@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  gtrack-admin-site.webpack-server:
+    build:
+      context: ..
+      dockerfile: Dockerfile.dev
+      args:
+        NPM_TOKEN: $NPM_TOKEN_Garlictech
+    volumes:
+      - "../src:/app/src"
+      - "../dist:/app/dist"
+      - "./hooks:/app/hooks"
+      - "../reports:/app/reports"
+    environment:
+      - NODE_ENV
+      - CI
+    command: "npm start"

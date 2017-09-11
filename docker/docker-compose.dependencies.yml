@@ -1,0 +1,42 @@
+version: '2'
+
+services:
+  authentication-server:
+    image: docker.garlictech.com/authentication-server:latest
+    env_file:
+      - ./service.env
+      - ./tokens.env
+    depends_on:
+      - mongodb
+    ports:
+      - 3000:3000
+
+  mongodb:
+    image: mongo:3.2
+
+  deepstream:
+    image: docker.garlictech.com/deepstream
+    ports:
+      - 6020:6020
+    env_file:
+      - ./service.env
+      - ./tokens.env
+    depends_on:
+      - rethinkdb
+      - redis
+    restart: always
+
+  redis:
+    image: redis:alpine
+
+  rethinkdb:
+    image: rethinkdb
+
+  # deepstream_providers:
+  #   image: docker.garlictech.com/gtrack-providers:latest
+  #   env_file:
+  #     - ./service.env
+  #     - ./tokens.env
+  #   depends_on:
+  #     - deepstream
+  #   restart: always

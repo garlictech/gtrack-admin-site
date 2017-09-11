@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  garlictech.gtrack-admin-site.e2e-tester:
+    build: ../e2e
+    volumes:
+      - "../e2e/src:/protractor"
+      - "/dev/shm:/dev/shm"
+    environment:
+      - WEBSERVER_IP=gtrack-admin-site.webpack-server
+    privileged: true
+    depends_on:
+      - gtrack-admin-site.webpack-server

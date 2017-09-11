@@ -1,0 +1,12 @@
+{
+  "generator-garlic-webapp": {
+    "appname": "gtrack admin site",
+    "angularModules": {
+      "directives": [],
+      "services": [],
+      "components": []
+    },
+    "scope": "garlictech",
+    "projectType": "site"
+  }
+}

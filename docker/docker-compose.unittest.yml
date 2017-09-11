@@ -1,0 +1,6 @@
+version: '2'
+
+services:
+  gtrack-admin-site.webpack-server:
+    ports:
+      - "9876:9876"

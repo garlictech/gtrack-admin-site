@@ -1,0 +1,34 @@
+language: node_js
+node_js:
+- '6'
+cache:
+  directories:
+  - node_modules
+sudo: required
+services:
+- docker
+before_install:
+- hooks/travis/before_install
+install:
+- hooks/travis/install
+script:
+- hooks/travis/script
+branches:
+  only:
+  - master
+  - stable
+deploy:
+  provider: script
+  script: hooks/travis/deploy
+  skip_cleanup: true
+  on:
+    repo: garlictech/gtrack-admin-site
+    branch: master
+after_success:
+- hooks/travis/after_success
+after_deploy:
+- hooks/travis/after_deploy
+notifications:
+  slack:
+    rooms:
+      secure: TmkP3khZvoZez68+Q5YSF9Y6cF17gDQCzN+nMkWY/BgV4gay15o0RZRs4gAOARkIuFndfHQDgLTuoDo3/GO04veqRrLXnvs/qhKwZAvCDqc5ZRbEYn3kAYU3Y84VaVEjr0gQR5VbB0d7RcsAna+NRTC2bYCEATYak5wvFjNPxprxpIgtnQu0Rf1cADXlj777WlcFm4nALUqsnBKGtQ9MDCLRNxlsqlTzrFWRmNgJvyyQ3UjJjE5EPSTX2o2DkcWAvsVAKNBHhbyrGgZIfSeYMbzgPJVWm+TWLloAonILWfdHPkpRDqWVU7ay9S10esCj6ERAOgCNEnZHVsQdtc4nIRsmz0NxdQPMWaesbmSbMzqr4ZlfNzeduJjctQxN1bn1+mZLT8tljtwqmA8ycjefWcLyknZ8IhK4Y39U8TguXQ84zjJCNYMZvtSRqOegvG3oM6l+Plp11/3ylWVYOL1hbXLOgL37B1UaM2FbMx4QdP0b7hoPwPynW5MeurxEnUle1b8e/w+HnWDla0ezkRm9mLxXtLol+gCFC2WKqBYVEa+oZVzdKq1PBiXRVM5FXt/cyYGE/R8EfhfY4AEj7FBlKf+1y/7Spuj0onskZRXRUhPf208NGkNKeZcGj+oni6GuTgE/u4Ot8YWkD9IcR9+Vsg6oPMbPjbFYAlo6R5zcbNY=

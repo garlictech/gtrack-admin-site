@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  gtrack-admin-site.webpack-server:
+    ports:
+      - "5858:5858"
+    environment:
+      - DEBUG
+
+  # garlictech.gtrack-admin-site.e2e-tester:
+  #   ports:
+  #     - "5858:5858"
+  #   environment:
+  #     - DEBUG
