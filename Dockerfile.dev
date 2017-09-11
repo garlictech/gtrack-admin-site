@@ -1,9 +1,11 @@
 FROM garlictech2/angular2-webapp:v2.1.24
 
-# These lines should not be changed!
 ARG NPM_TOKEN
-COPY ./package.json /app/package.project.json
-# We need the copy for the proper installation of the submodule dependencies.
-COPY src /app/src/
+
+RUN mkdir -p /app/src/subrepos /app/src/assets
+
+COPY src/subrepos /app/src/subrepos/
+COPY package.json /app/package.project.json
+
 RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
   scripts/install_dependencies
