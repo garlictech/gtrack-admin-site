@@ -1,0 +1,18 @@
+<gt-layout>
+    <gt-sidenav [open]="showSidenav$ | async" *ngIf="loggedIn$ | async">
+        <gt-nav-item (activate)="closeSidenav()" routerLink="/" icon="home" hint="">
+            Home
+        </gt-nav-item>
+        <gt-nav-item (activate)="logout()" icon="exit_to_app">
+            Sign Out
+        </gt-nav-item>
+    </gt-sidenav>
+
+    <gt-toolbar (openMenu)="openSidenav()">
+        gTrack Admin
+    </gt-toolbar>
+
+    <router-outlet *ngIf="loggedIn$ | async"></router-outlet>
+
+    <gt-login *ngIf="!(loggedIn$ | async)"></gt-login>
+</gt-layout>
