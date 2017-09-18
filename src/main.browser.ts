@@ -6,6 +6,8 @@ import { AppComponent } from './app/app.component';
 import { AppStore } from './app/app-store';
 import { AppModule } from './app/app.module';
 
+import 'hammerjs';
+
 @NgModule({
     bootstrap: [
         AppComponent
