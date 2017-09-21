@@ -2,7 +2,7 @@ version: '2'
 
 services:
   authentication-server:
-    image: docker.garlictech.com/authentication-server:latest
+    image: docker.garlictech.com/authentication-server:v0.9.1
     env_file:
       - ./service.env
       - ./tokens.env
