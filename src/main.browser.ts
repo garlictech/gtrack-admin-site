@@ -1,5 +1,5 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { NgModule, ApplicationRef } from '@angular/core';
+import { NgModule, ApplicationRef, ViewEncapsulation } from '@angular/core';
 import { removeNgStyles, createNewHosts, createInputTransfer, bootloader } from '@angularclass/hmr';
 
 import { AppComponent } from './app/app.component';
@@ -53,7 +53,11 @@ class MainModule {
 }
 
 export function main() {
-    return platformBrowserDynamic().bootstrapModule(MainModule);
+    return platformBrowserDynamic().bootstrapModule(MainModule, [
+        {
+            defaultEncapsulation: ViewEncapsulation.None
+        }
+    ]);
 }
 
 // boot on document ready

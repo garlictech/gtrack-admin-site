@@ -11,4 +11,6 @@ export class CloseSidenavAction implements Action {
     readonly type = CLOSE_SIDENAV;
 }
 
-export type Actions = OpenSidenavAction | CloseSidenavAction;
+export type LayoutActions =
+    | OpenSidenavAction
+    | CloseSidenavAction;

@@ -1,3 +1,19 @@
-<md-sidenav-container fullscreen>
-    <ng-content></ng-content>
+<gt-toolbar (menuButtonClick)="handleSidenav()">
+    gTrack Admin
+</gt-toolbar>
+<md-sidenav-container>
+    <gt-sidenav [open]="showSidenav$ | async">
+        <gt-nav-item (activate)="closeSidenav()" routerLink="/dashboard/hike-list" icon="list" hint="">
+            Hikes
+        </gt-nav-item>
+        <gt-nav-item (activate)="logout()" icon="exit_to_app">
+            Sign Out
+        </gt-nav-item>
+    </gt-sidenav>
+
+    <div class="gt-content">
+        <router-outlet></router-outlet>
+    </div>
+
+
 </md-sidenav-container>

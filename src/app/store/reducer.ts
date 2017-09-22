@@ -1,12 +1,12 @@
-import * as layout from './layout.action';
+import * as layout from './actions';
 
-import { ILayoutState } from './layout.state';
+import { ILayoutState } from './state';
 
-const initialState: ILayoutState = {
-   showSidenav: false,
+const initialLayoutState: ILayoutState = {
+    showSidenav: false,
 };
 
-export function reducer(state = initialState, action: layout.Actions): ILayoutState {
+export function reducer(state = initialLayoutState, action: layout.LayoutActions): ILayoutState {
     switch (action.type) {
         case layout.CLOSE_SIDENAV:
             return {
