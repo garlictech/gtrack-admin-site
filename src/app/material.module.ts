@@ -1,20 +1,36 @@
 import { NgModule } from '@angular/core';
+
 import {
-    MdSidenavModule,
-    MdToolbarModule,
-    MdButtonModule
+    MATERIAL_COMPATIBILITY_MODE,
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatListModule,
+    MatCardModule
 } from '@angular/material';
 
 @NgModule({
     imports: [
-        MdSidenavModule,
-        MdToolbarModule,
-        MdButtonModule
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatListModule,
+        MatCardModule
     ],
     exports: [
-        MdSidenavModule,
-        MdToolbarModule,
-        MdButtonModule
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatListModule,
+        MatCardModule
     ],
+    providers: [
+        {
+            provide: MATERIAL_COMPATIBILITY_MODE, useValue: true
+        }
+    ]
 })
 export class GtMaterialModule { }
