@@ -1,7 +1,7 @@
 <gt-toolbar (menuButtonClick)="handleSidenav()">
     gTrack Admin
 </gt-toolbar>
-<md-sidenav-container>
+<mat-sidenav-container>
     <gt-sidenav [open]="showSidenav$ | async">
         <gt-nav-item (activate)="closeSidenav()" routerLink="/dashboard/hike-list" icon="list" hint="">
             Hikes
@@ -16,4 +16,4 @@
     </div>
 
 
-</md-sidenav-container>
+</mat-sidenav-container>
