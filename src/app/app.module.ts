@@ -9,22 +9,25 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-
+import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
+import { EffectsModule } from '@ngrx/effects';
 import { AuthenticationApiConfig, AuthenticationApiModule } from 'authentication-api-ngx';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store } from './store';
+import { store, Effects } from './store';
 
 import { routing } from './app-routing.module';
+import { GtMaterialModule } from './material.module';
 
-import { MaterialModule, MdSidenavModule, MdToolbarModule } from '@angular/material';
 import { LayoutComponent } from './core/components/layout';
 import { NavItemComponent } from './core/components/nav-item';
 import { SidenavComponent } from './core/components/sidenav';
 import { ToolbarComponent } from './core/components/toolbar';
+import { PageNotFoundComponent } from './core/components/page-not-found';
 import { LoginComponent } from './auth/components/login';
-import { HomeComponent } from './pages/home';
+import { HikeListComponent } from './pages/hike-list';
+import { HikeEditComponent } from './pages/hike-edit';
 
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authServer;
@@ -40,7 +43,9 @@ authConfig.google.appId = environment.google.appId;
         SidenavComponent,
         ToolbarComponent,
         LoginComponent,
-        HomeComponent
+        HikeListComponent,
+        HikeEditComponent,
+        PageNotFoundComponent
     ],
     imports: [
         BrowserModule,
@@ -51,17 +56,17 @@ authConfig.google.appId = environment.google.appId;
         store,
         routing,
         StoreDevtoolsModule.instrumentOnlyWithExtension({
-        maxAge: 25
+            maxAge: 25
         }),
         AngularFireModule.initializeApp(authConfig.firebase),
         AngularFireAuthModule,
         AngularFireDatabaseModule,
         AuthenticationApiModule.forRoot(authConfig),
-
-        MaterialModule,
-        MdSidenavModule,
-        MdToolbarModule
+        GtMaterialModule,
+        RouterStoreModule.connectRouter(),
+        EffectsModule.run(Effects)
     ],
+    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

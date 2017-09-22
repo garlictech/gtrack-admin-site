@@ -87,6 +87,7 @@ export class FailureHappened implements Action {
   readonly type = FAILURE_HAPPENED;
   // Payload: the error object
   constructor(public payload: any) {
+    console.log('FAILURE', payload);
     /* EMPTY */
   }
 }
