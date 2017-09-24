@@ -6,8 +6,8 @@ import { compose } from '@ngrx/core/compose';
 
 import { IAuthenticationState, Reducer, domain as authDomain } from 'authentication-api-ngx';
 
-import * as Actions from './actions';
-export { Actions };
+import * as GtActions from './actions';
+export { GtActions };
 
 import { reducer as LayoutReducer } from './reducer';
 export { LayoutReducer };

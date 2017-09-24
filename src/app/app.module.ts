@@ -29,6 +29,11 @@ import { LoginComponent } from './auth/components/login';
 import { HikeListComponent } from './pages/hike-list';
 import { HikeEditComponent } from './pages/hike-edit';
 
+import { ObjectToArrayPipe } from './shared/pipes/';
+
+// Mocks
+import { HikeDataService } from './shared/services';
+
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authServer;
 authConfig.firebase = environment.firebase;
@@ -45,7 +50,9 @@ authConfig.google.appId = environment.google.appId;
         LoginComponent,
         HikeListComponent,
         HikeEditComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        // Pipes
+        ObjectToArrayPipe
     ],
     imports: [
         BrowserModule,
@@ -66,7 +73,9 @@ authConfig.google.appId = environment.google.appId;
         RouterStoreModule.connectRouter(),
         EffectsModule.run(Effects)
     ],
-    providers: [],
+    providers: [
+        HikeDataService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

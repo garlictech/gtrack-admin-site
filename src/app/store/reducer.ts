@@ -1,4 +1,4 @@
-import * as layout from './actions';
+import * as GtActions from './actions';
 
 import { ILayoutState } from './state';
 
@@ -6,13 +6,13 @@ const initialLayoutState: ILayoutState = {
     showSidenav: false,
 };
 
-export function reducer(state = initialLayoutState, action: layout.LayoutActions): ILayoutState {
+export function reducer(state = initialLayoutState, action: GtActions.Actions): ILayoutState {
     switch (action.type) {
-        case layout.CLOSE_SIDENAV:
+        case GtActions.CLOSE_SIDENAV:
             return {
                 showSidenav: false,
             };
-        case layout.OPEN_SIDENAV:
+        case GtActions.OPEN_SIDENAV:
             return {
                 showSidenav: true,
             };

@@ -1,3 +1,55 @@
 <section class="mat-typography">
     <h1>Hike edit</h1>
+
+    <mat-card class="mat-elevation-z4">
+        <mat-card-content>
+            <div class="lang-toolbar">
+                <button
+                    mat-icon-button
+                    color="primary"
+                    matTooltip="Add translation"
+                    (click)="addTranslation()">
+                    <mat-icon>add</mat-icon>
+                </button>
+
+                <mat-select [(ngModel)]="selLang">
+                    <ng-container *ngFor="let lang of langs | obj2arr">
+                        <mat-option
+                            *ngIf="!existingLangKeys.has(lang.key)"
+                            [value]="lang.key"
+                            [innerHTML]="lang.value">
+                        </mat-option>
+                    </ng-container>
+                </mat-select>
+            </div>
+
+            <table class="mat-table lang-table">
+                <tr class="mat-header-row">
+                    <th class="mat-header-cell">Lang</th>
+                    <th class="mat-header-cell">Title</th>
+                    <th class="mat-header-cell">Description</th>
+                </tr>
+                <tr class="mat-row" *ngFor="let lng of existingLangKeys">
+                    <td class="mat-cell">{{lng}}</td>
+                    <td class="mat-cell">
+                        <mat-form-field>
+                            <input matInput name="title" [(ngModel)]="hikeData.title[lng]">
+                        </mat-form-field>
+                    </td>
+                    <td class="mat-cell">
+                        <mat-form-field >
+                            <input matInput name="title" [(ngModel)]="hikeData.description[lng]">
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="clearfix">
+                <button mat-raised-button class="btn-save" color="primary" (click)="save()">
+                    Save
+                </button>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
 </section>
