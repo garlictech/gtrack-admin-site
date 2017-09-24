@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
+import * as GtActions from './actions';
 
 @Injectable()
 export class Effects {
@@ -9,23 +10,25 @@ export class Effects {
         private _actions$: Actions
     ) {}
 
-    // Logout
-    /*
+    // Save hike
     @Effect()
-    logout$: Observable<Action> = this._actions$
-        .ofType(AuthActions.LOGOUT_SUCCESS)
+    saveHike$: Observable<Action> = this._actions$
+        .ofType(GtActions.SAVE_HIKE)
         .map(toPayload)
-        .switchMap(() => {
-            return Observable.fromPromise(this._auth.logout())
-                .map(() => {
-                    log.i('Effect: Logout success');
-                    return new LocalActions.LogoutSuccess();
-                })
-                .catch(err => {
-                log.er('Effect: Logout error', err);
-                return Observable.of(new LocalActions.FailureHappened(err));
-                });
-            });
+        .switchMap(data => {
+            console.log('saveHike EFFECT: Save hike data: ', data);
+
+            return Observable.empty<Response>();
         });
-    */
+
+    // Delet hike
+    @Effect()
+    deleteHike$: Observable<Action> = this._actions$
+        .ofType(GtActions.DELETE_HIKE)
+        .map(toPayload)
+        .switchMap(data => {
+            console.log('deleteHike EFFECT: Delete hike by id: ', data);
+
+            return Observable.empty<Response>();
+        });
 }

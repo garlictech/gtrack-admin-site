@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
 import { Observable, Subscription } from 'rxjs';
 import { IAuth, Actions as AuthActions } from 'authentication-api-ngx';
-import { State, Actions as LayoutActions } from '../../../store';
+import { State, GtActions } from '../../../store';
 
 @Component({
     selector: 'gt-layout',
@@ -24,25 +24,25 @@ export class LayoutComponent implements OnInit {
     }
 
     closeSidenav() {
-        this._store.dispatch(new LayoutActions.CloseSidenavAction());
+        this._store.dispatch(new GtActions.CloseSidenavAction());
     }
 
     openSidenav() {
-        this._store.dispatch(new LayoutActions.OpenSidenavAction());
+        this._store.dispatch(new GtActions.OpenSidenavAction());
     }
 
     handleSidenav() {
         this.showSidenav$.take(1).subscribe(show => {
             if (show) {
-                this._store.dispatch(new LayoutActions.CloseSidenavAction());
+                this._store.dispatch(new GtActions.CloseSidenavAction());
             } else {
-                this._store.dispatch(new LayoutActions.OpenSidenavAction());
+                this._store.dispatch(new GtActions.OpenSidenavAction());
             }
         });
     }
 
     logout() {
         this._store.dispatch(new AuthActions.LogoutStart());
-        this._store.dispatch(new LayoutActions.CloseSidenavAction());
+        this._store.dispatch(new GtActions.CloseSidenavAction());
     }
 }

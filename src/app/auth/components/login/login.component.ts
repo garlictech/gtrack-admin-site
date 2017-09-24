@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
 import { IAuth, Actions } from 'authentication-api-ngx';

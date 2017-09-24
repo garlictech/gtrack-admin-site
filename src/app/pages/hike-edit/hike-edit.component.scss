@@ -1,0 +1,47 @@
+gt-hike-edit {
+    .mat-form-field {
+        padding: 10px;
+    }
+
+    .lang-toolbar {
+        .mat-select {
+            float: right;
+        }
+        button {
+            float: right;
+        }
+    }
+    .mat-table {
+        display: table;
+        width: 100%;
+
+        .mat-header-cell {
+            text-align: left;
+        }
+
+        .mat-header-cell:first-child,
+        .mat-cell:first-child {
+            width: 120px;
+            flex: none;
+        }
+
+        mat-form-field {
+            width: 100%;
+        }
+
+        .mat-select {
+            padding-top: 0;
+            position: relative;
+            top: -5px;
+
+            .mat-select-trigger {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .btn-save {
+        float: right;
+        margin-top: 10px;
+    }
+}

@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
 import { Observable, Subscription } from 'rxjs';
-
 import { IAuth } from 'authentication-api-ngx';
 import { State } from './store';
 
