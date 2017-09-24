@@ -12,7 +12,7 @@ import { HikeEditComponent } from './pages/hike-edit';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/dashboard/hike-list',
+        redirectTo: '/dashboard/hikes',
         pathMatch: 'full'
     },
     {
@@ -20,11 +20,11 @@ export const routes: Routes = [
         component:  LayoutComponent,
         children: [
             {
-                path: 'hike-list',
+                path: 'hikes',
                 component: HikeListComponent
             },
             {
-                path: 'hike-edit',
+                path: 'hike/:id',
                 component: HikeEditComponent
             }
         ],
