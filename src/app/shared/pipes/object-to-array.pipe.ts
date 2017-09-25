@@ -2,15 +2,17 @@ import { PipeTransform, Pipe } from '@angular/core';
 
 @Pipe({name: 'obj2arr'})
 export class ObjectToArrayPipe implements PipeTransform {
-    transform(value, args: string[]): any {
+    transform(obj: Object): any {
         let keys = [];
 
-        for (let key in value) {
-            let obj = {
-                key: key,
-                value: value[key]
-            };
-            keys.push(obj);
+        if (typeof obj === 'object' && Object.keys(obj).length) {
+            for (let key in obj) {
+                let item = {
+                    key: key,
+                    value: obj[key]
+                };
+                keys.push(item);
+            }
         }
 
         return keys;
