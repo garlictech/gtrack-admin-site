@@ -8,6 +8,7 @@ export class MockStore<T> extends BehaviorSubject<T> {
     constructor(private _initialState: T) {
         super(_initialState);
     }
+
     dispatch = (action: Action): void => {
         //
     }

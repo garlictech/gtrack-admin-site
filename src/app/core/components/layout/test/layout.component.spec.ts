@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Actions as authActions } from 'authentication-api-ngx';
 import { Observable } from 'rxjs';
-import { MockStore, GtActions } from '../../../../store/';
+import { take } from 'rxjs/operator/take';
+import { MockStore, GtActions, State } from '../../../../store/';
 import { GtMaterialModule } from '../../../../material.module';
 import { LayoutComponent } from '../layout.component';
 import { ToolbarComponent } from '../../toolbar/toolbar.component';
@@ -15,7 +16,7 @@ import { NavItemComponent } from '../../nav-item/nav-item.component';
 
 let comp: LayoutComponent;
 let fixture: ComponentFixture<LayoutComponent>;
-let _store: any;
+let _store: MockStore<any>;
 
 describe('LayoutComponent', () => {
     beforeEach(() => {
@@ -76,12 +77,12 @@ describe('LayoutComponent', () => {
         const openAction = new GtActions.OpenSidenavAction();
         const closeAction = new GtActions.CloseSidenavAction();
 
+        // Failed: undefined is not an object (evaluating 'this.showSidenav$.take')
+
         comp.handleSidenav();
-        comp.showSidenav$ = Observable.of(false);
+
         fixture.detectChanges();
         expect(_store.dispatch).toHaveBeenCalledWith(openAction);
-
-        comp.showSidenav$ = Observable.of(true);
 
         fixture.detectChanges();
         expect(_store.dispatch).toHaveBeenCalledWith(closeAction);
