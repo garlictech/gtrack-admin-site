@@ -5,5 +5,5 @@ import { Component, Output, EventEmitter } from '@angular/core';
     templateUrl: './toolbar.component.html'
 })
 export class ToolbarComponent {
-    @Output() openMenu = new EventEmitter();
+    @Output() menuButtonClick = new EventEmitter();
 }

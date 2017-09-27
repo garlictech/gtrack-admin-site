@@ -1,0 +1,40 @@
+<section class="mat-typography">
+    <h1>Hikes</h1>
+
+    <div class="mat-elevation-z4">
+        <mat-table #table [dataSource]="hikeDataSource">
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="title">
+                <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.title.hu_HU}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="control">
+                <mat-header-cell *matHeaderCellDef> Control </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button
+                        mat-icon-button
+                        color="primary"
+                        matTooltip="Edit hike"
+                        routerLink="/dashboard/hike/{{element.id}}">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                        mat-icon-button
+                        color="warn"
+                        matTooltip="Delete hike"
+                        (click)="deleteHike(element.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </div>
+</section>

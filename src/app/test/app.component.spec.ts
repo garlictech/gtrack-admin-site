@@ -1,51 +1,60 @@
-import {
-    RouterTestingModule
-} from '@angular/router/testing';
-import {
-    async,
-    TestBed,
-    ComponentFixture
-} from '@angular/core/testing';
-import { provideRoutes, Routes, RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { Store, Action } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { Component } from '@angular/core';
-
+import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
+import { MockStore } from '../store/';
 
-@Component({
-    selector: 'app-test-cmp',
-    template: '<div class="title">Hello test</div>'
-})
-class TestRouterComponent {
-}
-
-let config: Routes = [
-    {
-        path: '', component: TestRouterComponent
-    }
-];
+let comp: AppComponent;
+let fixture: ComponentFixture<AppComponent>;
+let _store: any;
 
 describe('AppComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
-                TestRouterComponent,
                 AppComponent
             ],
-            imports: [ RouterTestingModule, RouterModule ],
-            providers: [ provideRoutes(config) ]
-        });
+            imports: [
+                RouterTestingModule
+            ],
+            providers: [
+                {
+                    provide: Store,
+                    useValue: new MockStore({
+                        authentication: {
+                            auth: {}
+                        }
+                    })
+                }
+            ]
+        }).compileComponents();
+
+        fixture = TestBed.createComponent(AppComponent);
+        _store = fixture.debugElement.injector.get(Store);
+        comp = fixture.componentInstance;
+
+        spyOn(_store, 'dispatch').and.callThrough();
     });
 
-    it('should have title Hello world', async(() => {
-        TestBed.compileComponents().then(() => {
-            let fixture: ComponentFixture<AppComponent>;
-            fixture = TestBed.createComponent(AppComponent);
-            fixture.detectChanges();
+    it('should create the app', async(() => {
+        fixture.detectChanges();
+        expect(comp).toBeTruthy();
+    }));
 
-            let compiled = fixture.debugElement.nativeElement;
-            expect(compiled).toBeDefined();
-            // TODO: find a way to compile the routed component
-            // expect(compiled.querySelector('div.title')).toMatch('Hello world');
+    it('should redirect to login if auth token is null', async(() => {
+        const action = go(['/login']);
+        _store.next({
+            authentication: {
+                auth: {
+                    token: null
+                }
+            }
         });
+
+        fixture.detectChanges();
+        expect(_store.dispatch).toHaveBeenCalledWith(action);
     }));
 });

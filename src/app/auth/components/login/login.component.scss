@@ -1,9 +1,14 @@
 gt-login {
+    display: block;
+    height: 100%;
 
-    md-card.mat-card {
-        justify-content: center;
-        margin: 80px auto;
+    mat-card.mat-card {
         width: 350px;
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
 
         .btn-google {
             background: #DD4B39;
