@@ -12,26 +12,36 @@ import { HikeEditComponent } from './pages/hike-edit';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/dashboard/hikes',
+        redirectTo: '/admin/hikes',
         pathMatch: 'full'
     },
     {
-        path: 'dashboard',
+        path: 'admin',
         component:  LayoutComponent,
         children: [
             {
                 path: 'hikes',
-                component: HikeListComponent
+                component: HikeListComponent,
+                data: {
+                    title: 'Hikes'
+                }
             },
             {
                 path: 'hike/:id',
-                component: HikeEditComponent
+                component: HikeEditComponent,
+                data: {
+                    title: 'Hike'
+                }
             }
         ],
         canActivate: [AuthGuard],
     },
     {
         path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: 'logout',
         component: LoginComponent
     },
     {

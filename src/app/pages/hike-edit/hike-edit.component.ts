@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, GtActions } from '../../store';
 import { ActivatedRoute } from '@angular/router';
-import { HikeDataService, HikeDataSource } from '../../shared/services';
+import { HikeDataService } from '../../shared/services';
 import { IHikeElement } from '../../shared/interfaces';
 import { Subscription } from 'rxjs/Subscription';
 

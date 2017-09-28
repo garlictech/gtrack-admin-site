@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, GtActions } from '../../store';
 
-import { HikeDataService, HikeDataSource } from '../../shared/services';
+import { HikeDataService } from '../../shared/services';
 
 @Component({
     selector: 'gt-hike-list',
@@ -10,8 +10,7 @@ import { HikeDataService, HikeDataSource } from '../../shared/services';
     styleUrls: ['./hike-list.component.scss']
 })
 export class HikeListComponent implements OnInit {
-    displayedColumns = ['id', 'title', 'control'];
-    hikeDataSource: HikeDataSource;
+    hikeList: any[];
 
     constructor(
         private _store: Store<State>,
@@ -19,7 +18,7 @@ export class HikeListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.hikeDataSource = this._hikeDataService.getHikes();
+        this.hikeList = this._hikeDataService.getHikes();
     }
 
     deleteHike(hikeId) {

@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { IAuth } from 'authentication-api-ngx';
 import { State } from './store';
 
-import './styles';
+declare const $: any;
 
 @Component({
     selector: 'gtrack-main',
@@ -18,6 +18,9 @@ export class AppComponent implements OnInit, OnDestroy {
     constructor(private _store: Store<State>) {}
 
     ngOnInit() {
+        $.material.options.autofill = true;
+        $.material.init();
+
         this._authSubscription = this._store
             .select((state: State) => state.authentication.auth)
             .filter((auth: IAuth) => auth.token === null)

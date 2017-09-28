@@ -20,19 +20,27 @@ import { store, Effects } from './store';
 import { routing } from './app-routing.module';
 import { GtMaterialModule } from './material.module';
 
+// Components
 import { LayoutComponent } from './core/components/layout';
-import { NavItemComponent } from './core/components/nav-item';
-import { SidenavComponent } from './core/components/sidenav';
-import { ToolbarComponent } from './core/components/toolbar';
+import { FooterComponent } from './core/components/footer';
+import { NavbarComponent } from './core/components/navbar';
+import { SidebarComponent } from './core/components/sidebar';
 import { PageNotFoundComponent } from './core/components/page-not-found';
 import { LoginComponent } from './auth/components/login';
 import { HikeListComponent } from './pages/hike-list';
 import { HikeEditComponent } from './pages/hike-edit';
 
+// Pipes
 import { ObjectToArrayPipe } from './shared/pipes/';
 
 // Mocks
 import { HikeDataService } from './shared/services';
+
+import './styles';
+
+// Vendors
+import '../../node_modules/bootstrap/dist/js/bootstrap.js';
+import '../../node_modules/bootstrap-material-design/dist/js/material.min.js';
 
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authServer;
@@ -43,10 +51,12 @@ authConfig.google.appId = environment.google.appId;
 @NgModule({
     declarations: [
         AppComponent,
+
         LayoutComponent,
-        NavItemComponent,
-        SidenavComponent,
-        ToolbarComponent,
+        FooterComponent,
+        NavbarComponent,
+        SidebarComponent,
+
         LoginComponent,
         HikeListComponent,
         HikeEditComponent,

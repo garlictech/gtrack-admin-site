@@ -1,9 +1,11 @@
 gt-hike-list {
-    .mat-header-cell:last-child {
-        flex: 0 0 100px;
+    .btn-sm {
+        padding: 6px !important;
+        margin-left : 10px;
     }
 
-    .mat-cell:last-child {
-        flex: 0 0 100px;
+    th:last-child, td:last-child {
+        width: 200px;
+        text-align: right !important;
     }
 }
