@@ -19,26 +19,7 @@ export class LayoutComponent implements OnInit {
     constructor(private _store: Store<State>) {}
 
     ngOnInit() {
-        this.showSidenav$ = this._store
-            .select((state: State) => state.layout.showSidenav);
-    }
-
-    closeSidenav() {
-        this._store.dispatch(new GtActions.CloseSidenavAction());
-    }
-
-    openSidenav() {
-        this._store.dispatch(new GtActions.OpenSidenavAction());
-    }
-
-    handleSidenav() {
-        this.showSidenav$.take(1).subscribe(show => {
-            if (show) {
-                this._store.dispatch(new GtActions.CloseSidenavAction());
-            } else {
-                this._store.dispatch(new GtActions.OpenSidenavAction());
-            }
-        });
+        //
     }
 
     logout() {
