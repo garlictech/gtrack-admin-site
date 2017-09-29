@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
 import { Actions as AuthActions } from 'authentication-api-ngx';
@@ -64,7 +63,7 @@ export class NavbarComponent implements OnInit {
         const toggleButton = this._toggleButton;
         const body = document.getElementsByTagName('body')[0];
 
-        setTimeout(function(){
+        setTimeout(function() {
             toggleButton.classList.add('toggled');
         }, 500);
         body.classList.add('nav-open');

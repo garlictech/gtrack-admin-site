@@ -1,1 +1,1 @@
-export { NavbarComponent } from './navbar.component.ts';
+export { NavbarComponent } from './navbar.component';

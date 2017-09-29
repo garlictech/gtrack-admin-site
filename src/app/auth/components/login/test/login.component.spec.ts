@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
 import { Actions as authActions } from 'authentication-api-ngx';
 import { Observable } from 'rxjs';
 import { MockStore } from '../../../../store/';
-import { GtMaterialModule } from '../../../../material.module';
 import { LoginComponent } from '../login.component';
 
 let comp: LoginComponent;
@@ -17,9 +16,6 @@ describe('LoginComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 LoginComponent
-            ],
-            imports: [
-                GtMaterialModule
             ],
             providers: [
                 {

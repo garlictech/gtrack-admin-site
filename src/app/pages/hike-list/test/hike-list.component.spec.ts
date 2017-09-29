@@ -3,9 +3,8 @@ import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MockStore } from '../../../store/';
-import { GtMaterialModule } from '../../../material.module';
 import { HikeListComponent } from '../hike-list.component';
-import { HikeDataService, HikeDataSource } from '../../../shared/services';
+import { HikeDataService } from '../../../shared/services';
 
 let comp: HikeListComponent;
 let fixture: ComponentFixture<HikeListComponent>;
@@ -18,8 +17,7 @@ describe('HikeListComponent', () => {
                 HikeListComponent
             ],
             imports: [
-                RouterTestingModule,
-                GtMaterialModule
+                RouterTestingModule
             ],
             providers: [
                 // TODO: mock HikeDataService

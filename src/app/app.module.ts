@@ -18,7 +18,6 @@ import { environment } from '../environments/environment';
 import { store, Effects } from './store';
 
 import { routing } from './app-routing.module';
-import { GtMaterialModule } from './material.module';
 
 // Components
 import { LayoutComponent } from './core/components/layout';
@@ -79,7 +78,6 @@ authConfig.google.appId = environment.google.appId;
         AngularFireAuthModule,
         AngularFireDatabaseModule,
         AuthenticationApiModule.forRoot(authConfig),
-        GtMaterialModule,
         RouterStoreModule.connectRouter(),
         EffectsModule.run(Effects)
     ],

@@ -34,4 +34,5 @@ export class DeleteHikeAction implements Action {
 export type Actions =
     | OpenSidenavAction
     | CloseSidenavAction
-    | SaveHikeAction;
+    | SaveHikeAction
+    | DeleteHikeAction;

@@ -5,10 +5,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { MockStore } from '../../../store/';
-import { GtMaterialModule } from '../../../material.module';
 import { HikeEditComponent } from '../hike-edit.component';
 import { ObjectToArrayPipe } from '../../../shared/pipes/';
-import { HikeDataService, HikeDataSource } from '../../../shared/services';
+import { HikeDataService } from '../../../shared/services';
 
 let comp: HikeEditComponent;
 let fixture: ComponentFixture<HikeEditComponent>;
@@ -23,7 +22,6 @@ describe('HikeEditComponent', () => {
             ],
             imports: [
                 FormsModule,
-                GtMaterialModule,
                 NoopAnimationsModule,
                 RouterTestingModule
             ],

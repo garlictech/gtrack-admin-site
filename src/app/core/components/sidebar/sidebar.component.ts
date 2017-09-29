@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
 import { Actions as AuthActions } from 'authentication-api-ngx';
 
 declare const $: any;
+
 declare interface RouteInfo {
     path: string;
     title: string;

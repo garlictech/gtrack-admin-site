@@ -1,1 +1,1 @@
-export { SidebarComponent } from './sidebar.component.ts';
+export { SidebarComponent } from './sidebar.component';

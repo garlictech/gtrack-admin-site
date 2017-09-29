@@ -1,1 +1,1 @@
-export { PageNotFoundComponent } from './page-not-found.component.ts';
+export { PageNotFoundComponent } from './page-not-found.component';
