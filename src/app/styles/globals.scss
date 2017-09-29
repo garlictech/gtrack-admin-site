@@ -6,6 +6,19 @@
     box-sizing: border-box;
 }
 
+input, select, textarea {
+    font-weight: 300 !important;
+}
+
+table.table {
+    th {
+        font-weight: bold;
+    }
+    td {
+        padding: 4px 8px !important;
+    }
+}
+
 .clearfix {
     &::after {
         display: block;
