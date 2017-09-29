@@ -22,7 +22,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         'fr_FR': 'French',
         'it_IT': 'Italian',
     };
-    selLang: string;
+    selLang: string = null;
 
     constructor(
         private _store: Store<State>,
@@ -48,9 +48,12 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     }
 
     addTranslation() {
-        this.hikeData.title[this.selLang] = '';
-        this.hikeData.description[this.selLang] = '';
-        this.existingLangKeys.add(this.selLang);
+        if (this.selLang) {
+            this.hikeData.title[this.selLang] = '';
+            this.hikeData.description[this.selLang] = '';
+            this.existingLangKeys.add(this.selLang);
+            this.selLang = null;
+        }
     }
 
     save() {

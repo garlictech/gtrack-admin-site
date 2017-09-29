@@ -1,71 +1,65 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header" data-background-color="green">
-                        <h4 class="title">Hike edit</h4>
-                    </div>
-                    <div class="card-content">
-                        <div class="lang-toolbar">
-                            <button
-                                class="btn btn-round btn-sm btn-warning"
-                                (click)="addTranslation()">
-                                <i class="material-icons">add</i>
-                            </button>
+        <div class="card">
+            <div class="card-header" data-background-color="green">
+                <h4 class="title">Hike edit</h4>
+            </div>
+            <div class="card-content">
+                <div class="lang-toolbar clearfix">
+                    <button
+                        class="btn btn-round btn-sm btn-warning"
+                        [disabled]="!selLang"
+                        (click)="addTranslation()">
+                        <i class="material-icons">add</i>
+                    </button>
+
+                    <select class="form-control" [(ngModel)]="selLang" title="Select">
+                        <ng-container *ngFor="let lang of langs | obj2arr">
+                            <option
+                                *ngIf="!existingLangKeys.has(lang.key)"
+                                [value]="lang.key"
+                                [innerHTML]="lang.value">
+                            </option>
+                        </ng-container>
+                    </select>
+
+                    <span>New lang:</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Lang</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let lng of existingLangKeys">
+                                <td>{{langs[lng]}}</td>
+                                <td>
+                                    <div class="form-group form-black">
+                                    <input class="form-control"  name="title" [(ngModel)]="hikeData.title[lng]">
+                                    </div>
+                                </td>
+                                <td class="btn-control">
+                                        <div class="form-group form-black">
+                                        <input class="form-control"  name="title" [(ngModel)]="hikeData.description[lng]">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
 
-                            <select class="form-control" [(ngModel)]="selLang">
-                                <ng-container *ngFor="let lang of langs | obj2arr">
-                                    <option
-                                        *ngIf="!existingLangKeys.has(lang.key)"
-                                        [value]="lang.key"
-                                        [innerHTML]="lang.value">
-                                    </option>
-                                </ng-container>
-                            </select>
-                        </div>
-
-                    </div>
+                <div class="clearfix">
+                    <button class="btn btn-save btn-danger pull-right" (click)="save()">
+                        Save
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!--section class="mat-typography">
-    <h1>Hike edit</h1>
-
-    <mat-card class="mat-elevation-z4">
-        <mat-card-content>
-
-            <table class="mat-table lang-table">
-                <tr class="mat-header-row">
-                    <th class="mat-header-cell">Lang</th>
-                    <th class="mat-header-cell">Title</th>
-                    <th class="mat-header-cell">Description</th>
-                </tr>
-                <tr class="mat-row" *ngFor="let lng of existingLangKeys">
-                    <td class="mat-cell">{{lng}}</td>
-                    <td class="mat-cell">
-                        <mat-form-field>
-                            <input matInput name="title" [(ngModel)]="hikeData.title[lng]">
-                        </mat-form-field>
-                    </td>
-                    <td class="mat-cell">
-                        <mat-form-field >
-                            <input matInput name="title" [(ngModel)]="hikeData.description[lng]">
-                        </mat-form-field>
-                    </td>
-                </tr>
-            </table>
-
-            <div class="clearfix">
-                <button mat-raised-button class="btn-save" color="primary" (click)="save()">
-                    Save
-                </button>
-            </div>
-
-        </mat-card-content>
-    </mat-card>
-</section-->
