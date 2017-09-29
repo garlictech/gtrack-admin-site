@@ -25,7 +25,8 @@ export class AppComponent implements OnInit, OnDestroy {
             .select((state: State) => state.authentication.auth)
             .filter((auth: IAuth) => auth.token === null)
             .subscribe((auth: IAuth) => {
-                this._store.dispatch(go(['/login']));
+                console.log('TODO BACK LOGIN');
+                // this._store.dispatch(go(['/login']));
             });
     }
 
