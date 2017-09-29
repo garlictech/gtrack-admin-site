@@ -13,7 +13,7 @@ export class MockStore<T> extends BehaviorSubject<T> {
         //
     }
 
-    select = <T, R>(pathOrMapFn: any, ...paths: string[]): Observable<R> => {
+    select = <P, R>(pathOrMapFn: any, ...paths: string[]): Observable<R> => {
         return map.call(this, pathOrMapFn);
     }
 }
