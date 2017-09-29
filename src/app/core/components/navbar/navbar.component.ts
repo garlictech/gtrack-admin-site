@@ -1,6 +1,10 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
+import { Store } from '@ngrx/store';
+import { State } from '../../../store';
+import { Actions as AuthActions } from 'authentication-api-ngx';
+
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
@@ -14,7 +18,8 @@ export class NavbarComponent implements OnInit {
     constructor(
         private _element: ElementRef,
         private _activatedRoute: ActivatedRoute,
-        private _router: Router
+        private _router: Router,
+        private _store: Store<State>
     ) {
         // Read page title from route params
         this._router.events
@@ -38,6 +43,10 @@ export class NavbarComponent implements OnInit {
     ngOnInit() {
         const navbar: HTMLElement = this._element.nativeElement;
         this._toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+    }
+
+    logout() {
+        this._store.dispatch(new AuthActions.LogoutStart());
     }
 
     /**

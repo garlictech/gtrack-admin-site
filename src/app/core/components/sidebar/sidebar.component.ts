@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-declare const $: any;
+import { Store } from '@ngrx/store';
+import { State } from '../../../store';
+import { Actions as AuthActions } from 'authentication-api-ngx';
 
+declare const $: any;
 declare interface RouteInfo {
     path: string;
     title: string;
@@ -16,11 +19,21 @@ export const ROUTES: RouteInfo[] = [
         icon: 'list',
         class: ''
     }, {
-        path: '/logout',
-        title: 'Logout',
-        icon: 'exit_to_app',
+        path: '/fake',
+        title: 'Test link 1',
+        icon: 'assessment',
         class: ''
-    },
+    }, {
+        path: '/fake',
+        title: 'Another test link 2',
+        icon: 'explore',
+        class: ''
+    }, {
+        path: '/fake',
+        title: 'Fake link',
+        icon: 'map',
+        class: ''
+    }
 ];
 
 @Component({
@@ -31,17 +44,20 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
     menuItems: any[];
 
+    constructor(private _store: Store<State>) {}
+
     ngOnInit() {
         this.menuItems = ROUTES.filter(menuItem => menuItem);
     }
 
-    /*
     isMobileMenu() {
-        // TODO jQuery
-        // if ($(window).width() > 991) {
-        //    return false;
-        // }
-        return false; // true;
+        if ($(window).width() > 991) {
+            return false;
+        }
+        return true;
     };
-    */
+
+    logout() {
+        this._store.dispatch(new AuthActions.LogoutStart());
+    }
 }
