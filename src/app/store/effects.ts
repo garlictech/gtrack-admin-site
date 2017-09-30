@@ -4,6 +4,7 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { Actions as AuthActions } from 'authentication-api-ngx';
 import * as GtActions from './actions';
+import { go } from '@ngrx/router-store';
 
 @Injectable()
 export class Effects {
@@ -11,15 +12,25 @@ export class Effects {
     private _actions$: Actions
   ) {}
 
-  // Save hike
+  // Auth guard route forbidden
   @Effect()
   routeForbidden$: Observable<Action> = this._actions$
     .ofType(AuthActions.ROUTE_FORBIDDEN)
     .map(toPayload)
     .switchMap(data => {
       console.log('sROUTE_FORBIDDEN ', data);
+      return Observable.of(go(['/login']));
 
-      return Observable.empty<Response>();
+    });
+
+  // Logut
+  @Effect()
+  logoutSuccess$: Observable<Action> = this._actions$
+    .ofType(AuthActions.LOGOUT_SUCCESS)
+    .map(toPayload)
+    .switchMap(data => {
+      console.log('LOGOUT_SUCCESS ', data);
+      return Observable.of(go(['/login']));
     });
 
   // Save hike
