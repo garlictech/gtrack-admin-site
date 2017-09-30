@@ -21,16 +21,17 @@ export class AppComponent implements OnInit, OnDestroy {
         $.material.options.autofill = true;
         $.material.init();
 
+        /* TODO - DELETE
         this._authSubscription = this._store
             .select((state: State) => state.authentication.auth)
             .filter((auth: IAuth) => auth.token === null)
             .subscribe((auth: IAuth) => {
                 console.log('TODO BACK LOGIN');
                 // this._store.dispatch(go(['/login']));
-            });
+            });*/
     }
 
     ngOnDestroy() {
-        this._authSubscription.unsubscribe();
+        // this._authSubscription.unsubscribe();
     }
 }
