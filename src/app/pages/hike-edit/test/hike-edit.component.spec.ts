@@ -14,33 +14,33 @@ let fixture: ComponentFixture<HikeEditComponent>;
 let _store: any;
 
 describe('HikeEditComponent', () => {
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                HikeEditComponent,
-                ObjectToArrayPipe
-            ],
-            imports: [
-                FormsModule,
-                NoopAnimationsModule,
-                RouterTestingModule
-            ],
-            providers: [
-                // TODO: mock HikeDataService
-                HikeDataService,
-                {
-                    provide: Store,
-                    useValue: new MockStore({})
-                }
-            ]
-        }).compileComponents();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        HikeEditComponent,
+        ObjectToArrayPipe
+      ],
+      imports: [
+        FormsModule,
+        NoopAnimationsModule,
+        RouterTestingModule
+      ],
+      providers: [
+        // TODO: mock HikeDataService
+        HikeDataService,
+        {
+          provide: Store,
+          useValue: new MockStore({})
+        }
+      ]
+    }).compileComponents();
 
-        fixture = TestBed.createComponent(HikeEditComponent);
-        comp = fixture.debugElement.componentInstance;
-    });
+    fixture = TestBed.createComponent(HikeEditComponent);
+    comp = fixture.debugElement.componentInstance;
+  });
 
-    it('should create the component', async(() => {
-        fixture.detectChanges();
-        expect(comp).toBeTruthy();
-    }));
+  it('should create the component', async(() => {
+    fixture.detectChanges();
+    expect(comp).toBeTruthy();
+  }));
 });

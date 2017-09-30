@@ -7,11 +7,11 @@ import 'rxjs/add/observable/of';
 
 @Injectable()
 export class HikeDataService {
-    public getHikes() {
-        return MOCK_HIKE_LIST;
-    }
+  public getHikes() {
+    return MOCK_HIKE_LIST;
+  }
 
-    public getHike(id) {
-        return MOCK_HIKE_DATA;
-    }
+  public getHike(id) {
+    return MOCK_HIKE_DATA;
+  }
 }

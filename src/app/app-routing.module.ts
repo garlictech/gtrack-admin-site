@@ -2,7 +2,6 @@ import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'authentication-api-ngx';
 import { HomeComponent } from './pages/home';
-
 import { LayoutComponent } from './core/components/layout';
 import { PageNotFoundComponent } from './core/components/page-not-found';
 import { LoginComponent } from './auth/components/login';
@@ -34,7 +33,7 @@ export const routes: Routes = [
                 }
             }
         ],
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
     },
     {
         path: 'login',

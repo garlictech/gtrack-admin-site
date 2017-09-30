@@ -1,17 +1,18 @@
 gt-hike-list {
-    .btn-control > button {
-        padding: 6px !important;
-        margin-left : 10px;
+  .btn-control > button {
+    padding: 6px !important;
+    margin-left: 10px;
+  }
+
+  table.table {
+    th:last-child,
+    td:last-child {
+      width: 200px;
+      text-align: right !important;
     }
 
-    table.table {
-        th:last-child, td:last-child {
-            width: 200px;
-            text-align: right !important;
-        }
-
-        td {
-            padding: 4px 8px !important;
-        }
+    td {
+      padding: 4px 8px !important;
     }
+  }
 }

@@ -11,30 +11,30 @@ let fixture: ComponentFixture<HikeListComponent>;
 let _store: any;
 
 describe('HikeListComponent', () => {
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                HikeListComponent
-            ],
-            imports: [
-                RouterTestingModule
-            ],
-            providers: [
-                // TODO: mock HikeDataService
-                HikeDataService,
-                {
-                    provide: Store,
-                    useValue: new MockStore({})
-                }
-            ]
-        }).compileComponents();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        HikeListComponent
+      ],
+      imports: [
+        RouterTestingModule
+      ],
+      providers: [
+        // TODO: mock HikeDataService
+        HikeDataService,
+        {
+          provide: Store,
+          useValue: new MockStore({})
+        }
+      ]
+    }).compileComponents();
 
-        fixture = TestBed.createComponent(HikeListComponent);
-        comp = fixture.debugElement.componentInstance;
-    });
+    fixture = TestBed.createComponent(HikeListComponent);
+    comp = fixture.debugElement.componentInstance;
+  });
 
-    it('should create the component', async(() => {
-        fixture.detectChanges();
-        expect(comp).toBeTruthy();
-    }));
+  it('should create the component', async(() => {
+    fixture.detectChanges();
+    expect(comp).toBeTruthy();
+  }));
 });

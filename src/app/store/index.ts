@@ -25,9 +25,9 @@ reducers[routerDomain] = routerReducer;
 
 // Extend the store interface with that.
 export interface State {
-    authentication: IAuthenticationState;
-    layout: ILayoutState;
-    router: RouterState;
+  authentication: IAuthenticationState;
+  layout: ILayoutState;
+  router: RouterState;
 }
 
 export const store = StoreModule.provideStore(compose(storeLogger(), combineReducers)(reducers));

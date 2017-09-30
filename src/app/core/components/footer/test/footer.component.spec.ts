@@ -10,22 +10,22 @@ let fixture: ComponentFixture<FooterComponent>;
 let _store: any;
 
 describe('FooterComponent', () => {
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                FooterComponent
-            ],
-            imports: [
-                RouterTestingModule
-            ]
-        }).compileComponents();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        FooterComponent
+      ],
+      imports: [
+        RouterTestingModule
+      ]
+    }).compileComponents();
 
-        fixture = TestBed.createComponent(FooterComponent);
-        comp = fixture.debugElement.componentInstance;
-    });
+    fixture = TestBed.createComponent(FooterComponent);
+    comp = fixture.debugElement.componentInstance;
+  });
 
-    it('should create the component', async(() => {
-        fixture.detectChanges();
-        expect(comp).toBeTruthy();
-    }));
+  it('should create the component', async(() => {
+    fixture.detectChanges();
+    expect(comp).toBeTruthy();
+  }));
 });

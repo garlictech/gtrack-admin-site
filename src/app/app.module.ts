@@ -16,9 +16,7 @@ import { AuthenticationApiConfig, AuthenticationApiModule } from 'authentication
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { store, Effects } from './store';
-
 import { routing } from './app-routing.module';
-
 // Components
 import { LayoutComponent } from './core/components/layout';
 import { FooterComponent } from './core/components/footer';
@@ -28,15 +26,12 @@ import { PageNotFoundComponent } from './core/components/page-not-found';
 import { LoginComponent } from './auth/components/login';
 import { HikeListComponent } from './pages/hike-list';
 import { HikeEditComponent } from './pages/hike-edit';
-
 // Pipes
 import { ObjectToArrayPipe } from './shared/pipes/';
-
 // Mocks
 import { HikeDataService } from './shared/services';
-
+// Global styles
 import './styles';
-
 // Vendors
 import '../../node_modules/bootstrap/dist/js/bootstrap.js';
 import '../../node_modules/bootstrap-material-design/dist/js/material.min.js';
@@ -48,42 +43,40 @@ authConfig.webserverUrl = environment.webappServer;
 authConfig.google.appId = environment.google.appId;
 
 @NgModule({
-    declarations: [
-        AppComponent,
-
-        LayoutComponent,
-        FooterComponent,
-        NavbarComponent,
-        SidebarComponent,
-
-        LoginComponent,
-        HikeListComponent,
-        HikeEditComponent,
-        PageNotFoundComponent,
-        // Pipes
-        ObjectToArrayPipe
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        CommonModule,
-        FormsModule,
-        HttpModule,
-        store,
-        routing,
-        StoreDevtoolsModule.instrumentOnlyWithExtension({
-            maxAge: 25
-        }),
-        AngularFireModule.initializeApp(authConfig.firebase),
-        AngularFireAuthModule,
-        AngularFireDatabaseModule,
-        AuthenticationApiModule.forRoot(authConfig),
-        RouterStoreModule.connectRouter(),
-        EffectsModule.run(Effects)
-    ],
-    providers: [
-        HikeDataService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    LayoutComponent,
+    FooterComponent,
+    NavbarComponent,
+    SidebarComponent,
+    LoginComponent,
+    HikeListComponent,
+    HikeEditComponent,
+    PageNotFoundComponent,
+    // Pipes
+    ObjectToArrayPipe
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    CommonModule,
+    FormsModule,
+    HttpModule,
+    store,
+    routing,
+    StoreDevtoolsModule.instrumentOnlyWithExtension({
+        maxAge: 25
+    }),
+    AngularFireModule.initializeApp(authConfig.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AuthenticationApiModule.forRoot(authConfig),
+    RouterStoreModule.connectRouter(),
+    EffectsModule.run(Effects)
+  ],
+  providers: [
+    HikeDataService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

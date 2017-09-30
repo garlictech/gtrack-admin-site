@@ -8,22 +8,22 @@ let fixture: ComponentFixture<PageNotFoundComponent>;
 let _store: any;
 
 describe('PageNotFoundComponent', () => {
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                PageNotFoundComponent
-            ],
-            imports: [
-                RouterTestingModule
-            ]
-        }).compileComponents();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        PageNotFoundComponent
+      ],
+      imports: [
+        RouterTestingModule
+      ]
+    }).compileComponents();
 
-        fixture = TestBed.createComponent(PageNotFoundComponent);
-        comp = fixture.debugElement.componentInstance;
-    });
+    fixture = TestBed.createComponent(PageNotFoundComponent);
+    comp = fixture.debugElement.componentInstance;
+  });
 
-    it('should create the component', async(() => {
-        fixture.detectChanges();
-        expect(comp).toBeTruthy();
-    }));
+  it('should create the component', async(() => {
+    fixture.detectChanges();
+    expect(comp).toBeTruthy();
+  }));
 });

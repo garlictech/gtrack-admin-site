@@ -1,43 +1,42 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header" data-background-color="green">
-                        <h4 class="title">Hikes</h4>
-                    </div>
-                    <div class="card-content table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Title</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let hike of hikeList">
-                                    <td>{{hike.id}}</td>
-                                    <td>{{hike.title.hu_HU}}</td>
-                                    <td class="btn-control">
-                                        <button
-                                            class="btn btn-round btn-sm btn-warning"
-                                            routerLink="/admin/hike/{{hike.id}}">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                        <button
-                                            class="btn btn-round btn-sm btn-danger"
-                                            (click)="deleteHike(hike.id)">
-                                            <i class="material-icons">delete</i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="green">
+            <h4 class="title">Hikes</h4>
+          </div>
+          <div class="card-content table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Title</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let hike of hikeList">
+                  <td>{{hike.id}}</td>
+                  <td>{{hike.title.hu_HU}}</td>
+                  <td class="btn-control">
+                    <button
+                      class="btn btn-round btn-sm btn-warning"
+                      routerLink="/admin/hike/{{hike.id}}">
+                      <i class="material-icons">edit</i>
+                    </button>
+                    <button
+                      class="btn btn-round btn-sm btn-danger"
+                      (click)="deleteHike(hike.id)">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-

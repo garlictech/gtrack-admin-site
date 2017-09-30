@@ -1,29 +1,25 @@
 @import '../../../../assets/sass/md/colors.scss';
 
-app-sidebar {
-    /**/
-}
-
 .sidebar {
-    background-color: black;
-    .logo .simple-text {
-        color: white;
-    }
+  background-color: black;
+  .logo .simple-text {
+    color: white;
+  }
 
-    .sidebar-background {
-        opacity: 0.8;
-        &::after {
-            background-color: $green-500 !important;
-            opacity: 0.4;
-        }
+  .sidebar-background {
+    opacity: 0.8;
+    &::after {
+      background-color: $green-500 !important;
+      opacity: 0.4;
     }
+  }
 
-    .nav i,
-    .nav li > a,
-    .nav li:hover > a {
-        color: white;
-    }
-    .nav li > a.active {
-        background-color:  rgba(76, 175, 80, 0.75);
-    }
+  .nav i,
+  .nav li > a,
+  .nav li:hover > a {
+    color: white;
+  }
+  .nav li > a.active {
+    background-color:  rgba(76, 175, 80, 0.75);
+  }
 }

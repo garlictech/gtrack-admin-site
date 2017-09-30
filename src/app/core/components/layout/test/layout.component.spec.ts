@@ -12,31 +12,31 @@ let comp: LayoutComponent;
 let fixture: ComponentFixture<LayoutComponent>;
 
 describe('LayoutComponent', () => {
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                LayoutComponent,
-                NavbarComponent,
-                SidebarComponent,
-                FooterComponent
-            ],
-            imports: [
-                RouterTestingModule
-            ],
-            providers: [
-                {
-                    provide: Store,
-                    useValue: new MockStore({})
-                }
-            ]
-        }).compileComponents();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        LayoutComponent,
+        NavbarComponent,
+        SidebarComponent,
+        FooterComponent
+      ],
+      imports: [
+        RouterTestingModule
+      ],
+      providers: [
+        {
+          provide: Store,
+          useValue: new MockStore({})
+        }
+      ]
+    }).compileComponents();
 
-        fixture = TestBed.createComponent(LayoutComponent);
-        comp = fixture.debugElement.componentInstance;
-    });
+    fixture = TestBed.createComponent(LayoutComponent);
+    comp = fixture.debugElement.componentInstance;
+  });
 
-    it('should create the component', async(() => {
-        fixture.detectChanges();
-        expect(comp).toBeTruthy();
-    }));
+  it('should create the component', async(() => {
+    fixture.detectChanges();
+    expect(comp).toBeTruthy();
+  }));
 });

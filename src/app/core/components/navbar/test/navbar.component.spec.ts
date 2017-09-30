@@ -13,49 +13,48 @@ let fixture: ComponentFixture<NavbarComponent>;
 let _store: MockStore<any>;
 
 describe('NavbarComponent', () => {
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                NavbarComponent
-            ],
-            imports: [
-                RouterTestingModule
-            ],
-            providers: [
-                {
-                    provide: ActivatedRoute,
-                    useValue: {
-                        data: {
-                            subscribe: (fn: (value: Data) => void) => fn({
-                                    yourData: 'yolo'
-                            })
-                        }
-                    }
-                },
-                {
-                    provide: Store,
-                    useValue: new MockStore({})
-                }
-            ]
-        }).compileComponents();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        NavbarComponent
+      ],
+      imports: [
+        RouterTestingModule
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            data: {
+              subscribe: (fn: (value: Data) => void) => fn({
+                yourData: 'fakeroute'
+              })
+            }
+          }
+        }, {
+          provide: Store,
+          useValue: new MockStore({})
+        }
+      ]
+    }).compileComponents();
 
-        fixture = TestBed.createComponent(NavbarComponent);
-        _store = fixture.debugElement.injector.get(Store);
-        comp = fixture.debugElement.componentInstance;
+    fixture = TestBed.createComponent(NavbarComponent);
+    _store = fixture.debugElement.injector.get(Store);
+    comp = fixture.debugElement.componentInstance;
 
-        spyOn(_store, 'dispatch').and.callThrough();
-    });
+    spyOn(_store, 'dispatch').and.callThrough();
+  });
 
-    it('should create the component', async(() => {
-        fixture.detectChanges();
-        expect(comp).toBeTruthy();
-    }));
+  it('should create the component', async(() => {
+    fixture.detectChanges();
+    expect(comp).toBeTruthy();
+  }));
 
-    it('should call logout', async(() => {
-        const authAction = new authActions.LogoutStart();
+  it('should call logout', async(() => {
+    const authAction = new authActions.LogoutStart();
 
-        comp.logout();
-        fixture.detectChanges();
-        expect(_store.dispatch).toHaveBeenCalledWith(authAction);
-    }));
+    comp.logout();
+    fixture.detectChanges();
+    expect(_store.dispatch).toHaveBeenCalledWith(authAction);
+  }));
 });
