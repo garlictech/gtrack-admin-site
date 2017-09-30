@@ -1,6 +1,6 @@
 export interface IHikeElement {
-  id: string;
-  title: {
+  id?: string;
+  title?: {
     [lng: string]: string;
   };
   description?: {

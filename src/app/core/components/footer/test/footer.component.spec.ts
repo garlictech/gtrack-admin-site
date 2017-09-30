@@ -1,7 +1,7 @@
-import { RouterTestingModule } from '@angular/router/testing';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FooterComponent } from '../footer.component';
+// For date pipe
 import 'intl/index';
 import 'intl/locale-data/jsonp/en.js';
 
@@ -14,9 +14,6 @@ describe('FooterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         FooterComponent
-      ],
-      imports: [
-        RouterTestingModule
       ]
     }).compileComponents();
 

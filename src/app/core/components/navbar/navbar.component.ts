@@ -11,8 +11,8 @@ import { Actions as AuthActions } from 'authentication-api-ngx';
 })
 export class NavbarComponent implements OnInit {
   pageTitle: string;
-  private _toggleButton: any;
-  private _sidebarVisible: boolean;
+  toggleButton: any;
+  sidebarVisible: boolean;
 
   constructor(
     private _element: ElementRef,
@@ -36,12 +36,12 @@ export class NavbarComponent implements OnInit {
         this.pageTitle = (event.title ) || 'Untitled page';
       });
 
-    this._sidebarVisible = false;
+    this.sidebarVisible = false;
   }
 
   ngOnInit() {
     const navbar: HTMLElement = this._element.nativeElement;
-    this._toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+    this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
   }
 
   logout() {
@@ -52,28 +52,28 @@ export class NavbarComponent implements OnInit {
    * Mobile view
    */
   sidebarToggle() {
-    if (this._sidebarVisible === false) {
-      this._sidebarOpen();
+    if (this.sidebarVisible === false) {
+      this.sidebarOpen();
     } else {
-      this._sidebarClose();
+      this.sidebarClose();
     }
   };
 
-  private _sidebarOpen() {
-    const toggleButton = this._toggleButton;
+  sidebarOpen() {
+    const toggleButton = this.toggleButton;
     const body = document.getElementsByTagName('body')[0];
 
     setTimeout(function() {
       toggleButton.classList.add('toggled');
     }, 500);
     body.classList.add('nav-open');
-    this._sidebarVisible = true;
+    this.sidebarVisible = true;
   };
 
-  private _sidebarClose() {
+  sidebarClose() {
     const body = document.getElementsByTagName('body')[0];
-    this._toggleButton.classList.remove('toggled');
-    this._sidebarVisible = false;
+    this.toggleButton.classList.remove('toggled');
+    this.sidebarVisible = false;
     body.classList.remove('nav-open');
   };
 }

@@ -31,15 +31,23 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._routeSubscription = this._route.params.subscribe(params => {
-      this.hikeData = this._hikeDataService.getHike(params.id);
-      this.hikeData = this._hikeDataService.getHike(params.id);
+    this.hikeData = {
+      title: {},
+      description: {}
+    };
+    this.existingLangKeys = new Set([]);
 
-      // Get filled lang keys
-      this.existingLangKeys = new Set([
-        ...Object.keys(this.hikeData.title),
-        ...Object.keys(this.hikeData.description)
-      ]);
+    this._routeSubscription = this._route.params.subscribe(params => {
+      if (params && params.id) {
+        this.hikeData = this._hikeDataService.getHike(params.id);
+        this.hikeData = this._hikeDataService.getHike(params.id);
+
+        // Get filled lang keys
+        this.existingLangKeys = new Set([
+          ...Object.keys(this.hikeData.title),
+          ...Object.keys(this.hikeData.description)
+        ]);
+      }
     });
   }
 

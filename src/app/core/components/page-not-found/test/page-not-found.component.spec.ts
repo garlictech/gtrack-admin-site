@@ -1,4 +1,3 @@
-import { RouterTestingModule } from '@angular/router/testing';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { PageNotFoundComponent } from '../page-not-found.component';
@@ -12,9 +11,6 @@ describe('PageNotFoundComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         PageNotFoundComponent
-      ],
-      imports: [
-        RouterTestingModule
       ]
     }).compileComponents();
 

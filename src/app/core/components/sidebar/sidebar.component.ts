@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
 import { Actions as AuthActions } from 'authentication-api-ngx';
 
-declare const $: any;
+declare const window: any;
 
 declare interface RouteInfo {
     path: string;
@@ -42,22 +43,21 @@ export const ROUTES: RouteInfo[] = [
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-    menuItems: any[];
+  menuItems: any[];
 
-    constructor(private _store: Store<State>) {}
+  constructor(
+    private _store: Store<State>
+  ) {}
 
-    ngOnInit() {
-        this.menuItems = ROUTES.filter(menuItem => menuItem);
-    }
+  ngOnInit() {
+    this.menuItems = ROUTES.filter(menuItem => menuItem);
+  }
 
-    isMobileMenu() {
-        if ($(window).width() > 991) {
-            return false;
-        }
-        return true;
-    };
+  isMobileMenu() {
+    return window.outerWidth <= 991;
+  };
 
-    logout() {
-        this._store.dispatch(new AuthActions.LogoutStart());
-    }
+  logout() {
+    this._store.dispatch(new AuthActions.LogoutStart());
+  }
 }

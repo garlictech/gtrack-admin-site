@@ -52,12 +52,4 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     expect(comp).toBeTruthy();
   }));
-
-  it('should redirect to login if auth token is null', async(() => {
-    const action = go(['/login']);
-    _store.next({ authentication: { auth: { token: null } } });
-
-    fixture.detectChanges();
-    expect(_store.dispatch).toHaveBeenCalledWith(action);
-  }));
 });

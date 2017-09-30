@@ -23,13 +23,21 @@ export class Effects {
 
     });
 
+  // Login
+  @Effect()
+  loginSuccess$: Observable<Action> = this._actions$
+    .ofType(AuthActions.LOGIN_SUCCESS)
+    .map(toPayload)
+    .switchMap(data => {
+      return Observable.of(go(['/']));
+    });
+
   // Logut
   @Effect()
   logoutSuccess$: Observable<Action> = this._actions$
     .ofType(AuthActions.LOGOUT_SUCCESS)
     .map(toPayload)
     .switchMap(data => {
-      console.log('LOGOUT_SUCCESS ', data);
       return Observable.of(go(['/login']));
     });
 
@@ -39,8 +47,6 @@ export class Effects {
     .ofType(GtActions.SAVE_HIKE)
     .map(toPayload)
     .switchMap(data => {
-      console.log('saveHike EFFECT: Save hike data: ', data);
-
       return Observable.empty<Response>();
     });
 
