@@ -8,30 +8,31 @@ export const SAVE_HIKE = '[Hike] Save hike';
 export const DELETE_HIKE = '[Hike] Delete hike';
 
 export class OpenSidenavAction implements Action {
-    readonly type = OPEN_SIDENAV;
+  readonly type = OPEN_SIDENAV;
 }
 
 export class CloseSidenavAction implements Action {
-    readonly type = CLOSE_SIDENAV;
+  readonly type = CLOSE_SIDENAV;
 }
 
 export class SaveHikeAction implements Action {
-    readonly type = SAVE_HIKE;
+  readonly type = SAVE_HIKE;
 
-    constructor(public payload: IHikeElement) {
-        /* EMPTY */
-    }
+  constructor(public payload: IHikeElement) {
+      /* EMPTY */
+  }
 }
 
 export class DeleteHikeAction implements Action {
-    readonly type = DELETE_HIKE;
+  readonly type = DELETE_HIKE;
 
-    constructor(public payload: string) {
-        /* EMPTY */
-    }
+  constructor(public payload: string) {
+      /* EMPTY */
+  }
 }
 
 export type Actions =
-    | OpenSidenavAction
-    | CloseSidenavAction
-    | SaveHikeAction;
+  | OpenSidenavAction
+  | CloseSidenavAction
+  | SaveHikeAction
+  | DeleteHikeAction;

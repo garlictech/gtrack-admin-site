@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { IAuth } from './state';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 export const TWITTER_LOGIN = '[Authentication] Login with Twitter';
 export const REQUEST_VERIFY_TOKEN = '[Authentication] Request Twitter verify token';
@@ -14,6 +15,7 @@ export const FAILURE_HAPPENED = '[Authentication] Login/Logout Error';
 export const LOGOUT_START = '[Authentication] Logout Start';
 export const LOGOUT_SUCCESS = '[Authentication] Logout Success';
 export const UNAUTHORIZED = '[Authentication] Unauthorized';
+export const ROUTE_FORBIDDEN = '[Authentication] Route forbidden'
 
 export class RequestVerifyToken implements Action {
   readonly type = REQUEST_VERIFY_TOKEN;
@@ -87,7 +89,6 @@ export class FailureHappened implements Action {
   readonly type = FAILURE_HAPPENED;
   // Payload: the error object
   constructor(public payload: any) {
-    console.log('FAILURE', payload);
     /* EMPTY */
   }
 }
@@ -104,6 +105,17 @@ export class Unauthorized implements Action {
   readonly type = UNAUTHORIZED;
 }
 
+export class RouteForbidden implements Action {
+  readonly type = ROUTE_FORBIDDEN;
+
+  constructor (public payload: {
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  }) {
+    // Empty
+  }
+}
+
 export type AllActions =
   | RequestVerifyToken
   | Verify
@@ -117,4 +129,5 @@ export type AllActions =
   | FailureHappened
   | LogoutStart
   | LogoutSuccess
-  | Unauthorized;
+  | Unauthorized
+  | RouteForbidden

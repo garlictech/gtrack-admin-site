@@ -1,32 +1,40 @@
 gt-login {
-    display: block;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-    mat-card.mat-card {
-        width: 350px;
-        position: absolute;
-        top: 40%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
+  .card {
+    width: 350px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
 
-        .btn-google {
-            background: #DD4B39;
-            color: white;
-            font-weight: normal;
-
-            .fa-google {
-                position: relative;
-                top: -2px;
-                font-size: 20px;
-                padding-right: 10px;
-                margin-right: 8px;
-                border-right: #BB3F30 1px solid;
-            }
-
-            &:before {
-                border-right: #972F23 1px solid;
-            }
-        }
+    .card-content {
+        padding-top: 0;
     }
+
+    .btn-google {
+      background: #DD4B39;
+      color: white;
+      font-weight: normal;
+      padding-left: 12px;
+
+      .fa-google {
+        position: relative;
+        top: -2px;
+        font-size: 20px;
+        padding-right: 10px;
+        margin-right: 8px;
+        border-right: #BB3F30 1px solid;
+      }
+
+      &:before {
+          border-right: #972F23 1px solid;
+      }
+    }
+  }
 }

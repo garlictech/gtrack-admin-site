@@ -1,1 +1,1 @@
-export { LayoutComponent } from './layout.component.ts';
+export { LayoutComponent } from './layout.component';

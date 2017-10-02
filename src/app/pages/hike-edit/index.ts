@@ -1,1 +1,1 @@
-export { HikeEditComponent } from './hike-edit.component.ts';
+export { HikeEditComponent } from './hike-edit.component';

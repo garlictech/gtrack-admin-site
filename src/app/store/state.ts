@@ -1,5 +1,5 @@
 export interface ILayoutState {
-    showSidenav: boolean;
+  showSidenav: boolean;
 }
 
 export const layoutDomain = 'layout';

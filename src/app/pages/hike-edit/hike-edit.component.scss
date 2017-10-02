@@ -1,47 +1,31 @@
 gt-hike-edit {
-    .mat-form-field {
-        padding: 10px;
+  .lang-toolbar {
+    span {
+      float: right;
+      padding: 7px 12px;
+    }
+    select {
+      float: right;
+      width: auto;
+    }
+    button {
+      float: right;
+      padding: 6px !important;
+      margin-left: 20px;
+      margin-top: 2px;
+    }
+  }
+
+  .table {
+    th:first-child,
+    td:first-child {
+      width: 130px;
     }
 
-    .lang-toolbar {
-        .mat-select {
-            float: right;
-        }
-        button {
-            float: right;
-        }
+    .form-group {
+      margin: 0;
+      padding: 0;
+      margin-top: 6px;
     }
-    .mat-table {
-        display: table;
-        width: 100%;
-
-        .mat-header-cell {
-            text-align: left;
-        }
-
-        .mat-header-cell:first-child,
-        .mat-cell:first-child {
-            width: 120px;
-            flex: none;
-        }
-
-        mat-form-field {
-            width: 100%;
-        }
-
-        .mat-select {
-            padding-top: 0;
-            position: relative;
-            top: -5px;
-
-            .mat-select-trigger {
-                font-size: 14px;
-            }
-        }
-    }
-
-    .btn-save {
-        float: right;
-        margin-top: 10px;
-    }
+  }
 }

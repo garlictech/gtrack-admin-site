@@ -1,1 +1,1 @@
-export { HikeListComponent } from './hike-list.component.ts';
+export { HikeListComponent } from './hike-list.component';
