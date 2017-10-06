@@ -20,7 +20,6 @@ describe('HikeListComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        // TODO: mock HikeDataService
         HikeDataService,
         {
           provide: Store,

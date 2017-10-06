@@ -22,12 +22,12 @@ export class NavbarComponent implements OnInit {
     private _titleService: Title
   ) {
     this._router.events
-    .filter(event => event instanceof NavigationEnd)
-    .subscribe(event => {
-      setTimeout(() => {
-        this.pageTitle = this._titleService.getTitle();
+      .filter(event => event instanceof NavigationEnd)
+      .subscribe(event => {
+        setTimeout(() => {
+          this.pageTitle = this._titleService.getTitle();
+        });
       });
-    });
 
     this.sidebarVisible = false;
   }

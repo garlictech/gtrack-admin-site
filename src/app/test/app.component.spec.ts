@@ -8,22 +8,12 @@ import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
 import { MockStore } from '../store/';
 
-declare const $: any;
-
 let comp: AppComponent;
 let fixture: ComponentFixture<AppComponent>;
 let _store: any;
 
 describe('AppComponent', () => {
   beforeEach(() => {
-    // Mocking the jQuery material plugin
-    $.material = {
-      options: {},
-      init: function(options) {
-        //
-      }
-    };
-
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       imports: [RouterTestingModule],

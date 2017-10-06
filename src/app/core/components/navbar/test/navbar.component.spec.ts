@@ -1,6 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router, Data, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from '../navbar.component';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
@@ -31,8 +30,6 @@ describe('NavbarComponent', () => {
     fixture = TestBed.createComponent(NavbarComponent);
     comp = fixture.debugElement.componentInstance;
     _store = fixture.debugElement.injector.get(Store);
-
-    spyOn(_store, 'dispatch').and.callThrough();
   });
 
   it('should create the component', async(() => {
@@ -41,6 +38,8 @@ describe('NavbarComponent', () => {
   }));
 
   it('should call logout', async(() => {
+    spyOn(_store, 'dispatch').and.callThrough();
+
     const authAction = new authActions.LogoutStart();
 
     comp.logout();
