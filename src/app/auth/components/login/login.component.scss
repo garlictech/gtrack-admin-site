@@ -14,12 +14,10 @@ gt-login {
     transform: translate(-50%, -50%);
 
     .card-content {
-        padding-top: 0;
+      padding-top: 0;
     }
 
     .btn-google {
-      background: #DD4B39;
-      color: white;
       font-weight: normal;
       padding-left: 12px;
 
@@ -29,11 +27,11 @@ gt-login {
         font-size: 20px;
         padding-right: 10px;
         margin-right: 8px;
-        border-right: #BB3F30 1px solid;
+        border-right: #bb3f30 1px solid;
       }
 
       &:before {
-          border-right: #972F23 1px solid;
+        border-right: #972f23 1px solid;
       }
     }
   }
