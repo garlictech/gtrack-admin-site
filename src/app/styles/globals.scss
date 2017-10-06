@@ -11,12 +11,18 @@ input, select, textarea {
 }
 
 table.table {
-  th {
-    font-weight: bold;
-  }
   td {
     padding: 4px 8px !important;
+
+    .btn-control > button {
+      padding: 6px !important;
+      margin-left: 10px;
+    }
   }
+}
+
+button.btn-just-icon.btn-sm {
+    padding: 5px !important;
 }
 
 .clearfix {
