@@ -75,6 +75,7 @@
     "debug": "^3.1.0",
     "firebase": "^4.4.0",
     "font-awesome": "^4.7.0",
+    "gtrack-common-ngx": "file:src/subrepos/gtrack-common-ngx",
     "hammerjs": "^2.0.8",
     "intl": "^1.2.5",
     "jquery": "3.2.1",
