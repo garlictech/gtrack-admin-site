@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
-  authServer: 'http://localhost:3000',
+  authServer: 'https://y0z8yjok18.execute-api.us-east-1.amazonaws.com/latest',
   webappServer: 'http://localhost:8081',
   google: {
     appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com'
