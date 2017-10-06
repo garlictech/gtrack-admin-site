@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HikeDataService } from '../../shared/services';
 import { IHikeElement } from '../../shared/interfaces';
 import { Subscription } from 'rxjs/Subscription';
+import { MapService, LeafletComponent, Center } from '../../../subrepos/gtrack-common-ngx';
 
 declare const $: any;
 
@@ -18,6 +19,13 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   private _routeSubscription: Subscription;
   hikeData: IHikeElement;
   existingLangKeys: Set<string>;
+
+  public center = <Center>{
+    lat: 51.505,
+    lng: -0.09,
+    zoom: 14
+  }
+
   // TODO langs from config????
   langs = {
     'en_US': 'English (US)',
