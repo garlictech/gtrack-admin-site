@@ -35,7 +35,19 @@ export class LeafletComponent implements AfterViewInit {
     }
   ];
 
-  public tileLayers: {
+  @Input()
+  public overlays = [
+    {
+      name: 'tuhu',
+      url: 'http://{s}.map.turistautak.hu/tiles/lines/{z}/{x}/{y}.png'
+    }
+  ];
+
+  public baseLayers: {
+    [key: string]: L.TileLayer;
+  } = {};
+
+  public overlayLayers: {
     [key: string]: L.TileLayer;
   } = {};
 
@@ -57,10 +69,16 @@ export class LeafletComponent implements AfterViewInit {
     this.layers.reverse().forEach((layer) => {
       let tileLayer = L.tileLayer(layer.url, layer);
       tileLayer.addTo(this.leafletMap);
-      this.tileLayers[layer.name] = tileLayer;
+      this.baseLayers[layer.name] = tileLayer;
     });
 
-    this.control = L.control.layers(this.tileLayers).addTo(this.leafletMap);
+    this.overlays.reverse().forEach((layer) => {
+      let tileLayer = L.tileLayer(layer.url, layer);
+      tileLayer.addTo(this.leafletMap);
+      this.overlayLayers[layer.name] = tileLayer;
+    });
+
+    this.control = L.control.layers(this.baseLayers, this.overlayLayers).addTo(this.leafletMap);
     this.map = this.mapService.get(this.leafletMap);
   }
 }
