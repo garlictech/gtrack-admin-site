@@ -20,17 +20,15 @@ export const routes: Routes = [
         children: [
             {
                 path: 'hikes',
-                component: HikeListComponent,
-                data: {
-                    title: 'Hikes'
-                }
+                component: HikeListComponent
+            },
+            {
+                path: 'hike/add',
+                component: HikeEditComponent
             },
             {
                 path: 'hike/:id',
-                component: HikeEditComponent,
-                data: {
-                    title: 'Hike'
-                }
+                component: HikeEditComponent
             }
         ],
         canActivate: [AuthGuard],
