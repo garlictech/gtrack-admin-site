@@ -6,4 +6,7 @@ export interface IHikeElement {
   description?: {
     [lng: string]: string;
   };
+  summary?: {
+    [lng: string]: string;
+  };
 }
