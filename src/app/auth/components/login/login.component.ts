@@ -1,21 +1,17 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
-import { IAuth, Actions } from 'authentication-api-ngx';
+import { Actions } from 'authentication-api-ngx';
 
 @Component({
-    selector: 'gt-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    encapsulation: ViewEncapsulation.None
+  selector: 'gt-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  constructor(private _store: Store<State>) {}
 
-    constructor(private store: Store<State>) {}
-
-    public login() {
-        console.log('login');
-        this.store.dispatch(new Actions.GoogleLogin(['admin']));
-    }
+  public login() {
+    this._store.dispatch(new Actions.GoogleLogin(['admin']));
+  }
 }

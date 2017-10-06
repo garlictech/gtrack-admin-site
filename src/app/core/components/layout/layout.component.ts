@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'gt-layout',
-    templateUrl: './layout.component.html'
+  selector: 'gt-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent {}

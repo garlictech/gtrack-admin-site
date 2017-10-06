@@ -9,22 +9,32 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-
+import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
+import { EffectsModule } from '@ngrx/effects';
 import { AuthenticationApiConfig, AuthenticationApiModule } from 'authentication-api-ngx';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store } from './store';
-
+import { store, Effects } from './store';
 import { routing } from './app-routing.module';
-
-import { MaterialModule, MdSidenavModule, MdToolbarModule } from '@angular/material';
+// Components
 import { LayoutComponent } from './core/components/layout';
-import { NavItemComponent } from './core/components/nav-item';
-import { SidenavComponent } from './core/components/sidenav';
-import { ToolbarComponent } from './core/components/toolbar';
+import { FooterComponent } from './core/components/footer';
+import { NavbarComponent } from './core/components/navbar';
+import { SidebarComponent } from './core/components/sidebar';
+import { PageNotFoundComponent } from './core/components/page-not-found';
 import { LoginComponent } from './auth/components/login';
-import { HomeComponent } from './pages/home';
+import { HikeListComponent } from './pages/hike-list';
+import { HikeEditComponent } from './pages/hike-edit';
+// Pipes
+import { ObjectToArrayPipe } from './shared/pipes/';
+// Mocks
+import { HikeDataService } from './shared/services';
+// Global styles
+import './styles';
+// Vendors
+import '../../node_modules/bootstrap/dist/js/bootstrap.js';
+import '../../node_modules/bootstrap-material-design/dist/js/material.min.js';
 
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authServer;
@@ -33,35 +43,40 @@ authConfig.webserverUrl = environment.webappServer;
 authConfig.google.appId = environment.google.appId;
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        LayoutComponent,
-        NavItemComponent,
-        SidenavComponent,
-        ToolbarComponent,
-        LoginComponent,
-        HomeComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        CommonModule,
-        FormsModule,
-        HttpModule,
-        store,
-        routing,
-        StoreDevtoolsModule.instrumentOnlyWithExtension({
+  declarations: [
+    AppComponent,
+    LayoutComponent,
+    FooterComponent,
+    NavbarComponent,
+    SidebarComponent,
+    LoginComponent,
+    HikeListComponent,
+    HikeEditComponent,
+    PageNotFoundComponent,
+    // Pipes
+    ObjectToArrayPipe
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    CommonModule,
+    FormsModule,
+    HttpModule,
+    store,
+    routing,
+    StoreDevtoolsModule.instrumentOnlyWithExtension({
         maxAge: 25
-        }),
-        AngularFireModule.initializeApp(authConfig.firebase),
-        AngularFireAuthModule,
-        AngularFireDatabaseModule,
-        AuthenticationApiModule.forRoot(authConfig),
-
-        MaterialModule,
-        MdSidenavModule,
-        MdToolbarModule
-    ],
-    bootstrap: [AppComponent]
+    }),
+    AngularFireModule.initializeApp(authConfig.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AuthenticationApiModule.forRoot(authConfig),
+    RouterStoreModule.connectRouter(),
+    EffectsModule.run(Effects)
+  ],
+  providers: [
+    HikeDataService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

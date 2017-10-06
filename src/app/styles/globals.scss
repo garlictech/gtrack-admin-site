@@ -1,6 +1,28 @@
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~font-awesome/css/font-awesome.css';
+@import '../../assets/sass/material-dashboard.scss';
 
 * {
   box-sizing: border-box;
+}
+
+input, select, textarea {
+  font-weight: 300 !important;
+}
+
+table.table {
+  th {
+    font-weight: bold;
+  }
+  td {
+    padding: 4px 8px !important;
+  }
+}
+
+.clearfix {
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
 }

@@ -1,51 +1,55 @@
-import {
-    RouterTestingModule
-} from '@angular/router/testing';
-import {
-    async,
-    TestBed,
-    ComponentFixture
-} from '@angular/core/testing';
-import { provideRoutes, Routes, RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { Store, Action } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { Component } from '@angular/core';
-
+import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
+import { MockStore } from '../store/';
 
-@Component({
-    selector: 'app-test-cmp',
-    template: '<div class="title">Hello test</div>'
-})
-class TestRouterComponent {
-}
+declare const $: any;
 
-let config: Routes = [
-    {
-        path: '', component: TestRouterComponent
-    }
-];
+let comp: AppComponent;
+let fixture: ComponentFixture<AppComponent>;
+let _store: any;
 
 describe('AppComponent', () => {
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                TestRouterComponent,
-                AppComponent
-            ],
-            imports: [ RouterTestingModule, RouterModule ],
-            providers: [ provideRoutes(config) ]
-        });
-    });
+  beforeEach(() => {
+    // Mocking the jQuery material plugin
+    $.material = {
+      options: {},
+      init: function(options) {
+        //
+      }
+    };
 
-    it('should have title Hello world', async(() => {
-        TestBed.compileComponents().then(() => {
-            let fixture: ComponentFixture<AppComponent>;
-            fixture = TestBed.createComponent(AppComponent);
-            fixture.detectChanges();
+    TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        {
+          provide: Store,
+          useValue: new MockStore({
+            authentication: {
+              auth: {}
+            }
+          })
+        }
+      ]
+    }).compileComponents();
 
-            let compiled = fixture.debugElement.nativeElement;
-            expect(compiled).toBeDefined();
-            // TODO: find a way to compile the routed component
-            // expect(compiled.querySelector('div.title')).toMatch('Hello world');
-        });
-    }));
+    fixture = TestBed.createComponent(AppComponent);
+    _store = fixture.debugElement.injector.get(Store);
+    comp = fixture.componentInstance;
+  });
+
+  afterEach(() => {
+    delete $.material;
+  });
+
+  it('should create the app', async(() => {
+    fixture.detectChanges();
+    expect(comp).toBeTruthy();
+  }));
 });
