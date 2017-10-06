@@ -6,7 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 import { HikeDataService } from '../../shared/services';
 import { IHikeElement } from '../../shared/interfaces';
 import { Subscription } from 'rxjs/Subscription';
-import { MapService, LeafletComponent, Center } from '../../../subrepos/gtrack-common-ngx';
+import {
+  MapService,
+  LeafletComponent,
+  Center
+} from '../../../subrepos/gtrack-common-ngx';
 
 declare const $: any;
 
@@ -21,18 +25,36 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   existingLangKeys: Set<string>;
 
   public center = <Center>{
-    lat: 51.505,
-    lng: -0.09,
-    zoom: 14
-  }
+    lat: 47.503136,
+    lng: 19.06166,
+    zoom: 17
+  };
+
+  public layers = [
+    {
+      name: 'street',
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    },
+    {
+      name: 'topo',
+      url: 'https://opentopomap.org/{z}/{x}/{y}.png'
+    }
+  ];
+
+  public overlays = [
+    {
+      name: 'tuhu',
+      url: 'http://{s}.map.turistautak.hu/tiles/lines/{z}/{x}/{y}.png'
+    }
+  ];
 
   // TODO langs from config????
   langs = {
-    'en_US': 'English (US)',
-    'hu_HU': 'Hungarian',
-    'de_DE': 'German',
-    'fr_FR': 'French',
-    'it_IT': 'Italian',
+    en_US: 'English (US)',
+    hu_HU: 'Hungarian',
+    de_DE: 'German',
+    fr_FR: 'French',
+    it_IT: 'Italian'
   };
   selLang: string = null;
 
@@ -41,8 +63,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _hikeDataService: HikeDataService,
     private _title: Title
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.hikeData = {
@@ -55,17 +76,17 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this._routeSubscription = this._route.params.subscribe(params => {
       // Load hike data from DB
       if (params && params.id) {
-          this._title.setTitle('Edit hike');
+        this._title.setTitle('Edit hike');
 
-          this.hikeData = this._hikeDataService.getHike(params.id);
-          this.hikeData = this._hikeDataService.getHike(params.id);
+        this.hikeData = this._hikeDataService.getHike(params.id);
+        this.hikeData = this._hikeDataService.getHike(params.id);
 
-          // Get filled lang keys
-          this.existingLangKeys = new Set([
-            ...Object.keys(this.hikeData.title),
-            ...Object.keys(this.hikeData.description)
-          ]);
-      // Create new hike
+        // Get filled lang keys
+        this.existingLangKeys = new Set([
+          ...Object.keys(this.hikeData.title),
+          ...Object.keys(this.hikeData.description)
+        ]);
+        // Create new hike
       } else {
         this._title.setTitle('New hike');
 
@@ -86,7 +107,9 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       this.hikeData.title[this.selLang] = '';
       this.hikeData.description[this.selLang] = '';
       this.hikeData.summary[this.selLang] = '';
+
       this.existingLangKeys.add(this.selLang);
+
       this.selLang = null;
     }
   }

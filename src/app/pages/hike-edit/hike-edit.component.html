@@ -70,9 +70,8 @@
       </div>
 
       <div class="card-content">
-        <div style="background-color: green; width: 100%; height: 400px;">
-          <gc-leaflet #map [center]="center">
-
+        <div class="map-container">
+          <gc-leaflet #map [layers]="layers" [overlays]="overlays" [center]="center">
           </gc-leaflet>
         </div>
       </div>
