@@ -1,16 +1,20 @@
 gt-hike-edit {
   .lang-toolbar {
     span {
-      float: right;
-      padding: 7px 12px;
+      float: right !important;
+      padding: 6px 14px;
     }
-    select {
-      float: right;
-      width: auto;
+
+    .form-group {
+      display: initial;
+      select {
+        float: right !important;
+        width: auto !important;
+      }
     }
+
     button {
-      float: right;
-      padding: 6px !important;
+      float: right !important;
       margin-left: 20px;
       margin-top: 2px;
     }
