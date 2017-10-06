@@ -32,4 +32,15 @@ gt-hike-edit {
       margin-top: 6px;
     }
   }
+
+  .map-container {
+    width: 100%;
+    height: 400px;
+
+    gc-leaflet {
+      .leaflet-container {
+        height: 100%;
+      }
+    }
+  }
 }
