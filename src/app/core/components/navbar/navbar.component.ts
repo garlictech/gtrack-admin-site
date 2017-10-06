@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { Router, NavigationEnd } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
 import { Actions as AuthActions } from 'authentication-api-ngx';
@@ -16,25 +17,17 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private _element: ElementRef,
-    private _activatedRoute: ActivatedRoute,
     private _router: Router,
-    private _store: Store<State>
+    private _store: Store<State>,
+    private _titleService: Title
   ) {
-    // Read page title from route params
     this._router.events
-      .filter((event) => event instanceof NavigationEnd)
-      .map(() => this._activatedRoute)
-      .map((route) => {
-        while (route.firstChild) {
-          route = route.firstChild;
-        }
-        return route;
-      })
-      .filter((route) => route.outlet === 'primary')
-      .mergeMap((route) => route.data)
-      .subscribe((event) => {
-        this.pageTitle = (event.title ) || 'Untitled page';
+    .filter(event => event instanceof NavigationEnd)
+    .subscribe(event => {
+      setTimeout(() => {
+        this.pageTitle = this._titleService.getTitle();
       });
+    });
 
     this.sidebarVisible = false;
   }
