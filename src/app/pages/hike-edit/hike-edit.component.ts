@@ -10,7 +10,7 @@ import {
   MapService,
   LeafletComponent,
   Center
-} from '../../../subrepos/gtrack-common-ngx';
+} from 'gtrack-common-ngx';
 
 declare const $: any;
 
@@ -21,7 +21,7 @@ declare const $: any;
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
   private _routeSubscription: Subscription;
-  hikeData: IHikeElement;
+  hikeData: IHikeElement = null;
   existingLangKeys: Set<string>;
 
   public center = <Center>{
@@ -43,8 +43,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
   public overlays = [
     {
-      name: 'tuhu',
-      url: 'http://{s}.map.turistautak.hu/tiles/lines/{z}/{x}/{y}.png'
+      name: 'trails',
+      url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
     }
   ];
 
@@ -60,25 +60,19 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private _store: Store<State>,
-    private _route: ActivatedRoute,
+    private _activatedRoute: ActivatedRoute,
     private _hikeDataService: HikeDataService,
     private _title: Title
   ) {}
 
   ngOnInit() {
-    this.hikeData = {
-      title: {},
-      description: {},
-      summary: {}
-    };
     this.existingLangKeys = new Set([]);
 
-    this._routeSubscription = this._route.params.subscribe(params => {
+    this._routeSubscription = this._activatedRoute.params.subscribe(params => {
       // Load hike data from DB
       if (params && params.id) {
         this._title.setTitle('Edit hike');
 
-        this.hikeData = this._hikeDataService.getHike(params.id);
         this.hikeData = this._hikeDataService.getHike(params.id);
 
         // Get filled lang keys
@@ -86,9 +80,15 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           ...Object.keys(this.hikeData.title),
           ...Object.keys(this.hikeData.description)
         ]);
-        // Create new hike
+      // Create new hike
       } else {
         this._title.setTitle('New hike');
+
+        this.hikeData = {
+          title: {},
+          description: {},
+          summary: {}
+        };
 
         this.existingLangKeys = new Set([]);
       }
