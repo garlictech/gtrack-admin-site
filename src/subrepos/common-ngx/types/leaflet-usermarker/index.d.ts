@@ -1,10 +1,10 @@
 // Type definitions for Leaflet.userMarker
 
-/// <reference types="leaflet" />
+import * as L from 'leaflet';
 
-declare namespace L {
+declare module 'leaflet' {
     interface UserMarker extends L.Marker {
-        options: UserMarkerOptions,
+        options: UserMarkerOptions;
 
         initialize(latlng: LatLngExpression, options: UserMarkerOptions);
 
@@ -25,7 +25,7 @@ declare namespace L {
       clickable?: boolean;
     }
 
-    interface UserMarkerOptions {
+    interface UserMarkerOptions extends L.MarkerOptions {
         pulsing?: boolean;
         smallIcon?: boolean;
         accuracy?: number;

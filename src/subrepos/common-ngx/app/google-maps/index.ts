@@ -4,7 +4,7 @@ import { IGoogleMapsConfig, CommonConfig } from '../config';
 
 @Injectable()
 export class GoogleMapsService {
-  public map: Promise<any>;
+  public map: Promise<google.maps.Map>;
   private _config: IGoogleMapsConfig;
 
   constructor(private commonConfig: CommonConfig) {

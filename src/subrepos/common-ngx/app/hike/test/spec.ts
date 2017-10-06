@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
+import { FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 
 import { HikeService, Hike } from '..';
@@ -39,7 +39,7 @@ describe('HikeService', () => {
         (hike: Hike) => {
           expect(hike instanceof Hike).toBeTruthy();
           expect(spy.calls.count()).toEqual(1);
-          expect(hike.routeId).toEqual(1);
+          expect(hike.routeId).toEqual('1');
 
           done();
         },

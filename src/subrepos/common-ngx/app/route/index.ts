@@ -7,7 +7,7 @@ import { GeometryService, GeoPoint } from '../geometry';
 import * as d3 from 'd3';
 import * as turf from '@turf/turf';
 
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 export interface IElevationMargin {
   top: number;
@@ -39,10 +39,10 @@ export class RouteService {
       .object(`test/routes/${id}`)
       .map((data: any) => {
         if (data.$value === null) {
-          return Observable.throw(new Error('No data with this id'));
+          throw new Error('No data with this id');
         }
 
-        return <Route>{
+        return <Route> {
           bounds: data.bounds,
           path: data.route.features[0].geometry,
           geojson: data.route
@@ -91,7 +91,7 @@ export class RouteService {
           ]
         };
 
-        distance += turf.distance(currentPoint, previousPoint);
+        distance += turf.distance(currentPoint, previousPoint) * 1000;
 
         lineData.push([
           this.unitsService.convertDistanceInBigUnit(distance).value,

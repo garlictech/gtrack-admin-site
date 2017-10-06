@@ -17,17 +17,17 @@ export class ElevationService {
 
   public getData(coordinates: number[][]): Promise<number[][]> {
     return this.googleMapsService.map
-      .then((maps) => {
+      .then(() => {
         let locations: google.maps.LatLng[] = coordinates.map((coordinate: number[]) => {
-          return new maps.LatLng(coordinate[0], coordinate[1]);
+          return new google.maps.LatLng(coordinate[0], coordinate[1]);
         });
 
-        let elevationService: google.maps.ElevationService = new maps.ElevationService();
-        let request: google.maps.LocationElevationRequest = new maps.LocationElevationRequest();
+        let elevationService: google.maps.ElevationService = new google.maps.ElevationService();
+        let request: google.maps.LocationElevationRequest = {
+          locations: locations
+        };
 
-        request.locations = locations;
-
-        return new Promise((resolve, reject) => {
+        return new Promise<number[][]>((resolve, reject) => {
           elevationService
             .getElevationForLocations(request, (results: google.maps.ElevationResult[], status: google.maps.ElevationStatus) => {
               if (results) {

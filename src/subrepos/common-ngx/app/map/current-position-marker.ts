@@ -1,6 +1,8 @@
 import 'leaflet-usermarker';
 import 'leaflet-spin';
 
+import * as L from 'leaflet';
+
 export class CurrentPositionMarker {
   protected marker: L.UserMarker = null;
   public positioningInverval = 10000;
