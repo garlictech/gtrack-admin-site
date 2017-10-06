@@ -16,7 +16,7 @@ export class ApiService extends Emitter {
 
     return this.http
       .get(url, {
-        headers: headers,
+        headers: headers
       })
       .catch(err => this.handleError(err));
   }
@@ -26,7 +26,7 @@ export class ApiService extends Emitter {
 
     return this.http
       .post(url, data, {
-        headers: headers,
+        headers: headers
       })
       .catch(err => this.handleError(err));
   }

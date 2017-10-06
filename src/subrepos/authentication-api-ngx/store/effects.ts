@@ -51,21 +51,18 @@ export class Effects {
 
   // Verify
   @Effect()
-  verify$: Observable<Action> = this._actions$
-    .ofType(LocalActions.VERIFY)
-    .map(toPayload)
-    .switchMap(payload => {
-      log.d('Effect: Verify initiated');
-      return Observable.fromPromise(this._auth.verify(payload.token, payload.uid))
-        .map(auth => {
-          log.i('Effect: Verify success');
-          return new LocalActions.LoginSuccess(auth);
-        })
-        .catch(err => {
-          log.er('Effect: Verify error', err);
-          return Observable.of(new LocalActions.FailureHappened(err));
-        });
-    });
+  verify$: Observable<Action> = this._actions$.ofType(LocalActions.VERIFY).map(toPayload).switchMap(payload => {
+    log.d('Effect: Verify initiated');
+    return Observable.fromPromise(this._auth.verify(payload.token, payload.uid))
+      .map(auth => {
+        log.i('Effect: Verify success');
+        return new LocalActions.LoginSuccess(auth);
+      })
+      .catch(err => {
+        log.er('Effect: Verify error', err);
+        return Observable.of(new LocalActions.FailureHappened(err));
+      });
+  });
 
   // Google login
   @Effect()
@@ -142,36 +139,30 @@ export class Effects {
 
   // Logout
   @Effect()
-  logout$: Observable<Action> = this._actions$
-    .ofType(LocalActions.LOGOUT_START)
-    .map(toPayload)
-    .switchMap(() => {
-      log.d('Effect: Logout initiated');
-      return Observable.fromPromise(this._auth.logout())
-        .map(() => {
-          log.i('Effect: Logout success');
-          return new LocalActions.LogoutSuccess();
-        })
-        .catch(err => {
-          log.er('Effect: Logout error', err);
-          return Observable.of(new LocalActions.FailureHappened(err));
-        });
-    });
+  logout$: Observable<Action> = this._actions$.ofType(LocalActions.LOGOUT_START).map(toPayload).switchMap(() => {
+    log.d('Effect: Logout initiated');
+    return Observable.fromPromise(this._auth.logout())
+      .map(() => {
+        log.i('Effect: Logout success');
+        return new LocalActions.LogoutSuccess();
+      })
+      .catch(err => {
+        log.er('Effect: Logout error', err);
+        return Observable.of(new LocalActions.FailureHappened(err));
+      });
+  });
 
   @Effect()
-  unauthorized$: Observable<Action> = this._actions$
-    .ofType(LocalActions.UNAUTHORIZED)
-    .map(toPayload)
-    .switchMap(() => {
-      return Observable.fromPromise(this._auth.refreshToken())
-        .map(auth => {
-          return new LocalActions.LoginSuccess(auth);
-        })
-        .catch(err => {
-          log.er('Effect: Refresh token error', err);
-          return Observable.of(new LocalActions.LogoutStart());
-        });
-    });
+  unauthorized$: Observable<Action> = this._actions$.ofType(LocalActions.UNAUTHORIZED).map(toPayload).switchMap(() => {
+    return Observable.fromPromise(this._auth.refreshToken())
+      .map(auth => {
+        return new LocalActions.LoginSuccess(auth);
+      })
+      .catch(err => {
+        log.er('Effect: Refresh token error', err);
+        return Observable.of(new LocalActions.LogoutStart());
+      });
+  });
 
   constructor(
     private _actions$: Actions,

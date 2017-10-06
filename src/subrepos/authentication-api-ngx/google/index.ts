@@ -9,7 +9,7 @@ import '!file-loader?name=google/success.html!./success.html';
 
 @NgModule({
   imports: [OauthWindowModule, WindowModule, HttpModule, AuthModule],
-  providers: [GoogleService],
+  providers: [GoogleService]
 })
 export class GoogleModule {}
 

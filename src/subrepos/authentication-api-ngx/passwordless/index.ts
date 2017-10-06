@@ -11,7 +11,7 @@ import { PasswordlessSuccessComponent } from './passwordless-success.component';
   declarations: [PasswordlessSuccessComponent],
   imports: [HttpModule, AuthModule],
   exports: [PasswordlessSuccessComponent],
-  providers: [PasswordlessService],
+  providers: [PasswordlessService]
 })
 export class PasswordlessModule {}
 

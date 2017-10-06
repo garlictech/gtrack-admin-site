@@ -4,7 +4,7 @@ import { WindowService } from './window.service';
 @NgModule({
   imports: [],
   exports: [],
-  providers: [WindowService],
+  providers: [WindowService]
 })
 export class WindowModule {}
 

@@ -50,7 +50,7 @@ export class OauthWindowService {
     if (this.loginWindow) {
       if (typeof this.loginWindow.executeScript === 'function') {
         this.loginWindow.executeScript({
-          code: "window.location.href='" + url + "';",
+          code: "window.location.href='" + url + "';"
         });
       } else {
         this.loginWindow.location.href = url;
@@ -74,14 +74,8 @@ export class OauthWindowService {
       let timeout = 600 - (new Date().getTime() - this.startTime);
 
       let fv = () => {
-        this.loginWindow.removeEventListener(
-          'loadstart',
-          this.loadStartHandler
-        );
-        this.loginWindow.removeEventListener(
-          'exit',
-          this.loginWindowExitHandler
-        );
+        this.loginWindow.removeEventListener('loadstart', this.loadStartHandler);
+        this.loginWindow.removeEventListener('exit', this.loginWindowExitHandler);
         this.loginWindow.close();
         this.loginWindow = null;
       };

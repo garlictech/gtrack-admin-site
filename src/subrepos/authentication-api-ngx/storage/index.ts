@@ -7,7 +7,7 @@ import { Storage } from './storage.interface';
 @NgModule({
   imports: [],
   exports: [],
-  providers: [LocalStorage],
+  providers: [LocalStorage]
 })
 export class StorageModule {}
 

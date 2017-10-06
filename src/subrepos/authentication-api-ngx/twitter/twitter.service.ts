@@ -167,16 +167,13 @@ export class TwitterService extends AuthProviderBase {
       options.roles = roles;
     }
 
-    return this.http
-      .post(url, options)
-      .toPromise()
-      .then(response => {
-        let body = response.json();
-        let data = body;
-        let token = data.token;
-        let refreshToken = data.refreshToken;
-        return this.auth.init(token, refreshToken);
-      });
+    return this.http.post(url, options).toPromise().then(response => {
+      let body = response.json();
+      let data = body;
+      let token = data.token;
+      let refreshToken = data.refreshToken;
+      return this.auth.init(token, refreshToken);
+    });
   }
 
   @DebugLog

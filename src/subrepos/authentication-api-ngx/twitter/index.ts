@@ -9,7 +9,7 @@ import '!file-loader?name=twitter/success.html!./success.html';
 
 @NgModule({
   imports: [OauthWindowModule, WindowModule, HttpModule, AuthModule],
-  providers: [TwitterService],
+  providers: [TwitterService]
 })
 export class TwitterModule {}
 

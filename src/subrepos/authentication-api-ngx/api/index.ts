@@ -7,7 +7,7 @@ import { StorageModule } from '../storage';
 
 @NgModule({
   imports: [HttpModule, StorageModule],
-  providers: [ApiService],
+  providers: [ApiService]
 })
 export class ApiModule {}
 

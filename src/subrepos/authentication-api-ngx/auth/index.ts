@@ -15,7 +15,7 @@ import { VerifySuccessComponent } from './verify-success.component';
   imports: [ApiModule, StorageModule],
   providers: [AuthService, AuthGuard],
   declarations: [VerifySuccessComponent],
-  exports: [VerifySuccessComponent],
+  exports: [VerifySuccessComponent]
 })
 export class AuthModule {}
 

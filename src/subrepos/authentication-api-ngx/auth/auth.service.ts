@@ -152,16 +152,13 @@ export class AuthService {
 
   @DebugLog
   getFirebaseToken(): Promise<Response> {
-    return this.api
-      .get(`${this.authConfig.apiUrl}/auth/firebase/token`)
-      .toPromise()
-      .catch((err: Error | Response) => {
-        if (err instanceof Response && err.status === 404) {
-          return Promise.resolve(null);
-        }
+    return this.api.get(`${this.authConfig.apiUrl}/auth/firebase/token`).toPromise().catch((err: Error | Response) => {
+      if (err instanceof Response && err.status === 404) {
+        return Promise.resolve(null);
+      }
 
-        return Promise.reject(err);
-      });
+      return Promise.reject(err);
+    });
   }
 
   /**

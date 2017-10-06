@@ -6,7 +6,7 @@ import { WindowModule } from '../window';
   imports: [WindowModule],
   exports: [],
   declarations: [],
-  providers: [OauthWindowService],
+  providers: [OauthWindowService]
 })
 export class OauthWindowModule {}
 

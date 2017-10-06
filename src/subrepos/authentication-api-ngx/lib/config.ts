@@ -36,19 +36,19 @@ export class AuthenticationApiConfig implements IAuthenticationApiConfig {
   authGuardRedirectSlug = '/denied';
   twitter = true;
   magiclink: IMagiclinkConfig = {
-    redirectSlug: '/magiclink',
+    redirectSlug: '/magiclink'
   };
   verify: IVerifyConfig = {
-    redirectSlug: '/verify',
+    redirectSlug: '/verify'
   };
   facebook: IFacebookConfig = {
     version: '2.8',
     permissions: 'email',
-    appId: null,
+    appId: null
   };
   google: IGoogleConfig = {
     permissions: 'email',
-    appId: null,
+    appId: null
   };
   firebase: any;
 }

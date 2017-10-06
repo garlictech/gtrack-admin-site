@@ -9,7 +9,7 @@ import '!file-loader?name=facebook/success.html!./success.html';
 
 @NgModule({
   imports: [OauthWindowModule, WindowModule, HttpModule, AuthModule],
-  providers: [FacebookService],
+  providers: [FacebookService]
 })
 export class FacebookModule {}
 

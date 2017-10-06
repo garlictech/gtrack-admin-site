@@ -13,17 +13,15 @@ export class AuthGuard implements CanActivate {
 
   @DebugLog
   canActivate(route?: ActivatedRouteSnapshot, state?: RouterStateSnapshot): Observable<boolean> {
-    return Observable
-      .fromPromise(
-        this.auth.authenticated.then(() => true).catch(() => false)
-      )
-      .do(authenticated => {
-        if (authenticated === false) {
-          this.store.dispatch(new Action.RouteForbidden({
+    return Observable.fromPromise(this.auth.authenticated.then(() => true).catch(() => false)).do(authenticated => {
+      if (authenticated === false) {
+        this.store.dispatch(
+          new Action.RouteForbidden({
             route: route,
             state: state
-          }));
-        }
-      });
+          })
+        );
+      }
+    });
   }
 }

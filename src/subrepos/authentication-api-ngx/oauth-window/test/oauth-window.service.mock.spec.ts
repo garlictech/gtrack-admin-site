@@ -10,9 +10,7 @@ describe('OauthWindowMockService', () => {
   });
 
   it('should return a promise when opened', () => {
-    expect(
-      service.open('http://test.com', 'access_token') instanceof Promise
-    ).toBeTruthy();
+    expect(service.open('http://test.com', 'access_token') instanceof Promise).toBeTruthy();
   });
 
   it('should change url', done => {
