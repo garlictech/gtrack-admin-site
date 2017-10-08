@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GoogleMapsService } from '../google-maps';
+import { /**/ } from '@types/googlemaps';
 import * as L from 'leaflet';
 
 @Injectable()

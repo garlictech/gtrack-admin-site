@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import loadGoogleMapsAPI from 'load-google-maps-api';
 import { IGoogleMapsConfig, CommonConfig } from '../config';
+import { /**/ } from '@types/googlemaps';
 
 @Injectable()
 export class GoogleMapsService {

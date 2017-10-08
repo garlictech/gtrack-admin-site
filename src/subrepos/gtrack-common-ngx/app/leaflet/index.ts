@@ -38,8 +38,8 @@ export class LeafletComponent implements AfterViewInit {
   @Input()
   public overlays = [
     {
-      name: 'tuhu',
-      url: 'http://{s}.map.turistautak.hu/tiles/lines/{z}/{x}/{y}.png'
+      name: 'trails',
+      url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
     }
   ];
 
