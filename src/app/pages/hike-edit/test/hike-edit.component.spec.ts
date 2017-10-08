@@ -5,17 +5,21 @@ import { ActivatedRoute } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { MockStore, GtActions } from '../../../store/';
+
+import { GtActions } from '../../../store/';
+import { MockStore } from '../../../test-helpers/store/';
+import { ActivatedRouteStub } from '../../../test-helpers/services';
+import { HikeDataServiceStub } from '../../../test-helpers/services';
+
 import { HikeEditComponent } from '../hike-edit.component';
 import { ObjectToArrayPipe } from '../../../shared/pipes/';
 import { HikeDataService } from '../../../shared/services';
-import { ActivatedRouteStub } from '../../../shared/test-helpers';
 
 declare const $: any;
 
 let comp: HikeEditComponent;
 let fixture: ComponentFixture<HikeEditComponent>;
-let _store: any;
+let store: any;
 let mockParams;
 let mockActivatedRoute;
 let hikeDataService: HikeDataService;
@@ -41,7 +45,7 @@ describe('HikeEditComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        HikeDataService,
+        HikeDataServiceStub,
         {
           provide: Store,
           useValue: new MockStore({})
@@ -49,6 +53,10 @@ describe('HikeEditComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: mockActivatedRoute
+        },
+        {
+          provide: HikeDataService,
+          useClass: HikeDataServiceStub
         }
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
@@ -56,11 +64,13 @@ describe('HikeEditComponent', () => {
 
     fixture = TestBed.createComponent(HikeEditComponent);
     comp = fixture.debugElement.componentInstance;
-    _store = fixture.debugElement.injector.get(Store);
+    store = fixture.debugElement.injector.get(Store);
     hikeDataService = TestBed.get(HikeDataService);
-
-
   }));
+
+  afterEach(() => {
+    delete $.material;
+  });
 
   it('should create the component', async(() => {
     fixture.detectChanges();
@@ -125,13 +135,13 @@ describe('HikeEditComponent', () => {
   }));
 
   it('should call save', async(() => {
-    spyOn(_store, 'dispatch').and.callThrough();
+    spyOn(store, 'dispatch').and.callThrough();
 
     const saveAction = new GtActions.SaveHikeAction(comp.hikeData);
 
     comp.save();
     fixture.detectChanges();
 
-    expect(_store.dispatch).toHaveBeenCalledWith(saveAction);
+    expect(store.dispatch).toHaveBeenCalledWith(saveAction);
   }));
 });

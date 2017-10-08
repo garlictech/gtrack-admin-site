@@ -1,16 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SidebarComponent } from '../sidebar.component';
 import { Store, Action } from '@ngrx/store';
-import { MockStore } from '../../../../store/';
+
 import { Actions as authActions } from 'authentication-api-ngx';
+import { MockStore } from '../../../../test-helpers/store/';
+
+import { SidebarComponent } from '../sidebar.component';
 
 declare const $: any;
 declare const window: any;
 
 let comp: SidebarComponent;
 let fixture: ComponentFixture<SidebarComponent>;
-let _store: any;
+let store: any;
 
 describe('SidebarComponent', () => {
   beforeEach(async(() => {
@@ -32,9 +34,9 @@ describe('SidebarComponent', () => {
 
     fixture = TestBed.createComponent(SidebarComponent);
     comp = fixture.debugElement.componentInstance;
-    _store = fixture.debugElement.injector.get(Store);
+    store = fixture.debugElement.injector.get(Store);
 
-    spyOn(_store, 'dispatch').and.callThrough();
+    spyOn(store, 'dispatch').and.callThrough();
   }));
 
   it('should create the component', async(() => {
@@ -64,6 +66,6 @@ describe('SidebarComponent', () => {
     comp.logout();
     fixture.detectChanges();
 
-    expect(_store.dispatch).toHaveBeenCalledWith(authAction);
+    expect(store.dispatch).toHaveBeenCalledWith(authAction);
   }));
 });

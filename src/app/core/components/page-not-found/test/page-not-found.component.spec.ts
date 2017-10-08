@@ -4,7 +4,6 @@ import { PageNotFoundComponent } from '../page-not-found.component';
 
 let comp: PageNotFoundComponent;
 let fixture: ComponentFixture<PageNotFoundComponent>;
-let _store: any;
 
 describe('PageNotFoundComponent', () => {
   beforeEach(() => {
