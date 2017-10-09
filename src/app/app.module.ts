@@ -12,7 +12,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthenticationApiConfig, AuthenticationApiModule } from 'authentication-api-ngx';
-
+import { CommonModule as GtCommonModule, CommonConfig } from 'gtrack-common-ngx';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { store, Effects } from './store';
@@ -41,6 +41,8 @@ authConfig.apiUrl = environment.authServer;
 authConfig.firebase = environment.firebase;
 authConfig.webserverUrl = environment.webappServer;
 authConfig.google.appId = environment.google.appId;
+
+const commonConfig = new CommonConfig();
 
 @NgModule({
   declarations: [
@@ -71,6 +73,7 @@ authConfig.google.appId = environment.google.appId;
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AuthenticationApiModule.forRoot(authConfig),
+    GtCommonModule.forRoot(commonConfig),
     RouterStoreModule.connectRouter(),
     EffectsModule.run(Effects)
   ],

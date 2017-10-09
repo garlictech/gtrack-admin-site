@@ -18,9 +18,7 @@ export class Effects {
     .ofType(AuthActions.ROUTE_FORBIDDEN)
     .map(toPayload)
     .switchMap(data => {
-      console.log('sROUTE_FORBIDDEN ', data);
       return Observable.of(go(['/login']));
-
     });
 
   // Login
@@ -50,7 +48,7 @@ export class Effects {
       return Observable.empty<Response>();
     });
 
-  // Delet hike
+  // Delete hike
   @Effect()
   deleteHike$: Observable<Action> = this._actions$
     .ofType(GtActions.DELETE_HIKE)

@@ -1,8 +1,10 @@
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
-import { MockStore } from '../../../../store/';
 import { Component } from '@angular/core';
+
+import { MockStore } from '../../../../test-helpers/store/';
+
 import { LayoutComponent } from '../layout.component';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { NavbarComponent } from '../../navbar/navbar.component';

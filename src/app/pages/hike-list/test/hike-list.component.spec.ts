@@ -2,13 +2,17 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MockStore, GtActions } from '../../../store/';
-import { HikeListComponent } from '../hike-list.component';
+
+import { GtActions } from '../../../store/';
+import { MockStore } from '../../../test-helpers/store/';
 import { HikeDataService } from '../../../shared/services';
+import { HikeDataServiceStub } from '../../../test-helpers/services';
+
+import { HikeListComponent } from '../hike-list.component';
 
 let comp: HikeListComponent;
 let fixture: ComponentFixture<HikeListComponent>;
-let _store: any;
+let store: any;
 
 describe('HikeListComponent', () => {
   beforeEach(() => {
@@ -20,20 +24,22 @@ describe('HikeListComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        // TODO: mock HikeDataService
-        HikeDataService,
         {
           provide: Store,
           useValue: new MockStore({})
+        },
+        {
+          provide: HikeDataService,
+          useClass: HikeDataServiceStub
         }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HikeListComponent);
     comp = fixture.debugElement.componentInstance;
-    _store = fixture.debugElement.injector.get(Store);
+    store = fixture.debugElement.injector.get(Store);
 
-    spyOn(_store, 'dispatch').and.callThrough();
+    spyOn(store, 'dispatch').and.callThrough();
   });
 
   it('should create the component', async(() => {
@@ -47,6 +53,6 @@ describe('HikeListComponent', () => {
     comp.deleteHike('fakeid');
     fixture.detectChanges();
 
-    expect(_store.dispatch).toHaveBeenCalledWith(deleteAction);
+    expect(store.dispatch).toHaveBeenCalledWith(deleteAction);
   }));
 });

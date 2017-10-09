@@ -41,5 +41,8 @@ export const MOCK_HIKE_DATA: IHikeElement = {
   },
   'description': {
     'hu_HU': 'Első túra szép hosszú leírása'
+  },
+  'summary': {
+    'hu_HU': 'Első túra szép hosszú leírása nagyon hosszan. Mert ez a summary'
   }
 };

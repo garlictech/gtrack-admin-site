@@ -1,15 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, Data } from '@angular/router';
-import { NavbarComponent } from '../navbar.component';
-
 import { Store } from '@ngrx/store';
-import { MockStore } from '../../../../store/';
+import { Observable } from 'rxjs/Observable';
+
+import { MockStore } from '../../../../test-helpers/store/';
 import { Actions as authActions } from 'authentication-api-ngx';
+
+import { NavbarComponent } from '../navbar.component';
 
 let comp: NavbarComponent;
 let fixture: ComponentFixture<NavbarComponent>;
-let _store: MockStore<any>;
+let store: MockStore<any>;
 
 describe('NavbarComponent', () => {
   beforeEach(() => {
@@ -22,13 +23,6 @@ describe('NavbarComponent', () => {
       ],
       providers: [
         {
-          provide: ActivatedRoute,
-          useValue: {
-            data: {
-              title: 'FakePageTitle'
-            }
-          }
-        }, {
           provide: Store,
           useValue: new MockStore({})
         }
@@ -37,9 +31,7 @@ describe('NavbarComponent', () => {
 
     fixture = TestBed.createComponent(NavbarComponent);
     comp = fixture.debugElement.componentInstance;
-    _store = fixture.debugElement.injector.get(Store);
-
-    spyOn(_store, 'dispatch').and.callThrough();
+    store = fixture.debugElement.injector.get(Store);
   });
 
   it('should create the component', async(() => {
@@ -48,12 +40,14 @@ describe('NavbarComponent', () => {
   }));
 
   it('should call logout', async(() => {
+    spyOn(store, 'dispatch').and.callThrough();
+
     const authAction = new authActions.LogoutStart();
 
     comp.logout();
     fixture.detectChanges();
 
-    expect(_store.dispatch).toHaveBeenCalledWith(authAction);
+    expect(store.dispatch).toHaveBeenCalledWith(authAction);
   }));
 
   it('should sidebarToggle open mobile sidebar if it is hidden', async(() => {

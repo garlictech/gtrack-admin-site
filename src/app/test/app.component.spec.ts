@@ -6,24 +6,14 @@ import { go } from '@ngrx/router-store';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
-import { MockStore } from '../store/';
-
-declare const $: any;
+import { MockStore } from '../test-helpers/store/';
 
 let comp: AppComponent;
 let fixture: ComponentFixture<AppComponent>;
-let _store: any;
+let store: any;
 
 describe('AppComponent', () => {
   beforeEach(() => {
-    // Mocking the jQuery material plugin
-    $.material = {
-      options: {},
-      init: function(options) {
-        //
-      }
-    };
-
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       imports: [RouterTestingModule],
@@ -40,12 +30,8 @@ describe('AppComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
-    _store = fixture.debugElement.injector.get(Store);
+    store = fixture.debugElement.injector.get(Store);
     comp = fixture.componentInstance;
-  });
-
-  afterEach(() => {
-    delete $.material;
   });
 
   it('should create the app', async(() => {

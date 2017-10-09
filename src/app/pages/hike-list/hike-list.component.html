@@ -3,12 +3,18 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header" data-background-color="green">
+          <div class="card-header clearfix" data-background-color="green">
+              <button
+                class="btn btn-round btn-fab btn-fab-mini btn-white btn-just-icon pull-right"
+                routerLink="/admin/hike/add"
+                title="Add new hike">
+                <i class="material-icons">add</i>
+              </button>
             <h4 class="title">Hikes</h4>
           </div>
           <div class="card-content table-responsive">
             <table class="table table-hover">
-              <thead>
+              <thead class="text-success">
                 <tr>
                   <th>Id</th>
                   <th>Title</th>
@@ -19,15 +25,17 @@
                 <tr *ngFor="let hike of hikeList">
                   <td>{{hike.id}}</td>
                   <td>{{hike.title.hu_HU}}</td>
-                  <td class="btn-control">
+                  <td class=" ">
                     <button
-                      class="btn btn-round btn-sm btn-warning"
-                      routerLink="/admin/hike/{{hike.id}}">
+                      class="btn btn-round btn-warning btn-just-icon btn-sm"
+                      routerLink="/admin/hike/{{hike.id}}"
+                      title="Edit hike">
                       <i class="material-icons">edit</i>
                     </button>
                     <button
-                      class="btn btn-round btn-sm btn-danger"
-                      (click)="deleteHike(hike.id)">
+                      class="btn btn-round btn-danger btn-just-icon btn-sm"
+                      (click)="deleteHike(hike.id)"
+                      title="Delete hike">
                       <i class="material-icons">delete</i>
                     </button>
                   </td>

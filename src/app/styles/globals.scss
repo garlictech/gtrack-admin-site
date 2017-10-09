@@ -1,5 +1,6 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~font-awesome/css/font-awesome.css';
+@import '~leaflet/dist/leaflet.css';
 @import '../../assets/sass/material-dashboard.scss';
 
 * {
@@ -11,12 +12,18 @@ input, select, textarea {
 }
 
 table.table {
-  th {
-    font-weight: bold;
-  }
   td {
     padding: 4px 8px !important;
+
+    .btn-control > button {
+      padding: 6px !important;
+      margin-left: 10px;
+    }
   }
+}
+
+button.btn-just-icon.btn-sm {
+    padding: 5px !important;
 }
 
 .clearfix {
