@@ -31,4 +31,3 @@ export interface State {
 }
 
 export const store = StoreModule.provideStore(compose(storeLogger(), combineReducers)(reducers));
-
