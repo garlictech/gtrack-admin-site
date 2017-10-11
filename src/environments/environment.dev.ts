@@ -1,15 +1,13 @@
 import { IEnvironment } from './ienvironment';
 
 export class Environment implements IEnvironment {
-  production = true;
-  webappServer = 'https://gtrack-admin-zlnhf.firebaseapp.com/';
-  deepstream = 'wss://deepstream.camnjoy.com/deepstream';
+  production = false;
+  webappServer = 'http://localhost:8081';
+  deepstream = 'ws://localhost:6020/deepstream';
 
   authentication = {
-    server: 'https://y0z8yjok18.execute-api.us-east-1.amazonaws.com/latest',
-    google: {
-      appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com'
-    }
+    server: 'https://lz679q1jla.execute-api.us-east-1.amazonaws.com/latest',
+    google: { appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com' }
   };
 
   firebase = {

@@ -37,10 +37,12 @@ import '../../node_modules/bootstrap/dist/js/bootstrap.js';
 import '../../node_modules/bootstrap-material-design/dist/js/material.min.js';
 
 const authConfig = new AuthenticationApiConfig();
-authConfig.apiUrl = environment.authServer;
+authConfig.apiUrl = environment.authentication.server;
 authConfig.firebase = environment.firebase;
+
+console.log('x', environment);
 authConfig.webserverUrl = environment.webappServer;
-authConfig.google.appId = environment.google.appId;
+authConfig.google.appId = environment.authentication.google.appId;
 
 const commonConfig = new CommonConfig();
 
@@ -67,7 +69,7 @@ const commonConfig = new CommonConfig();
     store,
     routing,
     StoreDevtoolsModule.instrumentOnlyWithExtension({
-        maxAge: 25
+      maxAge: 25
     }),
     AngularFireModule.initializeApp(authConfig.firebase),
     AngularFireAuthModule,
@@ -77,9 +79,7 @@ const commonConfig = new CommonConfig();
     RouterStoreModule.connectRouter(),
     EffectsModule.run(Effects)
   ],
-  providers: [
-    HikeDataService
-  ],
+  providers: [HikeDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
