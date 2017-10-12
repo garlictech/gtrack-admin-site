@@ -2,6 +2,7 @@
 set -e
 
 # DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
+touch ${TRAVIS_BUILD_DIR}/tokens.env
 docker/login.sh
 npm run travis before_install
 
