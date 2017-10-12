@@ -54,8 +54,6 @@ export class Effects {
     .ofType(GtActions.DELETE_HIKE)
     .map(toPayload)
     .switchMap(data => {
-      console.log('deleteHike EFFECT: Delete hike by id: ', data);
-
       return Observable.empty<Response>();
     });
 }

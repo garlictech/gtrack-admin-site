@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MOCK_HIKE_LIST, MOCK_HIKE_DATA } from '../../mock-data';
-import { IHikeElement } from '../interfaces'
+import { MOCK_HIKE_LIST, MOCK_HIKE_DATA } from '../../../mock-data';
+import { IHikeElement } from '../../../shared/interfaces';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';

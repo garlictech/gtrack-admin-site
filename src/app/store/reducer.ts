@@ -1,5 +1,4 @@
 import * as GtActions from './actions';
-
 import { ILayoutState } from './state';
 
 const initialLayoutState: ILayoutState = {

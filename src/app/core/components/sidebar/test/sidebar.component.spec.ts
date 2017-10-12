@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Store, Action } from '@ngrx/store';
 
 import { Actions as authActions } from 'authentication-api-ngx';
-import { MockStore } from '../../../../test-helpers/store/';
+import { MockStore } from '../../../../test/helpers/store/';
 
 import { SidebarComponent } from '../sidebar.component';
 

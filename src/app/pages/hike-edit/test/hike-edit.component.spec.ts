@@ -7,9 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { GtActions } from '../../../store/';
-import { MockStore } from '../../../test-helpers/store/';
-import { ActivatedRouteStub } from '../../../test-helpers/services';
-import { HikeDataServiceStub } from '../../../test-helpers/services';
+import { MockStore } from '../../../test/helpers/store/';
+import { ActivatedRouteStub } from '../../../test/helpers/services';
+import { HikeDataServiceStub } from '../../../test/helpers/services';
 
 import { HikeEditComponent } from '../hike-edit.component';
 import { ObjectToArrayPipe } from '../../../shared/pipes/';

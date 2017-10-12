@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { GtActions } from '../../../store/';
-import { MockStore } from '../../../test-helpers/store/';
 import { HikeDataService } from '../../../shared/services';
-import { HikeDataServiceStub } from '../../../test-helpers/services';
+import { HikeDataServiceStub } from '../../../test/helpers/services';
+import { MockStore } from '../../../test/helpers/store/';
 
 import { HikeListComponent } from '../hike-list.component';
 
