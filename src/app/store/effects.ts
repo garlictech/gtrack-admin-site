@@ -5,11 +5,13 @@ import { Observable } from 'rxjs/Rx';
 import { Actions as AuthActions } from 'authentication-api-ngx';
 import * as GtActions from './actions';
 import { go } from '@ngrx/router-store';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class Effects {
   constructor(
-    private _actions$: Actions
+    private _actions$: Actions,
+    private _router: Router
   ) {}
 
   // Auth guard route forbidden
@@ -27,7 +29,11 @@ export class Effects {
     .ofType(AuthActions.LOGIN_SUCCESS)
     .map(toPayload)
     .switchMap(data => {
-      return Observable.of(go(['/']));
+      if (this._router.url === '/login') {
+        return Observable.of(go(['/']));
+      } else {
+        return Observable.of(true);
+      }
     });
 
   // Logut
