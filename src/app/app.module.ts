@@ -39,8 +39,6 @@ import '../../node_modules/bootstrap-material-design/dist/js/material.min.js';
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authentication.server;
 authConfig.firebase = environment.firebase;
-
-console.log('x', environment);
 authConfig.webserverUrl = environment.webappServer;
 authConfig.google.appId = environment.authentication.google.appId;
 
