@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IHikeElement } from '../shared/interfaces';
+import { IMockHikeElement } from '../shared/interfaces';
 
 export const OPEN_SIDENAV = '[Layout] Open Sidenav';
 export const CLOSE_SIDENAV = '[Layout] Close Sidenav';
@@ -18,7 +18,7 @@ export class CloseSidenavAction implements Action {
 export class SaveHikeAction implements Action {
   readonly type = SAVE_HIKE;
 
-  constructor(public payload: IHikeElement) {
+  constructor(public payload: IMockHikeElement) {
       /* EMPTY */
   }
 }

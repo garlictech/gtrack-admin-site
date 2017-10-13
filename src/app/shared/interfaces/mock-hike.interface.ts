@@ -1,4 +1,4 @@
-export interface IHikeElement {
+export interface IMockHikeElement {
   id?: string;
   title?: {
     [lng: string]: string;

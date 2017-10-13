@@ -1,6 +1,6 @@
-import { IHikeElement } from '../shared/interfaces'
+import { IMockHikeElement } from '../shared/interfaces'
 
-export const MOCK_HIKE_LIST: IHikeElement[] = [
+export const MOCK_HIKE_LIST: IMockHikeElement[] = [
   {
     'id': '-KYTgM_eoTk0BcbN8j5g',
     'title': {
@@ -33,7 +33,7 @@ export const MOCK_HIKE_LIST: IHikeElement[] = [
   }
 ];
 
-export const MOCK_HIKE_DATA: IHikeElement = {
+export const MOCK_HIKE_DATA: IMockHikeElement = {
   'id': '-KYTgM_eoTk0BcbN8j5g',
   'title': {
     'hu_HU': 'Első túra',

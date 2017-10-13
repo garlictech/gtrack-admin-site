@@ -1,1 +1,1 @@
-export * from './hike.interface';
+export * from './mock-hike.interface';
