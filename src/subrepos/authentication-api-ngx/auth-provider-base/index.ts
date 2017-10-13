@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { OauthWindowService } from '../oauth-window';
 import { Deferred } from '../deferred';
 import { AuthService } from '../auth';
-import { log, DebugLog } from '../log';
+import { DebugLog } from '../log';
 import { IAuth } from '../store';
 
 export class AuthProviderBase {

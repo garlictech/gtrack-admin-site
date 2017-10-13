@@ -66,11 +66,9 @@ describe('AuthGuard', () => {
     let action = new Actions.RouteForbidden({
       route: undefined,
       state: undefined
-    })
+    });
 
-    spyOn(store, 'dispatch')
-      .and
-      .callThrough();
+    spyOn(store, 'dispatch').and.callThrough();
 
     guard.canActivate().subscribe((canActivate: boolean) => {
       expect(canActivate).toEqual(false);

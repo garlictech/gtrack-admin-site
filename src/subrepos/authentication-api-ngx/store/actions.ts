@@ -15,7 +15,7 @@ export const FAILURE_HAPPENED = '[Authentication] Login/Logout Error';
 export const LOGOUT_START = '[Authentication] Logout Start';
 export const LOGOUT_SUCCESS = '[Authentication] Logout Success';
 export const UNAUTHORIZED = '[Authentication] Unauthorized';
-export const ROUTE_FORBIDDEN = '[Authentication] Route forbidden'
+export const ROUTE_FORBIDDEN = '[Authentication] Route forbidden';
 
 export class RequestVerifyToken implements Action {
   readonly type = REQUEST_VERIFY_TOKEN;
@@ -108,10 +108,12 @@ export class Unauthorized implements Action {
 export class RouteForbidden implements Action {
   readonly type = ROUTE_FORBIDDEN;
 
-  constructor (public payload: {
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  }) {
+  constructor(
+    public payload: {
+      route: ActivatedRouteSnapshot;
+      state: RouterStateSnapshot;
+    }
+  ) {
     // Empty
   }
 }
@@ -130,4 +132,4 @@ export type AllActions =
   | LogoutStart
   | LogoutSuccess
   | Unauthorized
-  | RouteForbidden
+  | RouteForbidden;

@@ -8,7 +8,7 @@ import { TwitterService } from '../twitter';
 import { FacebookService } from '../facebook';
 import { GoogleService } from '../google';
 import { PasswordlessService } from '../passwordless';
-import { log, DebugLog } from '../log';
+import { log } from '../log';
 import * as LocalActions from './actions';
 
 @Injectable()

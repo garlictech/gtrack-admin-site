@@ -1,14 +1,14 @@
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
-import { StoreModule, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { AuthenticationApiConfig } from './config';
 import { AuthService } from '../auth';
 
-import { Reducer, IAuth, Effects } from '../store';
+import { IAuth, Effects } from '../store';
 import * as Actions from '../store/actions';
 
-import { log, DebugLog } from '../log';
+import { log } from '../log';
 import { PasswordlessModule, PasswordlessSuccessComponent } from '../passwordless';
 
 import { TwitterModule } from '../twitter';

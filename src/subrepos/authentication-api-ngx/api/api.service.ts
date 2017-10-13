@@ -12,7 +12,6 @@ export class ApiService extends Emitter {
 
   get(url: string): Observable<Response> {
     let headers = this.getAuthorizationHeaders();
-    let api = this;
 
     return this.http
       .get(url, {

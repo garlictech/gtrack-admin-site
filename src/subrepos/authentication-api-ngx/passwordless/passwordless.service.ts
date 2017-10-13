@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response } from '@angular/http';
 import { AuthService } from '../auth';
-import { User } from '../';
 import { IAuth } from '../store';
-import { log, DebugLog } from '../log';
+import { DebugLog } from '../log';
 import { AuthenticationApiConfig, IMagiclinkConfig } from '../lib/config';
 
 interface RequestTokenParams {

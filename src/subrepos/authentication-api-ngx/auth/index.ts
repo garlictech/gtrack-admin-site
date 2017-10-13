@@ -1,8 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { AngularFireModule } from 'angularfire2';
-import { CommonModule } from '@angular/common';
 
 import { ApiModule } from '../api';
 import { StorageModule } from '../storage';

@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FacebookService } from './facebook.service';
 import { WindowModule } from '../window';
 import { AuthModule } from '../auth';

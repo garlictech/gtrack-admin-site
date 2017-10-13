@@ -1,6 +1,6 @@
 import { ActionReducer } from '@ngrx/store';
 
-import { IAuthenticationState, IAuth } from './state';
+import { IAuthenticationState } from './state';
 import * as ApiActions from './actions';
 
 export type Action = ApiActions.AllActions;

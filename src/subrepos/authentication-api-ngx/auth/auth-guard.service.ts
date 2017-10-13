@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { AuthService } from './auth.service';
 import * as Action from '../store/actions';
-import { log, DebugLog } from '../log';
+import { DebugLog } from '../log';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

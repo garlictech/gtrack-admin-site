@@ -1,17 +1,16 @@
-import { Injectable, Inject, Optional } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { Http, Response, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Store } from '@ngrx/store';
 
 import { LocalStorage } from '../storage/local-storage.service';
 import { User } from '../';
-import { IAuth, IAuthenticationState } from '../store';
+import { IAuth } from '../store';
 import * as Actions from '../store/actions';
 import { AuthenticationApiConfig } from '../lib/config';
 import { ApiService } from '../api';
-import { log, DebugLog } from '../log';
+import { DebugLog } from '../log';
 
 import 'rxjs/add/operator/toPromise';
 

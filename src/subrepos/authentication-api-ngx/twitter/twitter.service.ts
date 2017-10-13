@@ -4,12 +4,9 @@ import { Http, Response } from '@angular/http';
 import { AuthService } from '../auth';
 import { OauthWindowService } from '../oauth-window/oauth-window.service';
 import { WindowService } from '../window';
-import { Deferred } from '../deferred';
-import { ApiService } from '../api';
-import { User } from '../';
 import { IAuth } from '../store';
 import { AuthenticationApiConfig } from '../lib/config';
-import { log, DebugLog } from '../log';
+import { DebugLog } from '../log';
 import { AuthProviderBase } from '../auth-provider-base';
 
 @Injectable()

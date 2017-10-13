@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http } from '@angular/http';
 
 import { OauthWindowService } from '../oauth-window';
 import { AuthService } from '../auth';
 import { WindowService } from '../window';
 import { IAuth } from '../store';
 import { AuthenticationApiConfig, IFacebookConfig } from '../lib/config';
-import { log, DebugLog } from '../log';
+import { DebugLog } from '../log';
 import { AuthProviderBase } from '../auth-provider-base';
 
 @Injectable()

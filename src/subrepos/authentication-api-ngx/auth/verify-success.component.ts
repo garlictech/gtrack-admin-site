@@ -1,6 +1,6 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import * as Actions from '../store/actions';
 
@@ -14,7 +14,7 @@ interface SuccessParams {
   template: ''
 })
 export class VerifySuccessComponent implements OnInit {
-  constructor(private store: Store<any>, private router: Router, private route: ActivatedRoute) {}
+  constructor(private store: Store<any>, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: SuccessParams) => {
