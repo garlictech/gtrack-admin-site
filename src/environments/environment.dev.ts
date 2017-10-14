@@ -7,7 +7,9 @@ export class Environment implements IEnvironment {
 
   authentication = {
     server: 'https://lz679q1jla.execute-api.us-east-1.amazonaws.com/latest',
-    google: { appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com' }
+    google: {
+      appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com'
+    }
   };
 
   firebase = {
@@ -16,5 +18,9 @@ export class Environment implements IEnvironment {
     databaseURL: 'https://gtrack-auth-e2e.firebaseio.com',
     storageBucket: 'gtrack-auth-e2e.appspot.com',
     messagingSenderId: '383921170591'
+  };
+
+  valhalla = {
+    apiKey: 'valhalla-i5h6bCM'
   };
 }

@@ -19,4 +19,8 @@ export class Environment implements IEnvironment {
     storageBucket: 'gtrack-auth-e2e.appspot.com',
     messagingSenderId: '383921170591'
   };
+
+  valhalla = {
+    apiKey: 'valhalla-i5h6bCM'
+  };
 }
