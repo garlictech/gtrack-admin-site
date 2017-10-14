@@ -4,7 +4,7 @@ import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
 import { RouterState } from '@ngrx/router-store';
 import { compose } from '@ngrx/core/compose';
 
-import { IAuthenticationState, Reducer, domain as authDomain } from 'authentication-api-ngx';
+import { IAuthenticationState, Reducer, domain as authDomain } from '../../subrepos/authentication-api-ngx';
 
 import * as GtActions from './actions';
 export { GtActions };

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
-import { Actions as AuthActions } from 'authentication-api-ngx';
+import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';;
 
 declare const window: any;
 

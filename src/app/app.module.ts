@@ -11,8 +11,11 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthenticationApiConfig, AuthenticationApiModule } from 'authentication-api-ngx';
-import { CommonModule as GtCommonModule, CommonConfig } from 'gtrack-common-ngx';
+import {
+  AuthenticationApiConfig,
+  AuthenticationApiModule
+} from '../subrepos/authentication-api-ngx';
+import { CommonModule as GtCommonModule, CommonConfig } from '../subrepos/gtrack-common-ngx';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { store, Effects } from './store';

@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
-import { Actions as AuthActions } from 'authentication-api-ngx';
+import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';
 
 @Component({
   selector: 'app-navbar',
