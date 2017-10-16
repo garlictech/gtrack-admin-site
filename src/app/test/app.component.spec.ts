@@ -6,7 +6,7 @@ import { go } from '@ngrx/router-store';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
-import { MockStore } from '../test-helpers/store/';
+import { MockStore } from '../test/helpers/store/';
 
 let comp: AppComponent;
 let fixture: ComponentFixture<AppComponent>;
