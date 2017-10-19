@@ -4,7 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { Map } from '../../../../subrepos/gtrack-common-ngx';
 
 import * as L from 'leaflet';
-import * as Routing from 'leaflet-routing-machine';
+import 'leaflet-routing-machine';
 
 @Injectable()
 export class RoutingControlService {
@@ -75,13 +75,13 @@ export class RoutingControlService {
   }
 
   public addNew() {
-    const control = Routing.control({
+    const control = new L.Routing.Control({
       routeWhileDragging: true,
       autoRoute: false,
       fitSelectedRoutes: false,
-      router: Routing.valhalla(environment.valhalla.apiKey, 'pedestrian'),
-      formatter: new Routing.Valhalla.Formatter(),
-      plan: Routing.plan([], {
+      router: L.Routing.valhalla(environment.valhalla.apiKey, 'pedestrian'),
+      formatter: new L.Routing.Valhalla.Formatter(),
+      plan: L.Routing.plan([], {
         createMarker: (waypointNum, waypoint, c) => {
           this._createMarker(waypoint.name, waypoint.latLng);
         }
