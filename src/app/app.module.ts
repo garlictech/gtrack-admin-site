@@ -33,6 +33,9 @@ import { HikeEditComponent } from './pages/hike-edit';
 import { ObjectToArrayPipe } from './shared/pipes/';
 // Mocks
 import { HikeDataService } from './shared/services';
+// Services
+import { WaypointMarkerService } from './shared/services';
+import { RoutingControlService } from './shared/services';
 // Global styles
 import './styles';
 // Vendors
@@ -80,7 +83,11 @@ const commonConfig = new CommonConfig();
     RouterStoreModule.connectRouter(),
     EffectsModule.run(Effects)
   ],
-  providers: [HikeDataService],
+  providers: [
+    HikeDataService,
+    WaypointMarkerService,
+    RoutingControlService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
