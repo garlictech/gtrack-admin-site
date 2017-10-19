@@ -4,11 +4,11 @@ import { environment } from '../../../../environments/environment';
 import { Map } from '../../../../subrepos/gtrack-common-ngx';
 
 import * as L from 'leaflet';
-import 'leaflet-routing-machine';
+import * as Routing from 'leaflet-routing-machine';
 
 @Injectable()
 export class RoutingControlService {
-  private _controls: Array<L.Routing.control>;
+  private _controls: Array<any>;
   private _coordinates: Array<any>;
 
   constructor(
@@ -46,9 +46,11 @@ export class RoutingControlService {
 
     this._map.leafletMap.removeControl(control);
 
+    /*
     if (RouteService.planner) {
       RouteService.planner.removeLastSegment();
     }
+    */
 
     return control;
   }
@@ -73,13 +75,13 @@ export class RoutingControlService {
   }
 
   public addNew() {
-    const control = L.Routing.control({
+    const control = Routing.control({
       routeWhileDragging: true,
       autoRoute: false,
       fitSelectedRoutes: false,
-      router: L.Routing.valhalla(environment.valhalla.apiKey, 'pedestrian'),
-      formatter: new L.Routing.Valhalla.Formatter(),
-      plan: L.Routing.plan([], {
+      router: Routing.valhalla(environment.valhalla.apiKey, 'pedestrian'),
+      formatter: new Routing.Valhalla.Formatter(),
+      plan: Routing.plan([], {
         createMarker: (waypointNum, waypoint, c) => {
           this._createMarker(waypoint.name, waypoint.latLng);
         }
