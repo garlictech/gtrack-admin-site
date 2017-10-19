@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';;
+import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';
 import * as GtActions from './actions';
 import { go } from '@ngrx/router-store';
 import { Router } from '@angular/router';
