@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { MockStore } from '../../../../test/helpers/store/';
-import { Actions as authActions } from '../../../../subrepos/authentication-api-ngx';
+import { Actions as authActions } from '../../../../../subrepos/authentication-api-ngx';
 import { NavbarComponent } from '../navbar.component';
 
 let comp: NavbarComponent;
