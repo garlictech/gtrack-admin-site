@@ -43,6 +43,10 @@ export class LeafletComponent implements AfterViewInit {
     }
   ];
 
+  @Input()
+  public activeOverlays: string[] = [
+  ];
+
   public baseLayers: {
     [key: string]: L.TileLayer;
   } = {};
@@ -66,15 +70,23 @@ export class LeafletComponent implements AfterViewInit {
 
     this.leafletMap.setView([this.center.lat, this.center.lng], this.center.zoom);
 
-    this.layers.reverse().forEach((layer) => {
+    this.layers.forEach((layer, index) => {
       let tileLayer = L.tileLayer(layer.url, layer);
-      tileLayer.addTo(this.leafletMap);
+
+      if (index === 0) {
+        tileLayer.addTo(this.leafletMap);
+      }
+
       this.baseLayers[layer.name] = tileLayer;
     });
 
-    this.overlays.reverse().forEach((layer) => {
+    this.overlays.forEach((layer) => {
       let tileLayer = L.tileLayer(layer.url, layer);
-      tileLayer.addTo(this.leafletMap);
+
+      if (this.activeOverlays.indexOf(layer.name) !== -1) {
+        tileLayer.addTo(this.leafletMap);
+      }
+
       this.overlayLayers[layer.name] = tileLayer;
     });
 
