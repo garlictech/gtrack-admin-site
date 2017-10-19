@@ -6,6 +6,7 @@ RUN mkdir -p /app/src/subrepos /app/src/assets
 
 COPY src/subrepos /app/src/subrepos/
 COPY package.json /app/package.project.json
+COPY tsconfig.json /app/tsconfig.json
 
 RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
   scripts/install_dependencies
