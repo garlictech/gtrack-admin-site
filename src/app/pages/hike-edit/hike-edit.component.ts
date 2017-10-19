@@ -83,7 +83,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     this.map.leafletMap.on('click', (e: LeafletMouseEvent) => {
       if (this._mode === 'routing') {
         console.log('Routing mode click', e.latlng);
-        
+
         this._waypointMarkerService.addWaypoint(e.latlng);
       } else {
         // this._createCheckpoint(e.latlng);
