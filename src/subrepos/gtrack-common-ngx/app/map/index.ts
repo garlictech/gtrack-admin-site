@@ -8,7 +8,7 @@ import { MapMarkerService } from '../map-marker';
 @Injectable()
 export class MapService {
 
-  constructor(private iconService: IconService, private mapMarkerService: MapMarkerService) { }
+  constructor(protected iconService: IconService, protected mapMarkerService: MapMarkerService) { }
 
   get(map: L.Map): Map {
     return new Map(map, this.iconService, this.mapMarkerService);
