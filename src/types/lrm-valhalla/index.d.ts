@@ -1,5 +1,3 @@
-/// <reference path="../leaflet-routing-machine/index.d.ts" />
-
 import * as L from 'leaflet';
 
 declare module 'leaflet' {
