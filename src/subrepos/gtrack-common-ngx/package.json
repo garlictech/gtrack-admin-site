@@ -24,7 +24,7 @@
     "node": ">=5.0.0"
   },
   "dependencies": {
-    "@garlictech/deepstream-ngx": "file:./subrepos/deepstream-ngx",
+    "deepstream-ngx": "file:./subrepos/deepstream-ngx",
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^2.0.0",
     "@ngrx/router-store": "^1.2.5",
