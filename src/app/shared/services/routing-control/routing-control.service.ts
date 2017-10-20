@@ -4,7 +4,6 @@ import { environment } from '../../../../environments/environment';
 import { Map } from '../../../../subrepos/gtrack-common-ngx';
 
 import * as L from 'leaflet';
-import * as Routing from 'leaflet-routing-machine';
 
 @Injectable()
 export class RoutingControlService {
@@ -75,14 +74,14 @@ export class RoutingControlService {
   }
 
   public addNew() {
-    const control = Routing.control({
+    const control = new L.Routing.Control({
       routeWhileDragging: true,
       autoRoute: false,
-      fitSelectedRoutes: false,
-      router: Routing.valhalla(environment.valhalla.apiKey, 'pedestrian'),
-      formatter: new Routing.Valhalla.Formatter(),
-      plan: Routing.plan([], {
-        createMarker: (waypointNum, waypoint, c) => {
+      fitSelectedRoutes: 'smart',
+      router: L.Routing.valhalla(environment.valhalla.apiKey, 'pedestrian'),
+      formatter: new L.Routing.Valhalla.Formatter(),
+      plan: new L.Routing.Plan([], {
+        createMarker: (waypointNum, waypoint) => {
           this._createMarker(waypoint.name, waypoint.latLng);
         }
       })
@@ -103,7 +102,7 @@ export class RoutingControlService {
       */
     });
 
-    control.on('routesfound', (e) => {
+    control.on('routesfound', (e) => {
       console.log('Routes found - TODO: Rewrite coffee');
       /*
       ElevationService.get(e.routes[0].coordinates).then (data) ->
@@ -117,7 +116,7 @@ export class RoutingControlService {
       */
     });
 
-    control.on('routingerror', (e) => {
+    control.on('routingerror', (e) => {
       console.log('Routing error - TODO: Rewrite coffee');
       /*
       $rootScope.$broadcast "ROUTING:ERROR"

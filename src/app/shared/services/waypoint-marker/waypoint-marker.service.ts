@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { RoutingControlService } from '../routing-control/routing-control.service';
 
 import * as L from 'leaflet';
-import * as Routing from 'leaflet-routing-machine';
 
 @Injectable()
 export class WaypointMarkerService {
@@ -21,8 +20,6 @@ export class WaypointMarkerService {
     this._waypointIndex = 0;
   }
 
-
-  /*
   private _deleteLast() {
     const isEmpty = this._getWaypointNum() === 0;
     const isLastWaypointInAdditionalSegment = this._routeSegmentIndex > 1 && this._waypointIndex === 2;
@@ -56,7 +53,6 @@ export class WaypointMarkerService {
       control.route();
     }
   }
-  */
 
   /**
    * The first segment contains _maxAllowedValhallaWayPoints.
@@ -64,7 +60,6 @@ export class WaypointMarkerService {
    * as their first point is always duplicate of the last point of the previous segment.
    * So, in case of first segment, we adjust the number...
    */
-  /*
   private _getWaypointNum() {
     if (this._routeSegmentIndex === 0) {
       return 0;
@@ -74,24 +69,20 @@ export class WaypointMarkerService {
       return (this._routeSegmentIndex - 1) * (this._maxAllowedValhallaWayPoints - 1) + this._waypointIndex;
     }
   }
-  */
 
-  /*
   private _closeCircle() {
-    const firstControl = Routing.control(this._routingControlService.getControl(0));
+    const firstControl = new L.Routing.Control(this._routingControlService.getControl(0));
 
     if (firstControl && firstControl.getWaypoints().length) {
       const firstPointLatLng = firstControl.getWaypoints()[0].latLng;
       this.addWaypoint(firstPointLatLng);
     }
   }
-  */
 
-  /*
   public addWaypoint(latlng) {
     console.log('WaypointMarkerService.addWaypoint');
 
-    let control = Routing.control(null);
+    let control = new L.Routing.Control(null);
     const isStartRouting = this._getWaypointNum() === 0;
     const shouldAddNewSegment = this._waypointIndex === this._maxAllowedValhallaWayPoints;
 
@@ -123,5 +114,4 @@ export class WaypointMarkerService {
     control.route();
     this._waypointIndex++;
   }
-  */
 }
