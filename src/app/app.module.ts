@@ -29,13 +29,17 @@ import { PageNotFoundComponent } from './core/components/page-not-found';
 import { LoginComponent } from './auth/components/login';
 import { HikeListComponent } from './pages/hike-list';
 import { HikeEditComponent } from './pages/hike-edit';
+import { AdminLeafletComponent } from './shared/components/admin-leaflet';
 // Pipes
 import { ObjectToArrayPipe } from './shared/pipes/';
-// Mocks
-import { HikeDataService } from './shared/services';
 // Services
-import { WaypointMarkerService } from './shared/services';
-import { RoutingControlService } from './shared/services';
+import {
+  AdminMapService,
+  RoutingControlService,
+  WaypointMarkerService,
+  // Mocks
+  HikeDataService
+} from './shared/services';
 // Global styles
 import './styles';
 // Vendors
@@ -60,6 +64,7 @@ const commonConfig = new CommonConfig();
     LoginComponent,
     HikeListComponent,
     HikeEditComponent,
+    AdminLeafletComponent,
     PageNotFoundComponent,
     // Pipes
     ObjectToArrayPipe
@@ -85,6 +90,7 @@ const commonConfig = new CommonConfig();
   ],
   providers: [
     HikeDataService,
+    AdminMapService,
     WaypointMarkerService,
     RoutingControlService
   ],

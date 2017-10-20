@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 
-import { Map } from '../../../../subrepos/gtrack-common-ngx';
+import { AdminMap } from '../admin-map/admin-map';
 
 import * as L from 'leaflet';
 
@@ -11,7 +11,7 @@ export class RoutingControlService {
   private _coordinates: Array<any>;
 
   constructor(
-    private _map: Map
+    private _map: AdminMap
   ) {
     this._reset();
   }

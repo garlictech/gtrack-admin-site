@@ -9,11 +9,8 @@ import { WaypointMarkerService } from '../../shared/services';
 import { IMockHikeElement } from '../../shared/interfaces';
 import { Subscription } from 'rxjs/Subscription';
 import { LeafletMouseEvent } from 'leaflet';
-import {
-  Map,
-  LeafletComponent,
-  Center
-} from '../../../subrepos/gtrack-common-ngx';
+import { AdminMapService, AdminMap } from '../../shared/services/admin-map';
+import { LeafletComponent, Map, MapService, Center } from '../../../subrepos/gtrack-common-ngx/app';
 
 declare const $: any;
 
@@ -68,7 +65,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
     private _hikeDataService: HikeDataService,
-    private _waypointMarkerService: WaypointMarkerService,
+    // private _waypointMarkerService: WaypointMarkerService,
     private _title: Title
   ) {}
 
@@ -84,7 +81,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this._mode === 'routing') {
         console.log('Routing mode click', e.latlng);
 
-        this._waypointMarkerService.addWaypoint(e.latlng);
+        // this._waypointMarkerService.addWaypoint(e.latlng);
       } else {
         // this._createCheckpoint(e.latlng);
       }
