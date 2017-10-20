@@ -12,7 +12,7 @@ export class Map {
   protected _checkpointMarker: CheckpointMarker;
   protected _pointMarker: PointMarker;
 
-  constructor(protected map: L.Map, private iconService: IconService, private mapMarkerService: MapMarkerService) {}
+  constructor(protected map: L.Map, protected iconService: IconService, protected mapMarkerService: MapMarkerService) {}
 
   public get currentPositionMarker(): CurrentPositionMarker {
     if (!this._currentPositionMarker) {
