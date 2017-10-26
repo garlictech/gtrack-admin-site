@@ -24,27 +24,10 @@ export class Hike implements IHike {
 
   private observable: Observable<Hike>;
 
-  private rawKeys = [
-    'location',
-    'backgroundImageUrls',
-    'description',
-    'difficulty',
-    'rate',
-    'score',
-    'routeIcon',
-    'elevationIcon',
-    'routeId',
-    'offlineMap'
-  ];
-
   private locale = 'en_US';
 
-  constructor(private rawData: any, private hikeProgramService: HikeProgramService) {
-    this.rawKeys.forEach((key: string) => {
-      this[key] = this.rawData[key] || null;
-    });
-
-    this.id = this.rawData.$key;
+  constructor(data: IHike, private hikeProgramService: HikeProgramService) {
+    Object.assign(this, data);
   }
 
   public get name(): string {
@@ -75,7 +58,7 @@ export class Hike implements IHike {
 
   private getHikeProgram(): Observable<HikeProgram> {
     return this.hikeProgramService
-      .get(this.rawData.program)
+      .get(this.program)
       .do((program: HikeProgram) => this.program = program)
       .do((program: HikeProgram) => this.calculatePhysicalValues(program));
   }

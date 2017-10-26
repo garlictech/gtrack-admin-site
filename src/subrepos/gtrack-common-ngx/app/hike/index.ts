@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
 
 import { Observable } from 'rxjs';
 
 import { Hike } from './hike';
 import { IHike } from './ihike';
 import { HikeProgramService } from '../hike-program';
+import { DeepstreamService } from '../../subrepos/deepstream-ngx';
 
 @Injectable()
 export class HikeService {
 
-  constructor(private db: AngularFireDatabase, private hikeProgramService: HikeProgramService) { }
+  constructor(private hikeProgramService: HikeProgramService, private _deepstream: DeepstreamService) { }
 
   get(id: string): Observable<Hike> {
-    return this.db
-      .object(`test/activities/hikes/${id}`)
+    return this._deepstream
+      .getRecord(id)
+      .get()
       .switchMap((data: any) => {
         let hike: Hike = new Hike(data, this.hikeProgramService);
 
@@ -27,8 +28,9 @@ export class HikeService {
   }
 
   query(): Observable<Hike[]> {
-    return this.db
-      .list('test/activities/hikes')
+    return this._deepstream
+      .getList('hikes')
+      .subscribeForData()
       .switchMap((data: any) => {
         let observables: Observable<Hike>[] = data.map((item: any) => {
           let hike: Hike = new Hike(item, this.hikeProgramService);

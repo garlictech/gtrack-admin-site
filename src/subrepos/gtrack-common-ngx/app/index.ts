@@ -1,4 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule  } from 'angularfire2/database';
 
 import { HikeService, Hike, IHike } from './hike';
 import { HikeProgramService, HikeProgram } from './hike-program';
@@ -8,8 +10,7 @@ import { GeometryService } from './geometry';
 import { ElevationService } from './elevation';
 import { CheckpointService, Checkpoint, CheckpointSequence } from './checkpoint';
 import { GameRuleService } from './game-rule';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule  } from 'angularfire2/database';
+import { DeepstreamModule } from './deepstream';
 
 import {
   MapService,
@@ -40,7 +41,8 @@ import {
   ],
   imports: [
     AngularFireModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    DeepstreamModule
   ],
   providers: [
     HikeService,
@@ -110,5 +112,6 @@ export {
   Checkpoint,
   CheckpointSequence,
   CheckpointService,
-  GameRuleService
+  GameRuleService,
+  DeepstreamModule
 };

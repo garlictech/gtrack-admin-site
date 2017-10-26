@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Route } from './route';
-import { UnitsService } from '../units';
-
 import * as d3 from 'd3';
 import * as turf from '@turf/turf';
 
 import { Observable } from 'rxjs/Observable';
+
+import { Route } from './route';
+import { UnitsService } from '../units';
+
+import { DeepstreamService } from '../../subrepos/deepstream-ngx';
 
 export interface IElevationMargin {
   top: number;
@@ -28,23 +29,25 @@ export interface IElavationData {
 export class RouteService {
 
   constructor(
-    private db: AngularFireDatabase,
+    private _deepstream: DeepstreamService,
     private unitsService: UnitsService
   ) { }
 
   public get(id: string): Observable<Route> {
-    return this.db
-      .object(`test/routes/${id}`)
+    return this._deepstream
+      .getRecord(`routes/${id}`)
+      .get()
       .map((data: any) => {
         if (data.$value === null) {
           throw new Error('No data with this id');
         }
 
-        return <Route> {
+        return new Route({
+          id: data.id,
           bounds: data.bounds,
           path: data.route.features[0].geometry,
           geojson: data.route
-        };
+        });
       });
   }
 

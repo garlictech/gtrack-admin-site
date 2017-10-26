@@ -1,4 +1,7 @@
-export class Poi {
+import { IPoi } from './ipoi';
+
+export class Poi implements IPoi {
+  public id: string;
   public elevation: string;
   public lat: number;
   public lon: number;
@@ -11,7 +14,9 @@ export class Poi {
   public isStart = false;
   public isFinish = false;
 
-  public constructor(public id: string) {}
+  public constructor(public data: IPoi) {
+    Object.assign(this, data);
+  }
 
   public setToCheckpoint() {
     if (this.isCheckpoint !== true) {

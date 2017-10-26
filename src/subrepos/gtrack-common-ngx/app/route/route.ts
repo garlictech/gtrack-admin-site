@@ -1,5 +1,8 @@
-export class Route {
-  bounds: {
+import { IRoute } from './iroute';
+
+export class Route implements IRoute {
+  public id: string;
+  public bounds: {
     NorthEast: {
       lat: number,
       lon: number
@@ -10,10 +13,14 @@ export class Route {
     }
   };
 
-  path: {
+  public path: {
     coordinates: GeoJSON.Position[],
     type: string
   };
 
-  geojson: any;
+  public geojson: any;
+
+  constructor(data: IRoute) {
+    Object.assign(this, data);
+  }
 }
