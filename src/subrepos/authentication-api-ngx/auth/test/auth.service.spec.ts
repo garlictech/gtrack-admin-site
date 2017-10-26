@@ -9,6 +9,8 @@ import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
 import { Subject } from 'rxjs/Subject';
 import { StoreModule, Store, combineReducers } from '@ngrx/store';
 
+import * as firebase from 'firebase';
+
 import { ApiModule } from '../../api';
 import { ApiService } from '../../api/api.service';
 import { AuthService } from '../auth.service';
