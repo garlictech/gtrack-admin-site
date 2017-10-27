@@ -25,6 +25,17 @@ export interface IElavationData {
   lineFunc: d3.Line<[number, number]>;
 };
 
+export interface IBounds {
+  NorthEast: {
+    lat: number,
+    lon: number
+  },
+  SouthWest: {
+    lat: number,
+    lon: number
+  }
+}
+
 @Injectable()
 export class RouteService {
 
@@ -127,6 +138,22 @@ export class RouteService {
         .y((d) => yRange(d[1]))
         .curve(d3.curveBasis)
     };
+  }
+
+  public getBounds(track): IBounds {
+    let d3Bounds = d3.geoBounds(track.features[0]);
+    let padding = 0.003; // about 330m
+
+    return {
+      NorthEast: {
+        lat: d3Bounds[0][1] - padding,
+        lon: d3Bounds[0][0] - padding
+      },
+      SouthWest: {
+        lat: d3Bounds[1][1] + padding,
+        lon: d3Bounds[1][0] + padding
+      }
+    }
   }
 }
 
