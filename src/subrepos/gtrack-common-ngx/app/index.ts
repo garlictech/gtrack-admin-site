@@ -25,6 +25,7 @@ import { IconService } from './icon';
 import { MapMarkerService, MapMarker } from './map-marker';
 import { GoogleMapsService } from './google-maps';
 import { CommonConfig } from './config';
+import { ISegment } from './segment';
 
 import {
   DistancePipe,
@@ -113,5 +114,6 @@ export {
   CheckpointSequence,
   CheckpointService,
   GameRuleService,
-  DeepstreamModule
+  DeepstreamModule,
+  ISegment
 };
