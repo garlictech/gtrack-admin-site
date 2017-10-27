@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
 
-    <div class="card">
+    <!--div class="card">
       <div class="card-header" data-background-color="green">
         <h4 class="title">General info</h4>
       </div>
@@ -62,18 +62,21 @@
           </div>
         </div>
       </div>
-    </div>
+    </div-->
 
     <div class="card">
       <div class="card-header" data-background-color="green">
         <h4 class="title">Map</h4>
       </div>
-
       <div class="card-content">
         <div class="map-container">
           <gc-admin-leaflet #map [layers]="layers" [overlays]="overlays" [center]="center">
           </gc-admin-leaflet>
         </div>
+
+        <button class="btn btn-sm btn-primary" (click)="removeLast()">Remove last</button>
+        <button class="btn btn-sm btn-primary" (click)="closeCircle()">Close circle</button>
+        <button class="btn btn-sm btn-primary" (click)="deletePlan()">Delete plan</button>
       </div>
     </div>
   </div>

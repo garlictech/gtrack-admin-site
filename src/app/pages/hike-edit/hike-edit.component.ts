@@ -2,15 +2,19 @@ import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
-
+import { Subscription } from 'rxjs/Subscription';
+import {
+  LeafletComponent,
+  Map,
+  MapService,
+  Center
+} from '../../../subrepos/gtrack-common-ngx/app';
 import { State, GtActions } from '../../store';
 import { HikeDataService } from '../../shared/services';
-import { WaypointMarkerService } from '../../shared/services';
 import { IMockHikeElement } from '../../shared/interfaces';
-import { Subscription } from 'rxjs/Subscription';
+import { AdminLeafletComponent } from '../../shared/components/admin-leaflet';
+import { AdminMap } from '../../shared/services/admin-map';
 import { LeafletMouseEvent } from 'leaflet';
-import { AdminMapService, AdminMap } from '../../shared/services/admin-map';
-import { LeafletComponent, Map, MapService, Center } from '../../../subrepos/gtrack-common-ngx/app';
 
 declare const $: any;
 
@@ -48,9 +52,7 @@ const LANGS = {
   styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('map')
-  map: Map;
-
+  @ViewChild('map') mapComponent: AdminLeafletComponent;
   private _routeSubscription: Subscription;
   private _mode = 'routing';
   public hikeData: IMockHikeElement = null;
@@ -65,7 +67,6 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
     private _hikeDataService: HikeDataService,
-    // private _waypointMarkerService: WaypointMarkerService,
     private _title: Title
   ) {}
 
@@ -77,18 +78,17 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.map.leafletMap.on('click', (e: LeafletMouseEvent) => {
+    this.mapComponent.leafletMap.on('click', (e: LeafletMouseEvent) => {
       if (this._mode === 'routing') {
-        console.log('Routing mode click', e.latlng);
-
-        // this._waypointMarkerService.addWaypoint(e.latlng);
+          this.mapComponent.map.waypointMarker.addWaypoint(e.latlng);
       } else {
+        console.log('todo _createCheckpoint');
         // this._createCheckpoint(e.latlng);
       }
     });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this._routeSubscription) {
       this._routeSubscription.unsubscribe();
     }
@@ -122,7 +122,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  addTranslation() {
+  public addTranslation() {
     if (this.selLang) {
       this.hikeData.title[this.selLang] = '';
       this.hikeData.description[this.selLang] = '';
@@ -134,7 +134,21 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  save() {
+  public removeLast() {
+    this.mapComponent.map.waypointMarker.deleteLast();
+  }
+
+  public closeCircle() {
+    this.mapComponent.map.waypointMarker.closeCircle();
+  }
+
+  public deletePlan() {
+    this.mapComponent.map.routeInfo.deletePlan();
+    this.mapComponent.map.waypointMarker.reset();
+    this.mapComponent.map.routingControl.clearControls();
+  }
+
+  public save() {
     this._store.dispatch(new GtActions.SaveHikeAction(this.hikeData));
   }
 }

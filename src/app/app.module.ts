@@ -38,15 +38,13 @@ import { ObjectToArrayPipe } from './shared/pipes/';
 // Services
 import {
   AdminMapService,
-  RoutingControlService,
-  WaypointMarkerService,
   // Mocks
   HikeDataService
 } from './shared/services';
 // Global styles
 import './styles';
 // Vendors
-import '../../node_modules/bootstrap/dist/js/bootstrap.js';
+import '../../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import '../../node_modules/bootstrap-material-design/dist/js/material.min.js';
 
 const authConfig = new AuthenticationApiConfig();
@@ -96,9 +94,7 @@ const commonConfig = new CommonConfig();
   ],
   providers: [
     HikeDataService,
-    AdminMapService,
-    WaypointMarkerService,
-    RoutingControlService
+    AdminMapService
   ],
   bootstrap: [AppComponent]
 })
