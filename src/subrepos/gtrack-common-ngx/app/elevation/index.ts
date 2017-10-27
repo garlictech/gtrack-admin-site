@@ -8,11 +8,11 @@ export class ElevationService {
   constructor(private googleMapsService: GoogleMapsService) { }
 
   public calculateUphill(data: number[][]): number {
-    return this.calculateHill(data, (diff) => (diff > 0));
+    return this._calculateHill(data, (diff) => (diff > 0));
   }
 
   public calculateDownhill(data: number[][]): number {
-    return this.calculateHill(data, (diff) => (diff < 0), -1);
+    return this._calculateHill(data, (diff) => (diff < 0), -1);
   }
 
   public getData(coordinates: number[][]): Promise<number[][]> {
@@ -44,7 +44,7 @@ export class ElevationService {
       });
   }
 
-  private calculateHill(data: number[][], bigEnough: ((diff: number) => boolean), multiplier = 1): number {
+  private _calculateHill(data: number[][], bigEnough: ((diff: number) => boolean), multiplier = 1): number {
     let sum = 0;
 
     data.forEach((point, i) => {

@@ -13,13 +13,11 @@ const reducer = {
   // actorList: ActorList.Reducer,
 };
 
-
 // Extend the store interface with that.
 export interface State {
   // authentication: Authentication.IAuthenticationState,
   // actorList: ActorList.IActorListState,
 }
-
 
 // export const store = StoreModule.provideStore(reducer)
 export const store: ModuleWithProviders = StoreModule.provideStore(compose(storeLogger(), combineReducers)(reducer));
