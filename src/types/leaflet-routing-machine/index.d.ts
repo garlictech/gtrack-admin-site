@@ -2,16 +2,14 @@ import * as L from 'leaflet';
 
 declare module 'leaflet' {
   namespace Routing {
-    type EventHandlerFn = (event: Event) => void;
-
     /**
      * Classes
      */
 
-    class Control {
+    class Control extends Itinerary {
       constructor(options?: ControlOptions);
       onAdd(map: Map): HTMLElement;
-      on(eventName: string, fn: EventHandlerFn): this;
+      on(eventName: string, fn: ControlEventHandlerFn): this;
       onRemove(map: Map): this;
       getWaypoints(): Waypoint[];
       setWaypoints(waypoints: Waypoint[]): this;
@@ -21,19 +19,19 @@ declare module 'leaflet' {
       route(options?: RouteOptions);
     }
 
-    class Line {
+    class Line extends L.LayerGroup {
       constructor(route: Route, options: LineOptions);
       getBounds(): LatLngBounds;
     }
 
-    class OSRMv1 {
+    class OSRMv1 extends L.Class {
       constructor(options: OSRMv1Options);
       route(waypoints: Waypoint[], callback: Function, context: any, options: any);
       requiresMoreDetail(route: Route, zoom: number, bounds: LatLngBounds): boolean;
       buildRouteUrl(waypoints: Waypoint[], options: any): string;
     }
 
-    class Plan {
+    class Plan extends (L.Layer || L.Class) {
       constructor(waypoints?: Waypoint[], options?: PlanOptions);
       isReady(): boolean;
       getWaypoints(): Waypoint[];
@@ -45,12 +43,12 @@ declare module 'leaflet' {
       dragNewWaypoint(e: Event): this;
     }
 
-    class Autocomplete {
+    class Autocomplete extends L.Class {
       constructor(elem: HTMLElement, callback: Function, context: any, options: AutocompleteOptions);
       close(): this;
     }
 
-    class Formatter {
+    class Formatter extends L.Class {
       constructor(options?: FormatterOptions);
       formatDistance(distance: number, sensitivity: number): string;
       formatTime(time: number): string;
@@ -59,7 +57,7 @@ declare module 'leaflet' {
       capitalize(s: string): string;
     }
 
-    class GeocoderElement {
+    class GeocoderElement extends L.Class {
       constructor(wp?: Waypoint, i?: number, nWps?: number, options?: GeocoderOptions);
       getContainer(): HTMLElement;
       setValue(v: string): this;
@@ -67,12 +65,12 @@ declare module 'leaflet' {
       focus(): this;
     }
 
-    class Localization {
+    class Localization extends L.Class {
       constructor(langs?: string[]);
       localize(keys: any): string;
     }
 
-    class Itinerary {
+    class Itinerary extends L.Control {
       constructor(options?: ItineraryOptions);
       onAdd(map: Map): HTMLElement;
       onRemove(map?: Map): this;
@@ -82,7 +80,7 @@ declare module 'leaflet' {
       hide(): this;
     }
 
-    class ItineraryBuilder {
+    class ItineraryBuilder extends L.Class {
       constructor(options?: ItineraryBuilderOptions);
       createContainer(className?: string): HTMLElement;
       createStepsContainer(): HTMLElement;
@@ -105,6 +103,14 @@ declare module 'leaflet' {
       waypointMode?: string;
       showAlternatives?: boolean;
       defaultErrorHandler?(e: Event);
+    }
+
+    type ControlEventHandlerFn = (event: ControlEvent) => void;
+
+    interface ControlEvent extends Event {
+      waypoints?: any; // Waypoint[];
+      alts?: any; //Waypoint[];
+      routes?: any; // Route[];
     }
 
     interface Router {
@@ -284,7 +290,7 @@ declare module 'leaflet' {
     }
 
     interface Route {
-      coordinates: L.LatLngExpression;
+      coordinates: number[][];
       inputWaypoints: Waypoint[];
       waypointIndices: number[];
     }

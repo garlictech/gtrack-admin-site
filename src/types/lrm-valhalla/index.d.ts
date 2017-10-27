@@ -5,7 +5,7 @@ declare module 'leaflet' {
     function valhalla(apiKey: string, name: string): L.Routing.Router;
 
     namespace Valhalla {
-      class Formatter extends L.Routing.Formatter {}
+      class Formatter extends L.Routing.Formatter {}
     }
   }
 }
