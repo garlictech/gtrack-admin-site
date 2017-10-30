@@ -43,11 +43,6 @@ import {
 } from './shared/services';
 // Global styles
 import './styles';
-// Vendors
-import * as Spinner from '../../node_modules/spin.js/spin.js';
-(<any>window).Spinner = Spinner;
-import '../../node_modules/bootstrap/dist/js/bootstrap.min.js';
-import '../../node_modules/bootstrap-material-design/dist/js/material.min.js';
 
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authentication.server;

@@ -6,7 +6,12 @@ import { AppComponent } from './app/app.component';
 import { AppStore } from './app/app-store';
 import { AppModule } from './app/app.module';
 
+// Vendors
 import 'hammerjs';
+import 'bootstrap';
+import 'bootstrap-material-design';
+import * as Spinner from '../node_modules/spin.js/spin.js';
+(<any>window).Spinner = Spinner;
 
 @NgModule({
     bootstrap: [
