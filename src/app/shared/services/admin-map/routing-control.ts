@@ -103,10 +103,13 @@ export class RoutingControl {
 
     control.on('routingstart', () => {
       this._store.dispatch(new GtActions.RoutingStartAction());
-      // this._leafletMap.spin(true);
+      this._leafletMap.spin(true);
     });
 
     control.on('routesfound', (e) => {
+      console.log('Hide spin, because elevationService still fails!');
+      this._leafletMap.spin(false);
+
       this._elevationService.getData(e.routes[0].coordinates).then(data => {
         const upDown = {
           uphill: this._elevationService.calculateUphill(data),
@@ -114,16 +117,16 @@ export class RoutingControl {
         };
         this._routeInfo.planner.addRouteSegment(data, e.routes[0].summary, upDown);
         this._store.dispatch(new GtActions.RoutingFinishedAction());
-        // this._leafletMap.spin(false);
+        this._leafletMap.spin(false);
       }).catch(() => {
         this._store.dispatch(new GtActions.RoutingErrorAction());
-        // this._leafletMap.spin(false);
+        this._leafletMap.spin(false);
       });
     });
 
     control.on('routingerror', (e) => {
       this._store.dispatch(new GtActions.RoutingErrorAction());
-      // this._leafletMap.spin(false);
+      this._leafletMap.spin(false);
     });
 
     this._controls.push(control);
