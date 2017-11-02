@@ -43,7 +43,7 @@
     "leaflet": "^1.0.3",
     "leaflet-spin": "^1.1.0",
     "leaflet-usermarker": "^1.0.0",
-    "load-google-maps-api": "0.0.3",
+    "load-google-maps-api": "1.0.0",
     "moment": "^2.18.1",
     "spin.js": "^2.3.2"
   },
