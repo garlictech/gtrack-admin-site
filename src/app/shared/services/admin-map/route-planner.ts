@@ -56,11 +56,13 @@ export class RoutePlanner {
     for (let i = 0; i < this.routeInfoData.segments.length; i++) {
       const segment = this.routeInfoData.segments[i];
 
-      this._geoJSON.features[0].geometry.coordinates.push([
-        segment.coordinates[1],
-        segment.coordinates[0],
-        segment.coordinates[2],
-      ]);
+      for (let p of segment.coordinates) {
+        this._geoJSON.features[0].geometry.coordinates.push([
+          p[1],
+          p[0],
+          p[2],
+        ]);
+      }
 
       this._addRoutePoint(segment.coordinates[0], i + 1);
     }

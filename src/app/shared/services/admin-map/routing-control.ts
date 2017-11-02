@@ -67,10 +67,9 @@ export class RoutingControl {
 
   private _createMarker(name, latLng) {
     const icon = L.divIcon({
-      // type: 'div',
-      iconSize: [30, 30],
-      html: name,
-      iconAnchor: [30, 0]
+      html: `<span>${name}</span>`,
+      iconSize: [25, 41],
+      iconAnchor: [13, 41]
     });
 
     const marker = L.marker(latLng, {
@@ -107,15 +106,13 @@ export class RoutingControl {
     });
 
     control.on('routesfound', (e) => {
-      console.log('Hide spin, because elevationService still fails!');
-      this._leafletMap.spin(false);
-
       this._elevationService.getData(e.routes[0].coordinates).then(data => {
         const upDown = {
           uphill: this._elevationService.calculateUphill(data),
           downhill: this._elevationService.calculateDownhill(data)
         };
         this._routeInfo.planner.addRouteSegment(data, e.routes[0].summary, upDown);
+
         this._store.dispatch(new GtActions.RoutingFinishedAction());
         this._leafletMap.spin(false);
       }).catch(() => {

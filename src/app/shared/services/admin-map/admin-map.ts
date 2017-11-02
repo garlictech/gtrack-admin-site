@@ -12,6 +12,7 @@ import {
   RouteService,
   ElevationService
 } from '../../../../subrepos/gtrack-common-ngx/app';
+import * as L from 'leaflet';
 
 export class AdminMap extends Map {
   private _routingControl: RoutingControl;
@@ -59,5 +60,47 @@ export class AdminMap extends Map {
 
   public get waypointMarker(): WaypointMarker {
     return this._waypointMarker;
+  }
+
+  private _geoJsonStyle(feature) {
+    let style;
+    switch (feature.properties.draw_type) {
+      case 'small_buffer':
+        style = { color: '#000044', weight: 2, fillColor: '#000077' };
+        break;
+      case 'route_0':
+        style = { color: 'black', opacity: 0.15, weight: 9 };
+        break;
+      case 'route_1':
+        style = { color: 'white', opacity: 0.8, weight: 6 };
+        break;
+      case 'route_2':
+        style = { color: 'red', opacity: 1, weight: 2 };
+        break;
+    }
+    return style;
+  }
+
+  private _propagateClick(feature, layer) {
+    layer.on('click', event => {
+      this.map.fireEvent('click', {
+        latlng: event.latlng,
+        layerPoint: this.map.latLngToLayerPoint(event.latlng),
+        containerPoint: this.map.latLngToContainerPoint(event.latlng)
+      });
+    });
+  }
+
+  public addGeoJSON(geojson) {
+    const res = L.geoJSON(geojson, {
+      style: this._geoJsonStyle(geojson),
+      onEachFeature: this._propagateClick
+    });
+    res.addTo(this.leafletMap);
+    return res;
+  }
+
+  public removeGeoJSON(geojson) {
+    this.map.removeLayer(geojson);
   }
 }

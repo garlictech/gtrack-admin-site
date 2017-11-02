@@ -67,7 +67,7 @@ export class RouteInfo {
     }
   }
 
-  private _getPath() {
+  public getPath() {
     return this._getRoute().track.features[0];
   }
 

@@ -13,15 +13,14 @@ import { State, GtActions } from '../../store';
 import { HikeDataService } from '../../shared/services';
 import { IMockHikeElement } from '../../shared/interfaces';
 import { AdminLeafletComponent } from '../../shared/components/admin-leaflet';
-import { AdminMap } from '../../shared/services/admin-map';
 import { LeafletMouseEvent } from 'leaflet';
-
+import * as turf from '@turf/turf';
 declare const $: any;
 
 const CENTER = <Center>{
-  lat: 47.503136,
-  lng: 19.06166,
-  zoom: 17
+  lat: 51.505,
+  lng: -0.09,
+  zoom: 14
 };
 
 const LAYERS = [{
@@ -55,6 +54,8 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('map') mapComponent: AdminLeafletComponent;
   private _routeSubscription: Subscription;
   private _mode = 'routing';
+  private _bufferShown = false;
+  private _geoJsonOnMap: L.GeoJSON;
   public hikeData: IMockHikeElement = null;
   public existingLangKeys: Set<string>;
   public center: Center = CENTER;
@@ -146,6 +147,24 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     this.mapComponent.map.routeInfo.deletePlan();
     this.mapComponent.map.waypointMarker.reset();
     this.mapComponent.map.routingControl.clearControls();
+  }
+
+  private _getBuffer() {
+    let buffer: GeoJSON.Feature<GeoJSON.Polygon> = turf.buffer(this.mapComponent.map.routeInfo.getPath(), 50, 'meters');
+    buffer.properties.name = 'buffer polygon';
+    buffer.properties.draw_type = 'small_buffer';
+
+    return buffer;
+  }
+
+  public buffer() {
+    this._bufferShown = !this._bufferShown;
+
+    if (this._bufferShown) {
+      this._geoJsonOnMap = this.mapComponent.map.addGeoJSON(this._getBuffer());
+    } else {
+      this.mapComponent.map.removeGeoJSON(this._geoJsonOnMap);
+    }
   }
 
   public save() {

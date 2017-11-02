@@ -40,7 +40,26 @@ gt-hike-edit {
     gc-admin-leaflet {
       .leaflet-container {
         height: 100%;
+        cursor: pointer;
       }
+    }
+  }
+
+  .leaflet-div-icon {
+    background-image: url('../../../../assets/img/marker-icon.png');
+    background-color: transparent;
+    border: 0;
+    text-align: center;
+    span {
+      position: relative;
+      top: -30px;
+      color: white;
+      text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+      font-size: 20px;
     }
   }
 }

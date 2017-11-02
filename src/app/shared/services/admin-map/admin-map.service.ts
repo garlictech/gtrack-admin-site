@@ -24,7 +24,7 @@ export class AdminMapService extends MapService {
     super(iconService, mapMarkerService);
   }
 
-  get(map: L.Map): AdminMap {
+  public get(map: L.Map): AdminMap {
     return new AdminMap(
       map,
       this.iconService,
