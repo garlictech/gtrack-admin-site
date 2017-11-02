@@ -1,4 +1,4 @@
-@import '../../../../assets/sass/md/colors.scss';
+@import '../../../../assets/sass/gtrack-material-dashboard.scss';
 
 .sidebar {
   background-color: black;
@@ -7,9 +7,10 @@
   }
 
   .sidebar-background {
-    opacity: 0.8;
+    opacity: 0.75;
+
     &::after {
-      background-color: $green-500 !important;
+      background-color: $gt-green-primary !important;
       opacity: 0.4;
     }
   }
@@ -20,6 +21,6 @@
     color: white;
   }
   .nav li > a.active {
-    background-color:  rgba(76, 175, 80, 0.75);
+    background-color:  rgba(115, 190, 70, 0.75);
   }
 }

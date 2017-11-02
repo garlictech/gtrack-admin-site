@@ -65,7 +65,7 @@
     </div-->
 
     <div class="card">
-      <div class="card-header" data-background-color="green">
+      <div class="card-header" data-background-color="gt-green-primary">
         <h4 class="title">Map</h4>
       </div>
       <div class="card-content">
@@ -78,6 +78,8 @@
         <button class="btn btn-sm btn-primary" (click)="closeCircle()">Close circle</button>
         <button class="btn btn-sm btn-primary" (click)="deletePlan()">Delete plan</button>
       </div>
+
+      <!--pre *ngIf="mapComponent.map">{{mapComponent.map._routePlanner | json}}</pre-->
     </div>
   </div>
 </div>
