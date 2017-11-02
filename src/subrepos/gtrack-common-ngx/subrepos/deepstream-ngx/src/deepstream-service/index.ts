@@ -23,22 +23,28 @@ export class DeepstreamService {
   getClient(): DeepstreamClient {
     return this.dsClient;
   }
-  doQuery(queryObject: any, start = 0): Observable<any> {
-    let query = new Query(this.dsClient);
-    return query.queryForData(queryObject);
+  doQuery<T = any>(queryObject: any, start = 0): Observable<T[]> {
+    let rpc = new Rpc(this.dsClient);
+    return rpc.make('camnjoy.search-provider.serialize', { payload: queryObject }).switchMap(res => {
+      let query = new Query<T>(this.dsClient);
+      return query.queryForData(res.name, res.table);
+    });
   }
-  doPageQuery(queryObject: any, currentPage, pageSize): Observable<any> {
+  doPageQuery<T = any>(queryObject: any, currentPage, pageSize): Observable<T[]> {
     let start = currentPage * pageSize;
     let end = start + pageSize;
     queryObject.limit = end;
-    let query = new Query(this.dsClient);
-    return query.pageableQuery(queryObject, start, end);
+    let rpc = new Rpc(this.dsClient);
+    return rpc.make('camnjoy.search-provider.serialize', { payload: queryObject }).switchMap(res => {
+      let query = new Query<T>(this.dsClient);
+      return query.pageableQuery(res.name, start, end, res.table);
+    });
   }
-  getRecord(id: string): Record {
-    return new Record(this.dsClient, id);
+  getRecord<T = any>(id: string): Record<T> {
+    return new Record<T>(this.dsClient, id);
   }
-  getList(id: string): List {
-    return new List(this.dsClient, id);
+  getList<T = any>(id: string): List<T> {
+    return new List<T>(this.dsClient, id);
   }
   callRpc(name: string, data: any): Observable<any> {
     let rpc = new Rpc(this.dsClient);

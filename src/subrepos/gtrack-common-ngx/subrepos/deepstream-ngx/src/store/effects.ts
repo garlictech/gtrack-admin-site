@@ -3,6 +3,8 @@ import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 
+import { IClientData } from '@garlictech/deepstream-rxjs';
+
 import { log } from '../log';
 // import { Actions as JwtApiActions, IAuth } from 'authentication-api-ngx';
 import { DeepstreamService } from '../deepstream-service';
@@ -23,9 +25,9 @@ export class Effects {
       log.d('Effect: Logging in to deepstream...');
       return this._deepstreamService.login(token);
     })
-    .map(auth => {
-      log.i('Effect: Deepstream login success');
-      return new LocalActions.DeepstreamLoginSuccess();
+    .map((auth: IClientData) => {
+      log.i('Effect: Deepstream login success. Auth objct: ', auth);
+      return new LocalActions.DeepstreamLoginSuccess(auth);
     })
     .catch(err => {
       log.er('Effect: Deepstream Login error', err);
@@ -61,6 +63,30 @@ export class Effects {
     .catch(err => {
       log.er('Effect: Deepstream Logout error', err);
       return Observable.of(null);
+    });
+
+  @Effect()
+  deepstreamPermissionRecord$: Observable<Action> = this._actions$
+    .ofType(LocalActions.DEEPSTREAM_LOGIN_SUCCESS)
+    .map(toPayload)
+    .switchMap((auth: IClientData) => {
+      log.d('Effect: Subscribing to the permission record');
+      let res$ = Observable.of({});
+
+      if (auth.permissionRecord) {
+        let record = this._deepstreamService.getRecord(auth.permissionRecord);
+        res$ = record.get();
+      }
+
+      return res$
+        .map(permissionRecord => {
+          log.i('Effect: Deepstream permission record changed');
+          return new LocalActions.DeepstreamPermissionRecordChanged(permissionRecord);
+        })
+        .catch((err, caught) => {
+          log.er('Effect: Deepstream permission record error', err);
+          return caught;
+        });
     });
 
   constructor(

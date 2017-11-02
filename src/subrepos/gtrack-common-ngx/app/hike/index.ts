@@ -29,10 +29,10 @@ export class HikeService {
 
   query(): Observable<Hike[]> {
     return this._deepstream
-      .getList('hikes')
+      .getList<IHike>('hikes')
       .subscribeForData()
-      .switchMap((data: any) => {
-        let observables: Observable<Hike>[] = data.map((item: any) => {
+      .switchMap(data => {
+        let observables: Observable<Hike>[] = data.map(item => {
           let hike: Hike = new Hike(item, this.hikeProgramService);
 
           return hike
