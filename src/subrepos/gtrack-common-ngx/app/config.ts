@@ -5,6 +5,6 @@ export interface IGoogleMapsConfig {
 
 export class CommonConfig {
   googleMaps: IGoogleMapsConfig = {
-    key: null
+    key: 'AIzaSyD8WkvPfxI6NRC7xnNrezxeIxb7MD_zRtI'
   };
 }
