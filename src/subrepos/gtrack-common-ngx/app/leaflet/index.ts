@@ -63,6 +63,9 @@ export class LeafletComponent implements AfterViewInit {
   @Input()
   public path: any;
 
+  @Input()
+  public id = 'leaflet-map';
+
   constructor(protected mapService: MapService) { }
 
   ngAfterViewInit() {
