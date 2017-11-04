@@ -21,7 +21,7 @@ import {
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store, Effects } from './store';
+import { store, Effects, Actions } from './store';
 import { routing } from './app-routing.module';
 // Components
 import { LayoutComponent } from './core/components/layout';
@@ -31,7 +31,12 @@ import { SidebarComponent } from './core/components/sidebar';
 import { PageNotFoundComponent } from './core/components/page-not-found';
 import { LoginComponent } from './auth/components/login';
 import { HikeListComponent } from './pages/hike-list';
-import { HikeEditComponent } from './pages/hike-edit';
+import {
+  HikeEditComponent,
+  HikeGeneralInfoComponent,
+  HikeMapComponent,
+  HikeRoutePlanningComponent
+} from './pages/hike-edit';
 import { AdminLeafletComponent } from './shared/components/admin-leaflet';
 // Pipes
 import { ObjectToArrayPipe } from './shared/pipes/';
@@ -61,6 +66,9 @@ const commonConfig = new CommonConfig();
     LoginComponent,
     HikeListComponent,
     HikeEditComponent,
+    HikeGeneralInfoComponent,
+    HikeMapComponent,
+    HikeRoutePlanningComponent,
     AdminLeafletComponent,
     PageNotFoundComponent,
     // Pipes
@@ -91,7 +99,8 @@ const commonConfig = new CommonConfig();
   ],
   providers: [
     HikeDataService,
-    AdminMapService
+    AdminMapService,
+    Actions
   ],
   bootstrap: [AppComponent]
 })

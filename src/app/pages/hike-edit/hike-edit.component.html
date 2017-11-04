@@ -1,26 +1,40 @@
 <div class="main-content">
   <div class="container-fluid">
-
-    <!--div class="card">
-      <div class="card-header" data-background-color="green">
+    <div class="card">
+      <div class="card-header" data-background-color="gt-green-primary">
         <h4 class="title">General info</h4>
       </div>
       <div class="card-content">
-        <div class="lang-toolbar clearfix">
-          <button class="btn btn-round btn-sm btn-just-icon btn-success" [disabled]="!selLang" (click)="addTranslation()">
-            <i class="material-icons">add</i>
-          </button>
+          TODO: https://blog.angular-university.io/introduction-to-angular-2-forms-template-driven-vs-model-driven/
+          <br>
+          https://angular.io/guide/dynamic-form
+        <gt-hike-general-info [hikeData]="hikeData" ></gt-hike-general-info>
+      </div>
+    </div>
 
-          <select class="form-control" [(ngModel)]="selLang" title="Select">
-            <ng-container *ngFor="let lang of langs | obj2arr">
-              <option *ngIf="!existingLangKeys.has(lang.key)" [value]="lang.key" [innerHTML]="lang.value">
-              </option>
-            </ng-container>
-          </select>
+    <div class="card">
+      <div class="card-header" data-background-color="gt-green-primary">
+        <h4 class="title">Map</h4>
+      </div>
+      <div class="card-content">
+        <gt-hike-map></gt-hike-map>
+      </div>
+    </div>
 
-          <span>New lang:</span>
-        </div>
+    <div class="card">
+      <div class="card-header" data-background-color="gt-green-primary">
+        <h4 class="title">Route planning</h4>
+      </div>
+      <div class="card-content">
+        <gt-hike-route-planning></gt-hike-route-planning>
+      </div>
+    </div>
 
+    <!--div class="card">
+      <div class="card-header" data-background-color="gt-green-primary">
+        <h4 class="title">Pois</h4>
+      </div>
+      <div class="card-content">
         <div aria-multiselectable="true" class="panel-group" id="accordion" role="tablist">
           <div class="panel panel-default" *ngFor="let lng of existingLangKeys">
             <div class="panel-heading" id="headingOne" role="tab">
@@ -63,24 +77,5 @@
         </div>
       </div>
     </div-->
-
-    <div class="card">
-      <div class="card-header" data-background-color="gt-green-primary">
-        <h4 class="title">Map</h4>
-      </div>
-      <div class="card-content">
-        <div class="map-container">
-          <gc-admin-leaflet #map [layers]="layers" [overlays]="overlays" [center]="center">
-          </gc-admin-leaflet>
-        </div>
-
-        <button class="btn btn-sm btn-primary" (click)="removeLast()">Remove last</button>
-        <button class="btn btn-sm btn-primary" (click)="closeCircle()">Close circle</button>
-        <button class="btn btn-sm btn-primary" (click)="deletePlan()">Delete plan</button>
-        <button class="btn btn-sm btn-primary" (click)="buffer()">Buffer</button>
-      </div>
-
-      <!--pre *ngIf="mapComponent.map">{{mapComponent.map._routePlanner | json}}</pre-->
-    </div>
   </div>
 </div>

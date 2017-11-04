@@ -1,0 +1,55 @@
+<div class="lang-toolbar clearfix">
+  <button class="btn btn-round btn-sm btn-just-icon btn-success" [disabled]="!selLang" (click)="addTranslation()">
+    <i class="material-icons">add</i>
+  </button>
+
+  <select class="form-control" [(ngModel)]="selLang" title="Select">
+    <ng-container *ngFor="let lang of langs | obj2arr">
+      <option *ngIf="!existingLangKeys.has(lang.key)" [value]="lang.key" [innerHTML]="lang.value">
+      </option>
+    </ng-container>
+  </select>
+
+  <span>New lang:</span>
+</div>
+
+<div aria-multiselectable="true" class="panel-group" id="accordion" role="tablist">
+  <div class="panel panel-default" *ngFor="let lng of existingLangKeys">
+    <div class="panel-heading" id="headingOne" role="tab">
+      <a aria-controls="collapseOne" aria-expanded="false" data-parent="#accordion" data-toggle="collapse" href="#collapse{{lng}}"
+        role="button" class="collapsed">
+        <div class="text-success">
+          {{langs[lng]}}
+          <i class="material-icons">keyboard_arrow_down</i>
+        </div>
+      </a>
+    </div>
+    <div aria-labelledby="headingOne" class="panel-collapse collapse" id="collapse{{lng}}" role="tabpanel" aria-expanded="false"
+      style="height: 0px;">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">Title</label>
+              <input class="form-control" type="text" [(ngModel)]="hikeData.title[lng]">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">Description</label>
+              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng]">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">Summary</label>
+              <input class="form-control" type="text" [(ngModel)]="hikeData.summary[lng]">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

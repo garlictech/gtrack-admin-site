@@ -1,90 +1,51 @@
-import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import {
-  LeafletComponent,
-  Map,
-  MapService,
-  Center
-} from '../../../subrepos/gtrack-common-ngx/app';
-import { State, GtActions } from '../../store';
+
+import { State, Actions } from '../../store';
 import { HikeDataService } from '../../shared/services';
 import { IMockHikeElement } from '../../shared/interfaces';
-import { AdminLeafletComponent } from '../../shared/components/admin-leaflet';
-import { LeafletMouseEvent } from 'leaflet';
-import * as turf from '@turf/turf';
+
 declare const $: any;
-
-const CENTER = <Center>{
-  lat: 51.505,
-  lng: -0.09,
-  zoom: 14
-};
-
-const LAYERS = [{
-  name: 'street',
-  url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-}, {
-  name: 'topo',
-  url: 'https://opentopomap.org/{z}/{x}/{y}.png'
-}];
-
-const OVERLAYS = [{
-  name: 'trails',
-  url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
-}];
-
-// TODO: load from config?
-const LANGS = {
-  en_US: 'English (US)',
-  hu_HU: 'Hungarian',
-  de_DE: 'German',
-  fr_FR: 'French',
-  it_IT: 'Italian'
-};
 
 @Component({
   selector: 'gt-hike-edit',
   templateUrl: './hike-edit.component.html',
   styleUrls: ['./hike-edit.component.scss']
 })
-export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('map') mapComponent: AdminLeafletComponent;
+export class HikeEditComponent implements OnInit, OnDestroy {
   private _routeSubscription: Subscription;
-  private _mode = 'routing';
-  private _bufferShown = false;
-  private _geoJsonOnMap: L.GeoJSON;
   public hikeData: IMockHikeElement = null;
-  public existingLangKeys: Set<string>;
-  public center: Center = CENTER;
-  public layers = LAYERS;
-  public overlays = OVERLAYS;
-  public langs = LANGS;
-  public selLang: string = null;
 
   constructor(
     private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
     private _hikeDataService: HikeDataService,
+    private _actions: Actions,
     private _title: Title
   ) {}
 
   ngOnInit() {
-    this._initHike();
-
     $.material.options.autofill = true;
     $.material.init();
-  }
 
-  ngAfterViewInit() {
-    this.mapComponent.leafletMap.on('click', (e: LeafletMouseEvent) => {
-      if (this._mode === 'routing') {
-          this.mapComponent.map.waypointMarker.addWaypoint(e.latlng);
+    this._routeSubscription = this._activatedRoute.params.subscribe(params => {
+      // Load hike data from mock DB
+      if (params && params.id) {
+        this._title.setTitle('Edit hike');
+
+        this.hikeData = this._hikeDataService.getHike(params.id);
+      // Create new hike
       } else {
-        console.log('todo _createCheckpoint');
-        // this._createCheckpoint(e.latlng);
+        this._title.setTitle('New hike');
+
+        this.hikeData = {
+          title: {},
+          description: {},
+          summary: {}
+        };
       }
     });
   }
@@ -95,79 +56,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private _initHike() {
-    this._routeSubscription = this._activatedRoute.params.subscribe(params => {
-      // Load hike data from mock DB
-      if (params && params.id) {
-        this._title.setTitle('Edit hike');
-
-        this.hikeData = this._hikeDataService.getHike(params.id);
-
-        // Get filled lang keys
-        this.existingLangKeys = new Set([
-          ...Object.keys(this.hikeData.title),
-          ...Object.keys(this.hikeData.description)
-        ]);
-      // Create new hike
-      } else {
-        this._title.setTitle('New hike');
-
-        this.hikeData = {
-          title: {},
-          description: {},
-          summary: {}
-        };
-
-        this.existingLangKeys = new Set([]);
-      }
-    });
-  }
-
-  public addTranslation() {
-    if (this.selLang) {
-      this.hikeData.title[this.selLang] = '';
-      this.hikeData.description[this.selLang] = '';
-      this.hikeData.summary[this.selLang] = '';
-
-      this.existingLangKeys.add(this.selLang);
-
-      this.selLang = null;
-    }
-  }
-
-  public removeLast() {
-    this.mapComponent.map.waypointMarker.deleteLast();
-  }
-
-  public closeCircle() {
-    this.mapComponent.map.waypointMarker.closeCircle();
-  }
-
-  public deletePlan() {
-    this.mapComponent.map.routeInfo.deletePlan();
-    this.mapComponent.map.waypointMarker.reset();
-    this.mapComponent.map.routingControl.clearControls();
-  }
-
-  private _getBuffer() {
-    let buffer: GeoJSON.Feature<GeoJSON.Polygon> = turf.buffer(this.mapComponent.map.routeInfo.getPath(), 50, 'meters');
-    buffer.properties.name = 'buffer polygon';
-    buffer.properties.draw_type = 'small_buffer';
-
-    return buffer;
-  }
-
-  public buffer() {
-    this._bufferShown = !this._bufferShown;
-
-    if (this._bufferShown) {
-      this._geoJsonOnMap = this.mapComponent.map.addGeoJSON(this._getBuffer());
-    } else {
-      this.mapComponent.map.removeGeoJSON(this._geoJsonOnMap);
-    }
-  }
-
   public save() {
-    this._store.dispatch(new GtActions.SaveHikeAction(this.hikeData));
+    this._store.dispatch(this._actions.saveHike(this.hikeData));
   }
 }
