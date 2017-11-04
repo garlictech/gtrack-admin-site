@@ -18,7 +18,7 @@ export class RouteInfoData {
     this.track = {};
   }
 
-  public addTrack(track: any) {
+  public addTrack(track: GeoJSON.FeatureCollection<any>) {
     this.track = track;
     this.track.bounds = this._routeService.getBounds(track);
   }
@@ -35,7 +35,7 @@ export class RouteInfoData {
     this._calculateTotal();
   }
 
-  private _setLocation(location) {
+  public setLocation(location) {
     this.location = location;
   }
 

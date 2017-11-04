@@ -1,6 +1,7 @@
 /* OLD: RouteService  */
 import { AdminMap } from './admin-map';
 import { RoutePlanner } from './route-planner';
+import { RouteInfoData } from './route-info-data';
 import {
   GameRuleService,
   RouteService
@@ -24,10 +25,6 @@ export class RouteInfo {
     this._getSavedTrack(hike)
   }
 
-  public newPlan() {
-    this.planner = new RoutePlanner(this._gameRuleService, this._routeService);
-  }
-
   private saveTrack(hike: any) {
     console.log('TODO saveTrack');
     /*
@@ -38,10 +35,6 @@ export class RouteInfo {
       this._getSavedTrack(hike);
     });
     */
-  }
-
-  public deletePlan() {
-    delete this.planner;
   }
 
   private _getSearchBounds() {
@@ -67,25 +60,39 @@ export class RouteInfo {
     }
   }
 
-  public getPath() {
-    return this._getRoute().track.features[0];
-  }
-
-  private _getTrack() {
+  public getTrack() {
     return this._getRoute().track;
   }
 
   private _getSavedTrack(hike) {
-    /*
-    TrackService.get(hike.trackId).then((track) =>
-      route = new Route()
-      route.addTrack track.geojson
-      route.pushSegment segment.toNext for segment in hike.routePoints
-      route.setLocation hike.location
-      @savedRoute = route
+    this._routeService.get(hike.trackId).take(1).subscribe(track => {
+      let route = new RouteInfoData(this._routeService);
+      route.addTrack(track.geojson);
+
+      // route.pushSegment segment.toNext for segment in hike.routePoints
+
+      route.setLocation(hike.location);
+
+      this._savedRoute = route;
+
+      /*
       MapService.addTrackObject(track).then (leafletLayers) =>
         @_savedMapTrack = leafletLayers
-    })
-    */
+      })
+      */
+    });
+  }
+
+  public newPlan() {
+    this.planner = new RoutePlanner(this._gameRuleService, this._routeService);
+  }
+
+  public deletePlan() {
+    delete this.planner;
+  }
+
+  public getPath() {
+    // Feature[0] contains the features[0]
+    return this._getRoute().track.features[0];
   }
 }

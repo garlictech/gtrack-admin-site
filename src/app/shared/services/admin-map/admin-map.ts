@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { State } from '../../../store';
+import { State, Actions } from '../../../store';
 import { RoutingControl } from './routing-control';
 import { WaypointMarker } from './waypoint-marker';
 import { RouteInfo } from './route-info';
@@ -27,7 +27,8 @@ export class AdminMap extends Map {
     private _store: Store<State>,
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
-    private _elevationService: ElevationService
+    private _elevationService: ElevationService,
+    private _actions: Actions
   ) {
     super(map, iconService, mapMarkerService);
 
@@ -41,7 +42,8 @@ export class AdminMap extends Map {
       this._store,
       this._elevationService,
       this._routeService,
-      this._routeInfo
+      this._routeInfo,
+      this._actions
     );
 
     this._waypointMarker = new WaypointMarker(
@@ -60,6 +62,19 @@ export class AdminMap extends Map {
 
   public get waypointMarker(): WaypointMarker {
     return this._waypointMarker;
+  }
+
+  public addGeoJSON(geojson) {
+    const res = L.geoJSON(geojson, {
+      style: this._geoJsonStyle(geojson),
+      onEachFeature: this._propagateClick
+    });
+    res.addTo(this.leafletMap);
+    return res;
+  }
+
+  public removeGeoJSON(geojson) {
+    this.map.removeLayer(geojson);
   }
 
   private _geoJsonStyle(feature) {
@@ -89,18 +104,5 @@ export class AdminMap extends Map {
         containerPoint: this.map.latLngToContainerPoint(event.latlng)
       });
     });
-  }
-
-  public addGeoJSON(geojson) {
-    const res = L.geoJSON(geojson, {
-      style: this._geoJsonStyle(geojson),
-      onEachFeature: this._propagateClick
-    });
-    res.addTo(this.leafletMap);
-    return res;
-  }
-
-  public removeGeoJSON(geojson) {
-    this.map.removeLayer(geojson);
   }
 }
