@@ -7,11 +7,18 @@ import { MapMarkerService } from '../map-marker';
 
 @Injectable()
 export class MapService {
+  protected _maps: {[id: string]: Map} = {};
 
   constructor(protected iconService: IconService, protected mapMarkerService: MapMarkerService) { }
 
-  get(map: L.Map): Map {
-    return new Map(map, this.iconService, this.mapMarkerService);
+  get(leafletMap: L.Map, id: string): Map {
+    const map = new Map(leafletMap, this.iconService, this.mapMarkerService);
+    this._maps[id] = map;
+    return map;
+  }
+
+  getMapById(id: string) {
+    return this._maps[id];
   }
 }
 

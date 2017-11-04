@@ -94,6 +94,6 @@ export class LeafletComponent implements AfterViewInit {
     });
 
     this.control = L.control.layers(this.baseLayers, this.overlayLayers).addTo(this.leafletMap);
-    this.map = this.mapService.get(this.leafletMap);
+    this.map = this.mapService.get(this.leafletMap, this.id);
   }
 }
