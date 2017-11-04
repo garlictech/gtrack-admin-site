@@ -1,63 +1,73 @@
+import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { IMockHikeElement } from '../shared/interfaces';
 
-/**
- * LAYOUT
- */
+@Injectable()
+export class Actions {
+  // Layout
+  static OPEN_SIDENAV = '[Layout] Open Sidenav';
+  static CLOSE_SIDENAV = '[Layout] Close Sidenav';
+  // Hike Edit - todo: deprecated
+  static SAVE_HIKE = '[Hike] Save hike';
+  static DELETE_HIKE = '[Hike] Delete hike';
+  // Routing
+  static ROUTING_START = '[Routing] Start';
+  static ROUTING_FINISHED = '[Routing] Finished';
+  static ROUTING_ERROR = '[Routing] Error';
 
-export const OPEN_SIDENAV = '[Layout] Open Sidenav';
-export const CLOSE_SIDENAV = '[Layout] Close Sidenav';
+  /**
+   * LAYOUT
+   */
 
-export class OpenSidenavAction implements Action {
-  readonly type = OPEN_SIDENAV;
+  openSidenav(): Action {
+    return {
+      type: Actions.OPEN_SIDENAV
+    };
+  }
+
+  closeSidenav(): Action {
+    return {
+      type: Actions.CLOSE_SIDENAV
+    };
+  }
+
+  /**
+   * HIKE EDIT
+   */
+
+  saveHike(hike: IMockHikeElement): Action {
+    return {
+      type: Actions.SAVE_HIKE,
+      payload: hike
+    };
+  }
+
+  deleteHike(hikeId: string): Action {
+    return {
+      type: Actions.DELETE_HIKE,
+      payload: hikeId
+    };
+  }
+
+  /**
+   * ROUTING
+   */
+
+  routingStart(): Action {
+    return {
+      type: Actions.ROUTING_START
+    };
+  }
+
+  routingFinished(): Action {
+    return {
+      type: Actions.ROUTING_FINISHED
+    };
+  }
+
+  routingError(): Action {
+    return {
+      type: Actions.ROUTING_ERROR
+    };
+  }
 }
-
-export class CloseSidenavAction implements Action {
-  readonly type = CLOSE_SIDENAV;
-}
-
-/**
- * HIKE EDIT
- */
-
-export const SAVE_HIKE = '[Hike] Save hike';
-export const DELETE_HIKE = '[Hike] Delete hike';
-
-export class SaveHikeAction implements Action {
-  readonly type = SAVE_HIKE;
-  constructor(public payload: IMockHikeElement) {}
-}
-
-export class DeleteHikeAction implements Action {
-  readonly type = DELETE_HIKE;
-  constructor(public payload: string) {}
-}
-
-/**
- * ROUTING
- */
-
-export const ROUTING_START = '[Routing] Start';
-export const ROUTING_FINISHED = '[Routing] Finished';
-export const ROUTING_ERROR = '[Routing] Error';
-
-export class RoutingStartAction implements Action {
-  readonly type = ROUTING_START;
-}
-
-export class RoutingFinishedAction implements Action {
-  readonly type = ROUTING_FINISHED;
-}
-
-export class RoutingErrorAction implements Action {
-  readonly type = ROUTING_ERROR;
-}
-
-export type Actions =
-  | OpenSidenavAction
-  | CloseSidenavAction
-  | SaveHikeAction
-  | DeleteHikeAction
-  | RoutingStartAction
-  | RoutingFinishedAction
-  | RoutingErrorAction;
