@@ -33,7 +33,7 @@ describe('PasswordlessService', () => {
   config.magiclink = passwordlessConfig;
 
   let user = {
-    _id: '1',
+    id: '1',
     email: 'test@test.com',
     provider: 'passwordless'
   };
@@ -154,6 +154,9 @@ describe('PasswordlessService', () => {
       connection.mockRespond(response);
     });
 
-    passwordless.callback('xac32k', 'test@test.com').then(done).catch(err => done.fail(err));
+    passwordless
+      .callback('xac32k', 'test@test.com')
+      .then(done)
+      .catch(err => done.fail(err));
   });
 });

@@ -53,7 +53,7 @@ export class AuthenticationApiModule {
 export * from './config';
 
 export interface User {
-  _id: string;
+  id: string;
   createdAt: Date;
   email: string;
   facebookId: string;

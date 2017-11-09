@@ -136,7 +136,7 @@ describe('TwitterService', () => {
         new Response(
           new ResponseOptions({
             body: {
-              _id: '1',
+              id: '1',
               provider: 'twitter',
               email: 'test@test.com'
             }
@@ -150,7 +150,7 @@ describe('TwitterService', () => {
       .then(auth => {
         let user = auth.user;
 
-        expect(user._id).toEqual('1');
+        expect(user.id).toEqual('1');
         expect(user.email).toEqual('test@test.com');
 
         done();
@@ -220,7 +220,7 @@ describe('TwitterService', () => {
         new Response(
           new ResponseOptions({
             body: {
-              _id: '1',
+              id: '1',
               provider: 'twitter',
               email: 'test@test.com'
             }
@@ -240,7 +240,7 @@ describe('TwitterService', () => {
       .then(auth => {
         let user = auth.user;
 
-        expect(user._id).toEqual('1');
+        expect(user.id).toEqual('1');
         expect(user.email).toEqual('test@test.com');
 
         done();

@@ -6,6 +6,6 @@
 [subrepo]
 	remote = https://github.com/garlictech/authentication-api-ngx.git
 	branch = master
-	commit = 6c4294df1a176097c49b5bee4904bcb7c7cf65ce
-	parent = 200df0c6f8d90f7ab6ae97477a14758db56ea1fb
+	commit = c671da506b8e714fcd3dcbb8d8746a184d474caf
+	parent = 324b1cee99e2bfbbf03194903d63f4bd14af7d7b
 	cmdver = 0.3.1

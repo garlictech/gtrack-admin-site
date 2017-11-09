@@ -33,7 +33,7 @@ describe('AuthService', () => {
   let reducer = {};
 
   let user = {
-    _id: '1',
+    id: '1',
     email: 'test@test.com',
     provider: 'facebook'
   };
@@ -203,7 +203,7 @@ describe('AuthService', () => {
       .init('token')
       .then(auth => {
         let responseUser = auth.user;
-        expect(responseUser._id).toEqual(user._id);
+        expect(responseUser.id).toEqual(user.id);
         done();
       })
       .catch(err => done.fail(err));
@@ -236,7 +236,7 @@ describe('AuthService', () => {
         expect(firebaseLoginSpy.calls.count()).toBe(0);
         expect(auth.firebaseUser).toBeNull();
         expect(auth.firebaseToken).toBeNull();
-        expect(auth.user._id).toEqual(user._id);
+        expect(auth.user.id).toEqual(user.id);
 
         done();
       })
@@ -266,7 +266,7 @@ describe('AuthService', () => {
     authService
       .init('token')
       .then(auth => {
-        expect(auth.user._id).toEqual(user._id);
+        expect(auth.user.id).toEqual(user.id);
         done();
       })
       .catch(err => done.fail(err));
