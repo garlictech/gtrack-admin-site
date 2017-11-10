@@ -42,21 +42,24 @@ export class HikeEditMapEffects {
       });
 
   @Effect()
-  toggleBuffer$: Observable<Action> = this._actions$
-    .ofType(HikeEditMapActions.TOGGLE_BUFFER)
+  addGeoJson$: Observable<Action> = this._actions$
+    .ofType(HikeEditMapActions.ADD_GEOJSON)
     .withLatestFrom(this._store)
     .map(([action, state]) => state)
     .switchMap(state => {
       const adminMap: AdminMap = this._adminMapService.getMapById(state.hikeEditMap.mapId);
+      const geoJson = adminMap.addGeoJSON(adminMap.getBuffer());
+      return Observable.of(this._hikeEditMapActions.geoJsonAdded(geoJson));
+    });
 
-      if (state.hikeEditMap.bufferShown) {
-        return Observable.of(this._hikeEditMapActions.geoJsonAdded(
-          // Payload is the returned geojson object
-          adminMap.addGeoJSON(adminMap.getBuffer())
-        ));
-      } else {
+  @Effect()
+    removeGeoJson$: Observable<Action> = this._actions$
+      .ofType(HikeEditMapActions.REMOVE_GEOJSON)
+      .withLatestFrom(this._store)
+      .map(([action, state]) => state)
+      .switchMap(state => {
+        const adminMap: AdminMap = this._adminMapService.getMapById(state.hikeEditMap.mapId);
         adminMap.removeGeoJSON(state.hikeEditMap.geoJsonOnMap);
         return Observable.of(this._hikeEditMapActions.geoJsonRemoved());
-      }
-    });
+      });
 }

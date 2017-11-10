@@ -35,6 +35,7 @@ export { HikeEditRoutePlanningEffects } from './hike-edit-route-planning';
 // States
 import { ILayoutState, layoutDomain } from './layout/state';
 import { IHikeEditMapState, hikeEditMapDomain } from './hike-edit-map';
+export { IHikeEditMapState }
 
 // Reducers
 import { layoutReducer } from './layout/reducer';

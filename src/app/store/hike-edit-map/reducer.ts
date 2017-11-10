@@ -22,15 +22,17 @@ export function hikeEditMapReducer(state = initialState, action: Action): IHikeE
         ...state,
         mode: action.payload
       };
-    case HikeEditMapActions.TOGGLE_BUFFER:
-      return {
-        ...state,
-        bufferShown: !state.bufferShown
-      };
     case HikeEditMapActions.GEOJSON_ADDED:
       return {
         ...state,
+        bufferShown: true,
         geoJsonOnMap: action.payload
+      };
+    case HikeEditMapActions.GEOJSON_REMOVED:
+      return {
+        ...state,
+        bufferShown: false,
+        geoJsonOnMap: null
       };
     default:
       return state;

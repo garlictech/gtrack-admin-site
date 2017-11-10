@@ -4,7 +4,7 @@ import { Center } from '../../../../../subrepos/gtrack-common-ngx/app';
 import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import { State, HikeEditMapActions } from '../../../../store';
+import { State, HikeEditMapActions, IHikeEditMapState } from '../../../../store';
 import { LeafletMouseEvent } from 'leaflet';
 import * as turf from '@turf/turf';
 
@@ -38,8 +38,8 @@ export class HikeEditMapComponent implements AfterViewInit {
   public center: Center = CENTER;
   public layers = LAYERS;
   public overlays = OVERLAYS;
-  private _mode$: Observable<string>;
   public mode: string;
+  private _mode$: Observable<string>;
 
   constructor(
     private _store: Store<State>,
@@ -79,40 +79,35 @@ export class HikeEditMapComponent implements AfterViewInit {
 
   public toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
+
     this._store.dispatch(this._actions.toggleCurrentPositionMarker());
   }
 
   public resetMap($event: Event) {
     $event.stopPropagation();
+
     this._store.dispatch(this._actions.resetMap());
   }
 
   public buffer($event: Event) {
     $event.stopPropagation();
-    this._store.dispatch(this._actions.toggleBuffer());
 
-    /*
-    this._bufferShown = !this._bufferShown;
+    this._store.select((state: State) => state.hikeEditMap)
+      .take(1)
+      .subscribe((hikeEditMapState: IHikeEditMapState) => {
+        console.log('hikeEditMapState', hikeEditMapState);
 
-    if (this._bufferShown) {
-      this._geoJsonOnMap = this.mapComponent.map.addGeoJSON(this._getBuffer());
-      console.log('this._geoJsonOnMap ', this._geoJsonOnMap );
-    } else {
-      this.mapComponent.map.removeGeoJSON(this._geoJsonOnMap);
-    }
-    */
+        if (hikeEditMapState.bufferShown) {
+          this._store.dispatch(this._actions.removeGeoJson(hikeEditMapState.geoJsonOnMap));
+        } else {
+          this._store.dispatch(this._actions.addGeoJson());
+        }
+      });
   }
 
   public setMode($event: Event, mode: string) {
     $event.stopPropagation();
+
     this._store.dispatch(this._actions.setMode(mode));
-  }
-
-  private _getBuffer() {
-    let buffer: GeoJSON.Feature<GeoJSON.Polygon> = turf.buffer(this.mapComponent.map.routeInfo.getPath(), 50, 'meters');
-    buffer.properties.name = 'buffer polygon';
-    buffer.properties.draw_type = 'small_buffer';
-
-    return buffer;
   }
 }
