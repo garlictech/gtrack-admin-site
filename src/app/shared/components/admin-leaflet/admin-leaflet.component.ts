@@ -7,8 +7,6 @@ import { LeafletComponent } from '../../../../subrepos/gtrack-common-ngx/app';
   template: '<div #map class="angular-leaflet-map"><ng-content></ng-content></div>'
 })
 export class AdminLeafletComponent extends LeafletComponent implements AfterViewInit {
-  @Input()
-  public id = 'admin-map';
   public map: AdminMap;
 
   constructor(private adminMapService: AdminMapService) {

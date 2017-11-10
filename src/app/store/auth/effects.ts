@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import { Actions as AuthActions } from '../../subrepos/authentication-api-ngx';
-import { Actions as GtActions } from './actions';
+import { Actions as AuthActions } from '../../../subrepos/authentication-api-ngx';
 import { go } from '@ngrx/router-store';
 import { Router } from '@angular/router';
 
 @Injectable()
-export class Effects {
+export class AuthEffects {
   constructor(
     private _actions$: Actions,
     private _router: Router
@@ -43,23 +42,5 @@ export class Effects {
     .map(toPayload)
     .switchMap(data => {
       return Observable.of(go(['/login']));
-    });
-
-  // Save hike
-  @Effect()
-  saveHike$: Observable<Action> = this._actions$
-    .ofType(GtActions.SAVE_HIKE)
-    .map(toPayload)
-    .switchMap(data => {
-      return Observable.empty<Response>();
-    });
-
-  // Delete hike
-  @Effect()
-  deleteHike$: Observable<Action> = this._actions$
-    .ofType(GtActions.DELETE_HIKE)
-    .map(toPayload)
-    .switchMap(data => {
-      return Observable.empty<Response>();
     });
 }

@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { State, Actions } from '../../../store';
+import { State, RoutingActions } from '../../../store';
 import { RoutingControl } from './routing-control';
 import { WaypointMarker } from './waypoint-marker';
 import { RouteInfo } from './route-info';
@@ -13,6 +13,7 @@ import {
   ElevationService
 } from '../../../../subrepos/gtrack-common-ngx/app';
 import * as L from 'leaflet';
+import * as turf from '@turf/turf';
 
 export class AdminMap extends Map {
   private _routingControl: RoutingControl;
@@ -21,6 +22,7 @@ export class AdminMap extends Map {
   private _routePlanner: RoutePlanner;
 
   constructor(
+    public id: string,
     protected map: L.Map,
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
@@ -28,9 +30,9 @@ export class AdminMap extends Map {
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
     private _elevationService: ElevationService,
-    private _actions: Actions
+    private _routingActions: RoutingActions
   ) {
-    super(map, iconService, mapMarkerService);
+    super(id, map, iconService, mapMarkerService);
 
     this._routeInfo = new RouteInfo(
       this._gameRuleService,
@@ -43,7 +45,7 @@ export class AdminMap extends Map {
       this._elevationService,
       this._routeService,
       this._routeInfo,
-      this._actions
+      this._routingActions
     );
 
     this._waypointMarker = new WaypointMarker(
@@ -62,6 +64,14 @@ export class AdminMap extends Map {
 
   public get waypointMarker(): WaypointMarker {
     return this._waypointMarker;
+  }
+
+  public getBuffer() {
+    let buffer: GeoJSON.Feature<GeoJSON.Polygon> = turf.buffer(this._routeInfo.getPath(), 50, 'meters');
+    buffer.properties.name = 'buffer polygon';
+    buffer.properties.draw_type = 'small_buffer';
+
+    return buffer;
   }
 
   public addGeoJSON(geojson) {

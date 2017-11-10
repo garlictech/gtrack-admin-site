@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { State, Actions } from '../../../store';
+import { State, RoutingActions } from '../../../store';
 import { environment } from '../../../../environments/environment';
 import { RouteInfo } from './route-info';
 import {
@@ -23,7 +23,7 @@ export class RoutingControl {
     private _elevationService: ElevationService,
     private _routeService: RouteService,
     private _routeInfo: RouteInfo,
-    private _actions: Actions,
+    private _routingActions: RoutingActions,
   ) {
     this._reset();
   }
@@ -102,7 +102,7 @@ export class RoutingControl {
     control.hide();
 
     control.on('routingstart', () => {
-      this._store.dispatch(this._actions.routingStart());
+      this._store.dispatch(this._routingActions.routingStart());
       this._leafletMap.spin(true);
     });
 
@@ -114,16 +114,16 @@ export class RoutingControl {
         };
         this._routeInfo.planner.addRouteSegment(data, e.routes[0].summary, upDown);
 
-        this._store.dispatch(this._actions.routingFinished());
+        this._store.dispatch(this._routingActions.routingFinished());
         this._leafletMap.spin(false);
       }).catch(() => {
-        this._store.dispatch(this._actions.routingError());
+        this._store.dispatch(this._routingActions.routingError());
         this._leafletMap.spin(false);
       });
     });
 
     control.on('routingerror', (e) => {
-      this._store.dispatch(this._actions.routingError());
+      this._store.dispatch(this._routingActions.routingError());
       this._leafletMap.spin(false);
     });
 

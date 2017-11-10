@@ -1,18 +1,18 @@
 import { Action } from '@ngrx/store';
-import { Actions } from './actions';
+import { LayoutActions } from './actions';
 import { ILayoutState } from './state';
 
-const initialLayoutState: ILayoutState = {
+const initialState: ILayoutState = {
   showSidenav: false,
 };
 
-export function layoutReducer(state = initialLayoutState, action: Action): ILayoutState {
+export function layoutReducer(state = initialState, action: Action): ILayoutState {
   switch (action.type) {
-    case Actions.CLOSE_SIDENAV:
+    case LayoutActions.CLOSE_SIDENAV:
       return {
         showSidenav: false,
       };
-    case Actions.OPEN_SIDENAV:
+    case LayoutActions.OPEN_SIDENAV:
       return {
         showSidenav: true,
       };

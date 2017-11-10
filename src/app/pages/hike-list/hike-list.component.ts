@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
-import { State, Actions } from '../../store';
 
 import { HikeDataService } from '../../shared/services';
 
@@ -14,10 +12,8 @@ export class HikeListComponent implements OnInit {
   hikeList: any[];
 
   constructor(
-    private _store: Store<State>,
     private _hikeDataService: HikeDataService,
-    private _title: Title,
-    private _actions: Actions
+    private _title: Title
   ) {}
 
   ngOnInit() {
@@ -26,6 +22,6 @@ export class HikeListComponent implements OnInit {
   }
 
   deleteHike(hikeId) {
-    this._store.dispatch(this._actions.deleteHike(hikeId));
+    // this._store.dispatch(this._actions.deleteHike(hikeId));
   }
 }
