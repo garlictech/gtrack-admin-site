@@ -18,6 +18,8 @@ import {
 // Actions
 import { AdminMapActions } from './admin-map';
 export { AdminMapActions };
+import { RouteInfoDataActions } from './admin-map-route-info-data';
+export { RouteInfoDataActions };
 import { LayoutActions } from './layout';
 export { LayoutActions };
 import { RoutingActions } from './routing';
@@ -29,15 +31,21 @@ export { HikeEditRoutePlanningActions };
 
 // Effects
 export { AuthEffects } from './auth';
+export { RouteInfoDataEffects } from './admin-map-route-info-data';
 export { HikeEditMapEffects } from './hike-edit-map';
 export { HikeEditRoutePlanningEffects } from './hike-edit-route-planning';
 
 // States
+import { IRouteInfoDataState, routeInfoDataDomain } from './admin-map-route-info-data/state';
+export { IRouteInfoDataState }
 import { ILayoutState, layoutDomain } from './layout/state';
+export { ILayoutState }
 import { IHikeEditMapState, hikeEditMapDomain } from './hike-edit-map';
 export { IHikeEditMapState }
 
 // Reducers
+import { routeInfoDataReducer } from './admin-map-route-info-data/reducer';
+export { routeInfoDataReducer };
 import { layoutReducer } from './layout/reducer';
 export { layoutReducer };
 import { hikeEditMapReducer } from './hike-edit-map';
@@ -49,12 +57,14 @@ let reducers = {
   'deepstream': deepstreamReducer
 };
 reducers[authDomain] = authReducer;
+reducers[routeInfoDataDomain] = routeInfoDataReducer;
 reducers[layoutDomain] = layoutReducer;
 reducers[hikeEditMapDomain] = hikeEditMapReducer;
 
 // Extend the store interface with that.
 export interface State {
   authentication: IAuthenticationState;
+  routeInfoData: IRouteInfoDataState;
   layout: ILayoutState;
   hikeEditMap: IHikeEditMapState;
   router: RouterState; // ngrx/router

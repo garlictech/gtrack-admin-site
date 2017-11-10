@@ -5,3 +5,35 @@
   <button class="btn btn-sm btn-white" (click)="deletePlan()">Delete plan</button>
   <button class="btn btn-sm btn-white" (click)="saveRoute()">Save route</button>
 </div>
+
+<!--pre>{{routeInfoData$ | async | json }}</pre-->
+
+<table class="table table-hover">
+  <thead class="text-success">
+    <tr>
+      <th>Distance</th>
+      <th>Time</th>
+      <th>Uphill</th>
+      <th>Downhill</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let segment of (routeInfoData$ | async)?.segments; let idx = index">
+      <td>{{idx + 1}}</td>
+      <td>{{segment.distance}}</td>
+      <td>{{segment.time}}</td>
+      <td>{{segment.uphill}}</td>
+      <td>{{segment.downhill}}</td>
+      <td>{{segment.score}}</td>
+    </tr>
+    <tr>
+      <td>Total</td>
+      <td>{{(routeInfoData$ | async)?.total.distance}}</td>
+      <td>{{(routeInfoData$ | async)?.total.time}}</td>
+      <td>{{(routeInfoData$ | async)?.total.uphill}}</td>
+      <td>{{(routeInfoData$ | async)?.total.downhill}}</td>
+      <td>{{(routeInfoData$ | async)?.total.score}}</td>
+    </tr>
+  </tbody>
+</table>

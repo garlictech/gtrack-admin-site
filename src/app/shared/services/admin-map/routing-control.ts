@@ -29,17 +29,20 @@ export class RoutingControl {
   }
 
   private _reset() {
+    console.log('RoutingControl._reset');
     this._controls = [];
     this._coordinates = [];
   }
 
   public clearControls() {
+    console.log('RoutingControl.clearControls');
     while (this._controls.length > 0) {
       this.pop();
     }
   }
 
   public getActualControl() {
+    console.log('RoutingControl.getActualControl');
     return this._controls[this._controls.length - 1];
   }
 
@@ -50,42 +53,46 @@ export class RoutingControl {
   */
 
   public getControl(index) {
+    console.log('RoutingControl.getControl');
     return this._controls[index];
   }
 
   public pop() {
-    const indexToRemove = this._controls.length - 1;
-    const control = this._controls.pop();
+    console.log('RoutingControl.pop');
+    const _indexToRemove = this._controls.length - 1;
+    const _control = this._controls.pop();
 
-    this._leafletMap.removeControl(control);
+    this._leafletMap.removeControl(_control);
 
     if (this._routeInfo.planner) {
       this._routeInfo.planner.removeLastSegment();
     }
 
-    return control;
+    return _control;
   }
 
   private _createMarker(name, latLng) {
-    const icon = L.divIcon({
+    console.log('RoutingControl._createMarker');
+    const _icon = L.divIcon({
       html: `<span>${name}</span>`,
       iconSize: [25, 41],
       iconAnchor: [13, 41]
     });
 
-    const marker = L.marker(latLng, {
+    const _marker = L.marker(latLng, {
       opacity: 1,
       draggable: true,
-      icon: icon
+      icon: _icon
     });
 
-    marker.addTo(this._leafletMap);
+    _marker.addTo(this._leafletMap);
 
-    return marker;
+    return _marker;
   }
 
   public addNew() {
-    const control: L.Routing.Control = new L.Routing.Control({
+    console.log('RoutingControl.addNew (control)');
+    const _control: L.Routing.Control = new L.Routing.Control({
       routeWhileDragging: true,
       autoRoute: false,
       fitSelectedRoutes: 'smart',
@@ -98,22 +105,21 @@ export class RoutingControl {
       })
     });
 
-    control.addTo(this._leafletMap);
-    control.hide();
+    _control.addTo(this._leafletMap);
+    _control.hide();
 
-    control.on('routingstart', () => {
+    _control.on('routingstart', () => {
       this._store.dispatch(this._routingActions.routingStart());
       this._leafletMap.spin(true);
     });
 
-    control.on('routesfound', (e) => {
+    _control.on('routesfound', (e) => {
       this._elevationService.getData(e.routes[0].coordinates).then(data => {
         const upDown = {
           uphill: this._elevationService.calculateUphill(data),
           downhill: this._elevationService.calculateDownhill(data)
         };
         this._routeInfo.planner.addRouteSegment(data, e.routes[0].summary, upDown);
-
         this._store.dispatch(this._routingActions.routingFinished());
         this._leafletMap.spin(false);
       }).catch(() => {
@@ -122,13 +128,13 @@ export class RoutingControl {
       });
     });
 
-    control.on('routingerror', (e) => {
+    _control.on('routingerror', (e) => {
       this._store.dispatch(this._routingActions.routingError());
       this._leafletMap.spin(false);
     });
 
-    this._controls.push(control);
+    this._controls.push(_control);
 
-    return control;
+    return _control;
   }
 }

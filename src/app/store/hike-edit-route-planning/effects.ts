@@ -11,51 +11,6 @@ export class HikeEditRoutePlanningEffects {
   ) {}
 
   @Effect()
-  retrievePlan$: Observable<Action> = this._actions$
-    .ofType(HikeEditRoutePlanningActions.RETRIEVE_PLAN)
-    .map(toPayload)
-    .switchMap(data => {
-      console.log('EFFECT for HikeEditRoutePlanningActions.RETRIEVE_PLAN');
-      /*
-      if (this._router.url === '/login') {
-        return Observable.of(go(['/']));
-      } else {
-        return Observable.empty<Response>();
-      }*/
-      return Observable.empty<Response>();
-    });
-
-  @Effect()
-    removeLast$: Observable<Action> = this._actions$
-      .ofType(HikeEditRoutePlanningActions.REMOVE_LAST)
-      .map(toPayload)
-      .switchMap(data => {
-        console.log('EFFECT for HikeEditRoutePlanningActions.REMOVE_LAST');
-
-        return Observable.empty<Response>();
-      });
-
-  @Effect()
-    closeCircle$: Observable<Action> = this._actions$
-      .ofType(HikeEditRoutePlanningActions.CLOSE_CIRCLE)
-      .map(toPayload)
-      .switchMap(data => {
-        console.log('EFFECT for HikeEditRoutePlanningActions.CLOSE_CIRCLE');
-
-        return Observable.empty<Response>();
-      });
-
-  @Effect()
-    deletePlan$: Observable<Action> = this._actions$
-      .ofType(HikeEditRoutePlanningActions.DELETE_PLAN)
-      .map(toPayload)
-      .switchMap(data => {
-        console.log('EFFECT for HikeEditRoutePlanningActions.DELETE_PLAN');
-
-        return Observable.empty<Response>();
-      });
-
-  @Effect()
     saveRoute$: Observable<Action> = this._actions$
       .ofType(HikeEditRoutePlanningActions.SAVE_ROUTE)
       .map(toPayload)

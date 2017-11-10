@@ -18,27 +18,39 @@ export class RouteInfoData {
     this.track = {};
   }
 
+  /*
   public addTrack(track: GeoJSON.FeatureCollection<any>) {
+    console.log('RouteInfoData.addTrack', track);
     this.track = track;
     this.track.bounds = this._routeService.getBounds(track);
   }
 
+
   public pushSegment(s: ISegment) {
+    console.log('RouteInfoData.pushSegment', s);
     if (s) {
       this.segments.push(s);
       this._calculateTotal();
     }
   }
 
+  */
+  /*
   public popSegment() {
+    console.log('RouteInfoData.popSegment');
     this.segments.pop();
     this._calculateTotal();
   }
+  */
 
   public setLocation(location) {
+    console.log('RouteInfoData.setLocation', location);
     this.location = location;
   }
 
+  /**
+   * Calculate segments total
+   */
   private _calculateTotal() {
     this.total = {};
 

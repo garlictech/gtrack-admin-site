@@ -4,32 +4,11 @@ import { GeoJsonObject } from 'geojson';
 
 @Injectable()
 export class HikeEditMapActions {
-  static TOGGLE_CURRENT_POSITION_MARKER = '[HikeEditMap] Toggle current position marker';
-  static RESET_MAP = '[HikeEditMap] Reset map';
-  static MAP_RESETED = '[HikeEditMap] Map reseted';
   static ADD_GEOJSON = '[HikeEditMap] Add GeoJson';
   static GEOJSON_ADDED = '[HikeEditMap] GeoJson added';
   static REMOVE_GEOJSON = '[HikeEditMap] Remove GeoJson';
   static GEOJSON_REMOVED = '[HikeEditMap] GeoJson removed';
-  static SET_MODE = '[HikeEditMap] Set mode';
-
-  toggleCurrentPositionMarker(): Action {
-    return {
-      type: HikeEditMapActions.TOGGLE_CURRENT_POSITION_MARKER
-    };
-  }
-
-  resetMap(): Action {
-    return {
-      type: HikeEditMapActions.RESET_MAP
-    };
-  }
-
-  mapReseted(): Action {
-    return {
-      type: HikeEditMapActions.MAP_RESETED
-    };
-  }
+  static ERROR = '[HikeEditMap] Error';
 
   addGeoJson(): Action {
     return {
@@ -44,10 +23,9 @@ export class HikeEditMapActions {
     };
   }
 
-  removeGeoJson(geoJson): Action {
+  removeGeoJson(): Action {
     return {
-      type: HikeEditMapActions.REMOVE_GEOJSON,
-      payload: geoJson
+      type: HikeEditMapActions.REMOVE_GEOJSON
     };
   }
 
@@ -57,10 +35,10 @@ export class HikeEditMapActions {
     };
   }
 
-  setMode(mode: string): Action {
+  error(msg): Action {
     return {
-      type: HikeEditMapActions.SET_MODE,
-      payload: mode
+      type: HikeEditMapActions.ERROR,
+      payload: msg
     };
   }
 }

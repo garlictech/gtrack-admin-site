@@ -24,6 +24,8 @@ import {
   store,
   AuthEffects,
   AdminMapActions,
+  RouteInfoDataActions,
+  RouteInfoDataEffects,
   LayoutActions,
   RoutingActions,
   HikeEditMapActions,
@@ -67,6 +69,7 @@ const commonConfig = new CommonConfig();
 
 const appEffectsRun = [
   EffectsModule.run(AuthEffects),
+  EffectsModule.run(RouteInfoDataEffects),
   EffectsModule.run(HikeEditMapEffects),
   EffectsModule.run(HikeEditRoutePlanningEffects)
 ];
@@ -113,10 +116,11 @@ const appEffectsRun = [
     ...appEffectsRun
   ],
   providers: [
-    // TODO move the single linkst to the components
+    // TODO move the single links to the components
     HikeDataService,
     AdminMapService,
     AdminMapActions,
+    RouteInfoDataActions,
     LayoutActions,
     RoutingActions,
     HikeEditMapActions,

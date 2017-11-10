@@ -38,18 +38,13 @@ export class HikeEditMapComponent implements AfterViewInit {
   public center: Center = CENTER;
   public layers = LAYERS;
   public overlays = OVERLAYS;
-  public mode: string;
-  private _mode$: Observable<string>;
+  public mode = 'routing';
+  private _bufferShown = false;
 
   constructor(
     private _store: Store<State>,
     private _actions: HikeEditMapActions
-  ) {
-    this._mode$ = this._store.select((state: State) => state.hikeEditMap.mode);
-    this._mode$.subscribe((mode: string) => {
-      this.mode = mode;
-    });
-  }
+  ) {}
 
   ngAfterViewInit() {
     // Disable wheel zoom
@@ -79,35 +74,27 @@ export class HikeEditMapComponent implements AfterViewInit {
 
   public toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
-
-    this._store.dispatch(this._actions.toggleCurrentPositionMarker());
+    this.mapComponent.map.currentPositionMarker.goToCurrentPosition();
   }
 
   public resetMap($event: Event) {
     $event.stopPropagation();
-
-    this._store.dispatch(this._actions.resetMap());
+    this.mapComponent.map.fitBounds(this.mapComponent.map.routeInfo.getTrack());
   }
 
   public buffer($event: Event) {
     $event.stopPropagation();
 
-    this._store.select((state: State) => state.hikeEditMap)
-      .take(1)
-      .subscribe((hikeEditMapState: IHikeEditMapState) => {
-        console.log('hikeEditMapState', hikeEditMapState);
-
-        if (hikeEditMapState.bufferShown) {
-          this._store.dispatch(this._actions.removeGeoJson(hikeEditMapState.geoJsonOnMap));
-        } else {
-          this._store.dispatch(this._actions.addGeoJson());
-        }
-      });
+    this._bufferShown = !this._bufferShown;
+    if (this._bufferShown) {
+      this._store.dispatch(this._actions.addGeoJson());
+    } else {
+      this._store.dispatch(this._actions.addGeoJson());
+    }
   }
 
   public setMode($event: Event, mode: string) {
     $event.stopPropagation();
-
-    this._store.dispatch(this._actions.setMode(mode));
+    this.mode = mode;
   }
 }

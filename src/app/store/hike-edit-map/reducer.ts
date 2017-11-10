@@ -5,8 +5,6 @@ import { AdminMapActions } from '../admin-map';
 
 const initialState: IHikeEditMapState = {
   mapId: null,
-  mode: 'routing',
-  bufferShown: false,
   geoJsonOnMap: null
 };
 
@@ -17,21 +15,14 @@ export function hikeEditMapReducer(state = initialState, action: Action): IHikeE
         ...state,
         mapId: action.payload
       };
-    case HikeEditMapActions.SET_MODE:
-      return {
-        ...state,
-        mode: action.payload
-      };
     case HikeEditMapActions.GEOJSON_ADDED:
       return {
         ...state,
-        bufferShown: true,
         geoJsonOnMap: action.payload
       };
     case HikeEditMapActions.GEOJSON_REMOVED:
       return {
         ...state,
-        bufferShown: false,
         geoJsonOnMap: null
       };
     default:

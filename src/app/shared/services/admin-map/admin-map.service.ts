@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { State, RoutingActions, AdminMapActions } from '../../../store';
+import { State } from '../../../store';
 import { Injectable } from '@angular/core';
 import { AdminMap } from './admin-map';
 import {
@@ -12,6 +12,9 @@ import {
 } from '../../../../subrepos/gtrack-common-ngx/app';
 
 import * as uuid from 'uuid';
+import { RoutingActions } from '../../../store/routing/index';
+import { AdminMapActions } from '../../../store/admin-map';
+import { RouteInfoDataActions } from '../../../store/admin-map-route-info-data';
 
 @Injectable()
 export class AdminMapService extends MapService {
@@ -25,15 +28,16 @@ export class AdminMapService extends MapService {
     private _routeService: RouteService,
     private _elevationService: ElevationService,
     private _routingActions: RoutingActions,
-    private _adminMapActions: AdminMapActions
+    private _adminMapActions: AdminMapActions,
+    private _routeInfoDataActions: RouteInfoDataActions
   ) {
     super(iconService, mapMarkerService);
   }
 
   public get(leafletMap: L.Map): AdminMap {
-    const id = uuid();
-    const map = new AdminMap(
-      id,
+    const _id = uuid();
+    const _map = new AdminMap(
+      _id,
       leafletMap,
       this.iconService,
       this.mapMarkerService,
@@ -41,16 +45,32 @@ export class AdminMapService extends MapService {
       this._gameRuleService,
       this._routeService,
       this._elevationService,
-      this._routingActions
+      this._routingActions,
+      this._routeInfoDataActions
     );
-    this._maps[id] = map;
+    this._maps[_id] = _map;
 
-    this._store.dispatch(this._adminMapActions.registerMap(id));
+    this._store.dispatch(this._adminMapActions.registerMap(_id));
 
-    return map;
+    return _map;
   }
 
   getMapById(id: string) {
     return this._maps[id];
+  }
+
+  calculateTotal(segments) {
+    let total = {};
+
+    for (let segment of segments) {
+      for (let key in segment) {
+        if (!total[key]) {
+          total[key] = 0;
+        }
+        total[key] += segment[key];
+      }
+    }
+
+    return total;
   }
 }

@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { State, RoutingActions } from '../../../store';
+import { State, RoutingActions, RouteInfoDataActions } from '../../../store';
 import { RoutingControl } from './routing-control';
 import { WaypointMarker } from './waypoint-marker';
 import { RouteInfo } from './route-info';
@@ -30,13 +30,16 @@ export class AdminMap extends Map {
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
     private _elevationService: ElevationService,
-    private _routingActions: RoutingActions
+    private _routingActions: RoutingActions,
+    private _routeInfoDataActions: RouteInfoDataActions
   ) {
     super(id, map, iconService, mapMarkerService);
 
     this._routeInfo = new RouteInfo(
       this._gameRuleService,
-      this._routeService
+      this._routeService,
+      this._store,
+      this._routeInfoDataActions
     );
 
     this._routingControl = new RoutingControl(
@@ -67,24 +70,26 @@ export class AdminMap extends Map {
   }
 
   public getBuffer() {
-    let buffer: GeoJSON.Feature<GeoJSON.Polygon> = turf.buffer(this._routeInfo.getPath(), 50, 'meters');
-    buffer.properties.name = 'buffer polygon';
-    buffer.properties.draw_type = 'small_buffer';
+    const _path = this._routeInfo.getPath();
 
-    return buffer;
+    if (!_path) {
+      return
+    }
+
+    let _buffer: GeoJSON.Feature<GeoJSON.Polygon> = turf.buffer(_path, 50, 'meters');
+    _buffer.properties.name = 'buffer polygon';
+    _buffer.properties.draw_type = 'small_buffer';
+
+    return _buffer;
   }
 
   public addGeoJSON(geojson) {
-    const res = L.geoJSON(geojson, {
+    const _res = L.geoJSON(geojson, {
       style: this._geoJsonStyle(geojson),
       onEachFeature: this._propagateClick
     });
-    res.addTo(this.leafletMap);
-    return res;
-  }
-
-  public removeGeoJSON(geojson) {
-    this.map.removeLayer(geojson);
+    _res.addTo(this.leafletMap);
+    return _res;
   }
 
   private _geoJsonStyle(feature) {
@@ -114,5 +119,11 @@ export class AdminMap extends Map {
         containerPoint: this.map.latLngToContainerPoint(event.latlng)
       });
     });
+  }
+
+  public removeGeoJSON(geojson) {
+    if (geojson) {
+      this.map.removeLayer(geojson);
+    }
   }
 }

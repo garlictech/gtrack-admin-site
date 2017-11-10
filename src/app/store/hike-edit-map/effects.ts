@@ -15,51 +15,36 @@ export class HikeEditMapEffects {
     private _hikeEditMapActions: HikeEditMapActions
   ) {}
 
-  @Effect()
-  toggleCurrentPositionMarker$: Observable<void> = this._actions$
-    .ofType(HikeEditMapActions.TOGGLE_CURRENT_POSITION_MARKER)
-    .withLatestFrom(this._store)
-    .map(([action, state]) => state)
-    .switchMap(state => {
-      const adminMap: AdminMap = this._adminMapService.getMapById(state.hikeEditMap.mapId);
-
-      adminMap.currentPositionMarker.goToCurrentPosition();
-
-      return Observable.of<void>();
-    });
-
-  @Effect()
-    resetMap$: Observable<Action> = this._actions$
-      .ofType(HikeEditMapActions.RESET_MAP)
-      .withLatestFrom(this._store)
-      .map(([action, state]) => state)
-      .switchMap(state => {
-        const adminMap: AdminMap = this._adminMapService.getMapById(state.hikeEditMap.mapId);
-
-        adminMap.fitBounds(adminMap.routeInfo.getTrack());
-
-        return Observable.of(this._hikeEditMapActions.mapReseted());
-      });
-
+  // TODOD vissza
   @Effect()
   addGeoJson$: Observable<Action> = this._actions$
     .ofType(HikeEditMapActions.ADD_GEOJSON)
     .withLatestFrom(this._store)
     .map(([action, state]) => state)
     .switchMap(state => {
-      const adminMap: AdminMap = this._adminMapService.getMapById(state.hikeEditMap.mapId);
-      const geoJson = adminMap.addGeoJSON(adminMap.getBuffer());
-      return Observable.of(this._hikeEditMapActions.geoJsonAdded(geoJson));
+      const _adminMap: AdminMap = this._adminMapService.getMapById(state.hikeEditMap.mapId);
+      const _buffer = _adminMap.getBuffer();
+
+      if (_buffer) {
+        const _geoJson = _adminMap.addGeoJSON(_buffer);
+        return Observable.of(this._hikeEditMapActions.geoJsonAdded(_geoJson));
+      } else {
+        return Observable.of(this._hikeEditMapActions.error('Empty buffer'));
+      }
     });
 
   @Effect()
-    removeGeoJson$: Observable<Action> = this._actions$
-      .ofType(HikeEditMapActions.REMOVE_GEOJSON)
-      .withLatestFrom(this._store)
-      .map(([action, state]) => state)
-      .switchMap(state => {
-        const adminMap: AdminMap = this._adminMapService.getMapById(state.hikeEditMap.mapId);
+  removeGeoJson$: Observable<Action> = this._actions$
+    .ofType(HikeEditMapActions.REMOVE_GEOJSON)
+    .withLatestFrom(this._store)
+    .map(([action, state]) => state)
+    .switchMap(state => {
+      const adminMap: AdminMap = this._adminMapService.getMapById(state.hikeEditMap.mapId);
+      if (state.hikeEditMap.geoJsonOnMap) {
         adminMap.removeGeoJSON(state.hikeEditMap.geoJsonOnMap);
         return Observable.of(this._hikeEditMapActions.geoJsonRemoved());
-      });
+      } else {
+        return Observable.of(this._hikeEditMapActions.error('geoJson is null'));
+      }
+    });
 }
