@@ -2,6 +2,9 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Center } from '../../../../../subrepos/gtrack-common-ngx/app';
 import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { State, HikeEditMapActions } from '../../../../store';
 import { LeafletMouseEvent } from 'leaflet';
 import * as turf from '@turf/turf';
 
@@ -25,32 +28,40 @@ const OVERLAYS = [{
 }];
 
 @Component({
-  selector: 'gt-hike-map',
-  templateUrl: './hike-map.component.html',
-  styleUrls: ['./hike-map.component.scss']
+  selector: 'gt-hike-edit-map',
+  templateUrl: './hike-edit-map.component.html',
+  styleUrls: ['./hike-edit-map.component.scss']
 })
-export class HikeMapComponent implements AfterViewInit {
+export class HikeEditMapComponent implements AfterViewInit {
   @ViewChild('map')
   public mapComponent: AdminLeafletComponent;
   public center: Center = CENTER;
   public layers = LAYERS;
   public overlays = OVERLAYS;
-  private _mode = 'routing';
-  private _bufferShown = false;
-  private _geoJsonOnMap: L.GeoJSON;
+  private _mode$: Observable<string>;
+  public mode: string;
+
+  constructor(
+    private _store: Store<State>,
+    private _actions: HikeEditMapActions
+  ) {
+    this._mode$ = this._store.select((state: State) => state.hikeEditMap.mode);
+    this._mode$.subscribe((mode: string) => {
+      this.mode = mode;
+    });
+  }
 
   ngAfterViewInit() {
     // Disable wheel zoom
     this.mapComponent.leafletMap.scrollWheelZoom.disable();
 
+    // Setup map events
     this.mapComponent.leafletMap
       // Add markers by click
       .on('click', (e: LeafletMouseEvent) => {
-        if (this._mode === 'routing') {
-            this.mapComponent.map.waypointMarker.addWaypoint(e.latlng);
-
-            // TODO Observable-val!
-            console.log(this.mapComponent.map);
+        if (this.mode === 'routing') {
+          // TODO action
+          this.mapComponent.map.waypointMarker.addWaypoint(e.latlng);
         } else {
           console.log('todo _createCheckpoint');
           // this._createCheckpoint(e.latlng);
@@ -68,46 +79,33 @@ export class HikeMapComponent implements AfterViewInit {
 
   public toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
-    this.mapComponent.map.currentPositionMarker.goToCurrentPosition();
+    this._store.dispatch(this._actions.toggleCurrentPositionMarker());
   }
 
   public resetMap($event: Event) {
     $event.stopPropagation();
-    this.mapComponent.map.fitBounds(this.mapComponent.map.routeInfo.getTrack());
-  }
-
-  public removeLast($event: Event) {
-    $event.stopPropagation();
-    this.mapComponent.map.waypointMarker.deleteLast();
-  }
-
-  public closeCircle($event: Event) {
-    $event.stopPropagation();
-    this.mapComponent.map.waypointMarker.closeCircle();
-  }
-
-  public deletePlan($event: Event) {
-    $event.stopPropagation();
-    this.mapComponent.map.routeInfo.deletePlan();
-    this.mapComponent.map.waypointMarker.reset();
-    this.mapComponent.map.routingControl.clearControls();
+    this._store.dispatch(this._actions.resetMap());
   }
 
   public buffer($event: Event) {
     $event.stopPropagation();
+    this._store.dispatch(this._actions.toggleBuffer());
+
+    /*
     this._bufferShown = !this._bufferShown;
 
     if (this._bufferShown) {
       this._geoJsonOnMap = this.mapComponent.map.addGeoJSON(this._getBuffer());
+      console.log('this._geoJsonOnMap ', this._geoJsonOnMap );
     } else {
       this.mapComponent.map.removeGeoJSON(this._geoJsonOnMap);
     }
+    */
   }
 
   public setMode($event: Event, mode: string) {
     $event.stopPropagation();
-    console.log(this.mapComponent.map);
-    this._mode = mode;
+    this._store.dispatch(this._actions.setMode(mode));
   }
 
   private _getBuffer() {

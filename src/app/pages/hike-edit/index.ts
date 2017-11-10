@@ -1,10 +1,10 @@
 export { HikeEditComponent } from './hike-edit.component';
 export {
-  HikeGeneralInfoComponent
-} from './components/hike-general-info/hike-general-info.component';
+  HikeEditGeneralInfoComponent
+} from './components/hike-edit-general-info/hike-edit-general-info.component';
 export {
-  HikeMapComponent
-} from './components/hike-map/hike-map.component';
+  HikeEditMapComponent
+} from './components/hike-edit-map/hike-edit-map.component';
 export {
-  HikeRoutePlanningComponent
-} from './components/hike-route-planning/hike-route-planning.component';
+  HikeEditRoutePlanningComponent
+} from './components/hike-edit-route-planning/hike-edit-route-planning.component';

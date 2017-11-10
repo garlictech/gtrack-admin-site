@@ -11,11 +11,11 @@ const LANGS = {
 };
 
 @Component({
-  selector: 'gt-hike-general-info',
-  templateUrl: './hike-general-info.component.html',
-  styleUrls: ['./hike-general-info.component.scss']
+  selector: 'gt-hike-edit-general-info',
+  templateUrl: './hike-edit-general-info.component.html',
+  styleUrls: ['./hike-edit-general-info.component.scss']
 })
-export class HikeGeneralInfoComponent implements OnInit {
+export class HikeEditGeneralInfoComponent implements OnInit {
   @Input() hikeData: any;
   public existingLangKeys: Set<string>;
   public langs = LANGS;

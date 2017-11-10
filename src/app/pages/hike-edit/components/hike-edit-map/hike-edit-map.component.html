@@ -10,11 +10,17 @@
         <button class="btn btn-sm btn-white" (click)="buffer($event)">
           Buffer
         </button>
-        <button class="btn btn-sm btn-white" (click)="setMode($event, 'routing')">
+        <button
+          class="btn btn-sm btn-white"
+          [ngClass]="{'btn-primary': mode === 'routing', 'btn-white': mode === 'checkpoint'}"
+          (click)="setMode($event, 'routing')">
           Routing mode
         </button>
-        <button class="btn btn-sm btn-white" (click)="setMode($event, 'checkpoint')">
-          Checkpoint mode
+        <button
+          class="btn btn-sm"
+          [ngClass]="{'btn-primary': mode === 'checkpoint', 'btn-white': mode === 'routing'}"
+          (click)="setMode($event, 'checkpoint')">
+          Checkpoint mode {{mode}}
         </button>
       </div>
     </gc-admin-leaflet>

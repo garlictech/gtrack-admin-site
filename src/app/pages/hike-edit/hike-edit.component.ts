@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { State, Actions } from '../../store';
 import { HikeDataService } from '../../shared/services';
 import { IMockHikeElement } from '../../shared/interfaces';
 
@@ -20,10 +18,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   public hikeData: IMockHikeElement = null;
 
   constructor(
-    private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
     private _hikeDataService: HikeDataService,
-    private _actions: Actions,
     private _title: Title
   ) {}
 
@@ -57,6 +53,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   }
 
   public save() {
-    this._store.dispatch(this._actions.saveHike(this.hikeData));
+    // this._store.dispatch(this._actions.saveHike(this.hikeData));
   }
 }
