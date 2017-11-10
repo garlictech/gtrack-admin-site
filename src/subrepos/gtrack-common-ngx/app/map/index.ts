@@ -4,6 +4,7 @@ import { CurrentPositionMarker } from './current-position-marker';
 import { CheckpointMarker } from './checkpoint-marker';
 import { IconService } from '../icon';
 import { MapMarkerService } from '../map-marker';
+import * as uuid from 'uuid';
 
 @Injectable()
 export class MapService {
@@ -11,8 +12,9 @@ export class MapService {
 
   constructor(protected iconService: IconService, protected mapMarkerService: MapMarkerService) { }
 
-  get(leafletMap: L.Map, id: string): Map {
-    const map = new Map(leafletMap, this.iconService, this.mapMarkerService);
+  get(leafletMap: L.Map): Map {
+    const id = uuid();
+    const map = new Map(id, leafletMap, this.iconService, this.mapMarkerService);
     this._maps[id] = map;
     return map;
   }

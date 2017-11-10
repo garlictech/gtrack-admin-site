@@ -63,9 +63,6 @@ export class LeafletComponent implements AfterViewInit {
   @Input()
   public path: any;
 
-  @Input()
-  public id = 'leaflet-map';
-
   constructor(protected mapService: MapService) { }
 
   ngAfterViewInit() {
@@ -94,6 +91,6 @@ export class LeafletComponent implements AfterViewInit {
     });
 
     this.control = L.control.layers(this.baseLayers, this.overlayLayers).addTo(this.leafletMap);
-    this.map = this.mapService.get(this.leafletMap, this.id);
+    this.map = this.mapService.get(this.leafletMap);
   }
 }
