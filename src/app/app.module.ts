@@ -18,10 +18,19 @@ import {
   CommonConfig,
   DeepstreamModule
 } from '../subrepos/gtrack-common-ngx';
-
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store, Effects, Actions } from './store';
+import {
+  store,
+  AuthEffects,
+  AdminMapActions,
+  LayoutActions,
+  RoutingActions,
+  HikeEditMapActions,
+  HikeEditMapEffects,
+  HikeEditRoutePlanningActions,
+  HikeEditRoutePlanningEffects
+} from './store';
 import { routing } from './app-routing.module';
 // Components
 import { LayoutComponent } from './core/components/layout';
@@ -33,9 +42,9 @@ import { LoginComponent } from './auth/components/login';
 import { HikeListComponent } from './pages/hike-list';
 import {
   HikeEditComponent,
-  HikeGeneralInfoComponent,
-  HikeMapComponent,
-  HikeRoutePlanningComponent
+  HikeEditGeneralInfoComponent,
+  HikeEditMapComponent,
+  HikeEditRoutePlanningComponent
 } from './pages/hike-edit';
 import { AdminLeafletComponent } from './shared/components/admin-leaflet';
 // Pipes
@@ -56,6 +65,12 @@ authConfig.google.appId = environment.authentication.google.appId;
 
 const commonConfig = new CommonConfig();
 
+const appEffectsRun = [
+  EffectsModule.run(AuthEffects),
+  EffectsModule.run(HikeEditMapEffects),
+  EffectsModule.run(HikeEditRoutePlanningEffects)
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,9 +81,9 @@ const commonConfig = new CommonConfig();
     LoginComponent,
     HikeListComponent,
     HikeEditComponent,
-    HikeGeneralInfoComponent,
-    HikeMapComponent,
-    HikeRoutePlanningComponent,
+    HikeEditGeneralInfoComponent,
+    HikeEditMapComponent,
+    HikeEditRoutePlanningComponent,
     AdminLeafletComponent,
     PageNotFoundComponent,
     // Pipes
@@ -95,12 +110,17 @@ const commonConfig = new CommonConfig();
     AuthenticationApiModule.forRoot(authConfig),
     GtCommonModule.forRoot(commonConfig),
     RouterStoreModule.connectRouter(),
-    EffectsModule.run(Effects)
+    ...appEffectsRun
   ],
   providers: [
+    // TODO move the single linkst to the components
     HikeDataService,
     AdminMapService,
-    Actions
+    AdminMapActions,
+    LayoutActions,
+    RoutingActions,
+    HikeEditMapActions,
+    HikeEditRoutePlanningActions
   ],
   bootstrap: [AppComponent]
 })
