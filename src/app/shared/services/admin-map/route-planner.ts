@@ -13,7 +13,7 @@ import { timeout } from 'd3';
 
 export class RoutePlanner {
   private _geoJSON: GeoJSON.FeatureCollection<any>;
-  private _routeInfoData: IRouteInfoDataState;
+  public routeInfoData: IRouteInfoDataState;
 
   constructor(
     private _gameRuleService: GameRuleService,
@@ -38,9 +38,8 @@ export class RoutePlanner {
     }
 
     this._store.select((state: State) => state.routeInfoData).subscribe((routeInfoData: IRouteInfoDataState) => {
-      this._routeInfoData = routeInfoData;
-      console.log('CHANGE');
-      // this._createGeoJSON();
+      this.routeInfoData = routeInfoData;
+      console.log('routeInfoData CHANGED');
     });
   }
 
@@ -73,9 +72,9 @@ export class RoutePlanner {
     console.log('RoutePlanner._createGeoJSON');
     this._resetGeoJSON();
 
-    for (let i = 0; i < this._routeInfoData.segments.length; i++) {
+    for (let i = 0; i < this.routeInfoData.segments.length; i++) {
       // Add segment coords to LineString
-      const _segment = this._routeInfoData.segments[i];
+      const _segment = this.routeInfoData.segments[i];
       for (let p of _segment.coordinates) {
         this._geoJSON.features[0].geometry.coordinates.push([p[1], p[0], p[2]]);
       }
@@ -84,8 +83,8 @@ export class RoutePlanner {
     }
 
     // Add the last route point: the last point of the last segment
-    if (this._routeInfoData.segments.length > 0) {
-      this._addRoutePoint(this._getLastPointOfLastSegment(this._routeInfoData.segments), this._routeInfoData.segments.length + 1);
+    if (this.routeInfoData.segments.length > 0) {
+      this._addRoutePoint(this._getLastPointOfLastSegment(this.routeInfoData.segments), this.routeInfoData.segments.length + 1);
     }
 
     this._store.dispatch(this._routeInfoDataActions.addTrack(this._geoJSON));

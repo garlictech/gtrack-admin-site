@@ -35,6 +35,7 @@ export class RouteInfoDataEffects {
     .ofType(RouteInfoDataActions.PUSH_SEGMENT)
     .withLatestFrom(this._store)
     .map(([action, state]) => {
+      console.log('PUSH SEGMENT EFFECT');
       let _segments = state.routeInfoData.segments;
       _segments.push(action.payload);
       let _total = this._adminMapService.calculateTotal(_segments);
@@ -50,6 +51,7 @@ export class RouteInfoDataEffects {
     .ofType(RouteInfoDataActions.PUSH_SEGMENTS_TO_STORE)
     .map(toPayload)
     .switchMap(data => {
+      console.log('PUSH SEGMENT TO STORE EFFECT');
       return Observable.empty<Response>();
     });
 

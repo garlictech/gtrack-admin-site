@@ -89,7 +89,7 @@ export class HikeEditMapComponent implements AfterViewInit {
     if (this._bufferShown) {
       this._store.dispatch(this._actions.addGeoJson());
     } else {
-      this._store.dispatch(this._actions.addGeoJson());
+      this._store.dispatch(this._actions.removeGeoJson());
     }
   }
 
