@@ -69,11 +69,11 @@ export class AdminMap extends Map {
     return this._waypointMarker;
   }
 
-  public getBuffer() {
+  /**
+   * Get buffer geoJSON
+   */
+  public getBuffer(): GeoJSON.Feature<GeoJSON.Polygon> {
     const _path = this._routeInfo.getPath();
-
-    console.log('---BUFFER PATH---', _path);
-
 
     if (!_path) {
       return
@@ -86,16 +86,23 @@ export class AdminMap extends Map {
     return _buffer;
   }
 
-  public addGeoJSON(geojson) {
-    const _res = L.geoJSON(geojson, {
-      style: this._geoJsonStyle(geojson),
+  /**
+   * Add buffer geoJSON to map
+   */
+  public addGeoJSON(geoJson): L.GeoJSON {
+    const _geoJSON = L.geoJSON(geoJson, {
+      style: this._getGeoJsonStyle(geoJson),
       onEachFeature: this._propagateClick
     });
-    _res.addTo(this.leafletMap);
-    return _res;
+    _geoJSON.addTo(this.leafletMap);
+
+    return _geoJSON;
   }
 
-  private _geoJsonStyle(feature) {
+  /**
+   * addGeoJSON submethod
+   */
+  private _getGeoJsonStyle(feature) {
     let style;
 
     switch (feature.properties.draw_type) {
@@ -116,6 +123,9 @@ export class AdminMap extends Map {
     return style;
   }
 
+  /**
+   * addGeoJSON submethod
+   */
   private _propagateClick(feature, layer) {
     layer.on('click', event => {
       this.map.fireEvent('click', {
@@ -126,6 +136,9 @@ export class AdminMap extends Map {
     });
   }
 
+  /**
+   * Remove buffer geoJSON from map
+   */
   public removeGeoJSON(geojson) {
     if (geojson) {
       this.map.removeLayer(geojson);

@@ -11,7 +11,7 @@ import * as turf from '@turf/turf';
 import * as d3 from 'd3';
 
 export class RouteInfo {
-  private _savedRoute: IRouteInfoDataState; // RouteInfoData;
+  private _savedRoute: IRouteInfoDataState; // Deprecated?
   private _savedMapTrack: any;
   public planner: RoutePlanner;
 
@@ -37,10 +37,16 @@ export class RouteInfo {
     delete this.planner;
   }
 
+  /**
+   * Get track from current route
+   */
   public getTrack() {
     return this._getRoute().track;
   }
 
+  /**
+   * Get track path from current route
+   */
   public getPath() {
     // Feature[0] contains the route polyLine
     const route = this._getRoute();
@@ -85,6 +91,9 @@ export class RouteInfo {
   }
   */
 
+  /**
+   * Get path bounds for POI search
+   */
   public getSearchBounds() {
     let _buffer: any = turf.buffer(this.getPath(), 1000, 'meters');
     let _bounds = d3.geoBounds(_buffer);

@@ -1,12 +1,14 @@
 
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { Center } from '../../../../../subrepos/gtrack-common-ngx/app';
-import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
+import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, HikeEditMapActions, IHikeEditMapState } from '../../../../store';
+import { State } from '../../../../store';
 import { LeafletMouseEvent } from 'leaflet';
+import { Center, ISegment } from '../../../../../subrepos/gtrack-common-ngx';
+import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
 import * as turf from '@turf/turf';
+import * as L from 'leaflet';
 
 const CENTER = <Center>{
   lat: 51.505,
@@ -32,7 +34,7 @@ const OVERLAYS = [{
   templateUrl: './hike-edit-map.component.html',
   styleUrls: ['./hike-edit-map.component.scss']
 })
-export class HikeEditMapComponent implements AfterViewInit {
+export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('map')
   public mapComponent: AdminLeafletComponent;
   public center: Center = CENTER;
@@ -40,11 +42,32 @@ export class HikeEditMapComponent implements AfterViewInit {
   public overlays = OVERLAYS;
   public mode = 'routing';
   private _bufferShown = false;
+  private _geoJsonOnMap: L.GeoJSON;
+  private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private _store: Store<State>,
-    private _actions: HikeEditMapActions
+    private _store: Store<State>
   ) {}
+
+  ngOnInit() {
+    // Update buffer on each segment update
+    this._store.select((state: State) => state.routeInfoData.segments)
+      .takeUntil(this._destroy$)
+      .subscribe(() => {
+        // Refreh buffer on segment change, if needed
+        setTimeout(() => {
+          if (this._bufferShown) {
+            this._removeBuffer();
+            this._addBuffer();
+          }
+        });
+      });
+  }
+
+  ngOnDestroy( ) {
+    this._destroy$.next(true);
+    this._destroy$.unsubscribe();
+  }
 
   ngAfterViewInit() {
     // Disable wheel zoom
@@ -86,10 +109,24 @@ export class HikeEditMapComponent implements AfterViewInit {
     $event.stopPropagation();
 
     this._bufferShown = !this._bufferShown;
+
     if (this._bufferShown) {
-      this._store.dispatch(this._actions.addGeoJson());
+      this._addBuffer();
     } else {
-      this._store.dispatch(this._actions.removeGeoJson());
+      this._removeBuffer();
+    }
+  }
+
+  private _addBuffer() {
+    const _buffer = this.mapComponent.map.getBuffer();
+    if (_buffer) {
+      this._geoJsonOnMap = this.mapComponent.map.addGeoJSON(_buffer);
+    }
+  }
+
+  private _removeBuffer() {
+    if (this._geoJsonOnMap) {
+      this.mapComponent.map.removeGeoJSON(this._geoJsonOnMap);
     }
   }
 

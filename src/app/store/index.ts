@@ -29,7 +29,6 @@ export { HikeEditRoutePlanningActions };
 
 // Effects
 export { AuthEffects } from './auth';
-export { RouteInfoDataEffects } from './admin-map-route-info-data';
 export { HikeEditRoutePlanningEffects } from './hike-edit-route-planning';
 
 // States

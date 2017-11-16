@@ -24,20 +24,19 @@ export class RoutePlanner {
     private _store: Store<State>,
     private _routeInfoDataActions: RouteInfoDataActions
   ) {
+    // Initial value
     this._geoJSON = {
       type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: []
-          },
-          properties: {
-            name: 'Tour track'
-          }
+      features: [{
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: []
+        },
+        properties: {
+          name: 'Tour track'
         }
-      ]
+      }]
     }
 
     // Reset the state when the planner has been created
@@ -65,6 +64,9 @@ export class RoutePlanner {
   }
 
   public destroy() {
+    // Clear state
+    this._store.dispatch(this._routeInfoDataActions.reset());
+
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
   }

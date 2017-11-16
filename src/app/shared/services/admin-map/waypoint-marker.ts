@@ -84,7 +84,6 @@ export class WaypointMarker {
     const _shouldAddNewSegment = this._waypointIndex === this._maxAllowedValhallaWayPoints;
 
     if (_isStartRouting) {
-      console.log('START ROUTING');
       this._routeInfo.newPlan();
 
       _control = this._routingControl.addNew();
@@ -92,27 +91,25 @@ export class WaypointMarker {
       this._routeSegmentIndex = 1;
       this._waypointIndex = 0;
     } else if (_shouldAddNewSegment) {
-      console.log('START ROUTING _shouldAddNewSegment');
-      const previousControl = this._routingControl.getActualControl();
-      const waypoints = previousControl.getWaypoints();
-      const lastWaypoint = waypoints[waypoints.length - 1];
+      const _previousControl = this._routingControl.getActualControl();
+      const _waypoints = _previousControl.getWaypoints();
+      const _lastWaypoint = _waypoints[_waypoints.length - 1];
 
       _control = this._routingControl.addNew();
-      _control.spliceWaypoints(0, 1, lastWaypoint);
+      _control.spliceWaypoints(0, 1, _lastWaypoint);
 
       this._waypointIndex = 1;
       this._routeSegmentIndex++;
     } else {
-      console.log('START ROUTING ELSE');
       _control = this._routingControl.getActualControl();
     }
 
-    const waypoint = {
+    const _waypoint = {
       latLng: latlng,
       name: this._getWaypointNum() + 1
     }
 
-    _control.spliceWaypoints(this._waypointIndex, 1, waypoint);
+    _control.spliceWaypoints(this._waypointIndex, 1, _waypoint);
     _control.route();
     this._waypointIndex++;
   }

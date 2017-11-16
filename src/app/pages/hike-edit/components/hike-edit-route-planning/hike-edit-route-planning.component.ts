@@ -10,8 +10,7 @@ import {
 
 @Component({
   selector: 'gt-hike-edit-route-planning',
-  templateUrl: './hike-edit-route-planning.component.html',
-  styleUrls: ['./hike-edit-route-planning.component.scss']
+  templateUrl: './hike-edit-route-planning.component.html'
 })
 export class HikeEditRoutePlanningComponent {
   public routeInfoData$: Observable<IRouteInfoDataState>;

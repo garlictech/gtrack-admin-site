@@ -23,7 +23,6 @@ import {
   AuthEffects,
   AdminMapActions,
   RouteInfoDataActions,
-  RouteInfoDataEffects,
   LayoutActions,
   RoutingActions,
   HikeEditRoutePlanningActions,
@@ -54,7 +53,6 @@ const commonConfig = new CommonConfig();
 
 const appEffectsRun = [
   EffectsModule.run(AuthEffects),
-  EffectsModule.run(RouteInfoDataEffects),
   EffectsModule.run(HikeEditRoutePlanningEffects)
 ];
 
