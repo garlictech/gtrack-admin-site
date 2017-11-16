@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import {
   State,
   HikeEditRoutePlanningActions,
-  HikeEditMapActions,
   IRouteInfoDataState
 } from '../../../../store';
 
@@ -21,14 +20,14 @@ export class HikeEditRoutePlanningComponent {
   constructor(
     private _adminMapService: AdminMapService,
     private _store: Store<State>,
-    private _actions: HikeEditRoutePlanningActions,
-    private _mapActions: HikeEditMapActions
+    private _actions: HikeEditRoutePlanningActions
   ) {
     this.routeInfoData$ = this._store.select((state: State) => state.routeInfoData);
     this._store.select((state: State) => state.hikeEditMap.mapId)
       .skipWhile(mapId => mapId === null)
       .take(1)
       .subscribe((mapId: string) => {
+        console.log('MAP ID ?????????????????????????????????', mapId);
         this._map = this._adminMapService.getMapById(mapId);
       });
   }
@@ -49,7 +48,7 @@ export class HikeEditRoutePlanningComponent {
     this._map.routeInfo.deletePlan();
     this._map.waypointMarker.reset();
     this._map.routingControl.clearControls();
-    this._store.dispatch(this._mapActions.removeGeoJson());
+
   }
 
   public saveRoute() {

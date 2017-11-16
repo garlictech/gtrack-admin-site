@@ -3,38 +3,34 @@ import { Action } from '@ngrx/store';
 
 @Injectable()
 export class RouteInfoDataActions {
+  static RESET = '[RouteInfoData] Reset';
   static ADD_TRACK = '[RouteInfoData] Add track';
-  static ADD_TRACK_TO_STORE = '[RouteInfoData] Add track to store';
   static PUSH_SEGMENT = '[RouteInfoData] Push segment';
-  static PUSH_SEGMENTS_TO_STORE = '[RouteInfoData] Push segments to store';
   static POP_SEGMENT = '[RouteInfoData] Pop segment';
-  static POP_SEGMENTS_TO_STORE = '[RouteInfoData] Pop segments to store';
+  static UPDATE_TOTAL = '[RouteInfoData] Update total';
+  static SET_LOCATION = '[RouteInfoData] Set location';
 
-  addTrack(geoJSON): Action {
+  reset(): Action {
     return {
-      type: RouteInfoDataActions.ADD_TRACK,
-      payload: geoJSON
+      type: RouteInfoDataActions.RESET
     };
   }
 
-  addTrackToStore(trackData): Action {
+  addTrack(track): Action {
     return {
-      type: RouteInfoDataActions.ADD_TRACK_TO_STORE,
-      payload: trackData
+      type: RouteInfoDataActions.ADD_TRACK,
+      payload: {
+        track: track
+      }
     };
   }
 
   pushSegment(segment): Action {
     return {
       type: RouteInfoDataActions.PUSH_SEGMENT,
-      payload: segment
-    };
-  }
-
-  pushSegmentsToStore(data): Action {
-    return {
-      type: RouteInfoDataActions.PUSH_SEGMENTS_TO_STORE,
-      payload: data
+      payload: {
+        segment: segment
+      }
     };
   }
 
@@ -44,10 +40,21 @@ export class RouteInfoDataActions {
     };
   }
 
-  popSegmentsToStore(data): Action {
+  updateTotal(total): Action {
     return {
-      type: RouteInfoDataActions.POP_SEGMENTS_TO_STORE,
-      payload: data
+      type: RouteInfoDataActions.UPDATE_TOTAL,
+      payload: {
+        total: total
+      }
+    };
+  }
+
+  setLocation(total): Action {
+    return {
+      type: RouteInfoDataActions.SET_LOCATION,
+      payload: {
+        location: location
+      }
     };
   }
 }

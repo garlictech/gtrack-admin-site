@@ -11,21 +11,28 @@ const initialState: IRouteInfoDataState = {
 
 export function routeInfoDataReducer(state = initialState, action: Action): IRouteInfoDataState {
   switch (action.type) {
-    case RouteInfoDataActions.ADD_TRACK_TO_STORE:
+    case RouteInfoDataActions.RESET:
+      return initialState;
+    case RouteInfoDataActions.ADD_TRACK:
       return {
         ...state,
-        track: action.payload
+        track: action.payload.track
       };
-    case RouteInfoDataActions.PUSH_SEGMENTS_TO_STORE:
+    case RouteInfoDataActions.PUSH_SEGMENT:
       return {
         ...state,
-        segments: action.payload.segments,
-        total: action.payload.total
+        segments: [...state.segments, action.payload.segment]
       };
-    case RouteInfoDataActions.POP_SEGMENTS_TO_STORE:
+    case RouteInfoDataActions.POP_SEGMENT:
       return {
         ...state,
-        segments: action.payload.segments,
+        segments: state.segments.length > 1 ?
+          state.segments.slice(0, state.segments.length - 1) :
+          []
+      };
+    case RouteInfoDataActions.UPDATE_TOTAL:
+      return {
+        ...state,
         total: action.payload.total
       };
     default:

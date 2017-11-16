@@ -1,16 +1,17 @@
 /* OLD: RouteService  */
 import { Store } from '@ngrx/store';
-import { State, RouteInfoDataActions } from '../../../store';
+import { State, RouteInfoDataActions, IRouteInfoDataState } from '../../../store';
 import { AdminMap } from './admin-map';
 import { RoutePlanner } from './route-planner';
-import { RouteInfoData } from './route-info-data';
 import {
   GameRuleService,
   RouteService
 } from '../../../../subrepos/gtrack-common-ngx/app';
+import * as turf from '@turf/turf';
+import * as d3 from 'd3';
 
 export class RouteInfo {
-  private _savedRoute: RouteInfoData;
+  private _savedRoute: IRouteInfoDataState; // RouteInfoData;
   private _savedMapTrack: any;
   public planner: RoutePlanner;
 
@@ -22,7 +23,6 @@ export class RouteInfo {
   ) {}
 
   public newPlan() {
-    console.log('RouteInfo.newPlan');
     this.planner = new RoutePlanner(
       this._gameRuleService,
       this._routeService,
@@ -32,17 +32,16 @@ export class RouteInfo {
   }
 
   public deletePlan() {
-    console.log('RouteInfo.deletePlan');
+    // Cleanup subscriptions
+    this.planner.destroy();
     delete this.planner;
   }
 
   public getTrack() {
-    console.log('RouteInfo.getTrack');
     return this._getRoute().track;
   }
 
   public getPath() {
-    console.log('RouteInfo.getPath');
     // Feature[0] contains the route polyLine
     const route = this._getRoute();
     if (route && route.track) {
@@ -53,7 +52,7 @@ export class RouteInfo {
   }
 
   private _getRoute() {
-    console.log('RouteInfo._getRoute');
+    // TODO use only the store?
     if (this.planner) {
       return this.planner.routeInfoData;
     } else {
@@ -86,22 +85,21 @@ export class RouteInfo {
   }
   */
 
-  /*
-  private _getSearchBounds() {
-    console.log('RouteInfo._getSearchBounds');
-    console.log('TODO _getSearchBounds');
+  public getSearchBounds() {
+    let _buffer: any = turf.buffer(this.getPath(), 1000, 'meters');
+    let _bounds = d3.geoBounds(_buffer);
 
-    buffer = Turf.buffer @getPath(), 1000, 'meters'
-    bounds = d3.geo.bounds buffer
-
-    SouthWest:
-      lat: bounds[0][1]
-      lon: bounds[0][0]
-    NorthEast:
-      lat: bounds[1][1]
-      lon: bounds[1][0]
-
-  }*/
+    return {
+      NorthEast: {
+        lat: _bounds[0][1],
+        lon: _bounds[0][0]
+      },
+      SouthWest: {
+        lat: _bounds[1][1],
+        lon: _bounds[1][0]
+      }
+    };
+  }
 
   /*
   private _getSavedTrack(hike) {

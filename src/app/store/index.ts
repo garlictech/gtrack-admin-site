@@ -24,15 +24,12 @@ import { LayoutActions } from './layout';
 export { LayoutActions };
 import { RoutingActions } from './routing';
 export { RoutingActions };
-import { HikeEditMapActions } from './hike-edit-map';
-export { HikeEditMapActions };
 import { HikeEditRoutePlanningActions } from './hike-edit-route-planning';
 export { HikeEditRoutePlanningActions };
 
 // Effects
 export { AuthEffects } from './auth';
 export { RouteInfoDataEffects } from './admin-map-route-info-data';
-export { HikeEditMapEffects } from './hike-edit-map';
 export { HikeEditRoutePlanningEffects } from './hike-edit-route-planning';
 
 // States

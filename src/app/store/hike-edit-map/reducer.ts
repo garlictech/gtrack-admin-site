@@ -4,8 +4,7 @@ import { HikeEditMapActions } from './actions';
 import { AdminMapActions } from '../admin-map';
 
 const initialState: IHikeEditMapState = {
-  mapId: null,
-  geoJsonOnMap: null
+  mapId: null
 };
 
 export function hikeEditMapReducer(state = initialState, action: Action): IHikeEditMapState {
@@ -14,16 +13,6 @@ export function hikeEditMapReducer(state = initialState, action: Action): IHikeE
       return {
         ...state,
         mapId: action.payload
-      };
-    case HikeEditMapActions.GEOJSON_ADDED:
-      return {
-        ...state,
-        geoJsonOnMap: action.payload
-      };
-    case HikeEditMapActions.GEOJSON_REMOVED:
-      return {
-        ...state,
-        geoJsonOnMap: null
       };
     default:
       return state;

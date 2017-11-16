@@ -72,6 +72,9 @@ export class AdminMap extends Map {
   public getBuffer() {
     const _path = this._routeInfo.getPath();
 
+    console.log('---BUFFER PATH---', _path);
+
+
     if (!_path) {
       return
     }
@@ -94,6 +97,7 @@ export class AdminMap extends Map {
 
   private _geoJsonStyle(feature) {
     let style;
+
     switch (feature.properties.draw_type) {
       case 'small_buffer':
         style = { color: '#000044', weight: 2, fillColor: '#000077' };
@@ -108,6 +112,7 @@ export class AdminMap extends Map {
         style = { color: 'red', opacity: 1, weight: 2 };
         break;
     }
+
     return style;
   }
 

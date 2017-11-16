@@ -67,5 +67,4 @@ export class Map {
   public fitBounds(route: Route) {
     return this.fitBox(this.getBounds(route));
   }
-
 }

@@ -28,11 +28,11 @@
     </tr>
     <tr>
       <td>Total</td>
-      <td>{{(routeInfoData$ | async)?.total.distance | distance}}</td>
-      <td>{{(routeInfoData$ | async)?.total.time | duration}}</td>
-      <td>{{(routeInfoData$ | async)?.total.uphill | distance : true}}</td>
-      <td>{{(routeInfoData$ | async)?.total.downhill | distance : true}}</td>
-      <td>{{(routeInfoData$ | async)?.total.score}}</td>
+      <td>{{(routeInfoData$ | async)?.total?.distance | distance}}</td>
+      <td>{{(routeInfoData$ | async)?.total?.time | duration}}</td>
+      <td>{{(routeInfoData$ | async)?.total?.uphill | distance : true}}</td>
+      <td>{{(routeInfoData$ | async)?.total?.downhill | distance : true}}</td>
+      <td>{{(routeInfoData$ | async)?.total?.score}}</td>
     </tr>
   </tbody>
 </table>

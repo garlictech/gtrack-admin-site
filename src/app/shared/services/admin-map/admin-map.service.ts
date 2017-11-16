@@ -58,19 +58,4 @@ export class AdminMapService extends MapService {
   getMapById(id: string) {
     return this._maps[id];
   }
-
-  calculateTotal(segments) {
-    let total = {};
-
-    for (let segment of segments) {
-      for (let key in segment) {
-        if (!total[key]) {
-          total[key] = 0;
-        }
-        total[key] += segment[key];
-      }
-    }
-
-    return total;
-  }
 }

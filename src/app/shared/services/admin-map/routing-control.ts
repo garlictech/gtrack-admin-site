@@ -29,20 +29,17 @@ export class RoutingControl {
   }
 
   private _reset() {
-    console.log('RoutingControl._reset');
     this._controls = [];
     this._coordinates = [];
   }
 
   public clearControls() {
-    console.log('RoutingControl.clearControls');
     while (this._controls.length > 0) {
       this.pop();
     }
   }
 
   public getActualControl() {
-    console.log('RoutingControl.getActualControl');
     return this._controls[this._controls.length - 1];
   }
 
@@ -53,12 +50,10 @@ export class RoutingControl {
   */
 
   public getControl(index) {
-    console.log('RoutingControl.getControl');
     return this._controls[index];
   }
 
   public pop() {
-    console.log('RoutingControl.pop');
     const _indexToRemove = this._controls.length - 1;
     const _control = this._controls.pop();
 
@@ -72,7 +67,6 @@ export class RoutingControl {
   }
 
   private _createMarker(name, latLng) {
-    console.log('RoutingControl._createMarker');
     const _icon = L.divIcon({
       html: `<span>${name}</span>`,
       iconSize: [25, 41],
@@ -91,7 +85,6 @@ export class RoutingControl {
   }
 
   public addNew() {
-    console.log('RoutingControl.addNew (control)');
     const _control: L.Routing.Control = new L.Routing.Control({
       routeWhileDragging: true,
       autoRoute: false,
