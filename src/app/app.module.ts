@@ -1,10 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
@@ -28,32 +26,19 @@ import {
   RouteInfoDataEffects,
   LayoutActions,
   RoutingActions,
-  HikeEditMapActions,
-  HikeEditMapEffects,
   HikeEditRoutePlanningActions,
   HikeEditRoutePlanningEffects
 } from './store';
 import { routing } from './app-routing.module';
-// Components
-import { LayoutComponent } from './core/components/layout';
-import { FooterComponent } from './core/components/footer';
-import { NavbarComponent } from './core/components/navbar';
-import { SidebarComponent } from './core/components/sidebar';
-import { PageNotFoundComponent } from './core/components/page-not-found';
-import { LoginComponent } from './auth/components/login';
-import { HikeListComponent } from './pages/hike-list';
-import {
-  HikeEditComponent,
-  HikeEditGeneralInfoComponent,
-  HikeEditMapComponent,
-  HikeEditRoutePlanningComponent
-} from './pages/hike-edit';
-import { AdminLeafletComponent } from './shared/components/admin-leaflet';
-// Pipes
-import { ObjectToArrayPipe } from './shared/pipes/';
+// Page modules
+import { CoreLayoutModule } from './core';
+import { AuthModule } from './auth';
+import { HikeListModule } from './pages/hike-list';
+import { HikeEditModule } from './pages/hike-edit';
 // Services
 import {
   AdminMapService,
+  OsmPoiService,
   // Mocks
   HikeDataService
 } from './shared/services';
@@ -70,33 +55,17 @@ const commonConfig = new CommonConfig();
 const appEffectsRun = [
   EffectsModule.run(AuthEffects),
   EffectsModule.run(RouteInfoDataEffects),
-  EffectsModule.run(HikeEditMapEffects),
   EffectsModule.run(HikeEditRoutePlanningEffects)
 ];
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LayoutComponent,
-    FooterComponent,
-    NavbarComponent,
-    SidebarComponent,
-    LoginComponent,
-    HikeListComponent,
-    HikeEditComponent,
-    HikeEditGeneralInfoComponent,
-    HikeEditMapComponent,
-    HikeEditRoutePlanningComponent,
-    AdminLeafletComponent,
-    PageNotFoundComponent,
-    // Pipes
-    ObjectToArrayPipe
+    AppComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
-    FormsModule,
     HttpModule,
     store,
     routing,
@@ -113,17 +82,21 @@ const appEffectsRun = [
     AuthenticationApiModule.forRoot(authConfig),
     GtCommonModule.forRoot(commonConfig),
     RouterStoreModule.connectRouter(),
+    // Page modules
+    CoreLayoutModule,
+    AuthModule,
+    HikeListModule,
+    HikeEditModule,
+    // Effects
     ...appEffectsRun
   ],
   providers: [
-    // TODO move the single links to the components
     HikeDataService,
     AdminMapService,
     AdminMapActions,
     RouteInfoDataActions,
     LayoutActions,
     RoutingActions,
-    HikeEditMapActions,
     HikeEditRoutePlanningActions
   ],
   bootstrap: [AppComponent]

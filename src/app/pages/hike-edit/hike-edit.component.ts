@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { Store } from '@ngrx/store';
+import { State } from '../../store';
 
 import { HikeDataService } from '../../shared/services';
 import { IMockHikeElement } from '../../shared/interfaces';
@@ -18,6 +20,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   public hikeData: IMockHikeElement = null;
 
   constructor(
+    private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
     private _hikeDataService: HikeDataService,
     private _title: Title
@@ -32,11 +35,13 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       if (params && params.id) {
         this._title.setTitle('Edit hike');
 
+        // todo: load from db
         this.hikeData = this._hikeDataService.getHike(params.id);
       // Create new hike
       } else {
         this._title.setTitle('New hike');
 
+        // todo: from store
         this.hikeData = {
           title: {},
           description: {},
