@@ -26,10 +26,13 @@ import { RoutingActions } from './routing';
 export { RoutingActions };
 import { HikeEditRoutePlanningActions } from './hike-edit-route-planning';
 export { HikeEditRoutePlanningActions };
+import { HikeEditPoiActions } from './hike-edit-poi';
+export { HikeEditPoiActions };
 
 // Effects
 export { AuthEffects } from './auth';
 export { HikeEditRoutePlanningEffects } from './hike-edit-route-planning';
+export { HikeEditPoiEffects } from './hike-edit-poi';
 
 // States
 import { IRouteInfoDataState, routeInfoDataDomain } from './admin-map-route-info-data/state';
@@ -38,6 +41,8 @@ import { ILayoutState, layoutDomain } from './layout/state';
 export { ILayoutState }
 import { IHikeEditMapState, hikeEditMapDomain } from './hike-edit-map';
 export { IHikeEditMapState }
+import { IHikeEditPoiState, hikeEditPoiDomain } from './hike-edit-poi';
+export { IHikeEditPoiState }
 
 // Reducers
 import { routeInfoDataReducer } from './admin-map-route-info-data/reducer';
@@ -46,6 +51,8 @@ import { layoutReducer } from './layout/reducer';
 export { layoutReducer };
 import { hikeEditMapReducer } from './hike-edit-map';
 export { hikeEditMapReducer };
+import { hikeEditPoiReducer } from './hike-edit-poi';
+export { hikeEditPoiReducer };
 
 // Add the store interface of the module to the global reducers.
 let reducers = {
@@ -56,6 +63,7 @@ reducers[authDomain] = authReducer;
 reducers[routeInfoDataDomain] = routeInfoDataReducer;
 reducers[layoutDomain] = layoutReducer;
 reducers[hikeEditMapDomain] = hikeEditMapReducer;
+reducers[hikeEditPoiDomain] = hikeEditPoiReducer;
 
 // Extend the store interface with that.
 export interface State {
@@ -63,6 +71,7 @@ export interface State {
   routeInfoData: IRouteInfoDataState;
   layout: ILayoutState;
   hikeEditMap: IHikeEditMapState;
+  hikeEditPoi: IHikeEditPoiState;
   router: RouterState; // ngrx/router
   deepstream: IDeepstreamState;
 }

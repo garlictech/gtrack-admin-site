@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
@@ -26,7 +26,9 @@ import {
   LayoutActions,
   RoutingActions,
   HikeEditRoutePlanningActions,
-  HikeEditRoutePlanningEffects
+  HikeEditRoutePlanningEffects,
+  HikeEditPoiActions,
+  HikeEditPoiEffects
 } from './store';
 import { routing } from './app-routing.module';
 // Page modules
@@ -53,7 +55,8 @@ const commonConfig = new CommonConfig();
 
 const appEffectsRun = [
   EffectsModule.run(AuthEffects),
-  EffectsModule.run(HikeEditRoutePlanningEffects)
+  EffectsModule.run(HikeEditRoutePlanningEffects),
+  EffectsModule.run(HikeEditPoiEffects)
 ];
 
 @NgModule({
@@ -64,7 +67,7 @@ const appEffectsRun = [
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
-    HttpModule,
+    HttpClientModule,
     store,
     routing,
     StoreDevtoolsModule.instrumentOnlyWithExtension({
@@ -91,11 +94,14 @@ const appEffectsRun = [
   providers: [
     HikeDataService,
     AdminMapService,
+    OsmPoiService,
+    // Actions
     AdminMapActions,
     RouteInfoDataActions,
     LayoutActions,
     RoutingActions,
-    HikeEditRoutePlanningActions
+    HikeEditRoutePlanningActions,
+    HikeEditPoiActions
   ],
   bootstrap: [AppComponent]
 })

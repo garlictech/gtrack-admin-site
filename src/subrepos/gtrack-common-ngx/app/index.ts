@@ -90,6 +90,7 @@ export {
   IElavationData,
   IElevationMargin,
   Poi,
+  IPoi,
   PoiService,
   DistancePipe,
   CoordinatePipe,

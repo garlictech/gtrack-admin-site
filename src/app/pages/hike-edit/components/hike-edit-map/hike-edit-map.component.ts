@@ -7,7 +7,6 @@ import { State } from '../../../../store';
 import { LeafletMouseEvent } from 'leaflet';
 import { Center, ISegment } from '../../../../../subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
-import * as turf from '@turf/turf';
 import * as L from 'leaflet';
 
 const CENTER = <Center>{

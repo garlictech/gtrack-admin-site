@@ -12,7 +12,6 @@ import {
 } from '../../../../subrepos/gtrack-common-ngx/app';
 import * as _ from 'lodash';
 
-
 export class RoutePlanner {
   public routeInfoData: IRouteInfoDataState;
   private _geoJSON: GeoJSON.FeatureCollection<any>;

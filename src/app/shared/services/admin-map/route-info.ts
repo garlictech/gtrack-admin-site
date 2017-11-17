@@ -9,6 +9,8 @@ import {
 } from '../../../../subrepos/gtrack-common-ngx/app';
 import * as turf from '@turf/turf';
 import * as d3 from 'd3';
+import { Feature } from 'geojson';
+import { Polygon } from 'leaflet';
 
 export class RouteInfo {
   private _savedRoute: IRouteInfoDataState; // Deprecated?
@@ -50,6 +52,7 @@ export class RouteInfo {
   public getPath() {
     // Feature[0] contains the route polyLine
     const route = this._getRoute();
+
     if (route && route.track) {
       return this._getRoute().track.features[0];
     } else {
@@ -95,17 +98,18 @@ export class RouteInfo {
    * Get path bounds for POI search
    */
   public getSearchBounds() {
-    let _buffer: any = turf.buffer(this.getPath(), 1000, 'meters');
+    let _path = this.getPath();
+    let _buffer = turf.rewind(turf.buffer(_path, 1000, 'meters'), true);
     let _bounds = d3.geoBounds(_buffer);
 
     return {
       NorthEast: {
-        lat: _bounds[0][1],
-        lon: _bounds[0][0]
-      },
-      SouthWest: {
         lat: _bounds[1][1],
         lon: _bounds[1][0]
+      },
+      SouthWest: {
+        lat: _bounds[0][1],
+        lon: _bounds[0][0]
       }
     };
   }

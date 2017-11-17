@@ -1,0 +1,43 @@
+
+<div aria-multiselectable="true" class="panel-group" id="accordion" role="tablist">
+  <!-- gTrack pois -->
+  <!--div class="panel panel-default">
+    <div class="panel-heading" id="headingOne" role="tab">
+      <a aria-controls="collapseOne" aria-expanded="false" data-parent="#accordion" data-toggle="collapse" href="#collapse"
+        role="button" class="collapsed">
+        <div class="text-success">
+          gTrack pois
+          <i class="material-icons">keyboard_arrow_down</i>
+        </div>
+      </a>
+    </div>
+    <div aria-labelledby="headingOne" class="panel-collapse collapse" id="collapse" role="tabpanel" aria-expanded="false"
+      style="height: 0px;">
+      <div class="panel-body">
+        <gt-hike-edit-pois-gtrack></gt-hike-edit-pois-gtrack>
+      </div>
+    </div>
+  </div-->
+
+  <!-- Extenal pois -->
+  <div class="panel panel-default" *ngFor="let poiType of externalPoiTypes; let idx = index;">
+    <div class="panel-heading" id="headingOne" role="tab">
+      <a aria-controls="collapseOne" aria-expanded="false" data-parent="#accordion" data-toggle="collapse" href="#collapse{{idx}}"
+        role="button" class="collapsed">
+        <div class="text-success">
+          {{poiType.title}}
+          <i class="material-icons">keyboard_arrow_down</i>
+        </div>
+      </a>
+    </div>
+    <div aria-labelledby="headingOne" class="panel-collapse collapse show" id="collapse{{idx}}" role="tabpanel" aria-expanded="true"
+      ___style="height: 0px;">
+      <div class="panel-body">
+        <gt-hike-edit-pois-external
+          [actionName]="poiType.actionName"
+          [poiType]="poiType.poiType">
+        </gt-hike-edit-pois-external>
+      </div>
+    </div>
+  </div>
+</div>

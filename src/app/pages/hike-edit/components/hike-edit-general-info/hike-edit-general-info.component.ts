@@ -22,7 +22,6 @@ export class HikeEditGeneralInfoComponent implements OnInit {
   public selLang: string = null;
 
   ngOnInit() {
-    console.log(this.hikeData);
     this.existingLangKeys = new Set([
       ...Object.keys((this.hikeData.title || {})),
       ...Object.keys((this.hikeData.description || {}))
