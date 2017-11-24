@@ -29,4 +29,7 @@ export class Poi implements IPoi {
     return (this.types instanceof Array && this.types.indexOf('checkpoint') > -1);
   }
 
+  public get isPhoto(): boolean {
+    return (this.types instanceof Array && this.types.indexOf('photo') > -1);
+  }
 }

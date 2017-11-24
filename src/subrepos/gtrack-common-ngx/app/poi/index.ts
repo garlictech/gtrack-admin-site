@@ -9,7 +9,10 @@ import 'rxjs/add/operator/take';
 
 @Injectable()
 export class PoiService {
-  constructor(private db: AngularFireDatabase, private _deepstream: DeepstreamService) { }
+  constructor(
+    private db: AngularFireDatabase,
+    private _deepstream: DeepstreamService
+  ) { }
 
   get(id: string): Observable<Poi> {
     return this._deepstream
@@ -20,6 +23,10 @@ export class PoiService {
 
         return poi;
       });
+  }
+
+  public search(bounds): Observable<any[]> {
+    return Observable.of([]);
   }
 }
 
