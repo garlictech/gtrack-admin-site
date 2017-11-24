@@ -19,21 +19,6 @@ export const ROUTES: RouteInfo[] = [
         title: 'Hikes',
         icon: 'list',
         class: ''
-    }, {
-        path: '/fake',
-        title: 'Test link 1',
-        icon: 'assessment',
-        class: ''
-    }, {
-        path: '/fake',
-        title: 'Another test link 2',
-        icon: 'explore',
-        class: ''
-    }, {
-        path: '/fake',
-        title: 'Fake link',
-        icon: 'map',
-        class: ''
     }
 ];
 

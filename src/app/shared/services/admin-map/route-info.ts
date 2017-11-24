@@ -99,7 +99,7 @@ export class RouteInfo {
    */
   public getSearchBounds() {
     let _path = this.getPath();
-    let _buffer = turf.rewind(turf.buffer(_path, 1000, 'meters'), true);
+    let _buffer = turf.rewind(turf.buffer(_path, 100, 'meters'), true); // todo back to 1000
     let _bounds = d3.geoBounds(_buffer);
 
     return {

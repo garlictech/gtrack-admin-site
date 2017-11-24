@@ -1,0 +1,25 @@
+gt-hike-edit {
+  .inline-checkbox {
+    display: inline-block;
+    margin-left: 25px;
+    position: relative;
+    top: 2px;
+
+    label {
+      top: 1px;
+      position: relative;
+    }
+  }
+
+  .poi-spinner {
+    position: relative;
+    left: 0;
+    top: 12px;
+  }
+
+  poi-icons {
+    img {
+      width: 24px !important;
+    }
+  }
+}

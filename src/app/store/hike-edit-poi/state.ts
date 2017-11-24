@@ -1,8 +1,36 @@
+import { IExternalPoi } from '../../shared/interfaces/index';
+
 export interface IHikeEditPoiState {
-  wikipediaPois: any[],
-  googlePois: any[],
-  osmNaturalPois: any[],
-  osmAmenityPois: any[]
+  wikipedia: {
+    pois: IExternalPoi[],
+    loading: boolean,
+    showOnrouteMarkers: boolean,
+    showOffrouteMarkers: boolean
+  },
+  google: {
+    pois: IExternalPoi[],
+    loading: boolean,
+    showOnrouteMarkers: boolean,
+    showOffrouteMarkers: boolean
+  },
+  osmNatural: {
+    pois: IExternalPoi[],
+    loading: boolean,
+    showOnrouteMarkers: boolean,
+    showOffrouteMarkers: boolean
+  },
+  osmAmenity: {
+    pois: IExternalPoi[],
+    loading: boolean,
+    showOnrouteMarkers: boolean,
+    showOffrouteMarkers: boolean
+  },
+  osmRoute: {
+    pois: IExternalPoi[],
+    loading: boolean,
+    showOnrouteMarkers: boolean,
+    showOffrouteMarkers: boolean
+  },
 };
 
 export const hikeEditPoiDomain = 'hikeEditPoi';

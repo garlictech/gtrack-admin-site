@@ -1,11 +1,6 @@
 
 import { Component } from '@angular/core';
-
-interface IExternalPoiType {
-  title: string;
-  actionName: string;
-  poiType?: string;
-}
+import { IExternalPoiType } from '../../../../shared/interfaces/index';
 
 @Component({
   selector: 'gt-hike-edit-pois',
@@ -13,20 +8,31 @@ interface IExternalPoiType {
 })
 export class HikeEditPoisComponent {
   public externalPoiTypes: IExternalPoiType[] = [
-    /*{
+    {
       title: 'Wikipedia pois',
-      actionName: 'getWikipediaPois'
+      subdomain: 'wikipedia',
+      getAction: 'getWikipediaPois',
+      setAction: 'setWikipediaPois'
     }, {
       title: 'Google pois',
-      actionName: 'getGooglePois'
-    },*/ {
+      subdomain: 'google',
+      getAction: 'getGooglePois',
+      setAction: 'setGooglePois'
+    }, {
       title: 'OSM Natural pois',
-      actionName: 'getOsmPois',
-      poiType: 'natural'
+      subdomain: 'osmNatural',
+      getAction: 'getOsmNaturalPois',
+      setAction: 'setOsmNaturalPois'
     }, {
       title: 'OSM Amenity pois',
-      actionName: 'getOsmPois',
-      poiType: 'amenity'
+      subdomain: 'osmAmenity',
+      getAction: 'getOsmAmenityPois',
+      setAction: 'setOsmAmenityPois'
+    }, {
+      title: 'OSM Route pois',
+      subdomain: 'osmRoute',
+      getAction: 'getOsmRoutePois',
+      setAction: 'setOsmRoutePois'
     }
   ];
 }

@@ -1,36 +1,32 @@
 import { Poi, IPoi } from '../../../../subrepos/gtrack-common-ngx/index';
+import { IExternalPoi } from '../../interfaces';
 import * as _ from 'lodash';
 import { read } from 'fs';
 
-export class ExternalPoi extends Poi {
-  private _inGtrackDb: boolean;
+export class ExternalPoi extends Poi implements IExternalPoi {
+  public inGtrackDb: boolean;
+  public distFromRoute: number;
+  public onRoute: boolean;
 
-  public constructor(public data: IPoi) {
-    super(data);
+  public constructor(public data: IExternalPoi) {
+    super(<IPoi>data);
 
-    this._inGtrackDb = false;
+    this.inGtrackDb = false;
+    this.distFromRoute = 0;
   }
 
-  public set setInGtrackDb(val: boolean) {
-    this._inGtrackDb = val;
-  }
-
-  public get isInGtrackDb(): boolean {
-    return this._inGtrackDb;
-  }
-
+  // todo: check this method when working. dbObj is missing in the new ExPoi class!
   public getDbObj() {
-    let res = {};
+    let _res = {};
 
-    _.defaultsDeep(res, _.pick(this), ['elevation', 'lat', 'lon', 'objectType', 'title', 'types']);
+    _.defaultsDeep(_res, _.pick(this), ['elevation', 'lat', 'lon', 'objectType', 'title', 'types']);
 
     if (this[this.objectType]) {
-      res[this.objectType] = {};
+      _res[this.objectType] = {};
     } else {
-      _.defaultsDeep(res[this.objectType], this[this.objectType]);
+      _.defaultsDeep(_res[this.objectType], this[this.objectType]);
     }
 
-    console.log('ExternalPoi getDbObj', res);
-    return res;
+    return _res;
   }
 }

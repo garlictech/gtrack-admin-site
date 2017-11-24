@@ -1,8 +1,67 @@
-
-{{actionName}}
-{{poiType}}
-
 <div class="clearfix">
-  <button class="btn btn-sm btn-primary" (click)="savePois()">Save</button>
-  <button class="btn btn-sm btn-primary" (click)="getPois()">Get new</button>
+  <div class="pull-left">
+    <button class="btn btn-sm btn-primary" (click)="savePois()">Save</button>
+    <button class="btn btn-sm btn-primary" (click)="getPois()">Get new</button>
+  </div>
+
+  <div class="pull-left" *ngIf="loading$ | async"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
+
+  <div class="pull-right">
+    <div class="checkbox inline-checkbox">
+      <label>
+          <input type="checkbox" name="optionsCheckboxes" [checked]="showOnrouteMarkers$ | async" (change)="toggleOnrouteMarkers()">
+          <span class="checkbox-material"><span class="check"></span></span>
+      </label>
+      Show onroute markers
+    </div>
+    <div class="checkbox inline-checkbox">
+      <label>
+          <input type="checkbox" name="optionsCheckboxes" [checked]="showOffrouteMarkers$ | async" (change)="toggleOffrouteMarkers()">
+          <span class="checkbox-material"><span class="check"></span></span>
+      </label>
+      Show offroute markers
+    </div>
+  </div>
+</div>
+
+<div aria-multiselectable="true" class="panel-group" id="acc_{{poiType.subdomain}}" role="tablist">
+  <div class="panel panel-default">
+    <div class="panel-heading" id="headingOne" role="tab">
+      <a aria-controls="collapseOne" aria-expanded="false" [attr.data-parent]="'#acc_' + poiType.subdomain" data-toggle="collapse" href="#collapse_{{poiType.subdomain}}_off" role="button" class="collapsed">
+        <div class="text-success">
+          On route pois
+          <i class="material-icons">keyboard_arrow_down</i>
+        </div>
+      </a>
+    </div>
+    <div aria-labelledby="headingOne" class="panel-collapse collapse" id="collapse_{{poiType.subdomain}}_off" role="tabpanel" aria-expanded="false" style="height: 0px;">
+      <div class="panel-body">
+          <hike-edit-pois-external-table
+          [pois]="pois$"
+          [subdomain]="poiType.subdomain"
+          [onRouteCheck]="true">
+        </hike-edit-pois-external-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" id="headingOne" role="tab">
+      <a aria-controls="collapseOne" aria-expanded="false" data-parent="#accordion2" data-toggle="collapse" href="#collapse_{{poiType.subdomain}}_on" role="button" class="collapsed">
+        <div class="text-success">
+          Off route pois
+          <i class="material-icons">keyboard_arrow_down</i>
+        </div>
+      </a>
+    </div>
+    <div aria-labelledby="headingOne" class="panel-collapse collapse" id="collapse_{{poiType.subdomain}}_on" role="tabpanel" aria-expanded="false" style="height: 0px;">
+      <div class="panel-body">
+          <hike-edit-pois-external-table
+            [pois]="pois$"
+            [subdomain]="poiType.subdomain"
+            [onRouteCheck]="false">
+          </hike-edit-pois-external-table>
+      </div>
+    </div>
+  </div>
 </div>

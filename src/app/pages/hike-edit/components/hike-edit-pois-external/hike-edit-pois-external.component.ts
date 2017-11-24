@@ -1,35 +1,67 @@
 
-import { Component, Input, Injector, OnInit } from '@angular/core';
+import { Component, Input, Injector, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
 import { OsmPoiService } from '../../../../shared/services';
+import { IExternalPoiType, IExternalPoi } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
 import { HikeEditPoiActions } from '../../../../store/hike-edit-poi/index';
+import * as _ from 'lodash';
+import { ExternalPoi } from '../../../../shared/services/poi/external-poi';
 
 @Component({
   selector: 'gt-hike-edit-pois-external',
   templateUrl: './hike-edit-pois-external.component.html',
-  providers: [
-    OsmPoiService
-  ]
+  providers: [OsmPoiService]
 })
-export class HikeEditPoisExternalComponent implements OnInit {
-  @Input() actionName: string;
-  @Input() poiType: string;
-  public pois: any[] = []; // STORE!!
+export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
+  @Input() poiType: IExternalPoiType;
+  public pois$: Observable<IExternalPoi>;
+  public loading$: Observable<boolean>;
+  public showOnrouteMarkers$: Observable<boolean>;
+  public showOffrouteMarkers$: Observable<boolean>;
   private _map: AdminMap;
-
-  private _serviceMap = {
-    'OsmPoiService': OsmPoiService
-  };
+  private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _injector: Injector,
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
-    private _actions: HikeEditPoiActions
-  ) {
-    this._store.select((state: State) => state.hikeEditMap.mapId)
+    private _hikeEditPoiActions: HikeEditPoiActions
+  ) {}
+
+  ngOnInit() {
+    this.pois$ = this._store
+      .select((state: State) => state.hikeEditPoi[this.poiType.subdomain].pois);
+    this.loading$ = this._store
+      .select((state: State) => state.hikeEditPoi[this.poiType.subdomain].loading);
+    this.showOnrouteMarkers$ = this._store
+      .select((state: State) => state.hikeEditPoi[this.poiType.subdomain].showOnrouteMarkers);
+    this.showOffrouteMarkers$ = this._store
+      .select((state: State) => state.hikeEditPoi[this.poiType.subdomain].showOffrouteMarkers);
+
+    this.pois$
+      .takeUntil(this._destroy$)
+      .subscribe(() => {
+        this._store.dispatch(this._hikeEditPoiActions.markersConfigChanged(this.poiType.subdomain));
+      });
+
+    this.showOnrouteMarkers$
+      .takeUntil(this._destroy$)
+      .subscribe(() => {
+        this._store.dispatch(this._hikeEditPoiActions.markersConfigChanged(this.poiType.subdomain));
+      });
+
+    this.showOffrouteMarkers$
+      .takeUntil(this._destroy$)
+      .subscribe(() => {
+        this._store.dispatch(this._hikeEditPoiActions.markersConfigChanged(this.poiType.subdomain));
+      });
+
+    this._store
+      .select((state: State) => state.hikeEditMap.mapId)
       .skipWhile(mapId => mapId === null)
       .take(1)
       .subscribe((mapId: string) => {
@@ -37,32 +69,54 @@ export class HikeEditPoisExternalComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-    // console.log('SERVICE???', this._serviceMap[this.serviceName]);
+  ngOnDestroy() {
+    this._destroy$.next(true);
+    this._destroy$.unsubscribe();
   }
 
   public getPois() {
     let _bounds = this._map.routeInfo.getSearchBounds();
-    console.log('bounds', _bounds);
-    this._store.dispatch(this._actions[this.actionName](_bounds, (this.poiType || null)));
 
-    /*
+    if (_bounds) {
+      // Clear poi list from the current subdomain
+      this._removeSubdomainPois();
 
-    bounds = RouteService.getSearchBounds()
-    _removePois()
+      // Get pois for the current domain
+      this._store.dispatch(this._hikeEditPoiActions[this.poiType.getAction](
+        _bounds,
+        this._map.id
+      ));
+    }
+  }
 
-    AsyncRequestExecutor.execute scope, scope.service.get(bounds, scope.poiType)
-    .then (pois) ->
+  public toggleOnrouteMarkers() {
+    this._store.dispatch(this._hikeEditPoiActions.toggleOnrouteMarkers(
+      this.poiType.subdomain
+    ));
+  }
 
-      PoiService.search(bounds).then (gtrackPois) ->
-        PoiEditorService.organizePois(pois, RouteService.getPath(), gtrackPois).then (organizedPois) ->
-          scope.pois = _.sortBy organizedPois, (p) -> p.distFromStart
-          onRoutePois = PoiEditorService.getOnroutePois scope.pois
-          _.forEach onRoutePois, (p) -> p.inHike = true
-          offRoutePois = PoiEditorService.getOffroutePois scope.pois
-          _.forEach offRoutePois, (p) -> p.inHike = false
-          _markerConfigChanged()
-    */
+  public toggleOffrouteMarkers() {
+    this._store.dispatch(this._hikeEditPoiActions.toggleOffrouteMarkers(
+      this.poiType.subdomain
+    ));
+  }
+
+  /**
+   * getPois submethod
+   */
+  private _removeSubdomainPois() {
+    this._store.select((state: State) => state.hikeEditPoi[this.poiType.subdomain].pois)
+      .take(1)
+      .subscribe((pois) => {
+        this._store.dispatch(this._hikeEditPoiActions[this.poiType.setAction]([]));
+      });
+  }
+
+  /**
+   * _removePois submethod
+   */
+  private _firstToLowerCase(str: string) {
+    return str.substr(0, 1).toLowerCase() + str.substr(1);
   }
 
   public savePois() {

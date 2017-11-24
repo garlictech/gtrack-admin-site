@@ -1,0 +1,27 @@
+<table class="table table-hover">
+  <thead class="text-success">
+    <tr>
+      <th>Icon</th>
+      <th>Title</th>
+      <th>Distance from route</th>
+      <th>Types</th>
+      <th>Remove</th>
+      <th>Special</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let poi of (pois | async); let idx = index">
+      <tr *ngIf="poi.onRoute === onRouteCheck">
+        <td><poi-icons [poi]="poi"></poi-icons></td>
+        <td>{{poi.title}}</td>
+        <td>{{poi.distFromRoute | distance : true}}</td>
+        <td>{{poi.types}}</td>
+        <td>
+          <a *ngIf="poi.inHike" (click)="removePoi($event, idx)">remove</a>
+          <a *ngIf="!poi.inHike" (click)="addPoi($event, idx)">add</a>
+        </td>
+        <td><special-poi-data [poi]="poi"></special-poi-data></td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

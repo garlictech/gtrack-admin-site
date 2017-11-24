@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
+import { ExternalPoi } from '../../shared/services/poi/external-poi';
 
 @Injectable()
 export class HikeEditPoiActions {
@@ -7,14 +8,23 @@ export class HikeEditPoiActions {
   static SET_WIKIPEDIA_POIS = '[HikeEditPoi] Set Wikipedia pois';
   static GET_GOOGLE_POIS = '[HikeEditPoi] Get Google pois';
   static SET_GOOGLE_POIS = '[HikeEditPoi] Set Google pois';
-  static GET_OSM_POIS = '[HikeEditPoi] Get OSM pois';
-  static SET_OSM_POIS = '[HikeEditPoi] Set OSM pois';
+  static GET_OSM_NATURAL_POIS = '[HikeEditPoi] Get OSM natural pois';
+  static SET_OSM_NATURAL_POIS = '[HikeEditPoi] Set OSM natural pois';
+  static GET_OSM_AMENITY_POIS = '[HikeEditPoi] Get OSM amenity pois';
+  static SET_OSM_AMENITY_POIS = '[HikeEditPoi] Set OSM amenity pois';
+  static GET_OSM_ROUTE_POIS = '[HikeEditPoi] Get OSM route pois';
+  static SET_OSM_ROUTE_POIS = '[HikeEditPoi] Set OSM route pois';
+  static SET_POI_IN_HIKE = '[HikeEditPoi] Set poi inHike';
+  static TOGGLE_ONROUTE_MARKERS = '[HikeEditPoi] Toggle onroute markers';
+  static TOGGLE_OFFROUTE_MARKERS = '[HikeEditPoi] Toggle offroute markers';
+  static MARKERS_CONFIG_CHANGED = '[HikeEditPoi] Markers config changed';
 
-  getWikipediaPois(bounds): Action {
+  getWikipediaPois(bounds, mapId): Action {
     return {
       type: HikeEditPoiActions.GET_WIKIPEDIA_POIS,
       payload: {
-        bounds: bounds
+        bounds: bounds,
+        mapId: mapId
       }
     };
   }
@@ -28,11 +38,12 @@ export class HikeEditPoiActions {
     };
   }
 
-  getGooglePois(bounds): Action {
+  getGooglePois(bounds, mapId): Action {
     return {
       type: HikeEditPoiActions.GET_GOOGLE_POIS,
       payload: {
-        bounds: bounds
+        bounds: bounds,
+        mapId: mapId
       }
     };
   }
@@ -46,22 +57,97 @@ export class HikeEditPoiActions {
     };
   }
 
-  getOsmPois(bounds, poiType): Action {
+  getOsmNaturalPois(bounds, mapId): Action {
     return {
-      type: HikeEditPoiActions.GET_OSM_POIS,
+      type: HikeEditPoiActions.GET_OSM_NATURAL_POIS,
       payload: {
         bounds: bounds,
-        poiType: poiType
+        mapId: mapId
       }
     };
   }
 
-  setOsmPois(pois, poiType): Action {
+  setOsmNaturalPois(pois): Action {
     return {
-      type: HikeEditPoiActions.SET_OSM_POIS,
+      type: HikeEditPoiActions.SET_OSM_NATURAL_POIS,
       payload: {
-        pois: pois,
-        poiType: poiType
+        pois: pois
+      }
+    };
+  }
+
+  getOsmAmenityPois(bounds, mapId): Action {
+    return {
+      type: HikeEditPoiActions.GET_OSM_AMENITY_POIS,
+      payload: {
+        bounds: bounds,
+        mapId: mapId
+      }
+    };
+  }
+
+  setOsmAmenityPois(pois): Action {
+    return {
+      type: HikeEditPoiActions.SET_OSM_AMENITY_POIS,
+      payload: {
+        pois: pois
+      }
+    };
+  }
+
+  getOsmRoutePois(bounds, mapId): Action {
+    return {
+      type: HikeEditPoiActions.GET_OSM_ROUTE_POIS,
+      payload: {
+        bounds: bounds,
+        mapId: mapId
+      }
+    };
+  }
+
+  setOsmRoutePois(pois): Action {
+    return {
+      type: HikeEditPoiActions.SET_OSM_ROUTE_POIS,
+      payload: {
+        pois: pois
+      }
+    };
+  }
+
+  setPoiInHike(subdomain: string, poiIdx: number, isInHike: boolean): Action {
+    return {
+      type: HikeEditPoiActions.SET_POI_IN_HIKE,
+      payload: {
+        subdomain: subdomain,
+        poiIdx: poiIdx,
+        isInHike: isInHike
+      }
+    }
+  }
+
+  toggleOnrouteMarkers(subdomain: string): Action {
+    return {
+      type: HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS,
+      payload: {
+        subdomain: subdomain
+      }
+    };
+  }
+
+  toggleOffrouteMarkers(subdomain: string): Action {
+    return {
+      type: HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS,
+      payload: {
+        subdomain: subdomain
+      }
+    };
+  }
+
+  markersConfigChanged(subdomain): Action {
+    return {
+      type: HikeEditPoiActions.MARKERS_CONFIG_CHANGED,
+      payload: {
+        subdomain: subdomain
       }
     };
   }

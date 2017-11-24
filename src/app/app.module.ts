@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { JsonpModule } from '@angular/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
@@ -16,6 +17,7 @@ import {
   CommonConfig,
   DeepstreamModule
 } from '../subrepos/gtrack-common-ngx';
+import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import {
@@ -39,7 +41,11 @@ import { HikeEditModule } from './pages/hike-edit';
 // Services
 import {
   AdminMapService,
+  PoiEditorService,
+  WikipediaPoiService,
   OsmPoiService,
+  OsmRoutePoiService,
+  GooglePoiService,
   // Mocks
   HikeDataService
 } from './shared/services';
@@ -48,6 +54,7 @@ import './styles';
 
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authentication.server;
+authConfig.firebase = environment.firebase;
 authConfig.webserverUrl = environment.webappServer;
 authConfig.google.appId = environment.authentication.google.appId;
 
@@ -68,6 +75,7 @@ const appEffectsRun = [
     BrowserAnimationsModule,
     CommonModule,
     HttpClientModule,
+    JsonpModule,
     store,
     routing,
     StoreDevtoolsModule.instrumentOnlyWithExtension({
@@ -80,6 +88,7 @@ const appEffectsRun = [
       },
       deepstreamConnectionString: 'localhost:6020'
     }),
+    AngularFireModule.initializeApp(authConfig.firebase),
     AuthenticationApiModule.forRoot(authConfig),
     GtCommonModule.forRoot(commonConfig),
     RouterStoreModule.connectRouter(),
@@ -92,9 +101,14 @@ const appEffectsRun = [
     ...appEffectsRun
   ],
   providers: [
+    // Services
     HikeDataService,
     AdminMapService,
+    PoiEditorService,
+    WikipediaPoiService,
     OsmPoiService,
+    OsmRoutePoiService,
+    GooglePoiService,
     // Actions
     AdminMapActions,
     RouteInfoDataActions,

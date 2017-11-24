@@ -30,13 +30,9 @@
         </div>
       </a>
     </div>
-    <div aria-labelledby="headingOne" class="panel-collapse collapse show" id="collapse{{idx}}" role="tabpanel" aria-expanded="true"
-      ___style="height: 0px;">
+    <div aria-labelledby="headingOne" class="panel-collapse collapse" id="collapse{{idx}}" role="tabpanel" aria-expanded="false" style="height: 0px;">
       <div class="panel-body">
-        <gt-hike-edit-pois-external
-          [actionName]="poiType.actionName"
-          [poiType]="poiType.poiType">
-        </gt-hike-edit-pois-external>
+        <gt-hike-edit-pois-external [poiType]="poiType"></gt-hike-edit-pois-external>
       </div>
     </div>
   </div>

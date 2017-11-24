@@ -12,7 +12,8 @@ declare const $: any;
 
 @Component({
   selector: 'gt-hike-edit',
-  templateUrl: './hike-edit.component.html'
+  templateUrl: './hike-edit.component.html',
+  styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
   private _routeSubscription: Subscription;

@@ -12,7 +12,10 @@ import {
   HikeEditRoutePlanningComponent,
   HikeEditPoisComponent,
   HikeEditPoisGTrackComponent,
-  HikeEditPoisExternalComponent
+  HikeEditPoisExternalComponent,
+  HikeEditPoisExternalTableComponent,
+  PoiIconsComponent,
+  SpecialPoiDataComponent
 } from './components';
 // Shared components
 import { AdminLeafletComponent } from '../../shared/components/admin-leaflet';
@@ -26,7 +29,10 @@ const COMPONENTS = [
   HikeEditRoutePlanningComponent,
   HikeEditPoisComponent,
   HikeEditPoisGTrackComponent,
-  HikeEditPoisExternalComponent
+  HikeEditPoisExternalComponent,
+  HikeEditPoisExternalTableComponent,
+  PoiIconsComponent,
+  SpecialPoiDataComponent
 ];
 
 @NgModule({
