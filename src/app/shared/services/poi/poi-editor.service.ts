@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { GeometryService, ElevationService } from '../../../../subrepos/gtrack-common-ngx';
+import { GeometryService, ElevationService, PoiService } from '../../../../subrepos/gtrack-common-ngx';
 import { ExternalPoi } from './external-poi';
-import { AdminMap } from '../admin-map/admin-map';
+import { AdminMap, AdminMapService } from '../admin-map';
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
 import { Observable } from 'rxjs/Observable';
@@ -18,7 +18,9 @@ export class PoiEditorService {
 
   constructor(
     private _geometryService: GeometryService,
-    private _elevationService: ElevationService
+    private _elevationService: ElevationService,
+    private _poiService: PoiService,
+    private _adminMapService: AdminMapService,
   ) {}
 
   public createGtrackPoi(externalPoi) {
@@ -172,5 +174,36 @@ export class PoiEditorService {
         // remove inHike offroutePois
       }
     }
+  }
+
+  /**
+   * Effect submethod
+   */
+  public assignGTrackPois(data) {
+    return this._poiService.search(data.bounds).map((gtrackPois) => {
+      return Object.assign(data, {gtrackPois: gtrackPois});
+    });
+  }
+
+  /**
+   * Effect submethod
+   */
+  public assignOrganizedPois(data) {
+    const _map: AdminMap = this._adminMapService.getMapById(data.mapId);
+    return this
+      .organizePois(data.pois, _map.routeInfo.getPath(), data.gtrackPois)
+      .then((organizedPois) => {
+        return Object.assign(data, {organizedPois: organizedPois});
+      });
+  }
+
+  public assignOnOffRoutePois(data) {
+    let _pois = _.sortBy(data.organizedPois, (p: ExternalPoi) => p.distFromRoute);
+    let _onRoutePois = this.getOnroutePois(_pois);
+    let _offRoutePois = this.getOffroutePois(_pois);
+    _.forEach(_onRoutePois, (p) => (<any>p).inHike = true);
+    _.forEach(_offRoutePois, (p) => (<any>p).inHike = false);
+
+    return _pois;
   }
 }
