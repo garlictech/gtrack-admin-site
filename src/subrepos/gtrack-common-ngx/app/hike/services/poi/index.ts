@@ -20,6 +20,11 @@ export class PoiService {
         return poi;
       });
   }
+
+  public search(bounds): Observable<any[]> {
+    return Observable.of([]);
+  }
+
 }
 
 export { Poi };
