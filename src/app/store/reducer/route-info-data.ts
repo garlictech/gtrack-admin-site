@@ -1,6 +1,6 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { IRouteInfoDataState } from './state';
-import { RouteInfoDataActions } from './actions';
+import { IRouteInfoDataState } from '../state';
+import { RouteInfoDataActions } from '../actions';
 
 const initialState: IRouteInfoDataState = {
   segments: [],

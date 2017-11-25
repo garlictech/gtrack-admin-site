@@ -16,43 +16,53 @@ import {
 } from '../../subrepos/gtrack-common-ngx/subrepos/deepstream-ngx';
 
 // Actions
-import { AdminMapActions } from './admin-map';
-export { AdminMapActions };
-import { RouteInfoDataActions } from './admin-map-route-info-data';
-export { RouteInfoDataActions };
-import { LayoutActions } from './layout';
-export { LayoutActions };
-import { RoutingActions } from './routing';
-export { RoutingActions };
-import { HikeEditRoutePlanningActions } from './hike-edit-route-planning';
-export { HikeEditRoutePlanningActions };
-import { HikeEditPoiActions } from './hike-edit-poi';
-export { HikeEditPoiActions };
+export {
+  AdminMapActions,
+  RouteInfoDataActions,
+  LayoutActions,
+  RoutingActions,
+  HikeEditRoutePlanningActions,
+  HikeEditPoiActions
+} from './actions';
 
 // Effects
-export { AuthEffects } from './auth';
-export { HikeEditRoutePlanningEffects } from './hike-edit-route-planning';
-export { HikeEditPoiEffects } from './hike-edit-poi';
+export {
+  AuthEffects,
+  HikeEditRoutePlanningEffects,
+  HikeEditPoiEffects
+} from './effects';
 
 // States
-import { IRouteInfoDataState, routeInfoDataDomain } from './admin-map-route-info-data/state';
-export { IRouteInfoDataState }
-import { ILayoutState, layoutDomain } from './layout/state';
-export { ILayoutState }
-import { IHikeEditMapState, hikeEditMapDomain } from './hike-edit-map';
-export { IHikeEditMapState }
-import { IHikeEditPoiState, hikeEditPoiDomain } from './hike-edit-poi';
-export { IHikeEditPoiState }
+import {
+  IRouteInfoDataState,
+  routeInfoDataDomain,
+  ILayoutState,
+  layoutDomain,
+  IHikeEditMapState,
+  hikeEditMapDomain,
+  IHikeEditPoiState,
+  hikeEditPoiDomain
+} from './state';
+export {
+  IRouteInfoDataState,
+  ILayoutState,
+  IHikeEditMapState,
+  IHikeEditPoiState
+}
 
 // Reducers
-import { routeInfoDataReducer } from './admin-map-route-info-data/reducer';
-export { routeInfoDataReducer };
-import { layoutReducer } from './layout/reducer';
-export { layoutReducer };
-import { hikeEditMapReducer } from './hike-edit-map';
-export { hikeEditMapReducer };
-import { hikeEditPoiReducer } from './hike-edit-poi';
-export { hikeEditPoiReducer };
+import {
+  routeInfoDataReducer,
+  layoutReducer,
+  hikeEditMapReducer,
+  hikeEditPoiReducer
+} from './reducer';
+export {
+  routeInfoDataReducer,
+  layoutReducer,
+  hikeEditMapReducer,
+  hikeEditPoiReducer
+};
 
 // Add the store interface of the module to the global reducers.
 let reducers = {

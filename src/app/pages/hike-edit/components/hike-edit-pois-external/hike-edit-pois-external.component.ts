@@ -7,9 +7,9 @@ import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map
 import { OsmPoiService } from '../../../../shared/services';
 import { IExternalPoiType, IExternalPoi } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
-import { HikeEditPoiActions } from '../../../../store/hike-edit-poi/index';
-import * as _ from 'lodash';
+import { HikeEditPoiActions } from '../../../../store/actions';
 import { ExternalPoi } from '../../../../shared/services/poi/external-poi';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'gt-hike-edit-pois-external',

@@ -1,7 +1,6 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { IHikeEditPoiState } from './state';
-import { HikeEditPoiActions } from './actions';
-import { AdminMapActions } from '../admin-map';
+import { IHikeEditPoiState } from '../state';
+import { HikeEditPoiActions, AdminMapActions } from '../actions';
 
 const initialState: IHikeEditPoiState = {
   wikipedia: {

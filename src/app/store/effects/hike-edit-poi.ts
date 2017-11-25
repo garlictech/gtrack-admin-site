@@ -3,7 +3,7 @@ import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { State } from '../index';
-import { HikeEditPoiActions } from './index';
+import { HikeEditPoiActions } from '../actions';
 import {
   OsmPoiService,
   OsmRoutePoiService,

@@ -1,7 +1,6 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { IHikeEditMapState } from './state';
-import { HikeEditMapActions } from './actions';
-import { AdminMapActions } from '../admin-map';
+import { IHikeEditMapState } from '../state';
+import { AdminMapActions } from '../actions';
 
 const initialState: IHikeEditMapState = {
   mapId: null

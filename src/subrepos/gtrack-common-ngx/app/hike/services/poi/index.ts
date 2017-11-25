@@ -24,7 +24,6 @@ export class PoiService {
   public search(bounds): Observable<any[]> {
     return Observable.of([]);
   }
-
 }
 
 export { Poi };

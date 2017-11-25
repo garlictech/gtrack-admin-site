@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { LayoutActions } from './actions';
-import { ILayoutState } from './state';
+import { LayoutActions } from '../actions';
+import { ILayoutState } from '../state';
 
 const initialState: ILayoutState = {
   showSidenav: false,

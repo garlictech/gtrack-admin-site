@@ -10,11 +10,12 @@ import {
   RouteService,
   ElevationService
 } from '../../../../subrepos/gtrack-common-ngx/app';
-
+import {
+  RouteInfoDataActions,
+  AdminMapActions,
+  RoutingActions
+} from '../../../store/actions';
 import * as uuid from 'uuid';
-import { RoutingActions } from '../../../store/routing/index';
-import { AdminMapActions } from '../../../store/admin-map';
-import { RouteInfoDataActions } from '../../../store/admin-map-route-info-data';
 
 @Injectable()
 export class AdminMapService extends MapService {
