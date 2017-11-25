@@ -13,8 +13,8 @@ import {
   Actions as JwtActions
 } from '../subrepos/authentication-api-ngx';
 import {
-  CommonModule as GtCommonModule,
-  CommonConfig,
+  SharedModule,
+  SharedConfig,
   DeepstreamModule
 } from '../subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
@@ -58,13 +58,13 @@ authConfig.firebase = environment.firebase;
 authConfig.webserverUrl = environment.webappServer;
 authConfig.google.appId = environment.authentication.google.appId;
 
-const commonConfig = new CommonConfig();
-
 const appEffectsRun = [
   EffectsModule.run(AuthEffects),
   EffectsModule.run(HikeEditRoutePlanningEffects),
   EffectsModule.run(HikeEditPoiEffects)
 ];
+
+const sharedConfig = new SharedConfig();
 
 @NgModule({
   declarations: [
@@ -90,8 +90,8 @@ const appEffectsRun = [
     }),
     AngularFireModule.initializeApp(authConfig.firebase),
     AuthenticationApiModule.forRoot(authConfig),
-    GtCommonModule.forRoot(commonConfig),
     RouterStoreModule.connectRouter(),
+    SharedModule.forRoot(sharedConfig),
     // Page modules
     CoreLayoutModule,
     AuthModule,

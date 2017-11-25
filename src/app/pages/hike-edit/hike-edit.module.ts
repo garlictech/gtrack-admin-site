@@ -20,7 +20,7 @@ import {
 // Shared components
 import { AdminLeafletComponent } from '../../shared/components/admin-leaflet';
 // gTrack common
-import { CommonModule as GtCommonModule } from '../../../subrepos/gtrack-common-ngx';
+import { MapModule, HikeModule, SharedModule } from '../../../subrepos/gtrack-common-ngx';
 
 const COMPONENTS = [
   HikeEditComponent,
@@ -40,7 +40,9 @@ const COMPONENTS = [
     CommonModule,
     RouterModule,
     FormsModule,
-    GtCommonModule
+    MapModule,
+    HikeModule,
+    SharedModule
   ],
   exports: [
     ...COMPONENTS

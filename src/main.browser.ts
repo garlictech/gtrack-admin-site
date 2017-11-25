@@ -8,6 +8,10 @@ import { AppModule } from './app/app.module';
 
 // Vendors
 import 'hammerjs';
+/*
+import * as Popper from '../node_modules/popper.js/dist/umd/popper.min.js';
+(<any>window).Popper = Popper;
+*/
 import 'bootstrap';
 import 'bootstrap-material-design';
 import * as Spinner from '../node_modules/spin.js/spin.js';
