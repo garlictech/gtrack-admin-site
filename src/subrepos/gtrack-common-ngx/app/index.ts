@@ -20,7 +20,7 @@ import {
 } from './map';
 
 import { UnitsService } from './units';
-import { PoiService, Poi } from './poi';
+import { PoiService, Poi, IPoi } from './poi';
 import { IconService } from './icon';
 import { MapMarkerService, MapMarker } from './map-marker';
 import { GoogleMapsService } from './google-maps';
