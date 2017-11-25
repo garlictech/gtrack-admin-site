@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HikeService, Hike, IHike } from './services/hike';
 import { HikeProgramService, HikeProgram } from './services/hike-program';
 import { RouteService, Route, IElavationData, IElevationMargin } from './services/route';
-import { PoiService, Poi } from './services/poi';
+import { PoiService, Poi, IPoi } from './services/poi';
 import { ISegment } from './services/segment';
 import { CheckpointService, Checkpoint, CheckpointSequence } from './services/checkpoint';
 import { GameRuleService } from './services/game-rule';
@@ -33,6 +33,7 @@ import { MapModule } from '../map';
     HikeProgramService,
     RouteService,
     PoiService,
+    GameRuleService,
     GeometryService,
     ElevationService,
     CheckpointService
@@ -52,8 +53,10 @@ export {
   Route,
   PoiService,
   Poi,
+  IPoi,
   ISegment,
   TrailBoxComponent,
+  GameRuleService,
   GeometryService,
   ElevationService,
   Checkpoint,
