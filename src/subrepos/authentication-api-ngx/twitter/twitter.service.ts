@@ -8,6 +8,7 @@ import { IAuth } from '../store';
 import { AuthenticationApiConfig } from '../lib/config';
 import { DebugLog } from '../log';
 import { AuthProviderBase } from '../auth-provider-base';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class TwitterService extends AuthProviderBase {
@@ -115,8 +116,7 @@ export class TwitterService extends AuthProviderBase {
       .post(requestTokenProxy, {
         redirectUri: redirectUri
       })
-      .toPromise()
-      .then(response => {
+      .do(response => {
         let queryString: string = response.text().replace(/"(.*)"/, '$1');
         let requestTokenParams: any = this._parseQueryString(queryString);
         let oauthToken: string;
@@ -124,7 +124,7 @@ export class TwitterService extends AuthProviderBase {
         let loginUrl: string;
 
         if (requestTokenParams.hasOwnProperty('oauth_token') === false) {
-          return Promise.reject(new Error('Oauth request token was not received'));
+          Observable.throw(new Error('Oauth request token was not received'));
         }
 
         /*jshint camelcase: false */
@@ -139,10 +139,13 @@ export class TwitterService extends AuthProviderBase {
 
         this.oauthWindow.changeUrl(loginUrl);
       })
-      .catch(err => {
+      .catch((err, obs) => {
         this.oauthWindow.close();
         this.deferred.reject(err);
-      });
+        return obs;
+      })
+      .first()
+      .subscribe();
 
     return this.deferred.promise;
   }
@@ -164,13 +167,16 @@ export class TwitterService extends AuthProviderBase {
       options.roles = roles;
     }
 
-    return this.http.post(url, options).toPromise().then(response => {
-      let body = response.json();
-      let data = body;
-      let token = data.token;
-      let refreshToken = data.refreshToken;
-      return this.auth.init(token, refreshToken);
-    });
+    return this.http
+      .post(url, options)
+      .toPromise()
+      .then(response => {
+        let body = response.json();
+        let data = body;
+        let token = data.token;
+        let refreshToken = data.refreshToken;
+        return this.auth.init(token, refreshToken);
+      });
   }
 
   @DebugLog

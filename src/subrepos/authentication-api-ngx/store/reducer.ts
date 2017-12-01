@@ -9,9 +9,7 @@ const initialState: IAuthenticationState = {
   auth: {
     token: null,
     refreshToken: null,
-    user: null,
-    firebaseToken: null,
-    firebaseUser: null
+    user: null
   },
   loggingIn: false,
   failed: null,

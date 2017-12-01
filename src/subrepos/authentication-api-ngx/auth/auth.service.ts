@@ -13,6 +13,7 @@ import { ApiService } from '../api';
 import { DebugLog } from '../log';
 
 import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -36,7 +37,7 @@ export class AuthService {
   }
 
   @DebugLog
-  init(token: string, refreshToken?: string): Promise<IAuth> {
+  init(token: string, refreshToken?: string | null): Promise<IAuth> {
     this.storage.setItem('token', token);
 
     if (refreshToken) {
@@ -45,57 +46,56 @@ export class AuthService {
 
     refreshToken = this.storage.getItem('refreshToken');
 
-    let user: User;
-    let firebaseToken: string = null;
-
     this.config = { ...this.authConfig.verify };
     this.redirectUri = new URL(`${this.authConfig.webserverUrl}${this.config.redirectSlug}`);
 
     return (this.authenticated = this.api
       .get(`${this.authConfig.apiUrl}/user/me`)
-      .toPromise()
-      .then(response => {
-        user = <User>response.json();
+      .switchMap(response => {
+        let user = <User>response.json();
 
         this.api.on('unauthorized', () => {
           this.store.dispatch(new Actions.Unauthorized());
         });
 
-        if (this.afAuth) {
-          return this.getFirebaseToken();
-        }
+        let afObs = this.afAuth ? this._getFirebaseData() : Observable.of({ firebaseToken: null, firebaseUser: null });
 
-        return Promise.resolve(null);
+        return Observable.combineLatest(Observable.of({ token, refreshToken, user }), afObs);
       })
-      .then((response?: Response) => {
-        if (response) {
-          let body = response.text();
+      .map(values => {
+        let auth: IAuth = {
+          token: values[0].token,
+          refreshToken: values[0].refreshToken,
+          user: values[0].user,
+          firebaseToken: values[1].firebaseToken,
+          firebaseUser: values[1].firebaseUser || undefined
+        };
 
+        return auth;
+      })
+      .toPromise());
+  }
+
+  @DebugLog
+  private _getFirebaseData(): Observable<{ firebaseToken: string | null; firebaseUser: firebase.User | null }> {
+    return Observable.fromPromise(this.getFirebaseToken())
+      .switchMap(response => {
+        let body: string | null = response && response.text();
+        let firebaseToken: string | null = null;
+
+        if (body) {
           firebaseToken = body.replace(/"/g, '');
-
-          return this.afAuth.auth.signInWithCustomToken(firebaseToken);
         }
 
-        return Promise.resolve(null);
+        let firebaseUser = firebaseToken
+          ? Observable.fromPromise(this.afAuth.auth.signInWithCustomToken(firebaseToken))
+          : Observable.empty();
+
+        return Observable.combineLatest(Observable.of(firebaseToken), firebaseUser);
       })
-      .then((response?: any) => {
-        let firebaseUser: firebase.User = null;
-
-        if (response) {
-          firebaseUser = <firebase.User>response;
-        }
-
-        return { token, refreshToken, user, firebaseToken, firebaseUser };
-      })
-      .catch((err: Error | Response) => {
-        if (err instanceof Response && err.status === 401) {
-          this.store.dispatch(new Actions.Unauthorized());
-        } else {
-          this.logout();
-        }
-
-        return Promise.reject(err);
-      }));
+      .map(values => {
+        return { firebaseToken: values[0], firebaseUser: values[1] };
+      });
   }
 
   @DebugLog
@@ -150,14 +150,17 @@ export class AuthService {
   }
 
   @DebugLog
-  getFirebaseToken(): Promise<Response> {
-    return this.api.get(`${this.authConfig.apiUrl}/auth/firebase/token`).toPromise().catch((err: Error | Response) => {
-      if (err instanceof Response && err.status === 404) {
-        return Promise.resolve(null);
-      }
+  getFirebaseToken(): Promise<Response | null> {
+    return this.api
+      .get(`${this.authConfig.apiUrl}/auth/firebase/token`)
+      .toPromise()
+      .catch((err: Error | Response) => {
+        if (err instanceof Response && err.status === 404) {
+          return Promise.resolve(null);
+        }
 
-      return Promise.reject(err);
-    });
+        return Promise.reject(err);
+      });
   }
 
   /**

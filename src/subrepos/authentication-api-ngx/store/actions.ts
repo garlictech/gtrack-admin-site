@@ -110,8 +110,8 @@ export class RouteForbidden implements Action {
 
   constructor(
     public payload: {
-      route: ActivatedRouteSnapshot;
-      state: RouterStateSnapshot;
+      route?: ActivatedRouteSnapshot;
+      state?: RouterStateSnapshot;
     }
   ) {
     // Empty

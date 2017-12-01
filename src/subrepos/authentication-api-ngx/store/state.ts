@@ -2,17 +2,17 @@ import { User } from '../';
 import * as firebase from 'firebase';
 
 export interface IAuth {
-  token: string;
-  user: User;
-  refreshToken: string;
-  firebaseToken: string;
-  firebaseUser: firebase.User;
+  token: string | null;
+  user: User | null;
+  refreshToken?: string | null;
+  firebaseToken?: string | null;
+  firebaseUser?: firebase.User;
 }
 
 export interface IAuthenticationState {
-  auth: IAuth;
+  auth: IAuth | null;
   loggingIn: boolean;
-  failed: any;
+  failed: any | null;
   emailSent: boolean;
 }
 

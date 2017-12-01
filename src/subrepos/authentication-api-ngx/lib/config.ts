@@ -1,13 +1,13 @@
 export interface IFacebookConfig {
   version: string;
   permissions: string;
-  appId: string;
+  appId: string | null;
   redirectUri?: string;
 }
 
 export interface IGoogleConfig {
   permissions: string;
-  appId: string;
+  appId: string | null;
 }
 
 export interface IMagiclinkConfig {

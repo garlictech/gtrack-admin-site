@@ -4,7 +4,7 @@ import { Storage } from './storage.interface';
 @Injectable()
 export class SessionStorage implements Storage {
   getItem(key: string): string {
-    return window.sessionStorage.getItem(key);
+    return window.sessionStorage.getItem(key) || '';
   }
 
   setItem(key: string, value: string): void {
