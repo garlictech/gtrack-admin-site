@@ -34,7 +34,7 @@ describe('AuthGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.provideStore(combineReducers(reducer)), AuthenticationApiModule.forRoot(authConfig)],
+      imports: [StoreModule.forRoot(combineReducers(reducer)), AuthenticationApiModule.forRoot(authConfig)],
       providers: [
         {
           provide: Router,

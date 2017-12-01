@@ -40,7 +40,7 @@ describe('PasswordlessService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.provideStore(authReducer), AuthenticationApiModule.forRoot(config), ApiModule],
+      imports: [StoreModule.forRoot(authReducer), AuthenticationApiModule.forRoot(config), ApiModule],
       providers: [
         BaseRequestOptions,
         MockBackend,

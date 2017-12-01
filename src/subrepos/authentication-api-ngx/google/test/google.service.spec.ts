@@ -41,7 +41,7 @@ describe('Google', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.provideStore(authReducer),
+        StoreModule.forRoot(authReducer),
         WindowModule,
         AuthenticationApiModule.forRoot(config),
         ApiModule

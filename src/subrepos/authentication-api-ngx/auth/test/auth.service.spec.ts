@@ -66,7 +66,7 @@ describe('AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.provideStore(combineReducers(reducer)),
+        StoreModule.forRoot(combineReducers(reducer)),
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireAuthModule,
         AuthenticationApiModule.forRoot(authConfig),
