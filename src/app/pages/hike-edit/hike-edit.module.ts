@@ -52,6 +52,8 @@ const COMPONENTS = [
     ObjectToArrayPipe,
     ...COMPONENTS
   ],
-  entryComponents: [...COMPONENTS]
+  entryComponents: [
+    ...COMPONENTS
+  ]
 })
 export class HikeEditModule {}

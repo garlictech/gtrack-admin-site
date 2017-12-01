@@ -17,7 +17,7 @@ declare const $: any;
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
   private _routeSubscription: Subscription;
-  public hikeData: IMockHikeElement = null;
+  public hikeData: IMockHikeElement;
 
   constructor(
     private _store: Store<State>,

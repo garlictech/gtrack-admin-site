@@ -9,7 +9,7 @@ import { IconService } from '../../../../../subrepos/gtrack-common-ngx/index';
 })
 export class PoiIconsComponent implements OnInit {
   @Input() poi: IExternalPoi;
-  public urls: string[];
+  public urls: string[] = [];
 
   constructor(
     private _iconService: IconService

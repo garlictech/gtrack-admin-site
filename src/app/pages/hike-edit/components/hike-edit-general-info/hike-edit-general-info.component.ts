@@ -19,7 +19,7 @@ export class HikeEditGeneralInfoComponent implements OnInit {
   @Input() hikeData: any;
   public existingLangKeys: Set<string>;
   public langs = LANGS;
-  public selLang: string = null;
+  public selLang = '';
 
   ngOnInit() {
     this.existingLangKeys = new Set([
@@ -36,7 +36,7 @@ export class HikeEditGeneralInfoComponent implements OnInit {
 
       this.existingLangKeys.add(this.selLang);
 
-      this.selLang = null;
+      this.selLang = '';
     }
   }
 }
