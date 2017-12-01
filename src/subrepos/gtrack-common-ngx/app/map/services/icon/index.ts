@@ -24,7 +24,7 @@ export class IconService {
     return icon;
   }
 
-  public urls(types: Array<string>, iconType = 'default') {
+  public urls(types: Array<string>, iconType = 'default'): string[] {
     return types.map((type) => {
       return this.url(type, iconType);
     });

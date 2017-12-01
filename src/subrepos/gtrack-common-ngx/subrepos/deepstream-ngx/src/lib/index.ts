@@ -5,7 +5,7 @@ import { Effects } from '../store';
 import { DeepstreamService } from '../deepstream-service';
 
 @NgModule({
-  imports: [EffectsModule.run(Effects)],
+  imports: [EffectsModule.forFeature([Effects])],
   providers: [Effects, DeepstreamService]
 })
 export class DeepstreamModule {}
