@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { GeometryService, ElevationService, PoiService } from '../../../../subrepos/gtrack-common-ngx';
 import { ExternalPoi } from './external-poi';
 import { AdminMap, AdminMapService } from '../admin-map';
-import * as _ from 'lodash';
-import * as turf from '@turf/turf';
 import { Observable } from 'rxjs/Observable';
 import { IExternalPoi } from '../../interfaces/index';
+import { State, selectHikeEditMapMapId } from '../../../store';
+import { Store } from '@ngrx/store';
+import * as _ from 'lodash';
+import * as turf from '@turf/turf';
 
 @Injectable()
 export class PoiEditorService {
@@ -17,6 +19,7 @@ export class PoiEditorService {
   }
 
   constructor(
+    private _store: Store<State>,
     private _geometryService: GeometryService,
     private _elevationService: ElevationService,
     private _poiService: PoiService,
@@ -156,24 +159,29 @@ export class PoiEditorService {
       });
   }
 
-  public handleMarkerChanged(subdomainData, map: AdminMap) {
-    map.pointMarker.removeMarkers(); // todo remove this global method
+  public handleMarkerChanged(subdomainData) {
 
-    if (subdomainData.pois) {
-      const _filteredPois = _.filter(subdomainData.pois, (p: IExternalPoi) => p.inHike);
+    this._store.select(selectHikeEditMapMapId).subscribe((mapId: string) => {
+      const _map = this._adminMapService.getMapById(mapId);
 
-      if (subdomainData.showOnrouteMarkers) {
-        map.pointMarker.addMarkers(this.getOnroutePois(_filteredPois));
-      } else {
-        // remove inHike onroutePois
+      _map.pointMarker.removeMarkers(); // todo remove this global method
+
+      if (subdomainData.pois) {
+        const _filteredPois = _.filter(subdomainData.pois, (p: IExternalPoi) => p.inHike);
+
+        if (subdomainData.showOnrouteMarkers) {
+          _map.pointMarker.addMarkers(this.getOnroutePois(_filteredPois));
+        } else {
+          // remove inHike onroutePois
+        }
+
+        if (subdomainData.showOffrouteMarkers) {
+          _map.pointMarker.addMarkers(this.getOffroutePois(_filteredPois));
+        } else {
+          // remove inHike offroutePois
+        }
       }
-
-      if (subdomainData.showOffrouteMarkers) {
-        map.pointMarker.addMarkers(this.getOffroutePois(_filteredPois));
-      } else {
-        // remove inHike offroutePois
-      }
-    }
+    });
   }
 
   /**
@@ -181,7 +189,7 @@ export class PoiEditorService {
    */
   public assignGTrackPois(data) {
     return this._poiService.search(data.bounds).map((gtrackPois) => {
-      return Object.assign(data, {gtrackPois: gtrackPois});
+      return _.extend(_.cloneDeep(data), {gtrackPois: gtrackPois});
     });
   }
 
@@ -193,7 +201,7 @@ export class PoiEditorService {
     return this
       .organizePois(data.pois, _map.routeInfo.getPath(), data.gtrackPois)
       .then((organizedPois) => {
-        return Object.assign(data, {organizedPois: organizedPois});
+        return _.extend(_.cloneDeep(data), {organizedPois: organizedPois});
       });
   }
 

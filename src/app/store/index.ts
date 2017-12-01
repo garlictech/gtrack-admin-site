@@ -1,14 +1,13 @@
 import { storeLogger } from 'ngrx-store-logger';
 import { StoreModule, combineReducers } from '@ngrx/store';
-import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
-import { RouterState } from '@ngrx/router-store';
-import { compose } from '@ngrx/core/compose';
+import { routerReducer, RouterReducerState } from '@ngrx/router-store';
+import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/models';
+import { storeFreeze } from 'ngrx-store-freeze';
 
 // Subrepos
 import {
   IAuthenticationState,
-  Reducer as authReducer,
-  domain as authDomain
+  Reducer as authReducer
 } from '../../subrepos/authentication-api-ngx';
 import {
   Reducer as deepstreamReducer,
@@ -16,14 +15,29 @@ import {
 } from '../../subrepos/gtrack-common-ngx/subrepos/deepstream-ngx';
 
 // Actions
-export {
-  AdminMapActions,
-  RouteInfoDataActions,
-  LayoutActions,
-  RoutingActions,
-  HikeEditRoutePlanningActions,
-  HikeEditPoiActions
-} from './actions';
+import * as adminMapActions from './actions/admin-map';
+export type AdminMapAction = adminMapActions.AllAdminMapActions;
+export { adminMapActions };
+
+import * as hikeEditPoiActions from './actions/hike-edit-poi';
+export type HikeEditPoiAction = hikeEditPoiActions.AllHikeEditPoiActions;
+export { hikeEditPoiActions };
+
+import * as hikeEditroutePlanningActions from './actions/hike-edit-route-planning';
+export type HikeEditroutePlanningAction = hikeEditroutePlanningActions.AllHikeEditroutePlanningActions;
+export { hikeEditroutePlanningActions };
+
+import * as layoutActions from './actions/layout';
+export type LayoutAction = layoutActions.AllLayoutActions;
+export { layoutActions };
+
+import * as routeInfoDataActions from './actions/route-info-data';
+export type RouteInfoDataAction = routeInfoDataActions.AllRouteInfoDataActions;
+export { routeInfoDataActions };
+
+import * as routingActions from './actions/routing';
+export type RoutingAction = routingActions.AllRoutingAction;
+export { routingActions };
 
 // Effects
 export {
@@ -31,17 +45,14 @@ export {
   HikeEditRoutePlanningEffects,
   HikeEditPoiEffects
 } from './effects';
+export { RouterEffects } from '../../subrepos/gtrack-common-ngx';
 
 // States
 import {
   IRouteInfoDataState,
-  routeInfoDataDomain,
   ILayoutState,
-  layoutDomain,
   IHikeEditMapState,
-  hikeEditMapDomain,
-  IHikeEditPoiState,
-  hikeEditPoiDomain
+  IHikeEditPoiState
 } from './state';
 export {
   IRouteInfoDataState,
@@ -49,6 +60,9 @@ export {
   IHikeEditMapState,
   IHikeEditPoiState
 }
+
+// Selectors
+export * from './selectors';
 
 // Reducers
 import {
@@ -64,17 +78,6 @@ export {
   hikeEditPoiReducer
 };
 
-// Add the store interface of the module to the global reducers.
-let reducers = {
-  'router': routerReducer,
-  'deepstream': deepstreamReducer
-};
-reducers[authDomain] = authReducer;
-reducers[routeInfoDataDomain] = routeInfoDataReducer;
-reducers[layoutDomain] = layoutReducer;
-reducers[hikeEditMapDomain] = hikeEditMapReducer;
-reducers[hikeEditPoiDomain] = hikeEditPoiReducer;
-
 // Extend the store interface with that.
 export interface State {
   authentication: IAuthenticationState;
@@ -82,8 +85,28 @@ export interface State {
   layout: ILayoutState;
   hikeEditMap: IHikeEditMapState;
   hikeEditPoi: IHikeEditPoiState;
-  router: RouterState; // ngrx/router
+  router: RouterReducerState; // ngrx/router
   deepstream: IDeepstreamState;
 }
 
-export const store = StoreModule.provideStore(compose(storeLogger(), combineReducers)(reducers));
+// Same keys as in the state!!!
+const reducers: ActionReducerMap<State> = {
+  authentication: authReducer,
+  routeInfoData: routeInfoDataReducer,
+  layout: layoutReducer,
+  hikeEditPoi: hikeEditPoiReducer,
+  hikeEditMap: hikeEditMapReducer,
+  router: routerReducer,
+  deepstream: deepstreamReducer
+};
+
+function logger(reducer: ActionReducer<State>): any {
+  return storeLogger()(reducer);
+}
+const metaReducers: MetaReducer<State>[] = [logger];
+
+if (ENV === 'development') {
+  metaReducers.push(storeFreeze);
+}
+
+export const store = StoreModule.forRoot(reducers, { metaReducers });

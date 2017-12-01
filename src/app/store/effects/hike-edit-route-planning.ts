@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import { HikeEditRoutePlanningActions } from '../actions';
+import { hikeEditroutePlanningActions } from '../index';
 
 @Injectable()
 export class HikeEditRoutePlanningEffects {
@@ -12,7 +12,7 @@ export class HikeEditRoutePlanningEffects {
 
   @Effect()
     saveRoute$: Observable<Action> = this._actions$
-      .ofType(HikeEditRoutePlanningActions.SAVE_ROUTE)
+      .ofType(hikeEditroutePlanningActions.SAVE_ROUTE)
       .map(toPayload)
       .switchMap(data => {
         console.log('EFFECT for HikeEditRoutePlanningActions.SAVE_ROUTE');

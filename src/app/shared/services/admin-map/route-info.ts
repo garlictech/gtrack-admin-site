@@ -1,6 +1,6 @@
 /* OLD: RouteService  */
 import { Store } from '@ngrx/store';
-import { State, RouteInfoDataActions, IRouteInfoDataState } from '../../../store';
+import { State, IRouteInfoDataState } from '../../../store';
 import { AdminMap } from './admin-map';
 import { RoutePlanner } from './route-planner';
 import {
@@ -20,16 +20,14 @@ export class RouteInfo {
   constructor(
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
-    private _store: Store<State>,
-    private _routeInfoDataActions: RouteInfoDataActions
+    private _store: Store<State>
   ) {}
 
   public newPlan() {
     this.planner = new RoutePlanner(
       this._gameRuleService,
       this._routeService,
-      this._store,
-      this._routeInfoDataActions
+      this._store
     );
   }
 

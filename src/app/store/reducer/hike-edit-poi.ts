@@ -1,6 +1,6 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { IHikeEditPoiState } from '../state';
-import { HikeEditPoiActions, AdminMapActions } from '../actions';
+import { hikeEditPoiActions } from '../index';
 
 const initialState: IHikeEditPoiState = {
   wikipedia: {
@@ -35,9 +35,12 @@ const initialState: IHikeEditPoiState = {
   }
 };
 
-export function hikeEditPoiReducer(state = initialState, action: Action): IHikeEditPoiState {
+export function hikeEditPoiReducer(
+  state = initialState,
+  action: hikeEditPoiActions.AllHikeEditPoiActions
+): IHikeEditPoiState {
   switch (action.type) {
-    case HikeEditPoiActions.GET_WIKIPEDIA_POIS:
+    case hikeEditPoiActions.GET_WIKIPEDIA_POIS:
       return {
         ...state,
         wikipedia: {
@@ -45,7 +48,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           loading: true
         }
       };
-    case HikeEditPoiActions.SET_WIKIPEDIA_POIS:
+    case hikeEditPoiActions.SET_WIKIPEDIA_POIS:
       return {
         ...state,
         wikipedia: {
@@ -54,7 +57,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           loading: false
         }
       };
-    case HikeEditPoiActions.GET_GOOGLE_POIS:
+    case hikeEditPoiActions.GET_GOOGLE_POIS:
       return {
         ...state,
         google: {
@@ -62,7 +65,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           loading: true
         }
       };
-    case HikeEditPoiActions.SET_GOOGLE_POIS:
+    case hikeEditPoiActions.SET_GOOGLE_POIS:
       return {
         ...state,
         google: {
@@ -71,7 +74,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           loading: false
         }
       };
-    case HikeEditPoiActions.GET_OSM_NATURAL_POIS:
+    case hikeEditPoiActions.GET_OSM_NATURAL_POIS:
       return {
         ...state,
         osmNatural: {
@@ -79,7 +82,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           loading: true
         }
       };
-    case HikeEditPoiActions.SET_OSM_NATURAL_POIS:
+    case hikeEditPoiActions.SET_OSM_NATURAL_POIS:
       return {
         ...state,
         osmNatural: {
@@ -88,7 +91,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           loading: false
         }
       };
-    case HikeEditPoiActions.GET_OSM_AMENITY_POIS:
+    case hikeEditPoiActions.GET_OSM_AMENITY_POIS:
       return {
         ...state,
         osmAmenity: {
@@ -96,7 +99,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           loading: true
         }
       };
-    case HikeEditPoiActions.SET_OSM_AMENITY_POIS:
+    case hikeEditPoiActions.SET_OSM_AMENITY_POIS:
       return {
         ...state,
         osmAmenity: {
@@ -105,7 +108,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           loading: false
         }
       };
-    case HikeEditPoiActions.GET_OSM_ROUTE_POIS:
+    case hikeEditPoiActions.GET_OSM_ROUTE_POIS:
       return {
         ...state,
         osmRoute: {
@@ -113,7 +116,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           loading: true
         }
       };
-    case HikeEditPoiActions.SET_OSM_ROUTE_POIS:
+    case hikeEditPoiActions.SET_OSM_ROUTE_POIS:
       return {
         ...state,
         osmRoute: {
@@ -122,7 +125,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           loading: false
         }
       };
-    case HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS:
+    case hikeEditPoiActions.TOGGLE_ONROUTE_MARKERS:
       return {
         ...state,
         [action.payload.subdomain]: {
@@ -130,7 +133,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           showOnrouteMarkers: !state[action.payload.subdomain].showOnrouteMarkers
         }
       };
-    case HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS:
+    case hikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS:
       return {
         ...state,
         [action.payload.subdomain]: {
@@ -138,7 +141,7 @@ export function hikeEditPoiReducer(state = initialState, action: Action): IHikeE
           showOffrouteMarkers: !state[action.payload.subdomain].showOffrouteMarkers
         }
       };
-    case HikeEditPoiActions.SET_POI_IN_HIKE:
+    case hikeEditPoiActions.SET_POI_IN_HIKE:
       return {
         ...state,
         [action.payload.subdomain]: {

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { JsonpModule } from '@angular/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import {
   AuthenticationApiConfig,
@@ -15,7 +15,8 @@ import {
 import {
   SharedModule,
   SharedConfig,
-  DeepstreamModule
+  DeepstreamModule,
+  RouterEffects
 } from '../subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
@@ -23,13 +24,7 @@ import { environment } from '../environments/environment';
 import {
   store,
   AuthEffects,
-  AdminMapActions,
-  RouteInfoDataActions,
-  LayoutActions,
-  RoutingActions,
-  HikeEditRoutePlanningActions,
   HikeEditRoutePlanningEffects,
-  HikeEditPoiActions,
   HikeEditPoiEffects
 } from './store';
 import { routing } from './app-routing.module';
@@ -51,6 +46,8 @@ import {
 } from './shared/services';
 // Global styles
 import './styles';
+import { RouterStateSerializer } from '@ngrx/router-store';
+import { RouterStateSnapshot, Params } from '@angular/router';
 
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authentication.server;
@@ -58,13 +55,31 @@ authConfig.firebase = environment.firebase;
 authConfig.webserverUrl = environment.webappServer;
 authConfig.google.appId = environment.authentication.google.appId;
 
-const appEffectsRun = [
-  EffectsModule.run(AuthEffects),
-  EffectsModule.run(HikeEditRoutePlanningEffects),
-  EffectsModule.run(HikeEditPoiEffects)
-];
-
 const sharedConfig = new SharedConfig();
+
+export interface RouterStateUrl {
+  url: string;
+  params: Params;
+  queryParams: Params;
+}
+
+export class CustomRouterStateSerializer
+  implements RouterStateSerializer<RouterStateUrl> {
+    serialize(routerState: RouterStateSnapshot): RouterStateUrl {
+      let route = routerState.root;
+      while (route.firstChild) {
+        route = route.firstChild;
+      }
+
+      const { url } = routerState;
+      const queryParams = routerState.root.queryParams;
+      const params = route.params;
+
+      // Only return an object including the URL, params and query params
+      // instead of the entire snapshot
+      return { url, params, queryParams };
+    }
+}
 
 @NgModule({
   declarations: [
@@ -78,7 +93,8 @@ const sharedConfig = new SharedConfig();
     JsonpModule,
     store,
     routing,
-    StoreDevtoolsModule.instrumentOnlyWithExtension({
+    StoreRouterConnectingModule,
+    StoreDevtoolsModule.instrument({
       maxAge: 25
     }),
     DeepstreamModule.forRoot({
@@ -90,7 +106,7 @@ const sharedConfig = new SharedConfig();
     }),
     AngularFireModule.initializeApp(authConfig.firebase),
     AuthenticationApiModule.forRoot(authConfig),
-    RouterStoreModule.connectRouter(),
+
     SharedModule.forRoot(sharedConfig),
     // Page modules
     CoreLayoutModule,
@@ -98,7 +114,12 @@ const sharedConfig = new SharedConfig();
     HikeListModule,
     HikeEditModule,
     // Effects
-    ...appEffectsRun
+    EffectsModule.forRoot([
+      AuthEffects,
+      HikeEditRoutePlanningEffects,
+      HikeEditPoiEffects,
+      RouterEffects
+    ])
   ],
   providers: [
     // Services
@@ -109,13 +130,10 @@ const sharedConfig = new SharedConfig();
     OsmPoiService,
     OsmRoutePoiService,
     GooglePoiService,
-    // Actions
-    AdminMapActions,
-    RouteInfoDataActions,
-    LayoutActions,
-    RoutingActions,
-    HikeEditRoutePlanningActions,
-    HikeEditPoiActions
+    {
+      provide: RouterStateSerializer,
+      useClass: CustomRouterStateSerializer
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -4,7 +4,7 @@ import { AdminMap } from './admin-map';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, RouteInfoDataActions, IRouteInfoDataState } from '../../../store';
+import { State, IRouteInfoDataState, routeInfoDataActions } from '../../../store';
 import {
   ISegment,
   GameRuleService,
@@ -20,8 +20,7 @@ export class RoutePlanner {
   constructor(
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
-    private _store: Store<State>,
-    private _routeInfoDataActions: RouteInfoDataActions
+    private _store: Store<State>
   ) {
     // Initial value
     this._geoJSON = {
@@ -39,7 +38,7 @@ export class RoutePlanner {
     }
 
     // Reset the state when the planner has been created
-    this._store.dispatch(this._routeInfoDataActions.reset());
+    this._store.dispatch(new routeInfoDataActions.Reset());
 
     // Parent classes use routeInfoData
     this._store.select((state: State) => state.routeInfoData)
@@ -55,7 +54,9 @@ export class RoutePlanner {
         let _total = this._calculateTotal(segments);
 
         // Update total for route info
-        this._store.dispatch(this._routeInfoDataActions.updateTotal(_total));
+        this._store.dispatch(new routeInfoDataActions.UpdateTotal({
+          total: _total
+        }));
 
         // Refresh track data
         this._createGeoJSON(segments);
@@ -64,7 +65,7 @@ export class RoutePlanner {
 
   public destroy() {
     // Clear state
-    this._store.dispatch(this._routeInfoDataActions.reset());
+    this._store.dispatch(new routeInfoDataActions.Reset());
 
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
@@ -83,11 +84,13 @@ export class RoutePlanner {
     _segment.score = this._gameRuleService.score(_segment.distance, _segment.uphill)
 
     // Add segment to store
-    this._store.dispatch(this._routeInfoDataActions.pushSegment(_segment));
+    this._store.dispatch(new routeInfoDataActions.PushSegment({
+      segment: _segment
+    }));
   }
 
   public removeLastSegment() {
-    this._store.dispatch(this._routeInfoDataActions.popSegment());
+    this._store.dispatch(new routeInfoDataActions.PopSegment());
   }
 
   /**
@@ -136,7 +139,9 @@ export class RoutePlanner {
       _track.bounds = this._routeService.getBounds(_track);
     }
 
-    this._store.dispatch(this._routeInfoDataActions.addTrack(_track));
+    this._store.dispatch(new routeInfoDataActions.AddTrack({
+      track: _track
+    }));
   }
 
   /**

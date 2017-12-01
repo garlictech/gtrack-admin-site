@@ -2,7 +2,7 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IExternalPoi } from '../../../../shared/interfaces/index';
-import { State, HikeEditPoiActions } from '../../../../store';
+import { State, hikeEditPoiActions } from '../../../../store';
 
 @Component({
   selector: 'hike-edit-pois-external-table',
@@ -14,19 +14,26 @@ export class HikeEditPoisExternalTableComponent {
   @Input() onRouteCheck: boolean;
 
   constructor(
-    private _store: Store<State>,
-    private _hikeEditPoiActions: HikeEditPoiActions
+    private _store: Store<State>
   ) {}
 
   public addPoi($event, idx) {
     $event.stopPropagation();
 
-    this._store.dispatch(this._hikeEditPoiActions.setPoiInHike(this.subdomain, idx, true));
+    this._store.dispatch(new hikeEditPoiActions.SetPoiInHike({
+      subdomain: this.subdomain,
+      poiIdx: idx,
+      isInHike: true
+    }));
   }
 
   public removePoi($event, idx) {
     $event.stopPropagation();
 
-    this._store.dispatch(this._hikeEditPoiActions.setPoiInHike(this.subdomain, idx, false));
+    this._store.dispatch(new hikeEditPoiActions.SetPoiInHike({
+      subdomain: this.subdomain,
+      poiIdx: idx,
+      isInHike: false
+    }));
   }
 }

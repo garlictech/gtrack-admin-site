@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { State } from '../../../store';
+import { State, adminMapActions } from '../../../store';
 import { Injectable } from '@angular/core';
 import { AdminMap } from './admin-map';
 import {
@@ -10,11 +10,7 @@ import {
   RouteService,
   ElevationService
 } from '../../../../subrepos/gtrack-common-ngx/app';
-import {
-  RouteInfoDataActions,
-  AdminMapActions,
-  RoutingActions
-} from '../../../store/actions';
+
 import * as uuid from 'uuid';
 
 @Injectable()
@@ -27,10 +23,7 @@ export class AdminMapService extends MapService {
     private _store: Store<State>,
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
-    private _elevationService: ElevationService,
-    private _routingActions: RoutingActions,
-    private _adminMapActions: AdminMapActions,
-    private _routeInfoDataActions: RouteInfoDataActions
+    private _elevationService: ElevationService
   ) {
     super(iconService, mapMarkerService);
   }
@@ -45,13 +38,13 @@ export class AdminMapService extends MapService {
       this._store,
       this._gameRuleService,
       this._routeService,
-      this._elevationService,
-      this._routingActions,
-      this._routeInfoDataActions
+      this._elevationService
     );
     this._maps[_id] = _map;
 
-    this._store.dispatch(this._adminMapActions.registerMap(_id));
+    this._store.dispatch(new adminMapActions.RegisterMap({
+      mapId: _id
+    }));
 
     return _map;
   }

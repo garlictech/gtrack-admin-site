@@ -1,6 +1,6 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { IRouteInfoDataState } from '../state';
-import { RouteInfoDataActions } from '../actions';
+import { routeInfoDataActions } from '../index';
 
 const initialState: IRouteInfoDataState = {
   segments: [],
@@ -9,28 +9,31 @@ const initialState: IRouteInfoDataState = {
   track: {},
 };
 
-export function routeInfoDataReducer(state = initialState, action: Action): IRouteInfoDataState {
+export function routeInfoDataReducer(
+  state = initialState,
+  action: routeInfoDataActions.AllRouteInfoDataActions
+): IRouteInfoDataState {
   switch (action.type) {
-    case RouteInfoDataActions.RESET:
+    case routeInfoDataActions.RESET:
       return initialState;
-    case RouteInfoDataActions.ADD_TRACK:
+    case routeInfoDataActions.ADD_TRACK:
       return {
         ...state,
         track: action.payload.track
       };
-    case RouteInfoDataActions.PUSH_SEGMENT:
+    case routeInfoDataActions.PUSH_SEGMENT:
       return {
         ...state,
         segments: [...state.segments, action.payload.segment]
       };
-    case RouteInfoDataActions.POP_SEGMENT:
+    case routeInfoDataActions.POP_SEGMENT:
       return {
         ...state,
         segments: state.segments.length > 1 ?
           state.segments.slice(0, state.segments.length - 1) :
           []
       };
-    case RouteInfoDataActions.UPDATE_TOTAL:
+    case routeInfoDataActions.UPDATE_TOTAL:
       return {
         ...state,
         total: action.payload.total
