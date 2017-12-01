@@ -6,5 +6,3 @@ export interface IRouteInfoDataState {
   location: any;
   track: any;
 };
-
-export const routeInfoDataDomain = 'routeInfoData';

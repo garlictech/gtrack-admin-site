@@ -32,5 +32,3 @@ export interface IHikeEditPoiState {
     showOffrouteMarkers: boolean
   },
 };
-
-export const hikeEditPoiDomain = 'hikeEditPoi';
