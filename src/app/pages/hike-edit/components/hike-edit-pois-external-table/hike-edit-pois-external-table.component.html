@@ -15,7 +15,7 @@
         <td><poi-icons [poi]="poi"></poi-icons></td>
         <td>{{poi.title}}</td>
         <td>{{poi.distFromRoute | distance : true}}</td>
-        <td>{{poi.types}}</td>
+        <td>{{poi.types.join(', ')}}</td>
         <td>
           <a *ngIf="poi.inHike" (click)="removePoi($event, idx)">remove</a>
           <a *ngIf="!poi.inHike" (click)="addPoi($event, idx)">add</a>
