@@ -82,13 +82,18 @@ export class PoiEditorService {
   private _handleTypes(poi) {
     let _types = [];
     let _replaceTypesKeys = _.keys(this._replaceTypes);
+
     _.forEach(poi.types, (t) => {
       if (_replaceTypesKeys.indexOf(t) >= 0) {
-        _types.push(this._replaceTypes[_replaceTypesKeys.indexOf(t)]);
+        _types.push(this._replaceTypes[t]);
       } else if (this._removedTypes.indexOf(t) < 0) {
         _types.push(t);
       }
     });
+
+    if (_types.length === 0) {
+      _types.push('unknown');
+    }
 
     poi.types = _.uniq(_types);
   }

@@ -83,27 +83,3 @@ export class GooglePoiService {
     document.body.removeChild(fakeDiv);
   }
 }
-
-/*
-          for p in result
-            point =
-              lat: p.geometry.location.lat()
-              lon: p.geometry.location.lng()
-              title: p.name ? 'unknown'
-              types: p.types ? []
-              objectType: 'google'
-              google:
-                id: p.place_id
-
-            p.types = _.map p.types, (obj) ->
-              if obj is 'locality' then 'city' else obj
-
-            res.push new ExternalPoi point
-
-          if pagination.hasNextPage
-            $timeout ->
-              pagination.nextPage()
-            , 2000 # Google API:  must wait 2 sec between requests
-          else
-            resolve res
-            */
