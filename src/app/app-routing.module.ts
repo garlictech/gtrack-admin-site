@@ -31,7 +31,7 @@ export const routes: Routes = [
                 component: HikeEditComponent
             }
         ],
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
     },
     {
         path: 'login',
