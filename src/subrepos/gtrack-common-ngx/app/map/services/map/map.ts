@@ -1,4 +1,4 @@
-import { Route } from '../../../hike';
+import { Route } from '../../../hike/services/route';
 import { IconService } from '../icon';
 
 import { CurrentPositionMarker } from './current-position-marker';

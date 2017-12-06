@@ -1,0 +1,14 @@
+:host {
+  text-align: right;
+  .hike-info-item {
+    padding: 0 3px 0 0;
+    font-size: 0.8rem;
+    text-shadow: 1px 1px 2px #000000;
+    font-weight: bold;
+
+    &::last-child {
+      padding: 0;
+    }
+  }
+
+}

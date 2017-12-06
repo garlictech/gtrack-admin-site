@@ -16,7 +16,7 @@ export interface IElevationMargin {
   left: number;
 };
 
-export interface IElavationData {
+export interface IElevationData {
   highestElevation: number;
   lowestElevation: number;
   xRange: d3.ScaleLinear<number, number>;
@@ -72,7 +72,7 @@ export class RouteService {
       right: 0,
       bottom: 0
     }
-  ): IElavationData {
+  ): IElevationData {
     let lineData: [number, number][] = [];
     let distance = 0;
 

@@ -1,0 +1,29 @@
+<div class="list-group">
+  <div class="list-group-item"><i class="ion-ios-location"></i> Number of checkpoints: {{ checkpoints.length }}</div>
+  <div class="list-group-item gtcn-checkpoints-item" *ngFor="let checkpoint of checkpoints; let i = index;">
+    <div class="container">
+      <div class="row">
+        <div class="col-4">{{ checkpoint.name }}</div>
+        <div class="col-4">lat.: <i>{{ checkpoint.poi.lat | coordinate }}</i></div>
+        <div class="col-4">long.: <i>{{ checkpoint.poi.lon | coordinate }}</i></div>
+      </div>
+      <div class="row" *ngIf="i < checkpoints.length - 1">
+        <div class="col-4">
+          <i class="ion-android-arrow-forward"></i> {{ checkpoint.poi.segment.distance | distance}}
+        </div>
+        <div class="col-2">
+          <i class="ion-arrow-graph-up-right"></i> {{ checkpoint.poi.segment.uphill | distance }}
+        </div>
+        <div class="col-2">
+          <i class="ion-arrow-graph-down-right"></i> {{ checkpoint.poi.segment.downhill | distance }}
+        </div>
+        <div class="col-2">
+          <i class="ion-ios-time"></i> {{ checkpoint.poi.segment.time | duration }}
+        </div>
+        <div class="col-2">
+          <i class="ion-trophy"></i> {{ checkpoint.poi.segment.score }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

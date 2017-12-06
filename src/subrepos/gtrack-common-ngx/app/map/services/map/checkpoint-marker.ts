@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 
-import { Checkpoint } from '../../../hike';
-import { Poi } from '../../../hike';
+import { Checkpoint } from '../../../hike/services/checkpoint';
+import { Poi } from '../../../hike/services/poi';
 import { IconService } from '../icon';
 
 export class CheckpointMarker {
