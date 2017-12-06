@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 @Injectable()
 export class GooglePoiService {
   private _hasNextPage$: Subject<boolean> = new Subject<boolean>();
+  private _placesService: google.maps.places.PlacesService;
 
   constructor(
     private _http: HttpClient,
@@ -18,13 +19,15 @@ export class GooglePoiService {
   ) {}
 
   public get(bounds, lang = 'en') {
+    console.log('bounds', bounds);
     return this._googleMapsService.map
       .then(() => {
         this._createFakeMapInstance();
         this._hasNextPage$.next(true);
 
         const _map = new google.maps.Map(document.getElementById('fakeMap'));
-        const _srv = new google.maps.places.PlacesService(_map);
+        this._placesService = new google.maps.places.PlacesService(_map);
+        console.log('this._placesService', this._placesService);
         const _bnds = new google.maps.LatLngBounds(
           new google.maps.LatLng(bounds.SouthWest.lat, bounds.SouthWest.lon),
           new google.maps.LatLng(bounds.NorthEast.lat, bounds.NorthEast.lon)
@@ -32,7 +35,7 @@ export class GooglePoiService {
         let _res = [];
 
         return new Promise((resolve, reject) => {
-          _srv.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
+          this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
             for (let i = 0; i < result.length; i++) {
               const _point = result[i];
               const _pointData = {
@@ -56,9 +59,11 @@ export class GooglePoiService {
               // Google API:  must wait 2 sec between requests
               setTimeout(() => {
                 pagination.nextPage()
-              }, 100);
+              }, 200);
             } else {
-              resolve(_res);
+              this._getPlaceInfo(_res).then((data) => {
+                resolve(data);
+              });
             }
           });
         });
@@ -82,28 +87,47 @@ export class GooglePoiService {
     let fakeDiv = document.getElementById('fakeMap');
     document.body.removeChild(fakeDiv);
   }
+
+  /**
+   * get() submethod
+   */
+  private _getPlaceInfo(pois: ExternalPoi[]) {
+    return Observable
+      .interval(200)
+      .take(pois.length)
+      .mergeMap((idx) => {
+        if (pois[idx].data.google.id) {
+          this._placesService.getDetails({
+            placeId: pois[idx].data.google.id
+          }, (place, status) => {
+            if (status !== google.maps.places.PlacesServiceStatus.OK) {
+              return Observable.empty();
+            }
+
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              pois[idx].data.google.formatted_address = place.formatted_address;
+              pois[idx].data.google.international_phone_number = place.international_phone_number;
+              pois[idx].data.google.international_phone_number = place.international_phone_number;
+
+              if (place.opening_hours) {
+                pois[idx].data.google.opening_hours = place.opening_hours;
+              }
+              if (place.photos) {
+                pois[idx].data.google.photos = place.photos;
+              }
+            }
+
+            return Observable.empty();
+          })
+          return Observable.empty();
+        } else {
+          return Observable.empty();
+        }
+      })
+      .combineAll()
+      .toPromise()
+      .then(() => {
+        return pois;
+      });
+  }
 }
-
-/*
-          for p in result
-            point =
-              lat: p.geometry.location.lat()
-              lon: p.geometry.location.lng()
-              title: p.name ? 'unknown'
-              types: p.types ? []
-              objectType: 'google'
-              google:
-                id: p.place_id
-
-            p.types = _.map p.types, (obj) ->
-              if obj is 'locality' then 'city' else obj
-
-            res.push new ExternalPoi point
-
-          if pagination.hasNextPage
-            $timeout ->
-              pagination.nextPage()
-            , 2000 # Google API:  must wait 2 sec between requests
-          else
-            resolve res
-            */
