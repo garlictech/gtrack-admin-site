@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
-import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';
+import { Actions as AuthActions } from 'authentication-api-ngx';
 
 @Component({
   selector: 'app-navbar',
@@ -21,13 +21,11 @@ export class NavbarComponent implements OnInit {
     private _store: Store<State>,
     private _titleService: Title
   ) {
-    this._router.events
-      .filter(event => event instanceof NavigationEnd)
-      .subscribe(event => {
-        setTimeout(() => {
-          this.pageTitle = this._titleService.getTitle();
-        });
+    this._router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
+      setTimeout(() => {
+        this.pageTitle = this._titleService.getTitle();
       });
+    });
 
     this.sidebarVisible = false;
   }
@@ -50,7 +48,7 @@ export class NavbarComponent implements OnInit {
     } else {
       this.sidebarClose();
     }
-  };
+  }
 
   sidebarOpen() {
     const toggleButton = this.toggleButton;
@@ -61,12 +59,12 @@ export class NavbarComponent implements OnInit {
     }, 500);
     body.classList.add('nav-open');
     this.sidebarVisible = true;
-  };
+  }
 
   sidebarClose() {
     const body = document.getElementsByTagName('body')[0];
     this.toggleButton.classList.remove('toggled');
     this.sidebarVisible = false;
     body.classList.remove('nav-open');
-  };
+  }
 }

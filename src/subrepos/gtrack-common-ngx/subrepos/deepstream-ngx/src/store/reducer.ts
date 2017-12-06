@@ -1,18 +1,11 @@
 import { ActionReducer, combineReducers } from '@ngrx/store';
 
-import { IDeepstreamState } from './state';
+import { IDeepstreamState, initialState } from './state';
 import * as Actions from './actions';
 
 export type Action = Actions.AllActions;
 
-const deepstreamIninitialState: IDeepstreamState = {
-  state: 'unknown',
-  failure: null,
-  auth: null,
-  permissionRecord: null
-};
-
-export const reducer: ActionReducer<IDeepstreamState> = (state = deepstreamIninitialState, action: Action) => {
+export const reducer: ActionReducer<IDeepstreamState> = (state = initialState, action: Action) => {
   switch (action.type) {
     case Actions.DEEPSTREAM_LOGIN:
       return { ...state, state: 'loggingIn', failure: null };

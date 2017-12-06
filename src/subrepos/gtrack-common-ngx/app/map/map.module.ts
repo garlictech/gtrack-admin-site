@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { IconService } from './services/icon';
+
+import { IconComponent } from './components/icon';
 
 import {
   MapService,
@@ -13,12 +16,16 @@ import { MapMarkerService, MapMarker } from './services/map-marker';
 import { LeafletComponent, Center } from './components/leaflet';
 
 @NgModule({
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   exports: [
-    LeafletComponent
+    LeafletComponent,
+    IconComponent
   ],
   declarations: [
-    LeafletComponent
+    LeafletComponent,
+    IconComponent
   ],
   providers: [
     MapService,
@@ -37,5 +44,6 @@ export {
   Center,
   MapMarker,
   MapMarkerService,
-  IconService
+  IconService,
+  IconComponent
 }

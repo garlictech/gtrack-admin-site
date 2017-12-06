@@ -5,10 +5,7 @@ import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/mo
 import { storeFreeze } from 'ngrx-store-freeze';
 
 // Subrepos
-import {
-  IAuthenticationState,
-  Reducer as authReducer
-} from '../../subrepos/authentication-api-ngx';
+import { IAuthenticationState, Reducer as authReducer } from 'authentication-api-ngx';
 import {
   Reducer as deepstreamReducer,
   IDeepstreamState
@@ -40,43 +37,19 @@ export type RoutingAction = routingActions.AllRoutingAction;
 export { routingActions };
 
 // Effects
-export {
-  AuthEffects,
-  HikeEditRoutePlanningEffects,
-  HikeEditPoiEffects
-} from './effects';
+export { AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from './effects';
 export { RouterEffects } from '../../subrepos/gtrack-common-ngx';
 
 // States
-import {
-  IRouteInfoDataState,
-  ILayoutState,
-  IHikeEditMapState,
-  IHikeEditPoiState
-} from './state';
-export {
-  IRouteInfoDataState,
-  ILayoutState,
-  IHikeEditMapState,
-  IHikeEditPoiState
-}
+import { IRouteInfoDataState, ILayoutState, IHikeEditMapState, IHikeEditPoiState } from './state';
+export { IRouteInfoDataState, ILayoutState, IHikeEditMapState, IHikeEditPoiState };
 
 // Selectors
 export * from './selectors';
 
 // Reducers
-import {
-  routeInfoDataReducer,
-  layoutReducer,
-  hikeEditMapReducer,
-  hikeEditPoiReducer
-} from './reducer';
-export {
-  routeInfoDataReducer,
-  layoutReducer,
-  hikeEditMapReducer,
-  hikeEditPoiReducer
-};
+import { routeInfoDataReducer, layoutReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
+export { routeInfoDataReducer, layoutReducer, hikeEditMapReducer, hikeEditPoiReducer };
 
 // Extend the store interface with that.
 export interface State {
@@ -105,7 +78,7 @@ function logger(reducer: ActionReducer<State>): any {
 }
 const metaReducers: MetaReducer<State>[] = [logger];
 
-if (ENV === 'development') {
+if (ENV === 'development') {
   metaReducers.push(storeFreeze);
 }
 

@@ -7,26 +7,12 @@ import { JsonpModule } from '@angular/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
-import {
-  AuthenticationApiConfig,
-  AuthenticationApiModule,
-  Actions as JwtActions
-} from '../subrepos/authentication-api-ngx';
-import {
-  SharedModule,
-  SharedConfig,
-  DeepstreamModule,
-  RouterEffects
-} from '../subrepos/gtrack-common-ngx';
+import { AuthenticationApiConfig, AuthenticationApiModule, Actions as JwtActions } from 'authentication-api-ngx';
+import { SharedModule, SharedConfig, DeepstreamModule, RouterEffects } from '../subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import {
-  store,
-  AuthEffects,
-  HikeEditRoutePlanningEffects,
-  HikeEditPoiEffects
-} from './store';
+import { store, AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from './store';
 import { routing } from './app-routing.module';
 // Page modules
 import { CoreLayoutModule } from './core';
@@ -63,28 +49,25 @@ export interface RouterStateUrl {
   queryParams: Params;
 }
 
-export class CustomRouterStateSerializer
-  implements RouterStateSerializer<RouterStateUrl> {
-    serialize(routerState: RouterStateSnapshot): RouterStateUrl {
-      let route = routerState.root;
-      while (route.firstChild) {
-        route = route.firstChild;
-      }
-
-      const { url } = routerState;
-      const queryParams = routerState.root.queryParams;
-      const params = route.params;
-
-      // Only return an object including the URL, params and query params
-      // instead of the entire snapshot
-      return { url, params, queryParams };
+export class CustomRouterStateSerializer implements RouterStateSerializer<RouterStateUrl> {
+  serialize(routerState: RouterStateSnapshot): RouterStateUrl {
+    let route = routerState.root;
+    while (route.firstChild) {
+      route = route.firstChild;
     }
+
+    const { url } = routerState;
+    const queryParams = routerState.root.queryParams;
+    const params = route.params;
+
+    // Only return an object including the URL, params and query params
+    // instead of the entire snapshot
+    return { url, params, queryParams };
+  }
 }
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -114,12 +97,7 @@ export class CustomRouterStateSerializer
     HikeListModule,
     HikeEditModule,
     // Effects
-    EffectsModule.forRoot([
-      AuthEffects,
-      HikeEditRoutePlanningEffects,
-      HikeEditPoiEffects,
-      RouterEffects
-    ])
+    EffectsModule.forRoot([AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects, RouterEffects])
   ],
   providers: [
     // Services

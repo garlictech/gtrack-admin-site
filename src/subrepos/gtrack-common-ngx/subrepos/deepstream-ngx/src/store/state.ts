@@ -6,3 +6,10 @@ export interface IDeepstreamState {
   auth: IClientData;
   permissionRecord: any;
 }
+
+export const initialState: IDeepstreamState = {
+  state: 'unknown',
+  failure: null,
+  auth: null,
+  permissionRecord: null
+};
