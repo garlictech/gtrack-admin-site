@@ -107,7 +107,6 @@ export class GooglePoiService {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               pois[idx].data.google.formatted_address = place.formatted_address;
               pois[idx].data.google.international_phone_number = place.international_phone_number;
-              pois[idx].data.google.international_phone_number = place.international_phone_number;
 
               if (place.opening_hours) {
                 pois[idx].data.google.opening_hours = place.opening_hours;
