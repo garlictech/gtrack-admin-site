@@ -20,6 +20,9 @@
         "forkChecker": true,
         "useWebpackText": true
     },
+    "paths": {
+        "*": ["*"]
+    },
     "angularCompilerOptions": {
         "genDir": "./compiled",
         "skipMetadataEmit": true
