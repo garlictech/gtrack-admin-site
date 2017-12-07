@@ -10,6 +10,7 @@ import { GoogleService } from '../google';
 import { PasswordlessService } from '../passwordless';
 import { log } from '../log';
 import * as LocalActions from './actions';
+import { LoginError, LoginErrorCodes } from '../errors/login-error';
 
 @Injectable()
 export class Effects {

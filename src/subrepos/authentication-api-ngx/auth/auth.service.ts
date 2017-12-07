@@ -89,7 +89,7 @@ export class AuthService {
 
         let firebaseUser = firebaseToken
           ? Observable.fromPromise(this.afAuth.auth.signInWithCustomToken(firebaseToken))
-          : Observable.empty();
+          : Observable.of(null);
 
         return Observable.combineLatest(Observable.of(firebaseToken), firebaseUser);
       })

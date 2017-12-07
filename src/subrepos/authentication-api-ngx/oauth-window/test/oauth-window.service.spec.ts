@@ -5,6 +5,11 @@ import { Emitter } from '../../emitter';
 
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/elementAt';
+import 'rxjs/add/observable/interval'
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
+import { Observable } from 'rxjs/Observable';
 
 class WindowLocation extends Emitter {
   private _href = '';
@@ -137,7 +142,7 @@ describe('OauthWindow', () => {
     let oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
     oauthWindow.open(url).catch((err: Error) => {
-      expect(err.message).toEqual('Cancelled');
+      expect(err.message).toEqual('OAuth window reopened');
       expect(firstWindow.closed).toBe(true);
       expect(secondWindow.closed).toBe(false);
 
@@ -153,7 +158,7 @@ describe('OauthWindow', () => {
         return mockWindow;
       }
     };
-    let oauthWindow: OauthWindowService = new OauthWindowService(windowService);
+    let oauthWindow = new OauthWindowService(windowService);
 
     let url = 'http://test.com';
     let url2 = 'http://test2.com';
@@ -162,15 +167,22 @@ describe('OauthWindow', () => {
     windows.take(1).subscribe((win: MockWindow) => {
       expect(win.location.href).toEqual(url);
       activeWindow = win;
+
+      done();
     });
 
+    // wait for OauthWindow to have the window istance
+    Observable
+      .interval(200)
+      .map(() => oauthWindow.isOpened())
+      .filter(opened => (opened === true))
+      .take(1)
+      .subscribe(() => {
+        oauthWindow.changeUrl(url2);
+        expect(activeWindow.location.href).toEqual(url2);
+      });
+
     oauthWindow.open(url).catch(err => done.fail(err));
-
-    expect(activeWindow).toBeDefined();
-    oauthWindow.changeUrl(url2);
-    expect(activeWindow.location.href).toEqual(url2);
-
-    done();
   });
 
   it('should not fail when there is not any opened window', () => {
@@ -271,6 +283,8 @@ describe('OauthWindow', () => {
     windows.take(1).subscribe((win: MockWindowCordova) => {
       expect(win.location.href).toEqual(url);
       cordovaWindow = win;
+
+      cordovaWindow.close();
     });
 
     let oauthWindow: OauthWindowService = new OauthWindowService(windowService);
@@ -284,8 +298,6 @@ describe('OauthWindow', () => {
         expect(err.message).toBe('User cancelled');
         done();
       });
-
-    cordovaWindow.close();
   });
 
   it('shoud close the window', done => {
@@ -306,11 +318,12 @@ describe('OauthWindow', () => {
       });
 
       // wait for OauthWindow to have the window istance
-      const fv = () => {
-        oauthWindow.close();
-      };
-
-      setTimeout(fv, 200);
+      Observable
+        .interval(200)
+        .map(() => oauthWindow.isOpened())
+        .filter(opened => (opened === true))
+        .take(1)
+        .subscribe(() => oauthWindow.close());
     });
 
     oauthWindow.open(url).catch((err: Error) => {

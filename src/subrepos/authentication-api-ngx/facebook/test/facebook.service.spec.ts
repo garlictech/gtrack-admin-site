@@ -5,7 +5,8 @@ import { BaseRequestOptions, ResponseOptions, XHRBackend, Response, RequestMetho
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Subject } from 'rxjs/Subject';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { OauthWindowService } from '../../oauth-window';
 import { WindowModule, WindowService } from '../../window';
@@ -44,6 +45,7 @@ describe('Facebook', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot(authReducer),
+        EffectsModule.forRoot([]),
         WindowModule,
         AuthenticationApiModule.forRoot(config),
         ApiModule
@@ -134,8 +136,13 @@ describe('Facebook', () => {
       .connect()
       .then(auth => {
         let user = auth.user;
-        expect(user.id).toEqual('1');
-        expect(user.email).toEqual('test@test.com');
+
+        expect(user).not.toBeNull();
+
+        if (user !== null) {
+          expect(user.id).toEqual('1');
+          expect(user.email).toEqual('test@test.com');
+        }
 
         done();
       })
@@ -197,8 +204,13 @@ describe('Facebook', () => {
       .connect()
       .then(auth => {
         let user = auth.user;
-        expect(user.id).toEqual('1');
-        expect(user.email).toEqual('test@test.com');
+
+        expect(user).not.toBeNull();
+
+        if (user !== null) {
+          expect(user.id).toEqual('1');
+          expect(user.email).toEqual('test@test.com');
+        }
 
         done();
       })

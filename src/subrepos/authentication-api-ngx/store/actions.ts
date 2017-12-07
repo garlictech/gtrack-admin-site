@@ -16,6 +16,8 @@ export const LOGOUT_START = '[Authentication] Logout Start';
 export const LOGOUT_SUCCESS = '[Authentication] Logout Success';
 export const UNAUTHORIZED = '[Authentication] Unauthorized';
 export const ROUTE_FORBIDDEN = '[Authentication] Route forbidden';
+export const USER_CANCELLED = '[Authentication] User cancelled';
+export const WINDOW_REOPENED = '[Authentication] Window reopened'
 
 export class RequestVerifyToken implements Action {
   readonly type = REQUEST_VERIFY_TOKEN;
@@ -93,6 +95,22 @@ export class FailureHappened implements Action {
   }
 }
 
+export class UserCancelled implements Action {
+  readonly type = USER_CANCELLED;
+  // Payload: the error object
+  constructor(public payload: any) {
+    /* EMPTY */
+  }
+}
+
+export class WindowReopened implements Action {
+  readonly type = WINDOW_REOPENED;
+  // Payload: the error object
+  constructor(public payload: any) {
+    /* EMPTY */
+  }
+}
+
 export class LogoutStart implements Action {
   readonly type = LOGOUT_START;
 }
@@ -132,4 +150,6 @@ export type AllActions =
   | LogoutStart
   | LogoutSuccess
   | Unauthorized
-  | RouteForbidden;
+  | RouteForbidden
+  | UserCancelled
+  | WindowReopened;
