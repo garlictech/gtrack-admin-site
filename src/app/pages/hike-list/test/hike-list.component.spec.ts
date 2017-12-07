@@ -3,10 +3,10 @@ import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { GtActions } from '../../../store/';
-import { HikeDataService } from '../../../shared/services';
-import { HikeDataServiceStub } from '../../../test/helpers/services';
-import { MockStore } from '../../../test/helpers/store/';
+import { GtActions } from 'app/store/';
+import { HikeDataService } from 'app/shared/services';
+import { HikeDataServiceStub } from 'app/test/helpers/services';
+import { MockStore } from 'app/test/helpers/store/';
 
 import { HikeListComponent } from '../hike-list.component';
 

@@ -8,6 +8,11 @@ export type GeoPoint = {
 
 export const EARTH_RADIUS = 6371000;
 
+export type CenterRadius = {
+  radius: number;
+  center: GeoJSON.Feature<GeoJSON.Point>;
+}
+
 @Injectable()
 export class GeometryService {
 
@@ -32,7 +37,7 @@ export class GeometryService {
     return Math.round(1000 * turf.distance(point, p2, 'kilometers'));
   }
 
-  public getCenterRadius(bounds) {
+  public getCenterRadius(bounds): CenterRadius {
     const p1 = this.getPoint(bounds.SouthWest.lon, bounds.SouthWest.lat);
     const p2 = this.getPoint(bounds.NorthEast.lon, bounds.NorthEast.lat);
 

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 // Pipes
-import { ObjectToArrayPipe } from '../../shared/pipes';
+import { ObjectToArrayPipe } from 'app/shared/pipes';
 // Components
 import { HikeEditComponent } from './hike-edit.component';
 import {
@@ -18,9 +18,9 @@ import {
   SpecialPoiDataComponent
 } from './components';
 // Shared components
-import { AdminLeafletComponent } from '../../shared/components/admin-leaflet';
+import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 // gTrack common
-import { MapModule, HikeModule, SharedModule } from '../../../subrepos/gtrack-common-ngx';
+import { MapModule, HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
 
 const COMPONENTS = [
   HikeEditComponent,

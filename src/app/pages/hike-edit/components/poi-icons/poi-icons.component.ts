@@ -1,7 +1,7 @@
 // Core
 import { Component, Input, OnInit } from '@angular/core';
-import { IExternalPoi } from '../../../../shared/interfaces/index';
-import { IconService } from '../../../../../subrepos/gtrack-common-ngx/index';
+import { IExternalPoi } from 'app/shared/interfaces/index';
+import { IconService, } from 'subrepos/gtrack-common-ngx/index';
 import * as _ from 'lodash';
 
 @Component({
@@ -17,6 +17,10 @@ export class PoiIconsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.urls = _.uniq(this._iconService.urls(this.poi.types));
+    if (typeof this.poi.types !== 'undefined') {
+      this.urls = _.uniq(this._iconService.urls(this.poi.types));
+    } else {
+      this.urls = [];
+    }
   }
 }

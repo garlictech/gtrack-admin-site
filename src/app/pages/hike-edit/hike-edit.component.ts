@@ -3,10 +3,10 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
-import { State } from '../../store';
+import { State } from 'app/store';
 
-import { HikeDataService } from '../../shared/services';
-import { IMockHikeElement } from '../../shared/interfaces';
+import { HikeDataService } from 'app/shared/services';
+import { IMockHikeElement } from 'app/shared/interfaces';
 
 declare const $: any;
 

@@ -1,30 +1,30 @@
-import { IPoi } from '../../../subrepos/gtrack-common-ngx/app/poi/ipoi';
+import { IPoi } from 'subrepos/gtrack-common-ngx/app/poi/ipoi';
 
 export interface IExternalPoi {
-  id?: string;
-  elevation?: string;
+  id?: string | undefined;
+  elevation?: string | undefined;
   lat: number;
   lon: number;
-  objectType?: string;
-  title?: string;
-  types?: string[];
-  segment?: any;
-  inHike?: boolean;
-  distanceFromOrigo?: number;
-  isStart?: boolean;
-  isFinish?: boolean;
+  objectType?: string | undefined;
+  title?: string | undefined;
+  types?: string[] | undefined;
+  segment?: any | undefined;
+  inHike?: boolean | undefined;
+  distanceFromOrigo?: number | undefined;
+  isStart?: boolean | undefined;
+  isFinish?: boolean | undefined;
   // Extends IPoi
   google?: {
     [lng: string]: any;
-  };
+  } | undefined;
   osm?: {
     [lng: string]: any;
-  };
+  } | undefined;
   wikipedia?: {
     id: string;
     url: string;
-  };
-  inGtrackDb?: boolean;
-  onRoute?: boolean;
-  distFromRoute?: number;
+  } | undefined;
+  inGtrackDb?: boolean | undefined;
+  onRoute?: boolean | undefined;
+  distFromRoute?: number | undefined;
 }

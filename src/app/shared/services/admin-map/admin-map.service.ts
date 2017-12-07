@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { State, adminMapActions } from '../../../store';
+import { State, adminMapActions } from 'app/store';
 import { Injectable } from '@angular/core';
 import { AdminMap } from './admin-map';
 import {
@@ -9,7 +9,7 @@ import {
   GameRuleService,
   RouteService,
   ElevationService
-} from '../../../../subrepos/gtrack-common-ngx/app';
+} from 'subrepos/gtrack-common-ngx/app';
 
 import * as uuid from 'uuid';
 

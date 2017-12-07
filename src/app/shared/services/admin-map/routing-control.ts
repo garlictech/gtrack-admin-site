@@ -1,11 +1,11 @@
 import { Store } from '@ngrx/store';
-import { State, routingActions } from '../../../store';
-import { environment } from '../../../../environments/environment';
+import { State, routingActions } from 'app/store';
+import { environment } from 'environments/environment';
 import { RouteInfo } from './route-info';
 import {
   ElevationService,
   RouteService
-} from '../../../../subrepos/gtrack-common-ngx/app';
+} from 'subrepos/gtrack-common-ngx/app';
 
 import * as L from 'leaflet';
 import 'leaflet-spin';
@@ -54,7 +54,11 @@ export class RoutingControl {
 
   public pop() {
     const _indexToRemove = this._controls.length - 1;
-    const _control = this._controls.pop();
+    const _control: L.Routing.Control | undefined = this._controls.pop();
+
+    if (typeof _control === 'undefined') {
+      return;
+    }
 
     this._leafletMap.removeControl(_control);
 
@@ -92,6 +96,9 @@ export class RoutingControl {
       formatter: new L.Routing.Valhalla.Formatter(),
       plan: new L.Routing.Plan([], {
         createMarker: (waypointNum, waypoint) => {
+          if (typeof waypoint === 'undefined') {
+            return;
+          }
           return this._createMarker(waypoint.name, waypoint.latLng);
         }
       })

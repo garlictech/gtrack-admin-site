@@ -23,7 +23,7 @@ export class OsmRoutePoiService {
     return this._http.post('http://overpass-api.de/api/interpreter', request)
       .toPromise()
       .then((response: any) => {
-        let _res = [];
+        let _res: ExternalPoi[] = [];
 
         for (let i = 0; i < response.elements.length; i++) {
           let _point = response.elements[i];

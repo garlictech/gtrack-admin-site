@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { IMockHikeElement } from '../../shared/interfaces';
+import { IMockHikeElement } from 'app/shared/interfaces';
 
 export const OPEN_SIDENAV = '[Layout] Open Sidenav';
 export const CLOSE_SIDENAV = '[Layout] Close Sidenav';
 
 export class OpenSidenav implements Action {
   readonly type = OPEN_SIDENAV;
-  constructor() {}
+  constructor() {
+    /* EMPTY */
+  }
 }
 
 export class CloseSidenav implements Action {

@@ -2,8 +2,10 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { State } from '../../../store';
-import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';
+import { State } from 'app/store';
+import {
+  Actions as AuthActions
+} from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
 
 @Component({
   selector: 'app-navbar',

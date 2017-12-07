@@ -3,10 +3,10 @@ import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State } from '../../../../store';
+import { State } from 'app/store';
 import { LeafletMouseEvent } from 'leaflet';
-import { Center, ISegment } from '../../../../../subrepos/gtrack-common-ngx';
-import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
+import { Center, ISegment } from 'subrepos/gtrack-common-ngx';
+import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 import * as L from 'leaflet';
 
 const CENTER = <Center>{

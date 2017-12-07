@@ -3,7 +3,7 @@ import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 
-import { MockStore } from '../../../../test/helpers/store/';
+import { MockStore } from 'app/test/helpers/store/';
 
 import { LayoutComponent } from '../layout.component';
 import { SidebarComponent } from '../../sidebar/sidebar.component';

@@ -8,7 +8,7 @@ import { PoiService, Poi, IPoi } from './services/poi';
 import { ISegment } from './services/segment';
 import { CheckpointService, Checkpoint, CheckpointSequence } from './services/checkpoint';
 import { GameRuleService } from './services/game-rule';
-import { GeometryService } from './services/geometry';
+import { GeometryService, CenterRadius } from './services/geometry';
 import { ElevationService } from './services/elevation';
 
 import { TrailBoxComponent } from './components/trail-box';
@@ -76,6 +76,7 @@ export {
   TrailBoxComponent,
   GameRuleService,
   GeometryService,
+  CenterRadius,
   ElevationService,
   Checkpoint,
   CheckpointSequence,

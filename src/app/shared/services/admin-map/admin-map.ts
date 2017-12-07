@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { State } from '../../../store';
+import { State } from 'app/store';
 import { RoutingControl } from './routing-control';
 import { WaypointMarker } from './waypoint-marker';
 import { RouteInfo } from './route-info';
@@ -11,7 +11,7 @@ import {
   GameRuleService,
   RouteService,
   ElevationService
-} from '../../../../subrepos/gtrack-common-ngx/app';
+} from 'subrepos/gtrack-common-ngx/app';
 import * as L from 'leaflet';
 import * as turf from '@turf/turf';
 
@@ -68,18 +68,24 @@ export class AdminMap extends Map {
   /**
    * Get buffer geoJSON
    */
-  public getBuffer(): GeoJSON.Feature<GeoJSON.Polygon> {
+  public getBuffer(): GeoJSON.Feature<GeoJSON.Polygon> | undefined {
     const _path = this._routeInfo.getPath();
 
-    if (!_path) {
-      return
+    if (typeof _path !== 'undefined') {
+      let _buffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(_path, 50, 'meters');
+
+      if (typeof _buffer !== 'undefined') {
+        if (_buffer.properties === null) {
+          _buffer.properties = {};
+        }
+        _buffer.properties.name = 'buffer polygon';
+        _buffer.properties.draw_type = 'small_buffer';
+      }
+
+      return _buffer;
+    } else {
+      return;
     }
-
-    let _buffer: GeoJSON.Feature<GeoJSON.Polygon> = turf.buffer(_path, 50, 'meters');
-    _buffer.properties.name = 'buffer polygon';
-    _buffer.properties.draw_type = 'small_buffer';
-
-    return _buffer;
   }
 
   /**

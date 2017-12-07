@@ -1,9 +1,10 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-
-import { Actions as authActions } from '../../../../../subrepos/authentication-api-ngx';
-import { MockStore } from '../../../../test/helpers/store/';
+import {
+  Actions as authActions
+} from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
+import { MockStore } from 'app/test/helpers/store/';
 
 import { LoginComponent } from '../login.component';
 

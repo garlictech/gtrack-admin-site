@@ -1,16 +1,17 @@
 /* OLD: RouteService  */
 import { Store } from '@ngrx/store';
-import { State, IRouteInfoDataState } from '../../../store';
+import { State, IRouteInfoDataState } from 'app/store';
 import { AdminMap } from './admin-map';
 import { RoutePlanner } from './route-planner';
 import {
   GameRuleService,
   RouteService
-} from '../../../../subrepos/gtrack-common-ngx/app';
+} from 'subrepos/gtrack-common-ngx/app';
 import * as turf from '@turf/turf';
 import * as d3 from 'd3';
 import { Feature } from 'geojson';
 import { Polygon } from 'leaflet';
+import { ExtendedFeature, ExtendedGeometryCollection } from 'd3';
 
 export class RouteInfo {
   private _savedRoute: IRouteInfoDataState; // Deprecated?
@@ -97,19 +98,32 @@ export class RouteInfo {
    */
   public getSearchBounds() {
     let _path = this.getPath();
-    let _buffer = turf.rewind(turf.buffer(_path, 100, 'meters'), true); // todo back to 1000
-    let _bounds = d3.geoBounds(_buffer);
 
-    return {
-      NorthEast: {
-        lat: _bounds[1][1],
-        lon: _bounds[1][0]
-      },
-      SouthWest: {
-        lat: _bounds[0][1],
-        lon: _bounds[0][0]
+    if (typeof _path !== 'undefined') {
+      // todo back to 1000 meters
+      // declare as 'any' for avoid d3.geoBounds error
+      let _buffer: any = turf.buffer(_path, 50, 'meters');
+
+      if (typeof _buffer !== 'undefined') {
+        _buffer = turf.rewind(_buffer, true);
+        let _bounds = d3.geoBounds(_buffer);
+
+        return {
+          NorthEast: {
+            lat: _bounds[1][1],
+            lon: _bounds[1][0]
+          },
+          SouthWest: {
+            lat: _bounds[0][1],
+            lon: _bounds[0][0]
+          }
+        };
+      } else {
+        return;
       }
-    };
+    } else {
+      return;
+    }
   }
 
   /*
