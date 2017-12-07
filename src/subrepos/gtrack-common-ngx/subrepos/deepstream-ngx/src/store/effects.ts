@@ -59,10 +59,6 @@ export class Effects {
     .map(() => {
       log.i('Effect: Deepstream logout success');
       return new LocalActions.DeepstreamLogoutSuccess();
-    })
-    .catch(err => {
-      log.er('Effect: Deepstream Logout error', err);
-      return Observable.of(null);
     });
 
   @Effect()

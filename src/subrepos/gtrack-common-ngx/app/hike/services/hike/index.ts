@@ -12,7 +12,7 @@ export class HikeService {
 
   constructor(private hikeProgramService: HikeProgramService, private _deepstream: DeepstreamService) { }
 
-  get(id: string): Observable<Hike> {
+  get(id: string): Observable<Hike|null> {
     return this._deepstream
       .getRecord(id)
       .get()
@@ -32,7 +32,7 @@ export class HikeService {
       .getList<IHike>('hikes')
       .subscribeForData()
       .switchMap(data => {
-        let observables: Observable<Hike>[] = data.map(item => {
+        let observables: Observable<Hike|null>[] = data.map(item => {
           let hike: Hike = new Hike(item, this.hikeProgramService);
 
           return hike

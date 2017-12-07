@@ -3,7 +3,7 @@ import 'leaflet-usermarker';
 import 'leaflet-spin';
 
 export class CurrentPositionMarker {
-  protected marker: L.UserMarker = null;
+  protected marker: (L.UserMarker|null) = null;
   public positioningInverval = 10000;
   public timeout = 10000;
 

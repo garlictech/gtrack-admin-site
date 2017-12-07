@@ -8,6 +8,7 @@ import { Route } from './route';
 import { UnitsService } from '../../../shared';
 
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
+import { ScaleLinear } from 'd3';
 
 export interface IElevationMargin {
   top: number;
@@ -72,7 +73,7 @@ export class RouteService {
       right: 0,
       bottom: 0
     }
-  ): IElevationData {
+  ): (IElevationData|null) {
     let lineData: [number, number][] = [];
     let distance = 0;
 
@@ -117,12 +118,23 @@ export class RouteService {
     let yRangeMin = d3.min(lineData, (d) => d[1]);
     let yRangeMax = d3.max(lineData, (d) => d[1]);
 
-    let xRange = d3
+    let xRange: ScaleLinear<number, number>;
+    let yRange: ScaleLinear<number, number>;
+
+    if (typeof xRangeMin === 'undefined' || typeof xRangeMax === 'undefined') {
+      return null;
+    }
+
+    xRange = d3
       .scaleLinear()
       .range([margins.left, width - margins.right])
       .domain([xRangeMin, xRangeMax]);
 
-    let yRange = d3
+    if (typeof yRangeMin === 'undefined' || typeof yRangeMax === 'undefined') {
+      return null;
+    }
+
+    yRange = d3
       .scaleLinear()
       .range([height - margins.top, margins.bottom])
       .domain([yRangeMin, yRangeMax]);

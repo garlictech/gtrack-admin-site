@@ -28,9 +28,9 @@ export class CheckpointSequence {
     return index;
   }
 
-  public getNextCheckpoint(checkpoint: Checkpoint): Checkpoint {
+  public getNextCheckpoint(checkpoint: Checkpoint): (Checkpoint|null) {
     let index = this.indexOf(checkpoint);
-    let nextCheckpoint: Checkpoint  = null;
+    let nextCheckpoint: (Checkpoint|null) = null;
 
     if (index > -1) {
       let next = index + 1;

@@ -27,7 +27,6 @@ export class Hike implements IHike {
   private locale = 'en_US';
 
   constructor(data: IHike, private hikeProgramService: HikeProgramService) {
-    console.log(data.id, data.backgroundImageUrls);
     Object.assign(this, data);
   }
 

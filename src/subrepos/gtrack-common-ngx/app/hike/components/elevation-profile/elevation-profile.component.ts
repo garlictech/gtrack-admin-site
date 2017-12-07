@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 import { DistancePipe, UnitsService } from '../../../shared';
 import { Route, RouteService, IElevationData } from '../../services/route'
-import { Hike }from '../../services/hike';
+import { Hike } from '../../services/hike';
 
 @Component({
   selector: 'gtcn-elevation-profile',
@@ -14,12 +14,12 @@ export class ElevationProfileComponent implements AfterViewInit {
   @ViewChild('elevationProfile')
   public mainDiv: ElementRef;
 
-  public route: Route;
+  public route: (Route | null);
   public marker: d3.Selection<d3.BaseType, {}, null, undefined>;
   public elevationText: d3.Selection<d3.BaseType, {}, null, undefined>;
 
   protected vis: d3.Selection<d3.BaseType, {}, null, undefined>;
-  protected res: IElevationData;
+  protected res: (IElevationData|null);
   protected markerOn = false;
   protected distance: DistancePipe;
 
@@ -33,7 +33,7 @@ export class ElevationProfileComponent implements AfterViewInit {
   }
 
   @Input()
-  public set routeId(routeId: string) {
+  public set routeId(routeId: string | null) {
     if (!routeId) {
       this.route = null;
       return;
@@ -48,7 +48,9 @@ export class ElevationProfileComponent implements AfterViewInit {
 
         this.res = this.routeService.elevationData(route, this.width, this.height, this.margins);
 
-        console.log(this.res);
+        if (this.res === null) {
+          return;
+        }
 
         let xAxis = d3.axisBottom(this.res.xRange)
           .tickSize(5);
@@ -83,12 +85,16 @@ export class ElevationProfileComponent implements AfterViewInit {
           .attr('x', 70)
           .attr('y', this.margins.top);
 
-        this.vis
-          .append('svg:path')
-          .attr('d', this.res.lineFunc(this.res.lineData))
-          .attr('stroke', 'black')
-          .attr('stroke-width', 2)
-          .attr('fill', 'none');
+        let line = this.res.lineFunc(this.res.lineData);
+
+        if (line !== null) {
+          this.vis
+            .append('svg:path')
+            .attr('d', line)
+            .attr('stroke', 'black')
+            .attr('stroke-width', 2)
+            .attr('fill', 'none');
+        }
 
         this.vis.on('mouseover', () => this.marker.style('display', 'inherit'));
 
@@ -132,26 +138,28 @@ export class ElevationProfileComponent implements AfterViewInit {
   }
 
   protected moveHandler(eventX: number) {
-    let lineData = this.res.lineData;
-    let xRange = this.res.xRange;
-    let yRange = this.res.yRange;
-    let bisect = d3.bisector((d: [number, number]) => {
-      return d[0];
-    }).right;
-
-    let x = xRange.invert(eventX);
-    let index = bisect(lineData, x);
-
-    let startData = lineData[index - 1];
-    let endData = lineData[index];
-
-    if (startData && endData) {
-      let interpolate = d3.interpolateNumber(startData[1], endData[1]);
-      let range = endData[0] - startData[0];
-      let valueY = interpolate((x % range) / range);
-      this.marker.attr('cx', eventX);
-      this.marker.attr('cy', yRange(valueY));
-      this.elevationText.text(this.distance.transform(valueY));
+    if (this.res !== null) {
+      let lineData = this.res.lineData;
+      let xRange = this.res.xRange;
+      let yRange = this.res.yRange;
+      let bisect = d3.bisector((d: [number, number]) => {
+        return d[0];
+      }).right;
+  
+      let x = xRange.invert(eventX);
+      let index = bisect(lineData, x);
+  
+      let startData = lineData[index - 1];
+      let endData = lineData[index];
+  
+      if (startData && endData) {
+        let interpolate = d3.interpolateNumber(startData[1], endData[1]);
+        let range = endData[0] - startData[0];
+        let valueY = interpolate((x % range) / range);
+        this.marker.attr('cx', eventX);
+        this.marker.attr('cy', yRange(valueY));
+        this.elevationText.text(this.distance.transform(valueY));
+      }
     }
   }
 

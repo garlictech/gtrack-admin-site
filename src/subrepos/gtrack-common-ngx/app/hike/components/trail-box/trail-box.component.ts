@@ -36,7 +36,7 @@ export class TrailBoxComponent implements AfterViewInit {
   public map: LeafletComponent;
 
   @Input()
-  public set hike(hike: Hike) {
+  public set hike(hike: Hike|null) {
     this.hike$.next(hike);
 
     if (hike) {
@@ -46,16 +46,16 @@ export class TrailBoxComponent implements AfterViewInit {
     }
   }
 
-  public get hike(): Hike {
+  public get hike(): (Hike|null) {
     return this.hike$.getValue();
   }
 
-  public get route(): Route {
+  public get route(): (Route|null) {
     return this.route$.getValue();
   }
 
-  public route$ = new BehaviorSubject<Route>(null);
-  public hike$ = new BehaviorSubject<Hike>(null);
+  public route$ = new BehaviorSubject<Route|null>(null);
+  public hike$ = new BehaviorSubject<Hike|null>(null);
 
   public checkpointsOnly = false;
   protected _geoJsons: L.GeoJSON[] = [];
@@ -107,7 +107,7 @@ export class TrailBoxComponent implements AfterViewInit {
   }
 
   clearGeoJson() {
-    this._geoJsons.forEach((geojson: L.GeoJSON) => geojson.clearLayers());
+    this._geoJsons.forEach(geojson => geojson.clearLayers());
     this._geoJsons = [];
   }
 

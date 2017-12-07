@@ -45,7 +45,6 @@ describe('HikeProgramComponent', () => {
       routeId: '',
       description: {},
       location: 'Budapest',
-      offlineMap: null,
       program: {
         pois: [
           {
