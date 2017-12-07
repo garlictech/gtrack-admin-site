@@ -12,17 +12,33 @@ export class CircleSlice {
 
   }
 
-  public get(): GeoJSON.Feature<GeoJSON.LineString> {
-    let startVertex: GeoJSON.Feature<GeoJSON.Point> = turf.pointOnLine(this.line, this.startPoint);
-    let stopVertex: GeoJSON.Feature<GeoJSON.Point> = turf.pointOnLine(this.line, this.endPoint);
-    let clipLine: GeoJSON.Feature<GeoJSON.LineString> = turf.lineString([startVertex.geometry.coordinates]);
-    let it = new CoordinateIterator(this.line.geometry.coordinates);
+  public get(): (GeoJSON.Feature<GeoJSON.LineString>|null) {
+    let startVertex = turf.pointOnLine(this.line, this.startPoint);
+    let stopVertex = turf.pointOnLine(this.line, this.endPoint);
+    let clipLine: GeoJSON.Feature<GeoJSON.LineString>;
+    let it: CoordinateIterator;
     let property = 'index';
+
+    if (startVertex === null || stopVertex === null || this.line === null || startVertex.geometry === null || stopVertex.geometry === null || this.line.geometry === null) {
+      return null;
+    }
+
+    clipLine = turf.lineString([startVertex.geometry.coordinates]);
+
+    if (clipLine === null || clipLine.geometry === null) {
+      return null;
+    }
+
+    it = new CoordinateIterator(this.line.geometry.coordinates);
 
     it.start(startVertex.properties[property]);
 
     while (it.at() && !stopVertex.properties[property] && !it.end()) {
-      clipLine.geometry.coordinates.push(it.next());
+      let next = it.next();
+
+      if (next !== null) {
+        clipLine.geometry.coordinates.push(next);
+      }
     }
 
     clipLine.geometry.coordinates.push(stopVertex.geometry.coordinates);
