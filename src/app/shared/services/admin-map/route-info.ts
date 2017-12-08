@@ -102,7 +102,7 @@ export class RouteInfo {
     if (typeof _path !== 'undefined') {
       // todo back to 1000 meters
       // declare as 'any' for avoid d3.geoBounds error
-      let _buffer: any = turf.buffer(_path, 50, 'meters');
+      let _buffer: any = turf.buffer(_path, 50, {units: 'meters'});
 
       if (typeof _buffer !== 'undefined') {
         _buffer = turf.rewind(_buffer, true);

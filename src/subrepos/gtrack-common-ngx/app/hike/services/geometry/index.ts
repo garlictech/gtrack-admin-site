@@ -34,7 +34,7 @@ export class GeometryService {
   public distanceFromRoute(lonLat, path) {
     let point = turf.point(lonLat);
     let p2 = turf.pointOnLine(path, point);
-    return Math.round(1000 * turf.distance(point, p2, 'kilometers'));
+    return Math.round(1000 * turf.distance(point, p2, {units: 'kilometers'}));
   }
 
   public getCenterRadius(bounds): CenterRadius {
@@ -42,7 +42,7 @@ export class GeometryService {
     const p2 = this.getPoint(bounds.NorthEast.lon, bounds.NorthEast.lat);
 
     return {
-      radius: turf.distance(p1, p2, 'kilometers') * 500,
+      radius: turf.distance(p1, p2, {units: 'kilometers'}) * 500,
       center: turf.midpoint(p1, p2)
     }
   }
