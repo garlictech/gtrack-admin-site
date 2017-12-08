@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { HikeDataService } from '../../shared/services';
+import { HikeDataService } from 'app/shared/services';
 
 @Component({
   selector: 'gt-hike-list',

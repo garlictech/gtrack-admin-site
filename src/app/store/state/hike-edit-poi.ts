@@ -1,4 +1,4 @@
-import { IExternalPoi } from '../../shared/interfaces/index';
+import { IExternalPoi } from 'app/shared/interfaces/index';
 
 export interface IHikeEditPoiState {
   wikipedia: {

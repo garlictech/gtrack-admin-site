@@ -2,7 +2,7 @@ version: '2'
 
 services:
   deepstream:
-    image: docker.garlictech.com/deepstream
+    image: docker.garlictech.com/deepstream-gtrack:0.2.1
     ports:
       - 6020:6020
     env_file:

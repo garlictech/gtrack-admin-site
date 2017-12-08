@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { State } from '../../../store';
-import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';
+import { State } from 'app/store';
+import {
+  Actions as AuthActions
+} from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
 
 declare const window: any;
 

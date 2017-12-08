@@ -1,27 +1,20 @@
 import { ActionReducer, combineReducers } from '@ngrx/store';
 
-import { IDeepstreamState } from './state';
+import { IDeepstreamState, initialState, EDeepstreamState } from './state';
 import * as Actions from './actions';
 
 export type Action = Actions.AllActions;
 
-const deepstreamIninitialState: IDeepstreamState = {
-  state: 'unknown',
-  failure: null,
-  auth: null,
-  permissionRecord: null
-};
-
-export const reducer: ActionReducer<IDeepstreamState> = (state = deepstreamIninitialState, action: Action) => {
+export const reducer: ActionReducer<IDeepstreamState> = (state = initialState, action: Action) => {
   switch (action.type) {
     case Actions.DEEPSTREAM_LOGIN:
-      return { ...state, state: 'loggingIn', failure: null };
+      return { ...state, state: EDeepstreamState.LOGGING_IN, failure: null };
     case Actions.DEEPSTREAM_LOGIN_SUCCESS:
-      return { ...state, state: 'loggedIn', failure: null, auth: { ...action.payload } };
+      return { ...state, state: EDeepstreamState.LOGGED_IN, failure: null, auth: { ...action.payload } };
     case Actions.DEEPSTREAM_LOGOUT_SUCCESS:
-      return { ...state, state: 'loggedOut', failure: null };
+      return { ...state, state: EDeepstreamState.LOGGED_OUT, failure: null };
     case Actions.DEEPSTREAM_LOGIN_FAILED:
-      return { ...state, state: 'loginFailed', failure: { ...action.payload } };
+      return { ...state, state: EDeepstreamState.LOGGED_OUT, failure: { ...action.payload } };
     case Actions.DEEPSTREAM_PERMISSION_RECORD_CHANGED:
       return { ...state, permissionRecord: { ...action.payload } };
     default:

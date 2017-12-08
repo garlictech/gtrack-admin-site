@@ -4,8 +4,10 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { MockStore } from '../../../../test/helpers/store/';
-import { Actions as authActions } from '../../../../../subrepos/authentication-api-ngx';
+import { MockStore } from 'app/test/helpers/store/';
+import {
+  Actions as authActions
+} from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
 import { NavbarComponent } from '../navbar.component';
 
 let comp: NavbarComponent;

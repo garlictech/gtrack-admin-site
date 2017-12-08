@@ -8,11 +8,11 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import {
   IAuthenticationState,
   Reducer as authReducer
-} from '../../subrepos/authentication-api-ngx';
+} from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
 import {
   Reducer as deepstreamReducer,
   IDeepstreamState
-} from '../../subrepos/gtrack-common-ngx/subrepos/deepstream-ngx';
+} from 'subrepos/gtrack-common-ngx/subrepos/deepstream-ngx';
 
 // Actions
 import * as adminMapActions from './actions/admin-map';
@@ -45,7 +45,7 @@ export {
   HikeEditRoutePlanningEffects,
   HikeEditPoiEffects
 } from './effects';
-export { RouterEffects } from '../../subrepos/gtrack-common-ngx';
+export { RouterEffects } from 'subrepos/gtrack-common-ngx';
 
 // States
 import {

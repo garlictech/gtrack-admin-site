@@ -1,4 +1,4 @@
-import { ISegment } from '../../../subrepos/gtrack-common-ngx';
+import { ISegment } from 'subrepos/gtrack-common-ngx';
 
 export interface IRouteInfoDataState {
   segments: ISegment[];

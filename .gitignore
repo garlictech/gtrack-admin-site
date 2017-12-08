@@ -15,7 +15,7 @@ Thumbs.db
 # --------------------
 .nodemonignore
 npm-debug.log
-/node_modules
+node_modules
 coverage/
 
 # --------------------

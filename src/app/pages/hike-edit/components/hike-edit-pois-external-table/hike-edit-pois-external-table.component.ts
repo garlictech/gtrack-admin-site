@@ -1,8 +1,8 @@
 // Core
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IExternalPoi } from '../../../../shared/interfaces/index';
-import { State, hikeEditPoiActions } from '../../../../store';
+import { IExternalPoi } from 'app/shared/interfaces/index';
+import { State, hikeEditPoiActions } from 'app/store';
 
 @Component({
   selector: 'hike-edit-pois-external-table',

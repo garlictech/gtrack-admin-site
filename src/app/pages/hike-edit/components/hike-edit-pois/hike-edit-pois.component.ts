@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { IExternalPoiType } from '../../../../shared/interfaces/index';
+import { IExternalPoiType } from 'app/shared/interfaces/index';
 
 @Component({
   selector: 'gt-hike-edit-pois',

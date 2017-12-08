@@ -19,5 +19,5 @@ export interface IHike {
   elevationIcon: string;
   routeId: string;
   description: IHikeDescription;
-  offlineMap: string;
+  offlineMap?: string;
 }

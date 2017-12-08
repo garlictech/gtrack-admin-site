@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 
-import { Poi } from '../../../hike';
+import { Poi } from '../../../hike/services/poi';
 import { MapMarker, MapMarkerService } from '../map-marker';
 
 export class PointMarker {

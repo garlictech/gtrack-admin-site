@@ -31,7 +31,7 @@ declare module 'leaflet' {
       buildRouteUrl(waypoints: Waypoint[], options: any): string;
     }
 
-    class Plan extends (L.Layer || L.Class) {
+    class Plan extends L.Class {
       constructor(waypoints?: Waypoint[], options?: PlanOptions);
       isReady(): boolean;
       getWaypoints(): Waypoint[];

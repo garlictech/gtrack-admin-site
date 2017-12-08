@@ -4,12 +4,12 @@ import { AdminMap } from './admin-map';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, IRouteInfoDataState, routeInfoDataActions } from '../../../store';
+import { State, IRouteInfoDataState, routeInfoDataActions } from 'app/store';
 import {
   ISegment,
   GameRuleService,
   RouteService
-} from '../../../../subrepos/gtrack-common-ngx/app';
+} from 'subrepos/gtrack-common-ngx/app';
 import * as _ from 'lodash';
 
 export class RoutePlanner {
