@@ -6,7 +6,6 @@ import { IHike } from '../../../services/hike';
 
 import { HikeProgramComponent } from '../';
 
-
 @Pipe({
   name: 'distance'
 })
