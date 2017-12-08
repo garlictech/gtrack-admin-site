@@ -14,6 +14,7 @@ import {
 } from 'subrepos/gtrack-common-ngx/app';
 import * as L from 'leaflet';
 import * as turf from '@turf/turf';
+import * as _ from 'lodash';
 
 export class AdminMap extends Map {
   private _routingControl: RoutingControl;
@@ -75,11 +76,12 @@ export class AdminMap extends Map {
       let _buffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(_path, 50, {units: 'meters'});
 
       if (typeof _buffer !== 'undefined') {
-        if (_buffer.properties === null) {
-          _buffer.properties = {};
-        }
-        _buffer.properties.name = 'buffer polygon';
-        _buffer.properties.draw_type = 'small_buffer';
+        _buffer = _.assign(_buffer, {
+          properties: {
+            name: 'buffer polygon',
+            draw_type: 'small_buffer'
+          }
+        });
       }
 
       return _buffer;

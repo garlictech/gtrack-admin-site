@@ -8,6 +8,7 @@ import {
   RouteService
 } from 'subrepos/gtrack-common-ngx/app';
 import * as turf from '@turf/turf';
+import * as rewind from 'geojson-rewind';
 import * as d3 from 'd3';
 import { Feature } from 'geojson';
 import { Polygon } from 'leaflet';
@@ -100,13 +101,11 @@ export class RouteInfo {
     let _path = this.getPath();
 
     if (typeof _path !== 'undefined') {
-      // todo back to 1000 meters
       // declare as 'any' for avoid d3.geoBounds error
-      let _buffer: any = turf.buffer(_path, 50, {units: 'meters'});
+      let _buffer: any = turf.buffer(_path, 1000, {units: 'meters'});
 
       if (typeof _buffer !== 'undefined') {
-        _buffer = turf.rewind(_buffer, true);
-        let _bounds = d3.geoBounds(_buffer);
+        let _bounds = d3.geoBounds(rewind(_buffer, true));
 
         return {
           NorthEast: {

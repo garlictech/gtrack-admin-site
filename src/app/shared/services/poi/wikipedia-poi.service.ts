@@ -14,7 +14,7 @@ export class WikipediaPoiService {
 
   public get(bounds, lang = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
-    const request = `https://${lang}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo!.radius!}&gscoord=${geo!.center!.geometry!.coordinates![1]}%7C${geo!.center!.geometry!.coordinates![0]}&format=json&gslimit=500&origin=*`;
+    const request = `https://${lang}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo!.radius}&gscoord=${geo!.center!.geometry!.coordinates![1]}%7C${geo!.center!.geometry!.coordinates![0]}&format=json&gslimit=500&origin=*`;
 
     return this._http.get(request)
       .toPromise()
