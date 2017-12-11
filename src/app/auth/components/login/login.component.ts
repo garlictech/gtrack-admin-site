@@ -20,6 +20,6 @@ export class LoginComponent implements OnInit {
   };
 
   public login() {
-    this._store.dispatch(new Actions.GoogleLogin());
+    this._store.dispatch(new Actions.GoogleLogin(['admin']));
   }
 }
