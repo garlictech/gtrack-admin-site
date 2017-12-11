@@ -29,7 +29,7 @@ export class AuthEffects {
       if (this._router.url === '/login') {
         return Observable.of(new RouterActions.Go({ path: ['/'] }));
       } else {
-        return Observable.empty<Response>();
+        return Observable.of(null);
       }
     });
 
