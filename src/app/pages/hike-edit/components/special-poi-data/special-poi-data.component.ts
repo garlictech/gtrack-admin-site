@@ -1,6 +1,6 @@
 // Core
 import { Component, Input } from '@angular/core';
-import { IExternalPoi } from '../../../../shared/interfaces/index';
+import { IExternalPoi } from 'app/shared/interfaces/index';
 
 @Component({
   selector: 'special-poi-data',

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { GeometryService, ElevationService, PoiService } from '../../../../subrepos/gtrack-common-ngx';
+import {
+  GeometryService, ElevationService, PoiService, Poi
+} from 'subrepos/gtrack-common-ngx';
 import { ExternalPoi } from './external-poi';
 import { AdminMap, AdminMapService } from '../admin-map';
 import { Observable } from 'rxjs/Observable';
-import { IExternalPoi } from '../../interfaces/index';
-import { State, selectHikeEditMapMapId } from '../../../store';
+import { IExternalPoi } from 'app/shared/interfaces/index';
+import { State, selectHikeEditMapMapId } from 'app/store';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
@@ -36,40 +38,48 @@ export class PoiEditorService {
     */
   }
 
-  public getOnroutePois(pois) {
+  public getOnroutePois(pois: ExternalPoi[]) {
     return _.filter(pois, (p: ExternalPoi) => p.onRoute);
   }
 
-  public getOffroutePois(pois) {
+  public getOffroutePois(pois: ExternalPoi[]) {
     return _.filter(pois, (p: ExternalPoi) => !p.onRoute);
   }
 
-  public organizePois(pois, path, gtrackPois) {
-    let _res = [];
+  public organizePois(
+    pois: ExternalPoi[],
+    path: GeoJSON.Feature<GeoJSON.Polygon>,
+    gtrackPois: ExternalPoi[]
+  ) {
+    let _res: ExternalPoi[] = [];
 
-    const _smallBuffer: GeoJSON.Feature<GeoJSON.Polygon> = turf.buffer(path, 50, 'meters');
-    const _bigBuffer: GeoJSON.Feature<GeoJSON.Polygon> = turf.buffer(path, 1000, 'meters');
+    const _smallBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 50, {units: 'meters'});
+    const _bigBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 1000, {units: 'meters'});
 
     for (let p of pois) {
-      let _point = turf.point([p.lon, p.lat]);
+      let _point: GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties> = turf.point([p.lon, p.lat]);
 
-      if (turf.inside(_point, _smallBuffer)) {
-        p.onRoute = true;
-      } else {
-        p.onRoute = false;
+      if (typeof _smallBuffer !== 'undefined') {
+        if (turf.inside(_point, _smallBuffer)) {
+          p.onRoute = true;
+        } else {
+          p.onRoute = false;
+        }
       }
 
-      if (turf.inside(_point, _bigBuffer)) {
-        p.distFromRoute = this._geometryService.distanceFromRoute(_point.geometry.coordinates, path);
+      if (typeof _bigBuffer !== 'undefined') {
+        if (turf.inside(_point, _bigBuffer)) {
+          p.distFromRoute = this._geometryService.distanceFromRoute(_point!.geometry!.coordinates, path);
 
-        this._handleTypes(p);
-        this._handleTitle(p);
+          this._handleTypes(p);
+          this._handleTitle(p);
 
-        if (gtrackPois) {
-          this._handleGtrackPois(gtrackPois, p);
+          if (gtrackPois) {
+            this._handleGtrackPois(gtrackPois, p);
+          }
+
+          _res.push(p);
         }
-
-        _res.push(p);
       }
     }
 
@@ -79,8 +89,8 @@ export class PoiEditorService {
   /**
    * organizePois submethod
    */
-  private _handleTypes(poi) {
-    let _types = [];
+  private _handleTypes(poi: ExternalPoi) {
+    let _types: string[] = [];
     let _replaceTypesKeys = _.keys(this._replaceTypes);
 
     _.forEach(poi.types, (t) => {
@@ -101,12 +111,12 @@ export class PoiEditorService {
   /**
    * organizePois submethod
    */
-  private _handleTitle(poi) {
+  private _handleTitle(poi: ExternalPoi) {
     if (!poi.title || poi.title === 'unknown') {
-      let _titleParts = [];
+      let _titleParts: string[] = [];
 
       for (let i = 0; i < poi.types.length; i++) {
-        let _t = poi.types[i];
+        let _t: string = poi.types[i];
 
         if (['atm'].indexOf(_t) >= 0) {
           _titleParts.push(_t.toUpperCase());
@@ -122,7 +132,7 @@ export class PoiEditorService {
   /**
    * organizePois submethod
    */
-  private _handleGtrackPois(gtrackPois, poi: ExternalPoi) {
+  private _handleGtrackPois(gtrackPois: ExternalPoi[], poi: ExternalPoi) {
     let _found = _.find(gtrackPois, (p: ExternalPoi) => {
       return p.objectType === poi.objectType &&
         p[p.objectType].id === poi[poi.objectType].id
@@ -136,15 +146,15 @@ export class PoiEditorService {
   /**
    * organizePois submethod
    */
-  private _handleElevation(pois) {
+  private _handleElevation(pois: ExternalPoi[]) {
     let _poisWithoutElevation = _.filter(pois, (p: ExternalPoi) => !p.elevation);
-    let _chunks = _.chunk(_poisWithoutElevation, 20);
+    let _chunks: ExternalPoi[][] = _.chunk(_poisWithoutElevation, 20);
 
     return Observable
       .interval(100)
       .take(_chunks.length)
       .map(counter => {
-        const _chunk = _chunks[counter];
+        const _chunk: ExternalPoi[] = _chunks[counter];
         const _coordinates = _.map(_chunk, (p: ExternalPoi) => [p.lat, p.lon]);
 
         return this._elevationService.getData(_coordinates).then((data) => {
@@ -165,23 +175,28 @@ export class PoiEditorService {
   }
 
   public handleMarkerChanged(subdomainData) {
-
     this._store.select(selectHikeEditMapMapId).subscribe((mapId: string) => {
-      const _map = this._adminMapService.getMapById(mapId);
+      const _map: AdminMap = this._adminMapService.getMapById(mapId);
 
       _map.pointMarker.removeMarkers(); // todo remove this global method
 
       if (subdomainData.pois) {
-        const _filteredPois = _.filter(subdomainData.pois, (p: IExternalPoi) => p.inHike);
+        const _filteredPois: ExternalPoi[] = _.filter(subdomainData.pois, (p: ExternalPoi) => {
+          if (typeof p.inHike !== 'undefined') {
+            return p.inHike;
+          } else {
+            return false;
+          }
+        });
 
         if (subdomainData.showOnrouteMarkers) {
-          _map.pointMarker.addMarkers(this.getOnroutePois(_filteredPois));
+          _map.pointMarker.addMarkers(<Poi[]>this.getOnroutePois(_filteredPois));
         } else {
           // remove inHike onroutePois
         }
 
         if (subdomainData.showOffrouteMarkers) {
-          _map.pointMarker.addMarkers(this.getOffroutePois(_filteredPois));
+          _map.pointMarker.addMarkers(<Poi[]>this.getOffroutePois(_filteredPois));
         } else {
           // remove inHike offroutePois
         }

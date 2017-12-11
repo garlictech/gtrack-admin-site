@@ -6,7 +6,6 @@ import { IHike } from '../../../services/hike';
 
 import { HikeProgramComponent } from '../';
 
-
 @Pipe({
   name: 'distance'
 })
@@ -20,13 +19,14 @@ describe('HikeProgramComponent', () => {
   let component: HikeProgramComponent;
   let fixture: ComponentFixture<HikeProgramComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ HikeProgramComponent, DistancePipe ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [HikeProgramComponent, DistancePipe],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HikeProgramComponent);

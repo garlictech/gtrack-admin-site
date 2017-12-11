@@ -47,13 +47,15 @@ export class AuthProviderBase {
     permissions: string,
     roles?: string[]
   ): Promise<IAuth> {
-    return this._login(loginUrl, redirectUri, permissions).then(response => {
-      /* jshint camelcase: false */
-      let accessToken = response.access_token;
-      /* jshint camelcase: true */
+    return this
+      ._login(loginUrl, redirectUri, permissions)
+      .then(response => {
+        /* jshint camelcase: false */
+        let accessToken = response.access_token;
+        /* jshint camelcase: true */
 
-      return this.restApiLogin(accessToken, tokenUrl, roles);
-    });
+        return this.restApiLogin(accessToken, tokenUrl, roles);
+      });
   }
 
   @DebugLog
@@ -101,11 +103,14 @@ export class AuthProviderBase {
       loginUrl += '&scope=' + permissions;
     }
 
-    this.oauthWindow.open(loginUrl, 'access_token').then(url => {
-      this._oauthCallback(url);
+    this.oauthWindow
+      .open(loginUrl, 'access_token')
+      .then(url => {
+        this._oauthCallback(url);
 
-      return this.deferred.promise;
-    });
+        return this.deferred.promise;
+      })
+      .catch(err => this.deferred.reject(err));
 
     return this.deferred.promise;
   }

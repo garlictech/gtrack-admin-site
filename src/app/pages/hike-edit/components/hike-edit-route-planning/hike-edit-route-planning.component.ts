@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
+import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import {
   State,
   IRouteInfoDataState,
   hikeEditroutePlanningActions
-} from '../../../../store';
-import { selectHikeEditMapMapId } from '../../../../store/selectors/hike-edit-map';
+} from 'app/store';
+import { selectHikeEditMapMapId } from 'app/store/selectors/hike-edit-map';
 
 @Component({
   selector: 'gt-hike-edit-route-planning',

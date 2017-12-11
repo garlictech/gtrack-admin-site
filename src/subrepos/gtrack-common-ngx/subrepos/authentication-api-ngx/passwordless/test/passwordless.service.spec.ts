@@ -5,6 +5,7 @@ import { BaseRequestOptions, ResponseOptions, XHRBackend, Response, RequestMetho
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { PasswordlessService } from '../passwordless.service';
 import { AuthModule } from '../../auth';
@@ -40,7 +41,11 @@ describe('PasswordlessService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot(authReducer), AuthenticationApiModule.forRoot(config), ApiModule],
+      imports: [
+        StoreModule.forRoot(authReducer),
+        EffectsModule.forRoot([]),
+        AuthenticationApiModule.forRoot(config), ApiModule
+      ],
       providers: [
         BaseRequestOptions,
         MockBackend,
@@ -115,7 +120,7 @@ describe('PasswordlessService', () => {
       .requestToken('test@test.com')
       .toPromise()
       .then(() => {
-        config.magiclink.redirectSlug = undefined;
+        config.magiclink.redirectSlug = '';
 
         return passwordless.requestToken('test@test.com', 'hu_HU').toPromise();
       })

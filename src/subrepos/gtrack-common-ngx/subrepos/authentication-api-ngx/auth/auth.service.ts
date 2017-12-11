@@ -89,7 +89,7 @@ export class AuthService {
 
         let firebaseUser = firebaseToken
           ? Observable.fromPromise(this.afAuth.auth.signInWithCustomToken(firebaseToken))
-          : Observable.empty();
+          : Observable.of(null);
 
         return Observable.combineLatest(Observable.of(firebaseToken), firebaseUser);
       })
@@ -102,7 +102,13 @@ export class AuthService {
   initFromLocalStore() {
     let token = this.storage.getItem('token');
     let refreshToken = this.storage.getItem('refreshToken');
-    return token ? this.init(token, refreshToken) : Promise.reject({});
+
+    if (token) {
+      return this.init(token, refreshToken);
+    } else {
+      this.store.dispatch(new Actions.LoginSuccess(null));
+      return Promise.reject({});
+    }
   }
 
   @DebugLog

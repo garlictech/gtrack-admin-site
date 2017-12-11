@@ -11,7 +11,7 @@ const initialState: IAuthenticationState = {
     refreshToken: null,
     user: null
   },
-  loggingIn: false,
+  loggingIn: true,
   failed: null,
   emailSent: false
 };
@@ -33,14 +33,15 @@ export const reducer: ActionReducer<IAuthenticationState> = (state = initialStat
     case ApiActions.LOGIN_SUCCESS:
       return { ...{ auth: action.payload }, loggingIn: false, failed: null, emailSent: false };
 
-    case ApiActions.FAILURE_HAPPENED:
+      case ApiActions.USER_CANCELLED:
+      case ApiActions.FAILURE_HAPPENED:
       return { ...state, ...{ failed: action.payload }, loggingIn: false, emailSent: false };
 
     case ApiActions.LOGOUT_START:
       return { ...state };
 
     case ApiActions.LOGOUT_SUCCESS:
-      return { ...initialState };
+      return { ...initialState, loggingIn: false };
 
     default:
       return state;

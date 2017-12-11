@@ -7,8 +7,12 @@ import { JsonpModule } from '@angular/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthenticationApiConfig, AuthenticationApiModule, Actions as JwtActions } from 'authentication-api-ngx';
-import { SharedModule, SharedConfig, DeepstreamModule, RouterEffects } from '../subrepos/gtrack-common-ngx';
+import {
+  AuthenticationApiConfig,
+  AuthenticationApiModule,
+  Actions as JwtActions
+} from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
+import { SharedModule, SharedConfig, DeepstreamModule, RouterEffects } from 'subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -81,11 +85,8 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       maxAge: 25
     }),
     DeepstreamModule.forRoot({
-      JwtApiActions: {
-        LOGIN_SUCCESS: JwtActions.LOGIN_SUCCESS,
-        LOGOUT_START: JwtActions.LOGOUT_START
-      },
-      deepstreamConnectionString: 'localhost:6020'
+      deepstreamConnectionString: 'localhost:6020',
+      storeDomain: 'deepstream'
     }),
     AngularFireModule.initializeApp(authConfig.firebase),
     AuthenticationApiModule.forRoot(authConfig),

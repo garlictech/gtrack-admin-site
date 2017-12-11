@@ -10,10 +10,10 @@ import {
   PoiEditorService,
   GooglePoiService,
   AdminMapService
-} from '../../shared/services';
-import { AdminMap } from '../../shared/services/admin-map/admin-map';
-import { IExternalPoi } from '../../shared/interfaces/index';
-import { ExternalPoi } from '../../shared/services/poi/external-poi';
+} from 'app/shared/services';
+import { AdminMap } from 'app/shared/services/admin-map/admin-map';
+import { IExternalPoi } from 'app/shared/interfaces/index';
+import { ExternalPoi } from 'app/shared/services/poi/external-poi';
 import * as _ from 'lodash';
 
 @Injectable()

@@ -1,11 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
+// import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs/Rx';
 import { Action } from '@ngrx/store';
-import { Actions as AuthActions } from 'authentication-api-ngx';
+import { Actions as AuthActions } from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
 import * as GtActions from '../actions';
-import { Effects } from '../effects';
+// import { Effects } from '../effects';
 
+/*
 describe('Effects', () => {
   let runner: EffectsRunner;
   let effects: Effects;
@@ -86,3 +87,5 @@ describe('Effects', () => {
     });
   });
 });
+
+*/

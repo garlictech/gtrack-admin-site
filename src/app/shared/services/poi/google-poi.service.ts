@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ExternalPoi } from './external-poi';
-import { GoogleMapsService } from '../../../../subrepos/gtrack-common-ngx/index';
+import { GoogleMapsService } from 'subrepos/gtrack-common-ngx/index';
 import { /**/ } from '@types/googlemaps';
 import { SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG } from 'constants';
 import { Observable } from 'rxjs/Observable';
@@ -32,7 +32,7 @@ export class GooglePoiService {
           new google.maps.LatLng(bounds.SouthWest.lat, bounds.SouthWest.lon),
           new google.maps.LatLng(bounds.NorthEast.lat, bounds.NorthEast.lon)
         );
-        let _res = [];
+        let _res: ExternalPoi[] = [];
 
         return new Promise((resolve, reject) => {
           this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
@@ -74,7 +74,7 @@ export class GooglePoiService {
    * get() submethod
    */
   private _createFakeMapInstance() {
-    let fakeDiv = document.createElement('div');
+    let fakeDiv: HTMLDivElement = document.createElement('div');
     fakeDiv.id = 'fakeMap';
     fakeDiv.style.display = 'none';
     document.body.appendChild(fakeDiv);
@@ -84,8 +84,11 @@ export class GooglePoiService {
    * get() submethod
    */
   private _removeFakeMapInstance() {
-    let fakeDiv = document.getElementById('fakeMap');
-    document.body.removeChild(fakeDiv);
+    let fakeDiv: HTMLElement | null = document.getElementById('fakeMap');
+
+    if (fakeDiv !== null) {
+      document.body.removeChild(fakeDiv);
+    }
   }
 
   /**
@@ -96,24 +99,24 @@ export class GooglePoiService {
       .interval(200)
       .take(pois.length)
       .mergeMap((idx) => {
-        if (pois[idx].data.google.id) {
+        let _googleData = pois[idx]!.data!.google!;
+        if (_googleData.id) {
           this._placesService.getDetails({
-            placeId: pois[idx].data.google.id
+            placeId: _googleData.id
           }, (place, status) => {
             if (status !== google.maps.places.PlacesServiceStatus.OK) {
               return Observable.empty();
             }
 
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-              pois[idx].data.google.formatted_address = place.formatted_address;
-              pois[idx].data.google.international_phone_number = place.international_phone_number;
-              pois[idx].data.google.international_phone_number = place.international_phone_number;
+              _googleData.formatted_address = place.formatted_address;
+              _googleData.international_phone_number = place.international_phone_number;
 
               if (place.opening_hours) {
-                pois[idx].data.google.opening_hours = place.opening_hours;
+                _googleData.opening_hours = place!.opening_hours;
               }
               if (place.photos) {
-                pois[idx].data.google.photos = place.photos;
+                _googleData.photos = place!.photos;
               }
             }
 

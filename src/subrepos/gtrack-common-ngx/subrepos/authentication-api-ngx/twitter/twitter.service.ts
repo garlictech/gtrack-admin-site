@@ -8,7 +8,9 @@ import { IAuth } from '../store';
 import { AuthenticationApiConfig } from '../lib/config';
 import { DebugLog } from '../log';
 import { AuthProviderBase } from '../auth-provider-base';
-import { Observable } from 'rxjs';
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/take';
 
 @Injectable()
 export class TwitterService extends AuthProviderBase {
@@ -116,7 +118,7 @@ export class TwitterService extends AuthProviderBase {
       .post(requestTokenProxy, {
         redirectUri: redirectUri
       })
-      .do(response => {
+      .mergeMap(response => {
         let queryString: string = response.text().replace(/"(.*)"/, '$1');
         let requestTokenParams: any = this._parseQueryString(queryString);
         let oauthToken: string;
@@ -124,7 +126,7 @@ export class TwitterService extends AuthProviderBase {
         let loginUrl: string;
 
         if (requestTokenParams.hasOwnProperty('oauth_token') === false) {
-          Observable.throw(new Error('Oauth request token was not received'));
+          return Observable.throw(new Error('Oauth request token was not received'));
         }
 
         /*jshint camelcase: false */
@@ -138,14 +140,18 @@ export class TwitterService extends AuthProviderBase {
         loginUrl += oauthSecret + '&oauth_callback_confirmed=true';
 
         this.oauthWindow.changeUrl(loginUrl);
+        return Observable.of();
       })
-      .catch((err, obs) => {
-        this.oauthWindow.close();
-        this.deferred.reject(err);
-        return obs;
-      })
-      .first()
-      .subscribe();
+      .take(1)
+      .subscribe(
+        () => {
+          // Empty
+        },
+        err => {
+          this.oauthWindow.close();
+          this.deferred.reject(err);
+        }
+      );
 
     return this.deferred.promise;
   }

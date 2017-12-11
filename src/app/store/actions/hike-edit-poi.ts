@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { ExternalPoi } from '../../shared/services/poi/external-poi';
+import { ExternalPoi } from 'app/shared/services/poi/external-poi';
 
 export const GET_WIKIPEDIA_POIS = '[HikeEditPoi] Get Wikipedia pois';
 export const SET_WIKIPEDIA_POIS = '[HikeEditPoi] Set Wikipedia pois';

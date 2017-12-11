@@ -5,11 +5,11 @@ import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/mo
 import { storeFreeze } from 'ngrx-store-freeze';
 
 // Subrepos
-import { IAuthenticationState, Reducer as authReducer } from 'authentication-api-ngx';
 import {
-  Reducer as deepstreamReducer,
-  IDeepstreamState
-} from '../../subrepos/gtrack-common-ngx/subrepos/deepstream-ngx';
+  IAuthenticationState,
+  Reducer as authReducer
+} from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
+import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/gtrack-common-ngx/subrepos/deepstream-ngx';
 
 // Actions
 import * as adminMapActions from './actions/admin-map';
@@ -38,7 +38,7 @@ export { routingActions };
 
 // Effects
 export { AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from './effects';
-export { RouterEffects } from '../../subrepos/gtrack-common-ngx';
+export { RouterEffects } from 'subrepos/gtrack-common-ngx';
 
 // States
 import { IRouteInfoDataState, ILayoutState, IHikeEditMapState, IHikeEditPoiState } from './state';

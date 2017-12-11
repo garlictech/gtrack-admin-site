@@ -7,7 +7,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AngularFireModule, FirebaseAppConfig } from 'angularfire2';
 import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
 import { Subject } from 'rxjs/Subject';
-import { StoreModule, Store, combineReducers } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import * as firebase from 'firebase';
 
@@ -23,6 +24,7 @@ import { User } from '../../lib';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/toPromise';
+import { Effect } from '@ngrx/effects/src/effects_metadata';
 
 class MockError extends Response implements Error {
   public name: string;
@@ -66,7 +68,8 @@ describe('AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot(combineReducers(reducer)),
+        StoreModule.forRoot(reducer),
+        EffectsModule.forRoot([]),
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireAuthModule,
         AuthenticationApiModule.forRoot(authConfig),
@@ -109,8 +112,12 @@ describe('AuthService', () => {
     firebaseLogoutSpy = spyOn(af.auth, 'signOut').and.returnValue(Promise.resolve());
 
     backend.connections.subscribe((connection: MockConnection) => {
-      let header: string = connection.request.headers.get('Authorization');
-      let token: string = header.replace(/JWT /, '');
+      let header = connection.request.headers.get('Authorization');
+      let token  = '';
+
+      if (header !== null) {
+        token = header.replace(/JWT /, '');
+      }
 
       if (connection.request.url === `${apiUrl}/user/me` && connection.request.method === RequestMethod.Get) {
         if (
@@ -203,7 +210,11 @@ describe('AuthService', () => {
       .init('token')
       .then(auth => {
         let responseUser = auth.user;
-        expect(responseUser.id).toEqual(user.id);
+        expect(responseUser).not.toBeNull();
+        if (responseUser !== null) {
+          expect(responseUser.id).toEqual(user.id);
+        }
+
         done();
       })
       .catch(err => done.fail(err));
@@ -220,7 +231,11 @@ describe('AuthService', () => {
 
         expect(firebaseLoginSpy.calls.count()).toBe(1);
         expect(firebaseLoginSpy.calls.first().args[0]).toBe('firebasetoken');
-        expect(firebaseUser.uid).toEqual(mockFirebaseUser.uid);
+        expect(firebaseUser).toBeDefined();
+        if (typeof firebaseUser !== 'undefined') {
+          expect(firebaseUser.uid).toEqual(mockFirebaseUser.uid);
+        }
+
         done();
       })
       .catch(err => done.fail(err));
@@ -234,9 +249,13 @@ describe('AuthService', () => {
       .init('firebase-missing-token')
       .then(auth => {
         expect(firebaseLoginSpy.calls.count()).toBe(0);
-        expect(auth.firebaseUser).toBeNull();
+        expect(auth.firebaseUser).not.toBeDefined();
         expect(auth.firebaseToken).toBeNull();
-        expect(auth.user.id).toEqual(user.id);
+        expect(auth.user).not.toBeNull();
+
+        if (auth.user !== null) {
+          expect(auth.user.id).toEqual(user.id);
+        }
 
         done();
       })
@@ -266,7 +285,11 @@ describe('AuthService', () => {
     authService
       .init('token')
       .then(auth => {
-        expect(auth.user.id).toEqual(user.id);
+        expect(auth.user).not.toBeNull();
+        if (auth.user !== null) {
+          expect(auth.user.id).toEqual(user.id);
+        }
+
         done();
       })
       .catch(err => done.fail(err));

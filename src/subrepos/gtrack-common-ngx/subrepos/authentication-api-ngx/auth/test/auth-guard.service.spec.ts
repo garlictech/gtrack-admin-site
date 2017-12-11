@@ -5,7 +5,8 @@ import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/ro
 import { TestBed } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Subject } from 'rxjs/Subject';
-import { StoreModule, Store, combineReducers } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { AuthenticationApiConfig, AuthenticationApiModule } from '../../lib';
 
@@ -34,7 +35,11 @@ describe('AuthGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot(combineReducers(reducer)), AuthenticationApiModule.forRoot(authConfig)],
+      imports: [
+        StoreModule.forRoot(reducer),
+        EffectsModule.forRoot([]),
+        AuthenticationApiModule.forRoot(authConfig)
+      ],
       providers: [
         {
           provide: Router,

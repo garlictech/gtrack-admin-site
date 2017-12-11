@@ -1,6 +1,6 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
-import { AdminMap, AdminMapService } from '../../services/admin-map';
-import { LeafletComponent } from '../../../../subrepos/gtrack-common-ngx/app';
+import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
+import { LeafletComponent } from 'subrepos/gtrack-common-ngx/app';
 
 @Component({
   selector: 'gc-admin-leaflet',

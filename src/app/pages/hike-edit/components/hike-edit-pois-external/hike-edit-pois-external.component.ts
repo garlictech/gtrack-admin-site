@@ -3,9 +3,9 @@ import { Component, Input, Injector, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
-import { OsmPoiService } from '../../../../shared/services';
-import { IExternalPoiType, IExternalPoi } from '../../../../shared/interfaces';
+import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
+import { OsmPoiService } from 'app/shared/services';
+import { IExternalPoiType, IExternalPoi } from 'app/shared/interfaces';
 import {
   State,
   hikeEditPoiActions,
@@ -14,8 +14,8 @@ import {
   selectHikeEditDomainOnrouteMarkers,
   selectHikeEditDomainOffrouteMarkers,
   selectHikeEditMapMapId
-} from '../../../../store';
-import { ExternalPoi } from '../../../../shared/services/poi/external-poi';
+} from 'app/store';
+import { ExternalPoi } from 'app/shared/services/poi/external-poi';
 import * as _ from 'lodash';
 
 @Component({
