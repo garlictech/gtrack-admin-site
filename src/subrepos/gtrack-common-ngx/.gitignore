@@ -1,5 +1,6 @@
 dist/
 docker/
-node_module/
+node_modules
 reports/
 src/
+.vscode
