@@ -10,3 +10,8 @@ COPY tsconfig.json /app/tsconfig.json
 
 RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
   scripts/install_dependencies
+
+# NOTE: Remove this after a newer version is released to karma (current version is 1.7.1)
+# This hack will remove the optional dependencies  (see more about the bug: https://github.com/karma-runner/karma/issues/2593)
+RUN rm -Rf /app/node_modules/bufferutil && \
+  rm -Rf /app/node_modules/utf-8-validate
