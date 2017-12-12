@@ -1,4 +1,4 @@
-FROM garlictech2/angular2-webapp:v4.0.0
+FROM garlictech2/angular2-webapp:v4.0.1
 
 ARG NPM_TOKEN
 
@@ -10,3 +10,4 @@ COPY tsconfig.json /app/tsconfig.json
 
 RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
   scripts/install_dependencies
+

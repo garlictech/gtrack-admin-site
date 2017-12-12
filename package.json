@@ -108,7 +108,7 @@
         "typescript": "^2.6.1"
     },
     "config": {
-        "dockerWorkflowVersion": "v4.0.0",
+        "dockerWorkflowVersion": "v4.0.1",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }
