@@ -8,8 +8,8 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import {
   IAuthenticationState,
   Reducer as authReducer
-} from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
-import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/gtrack-common-ngx/subrepos/deepstream-ngx';
+} from 'subrepos/authentication-api-ngx';
+import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/deepstream-ngx';
 
 // Actions
 import * as adminMapActions from './actions/admin-map';

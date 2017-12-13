@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'app/store';
-import { Actions } from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
+import { Actions } from 'subrepos/authentication-api-ngx';
 import { Title } from '@angular/platform-browser';
 
 @Component({
