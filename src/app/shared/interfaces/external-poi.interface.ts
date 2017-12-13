@@ -23,6 +23,7 @@ export interface IExternalPoi {
   wikipedia?: {
     id: string;
     url: string;
+    extract?: string;
   } | undefined;
   inGtrackDb?: boolean | undefined;
   onRoute?: boolean | undefined;
