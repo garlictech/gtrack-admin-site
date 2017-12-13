@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { Route } from './route';
 import { UnitsService } from '../../../shared';
 
-import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
+import { DeepstreamService } from 'subrepos/deepstream-ngx';
 import { ScaleLinear } from 'd3';
 
 export interface IElevationMargin {
