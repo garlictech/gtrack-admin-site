@@ -63,7 +63,7 @@
         "@angular/platform-browser": "^5.1.0",
         "@angular/platform-browser-dynamic": "^5.1.0",
         "@angular/router": "^5.1.0",
-        "@garlictech/gtrack-provider-client": "file:src/subrepos/gtrack-provider-client",
+        "@garlictech/gtrack-provider-client": "file:src/subrepos/provider-client",
         "@mapbox/corslite": "0.0.7",
         "@mapbox/polyline": "^0.2.0",
         "@ngrx/core": "^1.2.0",
