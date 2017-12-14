@@ -11,7 +11,7 @@ import {
   AuthenticationApiConfig,
   AuthenticationApiModule,
   Actions as JwtActions
-} from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
+} from 'subrepos/authentication-api-ngx';
 import { SharedModule, SharedConfig, DeepstreamModule, RouterEffects } from 'subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
