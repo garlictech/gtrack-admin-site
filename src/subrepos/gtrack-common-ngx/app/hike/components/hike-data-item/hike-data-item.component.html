@@ -1,0 +1,43 @@
+<div class="container" *ngIf="hike">
+
+  <div class="row">
+    <div class="p-2 col-1">
+      <i class="ion-android-arrow-forward"></i>
+    </div>
+    <div class="p-2 col-5">Total distance</div>
+    <div class="p-2 col-5">{{hike.distance | distance}}</div>
+  </div>
+
+  <div class="row">
+    <div class="p-2 col-1">
+      <i class="ion-arrow-graph-up-right"></i>
+    </div>
+    <div class="p-2 col-5">Uphill</div>
+    <div class="p-2 col-5">{{hike.uphill | distance}}</div>
+  </div>
+
+  <div class="row">
+    <div class="p-2 col-1">
+      <i class="ion-arrow-graph-down-right"></i>
+    </div>
+    <div class="p-2 col-5">Downhill</div>
+    <div class="p-2 col-5">{{hike.downhill | distance}}</div>
+  </div>
+
+  <div class="row">
+    <div class="p-2 col-1">
+      <i class="ion-ios-time"></i>
+    </div>
+    <div class="p-2 col-5">Estimated walk time</div>
+    <div class="p-2 col-5">{{ hike.time | duration }}</div>
+  </div>
+
+  <div class="row">
+    <div class="p-2 col-1">
+      <i class="ion-trophy"></i>
+    </div>
+    <div class="p-2 col-5">Score</div>
+    <div class="p-2 col-5">{{ hike.score }}</div>
+  </div>
+
+</div>

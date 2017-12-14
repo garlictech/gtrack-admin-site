@@ -1,0 +1,20 @@
+<div class="container" *ngIf="hike">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-3"><b>Name</b></div>
+    <div class="col-3"><b>From start</b></div>
+    <div class="col-3"><b>To next</b></div>
+  </div>
+
+  <div class="row" *ngFor="let poi of hike.program.pois; let i = index;">
+    <div class="col-2"><gtcn-icon [poi]="poi"></gtcn-icon></div>
+    <div class="col-3">{{poi.title}}</div>
+
+    <div class="col-3" *ngIf="i === 0">START</div>
+    <div class="col-3" *ngIf="i > 0">{{ poi.distanceFromOrigo | distance }}</div>
+
+    <div class="col-3" *ngIf="i < hike.program.pois.length - 1">{{ poi.segment.distance | distance }}</div>
+    <div class="col-3" *ngIf="i === hike.program.pois.length - 1">STOP</div>
+
+  </div>
+</div>
