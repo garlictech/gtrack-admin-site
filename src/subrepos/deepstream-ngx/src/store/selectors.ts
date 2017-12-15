@@ -10,6 +10,7 @@ export class Selectors {
   public loggedOut;
   public failed;
   public userData;
+  public permissions;
   private _externals: IExternalDeepstreamDependencies;
 
   constructor(@Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) externals) {
@@ -17,9 +18,15 @@ export class Selectors {
 
     let selectFeature = createFeatureSelector<IDeepstreamState>(this._externals.storeDomain);
 
-    this.loggingIn = createSelector(selectFeature, state => state.state === EDeepstreamState.LOGGING_IN);
+    this.loggingIn = createSelector(selectFeature, (state): boolean => state.state === EDeepstreamState.LOGGING_IN);
 
-    this.loggedIn = createSelector(selectFeature, state => state.state === EDeepstreamState.LOGGED_IN);
+    this.permissions = createSelector(selectFeature, state => state.permissionRecord);
+
+    this.loggedIn = createSelector(
+      selectFeature,
+      this.permissions,
+      (state, permissions) => state.state === EDeepstreamState.LOGGED_IN && !!permissions
+    );
 
     this.loggedOut = createSelector(selectFeature, state => state.state === EDeepstreamState.LOGGED_OUT);
 

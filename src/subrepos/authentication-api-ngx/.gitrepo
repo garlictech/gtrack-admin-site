@@ -4,8 +4,8 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = git@github.com:garlictech/deepstream-ngx.git
+	remote = https://github.com/garlictech/authentication-api-ngx.git
 	branch = master
-	commit = 408874e44c15708eea8251c096755cf76e4d0598
-	parent = 39e69ad71707516526aa926591c07b8123bc9dd3
+	commit = 4f83e119342fbc695c2cca6f477e5dbcde9b899f
+	parent = 3cf57058c18bba792eed130b11aa28f25243d156
 	cmdver = 0.3.1

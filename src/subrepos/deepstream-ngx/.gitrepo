@@ -4,9 +4,8 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = https://github.com/garlictech/gtrack-provider-client.git
+	remote = https://github.com/garlictech/deepstream-ngx.git
 	branch = master
-	commit = 5bd8ba5257b847dca889c27757545a8f008bc984
-	parent = c68985c54d0faf2da64bf5bcb415edd497d22fe5
-	method = merge
+	commit = 998bf03f36618264be4775f57337997729224ea4
+	parent = 5ead31d2cdb2a335c2ec9391af2ded083f959c14
 	cmdver = 0.3.1

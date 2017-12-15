@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Poi } from './poi';
-import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
+import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
 import 'rxjs/add/operator/take';
 

@@ -4,8 +4,8 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = https://github.com/garlictech/authentication-api-ngx.git
+	remote = https://github.com/garlictech/gtrack-provider-client.git
 	branch = master
-	commit = 4f83e119342fbc695c2cca6f477e5dbcde9b899f
-	parent = 5bb12747b8538d1c067dea8165610157781690d6
+	commit = 5bd8ba5257b847dca889c27757545a8f008bc984
+	parent = dd0ec9d504f177f68d0721c8b9d7189db6a4392d
 	cmdver = 0.3.1

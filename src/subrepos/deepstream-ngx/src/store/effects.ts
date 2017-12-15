@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 
 import { IClientData } from '@garlictech/deepstream-rxjs';
@@ -25,12 +25,13 @@ export class Effects {
       log.d('Effect: Logging in to deepstream...');
       return this._deepstreamService.login(token);
     })
+    .filter(auth => !!auth)
     .map((auth: IClientData) => {
-      log.i('Effect: Deepstream login success. Auth objct: ', auth);
-      return new LocalActions.DeepstreamLoginSuccess(auth);
+      log.i('Effect: Deepstream auth success. Auth objct: ', auth);
+      return new LocalActions.DeepstreamAuthSuccess(auth);
     })
     .catch(err => {
-      log.er('Effect: Deepstream Login error', err);
+      log.er('Effect: Deepstream auth error', err);
       return Observable.of(new LocalActions.DeepstreamLoginFailed(err));
     });
 
@@ -63,7 +64,7 @@ export class Effects {
 
   @Effect()
   deepstreamPermissionRecord$: Observable<Action> = this._actions$
-    .ofType(LocalActions.DEEPSTREAM_LOGIN_SUCCESS)
+    .ofType(LocalActions.DEEPSTREAM_AUTH_SUCCESS)
     .map(toPayload)
     .switchMap((auth: IClientData) => {
       log.d('Effect: Subscribing to the permission record');
@@ -88,6 +89,7 @@ export class Effects {
   constructor(
     private _actions$: Actions,
     private _deepstreamService: DeepstreamService,
+    private _store: Store<any>,
     @Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) private _externals: IExternalDeepstreamDependencies
   ) {
     /* EMPTY */

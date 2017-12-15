@@ -6,7 +6,7 @@
 
 This repo contains all the deepstream related functionalities:
 
-- It defines a service to log in/out to deepstream, and access deepstream-rxjs records, queries, etc.
+- It defines a service to log in/out to deepstream, and access deepstream-rxjs records, queries, etc. 
 - It also reacts to JWT logins: there are effects reacting to the `LOGIN_SUCCESS` and `LOGOUT_SUCCESS` events from the JWT authentication. After such actions, the service executes the appropriate Deepstream logins/logouts. The concept: you log in and obtain a JWT token. Using that token, you execute a deepstream login/logout as well. When both logins are OK, then you consider your application logged in. If any of the logins fail, take the whole login process failed.
 
 The payload of the JWT login must contain a jwt token, like:
@@ -63,7 +63,7 @@ const reducer = {
   ...
 };
 
-export const store = NgrxStoreModule.forRoot(compose(storeLogger(), combineReducers)(reducer));
+export const store = NgrxStoreModule.provideStore(compose(storeLogger(), combineReducers)(reducer));
 
 export interface State {
   authentication: IAuthenticationState;

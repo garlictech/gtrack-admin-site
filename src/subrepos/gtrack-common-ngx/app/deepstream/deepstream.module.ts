@@ -2,13 +2,13 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as _ from 'lodash';
 
-import { IAuthenticationState, IAuth, Actions as JwtActions } from '../../subrepos/authentication-api-ngx';
+import { IAuthenticationState, IAuth, Actions as JwtActions } from 'subrepos/authentication-api-ngx';
 
 import {
   DeepstreamModule as CoreDeepstreamModule,
   IExternalDeepstreamDependencies,
   EXTERNAL_DEEPSTREAM_DEPENDENCIES
-} from '../../subrepos/deepstream-ngx';
+} from 'subrepos/deepstream-ngx';
 
 import { IDeepstreamModuleConfig } from './interfaces';
 
@@ -47,4 +47,4 @@ export class DeepstreamModule {
   }
 }
 
-export { Reducer, IDeepstreamState, DeepstreamService } from '../../subrepos/deepstream-ngx';
+export { Reducer, IDeepstreamState, DeepstreamService } from 'subrepos/deepstream-ngx';

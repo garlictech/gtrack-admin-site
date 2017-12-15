@@ -19,14 +19,13 @@ describe('HikeProgramComponent', () => {
   let component: HikeProgramComponent;
   let fixture: ComponentFixture<HikeProgramComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [HikeProgramComponent, DistancePipe],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-      }).compileComponents();
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ HikeProgramComponent, DistancePipe ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
-  );
+    .compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HikeProgramComponent);

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Hike } from './hike';
 import { IHike } from './ihike';
 import { HikeProgramService } from '../hike-program';
-import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
+import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
 @Injectable()
 export class HikeService {

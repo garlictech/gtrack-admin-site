@@ -1,4 +1,5 @@
 import { IClientData } from '@garlictech/deepstream-rxjs';
+import { IPermissionRecord } from 'subrepos/provider-client';
 
 export enum EDeepstreamState {
   LOGGING_IN,
@@ -10,7 +11,7 @@ export interface IDeepstreamState {
   state: EDeepstreamState;
   failure: any;
   auth: IClientData | null;
-  permissionRecord: any;
+  permissionRecord: IPermissionRecord | null;
 }
 
 export const initialState: IDeepstreamState = {

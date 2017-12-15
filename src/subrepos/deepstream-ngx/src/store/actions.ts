@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { IClientData } from '@garlictech/deepstream-rxjs';
 
+export const DEEPSTREAM_AUTH_SUCCESS = '[Deepstream Authentication] Authentication Success';
 export const DEEPSTREAM_LOGIN_SUCCESS = '[Deepstream Authentication] Login Success';
 export const DEEPSTREAM_LOGIN = '[Deepstream Authentication] Logging in...';
 export const DEEPSTREAM_LOGIN_FAILED = '[Deepstream Authentication] Failed';
@@ -9,6 +10,13 @@ export const DEEPSTREAM_PERMISSION_RECORD_CHANGED = '[Deepstream] Permission rec
 
 export class DeepstreamLoginSuccess implements Action {
   readonly type = DEEPSTREAM_LOGIN_SUCCESS;
+  constructor(public payload: IClientData) {
+    /* EMPTY */
+  }
+}
+
+export class DeepstreamAuthSuccess implements Action {
+  readonly type = DEEPSTREAM_AUTH_SUCCESS;
   constructor(public payload: IClientData) {
     /* EMPTY */
   }
@@ -47,4 +55,5 @@ export type AllActions =
   | DeepstreamLoginFailed
   | DeepstreamLoginSuccess
   | DeepstreamLogoutSuccess
-  | DeepstreamPermissionRecordChanged;
+  | DeepstreamPermissionRecordChanged
+  | DeepstreamAuthSuccess;

@@ -1,12 +1,16 @@
-FROM garlictech2/angular2-webapp:v4.0.1
+FROM garlictech2/angular2-webapp:v5.1.1
 
 ARG NPM_TOKEN
 
-RUN mkdir -p /app/src/subrepos /app/src/assets
+RUN mkdir -p /app/src/subrepos && \
+  cd /app/src/subrepos && \
+  mkdir -p authentication-api-ngx deepstream-ngx gtrack-common-ngx provider-client
 
-COPY src/subrepos /app/src/subrepos/
+COPY src/subrepos/authentication-api-ngx/package.json /app/src/subrepos/authentication-api-ngx
+COPY src/subrepos/deepstream-ngx/package.json /app/src/subrepos/deepstream-ngx
+COPY src/subrepos/gtrack-common-ngx/package.json /app/src/subrepos/gtrack-common-ngx
+COPY src/subrepos/provider-client/package.json /app/src/subrepos/provider-client
 COPY package.json /app/package.project.json
-COPY tsconfig.json /app/tsconfig.json
 
 RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
   scripts/install_dependencies
