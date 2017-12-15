@@ -5,7 +5,7 @@
 
   <select class="form-control" [(ngModel)]="selLang" title="Select">
     <ng-container *ngFor="let lang of langs | obj2arr">
-      <option *ngIf="!existingLangKeys.has(lang.key)" [value]="lang.key" [innerHTML]="lang.value">
+      <option *ngIf="existingLangKeys && !existingLangKeys.has(lang.key)" [value]="lang.key" [innerHTML]="lang.value">
       </option>
     </ng-container>
   </select>
