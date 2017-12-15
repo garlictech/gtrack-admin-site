@@ -20,8 +20,9 @@ gt-login {
     .btn-google {
       font-weight: normal;
       padding-left: 12px;
+      width: 195px;
 
-      .fa-google {
+      i.fa-google {
         position: relative;
         top: -2px;
         font-size: 20px;
@@ -32,6 +33,13 @@ gt-login {
 
       &:before {
         border-right: #972f23 1px solid;
+      }
+
+      i.login-spinner {
+        position: relative;
+        left: 0px;
+        top: -1px !important;
+        font-size: 12px !important;
       }
     }
   }
