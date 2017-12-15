@@ -14,35 +14,29 @@ export class WikipediaPoiService {
 
   public get(bounds, lang = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
-    const request = `https://${lang}.wikipedia.org/w/api.php?action=query&list=geosearch&ggsradius=${geo!.radius}&ggscoord=${geo!.center!.geometry!.coordinates![1]}%7C${geo!.center!.geometry!.coordinates![0]}&format=json&origin=*&prop=coordinates|extracts&exintro=&explaintext=&&exlimit=20&colimit=20`; //&ggslimit=20
+    const request = `https://${lang}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo!.radius!}&gscoord=${geo!.center!.geometry!.coordinates![1]}%7C${geo!.center!.geometry!.coordinates![0]}&format=json&gslimit=500&origin=*`;
 
-    // https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=1991.9683155014077&gscoord=51.50238492343173%7C-0.10350302516392215&format=json&origin=*&prop=coordinates|extracts&exintro=&explaintext=&&exlimit=20&colimit=20
-
-    console.log(request);
     return this._http.get(request)
       .toPromise()
       .then((data: any) => {
         let _res: ExternalPoi[] = [];
 
-        console.log('PAGES', data.query.pages);
-
-        for (let _pointId in data.query.pages) {
-          let _point = data.query.pages[_pointId];
+        for (let i = 0; i < data.query.geosearch.length; i++) {
+          let _point = data.query.geosearch[i];
 
           _res.push(new ExternalPoi({
-            lat: _point.coordinates[0].lat,
-            lon: _point.coordinates[0].lon,
+            lat: _point.lat,
+            lon: _point.lon,
             title: _point.title,
             types: ['sight'],
             objectType: 'wikipedia',
             wikipedia: {
               id: _point.pageid,
-              extract: _point.extract,
               url: `https://${lang}.wikipedia.org/?curid=${_point.pageid}`
             }
           }));
         }
-        console.log('RES', _res);
+
         return _res;
       });
   }
