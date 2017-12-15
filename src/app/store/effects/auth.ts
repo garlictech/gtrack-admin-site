@@ -4,7 +4,7 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import {
   Actions as AuthActions
-} from 'subrepos/gtrack-common-ngx/subrepos/authentication-api-ngx';
+} from 'subrepos/authentication-api-ngx';
 import * as RouterActions from 'subrepos/gtrack-common-ngx';
 
 import { Router } from '@angular/router';
