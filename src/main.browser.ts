@@ -8,14 +8,15 @@ import { AppModule } from './app/app.module';
 
 // Vendors
 import 'hammerjs';
-/*
 import * as Popper from '../node_modules/popper.js/dist/umd/popper.min.js';
 (<any>window).Popper = Popper;
-*/
-import 'bootstrap';
-import 'bootstrap-material-design';
+import * as Tether from '../node_modules/tether/dist/js/tether.min.js';
+(<any>window).Tether = Tether;
 import * as Spinner from '../node_modules/spin.js/spin.js';
 (<any>window).Spinner = Spinner;
+import 'bootstrap';
+import 'bootstrap-material-design';
+import './assets/light-bootstrap-dashboard.js';
 
 @NgModule({
     bootstrap: [
@@ -62,11 +63,9 @@ class MainModule {
 }
 
 export function main() {
-    return platformBrowserDynamic().bootstrapModule(MainModule, [
-        {
-            defaultEncapsulation: ViewEncapsulation.None
-        }
-    ]);
+  return platformBrowserDynamic().bootstrapModule(MainModule, [{
+    defaultEncapsulation: ViewEncapsulation.None
+  }]);
 }
 
 // boot on document ready

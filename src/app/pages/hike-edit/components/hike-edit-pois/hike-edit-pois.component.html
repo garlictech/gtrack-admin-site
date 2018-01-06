@@ -1,5 +1,4 @@
-
-<div aria-multiselectable="true" class="panel-group" id="accordion" role="tablist">
+<div id="accordion" role="tablist" aria-multiselectable="true">
   <!-- gTrack pois -->
   <!--div class="panel panel-default">
     <div class="panel-heading" id="headingOne" role="tab">
@@ -20,18 +19,19 @@
   </div-->
 
   <!-- Extenal pois -->
-  <div class="panel panel-default" *ngFor="let poiType of externalPoiTypes; let idx = index;">
-    <div class="panel-heading" id="headingOne" role="tab">
-      <a aria-controls="collapseOne" aria-expanded="false" data-parent="#accordion" data-toggle="collapse" href="#collapse{{idx}}"
-        role="button" class="collapsed">
-        <div class="text-success">
-          {{poiType.title}}
-          <i class="material-icons">keyboard_arrow_down</i>
-        </div>
-      </a>
+  <div class="card mb-1" *ngFor="let poiType of externalPoiTypes; let idx = index;">
+    <div class="card-header bg-light" id="headingOne" role="tab">
+      <h5>
+        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse{{idx}}" role="button" class="collapsed">
+          <div class="text-success">
+            {{poiType.title}}
+            <i class="material-icons pull-right">keyboard_arrow_down</i>
+          </div>
+        </a>
+      </h5>
     </div>
-    <div aria-labelledby="headingOne" class="panel-collapse collapse" id="collapse{{idx}}" role="tabpanel" aria-expanded="false" style="height: 0px;">
-      <div class="panel-body">
+    <div aria-labelledby="headingOne" class="collapse" id="collapse{{idx}}" role="tabpanel" aria-expanded="false" style="height: 0px;">
+      <div class="card-body">
         <gt-hike-edit-pois-external [poiType]="poiType"></gt-hike-edit-pois-external>
       </div>
     </div>

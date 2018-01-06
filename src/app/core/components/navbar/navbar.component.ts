@@ -6,9 +6,8 @@ import { State } from 'app/store';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  selector: '[app-navbar]',
+  templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit {
   pageTitle: string;

@@ -27,8 +27,10 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    /* TODO: deprecated
     $.material.options.autofill = true;
     $.material.init();
+    */
 
     this._routeSubscription = this._activatedRoute.params.subscribe(params => {
       // Load hike data from mock DB
