@@ -1,0 +1,32 @@
+$gt-green-primary-400: #A6CE3A;
+$gt-green-primary-500: #8EC640;
+$gt-green-primary-600: #73BF44;
+$gt-green-primary: $gt-green-primary-500;
+
+$gt-green-secondary-400: #63BC47;
+$gt-green-secondary-500: #3AB54A;
+$gt-green-secondary-600: #00AE4C;
+$gt-green-secondary: $gt-green-secondary-500;
+
+$brand-primary: $gt-green-primary;
+$brand-success: $gt-green-primary-600;
+
+body {
+  background: rgba(203, 203, 210, 0.15);
+}
+
+/* Overrides, fixes --> */
+.main-panel {
+  .content {
+    padding: 30px 15px;
+    min-height: calc(100% - 123px);
+  }
+}
+
+table.table {
+  th:last-child,
+  td:last-child {
+    display: table-cell !important;
+  }
+}
+/* <-- Overrides, fixes */

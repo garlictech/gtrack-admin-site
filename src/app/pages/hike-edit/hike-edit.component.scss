@@ -1,25 +1,22 @@
-gt-hike-edit {
-  .inline-checkbox {
-    display: inline-block;
-    margin-left: 25px;
-    position: relative;
-    top: 2px;
+.inline-checkbox {
+  display: inline-block;
+  margin-left: 25px;
+  position: relative;
+  top: 2px;
 
-    label {
-      top: 1px;
-      position: relative;
-    }
+  .form-check-sign::before, .form-check-sign::after {
+    margin-top: 1px !important;
   }
+}
 
-  .poi-spinner {
-    position: relative;
-    left: 0;
-    top: 12px;
-  }
+.poi-spinner {
+  position: relative;
+  left: 10px;
+  top: 5px;
+}
 
-  poi-icons {
-    img {
-      width: 24px !important;
-    }
+poi-icons {
+  img {
+    width: 24px !important;
   }
 }

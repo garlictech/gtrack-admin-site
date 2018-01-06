@@ -16,6 +16,7 @@ import * as Spinner from '../node_modules/spin.js/spin.js';
 (<any>window).Spinner = Spinner;
 import 'bootstrap';
 import 'bootstrap-material-design';
+import './assets/light-bootstrap-dashboard.js';
 
 @NgModule({
     bootstrap: [
@@ -62,11 +63,9 @@ class MainModule {
 }
 
 export function main() {
-    return platformBrowserDynamic().bootstrapModule(MainModule, [
-        {
-            defaultEncapsulation: ViewEncapsulation.None
-        }
-    ]);
+  return platformBrowserDynamic().bootstrapModule(MainModule, [{
+    defaultEncapsulation: ViewEncapsulation.None
+  }]);
 }
 
 // boot on document ready

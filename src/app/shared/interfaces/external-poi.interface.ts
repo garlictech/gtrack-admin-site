@@ -1,6 +1,7 @@
-import { IPoi } from 'subrepos/gtrack-common-ngx/app/poi/ipoi';
+import { IPoi } from 'subrepos/gtrack-common-ngx';
 
-export interface IExternalPoi {
+export interface IExternalPoi extends IPoi {
+  /*
   id?: string | undefined;
   elevation?: string | undefined;
   lat: number;
@@ -13,6 +14,7 @@ export interface IExternalPoi {
   distanceFromOrigo?: number | undefined;
   isStart?: boolean | undefined;
   isFinish?: boolean | undefined;
+  */
   // Extends IPoi
   google?: {
     [lng: string]: any;

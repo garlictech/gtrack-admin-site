@@ -19,12 +19,12 @@
    > tfoot > tr > th,
    > thead > tr > td,
    > tbody > tr > td,
-   > tfoot > tr > td{
+   > tfoot > tr > td {
        padding: 12px 8px;
        vertical-align: middle;
    }
 
-    > thead > tr > th{
+    > thead > tr > th {
         border-bottom-width: 1px;
         font-size: $font-size-small;
         text-transform: uppercase;

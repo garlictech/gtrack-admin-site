@@ -8,11 +8,6 @@
 // @import '../../assets/sass/material-dashboard.scss';
 @import '../../assets/sass/light-bootstrap-dashboard.scss';
 
-
-* {
-  box-sizing: border-box;
-}
-
 a {
   cursor: pointer;
 }
@@ -21,6 +16,7 @@ input, select, textarea {
   font-weight: 300 !important;
 }
 
+/*
 table.table {
   td {
     padding: 4px 8px !important;
@@ -32,8 +28,17 @@ table.table {
   }
 }
 
+*/
+
+.btn .material-icons {
+  vertical-align: middle;
+  font-size: 17px;
+  top: -1px;
+  position: relative;
+}
+
 button.btn-just-icon.btn-sm {
-    padding: 5px !important;
+  padding: 5px !important;
 }
 
 .clearfix {

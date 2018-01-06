@@ -190,13 +190,13 @@ export class PoiEditorService {
         });
 
         if (subdomainData.showOnrouteMarkers) {
-          _map.pointMarker.addMarkers(<Poi[]>this.getOnroutePois(_filteredPois));
+          _map.pointMarker.addMarkers(this.getOnroutePois(_filteredPois));
         } else {
           // remove inHike onroutePois
         }
 
         if (subdomainData.showOffrouteMarkers) {
-          _map.pointMarker.addMarkers(<Poi[]>this.getOffroutePois(_filteredPois));
+          _map.pointMarker.addMarkers(this.getOffroutePois(_filteredPois));
         } else {
           // remove inHike offroutePois
         }
