@@ -1,8 +1,8 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-import { Actions as authActions } from 'subrepos/authentication-api-ngx';
-import { MockStore } from 'app/test/helpers/store/';
+import { Actions as authActions } from '../../../../../subrepos/authentication-api-ngx';
+import { MockStore } from '../../../../test/helpers/store/';
 
 import { LoginComponent } from '../login.component';
 
@@ -17,7 +17,12 @@ describe('LoginComponent', () => {
       providers: [
         {
           provide: Store,
-          useValue: new MockStore({})
+          useValue: new MockStore({
+            authentication: {
+              auth: {},
+              loggingIn: false
+            }
+          })
         }
       ]
     }).compileComponents();
