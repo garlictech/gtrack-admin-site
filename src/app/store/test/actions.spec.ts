@@ -34,4 +34,5 @@ describe('Actions', () => {
     expect(expectedClass.type).toEqual(GtActions.DELETE_HIKE);
   });
 });
+
 */

@@ -16,7 +16,7 @@ module.exports = function(karmaConfig) {
     watched: false
   });
   karmaConfig.files.push({
-    pattern: './node_modules/bootstrap-material-design/dist/js/material.min.js',
+    pattern: './node_modules/bootstrap-material-design/dist/js/bootrap-material-design.min.js',
     watched: false
   });
 

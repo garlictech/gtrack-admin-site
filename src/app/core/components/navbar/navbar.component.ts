@@ -37,33 +37,4 @@ export class NavbarComponent implements OnInit {
   logout() {
     this._store.dispatch(new AuthActions.LogoutStart());
   }
-
-  /**
-   * Mobile view
-   */
-  sidebarToggle() {
-    if (this.sidebarVisible === false) {
-      this.sidebarOpen();
-    } else {
-      this.sidebarClose();
-    }
-  }
-
-  sidebarOpen() {
-    const toggleButton = this.toggleButton;
-    const body = document.getElementsByTagName('body')[0];
-
-    setTimeout(function() {
-      toggleButton.classList.add('toggled');
-    }, 500);
-    body.classList.add('nav-open');
-    this.sidebarVisible = true;
-  }
-
-  sidebarClose() {
-    const body = document.getElementsByTagName('body')[0];
-    this.toggleButton.classList.remove('toggled');
-    this.sidebarVisible = false;
-    body.classList.remove('nav-open');
-  }
 }

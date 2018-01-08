@@ -79,6 +79,7 @@
         "d3-geo": "^1.9.1",
         "debug": "^3.0.0",
         "deepstream-ngx": "file:src/subrepos/deepstream-ngx",
+        "firebase": "4.5.0",
         "font-awesome": "^4.7.0",
         "geojson-rewind": "^0.3.0",
         "gtrack-common-ngx": "file:src/subrepos/gtrack-common-ngx",
