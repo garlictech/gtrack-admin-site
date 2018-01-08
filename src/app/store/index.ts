@@ -1,5 +1,5 @@
 import { storeLogger } from 'ngrx-store-logger';
-import { StoreModule, combineReducers } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/models';
 import { storeFreeze } from 'ngrx-store-freeze';

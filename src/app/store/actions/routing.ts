@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 
 export const ROUTING_START = '[Routing] Start';

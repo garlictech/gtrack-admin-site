@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { ExternalPoi } from 'app/shared/services/poi/external-poi';
 

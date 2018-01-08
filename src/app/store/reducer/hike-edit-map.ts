@@ -1,4 +1,3 @@
-import { ActionReducer } from '@ngrx/store';
 import { IHikeEditMapState } from '../state';
 import { adminMapActions } from '../index';
 
