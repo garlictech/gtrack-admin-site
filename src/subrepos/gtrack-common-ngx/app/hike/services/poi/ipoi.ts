@@ -1,5 +1,5 @@
 export interface IPoi {
-  id: string;
+  id?: string;
   elevation?: string;
   lat: number;
   lon: number;
