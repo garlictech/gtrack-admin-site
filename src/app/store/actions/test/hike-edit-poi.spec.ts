@@ -22,7 +22,7 @@ describe('HikeEditPoi actions', () => {
   it('should create GetWikipediaPois action', () => {
     let expectedClass = new HikeEditPoiActions.GetWikipediaPois({
       bounds: null,
-      mapId: null
+      mapId: 'fakeId'
     });
     expect(expectedClass).toBeDefined();
     expect(expectedClass.type).toEqual(HikeEditPoiActions.GET_WIKIPEDIA_POIS);
@@ -39,7 +39,7 @@ describe('HikeEditPoi actions', () => {
   it('should create GetGooglePois action', () => {
     let expectedClass = new HikeEditPoiActions.GetGooglePois({
       bounds: null,
-      mapId: null
+      mapId: 'fakeId'
     });
     expect(expectedClass).toBeDefined();
     expect(expectedClass.type).toEqual(HikeEditPoiActions.GET_GOOGLE_POIS);
@@ -56,7 +56,7 @@ describe('HikeEditPoi actions', () => {
   it('should create GetOsmNaturalPois action', () => {
     let expectedClass = new HikeEditPoiActions.GetOsmNaturalPois({
       bounds: null,
-      mapId: null
+      mapId: 'fakeId'
     });
     expect(expectedClass).toBeDefined();
     expect(expectedClass.type).toEqual(HikeEditPoiActions.GET_OSM_NATURAL_POIS);
@@ -73,7 +73,7 @@ describe('HikeEditPoi actions', () => {
   it('should create GetOsmAmenityPois action', () => {
     let expectedClass = new HikeEditPoiActions.GetOsmAmenityPois({
       bounds: null,
-      mapId: null
+      mapId: 'fakeId'
     });
     expect(expectedClass).toBeDefined();
     expect(expectedClass.type).toEqual(HikeEditPoiActions.GET_OSM_AMENITY_POIS);
@@ -90,7 +90,7 @@ describe('HikeEditPoi actions', () => {
   it('should create GetOsmRoutePois action', () => {
     let expectedClass = new HikeEditPoiActions.GetOsmRoutePois({
       bounds: null,
-      mapId: null
+      mapId: 'fakeId'
     });
     expect(expectedClass).toBeDefined();
     expect(expectedClass.type).toEqual(HikeEditPoiActions.GET_OSM_ROUTE_POIS);

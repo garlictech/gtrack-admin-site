@@ -4,7 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Store, StoreModule } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { Actions as authActions } from '../../../../../subrepos/authentication-api-ngx';
+import { Actions as authActions } from 'subrepos/authentication-api-ngx';
 import { MockStore } from '../../../../test/helpers/store/mock-store';
 import { NavbarComponent } from '../navbar.component';
 
