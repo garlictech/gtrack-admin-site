@@ -2,9 +2,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
-import { IHike } from '../../../services/hike';
+import { StoreModule } from '@ngrx/store';
+
+import { IHikeProgram } from '../../../services/hike-program';
+import { PoiSelectors, poiReducer } from '../../../store/poi';
+import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
 
 import { HikeProgramComponent } from '../';
+
 
 @Pipe({
   name: 'distance'
@@ -21,6 +26,20 @@ describe('HikeProgramComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [
+        PoiSelectors,
+        {
+          provide: EXTERNAL_POI_DEPENDENCIES,
+          useValue: {
+            storeDomain: 'poi'
+          }
+        }
+      ],
+      imports: [
+        StoreModule.forRoot({
+          poi: poiReducer
+        })
+      ],
       declarations: [ HikeProgramComponent, DistancePipe ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
@@ -31,30 +50,28 @@ describe('HikeProgramComponent', () => {
     fixture = TestBed.createComponent(HikeProgramComponent);
     component = fixture.componentInstance;
 
-    component.hike = <IHike>{
+    component.hikeProgram = <IHikeProgram>{
       id: '1',
       distance: 4500,
       uphill: 2345,
       downhill: 3456,
       time: 120,
       score: 500,
+      isRoundTrip: false,
       difficulty: 'hard',
       routeIcon: '',
       elevationIcon: '',
       routeId: '',
       description: {},
       location: 'Budapest',
-      program: {
-        pois: [
-          {
-            distance: 10,
-            name: 'test',
-            segment: {
-              distance: 50
-            }
+      stops: [
+        {
+          distanceFromOrigo: 10,
+          segment: {
+            distance: 50
           }
-        ]
-      }
+        }
+      ]
     };
 
     fixture.detectChanges();

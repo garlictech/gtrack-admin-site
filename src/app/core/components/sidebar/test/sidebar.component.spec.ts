@@ -15,66 +15,36 @@ let fixture: ComponentFixture<SidebarComponent>;
 let store: any;
 
 describe('SidebarComponent', () => {
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [SidebarComponent],
-        imports: [RouterTestingModule],
-        providers: [
-          {
-            provide: Store,
-            useValue: new MockStore({})
-          }
-        ]
-      }).compileComponents();
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [SidebarComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        {
+          provide: Store,
+          useValue: new MockStore({})
+        }
+      ]
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(SidebarComponent);
-      comp = fixture.debugElement.componentInstance;
-      store = fixture.debugElement.injector.get(Store);
+    fixture = TestBed.createComponent(SidebarComponent);
+    comp = fixture.debugElement.componentInstance;
+    store = fixture.debugElement.injector.get(Store);
 
-      spyOn(store, 'dispatch').and.callThrough();
-    })
-  );
+    spyOn(store, 'dispatch').and.callThrough();
+  }));
 
-  it(
-    'should create the component',
-    async(() => {
-      fixture.detectChanges();
-      expect(comp).toBeTruthy();
-    })
-  );
+  it('should create the component', async(() => {
+    fixture.detectChanges();
+    expect(comp).toBeTruthy();
+  }));
 
-  it(
-    'should show mobile menu on small screen',
-    async(() => {
-      window.outerWidth = 100;
-      let isMobileMenu = comp.isMobileMenu();
-      fixture.detectChanges();
+  it('should call logout', async(() => {
+    const authAction = new authActions.LogoutStart();
 
-      expect(isMobileMenu).toBe(true);
-    })
-  );
+    comp.logout();
+    fixture.detectChanges();
 
-  it(
-    'should hide mobile menu on wide screen',
-    async(() => {
-      window.outerWidth = 1000;
-      let isMobileMenu = comp.isMobileMenu();
-      fixture.detectChanges();
-
-      expect(isMobileMenu).toBe(false);
-    })
-  );
-
-  it(
-    'should call logout',
-    async(() => {
-      const authAction = new authActions.LogoutStart();
-
-      comp.logout();
-      fixture.detectChanges();
-
-      expect(store.dispatch).toHaveBeenCalledWith(authAction);
-    })
-  );
+    expect(store.dispatch).toHaveBeenCalledWith(authAction);
+  }));
 });

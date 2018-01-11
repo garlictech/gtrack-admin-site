@@ -5,12 +5,13 @@ import { Title } from '@angular/platform-browser';
 import { Store, StoreModule } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Actions as authActions } from 'subrepos/authentication-api-ngx';
+import { MockStore } from '../../../../test/helpers/store/mock-store';
 import { NavbarComponent } from '../navbar.component';
 
 let comp: NavbarComponent;
 let fixture: ComponentFixture<NavbarComponent>;
-// let store: MockStore<any>;
-/*
+let store: Store<any>;
+
 describe('NavbarComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,11 +19,13 @@ describe('NavbarComponent', () => {
         NavbarComponent
       ],
       imports: [
-        RouterTestingModule,
-        StoreModule.forRoot({
-          ...fromRoot.reducers,
-          'feature': combineReducers(fromFeature.reducers)
-        }),
+        RouterTestingModule
+      ],
+      providers: [
+        {
+          provide: Store,
+          useValue: new MockStore({})
+        }
       ]
     }).compileComponents();
 
@@ -60,62 +63,8 @@ describe('NavbarComponent', () => {
     comp.logout();
     fixture.detectChanges();
 
+    console.log('authAction', authAction);
+
     expect(store.dispatch).toHaveBeenCalledWith(authAction);
   }));
-
-  it('should sidebarToggle open mobile sidebar if it is hidden', async(() => {
-    comp.sidebarVisible = false;
-    spyOn(comp, 'sidebarOpen').and.stub();
-    spyOn(comp, 'sidebarClose').and.stub();
-
-    comp.sidebarToggle();
-    fixture.detectChanges();
-
-    expect(comp.sidebarOpen).toHaveBeenCalledTimes(1);
-    expect(comp.sidebarClose).toHaveBeenCalledTimes(0);
-  }));
-
-  it('should sidebarToggle close mobile sidebar if it is opened', async(() => {
-    comp.sidebarVisible = true;
-    spyOn(comp, 'sidebarOpen').and.stub();
-    spyOn(comp, 'sidebarClose').and.stub();
-
-    comp.sidebarToggle();
-    fixture.detectChanges();
-
-    expect(comp.sidebarOpen).toHaveBeenCalledTimes(0);
-    expect(comp.sidebarClose).toHaveBeenCalledTimes(1);
-  }));
-
-  it('should sidebarOpen updates sidebar settings and variables', async(() => {
-    // Mock button classList
-    comp.toggleButton = {
-      classList: {
-        add: function() {/* * /}
-      }
-    };
-
-    comp.sidebarOpen();
-    fixture.detectChanges();
-
-    expect(document.body.classList.contains('nav-open')).toBeTruthy();
-    expect(comp.sidebarVisible).toBeTruthy();
-  }));
-
-  it('should sidebarClose updates sidebar settings and variables', async(() => {
-    // Mock button classList
-    comp.toggleButton = {
-      classList: {
-        remove: function() {/** /}
-      }
-    };
-
-      comp.sidebarClose();
-      fixture.detectChanges();
-
-      expect(document.body.classList.contains('nav-open')).toBeFalsy();
-      expect(comp.sidebarVisible).toBeFalsy();
-    })
-  );
 });
-*/

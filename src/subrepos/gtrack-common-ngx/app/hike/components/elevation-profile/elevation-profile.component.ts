@@ -1,16 +1,16 @@
-import { Component, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
 import { DistancePipe, UnitsService } from '../../../shared';
 import { Route, RouteService, IElevationData } from '../../services/route'
-import { Hike } from '../../services/hike';
+import { HikeProgram } from '../../services/hike-program';
 
 @Component({
   selector: 'gtcn-elevation-profile',
   templateUrl: './elevation-profile.component.html',
   styleUrls: ['./elevation-profile.component.scss']
 })
-export class ElevationProfileComponent implements AfterViewInit {
+export class ElevationProfileComponent implements OnInit {
   @ViewChild('elevationProfile')
   public mainDiv: ElementRef;
 
@@ -24,9 +24,9 @@ export class ElevationProfileComponent implements AfterViewInit {
   protected distance: DistancePipe;
 
   @Input()
-  public set hike(hike: Hike) {
-    if (hike) {
-      this.routeId = hike.routeId;
+  public set hikeProgram(hikeProgram: HikeProgram) {
+    if (hikeProgram) {
+      this.routeId = hikeProgram.routeId;
     } else {
       this.routeId = null;
     }
@@ -163,7 +163,7 @@ export class ElevationProfileComponent implements AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
    this.vis = d3
       .select(this.mainDiv.nativeElement)
       .append('svg')

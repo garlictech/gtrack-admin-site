@@ -16,14 +16,19 @@ module.exports = function(karmaConfig) {
     watched: false
   });
   karmaConfig.files.push({
-    pattern: './node_modules/bootstrap-material-design/dist/js/material.min.js',
+    pattern: './node_modules/popper.js/dist/umd/popper.min.js',
+    watched: false
+  });
+  karmaConfig.files.push({
+    pattern: './node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js',
     watched: false
   });
 
   karmaConfig.webpack.plugins.push(
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery'
+      jQuery: 'jquery',
+      Popper: 'popper.js'
     })
   );
 };

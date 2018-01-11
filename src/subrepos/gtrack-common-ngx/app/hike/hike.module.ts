@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HikeService, Hike, IHike } from './services/hike';
-import { HikeProgramService, HikeProgram } from './services/hike-program';
+import { HikeProgramService, HikeProgram, IHikeProgram } from './services/hike-program';
 import { RouteService, Route, IElevationData, IElevationMargin } from './services/route';
 import { PoiService, Poi, IPoi } from './services/poi';
 import { ISegment } from './services/segment';
@@ -19,14 +18,28 @@ import { ElevationProfileComponent } from './components/elevation-profile';
 import { HikeProgramComponent } from './components/hike-program';
 import { CheckpointsComponent } from './components/checkpoints';
 
+import { EXTERNAL_POI_DEPENDENCIES, EXTERNAL_HIKE_DEPENDENCIES, EXTERNAL_ROUTE_DEPENDENCIES } from './externals';
+
+import {
+  HikeSelectors,
+  PoiSelectors,
+  RouteSelectors,
+  HikeEffects,
+  PoiEffects,
+  RouteEffects
+} from './store';
+
 import { SharedModule } from '../shared';
 import { MapModule } from '../map';
+import { RouterModule } from '../router';
+import { HikeModuleConfig } from './config';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    MapModule
+    MapModule,
+    RouterModule
   ],
   exports: [
     TrailBoxComponent,
@@ -47,24 +60,53 @@ import { MapModule } from '../map';
     CheckpointsComponent
   ],
   providers: [
-    HikeService,
+    HikeProgramService,
     HikeProgramService,
     RouteService,
     PoiService,
     GameRuleService,
     GeometryService,
     ElevationService,
-    CheckpointService
+    CheckpointService,
+    PoiSelectors,
+    HikeSelectors,
+    PoiEffects,
+    HikeEffects,
+    RouteSelectors,
+    RouteEffects
   ],
 })
 export class HikeModule {
+  static forRoot(config: HikeModuleConfig): ModuleWithProviders {
+    return {
+      ngModule: HikeModule,
+      providers: [
+        {
+          provide: EXTERNAL_POI_DEPENDENCIES,
+          useValue: {
+            storeDomain: config.storeDomains.poi
+          }
+        },
+        {
+          provide: EXTERNAL_HIKE_DEPENDENCIES,
+          useValue: {
+            storeDomain: config.storeDomains.hike
+          }
+        },
+        {
+          provide: EXTERNAL_ROUTE_DEPENDENCIES,
+          useValue: {
+            storeDomain: config.storeDomains.route
+          }
+        }
 
+      ]
+    }
+  }
 }
 
 export {
-  IHike,
-  Hike,
-  HikeService,
+  IHikeProgram,
   HikeProgram,
   HikeProgramService,
   RouteService,
@@ -86,5 +128,6 @@ export {
   HikeDataItemComponent,
   ElevationProfileComponent,
   HikeProgramComponent,
-  CheckpointsComponent
+  CheckpointsComponent,
+  HikeModuleConfig
 }

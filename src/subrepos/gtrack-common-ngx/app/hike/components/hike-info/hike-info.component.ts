@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IHike } from '../../services/hike';
+import { IHikeProgram } from '../../services/hike-program';
 
 @Component({
   selector: 'gtcn-hike-info',
@@ -8,5 +8,5 @@ import { IHike } from '../../services/hike';
 })
 export class HikeInfoComponent {
   @Input()
-  public hike: IHike;
+  public hikeProgram: IHikeProgram;
 }

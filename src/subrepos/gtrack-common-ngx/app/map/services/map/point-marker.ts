@@ -9,15 +9,31 @@ export class PointMarker {
 
   constructor(protected map: L.Map, private mapMarkerService: MapMarkerService) {}
 
-  public removeMarkers() {
+  public addMarkersToMap() {
+    this.markers.forEach(marker => {
+      marker.addToMap(this.map);
+    });
+
+    this.shownOnMap = true;
+  }
+
+  public removeMarkersFromMap() {
     this.markers.forEach((marker) => marker.removeFromMap(this.map));
+    this.shownOnMap = false;
+  }
+
+  public removeMarkers() {
+    this.markers = [];
   }
 
   public addMarkers(pois: Poi[]) {
     pois.forEach((poi, i) => {
       let marker = this.mapMarkerService.create(poi.lat, poi.lon, poi.types, poi.title);
-      marker.addToMap(this.map);
       this.markers.push(marker);
+
+      if (this.shownOnMap === true) {
+        marker.addToMap(this.map);
+      }
     });
   }
 }

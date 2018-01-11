@@ -24,9 +24,9 @@ import * as hikeEditroutePlanningActions from './actions/hike-edit-route-plannin
 export type HikeEditroutePlanningAction = hikeEditroutePlanningActions.AllHikeEditroutePlanningActions;
 export { hikeEditroutePlanningActions };
 
-import * as layoutActions from './actions/layout';
-export type LayoutAction = layoutActions.AllLayoutActions;
-export { layoutActions };
+import * as hikeListActions from './actions/hike-list';
+export type HikeListAction = hikeListActions.AllHikeListActions;
+export { hikeListActions };
 
 import * as routeInfoDataActions from './actions/route-info-data';
 export type RouteInfoDataAction = routeInfoDataActions.AllRouteInfoDataActions;
@@ -41,21 +41,20 @@ export { AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from '.
 export { RouterEffects } from 'subrepos/gtrack-common-ngx';
 
 // States
-import { IRouteInfoDataState, ILayoutState, IHikeEditMapState, IHikeEditPoiState } from './state';
-export { IRouteInfoDataState, ILayoutState, IHikeEditMapState, IHikeEditPoiState };
+import { IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState } from './state';
+export { IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState };
 
 // Selectors
 export * from './selectors';
 
 // Reducers
-import { routeInfoDataReducer, layoutReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
-export { routeInfoDataReducer, layoutReducer, hikeEditMapReducer, hikeEditPoiReducer };
+import { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
+export { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer };
 
 // Extend the store interface with that.
 export interface State {
   authentication: IAuthenticationState;
   routeInfoData: IRouteInfoDataState;
-  layout: ILayoutState;
   hikeEditMap: IHikeEditMapState;
   hikeEditPoi: IHikeEditPoiState;
   router: RouterReducerState; // ngrx/router
@@ -66,7 +65,6 @@ export interface State {
 const reducers: ActionReducerMap<State> = {
   authentication: authReducer,
   routeInfoData: routeInfoDataReducer,
-  layout: layoutReducer,
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditMap: hikeEditMapReducer,
   router: routerReducer,

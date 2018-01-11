@@ -4,7 +4,11 @@
     <button (click)="resetMap($event)" class="map-button">Reset map</button>
   </div>
 </gc-leaflet>
-<button *ngIf="!checkpointsOnly" (click)="showCheckpointsOnly($event)">Checkpoints only</button>
-<button *ngIf="checkpointsOnly" (click)="showCheckpointsOnly($event)">Checkpoints only</button>
-<button *ngIf="checkpointsOnly" (click)="showAllPoints($event)">All points</button>
-<button *ngIf="!checkpointsOnly" (click)="showAllPoints($event)">All points</button>
+
+<div class="mt-3 mb-3">
+  <button class="btn" *ngIf="!checkpointsOnly" (click)="showCheckpointsOnly($event)">Checkpoints only</button>
+  <button class="btn" *ngIf="checkpointsOnly" (click)="showCheckpointsOnly($event)">Checkpoints only</button>
+  <button class="btn" *ngIf="checkpointsOnly" (click)="showAllPoints($event)">All points</button>
+  <button class="btn" *ngIf="!checkpointsOnly" (click)="showAllPoints($event)">All points</button>
+</div>
+

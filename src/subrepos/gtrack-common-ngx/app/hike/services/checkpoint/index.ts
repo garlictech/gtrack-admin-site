@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { Poi } from '../poi';
+import { IHikeProgramStop } from '../hike-program';
 import { CheckpointSequence } from './checkpoint-sequence';
 import { Checkpoint } from './checkpoint';
 
 @Injectable()
 export class CheckpointService {
-  public createSequence(pois: Poi[]): CheckpointSequence {
-    return new CheckpointSequence(pois);
+  public createSequence(stops: IHikeProgramStop[]): CheckpointSequence {
+    return new CheckpointSequence(stops);
   }
 }
 

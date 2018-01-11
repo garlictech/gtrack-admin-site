@@ -1,63 +1,91 @@
-import { Poi } from '../poi';
-import { CheckpointService, CheckpointSequence } from '../checkpoint';
+import { Observable } from 'rxjs';
 
-export class HikeProgram {
+import { IHikeProgram, IHikeProgramData, IHikeDescription, IHikeProgramBackgroundImage, IHikeProgramStop } from './interfaces';
+import { CheckpointSequence, CheckpointService } from '../checkpoint';
+import { Poi } from '../poi';
+import * as _ from 'lodash';
+
+export class HikeProgram implements IHikeProgram {
+  public id: string;
+  public distance: number;
   public uphill: number;
   public downhill: number;
   public time: number;
   public score: number;
-  public isRoundTrip = false;
+  public location: string;
+  public difficulty: string;
+  public rate: string;
+  public routeIcon: string;
+  public elevationIcon: string;
+  public routeId: string;
+  public description: IHikeDescription;
+  public backgroundImageUrls?: [IHikeProgramBackgroundImage];
+  public offlineMap: string;
+  public isRoundTrip: boolean;
+  public pois: Poi[];
+  public poiIds: string[];
+  public stops: IHikeProgramStop[];
   public checkpoints: CheckpointSequence;
 
-  constructor(
-    public pois: Poi[],
-    private checkpointService: CheckpointService
-  ) {}
+  private observable: Observable<HikeProgram>;
 
-  public init() {
-    this.calculatePhysicalValues();
-    this.handleStartFinish();
-    this.checkpoints = this.checkpointService.createSequence(this.pois);
-  }
+  private locale = 'en_US';
 
-  public get fullDistance(): number {
-    let last: Poi = this.pois[this.pois.length - 1];
-    let distance = 0;
+  constructor(data: IHikeProgramData, private _checkpointService: CheckpointService) {
+    let converted = _.clone(data);
+    delete converted.pois;
+    Object.assign(this, converted);
+    this.pois = [];
+    this.poiIds = data.pois;
 
-    if (last) {
-      distance = last.distanceFromOrigo;
+    this._calculatePhysicalValues();
+    this._handleStartFinish();
+    this.checkpoints = this._checkpointService.createSequence(this.stops);
+
+    if (this.isRoundTrip === true && this.stops.length > 0) {
+      this.stops.push(this.stops[0]);
     }
-
-    return distance;
   }
 
-  protected calculatePhysicalValues() {
-    let lastIndex = this.pois.length - 1;
-    this.pois[0].distanceFromOrigo = 0;
+  public get name(): string {
+    return this.description[this.locale].name;
+  }
+
+  public get fullDescription(): string {
+    return this.description[this.locale].full;
+  }
+
+  public get summary(): string {
+    return this.description[this.locale].summary;
+  }
+
+  private _calculatePhysicalValues() {
     this.uphill = 0;
     this.downhill = 0;
     this.time = 0;
     this.score = 0;
 
-    this.pois.forEach((poi: Poi, index: number) => {
-      let previous: Poi = this.pois[index - 1] || null;
+    if (this.stops instanceof Array) {
+      let lastIndex = this.stops.length - 1;
 
-      if (index !== lastIndex) {
-        this.uphill += poi.segment.uphill || 0;
-        this.downhill += poi.segment.downhill || 0;
-        this.time += poi.segment.time || 0;
-        this.score += poi.segment.score || 0;
-      }
-
-      if (previous) {
-        poi.distanceFromOrigo = previous.distanceFromOrigo + previous.segment.distance;
-      }
-    });
+      this.stops.forEach((stop, index) => {
+        if (index !== lastIndex) {
+          this.uphill += stop.segment.uphill || 0;
+          this.downhill += stop.segment.downhill || 0;
+          this.time += stop.segment.time || 0;
+          this.score += stop.segment.score || 0;
+        }
+      });
+    }
   }
 
-  protected handleStartFinish() {
-    let first = this.pois[0] || null;
-    let last  = this.pois[this.pois.length - 1] || null;
+  private _handleStartFinish() {
+    let first = this.stops[0] || null;
+    let last  = this.stops[this.stops.length - 1] || null;
+
+    if (this.isRoundTrip === true) {
+      last = first;
+    }
 
     if (first) {
       first.isStart = true;
@@ -66,6 +94,6 @@ export class HikeProgram {
     if (last) {
       last.isFinish = true;
     }
-  }
 
+  }
 }

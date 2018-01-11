@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Input, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import * as L from 'leaflet';
 
 import { MapService, Map } from '../../services/map';
@@ -16,7 +16,7 @@ export interface Center {
   `,
   encapsulation: ViewEncapsulation.None
 })
-export class LeafletComponent implements AfterViewInit {
+export class LeafletComponent implements OnInit {
   @ViewChild('map')
   public mapElement: ElementRef;
 
@@ -65,7 +65,8 @@ export class LeafletComponent implements AfterViewInit {
 
   constructor(protected mapService: MapService) { }
 
-  ngAfterViewInit() {
+  ngOnInit() {
+    console.log('XXXX');
     this.leafletMap = new L.Map(this.mapElement.nativeElement);
 
     this.leafletMap.setView([this.center.lat, this.center.lng], this.center.zoom);

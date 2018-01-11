@@ -1,18 +1,41 @@
-import { Component, Input, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  AfterViewInit,
+  ViewEncapsulation,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
 
-import { Hike } from '../../services/hike';
-import { Route, RouteService } from '../../services/route';
+import { Store } from '@ngrx/store';
+import * as _ from 'lodash';
+
+import { HikeProgram } from '../../services/hike-program';
+
+import {
+  PoiSelectors,
+  RouteSelectors
+} from '../../store';
+
+import * as poiActions from '../../store/poi/actions';
+import * as routeActions from '../../store/route/actions';
+
+import { Route } from '../../services/route';
+
+import { Poi } from '../../services/poi';
 import { LeafletComponent, Center } from '../../../map';
 
 import * as L from 'leaflet';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'gc-trail-box',
   templateUrl: './trail-box.component.html',
   styleUrls: ['./trail-box.component.scss']
 })
-export class TrailBoxComponent implements AfterViewInit {
+export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
   public layers = [
     {
       name: 'street',
@@ -32,45 +55,48 @@ export class TrailBoxComponent implements AfterViewInit {
 
   public offlineMap = false;
 
+  @Input()
+  public hikeProgram: HikeProgram;
+
   @ViewChild('map')
   public map: LeafletComponent;
 
-  @Input()
-  public set hike(hike: Hike|null) {
-    this.hike$.next(hike);
+  public route: Route;
 
-    if (hike) {
-      this.routeService
-        .get(hike.routeId)
-        .subscribe((route: Route) => this.route$.next(route));
-    }
-  }
-
-  public get hike(): (Hike|null) {
-    return this.hike$.getValue();
-  }
-
-  public get route(): (Route|null) {
-    return this.route$.getValue();
-  }
-
-  public route$ = new BehaviorSubject<Route|null>(null);
-  public hike$ = new BehaviorSubject<Hike|null>(null);
+  public route$: Observable<Route | undefined>;
+  public pois$: Observable<Poi[]>;
 
   public checkpointsOnly = false;
   protected _geoJsons: L.GeoJSON[] = [];
+  private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   public constructor(
-    private routeService: RouteService
+    private _store: Store<any>,
+    private _poiSelectors: PoiSelectors,
+    private _routeSelectors: RouteSelectors
   ) {}
+
+  ngOnInit() {
+    let pois = this.hikeProgram.stops.map(stop => stop.poiId);
+    let route = this.hikeProgram.routeId;
+
+    this.pois$ = this._store.select(this._poiSelectors.getPois(pois));
+    this.route$ = this._store.select(this._routeSelectors.getRoute(route));
+
+    this._store.dispatch(new poiActions.LoadPois(pois));
+    this._store.dispatch(new routeActions.LoadRoute(route));
+  }
 
   ngAfterViewInit() {
     let map = this.map.map;
 
     this.route$
-      .filter((route: Route) => (route !== null))
+      .filter((route: Route) => (typeof route !== 'undefined'))
+      .takeUntil(this._destroy$)
       .subscribe((route: Route) => {
+        this.route = route;
         this.clearGeoJson();
+
         for (let i = 0; i <= 2; i++) {
           let feature = Object.assign({}, route.geojson.features[0]);
 
@@ -84,13 +110,23 @@ export class TrailBoxComponent implements AfterViewInit {
         map.fitBounds(route);
       });
 
-    this.hike$
-      .filter((hike: Hike) => (hike !== null))
-      .subscribe((hike: Hike) => {
-        map.pointMarker.addMarkers(hike.program.pois);
-        map.checkpointMarker.removeCheckpointMarkers();
-        map.checkpointMarker.addCheckpointMarkers(hike.program.checkpoints.checkpoints);
+    this
+      .pois$
+      .filter(pois => (!_.isEmpty(pois)))
+      .take(1)
+      .subscribe(pois => {
+        map.pointMarker.removeMarkers();
+        map.pointMarker.addMarkers(pois);
       });
+
+    map.checkpointMarker.removeCheckpointMarkers();
+    map.checkpointMarker.addCheckpointMarkers(this.hikeProgram.checkpoints.checkpoints);
+    map.pointMarker.addMarkersToMap();
+  }
+
+  ngOnDestroy() {
+    this._destroy$.next(true);
+    this._destroy$.unsubscribe();
   }
 
   addGeoJson(geojson: any, map: L.Map) {
@@ -129,14 +165,13 @@ export class TrailBoxComponent implements AfterViewInit {
   showCheckpointsOnly(e: Event) {
     e.preventDefault();
     let map = this.map.map;
-    let hike = this.hike$.getValue();
 
-    if (hike) {
-      let checkpoints = hike.program.checkpoints.checkpoints;
+    if (this.hikeProgram) {
+      let checkpoints = this.hikeProgram.checkpoints.checkpoints;
 
       if (this.checkpointsOnly === false) {
         this.checkpointsOnly = true;
-        map.pointMarker.removeMarkers();
+        map.pointMarker.removeMarkersFromMap();
         map.checkpointMarker.showMarkers(checkpoints, true);
       }
     }
@@ -145,14 +180,13 @@ export class TrailBoxComponent implements AfterViewInit {
   showAllPoints(e: Event) {
     e.preventDefault();
     let map = this.map.map;
-    let hike = this.hike$.getValue();
 
-    if (hike) {
-      let checkpoints = hike.program.checkpoints.checkpoints;
+    if (this.hikeProgram) {
+      let checkpoints = this.hikeProgram.checkpoints.checkpoints;
 
       if (this.checkpointsOnly === true) {
         this.checkpointsOnly = false;
-        map.pointMarker.addMarkers(hike.program.pois);
+        map.pointMarker.addMarkersToMap();
         map.checkpointMarker.showMarkers(checkpoints, false);
       }
     }

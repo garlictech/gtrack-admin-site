@@ -2,7 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
-import { IHike } from '../../../services/hike';
+import { IHikeProgram } from '../../../services/hike-program';
 
 import { HikeCardComponent } from '../';
 
@@ -39,7 +39,7 @@ describe('HikeCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HikeCardComponent);
     component = fixture.componentInstance;
-    component.hike = <IHike>{
+    component.hikeProgram = <IHikeProgram>{
       id: '1',
       distance: 4500,
       uphill: 2345,

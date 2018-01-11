@@ -15,7 +15,7 @@ export class PoiService {
       .getRecord(`pois/${id}`)
       .snapshot()
       .map((data: any) => {
-        let poi: Poi = Object.assign(new Poi(data.id), data);
+        let poi = new Poi(data);
 
         return poi;
       });

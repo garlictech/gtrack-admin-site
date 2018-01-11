@@ -1,14 +1,14 @@
-import { Poi } from '../poi';
+import { IHikeProgramStop } from '../hike-program';
 import { Checkpoint } from './checkpoint';
 
 export class CheckpointSequence {
   public checkpoints: Checkpoint[];
 
-  constructor(pois: Poi[]) {
-    this.checkpoints = pois
-      .filter((poi: Poi) => poi.isCheckpoint)
-      .map((poi: Poi, i: number) => {
-        return new Checkpoint(poi, i);
+  constructor(stops: IHikeProgramStop[]) {
+    this.checkpoints = stops
+      .filter(stop => stop.isCheckpoint)
+      .map((stop, i) => {
+        return new Checkpoint(stop, i);
       });
   }
 
@@ -17,12 +17,12 @@ export class CheckpointSequence {
   }
 
   public indexOf(checkpoint: Checkpoint): number {
-    let pois  = this.checkpoints.map((point) => point.poi.id);
+    let stops  = this.checkpoints.map(point => point.stop.poiId);
     let index = -1;
 
-    if (checkpoint && checkpoint.poi && checkpoint.poi.id) {
-      let id = checkpoint.poi.id;
-      index = pois.indexOf(id);
+    if (checkpoint && checkpoint.stop && checkpoint.stop.poiId) {
+      let id = checkpoint.stop.poiId;
+      index = stops.indexOf(id);
     }
 
     return index;
