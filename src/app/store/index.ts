@@ -41,8 +41,12 @@ export { AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from '.
 export { RouterEffects } from 'subrepos/gtrack-common-ngx';
 
 // States
-import { IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState, ILoginState } from './state';
-export { IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState, ILoginState };
+import {
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState, ILoginState
+} from './state';
+export {
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState, ILoginState
+};
 
 // Selectors
 export * from './selectors';
