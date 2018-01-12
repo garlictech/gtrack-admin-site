@@ -12,11 +12,18 @@ import { Title } from '@angular/platform-browser';
 })
 export class LoginComponent implements OnInit {
   public loggingIn$: Observable<Boolean>;
-  constructor(private _store: Store<State>, private _title: Title) {}
+  public loginCalled$: Observable<Boolean>;
+
+  constructor(
+    private _store: Store<State>,
+    private _title: Title
+  ) {}
 
   ngOnInit() {
     this._title.setTitle('Login');
+
     this.loggingIn$ = this._store.select((state: State) => state.authentication.loggingIn);
+    this.loginCalled$ = this._store.select((state: State) => state.login.loginCalled);
   }
 
   public login() {

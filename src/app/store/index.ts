@@ -41,19 +41,24 @@ export { AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from '.
 export { RouterEffects } from 'subrepos/gtrack-common-ngx';
 
 // States
-import { IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState } from './state';
-export { IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState };
+import { IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState, ILoginState } from './state';
+export { IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState, ILoginState };
 
 // Selectors
 export * from './selectors';
 
 // Reducers
-import { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
-export { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer };
+import {
+  routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer, loginReducer
+} from './reducer';
+export {
+  routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer, loginReducer
+};
 
 // Extend the store interface with that.
 export interface State {
   authentication: IAuthenticationState;
+  login: ILoginState;
   routeInfoData: IRouteInfoDataState;
   hikeEditMap: IHikeEditMapState;
   hikeEditPoi: IHikeEditPoiState;
@@ -64,6 +69,7 @@ export interface State {
 // Same keys as in the state!!!
 const reducers: ActionReducerMap<State> = {
   authentication: authReducer,
+  login: loginReducer,
   routeInfoData: routeInfoDataReducer,
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditMap: hikeEditMapReducer,
