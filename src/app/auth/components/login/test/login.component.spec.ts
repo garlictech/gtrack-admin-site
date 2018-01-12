@@ -14,17 +14,15 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      providers: [
-        {
-          provide: Store,
-          useValue: new MockStore({
-            authentication: {
-              auth: {},
-              loggingIn: false
-            }
-          })
-        }
-      ]
+      providers: [{
+        provide: Store,
+        useValue: new MockStore({
+          authentication: {
+            auth: {},
+            loggingIn: false
+          }
+        })
+      }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
@@ -34,22 +32,16 @@ describe('LoginComponent', () => {
     spyOn(store, 'dispatch').and.callThrough();
   });
 
-  it(
-    'should create the component',
-    async(() => {
-      fixture.detectChanges();
-      expect(comp).toBeTruthy();
-    })
-  );
+  it('should create the component', async(() => {
+    fixture.detectChanges();
+    expect(comp).toBeTruthy();
+  }));
 
-  it(
-    'should call googleLogin',
-    async(() => {
-      const action = new authActions.GoogleLogin(['admin']);
+  it('should call googleLogin', async(() => {
+    const action = new authActions.GoogleLogin(['admin']);
 
-      comp.login();
-      fixture.detectChanges();
-      expect(store.dispatch).toHaveBeenCalledWith(action);
-    })
-  );
+    comp.login();
+    fixture.detectChanges();
+    expect(store.dispatch).toHaveBeenCalledWith(action);
+  }));
 });
