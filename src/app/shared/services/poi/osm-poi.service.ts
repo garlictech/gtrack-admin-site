@@ -46,7 +46,7 @@ export class OsmPoiService {
               elevation: point.tags.ele,
               types: [type],
               title: point.tags.name || 'unknown',
-              objectType: 'osm',
+              objectType: typeParam === 'amenity' ? 'osmAmenity' : 'osmNatural',
               osm: {
                 id: point.id
               }

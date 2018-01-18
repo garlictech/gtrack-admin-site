@@ -1,11 +1,14 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
-  IHikeEditPoiState, IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
-  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextEntityState, IExternalPoiListContextState
+  IHikeEditPoiState,
+  IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
+  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState,
+  IExternalPoiListContextEntityState, IExternalPoiListContextState
 } from '../state';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import { hikeEditPoiActions } from '../index';
+import { poiReducer } from 'subrepos/gtrack-common-ngx';
 
 /**
  * Wikipedia
@@ -101,100 +104,137 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
  * Context
  */
 
-export const externalPoiListContextStateAdapter = createEntityAdapter<IExternalPoiListContextState>();
-const poiContextReducer: ActionReducer<IExternalPoiListContextEntityState> = (
-  state: IExternalPoiListContextEntityState = externalPoiListContextStateAdapter.getInitialState(),
-  action: hikeEditPoiActions.AllHikeEditPoiActions
-): IExternalPoiListContextEntityState => {
-  const defaultChanges = {
-    loading: false,
-    showOnrouteMarkers: true,
-    showOffrouteMarkers: false
-  };
-
-  switch (action.type) {
-    case hikeEditPoiActions.GET_WIKIPEDIA_POIS: {
-      return externalPoiListContextStateAdapter.addOne({
-        id: 'wikipedia',
-        loading: true
-      }, state);
-    }
-    case hikeEditPoiActions.SET_WIKIPEDIA_POIS: {
-      return externalPoiListContextStateAdapter.updateOne({
-        id: 'wikipedia',
-        changes: defaultChanges
-      }, state);
-    }
-    case hikeEditPoiActions.GET_GOOGLE_POIS: {
-      return externalPoiListContextStateAdapter.addOne({
-        id: 'google',
-        loading: true
-      }, state);
-    }
-    case hikeEditPoiActions.SET_GOOGLE_POIS: {
-      return externalPoiListContextStateAdapter.updateOne({
-        id: 'google',
-        changes: defaultChanges
-      }, state);
-    }
-    case hikeEditPoiActions.GET_OSM_AMENITY_POIS: {
-      return externalPoiListContextStateAdapter.addOne({
-        id: 'osmAmenity',
-        loading: true
-      }, state);
-    }
-    case hikeEditPoiActions.SET_OSM_AMENITY_POIS: {
-      return externalPoiListContextStateAdapter.updateOne({
-        id: 'osmAmenity',
-        changes: defaultChanges
-      }, state);
-    }
-    case hikeEditPoiActions.GET_OSM_NATURAL_POIS: {
-      return externalPoiListContextStateAdapter.addOne({
-        id: 'osmNatural',
-        loading: true
-      }, state);
-    }
-    case hikeEditPoiActions.SET_OSM_NATURAL_POIS: {
-      return externalPoiListContextStateAdapter.updateOne({
-        id: 'osmNatural',
-        changes: defaultChanges
-      }, state);
-    }
-    case hikeEditPoiActions.GET_OSM_ROUTE_POIS: {
-      return externalPoiListContextStateAdapter.addOne({
-        id: 'osmRoute',
-        loading: true
-      }, state);
-    }
-    case hikeEditPoiActions.SET_OSM_ROUTE_POIS: {
-      return externalPoiListContextStateAdapter.updateOne({
-        id: 'osmRoute',
-        changes: defaultChanges
-      }, state);
-    }
-    default:
-      return state;
-  }
-}
-
-const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
-  wikipediaPois: wikipediaPoiReducer,
-  googlePois: googlePoiReducer,
-  osmAmenityPois: osmAmenityPoiReducer,
-  osmNaturalPois: osmNaturalPoiReducer,
-  osmRoutePois: osmRoutePoiReducer,
-  contexts: poiContextReducer
+const initialContextItemState = {
+  loading: false,
+  showOnrouteMarkers: true,
+  showOffrouteMarkers: false
+};
+const initialContextState: IExternalPoiListContextState = {
+  wikipedia: initialContextItemState,
+  google: initialContextItemState,
+  osmAmenity: initialContextItemState,
+  osmNatural: initialContextItemState,
+  osmRoute: initialContextItemState
 };
 
-export const hikeEditPoiReducer = combineReducers(reducerMap);
-
-/*
-export function hikeEditPoiReducer(
-  state = initialState,
+export function externalPoiListContextReducer(
+  state = initialContextState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IHikeEditPoiState {
+): IExternalPoiListContextState {
   switch (action.type) {
+    /**
+     * Wikipedia
+     */
+    case hikeEditPoiActions.GET_WIKIPEDIA_POIS: {
+      return {
+        ...state,
+        wikipedia: {
+          ...state.wikipedia,
+          loading: true
+        }
+      };
+    }
+    case hikeEditPoiActions.SET_WIKIPEDIA_POIS: {
+      return {
+        ...state,
+        wikipedia: {
+          ...state.wikipedia,
+          loading: false
+        }
+      };
+    }
+
+    /**
+     * Google
+     */
+    case hikeEditPoiActions.GET_GOOGLE_POIS: {
+      return {
+        ...state,
+        google: {
+          ...state.google,
+          loading: true
+        }
+      };
+    }
+    case hikeEditPoiActions.SET_GOOGLE_POIS: {
+      return {
+        ...state,
+        google: {
+          ...state.google,
+          loading: false
+        }
+      };
+    }
+
+    /**
+     * OSM amenity
+     */
+    case hikeEditPoiActions.GET_OSM_AMENITY_POIS: {
+      return {
+        ...state,
+        osmAmenity: {
+          ...state.osmAmenity,
+          loading: true
+        }
+      };
+    }
+    case hikeEditPoiActions.SET_OSM_AMENITY_POIS: {
+      return {
+        ...state,
+        osmAmenity: {
+          ...state.osmAmenity,
+          loading: false
+        }
+      };
+    }
+
+    /**
+     * OSM natural
+     */
+    case hikeEditPoiActions.GET_OSM_NATURAL_POIS: {
+      return {
+        ...state,
+        osmNatural: {
+          ...state.osmNatural,
+          loading: true
+        }
+      };
+    }
+    case hikeEditPoiActions.SET_OSM_NATURAL_POIS: {
+      return {
+        ...state,
+        osmNatural: {
+          ...state.osmNatural,
+          loading: false
+        }
+      };
+    }
+
+    /**
+     * OSM route
+     */
+    case hikeEditPoiActions.GET_OSM_ROUTE_POIS: {
+      return {
+        ...state,
+        osmRoute: {
+          ...state.osmRoute,
+          loading: true
+        }
+      };
+    }
+    case hikeEditPoiActions.SET_OSM_ROUTE_POIS: {
+      return {
+        ...state,
+        osmRoute: {
+          ...state.osmRoute,
+          loading: false
+        }
+      };
+    }
+
+    /**
+     * Toggle markers
+     */
     case hikeEditPoiActions.TOGGLE_ONROUTE_MARKERS:
       return {
         ...state,
@@ -211,6 +251,25 @@ export function hikeEditPoiReducer(
           showOffrouteMarkers: !state[action.payload.subdomain].showOffrouteMarkers
         }
       };
+
+    default:
+      return state;
+  }
+}
+
+const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
+  wikipediaPois: wikipediaPoiReducer,
+  googlePois: googlePoiReducer,
+  osmAmenityPois: osmAmenityPoiReducer,
+  osmNaturalPois: osmNaturalPoiReducer,
+  osmRoutePois: osmRoutePoiReducer,
+  contexts: externalPoiListContextReducer
+};
+
+export const hikeEditPoiReducer = combineReducers(reducerMap);
+
+/* TODO
+
     case hikeEditPoiActions.SET_POI_IN_HIKE:
       return {
         ...state,
@@ -227,8 +286,6 @@ export function hikeEditPoiReducer(
             state[action.payload.subdomain].pois[i])
           }
       };
-    default:
-      return state;
-  }
+
 }
 */

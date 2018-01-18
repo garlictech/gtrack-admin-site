@@ -29,6 +29,9 @@ export class HikeEditPoiEffects {
     private _adminMapService: AdminMapService
   ) {}
 
+  /**
+   * Get pois from WikiPedia api
+   */
   @Effect()
   getWikipediaPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_WIKIPEDIA_POIS)
@@ -47,6 +50,9 @@ export class HikeEditPoiEffects {
       });
     });
 
+  /**
+   * Get pois from Google api
+   */
   @Effect()
   getGooglePois$: Observable<any> = this._actions$
     .ofType(hikeEditPoiActions.GET_GOOGLE_POIS)
@@ -65,6 +71,9 @@ export class HikeEditPoiEffects {
       });
     });
 
+  /**
+   * Get pois from OSM api
+   */
   @Effect()
   getOsmNaturalPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_NATURAL_POIS)
@@ -83,6 +92,9 @@ export class HikeEditPoiEffects {
       });
     });
 
+  /**
+   * Get pois from OSM api
+   */
   @Effect()
   getOsmAmenityPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_AMENITY_POIS)
@@ -101,6 +113,9 @@ export class HikeEditPoiEffects {
       });
     });
 
+  /**
+   * Get pois from OSM api
+   */
   @Effect()
   getOsmRoutePois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_ROUTE_POIS)
@@ -119,11 +134,15 @@ export class HikeEditPoiEffects {
       });
     });
 
+  /**
+   * Refresh markers TODO
+   */
   @Effect()
   markersConfigChanged$: Observable<any> = this._actions$
     .ofType(hikeEditPoiActions.MARKERS_CONFIG_CHANGED)
     .map((action: hikeEditPoiActions.MarkersConfigChanged) => action.payload)
     .mergeMap(data => {
+      console.log('Mark1', data);
       return this._store.select((state: State) => state.hikeEditPoi[data.subdomain])
         .map((subdomainData) => {
           return _.extend(_.cloneDeep(data), subdomainData);

@@ -38,7 +38,7 @@ export class OsmRoutePoiService {
               elevation: _point.tags.ele,
               types: [_type],
               title: _point.tags.name || 'unknown',
-              objectType: 'osm',
+              objectType: 'osmRoute',
               osm: {
                 id: _point.id
               }

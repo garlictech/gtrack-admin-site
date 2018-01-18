@@ -5,23 +5,14 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
 import { OsmPoiService } from 'app/shared/services';
-import { IExternalPoiType, IExternalPoi } from 'app/shared/interfaces';
+import { IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import {
-  State,
-  hikeEditPoiActions,
-  selectHikeEditPoiListContext,
-  poiSelectors,
-  /*
-  selectHikeEditDomainPois,
-  selectHikeEditDomainLoading,
-  selectHikeEditDomainOnrouteMarkers,
-  selectHikeEditDomainOffrouteMarkers,
-  */
-  selectHikeEditMapMapId
+  State, hikeEditPoiActions, IExternalPoiListContextState,
+  // Selectors
+  selectHikeEditMapMapId, selectAllWikipediaPois, selectAllGooglePois, selectAllOsmAmenityPois, selectAllOsmNaturalPois, selectAllOsmRoutePois, getHikeEditContextSelector
 } from 'app/store';
 import { ExternalPoi } from 'app/shared/services/poi/external-poi';
 import * as _ from 'lodash';
-import { IExternalPoiListContextState } from 'app/store/state';
 
 @Component({
   selector: 'gt-hike-edit-pois-external',
@@ -30,8 +21,10 @@ import { IExternalPoiListContextState } from 'app/store/state';
 })
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   @Input() poiType: IExternalPoiType;
-  public pois$: Observable<any>;
-  public poiListContext$: Observable<IExternalPoiListContextState>;
+  public pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
+  public loading$: Observable<boolean>;
+  public showOnrouteMarkers$: Observable<boolean>;
+  public showOffrouteMarkers$: Observable<boolean>;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -42,13 +35,18 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log('poiType', this.poiType);
-
-    // TODO: refactor to use entities
-    this.pois$ = this._store.select(poiSelectors[this.poiType.subdomain].all);
-    this.poiListContext$ = this._store.select(selectHikeEditPoiListContext[this.poiType.subdomain]);
-    /*
-
+    switch (this.poiType.subdomain) {
+      case 'google':
+        this.pois$ = this._store.select(selectAllGooglePois); break;
+      case 'wikipedia':
+        this.pois$ = this._store.select(selectAllWikipediaPois); break;
+      case 'osmAmenity':
+        this.pois$ = this._store.select(selectAllOsmAmenityPois); break;
+      case 'osmNatural':
+        this.pois$ = this._store.select(selectAllOsmNaturalPois); break;
+      case 'osmRoute':
+        this.pois$ = this._store.select(selectAllOsmRoutePois); break;
+    }
     this.pois$
       .takeUntil(this._destroy$)
       .subscribe(() => {
@@ -57,6 +55,18 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         }));
       });
 
+    this._store.select(selectHikeEditMapMapId)
+      .subscribe((mapId: string) => {
+        this._map = this._adminMapService.getMapById(mapId);
+      });
+
+    this.loading$ = this._store.select(
+      getHikeEditContextSelector(this.poiType.subdomain, 'loading')
+    );
+
+    this.showOffrouteMarkers$ = this._store.select(
+      getHikeEditContextSelector(this.poiType.subdomain, 'showOffrouteMarkers')
+    );
     this.showOnrouteMarkers$
       .takeUntil(this._destroy$)
       .subscribe(() => {
@@ -65,19 +75,15 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         }));
       });
 
+    this.showOnrouteMarkers$ = this._store.select(
+      getHikeEditContextSelector(this.poiType.subdomain, 'showOnrouteMarkers')
+    );
     this.showOffrouteMarkers$
       .takeUntil(this._destroy$)
       .subscribe(() => {
         this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
           subdomain: this.poiType.subdomain
         }));
-      });
-      */
-
-    this._store.select(selectHikeEditMapMapId)
-      .subscribe((mapId: string) => {
-        console.log('mapId', mapId, this.poiType);
-        this._map = this._adminMapService.getMapById(mapId);
       });
   }
 

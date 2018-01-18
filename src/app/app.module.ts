@@ -82,7 +82,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     routing,
     StoreRouterConnectingModule,
     StoreDevtoolsModule.instrument({
-      maxAge: 25
+      maxAge: 5
     }),
     DeepstreamModule.forRoot({
       deepstreamConnectionString: 'localhost:6020',

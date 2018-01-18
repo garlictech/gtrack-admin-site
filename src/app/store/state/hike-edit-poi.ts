@@ -7,14 +7,18 @@ export interface IOsmNaturalPoiEntityState extends EntityState<IOsmPoi> {};
 export interface IOsmAmenityPoiEntityState extends EntityState<IOsmPoi> {};
 export interface IOsmRoutePoiEntityState extends EntityState<IOsmPoi> {};
 
-// For poi lists
-export interface IExternalPoiListContextState {
-  id: string;
+export interface IExternalPoiListContextItemState {
   loading: boolean;
   showOnrouteMarkers?: boolean;
   showOffrouteMarkers?: boolean;
 }
-export interface IExternalPoiListContextEntityState extends EntityState<IExternalPoiListContextState> {};
+export interface IExternalPoiListContextState {
+  wikipedia: IExternalPoiListContextItemState,
+  google: IExternalPoiListContextItemState,
+  osmAmenity: IExternalPoiListContextItemState,
+  osmNatural: IExternalPoiListContextItemState,
+  osmRoute: IExternalPoiListContextItemState
+};
 
 // State
 export interface IHikeEditPoiState {
@@ -23,5 +27,5 @@ export interface IHikeEditPoiState {
   osmAmenityPois: IOsmAmenityPoiEntityState,
   osmNaturalPois: IOsmNaturalPoiEntityState,
   osmRoutePois: IOsmRoutePoiEntityState,
-  contexts: IExternalPoiListContextEntityState
+  contexts: IExternalPoiListContextState
 };

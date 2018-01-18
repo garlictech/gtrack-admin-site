@@ -4,19 +4,19 @@
     <button class="btn btn-sm btn-fill btn-success" (click)="getPois()">Get new</button>
   </div>
 
-  <div class="pull-left" *ngIf="(poiListContext$ | async)?.loading"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
+  <div class="pull-left" *ngIf="loading$ | async"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
 
   <div class="pull-right">
     <div class="form-check inline-checkbox">
       <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" name="optionsCheckboxes" [checked]="(poiListContext$ | async)?.showOnrouteMarkers" (change)="toggleOnrouteMarkers()">
+          <input class="form-check-input" type="checkbox" name="optionsCheckboxes" [checked]="showOnrouteMarkers$ | async" (change)="toggleOnrouteMarkers()">
           <span class="form-check-sign"></span>
           Show onroute markers
       </label>
     </div>
     <div class="form-check inline-checkbox">
       <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" name="optionsCheckboxes" [checked]="(poiListContext$ | async)?.showOffrouteMarkers" (change)="toggleOffrouteMarkers()">
+          <input class="form-check-input" type="checkbox" name="optionsCheckboxes" [checked]="showOffrouteMarkers$ | async" (change)="toggleOffrouteMarkers()">
           <span class="form-check-sign"></span>
           Show offroute markers
       </label>
