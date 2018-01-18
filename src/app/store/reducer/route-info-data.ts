@@ -29,9 +29,7 @@ export function routeInfoDataReducer(
     case routeInfoDataActions.POP_SEGMENT:
       return {
         ...state,
-        segments: state.segments.length > 1 ?
-          state.segments.slice(0, state.segments.length - 1) :
-          []
+        segments: state.segments.length > 1 ? state.segments.slice(0, state.segments.length - 1) : []
       };
     case routeInfoDataActions.UPDATE_TOTAL:
       return {
