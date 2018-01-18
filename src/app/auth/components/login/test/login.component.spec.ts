@@ -20,9 +20,6 @@ describe('LoginComponent', () => {
           authentication: {
             auth: {},
             loggingIn: false
-          },
-          login: {
-            loginCalled: false
           }
         })
       }]
