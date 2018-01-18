@@ -9,14 +9,19 @@ import { IExternalPoiType, IExternalPoi } from 'app/shared/interfaces';
 import {
   State,
   hikeEditPoiActions,
+  selectHikeEditPoiListContext,
+  poiSelectors,
+  /*
   selectHikeEditDomainPois,
   selectHikeEditDomainLoading,
   selectHikeEditDomainOnrouteMarkers,
   selectHikeEditDomainOffrouteMarkers,
+  */
   selectHikeEditMapMapId
 } from 'app/store';
 import { ExternalPoi } from 'app/shared/services/poi/external-poi';
 import * as _ from 'lodash';
+import { IExternalPoiListContextState } from 'app/store/state';
 
 @Component({
   selector: 'gt-hike-edit-pois-external',
@@ -25,10 +30,8 @@ import * as _ from 'lodash';
 })
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   @Input() poiType: IExternalPoiType;
-  public pois$: Observable<IExternalPoi>;
-  public loading$: Observable<boolean>;
-  public showOnrouteMarkers$: Observable<boolean>;
-  public showOffrouteMarkers$: Observable<boolean>;
+  public pois$: Observable<any>;
+  public poiListContext$: Observable<IExternalPoiListContextState>;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -39,11 +42,12 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log('poiType', this.poiType);
+
     // TODO: refactor to use entities
-    this.pois$ = this._store.select(selectHikeEditDomainPois[this.poiType.subdomain]);
-    this.loading$ = this._store.select(selectHikeEditDomainLoading[this.poiType.subdomain]);
-    this.showOnrouteMarkers$ = this._store.select(selectHikeEditDomainOnrouteMarkers[this.poiType.subdomain]);
-    this.showOffrouteMarkers$ = this._store.select(selectHikeEditDomainOffrouteMarkers[this.poiType.subdomain]);
+    this.pois$ = this._store.select(poiSelectors[this.poiType.subdomain].all);
+    this.poiListContext$ = this._store.select(selectHikeEditPoiListContext[this.poiType.subdomain]);
+    /*
 
     this.pois$
       .takeUntil(this._destroy$)
@@ -68,10 +72,13 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           subdomain: this.poiType.subdomain
         }));
       });
+      */
 
-    this._store.select(selectHikeEditMapMapId).subscribe((mapId: string) => {
-      this._map = this._adminMapService.getMapById(mapId);
-    });
+    this._store.select(selectHikeEditMapMapId)
+      .subscribe((mapId: string) => {
+        console.log('mapId', mapId, this.poiType);
+        this._map = this._adminMapService.getMapById(mapId);
+      });
   }
 
   ngOnDestroy() {
@@ -83,9 +90,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     let _bounds = this._map.routeInfo.getSearchBounds();
 
     if (_bounds) {
-      // Clear poi list from the current subdomain
-      this._removeSubdomainPois();
-
       // Get pois for the current domain
       this._store.dispatch(new hikeEditPoiActions[this.poiType.getAction]({
         bounds: _bounds,
@@ -104,19 +108,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers({
       subdomain: this.poiType.subdomain
     }));
-  }
-
-  /**
-   * getPois submethod
-   */
-  private _removeSubdomainPois() {
-    this._store.select((state: State) => state.hikeEditPoi[this.poiType.subdomain].pois)
-      .take(1)
-      .subscribe((pois) => {
-        this._store.dispatch(new hikeEditPoiActions[this.poiType.setAction]({
-          pois: []
-        }));
-      });
   }
 
   /**

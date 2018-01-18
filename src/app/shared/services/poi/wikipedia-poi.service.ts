@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Jsonp, Response } from '@angular/http';
-import { ExternalPoi } from './external-poi';
+import { WikipediaPoi } from './lib/wikipedia-poi';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index';
+import * as uuid from 'uuid';
 
 @Injectable()
 export class WikipediaPoiService {
@@ -19,12 +20,13 @@ export class WikipediaPoiService {
     return this._http.get(request)
       .toPromise()
       .then((data: any) => {
-        let _res: ExternalPoi[] = [];
+        let _res: WikipediaPoi[] = [];
 
         for (let i = 0; i < data.query.geosearch.length; i++) {
           let _point = data.query.geosearch[i];
 
-          _res.push(new ExternalPoi({
+          _res.push(new WikipediaPoi({
+            id: uuid(),
             lat: _point.lat,
             lon: _point.lon,
             title: _point.title,

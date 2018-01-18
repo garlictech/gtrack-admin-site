@@ -1,34 +1,27 @@
-import { IExternalPoi } from 'app/shared/interfaces/index';
+import { EntityAdapter, EntityState } from '@ngrx/entity';
+import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 
+export interface IWikipediaPoiEntityState extends EntityState<IWikipediaPoi> {};
+export interface IGooglePoiEntityState extends EntityState<IGooglePoi> {};
+export interface IOsmNaturalPoiEntityState extends EntityState<IOsmPoi> {};
+export interface IOsmAmenityPoiEntityState extends EntityState<IOsmPoi> {};
+export interface IOsmRoutePoiEntityState extends EntityState<IOsmPoi> {};
+
+// For poi lists
+export interface IExternalPoiListContextState {
+  id: string;
+  loading: boolean;
+  showOnrouteMarkers?: boolean;
+  showOffrouteMarkers?: boolean;
+}
+export interface IExternalPoiListContextEntityState extends EntityState<IExternalPoiListContextState> {};
+
+// State
 export interface IHikeEditPoiState {
-  wikipedia: {
-    pois: IExternalPoi[],
-    loading: boolean,
-    showOnrouteMarkers: boolean,
-    showOffrouteMarkers: boolean
-  },
-  google: {
-    pois: IExternalPoi[],
-    loading: boolean,
-    showOnrouteMarkers: boolean,
-    showOffrouteMarkers: boolean
-  },
-  osmNatural: {
-    pois: IExternalPoi[],
-    loading: boolean,
-    showOnrouteMarkers: boolean,
-    showOffrouteMarkers: boolean
-  },
-  osmAmenity: {
-    pois: IExternalPoi[],
-    loading: boolean,
-    showOnrouteMarkers: boolean,
-    showOffrouteMarkers: boolean
-  },
-  osmRoute: {
-    pois: IExternalPoi[],
-    loading: boolean,
-    showOnrouteMarkers: boolean,
-    showOffrouteMarkers: boolean
-  },
+  wikipediaPois: IWikipediaPoiEntityState,
+  googlePois: IGooglePoiEntityState,
+  osmAmenityPois: IOsmAmenityPoiEntityState,
+  osmNaturalPois: IOsmNaturalPoiEntityState,
+  osmRoutePois: IOsmRoutePoiEntityState,
+  contexts: IExternalPoiListContextEntityState
 };

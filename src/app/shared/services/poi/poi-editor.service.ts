@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   GeometryService, ElevationService, PoiService, Poi
 } from 'subrepos/gtrack-common-ngx';
-import { ExternalPoi } from './external-poi';
+import { ExternalPoi } from './lib/external-poi';
 import { AdminMap, AdminMapService } from '../admin-map';
 import { Observable } from 'rxjs/Observable';
 import { IExternalPoi } from 'app/shared/interfaces/index';

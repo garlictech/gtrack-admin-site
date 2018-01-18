@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ExternalPoi } from './external-poi';
+import { OsmPoi } from './lib/osm-poi';
+import * as uuid from 'uuid';
 
 @Injectable()
 export class OsmRoutePoiService {
@@ -23,14 +24,15 @@ export class OsmRoutePoiService {
     return this._http.post('http://overpass-api.de/api/interpreter', request)
       .toPromise()
       .then((response: any) => {
-        let _res: ExternalPoi[] = [];
+        let _res: OsmPoi[] = [];
 
         for (let i = 0; i < response.elements.length; i++) {
           let _point = response.elements[i];
           if (_point.tags && _point.lat) {
             let _type = _point.tags[poiType];
 
-            _res.push(new ExternalPoi({
+            _res.push(new OsmPoi({
+              id: uuid(),
               lat: _point.lat,
               lon: _point.lon,
               elevation: _point.tags.ele,

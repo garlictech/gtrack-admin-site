@@ -1,57 +1,84 @@
 import { State } from '../index';
-import { createSelector } from '@ngrx/store/src/selector';
+import { createSelector, createFeatureSelector } from '@ngrx/store/src/selector';
 import { IHikeEditPoiState } from '../state/index';
+import { googlePoiAdapter, osmAmenityPoiAdapter } from 'app/store/reducer';
 
-export const selectHikeEditPoi = (state: State) => state.hikeEditPoi;
+export const selectHikeEditPoi = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
 
-export const selectHikeEditDomainPois = {
+export const selectHikeEditPoiListContext = {
   google: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.google.pois),
+    (state: IHikeEditPoiState) => state.contexts.entities.google),
   osmAmenity: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmAmenity.pois),
+    (state: IHikeEditPoiState) => state.contexts.entities.osmAmenity),
   osmNatural: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmNatural.pois),
+    (state: IHikeEditPoiState) => state.contexts.entities.osmNatural),
   osmRoute: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmRoute.pois),
+    (state: IHikeEditPoiState) => state.contexts.entities.osmRoute),
   wikipedia: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.wikipedia.pois),
+    (state: IHikeEditPoiState) => state.contexts.entities.wikipedia)
 };
 
-export const selectHikeEditDomainLoading = {
-  google: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.google.loading),
-  osmAmenity: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmAmenity.loading),
-  osmNatural: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmNatural.loading),
-  osmRoute: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmRoute.loading),
-  wikipedia: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.wikipedia.loading),
-};
+const googlePoiSelector = createSelector(this.selectHikeEditPoi, (state: IHikeEditPoiState) => state.googlePois);
+const {
+  selectIds: selectGooglePoiIds ,
+  selectEntities: selectGooglePoiEntities,
+  selectAll: selectAllGooglePois,
+  selectTotal: selectGooglePoiCount
+} = googlePoiAdapter.getSelectors(googlePoiSelector);
 
-export const selectHikeEditDomainOnrouteMarkers = {
-  google: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.google.showOnrouteMarkers),
-  osmAmenity: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmAmenity.showOnrouteMarkers),
-  osmNatural: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmNatural.showOnrouteMarkers),
-  osmRoute: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmRoute.showOnrouteMarkers),
-  wikipedia: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.wikipedia.showOnrouteMarkers)
-};
+const osmAmenityPoiSelector = createSelector(this.selectHikeEditPoi, (state: IHikeEditPoiState) => state.osmAmenityPois);
+const {
+  selectIds: selectOsmAmenityPoiIds ,
+  selectEntities: selectOsmAmenityPoiEntities,
+  selectAll: selectAllOsmAmenityPois,
+  selectTotal: selectOsmAmenityPoiCount
+} = osmAmenityPoiAdapter.getSelectors(osmAmenityPoiSelector);
 
-export const selectHikeEditDomainOffrouteMarkers = {
+const osmNaturalPoiSelector = createSelector(this.selectHikeEditPoi, (state: IHikeEditPoiState) => state.osmNaturalPois);
+const {
+  selectIds: selectOsmNaturalPoiIds ,
+  selectEntities: selectOsmNaturalPoiEntities,
+  selectAll: selectAllOsmNaturalPois,
+  selectTotal: selectOsmNaturalPoiCount
+} = osmAmenityPoiAdapter.getSelectors(osmNaturalPoiSelector);
+
+export const poiSelectors = {
+  wikipedia: {
+    all: selectAllGooglePois,
+    entities: selectGooglePoiEntities,
+    total: selectGooglePoiCount
+  },
+  google: {
+    all: selectAllGooglePois,
+    entities: selectGooglePoiEntities,
+    total: selectGooglePoiCount
+  },
+  osmAmenity: {
+    all: selectAllOsmAmenityPois,
+    entities: selectOsmAmenityPoiEntities,
+    total: selectOsmAmenityPoiCount
+  },
+  osmNatural: {
+    all: selectAllOsmNaturalPois,
+    entities: selectOsmNaturalPoiEntities,
+    total: selectOsmNaturalPoiCount
+  },
+  osmRoute: {
+    all: selectAllOsmNaturalPois,
+    entities: selectOsmNaturalPoiEntities,
+    total: selectOsmNaturalPoiCount
+  }
+}
+
+export const selectHikeEditPoiList = {
   google: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.google.showOffrouteMarkers),
+    (state: IHikeEditPoiState) => state.googlePois.entities.se),
   osmAmenity: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmAmenity.showOffrouteMarkers),
+    (state: IHikeEditPoiState) => state.contexts.entities.osmAmenity),
   osmNatural: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmNatural.showOffrouteMarkers),
+    (state: IHikeEditPoiState) => state.contexts.entities.osmNatural),
   osmRoute: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.osmRoute.showOffrouteMarkers),
+    (state: IHikeEditPoiState) => state.contexts.entities.osmRoute),
   wikipedia: createSelector(selectHikeEditPoi,
-    (state: IHikeEditPoiState) => state.wikipedia.showOffrouteMarkers)
+    (state: IHikeEditPoiState) => state.contexts.entities.wikipedia)
 };

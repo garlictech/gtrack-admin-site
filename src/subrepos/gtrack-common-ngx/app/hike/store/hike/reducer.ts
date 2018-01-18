@@ -2,9 +2,9 @@ import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
 import * as _ from 'lodash';
 
 import {
-  IAllHikeContextState,
+  IHikeContextEntityState,
   hikeContextStateAdapter,
-  IHikeEntityState,
+  IHikeProgramEntityState,
   IHikeState,
   hikeAdapter
 } from './state';
@@ -15,10 +15,10 @@ import {
 } from './actions';
 import { AllHikeProgramsLoaded } from 'subrepos/gtrack-common-ngx';
 
-const contextReducer: ActionReducer<IAllHikeContextState> = (
-  state: IAllHikeContextState = hikeContextStateAdapter.getInitialState(),
+const contextReducer: ActionReducer<IHikeContextEntityState> = (
+  state: IHikeContextEntityState = hikeContextStateAdapter.getInitialState(),
   action: AllHikeActions
-): IAllHikeContextState => {
+): IHikeContextEntityState => {
   switch (action.type) {
     case HikeProgramActionTypes.LOAD_HIKE_PROGRAM:
       return hikeContextStateAdapter.addOne({
@@ -41,10 +41,10 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
   }
 };
 
-const reducer: ActionReducer<IHikeEntityState> = (
-  state: IHikeEntityState = hikeAdapter.getInitialState(),
+const reducer: ActionReducer<IHikeProgramEntityState> = (
+  state: IHikeProgramEntityState = hikeAdapter.getInitialState(),
   action: AllHikeActions
-): IHikeEntityState => {
+): IHikeProgramEntityState => {
   switch (action.type) {
     case HikeProgramActionTypes.HIKE_PROGRAM_LOADED:
       return hikeAdapter.addOne(action.hikeProgram, state);
