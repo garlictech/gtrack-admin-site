@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { State, adminMapActions } from 'app/store';
 import { Injectable } from '@angular/core';
-import { AdminMap } from './admin-map';
+import { AdminMap } from './lib/admin-map';
 import {
   IconService,
   MapMarkerService,
