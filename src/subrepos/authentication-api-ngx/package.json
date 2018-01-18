@@ -1,0 +1,33 @@
+{
+    "name": "authentication-api-ngx",
+    "description": "authentication api ngx",
+    "main": "index.ts",
+    "license": "SEE LICENSE IN license.txt",
+    "version": "0.0.0-local",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/garlictech/authentication-api-ngx.git"
+    },
+    "author": {
+        "name": "Garlictech",
+        "email": "contact@garlictech.com",
+        "url": "http://www.garlictech.com"
+    },
+    "contributors": [
+        "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
+    ],
+    "keywords": [],
+    "bugs": {
+        "url": "https://github.com/garlictech/authentication-api-ngx/issues"
+    },
+    "homepage": "https://github.com/garlictech/authentication-api-ngx/wiki/Home",
+    "engines": {
+        "npm": ">=3.0.0",
+        "node": ">=5.0.0"
+    },
+    "dependencies": {
+        "firebase": "4.8.0",
+        "angularfire2": "^5.0.0-rc.0"
+    },
+    "devDependencies": {}
+}
