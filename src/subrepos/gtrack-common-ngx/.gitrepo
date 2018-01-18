@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/garlictech/gtrack-common-ngx.git
+	branch = master
+	commit = 68ba97e477a5174fbc6607e1c80428fed59b9094
+	parent = 25095dc859d69104f82b7a9915835d60af13da13
+	cmdver = 0.3.1
