@@ -10,24 +10,6 @@ import { hikeEditPoiActions } from '../index';
 import { poiReducer } from 'subrepos/gtrack-common-ngx';
 
 /**
- * Wikipedia
- */
-
-export const wikipediaPoiAdapter: EntityAdapter<IWikipediaPoi> = createEntityAdapter<IWikipediaPoi>();
-const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
-  state: IWikipediaPoiEntityState = wikipediaPoiAdapter.getInitialState(),
-  action: hikeEditPoiActions.AllHikeEditPoiActions
-): IWikipediaPoiEntityState => {
-  switch (action.type) {
-    case hikeEditPoiActions.SET_WIKIPEDIA_POIS: {
-      return wikipediaPoiAdapter.addAll(action.payload.pois, state);
-    }
-    default:
-      return state;
-  }
-}
-
-/**
  * Google
  */
 
@@ -40,6 +22,13 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
     case hikeEditPoiActions.SET_GOOGLE_POIS: {
       return googlePoiAdapter.addAll(action.payload.pois, state);
     }
+    case hikeEditPoiActions.SET_GOOGLE_POI_IN_HIKE:
+      return googlePoiAdapter.updateOne({
+        id: action.payload.poiId,
+        changes: {
+          inHike: action.payload.isInHike
+        }
+      }, state);
     default:
       return state;
   }
@@ -58,6 +47,13 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
     case hikeEditPoiActions.SET_OSM_AMENITY_POIS: {
       return osmAmenityPoiAdapter.addAll(action.payload.pois, state);
     }
+    case hikeEditPoiActions.SET_OSM_AMENITY_POI_IN_HIKE:
+      return osmAmenityPoiAdapter.updateOne({
+        id: action.payload.poiId,
+        changes: {
+          inHike: action.payload.isInHike
+        }
+      }, state);
     default:
       return state;
   }
@@ -76,6 +72,13 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
     case hikeEditPoiActions.SET_OSM_NATURAL_POIS: {
       return osmNaturalPoiAdapter.addAll(action.payload.pois, state);
     }
+    case hikeEditPoiActions.SET_OSM_NATURAL_POI_IN_HIKE:
+      return osmNaturalPoiAdapter.updateOne({
+        id: action.payload.poiId,
+        changes: {
+          inHike: action.payload.isInHike
+        }
+      }, state);
     default:
       return state;
   }
@@ -94,6 +97,38 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
     case hikeEditPoiActions.SET_OSM_ROUTE_POIS: {
       return osmRoutePoiAdapter.addAll(action.payload.pois, state);
     }
+    case hikeEditPoiActions.SET_OSM_ROUTE_POI_IN_HIKE:
+      return osmRoutePoiAdapter.updateOne({
+        id: action.payload.poiId,
+        changes: {
+          inHike: action.payload.isInHike
+        }
+      }, state);
+    default:
+      return state;
+  }
+}
+
+/**
+ * Wikipedia
+ */
+
+export const wikipediaPoiAdapter: EntityAdapter<IWikipediaPoi> = createEntityAdapter<IWikipediaPoi>();
+const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
+  state: IWikipediaPoiEntityState = wikipediaPoiAdapter.getInitialState(),
+  action: hikeEditPoiActions.AllHikeEditPoiActions
+): IWikipediaPoiEntityState => {
+  switch (action.type) {
+    case hikeEditPoiActions.SET_WIKIPEDIA_POIS: {
+      return wikipediaPoiAdapter.addAll(action.payload.pois, state);
+    }
+    case hikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE:
+      return wikipediaPoiAdapter.updateOne({
+        id: action.payload.poiId,
+        changes: {
+          inHike: action.payload.isInHike
+        }
+      }, state);
     default:
       return state;
   }
@@ -109,11 +144,11 @@ const initialContextItemState = {
   showOffrouteMarkers: false
 };
 const initialContextState: IExternalPoiListContextState = {
-  wikipedia: initialContextItemState,
   google: initialContextItemState,
   osmAmenity: initialContextItemState,
   osmNatural: initialContextItemState,
-  osmRoute: initialContextItemState
+  osmRoute: initialContextItemState,
+  wikipedia: initialContextItemState
 };
 
 export function externalPoiListContextReducer(
@@ -266,25 +301,3 @@ const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
 };
 
 export const hikeEditPoiReducer = combineReducers(reducerMap);
-
-/* TODO
-
-    case hikeEditPoiActions.SET_POI_IN_HIKE:
-      return {
-        ...state,
-        [action.payload.subdomain]: {
-          ...state[action.payload.subdomain],
-          pois: state[action.payload.subdomain].pois
-            .map((poi, i) => i === action.payload.poiIdx ?
-            // Overwrite poi with the given poiIdx
-            {
-              ...state[action.payload.subdomain].pois[i],
-              inHike: action.payload.isInHike
-            } :
-            // Leave other pois
-            state[action.payload.subdomain].pois[i])
-          }
-      };
-
-}
-*/

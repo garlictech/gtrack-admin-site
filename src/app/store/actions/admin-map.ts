@@ -6,9 +6,7 @@ export class RegisterMap implements Action {
   readonly type = REGISTER_MAP;
   constructor(public payload: {
     mapId: string
-  }) {
-    /* EMPTY */
-  }
+  }) { /* EMPTY */ }
 }
 
 export type AllAdminMapActions =

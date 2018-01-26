@@ -306,7 +306,6 @@ export class PoiEditorService {
           const _offRoutePois = this._getOffroutePois(_filteredPois);
 
           if (subdomainData.showOnrouteMarkers) {
-            console.log('_onRoutePois LENGTH', _onRoutePois.length);
             _.forEach(_onRoutePois, (p) => {
               // Find the poi's marker
               const marker = _.find(subdomainData.markers, (m: AdminMapMarker) => m.poiId === p.id);
@@ -317,7 +316,6 @@ export class PoiEditorService {
           }
 
           if (subdomainData.showOffrouteMarkers) {
-            console.log('_offRoutePois LENGTH', _offRoutePois.length);
             _.forEach(_offRoutePois, (p) => {
               // Find the poi's marker
               const marker = _.find(subdomainData.markers, (m: AdminMapMarker) => m.poiId === p.id);

@@ -1,31 +1,32 @@
 <div class="map-container">
     <gc-admin-leaflet #map [id]="'hike-map'" [layers]="layers" [overlays]="overlays" [center]="center">
-      <div class="button-container">
-        <button class="btn btn-sm btn-success btn-fill" (click)="toggleCurrentPositionMarker($event)">
-          <i class="fa fa-crosshairs"></i>
-        </button>
-        <button class="btn btn-sm btn-success btn-fill" (click)="resetMap($event)">
-          <i class="fa fa-refresh"></i>
-        </button>
-        <button class="btn btn-sm btn-success btn-fill" (click)="buffer($event)">
-          Buffer
-        </button>
-        <div class="btn-group btn-toggle">
-          <button
-            class="btn btn-sm btn-fill"
-            [ngClass]="{'btn-primary': mode === 'routing', 'btn-success': mode === 'checkpoint'}"
-            (click)="setMode($event, 'routing')">
-            Routing mode
-          </button>
-          <button
-            class="btn btn-sm btn-fill"
-            [ngClass]="{'btn-primary': mode === 'checkpoint', 'btn-success': mode === 'routing'}"
-            (click)="setMode($event, 'checkpoint')">
-            Checkpoint mode
-          </button>
-        </div>
-      </div>
     </gc-admin-leaflet>
 </div>
 
+<div class="button-container mt-2">
+  <button class="btn btn-sm btn-success btn-fill" (click)="toggleCurrentPositionMarker($event)">
+    <i class="fa fa-crosshairs"></i>
+  </button>
+  <button class="btn btn-sm btn-success btn-fill" (click)="resetMap($event)">
+    <i class="fa fa-refresh"></i>
+  </button>
+  <button class="btn btn-sm btn-success btn-fill" (click)="buffer($event)">
+    Buffer
+  </button>
+  <div class="btn-group btn-toggle">
+    <button
+      class="btn btn-sm btn-fill"
+      [ngClass]="{'btn-primary': mode === 'routing', 'btn-success': mode === 'checkpoint'}"
+      (click)="setMode($event, 'routing')">
+      Routing mode
+    </button>
+    <button
+      class="btn btn-sm btn-fill"
+      [ngClass]="{'btn-primary': mode === 'checkpoint', 'btn-success': mode === 'routing'}"
+      (click)="setMode($event, 'checkpoint')">
+      Checkpoint mode
+    </button>
+  </div>
+</div>
 
+<div class="clearfix"></div>

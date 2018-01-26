@@ -24,11 +24,6 @@ export class HikeEditPoiSelectors {
      * Poi entity lists
      */
 
-    const wikipediaPoiSelector = createSelector(
-      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.wikipediaPois
-    );
-    this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
-
     const googlePoiSelector = createSelector(
       this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.googlePois
     );
@@ -48,6 +43,11 @@ export class HikeEditPoiSelectors {
       this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.osmRoutePois
     );
     this.getAllOsmRoutePois = osmRoutePoiAdapter.getSelectors(osmRoutePoiSelector).selectAll;
+
+    const wikipediaPoiSelector = createSelector(
+      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.wikipediaPois
+    );
+    this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
   }
 
   /**
