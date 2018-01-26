@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { TrailBoxComponent } from './trail-box';
 import { HikeCardComponent } from './hike-card';
@@ -10,11 +11,15 @@ import { CheckpointsComponent } from './checkpoints';
 
 import { HikeModule } from '../hike.module';
 import { MapModule } from '../../map/map.module';
+import { MapComponentsModule } from '../../map/components/map-components.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
-    HikeModule
+    HikeModule,
+    MapComponentsModule,
+    CommonModule,
+    SharedModule
   ],
   exports: [
     TrailBoxComponent,
