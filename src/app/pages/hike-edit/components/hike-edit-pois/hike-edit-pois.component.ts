@@ -11,28 +11,23 @@ export class HikeEditPoisComponent {
     {
       title: 'Wikipedia pois',
       subdomain: 'wikipedia',
-      getAction: 'GetWikipediaPois',
-      setAction: 'SetWikipediaPois'
+      getAction: 'GetWikipediaPois'
     }, {
       title: 'Google pois',
       subdomain: 'google',
-      getAction: 'GetGooglePois',
-      setAction: 'SetGooglePois'
+      getAction: 'GetGooglePois'
     }, {
       title: 'OSM Natural pois',
       subdomain: 'osmNatural',
-      getAction: 'GetOsmNaturalPois',
-      setAction: 'SetOsmNaturalPois'
+      getAction: 'GetOsmNaturalPois'
     }, {
       title: 'OSM Amenity pois',
       subdomain: 'osmAmenity',
-      getAction: 'GetOsmAmenityPois',
-      setAction: 'SetOsmAmenityPois'
+      getAction: 'GetOsmAmenityPois'
     }, {
       title: 'OSM Route pois',
       subdomain: 'osmRoute',
-      getAction: 'GetOsmRoutePois',
-      setAction: 'SetOsmRoutePois'
+      getAction: 'GetOsmRoutePois'
     }
   ];
 }

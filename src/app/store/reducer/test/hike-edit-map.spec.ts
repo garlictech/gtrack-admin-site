@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import * as AdminMapActions from '../../actions/admin-map';
-import { hikeEditMapReducer } from '../hike-edit-map';
+import { hikeEditMapMapReducer } from '../hike-edit-map';
 
 describe('HikeEditMap reducers', () => {
   /*
@@ -14,7 +14,7 @@ describe('HikeEditMap reducers', () => {
 
   it('should handle set mapId', () => {
     expect(
-      hikeEditMapReducer({mapId: ''}, new AdminMapActions.RegisterMap({
+      hikeEditMapMapReducer({mapId: ''}, new AdminMapActions.RegisterMap({
         mapId: 'fakeId'
       }))
     )

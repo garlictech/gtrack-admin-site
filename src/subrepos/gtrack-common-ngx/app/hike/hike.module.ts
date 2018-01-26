@@ -10,14 +10,6 @@ import { GameRuleService } from './services/game-rule';
 import { GeometryService, CenterRadius } from './services/geometry';
 import { ElevationService } from './services/elevation';
 
-import { TrailBoxComponent } from './components/trail-box';
-import { HikeCardComponent } from './components/hike-card';
-import { HikeInfoComponent } from './components/hike-info';
-import { HikeDataItemComponent } from './components/hike-data-item';
-import { ElevationProfileComponent } from './components/elevation-profile';
-import { HikeProgramComponent } from './components/hike-program';
-import { CheckpointsComponent } from './components/checkpoints';
-
 import { EXTERNAL_POI_DEPENDENCIES, EXTERNAL_HIKE_DEPENDENCIES, EXTERNAL_ROUTE_DEPENDENCIES } from './externals';
 
 import {
@@ -40,24 +32,6 @@ import { HikeModuleConfig } from './config';
     SharedModule,
     MapModule,
     RouterModule
-  ],
-  exports: [
-    TrailBoxComponent,
-    HikeCardComponent,
-    HikeInfoComponent,
-    HikeDataItemComponent,
-    ElevationProfileComponent,
-    HikeProgramComponent,
-    CheckpointsComponent
-  ],
-  declarations: [
-    TrailBoxComponent,
-    HikeCardComponent,
-    HikeInfoComponent,
-    HikeDataItemComponent,
-    ElevationProfileComponent,
-    HikeProgramComponent,
-    CheckpointsComponent
   ],
   providers: [
     HikeProgramService,
@@ -115,7 +89,6 @@ export {
   Poi,
   IPoi,
   ISegment,
-  TrailBoxComponent,
   GameRuleService,
   GeometryService,
   CenterRadius,
@@ -123,11 +96,7 @@ export {
   Checkpoint,
   CheckpointSequence,
   CheckpointService,
-  HikeCardComponent,
-  HikeInfoComponent,
-  HikeDataItemComponent,
-  ElevationProfileComponent,
-  HikeProgramComponent,
-  CheckpointsComponent,
-  HikeModuleConfig
+  HikeModuleConfig,
+  IElevationData,
+  IElevationMargin
 }

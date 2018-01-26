@@ -5,3 +5,6 @@ export * from './provider';
 export * from './object-mark';
 export * from './permission-record';
 export * from './search';
+export * from './roles';
+export * from './hike-program'
+export * from './poi'

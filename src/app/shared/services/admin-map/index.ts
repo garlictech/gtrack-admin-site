@@ -1,2 +1,3 @@
 export * from './admin-map.service';
-export { AdminMap } from './admin-map';
+export { AdminMap } from './lib/admin-map';
+export { AdminMapMarker } from './lib/admin-map-marker';

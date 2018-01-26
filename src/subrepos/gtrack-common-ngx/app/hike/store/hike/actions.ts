@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IHikeProgram } from '../../services/hike-program';
+import { HikeProgram } from '../../services/hike-program';
 import { IPoi } from '../../services/poi';
 
 export enum HikeProgramActionTypes {
@@ -29,7 +29,7 @@ export class LoadHikeProgramFailed implements Action {
 export class HikeProgramLoaded implements Action {
   readonly type = HikeProgramActionTypes.HIKE_PROGRAM_LOADED;
 
-  constructor(public context: string, public hikeProgram: IHikeProgram) {
+  constructor(public context: string, public hikeProgram: HikeProgram) {
     // Empty
   }
 }
@@ -45,7 +45,7 @@ export class LoadHikePrograms implements Action {
 export class AllHikeProgramsLoaded implements Action {
   readonly type = HikeProgramActionTypes.ALL_HIKE_PROGRAMS_LOADED;
 
-  constructor(public contexts: string[], public hikePrograms: IHikeProgram[]) {
+  constructor(public contexts: string[], public hikePrograms: HikeProgram[]) {
     // Empty
   }
 }

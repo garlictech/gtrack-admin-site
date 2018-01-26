@@ -5,8 +5,8 @@
         Login
       </h3>
       <hr>
-      <p>
-        <button type="button" [disabled]="loginCalled$ | async" class="btn btn-social btn-fill btn-google" (click)="login()">
+      <p> <!-- [disabled]="loggingIn$ | async"  -->
+        <button type="button" class="btn btn-social btn-fill btn-google" (click)="login()">
           <i class="fa fa-google" aria-hidden="true"></i>
           <span *ngIf="!(loggingIn$ | async)">Login with Google</span>
           <span *ngIf="loggingIn$ | async">

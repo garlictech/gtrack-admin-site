@@ -14,11 +14,11 @@ import { RouterSelectors } from '../../../router';
 export class HikeSelectors {
   public selectFeature: MemoizedSelector<object, IHikeState>;
   public getHikeIds: (state: object) => string[] | number[];
-  public getAllHikes: (state: object) => IHikeProgram[];
+  public getAllHikes: (state: object) => HikeProgram[];
   public getAllContexts: (state: object) => IHikeContextState[];
 
   private _selectContextEntities: (state: object) => Dictionary<IHikeContextState>;
-  private _selectHikeEntities: (state: object) => Dictionary<IHikeProgram>;
+  private _selectHikeEntities: (state: object) => Dictionary<HikeProgram>;
   private _externals: IExternalHikeDependencies;
 
   constructor(
@@ -44,14 +44,14 @@ export class HikeSelectors {
   }
 
   public getHike(context: string) {
-    return createSelector(this.getAllHikes, (hikes: IHikeProgram[]) => (hikes.find(hike => (hike.id === context))));
+    return createSelector(this.getAllHikes, (hikes: HikeProgram[]) => (hikes.find(hike => (hike.id === context))));
   }
 
   public getSelectedHike() {
     return createSelector(
       this._selectHikeEntities,
       this._routerSelectors.getRouterState,
-      (hikes, router): IHikeProgram => {
+      (hikes, router): HikeProgram => {
         return (router.state && hikes[router.state.params.id]);
       }
     )

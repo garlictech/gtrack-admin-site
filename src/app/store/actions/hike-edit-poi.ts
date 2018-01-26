@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ExternalPoi } from 'app/shared/services/poi/external-poi';
+import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 
 export const GET_WIKIPEDIA_POIS = '[HikeEditPoi] Get Wikipedia pois';
 export const SET_WIKIPEDIA_POIS = '[HikeEditPoi] Set Wikipedia pois';
@@ -14,6 +14,7 @@ export const SET_OSM_ROUTE_POIS = '[HikeEditPoi] Set OSM route pois';
 export const SET_POI_IN_HIKE = '[HikeEditPoi] Set poi inHike';
 export const TOGGLE_ONROUTE_MARKERS = '[HikeEditPoi] Toggle onroute markers';
 export const TOGGLE_OFFROUTE_MARKERS = '[HikeEditPoi] Toggle offroute markers';
+export const GENERATE_SUBDOMAIN_POI_MARKERS = '[HikeEditPoi] Generate subdomain poi markers';
 export const MARKERS_CONFIG_CHANGED = '[HikeEditPoi] Markers config changed';
 
 export class GetWikipediaPois implements Action {
@@ -29,7 +30,7 @@ export class GetWikipediaPois implements Action {
 export class SetWikipediaPois implements Action {
   readonly type = SET_WIKIPEDIA_POIS;
   constructor(public payload: {
-    pois: any[]
+    pois: IWikipediaPoi[]
   }) {
     /* EMPTY */
   }
@@ -48,7 +49,7 @@ export class GetGooglePois implements Action {
 export class SetGooglePois implements Action {
   readonly type = SET_GOOGLE_POIS;
   constructor(public payload: {
-    pois: any[]
+    pois: IGooglePoi[]
   }) {
     /* EMPTY */
   }
@@ -67,7 +68,7 @@ export class GetOsmNaturalPois implements Action {
 export class SetOsmNaturalPois implements Action {
   readonly type = SET_OSM_NATURAL_POIS;
   constructor(public payload: {
-    pois: any[]
+    pois: IOsmPoi[]
   }) {
     /* EMPTY */
   }
@@ -86,7 +87,7 @@ export class GetOsmAmenityPois implements Action {
 export class SetOsmAmenityPois implements Action {
   readonly type = SET_OSM_AMENITY_POIS;
   constructor(public payload: {
-    pois: any[]
+    pois: IOsmPoi[]
   }) {
     /* EMPTY */
   }
@@ -105,7 +106,7 @@ export class GetOsmRoutePois implements Action {
 export class SetOsmRoutePois implements Action {
   readonly type = SET_OSM_ROUTE_POIS;
   constructor(public payload: {
-    pois: any[]
+    pois: IOsmPoi[]
   }) {
     /* EMPTY */
   }
@@ -140,6 +141,15 @@ export class ToggleOffrouteMarkers implements Action {
   }
 }
 
+export class GenerateSubdomainPoiMarkers implements Action {
+  readonly type = GENERATE_SUBDOMAIN_POI_MARKERS;
+  constructor(public payload: {
+    subdomain: string
+  }) {
+    /* EMPTY */
+  }
+}
+
 export class MarkersConfigChanged implements Action {
   readonly type = MARKERS_CONFIG_CHANGED;
   constructor(public payload: {
@@ -163,4 +173,5 @@ export type AllHikeEditPoiActions =
   | SetPoiInHike
   | ToggleOnrouteMarkers
   | ToggleOffrouteMarkers
+  | GenerateSubdomainPoiMarkers
   | MarkersConfigChanged;

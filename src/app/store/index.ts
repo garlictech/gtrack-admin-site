@@ -16,6 +16,10 @@ import * as adminMapActions from './actions/admin-map';
 export type AdminMapAction = adminMapActions.AllAdminMapActions;
 export { adminMapActions };
 
+import * as hikeEditMapActions from './actions/hike-edit-map';
+export type HikeEditMapAction = hikeEditMapActions.AllHikeEditMapActions;
+export { hikeEditMapActions };
+
 import * as hikeEditPoiActions from './actions/hike-edit-poi';
 export type HikeEditPoiAction = hikeEditPoiActions.AllHikeEditPoiActions;
 export { hikeEditPoiActions };
@@ -42,27 +46,22 @@ export { RouterEffects } from 'subrepos/gtrack-common-ngx';
 
 // States
 import {
-  IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState, ILoginState
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState
 } from './state';
 export {
-  IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState, ILoginState
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState
 };
 
 // Selectors
 export * from './selectors';
 
 // Reducers
-import {
-  routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer, loginReducer
-} from './reducer';
-export {
-  routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer, loginReducer
-};
+import { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
+export { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer };
 
 // Extend the store interface with that.
 export interface State {
   authentication: IAuthenticationState;
-  login: ILoginState;
   routeInfoData: IRouteInfoDataState;
   hikeEditMap: IHikeEditMapState;
   hikeEditPoi: IHikeEditPoiState;
@@ -73,7 +72,6 @@ export interface State {
 // Same keys as in the state!!!
 const reducers: ActionReducerMap<State> = {
   authentication: authReducer,
-  login: loginReducer,
   routeInfoData: routeInfoDataReducer,
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditMap: hikeEditMapReducer,

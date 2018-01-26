@@ -1,7 +1,6 @@
 import { storeLogger } from 'ngrx-store-logger';
 import { StoreModule, combineReducers } from '@ngrx/store';
 import { compose, ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store';
-import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 
 import { IAuthenticationState, Reducer as authReducer, domain as authDomain } from 'subrepos/authentication-api-ngx';
 import { Reducer as deepstreamReducer, IDeepstreamState, DeepstreamService } from 'subrepos/deepstream-ngx';
@@ -26,7 +25,6 @@ export interface CommonState {
   deepstream: IDeepstreamState,
   poi: IPoiState,
   hike: IHikeState,
-  router: RouterReducerState,
   route: IRouteState
 }
 
@@ -35,6 +33,5 @@ export const commonReducers: ActionReducerMap<CommonState> = {
   deepstream: deepstreamReducer,
   poi: poiReducer,
   hike: hikeReducer,
-  router: routerReducer,
   route: routeReducer
 };
