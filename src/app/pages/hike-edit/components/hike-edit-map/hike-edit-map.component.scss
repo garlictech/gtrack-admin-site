@@ -3,15 +3,6 @@
   height: 400px;
 }
 
-gc-admin-leaflet {
-  .button-container {
-    position: absolute;
-    z-index: 100000;
-    bottom: 10px;
-    left: 10px;
-  }
-}
-
 .leaflet-div-icon {
   background-image: url('assets/img/marker-icon.png');
   background-color: transparent;
