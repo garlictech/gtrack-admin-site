@@ -16,6 +16,10 @@ import * as adminMapActions from './actions/admin-map';
 export type AdminMapAction = adminMapActions.AllAdminMapActions;
 export { adminMapActions };
 
+import * as hikeEditMapActions from './actions/hike-edit-map';
+export type HikeEditMapAction = hikeEditMapActions.AllHikeEditMapActions;
+export { hikeEditMapActions };
+
 import * as hikeEditPoiActions from './actions/hike-edit-poi';
 export type HikeEditPoiAction = hikeEditPoiActions.AllHikeEditPoiActions;
 export { hikeEditPoiActions };
@@ -42,10 +46,10 @@ export { RouterEffects } from 'subrepos/gtrack-common-ngx';
 
 // States
 import {
-  IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState, IExternalPoiListContextState
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState
 } from './state';
 export {
-  IRouteInfoDataState, IHikeEditMapState, IHikeEditPoiState, IExternalPoiListContextState
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState
 };
 
 // Selectors

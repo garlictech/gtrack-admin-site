@@ -84,6 +84,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
           // this._createCheckpoint(e.latlng);
         }
       })
+      /*
       // Turn on scrollWheelZoom after the first interaction (click/drag)
       .on('mouseup', () => {
         this.mapComponent.leafletMap.scrollWheelZoom.enable();
@@ -91,7 +92,9 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       // Turn off scrollWheelZoom on mouse out
       .on('mouseout', () => {
         this.mapComponent.leafletMap.scrollWheelZoom.disable();
-      });
+      })
+      */
+      ;
   }
 
   public toggleCurrentPositionMarker($event: Event) {

@@ -3,8 +3,7 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   IHikeEditPoiState,
   IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
-  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState,
-  IExternalPoiListContextEntityState, IExternalPoiListContextState
+  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState
 } from '../state';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import { hikeEditPoiActions } from '../index';

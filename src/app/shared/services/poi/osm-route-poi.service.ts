@@ -7,7 +7,7 @@ import * as uuid from 'uuid';
 export class OsmRoutePoiService {
   constructor(private _http: HttpClient) {}
 
-  public get(bounds, poiType) {
+  public get(bounds) {
     const request = `
       <osm-script output="json" timeout="25">
         <query into="_" type="way">
@@ -29,14 +29,14 @@ export class OsmRoutePoiService {
         for (let i = 0; i < response.elements.length; i++) {
           let _point = response.elements[i];
           if (_point.tags && _point.lat) {
-            let _type = _point.tags[poiType];
-
+            // let _type = _point.tags[poiType];
+            console.log('ROUTE TAGS???', _point.tags);
             _res.push(new OsmPoi({
               id: uuid(),
               lat: _point.lat,
               lon: _point.lon,
               elevation: _point.tags.ele,
-              types: [_type],
+              // types: [_type],
               title: _point.tags.name || 'unknown',
               objectType: 'osmRoute',
               osm: {

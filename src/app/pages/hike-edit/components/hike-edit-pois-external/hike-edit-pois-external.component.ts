@@ -3,14 +3,14 @@ import { Component, Input, Injector, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
+import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { OsmPoiService } from 'app/shared/services';
 import { IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import {
   State, hikeEditPoiActions, IExternalPoiListContextState,
-  // Selectors
-  selectHikeEditMapMapId, selectAllWikipediaPois, selectAllGooglePois, selectAllOsmAmenityPois, selectAllOsmNaturalPois, selectAllOsmRoutePois, getHikeEditContextSelector
 } from 'app/store';
+import { HikeEditMapSelectors } from 'app/store/selectors/hike-edit-map';
+import { HikeEditPoiSelectors } from 'app/store/selectors/hike-edit-poi';
 import { ExternalPoi } from 'app/shared/services/poi/external-poi';
 import * as _ from 'lodash';
 
@@ -22,6 +22,7 @@ import * as _ from 'lodash';
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   @Input() poiType: IExternalPoiType;
   public pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
+  public markers$: Observable<AdminMapMarker[]>;
   public loading$: Observable<boolean>;
   public showOnrouteMarkers$: Observable<boolean>;
   public showOffrouteMarkers$: Observable<boolean>;
@@ -32,41 +33,68 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     private _injector: Injector,
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
+    private _hikeEditMapSelectors: HikeEditMapSelectors,
+    private _hikeEditPoiSelectors: HikeEditPoiSelectors
   ) {}
 
   ngOnInit() {
+    this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
+      .subscribe((mapId: string) => {
+        this._map = this._adminMapService.getMapById(mapId);
+      });
+
     switch (this.poiType.subdomain) {
       case 'google':
-        this.pois$ = this._store.select(selectAllGooglePois); break;
+        this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGooglePois);
+        this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers);
+        break;
       case 'wikipedia':
-        this.pois$ = this._store.select(selectAllWikipediaPois); break;
+        this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllWikipediaPois);
+        this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllWikipediaMarkers);
+        break;
       case 'osmAmenity':
-        this.pois$ = this._store.select(selectAllOsmAmenityPois); break;
+        this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmAmenityPois);
+        this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmAmenityMarkers);
+        break;
       case 'osmNatural':
-        this.pois$ = this._store.select(selectAllOsmNaturalPois); break;
+        this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmNaturalPois);
+        this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmNaturalMarkers);
+        break;
       case 'osmRoute':
-        this.pois$ = this._store.select(selectAllOsmRoutePois); break;
+        this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmRoutePois);
+        this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmRouteMarkers);
+        break;
     }
+
     this.pois$
       .takeUntil(this._destroy$)
-      .subscribe(() => {
+      .subscribe((pois) => {
+        // Refresh markers when the poi list has been changed
+        this._store.dispatch(new hikeEditPoiActions.GenerateSubdomainPoiMarkers({
+          subdomain: this.poiType.subdomain
+        }));
+      });
+
+    this.markers$
+      .takeUntil(this._destroy$)
+      .subscribe((markers) => {
         this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
           subdomain: this.poiType.subdomain
         }));
       });
 
-    this._store.select(selectHikeEditMapMapId)
-      .subscribe((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
-      });
-
     this.loading$ = this._store.select(
-      getHikeEditContextSelector(this.poiType.subdomain, 'loading')
-    );
+      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
+        this.poiType.subdomain, 'loading'));
+
+    this.showOnrouteMarkers$ = this._store.select(
+      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
+        this.poiType.subdomain, 'showOnrouteMarkers'));
 
     this.showOffrouteMarkers$ = this._store.select(
-      getHikeEditContextSelector(this.poiType.subdomain, 'showOffrouteMarkers')
-    );
+      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
+        this.poiType.subdomain, 'showOffrouteMarkers'));
+
     this.showOnrouteMarkers$
       .takeUntil(this._destroy$)
       .subscribe(() => {
@@ -75,9 +103,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         }));
       });
 
-    this.showOnrouteMarkers$ = this._store.select(
-      getHikeEditContextSelector(this.poiType.subdomain, 'showOnrouteMarkers')
-    );
     this.showOffrouteMarkers$
       .takeUntil(this._destroy$)
       .subscribe(() => {
@@ -92,6 +117,9 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this._destroy$.unsubscribe();
   }
 
+  /**
+   * Get pois for the current subdomain
+   */
   public getPois() {
     let _bounds = this._map.routeInfo.getSearchBounds();
 
@@ -104,23 +132,22 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Show onroute markers checkbox click
+   */
   public toggleOnrouteMarkers() {
     this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers({
       subdomain: this.poiType.subdomain
     }));
   }
 
+  /**
+   * Show offroute markers checkbox click
+   */
   public toggleOffrouteMarkers() {
     this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers({
       subdomain: this.poiType.subdomain
     }));
-  }
-
-  /**
-   * _removePois submethod
-   */
-  private _firstToLowerCase(str: string) {
-    return str.substr(0, 1).toLowerCase() + str.substr(1);
   }
 
   public savePois() {

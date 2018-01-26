@@ -3,8 +3,8 @@ import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 
 export interface IWikipediaPoiEntityState extends EntityState<IWikipediaPoi> {};
 export interface IGooglePoiEntityState extends EntityState<IGooglePoi> {};
-export interface IOsmNaturalPoiEntityState extends EntityState<IOsmPoi> {};
 export interface IOsmAmenityPoiEntityState extends EntityState<IOsmPoi> {};
+export interface IOsmNaturalPoiEntityState extends EntityState<IOsmPoi> {};
 export interface IOsmRoutePoiEntityState extends EntityState<IOsmPoi> {};
 
 export interface IExternalPoiListContextItemState {

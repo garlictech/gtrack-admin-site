@@ -1,56 +1,66 @@
+import { Injectable } from '@angular/core';
+import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store/src/selector';
+
 import { State } from '../index';
-import { createSelector, createFeatureSelector } from '@ngrx/store/src/selector';
 import { IHikeEditPoiState } from '../state/index';
 import {
   wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter
 } from 'app/store/reducer';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 
-export const hikeEditPoiSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
+@Injectable()
+export class HikeEditPoiSelectors {
+  public hikeEditPoiSelector: MemoizedSelector<object, IHikeEditPoiState>;
+  public getAllWikipediaPois: (state: object) => IWikipediaPoi[];
+  public getAllGooglePois: (state: object) => IGooglePoi[];
+  public getAllOsmAmenityPois: (state: object) => IOsmPoi[];
+  public getAllOsmNaturalPois: (state: object) => IOsmPoi[];
+  public getAllOsmRoutePois: (state: object) => IOsmPoi[];
 
-/**
- * Context
- */
+  constructor() {
+    this.hikeEditPoiSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
 
-export function getHikeEditContextSelector(poiType, property) {
-  return createSelector(hikeEditPoiSelector,
-    (state: IHikeEditPoiState) => state.contexts[poiType][property]);
-};
+    /**
+     * Poi entity lists
+     */
 
-/**
- * Poi lists
- */
-const wikipediaPoiSelector = createSelector(
-  this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.wikipediaPois
-);
-export const {
-  selectAll: selectAllWikipediaPois
-} = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector);
+    const wikipediaPoiSelector = createSelector(
+      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.wikipediaPois
+    );
+    this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
 
-const googlePoiSelector = createSelector(
-  this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.googlePois
-);
-export const {
-  selectAll: selectAllGooglePois
-} = googlePoiAdapter.getSelectors(googlePoiSelector);
+    const googlePoiSelector = createSelector(
+      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.googlePois
+    );
+    this.getAllGooglePois = googlePoiAdapter.getSelectors(googlePoiSelector).selectAll;
 
-const osmAmenityPoiSelector = createSelector(
-  this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.osmAmenityPois
-);
-export const {
-  selectAll: selectAllOsmAmenityPois
-} = osmAmenityPoiAdapter.getSelectors(osmAmenityPoiSelector);
+    const osmAmenityPoiSelector = createSelector(
+      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.osmAmenityPois
+    );
+    this.getAllOsmAmenityPois = osmAmenityPoiAdapter.getSelectors(osmAmenityPoiSelector).selectAll;
 
-const osmNaturalPoiSelector = createSelector(
-  this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.osmNaturalPois
-);
-export const {
-  selectAll: selectAllOsmNaturalPois
-} = osmNaturalPoiAdapter.getSelectors(osmNaturalPoiSelector);
+    const osmNaturalPoiSelector = createSelector(
+      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.osmNaturalPois
+    );
+    this.getAllOsmNaturalPois = osmNaturalPoiAdapter.getSelectors(osmNaturalPoiSelector).selectAll;
 
-const osmRoutePoiSelector = createSelector(
-  this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.osmRoutePois
-);
-export const {
-  selectAll: selectAllOsmRoutePois
-} = osmRoutePoiAdapter.getSelectors(osmRoutePoiSelector);
+    const osmRoutePoiSelector = createSelector(
+      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.osmRoutePois
+    );
+    this.getAllOsmRoutePois = osmRoutePoiAdapter.getSelectors(osmRoutePoiSelector).selectAll;
+  }
+
+  /**
+   * Context
+   */
+
+  public getHikeEditContextSelector(poiType) {
+    return createSelector(this.hikeEditPoiSelector,
+      (state: IHikeEditPoiState) => state.contexts[poiType]);
+  };
+
+  public getHikeEditContextPropertySelector(poiType, property) {
+    return createSelector(this.hikeEditPoiSelector,
+      (state: IHikeEditPoiState) => state.contexts[poiType][property]);
+  };
+}
