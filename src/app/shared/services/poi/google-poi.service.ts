@@ -59,7 +59,7 @@ export class GooglePoiService {
               // Google API:  must wait 2 sec between requests
               setTimeout(() => {
                 pagination.nextPage()
-              }, 200);
+              }, 500);
             } else {
               this._getPlaceInfo(_res).then((data) => {
                 resolve(data);
