@@ -142,9 +142,6 @@ export class PoiEditorService {
    */
   private _handleGtrackPois(gtrackPois: ExternalPoi[], poi: ExternalPoi) {
     let _found = _.find(gtrackPois, (p: ExternalPoi) => {
-      console.log('====');
-      console.log('p', p);
-      console.log('poi', poi);
       return p.objectType === poi.objectType &&
         p[p.objectType].id === poi[poi.objectType].id
     });

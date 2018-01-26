@@ -30,7 +30,9 @@ export class OsmRoutePoiService {
           let _point = response.elements[i];
           if (_point.tags && _point.lat) {
             // let _type = _point.tags[poiType];
+
             console.log('ROUTE TAGS???', _point.tags);
+
             _res.push(new OsmPoi({
               id: uuid(),
               lat: _point.lat,
