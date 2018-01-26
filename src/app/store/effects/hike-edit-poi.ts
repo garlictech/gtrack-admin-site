@@ -148,7 +148,7 @@ export class HikeEditPoiEffects {
     .map((data: any) => {
       switch (data.subdomain) {
         case 'google':
-          return new hikeEditMapActions.SetWikipediaMarkers({markers: data.markers});
+          return new hikeEditMapActions.SetGoogleMarkers({markers: data.markers});
         case 'osmAmenity':
           return new hikeEditMapActions.SetOsmAmenityMarkers({markers: data.markers});
         case 'osmNatural':

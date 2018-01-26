@@ -13,19 +13,19 @@ export interface IExternalPoiListContextItemState {
   showOffrouteMarkers?: boolean;
 }
 export interface IExternalPoiListContextState {
-  wikipedia: IExternalPoiListContextItemState,
   google: IExternalPoiListContextItemState,
   osmAmenity: IExternalPoiListContextItemState,
   osmNatural: IExternalPoiListContextItemState,
-  osmRoute: IExternalPoiListContextItemState
+  osmRoute: IExternalPoiListContextItemState,
+  wikipedia: IExternalPoiListContextItemState
 };
 
 // State
 export interface IHikeEditPoiState {
-  wikipediaPois: IWikipediaPoiEntityState,
   googlePois: IGooglePoiEntityState,
   osmAmenityPois: IOsmAmenityPoiEntityState,
   osmNaturalPois: IOsmNaturalPoiEntityState,
   osmRoutePois: IOsmRoutePoiEntityState,
+  wikipediaPois: IWikipediaPoiEntityState,
   contexts: IExternalPoiListContextState
 };
