@@ -1,12 +1,6 @@
+import { IHikeDescription } from 'subrepos/gtrack-common-ngx/app/hike/services/hike-program';
+
 export interface IMockHikeElement {
   id?: string;
-  title?: {
-    [lng: string]: string;
-  };
-  description?: {
-    [lng: string]: string;
-  };
-  summary?: {
-    [lng: string]: string;
-  };
+  description: IHikeDescription;
 }

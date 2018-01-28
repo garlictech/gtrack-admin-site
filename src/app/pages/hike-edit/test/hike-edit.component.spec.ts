@@ -3,7 +3,6 @@ import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 // import { GtActions } from 'app/store/';

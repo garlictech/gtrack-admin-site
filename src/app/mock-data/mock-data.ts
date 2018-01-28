@@ -35,14 +35,16 @@ export const MOCK_HIKE_LIST: IMockHikeElement[] = [
 
 export const MOCK_HIKE_DATA: IMockHikeElement = {
   'id': '-KYTgM_eoTk0BcbN8j5g',
-  'title': {
-    'hu_HU': 'Első túra',
-    'en_US': 'First hike with no EN description.'
-  },
   'description': {
-    'hu_HU': 'Első túra szép hosszú leírása'
-  },
-  'summary': {
-    'hu_HU': 'Első túra szép hosszú leírása nagyon hosszan. Mert ez a summary'
+    'hu_HU': {
+      'full': 'Első túra szép hosszú leírása',
+      'name': 'Első túra',
+      'summary': 'Első túra szép hosszú leírása nagyon hosszan. Mert ez a summary'
+    },
+    'en_US': {
+      'full': '',
+      'name': 'First hike with no EN description.',
+      'summary': 'string'
+    }
   }
 };
