@@ -45,9 +45,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
         // todo: from store
         this.hikeData = {
-          title: {},
-          description: {},
-          summary: {}
+          description: {}
         };
       }
     });

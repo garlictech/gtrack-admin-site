@@ -3,46 +3,68 @@ import { IMockHikeElement } from '../shared/interfaces'
 export const MOCK_HIKE_LIST: IMockHikeElement[] = [
   {
     'id': '-KYTgM_eoTk0BcbN8j5g',
-    'title': {
-      'hu_HU': 'Első túra'
+    'description': {
+      'hu_HU': {
+        'full': '',
+        'name': 'Első túra',
+        'summary': ''
+      }
     }
   },
   {
     'id': '-KYU-aTrD4mSxBG7ELZ9',
-    'title': {
-      'hu_HU': 'Túra a Pilisben'
+    'description': {
+      'hu_HU': {
+        'full': '',
+        'name': 'Túra a Pilisben',
+        'summary': ''
+      }
     }
   },
   {
     'id': '-KhNoTDAUNykA_G0sPxN',
-    'title': {
-      'hu_HU': 'Kerékpárral a Tisza-tó körül.'
+    'description': {
+      'hu_HU': {
+        'full': '',
+        'name': 'Kerékpárral a Tisza-tó körül.',
+        'summary': ''
+      }
     }
   },
   {
     'id': '-KjD8OmAIRqSZDUzezjO',
-    'title': {
-      'hu_HU': 'Tour de Balaton'
+    'description': {
+      'hu_HU': {
+        'full': '',
+        'name': 'Tour de Balaton',
+        'summary': ''
+      }
     }
   },
   {
     'id': '-KjDDKHCwXzCj24bvGkJ',
-    'title': {
-      'hu_HU': 'Dél-Alföldi túra'
+    'description': {
+      'hu_HU': {
+        'full': '',
+        'name': 'Dél-Alföldi túra',
+        'summary': ''
+      }
     }
   }
 ];
 
 export const MOCK_HIKE_DATA: IMockHikeElement = {
   'id': '-KYTgM_eoTk0BcbN8j5g',
-  'title': {
-    'hu_HU': 'Első túra',
-    'en_US': 'First hike with no EN description.'
-  },
   'description': {
-    'hu_HU': 'Első túra szép hosszú leírása'
-  },
-  'summary': {
-    'hu_HU': 'Első túra szép hosszú leírása nagyon hosszan. Mert ez a summary'
+    'hu_HU': {
+      'full': 'Első túra szép hosszú leírása',
+      'name': 'Első túra',
+      'summary': 'Első túra szép hosszú leírása nagyon hosszan. Mert ez a summary'
+    },
+    'en_US': {
+      'full': '',
+      'name': 'First hike with no EN description.',
+      'summary': 'string'
+    }
   }
 };

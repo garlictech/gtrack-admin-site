@@ -31,19 +31,20 @@ https://angular.io/guide/dynamic-form
         </a>
       </h5>
     </div>
+
     <div aria-labelledby="headingOne" class="collapse" id="collapse{{lng}}" role="tabpanel" aria-expanded="false" style="height: 0px;">
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
             <div class="form-group form-black label-floating is-empty">
               <label class="control-label">Title</label>
-              <input class="form-control" type="text" [(ngModel)]="hikeData.title[lng]">
+              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng].name">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-black label-floating is-empty">
               <label class="control-label">Description</label>
-              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng]">
+              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng].full">
             </div>
           </div>
         </div>
@@ -51,7 +52,7 @@ https://angular.io/guide/dynamic-form
           <div class="col-md-12">
             <div class="form-group form-black label-floating is-empty">
               <label class="control-label">Summary</label>
-              <input class="form-control" type="text" [(ngModel)]="hikeData.summary[lng]">
+              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng].summary">
             </div>
           </div>
         </div>
