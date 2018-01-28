@@ -2,5 +2,5 @@ import { IHikeDescription } from 'subrepos/gtrack-common-ngx/app/hike/services/h
 
 export interface IMockHikeElement {
   id?: string;
-  description: IHikeDescription;
+  description?: IHikeDescription;
 }
