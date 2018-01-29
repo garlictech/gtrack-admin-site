@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import { State, hikeEditPoiActions } from '../index';
+import { State, hikeEditPoiActions, hikeEditMapActions } from '../index';
+import { HikeEditPoiSelectors } from '../selectors/hike-edit-poi'
 import {
   OsmPoiService,
   OsmRoutePoiService,
@@ -11,10 +12,12 @@ import {
   GooglePoiService,
   AdminMapService
 } from 'app/shared/services';
-import { AdminMap } from 'app/shared/services/admin-map/admin-map';
-import { IExternalPoi } from 'app/shared/interfaces/index';
+import { AdminMap, AdminMapMarker } from 'app/shared/services/admin-map';
+import { IExternalPoi, IWikipediaPoi, IOsmPoi, IGooglePoi } from 'app/shared/interfaces/index';
 import { ExternalPoi } from 'app/shared/services/poi/external-poi';
 import * as _ from 'lodash';
+import { IExternalPoiListContextItemState } from 'app/store/state';
+import { MapMarkerService, IconService } from 'subrepos/gtrack-common-ngx';
 
 @Injectable()
 export class HikeEditPoiEffects {
@@ -26,111 +29,149 @@ export class HikeEditPoiEffects {
     private _osmRoutePoiService: OsmRoutePoiService,
     private _googlePoiService: GooglePoiService,
     private _poiEditorService: PoiEditorService,
-    private _adminMapService: AdminMapService
+    private _adminMapService: AdminMapService,
+    private _hikeEditPoiSelectors: HikeEditPoiSelectors
   ) {}
 
+  /**
+   * Get pois from WikiPedia api
+   */
   @Effect()
   getWikipediaPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_WIKIPEDIA_POIS)
     .map(toPayload)
     .switchMap(data => {
-      return this._wikipediaPoiService.get(data.bounds).then((pois) => {
-        return _.extend(_.cloneDeep(data), {pois: pois});
+      return this._wikipediaPoiService.get(data.bounds).then((pois) =>  {
+        return _.extend(_.cloneDeep(data), { pois: pois });
       });
     })
     .switchMap(data => this._poiEditorService.assignGTrackPois(data))
     .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
     .map(data => {
-      const _pois = this._poiEditorService.assignOnOffRoutePois(data);
       return new hikeEditPoiActions.SetWikipediaPois({
-        pois: _pois
+        pois: this._poiEditorService.assignOnOffRoutePois(data)
       });
     });
 
+  /**
+   * Get pois from Google api
+   */
   @Effect()
   getGooglePois$: Observable<any> = this._actions$
     .ofType(hikeEditPoiActions.GET_GOOGLE_POIS)
     .map(toPayload)
     .switchMap(data => {
-      return this._googlePoiService.get(data.bounds).then((pois) => {
-        return _.extend(_.cloneDeep(data), {pois: pois});
+      return this._googlePoiService.get(data.bounds).then((pois) =>  {
+        return _.extend(_.cloneDeep(data), { pois: pois });
       });
     })
     .switchMap(data => this._poiEditorService.assignGTrackPois(data))
     .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
     .map(data => {
-      const _pois = this._poiEditorService.assignOnOffRoutePois(data);
       return new hikeEditPoiActions.SetGooglePois({
-        pois: _pois
+        pois: this._poiEditorService.assignOnOffRoutePois(data)
       });
     });
 
+  /**
+   * Get pois from OSM api
+   */
   @Effect()
   getOsmNaturalPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_NATURAL_POIS)
     .map(toPayload)
     .switchMap(data => {
-      return this._osmPoiService.get(data.bounds, 'natural').then((pois) => {
-        return _.extend(_.cloneDeep(data), {pois: pois});
+      return this._osmPoiService.get(data.bounds, 'natural').then((pois) =>  {
+        return _.extend(_.cloneDeep(data), { pois: pois });
       });
     })
     .switchMap(data => this._poiEditorService.assignGTrackPois(data))
     .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
     .map(data => {
-      const _pois = this._poiEditorService.assignOnOffRoutePois(data);
       return new hikeEditPoiActions.SetOsmNaturalPois({
-        pois: _pois
+        pois: this._poiEditorService.assignOnOffRoutePois(data)
       });
     });
 
+  /**
+   * Get pois from OSM api
+   */
   @Effect()
   getOsmAmenityPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_AMENITY_POIS)
     .map(toPayload)
     .switchMap(data => {
-      return this._osmPoiService.get(data.bounds, 'amenity').then((pois) => {
-        return _.extend(_.cloneDeep(data), {pois: pois});
+      return this._osmPoiService.get(data.bounds, 'amenity').then((pois) =>  {
+        return _.extend(_.cloneDeep(data), { pois: pois });
       });
     })
     .switchMap(data => this._poiEditorService.assignGTrackPois(data))
     .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
     .map(data => {
-      const _pois = this._poiEditorService.assignOnOffRoutePois(data);
       return new hikeEditPoiActions.SetOsmAmenityPois({
-        pois: _pois
+        pois: this._poiEditorService.assignOnOffRoutePois(data)
       });
     });
 
+  /**
+   * Get pois from OSM api
+   */
   @Effect()
   getOsmRoutePois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_ROUTE_POIS)
     .map(toPayload)
     .switchMap(data => {
-      return this._osmRoutePoiService.get(data.bounds, data.typeParam).then((pois) => {
-        return _.extend(_.cloneDeep(data), {pois: pois});
+      return this._osmRoutePoiService.get(data.bounds).then((pois) =>  {
+        return _.extend(_.cloneDeep(data), { pois: pois });
       });
     })
     .switchMap(data => this._poiEditorService.assignGTrackPois(data))
     .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
     .map(data => {
-      const _pois = this._poiEditorService.assignOnOffRoutePois(data);
       return new hikeEditPoiActions.SetOsmRoutePois({
-        pois: _pois
+        pois: this._poiEditorService.assignOnOffRoutePois(data)
       });
     });
 
+  /**
+   * Refresh poi markers for the given subdomain
+   */
+  @Effect()
+  generateSubdomainPoiMarkers$: Observable<Action> = this._actions$
+    .ofType(hikeEditPoiActions.GENERATE_SUBDOMAIN_POI_MARKERS)
+    .map(toPayload)
+    // Load old markers for removing them from the map
+    .switchMap(data => this._poiEditorService.getSubdomainMarkers(data))
+    .switchMap(data => this._poiEditorService.clearSubdomainPoiMarkers(data))
+    .switchMap(data => this._poiEditorService.getSubdomainPois(data))
+    .map(data => this._poiEditorService.generatePoiMarkers(data))
+    .map((data: any) => {
+      switch (data.subdomain) {
+        case 'google':
+          return new hikeEditMapActions.SetGoogleMarkers({markers: data.markers});
+        case 'osmAmenity':
+          return new hikeEditMapActions.SetOsmAmenityMarkers({markers: data.markers});
+        case 'osmNatural':
+          return new hikeEditMapActions.SetOsmNaturalMarkers({markers: data.markers});
+        case 'osmRoute':
+          return new hikeEditMapActions.SetOsmRouteMarkers({markers: data.markers});
+        default:
+          return new hikeEditMapActions.SetWikipediaMarkers({markers: data.markers});
+      }
+    });
+
+  /**
+   * Refresh marker visibility for the given subdomain
+   */
   @Effect()
   markersConfigChanged$: Observable<any> = this._actions$
     .ofType(hikeEditPoiActions.MARKERS_CONFIG_CHANGED)
-    .map((action: hikeEditPoiActions.MarkersConfigChanged) => action.payload)
-    .mergeMap(data => {
-      return this._store.select((state: State) => state.hikeEditPoi[data.subdomain])
-        .map((subdomainData) => {
-          return _.extend(_.cloneDeep(data), subdomainData);
-        });
-    })
-    // data now containts payload + map + pois
-    .mergeMap(data => {
+    .map(toPayload)
+    .switchMap(data => this._poiEditorService.getSubdomainMarkers(data))
+    .switchMap(data => this._poiEditorService.clearSubdomainPoiMarkers(data))
+    .switchMap(data => this._poiEditorService.getSubdomainPois(data))
+    .switchMap(data => this._poiEditorService.getSubdomainContext(data))
+    .switchMap(data => {
       this._poiEditorService.handleMarkerChanged(data);
       return Observable.empty<Response>();
     });

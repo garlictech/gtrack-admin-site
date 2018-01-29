@@ -70,7 +70,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     // Disable wheel zoom
-    this.mapComponent.leafletMap.scrollWheelZoom.disable();
+    // this.mapComponent.leafletMap.scrollWheelZoom.disable();
 
     // Setup map events
     this.mapComponent.leafletMap
@@ -83,7 +83,9 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log('todo _createCheckpoint');
           // this._createCheckpoint(e.latlng);
         }
-      })
+      });
+
+      /*
       // Turn on scrollWheelZoom after the first interaction (click/drag)
       .on('mouseup', () => {
         this.mapComponent.leafletMap.scrollWheelZoom.enable();
@@ -91,7 +93,8 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       // Turn off scrollWheelZoom on mouse out
       .on('mouseout', () => {
         this.mapComponent.leafletMap.scrollWheelZoom.disable();
-      });
+      })
+      */
   }
 
   public toggleCurrentPositionMarker($event: Event) {

@@ -1,12 +1,19 @@
-<div class="card">
-  <div class="card-content">
-    <h3>Login</h3>
-    <hr>
-    <p>
-      <button type="button" class="btn btn-social btn-fill btn-google" (click)="login()">
-        <i class="fa fa-google" aria-hidden="true"></i>
-        Login with Google
-      </button>
-    </p>
+<div class="container-fluid login-container">
+  <div class="card">
+    <div class="card-body">
+      <h3>
+        Login
+      </h3>
+      <hr>
+      <p> <!-- [disabled]="loggingIn$ | async"  -->
+        <button type="button" class="btn btn-social btn-fill btn-google" (click)="login()">
+          <i class="fa fa-google" aria-hidden="true"></i>
+          <span *ngIf="!(loggingIn$ | async)">Login with Google</span>
+          <span *ngIf="loggingIn$ | async">
+            Logging in... <i class="fa-li fa fa-spinner fa-spin login-spinner"></i>
+          </span>
+        </button>
+      </p>
+    </div>
   </div>
 </div>

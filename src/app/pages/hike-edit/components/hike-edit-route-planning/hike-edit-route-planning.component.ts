@@ -7,7 +7,7 @@ import {
   IRouteInfoDataState,
   hikeEditroutePlanningActions
 } from 'app/store';
-import { selectHikeEditMapMapId } from 'app/store/selectors/hike-edit-map';
+import { HikeEditMapSelectors } from 'app/store/selectors/hike-edit-map';
 
 @Component({
   selector: 'gt-hike-edit-route-planning',
@@ -19,13 +19,15 @@ export class HikeEditRoutePlanningComponent {
 
   constructor(
     private _adminMapService: AdminMapService,
+    private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _store: Store<State>
   ) {
     this.routeInfoData$ = this._store.select((state: State) => state.routeInfoData);
 
-    this._store.select(selectHikeEditMapMapId).subscribe((mapId: string) => {
-      this._map = this._adminMapService.getMapById(mapId);
-    });
+    this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
+      .subscribe((mapId: string) => {
+        this._map = this._adminMapService.getMapById(mapId);
+      });
   }
 
   public retrievePlan() {

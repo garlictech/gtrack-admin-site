@@ -1,21 +1,22 @@
-import { Poi } from '../poi';
+import { IHikeProgramStop } from '../hike-program/interfaces';
 
 export class Checkpoint {
-  public marker: L.Marker;
   protected _name: string;
+  public id: string;
 
-  constructor(public poi: Poi, public index: number) {
+  constructor(public stop: IHikeProgramStop, public index: number) {
     this._name = `Checkpoint ${index}`;
+    this.id = stop.poiId;
   };
 
   public get name(): string {
     let name = this._name;
 
-    if (this.poi.isStart === true && this.poi.isFinish === true) {
+    if (this.stop.isStart === true && this.stop.isFinish === true) {
       name = 'Start - Finish';
-    } else if (this.poi.isStart === true) {
+    } else if (this.stop.isStart === true) {
       name = 'Start';
-    } else if (this.poi.isFinish === true) {
+    } else if (this.stop.isFinish === true) {
       name = 'Finish';
     }
 

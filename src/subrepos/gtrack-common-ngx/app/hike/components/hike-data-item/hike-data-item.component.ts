@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IHike } from '../../services/hike';
+import { IHikeProgram } from '../../services/hike-program';
 
 @Component({
   selector: 'gtcn-hike-data-item',
@@ -9,5 +9,5 @@ import { IHike } from '../../services/hike';
 })
 export class HikeDataItemComponent {
   @Input()
-  public hike: IHike;
+  public hikeProgram: IHikeProgram;
 }

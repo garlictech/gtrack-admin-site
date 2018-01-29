@@ -23,21 +23,19 @@ export const ROUTES: RouteInfo[] = [
 ];
 
 @Component({
-  selector: 'app-sidebar',
+  selector: '[app-sidebar]',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  menuItems: any[];
+  public menuItems: any[];
 
-  constructor(private _store: Store<State>) {}
+  constructor(
+    private _store: Store<State>
+  ) {}
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
-  }
-
-  isMobileMenu() {
-    return window.outerWidth <= 991;
   }
 
   logout() {

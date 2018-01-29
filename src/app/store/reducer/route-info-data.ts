@@ -1,4 +1,4 @@
-import { ActionReducer, Action } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { IRouteInfoDataState } from '../state';
 import { routeInfoDataActions } from '../index';
 
@@ -29,9 +29,7 @@ export function routeInfoDataReducer(
     case routeInfoDataActions.POP_SEGMENT:
       return {
         ...state,
-        segments: state.segments.length > 1 ?
-          state.segments.slice(0, state.segments.length - 1) :
-          []
+        segments: state.segments.length > 1 ? state.segments.slice(0, state.segments.length - 1) : []
       };
     case routeInfoDataActions.UPDATE_TOTAL:
       return {

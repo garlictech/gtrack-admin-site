@@ -3,11 +3,10 @@ import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-// import { GtActions } from 'app/store/';
-import { HikeDataService } from 'app/shared/services';
-import { HikeDataServiceStub } from 'app/test/helpers/services';
-import { MockStore } from 'app/test/helpers/store/';
-
+import { hikeListActions } from '../../../store/';
+import { HikeDataService } from '../../../shared/services';
+import { HikeDataServiceStub } from '../../../test/helpers/services';
+import { MockStore } from '../../../test/helpers/store/';
 import { HikeListComponent } from '../hike-list.component';
 
 let comp: HikeListComponent;
@@ -15,7 +14,7 @@ let fixture: ComponentFixture<HikeListComponent>;
 let store: any;
 
 /*
-describe('HikeListComponent', () => {
+fdescribe('HikeListComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -49,7 +48,7 @@ describe('HikeListComponent', () => {
   }));
 
   it('should call delete', async(() => {
-    const deleteAction = new GtActions.DeleteHikeAction('fakeid');
+    const deleteAction = new hikeListActions.DeleteHike({hikeId: 'fakeid'});
 
     comp.deleteHike('fakeid');
     fixture.detectChanges();

@@ -17,8 +17,9 @@
         <td>{{poi.distFromRoute | distance : true}}</td>
         <td>{{poi.types.join(', ')}}</td>
         <td>
-          <a *ngIf="poi.inHike" (click)="removePoi($event, idx)">remove</a>
-          <a *ngIf="!poi.inHike" (click)="addPoi($event, idx)">add</a>
+          <a (click)="handleInHikePoi($event, poi)">
+            {{poi.inHike ? 'remove': 'add'}}
+          </a>
         </td>
         <td><special-poi-data [poi]="poi"></special-poi-data></td>
       </tr>

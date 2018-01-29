@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ExternalPoi } from './external-poi';
+import { GooglePoi } from './lib/google-poi';
 import { GoogleMapsService } from 'subrepos/gtrack-common-ngx/index';
 import { /**/ } from '@types/googlemaps';
 import { SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG } from 'constants';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import * as uuid from 'uuid';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -19,7 +20,6 @@ export class GooglePoiService {
   ) {}
 
   public get(bounds, lang = 'en') {
-    console.log('bounds', bounds);
     return this._googleMapsService.map
       .then(() => {
         this._createFakeMapInstance();
@@ -27,18 +27,18 @@ export class GooglePoiService {
 
         const _map = new google.maps.Map(document.getElementById('fakeMap'));
         this._placesService = new google.maps.places.PlacesService(_map);
-        console.log('this._placesService', this._placesService);
         const _bnds = new google.maps.LatLngBounds(
           new google.maps.LatLng(bounds.SouthWest.lat, bounds.SouthWest.lon),
           new google.maps.LatLng(bounds.NorthEast.lat, bounds.NorthEast.lon)
         );
-        let _res: ExternalPoi[] = [];
+        let _res: GooglePoi[] = [];
 
         return new Promise((resolve, reject) => {
           this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
             for (let i = 0; i < result.length; i++) {
               const _point = result[i];
               const _pointData = {
+                id: uuid(),
                 lat: _point.geometry.location.lat(),
                 lon: _point.geometry.location.lng(),
                 title: _point.name || 'unknown',
@@ -52,14 +52,14 @@ export class GooglePoiService {
                 return obj === 'locality' ? 'city' : obj;
               })
 
-              _res.push(new ExternalPoi(_pointData));
+              _res.push(new GooglePoi(_pointData));
             }
 
             if (pagination.hasNextPage) {
               // Google API:  must wait 2 sec between requests
               setTimeout(() => {
                 pagination.nextPage()
-              }, 200);
+              }, 500);
             } else {
               this._getPlaceInfo(_res).then((data) => {
                 resolve(data);
@@ -94,7 +94,7 @@ export class GooglePoiService {
   /**
    * get() submethod
    */
-  private _getPlaceInfo(pois: ExternalPoi[]) {
+  private _getPlaceInfo(pois: GooglePoi[]) {
     return Observable
       .interval(200)
       .take(pois.length)

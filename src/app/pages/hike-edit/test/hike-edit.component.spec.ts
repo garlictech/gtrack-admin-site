@@ -3,17 +3,16 @@ import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 // import { GtActions } from 'app/store/';
-import { MockStore } from 'app/test/helpers/store/';
-import { ActivatedRouteStub } from 'app/test/helpers/services';
-import { HikeDataServiceStub } from 'app/test/helpers/services';
+import { MockStore } from '../../../test/helpers/store/';
+import { ActivatedRouteStub } from '../../../test/helpers/services';
+import { HikeDataServiceStub } from '../../../test/helpers/services';
 
 import { HikeEditComponent } from '../hike-edit.component';
-import { ObjectToArrayPipe } from 'app/shared/pipes/';
-import { HikeDataService } from 'app/shared/services';
+import { ObjectToArrayPipe } from '../../../shared/pipes/';
+import { HikeDataService } from '../../../shared/services';
 
 declare const $: any;
 

@@ -1,5 +1,5 @@
 import { storeLogger } from 'ngrx-store-logger';
-import { StoreModule, combineReducers } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/models';
 import { storeFreeze } from 'ngrx-store-freeze';
@@ -16,6 +16,10 @@ import * as adminMapActions from './actions/admin-map';
 export type AdminMapAction = adminMapActions.AllAdminMapActions;
 export { adminMapActions };
 
+import * as hikeEditMapActions from './actions/hike-edit-map';
+export type HikeEditMapAction = hikeEditMapActions.AllHikeEditMapActions;
+export { hikeEditMapActions };
+
 import * as hikeEditPoiActions from './actions/hike-edit-poi';
 export type HikeEditPoiAction = hikeEditPoiActions.AllHikeEditPoiActions;
 export { hikeEditPoiActions };
@@ -24,9 +28,9 @@ import * as hikeEditroutePlanningActions from './actions/hike-edit-route-plannin
 export type HikeEditroutePlanningAction = hikeEditroutePlanningActions.AllHikeEditroutePlanningActions;
 export { hikeEditroutePlanningActions };
 
-import * as layoutActions from './actions/layout';
-export type LayoutAction = layoutActions.AllLayoutActions;
-export { layoutActions };
+import * as hikeListActions from './actions/hike-list';
+export type HikeListAction = hikeListActions.AllHikeListActions;
+export { hikeListActions };
 
 import * as routeInfoDataActions from './actions/route-info-data';
 export type RouteInfoDataAction = routeInfoDataActions.AllRouteInfoDataActions;
@@ -41,21 +45,24 @@ export { AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from '.
 export { RouterEffects } from 'subrepos/gtrack-common-ngx';
 
 // States
-import { IRouteInfoDataState, ILayoutState, IHikeEditMapState, IHikeEditPoiState } from './state';
-export { IRouteInfoDataState, ILayoutState, IHikeEditMapState, IHikeEditPoiState };
+import {
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState
+} from './state';
+export {
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState
+};
 
 // Selectors
 export * from './selectors';
 
 // Reducers
-import { routeInfoDataReducer, layoutReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
-export { routeInfoDataReducer, layoutReducer, hikeEditMapReducer, hikeEditPoiReducer };
+import { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
+export { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer };
 
 // Extend the store interface with that.
 export interface State {
   authentication: IAuthenticationState;
   routeInfoData: IRouteInfoDataState;
-  layout: ILayoutState;
   hikeEditMap: IHikeEditMapState;
   hikeEditPoi: IHikeEditPoiState;
   router: RouterReducerState; // ngrx/router
@@ -66,7 +73,6 @@ export interface State {
 const reducers: ActionReducerMap<State> = {
   authentication: authReducer,
   routeInfoData: routeInfoDataReducer,
-  layout: layoutReducer,
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditMap: hikeEditMapReducer,
   router: routerReducer,

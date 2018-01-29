@@ -1,41 +1,54 @@
-<div class="main-content">
+<div class="content">
   <div class="container-fluid">
-    <div class="card">
-      <div class="card-header" data-background-color="gt-green-primary">
-        <h4 class="title">General info</h4>
-      </div>
-      <div class="card-content">
-          TODO: https://blog.angular-university.io/introduction-to-angular-2-forms-template-driven-vs-model-driven/
-          <br>
-          https://angular.io/guide/dynamic-form
-        <gt-hike-edit-general-info [hikeData]="hikeData" ></gt-hike-edit-general-info>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header" data-background-color="gt-green-primary">
-        <h4 class="title">Map</h4>
-      </div>
-      <div class="card-content">
-        <gt-hike-edit-map></gt-hike-edit-map>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">General info</h4>
+          </div>
+          <div class="card-body">
+            <gt-hike-edit-general-info [hikeData]="hikeData"></gt-hike-edit-general-info>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-header" data-background-color="gt-green-primary">
-        <h4 class="title">Route planning</h4>
-      </div>
-      <div class="card-content">
-        <gt-hike-edit-route-planning></gt-hike-edit-route-planning>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Map</h4>
+          </div>
+          <div class="card-body">
+            <gt-hike-edit-map></gt-hike-edit-map>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-header" data-background-color="gt-green-primary">
-        <h4 class="title">Pois</h4>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Route planning</h4>
+          </div>
+          <div class="card-body">
+            <gt-hike-edit-route-planning></gt-hike-edit-route-planning>
+          </div>
+        </div>
       </div>
-      <div class="card-content">
-        <gt-hike-edit-pois></gt-hike-edit-pois>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Pois</h4>
+          </div>
+          <div class="card-body">
+            <gt-hike-edit-pois></gt-hike-edit-pois>
+          </div>
+        </div>
       </div>
     </div>
   </div>

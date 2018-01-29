@@ -8,9 +8,9 @@ export class MapMarker {
   constructor(
     lat: number,
     lon: number,
-    private types: Array<string>,
+    protected types: Array<string>,
     title: string,
-    private iconService: IconService
+    protected iconService: IconService
   ) {
     this.marker = new L.Marker([lat, lon], {
       icon: iconService.getLeafletIcon(types),

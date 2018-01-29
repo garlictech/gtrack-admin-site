@@ -1,42 +1,19 @@
-gt-hike-edit-map {
-  .map-container {
-    width: 100%;
-    height: 400px;
+.map-container {
+  width: 100%;
+  height: 400px;
+}
 
-    gc-admin-leaflet {
-      .leaflet-container {
-        height: 100%;
-        cursor: pointer;
-      }
-
-      .button-container {
-        position: absolute;
-        z-index: 100000;
-        bottom: 0px;
-        left: 10px;
-      }
-
-      .leaflet-routing-container {
-        display: none;
-      }
-    }
-  }
-
-  .leaflet-div-icon {
-    background-image: url('assets/img/marker-icon.png');
-    background-color: transparent;
-    border: 0;
-    text-align: center;
-    span {
-      position: relative;
-      top: -30px;
-      color: white;
-      text-shadow:
-        -1px -1px 0 #000,
-        1px -1px 0 #000,
-        -1px 1px 0 #000,
-        1px 1px 0 #000;
-      font-size: 20px;
-    }
+.leaflet-div-icon {
+  background-image: url('assets/img/marker-icon.png');
+  background-color: transparent;
+  border: 0;
+  text-align: center;
+  span  {
+    position: relative;
+    top: -30px;
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+      1px 1px 0 #000;
+    font-size: 20px;
   }
 }

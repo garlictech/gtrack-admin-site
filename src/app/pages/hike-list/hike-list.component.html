@@ -1,47 +1,49 @@
-<div class="main-content">
+<div class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header clearfix" data-background-color="gt-green-primary">
+          <div class="card-header">
               <button
-                class="btn btn-round btn-fab btn-fab-mini btn-white btn-just-icon pull-right"
+                class="btn btn-round"
                 routerLink="/admin/hike/add"
                 title="Add new hike">
                 <i class="material-icons">add</i>
               </button>
-            <h4 class="title">Hikes</h4>
+            <h4 class="card-title">Hikes</h4>
           </div>
-          <div class="card-content table-responsive">
-            <table class="table table-hover">
-              <thead class="text-success">
-                <tr>
-                  <th>Id</th>
-                  <th>Title</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let hike of hikeList">
-                  <td>{{hike.id}}</td>
-                  <td>{{hike.title.hu_HU}}</td>
-                  <td class=" ">
-                    <button
-                      class="btn btn-round btn-warning btn-just-icon btn-sm"
-                      routerLink="/admin/hike/{{hike.id}}"
-                      title="Edit hike">
-                      <i class="material-icons">edit</i>
-                    </button>
-                    <button
-                      class="btn btn-round btn-danger btn-just-icon btn-sm"
-                      (click)="deleteHike(hike.id)"
-                      title="Delete hike">
-                      <i class="material-icons">delete</i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let hike of hikeList">
+                    <td>{{hike.id}}</td>
+                    <td>{{hike.title.hu_HU}}</td>
+                    <td class="td-actions">
+                      <button
+                        class="btn btn-warning btn-simple btn-link"
+                        routerLink="/admin/hike/{{hike.id}}"
+                        title="Edit hike">
+                        <i class="material-icons">edit</i>
+                      </button>
+                      <button
+                        class="btn btn-danger btn-simple btn-link"
+                        (click)="deleteHike(hike.id)"
+                        title="Delete hike">
+                        <i class="material-icons">delete</i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

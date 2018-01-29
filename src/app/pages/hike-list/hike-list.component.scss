@@ -1,21 +1,23 @@
-gt-hike-list {
-  .card-header {
-    .btn {
-      position: absolute;
-      right: 26px;
-      top: 16px;
+.card-header {
+  .btn {
+    position: absolute;
+    right: 26px;
+    top: 16px;
+  }
+}
+
+table.table {
+  th:last-child,
+  td:last-child {
+    text-align: right !important;
+    button {
+      padding: 0 8px;
     }
   }
+}
 
-  table.table {
-    th:last-child,
-    td:last-child {
-      width: 200px;
-      text-align: right !important;
-
-      button:last-child {
-        margin-left: 5px;
-      }
-    }
+.card-header {
+  .btn-round {
+    padding: 8px 12px;
   }
 }

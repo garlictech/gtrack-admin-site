@@ -23,16 +23,17 @@ export class HikeEditGeneralInfoComponent implements OnInit {
 
   ngOnInit() {
     this.existingLangKeys = new Set([
-      ...Object.keys((this.hikeData.title || {})),
-      ...Object.keys((this.hikeData.description || {}))
+      ...Object.keys((this.hikeData.description || {}))
     ]);
   }
 
   public addTranslation() {
     if (this.selLang) {
-      this.hikeData.title[this.selLang] = '';
-      this.hikeData.description[this.selLang] = '';
-      this.hikeData.summary[this.selLang] = '';
+      this.hikeData.description[this.selLang] = {
+        name: '',
+        full: '',
+        summary: ''
+      }
 
       this.existingLangKeys.add(this.selLang);
 

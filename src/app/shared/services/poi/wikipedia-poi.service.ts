@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Jsonp, Response } from '@angular/http';
-import { ExternalPoi } from './external-poi';
+import { WikipediaPoi } from './lib/wikipedia-poi';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index';
+import * as uuid from 'uuid';
 
 @Injectable()
 export class WikipediaPoiService {
@@ -14,17 +15,18 @@ export class WikipediaPoiService {
 
   public get(bounds, lang = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
-    const request = `https://${lang}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo!.radius}&gscoord=${geo!.center!.geometry!.coordinates![1]}%7C${geo!.center!.geometry!.coordinates![0]}&format=json&gslimit=500&origin=*`;
+    const request = `https://${lang}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo!.radius!}&gscoord=${geo!.center!.geometry!.coordinates![1]}%7C${geo!.center!.geometry!.coordinates![0]}&format=json&gslimit=500&origin=*`;
 
     return this._http.get(request)
       .toPromise()
       .then((data: any) => {
-        let _res: ExternalPoi[] = [];
+        let _res: WikipediaPoi[] = [];
 
         for (let i = 0; i < data.query.geosearch.length; i++) {
           let _point = data.query.geosearch[i];
 
-          _res.push(new ExternalPoi({
+          _res.push(new WikipediaPoi({
+            id: uuid(),
             lat: _point.lat,
             lon: _point.lon,
             title: _point.title,

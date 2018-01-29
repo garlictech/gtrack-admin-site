@@ -1,4 +1,4 @@
-import { IRoute } from './iroute';
+import { IRoute } from './interfaces';
 
 export class Route implements IRoute {
   public id: string;

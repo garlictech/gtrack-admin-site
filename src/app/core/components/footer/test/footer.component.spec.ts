@@ -1,6 +1,5 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
-
 import { FooterComponent } from '../footer.component';
 
 // For date pipe

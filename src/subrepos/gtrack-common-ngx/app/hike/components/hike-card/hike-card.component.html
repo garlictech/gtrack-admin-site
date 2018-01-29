@@ -1,12 +1,12 @@
-<div class="card hike-card-background" [ngStyle]="{'background': 'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + image + ') 50% 50%', 'background-size': 'cover'}" *ngIf="hike">
+<div class="card hike-card-background" [ngStyle]="{'background': 'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + image + ') 50% 50%', 'background-size': 'cover'}" *ngIf="hikeProgram">
   <div class="card-body d-flex flex-column justify-content-start">
     <div class="card-meta card-row d-flex justify-content-end">
-      <gtcn-hike-info [hike]="hike"></gtcn-hike-info>
+      <gtcn-hike-info [hikeProgram]="hikeProgram"></gtcn-hike-info>
     </div>
 
     <div class="card-center card-row d-flex flex-column justify-content-center">
-      <h2 class="card-title">{{ hike.name }}</h2>
-      <h6 class="card-subtitle mb2"><i class="ion-ios-location"></i> {{ hike.location }}</h6>
+      <h2 class="card-title">{{ hikeProgram.name }}</h2>
+      <h6 class="card-subtitle mb2"><i class="ion-ios-location"></i> {{ hikeProgram.location }}</h6>
     </div>
 
     <div class="card-row"></div>

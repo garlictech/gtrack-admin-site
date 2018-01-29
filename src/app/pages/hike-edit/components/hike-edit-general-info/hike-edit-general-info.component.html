@@ -1,11 +1,17 @@
-<div class="lang-toolbar clearfix">
+<!--
+TODO: https://blog.angular-university.io/introduction-to-angular-2-forms-template-driven-vs-model-driven/
+<br>
+https://angular.io/guide/dynamic-form
+-->
+
+<div class="lang-toolbar clearfix mb-2">
   <button class="btn btn-round btn-sm btn-just-icon btn-success" [disabled]="!selLang" (click)="addTranslation()">
     <i class="material-icons">add</i>
   </button>
 
-  <select class="form-control" [(ngModel)]="selLang" title="Select">
+  <select class="form-control form-control-sm" [(ngModel)]="selLang" title="Select">
     <ng-container *ngFor="let lang of langs | obj2arr">
-      <option *ngIf="!existingLangKeys.has(lang.key)" [value]="lang.key" [innerHTML]="lang.value">
+      <option *ngIf="existingLangKeys && !existingLangKeys.has(lang.key)" [value]="lang.key" [innerHTML]="lang.value">
       </option>
     </ng-container>
   </select>
@@ -13,31 +19,32 @@
   <span>New lang:</span>
 </div>
 
-<div aria-multiselectable="true" class="panel-group" id="accordion" role="tablist">
-  <div class="panel panel-default" *ngFor="let lng of existingLangKeys">
-    <div class="panel-heading" id="headingOne" role="tab">
-      <a aria-controls="collapseOne" aria-expanded="false" data-parent="#accordion" data-toggle="collapse" href="#collapse{{lng}}"
-        role="button" class="collapsed">
-        <div class="text-success">
-          {{langs[lng]}}
-          <i class="material-icons">keyboard_arrow_down</i>
-        </div>
-      </a>
+<div aria-multiselectable="true" id="accordion" role="tablist">
+  <div class="card mb-1" *ngFor="let lng of existingLangKeys">
+    <div class="card-header bg-light" id="headingOne" role="tab">
+      <h5>
+        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse{{lng}}" role="button" class="collapsed">
+          <div class="text-success">
+            {{langs[lng]}}
+            <i class="material-icons pull-right">keyboard_arrow_down</i>
+          </div>
+        </a>
+      </h5>
     </div>
-    <div aria-labelledby="headingOne" class="panel-collapse collapse" id="collapse{{lng}}" role="tabpanel" aria-expanded="false"
-      style="height: 0px;">
-      <div class="panel-body">
+
+    <div aria-labelledby="headingOne" class="collapse" id="collapse{{lng}}" role="tabpanel" aria-expanded="false" style="height: 0px;">
+      <div class="card-body">
         <div class="row">
           <div class="col-md-6">
             <div class="form-group form-black label-floating is-empty">
               <label class="control-label">Title</label>
-              <input class="form-control" type="text" [(ngModel)]="hikeData.title[lng]">
+              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng].name">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group form-black label-floating is-empty">
               <label class="control-label">Description</label>
-              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng]">
+              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng].full">
             </div>
           </div>
         </div>
@@ -45,7 +52,7 @@
           <div class="col-md-12">
             <div class="form-group form-black label-floating is-empty">
               <label class="control-label">Summary</label>
-              <input class="form-control" type="text" [(ngModel)]="hikeData.summary[lng]">
+              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng].summary">
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@ import { SharedModule, SharedConfig, DeepstreamModule, RouterEffects } from 'sub
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store, AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from './store';
+import { store, AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects, HikeEditPoiSelectors, HikeEditMapSelectors } from './store';
 import { routing } from './app-routing.module';
 // Page modules
 import { CoreLayoutModule } from './core';
@@ -82,7 +82,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     routing,
     StoreRouterConnectingModule,
     StoreDevtoolsModule.instrument({
-      maxAge: 25
+      maxAge: 5
     }),
     DeepstreamModule.forRoot({
       deepstreamConnectionString: environment.deepstream,
@@ -98,7 +98,12 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     HikeListModule,
     HikeEditModule,
     // Effects
-    EffectsModule.forRoot([AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects, RouterEffects])
+    EffectsModule.forRoot([
+      AuthEffects,
+      HikeEditRoutePlanningEffects,
+      HikeEditPoiEffects,
+      RouterEffects
+    ])
   ],
   providers: [
     // Services
@@ -109,6 +114,8 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     OsmPoiService,
     OsmRoutePoiService,
     GooglePoiService,
+    HikeEditPoiSelectors,
+    HikeEditMapSelectors,
     {
       provide: RouterStateSerializer,
       useClass: CustomRouterStateSerializer

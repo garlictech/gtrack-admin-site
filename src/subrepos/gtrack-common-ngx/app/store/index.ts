@@ -1,32 +1,37 @@
-import { ModuleWithProviders } from '@angular/core';
 import { storeLogger } from 'ngrx-store-logger';
-import { StoreModule, combineReducers, Action } from '@ngrx/store';
-import { compose } from '@ngrx/store';
-import { ActionReducer, MetaReducer } from '@ngrx/store/src/models';
+import { StoreModule, combineReducers } from '@ngrx/store';
+import { compose, ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store';
 
-// A module with store must export its reducers and its store interface.
+import { IAuthenticationState, Reducer as authReducer, domain as authDomain } from 'subrepos/authentication-api-ngx';
+import { Reducer as deepstreamReducer, IDeepstreamState, DeepstreamService } from 'subrepos/deepstream-ngx';
+
+import {
+  poiReducer,
+  IPoiState,
+  hikeReducer,
+  IHikeState,
+  routeReducer,
+  IRouteState
+} from '../hike';
+
+// A module with store must export its reducers and its store interface - do it here, like in teh example
 // import * as Authentication from '../authentication/store'
-// import * as ActorList from '../videolist/store';
 
 // Add the store interface of the module to the global reducers.
-const reducers = {
-  // authentication: Authentication.Reducer,
-  // actorList: ActorList.Reducer,
-};
-
-// For ngrx 4.x migration
-export * from './actions';
-export * from './effects';
 
 // Extend the store interface with that.
-export interface State {
-  // authentication: Authentication.IAuthenticationState,
-  // actorList: ActorList.IActorListState,
+export interface CommonState {
+  jwtAuthentication: IAuthenticationState,
+  deepstream: IDeepstreamState,
+  poi: IPoiState,
+  hike: IHikeState,
+  route: IRouteState
 }
 
-function logger(reducer: ActionReducer<State>): any {
-  return storeLogger()(reducer);
-}
-const metaReducers: MetaReducer<State>[] = [logger];
-
-export const store = StoreModule.forRoot(reducers, { metaReducers });
+export const commonReducers: ActionReducerMap<CommonState> = {
+  jwtAuthentication: authReducer,
+  deepstream: deepstreamReducer,
+  poi: poiReducer,
+  hike: hikeReducer,
+  route: routeReducer
+};
