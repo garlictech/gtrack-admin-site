@@ -13,9 +13,7 @@
         "email": "contact@garlictech.com",
         "url": "http://www.garlictech.com"
     },
-    "contributors": [
-        "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
-    ],
+    "contributors": ["Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"],
     "keywords": [],
     "bugs": {
         "url": "https://github.com/garlictech/authentication-api-ngx/issues"
@@ -27,7 +25,7 @@
     },
     "dependencies": {
         "firebase": "4.8.0",
-        "angularfire2": "^5.0.0-rc.0"
+        "angularfire2": "5.0.0-rc.4"
     },
     "devDependencies": {}
 }
