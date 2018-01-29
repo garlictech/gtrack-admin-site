@@ -74,3 +74,4 @@ tokens.env
 secrets.tgz
 .vscode
 firebase-debug.log
+.setup.sh
