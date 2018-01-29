@@ -3,7 +3,7 @@ import { IEnvironment } from './ienvironment';
 export class Environment implements IEnvironment {
   production = true;
   webappServer = 'https://gtrack-admin-zlnhf.firebaseapp.com/';
-  deepstream = 'wss://deepstream.garlictech.com/deepstream';
+  deepstream = 'wss://deepstream.gtracksport.com/deepstream';
 
   authentication = {
     server: 'https://y0z8yjok18.execute-api.us-east-1.amazonaws.com/latest',

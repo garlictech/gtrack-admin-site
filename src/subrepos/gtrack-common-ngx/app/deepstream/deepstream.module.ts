@@ -22,7 +22,7 @@ let defaultExternalDeepstreamDependencies: IExternalDeepstreamDependencies = {
     LOGIN_SUCCESS: JwtActions.LOGIN_SUCCESS,
     LOGOUT_START: JwtActions.LOGOUT_START
   },
-  deepstreamConnectionString: 'wss://deepstream.camnjoy.com/deepstream',
+  deepstreamConnectionString: 'wss://deepstream.gtracksport.com/deepstream',
   selectors: {
     getUserId: createSelector(selectUser, state => _.get(state, 'id')),
     getUserRole: createSelector(selectUser, state => _.get(state, 'roles[0]'))
