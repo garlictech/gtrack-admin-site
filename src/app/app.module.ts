@@ -85,7 +85,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       maxAge: 25
     }),
     DeepstreamModule.forRoot({
-      deepstreamConnectionString: 'localhost:6020',
+      deepstreamConnectionString: environment.deepstream,
       storeDomain: 'deepstream'
     }),
     AngularFireModule.initializeApp(authConfig.firebase),
@@ -116,4 +116,4 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
