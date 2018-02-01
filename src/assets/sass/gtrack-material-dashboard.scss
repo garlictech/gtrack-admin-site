@@ -29,4 +29,9 @@ table.table {
     display: table-cell !important;
   }
 }
+
+.modal {
+  background-color: rgba(0,0,0,0.3);
+  padding: 30px;
+}
 /* <-- Overrides, fixes */
