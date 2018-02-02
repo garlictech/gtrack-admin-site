@@ -34,9 +34,7 @@ export class HikeEditGeneralInfoComponent implements OnInit {
         full: '',
         summary: ''
       }
-
       this.existingLangKeys.add(this.selLang);
-
       this.selLang = '';
     }
   }
