@@ -4,8 +4,7 @@ import * as _ from 'lodash';
 
 import {
   IAuthenticationState,
-  IAuth,
-  Actions as JwtActions,
+  IAuth
 } from 'subrepos/authentication-api-ngx';
 
 import {
@@ -22,10 +21,6 @@ let selectAuth = createSelector(selectAuthFeature, (state: IAuthenticationState)
 export const selectUser = createSelector(selectAuth, (state: IAuth) => state.user);
 
 let defaultExternalDeepstreamDependencies: IExternalDeepstreamDependencies = {
-  JwtApiActions: {
-    LOGIN_SUCCESS: JwtActions.LOGIN_SUCCESS,
-    LOGOUT_START: JwtActions.LOGOUT_START
-  },
   deepstreamConnectionString: 'localhost:6020',
   selectors: {
     getUserId: createSelector(selectUser, state => _.get(state, 'id')),
