@@ -19,8 +19,6 @@ export interface IQueryDesc {
 }
 
 export interface IRpcQuery {
-  userId: string;
-  role: string;
   payload: IQueryDesc;
 }
 
@@ -38,18 +36,16 @@ export class DeepstreamService {
   login(token: string) {
     return this.dsClient.close().switchMap(() => this.dsClient.login({ jwtToken: token }))
   }
+
   getClient(): DeepstreamClient {
     return this.dsClient;
   }
-  doQuery<T = any>(queryDesc: IQueryDesc, start = 0): Observable<T[]> {
-    return this._store
-      .select(this._selectors.userData)
-      .switchMap(userData => {
-        let rpc = new Rpc(this.dsClient);
-        let rpcData: IRpcQuery = { ...userData, payload: queryDesc };
 
-        return this.callRpc('search-provider.serialize', rpcData);
-      })
+  doQuery<T = any>(queryDesc: IQueryDesc, start = 0): Observable<T[]> {
+    let rpcData: IRpcQuery = { payload: { ...queryDesc }};
+
+    return this
+      .callRpc('search-provider.serialize', rpcData)
       .switchMap(res => {
         let query = new Query<T>(this.dsClient);
         return query.queryForData(res.name, res.table);
@@ -60,14 +56,15 @@ export class DeepstreamService {
     let start = currentPage * pageSize;
     let end = start + pageSize;
 
-    return this._store
-      .select(this._selectors.userData)
-      .switchMap(userData => {
-        let rpcData: IRpcQuery = { ...userData, payload: { ...queryDesc } };
-        rpcData.payload.limit = end;
+    let rpcData: IRpcQuery = {
+      payload: {
+        ...queryDesc,
+        limit: end
+      }
+    };
 
-        return this.callRpc('search-provider.serialize', rpcData);
-      })
+    return this
+      .callRpc('search-provider.serialize', rpcData)
       .switchMap(res => {
         let query = new Query<T>(this.dsClient);
         return query.pageableQuery(res.name, start, end, res.table);
@@ -77,15 +74,27 @@ export class DeepstreamService {
   getRecord<T = any>(id: string): Record<T> {
     return new Record<T>(this.dsClient, id);
   }
+
   getList<T = any>(id: string): List<T> {
     return new List<T>(this.dsClient, id);
   }
-  callRpc(name: string, data: any): Observable<any> {
+
+  callRpc<T = any>(name: string, data: any): Observable<T> {
     let rpc = new Rpc(this.dsClient);
-    return Observable.combineLatest(this._store.select(this._externals.selectors.getUserId), this._store.select(this._externals.selectors.getUserRole))
-      .take(1)
-      .switchMap(res => rpc.make(name, { ...data, userId: res[0], role: res[1] }))
+    let userSelector = this._store.select(this._selectors.userData).take(1);
+
+    return userSelector
+    .switchMap(user => {
+        let sentData = {
+          ...data,
+          userId: user.userId,
+          role: user.role
+        }
+
+        return rpc.make(name, sentData);
+      });
   }
+
   static getDeepstreamClient(connectionString: string) {
     return new DeepstreamClient(connectionString);
   }

@@ -1,8 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
-import * as _ from 'lodash';
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
 import { IDeepstreamState, EDeepstreamState } from './state';
+
+export interface ISelectorUserData {
+  userId: string | undefined;
+  role: string;
+};
 
 @Injectable()
 export class Selectors {
@@ -10,7 +14,7 @@ export class Selectors {
   public loggedIn;
   public loggedOut;
   public failed;
-  public userData;
+  public userData: MemoizedSelector<any, ISelectorUserData>;
   public permissions;
   public permissionRecordName;
   private _externals: IExternalDeepstreamDependencies;
@@ -36,7 +40,7 @@ export class Selectors {
 
     this.failed = createSelector(selectFeature, state => state.failure);
 
-    this.userData = createSelector(
+    this.userData = createSelector (
       this._externals.selectors.getUserId,
       this._externals.selectors.getUserRole,
       (userId, role) => {
