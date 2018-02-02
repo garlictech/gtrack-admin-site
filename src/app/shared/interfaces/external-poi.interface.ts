@@ -1,4 +1,4 @@
-import { IPoi } from 'subrepos/gtrack-common-ngx';
+import { IPoi } from 'subrepos/provider-client';
 
 export interface IExternalPoi extends IPoi {
   inGtrackDb?: boolean | undefined;
