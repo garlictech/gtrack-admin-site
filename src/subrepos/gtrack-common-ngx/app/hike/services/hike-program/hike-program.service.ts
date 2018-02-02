@@ -29,8 +29,10 @@ export class HikeProgramService {
 
   query(): Observable<HikeProgram[]> {
     return this._deepstream
-      .getList<IHikeProgramStored>('hike_programs')
-      .subscribeForData()
+      .doQuery<IHikeProgramStored>({
+        table: 'hike_programs',
+        query: []
+      })
       .map(data => {
         return data
           .filter(item => (item.stops instanceof Array))
@@ -43,6 +45,12 @@ export class HikeProgramService {
   }
 
   public create(hikeProgram: IHikeProgram) {
-    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', hikeProgram);
+    let data = hikeProgram;
+
+    if (hikeProgram instanceof HikeProgram) {
+      data = hikeProgram.toObject();
+    }
+
+    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data);
   }
 }

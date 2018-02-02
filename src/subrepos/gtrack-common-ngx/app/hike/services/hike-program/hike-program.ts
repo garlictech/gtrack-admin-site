@@ -92,4 +92,28 @@ export class HikeProgram implements IHikeProgram {
     }
 
   }
+
+  public toObject(): IHikeProgram {
+    let data: IHikeProgram = {
+      distance: this.distance,
+      isRoundTrip: this.isRoundTrip,
+      uphill: this.uphill,
+      downhill: this.downhill,
+      time: this.time,
+      score: this.score,
+      location: this.location,
+      difficulty: this.difficulty,
+      backgroundImageUrls: this.backgroundImageUrls,
+      rate: this.rate,
+      routeIcon: this.routeIcon,
+      elevationIcon: this.elevationIcon,
+      routeId: this.routeId,
+      description: this.description,
+      offlineMap: this.offlineMap,
+      pois: this.pois,
+      stops: this.stops
+    };
+
+    return data;
+  }
 }
