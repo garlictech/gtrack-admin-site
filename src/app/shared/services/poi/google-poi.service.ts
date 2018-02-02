@@ -26,12 +26,13 @@ export class GooglePoiService {
         this._hasNextPage$.next(true);
 
         const _map = new google.maps.Map(document.getElementById('fakeMap'));
-        this._placesService = new google.maps.places.PlacesService(_map);
         const _bnds = new google.maps.LatLngBounds(
           new google.maps.LatLng(bounds.SouthWest.lat, bounds.SouthWest.lon),
           new google.maps.LatLng(bounds.NorthEast.lat, bounds.NorthEast.lon)
         );
         let _res: GooglePoi[] = [];
+
+        this._placesService = new google.maps.places.PlacesService(_map);
 
         return new Promise((resolve, reject) => {
           this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
