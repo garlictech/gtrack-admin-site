@@ -1,6 +1,6 @@
-<div class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'in': visibleAnimate}"
+<div class="modal" tabindex="-1" role="dialog" [ngClass]="{'in': visibleAnimate}"
   [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
-  <div class="modal-dialog {{modalConfig.modal.className}}" role="document">
+  <div class="modal-dialog modal-dialog-centered {{modalConfig.modal.className}}" role="document">
     <div class="modal-content">
       <div class="modal-header justify-content-center">
         <h5 class="modal-title" [innerHTML]="modalConfig.modal.title"></h5>

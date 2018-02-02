@@ -1,13 +1,9 @@
-<div *ngIf="poi.panoramio">
-  <img [src]="poi.panoramio.url_small">
-</div>
-
 <div *ngIf="poi.wikipedia">
-  <a [href]="poi.wikipedia.url" target="_blank">WikiPedia</a>
+  <a (click)="openModal(poi)">Info</a>
 </div>
 
 <div *ngIf="poi.google">
-    <a href="https://www.google.com/maps/place/?q=place_id:{{poi.google.id}}" target="_blank">Google</a>
+  <a (click)="openModal(poi)">Info</a>
 </div>
 
 <div *ngIf="poi.osm">

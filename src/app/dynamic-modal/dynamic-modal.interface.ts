@@ -6,6 +6,7 @@ export interface IDynamicComponentModalConfig {
   };
   modal: {
     title: string;
+    className?: string;
     close?: any;
     destroy?: any;
   };
