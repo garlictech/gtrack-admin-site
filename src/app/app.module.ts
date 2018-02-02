@@ -12,7 +12,16 @@ import {
   AuthenticationApiModule,
   Actions as JwtActions
 } from 'subrepos/authentication-api-ngx';
-import { SharedModule, SharedConfig, DeepstreamModule, RouterEffects } from 'subrepos/gtrack-common-ngx';
+import {
+  SharedModule,
+  SharedConfig,
+  DeepstreamModule,
+  RouterEffects,
+  PoiEffects,
+  AuthenticationComponentsModule,
+  AuthenticationModule as CommonAuthenticationModule,
+  AuthenticationEffects as CommonAuthenticationEffects
+} from 'subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -78,6 +87,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
+    CommonAuthenticationModule,
     HttpClientModule,
     JsonpModule,
     store,
@@ -106,7 +116,9 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       AuthEffects,
       HikeEditRoutePlanningEffects,
       HikeEditPoiEffects,
-      RouterEffects
+      RouterEffects,
+      PoiEffects,
+      CommonAuthenticationEffects
     ])
   ],
   providers: [
