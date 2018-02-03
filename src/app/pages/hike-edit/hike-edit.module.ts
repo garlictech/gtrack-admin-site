@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 // Pipes
 import { ObjectToArrayPipe } from 'app/shared/pipes';
+// Modules
+import { DynamicModalService } from 'app/dynamic-modal';
 // Components
 import { HikeEditComponent } from './hike-edit.component';
 import {
@@ -15,7 +17,8 @@ import {
   HikeEditPoisExternalComponent,
   HikeEditPoisExternalTableComponent,
   PoiIconsComponent,
-  SpecialPoiDataComponent
+  SpecialPoiDataComponent,
+  HikeEditPoiInfoModalContentComponent
 } from './components';
 // Shared components
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
@@ -32,7 +35,8 @@ const COMPONENTS = [
   HikeEditPoisExternalComponent,
   HikeEditPoisExternalTableComponent,
   PoiIconsComponent,
-  SpecialPoiDataComponent
+  SpecialPoiDataComponent,
+  HikeEditPoiInfoModalContentComponent
 ];
 
 @NgModule({
@@ -54,6 +58,9 @@ const COMPONENTS = [
   ],
   entryComponents: [
     ...COMPONENTS
+  ],
+  providers: [
+    DynamicModalService
   ]
 })
 export class HikeEditModule {}

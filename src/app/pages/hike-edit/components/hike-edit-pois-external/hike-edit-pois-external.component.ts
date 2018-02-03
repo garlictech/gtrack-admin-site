@@ -12,6 +12,7 @@ import {
 import { HikeEditMapSelectors } from 'app/store/selectors/hike-edit-map';
 import { HikeEditPoiSelectors } from 'app/store/selectors/hike-edit-poi';
 import { ExternalPoi } from 'app/shared/services/poi/external-poi';
+
 import * as _ from 'lodash';
 
 @Component({

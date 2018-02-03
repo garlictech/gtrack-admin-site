@@ -18,6 +18,8 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { store, AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects, HikeEditPoiSelectors, HikeEditMapSelectors } from './store';
 import { routing } from './app-routing.module';
+// Modules
+import { DynamicModalModule, DynamicModalService } from 'app/dynamic-modal';
 // Page modules
 import { CoreLayoutModule } from './core';
 import { AuthModule } from './auth';
@@ -92,6 +94,8 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     AuthenticationApiModule.forRoot(authConfig),
 
     SharedModule.forRoot(sharedConfig),
+    // Modules
+    DynamicModalModule,
     // Page modules
     CoreLayoutModule,
     AuthModule,
