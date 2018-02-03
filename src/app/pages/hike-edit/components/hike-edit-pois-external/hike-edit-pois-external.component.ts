@@ -7,7 +7,7 @@ import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/a
 import { OsmPoiService } from 'app/shared/services';
 import { IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import {
-  State, hikeEditPoiActions, IExternalPoiListContextState,
+  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions,
 } from 'app/store';
 import { HikeEditMapSelectors } from 'app/store/selectors/hike-edit-map';
 import { HikeEditPoiSelectors } from 'app/store/selectors/hike-edit-poi';
@@ -151,7 +151,34 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     }));
   }
 
+  /**
+   * Save inHike pois as gTrackPoi
+   */
   public savePois() {
-    //
+    this.pois$
+      .take(1)
+      .subscribe((pois: IExternalPoi[]) => {
+        const _poisToSave = _.filter(pois, (poi: IExternalPoi) => poi.inHike && !poi.inGtrackDb);
+
+        // TODO: check poi in gTrackPoiList
+
+        _.forEach(_poisToSave, (externalPoi) => {
+          this._store.dispatch(new commonPoiActions.CreatePoi(externalPoi));
+        });
+
+        console.log('_poisToSave', _poisToSave);
+      });
+
+    /*
+    scope.busy = true
+        poisToSave = _.filter scope.pois, (p) -> p.inHike and not p.isInGtrackDb()
+        promises = _.map poisToSave, (p) ->
+          PoiEditorService.createGtrackPoi p
+
+        if promises
+          AsyncRequestExecutor.execute(scope, $q.all promises).then ->
+            scope.getPois()
+        else scope.busy = false
+    */
   }
 }

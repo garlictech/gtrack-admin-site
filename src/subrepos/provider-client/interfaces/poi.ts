@@ -3,7 +3,10 @@ import { IProviderInput } from './provider';
 export enum EPoiTypes {
   google = 'google',
   wikipedia = 'wikipedia',
-  osm = 'osm'
+  osm = 'osm', // TODO: DEPRECATED
+  osmAmenity = 'osmAmenity',
+  osmNatural = 'osmNatural',
+  osmRoute = 'osmRoute'
 };
 
 export interface IPoiSaveResponse {
@@ -12,6 +15,7 @@ export interface IPoiSaveResponse {
 }
 
 export interface IPoi {
+  id?: string;
   elevation?: number;
   lat: number;
   lon: number;

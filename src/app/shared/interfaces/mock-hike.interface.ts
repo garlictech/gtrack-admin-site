@@ -1,4 +1,4 @@
-import { IHikeDescription } from 'subrepos/gtrack-common-ngx/app/hike/services/hike-program';
+import { IHikeDescription } from 'subrepos/provider-client';
 
 export interface IMockHikeElement {
   id?: string;

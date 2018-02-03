@@ -8,6 +8,7 @@ import { IWikipediaPoi, IWikipediaPageImageInfo } from 'app/shared/interfaces';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid';
+import { EPoiTypes } from 'subrepos/provider-client';
 
 @Injectable()
 export class WikipediaPoiService {
@@ -36,7 +37,7 @@ export class WikipediaPoiService {
             lon: _point.lon,
             title: _point.title,
             types: ['sight'],
-            objectType: 'wikipedia',
+            objectType: EPoiTypes.wikipedia,
             wikipedia: {}
           });
           _poi.wikipedia = {

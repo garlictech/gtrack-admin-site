@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { EPoiTypes } from 'subrepos/provider-client';
 import { OsmPoi } from './lib/osm-poi';
 import * as uuid from 'uuid';
 
@@ -46,7 +47,7 @@ export class OsmPoiService {
               elevation: point.tags.ele,
               types: [type],
               title: point.tags.name || 'unknown',
-              objectType: typeParam === 'amenity' ? 'osmAmenity' : 'osmNatural',
+              objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,
               osm: {
                 id: point.id
               }

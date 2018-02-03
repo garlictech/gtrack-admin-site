@@ -1,4 +1,5 @@
-import { Poi, IPoi } from 'subrepos/gtrack-common-ngx/index';
+import { Poi } from 'subrepos/gtrack-common-ngx/index';
+import { IPoi } from 'subrepos/provider-client';
 import { IExternalPoi } from 'app/shared/interfaces';
 import * as _ from 'lodash';
 import { read } from 'fs';

@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GooglePoi } from './lib/google-poi';
-import { GoogleMapsService } from 'subrepos/gtrack-common-ngx/index';
-import { /**/ } from '@types/googlemaps';
-import { SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG } from 'constants';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+
+import { EPoiTypes } from 'subrepos/provider-client';
+import { GoogleMapsService } from 'subrepos/gtrack-common-ngx/index';
+
+import { GooglePoi } from './lib/google-poi';
+import { /**/ } from '@types/googlemaps';
+
 import * as uuid from 'uuid';
 import * as _ from 'lodash';
 
@@ -44,7 +47,7 @@ export class GooglePoiService {
                 lon: _point.geometry.location.lng(),
                 title: _point.name || 'unknown',
                 types: _point.types || [],
-                objectType: 'google',
+                objectType: EPoiTypes.google,
                 google: {
                   id: _point.place_id
                 }
