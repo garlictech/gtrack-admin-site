@@ -23,7 +23,7 @@ services:
     image: rethinkdb
 
   deepstream_providers:
-    image: docker.garlictech.com/gtrack-deepstream-staging
+    image: docker.garlictech.com/gtrack-deepstream-providers-staging
     env_file:
       - ./service.env
       - ./tokens.env
