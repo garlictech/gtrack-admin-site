@@ -2,12 +2,15 @@ version: '2'
 
 services:
   deepstream:
-    image: docker.garlictech.com/deepstream-gtrack:0.2.1
+    image: docker.garlictech.com/gtrack-deepstream-staging
     ports:
       - 6020:6020
     env_file:
       - ./service.env
       - ./tokens.env
+    environment:
+      - RETHINKDB_USER=admin
+      - RETHINKDB_PASSWORD=''
     depends_on:
       - rethinkdb
       - redis
@@ -20,7 +23,7 @@ services:
     image: rethinkdb
 
   deepstream_providers:
-    image: docker.garlictech.com/gtrack-providers:latest
+    image: docker.garlictech.com/gtrack-deepstream-staging
     env_file:
       - ./service.env
       - ./tokens.env
