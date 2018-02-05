@@ -3,11 +3,11 @@ import { Component, Input, OnInit } from '@angular/core';
 
 // TODO: load from config?
 const LANGS = {
-  en_US: 'English (US)',
-  hu_HU: 'Hungarian',
-  de_DE: 'German',
-  fr_FR: 'French',
-  it_IT: 'Italian'
+  en: 'English',
+  hu: 'Hungarian',
+  de: 'German',
+  fr: 'French',
+  it: 'Italian'
 };
 
 @Component({
