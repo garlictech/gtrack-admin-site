@@ -5,7 +5,7 @@
       <th>Title</th>
       <th>Distance from route</th>
       <th>Types</th>
-      <th>Remove</th>
+      <th>Add/Remove</th>
       <th>Special</th>
     </tr>
   </thead>
@@ -13,11 +13,11 @@
     <ng-container *ngFor="let poi of (pois | async); let idx = index">
       <tr *ngIf="poi.onRoute === onRouteCheck">
         <td><poi-icons [poi]="poi"></poi-icons></td>
-        <td>{{poi.title}}</td>
+        <td>{{poi.description.en.title}}</td>
         <td>{{poi.distFromRoute | distance : true}}</td>
         <td>{{poi.types.join(', ')}}</td>
         <td>
-          <a (click)="handleInHikePoi($event, poi)">
+          <a (click)="handleInHikePoi($event, poi)" [ngClass]="{'text-success': !poi.inHike, 'text-danger': poi.inHike}">
             {{poi.inHike ? 'remove': 'add'}}
           </a>
         </td>

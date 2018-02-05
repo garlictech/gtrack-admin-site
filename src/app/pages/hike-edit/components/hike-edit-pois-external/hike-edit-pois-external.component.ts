@@ -4,14 +4,14 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
-import { OsmPoiService } from 'app/shared/services';
-import { IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
+import { OsmPoiService, PoiEditorService } from 'app/shared/services';
+import { ExternalPoi, GTrackPoi } from 'app/shared/services/poi/lib';
+import { IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
 import {
-  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions,
+  State, hikeEditPoiActions, IExternalPoiListContextState,
 } from 'app/store';
 import { HikeEditMapSelectors } from 'app/store/selectors/hike-edit-map';
 import { HikeEditPoiSelectors } from 'app/store/selectors/hike-edit-poi';
-import { ExternalPoi } from 'app/shared/services/poi/external-poi';
 
 import * as _ from 'lodash';
 
@@ -35,7 +35,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors
+    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _poiEditorService: PoiEditorService
   ) {}
 
   ngOnInit() {
@@ -158,27 +159,21 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this.pois$
       .take(1)
       .subscribe((pois: IExternalPoi[]) => {
-        const _poisToSave = _.filter(pois, (poi: IExternalPoi) => poi.inHike && !poi.inGtrackDb);
+        const _externalPoisToSave: IExternalPoi[] = _.filter(pois, (poi: IExternalPoi) => {
+          return poi.inHike && !poi.inGtrackDb
+        });
+        let _gTrackPoisToSave: IGTrackPoi[] = [];
 
-        // TODO: check poi in gTrackPoiList
-
-        _.forEach(_poisToSave, (externalPoi) => {
-          this._store.dispatch(new commonPoiActions.CreatePoi(externalPoi));
+        _.forEach(_externalPoisToSave, (externalPoi: ExternalPoi) => {
+          console.log('savePois externalPoi', externalPoi);
+          let _poiData: IGTrackPoi = this._poiEditorService.getDbObj(externalPoi);
+          let _gTrackPoi = new GTrackPoi(_poiData);
+          return _gTrackPoisToSave.push(_gTrackPoi);
         });
 
-        console.log('_poisToSave', _poisToSave);
+        this._store.dispatch(new hikeEditPoiActions.AddGTrackPois({
+          pois: _gTrackPoisToSave
+        }));
       });
-
-    /*
-    scope.busy = true
-        poisToSave = _.filter scope.pois, (p) -> p.inHike and not p.isInGtrackDb()
-        promises = _.map poisToSave, (p) ->
-          PoiEditorService.createGtrackPoi p
-
-        if promises
-          AsyncRequestExecutor.execute(scope, $q.all promises).then ->
-            scope.getPois()
-        else scope.busy = false
-    */
   }
 }

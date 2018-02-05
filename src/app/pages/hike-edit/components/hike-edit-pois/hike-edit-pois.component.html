@@ -1,22 +1,22 @@
 <div id="accordion" role="tablist" aria-multiselectable="true">
   <!-- gTrack pois -->
-  <!--div class="panel panel-default">
-    <div class="panel-heading" id="headingOne" role="tab">
-      <a aria-controls="collapseOne" aria-expanded="false" data-parent="#accordion" data-toggle="collapse" href="#collapse"
-        role="button" class="collapsed">
-        <div class="text-success">
-          gTrack pois
-          <i class="material-icons">keyboard_arrow_down</i>
-        </div>
-      </a>
+  <div class="card mb-1">
+    <div class="card-header bg-light" id="headingOne" role="tab">
+      <h5>
+        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtp" role="button" class="collapsed">
+          <div class="text-success">
+            gTrack pois
+            <i class="material-icons pull-right">keyboard_arrow_down</i>
+          </div>
+        </a>
+      </h5>
     </div>
-    <div aria-labelledby="headingOne" class="panel-collapse collapse" id="collapse" role="tabpanel" aria-expanded="false"
-      style="height: 0px;">
-      <div class="panel-body">
+    <div aria-labelledby="headingOne" class="collapse" id="collapse_gtp" role="tabpanel" aria-expanded="false" style="height: 0px;">
+      <div class="card-body">
         <gt-hike-edit-pois-gtrack></gt-hike-edit-pois-gtrack>
       </div>
     </div>
-  </div-->
+  </div>
 
   <!-- Extenal pois -->
   <div class="card mb-1" *ngFor="let poiType of externalPoiTypes; let idx = index;">

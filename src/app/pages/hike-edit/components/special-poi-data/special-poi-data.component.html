@@ -1,11 +1,11 @@
-<div *ngIf="poi.wikipedia">
+<div *ngIf="poi.objectType === 'wikipedia'">
   <a (click)="openModal(poi)">Info</a>
 </div>
 
-<div *ngIf="poi.google">
+<div *ngIf="poi.objectType === 'google'">
   <a (click)="openModal(poi)">Info</a>
 </div>
 
-<div *ngIf="poi.osm">
+<div *ngIf="poi.objectType.substring(0, 3) === 'osm'">
   <span>Elevation: {{poi.elevation | distance}}</span>
 </div>

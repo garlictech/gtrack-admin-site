@@ -1,1 +1,36 @@
-gt-hike-edit-pois-gtrack
+<div class="clearfix mb-2">
+  <div class="pull-left">
+    <button class="btn btn-sm btn-fill btn-success" (click)="savePois()">Save to BD</button>
+  </div>
+
+  <div class="pull-left" *ngIf="loading$ | async"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
+</div>
+
+<table class="table table-hover">
+  <thead class="text-success">
+    <tr>
+      <th>Icon</th>
+      <th>Title</th>
+      <th>Distance from route</th>
+      <th>objType</th>
+      <th>Types</th>
+      <th>Remove</th>
+      <th>Special</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let poi of (pois$ | async); let idx = index">
+      <tr *ngIf="poi.onRoute === onRouteCheck">
+        <td><poi-icons [poi]="poi"></poi-icons></td>
+        <td>{{poi.description.en.title}}</td>
+        <td>{{poi.distFromRoute | distance : true}}</td>
+        <td>{{poi.objectType}}</td>
+        <td>{{poi.types.join(', ')}}</td>
+        <td>
+          <a (click)="removePoi($event, poi)" class="text-danger">remove</a>
+        </td>
+        <td><special-poi-data [poi]="poi"></special-poi-data></td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

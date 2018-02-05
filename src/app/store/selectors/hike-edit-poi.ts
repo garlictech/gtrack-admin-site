@@ -4,9 +4,9 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 import { State } from '../index';
 import { IHikeEditPoiState } from '../state/index';
 import {
-  wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter
+  wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter, gTrackPoiAdapter
 } from 'app/store/reducer';
-import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
+import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
 
 @Injectable()
 export class HikeEditPoiSelectors {
@@ -16,6 +16,7 @@ export class HikeEditPoiSelectors {
   public getAllOsmAmenityPois: (state: object) => IOsmPoi[];
   public getAllOsmNaturalPois: (state: object) => IOsmPoi[];
   public getAllOsmRoutePois: (state: object) => IOsmPoi[];
+  public getAllGTrackPois: (state: object) => IGTrackPoi[];
 
   constructor() {
     this.hikeEditPoiSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
@@ -48,6 +49,11 @@ export class HikeEditPoiSelectors {
       this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.wikipediaPois
     );
     this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
+
+    const gTrackPoiSelector = createSelector(
+      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.gTrackPois
+    );
+    this.getAllGTrackPois = gTrackPoiAdapter.getSelectors(gTrackPoiSelector).selectAll;
   }
 
   /**

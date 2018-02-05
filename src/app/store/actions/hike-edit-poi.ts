@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
+import { IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
 
 export const GET_GOOGLE_POIS = '[HikeEditPoi] Get Google pois';
 export const SET_GOOGLE_POIS = '[HikeEditPoi] Set Google pois';
@@ -16,6 +16,8 @@ export const SET_OSM_ROUTE_POI_IN_HIKE = '[HikeEditPoi] Set OSM route poi inHike
 export const GET_WIKIPEDIA_POIS = '[HikeEditPoi] Get Wikipedia pois';
 export const SET_WIKIPEDIA_POIS = '[HikeEditPoi] Set Wikipedia pois';
 export const SET_WIKIPEDIA_POI_IN_HIKE = '[HikeEditPoi] Set Wikipedia poi inHike';
+export const ADD_GTRACK_POIS = '[HikeEditPoi] Add gTrack pois';
+export const REMOVE_GTRACK_POI = '[HikeEditPoi] Remove gTrack poi';
 export const TOGGLE_ONROUTE_MARKERS = '[HikeEditPoi] Toggle onroute markers';
 export const TOGGLE_OFFROUTE_MARKERS = '[HikeEditPoi] Toggle offroute markers';
 export const GENERATE_SUBDOMAIN_POI_MARKERS = '[HikeEditPoi] Generate subdomain poi markers';
@@ -159,6 +161,24 @@ export class SetWikipediaPoiInHike implements Action {
 }
 
 /**
+ * gTrackPois
+ */
+
+export class AddGTrackPois implements Action {
+  readonly type = ADD_GTRACK_POIS;
+  constructor(public payload: {
+    pois: IGTrackPoi[]
+  }) { /* EMPTY */ }
+}
+
+export class RemoveGTrackPoi implements Action {
+  readonly type = REMOVE_GTRACK_POI;
+  constructor(public payload: {
+    id: string
+  }) { /* EMPTY */ }
+}
+
+/**
  * Toggle markers
  */
 
@@ -206,6 +226,8 @@ export type AllHikeEditPoiActions =
   | GetWikipediaPois
   | SetWikipediaPois
   | SetWikipediaPoiInHike
+  | AddGTrackPois
+  | RemoveGTrackPoi
   | ToggleOnrouteMarkers
   | ToggleOffrouteMarkers
   | GenerateSubdomainPoiMarkers
