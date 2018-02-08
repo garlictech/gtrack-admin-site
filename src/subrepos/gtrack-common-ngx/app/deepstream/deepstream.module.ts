@@ -18,7 +18,7 @@ import { IDeepstreamModuleConfig } from './interfaces';
 let selectAuthFeature = createFeatureSelector<IAuthenticationState>('jwtAuthentication');
 let selectAuth = createSelector(selectAuthFeature, (state: IAuthenticationState) => state.auth);
 
-export const selectUser = createSelector(selectAuth, (state: IAuth) => state.user);
+export const selectUser = createSelector(selectAuth, (state: IAuth) => _.get(state, 'user'));
 
 let defaultExternalDeepstreamDependencies: IExternalDeepstreamDependencies = {
   deepstreamConnectionString: 'localhost:6020',

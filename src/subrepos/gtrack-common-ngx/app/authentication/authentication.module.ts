@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-import { AuthenticationEffects } from './store';
+import { AuthenticationAgents } from './store';
 
 @NgModule({
   providers: [
-    AuthenticationEffects
+    AuthenticationAgents
   ],
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {
+  constructor(authenticationAgents: AuthenticationAgents) {
+    authenticationAgents.start();
+  }
+}
