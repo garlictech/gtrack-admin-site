@@ -76,7 +76,10 @@ const reducer: ActionReducer<IPoiEntityState> = (
       return poiAdapter.addOne(action.poi, state);
 
     case PoiActionTypes.ALL_POI_LOADED:
-    return poiAdapter.addMany(action.pois, state);
+      return poiAdapter.addMany(action.pois, state);
+
+    case PoiActionTypes.ADD_GTRACK_POIS:
+      return poiAdapter.addMany(action.pois, state);
 
     default:
       return state;
