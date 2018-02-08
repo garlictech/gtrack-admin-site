@@ -5,16 +5,19 @@ import {
   GeometryService, ElevationService, PoiService, IconService, Poi
 } from 'subrepos/gtrack-common-ngx';
 import { State } from 'app/store';
+import { IExternalPoiListContextItemState } from 'app/store/state';
 import { HikeEditMapSelectors } from 'app/store/selectors/hike-edit-map';
 import { HikeEditPoiSelectors } from 'app/store/selectors/hike-edit-poi';
-import { ExternalPoi } from './lib/external-poi';
-import { AdminMap, AdminMapService } from '../admin-map';
-import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces/index';
+import { ExternalPoi, GooglePoi, OsmPoi, WikipediaPoi } from './lib';
+import { AdminMap, AdminMapService, AdminMapMarker } from '../admin-map';
+import {
+  IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi
+} from 'app/shared/interfaces/index';
 
+import * as uuid from 'uuid';
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
-import { AdminMapMarker } from 'app/shared/services/admin-map/lib/admin-map-marker';
-import { IExternalPoiListContextItemState } from 'app/store/state';
+import { IPoi } from 'subrepos/provider-client';
 
 @Injectable()
 export class PoiEditorService {
@@ -46,6 +49,84 @@ export class PoiEditorService {
     */
   }
 
+  public getDbObj(poi: IExternalPoi /* GooglePoi | OsmPoi | WikipediaPoi*/) {
+    let _poiData = {
+      id: uuid()
+    };
+    _.defaultsDeep(
+      _poiData,
+      _.pick(poi, ['elevation', 'lat', 'lon', 'objectType', 'distFromRoute', 'description', 'types'])
+    );
+
+    switch (poi.objectType) {
+      case 'google':
+        this._getGoogleDbObj(_poiData, <GooglePoi>poi);
+        break;
+      case 'wikipedia':
+        this._getWikipediaDbObj(_poiData, <WikipediaPoi>poi);
+        break;
+      case 'osmAmenity':
+      case 'osmNatural':
+      case 'osmRoute':
+        this._getOsmDbObj(_poiData, <OsmPoi>poi);
+        break;
+    }
+
+    return (<IPoi>_poiData);
+  }
+
+  /**
+   * getDbObj submethod
+   */
+  private _getGoogleDbObj(poiData, poi: GooglePoi) {
+    if (poi.google && poi.google.id) {
+
+      // TODO Additional
+      // poiData.objectId = poi.google.id;
+
+      /*
+      if (poi.google.formatted_address) {
+        poiData.address = poi.google.formatted_address;
+      }
+
+      if (poi.google.international_phone_number) {
+        poiData.phoneNumber = poi.google.international_phone_number;
+      }
+
+      if (poi.google.opening_hours) {
+        poiData.openingHours = poi.google.opening_hours;
+      }
+      */
+    }
+
+    return poiData;
+  }
+
+  /**
+   * getDbObj submethod
+   */
+  private _getWikipediaDbObj(poiData, poi: WikipediaPoi) {
+    // TODO Additional
+    /*
+    if (poi.wikipedia && poi.wikipedia.pageid) {
+      poiData.objectId = poi.wikipedia.pageid;
+      poiData.url = poi.wikipedia.url;
+    }
+   */
+  }
+
+  /**
+   * getDbObj submethod
+   */
+  private _getOsmDbObj(poiData, poi: OsmPoi) {
+    // TODO Additional
+    /*
+    if (poi.osm && poi.osm.id) {
+      poiData.objectId = poi.osm.id;
+    }
+    */
+  }
+
   private _getOnroutePois(pois: ExternalPoi[]) {
     return _.filter(pois, (p: ExternalPoi) => p.onRoute);
   }
@@ -54,7 +135,7 @@ export class PoiEditorService {
     return _.filter(pois, (p: ExternalPoi) => !p.onRoute);
   }
 
-  public organizePois(
+  private _organizePois(
     pois: ExternalPoi[],
     path: GeoJSON.Feature<GeoJSON.Polygon>,
     gtrackPois: ExternalPoi[]
@@ -62,7 +143,7 @@ export class PoiEditorService {
     let _res: ExternalPoi[] = [];
 
     const _smallBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 50, {units: 'meters'});
-    const _bigBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 1000, {units: 'meters'});
+    const _bigBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 100, {units: 'meters'}); // TODO 1000
 
     for (let p of pois) {
       let _point: GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties> = turf.point([p.lon, p.lat]);
@@ -95,7 +176,7 @@ export class PoiEditorService {
   }
 
   /**
-   * organizePois submethod
+   * _organizePois submethod
    */
   private _handleTypes(poi: ExternalPoi) {
     let _types: string[] = [];
@@ -117,9 +198,11 @@ export class PoiEditorService {
   }
 
   /**
-   * organizePois submethod
+   * _organizePois submethod
    */
   private _handleTitle(poi: ExternalPoi) {
+    /*
+    TODO: Handle ILocalizedItem description
     if (!poi.title || poi.title === 'unknown') {
       let _titleParts: string[] = [];
 
@@ -135,10 +218,11 @@ export class PoiEditorService {
 
       poi.title = _titleParts.join(', ');
     }
+    */
   }
 
   /**
-   * organizePois submethod
+   * _organizePois submethod
    */
   private _handleGtrackPois(gtrackPois: ExternalPoi[], poi: ExternalPoi) {
     let _found = _.find(gtrackPois, (p: ExternalPoi) => {
@@ -152,7 +236,7 @@ export class PoiEditorService {
   }
 
   /**
-   * organizePois submethod
+   * _organizePois submethod
    */
   private _handleElevation(pois: ExternalPoi[]) {
     let _poisWithoutElevation = _.filter(pois, (p: ExternalPoi) => !p.elevation);
@@ -289,7 +373,7 @@ export class PoiEditorService {
           const _filteredPoiIds: string[] = [];
           const _filteredPois: ExternalPoi[] = _.filter(subdomainData.pois, (p: ExternalPoi) => {
             if (typeof p.inHike !== 'undefined') {
-              if (p.inHike) {
+              if (p.inHike && p.id) {
                 _filteredPoiIds.push(p.id);
               }
               return p.inHike;
@@ -343,7 +427,7 @@ export class PoiEditorService {
   public assignOrganizedPois(data) {
     const _map: AdminMap = this._adminMapService.getMapById(data.mapId);
     return this
-      .organizePois(data.pois, _map.routeInfo.getPath(), data.gtrackPois)
+      ._organizePois(data.pois, _map.routeInfo.getPath(), data.gtrackPois)
       .then((organizedPois) => {
         return _.extend(_.cloneDeep(data), {organizedPois: organizedPois});
       });

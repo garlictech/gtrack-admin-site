@@ -4,11 +4,13 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
-import { OsmPoiService, PoiEditorService } from 'app/shared/services';
-import { ExternalPoi, GTrackPoi } from 'app/shared/services/poi/lib';
-import { IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
+import { PoiEditorService } from 'app/shared/services';
+import { ExternalPoi } from 'app/shared/services/poi/lib';
+import { Poi } from 'subrepos/gtrack-common-ngx';
+import { IPoi } from 'subrepos/provider-client';
+import { IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import {
-  State, hikeEditPoiActions, IExternalPoiListContextState,
+  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions,
 } from 'app/store';
 import { HikeEditMapSelectors } from 'app/store/selectors/hike-edit-map';
 import { HikeEditPoiSelectors } from 'app/store/selectors/hike-edit-poi';
@@ -17,8 +19,7 @@ import * as _ from 'lodash';
 
 @Component({
   selector: 'gt-hike-edit-pois-external',
-  templateUrl: './hike-edit-pois-external.component.html',
-  providers: [OsmPoiService]
+  templateUrl: './hike-edit-pois-external.component.html'
 })
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   @Input() poiType: IExternalPoiType;
@@ -155,25 +156,21 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   /**
    * Save inHike pois as gTrackPoi
    */
+
   public savePois() {
     this.pois$
       .take(1)
       .subscribe((pois: IExternalPoi[]) => {
-        const _externalPoisToSave: IExternalPoi[] = _.filter(pois, (poi: IExternalPoi) => {
-          return poi.inHike && !poi.inGtrackDb
-        });
-        let _gTrackPoisToSave: IGTrackPoi[] = [];
+        const _externalPoisToSave = _.filter(pois, (poi: IExternalPoi) => (poi.inHike && !poi.inGtrackDb));
+        let _poisToSave: Poi[] = [];
 
-        _.forEach(_externalPoisToSave, (externalPoi: ExternalPoi) => {
-          console.log('savePois externalPoi', externalPoi);
-          let _poiData: IGTrackPoi = this._poiEditorService.getDbObj(externalPoi);
-          let _gTrackPoi = new GTrackPoi(_poiData);
-          return _gTrackPoisToSave.push(_gTrackPoi);
-        });
+        for (let externalPoi of _externalPoisToSave) {
+          let _poiData = this._poiEditorService.getDbObj(externalPoi);
+          let _poi = new Poi(_poiData);
+          _poisToSave.push(_poi);
+        }
 
-        this._store.dispatch(new hikeEditPoiActions.AddGTrackPois({
-          pois: _gTrackPoisToSave
-        }));
+        this._store.dispatch(new commonPoiActions.AddGTrackPois(_poisToSave));
       });
   }
 }

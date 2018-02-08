@@ -8,7 +8,7 @@ import * as uuid from 'uuid';
 export class OsmRoutePoiService {
   constructor(private _http: HttpClient) {}
 
-  public get(bounds) {
+  public get(bounds, lng = 'en') {
     const request = `
       <osm-script output="json" timeout="25">
         <query into="_" type="way">
@@ -39,8 +39,12 @@ export class OsmRoutePoiService {
               lat: _point.lat,
               lon: _point.lon,
               elevation: _point.tags.ele,
-              // types: [_type],
-              title: _point.tags.name || 'unknown',
+              types: [],
+              description: {
+                [lng]: {
+                  title: _point.tags.name || 'unknown',
+                }
+              },
               objectType: EPoiTypes.osmRoute,
               osm: {
                 id: _point.id

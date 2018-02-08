@@ -1,13 +1,13 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
-  IHikeEditPoiState,
-  IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
-  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState, IGtrackPoiEntityState
+  IHikeEditPoiState, IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
+  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState
 } from '../state';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
+import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import { hikeEditPoiActions } from '../index';
 import { poiReducer } from 'subrepos/gtrack-common-ngx';
+import { IPoi } from 'subrepos/provider-client';
 
 /**
  * Google
@@ -129,27 +129,6 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
           inHike: action.payload.isInHike
         }
       }, state);
-    default:
-      return state;
-  }
-}
-
-/**
- * gTrackPoi
- */
-
-export const gTrackPoiAdapter: EntityAdapter<IGTrackPoi> = createEntityAdapter<IGTrackPoi>();
-const gTrackPoiReducer: ActionReducer<IGtrackPoiEntityState> = (
-  state: IGtrackPoiEntityState = gTrackPoiAdapter.getInitialState(),
-  action: hikeEditPoiActions.AllHikeEditPoiActions
-): IGtrackPoiEntityState => {
-  switch (action.type) {
-    case hikeEditPoiActions.ADD_GTRACK_POIS: {
-      return gTrackPoiAdapter.addMany(action.payload.pois, state);
-    }
-    case hikeEditPoiActions.REMOVE_GTRACK_POI: {
-      return gTrackPoiAdapter.removeOne(action.payload.id, state);
-    }
     default:
       return state;
   }
@@ -318,7 +297,6 @@ const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
   osmAmenityPois: osmAmenityPoiReducer,
   osmNaturalPois: osmNaturalPoiReducer,
   osmRoutePois: osmRoutePoiReducer,
-  gTrackPois: gTrackPoiReducer,
   contexts: externalPoiListContextReducer
 };
 

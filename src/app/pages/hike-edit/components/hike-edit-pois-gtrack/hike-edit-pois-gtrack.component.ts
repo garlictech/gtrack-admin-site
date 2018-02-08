@@ -3,20 +3,21 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { IPoi } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
-import { IGTrackPoi } from 'app/shared/interfaces';
 import {
   State, hikeEditPoiActions, IExternalPoiListContextState, HikeEditPoiSelectors, HikeEditMapSelectors, commonPoiActions,
 } from 'app/store';
 
 import * as _ from 'lodash';
+import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 @Component({
   selector: 'gt-hike-edit-pois-gtrack',
   templateUrl: './hike-edit-pois-gtrack.component.html'
 })
 export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
-  public pois$: Observable<IGTrackPoi[]>;
+  public pois$: Observable<IPoi[]>;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -24,7 +25,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors
+    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _poiSelectors: PoiSelectors
   ) {}
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
-    this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGTrackPois);
+    this.pois$ = this._store.select(this._poiSelectors.getAllPois);
     // this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers);
 
     this.pois$
@@ -58,7 +60,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
    * Remove gTrack poi from list
    */
   public removePoi($event, poi) {
-    this._store.dispatch(new hikeEditPoiActions.RemoveGTrackPoi({id: poi.id}));
+    // this._store.dispatch(new commonPoiActions.RemoveGTrackPoi({id: poi.id}));
   }
 
   /**
@@ -67,8 +69,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public savePois() {
     this.pois$
       .take(1)
-      .subscribe((pois: IGTrackPoi[]) => {
-        _.forEach(pois, (poi: IGTrackPoi) => {
+      .subscribe((pois: IPoi[]) => {
+        _.forEach(pois, (poi: IPoi) => {
           return this._store.dispatch(new commonPoiActions.CreatePoi(poi));
         })
       });

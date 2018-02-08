@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
+import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
+import { IPoi } from 'subrepos/provider-client';
 
 export const GET_GOOGLE_POIS = '[HikeEditPoi] Get Google pois';
 export const SET_GOOGLE_POIS = '[HikeEditPoi] Set Google pois';
@@ -161,24 +162,6 @@ export class SetWikipediaPoiInHike implements Action {
 }
 
 /**
- * gTrackPois
- */
-
-export class AddGTrackPois implements Action {
-  readonly type = ADD_GTRACK_POIS;
-  constructor(public payload: {
-    pois: IGTrackPoi[]
-  }) { /* EMPTY */ }
-}
-
-export class RemoveGTrackPoi implements Action {
-  readonly type = REMOVE_GTRACK_POI;
-  constructor(public payload: {
-    id: string
-  }) { /* EMPTY */ }
-}
-
-/**
  * Toggle markers
  */
 
@@ -226,8 +209,6 @@ export type AllHikeEditPoiActions =
   | GetWikipediaPois
   | SetWikipediaPois
   | SetWikipediaPoiInHike
-  | AddGTrackPois
-  | RemoveGTrackPoi
   | ToggleOnrouteMarkers
   | ToggleOffrouteMarkers
   | GenerateSubdomainPoiMarkers

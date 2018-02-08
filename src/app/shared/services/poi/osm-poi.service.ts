@@ -8,7 +8,7 @@ import * as uuid from 'uuid';
 export class OsmPoiService {
   constructor(private _http: HttpClient) {}
 
-  public get(bounds, typeParam) {
+  public get(bounds, typeParam, lng = 'en') {
     const request = `
       <osm-script output="json" timeout="25">
         <union into="_">
@@ -36,20 +36,24 @@ export class OsmPoiService {
         let _res: OsmPoi[] = [];
 
         for (let i = 0; i < response.elements.length; i++) {
-          let point = response.elements[i];
-          if (point.tags && point.lat) {
-            let type = point.tags[typeParam];
+          let _point = response.elements[i];
+          if (_point.tags && _point.lat) {
+            let type = _point.tags[typeParam];
 
             _res.push(new OsmPoi({
               id: uuid(),
-              lat: point.lat,
-              lon: point.lon,
-              elevation: point.tags.ele,
+              lat: _point.lat,
+              lon: _point.lon,
+              elevation: _point.tags.ele,
               types: [type],
-              title: point.tags.name || 'unknown',
+              description: {
+                [lng]: {
+                  title: _point.tags.name || 'unknown',
+                }
+              },
               objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,
               osm: {
-                id: point.id
+                id: _point.id
               }
             }));
           }

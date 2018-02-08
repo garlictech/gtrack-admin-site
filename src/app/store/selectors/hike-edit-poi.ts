@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store/src/selector';
-
+import { IPoi } from 'subrepos/provider-client';
 import { State } from '../index';
 import { IHikeEditPoiState } from '../state/index';
 import {
-  wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter, gTrackPoiAdapter
+  wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter
 } from 'app/store/reducer';
-import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
+import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 
 @Injectable()
 export class HikeEditPoiSelectors {
@@ -16,7 +16,7 @@ export class HikeEditPoiSelectors {
   public getAllOsmAmenityPois: (state: object) => IOsmPoi[];
   public getAllOsmNaturalPois: (state: object) => IOsmPoi[];
   public getAllOsmRoutePois: (state: object) => IOsmPoi[];
-  public getAllGTrackPois: (state: object) => IGTrackPoi[];
+  public getAllGTrackPois: (state: object) => IPoi[];
 
   constructor() {
     this.hikeEditPoiSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
@@ -49,11 +49,6 @@ export class HikeEditPoiSelectors {
       this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.wikipediaPois
     );
     this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
-
-    const gTrackPoiSelector = createSelector(
-      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.gTrackPois
-    );
-    this.getAllGTrackPois = gTrackPoiAdapter.getSelectors(gTrackPoiSelector).selectAll;
   }
 
   /**

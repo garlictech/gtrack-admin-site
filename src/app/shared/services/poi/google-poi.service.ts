@@ -22,7 +22,7 @@ export class GooglePoiService {
     private _googleMapsService: GoogleMapsService
   ) {}
 
-  public get(bounds, lang = 'en') {
+  public get(bounds, lng = 'en') {
     return this._googleMapsService.map
       .then(() => {
         this._createFakeMapInstance();
@@ -45,7 +45,12 @@ export class GooglePoiService {
                 id: uuid(),
                 lat: _point.geometry.location.lat(),
                 lon: _point.geometry.location.lng(),
-                title: _point.name || 'unknown',
+                elevation: 0,
+                description: {
+                  [lng]: {
+                    title: _point.name || 'unknown',
+                  }
+                },
                 types: _point.types || [],
                 objectType: EPoiTypes.google,
                 google: {
@@ -103,7 +108,7 @@ export class GooglePoiService {
       .interval(200)
       .take(pois.length)
       .mergeMap((idx) => {
-        let _googleData = pois[idx]!.data!.google!;
+        let _googleData = pois[idx]!.google!;
         if (_googleData.id) {
           this._placesService.getDetails({
             placeId: _googleData.id
