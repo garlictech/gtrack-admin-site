@@ -20,7 +20,10 @@ import {
   PoiEffects,
   AuthenticationComponentsModule,
   AuthenticationModule as CommonAuthenticationModule,
-  AuthenticationEffects as CommonAuthenticationEffects
+  AuthenticationEffects as CommonAuthenticationEffects,
+  PoiSelectors,
+  HikeModuleConfig,
+  HikeModule
 } from 'subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
@@ -49,6 +52,14 @@ import {
 import './styles';
 import { RouterStateSerializer } from '@ngrx/router-store';
 import { RouterStateSnapshot, Params } from '@angular/router';
+
+const hikeModuleConfig = new HikeModuleConfig();
+
+hikeModuleConfig.storeDomains = {
+  hike: 'hike',
+  poi: 'poi',
+  route: 'route'
+};
 
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authentication.server;
@@ -106,6 +117,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     SharedModule.forRoot(sharedConfig),
     // Modules
     DynamicModalModule,
+    HikeModule.forRoot(hikeModuleConfig),
     // Page modules
     CoreLayoutModule,
     AuthModule,
@@ -132,6 +144,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     GooglePoiService,
     HikeEditPoiSelectors,
     HikeEditMapSelectors,
+    PoiSelectors,
     {
       provide: RouterStateSerializer,
       useClass: CustomRouterStateSerializer
