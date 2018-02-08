@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { IHikeProgram, IHikeDescription, IHikeProgramBackgroundImage, IHikeProgramStop } from 'subrepos/provider-client';
+import { IHikeProgram, ILocalizedItem, ITextualDescription, IHikeProgramBackgroundImage, IHikeProgramStop } from 'subrepos/provider-client';
 import { CheckpointSequence, CheckpointService } from '../checkpoint';
 import { Poi } from '../poi';
 import * as _ from 'lodash';
@@ -18,7 +18,7 @@ export class HikeProgram implements IHikeProgram {
   public routeIcon: string;
   public elevationIcon: string;
   public routeId: string;
-  public description: IHikeDescription;
+  public description: ILocalizedItem<ITextualDescription>;
   public backgroundImageUrls?: [IHikeProgramBackgroundImage];
   public offlineMap: string;
   public isRoundTrip: boolean;
@@ -43,16 +43,16 @@ export class HikeProgram implements IHikeProgram {
     }
   }
 
-  public get name(): string {
-    return this.description[this.locale].name;
+  public get title(): string {
+    return this.description[this.locale].title;
   }
 
   public get fullDescription(): string {
-    return this.description[this.locale].full;
+    return this.description[this.locale].fullDescription || '';
   }
 
   public get summary(): string {
-    return this.description[this.locale].summary;
+    return this.description[this.locale].summary || '';
   }
 
   private _calculatePhysicalValues() {

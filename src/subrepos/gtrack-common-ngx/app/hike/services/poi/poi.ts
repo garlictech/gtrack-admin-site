@@ -1,20 +1,15 @@
-import { IPoi, EPoiTypes } from 'subrepos/provider-client';
+import { IPoi, EPoiTypes, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 
 export class Poi implements IPoi {
-  public id: string;
+  public id?: string;
   public elevation: number;
   public lat: number;
   public lon: number;
   public objectType: EPoiTypes;
-  public title: string;
   public types: string[] = [];
-  public segment: any;
-  public inHike = false;
-  public distanceFromOrigo = 0;
-  public isStart = false;
-  public isFinish = false;
+  public description: ILocalizedItem<ITextualDescription>;
 
-  public constructor(public data: IPoi) {
+  public constructor(data: IPoi) {
     Object.assign(this, data);
   }
 
@@ -28,5 +23,4 @@ export class Poi implements IPoi {
   public get isCheckpoint(): boolean {
     return (this.types instanceof Array && this.types.indexOf('checkpoint') > -1);
   }
-
 }
