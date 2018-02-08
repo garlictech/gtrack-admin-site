@@ -20,7 +20,6 @@ import {
   PoiEffects,
   AuthenticationComponentsModule,
   AuthenticationModule as CommonAuthenticationModule,
-  AuthenticationEffects as CommonAuthenticationEffects,
   PoiSelectors,
   HikeModuleConfig,
   HikeModule
@@ -129,8 +128,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       HikeEditRoutePlanningEffects,
       HikeEditPoiEffects,
       RouterEffects,
-      PoiEffects,
-      CommonAuthenticationEffects
+      PoiEffects
     ])
   ],
   providers: [
