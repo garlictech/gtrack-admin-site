@@ -1,9 +1,9 @@
 import { IProviderInput } from './provider';
+import { ILocalizedItem, ITextualDescription } from './common';
 
 export enum EPoiTypes {
   google = 'google',
   wikipedia = 'wikipedia',
-  osm = 'osm', // TODO: DEPRECATED
   osmAmenity = 'osmAmenity',
   osmNatural = 'osmNatural',
   osmRoute = 'osmRoute'
@@ -16,16 +16,18 @@ export interface IPoiSaveResponse {
 
 export interface IPoi {
   id?: string;
-  elevation?: number;
+  elevation: number;
   lat: number;
   lon: number;
-  objectType?: EPoiTypes;
-  title?: string;
-  types?: string[];
-  inHike?: boolean;
-  distanceFromOrigo?: number;
-  isStart?: boolean;
-  isFinish?: boolean;
+  objectType: EPoiTypes;
+  types: string[];
+  description: ILocalizedItem<ITextualDescription>;
+  objectId?: {
+    [objectType: string]: string // Google/Wikipedia/OSM pageid
+  };
+  additionalData?: {
+    [key: string]: string // url/address/phoneNumber/openingHours
+  }
 }
 
 export interface IPoiInput extends IPoi, IProviderInput {}
