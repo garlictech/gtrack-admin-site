@@ -10,10 +10,10 @@ import { Poi } from 'subrepos/gtrack-common-ngx';
 import { IPoi } from 'subrepos/provider-client';
 import { IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import {
-  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions,
+  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions
 } from 'app/store';
-import { HikeEditMapSelectors } from 'app/store/selectors/hike-edit-map';
-import { HikeEditPoiSelectors } from 'app/store/selectors/hike-edit-poi';
+
+import { HikeEditMapSelectors, HikeEditPoiSelectors } from 'app/store/selectors'
 
 import * as _ from 'lodash';
 

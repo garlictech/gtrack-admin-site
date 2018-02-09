@@ -4,7 +4,8 @@ import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { State, hikeEditGeneralInfoActions, HikeEditGeneralInfoSelectors } from 'app/store';
+import { State, hikeEditGeneralInfoActions } from 'app/store';
+import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
 import { ITextualDescription } from 'subrepos/provider-client';
 
@@ -40,19 +41,21 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Selectors
-    this.existingLangKeys$ = this._store
-      .select(this._hikeEditGeneralInfoSelectors.getAllLangKeys);
-    this.textualDescriptions$ = this._store
-      .select(this._hikeEditGeneralInfoSelectors.getAllTextualDescriptions);
+    this.existingLangKeys$ = this._store.select(
+      this._hikeEditGeneralInfoSelectors.getAllLangKeys
+    );
+    this.textualDescriptions$ = this._store.select(
+      this._hikeEditGeneralInfoSelectors.getAllDescriptions
+    );
 
-    this._initTextualDescriptionsState();
-    this._initTextualDescriptionsForm();
+    this._initDescriptionsState();
+    this._initDescriptionsForm();
 
     // Watch form changes and save values to store
     this.descriptionForm.valueChanges
       .takeUntil(this._destroy$)
       .subscribe((value) => {
-        this._store.dispatch(new hikeEditGeneralInfoActions.SetTextualDescriptions({
+        this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
           descriptions: value.langs
         }));
       });
@@ -63,7 +66,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     this._destroy$.unsubscribe();
   }
 
-  private _initTextualDescriptionsForm() {
+  private _initDescriptionsForm() {
     // Initialize form
     this.descriptionForm = this._formBuilder.group({
       langs: this._formBuilder.array([])
@@ -75,7 +78,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       .subscribe((descriptions) => {
         const descriptionArray = <FormArray>this.descriptionForm.controls.langs;
         for (let desc of descriptions) {
-          const formArrayItem = this._createTextualDescriptionItem(desc);
+          const formArrayItem = this._createDescriptionItem(desc);
           descriptionArray.push(formArrayItem);
         }
       });
@@ -84,7 +87,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   /**
    * Fill the store with the initial values
    */
-  private _initTextualDescriptionsState() {
+  private _initDescriptionsState() {
     let descriptions: ITextualDescriptionItem[] = [];
 
     for (let langKey in this.initialDescription) {
@@ -93,12 +96,12 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       }));
     }
 
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetTextualDescriptions({
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
       descriptions: descriptions
     }));
   }
 
-  private _createTextualDescriptionItem(desc) {
+  private _createDescriptionItem(desc) {
     return this._formBuilder.group({
         id: [desc.id || ''],
         title: [desc.title || ''],
@@ -118,7 +121,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     if (this.selLang) {
       // Add new lang field to the form. Form change will call a store update.
       const control = <FormArray>this.descriptionForm.controls.langs;
-      control.push(this._createTextualDescriptionItem({
+      control.push(this._createDescriptionItem({
         id: this.selLang
       }));
 

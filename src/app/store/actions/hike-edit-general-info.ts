@@ -1,10 +1,10 @@
 import { Action } from '@ngrx/store';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
 
-export const SET_TEXTUAL_DESCRIPTIONS = '[HikeEditGeneralInfo] Set textual descriptions';
+export const SET_DESCRIPTIONS = '[HikeEditGeneralInfo] Set descriptions';
 
-export class SetTextualDescriptions implements Action {
-  readonly type = SET_TEXTUAL_DESCRIPTIONS;
+export class SetDescriptions implements Action {
+  readonly type = SET_DESCRIPTIONS;
 
   constructor(public payload: {
     descriptions: ITextualDescriptionItem[]
@@ -12,4 +12,4 @@ export class SetTextualDescriptions implements Action {
 }
 
 export type AllHikeEditGeneralInfoActions =
-  | SetTextualDescriptions;
+  | SetDescriptions;

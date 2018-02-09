@@ -7,7 +7,7 @@ import {
   IRouteInfoDataState,
   hikeEditroutePlanningActions
 } from 'app/store';
-import { HikeEditMapSelectors } from 'app/store/selectors/hike-edit-map';
+import { HikeEditMapSelectors } from 'app/store/selectors';
 
 @Component({
   selector: 'gt-hike-edit-route-planning',

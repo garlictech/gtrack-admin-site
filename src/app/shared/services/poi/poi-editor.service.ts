@@ -4,20 +4,22 @@ import { Observable } from 'rxjs/Observable';
 import {
   GeometryService, ElevationService, PoiService, IconService, Poi
 } from 'subrepos/gtrack-common-ngx';
-import { State } from 'app/store';
-import { IExternalPoiListContextItemState } from 'app/store/state';
-import { HikeEditMapSelectors } from 'app/store/selectors/hike-edit-map';
-import { HikeEditPoiSelectors } from 'app/store/selectors/hike-edit-poi';
+import {
+  State, IExternalPoiListContextItemState
+} from 'app/store';
+import {
+  HikeEditMapSelectors, HikeEditPoiSelectors,
+} from 'app/store/selectors';
 import { ExternalPoi, GooglePoi, OsmPoi, WikipediaPoi } from './lib';
 import { AdminMap, AdminMapService, AdminMapMarker } from '../admin-map';
 import {
   IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi
 } from 'app/shared/interfaces/index';
+import { IPoi } from 'subrepos/provider-client';
 
 import * as uuid from 'uuid/v4';
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
-import { IPoi } from 'subrepos/provider-client';
 
 @Injectable()
 export class PoiEditorService {

@@ -4,15 +4,21 @@ import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/models';
 import { storeFreeze } from 'ngrx-store-freeze';
 
-// Subrepos
 import { IAuthenticationState, Reducer as authReducer } from 'subrepos/authentication-api-ngx';
 import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/deepstream-ngx';
 import { CommonState, commonReducers } from 'subrepos/gtrack-common-ngx';
 
+/////////////
 // Actions
+/////////////
+
 import * as adminMapActions from './actions/admin-map';
 export type AdminMapAction = adminMapActions.AllAdminMapActions;
 export { adminMapActions };
+
+import * as hikeEditActions from './actions/hike-edit';
+export type HikeEditAction = hikeEditActions.AllHikeEditActions;
+export { hikeEditActions };
 
 import * as hikeEditGeneralInfoActions from './actions/hike-edit-general-info';
 export type HikeEditGeneralInfoAction = hikeEditGeneralInfoActions.AllHikeEditGeneralInfoActions;
@@ -46,25 +52,39 @@ import * as commonPoiActions from 'subrepos/gtrack-common-ngx/app/hike/store/poi
 export type CommonPoiAction = commonPoiActions.AllPoiActions;
 export { commonPoiActions };
 
+import * as commonHikeActions from 'subrepos/gtrack-common-ngx/app/hike/store/hike/actions';
+export type CommonHikeAction = commonHikeActions.AllHikeActions;
+export { commonHikeActions };
+
+/////////////
 // Effects
-export { AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from './effects';
+/////////////
+
+export { AuthEffects, HikeEditEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from './effects';
 export { RouterEffects, PoiEffects } from 'subrepos/gtrack-common-ngx';
 
+////////////
 // States
+////////////
+
 import {
-  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState, IHikeEditGeneralInfoState
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState, IHikeEditGeneralInfoState, IExternalPoiListContextItemState
 } from './state';
 export {
-  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState, IHikeEditGeneralInfoState, IExternalPoiListContextItemState
 };
 
-// Selectors
-export * from './selectors';
-
+//////////////
 // Reducers
+//////////////
+
 import { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
 import { hikeEditGeneralInfoReducer } from './reducer/hike-edig-general-info';
 export { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer };
+
+//////////////
+// Stato
+//////////////
 
 // Extend the store interface with that.
 export interface State extends CommonState {

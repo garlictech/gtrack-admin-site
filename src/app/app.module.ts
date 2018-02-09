@@ -8,28 +8,23 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import {
-  AuthenticationApiConfig,
-  AuthenticationApiModule,
+  AuthenticationApiConfig, AuthenticationApiModule,
   Actions as JwtActions
 } from 'subrepos/authentication-api-ngx';
 import {
-  SharedModule,
-  SharedConfig,
-  DeepstreamModule,
-  RouterEffects,
-  PoiEffects,
-  AuthenticationComponentsModule,
+  SharedModule, SharedConfig, DeepstreamModule, RouterEffects, PoiEffects, AuthenticationComponentsModule,
   AuthenticationModule as CommonAuthenticationModule,
-  PoiSelectors,
-  HikeModuleConfig,
-  HikeModule
+  PoiSelectors, HikeModuleConfig, HikeModule
 } from 'subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import {
-  store, AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects, HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors
+  store, AuthEffects, HikeEditEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects
 } from './store';
+import {
+  HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors
+} from './store/selectors';
 import { routing } from './app-routing.module';
 // Modules
 import { DynamicModalModule, DynamicModalService } from 'app/dynamic-modal';
@@ -127,6 +122,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     // Effects
     EffectsModule.forRoot([
       AuthEffects,
+      HikeEditEffects,
       HikeEditRoutePlanningEffects,
       HikeEditPoiEffects,
       RouterEffects,

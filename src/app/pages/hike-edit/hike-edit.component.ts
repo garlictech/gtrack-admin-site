@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State } from 'app/store';
+import { State, hikeEditActions } from 'app/store';
 
 import { HikeDataService } from 'app/shared/services';
 import { IMockHikeElement } from 'app/shared/interfaces';
+import { IHikeProgramStored } from 'subrepos/provider-client';
 
-declare const $: any;
+import * as uuid from 'uuid/v4';
 
 @Component({
   selector: 'gt-hike-edit',
@@ -16,8 +17,9 @@ declare const $: any;
   styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
-  private _routeSubscription: Subscription;
   public hikeData: IMockHikeElement;
+  private _hikeId: string;
+  private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
@@ -27,43 +29,45 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    /* TODO: deprecated
-    $.material.options.autofill = true;
-    $.material.init();
-    */
+    this._activatedRoute.params
+      .takeUntil(this._destroy$)
+      .subscribe(params => {
+        // Load hike data from mock DB
+        if (params && params.id) {
+          this._hikeId = params.id;
 
-    this._routeSubscription = this._activatedRoute.params.subscribe(params => {
-      // Load hike data from mock DB
-      if (params && params.id) {
-        this._title.setTitle('Edit hike');
+          this._title.setTitle('Edit hike');
 
-        // todo: load from db
-        this.hikeData = this._hikeDataService.getHike(params.id);
-      // Create new hike
-      } else {
-        this._title.setTitle('New hike');
+          // todo: load from db
+          this.hikeData = this._hikeDataService.getHike(params.id);
+        // Create new hike
+        } else {
+          this._hikeId = uuid();
 
-        // todo: from store
-        this.hikeData = {
-          description: {
-            'en_US': {
-              title: '',
-              fullDescription: '',
-              summary: ''
+          this._title.setTitle('New hike');
+
+          // todo: from store
+          this.hikeData = {
+            description: {
+              'en_US': {
+                title: '',
+                fullDescription: '',
+                summary: ''
+              }
             }
-          }
-        };
-      }
-    });
+          };
+        }
+      });
   }
 
-  public ngOnDestroy() {
-    if (this._routeSubscription) {
-      this._routeSubscription.unsubscribe();
-    }
+  ngOnDestroy( ) {
+    this._destroy$.next(true);
+    this._destroy$.unsubscribe();
   }
 
-  public save() {
-    // this._store.dispatch(this._actions.saveHike(this.hikeData));
+  public saveHike() {
+    this._store.dispatch(new hikeEditActions.CollectHikeData({
+      hikeId: this._hikeId
+    }));
   }
 }
