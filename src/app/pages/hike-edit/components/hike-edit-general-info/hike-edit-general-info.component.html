@@ -5,7 +5,7 @@
 
   <select class="form-control form-control-sm" [(ngModel)]="selLang" title="Select">
     <ng-container *ngFor="let lang of langs | obj2arr">
-      <option *ngIf="existingLangKeys && !existingLangKeys.has(lang.key)" [value]="lang.key" [innerHTML]="lang.value">
+      <option *ngIf="(existingLangKeys$ | async).indexOf(lang.key) < 0" [value]="lang.key" [innerHTML]="lang.value">
       </option>
     </ng-container>
   </select>
@@ -13,44 +13,46 @@
   <span>New lang:</span>
 </div>
 
-<div aria-multiselectable="true" id="accordion" role="tablist">
-  <div class="card mb-1" *ngFor="let lng of existingLangKeys">
-    <div class="card-header bg-light" id="headingOne" role="tab">
-      <h5>
-        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse{{lng}}" role="button" class="collapsed">
-          <div class="text-success">
-            {{langs[lng]}}
-            <i class="material-icons pull-right">keyboard_arrow_down</i>
-          </div>
-        </a>
-      </h5>
-    </div>
+<form [formGroup]="descriptionForm" novalidate (ngSubmit)="save(descriptionForm)">
+  <div aria-multiselectable="true" id="accordion" role="tablist" formArrayName="langs">
+    <div class="card mb-1" *ngFor="let lng of existingLangKeys$ | async; let i = index">
+      <div class="card-header bg-light" id="headingOne" role="tab">
+        <h5>
+          <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse{{lng}}" role="button" class="collapsed">
+            <div class="text-success">
+              {{langs[lng]}}
+              <i class="material-icons pull-right">keyboard_arrow_down</i>
+            </div>
+          </a>
+        </h5>
+      </div>
 
-    <div aria-labelledby="headingOne" class="collapse" id="collapse{{lng}}" role="tabpanel" aria-expanded="false" style="height: 0px;">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group form-black label-floating is-empty">
-              <label class="control-label">Title</label>
-              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng].name">
+      <div aria-labelledby="headingOne" class="collapse" id="collapse{{lng}}" role="tabpanel" aria-expanded="false" style="height: 0px;">
+        <div class="card-body" [formGroupName]="i">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group form-black label-floating is-empty">
+                <label class="control-label">Title</label>
+                <input class="form-control" type="text" formControlName="title">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-black label-floating is-empty">
+                <label class="control-label">Description</label>
+                <input class="form-control" type="text" formControlName="fullDescription">
+              </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group form-black label-floating is-empty">
-              <label class="control-label">Description</label>
-              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng].full">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group form-black label-floating is-empty">
-              <label class="control-label">Summary</label>
-              <input class="form-control" type="text" [(ngModel)]="hikeData.description[lng].summary">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group form-black label-floating is-empty">
+                <label class="control-label">Summary</label>
+                <input class="form-control" type="text" formControlName="summary">
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</form>

@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { Checkpoint } from '../../../hike/services/checkpoint';
 import { Poi } from '../../../hike/services/poi';
 import { IconService } from '../icon';
-import { IHikeProgramStop } from 'subrepos/gtrack-common-ngx/app/hike/services/hike-program';
+import { IHikeProgramStop } from 'subrepos/provider-client';
 
 export class CheckpointMarker {
   public markers: {[key: string]: L.Marker} = {};
@@ -16,8 +16,6 @@ export class CheckpointMarker {
   public showMarkers(checkpoints: Checkpoint[], show = true) {
     if (checkpoints) {
       this.shownOnMap = show;
-
-      console.log(this.markers);
 
       checkpoints
         .map(checkpoint => this.markers[checkpoint.id])

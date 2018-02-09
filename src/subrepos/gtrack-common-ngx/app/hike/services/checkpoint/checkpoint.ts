@@ -1,4 +1,4 @@
-import { IHikeProgramStop } from '../hike-program/interfaces';
+import { IHikeProgramStop } from 'subrepos/provider-client';
 
 export class Checkpoint {
   protected _name: string;

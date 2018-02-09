@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { IHikeProgram, IHikeProgramData, IHikeDescription, IHikeProgramBackgroundImage, IHikeProgramStop } from './interfaces';
+import { IHikeProgram, ILocalizedItem, ITextualDescription, IHikeProgramBackgroundImage, IHikeProgramStop } from 'subrepos/provider-client';
 import { CheckpointSequence, CheckpointService } from '../checkpoint';
 import { Poi } from '../poi';
 import * as _ from 'lodash';
@@ -18,12 +18,11 @@ export class HikeProgram implements IHikeProgram {
   public routeIcon: string;
   public elevationIcon: string;
   public routeId: string;
-  public description: IHikeDescription;
+  public description: ILocalizedItem<ITextualDescription>;
   public backgroundImageUrls?: [IHikeProgramBackgroundImage];
   public offlineMap: string;
   public isRoundTrip: boolean;
-  public pois: Poi[];
-  public poiIds: string[];
+  public pois: string[];
   public stops: IHikeProgramStop[];
   public checkpoints: CheckpointSequence;
 
@@ -31,12 +30,9 @@ export class HikeProgram implements IHikeProgram {
 
   private locale = 'en_US';
 
-  constructor(data: IHikeProgramData, private _checkpointService: CheckpointService) {
+  constructor(data: IHikeProgram, private _checkpointService: CheckpointService) {
     let converted = _.clone(data);
-    delete converted.pois;
     Object.assign(this, converted);
-    this.pois = [];
-    this.poiIds = data.pois;
 
     this._calculatePhysicalValues();
     this._handleStartFinish();
@@ -47,16 +43,16 @@ export class HikeProgram implements IHikeProgram {
     }
   }
 
-  public get name(): string {
-    return this.description[this.locale].name;
+  public get title(): string {
+    return this.description[this.locale].title;
   }
 
   public get fullDescription(): string {
-    return this.description[this.locale].full;
+    return this.description[this.locale].fullDescription || '';
   }
 
   public get summary(): string {
-    return this.description[this.locale].summary;
+    return this.description[this.locale].summary || '';
   }
 
   private _calculatePhysicalValues() {
@@ -95,5 +91,29 @@ export class HikeProgram implements IHikeProgram {
       last.isFinish = true;
     }
 
+  }
+
+  public toObject(): IHikeProgram {
+    let data: IHikeProgram = {
+      distance: this.distance,
+      isRoundTrip: this.isRoundTrip,
+      uphill: this.uphill,
+      downhill: this.downhill,
+      time: this.time,
+      score: this.score,
+      location: this.location,
+      difficulty: this.difficulty,
+      backgroundImageUrls: this.backgroundImageUrls,
+      rate: this.rate,
+      routeIcon: this.routeIcon,
+      elevationIcon: this.elevationIcon,
+      routeId: this.routeId,
+      description: this.description,
+      offlineMap: this.offlineMap,
+      pois: this.pois,
+      stops: this.stops
+    };
+
+    return data;
   }
 }

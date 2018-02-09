@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { IHikeProgramStop } from '../hike-program';
+import { IHikeProgramStop } from 'subrepos/provider-client';
 import { CheckpointSequence } from './checkpoint-sequence';
 import { Checkpoint } from './checkpoint';
 

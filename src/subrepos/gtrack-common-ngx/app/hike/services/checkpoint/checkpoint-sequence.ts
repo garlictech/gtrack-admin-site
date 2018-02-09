@@ -1,4 +1,4 @@
-import { IHikeProgramStop } from '../hike-program';
+import { IHikeProgramStop } from 'subrepos/provider-client';
 import { Checkpoint } from './checkpoint';
 
 export class CheckpointSequence {

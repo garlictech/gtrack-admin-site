@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
+import { IPoi } from 'subrepos/provider-client';
 
 export const GET_GOOGLE_POIS = '[HikeEditPoi] Get Google pois';
 export const SET_GOOGLE_POIS = '[HikeEditPoi] Set Google pois';

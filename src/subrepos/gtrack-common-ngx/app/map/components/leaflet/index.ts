@@ -66,7 +66,6 @@ export class LeafletComponent implements OnInit {
   constructor(protected mapService: MapService) { }
 
   ngOnInit() {
-    console.log('XXXX');
     this.leafletMap = new L.Map(this.mapElement.nativeElement);
 
     this.leafletMap.setView([this.center.lat, this.center.lng], this.center.zoom);

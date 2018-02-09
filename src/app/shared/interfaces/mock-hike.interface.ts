@@ -1,6 +1,6 @@
-import { IHikeDescription } from 'subrepos/gtrack-common-ngx/app/hike/services/hike-program';
+import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 
 export interface IMockHikeElement {
   id?: string;
-  description?: IHikeDescription;
+  description?: ILocalizedItem<ITextualDescription>;
 }

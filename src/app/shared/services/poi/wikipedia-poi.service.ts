@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Jsonp, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { WikipediaPoi } from './lib/wikipedia-poi';
+import { EPoiTypes } from 'subrepos/provider-client';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index';
 import { IWikipediaPoi, IWikipediaPageImageInfo } from 'app/shared/interfaces';
 
@@ -17,9 +18,10 @@ export class WikipediaPoiService {
     private _geometryService: GeometryService
   ) {}
 
-  public get(bounds, lang = 'en') {
+  public get(bounds, lng = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
-    const request = `https://${lang}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo!.radius!}&gscoord=${geo!.center!.geometry!.coordinates![1]}%7C${geo!.center!.geometry!.coordinates![0]}&format=json&gslimit=500&origin=*`;
+    const gsLimit = 50;
+    const request = `https://${lng}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo!.radius!}&gscoord=${geo!.center!.geometry!.coordinates![1]}%7C${geo!.center!.geometry!.coordinates![0]}&format=json&gslimit=${gsLimit}&origin=*`;
 
     // Get basic poi list
     return this._http.get(request)
@@ -34,22 +36,26 @@ export class WikipediaPoiService {
             id: uuid(),
             lat: _point.lat,
             lon: _point.lon,
-            title: _point.title,
+            elevation: 0,
             types: ['sight'],
-            objectType: 'wikipedia',
+            objectType: EPoiTypes.wikipedia,
+            description: {
+              [lng]: {
+                title: _point.title,
+              }
+            },
             wikipedia: {}
           });
           _poi.wikipedia = {
-            lng: lang,
             pageid: _point.pageid,
-            url: `https://${lang}.wikipedia.org/?curid=${_point.pageid}`
+            url: `https://${lng}.wikipedia.org/?curid=${_point.pageid}`
           }
           _pois.push(_poi);
         }
 
         let promises: Promise<WikipediaPoi[]>[] = [];
-        promises.push(this._getPageExtracts(_pois, lang));
-        promises.push(this._getPageImages(_pois, lang));
+        promises.push(this._getPageExtracts(_pois, lng));
+        promises.push(this._getPageImages(_pois, lng));
 
         return Promise.all(promises).then(() => {
           return _pois;
@@ -60,7 +66,7 @@ export class WikipediaPoiService {
   /**
    * get submethod - load wikipedia lead sections
    */
-  private _getPageExtracts(_pois: WikipediaPoi[], lang) {
+  private _getPageExtracts(_pois: WikipediaPoi[], lng) {
     const _poiIds = _pois.map((p: WikipediaPoi) => {
       if (p.wikipedia && p.wikipedia.pageid) {
         return p.wikipedia.pageid
@@ -75,7 +81,7 @@ export class WikipediaPoiService {
       .take(_chunks.length)
       .map(counter => {
         const _ids = _chunks[counter];
-        const request = `https://${lang}.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&exlimit=max&pageids=${_ids.join('|')}&origin=*`;
+        const request = `https://${lng}.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&exlimit=max&pageids=${_ids.join('|')}&origin=*`;
 
         return this._http.get(request)
           .toPromise()
@@ -105,7 +111,7 @@ export class WikipediaPoiService {
   /**
    * get submethod - load wikipedia page images
    */
-  private _getPageImages(_pois: WikipediaPoi[], lang) {
+  private _getPageImages(_pois: WikipediaPoi[], lng) {
     const _poiIds = _pois.map((p: WikipediaPoi) => {
       if (p.wikipedia && p.wikipedia.pageid) {
         return p.wikipedia.pageid
@@ -120,7 +126,7 @@ export class WikipediaPoiService {
       .take(_chunks.length)
       .map(counter => {
         const _ids = _chunks[counter];
-        const request = `https://${lang}.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&piprop=original|name|thumbnail&pageids=${_ids.join('|')}&origin=*`;
+        const request = `https://${lng}.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&piprop=original|name|thumbnail&pageids=${_ids.join('|')}&origin=*`;
 
         return this._http.get(request)
           .toPromise()
@@ -148,6 +154,7 @@ export class WikipediaPoiService {
       .combineAll()
       .toPromise()
       .then(() => {
+        console.log('WIKI', _pois);
         return _pois;
       });
   }

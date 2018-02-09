@@ -106,7 +106,6 @@ describe('AuthService', () => {
 
     storage.clear();
     auth.logout();
-    api.dispose();
 
     firebaseLoginSpy = spyOn(af.auth, 'signInWithCustomToken').and.returnValue(Promise.resolve(mockFirebaseUser));
     firebaseLogoutSpy = spyOn(af.auth, 'signOut').and.returnValue(Promise.resolve());
@@ -199,7 +198,6 @@ describe('AuthService', () => {
     let api: ApiService = TestBed.get(ApiService);
 
     storage.clear();
-    api.dispose();
     auth.logout();
   });
 

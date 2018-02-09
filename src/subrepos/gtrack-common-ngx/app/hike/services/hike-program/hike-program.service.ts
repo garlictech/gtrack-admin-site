@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { HikeProgram } from './hike-program';
-import { IHikeProgramData } from './interfaces';
+import { IHikeProgram, IHikeProgramStored, IHikeProgramSaveResponse } from 'subrepos/provider-client';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 import { CheckpointService } from '../checkpoint';
 
@@ -17,7 +17,7 @@ export class HikeProgramService {
 
   get(id: string): Observable<HikeProgram|null> {
     return this._deepstream
-      .getRecord<IHikeProgramData>(`hikePrograms/${id}`)
+      .getRecord<IHikeProgramStored>(`hike_programs/${id}`)
       .get()
       .filter(data => (data.stops instanceof Array))
       .map(data => {
@@ -29,8 +29,10 @@ export class HikeProgramService {
 
   query(): Observable<HikeProgram[]> {
     return this._deepstream
-      .getList<IHikeProgramData>('hikePrograms')
-      .subscribeForData()
+      .doQuery<IHikeProgramStored>({
+        table: 'hike_programs',
+        query: []
+      })
       .map(data => {
         return data
           .filter(item => (item.stops instanceof Array))
@@ -40,5 +42,15 @@ export class HikeProgramService {
             return hike;
           });
       });
+  }
+
+  public create(hikeProgram: IHikeProgram) {
+    let data = hikeProgram;
+
+    if (hikeProgram instanceof HikeProgram) {
+      data = hikeProgram.toObject();
+    }
+
+    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data);
   }
 }

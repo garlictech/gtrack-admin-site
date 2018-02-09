@@ -12,6 +12,7 @@ export interface IExternalPoiListContextItemState {
   showOnrouteMarkers?: boolean;
   showOffrouteMarkers?: boolean;
 }
+
 export interface IExternalPoiListContextState {
   google: IExternalPoiListContextItemState,
   osmAmenity: IExternalPoiListContextItemState,

@@ -15,7 +15,7 @@ export interface IDeepstreamState {
 }
 
 export const initialState: IDeepstreamState = {
-  state: EDeepstreamState.LOGGED_OUT,
+  state: EDeepstreamState.LOGGING_IN,
   failure: null,
   auth: null,
   permissionRecord: null

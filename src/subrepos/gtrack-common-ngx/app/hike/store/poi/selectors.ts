@@ -40,20 +40,32 @@ export class PoiSelectors {
   }
 
   public getPoi(context: string) {
-    return createSelector(this.getAllPois, (pois: Poi[]) => pois.filter(poi => (poi.id === context)));
+    return createSelector(this.getAllPois, (pois: Poi[]) => pois.find(poi => (poi.id === context)));
   }
 
   public getPois(contexts: string[]) {
     return createSelector(
       this.getAllPois,
-      pois => pois.filter(poi => (contexts.indexOf(poi.id || '-1') !== -1))
+      pois => pois.filter(poi => {
+        if (poi.id) {
+          return (contexts.indexOf(poi.id) !== -1)
+        } else {
+          return false;
+        }
+      })
     );
   }
 
   public getPoiEntities(contexts: string[]) {
     return createSelector(
       this.getAllPoiEntities,
-      pois => _.pickBy(pois, poi => (contexts.indexOf(poi.id || '-1') !== -1))
+      pois => _.pickBy(pois, poi => {
+        if (poi.id) {
+          return (contexts.indexOf(poi.id) !== -1)
+        } else {
+          return false;
+        }
+      })
     );
   }
 

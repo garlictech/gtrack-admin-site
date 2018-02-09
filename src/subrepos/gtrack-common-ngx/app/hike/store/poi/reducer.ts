@@ -14,8 +14,11 @@ import {
   AllPoiActions
 } from './actions';
 
+export const poiContextReducerInitialState = poiContextStateAdapter.getInitialState();
+export const poiReducerInitialState = poiAdapter.getInitialState();
+
 const contextReducer: ActionReducer<IAllPoiContextState> = (
-  state: IAllPoiContextState = poiContextStateAdapter.getInitialState(),
+  state: IAllPoiContextState = poiContextReducerInitialState,
   action: AllPoiActions
 ): IAllPoiContextState => {
   switch (action.type) {
@@ -23,7 +26,9 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
       return poiContextStateAdapter.addOne({
         id: action.context,
         loading: true,
-        loaded: false
+        loaded: false,
+        saving: false,
+        saved: true
       }, state);
 
     case PoiActionTypes.LOAD_POIS:
@@ -31,7 +36,9 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
         return {
           id: context,
           loading: true,
-          loaded: false
+          loaded: false,
+          saving: false,
+          saved: true
         };
       }), state);
 
@@ -61,7 +68,7 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
 };
 
 const reducer: ActionReducer<IPoiEntityState> = (
-  state: IPoiEntityState = poiAdapter.getInitialState(),
+  state: IPoiEntityState = poiReducerInitialState,
   action: AllPoiActions
 ): IPoiEntityState => {
   switch (action.type) {
@@ -69,7 +76,10 @@ const reducer: ActionReducer<IPoiEntityState> = (
       return poiAdapter.addOne(action.poi, state);
 
     case PoiActionTypes.ALL_POI_LOADED:
-    return poiAdapter.addMany(action.pois, state);
+      return poiAdapter.addMany(action.pois, state);
+
+    case PoiActionTypes.ADD_GTRACK_POIS:
+      return poiAdapter.addMany(action.pois, state);
 
     default:
       return state;

@@ -19,7 +19,6 @@ export class RouteEffects {
       return this._routeService
         .get(action.context)
         .map(route => {
-          console.log(route);
           if (route !== null) {
             return new LocalActions.RouteLoaded(action.context, route);
           }

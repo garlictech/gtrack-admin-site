@@ -15,8 +15,11 @@ import {
 } from './actions';
 import { AllHikeProgramsLoaded } from 'subrepos/gtrack-common-ngx';
 
+export const hikeContextReducerInitialState = hikeContextStateAdapter.getInitialState();
+export const hikeReducerInitialState = hikeAdapter.getInitialState();
+
 const contextReducer: ActionReducer<IAllHikeContextState> = (
-  state: IAllHikeContextState = hikeContextStateAdapter.getInitialState(),
+  state: IAllHikeContextState = hikeContextReducerInitialState,
   action: AllHikeActions
 ): IAllHikeContextState => {
   switch (action.type) {
@@ -42,7 +45,7 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
 };
 
 const reducer: ActionReducer<IHikeEntityState> = (
-  state: IHikeEntityState = hikeAdapter.getInitialState(),
+  state: IHikeEntityState = hikeReducerInitialState,
   action: AllHikeActions
 ): IHikeEntityState => {
   switch (action.type) {

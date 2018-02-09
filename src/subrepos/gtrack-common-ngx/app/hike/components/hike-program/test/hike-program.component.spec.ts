@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
-import { IHikeProgram } from '../../../services/hike-program';
+import { IHikeProgramStored } from 'subrepos/provider-client';
 import { PoiSelectors, poiReducer } from '../../../store/poi';
 import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
 
@@ -50,7 +50,7 @@ describe('HikeProgramComponent', () => {
     fixture = TestBed.createComponent(HikeProgramComponent);
     component = fixture.componentInstance;
 
-    component.hikeProgram = <IHikeProgram>{
+    component.hikeProgram = <IHikeProgramStored>{
       id: '1',
       distance: 4500,
       uphill: 2345,

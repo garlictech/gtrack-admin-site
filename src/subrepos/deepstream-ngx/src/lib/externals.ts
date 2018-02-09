@@ -4,10 +4,6 @@ import { MemoizedSelector } from '@ngrx/store/src/selector';
 
 export interface IExternalDeepstreamDependencies {
   deepstreamConnectionString: string;
-  JwtApiActions: {
-    LOGIN_SUCCESS: string;
-    LOGOUT_START: string;
-  };
 
   selectors: {
     getUserId: MemoizedSelector<any, string | undefined>;

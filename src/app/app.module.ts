@@ -12,11 +12,24 @@ import {
   AuthenticationApiModule,
   Actions as JwtActions
 } from 'subrepos/authentication-api-ngx';
-import { SharedModule, SharedConfig, DeepstreamModule, RouterEffects } from 'subrepos/gtrack-common-ngx';
+import {
+  SharedModule,
+  SharedConfig,
+  DeepstreamModule,
+  RouterEffects,
+  PoiEffects,
+  AuthenticationComponentsModule,
+  AuthenticationModule as CommonAuthenticationModule,
+  PoiSelectors,
+  HikeModuleConfig,
+  HikeModule
+} from 'subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store, AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects, HikeEditPoiSelectors, HikeEditMapSelectors } from './store';
+import {
+  store, AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects, HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors
+} from './store';
 import { routing } from './app-routing.module';
 // Modules
 import { DynamicModalModule, DynamicModalService } from 'app/dynamic-modal';
@@ -40,6 +53,14 @@ import {
 import './styles';
 import { RouterStateSerializer } from '@ngrx/router-store';
 import { RouterStateSnapshot, Params } from '@angular/router';
+
+const hikeModuleConfig = new HikeModuleConfig();
+
+hikeModuleConfig.storeDomains = {
+  hike: 'hike',
+  poi: 'poi',
+  route: 'route'
+};
 
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authentication.server;
@@ -78,6 +99,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
+    CommonAuthenticationModule,
     HttpClientModule,
     JsonpModule,
     store,
@@ -96,6 +118,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     SharedModule.forRoot(sharedConfig),
     // Modules
     DynamicModalModule,
+    HikeModule.forRoot(hikeModuleConfig),
     // Page modules
     CoreLayoutModule,
     AuthModule,
@@ -106,7 +129,8 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       AuthEffects,
       HikeEditRoutePlanningEffects,
       HikeEditPoiEffects,
-      RouterEffects
+      RouterEffects,
+      PoiEffects
     ])
   ],
   providers: [
@@ -118,8 +142,10 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     OsmPoiService,
     OsmRoutePoiService,
     GooglePoiService,
+    HikeEditGeneralInfoSelectors,
     HikeEditPoiSelectors,
     HikeEditMapSelectors,
+    PoiSelectors,
     {
       provide: RouterStateSerializer,
       useClass: CustomRouterStateSerializer

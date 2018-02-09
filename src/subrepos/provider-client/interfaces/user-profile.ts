@@ -14,11 +14,9 @@ export interface ICommonProfile extends IPublicCommonProfile {
   about: string;
 }
 
-export interface ICommonProfileBackend extends ICommonProfile, IProviderInput {}
+export interface ICommonProfileBackend extends ICommonProfile, IProviderInput { }
 
-export interface IUserProfileDelete extends IProviderInput {
-  role: string;
-}
+export interface IUserProfileDelete extends IProviderInput { }
 
 export enum UserPermissionType {
   Public,

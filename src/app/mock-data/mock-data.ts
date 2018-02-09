@@ -5,8 +5,8 @@ export const MOCK_HIKE_LIST: IMockHikeElement[] = [
     'id': '-KYTgM_eoTk0BcbN8j5g',
     'description': {
       'hu_HU': {
-        'full': '',
-        'name': 'Első túra',
+        'fullDescription': '',
+        'title': 'Első túra',
         'summary': ''
       }
     }
@@ -15,8 +15,8 @@ export const MOCK_HIKE_LIST: IMockHikeElement[] = [
     'id': '-KYU-aTrD4mSxBG7ELZ9',
     'description': {
       'hu_HU': {
-        'full': '',
-        'name': 'Túra a Pilisben',
+        'fullDescription': '',
+        'title': 'Túra a Pilisben',
         'summary': ''
       }
     }
@@ -25,8 +25,8 @@ export const MOCK_HIKE_LIST: IMockHikeElement[] = [
     'id': '-KhNoTDAUNykA_G0sPxN',
     'description': {
       'hu_HU': {
-        'full': '',
-        'name': 'Kerékpárral a Tisza-tó körül.',
+        'fullDescription': '',
+        'title': 'Kerékpárral a Tisza-tó körül.',
         'summary': ''
       }
     }
@@ -35,8 +35,8 @@ export const MOCK_HIKE_LIST: IMockHikeElement[] = [
     'id': '-KjD8OmAIRqSZDUzezjO',
     'description': {
       'hu_HU': {
-        'full': '',
-        'name': 'Tour de Balaton',
+        'fullDescription': '',
+        'title': 'Tour de Balaton',
         'summary': ''
       }
     }
@@ -45,8 +45,8 @@ export const MOCK_HIKE_LIST: IMockHikeElement[] = [
     'id': '-KjDDKHCwXzCj24bvGkJ',
     'description': {
       'hu_HU': {
-        'full': '',
-        'name': 'Dél-Alföldi túra',
+        'fullDescription': '',
+        'title': 'Dél-Alföldi túra',
         'summary': ''
       }
     }
@@ -57,13 +57,13 @@ export const MOCK_HIKE_DATA: IMockHikeElement = {
   'id': '-KYTgM_eoTk0BcbN8j5g',
   'description': {
     'hu_HU': {
-      'full': 'Első túra szép hosszú leírása',
-      'name': 'Első túra',
+      'fullDescription': 'Első túra szép hosszú leírása',
+      'title': 'Első túra',
       'summary': 'Első túra szép hosszú leírása nagyon hosszan. Mert ez a summary'
     },
     'en_US': {
-      'full': '',
-      'name': 'First hike with no EN description.',
+      'fullDescription': '',
+      'title': 'First hike with no EN description.',
       'summary': 'string'
     }
   }

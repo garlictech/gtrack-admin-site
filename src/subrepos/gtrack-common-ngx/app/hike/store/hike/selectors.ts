@@ -5,9 +5,9 @@ import * as _ from 'lodash';
 import { hikeAdapter, hikeContextStateAdapter, IHikeState, IHikeContextState } from './state';
 import { EXTERNAL_HIKE_DEPENDENCIES, IExternalHikeDependencies } from '../../externals';
 import { Dictionary } from '@ngrx/entity/src/models';
-import { PoiSelectors } from '../poi/selectors';
-import { HikeProgram, IHikeProgram, HikeProgramService  } from '../../services/hike-program';
-import { Poi } from '../../services/poi';
+import { IHikeProgram } from 'subrepos/provider-client';
+
+import { HikeProgram } from '../../services/hike-program';
 import { RouterSelectors } from '../../../router';
 
 @Injectable()
@@ -23,9 +23,7 @@ export class HikeSelectors {
 
   constructor(
     @Inject(EXTERNAL_HIKE_DEPENDENCIES) externals,
-    private _poiSelectors: PoiSelectors,
-    private _routerSelectors: RouterSelectors,
-    private _hikeProgramService: HikeProgramService
+    private _routerSelectors: RouterSelectors
   ) {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IHikeState>(this._externals.storeDomain);
@@ -52,7 +50,8 @@ export class HikeSelectors {
       this._selectHikeEntities,
       this._routerSelectors.getRouterState,
       (hikes, router): HikeProgram => {
-        return (router.state && hikes[router.state.params.id]);
+        console.log(router);
+        return (router && router.state && hikes[router.state.params.id]);
       }
     )
   }
@@ -62,7 +61,7 @@ export class HikeSelectors {
       this._selectContextEntities,
       this._routerSelectors.getRouterState,
       (contexts, router): boolean => {
-        let context = (router.state && contexts[router.state.params.id]);
+        let context = (router && router.state && contexts[router.state.params.id]);
         return _.get(context, 'loaded', false);
       }
     );

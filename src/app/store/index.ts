@@ -5,16 +5,18 @@ import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/mo
 import { storeFreeze } from 'ngrx-store-freeze';
 
 // Subrepos
-import {
-  IAuthenticationState,
-  Reducer as authReducer
-} from 'subrepos/authentication-api-ngx';
+import { IAuthenticationState, Reducer as authReducer } from 'subrepos/authentication-api-ngx';
 import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/deepstream-ngx';
+import { CommonState, commonReducers } from 'subrepos/gtrack-common-ngx';
 
 // Actions
 import * as adminMapActions from './actions/admin-map';
 export type AdminMapAction = adminMapActions.AllAdminMapActions;
 export { adminMapActions };
+
+import * as hikeEditGeneralInfoActions from './actions/hike-edit-general-info';
+export type HikeEditGeneralInfoAction = hikeEditGeneralInfoActions.AllHikeEditGeneralInfoActions;
+export { hikeEditGeneralInfoActions };
 
 import * as hikeEditMapActions from './actions/hike-edit-map';
 export type HikeEditMapAction = hikeEditMapActions.AllHikeEditMapActions;
@@ -40,13 +42,17 @@ import * as routingActions from './actions/routing';
 export type RoutingAction = routingActions.AllRoutingAction;
 export { routingActions };
 
+import * as commonPoiActions from 'subrepos/gtrack-common-ngx/app/hike/store/poi/actions';
+export type CommonPoiAction = commonPoiActions.AllPoiActions;
+export { commonPoiActions };
+
 // Effects
 export { AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from './effects';
-export { RouterEffects } from 'subrepos/gtrack-common-ngx';
+export { RouterEffects, PoiEffects } from 'subrepos/gtrack-common-ngx';
 
 // States
 import {
-  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState
+  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState, IHikeEditGeneralInfoState
 } from './state';
 export {
   IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState
@@ -57,12 +63,14 @@ export * from './selectors';
 
 // Reducers
 import { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
+import { hikeEditGeneralInfoReducer } from './reducer/hike-edig-general-info';
 export { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer };
 
 // Extend the store interface with that.
-export interface State {
+export interface State extends CommonState {
   authentication: IAuthenticationState;
   routeInfoData: IRouteInfoDataState;
+  hikeEditGeneralInfo: IHikeEditGeneralInfoState;
   hikeEditMap: IHikeEditMapState;
   hikeEditPoi: IHikeEditPoiState;
   router: RouterReducerState; // ngrx/router
@@ -71,8 +79,10 @@ export interface State {
 
 // Same keys as in the state!!!
 const reducers: ActionReducerMap<State> = {
+  ...commonReducers,
   authentication: authReducer,
   routeInfoData: routeInfoDataReducer,
+  hikeEditGeneralInfo: hikeEditGeneralInfoReducer,
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditMap: hikeEditMapReducer,
   router: routerReducer,

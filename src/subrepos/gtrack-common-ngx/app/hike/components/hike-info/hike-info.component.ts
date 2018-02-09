@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IHikeProgram } from '../../services/hike-program';
+import { IHikeProgram } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gtcn-hike-info',

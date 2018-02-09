@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
 
-import { IHikeProgram } from '../../../services/hike-program';
+import { IHikeProgramStored } from 'subrepos/provider-client';
 
 import { HikeInfoComponent } from '../';
 
@@ -41,7 +41,7 @@ describe('HikeInfoComponent', () => {
     fixture = TestBed.createComponent(HikeInfoComponent);
     component = fixture.componentInstance;
 
-    component.hikeProgram = <IHikeProgram>{
+    component.hikeProgram = <IHikeProgramStored>{
       id: '1',
       distance: 4500,
       uphill: 2345,

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Pipes
 import { ObjectToArrayPipe } from 'app/shared/pipes';
 // Modules
@@ -44,6 +44,7 @@ const COMPONENTS = [
     CommonModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
     MapModule,
     HikeModule,
     SharedModule

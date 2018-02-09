@@ -1,4 +1,5 @@
 import { Http } from '@angular/http';
+import { Store, StoreModule }  from '@ngrx/store';
 import { Component, Injector } from '@angular/core';
 import { TestBed, inject, async } from '@angular/core/testing';
 import { BaseRequestOptions, ResponseOptions, XHRBackend, Response, RequestMethod } from '@angular/http';
@@ -9,6 +10,7 @@ import { Subject, Observable } from 'rxjs';
 import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
 import { ApiService } from '../api.service';
+import { Reducer, IAuthenticationState, Actions } from '../../store';
 
 import 'rxjs/add/operator/take';
 
@@ -22,7 +24,11 @@ describe('ApiService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [],
+      imports: [
+        StoreModule.forRoot({
+          authentication: Reducer
+        })
+      ],
       providers: [
         ApiService,
         BaseRequestOptions,
@@ -86,10 +92,18 @@ describe('ApiService', () => {
       });
   });
 
-  it('should emit unauthorized on 401 response', done => {
+  it('should dispatch unauthorized action on 401 response', done => {
     let backend: MockBackend = TestBed.get(MockBackend);
     let api: ApiService = TestBed.get(ApiService);
     let url = 'http://localhost/user/me';
+
+    let store: Store<IAuthenticationState> = TestBed.get(Store);
+
+    spyOn(store, 'dispatch').and.callFake(action => {
+      if (action instanceof Actions.Unauthorized) {
+        done();
+      }
+    });
 
     backend.connections.take(1).subscribe((connection: MockConnection) => {
       connection.mockError(
@@ -101,10 +115,6 @@ describe('ApiService', () => {
           })
         )
       );
-    });
-
-    api.on('unauthorized', () => {
-      done();
     });
 
     api
@@ -122,6 +132,7 @@ describe('ApiService', () => {
     let backend: MockBackend = TestBed.get(MockBackend);
     let api: ApiService = TestBed.get(ApiService);
     let url = 'http://localhost/user/me';
+    let store: Store<IAuthenticationState> = TestBed.get(Store);
 
     backend.connections.take(1).subscribe((connection: MockConnection) => {
       connection.mockError(
@@ -135,8 +146,10 @@ describe('ApiService', () => {
       );
     });
 
-    api.on('unauthorized', () => {
-      done.fail(new Error('Unauthorized emitted'));
+    spyOn(store, 'dispatch').and.callFake(action => {
+      if (action instanceof Actions.Unauthorized) {
+        done.fail(new Error('Unauthorized emitted'));
+      }
     });
 
     api
@@ -156,13 +169,16 @@ describe('ApiService', () => {
     let backend: MockBackend = TestBed.get(MockBackend);
     let api: ApiService = TestBed.get(ApiService);
     let url = 'http://localhost/user/me';
+    let store: Store<IAuthenticationState> = TestBed.get(Store);
+
+    spyOn(store, 'dispatch').and.callFake(action => {
+      if (action instanceof Actions.Unauthorized) {
+        done.fail(new Error('Unauthorized emitted'));
+      }
+    });
 
     backend.connections.take(1).subscribe((connection: MockConnection) => {
       connection.mockError(new Error('Destination host is unreachable'));
-    });
-
-    api.on('unauthorized', () => {
-      done.fail(new Error('Unauthorized emitted'));
     });
 
     api

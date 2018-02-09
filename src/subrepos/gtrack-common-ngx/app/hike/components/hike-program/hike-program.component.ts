@@ -2,8 +2,7 @@ import { Store } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
-import { IHikeProgram } from '../../services/hike-program';
-import { IPoi } from '../../services/poi';
+import { IPoi, IHikeProgram } from 'subrepos/provider-client';
 import { PoiSelectors } from '../../store/poi';
 import * as poiActions from '../../store/poi/actions';
 import { Observable } from 'rxjs/Observable';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store/src/selector';
-
+import { IPoi } from 'subrepos/provider-client';
 import { State } from '../index';
 import { IHikeEditPoiState } from '../state/index';
 import {
@@ -16,6 +16,7 @@ export class HikeEditPoiSelectors {
   public getAllOsmAmenityPois: (state: object) => IOsmPoi[];
   public getAllOsmNaturalPois: (state: object) => IOsmPoi[];
   public getAllOsmRoutePois: (state: object) => IOsmPoi[];
+  public getAllGTrackPois: (state: object) => IPoi[];
 
   constructor() {
     this.hikeEditPoiSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');

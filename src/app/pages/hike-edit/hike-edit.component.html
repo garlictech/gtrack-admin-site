@@ -7,7 +7,9 @@
             <h4 class="card-title">General info</h4>
           </div>
           <div class="card-body">
-            <gt-hike-edit-general-info [hikeData]="hikeData"></gt-hike-edit-general-info>
+            <gt-hike-edit-general-info
+              [initialDescription]="hikeData.description"
+            ></gt-hike-edit-general-info>
           </div>
         </div>
       </div>

@@ -1,13 +1,13 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
-  IHikeEditPoiState,
-  IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
+  IHikeEditPoiState, IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
   IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState
 } from '../state';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import { hikeEditPoiActions } from '../index';
 import { poiReducer } from 'subrepos/gtrack-common-ngx';
+import { IPoi } from 'subrepos/provider-client';
 
 /**
  * Google

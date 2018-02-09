@@ -1,15 +1,16 @@
 import { IPoi } from './poi';
-export interface IHikeDescriptionData {
-  full: string;
-  name: string;
-  summary: string;
-};
-export interface IHikeDescription {
-  [locale: string]: IHikeDescriptionData;
-};
+import { IProviderInput } from './provider';
+import { ILocalizedItem, ITextualDescription } from './common';
+
+export interface IHikeProgramSaveResponse {
+  id: string;
+  success: boolean;
+}
+
 export interface IHikeProgramBackgroundImage {
   url: string;
 };
+
 export interface IHikeProgramStop {
   distanceFromOrigo: number;
   isCheckpoint: boolean;
@@ -26,8 +27,8 @@ export interface IHikeProgramStop {
   isStart?: boolean;
   isFinish?: boolean;
 };
+
 export interface IHikeProgram {
-  id: string;
   distance: number;
   isRoundTrip: boolean;
   uphill: number;
@@ -36,13 +37,20 @@ export interface IHikeProgram {
   score: number;
   location: string;
   difficulty: string;
-  backgroundImageUrls?: [IHikeProgramBackgroundImage];
+  backgroundImageUrls?: IHikeProgramBackgroundImage[];
   rate?: string;
   routeIcon: string;
   elevationIcon: string;
   routeId: string;
-  description: IHikeDescription;
+  description: ILocalizedItem<ITextualDescription>;
   offlineMap?: string;
   pois: string[];
   stops: IHikeProgramStop[];
+}
+
+export interface IHikeProgramInput extends IHikeProgram, IProviderInput { }
+
+export interface IHikeProgramStored extends IHikeProgram {
+  timestamp: number;
+  id: string;
 }

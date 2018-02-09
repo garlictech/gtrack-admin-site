@@ -6,7 +6,8 @@ import 'rxjs/add/operator/mergeMap';
 
 import * as _ from 'lodash';
 
-import { HikeProgramService, IHikeProgram } from '../../services/hike-program';
+import { HikeProgramService } from '../../services/hike-program';
+import { IHikeProgram } from 'subrepos/provider-client';
 import * as LocalActions from './actions';
 import * as PoiActions from '../poi/actions';
 
@@ -38,6 +39,20 @@ export class HikeEffects {
             return new LocalActions.AllHikeProgramsLoaded(ids, hikePrograms);
           });
       });
+
+    @Effect()
+    createHike$: Observable<Action> = this._actions$
+      .ofType<LocalActions.CreateHikeProgram>(LocalActions.HikeProgramActionTypes.CREATE_HIKE_PROGRAM)
+      .mergeMap(action => {
+        return this._hikeProgramService
+          .create(action.hikeProgram)
+          .map(response => new LocalActions.HikeProgramCreated(response.id));
+      });
+
+    @Effect()
+    loadCreatedHikeProgram$: Observable<Action> = this._actions$
+      .ofType<LocalActions.HikeProgramCreated>(LocalActions.HikeProgramActionTypes.HIKE_PROGRAM_CREATED)
+      .map(action => new LocalActions.LoadHikeProgram(action.context));
 
   constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {
     /* EMPTY */

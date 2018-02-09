@@ -5,3 +5,4 @@ export * from './hike';
 export * from './router';
 export * from './styles';
 export * from './store';
+export * from './authentication';

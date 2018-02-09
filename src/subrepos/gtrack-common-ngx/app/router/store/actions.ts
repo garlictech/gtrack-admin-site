@@ -12,9 +12,7 @@ export class Go implements Action {
     path: any[];
     query?: object;
     extras?: NavigationExtras;
-  }) {
-    console.log('GO', payload);
-  }
+  }) {}
 }
 
 export class Back implements Action {

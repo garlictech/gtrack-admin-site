@@ -1,9 +1,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HikeProgramService, HikeProgram, IHikeProgram } from './services/hike-program';
-import { RouteService, Route, IElevationData, IElevationMargin } from './services/route';
-import { PoiService, Poi, IPoi } from './services/poi';
+import { HikeProgramService, HikeProgram } from './services/hike-program';
+import { RouteService, Route } from './services/route';
+import { PoiService, Poi } from './services/poi';
 import { ISegment } from './services/segment';
 import { CheckpointService, Checkpoint, CheckpointSequence } from './services/checkpoint';
 import { GameRuleService } from './services/game-rule';
@@ -77,26 +77,4 @@ export class HikeModule {
       ]
     }
   }
-}
-
-export {
-  IHikeProgram,
-  HikeProgram,
-  HikeProgramService,
-  RouteService,
-  Route,
-  PoiService,
-  Poi,
-  IPoi,
-  ISegment,
-  GameRuleService,
-  GeometryService,
-  CenterRadius,
-  ElevationService,
-  Checkpoint,
-  CheckpointSequence,
-  CheckpointService,
-  HikeModuleConfig,
-  IElevationData,
-  IElevationMargin
 }

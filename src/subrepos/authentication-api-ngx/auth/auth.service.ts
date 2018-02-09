@@ -54,10 +54,6 @@ export class AuthService {
       .switchMap(response => {
         let user = <User>response.json();
 
-        this.api.on('unauthorized', () => {
-          this.store.dispatch(new Actions.Unauthorized());
-        });
-
         let afObs = this.afAuth ? this._getFirebaseData() : Observable.of({ firebaseToken: null, firebaseUser: null });
 
         return Observable.combineLatest(Observable.of({ token, refreshToken, user }), afObs);
