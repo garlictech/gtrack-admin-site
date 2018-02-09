@@ -36,8 +36,8 @@ describe('HikeProgramReducer', () => {
       routeId: uuid(),
       description: {
         en_US: {
-          full: '',
-          name: '',
+          fullDescription: '',
+          title: '',
           summary: ''
         }
       },
