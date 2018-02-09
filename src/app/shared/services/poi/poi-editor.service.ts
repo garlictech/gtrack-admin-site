@@ -49,7 +49,7 @@ export class PoiEditorService {
     */
   }
 
-  public getDbObj(poi: IExternalPoi /* GooglePoi | OsmPoi | WikipediaPoi*/) {
+  public getDbObj(poi: IExternalPoi) {
     let _poiData = {
       id: uuid()
     };

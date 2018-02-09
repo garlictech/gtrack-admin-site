@@ -27,7 +27,9 @@ import {
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store, AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects, HikeEditPoiSelectors, HikeEditMapSelectors } from './store';
+import {
+  store, AuthEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects, HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors
+} from './store';
 import { routing } from './app-routing.module';
 // Modules
 import { DynamicModalModule, DynamicModalService } from 'app/dynamic-modal';
@@ -140,6 +142,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     OsmPoiService,
     OsmRoutePoiService,
     GooglePoiService,
+    HikeEditGeneralInfoSelectors,
     HikeEditPoiSelectors,
     HikeEditMapSelectors,
     PoiSelectors,

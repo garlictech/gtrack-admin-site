@@ -56,12 +56,12 @@ export const MOCK_HIKE_LIST: IMockHikeElement[] = [
 export const MOCK_HIKE_DATA: IMockHikeElement = {
   'id': '-KYTgM_eoTk0BcbN8j5g',
   'description': {
-    'hu': {
+    'hu_HU': {
       'fullDescription': 'Első túra szép hosszú leírása',
       'title': 'Első túra',
       'summary': 'Első túra szép hosszú leírása nagyon hosszan. Mert ez a summary'
     },
-    'en': {
+    'en_US': {
       'fullDescription': '',
       'title': 'First hike with no EN description.',
       'summary': 'string'
