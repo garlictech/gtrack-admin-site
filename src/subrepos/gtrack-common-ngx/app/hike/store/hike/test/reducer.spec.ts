@@ -7,7 +7,6 @@ import { IHikeState } from '../state';
 import { HikeProgram } from '../../../services/hike-program';
 import { CheckpointService } from '../../../services/checkpoint';
 
-
 describe('HikeProgramReducer', () => {
   let id: string;
   let initialState: IHikeState;
@@ -36,8 +35,8 @@ describe('HikeProgramReducer', () => {
       routeId: uuid(),
       description: {
         en_US: {
-          full: '',
-          name: '',
+          fullDescription: '',
+          title: '',
           summary: ''
         }
       },
@@ -58,7 +57,6 @@ describe('HikeProgramReducer', () => {
     it('should return the default state', () => {
       const action = {} as any;
       const state = hikeReducer(undefined, action);
-
 
       expect(state).toEqual(initialState);
     });
