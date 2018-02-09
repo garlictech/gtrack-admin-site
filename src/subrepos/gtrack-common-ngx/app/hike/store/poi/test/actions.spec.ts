@@ -1,4 +1,4 @@
-import { IPoi, IPoiStored } from 'subrepos/provider-client';
+import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 import * as actions from '../actions';
 
@@ -15,7 +15,11 @@ describe('Poi actions', () => {
 
     poiData = {
       lat: 42.25,
-      lon: 19.32
+      lon: 19.32,
+      elevation: 0,
+      objectType: EPoiTypes.google,
+      types: [],
+      description: {}
     };
 
     poiDataStored = {

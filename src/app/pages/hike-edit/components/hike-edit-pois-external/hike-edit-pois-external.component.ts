@@ -161,12 +161,12 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this.pois$
       .take(1)
       .subscribe((pois: IExternalPoi[]) => {
-        const _externalPoisToSave = _.filter(pois, (poi: IExternalPoi) => (poi.inHike && !poi.inGtrackDb));
+        const _externalPoisToSave = _.filter(pois, (poi: IExternalPoi) => (!!(poi.inHike && !poi.inGtrackDb)));
         let _poisToSave: Poi[] = [];
 
         for (let externalPoi of _externalPoisToSave) {
           let _poiData = this._poiEditorService.getDbObj(externalPoi);
-          let _poi = new Poi(_poiData);
+          let _poi = new Poi(<IExternalPoi>_poiData);
           _poisToSave.push(_poi);
         }
 

@@ -14,6 +14,7 @@ export class AuthenticationAgents {
   private _jwtLoggingInSelector: MemoizedSelector<object, boolean>;
   private _tokenSelector: MemoizedSelector<object, string>;
 
+
   constructor(
     private _actions$: Actions,
     private _deepstreamService: DeepstreamService,

@@ -16,8 +16,8 @@ export const hikePrograms: IHikeProgram[] = [
     routeId: uuid(),
     description: {
       en_US: {
-        full: 'Test hike',
-        name: 'Test hike',
+        fullDescription: 'Test hike',
+        title: 'Test hike',
         summary: 'Test hike'
       }
     },
@@ -38,8 +38,8 @@ export const hikePrograms: IHikeProgram[] = [
     routeId: uuid(),
     description: {
       en_US: {
-        full: 'Test hike 2',
-        name: 'Test hike 2',
+        fullDescription: 'Test hike 2',
+        title: 'Test hike 2',
         summary: 'Test hike 2'
       }
     },
