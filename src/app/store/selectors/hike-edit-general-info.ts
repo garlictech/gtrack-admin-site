@@ -3,21 +3,21 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 import { State } from '../index';
 import { IHikeEditGeneralInfoState } from '../state/index';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
-import { textualDescriptionAdapter } from '../reducer/hike-edig-general-info';
+import { descriptionAdapter } from '../reducer/hike-edig-general-info';
 
 @Injectable()
 export class HikeEditGeneralInfoSelectors {
   public hikeEditGeneralInfoSelector: MemoizedSelector<object, IHikeEditGeneralInfoState>;
-  public getAllTextualDescriptions: (state: object) => ITextualDescriptionItem[];
+  public getAllDescriptions: (state: object) => ITextualDescriptionItem[];
   public getAllLangKeys: (state: object) => string[] | number[];
 
   constructor() {
     this.hikeEditGeneralInfoSelector = createFeatureSelector<IHikeEditGeneralInfoState>('hikeEditGeneralInfo');
 
-    const textualDescriptionSelector = createSelector(
-      this.hikeEditGeneralInfoSelector, (state: IHikeEditGeneralInfoState) => state.textualDescriptions
+    const descriptionSelector = createSelector(
+      this.hikeEditGeneralInfoSelector, (state: IHikeEditGeneralInfoState) => state.descriptions
     );
-    this.getAllTextualDescriptions = textualDescriptionAdapter.getSelectors(textualDescriptionSelector).selectAll;
-    this.getAllLangKeys = textualDescriptionAdapter.getSelectors(textualDescriptionSelector).selectIds;
+    this.getAllDescriptions = descriptionAdapter.getSelectors(descriptionSelector).selectAll;
+    this.getAllLangKeys = descriptionAdapter.getSelectors(descriptionSelector).selectIds;
   }
 }

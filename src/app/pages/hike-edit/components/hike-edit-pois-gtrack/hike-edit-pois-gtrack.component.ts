@@ -6,8 +6,9 @@ import { Subject } from 'rxjs/Subject';
 import { IPoi } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
 import {
-  State, hikeEditPoiActions, IExternalPoiListContextState, HikeEditPoiSelectors, HikeEditMapSelectors, commonPoiActions,
+  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions,
 } from 'app/store';
+import { HikeEditPoiSelectors, HikeEditMapSelectors } from 'app/store/selectors';
 
 import * as _ from 'lodash';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';

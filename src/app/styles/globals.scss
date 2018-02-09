@@ -48,3 +48,11 @@ button.btn-just-icon.btn-sm {
     clear: both;
   }
 }
+
+.main-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}

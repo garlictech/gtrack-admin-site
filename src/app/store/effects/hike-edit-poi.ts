@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import { State, hikeEditPoiActions, hikeEditMapActions } from '../index';
-import { HikeEditPoiSelectors } from '../selectors/hike-edit-poi'
+import { MapMarkerService, IconService } from 'subrepos/gtrack-common-ngx';
+import {
+  State, hikeEditPoiActions, hikeEditMapActions, IExternalPoiListContextItemState
+} from '../index';
+import { HikeEditPoiSelectors } from 'app/store/selectors/'
 import {
   OsmPoiService,
   OsmRoutePoiService,
@@ -13,11 +16,10 @@ import {
   AdminMapService
 } from 'app/shared/services';
 import { AdminMap, AdminMapMarker } from 'app/shared/services/admin-map';
-import { IExternalPoi, IWikipediaPoi, IOsmPoi, IGooglePoi } from 'app/shared/interfaces/index';
+import { IExternalPoi, IWikipediaPoi, IOsmPoi, IGooglePoi } from 'app/shared/interfaces';
 import { ExternalPoi } from 'app/shared/services/poi/external-poi';
+
 import * as _ from 'lodash';
-import { IExternalPoiListContextItemState } from 'app/store/state';
-import { MapMarkerService, IconService } from 'subrepos/gtrack-common-ngx';
 
 @Injectable()
 export class HikeEditPoiEffects {

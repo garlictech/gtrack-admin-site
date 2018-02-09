@@ -8,7 +8,7 @@ import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index'
 import { IWikipediaPoi, IWikipediaPageImageInfo } from 'app/shared/interfaces';
 
 import * as _ from 'lodash';
-import * as uuid from 'uuid';
+import * as uuid from 'uuid/v4';
 
 @Injectable()
 export class WikipediaPoiService {

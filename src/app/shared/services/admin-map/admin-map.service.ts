@@ -11,7 +11,7 @@ import {
   ElevationService
 } from 'subrepos/gtrack-common-ngx/app';
 
-import * as uuid from 'uuid';
+import * as uuid from 'uuid/v4';
 
 @Injectable()
 export class AdminMapService extends MapService {

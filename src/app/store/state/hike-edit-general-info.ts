@@ -1,9 +1,9 @@
 import { EntityAdapter, EntityState } from '@ngrx/entity';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
 
-export interface ITextualDescriptionEntityState extends EntityState<ITextualDescriptionItem> {};
+export interface IDescriptionEntityState extends EntityState<ITextualDescriptionItem> {};
 
 // State
 export interface IHikeEditGeneralInfoState {
-  textualDescriptions: ITextualDescriptionEntityState
+  descriptions: IDescriptionEntityState
 };
