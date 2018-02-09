@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EPoiTypes } from 'subrepos/provider-client';
 import { OsmPoi } from './lib/osm-poi';
-import * as uuid from 'uuid';
+import * as uuid from 'uuid/v4';
 
 @Injectable()
 export class OsmRoutePoiService {

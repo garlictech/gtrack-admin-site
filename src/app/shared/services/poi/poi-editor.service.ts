@@ -14,7 +14,7 @@ import {
   IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi
 } from 'app/shared/interfaces/index';
 
-import * as uuid from 'uuid';
+import * as uuid from 'uuid/v4';
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
 import { IPoi } from 'subrepos/provider-client';
