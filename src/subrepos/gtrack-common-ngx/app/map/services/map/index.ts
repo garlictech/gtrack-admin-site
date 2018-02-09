@@ -4,7 +4,7 @@ import { CurrentPositionMarker } from './current-position-marker';
 import { CheckpointMarker } from './checkpoint-marker';
 import { IconService } from '../icon';
 import { MapMarkerService } from '../map-marker';
-import * as uuid from 'uuid';
+import * as uuid from 'uuid/v4';
 
 @Injectable()
 export class MapService {
