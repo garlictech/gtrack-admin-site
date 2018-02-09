@@ -75,7 +75,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       .subscribe((descriptions) => {
         const descriptionArray = <FormArray>this.descriptionForm.controls.langs;
         for (let desc of descriptions) {
-          const formArrayItem = this._initTextualDescriptionItem(desc);
+          const formArrayItem = this._createTextualDescriptionItem(desc);
           descriptionArray.push(formArrayItem);
         }
       });
@@ -98,7 +98,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     }));
   }
 
-  private _initTextualDescriptionItem(desc) {
+  private _createTextualDescriptionItem(desc) {
     return this._formBuilder.group({
         id: [desc.id || ''],
         title: [desc.title || ''],
@@ -108,11 +108,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   }
 
   /*
-  public addTextualDescription() {
-      const control = <FormArray>this.descriptionForm.controls.langs;
-      control.push(this._initTextualDescriptionItem({}));
-  }
-
   public removeTextualDescription(i: number) {
       const control = <FormArray>this.descriptionForm.controls.langs;
       control.removeAt(i);
@@ -123,7 +118,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     if (this.selLang) {
       // Add new lang field to the form. Form change will call a store update.
       const control = <FormArray>this.descriptionForm.controls.langs;
-      control.push(this._initTextualDescriptionItem({
+      control.push(this._createTextualDescriptionItem({
         id: this.selLang
       }));
 
