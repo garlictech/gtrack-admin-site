@@ -12,7 +12,7 @@ import {
   Actions as JwtActions
 } from 'subrepos/authentication-api-ngx';
 import {
-  SharedModule, SharedConfig, DeepstreamModule, RouterEffects, PoiEffects, AuthenticationComponentsModule,
+  SharedModule, SharedConfig, DeepstreamModule, RouterEffects, PoiEffects, HikeEffects, AuthenticationComponentsModule,
   AuthenticationModule as CommonAuthenticationModule,
   PoiSelectors, HikeModuleConfig, HikeModule
 } from 'subrepos/gtrack-common-ngx';
@@ -126,7 +126,8 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       HikeEditRoutePlanningEffects,
       HikeEditPoiEffects,
       RouterEffects,
-      PoiEffects
+      PoiEffects,
+      HikeEffects
     ])
   ],
   providers: [

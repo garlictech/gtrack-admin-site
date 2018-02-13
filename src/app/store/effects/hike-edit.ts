@@ -22,21 +22,15 @@ export class HikeEditEffects {
     .map(toPayload)
     .switchMap(data => {
       return this._hikeDataService.collectHikeDescriptions()
-        .map((descriptions) => {
-          return _.extend(_.cloneDeep(data), { descriptions: descriptions });
-        });
+        .map((descriptions) => _.extend(_.cloneDeep(data), { descriptions: descriptions }));
     })
     .switchMap(data => {
       return this._hikeDataService.collectHikeRouteInfo()
-        .map((routeInfo) => {
-          return _.extend(_.cloneDeep(data), routeInfo);
-        });
+        .map((routeInfo) => _.extend(_.cloneDeep(data), routeInfo));
     })
     .switchMap(data => {
       return this._hikeDataService.collectHikePois()
-        .map((poiIds) => {
-          return _.extend(_.cloneDeep(data), { pois: poiIds });
-        });
+        .map((poiIds) => _.extend(_.cloneDeep(data), { pois: poiIds }));
     })
     .map(data => {
       return new commonHikeActions.CreateHikeProgram(data);
