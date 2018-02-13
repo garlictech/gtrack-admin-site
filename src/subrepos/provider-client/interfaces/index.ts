@@ -10,3 +10,4 @@ export * from './roles';
 export * from './hike-program'
 export * from './poi'
 export * from './geospatial-search';
+export * from './route';
