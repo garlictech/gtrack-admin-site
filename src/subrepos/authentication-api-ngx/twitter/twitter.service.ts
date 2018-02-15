@@ -108,11 +108,14 @@ export class TwitterService extends AuthProviderBase {
     let requestTokenProxy = `${this.authConfig.apiUrl}/auth/twitter/oauth/request_token`;
 
     // Avoid pop-up block
-    this.oauthWindow.open('', 'oauth_verifier').then(url => {
-      this.oauthCallback(url);
+    this
+      .oauthWindow
+      .open('', 'oauth_verifier').then(url => {
+        this.oauthCallback(url);
 
-      return this.deferred.promise;
-    });
+        return this.deferred.promise;
+      })
+      .catch(err => this.deferred.reject(err));
 
     this.http
       .post(requestTokenProxy, {
@@ -189,6 +192,7 @@ export class TwitterService extends AuthProviderBase {
   private _init() {
     let window: any = this.windowService.nativeWindow;
     window.twitterOauthCallback = (url: string) => {
+      this.oauthWindow.close();
       this.oauthCallback(url);
     };
   }
