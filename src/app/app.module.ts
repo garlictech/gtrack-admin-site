@@ -14,7 +14,7 @@ import {
 import {
   SharedModule, SharedConfig, DeepstreamModule, RouterEffects, PoiEffects, HikeEffects, AuthenticationComponentsModule,
   AuthenticationModule as CommonAuthenticationModule,
-  PoiSelectors, HikeModuleConfig, HikeModule
+  PoiSelectors, HikeModuleConfig, HikeModule, DynamicModalModule, DynamicModalService
 } from 'subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
@@ -26,8 +26,6 @@ import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors
 } from './store/selectors';
 import { routing } from './app-routing.module';
-// Modules
-import { DynamicModalModule, DynamicModalService } from 'app/dynamic-modal';
 // Page modules
 import { CoreLayoutModule } from './core';
 import { AuthModule } from './auth';

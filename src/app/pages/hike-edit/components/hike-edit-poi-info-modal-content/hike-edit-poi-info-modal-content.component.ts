@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { GooglePoi, OsmPoi, WikipediaPoi } from 'app/shared/services/poi/lib';
-import { IDynamicComponentModalConfig } from 'app/dynamic-modal';
+import { IDynamicComponentModalConfig } from 'subrepos/gtrack-common-ngx';
 
 @Component({
   selector: 'gt-hike-edit-poi-info-modal-content',
