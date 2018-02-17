@@ -56,6 +56,10 @@ import * as commonHikeActions from 'subrepos/gtrack-common-ngx/app/hike/store/hi
 export type CommonHikeAction = commonHikeActions.AllHikeActions;
 export { commonHikeActions };
 
+import * as commonRouteActions from 'subrepos/gtrack-common-ngx/app/hike/store/route/actions';
+export type CommonRouteAction = commonRouteActions.AllRouteActions;
+export { commonRouteActions };
+
 /////////////
 // Effects
 /////////////

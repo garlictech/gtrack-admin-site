@@ -5,9 +5,13 @@ import { Store } from '@ngrx/store';
 import {
   State,
   IRouteInfoDataState,
-  hikeEditroutePlanningActions
+  hikeEditroutePlanningActions,
+  commonHikeActions,
+  commonRouteActions
 } from 'app/store';
 import { HikeEditMapSelectors } from 'app/store/selectors';
+import { IRoute } from 'subrepos/provider-client';
+import * as uuid from 'uuid/v4';
 
 @Component({
   selector: 'gt-hike-edit-route-planning',
@@ -25,6 +29,7 @@ export class HikeEditRoutePlanningComponent {
     this.routeInfoData$ = this._store.select((state: State) => state.routeInfoData);
 
     this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
+      .take(1)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
@@ -46,12 +51,22 @@ export class HikeEditRoutePlanningComponent {
     this._map.routeInfo.deletePlan();
     this._map.waypointMarker.reset();
     this._map.routingControl.clearControls();
-
   }
 
   public saveRoute() {
-    console.log('todo: saveRoute');
-    this._store.dispatch(new hikeEditroutePlanningActions.SaveRoute());
+    this._store.select((state: State) => state.routeInfoData)
+      .take(1)
+      .subscribe((routeInfoData) => {
+        if (routeInfoData) {
+          let _route: IRoute = {
+            bounds: routeInfoData.route.bounds,
+            route: routeInfoData.route,
+          }
+
+          this._store.dispatch(new commonRouteActions.CreateRoute(_route));
+        }
+      });
+
     /*
     _rawData: firebaseObject volt!
     AsyncRequestExecutor.execute scope, RoutePlannerService.saveTrack(scope.hike._rawData).then ->
