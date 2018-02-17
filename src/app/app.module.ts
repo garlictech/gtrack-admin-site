@@ -14,7 +14,8 @@ import {
 import {
   SharedModule, SharedConfig, DeepstreamModule, RouterEffects, PoiEffects, HikeEffects, AuthenticationComponentsModule,
   AuthenticationModule as CommonAuthenticationModule,
-  PoiSelectors, HikeModuleConfig, HikeModule, DynamicModalModule, DynamicModalService
+  DynamicModalModule, DynamicModalService,
+  PoiSelectors, HikeModuleConfig, HikeModule, RouteEffects
 } from 'subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
@@ -34,13 +35,8 @@ import { HikeEditModule } from './pages/hike-edit';
 // Services
 import {
   AdminMapService,
-  PoiEditorService,
-  WikipediaPoiService,
-  OsmPoiService,
-  OsmRoutePoiService,
-  GooglePoiService,
-  // Mocks
-  HikeDataService
+  PoiEditorService, WikipediaPoiService, OsmPoiService, OsmRoutePoiService, GooglePoiService,
+  HikeDataService, ReverseGeocodingService
 } from './shared/services';
 // Global styles
 import './styles';
@@ -125,18 +121,21 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       HikeEditPoiEffects,
       RouterEffects,
       PoiEffects,
-      HikeEffects
+      HikeEffects,
+      RouteEffects
     ])
   ],
   providers: [
     // Services
     HikeDataService,
+    ReverseGeocodingService,
     AdminMapService,
     PoiEditorService,
     WikipediaPoiService,
     OsmPoiService,
     OsmRoutePoiService,
     GooglePoiService,
+    // Selectors
     HikeEditGeneralInfoSelectors,
     HikeEditPoiSelectors,
     HikeEditMapSelectors,
