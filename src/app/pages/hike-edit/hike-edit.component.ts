@@ -34,7 +34,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         // Load hike data from mock DB
         if (params && params.id) {
-          // Generate hike id
+          // Set hike id
           this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({
             hikeId: params.id
           }));
