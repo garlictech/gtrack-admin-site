@@ -4,5 +4,5 @@ export interface IRouteInfoDataState {
   segments: ISegment[];
   total: any;
   location: any;
-  track: any;
+  route: any;
 };

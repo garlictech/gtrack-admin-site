@@ -6,7 +6,7 @@ const initialState: IRouteInfoDataState = {
   segments: [],
   total: {},
   location: '',
-  track: {},
+  route: {},
 };
 
 export function routeInfoDataReducer(
@@ -16,10 +16,10 @@ export function routeInfoDataReducer(
   switch (action.type) {
     case routeInfoDataActions.RESET:
       return initialState;
-    case routeInfoDataActions.ADD_TRACK:
+    case routeInfoDataActions.ADD_ROUTE:
       return {
         ...state,
-        track: action.payload.track
+        route: action.payload.route
       };
     case routeInfoDataActions.PUSH_SEGMENT:
       return {
