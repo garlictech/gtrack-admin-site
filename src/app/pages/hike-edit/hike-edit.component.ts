@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, hikeEditActions } from 'app/store';
+import { State, hikeEditActions, hikeEditGeneralInfoActions } from 'app/store';
 
 import { HikeDataService } from 'app/shared/services';
 import { IMockHikeElement } from 'app/shared/interfaces';
@@ -17,7 +17,7 @@ import * as uuid from 'uuid/v4';
   styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
-  public hikeData: IMockHikeElement;
+  public hikeData: IMockHikeElement = {};
   private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -34,28 +34,35 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         // Load hike data from mock DB
         if (params && params.id) {
-          this._hikeId = params.id;
+          // Generate hike id
+          this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({
+            hikeId: params.id
+          }));
 
+          // Set page title
           this._title.setTitle('Edit hike');
 
           // todo: load from db
           this.hikeData = this._hikeDataService.getHike(params.id);
         // Create new hike
         } else {
-          this._hikeId = uuid();
+          // Generate hike id
+          this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({
+            hikeId: uuid()
+          }));
 
+          // Set page title
           this._title.setTitle('New hike');
 
-          // todo: from store
-          this.hikeData = {
-            description: {
-              'en_US': {
+          // Create initial language block
+          this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
+            descriptions: [{
+                id: 'en_US',
                 title: '',
                 fullDescription: '',
                 summary: ''
-              }
-            }
-          };
+            }]
+          }));
         }
       });
   }
@@ -66,8 +73,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   }
 
   public saveHike() {
-    this._store.dispatch(new hikeEditActions.CollectHikeData({
-      hikeId: this._hikeId
-    }));
+    this._store.dispatch(new hikeEditActions.CollectHikeData());
   }
 }
