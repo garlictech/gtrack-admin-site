@@ -1,24 +1,17 @@
-import { IRoute } from './interfaces';
+import { IRoute, IRouteData, IRouteBounds } from 'subrepos/provider-client';
 
 export class Route implements IRoute {
   public id: string;
-  public bounds: {
-    NorthEast: {
-      lat: number,
-      lon: number
-    },
-    SouthWest: {
-      lat: number,
-      lon: number
-    }
-  };
+  public bounds: IRouteBounds;
+  public route: IRouteData;
 
-  public path: {
-    coordinates: GeoJSON.Position[],
-    type: string
-  };
+  public get path() {
+    return this.route.features[0].geometry;
+  }
 
-  public geojson: any;
+  public get geojson() {
+    return this.route;
+  }
 
   constructor(data: IRoute) {
     Object.assign(this, data);

@@ -14,8 +14,11 @@ import {
   AllRouteActions
 } from './actions';
 
+export const routeReducerInitialState = routeAdapter.getInitialState();
+export const routeContextReducerInitialState = routeContextStateAdapter.getInitialState();
+
 const contextReducer: ActionReducer<IAllRouteContextState> = (
-  state: IAllRouteContextState = routeContextStateAdapter.getInitialState(),
+  state: IAllRouteContextState = routeContextReducerInitialState,
   action: AllRouteActions
 ): IAllRouteContextState => {
   switch (action.type) {
@@ -41,7 +44,7 @@ const contextReducer: ActionReducer<IAllRouteContextState> = (
 };
 
 const reducer: ActionReducer<IRouteEntityState> = (
-  state: IRouteEntityState = routeAdapter.getInitialState(),
+  state: IRouteEntityState = routeReducerInitialState,
   action: AllRouteActions
 ): IRouteEntityState => {
   switch (action.type) {

@@ -40,10 +40,10 @@ export class RouteInfo {
   }
 
   /**
-   * Get track from current route
+   * Get route from current plan
    */
-  public getTrack() {
-    return this._getRoute().track;
+  public getRoute() {
+    return this._getRoute().route;
   }
 
   /**
@@ -53,8 +53,8 @@ export class RouteInfo {
     // Feature[0] contains the route polyLine
     const route = this._getRoute();
 
-    if (route && route.track) {
-      return this._getRoute().track.features[0];
+    if (route && route.route) {
+      return this._getRoute().route.features[0];
     } else {
       return null;
     }
@@ -68,31 +68,6 @@ export class RouteInfo {
       return this._savedRoute;
     }
   }
-
-  private saveTrack(hike: any) {
-    console.log('RouteInfo.saveTrack');
-    console.log('TODO saveTrack');
-    /*
-    this.planner.saveTrack(hike).then(() => {
-      if (this._savedMapTrack) {
-        // MapService.removeTrack(this._savedMapTrack);
-      }
-      this._getSavedTrack(hike);
-    });
-    */
-  }
-
-  /*
-  private _getSavedRoute() {
-    console.log('RouteInfo._getSavedRoute');
-    return this._savedRoute;
-  }
-
-  private _setRoute(hike: any) {
-    console.log('RouteInfo._setRoute');
-    this._getSavedTrack(hike)
-  }
-  */
 
   /**
    * Get path bounds for POI search

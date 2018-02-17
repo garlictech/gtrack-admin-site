@@ -16,10 +16,14 @@ describe('Poi actions', () => {
     poiData = {
       lat: 42.25,
       lon: 19.32,
-      elevation: 0,
+      elevation: 240,
       objectType: EPoiTypes.google,
       types: [],
-      description: {}
+      description: {
+        en_US: {
+          title: 'Test poi'
+        }
+      }
     };
 
     poiDataStored = {

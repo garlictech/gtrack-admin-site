@@ -25,7 +25,6 @@ export class GooglePoiService {
   public get(bounds, lng = 'en') {
     return this._googleMapsService.map
       .then(() => {
-        this._createFakeMapInstance();
         this._hasNextPage$.next(true);
 
         const _map = new google.maps.Map(document.getElementById('fakeMap'));
@@ -77,27 +76,6 @@ export class GooglePoiService {
           });
         });
       });
-  }
-
-  /**
-   * get() submethod
-   */
-  private _createFakeMapInstance() {
-    let fakeDiv: HTMLDivElement = document.createElement('div');
-    fakeDiv.id = 'fakeMap';
-    fakeDiv.style.display = 'none';
-    document.body.appendChild(fakeDiv);
-  }
-
-  /**
-   * get() submethod
-   */
-  private _removeFakeMapInstance() {
-    let fakeDiv: HTMLElement | null = document.getElementById('fakeMap');
-
-    if (fakeDiv !== null) {
-      document.body.removeChild(fakeDiv);
-    }
   }
 
   /**

@@ -1,7 +1,7 @@
 // Core
 import { Component, Input } from '@angular/core';
 import { GooglePoi, OsmPoi, WikipediaPoi } from 'app/shared/services/poi/lib';
-import { DynamicModalService, IDynamicComponentModalConfig } from 'app/dynamic-modal';
+import { DynamicModalService, IDynamicComponentModalConfig } from 'subrepos/gtrack-common-ngx';
 
 @Component({
   selector: 'special-poi-data',

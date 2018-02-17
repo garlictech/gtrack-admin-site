@@ -1,8 +1,41 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
-import { IDescriptionEntityState, IHikeEditGeneralInfoState } from '../state';
+import { IDescriptionEntityState, IHikeEditGeneralInfoState, IGeneralInfoState } from '../state';
 import { hikeEditGeneralInfoActions } from '../index';
+
+/**
+ * General info
+ */
+
+const initialGeneralInfoState: IGeneralInfoState = {
+  hikeId: '',
+  routeId: ''
+};
+
+export function generalInfoReducer(
+  state = initialGeneralInfoState,
+  action: hikeEditGeneralInfoActions.AllHikeEditGeneralInfoActions
+): IGeneralInfoState {
+  switch (action.type) {
+    case hikeEditGeneralInfoActions.SET_HIKE_ID:
+      return {
+        ...state,
+        hikeId: action.payload.hikeId
+      };
+    case hikeEditGeneralInfoActions.SET_ROUTE_ID:
+      return {
+        ...state,
+        routeId: action.payload.routeId
+      };
+    default:
+      return state;
+  }
+}
+
+/**
+ * Descriptions
+ */
 
 export const descriptionAdapter: EntityAdapter<ITextualDescriptionItem> = createEntityAdapter<ITextualDescriptionItem>();
 const descriptionReducer: ActionReducer<IDescriptionEntityState> = (
@@ -19,6 +52,7 @@ const descriptionReducer: ActionReducer<IDescriptionEntityState> = (
 }
 
 const reducerMap: ActionReducerMap<IHikeEditGeneralInfoState> = {
+  generalInfo: generalInfoReducer,
   descriptions: descriptionReducer
 };
 

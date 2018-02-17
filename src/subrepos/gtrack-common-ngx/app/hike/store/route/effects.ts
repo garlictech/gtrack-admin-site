@@ -27,6 +27,20 @@ export class RouteEffects {
         });
     });
 
+    @Effect()
+    createRoute$: Observable<Action> = this._actions$
+      .ofType<LocalActions.CreateRoute>(LocalActions.RouteActionTypes.CREATE_ROUTE)
+      .mergeMap(action => {
+        return this._routeService
+          .create(action.route)
+          .map(response => new LocalActions.RouteCreated(response.id));
+      });
+
+    @Effect()
+    loadCreatedRoute$: Observable<Action> = this._actions$
+      .ofType<LocalActions.RouteCreated>(LocalActions.RouteActionTypes.ROUTE_CREATED)
+      .map(action => (new LocalActions.LoadRoute(action.context)));
+
   constructor(private _actions$: Actions, private _routeService: RouteService, private _store: Store<any>) {
     /* EMPTY */
   }

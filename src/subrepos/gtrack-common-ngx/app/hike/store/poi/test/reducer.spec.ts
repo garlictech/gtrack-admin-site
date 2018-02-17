@@ -1,10 +1,12 @@
-import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
+import { IPoi, IPoiStored } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 
 import { poiReducer, poiReducerInitialState, poiContextReducerInitialState } from '../reducer';
 import * as actions from '../actions';
 import { IPoiState } from '../state';
 import { Poi } from '../../../services/poi';
+
+import { pois as poiFixtures } from './fixtures'
 
 describe('PoiReducer', () => {
   let id: string;
@@ -19,14 +21,8 @@ describe('PoiReducer', () => {
       pois: poiReducerInitialState,
       contexts: poiContextReducerInitialState
     };
-    poiData = {
-      lat: 42.25,
-      lon: 19.32,
-      elevation: 0,
-      objectType: EPoiTypes.google,
-      types: [],
-      description: {}
-    };
+
+    poiData = poiFixtures[0];
 
     poiStored = {
       ...poiData,

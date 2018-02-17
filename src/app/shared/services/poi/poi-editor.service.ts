@@ -384,10 +384,6 @@ export class PoiEditorService {
             }
           });
 
-          // 1. Típusnak megfelelő markereket levenni a térképről
-          // 2. Markerek generálása és az entity lista lecserélése (addMany)
-          // 3. Láthatóság frissítése entity
-
           const _onRoutePois = this._getOnroutePois(_filteredPois);
           const _offRoutePois = this._getOffroutePois(_filteredPois);
 

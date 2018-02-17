@@ -3,8 +3,6 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
 import { IDeepstreamState, EDeepstreamState } from './state';
 
-import * as _ from 'lodash';
-
 export interface ISelectorUserData {
   userId: string | undefined;
   role: string;

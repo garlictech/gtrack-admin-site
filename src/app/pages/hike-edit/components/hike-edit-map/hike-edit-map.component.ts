@@ -102,7 +102,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public resetMap($event: Event) {
     $event.stopPropagation();
-    this.mapComponent.map.fitBounds(this.mapComponent.map.routeInfo.getTrack());
+    this.mapComponent.map.fitBounds(this.mapComponent.map.routeInfo.getRoute());
   }
 
   public buffer($event: Event) {

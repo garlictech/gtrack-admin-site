@@ -5,10 +5,8 @@ import * as _ from 'lodash';
 import { routeAdapter, routeContextStateAdapter, IRouteState, IRouteContextState } from './state';
 import { EXTERNAL_ROUTE_DEPENDENCIES, IExternalRouteDependencies } from '../../externals';
 import { Dictionary } from '@ngrx/entity/src/models';
-import { PoiSelectors } from '../poi/selectors';
 import { Route, RouteService  } from '../../services/route';
 import { Poi } from '../../services/poi';
-import { RouterSelectors } from '../../../router';
 
 @Injectable()
 export class RouteSelectors {
@@ -22,10 +20,7 @@ export class RouteSelectors {
   private _externals: IExternalRouteDependencies;
 
   constructor(
-    @Inject(EXTERNAL_ROUTE_DEPENDENCIES) externals,
-    private _poiSelectors: PoiSelectors,
-    private _routerSelectors: RouterSelectors,
-    private _hikeProgramService: RouteService
+    @Inject(EXTERNAL_ROUTE_DEPENDENCIES) externals
   ) {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IRouteState>(this._externals.storeDomain);

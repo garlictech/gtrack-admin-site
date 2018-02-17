@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 export const RESET = '[RouteInfoData] Reset';
-export const ADD_TRACK = '[RouteInfoData] Add track';
+export const ADD_ROUTE = '[RouteInfoData] Add route';
 export const PUSH_SEGMENT = '[RouteInfoData] Push segment';
 export const POP_SEGMENT = '[RouteInfoData] Pop segment';
 export const UPDATE_TOTAL = '[RouteInfoData] Update total';
@@ -12,10 +12,10 @@ export class Reset implements Action {
   constructor() { /* EMPTY */ }
 }
 
-export class AddTrack implements Action {
-  readonly type = ADD_TRACK;
+export class AddRoute implements Action {
+  readonly type = ADD_ROUTE;
   constructor(public payload: {
-    track: any
+    route: any
   }) { /* EMPTY */ }
 }
 
@@ -47,7 +47,7 @@ export class SetLocation implements Action {
 
 export type AllRouteInfoDataActions =
   | Reset
-  | AddTrack
+  | AddRoute
   | PushSegment
   | PopSegment
   | UpdateTotal

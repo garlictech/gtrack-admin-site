@@ -42,6 +42,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
+      .take(1)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
@@ -72,10 +73,12 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this.pois$
       .takeUntil(this._destroy$)
       .subscribe((pois) => {
-        // Refresh markers when the poi list has been changed
-        this._store.dispatch(new hikeEditPoiActions.GenerateSubdomainPoiMarkers({
-          subdomain: this.poiType.subdomain
-        }));
+        if (pois.length > 0) {
+          // Refresh markers when the poi list has been changed
+          this._store.dispatch(new hikeEditPoiActions.GenerateSubdomainPoiMarkers({
+            subdomain: this.poiType.subdomain
+          }));
+        }
       });
 
     this.markers$

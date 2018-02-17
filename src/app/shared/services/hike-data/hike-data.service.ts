@@ -12,13 +12,15 @@ import * as _ from 'lodash';
 
 // TODO del
 import { MOCK_HIKE_LIST, MOCK_HIKE_DATA } from '../../../mock-data';
+import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
 
 @Injectable()
 export class HikeDataService {
   constructor(
     private _store: Store<State>,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
-    private _poiSelectors: PoiSelectors
+    private _poiSelectors: PoiSelectors,
+    private _reverseGeocodingService: ReverseGeocodingService
   ) {}
 
   public getHikes() {
@@ -27,6 +29,20 @@ export class HikeDataService {
 
   public getHike(id) {
     return MOCK_HIKE_DATA;
+  }
+
+  /**
+   * collectHikeData effect submethod
+   */
+  public collectHikeGeneralInfo() {
+    return this._store.select((state: State) => state.hikeEditGeneralInfo.generalInfo)
+      .take(1)
+      .map((generalInfo) => {
+        return {
+          id: generalInfo.hikeId,
+          routeId: generalInfo.routeId
+        };
+      });
   }
 
   /**
@@ -53,7 +69,8 @@ export class HikeDataService {
       .map((routeInfoTotal) => {
         return _.pick(routeInfoTotal, [
           'distance', 'uphill', 'downhill', 'time', 'score',
-          'isRoundTrip', 'location', 'difficulty', 'rate'
+          'isRoundTrip', 'difficulty', 'rate', 'routeIcon',
+          'elevationIcon'
         ]);
       });
   }
@@ -71,5 +88,35 @@ export class HikeDataService {
       .map((poiIds) => {
         return poiIds;
       });
+  }
+
+  /**
+   * collectHikeData effect submethod
+   */
+  public collectHikeLocation() {
+    return new Promise((resolve, reject) => {
+      let _pois$ = this._store.select(
+        this._poiSelectors.getAllPois
+      );
+
+      _pois$
+        .take(1)
+        .subscribe((pois) => {
+          if (!pois[0]) {
+            resolve({location: 'n/a'});
+          }
+
+          let _startPoint = {
+            lon: pois[0].lon,
+            lat: pois[0].lat
+          }
+
+          this._reverseGeocodingService.get(_startPoint).then((location) => {
+            resolve({location: location});
+          }, (err) => {
+            resolve({location: 'n/a'});
+          });
+        });
+    });
   }
 }

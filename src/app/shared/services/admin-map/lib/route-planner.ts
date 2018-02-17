@@ -132,15 +132,15 @@ export class RoutePlanner {
       this._addRoutePoint(this._getLastPointOfLastSegment(segments), segments.length + 1);
     }
 
-    let _track: any = _.cloneDeep(this._geoJSON);
+    let _route: any = _.cloneDeep(this._geoJSON);
 
     // todo: getBounds fails when segments array is empty
     if (segments.length > 0) {
-      _track.bounds = this._routeService.getBounds(_track);
+      _route.bounds = this._routeService.getBounds(_route);
     }
 
-    this._store.dispatch(new routeInfoDataActions.AddTrack({
-      track: _track
+    this._store.dispatch(new routeInfoDataActions.AddRoute({
+      route: _route
     }));
   }
 

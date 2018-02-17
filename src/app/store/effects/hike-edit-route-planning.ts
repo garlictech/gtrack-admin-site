@@ -15,8 +15,6 @@ export class HikeEditRoutePlanningEffects {
       .ofType(hikeEditroutePlanningActions.SAVE_ROUTE)
       .map(toPayload)
       .switchMap(data => {
-        console.log('EFFECT for HikeEditRoutePlanningActions.SAVE_ROUTE');
-
         return Observable.empty<Response>();
       });
 }

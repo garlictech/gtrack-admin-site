@@ -12,9 +12,10 @@ import {
   Actions as JwtActions
 } from 'subrepos/authentication-api-ngx';
 import {
-  SharedModule, SharedConfig, DeepstreamModule, RouterEffects, PoiEffects, AuthenticationComponentsModule,
+  SharedModule, SharedConfig, DeepstreamModule, RouterEffects, PoiEffects, HikeEffects, AuthenticationComponentsModule,
   AuthenticationModule as CommonAuthenticationModule,
-  PoiSelectors, HikeModuleConfig, HikeModule
+  DynamicModalModule, DynamicModalService,
+  PoiSelectors, HikeModuleConfig, HikeModule, RouteEffects
 } from 'subrepos/gtrack-common-ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
@@ -26,8 +27,6 @@ import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors
 } from './store/selectors';
 import { routing } from './app-routing.module';
-// Modules
-import { DynamicModalModule, DynamicModalService } from 'app/dynamic-modal';
 // Page modules
 import { CoreLayoutModule } from './core';
 import { AuthModule } from './auth';
@@ -36,13 +35,8 @@ import { HikeEditModule } from './pages/hike-edit';
 // Services
 import {
   AdminMapService,
-  PoiEditorService,
-  WikipediaPoiService,
-  OsmPoiService,
-  OsmRoutePoiService,
-  GooglePoiService,
-  // Mocks
-  HikeDataService
+  PoiEditorService, WikipediaPoiService, OsmPoiService, OsmRoutePoiService, GooglePoiService,
+  HikeDataService, ReverseGeocodingService
 } from './shared/services';
 // Global styles
 import './styles';
@@ -126,18 +120,22 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       HikeEditRoutePlanningEffects,
       HikeEditPoiEffects,
       RouterEffects,
-      PoiEffects
+      PoiEffects,
+      HikeEffects,
+      RouteEffects
     ])
   ],
   providers: [
     // Services
     HikeDataService,
+    ReverseGeocodingService,
     AdminMapService,
     PoiEditorService,
     WikipediaPoiService,
     OsmPoiService,
     OsmRoutePoiService,
     GooglePoiService,
+    // Selectors
     HikeEditGeneralInfoSelectors,
     HikeEditPoiSelectors,
     HikeEditMapSelectors,

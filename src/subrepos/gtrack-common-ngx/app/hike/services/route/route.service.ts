@@ -9,6 +9,7 @@ import { UnitsService } from '../../../shared';
 
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 import { ScaleLinear } from 'd3';
+import { IRoute, IRouteStored, IRouteSaveResponse } from 'subrepos/provider-client';
 
 export interface IElevationMargin {
   top: number;
@@ -47,16 +48,15 @@ export class RouteService {
 
   public get(id: string): Observable<Route> {
     return this._deepstream
-      .getRecord(`routes/${id}`)
+      .getRecord<IRouteStored>(`routes/${id}`)
       .get()
-      .map((data: any) => {
-        return new Route({
-          id: data.id,
-          bounds: data.bounds,
-          path: data.route.features[0].geometry,
-          geojson: data.route
-        });
+      .map(data => {
+        return new Route(data);
       });
+  }
+
+  public create(route: IRoute) {
+    return this._deepstream.callRpc<IRouteSaveResponse>('admin.route.save', route);
   }
 
   public elevationData(

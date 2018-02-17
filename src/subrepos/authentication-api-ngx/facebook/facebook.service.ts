@@ -49,6 +49,7 @@ export class FacebookService extends AuthProviderBase {
     this.facebookApiUrl = `https://www.facebook.com/v${this.config.version}`;
 
     window.facebookOauthCallback = (url: string) => {
+      this.oauthWindow.close();
       this._oauthCallback(url);
     };
   }

@@ -5,18 +5,26 @@ export const pois: IPoi[] = [
   {
     lat: 42.25,
     lon: 19.32,
-    elevation: 0,
+    elevation: 150,
     objectType: EPoiTypes.google,
-    types: [],
-    description: {}
+    types: ['stop'],
+    description: {
+      en_US: {
+        title: 'Test poi 1'
+      }
+    }
   },
   {
     lat: 44.55,
     lon: -19.44,
-    elevation: 0,
-    objectType: EPoiTypes.google,
-    types: [],
-    description: {}
+    elevation: 252.1,
+    objectType: EPoiTypes.osmAmenity,
+    types: ['atm'],
+    description: {
+      en_US: {
+        title: 'Test poi 2'
+      }
+    }
   }
 ];
 

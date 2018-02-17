@@ -24,7 +24,6 @@ const LANGS = {
   styleUrls: ['./hike-edit-general-info.component.scss']
 })
 export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
-  @Input() initialDescription: any;
   public textualDescriptions$: Observable<ITextualDescriptionItem[]>;
   public existingLangKeys$: Observable<string[] | number[]>;
   public existingLangKeys: string[] | number[] = [];
@@ -48,7 +47,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       this._hikeEditGeneralInfoSelectors.getAllDescriptions
     );
 
-    this._initDescriptionsState();
     this._initDescriptionsForm();
 
     // Watch form changes and save values to store
@@ -82,23 +80,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
           descriptionArray.push(formArrayItem);
         }
       });
-  }
-
-  /**
-   * Fill the store with the initial values
-   */
-  private _initDescriptionsState() {
-    let descriptions: ITextualDescriptionItem[] = [];
-
-    for (let langKey in this.initialDescription) {
-      descriptions.push(Object.assign(this.initialDescription[langKey], {
-        id: langKey
-      }));
-    }
-
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
-      descriptions: descriptions
-    }));
   }
 
   private _createDescriptionItem(desc) {

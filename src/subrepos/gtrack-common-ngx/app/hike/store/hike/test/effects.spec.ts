@@ -39,6 +39,7 @@ describe('HikeProgram effects', () => {
   let hikeProgramsMap: {
     [key: string]: IHikeProgramStored
   };
+
   let hikePrograms: HikeProgram[];
 
   let actions$: TestActions;

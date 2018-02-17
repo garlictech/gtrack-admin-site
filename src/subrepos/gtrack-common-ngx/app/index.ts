@@ -1,4 +1,5 @@
 export * from './deepstream';
+export * from './dynamic-modal';
 export * from './shared';
 export * from './map';
 export * from './hike';

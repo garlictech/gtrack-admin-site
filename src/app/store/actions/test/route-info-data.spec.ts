@@ -4,7 +4,7 @@ import * as RouteInfoDataActions from '../route-info-data';
 describe('RouteInfoData actions', () => {
   it('should have action names defined', () => {
     expect(RouteInfoDataActions.RESET).toEqual('[RouteInfoData] Reset');
-    expect(RouteInfoDataActions.ADD_TRACK).toEqual('[RouteInfoData] Add track');
+    expect(RouteInfoDataActions.ADD_ROUTE).toEqual('[RouteInfoData] Add route');
     expect(RouteInfoDataActions.PUSH_SEGMENT).toEqual('[RouteInfoData] Push segment');
     expect(RouteInfoDataActions.POP_SEGMENT).toEqual('[RouteInfoData] Pop segment');
     expect(RouteInfoDataActions.UPDATE_TOTAL).toEqual('[RouteInfoData] Update total');
@@ -17,12 +17,12 @@ describe('RouteInfoData actions', () => {
     expect(expectedClass.type).toEqual(RouteInfoDataActions.RESET);
   });
 
-  it('should create AddTrack action', () => {
-    let expectedClass = new RouteInfoDataActions.AddTrack({
-      track: null
+  it('should create Addroute action', () => {
+    let expectedClass = new RouteInfoDataActions.AddRoute({
+      route: null
     });
     expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(RouteInfoDataActions.ADD_TRACK);
+    expect(expectedClass.type).toEqual(RouteInfoDataActions.ADD_ROUTE);
   });
 
   it('should create PushSegment action', () => {

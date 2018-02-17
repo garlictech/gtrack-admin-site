@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Pipes
 import { ObjectToArrayPipe } from 'app/shared/pipes';
 // Modules
-import { DynamicModalService } from 'app/dynamic-modal';
+import { DynamicModalService } from 'subrepos/gtrack-common-ngx';
 // Components
 import { HikeEditComponent } from './hike-edit.component';
 import {

@@ -47,6 +47,7 @@ export class GoogleService extends AuthProviderBase {
     this.config = this.authConfig.google;
 
     window.googleOauthCallback = (url: string) => {
+      this.oauthWindow.close();
       this._oauthCallback(url);
     };
   }
