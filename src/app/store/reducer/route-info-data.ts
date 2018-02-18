@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { IRouteInfoDataState } from '../state';
 import { routeInfoDataActions } from '../index';
 
-export const initialState: IRouteInfoDataState = {
+export const initialRouteInfoDataState: IRouteInfoDataState = {
   segments: [],
   total: {},
   location: '',
@@ -10,12 +10,12 @@ export const initialState: IRouteInfoDataState = {
 };
 
 export function routeInfoDataReducer(
-  state = initialState,
+  state = initialRouteInfoDataState,
   action: routeInfoDataActions.AllRouteInfoDataActions
 ): IRouteInfoDataState {
   switch (action.type) {
     case routeInfoDataActions.RESET:
-      return initialState;
+      return initialRouteInfoDataState;
     case routeInfoDataActions.ADD_ROUTE:
       return {
         ...state,
