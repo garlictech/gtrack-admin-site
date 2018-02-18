@@ -7,8 +7,11 @@ describe('HikeList actions', () => {
   });
 
   it('should create DeleteHike action', () => {
-    let expectedClass = new HikeEditActions.CollectHikeData();
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditActions.COLLECT_HIKE_DATA);
+    const action = new HikeEditActions.CollectHikeData();
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditActions.COLLECT_HIKE_DATA
+    });
   });
 });

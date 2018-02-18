@@ -7,8 +7,11 @@ describe('HikeEditRoutePlanning actions', () => {
   });
 
   it('should create SaveRoute action', () => {
-    let expectedClass = new HikeEditRoutePlanningActions.SaveRoute();
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditRoutePlanningActions.SAVE_ROUTE);
+    const action = new HikeEditRoutePlanningActions.SaveRoute();
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditRoutePlanningActions.SAVE_ROUTE
+    });
   });
 });

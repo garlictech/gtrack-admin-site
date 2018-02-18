@@ -34,29 +34,42 @@ describe('HikeEditPoi actions', () => {
    */
 
   it('should create GetGooglePois action', () => {
-    let expectedClass = new HikeEditPoiActions.GetGooglePois({
+    const payload = {
       bounds: null,
-      mapId: 'fakeId'
+      mapId: 'fakeMapId'
+    };
+    const action = new HikeEditPoiActions.GetGooglePois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.GET_GOOGLE_POIS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.GET_GOOGLE_POIS);
   });
 
   it('should create SetGooglePois action', () => {
-    let expectedClass = new HikeEditPoiActions.SetGooglePois({
-      pois: []
+    const payload = { pois: [] };
+    const action = new HikeEditPoiActions.SetGooglePois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_GOOGLE_POIS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.SET_GOOGLE_POIS);
   });
 
   it('should create SetGooglePoiInHike action', () => {
-    let expectedClass = new HikeEditPoiActions.SetGooglePoiInHike({
-      poiId: 'fakeId',
+    const payload = {
+      poiId: 'fakePoiId',
       isInHike: true
+    };
+    const action = new HikeEditPoiActions.SetGooglePoiInHike(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_GOOGLE_POI_IN_HIKE,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.SET_GOOGLE_POI_IN_HIKE);
   });
 
   /**
@@ -64,29 +77,42 @@ describe('HikeEditPoi actions', () => {
    */
 
   it('should create GetOsmAmenityPois action', () => {
-    let expectedClass = new HikeEditPoiActions.GetOsmAmenityPois({
+    const payload = {
       bounds: null,
-      mapId: 'fakeId'
+      mapId: 'fakeMapId'
+    };
+    const action = new HikeEditPoiActions.GetOsmAmenityPois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.GET_OSM_AMENITY_POIS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.GET_OSM_AMENITY_POIS);
   });
 
   it('should create SetOsmAmenityPois action', () => {
-    let expectedClass = new HikeEditPoiActions.SetOsmAmenityPois({
-      pois: []
+    const payload = { pois: [] };
+    const action = new HikeEditPoiActions.SetOsmAmenityPois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_OSM_AMENITY_POIS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.SET_OSM_AMENITY_POIS);
   });
 
   it('should create SetOsmAmenityPoiInHike action', () => {
-    let expectedClass = new HikeEditPoiActions.SetOsmAmenityPoiInHike({
-      poiId: 'fakeId',
+    const payload = {
+      poiId: 'fakePoiId',
       isInHike: true
+    };
+    const action = new HikeEditPoiActions.SetOsmAmenityPoiInHike(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_OSM_AMENITY_POI_IN_HIKE,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.SET_OSM_AMENITY_POI_IN_HIKE);
   });
 
   /**
@@ -94,29 +120,42 @@ describe('HikeEditPoi actions', () => {
    */
 
   it('should create GetOsmNaturalPois action', () => {
-    let expectedClass = new HikeEditPoiActions.GetOsmNaturalPois({
+    const payload = {
       bounds: null,
-      mapId: 'fakeId'
+      mapId: 'fakeMapId'
+    };
+    const action = new HikeEditPoiActions.GetOsmNaturalPois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.GET_OSM_NATURAL_POIS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.GET_OSM_NATURAL_POIS);
   });
 
   it('should create SetOsmNaturalPois action', () => {
-    let expectedClass = new HikeEditPoiActions.SetOsmNaturalPois({
-      pois: []
+    const payload = { pois: [] };
+    const action = new HikeEditPoiActions.SetOsmNaturalPois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_OSM_NATURAL_POIS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.SET_OSM_NATURAL_POIS);
   });
 
   it('should create SetOsmNaturalPoiInHike action', () => {
-    let expectedClass = new HikeEditPoiActions.SetOsmNaturalPoiInHike({
-      poiId: 'fakeId',
+    const payload = {
+      poiId: 'fakePoiId',
       isInHike: true
+    };
+    const action = new HikeEditPoiActions.SetOsmNaturalPoiInHike(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_OSM_NATURAL_POI_IN_HIKE,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.SET_OSM_NATURAL_POI_IN_HIKE);
   });
 
   /**
@@ -124,29 +163,42 @@ describe('HikeEditPoi actions', () => {
    */
 
   it('should create GetOsmRoutePois action', () => {
-    let expectedClass = new HikeEditPoiActions.GetOsmRoutePois({
+    const payload = {
       bounds: null,
-      mapId: 'fakeId'
+      mapId: 'fakeMapId'
+    };
+    const action = new HikeEditPoiActions.GetOsmRoutePois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.GET_OSM_ROUTE_POIS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.GET_OSM_ROUTE_POIS);
   });
 
   it('should create SetOsmRoutePois action', () => {
-    let expectedClass = new HikeEditPoiActions.SetOsmRoutePois({
-      pois: []
+    const payload = { pois: [] };
+    const action = new HikeEditPoiActions.SetOsmRoutePois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_OSM_ROUTE_POIS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.SET_OSM_ROUTE_POIS);
   });
 
   it('should create SetOsmRoutePoiInHike action', () => {
-    let expectedClass = new HikeEditPoiActions.SetOsmRoutePoiInHike({
-      poiId: 'fakeId',
+    const payload = {
+      poiId: 'fakePoiId',
       isInHike: true
+    };
+    const action = new HikeEditPoiActions.SetOsmRoutePoiInHike(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_OSM_ROUTE_POI_IN_HIKE,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.SET_OSM_ROUTE_POI_IN_HIKE);
   });
 
   /**
@@ -154,29 +206,42 @@ describe('HikeEditPoi actions', () => {
    */
 
   it('should create GetWikipediaPois action', () => {
-    let expectedClass = new HikeEditPoiActions.GetWikipediaPois({
+    const payload = {
       bounds: null,
-      mapId: 'fakeId'
+      mapId: 'fakeMapId'
+    };
+    const action = new HikeEditPoiActions.GetWikipediaPois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.GET_WIKIPEDIA_POIS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.GET_WIKIPEDIA_POIS);
   });
 
   it('should create SetWikipediaPois action', () => {
-    let expectedClass = new HikeEditPoiActions.SetWikipediaPois({
-      pois: []
+    const payload = { pois: [] };
+    const action = new HikeEditPoiActions.SetWikipediaPois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_WIKIPEDIA_POIS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.SET_WIKIPEDIA_POIS);
   });
 
   it('should create SetWikipediaPoiInHike action', () => {
-    let expectedClass = new HikeEditPoiActions.SetWikipediaPoiInHike({
-      poiId: 'fakeId',
+    const payload = {
+      poiId: 'fakePoiId',
       isInHike: true
+    };
+    const action = new HikeEditPoiActions.SetWikipediaPoiInHike(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE);
   });
 
   /**
@@ -184,34 +249,46 @@ describe('HikeEditPoi actions', () => {
    */
 
   it('should create ToggleOnrouteMarkers action', () => {
-    let expectedClass = new HikeEditPoiActions.ToggleOnrouteMarkers({
-      subdomain: 'fakeDomain'
-  });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS);
+    const payload = { subdomain: 'fakeDomain' };
+    const action = new HikeEditPoiActions.ToggleOnrouteMarkers(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS,
+      payload,
+    });
   });
 
   it('should create ToggleOffrouteMarkers action', () => {
-    let expectedClass = new HikeEditPoiActions.ToggleOffrouteMarkers({
-      subdomain: 'fakeDomain'
-  });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS);
+    const payload = { subdomain: 'fakeDomain' };
+    const action = new HikeEditPoiActions.ToggleOffrouteMarkers(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS,
+      payload,
+    });
   });
 
   it('should create GenerateSubdomainPoiMarkers action', () => {
-    let expectedClass = new HikeEditPoiActions.GenerateSubdomainPoiMarkers({
-      subdomain: 'fakeDomain'
-  });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.GENERATE_SUBDOMAIN_POI_MARKERS);
+    const payload = { subdomain: 'fakeDomain' };
+    const action = new HikeEditPoiActions.GenerateSubdomainPoiMarkers(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.GENERATE_SUBDOMAIN_POI_MARKERS,
+      payload,
+    });
   });
 
   it('should create MarkersConfigChanged action', () => {
-    let expectedClass = new HikeEditPoiActions.MarkersConfigChanged({
-      subdomain: 'fakeDomain'
-  });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditPoiActions.MARKERS_CONFIG_CHANGED);
+    const payload = { subdomain: 'fakeDomain' };
+    const action = new HikeEditPoiActions.MarkersConfigChanged(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.MARKERS_CONFIG_CHANGED,
+      payload,
+    });
   });
 });
