@@ -7,9 +7,7 @@ describe('HikeList actions', () => {
   });
 
   it('should create DeleteHike action', () => {
-    let expectedClass = new HikeEditActions.CollectHikeData({
-      hikeId: 'fakeId'
-    });
+    let expectedClass = new HikeEditActions.CollectHikeData();
     expect(expectedClass).toBeDefined();
     expect(expectedClass.type).toEqual(HikeEditActions.COLLECT_HIKE_DATA);
   });
