@@ -61,7 +61,6 @@ describe('Poi effects', () => {
         }),
         EffectsModule.forRoot([
 
-
         ]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot({

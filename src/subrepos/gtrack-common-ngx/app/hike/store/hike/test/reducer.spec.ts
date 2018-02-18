@@ -59,7 +59,6 @@ describe('HikeProgramReducer', () => {
       const action = {} as any;
       const state = hikeReducer(undefined, action);
 
-
       expect(state).toEqual(initialState);
     });
   });
