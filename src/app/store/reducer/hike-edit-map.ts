@@ -10,7 +10,7 @@ import { AdminMapMarker } from 'app/shared/services/admin-map';
  * Map
  */
 
-const initialMapState: IHikeEditMapMapState = {
+export const initialMapState: IHikeEditMapMapState = {
   mapId: ''
 };
 
@@ -34,8 +34,10 @@ export function hikeEditMapMapReducer(
  */
 
 export const wikipediaMarkerAdapter: EntityAdapter<AdminMapMarker> = createEntityAdapter<AdminMapMarker>();
+export const wikipediaMarkerEntityInitialState = wikipediaMarkerAdapter.getInitialState();
+
 const wikipediaMarkerReducer: ActionReducer<IWikipediaMarkerEntityState> = (
-  state: IWikipediaMarkerEntityState = wikipediaMarkerAdapter.getInitialState(),
+  state: IWikipediaMarkerEntityState = wikipediaMarkerEntityInitialState,
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IWikipediaMarkerEntityState => {
   switch (action.type) {
@@ -52,8 +54,10 @@ const wikipediaMarkerReducer: ActionReducer<IWikipediaMarkerEntityState> = (
  */
 
 export const googleMarkerAdapter: EntityAdapter<AdminMapMarker> = createEntityAdapter<AdminMapMarker>();
+export const googleMarkerEntityInitialState = googleMarkerAdapter.getInitialState();
+
 const googleMarkerReducer: ActionReducer<IGoogleMarkerEntityState> = (
-  state: IGoogleMarkerEntityState = googleMarkerAdapter.getInitialState(),
+  state: IGoogleMarkerEntityState = googleMarkerEntityInitialState,
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IGoogleMarkerEntityState => {
   switch (action.type) {
@@ -70,8 +74,10 @@ const googleMarkerReducer: ActionReducer<IGoogleMarkerEntityState> = (
  */
 
 export const osmAmenityMarkerAdapter: EntityAdapter<AdminMapMarker> = createEntityAdapter<AdminMapMarker>();
+export const osmAmenityMarkerEntityInitialState = osmAmenityMarkerAdapter.getInitialState();
+
 const osmAmenityMarkerReducer: ActionReducer<IOsmAmenityMarkerEntityState> = (
-  state: IOsmAmenityMarkerEntityState = osmAmenityMarkerAdapter.getInitialState(),
+  state: IOsmAmenityMarkerEntityState = osmAmenityMarkerEntityInitialState,
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IOsmAmenityMarkerEntityState => {
   switch (action.type) {
@@ -88,8 +94,10 @@ const osmAmenityMarkerReducer: ActionReducer<IOsmAmenityMarkerEntityState> = (
  */
 
 export const osmNaturalMarkerAdapter: EntityAdapter<AdminMapMarker> = createEntityAdapter<AdminMapMarker>();
+export const osmNaturalMarkerEntityInitialState = osmNaturalMarkerAdapter.getInitialState();
+
 const osmNaturalMarkerReducer: ActionReducer<IOsmNaturalMarkerEntityState> = (
-  state: IOsmNaturalMarkerEntityState = osmNaturalMarkerAdapter.getInitialState(),
+  state: IOsmNaturalMarkerEntityState = osmNaturalMarkerEntityInitialState,
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IOsmNaturalMarkerEntityState => {
   switch (action.type) {
@@ -106,8 +114,10 @@ const osmNaturalMarkerReducer: ActionReducer<IOsmNaturalMarkerEntityState> = (
  */
 
 export const osmRouteMarkerAdapter: EntityAdapter<AdminMapMarker> = createEntityAdapter<AdminMapMarker>();
+export const osmRouteMarkerEntityInitialState = osmRouteMarkerAdapter.getInitialState();
+
 const osmRouteMarkerReducer: ActionReducer<IOsmRouteMarkerEntityState> = (
-  state: IOsmRouteMarkerEntityState = osmRouteMarkerAdapter.getInitialState(),
+  state: IOsmRouteMarkerEntityState = osmRouteMarkerEntityInitialState,
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IOsmRouteMarkerEntityState => {
   switch (action.type) {

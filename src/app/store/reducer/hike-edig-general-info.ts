@@ -8,7 +8,7 @@ import { hikeEditGeneralInfoActions } from '../index';
  * General info
  */
 
-const initialGeneralInfoState: IGeneralInfoState = {
+export const initialGeneralInfoState: IGeneralInfoState = {
   hikeId: '',
   routeId: ''
 };
@@ -38,8 +38,10 @@ export function generalInfoReducer(
  */
 
 export const descriptionAdapter: EntityAdapter<ITextualDescriptionItem> = createEntityAdapter<ITextualDescriptionItem>();
+export const descriptionInitialState = descriptionAdapter.getInitialState();
+
 const descriptionReducer: ActionReducer<IDescriptionEntityState> = (
-  state: IDescriptionEntityState = descriptionAdapter.getInitialState(),
+  state: IDescriptionEntityState = descriptionInitialState,
   action: hikeEditGeneralInfoActions.AllHikeEditGeneralInfoActions
 ): IDescriptionEntityState => {
   switch (action.type) {

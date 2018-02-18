@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { IRouteInfoDataState } from '../state';
 import { routeInfoDataActions } from '../index';
 
-const initialState: IRouteInfoDataState = {
+export const initialState: IRouteInfoDataState = {
   segments: [],
   total: {},
   location: '',
