@@ -7,7 +7,6 @@ import { IHikeState } from '../state';
 import { HikeProgram } from '../../../services/hike-program';
 import { CheckpointService } from '../../../services/checkpoint';
 
-
 describe('HikeProgramReducer', () => {
   let id: string;
   let initialState: IHikeState;
