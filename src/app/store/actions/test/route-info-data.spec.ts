@@ -12,46 +12,65 @@ describe('RouteInfoData actions', () => {
   });
 
   it('should create Reset action', () => {
-    let expectedClass = new RouteInfoDataActions.Reset();
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(RouteInfoDataActions.RESET);
+    const payload = { hikeId: 'fakeHikeId' };
+    const action = new RouteInfoDataActions.Reset();
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: RouteInfoDataActions.RESET
+    });
   });
 
   it('should create Addroute action', () => {
-    let expectedClass = new RouteInfoDataActions.AddRoute({
-      route: null
+    const payload = { route: 'fakeRouteData' };
+    const action = new RouteInfoDataActions.AddRoute(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: RouteInfoDataActions.ADD_ROUTE,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(RouteInfoDataActions.ADD_ROUTE);
   });
 
   it('should create PushSegment action', () => {
-    let expectedClass = new RouteInfoDataActions.PushSegment({
-      segment: null
+    const payload = { segment: 'fakeSegmentData' };
+    const action = new RouteInfoDataActions.PushSegment(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: RouteInfoDataActions.PUSH_SEGMENT,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(RouteInfoDataActions.PUSH_SEGMENT);
   });
 
   it('should create PopSegment action', () => {
-    let expectedClass = new RouteInfoDataActions.PopSegment();
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(RouteInfoDataActions.POP_SEGMENT);
+    const action = new RouteInfoDataActions.PopSegment();
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: RouteInfoDataActions.POP_SEGMENT
+    });
   });
 
   it('should create UpdateTotal action', () => {
-    let expectedClass = new RouteInfoDataActions.UpdateTotal({
-      total: null
+    const payload = { total: 'fakeValue' };
+    const action = new RouteInfoDataActions.UpdateTotal(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: RouteInfoDataActions.UPDATE_TOTAL,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(RouteInfoDataActions.UPDATE_TOTAL);
   });
 
   it('should create SetLocation action', () => {
-    let expectedClass = new RouteInfoDataActions.SetLocation({
-      location: null
+    const payload = { location: 'fakeLocation' };
+    const action = new RouteInfoDataActions.SetLocation(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: RouteInfoDataActions.SET_LOCATION,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(RouteInfoDataActions.SET_LOCATION);
   });
 });

@@ -38,7 +38,6 @@ describe('PoiReducer', () => {
       const action = {} as any;
       const state = poiReducer(undefined, action);
 
-
       expect(state).toEqual(initialState);
     });
   });

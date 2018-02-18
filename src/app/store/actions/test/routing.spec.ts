@@ -9,20 +9,29 @@ describe('RouteInfoData actions', () => {
   });
 
   it('should create RoutingStart action', () => {
-    let expectedClass = new RoutingActions.RoutingStart();
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(RoutingActions.ROUTING_START);
+    const action = new RoutingActions.RoutingStart();
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: RoutingActions.ROUTING_START
+    });
   });
 
   it('should create RoutingFinished action', () => {
-    let expectedClass = new RoutingActions.RoutingFinished();
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(RoutingActions.ROUTING_FINISHED);
+    const action = new RoutingActions.RoutingFinished();
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: RoutingActions.ROUTING_FINISHED
+    });
   });
 
   it('should create RoutingError action', () => {
-    let expectedClass = new RoutingActions.RoutingError();
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(RoutingActions.ROUTING_ERROR);
+    const action = new RoutingActions.RoutingError();
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: RoutingActions.ROUTING_ERROR
+    });
   });
 });

@@ -14,8 +14,10 @@ import { IPoi } from 'subrepos/provider-client';
  */
 
 export const googlePoiAdapter: EntityAdapter<IGooglePoi> = createEntityAdapter<IGooglePoi>();
+export const googlePoiInitialState = googlePoiAdapter.getInitialState();
+
 const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
-  state: IGooglePoiEntityState = googlePoiAdapter.getInitialState(),
+  state: IGooglePoiEntityState = googlePoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IGooglePoiEntityState => {
   switch (action.type) {
@@ -39,8 +41,10 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
  */
 
 export const osmAmenityPoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
+export const osmAmenityPoiInitialState = osmAmenityPoiAdapter.getInitialState();
+
 const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
-  state: IOsmAmenityPoiEntityState = osmAmenityPoiAdapter.getInitialState(),
+  state: IOsmAmenityPoiEntityState = osmAmenityPoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmAmenityPoiEntityState => {
   switch (action.type) {
@@ -64,8 +68,10 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
  */
 
 export const osmNaturalPoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
+export const osmNaturalPoiInitialState = osmNaturalPoiAdapter.getInitialState();
+
 const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
-  state: IOsmNaturalPoiEntityState = osmNaturalPoiAdapter.getInitialState(),
+  state: IOsmNaturalPoiEntityState = osmNaturalPoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmNaturalPoiEntityState => {
   switch (action.type) {
@@ -89,8 +95,10 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
  */
 
 export const osmRoutePoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
+export const osmRoutePoiInitialState = osmRoutePoiAdapter.getInitialState();
+
 const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
-  state: IOsmRoutePoiEntityState = osmRoutePoiAdapter.getInitialState(),
+  state: IOsmRoutePoiEntityState = osmRoutePoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmRoutePoiEntityState => {
   switch (action.type) {
@@ -114,8 +122,10 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
  */
 
 export const wikipediaPoiAdapter: EntityAdapter<IWikipediaPoi> = createEntityAdapter<IWikipediaPoi>();
+export const wikipediaPoiInitialState = wikipediaPoiAdapter.getInitialState();
+
 const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
-  state: IWikipediaPoiEntityState = wikipediaPoiAdapter.getInitialState(),
+  state: IWikipediaPoiEntityState = wikipediaPoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IWikipediaPoiEntityState => {
   switch (action.type) {
@@ -143,7 +153,7 @@ const initialContextItemState = {
   showOnrouteMarkers: true,
   showOffrouteMarkers: false
 };
-const initialContextState: IExternalPoiListContextState = {
+export const externalPoiInitialContextState: IExternalPoiListContextState = {
   google: initialContextItemState,
   osmAmenity: initialContextItemState,
   osmNatural: initialContextItemState,
@@ -152,7 +162,7 @@ const initialContextState: IExternalPoiListContextState = {
 };
 
 export function externalPoiListContextReducer(
-  state = initialContextState,
+  state = externalPoiInitialContextState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IExternalPoiListContextState {
   switch (action.type) {

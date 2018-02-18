@@ -7,8 +7,13 @@ describe('AdminMap actions', () => {
   });
 
   it('should create RegisterMap action', () => {
-    let expectedClass = new AdminMapActions.RegisterMap({mapId: 'fakeId'});
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(AdminMapActions.REGISTER_MAP);
+    const payload = { mapId: 'fakeMapId' };
+    const action = new AdminMapActions.RegisterMap(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: AdminMapActions.REGISTER_MAP,
+      payload,
+    });
   });
 });

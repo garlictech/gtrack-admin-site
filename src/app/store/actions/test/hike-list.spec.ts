@@ -7,10 +7,13 @@ describe('HikeList actions', () => {
   });
 
   it('should create DeleteHike action', () => {
-    let expectedClass = new HikeListActions.DeleteHike({
-      hikeId: 'fakeId'
+    const payload = { hikeId: 'fakeHikeId' };
+    const action = new HikeListActions.DeleteHike(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeListActions.DELETE_HIKE,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeListActions.DELETE_HIKE);
   });
 });

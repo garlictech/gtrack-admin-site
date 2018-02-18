@@ -3,14 +3,48 @@ import * as HikeEditGeneralInfoActions from '../hike-edit-general-info';
 
 describe('HikeEditMap actions', () => {
   it('should have action names defined', () => {
+    expect(HikeEditGeneralInfoActions.SET_HIKE_ID).toEqual('[HikeEditGeneralInfo] Set hike id');
+    expect(HikeEditGeneralInfoActions.SET_ROUTE_ID).toEqual('[HikeEditGeneralInfo] Set route id');
     expect(HikeEditGeneralInfoActions.SET_DESCRIPTIONS).toEqual('[HikeEditGeneralInfo] Set descriptions');
- });
+  });
+
+  it('should create SetHikeId action', () => {
+    const payload = { hikeId: 'fakeHikeId' };
+    const action = new HikeEditGeneralInfoActions.SetHikeId(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditGeneralInfoActions.SET_HIKE_ID,
+      payload,
+    });
+  });
+
+  it('should create SetRouteId action', () => {
+    const payload = { routeId: 'fakeRouteId' };
+    const action = new HikeEditGeneralInfoActions.SetRouteId(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditGeneralInfoActions.SET_ROUTE_ID,
+      payload,
+    });
+  });
 
   it('should create GetGooglePois action', () => {
-    let expectedClass = new HikeEditGeneralInfoActions.SetDescriptions({
-      descriptions: []
+    const payload = {
+      descriptions: [{
+        id: 'en_US',
+        title: 'Fake title',
+        summary: 'Fake summary',
+        fullDescription: 'Fake description'
+      }]
+    };
+    const action = new HikeEditGeneralInfoActions.SetDescriptions(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditGeneralInfoActions.SET_DESCRIPTIONS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditGeneralInfoActions.SET_DESCRIPTIONS);
   });
 });

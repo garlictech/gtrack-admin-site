@@ -11,42 +11,57 @@ describe('HikeEditMap actions', () => {
  });
 
   it('should create GetGooglePois action', () => {
-    let expectedClass = new HikeEditMapActions.SetGoogleMarkers({
-      markers: []
+    const payload = { markers: [] };
+    const action = new HikeEditMapActions.SetGoogleMarkers(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditMapActions.SET_GOOGLE_MARKERS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditMapActions.SET_GOOGLE_MARKERS);
   });
 
   it('should create SetOsmAmenityMarkers action', () => {
-    let expectedClass = new HikeEditMapActions.SetOsmAmenityMarkers({
-      markers: []
+    const payload = { markers: [] };
+    const action = new HikeEditMapActions.SetOsmAmenityMarkers(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditMapActions.SET_OSM_AMENITY_MARKERS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditMapActions.SET_OSM_AMENITY_MARKERS);
   });
 
   it('should create SetOsmNaturalMarkers action', () => {
-    let expectedClass = new HikeEditMapActions.SetOsmNaturalMarkers({
-      markers: []
+    const payload = { markers: [] };
+    const action = new HikeEditMapActions.SetOsmNaturalMarkers(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditMapActions.SET_OSM_NATURAL_MARKERS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditMapActions.SET_OSM_NATURAL_MARKERS);
   });
 
   it('should create SetOsmRouteMarkers action', () => {
-    let expectedClass = new HikeEditMapActions.SetOsmRouteMarkers({
-      markers: []
+    const payload = { markers: [] };
+    const action = new HikeEditMapActions.SetOsmRouteMarkers(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditMapActions.SET_OSM_ROUTE_MARKERS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditMapActions.SET_OSM_ROUTE_MARKERS);
   });
 
   it('should create SetWikipediaMarkers action', () => {
-    let expectedClass = new HikeEditMapActions.SetWikipediaMarkers({
-      markers: []
+    const payload = { markers: [] };
+    const action = new HikeEditMapActions.SetWikipediaMarkers(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditMapActions.SET_WIKIPEDIA_MARKERS,
+      payload,
     });
-    expect(expectedClass).toBeDefined();
-    expect(expectedClass.type).toEqual(HikeEditMapActions.SET_WIKIPEDIA_MARKERS);
   });
 });

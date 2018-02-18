@@ -64,7 +64,6 @@ describe('HikeProgram effects', () => {
         }),
         EffectsModule.forRoot([
 
-
         ]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot({
@@ -146,6 +145,4 @@ describe('HikeProgram effects', () => {
       expect(effects.loadCreatedHikeProgram$).toBeObservable(expected);
     });
   });
-
-
 });
