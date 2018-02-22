@@ -1,15 +1,11 @@
 /* OLD: TrackPlanner */
-
 import { AdminMap } from './admin-map';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import { State, IRouteInfoDataState, routeInfoDataActions } from 'app/store';
-import {
-  ISegment,
-  GameRuleService,
-  RouteService
-} from 'subrepos/gtrack-common-ngx/app';
+import { ISegment, GameRuleService, RouteService } from 'subrepos/gtrack-common-ngx/app';
+
 import * as _ from 'lodash';
 
 export class RoutePlanner {
@@ -175,73 +171,5 @@ export class RoutePlanner {
     const _lastSegment = segments[segments.length - 1];
     const _coordinateNumInLastSegment = _lastSegment.coordinates.length;
     return _lastSegment.coordinates[_coordinateNumInLastSegment - 1];
-  }
-
-  /*
-  private _createPoint(segmentPoint) {
-    console.log('RoutePlanner._createPoint');
-    return {
-      lat: segmentPoint[0],
-      lon: segmentPoint[1],
-      elevation: Math.round(segmentPoint[2])
-    };
-  }
-
-  private _addSummaryValues(to, from) {
-    console.log('RoutePlanner._addSummaryValues');
-    to.distance = Math.round(from.distance);
-    to.downhill = Math.round(from.downhill);
-    to.uphill = Math.round(from.uphill);
-    to.time = Math.round(from.time);
-    to.score = from.score;
-  }
-
-  private _addIcons(trackId) {
-    console.log('RoutePlanner._addIcons');
-    console.log('TODO: SvgIconService');
-    / *
-    SvgIconService.get(trackId, "#elevationImagePrep", "#trackImagePrep").then (icons) ->
-    dbObj.elevationIcon = icons.elevationIcon
-    dbObj.trackIcon = icons.trackIcon
-    dbObj.$save()
-    * /
-  }
-
-  private _getFirstPoint() {
-    console.log('RoutePlanner._getFirstPoint');
-    return this.routeInfoData.segments[0].coordinates[0];
-  }
-  */
-  public saveTrack(dbObj) {
-    console.log('RoutePlanner.saveTrack', dbObj);
-    console.log('TODO: _saveTrack');
-    /*
-
-    dbObj.routePoints = {}
-
-    for segment, index in @route.segments
-      dbObj.routePoints[index] = _createPoint segment.coordinates[0]
-
-    # And the last point
-    routepoint = _createPoint @_getLastPointOfLastSegment()
-    dbObj.routePoints[@route.segments.length] = routepoint
-    _addSummaryValues dbObj, @route.total
-    # Add the start point to the location database
-    geo = $geofire(new $window.Firebase "#{config.fireBaseRef}/geo/hikes")
-    firstPoint = @_getFirstPoint()
-
-    trackservice = common/routeservice!!
-    TrackService.create(@geoJSON).then (id) ->
-      dbObj.trackId = id
-
-      $q.all [
-        geo.$set(dbObj.$id, [firstPoint[0], firstPoint[1]]),
-        _addIcons id,
-        dbObj.$save()
-      ]
-      .then ->
-        $rootScope.$broadcast 'HIKE:CHANGED'
-
-    */
   }
 }

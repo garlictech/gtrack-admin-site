@@ -3,16 +3,14 @@ import { Store } from '@ngrx/store';
 import { State, IRouteInfoDataState } from 'app/store';
 import { AdminMap } from './admin-map';
 import { RoutePlanner } from './route-planner';
-import {
-  GameRuleService,
-  RouteService
-} from 'subrepos/gtrack-common-ngx/app';
-import * as turf from '@turf/turf';
-import * as rewind from 'geojson-rewind';
-import * as d3 from 'd3';
+import { GameRuleService, RouteService } from 'subrepos/gtrack-common-ngx/app';
 import { Feature } from 'geojson';
 import { Polygon } from 'leaflet';
 import { ExtendedFeature, ExtendedGeometryCollection } from 'd3';
+
+import * as turf from '@turf/turf';
+import * as rewind from 'geojson-rewind';
+import * as d3 from 'd3';
 
 export class RouteInfo {
   private _savedRoute: IRouteInfoDataState; // Deprecated?
@@ -99,25 +97,4 @@ export class RouteInfo {
       return;
     }
   }
-
-  /*
-  private _getSavedTrack(hike) {
-    console.log('RouteInfo._getSavedTrack', hike);
-    this._routeService.get(hike.trackId).take(1).subscribe(track => {
-      let _routeInfoData = new RouteInfoData(this._routeService);
-      _routeInfoData.addTrack(track.geojson);
-
-      // route.pushSegment segment.toNext for segment in hike.routePoints
-
-      _routeInfoData.setLocation(hike.location);
-
-      this._savedRoute = _routeInfoData;
-
-      MapService.addTrackObject(track).then (leafletLayers) =>
-        @_savedMapTrack = leafletLayers
-      })
-
-    });
-
-  } */
 }

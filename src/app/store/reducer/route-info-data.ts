@@ -24,7 +24,10 @@ export function routeInfoDataReducer(
     case routeInfoDataActions.PUSH_SEGMENT:
       return {
         ...state,
-        segments: [...state.segments, action.payload.segment]
+        segments: [
+          ...state.segments,
+          action.payload.segment
+        ]
       };
     case routeInfoDataActions.POP_SEGMENT:
       return {
