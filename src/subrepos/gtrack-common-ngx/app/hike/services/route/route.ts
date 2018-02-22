@@ -1,9 +1,9 @@
-import { IRoute, IRouteData, IRouteBounds } from 'subrepos/provider-client';
+import { IRoute, IRouteBounds } from 'subrepos/provider-client';
 
 export class Route implements IRoute {
   public id: string;
   public bounds: IRouteBounds;
-  public route: IRouteData;
+  public route: GeoJSON.FeatureCollection<any>;
 
   public get path() {
     return this.route.features[0].geometry;

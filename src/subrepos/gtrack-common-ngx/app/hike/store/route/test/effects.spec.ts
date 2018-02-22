@@ -59,16 +59,6 @@ describe('Route effects', () => {
         }
       },
       route: {
-        bounds: {
-          NorthEast: {
-            lat: 47.498993,
-            lon: 19.043699
-          },
-          SouthWest: {
-            lat: 47.497157,
-            lon: 19.049757
-          }
-        },
         type: 'FeatureCollection',
         features: [
           {
