@@ -88,7 +88,7 @@ describe('HikeProgram selectors', () => {
       store
         .select(hikeSelectors.getHikeIds)
         .takeUntil(destroy$)
-        .subscribe(ids => (result = ids));
+        .subscribe(hikeIds => (result = hikeIds));
 
       expect(result).toEqual([]);
 
@@ -105,7 +105,7 @@ describe('HikeProgram selectors', () => {
       store
         .select(hikeSelectors.getAllHikes)
         .takeUntil(destroy$)
-        .subscribe(hikePrograms => (result = hikePrograms));
+        .subscribe(allHikePrograms => (result = allHikePrograms));
 
       expect(result).toEqual([]);
 
