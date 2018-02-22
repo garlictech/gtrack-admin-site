@@ -100,23 +100,23 @@ describe('Hike actions', () => {
     });
   });
 
-  describe('CreateHikeProgram action', () => {
+  describe('SaveHikeProgram action', () => {
     it('should create an action', () => {
-      let action = new actions.CreateHikeProgram(hikeProgramData);
+      let action = new actions.SaveHikeProgram(hikeProgramData);
 
       expect({ ...action }).toEqual({
-        type: actions.HikeProgramActionTypes.CREATE_HIKE_PROGRAM,
+        type: actions.HikeProgramActionTypes.SAVE_HIKE_PROGRAM,
         hikeProgram: hikeProgramData
       });
     });
   });
 
-  describe('HikeProgramCreated action', () => {
+  describe('HikeProgramSaved action', () => {
     it('should create an action', () => {
-      let action = new actions.HikeProgramCreated(id);
+      let action = new actions.HikeProgramSaved(id);
 
       expect({ ...action }).toEqual({
-        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_CREATED,
+        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_SAVED,
         context: id
       });
     });

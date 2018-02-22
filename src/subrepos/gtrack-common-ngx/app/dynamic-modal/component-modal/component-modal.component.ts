@@ -58,7 +58,6 @@ export class ComponentModalComponent {
         this._appRef.detachView(this._compRef.hostView);
       });
       this.modalBody.nativeElement.appendChild(this._compRef.location.nativeElement);
-
     }
   }
 
