@@ -102,10 +102,7 @@ describe('Route effects', () => {
         StoreModule.forRoot({
 
         }),
-        EffectsModule.forRoot([
-
-
-        ]),
+        EffectsModule.forRoot([]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot({
           storeDomain: 'deepstream',
@@ -131,7 +128,7 @@ describe('Route effects', () => {
     routeService = TestBed.get(RouteService);
     effects = TestBed.get(RouteEffects);
 
-    spyOn(routeService, 'get').and.callFake(id => Observable.of(new Route(routeDataStored)));
+    spyOn(routeService, 'get').and.callFake(_id => Observable.of(new Route(routeDataStored)));
     spyOn(routeService, 'create').and.returnValue(Observable.of({
       id: newId
     }));
@@ -149,27 +146,27 @@ describe('Route effects', () => {
     });
   });
 
-  describe('createRoute$', () => {
+  describe('saveRoute$', () => {
     it('should return the id of the created Route from RouteCreated', () => {
-      const action = new routeActions.CreateRoute(routeData);
-      const completion = new routeActions.RouteCreated(newId);
+      const action = new routeActions.SaveRoute(routeData);
+      const completion = new routeActions.RouteSaved(newId);
       const expected = cold('-b', {b: completion});
 
       actions$.stream = hot('-a', {a: action});
 
-      expect(effects.createRoute$).toBeObservable(expected);
+      expect(effects.saveRoute$).toBeObservable(expected);
     });
   });
 
-  describe('loadCreatedRoute$', () => {
-    it('should return a LoadRoute action after RouteCreated', () => {
-      const action = new routeActions.RouteCreated(newId);
+  describe('loadSavedRoute$', () => {
+    it('should return a LoadRoute action after RouteSaved', () => {
+      const action = new routeActions.RouteSaved(newId);
       const completion = new routeActions.LoadRoute(newId);
       const expected = cold('-b', {b: completion});
 
       actions$.stream = hot('-a', {a: action});
 
-      expect(effects.loadCreatedRoute$).toBeObservable(expected);
+      expect(effects.loadSavedRoute$).toBeObservable(expected);
     });
   });
 });
