@@ -1,6 +1,6 @@
 /* OLD: RouteService  */
 import { Store } from '@ngrx/store';
-import { State, IRouteInfoDataState } from 'app/store';
+import { State, IHikeEditRoutePlannerState } from 'app/store';
 import { AdminMap } from './admin-map';
 import { RoutePlanner } from './route-planner';
 import { GameRuleService, RouteService } from 'subrepos/gtrack-common-ngx/app';
@@ -13,7 +13,7 @@ import * as rewind from 'geojson-rewind';
 import * as d3 from 'd3';
 
 export class RouteInfo {
-  private _savedRoute: IRouteInfoDataState; // Deprecated?
+  private _savedRoute: IHikeEditRoutePlannerState; // Deprecated?
   private _savedMapTrack: any;
   public planner: RoutePlanner;
 
@@ -59,6 +59,7 @@ export class RouteInfo {
   }
 
   private _getRoute() {
+    console.log('TODO is in use??');
     // TODO use only the store?
     if (this.planner) {
       return this.planner.routeInfoData;

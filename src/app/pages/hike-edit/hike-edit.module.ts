@@ -11,7 +11,7 @@ import { HikeEditComponent } from './hike-edit.component';
 import {
   HikeEditGeneralInfoComponent,
   HikeEditMapComponent,
-  HikeEditRoutePlanningComponent,
+  HikeEditRoutePlannerComponent,
   HikeEditPoisComponent,
   HikeEditPoisGTrackComponent,
   HikeEditPoisExternalComponent,
@@ -29,7 +29,7 @@ const COMPONENTS = [
   HikeEditComponent,
   HikeEditGeneralInfoComponent,
   HikeEditMapComponent,
-  HikeEditRoutePlanningComponent,
+  HikeEditRoutePlannerComponent,
   HikeEditPoisComponent,
   HikeEditPoisGTrackComponent,
   HikeEditPoisExternalComponent,

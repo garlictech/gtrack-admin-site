@@ -3,13 +3,13 @@ import { AdminMap } from './admin-map';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, IRouteInfoDataState, routeInfoDataActions } from 'app/store';
+import { State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions } from 'app/store';
 import { ISegment, GameRuleService, RouteService } from 'subrepos/gtrack-common-ngx/app';
 
 import * as _ from 'lodash';
 
 export class RoutePlanner {
-  public routeInfoData: IRouteInfoDataState;
+  public routeInfoData: IHikeEditRoutePlannerState;
   private _geoJSON: GeoJSON.FeatureCollection<any>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -34,23 +34,23 @@ export class RoutePlanner {
     }
 
     // Reset the state when the planner has been created
-    this._store.dispatch(new routeInfoDataActions.Reset());
+    this._store.dispatch(new hikeEditRoutePlannerActions.Reset());
 
     // Parent classes use routeInfoData
-    this._store.select((state: State) => state.routeInfoData)
+    this._store.select((state: State) => state.hikeEditRoutePlanner)
       .takeUntil(this._destroy$)
-      .subscribe((routeInfoData: IRouteInfoDataState) => {
+      .subscribe((routeInfoData: IHikeEditRoutePlannerState) => {
         this.routeInfoData = routeInfoData;
       });
 
     // Update totals on each segment update
-    this._store.select((state: State) => state.routeInfoData.segments)
+    this._store.select((state: State) => state.hikeEditRoutePlanner.segments)
       .takeUntil(this._destroy$)
       .subscribe((segments: ISegment[]) => {
         let _total = this._calculateTotal(segments);
 
         // Update total for route info
-        this._store.dispatch(new routeInfoDataActions.UpdateTotal({
+        this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal({
           total: _total
         }));
 
@@ -61,7 +61,7 @@ export class RoutePlanner {
 
   public destroy() {
     // Clear state
-    this._store.dispatch(new routeInfoDataActions.Reset());
+    this._store.dispatch(new hikeEditRoutePlannerActions.Reset());
 
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
@@ -80,13 +80,13 @@ export class RoutePlanner {
     _segment.score = this._gameRuleService.score(_segment.distance, _segment.uphill)
 
     // Add segment to store
-    this._store.dispatch(new routeInfoDataActions.PushSegment({
+    this._store.dispatch(new hikeEditRoutePlannerActions.PushSegment({
       segment: _segment
     }));
   }
 
   public removeLastSegment() {
-    this._store.dispatch(new routeInfoDataActions.PopSegment());
+    this._store.dispatch(new hikeEditRoutePlannerActions.PopSegment());
   }
 
   /**
@@ -135,7 +135,7 @@ export class RoutePlanner {
       _route.bounds = this._routeService.getBounds(_route);
     }
 
-    this._store.dispatch(new routeInfoDataActions.AddRoute({
+    this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute({
       route: _route
     }));
   }

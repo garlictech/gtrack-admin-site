@@ -1,27 +1,27 @@
 import { Action } from '@ngrx/store';
-import { IRouteInfoDataState } from '../state';
-import { routeInfoDataActions } from '../index';
+import { IHikeEditRoutePlannerState } from '../state';
+import { hikeEditRoutePlannerActions } from '../index';
 
-export const initialRouteInfoDataState: IRouteInfoDataState = {
+export const initialRouteInfoDataState: IHikeEditRoutePlannerState = {
   segments: [],
   total: {},
   location: '',
   route: {},
 };
 
-export function routeInfoDataReducer(
+export function hikeEditRoutePlannerReducer(
   state = initialRouteInfoDataState,
-  action: routeInfoDataActions.AllRouteInfoDataActions
-): IRouteInfoDataState {
+  action: hikeEditRoutePlannerActions.AllHikeEditRoutePlannerActions
+): IHikeEditRoutePlannerState {
   switch (action.type) {
-    case routeInfoDataActions.RESET:
+    case hikeEditRoutePlannerActions.RESET:
       return initialRouteInfoDataState;
-    case routeInfoDataActions.ADD_ROUTE:
+    case hikeEditRoutePlannerActions.ADD_ROUTE:
       return {
         ...state,
         route: action.payload.route
       };
-    case routeInfoDataActions.PUSH_SEGMENT:
+    case hikeEditRoutePlannerActions.PUSH_SEGMENT:
       return {
         ...state,
         segments: [
@@ -29,12 +29,12 @@ export function routeInfoDataReducer(
           action.payload.segment
         ]
       };
-    case routeInfoDataActions.POP_SEGMENT:
+    case hikeEditRoutePlannerActions.POP_SEGMENT:
       return {
         ...state,
         segments: state.segments.length > 1 ? state.segments.slice(0, state.segments.length - 1) : []
       };
-    case routeInfoDataActions.UPDATE_TOTAL:
+    case hikeEditRoutePlannerActions.UPDATE_TOTAL:
       return {
         ...state,
         total: action.payload.total

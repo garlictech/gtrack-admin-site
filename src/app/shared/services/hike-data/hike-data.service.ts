@@ -64,7 +64,7 @@ export class HikeDataService {
    * collectHikeData effect submethod
    */
   public collectHikeRouteInfo() {
-    return this._store.select((state: State) => state.routeInfoData.total)
+    return this._store.select((state: State) => state.hikeEditRoutePlanner.total)
       .take(1)
       .map((routeInfoTotal) => {
         return _.pick(routeInfoTotal, [

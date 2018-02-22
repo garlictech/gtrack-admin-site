@@ -4,8 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import {
   State,
-  IRouteInfoDataState,
-  hikeEditroutePlanningActions,
+  IHikeEditRoutePlannerState,
+  hikeEditRoutePlannerActions,
   commonHikeActions,
   commonRouteActions
 } from 'app/store';
@@ -14,11 +14,11 @@ import { IRoute } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 
 @Component({
-  selector: 'gt-hike-edit-route-planning',
-  templateUrl: './hike-edit-route-planning.component.html'
+  selector: 'gt-hike-edit-route-planner',
+  templateUrl: './hike-edit-route-planner.component.html'
 })
-export class HikeEditRoutePlanningComponent {
-  public routeInfoData$: Observable<IRouteInfoDataState>;
+export class HikeEditRoutePlannerComponent {
+  public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   private _map: AdminMap;
 
   constructor(
@@ -26,7 +26,7 @@ export class HikeEditRoutePlanningComponent {
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _store: Store<State>
   ) {
-    this.routeInfoData$ = this._store.select((state: State) => state.routeInfoData);
+    this.routeInfoData$ = this._store.select((state: State) => state.hikeEditRoutePlanner);
 
     this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
       .take(1)
@@ -54,7 +54,7 @@ export class HikeEditRoutePlanningComponent {
   }
 
   public saveRoute() {
-    this._store.select((state: State) => state.routeInfoData)
+    this._store.select((state: State) => state.hikeEditRoutePlanner)
       .take(1)
       .subscribe((routeInfoData) => {
         if (routeInfoData) {
@@ -63,7 +63,9 @@ export class HikeEditRoutePlanningComponent {
             route: routeInfoData.route,
           }
 
-          this._store.dispatch(new commonRouteActions.CreateRoute(_route));
+          console.log('ROUTE SAVE', _route);
+
+          this._store.dispatch(new commonRouteActions.SaveRoute(_route));
         }
       });
 

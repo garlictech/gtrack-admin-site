@@ -50,7 +50,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     // Update buffer on each segment update
-    this._store.select((state: State) => state.routeInfoData.segments)
+    this._store.select((state: State) => state.hikeEditRoutePlanner.segments)
       .takeUntil(this._destroy$)
       .subscribe(() => {
         // Refreh buffer on segment change, if needed

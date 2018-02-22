@@ -21,7 +21,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import {
-  store, AuthEffects, HikeEditEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects
+  store, AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects
 } from './store';
 import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors
@@ -117,7 +117,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     EffectsModule.forRoot([
       AuthEffects,
       HikeEditEffects,
-      HikeEditRoutePlanningEffects,
+      HikeEditRoutePlannerEffects,
       HikeEditPoiEffects,
       RouterEffects,
       PoiEffects,
