@@ -116,27 +116,27 @@ describe('Poi effects', () => {
     });
   });
 
-  describe('createPoi$', () => {
+  describe('savePoi$', () => {
     it('should return the id of the created Poi from PoiCreated', () => {
-      const action = new poiActions.CreatePoi(poiFixtures[0]);
-      const completion = new poiActions.PoiCreated(newId);
+      const action = new poiActions.SavePoi(poiFixtures[0]);
+      const completion = new poiActions.PoiSaved(newId);
       const expected = cold('-b', {b: completion});
 
       actions$.stream = hot('-a', {a: action});
 
-      expect(effects.createPoi$).toBeObservable(expected);
+      expect(effects.savePoi$).toBeObservable(expected);
     });
   });
 
-  describe('loadCreatedPoi$', () => {
-    it('should return a LoadPoi action after PoiCreated', () => {
-      const action = new poiActions.PoiCreated(newId);
+  describe('loadSavedPoi$', () => {
+    it('should return a LoadPoi action after PoiSaved', () => {
+      const action = new poiActions.PoiSaved(newId);
       const completion = new poiActions.LoadPoi(newId);
       const expected = cold('-b', {b: completion});
 
       actions$.stream = hot('-a', {a: action});
 
-      expect(effects.loadCreatedPoi$).toBeObservable(expected);
+      expect(effects.loadSavedPoi$).toBeObservable(expected);
     });
   });
 });

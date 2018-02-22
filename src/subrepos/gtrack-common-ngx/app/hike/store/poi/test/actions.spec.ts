@@ -81,23 +81,23 @@ describe('Poi actions', () => {
     });
   });
 
-  describe('CreatePoi action', () => {
+  describe('SavePoi action', () => {
     it('should create an action', () => {
-      let action = new actions.CreatePoi(poiData);
+      let action = new actions.SavePoi(poiData);
 
       expect({ ...action }).toEqual({
-        type: actions.PoiActionTypes.CREATE_POI,
+        type: actions.PoiActionTypes.SAVE_POI,
         poi: poiData
       });
     });
   });
 
-  describe('PoiCreated action', () => {
+  describe('PoiSaved action', () => {
     it('should create an action', () => {
-      let action = new actions.PoiCreated(id);
+      let action = new actions.PoiSaved(id);
 
       expect({ ...action }).toEqual({
-        type: actions.PoiActionTypes.POI_CREATED,
+        type: actions.PoiActionTypes.POI_SAVED,
         context: id
       });
     });
