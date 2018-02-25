@@ -1,36 +1,68 @@
 <div class="clearfix mb-2">
   <div class="pull-left">
-    <button class="btn btn-sm btn-fill btn-success" (click)="savePois()">Save to BD</button>
+    <button class="btn btn-sm btn-fill btn-success" (click)="getPois()">Get new</button>
   </div>
 
   <div class="pull-left" *ngIf="loading$ | async"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
+
+  <div class="pull-right">
+    <div class="form-check inline-checkbox">
+      <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" name="optionsCheckboxes" [checked]="showOnrouteMarkers$ | async" (change)="toggleOnrouteMarkers()">
+          <span class="form-check-sign"></span>
+          Show onroute markers
+      </label>
+    </div>
+    <div class="form-check inline-checkbox">
+      <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" name="optionsCheckboxes" [checked]="showOffrouteMarkers$ | async" (change)="toggleOffrouteMarkers()">
+          <span class="form-check-sign"></span>
+          Show offroute markers
+      </label>
+    </div>
+  </div>
 </div>
 
-<table class="table table-hover">
-  <thead class="text-success">
-    <tr>
-      <th>Icon</th>
-      <th>Title</th>
-      <th>Distance from route</th>
-      <th>objType</th>
-      <th>Types</th>
-      <th>Remove</th>
-      <th>Special</th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngFor="let poi of (pois$ | async); let idx = index">
-      <tr *ngIf="poi.onRoute === onRouteCheck">
-        <td><poi-icons [poi]="poi"></poi-icons></td>
-        <td>{{poi.description.en.title}}</td>
-        <td>{{poi.distFromRoute | distance : true}}</td>
-        <td>{{poi.objectType}}</td>
-        <td>{{poi.types.join(', ')}}</td>
-        <td>
-          <a (click)="removePoi($event, poi)" class="text-danger">remove</a>
-        </td>
-        <td><special-poi-data [poi]="poi"></special-poi-data></td>
-      </tr>
-    </ng-container>
-  </tbody>
-</table>
+<div id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="card mb-1">
+    <div class="card-header bg-light" id="headingOne" role="tab">
+      <h5>
+        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtrack_off" role="button" class="collapsed">
+          <div class="text-success">
+            On route pois
+            <i class="material-icons pull-right">keyboard_arrow_down</i>
+          </div>
+        </a>
+      </h5>
+    </div>
+    <div aria-labelledby="headingOne" class="collapse" id="collapse_gtrack_off" role="tabpanel" aria-expanded="false" style="height: 0px;">
+      <div class="card-body">
+        <hike-edit-pois-gtrack-table
+          [pois$]="pois$"
+          [onRouteCheck]="true">
+        </hike-edit-pois-gtrack-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-1">
+    <div class="card-header bg-light" id="headingOne" role="tab">
+      <h5>
+        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtrack_on" role="button" class="collapsed">
+          <div class="text-success">
+            Off route pois
+            <i class="material-icons pull-right">keyboard_arrow_down</i>
+          </div>
+        </a>
+      </h5>
+    </div>
+    <div aria-labelledby="headingOne" class="collapse" id="collapse_gtrack_on" role="tabpanel" aria-expanded="false" style="height: 0px;">
+      <div class="card-body">
+        <hike-edit-pois-gtrack-table
+          [pois$]="pois$"
+          [onRouteCheck]="false">
+        </hike-edit-pois-gtrack-table>
+      </div>
+    </div>
+  </div>
+</div>

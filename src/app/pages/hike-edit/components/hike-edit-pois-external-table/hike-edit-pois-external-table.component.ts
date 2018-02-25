@@ -9,7 +9,7 @@ import { State, hikeEditPoiActions } from 'app/store';
   templateUrl: './hike-edit-pois-external-table.component.html'
 })
 export class HikeEditPoisExternalTableComponent {
-  @Input() pois: IExternalPoi[];
+  @Input() pois$: IExternalPoi[];
   @Input() subdomain: string;
   @Input() onRouteCheck: boolean;
 

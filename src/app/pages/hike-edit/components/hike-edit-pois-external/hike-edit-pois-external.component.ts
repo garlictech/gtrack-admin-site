@@ -8,11 +8,12 @@ import { PoiEditorService } from 'app/shared/services';
 import { ExternalPoi } from 'app/shared/services/poi/lib';
 import { Poi } from 'subrepos/gtrack-common-ngx';
 import { IPoi } from 'subrepos/provider-client';
-import { IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
+import {
+  IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi
+} from 'app/shared/interfaces';
 import {
   State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions
 } from 'app/store';
-
 import { HikeEditMapSelectors, HikeEditPoiSelectors } from 'app/store/selectors'
 
 import * as _ from 'lodash';
@@ -164,7 +165,9 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this.pois$
       .take(1)
       .subscribe((pois: IExternalPoi[]) => {
-        const _externalPoisToSave = _.filter(pois, (poi: IExternalPoi) => (!!(poi.inHike && !poi.inGtrackDb)));
+        const _externalPoisToSave = _.filter(pois, (poi: IExternalPoi) => {
+          return (!!(poi.inHike && !poi.inGtrackDb));
+        });
         let _poisToSave: Poi[] = [];
 
         for (let externalPoi of _externalPoisToSave) {
