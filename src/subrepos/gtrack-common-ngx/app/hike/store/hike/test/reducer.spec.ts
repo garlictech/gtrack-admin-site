@@ -1,5 +1,5 @@
 import { IHikeProgram, IHikeProgramStored } from 'subrepos/provider-client';
-import * as uuid from 'uuid/v4';
+import * as uuid from 'uuid/v1';
 
 import { hikeReducer, hikeReducerInitialState, hikeContextReducerInitialState } from '../reducer';
 import * as actions from '../actions';

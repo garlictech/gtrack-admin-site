@@ -7,7 +7,7 @@ import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
 import * as _ from 'lodash';
-import * as uuid from 'uuid/v4';
+import * as uuid from 'uuid/v1';
 
 import { hot, cold } from 'jasmine-marbles';
 
