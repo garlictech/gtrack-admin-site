@@ -3,13 +3,14 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, hikeEditActions, hikeEditGeneralInfoActions } from 'app/store';
+import { State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions } from 'app/store';
 
 import { HikeDataService } from 'app/shared/services';
 import { IMockHikeElement } from 'app/shared/interfaces';
 import { IHikeProgramStored } from 'subrepos/provider-client';
 
-import * as uuid from 'uuid/v4';
+import * as uuid from 'uuid/v1';
+import { RouteActionTypes } from 'subrepos/gtrack-common-ngx';
 
 @Component({
   selector: 'gt-hike-edit',
@@ -46,10 +47,13 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           this.hikeData = this._hikeDataService.getHike(params.id);
         // Create new hike
         } else {
-          // Generate hike id
-          this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({
-            hikeId: uuid()
-          }));
+          // Generate initial hike id
+          this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({ hikeId: uuid() }));
+
+          // Generate initial route id and save an empty entity
+          const _routeId = uuid();
+          this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({ routeId: _routeId }));
+          this._store.dispatch(new commonRouteActions.LoadRoute(_routeId));
 
           // Set page title
           this._title.setTitle('New hike');

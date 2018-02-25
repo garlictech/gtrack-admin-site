@@ -20,4 +20,9 @@ export class HikeEditGeneralInfoSelectors {
     this.getAllDescriptions = descriptionAdapter.getSelectors(descriptionSelector).selectAll;
     this.getAllLangKeys = descriptionAdapter.getSelectors(descriptionSelector).selectIds;
   }
+
+  public getHikeEditGeneralInfoSelector() {
+    return createSelector(this.hikeEditGeneralInfoSelector,
+      (state: IHikeEditGeneralInfoState) => state.generalInfo);
+  };
 }

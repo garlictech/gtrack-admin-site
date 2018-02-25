@@ -56,6 +56,10 @@ import * as commonRouteActions from 'subrepos/gtrack-common-ngx/app/hike/store/r
 export type CommonRouteAction = commonRouteActions.AllRouteActions;
 export { commonRouteActions };
 
+import * as commonGeoSearchActions from 'subrepos/gtrack-common-ngx/app/geosearch/store/actions';
+export type CommonGeoSearchAction = commonGeoSearchActions.AllGeoSearchActions;
+export { commonGeoSearchActions };
+
 /////////////
 // Effects
 /////////////
@@ -82,10 +86,11 @@ export {
 
 import { hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
 import { hikeEditGeneralInfoReducer } from './reducer/hike-edig-general-info';
+import { environment } from 'environments/environment';
 export { hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer };
 
 //////////////
-// Stato
+// State
 //////////////
 
 // Extend the store interface with that.
@@ -114,9 +119,10 @@ const reducers: ActionReducerMap<State> = {
 function logger(reducer: ActionReducer<State>): any {
   return storeLogger()(reducer);
 }
-const metaReducers: MetaReducer<State>[] = [logger];
+const metaReducers: MetaReducer<State>[] = [];
 
-if (ENV === 'development') {
+if (!environment.production) {
+  metaReducers.push(logger);
   metaReducers.push(storeFreeze);
 }
 
