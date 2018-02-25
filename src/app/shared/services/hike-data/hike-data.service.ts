@@ -7,7 +7,7 @@ import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import { State } from 'app/store';
 import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
 
-import * as uuid from 'uuid/v4';
+import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
 
 // TODO del
@@ -103,7 +103,7 @@ export class HikeDataService {
         .take(1)
         .subscribe((pois) => {
           if (!pois[0]) {
-            resolve({location: 'n/a'});
+            resolve({ location: 'n/a' });
           }
 
           let _startPoint = {
@@ -112,7 +112,7 @@ export class HikeDataService {
           }
 
           this._reverseGeocodingService.get(_startPoint).then((location) => {
-            resolve({location: location});
+            resolve({ location: location });
           }, (err) => {
             resolve({location: 'n/a'});
           });

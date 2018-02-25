@@ -8,7 +8,7 @@ import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index'
 import { IWikipediaPoi, IWikipediaPageImageInfo } from 'app/shared/interfaces';
 
 import * as _ from 'lodash';
-import * as uuid from 'uuid/v4';
+import * as uuid from 'uuid/v1';
 
 @Injectable()
 export class WikipediaPoiService {
@@ -154,7 +154,6 @@ export class WikipediaPoiService {
       .combineAll()
       .toPromise()
       .then(() => {
-        console.log('WIKI', _pois);
         return _pois;
       });
   }

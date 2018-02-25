@@ -1,6 +1,6 @@
 // import { MapMarker } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker';
 import { MapMarker, IconService } from 'subrepos/gtrack-common-ngx';
-import * as uuid from 'uuid/v4';
+import * as uuid from 'uuid/v1';
 
 export class AdminMapMarker extends MapMarker {
   public id: string;

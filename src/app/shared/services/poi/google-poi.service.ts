@@ -9,7 +9,7 @@ import { GoogleMapsService } from 'subrepos/gtrack-common-ngx/index';
 import { GooglePoi } from './lib/google-poi';
 import { /**/ } from '@types/googlemaps';
 
-import * as uuid from 'uuid/v4';
+import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
 
 @Injectable()

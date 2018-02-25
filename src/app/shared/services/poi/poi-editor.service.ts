@@ -17,7 +17,7 @@ import {
 } from 'app/shared/interfaces/index';
 import { IPoi } from 'subrepos/provider-client';
 
-import * as uuid from 'uuid/v4';
+import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
 
@@ -140,12 +140,12 @@ export class PoiEditorService {
   private _organizePois(
     pois: ExternalPoi[],
     path: GeoJSON.Feature<GeoJSON.Polygon>,
-    gtrackPois: ExternalPoi[]
+    gTrackPois: ExternalPoi[]
   ) {
     let _res: ExternalPoi[] = [];
 
     const _smallBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 50, {units: 'meters'});
-    const _bigBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 100, {units: 'meters'}); // TODO 1000
+    const _bigBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 1000, {units: 'meters'});
 
     for (let p of pois) {
       let _point: GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties> = turf.point([p.lon, p.lat]);
@@ -165,8 +165,8 @@ export class PoiEditorService {
           this._handleTypes(p);
           this._handleTitle(p);
 
-          if (gtrackPois) {
-            this._handleGtrackPois(gtrackPois, p);
+          if (gTrackPois) {
+            this._handleGTrackPois(gTrackPois, p);
           }
 
           _res.push(p);
@@ -226,8 +226,8 @@ export class PoiEditorService {
   /**
    * _organizePois submethod
    */
-  private _handleGtrackPois(gtrackPois: ExternalPoi[], poi: ExternalPoi) {
-    let _found = _.find(gtrackPois, (p: ExternalPoi) => {
+  private _handleGTrackPois(gTrackPois: ExternalPoi[], poi: ExternalPoi) {
+    let _found = _.find(gTrackPois, (p: ExternalPoi) => {
       return p.objectType === poi.objectType &&
         p[p.objectType].id === poi[poi.objectType].id
     });
@@ -414,8 +414,9 @@ export class PoiEditorService {
    * HikeEditPoi effect submethod
    */
   public assignGTrackPois(data) {
-    return this._poiService.search(data.bounds).map((gtrackPois) => {
-      return _.extend(_.cloneDeep(data), {gtrackPois: gtrackPois});
+    console.log('poiEditorService - assignGTrackPois: call poiService.search for gTrackPois');
+    return this._poiService.search(data.bounds).map((gTrackPois) => {
+      return _.extend(_.cloneDeep(data), { gTrackPois: gTrackPois });
     });
   }
 
@@ -424,10 +425,10 @@ export class PoiEditorService {
    */
   public assignOrganizedPois(data) {
     const _map: AdminMap = this._adminMapService.getMapById(data.mapId);
-    return this
-      ._organizePois(data.pois, _map.routeInfo.getPath(), data.gtrackPois)
+
+    return this._organizePois(data.pois, _map.routeInfo.getPath(), data.gTrackPois)
       .then((organizedPois) => {
-        return _.extend(_.cloneDeep(data), {organizedPois: organizedPois});
+        return _.extend(_.cloneDeep(data), { organizedPois: organizedPois });
       });
   }
 
