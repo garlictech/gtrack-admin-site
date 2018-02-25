@@ -59,11 +59,10 @@ export class RouteInfo {
   }
 
   private _getRoute() {
-    console.log('TODO is in use??');
-    // TODO use only the store?
     if (this.planner) {
       return this.planner.routeInfoData;
     } else {
+      console.log('TODO is in use??');
       return this._savedRoute;
     }
   }
