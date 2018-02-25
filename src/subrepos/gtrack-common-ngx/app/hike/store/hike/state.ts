@@ -8,6 +8,7 @@ export interface IHikeContextState {
   id: string;
   loading: boolean;
   loaded: boolean;
+  saved: boolean;
 }
 
 export interface IAllHikeContextState extends EntityState<IHikeContextState> {};

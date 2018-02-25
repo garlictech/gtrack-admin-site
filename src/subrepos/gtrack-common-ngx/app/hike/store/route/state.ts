@@ -8,6 +8,7 @@ export interface IRouteContextState {
   id: string;
   loading: boolean;
   loaded: boolean;
+  saved: boolean;
 }
 
 export interface IAllRouteContextState extends EntityState<IRouteContextState> {};

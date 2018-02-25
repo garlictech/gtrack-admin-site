@@ -4,11 +4,11 @@ import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 
-import * as _ from 'lodash';
-
 import { RouteService, Route } from '../../services/route';
 import * as LocalActions from './actions';
 import * as PoiActions from '../poi/actions';
+
+import * as _ from 'lodash';
 
 @Injectable()
 export class RouteEffects {
