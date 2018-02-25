@@ -41,4 +41,10 @@ export class RouteSelectors {
   public getRoute(context: string) {
     return createSelector(this.getAllRoutes, (routes: Route[]) => (routes.find(route => (route.id === context))));
   }
+
+  public getRouteContext(id: string) {
+    return createSelector(this.getAllContexts, (contexts) => {
+      return contexts.find(context => (context.id === id));
+    });
+  }
 }
