@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import {
   Actions as AuthActions
 } from 'subrepos/authentication-api-ngx';
+import { EAuthRoles } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gtcn-facebook-button',
@@ -18,6 +19,6 @@ export class FacebookButtonComponent {
   public buttonClicked(e: Event): void {
     e.preventDefault();
 
-    this.store.dispatch(new AuthActions.FacebookLogin());
+    this.store.dispatch(new AuthActions.FacebookLogin([EAuthRoles.user]));
   }
 }
