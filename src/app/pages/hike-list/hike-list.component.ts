@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import {
-  State
+  State, commonHikeActions
 } from 'app/store';
 import { IHikeProgram } from 'subrepos/provider-client';
 import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
@@ -30,6 +30,8 @@ export class HikeListComponent implements OnInit {
       .subscribe((hikes) => {
         this.hikeList = hikes;
       });
+
+    this._store.dispatch(new commonHikeActions.LoadHikePrograms());
   }
 
   deleteHike(hikeId) {
