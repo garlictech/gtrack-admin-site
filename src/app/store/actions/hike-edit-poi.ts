@@ -17,6 +17,8 @@ export const SET_OSM_ROUTE_POI_IN_HIKE = '[HikeEditPoi] Set OSM route poi inHike
 export const GET_WIKIPEDIA_POIS = '[HikeEditPoi] Get Wikipedia pois';
 export const SET_WIKIPEDIA_POIS = '[HikeEditPoi] Set Wikipedia pois';
 export const SET_WIKIPEDIA_POI_IN_HIKE = '[HikeEditPoi] Set Wikipedia poi inHike';
+export const GET_GTRACK_POIS = '[HikeEditPoi] Get gTrack pois';
+export const SET_GTRACK_POIS = '[HikeEditPoi] Set gTrack pois';
 export const TOGGLE_ONROUTE_MARKERS = '[HikeEditPoi] Toggle onroute markers';
 export const TOGGLE_OFFROUTE_MARKERS = '[HikeEditPoi] Toggle offroute markers';
 export const GENERATE_SUBDOMAIN_POI_MARKERS = '[HikeEditPoi] Generate subdomain poi markers';
@@ -160,6 +162,26 @@ export class SetWikipediaPoiInHike implements Action {
 }
 
 /**
+ * gTRack pois
+ */
+
+export class GetGTrackPois implements Action {
+  readonly type = GET_GTRACK_POIS;
+  constructor(public payload: {
+    centerCoord: number[],
+    radius: number
+    mapId: string
+  }) { /* EMPTY */ }
+}
+
+export class SetGTrackPois implements Action {
+  readonly type = SET_GTRACK_POIS;
+  constructor(public payload: {
+    pois: IPoi[]
+  }) { /* EMPTY */ }
+}
+
+/**
  * Toggle markers
  */
 
@@ -207,6 +229,8 @@ export type AllHikeEditPoiActions =
   | GetWikipediaPois
   | SetWikipediaPois
   | SetWikipediaPoiInHike
+  | GetGTrackPois
+  | SetGTrackPois
   | ToggleOnrouteMarkers
   | ToggleOffrouteMarkers
   | GenerateSubdomainPoiMarkers

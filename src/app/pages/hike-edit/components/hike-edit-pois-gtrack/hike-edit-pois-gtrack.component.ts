@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { IPoi } from 'subrepos/provider-client';
-import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
+import { PoiSelectors, CenterRadius, GeometryService } from 'subrepos/gtrack-common-ngx';
 import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
 import {
   State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, commonGeoSearchActions,
@@ -28,6 +28,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _adminMapService: AdminMapService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _geometryService: GeometryService,
     private _poiSelectors: PoiSelectors
   ) {}
 
@@ -72,28 +73,19 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
    * Get pois for the current subdomain
    */
   public getPois() {
-    this._store.select(state => state.hikeEditRoutePlanner.segments)
-      .take(1)
-      .subscribe(segments => {
-        for (const segment of segments) {
-          // Segments contains lat/lng, geoJson uses lng/lat
-          const _segmentCoords = segment.coordinates.map(coord => [coord[1], coord[0]]);
+    let _bounds = this._map.routeInfo.getSearchBounds();
+    let _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);
+    let _centerCoord = _geo!.center!.geometry!.coordinates;
 
-          // ERROR: may causes self-intersect
-          // _segmentCoords.push(_segmentCoords[0]);
+    if (_centerCoord) {
+      this._store.dispatch(new hikeEditPoiActions.GetGTrackPois({
+        centerCoord: _centerCoord,
+        radius: 1000,
+        mapId: this._map.id
+      }));
+    }
 
-          console.log('_segmentCoords', [_segmentCoords]);
-          this._store.dispatch(new commonGeoSearchActions.SearchInBox({
-            table: 'hike_programs',
-            box: {
-              type: 'Polygon',
-              coordinates: [_segmentCoords]
-            }
-          }, uuid()));
-        }
-      });
-
-    /*   let _bounds = this._map.routeInfo.getSearchBounds();
+    /*
 
     if (_bounds) {
       /*

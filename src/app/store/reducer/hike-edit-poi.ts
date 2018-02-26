@@ -2,7 +2,7 @@ import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   IHikeEditPoiState, IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
-  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState
+  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState, IGTrackPoiEntityState
 } from '../state';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import { hikeEditPoiActions } from '../index';
@@ -145,6 +145,35 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
 }
 
 /**
+ * gTrack
+ */
+
+export const gTrackPoiAdapter: EntityAdapter<IPoi> = createEntityAdapter<IPoi>();
+export const gTrackPoiInitialState = gTrackPoiAdapter.getInitialState();
+
+const gTrackPoiReducer: ActionReducer<IGTrackPoiEntityState> = (
+  state: IGTrackPoiEntityState = gTrackPoiInitialState,
+  action: hikeEditPoiActions.AllHikeEditPoiActions
+): IGTrackPoiEntityState => {
+  switch (action.type) {
+    case hikeEditPoiActions.SET_GTRACK_POIS: {
+      return wikipediaPoiAdapter.addAll(action.payload.pois, state);
+    }
+    /*
+    case hikeEditPoiActions.SET_GTRACK_POI_IN_HIKE:
+      return wikipediaPoiAdapter.updateOne({
+        id: action.payload.poiId,
+        changes: {
+          inHike: action.payload.isInHike
+        }
+      }, state);
+    */
+    default:
+      return state;
+  }
+}
+
+/**
  * Context
  */
 
@@ -158,7 +187,8 @@ export const externalPoiInitialContextState: IExternalPoiListContextState = {
   osmAmenity: initialContextItemState,
   osmNatural: initialContextItemState,
   osmRoute: initialContextItemState,
-  wikipedia: initialContextItemState
+  wikipedia: initialContextItemState,
+  gTrack: initialContextItemState
 };
 
 export function externalPoiListContextReducer(
@@ -307,6 +337,7 @@ const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
   osmAmenityPois: osmAmenityPoiReducer,
   osmNaturalPois: osmNaturalPoiReducer,
   osmRoutePois: osmRoutePoiReducer,
+  gTrackPois: gTrackPoiReducer,
   contexts: externalPoiListContextReducer
 };
 

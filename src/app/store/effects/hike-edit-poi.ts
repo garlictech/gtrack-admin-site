@@ -3,8 +3,9 @@ import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { MapMarkerService, IconService } from 'subrepos/gtrack-common-ngx';
+import { IPoi } from 'subrepos/provider-client';
 import {
-  State, hikeEditPoiActions, hikeEditMapActions, IExternalPoiListContextItemState
+  State, hikeEditPoiActions, hikeEditMapActions, IExternalPoiListContextItemState, commonGeoSearchActions
 } from '../index';
 import { HikeEditPoiSelectors } from 'app/store/selectors/'
 import {
@@ -20,6 +21,7 @@ import { IExternalPoi, IWikipediaPoi, IOsmPoi, IGooglePoi } from 'app/shared/int
 import { ExternalPoi } from 'app/shared/services/poi/external-poi';
 
 import * as _ from 'lodash';
+import * as uuid from 'uuid/v1';
 
 @Injectable()
 export class HikeEditPoiEffects {
@@ -133,6 +135,23 @@ export class HikeEditPoiEffects {
       return new hikeEditPoiActions.SetOsmRoutePois({
         pois: this._poiEditorService.assignOnOffRoutePois(data)
       });
+    });
+
+  /**
+   * Get gTrack pois from db
+   */
+  @Effect()
+  getGtrackPois$: Observable<any> = this._actions$
+    .ofType(hikeEditPoiActions.GET_GTRACK_POIS)
+    .map(toPayload)
+    .map(data => {
+      return new commonGeoSearchActions.SearchInCircle({
+        table: 'hike_programs',
+        circle: {
+          radius: data.radius,
+          center: [data.centerCoord[0], data.centerCoord[1]]
+        }
+      }, uuid());
     });
 
   /**
