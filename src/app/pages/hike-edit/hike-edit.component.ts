@@ -53,7 +53,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           // Generate initial route id and save an empty entity
           const _routeId = uuid();
           this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({ routeId: _routeId }));
-          this._store.dispatch(new commonRouteActions.LoadRoute(_routeId));
 
           // Set page title
           this._title.setTitle('New hike');

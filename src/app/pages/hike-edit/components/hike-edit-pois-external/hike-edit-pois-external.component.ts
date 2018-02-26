@@ -43,7 +43,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
-      .take(1)
+      .takeUntil(this._destroy$)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
@@ -168,15 +168,13 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         const _externalPoisToSave = _.filter(pois, (poi: IExternalPoi) => {
           return (!!(poi.inHike && !poi.inGtrackDb));
         });
-        let _poisToSave: Poi[] = [];
 
         for (let externalPoi of _externalPoisToSave) {
           let _poiData = this._poiEditorService.getDbObj(externalPoi);
           let _poi = new Poi(<IExternalPoi>_poiData);
-          _poisToSave.push(_poi);
-        }
 
-        this._store.dispatch(new commonPoiActions.AddGTrackPois(_poisToSave));
+          this._store.dispatch(new commonPoiActions.SavePoi(_poi));
+        }
       });
   }
 }
