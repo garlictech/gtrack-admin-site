@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/garlictech/deepstream-ngx.git
+	branch = master
+	commit = ba89422ad59e6defaf1ead5af8629ce70b8dd53e
+	parent = 4ee41a5fbb349f0934e011fa7331fd72103d4a3b
+	cmdver = 0.3.1
