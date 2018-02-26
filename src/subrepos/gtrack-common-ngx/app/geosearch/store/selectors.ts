@@ -16,7 +16,6 @@ import {
   EXTERNAL_GEO_SEARCH_DEPENDENCIES
 } from '../externals';
 
-
 @Injectable()
 export class GeoSearchSelectors {
   public selectFeature: MemoizedSelector<object, IGeoSearchState>;
