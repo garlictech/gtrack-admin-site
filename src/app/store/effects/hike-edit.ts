@@ -49,8 +49,6 @@ export class HikeEditEffects {
         });
     })
     .map(data => {
-      // return new commonHikeActions.CreateHikeProgram(data);
-
       return new commonHikeActions.SaveHikeProgram(
         _.extend(_.cloneDeep(data), {
           isRoundTrip: false,
