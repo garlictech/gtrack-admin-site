@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/garlictech/authentication-api-ngx.git
+	branch = master
+	commit = 21f342bae6a5b1e06c9e21f0fa78a63041e29137
+	parent = 09b8a6bd45432046e69ae5d9783cbff5155b9128
+	cmdver = 0.3.1
