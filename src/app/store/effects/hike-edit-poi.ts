@@ -146,7 +146,7 @@ export class HikeEditPoiEffects {
     .map(toPayload)
     .map(data => {
       return new commonGeoSearchActions.SearchInCircle({
-        table: 'hike_programs',
+        table: 'pois',
         circle: {
           radius: data.radius,
           center: [data.centerCoord[0], data.centerCoord[1]]

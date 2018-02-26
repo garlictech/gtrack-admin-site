@@ -30,7 +30,7 @@ export class HikeProgramService {
   query(): Observable<HikeProgram[]> {
     return this._deepstream
       .doQuery<IHikeProgramStored>({
-        table: 'hike_programs',
+        table: 'pois',
         query: []
       })
       .map(data => {
