@@ -80,25 +80,25 @@ export class PoiEditorService {
   /**
    * getDbObj submethod
    */
-  private _getGoogleDbObj(poiData, poi: GooglePoi) {
+  private _getGoogleDbObj(poiData: any, poi: GooglePoi) {
     if (poi.google && poi.google.id) {
+      poiData.objectId = {
+        google: poi.google.id
+      };
 
-      // TODO Additional
-      // poiData.objectId = poi.google.id;
+      poiData.additionalData = {};
 
-      /*
       if (poi.google.formatted_address) {
-        poiData.address = poi.google.formatted_address;
+        poiData.additionalData.address = poi.google.formatted_address;
       }
 
       if (poi.google.international_phone_number) {
-        poiData.phoneNumber = poi.google.international_phone_number;
+        poiData.additionalData.phoneNumber = poi.google.international_phone_number;
       }
 
       if (poi.google.opening_hours) {
-        poiData.openingHours = poi.google.opening_hours;
+        poiData.additionalData.openingHours = poi.google.opening_hours;
       }
-      */
     }
 
     return poiData;
@@ -108,25 +108,26 @@ export class PoiEditorService {
    * getDbObj submethod
    */
   private _getWikipediaDbObj(poiData, poi: WikipediaPoi) {
-    // TODO Additional
-    /*
     if (poi.wikipedia && poi.wikipedia.pageid) {
-      poiData.objectId = poi.wikipedia.pageid;
-      poiData.url = poi.wikipedia.url;
+      poiData.objectId = {
+        wikipedia: {
+          [(<string>poi.wikipedia.lng)]: poi.wikipedia.pageid
+        }
+      };
+
+      poiData.additionalData = {
+        url: poi.wikipedia.url
+      };
     }
-   */
   }
 
   /**
    * getDbObj submethod
    */
   private _getOsmDbObj(poiData, poi: OsmPoi) {
-    // TODO Additional
-    /*
-    if (poi.osm && poi.osm.id) {
-      poiData.objectId = poi.osm.id;
-    }
-    */
+    poiData.objectId = {
+      osm: poi.osm.id
+    };
   }
 
   private _getOnroutePois(pois: ExternalPoi[]) {

@@ -48,7 +48,8 @@ export class WikipediaPoiService {
           });
           _poi.wikipedia = {
             pageid: _point.pageid,
-            url: `https://${lng}.wikipedia.org/?curid=${_point.pageid}`
+            url: `https://${lng}.wikipedia.org/?curid=${_point.pageid}`,
+            lng: lng
           }
           _pois.push(_poi);
         }
