@@ -4,6 +4,7 @@ import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { debounceTime } from 'rxjs/operators';
 import { State, hikeEditGeneralInfoActions } from 'app/store';
 import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
@@ -49,14 +50,16 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
 
     this._initDescriptionsForm();
 
-    // Watch form changes and save values to store
+    // Watch form changes and save values to store (w/ 1 sec delay)
     this.descriptionForm.valueChanges
       .takeUntil(this._destroy$)
+      .debounceTime(1000)
       .subscribe((value) => {
         this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
           descriptions: value.langs
         }));
       });
+
   }
 
   ngOnDestroy() {

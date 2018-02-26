@@ -1,5 +1,6 @@
 import { RouteInfo } from './route-info';
 import { RoutingControl } from './routing-control';
+
 import * as L from 'leaflet';
 
 export class WaypointMarker {

@@ -32,17 +32,13 @@ import * as hikeEditPoiActions from './actions/hike-edit-poi';
 export type HikeEditPoiAction = hikeEditPoiActions.AllHikeEditPoiActions;
 export { hikeEditPoiActions };
 
-import * as hikeEditroutePlanningActions from './actions/hike-edit-route-planning';
-export type HikeEditroutePlanningAction = hikeEditroutePlanningActions.AllHikeEditroutePlanningActions;
-export { hikeEditroutePlanningActions };
+import * as hikeEditRoutePlannerActions from './actions/hike-edit-route-planner';
+export type HikeEditRoutePlannerAction = hikeEditRoutePlannerActions.AllHikeEditRoutePlannerActions;
+export { hikeEditRoutePlannerActions };
 
 import * as hikeListActions from './actions/hike-list';
 export type HikeListAction = hikeListActions.AllHikeListActions;
 export { hikeListActions };
-
-import * as routeInfoDataActions from './actions/route-info-data';
-export type RouteInfoDataAction = routeInfoDataActions.AllRouteInfoDataActions;
-export { routeInfoDataActions };
 
 import * as routingActions from './actions/routing';
 export type RoutingAction = routingActions.AllRoutingAction;
@@ -60,11 +56,17 @@ import * as commonRouteActions from 'subrepos/gtrack-common-ngx/app/hike/store/r
 export type CommonRouteAction = commonRouteActions.AllRouteActions;
 export { commonRouteActions };
 
+import * as commonGeoSearchActions from 'subrepos/gtrack-common-ngx/app/geosearch/store/actions';
+export type CommonGeoSearchAction = commonGeoSearchActions.AllGeoSearchActions;
+export { commonGeoSearchActions };
+
 /////////////
 // Effects
 /////////////
 
-export { AuthEffects, HikeEditEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects } from './effects';
+export {
+  AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects
+} from './effects';
 export { RouterEffects, PoiEffects } from 'subrepos/gtrack-common-ngx';
 
 ////////////
@@ -72,53 +74,55 @@ export { RouterEffects, PoiEffects } from 'subrepos/gtrack-common-ngx';
 ////////////
 
 import {
-  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState, IHikeEditGeneralInfoState, IExternalPoiListContextItemState
+  IHikeEditRoutePlannerState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState, IHikeEditGeneralInfoState, IExternalPoiListContextItemState
 } from './state';
 export {
-  IRouteInfoDataState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState, IHikeEditGeneralInfoState, IExternalPoiListContextItemState
+  IHikeEditRoutePlannerState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState, IHikeEditGeneralInfoState, IExternalPoiListContextItemState
 };
 
 //////////////
 // Reducers
 //////////////
 
-import { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
+import { hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
 import { hikeEditGeneralInfoReducer } from './reducer/hike-edig-general-info';
-export { routeInfoDataReducer, hikeEditMapReducer, hikeEditPoiReducer };
+import { environment } from 'environments/environment';
+export { hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer };
 
 //////////////
-// Stato
+// State
 //////////////
 
 // Extend the store interface with that.
 export interface State extends CommonState {
   authentication: IAuthenticationState;
-  routeInfoData: IRouteInfoDataState;
+  router: RouterReducerState; // ngrx/router
+  deepstream: IDeepstreamState;
+  hikeEditRoutePlanner: IHikeEditRoutePlannerState;
   hikeEditGeneralInfo: IHikeEditGeneralInfoState;
   hikeEditMap: IHikeEditMapState;
   hikeEditPoi: IHikeEditPoiState;
-  router: RouterReducerState; // ngrx/router
-  deepstream: IDeepstreamState;
 }
 
 // Same keys as in the state!!!
 const reducers: ActionReducerMap<State> = {
   ...commonReducers,
   authentication: authReducer,
-  routeInfoData: routeInfoDataReducer,
+  router: routerReducer,
+  deepstream: deepstreamReducer,
+  hikeEditRoutePlanner: hikeEditRoutePlannerReducer,
   hikeEditGeneralInfo: hikeEditGeneralInfoReducer,
   hikeEditPoi: hikeEditPoiReducer,
-  hikeEditMap: hikeEditMapReducer,
-  router: routerReducer,
-  deepstream: deepstreamReducer
+  hikeEditMap: hikeEditMapReducer
 };
 
 function logger(reducer: ActionReducer<State>): any {
   return storeLogger()(reducer);
 }
-const metaReducers: MetaReducer<State>[] = [logger];
+const metaReducers: MetaReducer<State>[] = [];
 
-if (ENV === 'development') {
+if (!environment.production) {
+  metaReducers.push(logger);
   metaReducers.push(storeFreeze);
 }
 

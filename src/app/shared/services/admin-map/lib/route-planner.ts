@@ -1,19 +1,15 @@
 /* OLD: TrackPlanner */
-
 import { AdminMap } from './admin-map';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, IRouteInfoDataState, routeInfoDataActions } from 'app/store';
-import {
-  ISegment,
-  GameRuleService,
-  RouteService
-} from 'subrepos/gtrack-common-ngx/app';
+import { State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions } from 'app/store';
+import { ISegment, GameRuleService, RouteService } from 'subrepos/gtrack-common-ngx/app';
+
 import * as _ from 'lodash';
 
 export class RoutePlanner {
-  public routeInfoData: IRouteInfoDataState;
+  public routeInfoData: IHikeEditRoutePlannerState;
   private _geoJSON: GeoJSON.FeatureCollection<any>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -38,23 +34,23 @@ export class RoutePlanner {
     }
 
     // Reset the state when the planner has been created
-    this._store.dispatch(new routeInfoDataActions.Reset());
+    this._store.dispatch(new hikeEditRoutePlannerActions.Reset());
 
     // Parent classes use routeInfoData
-    this._store.select((state: State) => state.routeInfoData)
+    this._store.select((state: State) => state.hikeEditRoutePlanner)
       .takeUntil(this._destroy$)
-      .subscribe((routeInfoData: IRouteInfoDataState) => {
+      .subscribe((routeInfoData: IHikeEditRoutePlannerState) => {
         this.routeInfoData = routeInfoData;
       });
 
     // Update totals on each segment update
-    this._store.select((state: State) => state.routeInfoData.segments)
+    this._store.select((state: State) => state.hikeEditRoutePlanner.segments)
       .takeUntil(this._destroy$)
       .subscribe((segments: ISegment[]) => {
         let _total = this._calculateTotal(segments);
 
         // Update total for route info
-        this._store.dispatch(new routeInfoDataActions.UpdateTotal({
+        this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal({
           total: _total
         }));
 
@@ -65,7 +61,7 @@ export class RoutePlanner {
 
   public destroy() {
     // Clear state
-    this._store.dispatch(new routeInfoDataActions.Reset());
+    this._store.dispatch(new hikeEditRoutePlannerActions.Reset());
 
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
@@ -84,13 +80,13 @@ export class RoutePlanner {
     _segment.score = this._gameRuleService.score(_segment.distance, _segment.uphill)
 
     // Add segment to store
-    this._store.dispatch(new routeInfoDataActions.PushSegment({
+    this._store.dispatch(new hikeEditRoutePlannerActions.PushSegment({
       segment: _segment
     }));
   }
 
   public removeLastSegment() {
-    this._store.dispatch(new routeInfoDataActions.PopSegment());
+    this._store.dispatch(new hikeEditRoutePlannerActions.PopSegment());
   }
 
   /**
@@ -139,7 +135,7 @@ export class RoutePlanner {
       _route.bounds = this._routeService.getBounds(_route);
     }
 
-    this._store.dispatch(new routeInfoDataActions.AddRoute({
+    this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute({
       route: _route
     }));
   }
@@ -175,73 +171,5 @@ export class RoutePlanner {
     const _lastSegment = segments[segments.length - 1];
     const _coordinateNumInLastSegment = _lastSegment.coordinates.length;
     return _lastSegment.coordinates[_coordinateNumInLastSegment - 1];
-  }
-
-  /*
-  private _createPoint(segmentPoint) {
-    console.log('RoutePlanner._createPoint');
-    return {
-      lat: segmentPoint[0],
-      lon: segmentPoint[1],
-      elevation: Math.round(segmentPoint[2])
-    };
-  }
-
-  private _addSummaryValues(to, from) {
-    console.log('RoutePlanner._addSummaryValues');
-    to.distance = Math.round(from.distance);
-    to.downhill = Math.round(from.downhill);
-    to.uphill = Math.round(from.uphill);
-    to.time = Math.round(from.time);
-    to.score = from.score;
-  }
-
-  private _addIcons(trackId) {
-    console.log('RoutePlanner._addIcons');
-    console.log('TODO: SvgIconService');
-    / *
-    SvgIconService.get(trackId, "#elevationImagePrep", "#trackImagePrep").then (icons) ->
-    dbObj.elevationIcon = icons.elevationIcon
-    dbObj.trackIcon = icons.trackIcon
-    dbObj.$save()
-    * /
-  }
-
-  private _getFirstPoint() {
-    console.log('RoutePlanner._getFirstPoint');
-    return this.routeInfoData.segments[0].coordinates[0];
-  }
-  */
-  public saveTrack(dbObj) {
-    console.log('RoutePlanner.saveTrack', dbObj);
-    console.log('TODO: _saveTrack');
-    /*
-
-    dbObj.routePoints = {}
-
-    for segment, index in @route.segments
-      dbObj.routePoints[index] = _createPoint segment.coordinates[0]
-
-    # And the last point
-    routepoint = _createPoint @_getLastPointOfLastSegment()
-    dbObj.routePoints[@route.segments.length] = routepoint
-    _addSummaryValues dbObj, @route.total
-    # Add the start point to the location database
-    geo = $geofire(new $window.Firebase "#{config.fireBaseRef}/geo/hikes")
-    firstPoint = @_getFirstPoint()
-
-    trackservice = common/routeservice!!
-    TrackService.create(@geoJSON).then (id) ->
-      dbObj.trackId = id
-
-      $q.all [
-        geo.$set(dbObj.$id, [firstPoint[0], firstPoint[1]]),
-        _addIcons id,
-        dbObj.$save()
-      ]
-      .then ->
-        $rootScope.$broadcast 'HIKE:CHANGED'
-
-    */
   }
 }

@@ -7,6 +7,8 @@ export enum EGeospatialSearchUnits {
   foot = 'ft'
 };
 
+export type GeospatialSearchResponse = string[];
+
 export interface IGeospatialSearchCircle {
   center: GeoJSON.Position;
   radius: number;

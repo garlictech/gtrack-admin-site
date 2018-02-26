@@ -29,7 +29,7 @@ export class PointMarker {
   public addMarkers(pois: Poi[]) {
     pois.forEach((poi, i) => {
       // TODO: poi.title is deprecated. Use poi.description[lng].title
-      let marker = this.mapMarkerService.create(poi.lat, poi.lon, poi.types, poi['en_US'].title);
+      let marker = this.mapMarkerService.create(poi.lat, poi.lon, poi.types, poi.description.en_US.title);
       this.markers.push(marker);
 
       if (this.shownOnMap === true) {

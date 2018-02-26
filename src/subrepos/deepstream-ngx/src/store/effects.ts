@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 
@@ -19,11 +19,10 @@ interface IAuth {
 export class Effects {
   @Effect()
   deepstreamLogin$: Observable<Action> = this._actions$
-    .ofType(LocalActions.DEEPSTREAM_LOGIN)
-    .map(toPayload)
-    .switchMap((token: string) => {
+    .ofType<LocalActions.DeepstreamLogin>(LocalActions.DEEPSTREAM_LOGIN)
+    .switchMap(action => {
       log.d('Effect: Logging in to deepstream...');
-      return this._deepstreamService.login(token);
+      return this._deepstreamService.login(action.payload);
     })
     .filter(auth => !!auth)
     .map((auth: IClientData) => {

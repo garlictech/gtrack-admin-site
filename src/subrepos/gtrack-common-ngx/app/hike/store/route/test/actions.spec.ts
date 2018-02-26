@@ -24,16 +24,6 @@ describe('Route actions', () => {
         }
       },
       route: {
-        bounds: {
-          NorthEast: {
-            lat: 47.498993,
-            lon: 19.043699
-          },
-          SouthWest: {
-            lat: 47.497157,
-            lon: 19.049757
-          }
-        },
         type: 'FeatureCollection',
         features: [
           {
@@ -97,23 +87,23 @@ describe('Route actions', () => {
     });
   });
 
-  describe('CreateRoute action', () => {
+  describe('SaveRoute action', () => {
     it('should create an action', () => {
-      let action = new actions.CreateRoute(route);
+      let action = new actions.SaveRoute(route);
 
       expect({ ...action }).toEqual({
-        type: actions.RouteActionTypes.CREATE_ROUTE,
+        type: actions.RouteActionTypes.SAVE_ROUTE,
         route: route
       });
     });
   });
 
-  describe('RouteCreated action', () => {
+  describe('RouteSaved action', () => {
     it('should create an action', () => {
-      let action = new actions.RouteCreated(id);
+      let action = new actions.RouteSaved(id);
 
       expect({ ...action }).toEqual({
-        type: actions.RouteActionTypes.ROUTE_CREATED,
+        type: actions.RouteActionTypes.ROUTE_SAVED,
         context: id
       });
     });

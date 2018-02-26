@@ -1,6 +1,6 @@
 <div class="clearfix mb-2">
   <div class="pull-left">
-    <button class="btn btn-sm btn-fill btn-success" (click)="savePois()">Save</button>
+    <button class="btn btn-sm btn-fill btn-success" (click)="savePois()">Save as gTrackPoi</button>
     <button class="btn btn-sm btn-fill btn-success" (click)="getPois()">Get new</button>
   </div>
 
@@ -39,7 +39,7 @@
     <div aria-labelledby="headingOne" class="collapse" id="collapse_{{poiType.subdomain}}_off" role="tabpanel" aria-expanded="false" style="height: 0px;">
       <div class="card-body">
         <hike-edit-pois-external-table
-          [pois]="pois$"
+          [pois$]="pois$"
           [subdomain]="poiType.subdomain"
           [onRouteCheck]="true">
         </hike-edit-pois-external-table>
@@ -61,7 +61,7 @@
     <div aria-labelledby="headingOne" class="collapse" id="collapse_{{poiType.subdomain}}_on" role="tabpanel" aria-expanded="false" style="height: 0px;">
       <div class="card-body">
         <hike-edit-pois-external-table
-          [pois]="pois$"
+          [pois$]="pois$"
           [subdomain]="poiType.subdomain"
           [onRouteCheck]="false">
         </hike-edit-pois-external-table>

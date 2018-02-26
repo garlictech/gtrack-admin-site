@@ -63,8 +63,6 @@ describe('NavbarComponent', () => {
     comp.logout();
     fixture.detectChanges();
 
-    console.log('authAction', authAction);
-
     expect(store.dispatch).toHaveBeenCalledWith(authAction);
   }));
 });

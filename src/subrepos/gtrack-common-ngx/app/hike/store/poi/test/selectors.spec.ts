@@ -62,7 +62,7 @@ describe('Poi selectors', () => {
       store
         .select(poiSelectors.getPoiIds)
         .takeUntil(destroy$)
-        .subscribe(ids => (result = ids));
+        .subscribe(_ids => (result = _ids));
 
       expect(result).toEqual([]);
 
@@ -79,7 +79,7 @@ describe('Poi selectors', () => {
       store
         .select(poiSelectors.getAllPois)
         .takeUntil(destroy$)
-        .subscribe(pois => (result = pois));
+        .subscribe(_pois => (result = _pois));
 
       expect(result).toEqual([]);
 
@@ -96,7 +96,7 @@ describe('Poi selectors', () => {
       store
         .select(poiSelectors.getAllPoiEntities)
         .takeUntil(destroy$)
-        .subscribe(pois => (result = pois));
+        .subscribe(_pois => (result = _pois));
 
       expect(result).toEqual({});
 
@@ -131,7 +131,7 @@ describe('Poi selectors', () => {
       store
         .select(poiSelectors.getPois(ids))
         .takeUntil(destroy$)
-        .subscribe(pois => (result = pois));
+        .subscribe(_pois => (result = _pois));
 
       expect(result).toEqual([]);
 
@@ -148,7 +148,7 @@ describe('Poi selectors', () => {
       store
         .select(poiSelectors.getPoiEntities(ids))
         .takeUntil(destroy$)
-        .subscribe(pois => (result = pois));
+        .subscribe(_pois => (result = _pois));
 
       expect(result).toEqual({});
 

@@ -16,7 +16,7 @@ import {
 import { IDeepstreamModuleConfig } from './interfaces';
 
 let selectAuthFeature = createFeatureSelector<IAuthenticationState>('jwtAuthentication');
-let selectAuth = createSelector(selectAuthFeature, (state: IAuthenticationState) => state.auth);
+let selectAuth = createSelector(selectAuthFeature, (state: IAuthenticationState) => _.get(state, 'auth'));
 
 export const selectUser = createSelector(selectAuth, (state: IAuth) => _.get(state, 'user'));
 

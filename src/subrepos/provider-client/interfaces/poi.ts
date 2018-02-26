@@ -23,7 +23,7 @@ export interface IPoi {
   types: string[];
   description: ILocalizedItem<ITextualDescription>;
   objectId?: {
-    [objectType: string]: string // Google/Wikipedia/OSM pageid
+    [objectType: string]: string | ILocalizedItem<string>  // Google/OSM pageid, wiki multi ids
   };
   additionalData?: {
     [key: string]: string // url/address/phoneNumber/openingHours

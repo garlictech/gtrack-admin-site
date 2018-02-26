@@ -41,17 +41,17 @@ export class HikeEffects {
       });
 
     @Effect()
-    createHike$: Observable<Action> = this._actions$
-      .ofType<LocalActions.CreateHikeProgram>(LocalActions.HikeProgramActionTypes.CREATE_HIKE_PROGRAM)
+    saveHike$: Observable<Action> = this._actions$
+      .ofType<LocalActions.SaveHikeProgram>(LocalActions.HikeProgramActionTypes.SAVE_HIKE_PROGRAM)
       .mergeMap(action => {
         return this._hikeProgramService
           .create(action.hikeProgram)
-          .map(response => new LocalActions.HikeProgramCreated(response.id));
+          .map(response => new LocalActions.HikeProgramSaved(response.id));
       });
 
     @Effect()
-    loadCreatedHikeProgram$: Observable<Action> = this._actions$
-      .ofType<LocalActions.HikeProgramCreated>(LocalActions.HikeProgramActionTypes.HIKE_PROGRAM_CREATED)
+    loadSavedHikeProgram$: Observable<Action> = this._actions$
+      .ofType<LocalActions.HikeProgramSaved>(LocalActions.HikeProgramActionTypes.HIKE_PROGRAM_SAVED)
       .map(action => new LocalActions.LoadHikeProgram(action.context));
 
   constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {

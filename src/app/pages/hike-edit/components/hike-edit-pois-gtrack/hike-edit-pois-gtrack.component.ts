@@ -4,14 +4,15 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { IPoi } from 'subrepos/provider-client';
+import { PoiSelectors, CenterRadius, GeometryService } from 'subrepos/gtrack-common-ngx';
 import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
 import {
-  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions,
+  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, commonGeoSearchActions,
 } from 'app/store';
 import { HikeEditPoiSelectors, HikeEditMapSelectors } from 'app/store/selectors';
 
 import * as _ from 'lodash';
-import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
+import * as uuid from 'uuid/v1';
 
 @Component({
   selector: 'gt-hike-edit-pois-gtrack',
@@ -27,19 +28,22 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _adminMapService: AdminMapService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _geometryService: GeometryService,
     private _poiSelectors: PoiSelectors
   ) {}
 
   ngOnInit() {
     this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
-      .take(1)
+      .takeUntil(this._destroy$)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
     this.pois$ = this._store.select(this._poiSelectors.getAllPois);
+
     // this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers);
 
+    /*
     this.pois$
       .takeUntil(this._destroy$)
       .subscribe((pois) => {
@@ -49,8 +53,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         this._store.dispatch(new hikeEditPoiActions.GenerateSubdomainPoiMarkers({
           subdomain: this.poiType.subdomain
         }));
-        */
-      });
+        * /
+      });*/
   }
 
   ngOnDestroy() {
@@ -66,9 +70,53 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Get pois for the current subdomain
+   */
+  public getPois() {
+    let _bounds = this._map.routeInfo.getSearchBounds();
+    let _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);
+    let _centerCoord = _geo!.center!.geometry!.coordinates;
+
+    if (_centerCoord) {
+      this._store.dispatch(new hikeEditPoiActions.GetGTrackPois({
+        centerCoord: _centerCoord,
+        radius: 1000,
+        mapId: this._map.id
+      }));
+    }
+
+    /*
+
+    if (_bounds) {
+      /*
+      old:
+      getPois: ->
+        bounds = RouteService.getSearchBounds()
+        _removePois()
+
+        AsyncRequestExecutor.execute scope, PoiService.search bounds
+        .then (res) ->
+          pois = _.map res, (p) -> new GtrackPoiEditor p
+          PoiEditorService.organizePois(pois, RouteService.getPath()).then (organizedPois) ->
+            scope.pois = _.sortBy organizedPois, (p) -> p.distFromStart
+            _handleHikeInclusion()
+            _markerConfigChanged()
+
+      */
+      /*
+      new:
+      return this._poiService.search(data.bounds).map((gTrackPois) => {
+        return _.extend(_.cloneDeep(data), { gTrackPois: gTrackPois });
+      });
+      * /
+  }*/
+  }
+
+  /**
    * Save inHike pois as gTrackPoi
    */
   public savePois() {
+    /*
     this.pois$
       .take(1)
       .subscribe((pois: IPoi[]) => {
@@ -76,5 +124,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
           return this._store.dispatch(new commonPoiActions.CreatePoi(poi));
         })
       });
+    */
   }
 }

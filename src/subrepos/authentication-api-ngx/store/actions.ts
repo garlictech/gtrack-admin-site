@@ -37,7 +37,7 @@ export class Verify implements Action {
 export class FacebookLogin implements Action {
   readonly type = FACEBOOK_LOGIN;
   // Payload: the roles array
-  constructor(public payload?: string[]) {
+  constructor(public payload: string[]) {
     /* EMPTY */
   }
 }
@@ -45,7 +45,7 @@ export class FacebookLogin implements Action {
 export class GoogleLogin implements Action {
   readonly type = GOOGLE_LOGIN;
   // Payload: the roles array
-  constructor(public payload?: string[]) {
+  constructor(public payload: string[]) {
     /* EMPTY */
   }
 }
@@ -62,7 +62,7 @@ export class RequestMagicLinkToken implements Action {
     public payload: {
       email: string;
       language: string;
-      roles?: string[];
+      roles: string[];
     }
   ) {
     /* EMPTY */

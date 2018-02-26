@@ -168,7 +168,7 @@ export class AuthService {
   /**
    * Request new verify token
    */
-  public requestVerifyToken(email: String): Promise<any> {
+  public requestVerifyToken(email: string): Promise<any> {
     let tokenRequestUrl = `${this.authConfig.apiUrl}/auth/verify/request`;
 
     return this.api
@@ -182,7 +182,7 @@ export class AuthService {
   /**
    * Verify user by token
    */
-  public verify(token: String, uid: String): Promise<IAuth> {
+  public verify(token: string, uid: string): Promise<IAuth> {
     let verifyUrl = `${this.authConfig.apiUrl}/auth/verify`;
 
     return this.api

@@ -4,11 +4,11 @@ import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 
-import * as _ from 'lodash';
-
 import { RouteService, Route } from '../../services/route';
 import * as LocalActions from './actions';
 import * as PoiActions from '../poi/actions';
+
+import * as _ from 'lodash';
 
 @Injectable()
 export class RouteEffects {
@@ -28,17 +28,17 @@ export class RouteEffects {
     });
 
     @Effect()
-    createRoute$: Observable<Action> = this._actions$
-      .ofType<LocalActions.CreateRoute>(LocalActions.RouteActionTypes.CREATE_ROUTE)
+    saveRoute$: Observable<Action> = this._actions$
+      .ofType<LocalActions.SaveRoute>(LocalActions.RouteActionTypes.SAVE_ROUTE)
       .mergeMap(action => {
         return this._routeService
           .create(action.route)
-          .map(response => new LocalActions.RouteCreated(response.id));
+          .map(response => new LocalActions.RouteSaved(response.id));
       });
 
     @Effect()
-    loadCreatedRoute$: Observable<Action> = this._actions$
-      .ofType<LocalActions.RouteCreated>(LocalActions.RouteActionTypes.ROUTE_CREATED)
+    loadSavedRoute$: Observable<Action> = this._actions$
+      .ofType<LocalActions.RouteSaved>(LocalActions.RouteActionTypes.ROUTE_SAVED)
       .map(action => (new LocalActions.LoadRoute(action.context)));
 
   constructor(private _actions$: Actions, private _routeService: RouteService, private _store: Store<any>) {

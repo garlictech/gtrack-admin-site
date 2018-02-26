@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-
-import { HikeDataService } from 'app/shared/services';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs/Subject';
+import {
+  State, commonHikeActions
+} from 'app/store';
+import { IHikeProgram } from 'subrepos/provider-client';
+import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
 
 @Component({
   selector: 'gt-hike-list',
@@ -9,16 +14,24 @@ import { HikeDataService } from 'app/shared/services';
   styleUrls: ['./hike-list.component.scss']
 })
 export class HikeListComponent implements OnInit {
-  hikeList: any[];
+  hikeList: IHikeProgram[];
 
   constructor(
-    private _hikeDataService: HikeDataService,
+    private _store: Store<State>,
+    private _hikeSelectors: HikeSelectors,
     private _title: Title
   ) {}
 
   ngOnInit() {
     this._title.setTitle('Hikes');
-    this.hikeList = this._hikeDataService.getHikes();
+
+    this._store.select(this._hikeSelectors.getAllHikes)
+      .take(1)
+      .subscribe((hikes) => {
+        this.hikeList = hikes;
+      });
+
+    this._store.dispatch(new commonHikeActions.LoadHikePrograms());
   }
 
   deleteHike(hikeId) {

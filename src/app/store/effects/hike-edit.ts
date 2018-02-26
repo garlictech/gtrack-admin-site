@@ -49,9 +49,7 @@ export class HikeEditEffects {
         });
     })
     .map(data => {
-      // return new commonHikeActions.CreateHikeProgram(data);
-
-      return new commonHikeActions.CreateHikeProgram(
+      return new commonHikeActions.SaveHikeProgram(
         _.extend(_.cloneDeep(data), {
           isRoundTrip: false,
           difficulty: 'hard', // todo numeric - range input
@@ -74,11 +72,4 @@ export class HikeEditEffects {
         })
       );
     });
-
-  @Effect()
-    loadCreatedRoute$: Observable<Action> = this._actions$
-      .ofType<commonRouteActions.RouteCreated>(commonRouteActions.RouteActionTypes.ROUTE_CREATED)
-      .map(action => (new hikeEditGeneralInfoActions.SetRouteId({
-        routeId: action.context
-      })));
 }

@@ -21,7 +21,9 @@ services:
 
   rethinkdb:
     image: rethinkdb
-
+    ports:
+      - "28016:28016"
+      - "8091:8080"
   deepstream_providers:
     image: docker.garlictech.com/gtrack-deepstream-providers-staging
     env_file:

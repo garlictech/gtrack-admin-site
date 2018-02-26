@@ -29,6 +29,7 @@ export interface IHikeProgramStop {
 };
 
 export interface IHikeProgram {
+  id?: string;
   distance: number;
   isRoundTrip: boolean;
   uphill: number;

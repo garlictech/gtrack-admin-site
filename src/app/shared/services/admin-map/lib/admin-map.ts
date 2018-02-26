@@ -5,13 +5,9 @@ import { WaypointMarker } from './waypoint-marker';
 import { RouteInfo } from './route-info';
 import { RoutePlanner } from './route-planner';
 import {
-  Map,
-  IconService,
-  MapMarkerService,
-  GameRuleService,
-  RouteService,
-  ElevationService
+  Map, IconService, MapMarkerService, GameRuleService, RouteService, ElevationService
 } from 'subrepos/gtrack-common-ngx/app';
+
 import * as L from 'leaflet';
 import * as turf from '@turf/turf';
 import * as _ from 'lodash';

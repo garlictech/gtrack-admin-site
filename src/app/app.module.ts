@@ -1,12 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { RouterStateSnapshot, Params } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { JsonpModule } from '@angular/http';
+// NgRx
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
+// Subrepos
 import {
   AuthenticationApiConfig, AuthenticationApiModule,
   Actions as JwtActions
@@ -15,13 +18,14 @@ import {
   SharedModule, SharedConfig, DeepstreamModule, RouterEffects, PoiEffects, HikeEffects, AuthenticationComponentsModule,
   AuthenticationModule as CommonAuthenticationModule,
   DynamicModalModule, DynamicModalService,
-  PoiSelectors, HikeModuleConfig, HikeModule, RouteEffects
+  PoiSelectors, HikeModuleConfig, HikeModule, RouteEffects,
+  GeoSearchModule, GeoSearchEffects
 } from 'subrepos/gtrack-common-ngx';
-import { AngularFireModule } from 'angularfire2';
+// App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import {
-  store, AuthEffects, HikeEditEffects, HikeEditRoutePlanningEffects, HikeEditPoiEffects
+  store, AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects
 } from './store';
 import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors
@@ -38,13 +42,13 @@ import {
   PoiEditorService, WikipediaPoiService, OsmPoiService, OsmRoutePoiService, GooglePoiService,
   HikeDataService, ReverseGeocodingService
 } from './shared/services';
+// Vendor
+import { AngularFireModule } from 'angularfire2';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 // Global styles
 import './styles';
-import { RouterStateSerializer } from '@ngrx/router-store';
-import { RouterStateSnapshot, Params } from '@angular/router';
 
 const hikeModuleConfig = new HikeModuleConfig();
-
 hikeModuleConfig.storeDomains = {
   hike: 'hike',
   poi: 'poi',
@@ -103,11 +107,13 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     }),
     AngularFireModule.initializeApp(authConfig.firebase),
     AuthenticationApiModule.forRoot(authConfig),
-
     SharedModule.forRoot(sharedConfig),
     // Modules
     DynamicModalModule,
     HikeModule.forRoot(hikeModuleConfig),
+    GeoSearchModule.forRoot({
+      storeDomain: 'geosearch'
+    }),
     // Page modules
     CoreLayoutModule,
     AuthModule,
@@ -117,13 +123,17 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     EffectsModule.forRoot([
       AuthEffects,
       HikeEditEffects,
-      HikeEditRoutePlanningEffects,
+      HikeEditRoutePlannerEffects,
       HikeEditPoiEffects,
       RouterEffects,
+      // Common-ngx
       PoiEffects,
       HikeEffects,
-      RouteEffects
-    ])
+      RouteEffects,
+      GeoSearchEffects
+    ]),
+    // Vendor
+    ToasterModule.forRoot()
   ],
   providers: [
     // Services
@@ -143,7 +153,9 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     {
       provide: RouterStateSerializer,
       useClass: CustomRouterStateSerializer
-    }
+    },
+    // Lib
+    ToasterService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,12 +1,12 @@
 import { Action } from '@ngrx/store';
 import { ISegment } from 'subrepos/gtrack-common-ngx';
-import { routeInfoDataReducer, initialRouteInfoDataState } from '../route-info-data';
-import { routeInfoDataActions, IRouteInfoDataState } from '../..';
+import { hikeEditRoutePlannerReducer, initialRouteInfoDataState } from '../hike-edit-route-planner';
+import { hikeEditRoutePlannerActions, IHikeEditRoutePlannerState } from '../..';
 
 import * as _ from 'lodash';
 
 describe('RouteInfoData reducers', () => {
-  let initialState: IRouteInfoDataState;
+  let initialState: IHikeEditRoutePlannerState;
   let segmentData: ISegment;
 
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('RouteInfoData reducers', () => {
   describe('undefined action', () => {
     it('should return the default state', () => {
       const action = {} as any;
-      const state = routeInfoDataReducer(undefined, action);
+      const state = hikeEditRoutePlannerReducer(undefined, action);
 
       expect(state).toEqual(initialRouteInfoDataState);
     });
@@ -30,8 +30,8 @@ describe('RouteInfoData reducers', () => {
 
   describe('Reset action', () => {
     it('should reset state', () => {
-      const action = new routeInfoDataActions.Reset();
-      const state = routeInfoDataReducer(initialState, action);
+      const action = new hikeEditRoutePlannerActions.Reset();
+      const state = hikeEditRoutePlannerReducer(initialState, action);
 
       expect(state.segments).toEqual([]);
       expect(state.total).toEqual({});
@@ -43,8 +43,8 @@ describe('RouteInfoData reducers', () => {
   describe('AddRoute action', () => {
     it('should set route', () => {
       const routeData = 'fakeRouteData';
-      const action = new routeInfoDataActions.AddRoute({ route: routeData });
-      const state = routeInfoDataReducer(initialState, action);
+      const action = new hikeEditRoutePlannerActions.AddRoute({ route: routeData });
+      const state = hikeEditRoutePlannerReducer(initialState, action);
 
       expect(state.route).toEqual(routeData);
     });
@@ -52,8 +52,8 @@ describe('RouteInfoData reducers', () => {
 
   describe('PushSegment action', () => {
     it('should push segment', () => {
-      const action = new routeInfoDataActions.PushSegment({ segment: segmentData });
-      const state = routeInfoDataReducer(initialState, action);
+      const action = new hikeEditRoutePlannerActions.PushSegment({ segment: segmentData });
+      const state = hikeEditRoutePlannerReducer(initialState, action);
 
       expect(state.segments).toEqual([segmentData]);
     });
@@ -61,8 +61,8 @@ describe('RouteInfoData reducers', () => {
 
   describe('PopSegment action', () => {
     it('should push segment', () => {
-      const action = new routeInfoDataActions.PopSegment();
-      const state = routeInfoDataReducer(_.merge({}, initialState, {
+      const action = new hikeEditRoutePlannerActions.PopSegment();
+      const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
         segments: [segmentData, segmentData]
       }), action);
 
@@ -73,8 +73,8 @@ describe('RouteInfoData reducers', () => {
   describe('UpdateTotal action', () => {
     it('should set total', () => {
       const total = 100;
-      const action = new routeInfoDataActions.UpdateTotal({ total: total });
-      const state = routeInfoDataReducer(initialState, action);
+      const action = new hikeEditRoutePlannerActions.UpdateTotal({ total: total });
+      const state = hikeEditRoutePlannerReducer(initialState, action);
 
       expect(state.total).toEqual(total);
     });

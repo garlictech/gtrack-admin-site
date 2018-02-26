@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 
@@ -18,10 +18,9 @@ export class Effects {
   @Effect()
   twitterLogin$: Observable<Action> = this._actions$
     .ofType(LocalActions.TWITTER_LOGIN)
-    .map(toPayload)
-    .switchMap(payload => {
+    .switchMap((action: LocalActions.TwitterLogin) => {
       log.d('Effect: Twitter login initiated');
-      return Observable.fromPromise(this._twitter.connect(payload))
+      return Observable.fromPromise(this._twitter.connect(action.payload))
         .map(auth => {
           log.i('Effect: Twitter login success');
           return new LocalActions.LoginSuccess(auth);
@@ -36,10 +35,9 @@ export class Effects {
   @Effect()
   requestVerifyToken$: Observable<Action> = this._actions$
     .ofType(LocalActions.REQUEST_VERIFY_TOKEN)
-    .map(toPayload)
-    .switchMap(payload => {
+    .switchMap((action: LocalActions.RequestVerifyToken) => {
       log.d('Effect: Requesting Twitter email verification token');
-      return Observable.fromPromise(this._auth.requestVerifyToken(payload))
+      return Observable.fromPromise(this._auth.requestVerifyToken(action.payload))
         .map(auth => {
           log.i('Effect: Twitter verification email sent');
           return new LocalActions.MagicLinkEmailSent();
@@ -52,9 +50,9 @@ export class Effects {
 
   // Verify
   @Effect()
-  verify$: Observable<Action> = this._actions$.ofType(LocalActions.VERIFY).map(toPayload).switchMap(payload => {
+  verify$: Observable<Action> = this._actions$.ofType(LocalActions.VERIFY).switchMap((action: LocalActions.Verify) => {
     log.d('Effect: Verify initiated');
-    return Observable.fromPromise(this._auth.verify(payload.token, payload.uid))
+    return Observable.fromPromise(this._auth.verify(action.payload.token, action.payload.uid))
       .map(auth => {
         log.i('Effect: Verify success');
         return new LocalActions.LoginSuccess(auth);
@@ -69,10 +67,9 @@ export class Effects {
   @Effect()
   googleLogin$: Observable<Action> = this._actions$
     .ofType(LocalActions.GOOGLE_LOGIN)
-    .map(toPayload)
-    .switchMap(payload => {
+    .switchMap((action: LocalActions.GoogleLogin) => {
       log.d('Effect: Google login initiated');
-      return Observable.fromPromise(this._google.connect(payload))
+      return Observable.fromPromise(this._google.connect(action.payload))
         .map(auth => {
           log.i('Effect: Google login success');
           return new LocalActions.LoginSuccess(auth);
@@ -87,10 +84,9 @@ export class Effects {
   @Effect()
   facebookLogin$: Observable<Action> = this._actions$
     .ofType(LocalActions.FACEBOOK_LOGIN)
-    .map(toPayload)
-    .switchMap(payload => {
+    .switchMap((action: LocalActions.FacebookLogin) => {
       log.d('Effect: Facebook login initiated');
-      return Observable.fromPromise(this._facebook.connect(payload))
+      return Observable.fromPromise(this._facebook.connect(action.payload))
         .map(auth => {
           log.i('Effect: Facebook login success');
           return new LocalActions.LoginSuccess(auth);
@@ -105,11 +101,10 @@ export class Effects {
   @Effect()
   magiclinkRequestToken$: Observable<Action> = this._actions$
     .ofType(LocalActions.MAGICLINK_REQUEST_TOKEN)
-    .map(toPayload)
-    .switchMap(payload => {
+    .switchMap((action: LocalActions.RequestMagicLinkToken) => {
       log.d('Effect: Magic Link login initiated');
       return this._magicLink
-        .requestToken(payload.email, payload.language, payload.roles)
+        .requestToken(action.payload.email, action.payload.language, action.payload.roles)
         .map(() => {
           log.i('Effect: Magic Link email sent');
           return new LocalActions.MagicLinkEmailSent();
@@ -124,10 +119,9 @@ export class Effects {
   @Effect()
   magiclinkLogin$: Observable<Action> = this._actions$
     .ofType(LocalActions.MAGICLINK_LOGIN)
-    .map(toPayload)
-    .switchMap(payload => {
+    .switchMap((action: LocalActions.MagicLinkLogin) => {
       log.d('Effect: Magic Link login initiated');
-      return Observable.fromPromise(this._magicLink.callback(payload.token, payload.uid, payload.roles))
+      return Observable.fromPromise(this._magicLink.callback(action.payload.token, action.payload.uid, action.payload.roles))
         .map(auth => {
           log.i('Effect: Magic Link login success');
           return new LocalActions.LoginSuccess(auth);
@@ -140,21 +134,22 @@ export class Effects {
 
   // Logout
   @Effect()
-  logout$: Observable<Action> = this._actions$.ofType(LocalActions.LOGOUT_START).map(toPayload).switchMap(() => {
-    log.d('Effect: Logout initiated');
-    return Observable.fromPromise(this._auth.logout())
-      .map(() => {
-        log.i('Effect: Logout success');
-        return new LocalActions.LogoutSuccess();
-      })
-      .catch(err => {
-        log.er('Effect: Logout error', err);
-        return Observable.of(new LocalActions.FailureHappened(err));
-      });
-  });
+  logout$: Observable<Action> = this._actions$.ofType(LocalActions.LOGOUT_START)
+    .switchMap(() => {
+      log.d('Effect: Logout initiated');
+      return Observable.fromPromise(this._auth.logout())
+        .map(() => {
+          log.i('Effect: Logout success');
+          return new LocalActions.LogoutSuccess();
+        })
+        .catch(err => {
+          log.er('Effect: Logout error', err);
+          return Observable.of(new LocalActions.FailureHappened(err));
+        });
+    });
 
   @Effect()
-  unauthorized$: Observable<Action> = this._actions$.ofType(LocalActions.UNAUTHORIZED).map(toPayload).switchMap(() => {
+  unauthorized$: Observable<Action> = this._actions$.ofType(LocalActions.UNAUTHORIZED).switchMap(() => {
     return Observable.fromPromise(this._auth.refreshToken())
       .map(auth => {
         return new LocalActions.LoginSuccess(auth);
@@ -172,5 +167,5 @@ export class Effects {
     private _facebook: FacebookService,
     private _magicLink: PasswordlessService,
     private _auth: AuthService
-  ) {}
+  ) { }
 }

@@ -14,16 +14,6 @@ export const routes: IRoute[] = [
       }
     },
     route: {
-      bounds: {
-        NorthEast: {
-          lat: 47.498993,
-          lon: 19.043699
-        },
-        SouthWest: {
-          lat: 47.497157,
-          lon: 19.049757
-        }
-      },
       type: 'FeatureCollection',
       features: [
         {
@@ -55,16 +45,6 @@ export const routes: IRoute[] = [
       }
     },
     route: {
-      bounds: {
-        NorthEast: {
-          lat: 37.498993,
-          lon: 14.043699
-        },
-        SouthWest: {
-          lat: 37.497157,
-          lon: 14.049757
-        }
-      },
       type: 'FeatureCollection',
       features: [
         {

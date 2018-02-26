@@ -35,17 +35,17 @@ export class PoiEffects {
       });
 
     @Effect()
-    createPoi$: Observable<Action> = this._actions$
-      .ofType<LocalActions.CreatePoi>(LocalActions.PoiActionTypes.CREATE_POI)
+    savePoi$: Observable<Action> = this._actions$
+      .ofType<LocalActions.SavePoi>(LocalActions.PoiActionTypes.SAVE_POI)
       .mergeMap(action => {
         return this._poiService
           .create(action.poi)
-          .map(response => new LocalActions.PoiCreated(response.id));
+          .map(response => new LocalActions.PoiSaved(response.id));
       });
 
     @Effect()
-    loadCreatedPoi$: Observable<Action> = this._actions$
-      .ofType<LocalActions.PoiCreated>(LocalActions.PoiActionTypes.POI_CREATED)
+    loadSavedPoi$: Observable<Action> = this._actions$
+      .ofType<LocalActions.PoiSaved>(LocalActions.PoiActionTypes.POI_SAVED)
       .map(action => (new LocalActions.LoadPoi(action.context)));
 
   constructor(private _actions$: Actions, private _poiService: PoiService, private _store: Store<any>) {

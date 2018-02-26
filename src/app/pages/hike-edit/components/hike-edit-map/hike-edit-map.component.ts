@@ -10,9 +10,9 @@ import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 import * as L from 'leaflet';
 
 const CENTER = <Center>{
-  lat: 51.505,
-  lng: -0.09,
-  zoom: 14
+  lat: 47.689714,
+  lng: 18.904206,
+  zoom: 12
 };
 
 const LAYERS = [{
@@ -50,7 +50,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     // Update buffer on each segment update
-    this._store.select((state: State) => state.routeInfoData.segments)
+    this._store.select((state: State) => state.hikeEditRoutePlanner.segments)
       .takeUntil(this._destroy$)
       .subscribe(() => {
         // Refreh buffer on segment change, if needed

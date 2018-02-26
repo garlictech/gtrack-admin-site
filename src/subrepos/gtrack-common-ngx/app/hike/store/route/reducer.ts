@@ -26,7 +26,8 @@ const contextReducer: ActionReducer<IAllRouteContextState> = (
       return routeContextStateAdapter.addOne({
         id: action.context,
         loading: true,
-        loaded: false
+        loaded: false,
+        saved: false
       }, state);
 
     case RouteActionTypes.ROUTE_LOADED:
@@ -34,7 +35,16 @@ const contextReducer: ActionReducer<IAllRouteContextState> = (
         id: action.context,
         changes: {
           loading: false,
-          loaded: true
+          loaded: true,
+          saved: false
+        }
+      }, state);
+
+    case RouteActionTypes.ROUTE_SAVED:
+      return routeContextStateAdapter.updateOne({
+        id: action.context,
+        changes: {
+          saved: true
         }
       }, state);
 

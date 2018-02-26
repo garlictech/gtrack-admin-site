@@ -15,7 +15,6 @@ export class ConnectFormDirective implements OnInit {
   ) {}
 
   ngOnInit() {
-
     // Update the form value based on the state
     this._store.select(state => state.hikeEditGeneralInfo[this.path])
       .take(1)

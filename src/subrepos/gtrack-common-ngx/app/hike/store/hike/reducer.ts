@@ -27,7 +27,8 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
       return hikeContextStateAdapter.addOne({
         id: action.context,
         loading: true,
-        loaded: false
+        loaded: false,
+        saved: false
       }, state);
 
     case HikeProgramActionTypes.HIKE_PROGRAM_LOADED:
@@ -35,7 +36,16 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
         id: action.context,
         changes: {
           loading: false,
-          loaded: true
+          loaded: true,
+          saved: false
+        }
+      }, state);
+
+     case HikeProgramActionTypes.HIKE_PROGRAM_SAVED:
+      return hikeContextStateAdapter.updateOne({
+        id: action.context,
+        changes: {
+          saved: true
         }
       }, state);
 

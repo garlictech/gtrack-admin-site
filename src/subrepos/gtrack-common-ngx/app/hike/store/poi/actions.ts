@@ -8,8 +8,8 @@ export enum PoiActionTypes {
   POI_LOADED = '[Poi] Poi loaded',
   LOAD_POIS = '[Poi] Load pois',
   ALL_POI_LOADED = '[Poi] All poi loaded',
-  CREATE_POI = '[Poi] Create poi',
-  POI_CREATED = '[Poi] Poi created',
+  SAVE_POI = '[Poi] Save poi',
+  POI_SAVED = '[Poi] Poi saved',
   ADD_GTRACK_POIS = '[Poi] Add gTrack pois'
 }
 
@@ -45,16 +45,16 @@ export class AllPoiLoaded implements Action {
   }
 }
 
-export class CreatePoi implements Action {
-  readonly type = PoiActionTypes.CREATE_POI;
+export class SavePoi implements Action {
+  readonly type = PoiActionTypes.SAVE_POI;
 
   constructor(public poi: IPoi) {
     // Empty
   }
 }
 
-export class PoiCreated implements Action {
-  readonly type = PoiActionTypes.POI_CREATED
+export class PoiSaved implements Action {
+  readonly type = PoiActionTypes.POI_SAVED
 
   constructor(public context: string) {
     // Empty
@@ -74,6 +74,6 @@ export type AllPoiActions =
   | PoiLoaded
   | LoadPois
   | AllPoiLoaded
-  | CreatePoi
-  | PoiCreated
+  | SavePoi
+  | PoiSaved
   | AddGTrackPois;

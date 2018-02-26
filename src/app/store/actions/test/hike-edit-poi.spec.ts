@@ -23,6 +23,9 @@ describe('HikeEditPoi actions', () => {
     expect(HikeEditPoiActions.SET_WIKIPEDIA_POIS).toEqual('[HikeEditPoi] Set Wikipedia pois');
     expect(HikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE).toEqual('[HikeEditPoi] Set Wikipedia poi inHike');
 
+    expect(HikeEditPoiActions.GET_GTRACK_POIS).toEqual('[HikeEditPoi] Get gTrack pois');
+    expect(HikeEditPoiActions.SET_GTRACK_POIS).toEqual('[HikeEditPoi] Set gTrack pois');
+
     expect(HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle onroute markers');
     expect(HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle offroute markers');
     expect(HikeEditPoiActions.GENERATE_SUBDOMAIN_POI_MARKERS).toEqual('[HikeEditPoi] Generate subdomain poi markers');
@@ -240,6 +243,36 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE,
+      payload,
+    });
+  });
+
+  /**
+   * gTrack pois
+   */
+
+  it('should create GetGtrackPois action', () => {
+    const payload = {
+      centerCoord: [0, 0],
+      radius: 100,
+      mapId: 'fakeMapId'
+    };
+    const action = new HikeEditPoiActions.GetGTrackPois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.GET_GTRACK_POIS,
+      payload,
+    });
+  });
+
+  it('should create SetGtrackPois action', () => {
+    const payload = { pois: [] };
+    const action = new HikeEditPoiActions.SetGTrackPois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_GTRACK_POIS,
       payload,
     });
   });

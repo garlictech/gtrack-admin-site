@@ -16,14 +16,10 @@ export interface IRouteBounds {
   }
 }
 
-export interface IRouteData extends GeoJSON.FeatureCollection<any> {
-  bounds: IRouteBounds;
-}
-
 export interface IRoute {
   id?: string;
   bounds: IRouteBounds;
-  route: IRouteData;
+  route: GeoJSON.FeatureCollection<any>;
 }
 
 export interface IRouteInput extends IRoute, IProviderInput {}

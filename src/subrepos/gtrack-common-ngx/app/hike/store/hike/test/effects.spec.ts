@@ -7,7 +7,7 @@ import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
 import * as _ from 'lodash';
-import * as uuid from 'uuid/v4';
+import * as uuid from 'uuid/v1';
 
 import { hot, cold } from 'jasmine-marbles';
 
@@ -122,27 +122,27 @@ describe('HikeProgram effects', () => {
     });
   });
 
-  describe('createHike$', () => {
-    it('should return the id of the created HikeProgram from HikeProgramCreated', () => {
-      const action = new hikeProgramActions.CreateHikeProgram(hikeProgramFixtures[0]);
-      const completion = new hikeProgramActions.HikeProgramCreated(newId);
+  describe('saveHike$', () => {
+    it('should return the id of the saved HikeProgram from HikeProgramSaved', () => {
+      const action = new hikeProgramActions.SaveHikeProgram(hikeProgramFixtures[0]);
+      const completion = new hikeProgramActions.HikeProgramSaved(newId);
       const expected = cold('-b', {b: completion});
 
       actions$.stream = hot('-a', {a: action});
 
-      expect(effects.createHike$).toBeObservable(expected);
+      expect(effects.saveHike$).toBeObservable(expected);
     });
   });
 
-  describe('loadCreatedHikeProgram$', () => {
+  describe('loadSavedHikeProgram$', () => {
     it('should return a LoadHikeProgram action after HikeProgramCreated', () => {
-      const action = new hikeProgramActions.HikeProgramCreated(newId);
+      const action = new hikeProgramActions.HikeProgramSaved(newId);
       const completion = new hikeProgramActions.LoadHikeProgram(newId);
       const expected = cold('-b', {b: completion});
 
       actions$.stream = hot('-a', {a: action});
 
-      expect(effects.loadCreatedHikeProgram$).toBeObservable(expected);
+      expect(effects.loadSavedHikeProgram$).toBeObservable(expected);
     });
   });
 });
