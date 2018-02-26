@@ -12,7 +12,7 @@ import * as L from 'leaflet';
 const CENTER = <Center>{
   lat: 47.689714,
   lng: 18.904206,
-  zoom: 13
+  zoom: 12
 };
 
 const LAYERS = [{
