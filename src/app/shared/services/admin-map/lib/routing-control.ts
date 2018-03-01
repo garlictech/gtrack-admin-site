@@ -10,8 +10,7 @@ import {
 import * as L from 'leaflet';
 import 'leaflet-spin';
 import 'leaflet-routing-machine';
-import 'lrm-valhalla';
-import 'lrm-valhalla/src/L.Routing.Valhalla.Formatter';
+import 'lrm-graphhopper';
 
 export class RoutingControl {
   private _controls: Array<L.Routing.Control>;
@@ -92,8 +91,12 @@ export class RoutingControl {
       routeWhileDragging: true,
       autoRoute: false,
       fitSelectedRoutes: 'smart',
-      router: L.Routing.valhalla(environment.valhalla.apiKey, 'pedestrian'),
-      formatter: new L.Routing.Valhalla.Formatter(),
+      router: L.Routing.graphHopper(environment.graphhopper.apiKey, {
+        urlParameters: {
+          vehicle: 'hike',
+          instructions: false
+        }
+      }),
       plan: new L.Routing.Plan([], {
         createMarker: (waypointNum, waypoint) => {
           if (typeof waypoint === 'undefined') {
@@ -113,11 +116,15 @@ export class RoutingControl {
     });
 
     _control.on('routesfound', (e) => {
-      this._elevationService.getData(e.routes[0].coordinates).then(data => {
+      // GraphHopper format fix
+      let _coordsArr = e.routes[0].coordinates.map(coord => [coord.lat, coord.lng]);
+
+      this._elevationService.getData(_coordsArr).then(data => {
         const upDown = {
           uphill: this._elevationService.calculateUphill(data),
           downhill: this._elevationService.calculateDownhill(data)
         };
+
         this._routeInfo.planner.addRouteSegment(data, e.routes[0].summary, upDown);
         this._store.dispatch(new routingActions.RoutingFinished());
         this._leafletMap.spin(false);

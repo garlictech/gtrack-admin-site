@@ -69,7 +69,7 @@ export class RoutePlanner {
 
   public addRouteSegment(coordinates, summary, updown) {
     let _segment: ISegment = {
-      distance: summary.totalDistance * 1000, // in meters
+      distance: summary.totalDistance, // in meters
       uphill: updown.uphill,
       downhill: updown.downhill,
       coordinates: coordinates

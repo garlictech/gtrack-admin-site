@@ -22,7 +22,8 @@ export class Environment implements IEnvironment {
     messagingSenderId: '383921170591'
   };
 
-  valhalla = {
-    apiKey: 'valhalla-i5h6bCM'
+  graphhopper = {
+    // TODO: '440eeec6-5492-4713-8c7a-2e9f2904d5b3' is a private TEST KEY!!!
+    apiKey: '440eeec6-5492-4713-8c7a-2e9f2904d5b3'
   };
 }
