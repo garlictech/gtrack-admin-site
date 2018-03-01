@@ -369,7 +369,7 @@ export class PoiEditorService {
    */
   public handleMarkerChanged(subdomainData) {
     this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
-      .subscribe((mapId: string) => {
+      .map((mapId: string) => {
         const _map: AdminMap = this._adminMapService.getMapById(mapId);
 
         if (subdomainData.pois) {
