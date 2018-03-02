@@ -35,27 +35,29 @@ export class OsmPoiService {
       .then((response: any) => {
         let _res: OsmPoi[] = [];
 
-        for (let i = 0; i < response.elements.length; i++) {
-          let _point = response.elements[i];
-          if (_point.tags && _point.lat) {
-            let type = _point.tags[typeParam];
+        if (response.elements) {
+          for (let i = 0; i < response.elements.length; i++) {
+            let _point = response.elements[i];
+            if (_point.tags && _point.lat) {
+              let type = _point.tags[typeParam];
 
-            _res.push(new OsmPoi({
-              id: uuid(),
-              lat: _point.lat,
-              lon: _point.lon,
-              elevation: _point.tags.ele,
-              types: [type],
-              description: {
-                [lng]: {
-                  title: _point.tags.name || 'unknown',
+              _res.push(new OsmPoi({
+                id: uuid(),
+                lat: _point.lat,
+                lon: _point.lon,
+                elevation: _point.tags.ele,
+                types: [type],
+                description: {
+                  [lng]: {
+                    title: _point.tags.name || 'unknown',
+                  }
+                },
+                objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,
+                osm: {
+                  id: _point.id
                 }
-              },
-              objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,
-              osm: {
-                id: _point.id
-              }
-            }));
+              }));
+            }
           }
         }
 
