@@ -30,14 +30,16 @@ export class ElevationService {
         return new Promise<number[][]>((resolve, reject) => {
           elevationService
             .getElevationForLocations(request, (results: google.maps.ElevationResult[], status: google.maps.ElevationStatus) => {
-              if (results) {
+              if (status === google.maps.ElevationStatus.OK) {
                 let elevations: number[][] = results.map((point: google.maps.ElevationResult) => {
                   return [point.location.lat(), point.location.lng(), point.elevation];
                 });
 
                 resolve(elevations);
               } else {
-                reject(status);
+                // Return with the original coordinates and 0 elevation
+                resolve(coordinates.map(coord => [coord[0], coord[1], 0]));
+                // reject(status);
               }
             });
         });
