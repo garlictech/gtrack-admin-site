@@ -4,7 +4,7 @@ import { IPoi } from 'subrepos/provider-client';
 import { State } from '../index';
 import { IHikeEditPoiState } from '../state/index';
 import {
-  wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter
+  wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter, gTrackPoiAdapter
 } from 'app/store/reducer';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 
@@ -49,6 +49,11 @@ export class HikeEditPoiSelectors {
       this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.wikipediaPois
     );
     this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
+
+    const gtrackPoiSelector = createSelector(
+      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.gTrackPois
+    );
+    this.getAllGTrackPois = gTrackPoiAdapter.getSelectors(gtrackPoiSelector).selectAll;
   }
 
   /**

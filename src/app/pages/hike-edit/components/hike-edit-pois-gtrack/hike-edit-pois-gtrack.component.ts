@@ -40,7 +40,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
-    this.pois$ = this._store.select(this._poiSelectors.getAllPois);
+    this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGTrackPois);
 
     // this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers);
 
@@ -104,13 +104,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
             _markerConfigChanged()
 
       */
-      /*
-      new:
-      return this._poiService.search(data.bounds).map((gTrackPois) => {
-        return _.extend(_.cloneDeep(data), { gTrackPois: gTrackPois });
-      });
-      * /
-  }*/
+
   }
 
   /**

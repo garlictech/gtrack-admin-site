@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import {
-  GeometryService, ElevationService, PoiService, IconService, Poi
+  GeometryService, ElevationService, PoiService, IconService, Poi, CenterRadius
 } from 'subrepos/gtrack-common-ngx';
 import {
   State, IExternalPoiListContextItemState
@@ -141,7 +141,7 @@ export class PoiEditorService {
   private _organizePois(
     pois: ExternalPoi[],
     path: GeoJSON.Feature<GeoJSON.Polygon>,
-    gTrackPois: ExternalPoi[]
+    gTrackPois?: ExternalPoi[]
   ) {
     let _res: ExternalPoi[] = [];
 
@@ -167,7 +167,7 @@ export class PoiEditorService {
           this._handleTitle(p);
 
           if (gTrackPois) {
-            this._handleGTrackPois(gTrackPois, p);
+            this._handleGTrackPois(gTrackPois, <any>p);
           }
 
           _res.push(p);
@@ -227,10 +227,25 @@ export class PoiEditorService {
   /**
    * _organizePois submethod
    */
-  private _handleGTrackPois(gTrackPois: ExternalPoi[], poi: ExternalPoi) {
-    let _found = _.find(gTrackPois, (p: ExternalPoi) => {
-      return p.objectType === poi.objectType &&
-        p[p.objectType].id === poi[poi.objectType].id
+  private _handleGTrackPois(gTrackPois: IPoi[], poi: GooglePoi | WikipediaPoi | OsmPoi) {
+    const _found = _.find(gTrackPois, (p: IPoi) => {
+      let _idCheck = false;
+
+      if (p.objectType === poi.objectType) {
+        if (p.objectType.substring(0, 3) === 'osm') {
+          _idCheck = p.objectId!.osm === (<OsmPoi>poi).osm.id;
+        } else if (p.objectType === 'google') {
+          _idCheck = p.objectId!.google === (<GooglePoi>poi).google.id;
+        } else if (p.objectType === 'wikipedia') {
+          _idCheck = p.objectId!.wikipedia[
+            (<WikipediaPoi>poi).wikipedia.lng!
+          ] === (<WikipediaPoi>poi).wikipedia.pageid;
+        }
+
+        return _idCheck;
+      } else {
+        return false;
+      }
     });
 
     if (_found) {
@@ -242,8 +257,12 @@ export class PoiEditorService {
    * _organizePois submethod
    */
   private _handleElevation(pois: ExternalPoi[]) {
+    // Google Elevation Service
+    // 2,500 free requests per day
+    // 512 locations per request.
+    // 50 requests per second
     let _poisWithoutElevation = _.filter(pois, (p: ExternalPoi) => !p.elevation);
-    let _chunks: ExternalPoi[][] = _.chunk(_poisWithoutElevation, 20);
+    let _chunks: ExternalPoi[][] = _.chunk(_poisWithoutElevation, 500);
 
     return Observable
       .interval(100)
@@ -415,7 +434,6 @@ export class PoiEditorService {
    * HikeEditPoi effect submethod
    */
   public assignGTrackPois(data) {
-    console.log('poiEditorService - assignGTrackPois: call poiService.search for gTrackPois');
     return this._poiService.search(data.bounds).map((gTrackPois) => {
       return _.extend(_.cloneDeep(data), { gTrackPois: gTrackPois });
     });
