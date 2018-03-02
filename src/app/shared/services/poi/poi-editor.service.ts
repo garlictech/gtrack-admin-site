@@ -8,17 +8,17 @@ import {
   State, IExternalPoiListContextItemState
 } from 'app/store';
 import {
-  HikeEditMapSelectors, HikeEditPoiSelectors,
+  HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditGeneralInfoSelectors,
 } from 'app/store/selectors';
 import { ExternalPoi, GooglePoi, OsmPoi, WikipediaPoi } from './lib';
 import { AdminMap, AdminMapService, AdminMapMarker } from '../admin-map';
 import {
-  IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi
+  IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi
 } from 'app/shared/interfaces/index';
 import { IPoi } from 'subrepos/provider-client';
 
-import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
+import * as uuid from 'uuid/v1';
 import * as turf from '@turf/turf';
 
 @Injectable()
@@ -39,6 +39,7 @@ export class PoiEditorService {
     private _adminMapService: AdminMapService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
   ) {}
 
   public createGtrackPoi(externalPoi) {
@@ -437,6 +438,20 @@ export class PoiEditorService {
     return this._poiService.search(data.bounds).map((gTrackPois) => {
       return _.extend(_.cloneDeep(data), { gTrackPois: gTrackPois });
     });
+  }
+
+  /**
+   * HikeEditPoi effect submethod
+   */
+  public handleHikeInclusion(data) {
+    return this._store.select((state: State) => state.hikeEditGeneralInfo.generalInfo)
+      .take(1)
+      .map((generalInfo) => {
+        data.pois.map((gTrackpoi: IGTrackPoi) => {
+          gTrackpoi.inHike = _.includes(generalInfo.pois, gTrackpoi.id);
+        });
+        return _.cloneDeep(data);
+      });
   }
 
   /**

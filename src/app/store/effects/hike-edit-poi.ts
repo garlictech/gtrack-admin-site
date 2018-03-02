@@ -165,8 +165,8 @@ export class HikeEditPoiEffects {
         });
     })
     .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
+    .switchMap(data => this._poiEditorService.handleHikeInclusion(data))
     .map(data => {
-      console.error('TODO in Hike test or gTrack pois - hike.markIncludedPois scope.pois');
       return new hikeEditPoiActions.SetGTrackPois({
         pois: data.pois
       });

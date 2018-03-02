@@ -6,6 +6,7 @@ export interface IGeneralInfoState {
   routeId: string;
   isRoundTrip: boolean;
   difficulty: number;
+  pois: string[];
 }
 
 export interface IDescriptionEntityState extends EntityState<ITextualDescriptionItem> {};

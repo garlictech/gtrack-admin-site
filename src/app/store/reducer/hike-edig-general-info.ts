@@ -12,7 +12,8 @@ export const initialGeneralInfoState: IGeneralInfoState = {
   hikeId: '',
   routeId: '',
   isRoundTrip: false,
-  difficulty: 5
+  difficulty: 5,
+  pois: []
 };
 
 export function generalInfoReducer(

@@ -33,6 +33,7 @@ describe('HikeEditGeneralInfo reducers', () => {
       expect(state.generalInfo.routeId).toEqual('');
       expect(state.generalInfo.isRoundTrip).toEqual(false);
       expect(state.generalInfo.difficulty).toEqual(5);
+      expect(state.generalInfo.pois).toEqual([]);
       expect(state.descriptions.ids).toEqual([]);
     });
   });
@@ -47,6 +48,7 @@ describe('HikeEditGeneralInfo reducers', () => {
       expect(state.generalInfo.hikeId).toEqual('');
       expect(state.generalInfo.isRoundTrip).toEqual(false);
       expect(state.generalInfo.difficulty).toEqual(5);
+      expect(state.generalInfo.pois).toEqual([]);
       expect(state.descriptions.ids).toEqual([]);
     });
   });
@@ -61,6 +63,7 @@ describe('HikeEditGeneralInfo reducers', () => {
       expect(state.generalInfo.hikeId).toEqual('');
       expect(state.generalInfo.routeId).toEqual('');
       expect(state.generalInfo.difficulty).toEqual(5);
+      expect(state.generalInfo.pois).toEqual([]);
       expect(state.descriptions.ids).toEqual([]);
     });
   });
@@ -75,6 +78,7 @@ describe('HikeEditGeneralInfo reducers', () => {
       expect(state.generalInfo.hikeId).toEqual('');
       expect(state.generalInfo.routeId).toEqual('');
       expect(state.generalInfo.isRoundTrip).toEqual(false);
+      expect(state.generalInfo.pois).toEqual([]);
       expect(state.descriptions.ids).toEqual([]);
     });
   });
