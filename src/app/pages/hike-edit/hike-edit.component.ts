@@ -35,27 +35,27 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         // Load hike data from mock DB
         if (params && params.id) {
+          // Set page title
+          this._title.setTitle('Edit hike');
+
           // Set hike id
           this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({
             hikeId: params.id
           }));
 
-          // Set page title
-          this._title.setTitle('Edit hike');
-
           // todo: load from db
           this.hikeData = this._hikeDataService.getHike(params.id);
         // Create new hike
         } else {
+          // Set page title
+          this._title.setTitle('New hike');
+
           // Generate initial hike id
           this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({ hikeId: uuid() }));
 
-          // Generate initial route id and save an empty entity
+          // Generate initial route id
           const _routeId = uuid();
           this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({ routeId: _routeId }));
-
-          // Set page title
-          this._title.setTitle('New hike');
 
           // Create initial language block
           this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({

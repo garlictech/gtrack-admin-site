@@ -1,6 +1,8 @@
 import * as actions from '../actions';
 import * as uuid from 'uuid/v1';
-import { IGeospatialBoxSearchPayload, IGeospatialCircleSearchPayload } from 'subrepos/provider-client';
+import {
+  IGeospatialBoxSearchPayload, IGeospatialCircleSearchPayload
+} from 'subrepos/provider-client';
 
 describe('GeoSearch actions', () => {
 
@@ -49,7 +51,7 @@ describe('GeoSearch actions', () => {
 
   describe('GeospatialSearchComplete action', () => {
     it('should create an action', () => {
-      let ids = [uuid(), uuid()];
+      let ids = [uuid()];
       let context = uuid();
       let action = new actions.GeoSearchComplete(ids, context);
 

@@ -10,7 +10,9 @@ import { hikeEditGeneralInfoActions } from '../index';
 
 export const initialGeneralInfoState: IGeneralInfoState = {
   hikeId: '',
-  routeId: ''
+  routeId: '',
+  isRoundTrip: false,
+  difficulty: 5
 };
 
 export function generalInfoReducer(
@@ -27,6 +29,16 @@ export function generalInfoReducer(
       return {
         ...state,
         routeId: action.payload.routeId
+      };
+    case hikeEditGeneralInfoActions.SET_IS_ROUND_TRIP:
+      return {
+        ...state,
+        isRoundTrip: action.payload.isRoundTrip
+      };
+    case hikeEditGeneralInfoActions.SET_DIFFICULTY:
+      return {
+        ...state,
+        difficulty: action.payload.difficulty
       };
     default:
       return state;

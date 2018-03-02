@@ -28,6 +28,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public textualDescriptions$: Observable<ITextualDescriptionItem[]>;
   public existingLangKeys$: Observable<string[] | number[]>;
   public existingLangKeys: string[] | number[] = [];
+  public generalInfoForm: FormGroup;
   public descriptionForm: FormGroup;
   public langs = LANGS;
   public selLang = '';
@@ -51,6 +52,26 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     this._initDescriptionsForm();
 
     // Watch form changes and save values to store (w/ 1 sec delay)
+    this.generalInfoForm.controls.isRoundTrip.valueChanges
+      .takeUntil(this._destroy$)
+      .debounceTime(1000)
+      .subscribe((value) => {
+        this._store.dispatch(new hikeEditGeneralInfoActions.SetIsRoundTrip({
+          isRoundTrip: value
+        }));
+      });
+
+    // Watch form changes and save values to store (w/ 1 sec delay)
+    this.generalInfoForm.controls.difficulty.valueChanges
+      .takeUntil(this._destroy$)
+      .debounceTime(1000)
+      .subscribe((value) => {
+        this._store.dispatch(new hikeEditGeneralInfoActions.SetDifficulty({
+          difficulty: value
+        }));
+      });
+
+    // Watch form changes and save values to store (w/ 1 sec delay)
     this.descriptionForm.valueChanges
       .takeUntil(this._destroy$)
       .debounceTime(1000)
@@ -59,7 +80,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
           descriptions: value.langs
         }));
       });
-
   }
 
   ngOnDestroy() {
@@ -68,7 +88,11 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   }
 
   private _initDescriptionsForm() {
-    // Initialize form
+    // Initialize forms
+    this.generalInfoForm = this._formBuilder.group({
+      isRoundTrip: false,
+      difficulty: 5
+    });
     this.descriptionForm = this._formBuilder.group({
       langs: this._formBuilder.array([])
     });

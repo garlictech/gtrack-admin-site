@@ -1,4 +1,18 @@
-<div class="lang-toolbar clearfix mb-2">
+<form [formGroup]="generalInfoForm" novalidate>
+  <div class="form-check inline-checkbox">
+    <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" formControlName="isRoundTrip">
+        <span class="form-check-sign"></span>
+        Is roundtrip
+    </label>
+    <label class="form-label ml-5">
+      Difficulty: <output name="diff" class="difficulty mr-2">5</output>
+      <input class="form-input ml-1" name="difficulty" type="range" min="1" max="10" formControlName="difficulty" oninput="diff.value = difficulty.value">
+    </label>
+  </div>
+</form>
+
+<div class="lang-toolbar clearfix mt-2 mb-2">
   <button class="btn btn-round btn-sm btn-just-icon btn-success" [disabled]="!selLang" (click)="addTranslation()">
     <i class="material-icons">add</i>
   </button>
@@ -13,7 +27,7 @@
   <span>Add language:</span>
 </div>
 
-<form [formGroup]="descriptionForm" novalidate (ngSubmit)="save(descriptionForm)">
+<form [formGroup]="descriptionForm" novalidate>
   <div aria-multiselectable="true" id="accordion" role="tablist" formArrayName="langs">
     <div class="card mb-1" *ngFor="let lng of existingLangKeys$ | async; let i = index">
       <div class="card-header bg-light" id="headingOne" role="tab">
