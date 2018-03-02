@@ -93,15 +93,18 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
     this.loading$ = this._store.select(
       this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
-        this.poiType.subdomain, 'loading'));
+        this.poiType.subdomain, 'loading')
+      );
 
     this.showOnrouteMarkers$ = this._store.select(
       this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
-        this.poiType.subdomain, 'showOnrouteMarkers'));
+        this.poiType.subdomain, 'showOnrouteMarkers')
+      );
 
     this.showOffrouteMarkers$ = this._store.select(
       this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
-        this.poiType.subdomain, 'showOffrouteMarkers'));
+        this.poiType.subdomain, 'showOffrouteMarkers')
+      );
 
     this.showOnrouteMarkers$
       .takeUntil(this._destroy$)

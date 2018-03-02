@@ -3,7 +3,6 @@ import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { MapMarkerService, IconService, GeoSearchService, PoiService } from 'subrepos/gtrack-common-ngx';
-import { IPoi } from 'subrepos/provider-client';
 import {
   State, hikeEditPoiActions, hikeEditMapActions, IExternalPoiListContextItemState, commonGeoSearchActions
 } from '../index';

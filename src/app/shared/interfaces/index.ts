@@ -1,4 +1,5 @@
 export * from './external-poi.interface';
+export * from './gtrack-poi.interface';
 export * from './google-poi.interface';
 export * from './osm-poi.interface';
 export * from './wikipedia-poi.interface';

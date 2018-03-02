@@ -6,7 +6,7 @@
   <button class="btn btn-sm btn-success btn-fill" (click)="saveRoute()">Save route</button>
 </div>
 
-<table class="table table-hover">
+<table class="table table-hover" *ngIf="(routeInfoData$ | async)?.segments.length > 0">
   <thead class="text-success">
     <tr>
       <th></th>
@@ -36,3 +36,7 @@
     </tr>
   </tbody>
 </table>
+
+<p *ngIf="(routeInfoData$ | async)?.segments.length === 0">
+  <em>Empty route.</em>
+</p>

@@ -20,6 +20,7 @@ import * as uuid from 'uuid/v1';
 })
 export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public pois$: Observable<IPoi[]>;
+  public loading$: Observable<boolean>;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -41,6 +42,10 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       });
 
     this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGTrackPois);
+
+    this.loading$ = this._store.select(
+      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'loading')
+    );
 
     // this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers);
 

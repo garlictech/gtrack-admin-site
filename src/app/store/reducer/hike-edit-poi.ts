@@ -4,10 +4,9 @@ import {
   IHikeEditPoiState, IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
   IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState, IGTrackPoiEntityState
 } from '../state';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
+import { IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
 import { hikeEditPoiActions } from '../index';
 import { poiReducer } from 'subrepos/gtrack-common-ngx';
-import { IPoi } from 'subrepos/provider-client';
 
 /**
  * Google
@@ -148,7 +147,7 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
  * gTrack
  */
 
-export const gTrackPoiAdapter: EntityAdapter<IPoi> = createEntityAdapter<IPoi>();
+export const gTrackPoiAdapter: EntityAdapter<IGTrackPoi> = createEntityAdapter<IGTrackPoi>();
 export const gTrackPoiInitialState = gTrackPoiAdapter.getInitialState();
 
 const gTrackPoiReducer: ActionReducer<IGTrackPoiEntityState> = (
@@ -301,6 +300,28 @@ export function externalPoiListContextReducer(
         ...state,
         osmRoute: {
           ...state.osmRoute,
+          loading: false
+        }
+      };
+    }
+
+    /**
+     * gTrackPoi
+     */
+    case hikeEditPoiActions.GET_GTRACK_POIS: {
+      return {
+        ...state,
+        gTrack: {
+          ...state.gTrack,
+          loading: true
+        }
+      };
+    }
+    case hikeEditPoiActions.SET_GTRACK_POIS: {
+      return {
+        ...state,
+        gTrack: {
+          ...state.gTrack,
           loading: false
         }
       };
