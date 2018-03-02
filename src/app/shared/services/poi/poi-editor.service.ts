@@ -42,16 +42,6 @@ export class PoiEditorService {
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
   ) {}
 
-  public createGtrackPoi(externalPoi) {
-    console.log('todo: createGtrackPoi');
-    /*
-    FirebaseBackend.getArray("pois").then (pois) ->
-      pois.$add(externalPoi.getDbObj()).then (ref) ->
-        geo = FirebaseBackend.getGeoRef "pois"
-        geo.$set(ref.key(), [externalPoi.lat, externalPoi.lon]).then -> externalPoi.setInGtrackDb()
-    */
-  }
-
   public getDbObj(poi: IExternalPoi) {
     let _poiData = {
       id: uuid()
@@ -303,8 +293,10 @@ export class PoiEditorService {
         pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmNaturalPois); break;
       case 'osmRoute':
         pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmRoutePois); break;
-      default:
+      case 'wikipedia':
         pois$ = this._store.select(this._hikeEditPoiSelectors.getAllWikipediaPois); break;
+      default:
+        pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGTrackPois); break;
     }
 
     return pois$.take(1).map((subdomainPoiData) => {
@@ -353,15 +345,19 @@ export class PoiEditorService {
     let markers$: Observable<AdminMapMarker[]>;
     switch (data.subdomain) {
       case 'google':
-        markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers); break;
+        markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers);
+        break;
       case 'osmAmenity':
         markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmAmenityMarkers); break;
       case 'osmNatural':
         markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmNaturalMarkers); break;
       case 'osmRoute':
         markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmRouteMarkers); break;
-      default:
+      case 'wikipedia':
         markers$ = this._store.select(this._hikeEditMapSelectors.getAllWikipediaMarkers); break;
+      default:
+        markers$ = this._store.select(this._hikeEditMapSelectors.getAllGTrackMarkers);
+        break;
     }
 
     return markers$.take(1).map((subdomainMarkerData) => {
@@ -389,7 +385,8 @@ export class PoiEditorService {
    */
   public handleMarkerChanged(subdomainData) {
     this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
-      .map((mapId: string) => {
+      .take(1)
+      .subscribe((mapId: string) => {
         const _map: AdminMap = this._adminMapService.getMapById(mapId);
 
         if (subdomainData.pois) {
@@ -462,7 +459,7 @@ export class PoiEditorService {
 
     return this._organizePois(data.pois, _map.routeInfo.getPath(), data.gTrackPois)
       .then((organizedPois) => {
-        return _.extend(_.cloneDeep(data), { organizedPois: organizedPois });
+        return _.extend(_.cloneDeep(data), { pois: organizedPois });
       });
   }
 
@@ -470,7 +467,7 @@ export class PoiEditorService {
    * HikeEditPoi effect submethod
    */
   public assignOnOffRoutePois(data) {
-    let _pois = _.sortBy(data.organizedPois, (p: ExternalPoi) => p.distFromRoute);
+    let _pois = _.sortBy(data.pois, (p: ExternalPoi) => p.distFromRoute);
     let _onRoutePois = this._getOnroutePois(_pois);
     let _offRoutePois = this._getOffroutePois(_pois);
     _.forEach(_onRoutePois, (p) => (<any>p).inHike = true);

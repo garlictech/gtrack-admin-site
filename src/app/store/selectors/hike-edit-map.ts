@@ -3,7 +3,7 @@ import { State } from '../index';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store/src/selector';
 import { IHikeEditMapState } from '../state/index';
 import {
-  wikipediaMarkerAdapter, googleMarkerAdapter, osmAmenityMarkerAdapter, osmNaturalMarkerAdapter, osmRouteMarkerAdapter
+  wikipediaMarkerAdapter, googleMarkerAdapter, osmAmenityMarkerAdapter, osmNaturalMarkerAdapter, osmRouteMarkerAdapter, gTrackMarkerAdapter
 } from 'app/store/reducer';
 import { AdminMapMarker } from 'app/shared/services/admin-map';
 
@@ -15,6 +15,7 @@ export class HikeEditMapSelectors {
   public getAllOsmAmenityMarkers: (state: object) => AdminMapMarker[];
   public getAllOsmNaturalMarkers: (state: object) => AdminMapMarker[];
   public getAllOsmRouteMarkers: (state: object) => AdminMapMarker[];
+  public getAllGTrackMarkers: (state: object) => AdminMapMarker[];
 
   constructor() {
     this.hikeEditMapSelector = createFeatureSelector<IHikeEditMapState>('hikeEditMap');
@@ -47,6 +48,11 @@ export class HikeEditMapSelectors {
       this.hikeEditMapSelector, (state: IHikeEditMapState) => state.osmRouteMarkers
     );
     this.getAllOsmRouteMarkers = osmRouteMarkerAdapter.getSelectors(osmRouteMarkerSelector).selectAll;
+
+    const gTrackMarkerSelector = createSelector(
+      this.hikeEditMapSelector, (state: IHikeEditMapState) => state.gTrackMarkers
+    );
+    this.getAllGTrackMarkers = gTrackMarkerAdapter.getSelectors(gTrackMarkerSelector).selectAll;
   }
 
   public getHikeEditMapMapIdSelector() {

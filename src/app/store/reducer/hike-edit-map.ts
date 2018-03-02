@@ -1,4 +1,4 @@
-import { IHikeEditMapMapState, IWikipediaMarkerEntityState, IHikeEditMapState, IGoogleMarkerEntityState, IOsmRoutePoiEntityState, IOsmRouteMarkerEntityState, IOsmNaturalMarkerEntityState, IOsmAmenityMarkerEntityState } from '../state';
+import { IHikeEditMapMapState, IWikipediaMarkerEntityState, IHikeEditMapState, IGoogleMarkerEntityState, IOsmRoutePoiEntityState, IOsmRouteMarkerEntityState, IOsmNaturalMarkerEntityState, IOsmAmenityMarkerEntityState, IGTrackMarkerEntityState } from '../state';
 import { adminMapActions, hikeEditMapActions } from '../index';
 import { EntityAdapter } from '@ngrx/entity/src/models';
 import { createEntityAdapter } from '@ngrx/entity/src/create_adapter';
@@ -129,12 +129,33 @@ const osmRouteMarkerReducer: ActionReducer<IOsmRouteMarkerEntityState> = (
   }
 }
 
+/**
+ * gTrack markers
+ */
+
+export const gTrackMarkerAdapter: EntityAdapter<AdminMapMarker> = createEntityAdapter<AdminMapMarker>();
+export const gTrackMarkerEntityInitialState = gTrackMarkerAdapter.getInitialState();
+
+const gTrackMarkerReducer: ActionReducer<IGTrackMarkerEntityState> = (
+  state: IGTrackMarkerEntityState = gTrackMarkerEntityInitialState,
+  action: hikeEditMapActions.AllHikeEditMapActions
+): IGTrackMarkerEntityState => {
+  switch (action.type) {
+    case hikeEditMapActions.SET_GTRACK_MARKERS: {
+      return gTrackMarkerAdapter.addAll(action.payload.markers, state);
+    }
+    default:
+      return state;
+  }
+}
+
 const reducerMap: ActionReducerMap<IHikeEditMapState> = {
   wikipediaMarkers: wikipediaMarkerReducer,
   googleMarkers: googleMarkerReducer,
   osmAmenityMarkers: osmAmenityMarkerReducer,
   osmNaturalMarkers: osmNaturalMarkerReducer,
   osmRouteMarkers: osmRouteMarkerReducer,
+  gTrackMarkers: gTrackMarkerReducer,
   map: hikeEditMapMapReducer
 };
 

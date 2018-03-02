@@ -8,6 +8,7 @@ describe('HikeEditMap actions', () => {
     expect(HikeEditMapActions.SET_OSM_NATURAL_MARKERS).toEqual('[HikeEditMap] Set OSM natural markers');
     expect(HikeEditMapActions.SET_OSM_ROUTE_MARKERS).toEqual('[HikeEditMap] Set OSM route markers');
     expect(HikeEditMapActions.SET_WIKIPEDIA_MARKERS).toEqual('[HikeEditMap] Set Wikipedia markers');
+    expect(HikeEditMapActions.SET_GTRACK_MARKERS).toEqual('[HikeEditMap] Set gTrack markers');
  });
 
   it('should create GetGooglePois action', () => {
@@ -61,6 +62,17 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditMapActions.SET_WIKIPEDIA_MARKERS,
+      payload,
+    });
+  });
+
+  it('should create SetGTrackMarkers action', () => {
+    const payload = { markers: [] };
+    const action = new HikeEditMapActions.SetGTrackMarkers(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditMapActions.SET_GTRACK_MARKERS,
       payload,
     });
   });

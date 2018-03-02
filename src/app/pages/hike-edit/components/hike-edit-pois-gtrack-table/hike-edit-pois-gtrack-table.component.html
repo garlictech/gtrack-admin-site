@@ -6,8 +6,8 @@
       <th>Distance from route</th>
       <th>Types</th>
       <th>Origin</th>
-      <th>Handles</th>
       <th>Elevation</th>
+      <th>Handles</th>
     </tr>
   </thead>
   <tbody>
@@ -18,12 +18,15 @@
         <td>{{poi.distFromRoute | distance : true}}</td>
         <td>{{poi.types.join(', ')}}</td>
         <td>{{poi.objectType}}</td>
+        <td>{{poi.elevation | distance}}</td>
         <td>
-          <a (click)="handleInHikePoi($event, poi)" [ngClass]="{'text-success': !poi.inHike, 'text-danger': poi.inHike}">
+          <a
+            (click)="handleInHikePoi($event, poi)" 
+            [ngClass]="{'text-success': !poi.inHike, 'text-danger': poi.inHike}"
+          >
             {{poi.inHike ? 'remove': 'add'}}
           </a>
         </td>
-        <td>{{poi.elevation | distance}}</td>
       </tr>
     </ng-container>
   </tbody>

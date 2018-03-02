@@ -6,7 +6,7 @@
       <th>Distance from route</th>
       <th>Types</th>
       <th>Special</th>
-      <th>Add/Remove</th>
+      <th>Handles</th>
     </tr>
   </thead>
   <tbody>
@@ -18,7 +18,10 @@
         <td>{{poi.types.join(', ')}}</td>
         <td><special-poi-data [poi]="poi"></special-poi-data></td>
         <td>
-          <a (click)="handleInHikePoi($event, poi)" [ngClass]="{'text-success': !poi.inHike, 'text-danger': poi.inHike}">
+          <a
+            (click)="handleInHikePoi($event, poi)" 
+            [ngClass]="{'text-success': !poi.inHike, 'text-danger': poi.inHike}"
+          >
             {{poi.inHike ? 'remove': 'add'}}
           </a>
         </td>

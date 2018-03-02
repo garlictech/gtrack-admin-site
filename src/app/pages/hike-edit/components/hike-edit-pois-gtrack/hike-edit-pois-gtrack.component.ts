@@ -3,9 +3,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { IPoi } from 'subrepos/provider-client';
 import { PoiSelectors, CenterRadius, GeometryService } from 'subrepos/gtrack-common-ngx';
-import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
+import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
+import { IGTrackPoi } from 'app/shared/interfaces';
 import {
   State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, commonGeoSearchActions,
 } from 'app/store';
@@ -19,8 +19,11 @@ import * as uuid from 'uuid/v1';
   templateUrl: './hike-edit-pois-gtrack.component.html'
 })
 export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
-  public pois$: Observable<IPoi[]>;
+  public pois$: Observable<IGTrackPoi[]>;
+  public markers$: Observable<AdminMapMarker[]>;
   public loading$: Observable<boolean>;
+  public showOnrouteMarkers$: Observable<boolean>;
+  public showOffrouteMarkers$: Observable<boolean>;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -42,37 +45,57 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       });
 
     this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGTrackPois);
+    this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllGTrackMarkers);
+
+    this.pois$
+      .takeUntil(this._destroy$)
+      .subscribe((pois) => {
+        if (pois.length > 0) {
+          // Refresh markers when the poi list has been changed
+          this._store.dispatch(new hikeEditPoiActions.GenerateSubdomainPoiMarkers({
+            subdomain: 'gTrack'
+          }));
+        }
+      });
+
+    this.markers$
+      .takeUntil(this._destroy$)
+      .subscribe((markers) => {
+        this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
+          subdomain: 'gTrack'
+        }));
+      });
 
     this.loading$ = this._store.select(
       this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'loading')
     );
 
-    // this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers);
+    this.showOnrouteMarkers$ = this._store.select(
+      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOnrouteMarkers'));
 
-    /*
-    this.pois$
+    this.showOffrouteMarkers$ = this._store.select(
+      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOffrouteMarkers'));
+
+    this.showOnrouteMarkers$
       .takeUntil(this._destroy$)
-      .subscribe((pois) => {
-        // Refresh markers when the poi list has been changed
-        // TODO: unique gTrackPoi markers???
-        /*
-        this._store.dispatch(new hikeEditPoiActions.GenerateSubdomainPoiMarkers({
-          subdomain: this.poiType.subdomain
+      .subscribe(() => {
+        this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
+          subdomain: 'gTrack'
         }));
-        * /
-      });*/
+      });
+
+    this.showOffrouteMarkers$
+      .takeUntil(this._destroy$)
+      .subscribe(() => {
+        this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
+          subdomain: 'gTrack'
+        }));
+      });
   }
 
   ngOnDestroy() {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
-  }
-
-  /**
-   * Remove gTrack poi from list
-   */
-  public removePoi($event, poi) {
-    // this._store.dispatch(new commonPoiActions.RemoveGTrackPoi({id: poi.id}));
   }
 
   /**
@@ -86,44 +109,30 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     if (_centerCoord) {
       this._store.dispatch(new hikeEditPoiActions.GetGTrackPois({
         centerCoord: _centerCoord,
-        radius: 1000,
+        radius: _geo.radius,
         mapId: this._map.id
       }));
     }
+  }
 
-    /*
+  /**
+   * Show onroute markers checkbox click
+   */
+  public toggleOnrouteMarkers() {
+    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'gTrack' }));
+  }
 
-    if (_bounds) {
-      /*
-      old:
-      getPois: ->
-        bounds = RouteService.getSearchBounds()
-        _removePois()
-
-        AsyncRequestExecutor.execute scope, PoiService.search bounds
-        .then (res) ->
-          pois = _.map res, (p) -> new GtrackPoiEditor p
-          PoiEditorService.organizePois(pois, RouteService.getPath()).then (organizedPois) ->
-            scope.pois = _.sortBy organizedPois, (p) -> p.distFromStart
-            _handleHikeInclusion()
-            _markerConfigChanged()
-
-      */
-
+  /**
+   * Show offroute markers checkbox click
+   */
+  public toggleOffrouteMarkers() {
+    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'gTrack' }));
   }
 
   /**
    * Save inHike pois as gTrackPoi
    */
   public savePois() {
-    /*
-    this.pois$
-      .take(1)
-      .subscribe((pois: IPoi[]) => {
-        _.forEach(pois, (poi: IPoi) => {
-          return this._store.dispatch(new commonPoiActions.CreatePoi(poi));
-        })
-      });
-    */
+    console.log('TODO: savePois, add poi ids to hike program');
   }
 }

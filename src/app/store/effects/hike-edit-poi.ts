@@ -168,7 +168,7 @@ export class HikeEditPoiEffects {
     .switchMap(data => this._poiEditorService.handleHikeInclusion(data))
     .map(data => {
       return new hikeEditPoiActions.SetGTrackPois({
-        pois: data.pois
+        pois: this._poiEditorService.assignOnOffRoutePois(data)
       });
     });
 
@@ -194,8 +194,10 @@ export class HikeEditPoiEffects {
           return new hikeEditMapActions.SetOsmNaturalMarkers({markers: data.markers});
         case 'osmRoute':
           return new hikeEditMapActions.SetOsmRouteMarkers({markers: data.markers});
-        default:
+        case 'wikipedia':
           return new hikeEditMapActions.SetWikipediaMarkers({markers: data.markers});
+        default:
+          return new hikeEditMapActions.SetGTrackMarkers({markers: data.markers});
       }
     });
 

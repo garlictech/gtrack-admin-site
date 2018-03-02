@@ -156,17 +156,15 @@ const gTrackPoiReducer: ActionReducer<IGTrackPoiEntityState> = (
 ): IGTrackPoiEntityState => {
   switch (action.type) {
     case hikeEditPoiActions.SET_GTRACK_POIS: {
-      return wikipediaPoiAdapter.addAll(action.payload.pois, state);
+      return gTrackPoiAdapter.addAll(action.payload.pois, state);
     }
-    /*
     case hikeEditPoiActions.SET_GTRACK_POI_IN_HIKE:
-      return wikipediaPoiAdapter.updateOne({
+      return gTrackPoiAdapter.updateOne({
         id: action.payload.poiId,
         changes: {
           inHike: action.payload.isInHike
         }
       }, state);
-    */
     default:
       return state;
   }

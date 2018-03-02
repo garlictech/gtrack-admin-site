@@ -18,6 +18,7 @@ export interface IGoogleMarkerEntityState extends EntityState<AdminMapMarker> {}
 export interface IOsmAmenityMarkerEntityState extends EntityState<AdminMapMarker> {};
 export interface IOsmNaturalMarkerEntityState extends EntityState<AdminMapMarker> {};
 export interface IOsmRouteMarkerEntityState extends EntityState<AdminMapMarker> {};
+export interface IGTrackMarkerEntityState extends EntityState<AdminMapMarker> {};
 
 /**
  * State
@@ -28,5 +29,6 @@ export interface IHikeEditMapState {
   osmAmenityMarkers: IOsmAmenityMarkerEntityState,
   osmNaturalMarkers: IOsmNaturalMarkerEntityState,
   osmRouteMarkers: IOsmRouteMarkerEntityState,
+  gTrackMarkers: IGTrackMarkerEntityState,
   map: IHikeEditMapMapState
 };
