@@ -51,24 +51,8 @@ export class HikeEditEffects {
     .map(data => {
       return new commonHikeActions.SaveHikeProgram(
         _.extend(_.cloneDeep(data), {
-          isRoundTrip: false,
-          difficulty: 'hard', // todo numeric - range input
           routeIcon: 'fake',
-          elevationIcon: 'fake', // todo from service
-          stops: [{
-            distanceFromOrigo: 0,
-            isCheckpoint: false,
-            poiId: 'fake',
-            lat: 0,
-            lon: 0,
-            segment: {
-              uphill: 0,
-              downhill: 0,
-              distance: 0,
-              score: 0,
-              time: 0
-            }
-          }]
+          elevationIcon: 'fake' // todo from service
         })
       );
     });

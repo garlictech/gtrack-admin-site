@@ -40,7 +40,9 @@ export class HikeDataService {
       .map((generalInfo) => {
         return {
           id: generalInfo.hikeId,
-          routeId: generalInfo.routeId
+          routeId: generalInfo.routeId,
+          difficulty: generalInfo.difficulty.toString(), // TODO it will be number!!
+          isRoundTrip: generalInfo.isRoundTrip
         };
       });
   }
@@ -64,14 +66,50 @@ export class HikeDataService {
    * collectHikeData effect submethod
    */
   public collectHikeRouteInfo() {
-    return this._store.select((state: State) => state.hikeEditRoutePlanner.total)
+    return this._store.select((state: State) => state.hikeEditRoutePlanner)
       .take(1)
-      .map((routeInfoTotal) => {
-        return _.pick(routeInfoTotal, [
+      .map((routeInfo) => {
+        let _routeInfo: any = _.pick(routeInfo.total, [
           'distance', 'uphill', 'downhill', 'time', 'score',
           'isRoundTrip', 'difficulty', 'rate', 'routeIcon',
           'elevationIcon'
         ]);
+
+        // TEST DATA FOR STOPS ====>
+        console.error('TODO: collectHikeRouteInfo - Temporary stops array from markers');
+        _routeInfo.stops = [];
+
+        for (let i = 1; i < routeInfo.route.features.length; i++) {
+          let _feature = routeInfo.route.features[i];
+          let _segment: any = {
+            uphill: 0,
+            downhill: 0,
+            distance: 0,
+            score: 0,
+            time: 0
+          };
+
+          if (i > 1) {
+            _segment = _.pick(routeInfo.segments[i - 2], [
+              'uphill', 'downhill', 'distance', 'score', 'time'
+            ])
+          }
+
+          if (_feature.geometry.type === 'Point') {
+            _routeInfo.stops.push({
+              distanceFromOrigo: _segment.distance,
+              isCheckpoint: false,
+              poiId: 'fakeId',
+              lat: _feature.geometry.coordinates[1],
+              lon: _feature.geometry.coordinates[0],
+              segment: _segment
+            });
+          }
+        }
+
+        // <=== TEST DATA FOR STOPS
+
+        return _routeInfo;
       });
   }
 
