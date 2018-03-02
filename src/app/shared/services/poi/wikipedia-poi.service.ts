@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Jsonp, Response } from '@angular/http';
+import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs/Observable';
 import { WikipediaPoi } from './lib/wikipedia-poi';
 import { EPoiTypes } from 'subrepos/provider-client';
@@ -15,7 +16,8 @@ export class WikipediaPoiService {
   constructor(
     private _http: HttpClient,
     private _jsonp: Jsonp,
-    private _geometryService: GeometryService
+    private _geometryService: GeometryService,
+    private _toasterService: ToasterService
   ) {}
 
   public get(bounds, lng = 'en') {
@@ -29,38 +31,45 @@ export class WikipediaPoiService {
       .then((data: any) => {
         let _pois: WikipediaPoi[] = [];
 
-        for (let i = 0; i < data.query.geosearch.length; i++) {
-          let _point = data.query.geosearch[i];
+        if (data.query) {
+          for (let i = 0; i < data.query.geosearch.length; i++) {
+            let _point = data.query.geosearch[i];
 
-          let _poi = new WikipediaPoi({
-            id: uuid(),
-            lat: _point.lat,
-            lon: _point.lon,
-            elevation: 0,
-            types: ['sight'],
-            objectType: EPoiTypes.wikipedia,
-            description: {
-              [lng]: {
-                title: _point.title,
-              }
-            },
-            wikipedia: {}
-          });
-          _poi.wikipedia = {
-            pageid: _point.pageid,
-            url: `https://${lng}.wikipedia.org/?curid=${_point.pageid}`,
-            lng: lng
+            let _poi = new WikipediaPoi({
+              id: uuid(),
+              lat: _point.lat,
+              lon: _point.lon,
+              elevation: 0,
+              types: ['sight'],
+              objectType: EPoiTypes.wikipedia,
+              description: {
+                [lng]: {
+                  title: _point.title,
+                }
+              },
+              wikipedia: {}
+            });
+            _poi.wikipedia = {
+              pageid: _point.pageid,
+              url: `https://${lng}.wikipedia.org/?curid=${_point.pageid}`,
+              lng: lng
+            }
+            _pois.push(_poi);
           }
-          _pois.push(_poi);
-        }
 
-        let promises: Promise<WikipediaPoi[]>[] = [];
-        promises.push(this._getPageExtracts(_pois, lng));
-        promises.push(this._getPageImages(_pois, lng));
+          let promises: Promise<WikipediaPoi[]>[] = [];
+          promises.push(this._getPageExtracts(_pois, lng));
+          promises.push(this._getPageImages(_pois, lng));
 
-        return Promise.all(promises).then(() => {
+          return Promise.all(promises).then(() => {
+            return _pois;
+          });
+        } else {
+          if (data.error) {
+            this._toasterService.pop('error', 'Error!', data.error.info || 'Unknown error.');
+          }
           return _pois;
-        });
+        }
       });
   }
 
