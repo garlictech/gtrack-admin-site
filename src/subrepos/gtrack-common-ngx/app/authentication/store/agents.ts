@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store, createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 import { Actions as jwtActions, IAuth, IAuthenticationState  } from 'subrepos/authentication-api-ngx';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';

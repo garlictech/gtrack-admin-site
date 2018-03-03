@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { MemoizedSelector } from '@ngrx/store/src/selector';
+import { MemoizedSelector } from '@ngrx/store';
 
 export interface IExternalDeepstreamDependencies {
   deepstreamConnectionString: string;

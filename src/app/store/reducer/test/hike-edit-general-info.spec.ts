@@ -23,6 +23,15 @@ describe('HikeEditGeneralInfo reducers', () => {
     });
   });
 
+  describe('ResetGeneralInfoState action', () => {
+    it('should reset state', () => {
+      const action = new hikeEditGeneralInfoActions.ResetGeneralInfoState();
+      const state = hikeEditGeneralInfoReducer(initialState, action);
+
+      expect(state).toEqual(initialState);
+    });
+  });
+
   describe('SetHikeId action', () => {
     it('should set hike id', () => {
       const action = new hikeEditGeneralInfoActions.SetHikeId({ hikeId: 'fakeHikeId' });

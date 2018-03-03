@@ -28,15 +28,12 @@ describe('RouteInfoData reducers', () => {
     });
   });
 
-  describe('Reset action', () => {
+  describe('ResetRoutePlanningState action', () => {
     it('should reset state', () => {
-      const action = new hikeEditRoutePlannerActions.Reset();
+      const action = new hikeEditRoutePlannerActions.ResetRoutePlanningState();
       const state = hikeEditRoutePlannerReducer(initialState, action);
 
-      expect(state.segments).toEqual([]);
-      expect(state.total).toEqual({});
-      expect(state.location).toEqual('');
-      expect(state.route).toEqual({});
+      expect(state).toEqual(initialState);
     });
   });
 

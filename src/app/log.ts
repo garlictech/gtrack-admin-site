@@ -1,5 +1,4 @@
-import { Log, Level } from 'ng2-logger/ng2-logger'
-import { Logger } from 'ng2-logger/src/logger'
+import { Log, Level } from 'ng2-logger'
 
 export const log = Log.create('@pioneer-wst/main-website')
 log.color = 'black'

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { State } from '../index';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store/src/selector';
+import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 import { IHikeEditMapState } from '../state/index';
 import {
   wikipediaMarkerAdapter, googleMarkerAdapter, osmAmenityMarkerAdapter, osmNaturalMarkerAdapter, osmRouteMarkerAdapter, gTrackMarkerAdapter

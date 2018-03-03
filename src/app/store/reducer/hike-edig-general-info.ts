@@ -21,6 +21,8 @@ export function generalInfoReducer(
   action: hikeEditGeneralInfoActions.AllHikeEditGeneralInfoActions
 ): IGeneralInfoState {
   switch (action.type) {
+    case hikeEditGeneralInfoActions.RESET_GENERAL_INFO_STATE:
+      return initialGeneralInfoState;
     case hikeEditGeneralInfoActions.SET_HIKE_ID:
       return {
         ...state,

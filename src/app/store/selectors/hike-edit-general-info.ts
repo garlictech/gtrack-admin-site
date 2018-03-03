@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store/src/selector';
+import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 import { State } from '../index';
 import { IHikeEditGeneralInfoState } from '../state/index';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';

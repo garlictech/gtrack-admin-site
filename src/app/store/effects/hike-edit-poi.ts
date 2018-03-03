@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { MapMarkerService, IconService, GeoSearchService, PoiService } from 'subrepos/gtrack-common-ngx';
@@ -44,7 +44,7 @@ export class HikeEditPoiEffects {
   @Effect()
   getWikipediaPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_WIKIPEDIA_POIS)
-    .map(toPayload)
+    .map((action: hikeEditPoiActions.GetWikipediaPois) => action.payload)
     .switchMap(data => {
       return this._wikipediaPoiService.get(data.bounds).then((pois) =>  {
         return _.extend(_.cloneDeep(data), { pois: pois });
@@ -64,7 +64,7 @@ export class HikeEditPoiEffects {
   @Effect()
   getGooglePois$: Observable<any> = this._actions$
     .ofType(hikeEditPoiActions.GET_GOOGLE_POIS)
-    .map(toPayload)
+    .map((action: hikeEditPoiActions.GetGooglePois) => action.payload)
     .switchMap(data => {
       return this._googlePoiService.get(data.bounds).then((pois) =>  {
         return _.extend(_.cloneDeep(data), { pois: pois });
@@ -84,7 +84,7 @@ export class HikeEditPoiEffects {
   @Effect()
   getOsmNaturalPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_NATURAL_POIS)
-    .map(toPayload)
+    .map((action: hikeEditPoiActions.GetOsmNaturalPois) => action.payload)
     .switchMap(data => {
       return this._osmPoiService.get(data.bounds, 'natural').then((pois) =>  {
         return _.extend(_.cloneDeep(data), { pois: pois });
@@ -104,7 +104,7 @@ export class HikeEditPoiEffects {
   @Effect()
   getOsmAmenityPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_AMENITY_POIS)
-    .map(toPayload)
+    .map((action: hikeEditPoiActions.GetOsmAmenityPois) => action.payload)
     .switchMap(data => {
       return this._osmPoiService.get(data.bounds, 'amenity').then((pois) =>  {
         return _.extend(_.cloneDeep(data), { pois: pois });
@@ -124,7 +124,7 @@ export class HikeEditPoiEffects {
   @Effect()
   getOsmRoutePois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_ROUTE_POIS)
-    .map(toPayload)
+    .map((action: hikeEditPoiActions.GetOsmRoutePois) => action.payload)
     .switchMap(data => {
       return this._osmRoutePoiService.get(data.bounds).then((pois) =>  {
         return _.extend(_.cloneDeep(data), { pois: pois });
@@ -144,7 +144,7 @@ export class HikeEditPoiEffects {
   @Effect()
   getGtrackPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_GTRACK_POIS)
-    .map(toPayload)
+    .map((action: hikeEditPoiActions.GetGTrackPois) => action.payload)
     .switchMap(data => {
       return this._geoSearchService
         .searchCircle({
@@ -178,7 +178,7 @@ export class HikeEditPoiEffects {
   @Effect()
   generateSubdomainPoiMarkers$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GENERATE_SUBDOMAIN_POI_MARKERS)
-    .map(toPayload)
+    .map((action: hikeEditPoiActions.GenerateSubdomainPoiMarkers) => action.payload)
     // Load old markers for removing them from the map
     .switchMap(data => this._poiEditorService.getSubdomainMarkers(data))
     .switchMap(data => this._poiEditorService.clearSubdomainPoiMarkers(data))
@@ -207,7 +207,7 @@ export class HikeEditPoiEffects {
   @Effect()
   markersConfigChanged$: Observable<any> = this._actions$
     .ofType(hikeEditPoiActions.MARKERS_CONFIG_CHANGED)
-    .map(toPayload)
+    .map((action: hikeEditPoiActions.MarkersConfigChanged) => action.payload)
     .switchMap(data => this._poiEditorService.getSubdomainMarkers(data))
     .switchMap(data => this._poiEditorService.clearSubdomainPoiMarkers(data))
     .switchMap(data => this._poiEditorService.getSubdomainPois(data))
