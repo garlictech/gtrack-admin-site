@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import {
-  Actions as AuthActions
-} from 'subrepos/authentication-api-ngx';
+import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 import * as RouterActions from 'subrepos/gtrack-common-ngx';
 
 import { Router } from '@angular/router';
@@ -20,7 +18,6 @@ export class AuthEffects {
   @Effect()
   routeForbidden$: Observable<Action> = this._actions$
     .ofType(AuthActions.ROUTE_FORBIDDEN)
-    .map(toPayload)
     .switchMap(data => {
       return Observable.of(new RouterActions.Go({path: ['/login']}));
     });
@@ -29,7 +26,6 @@ export class AuthEffects {
   @Effect()
   loginSuccess$: Observable<Action> = this._actions$
     .ofType(AuthActions.LOGIN_SUCCESS)
-    .map(toPayload)
     .filter(() => this._router.url === '/login')
     .switchMap(data => {
       return Observable.of(new RouterActions.Go({path: ['/']}));
@@ -39,7 +35,6 @@ export class AuthEffects {
   @Effect()
   logoutSuccess$: Observable<Action> = this._actions$
     .ofType(AuthActions.LOGOUT_SUCCESS)
-    .map(toPayload)
     .switchMap(data => {
       return Observable.of(new RouterActions.Go({path: ['/login']}));
     });

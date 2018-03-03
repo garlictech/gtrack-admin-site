@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { HikeDataService } from 'app/shared/services';
@@ -19,7 +19,6 @@ export class HikeEditEffects {
   @Effect()
   collectHikeData$: Observable<Action> = this._actions$
     .ofType(hikeEditActions.COLLECT_HIKE_DATA)
-    .map(toPayload)
     .switchMap(data => {
       return this._hikeDataService.collectHikeGeneralInfo()
         .map((generalInfo) => _.extend(_.cloneDeep(data), generalInfo));
