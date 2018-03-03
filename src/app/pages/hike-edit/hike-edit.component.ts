@@ -69,7 +69,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
             descriptions: [{
                 id: 'en_US',
-                title: 'Test hike',
+                title: `Test hike #${new Date().getTime()}`,
                 fullDescription: 'desc',
                 summary: 'summary'
             }]

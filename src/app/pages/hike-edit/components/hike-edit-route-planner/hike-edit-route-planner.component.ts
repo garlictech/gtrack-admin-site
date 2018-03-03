@@ -31,7 +31,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _routeSelectors: RouteSelectors,
     private _toasterService: ToasterService,
     private _store: Store<State>
-  ) {}
+  ) {
+    this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
+  }
 
   ngOnInit() {
     this.routeInfoData$ = this._store.select((state: State) => state.hikeEditRoutePlanner);

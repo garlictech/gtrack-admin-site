@@ -20,6 +20,9 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IGooglePoiEntityState => {
   switch (action.type) {
+    case hikeEditPoiActions.RESET: {
+      return googlePoiInitialState;
+    }
     case hikeEditPoiActions.SET_GOOGLE_POIS: {
       return googlePoiAdapter.addAll(action.payload.pois, state);
     }
@@ -47,6 +50,9 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmAmenityPoiEntityState => {
   switch (action.type) {
+    case hikeEditPoiActions.RESET: {
+      return osmAmenityPoiInitialState;
+    }
     case hikeEditPoiActions.SET_OSM_AMENITY_POIS: {
       return osmAmenityPoiAdapter.addAll(action.payload.pois, state);
     }
@@ -74,6 +80,9 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmNaturalPoiEntityState => {
   switch (action.type) {
+    case hikeEditPoiActions.RESET: {
+      return osmNaturalPoiInitialState;
+    }
     case hikeEditPoiActions.SET_OSM_NATURAL_POIS: {
       return osmNaturalPoiAdapter.addAll(action.payload.pois, state);
     }
@@ -101,6 +110,9 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmRoutePoiEntityState => {
   switch (action.type) {
+    case hikeEditPoiActions.RESET: {
+      return osmRoutePoiInitialState;
+    }
     case hikeEditPoiActions.SET_OSM_ROUTE_POIS: {
       return osmRoutePoiAdapter.addAll(action.payload.pois, state);
     }
@@ -128,6 +140,9 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IWikipediaPoiEntityState => {
   switch (action.type) {
+    case hikeEditPoiActions.RESET: {
+      return wikipediaPoiInitialState;
+    }
     case hikeEditPoiActions.SET_WIKIPEDIA_POIS: {
       return wikipediaPoiAdapter.addAll(action.payload.pois, state);
     }
@@ -155,6 +170,9 @@ const gTrackPoiReducer: ActionReducer<IGTrackPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IGTrackPoiEntityState => {
   switch (action.type) {
+    case hikeEditPoiActions.RESET: {
+      return gTrackPoiInitialState;
+    }
     case hikeEditPoiActions.SET_GTRACK_POIS: {
       return gTrackPoiAdapter.addAll(action.payload.pois, state);
     }
@@ -193,6 +211,9 @@ export function externalPoiListContextReducer(
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IExternalPoiListContextState {
   switch (action.type) {
+    case hikeEditPoiActions.RESET:
+      return externalPoiInitialContextState;
+
     /**
      * Wikipedia
      */

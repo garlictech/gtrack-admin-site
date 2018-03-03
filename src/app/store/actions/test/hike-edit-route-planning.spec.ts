@@ -3,18 +3,17 @@ import * as HikeEditRoutePlannerActions from '../hike-edit-route-planner';
 
 describe('HikeEditRoutePlanner actions', () => {
   it('should have action names defined', () => {
-    expect(HikeEditRoutePlannerActions.RESET).toEqual('[HikeEditRoutePLanner] Reset');
-    expect(HikeEditRoutePlannerActions.ADD_ROUTE).toEqual('[HikeEditRoutePLanner] Add route');
-    expect(HikeEditRoutePlannerActions.PUSH_SEGMENT).toEqual('[HikeEditRoutePLanner] Push segment');
-    expect(HikeEditRoutePlannerActions.POP_SEGMENT).toEqual('[HikeEditRoutePLanner] Pop segment');
-    expect(HikeEditRoutePlannerActions.UPDATE_TOTAL).toEqual('[HikeEditRoutePLanner] Update total');
-    expect(HikeEditRoutePlannerActions.SET_LOCATION).toEqual('[HikeEditRoutePLanner] Set location');
-    expect(HikeEditRoutePlannerActions.SAVE_ROUTE).toEqual('[HikeEditRoutePLanner] Save route');
+    expect(HikeEditRoutePlannerActions.RESET).toEqual('[HikeEditRoutePlanner] Reset');
+    expect(HikeEditRoutePlannerActions.ADD_ROUTE).toEqual('[HikeEditRoutePlanner] Add route');
+    expect(HikeEditRoutePlannerActions.PUSH_SEGMENT).toEqual('[HikeEditRoutePlanner] Push segment');
+    expect(HikeEditRoutePlannerActions.POP_SEGMENT).toEqual('[HikeEditRoutePlanner] Pop segment');
+    expect(HikeEditRoutePlannerActions.UPDATE_TOTAL).toEqual('[HikeEditRoutePlanner] Update total');
+    expect(HikeEditRoutePlannerActions.SET_LOCATION).toEqual('[HikeEditRoutePlanner] Set location');
+    expect(HikeEditRoutePlannerActions.SAVE_ROUTE).toEqual('[HikeEditRoutePlanner] Save route');
   });
 
   it('should create Reset action', () => {
-    const payload = { hikeId: 'fakeHikeId' };
-    const action = new HikeEditRoutePlannerActions.Reset();
+    const action = new HikeEditRoutePlannerActions.ResetRoutePlanningState();
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({

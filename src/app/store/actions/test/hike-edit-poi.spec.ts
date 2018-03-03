@@ -3,6 +3,8 @@ import * as HikeEditPoiActions from '../hike-edit-poi';
 
 describe('HikeEditPoi actions', () => {
   it('should have action names defined', () => {
+    expect(HikeEditPoiActions.RESET).toEqual('[HikeEditPoi] Reset');
+
     expect(HikeEditPoiActions.GET_GOOGLE_POIS).toEqual('[HikeEditPoi] Get Google pois');
     expect(HikeEditPoiActions.SET_GOOGLE_POIS).toEqual('[HikeEditPoi] Set Google pois');
     expect(HikeEditPoiActions.SET_GOOGLE_POI_IN_HIKE).toEqual('[HikeEditPoi] Set Google poi inHike');
@@ -31,6 +33,19 @@ describe('HikeEditPoi actions', () => {
     expect(HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle offroute markers');
     expect(HikeEditPoiActions.GENERATE_SUBDOMAIN_POI_MARKERS).toEqual('[HikeEditPoi] Generate subdomain poi markers');
     expect(HikeEditPoiActions.MARKERS_CONFIG_CHANGED).toEqual('[HikeEditPoi] Markers config changed');
+  });
+
+  /**
+   * Reset
+   */
+
+  it('should create Reset action', () => {
+    const action = new HikeEditPoiActions.ResetPoiState();
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.RESET
+    });
   });
 
   /**

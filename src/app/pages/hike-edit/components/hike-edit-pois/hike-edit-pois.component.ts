@@ -1,5 +1,7 @@
 
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { State, hikeEditPoiActions } from 'app/store';
 import { IExternalPoiType } from 'app/shared/interfaces/index';
 
 @Component({
@@ -30,4 +32,10 @@ export class HikeEditPoisComponent {
       getAction: 'GetOsmRoutePois'
     }
   ];
+
+  constructor(
+    private _store: Store<State>
+  ) {
+    this._store.dispatch(new hikeEditPoiActions.ResetPoiState());
+  }
 }
