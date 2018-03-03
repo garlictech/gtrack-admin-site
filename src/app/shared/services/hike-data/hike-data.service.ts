@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { State } from 'app/store';
 import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
@@ -19,7 +18,6 @@ export class HikeDataService {
   constructor(
     private _store: Store<State>,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
-    private _poiSelectors: PoiSelectors,
     private _reverseGeocodingService: ReverseGeocodingService
   ) {}
 
@@ -42,7 +40,8 @@ export class HikeDataService {
           id: generalInfo.hikeId,
           routeId: generalInfo.routeId,
           difficulty: generalInfo.difficulty.toString(), // TODO it will be number!!
-          isRoundTrip: generalInfo.isRoundTrip
+          isRoundTrip: generalInfo.isRoundTrip,
+          pois: generalInfo.pois
         };
       });
   }
@@ -76,7 +75,7 @@ export class HikeDataService {
         ]);
 
         // TEST DATA FOR STOPS ====>
-        console.error('TODO: collectHikeRouteInfo - Temporary stops array from markers');
+        console.warn('TODO: collectHikeRouteInfo - Temporary stops array from markers');
         _routeInfo.stops = [];
 
         for (let i = 1; i < routeInfo.route.features.length; i++) {
@@ -116,45 +115,22 @@ export class HikeDataService {
   /**
    * collectHikeData effect submethod
    */
-  public collectHikePois() {
-    let _pois$ = this._store.select(
-      this._poiSelectors.getPoiIds
-    );
-
-    return _pois$
-      .take(1)
-      .map((poiIds) => {
-        return poiIds;
-      });
-  }
-
-  /**
-   * collectHikeData effect submethod
-   */
-  public collectHikeLocation() {
+  public collectHikeLocation(data) {
     return new Promise((resolve, reject) => {
-      let _pois$ = this._store.select(
-        this._poiSelectors.getAllPois
-      );
+      if (!data.stops[0]) {
+        resolve({ location: 'n/a' });
+      }
 
-      _pois$
-        .take(1)
-        .subscribe((pois) => {
-          if (!pois[0]) {
-            resolve({ location: 'n/a' });
-          }
+      let _startPoint = {
+        lat: data.stops[0].lat,
+        lon: data.stops[0].lon
+      }
 
-          let _startPoint = {
-            lon: pois[0].lon,
-            lat: pois[0].lat
-          }
-
-          this._reverseGeocodingService.get(_startPoint).then((location) => {
-            resolve({ location: location });
-          }, (err) => {
-            resolve({location: 'n/a'});
-          });
-        });
+      this._reverseGeocodingService.get(_startPoint).then((location) => {
+        resolve({ location: location });
+      }, (err) => {
+        resolve({location: 'n/a'});
+      });
     });
   }
 }

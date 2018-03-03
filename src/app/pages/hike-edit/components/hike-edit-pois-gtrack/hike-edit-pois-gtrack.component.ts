@@ -7,9 +7,9 @@ import { PoiSelectors, CenterRadius, GeometryService } from 'subrepos/gtrack-com
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import {
-  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, commonGeoSearchActions,
+  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, commonGeoSearchActions, hikeEditGeneralInfoActions,
 } from 'app/store';
-import { HikeEditPoiSelectors, HikeEditMapSelectors } from 'app/store/selectors';
+import { HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors } from 'app/store/selectors';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
@@ -32,6 +32,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _adminMapService: AdminMapService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _geometryService: GeometryService,
     private _poiSelectors: PoiSelectors
   ) {}
@@ -133,6 +134,18 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
    * Save inHike pois as gTrackPoi
    */
   public savePois() {
-    console.log('TODO: savePois, add poi ids to hike program');
+    Observable.combineLatest(
+      this.pois$.take(1),
+      this._store.select(this._hikeEditGeneralInfoSelectors.getHikeEditGeneralInfoSelector()).take(1)
+    ).subscribe(data => {
+      if (data[0] && data[1]) {
+        const _gTrackPois = _.filter(data[0], (p: IGTrackPoi) => p.inHike)
+          .map((p: IGTrackPoi) => p.id);
+
+        this._store.dispatch(new hikeEditGeneralInfoActions.SetPois({
+          pois: _.union(<string[]>_gTrackPois, data[1].pois)
+        }));
+      }
+    });
   }
 }

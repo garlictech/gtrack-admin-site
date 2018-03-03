@@ -5,6 +5,7 @@ export const SET_HIKE_ID = '[HikeEditGeneralInfo] Set hike id';
 export const SET_ROUTE_ID = '[HikeEditGeneralInfo] Set route id';
 export const SET_IS_ROUND_TRIP = '[HikeEditGeneralInfo] Set isRoundTrip';
 export const SET_DIFFICULTY = '[HikeEditGeneralInfo] Set difficulty';
+export const SET_POIS = '[HikeEditGeneralInfo] Set pois';
 export const SET_DESCRIPTIONS = '[HikeEditGeneralInfo] Set descriptions';
 
 export class SetHikeId implements Action {
@@ -35,6 +36,13 @@ export class SetDifficulty implements Action {
   }) { /* EMPTY */ }
 }
 
+export class SetPois implements Action {
+  readonly type = SET_POIS;
+  constructor(public payload: {
+    pois: string[]
+  }) { /* EMPTY */ }
+}
+
 export class SetDescriptions implements Action {
   readonly type = SET_DESCRIPTIONS;
 
@@ -48,4 +56,5 @@ export type AllHikeEditGeneralInfoActions =
   | SetRouteId
   | SetIsRoundTrip
   | SetDifficulty
+  | SetPois
   | SetDescriptions;

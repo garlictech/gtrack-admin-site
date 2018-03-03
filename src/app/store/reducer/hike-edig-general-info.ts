@@ -41,6 +41,11 @@ export function generalInfoReducer(
         ...state,
         difficulty: action.payload.difficulty
       };
+    case hikeEditGeneralInfoActions.SET_POIS:
+      return {
+        ...state,
+        pois: action.payload.pois
+      };
     default:
       return state;
   }

@@ -6,6 +6,8 @@ describe('HikeEditMap actions', () => {
     expect(HikeEditGeneralInfoActions.SET_HIKE_ID).toEqual('[HikeEditGeneralInfo] Set hike id');
     expect(HikeEditGeneralInfoActions.SET_ROUTE_ID).toEqual('[HikeEditGeneralInfo] Set route id');
     expect(HikeEditGeneralInfoActions.SET_IS_ROUND_TRIP).toEqual('[HikeEditGeneralInfo] Set isRoundTrip');
+    expect(HikeEditGeneralInfoActions.SET_DIFFICULTY).toEqual('[HikeEditGeneralInfo] Set difficulty');
+    expect(HikeEditGeneralInfoActions.SET_POIS).toEqual('[HikeEditGeneralInfo] Set pois');
     expect(HikeEditGeneralInfoActions.SET_DESCRIPTIONS).toEqual('[HikeEditGeneralInfo] Set descriptions');
   });
 
@@ -49,6 +51,17 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.SET_DIFFICULTY,
+      payload,
+    });
+  });
+
+  it('should create SetPois action', () => {
+    const payload = { pois: ['id1', 'id2'] };
+    const action = new HikeEditGeneralInfoActions.SetPois(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditGeneralInfoActions.SET_POIS,
       payload,
     });
   });

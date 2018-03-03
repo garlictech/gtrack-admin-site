@@ -83,6 +83,21 @@ describe('HikeEditGeneralInfo reducers', () => {
     });
   });
 
+  describe('SetPoi action', () => {
+    it('should set pois', () => {
+      const action = new hikeEditGeneralInfoActions.SetPois({ pois: ['id1', 'id2'] });
+      const state = hikeEditGeneralInfoReducer(initialState, action);
+
+      expect(state.generalInfo.pois).toEqual(['id1', 'id2']);
+      // untouched props, good to add regardless
+      expect(state.generalInfo.hikeId).toEqual('');
+      expect(state.generalInfo.routeId).toEqual('');
+      expect(state.generalInfo.isRoundTrip).toEqual(false);
+      expect(state.generalInfo.difficulty).toEqual(5);
+      expect(state.descriptions.ids).toEqual([]);
+    });
+  });
+
   describe('SetDescriptions action', () => {
     it('should set descriptions', () => {
       const descriptions: ITextualDescriptionItem[] = [
