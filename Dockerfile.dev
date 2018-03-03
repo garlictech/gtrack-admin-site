@@ -1,4 +1,4 @@
-FROM garlictech2/angular2-webapp:v5.1.12
+FROM garlictech2/angular2-webapp:v5.1.15
 
 ARG NPM_TOKEN
 
