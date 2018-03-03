@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
 
-export const RESET = '[HikeEditGeneralInfo] Reset';
+export const RESET_GENERAL_INFO_STATE = '[HikeEditGeneralInfo] Reset';
 export const SET_HIKE_ID = '[HikeEditGeneralInfo] Set hike id';
 export const SET_ROUTE_ID = '[HikeEditGeneralInfo] Set route id';
 export const SET_IS_ROUND_TRIP = '[HikeEditGeneralInfo] Set isRoundTrip';
@@ -10,7 +10,7 @@ export const SET_POIS = '[HikeEditGeneralInfo] Set pois';
 export const SET_DESCRIPTIONS = '[HikeEditGeneralInfo] Set descriptions';
 
 export class ResetGeneralInfoState implements Action {
-  readonly type = RESET;
+  readonly type = RESET_GENERAL_INFO_STATE;
   constructor() { /* EMPTY */ }
 }
 

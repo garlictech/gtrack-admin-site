@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
 
-export const RESET = '[HikeEditPoi] Reset';
+export const RESET_POI_STATE = '[HikeEditPoi] Reset';
 export const GET_GOOGLE_POIS = '[HikeEditPoi] Get Google pois';
 export const SET_GOOGLE_POIS = '[HikeEditPoi] Set Google pois';
 export const SET_GOOGLE_POI_IN_HIKE = '[HikeEditPoi] Set Google poi inHike';
@@ -26,7 +26,7 @@ export const GENERATE_SUBDOMAIN_POI_MARKERS = '[HikeEditPoi] Generate subdomain 
 export const MARKERS_CONFIG_CHANGED = '[HikeEditPoi] Markers config changed';
 
 export class ResetPoiState implements Action {
-  readonly type = RESET;
+  readonly type = RESET_POI_STATE;
   constructor() { /* EMPTY */ }
 }
 

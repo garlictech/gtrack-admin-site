@@ -20,7 +20,7 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IGooglePoiEntityState => {
   switch (action.type) {
-    case hikeEditPoiActions.RESET: {
+    case hikeEditPoiActions.RESET_POI_STATE: {
       return googlePoiInitialState;
     }
     case hikeEditPoiActions.SET_GOOGLE_POIS: {
@@ -50,7 +50,7 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmAmenityPoiEntityState => {
   switch (action.type) {
-    case hikeEditPoiActions.RESET: {
+    case hikeEditPoiActions.RESET_POI_STATE: {
       return osmAmenityPoiInitialState;
     }
     case hikeEditPoiActions.SET_OSM_AMENITY_POIS: {
@@ -80,7 +80,7 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmNaturalPoiEntityState => {
   switch (action.type) {
-    case hikeEditPoiActions.RESET: {
+    case hikeEditPoiActions.RESET_POI_STATE: {
       return osmNaturalPoiInitialState;
     }
     case hikeEditPoiActions.SET_OSM_NATURAL_POIS: {
@@ -110,7 +110,7 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmRoutePoiEntityState => {
   switch (action.type) {
-    case hikeEditPoiActions.RESET: {
+    case hikeEditPoiActions.RESET_POI_STATE: {
       return osmRoutePoiInitialState;
     }
     case hikeEditPoiActions.SET_OSM_ROUTE_POIS: {
@@ -140,7 +140,7 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IWikipediaPoiEntityState => {
   switch (action.type) {
-    case hikeEditPoiActions.RESET: {
+    case hikeEditPoiActions.RESET_POI_STATE: {
       return wikipediaPoiInitialState;
     }
     case hikeEditPoiActions.SET_WIKIPEDIA_POIS: {
@@ -170,7 +170,7 @@ const gTrackPoiReducer: ActionReducer<IGTrackPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IGTrackPoiEntityState => {
   switch (action.type) {
-    case hikeEditPoiActions.RESET: {
+    case hikeEditPoiActions.RESET_POI_STATE: {
       return gTrackPoiInitialState;
     }
     case hikeEditPoiActions.SET_GTRACK_POIS: {
@@ -211,7 +211,7 @@ export function externalPoiListContextReducer(
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IExternalPoiListContextState {
   switch (action.type) {
-    case hikeEditPoiActions.RESET:
+    case hikeEditPoiActions.RESET_POI_STATE:
       return externalPoiInitialContextState;
 
     /**

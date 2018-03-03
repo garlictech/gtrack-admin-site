@@ -14,7 +14,7 @@ export function hikeEditRoutePlannerReducer(
   action: hikeEditRoutePlannerActions.AllHikeEditRoutePlannerActions
 ): IHikeEditRoutePlannerState {
   switch (action.type) {
-    case hikeEditRoutePlannerActions.RESET:
+    case hikeEditRoutePlannerActions.RESET_ROUTE_PLANNING_STATE:
       return initialRouteInfoDataState;
     case hikeEditRoutePlannerActions.ADD_ROUTE:
       return {

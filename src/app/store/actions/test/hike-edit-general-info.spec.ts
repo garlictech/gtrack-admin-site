@@ -3,7 +3,7 @@ import * as HikeEditGeneralInfoActions from '../hike-edit-general-info';
 
 describe('HikeEditMap actions', () => {
   it('should have action names defined', () => {
-    expect(HikeEditGeneralInfoActions.RESET).toEqual('[HikeEditGeneralInfo] Reset');
+    expect(HikeEditGeneralInfoActions.RESET_GENERAL_INFO_STATE).toEqual('[HikeEditGeneralInfo] Reset');
     expect(HikeEditGeneralInfoActions.SET_HIKE_ID).toEqual('[HikeEditGeneralInfo] Set hike id');
     expect(HikeEditGeneralInfoActions.SET_ROUTE_ID).toEqual('[HikeEditGeneralInfo] Set route id');
     expect(HikeEditGeneralInfoActions.SET_IS_ROUND_TRIP).toEqual('[HikeEditGeneralInfo] Set isRoundTrip');
@@ -17,7 +17,7 @@ describe('HikeEditMap actions', () => {
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditGeneralInfoActions.RESET
+      type: HikeEditGeneralInfoActions.RESET_GENERAL_INFO_STATE
     });
   });
 

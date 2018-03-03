@@ -1,9 +1,9 @@
 import { IHikeEditMapMapState, IWikipediaMarkerEntityState, IHikeEditMapState, IGoogleMarkerEntityState, IOsmRoutePoiEntityState, IOsmRouteMarkerEntityState, IOsmNaturalMarkerEntityState, IOsmAmenityMarkerEntityState, IGTrackMarkerEntityState } from '../state';
 import { adminMapActions, hikeEditMapActions } from '../index';
-import { EntityAdapter } from '@ngrx/entity/src/models';
-import { createEntityAdapter } from '@ngrx/entity/src/create_adapter';
-import { ActionReducer, ActionReducerMap } from '@ngrx/store/src/models';
-import { combineReducers } from '@ngrx/store/src/utils';
+import { EntityAdapter } from '@ngrx/entity';
+import { createEntityAdapter } from '@ngrx/entity';
+import { ActionReducer, ActionReducerMap } from '@ngrx/store';
+import { combineReducers } from '@ngrx/store';
 import { AdminMapMarker } from 'app/shared/services/admin-map';
 
 /**
@@ -41,7 +41,7 @@ const wikipediaMarkerReducer: ActionReducer<IWikipediaMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IWikipediaMarkerEntityState => {
   switch (action.type) {
-    case hikeEditMapActions.RESET: {
+    case hikeEditMapActions.RESET_MAP_STATE: {
       return wikipediaMarkerEntityInitialState;
     }
     case hikeEditMapActions.SET_WIKIPEDIA_MARKERS: {
@@ -64,7 +64,7 @@ const googleMarkerReducer: ActionReducer<IGoogleMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IGoogleMarkerEntityState => {
   switch (action.type) {
-    case hikeEditMapActions.RESET: {
+    case hikeEditMapActions.RESET_MAP_STATE: {
       return googleMarkerEntityInitialState;
     }
     case hikeEditMapActions.SET_GOOGLE_MARKERS: {
@@ -87,7 +87,7 @@ const osmAmenityMarkerReducer: ActionReducer<IOsmAmenityMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IOsmAmenityMarkerEntityState => {
   switch (action.type) {
-    case hikeEditMapActions.RESET: {
+    case hikeEditMapActions.RESET_MAP_STATE: {
       return osmAmenityMarkerEntityInitialState;
     }
     case hikeEditMapActions.SET_OSM_AMENITY_MARKERS: {
@@ -110,7 +110,7 @@ const osmNaturalMarkerReducer: ActionReducer<IOsmNaturalMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IOsmNaturalMarkerEntityState => {
   switch (action.type) {
-    case hikeEditMapActions.RESET: {
+    case hikeEditMapActions.RESET_MAP_STATE: {
       return osmNaturalMarkerEntityInitialState;
     }
     case hikeEditMapActions.SET_OSM_NATURAL_MARKERS: {
@@ -133,7 +133,7 @@ const osmRouteMarkerReducer: ActionReducer<IOsmRouteMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IOsmRouteMarkerEntityState => {
   switch (action.type) {
-    case hikeEditMapActions.RESET: {
+    case hikeEditMapActions.RESET_MAP_STATE: {
       return osmRouteMarkerEntityInitialState;
     }
     case hikeEditMapActions.SET_OSM_ROUTE_MARKERS: {
@@ -156,7 +156,7 @@ const gTrackMarkerReducer: ActionReducer<IGTrackMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IGTrackMarkerEntityState => {
   switch (action.type) {
-    case hikeEditMapActions.RESET:
+    case hikeEditMapActions.RESET_MAP_STATE:
       return gTrackMarkerEntityInitialState;
     case hikeEditMapActions.SET_GTRACK_MARKERS: {
       return gTrackMarkerAdapter.addAll(action.payload.markers, state);

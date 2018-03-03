@@ -3,7 +3,7 @@ import * as HikeEditRoutePlannerActions from '../hike-edit-route-planner';
 
 describe('HikeEditRoutePlanner actions', () => {
   it('should have action names defined', () => {
-    expect(HikeEditRoutePlannerActions.RESET).toEqual('[HikeEditRoutePlanner] Reset');
+    expect(HikeEditRoutePlannerActions.RESET_ROUTE_PLANNING_STATE).toEqual('[HikeEditRoutePlanner] Reset');
     expect(HikeEditRoutePlannerActions.ADD_ROUTE).toEqual('[HikeEditRoutePlanner] Add route');
     expect(HikeEditRoutePlannerActions.PUSH_SEGMENT).toEqual('[HikeEditRoutePlanner] Push segment');
     expect(HikeEditRoutePlannerActions.POP_SEGMENT).toEqual('[HikeEditRoutePlanner] Pop segment');
@@ -17,7 +17,7 @@ describe('HikeEditRoutePlanner actions', () => {
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditRoutePlannerActions.RESET
+      type: HikeEditRoutePlannerActions.RESET_ROUTE_PLANNING_STATE
     });
   });
 
@@ -71,15 +71,6 @@ describe('HikeEditRoutePlanner actions', () => {
     expect({ ...action }).toEqual({
       type: HikeEditRoutePlannerActions.SET_LOCATION,
       payload,
-    });
-  });
-
-  it('should create SaveRoute action', () => {
-    const action = new HikeEditRoutePlannerActions.SaveRoute();
-
-    expect(action).toBeDefined();
-    expect({ ...action }).toEqual({
-      type: HikeEditRoutePlannerActions.SAVE_ROUTE
     });
   });
 });

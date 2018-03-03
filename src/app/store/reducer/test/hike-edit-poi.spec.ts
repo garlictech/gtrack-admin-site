@@ -75,6 +75,15 @@ describe('HikeEditPoi reducers', () => {
     });
   });
 
+  describe('ResetPoiState action', () => {
+    it('should reset state', () => {
+      const action = new hikeEditPoiActions.ResetPoiState();
+      const state = hikeEditPoiReducer(initialState, action);
+
+      expect(state).toEqual(initialState);
+    });
+  });
+
   describe('GetGooglePois action', () => {
     it('should get google pois', () => {
       const action = new hikeEditPoiActions.GetGooglePois({

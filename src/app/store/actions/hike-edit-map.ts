@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { AdminMapMarker } from 'app/shared/services/admin-map';
 
-export const RESET = '[HikeEditMap] Reset';
+export const RESET_MAP_STATE = '[HikeEditMap] Reset';
 export const SET_GOOGLE_MARKERS = '[HikeEditMap] Set Google markers';
 export const SET_OSM_AMENITY_MARKERS = '[HikeEditMap] Set OSM amenity markers';
 export const SET_OSM_NATURAL_MARKERS = '[HikeEditMap] Set OSM natural markers';
@@ -10,7 +10,7 @@ export const SET_WIKIPEDIA_MARKERS = '[HikeEditMap] Set Wikipedia markers';
 export const SET_GTRACK_MARKERS = '[HikeEditMap] Set gTrack markers';
 
 export class ResetMapState implements Action {
-  readonly type = RESET;
+  readonly type = RESET_MAP_STATE;
   constructor() { /* EMPTY */ }
 }
 

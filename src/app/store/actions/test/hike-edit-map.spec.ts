@@ -3,7 +3,7 @@ import * as HikeEditMapActions from '../hike-edit-map';
 
 describe('HikeEditMap actions', () => {
   it('should have action names defined', () => {
-    expect(HikeEditMapActions.RESET).toEqual('[HikeEditMap] Reset');
+    expect(HikeEditMapActions.RESET_MAP_STATE).toEqual('[HikeEditMap] Reset');
     expect(HikeEditMapActions.SET_GOOGLE_MARKERS).toEqual('[HikeEditMap] Set Google markers');
     expect(HikeEditMapActions.SET_OSM_AMENITY_MARKERS).toEqual('[HikeEditMap] Set OSM amenity markers');
     expect(HikeEditMapActions.SET_OSM_NATURAL_MARKERS).toEqual('[HikeEditMap] Set OSM natural markers');
@@ -17,7 +17,7 @@ describe('HikeEditMap actions', () => {
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditMapActions.RESET
+      type: HikeEditMapActions.RESET_MAP_STATE
     });
   });
 

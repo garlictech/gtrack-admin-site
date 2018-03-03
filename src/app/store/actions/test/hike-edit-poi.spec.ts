@@ -3,7 +3,7 @@ import * as HikeEditPoiActions from '../hike-edit-poi';
 
 describe('HikeEditPoi actions', () => {
   it('should have action names defined', () => {
-    expect(HikeEditPoiActions.RESET).toEqual('[HikeEditPoi] Reset');
+    expect(HikeEditPoiActions.RESET_POI_STATE).toEqual('[HikeEditPoi] Reset');
 
     expect(HikeEditPoiActions.GET_GOOGLE_POIS).toEqual('[HikeEditPoi] Get Google pois');
     expect(HikeEditPoiActions.SET_GOOGLE_POIS).toEqual('[HikeEditPoi] Set Google pois');
@@ -44,7 +44,7 @@ describe('HikeEditPoi actions', () => {
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.RESET
+      type: HikeEditPoiActions.RESET_POI_STATE
     });
   });
 

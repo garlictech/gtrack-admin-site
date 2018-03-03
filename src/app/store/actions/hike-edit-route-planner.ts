@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-export const RESET = '[HikeEditRoutePlanner] Reset';
+export const RESET_ROUTE_PLANNING_STATE = '[HikeEditRoutePlanner] Reset';
 export const ADD_ROUTE = '[HikeEditRoutePlanner] Add route';
 export const PUSH_SEGMENT = '[HikeEditRoutePlanner] Push segment';
 export const POP_SEGMENT = '[HikeEditRoutePlanner] Pop segment';
@@ -9,7 +9,7 @@ export const SET_LOCATION = '[HikeEditRoutePlanner] Set location';
 export const SAVE_ROUTE = '[HikeEditRoutePlanner] Save route';
 
 export class ResetRoutePlanningState implements Action {
-  readonly type = RESET;
+  readonly type = RESET_ROUTE_PLANNING_STATE;
   constructor() { /* EMPTY */ }
 }
 
@@ -46,16 +46,10 @@ export class SetLocation implements Action {
   }) { /* EMPTY */ }
 }
 
-export class SaveRoute implements Action {
-  readonly type = SAVE_ROUTE;
-  constructor() { /* EMPTY */ }
-}
-
 export type AllHikeEditRoutePlannerActions =
   | ResetRoutePlanningState
   | AddRoute
   | PushSegment
   | PopSegment
   | UpdateTotal
-  | SetLocation
-  | SaveRoute;
+  | SetLocation;

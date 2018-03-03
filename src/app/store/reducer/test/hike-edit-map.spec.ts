@@ -41,6 +41,15 @@ describe('HikeEditMap reducers', () => {
     });
   });
 
+  describe('ResetPoiState action', () => {
+    it('should reset state', () => {
+      const action = new hikeEditMapActions.ResetMapState();
+      const state = hikeEditMapReducer(initialState, action);
+
+      expect(state).toEqual(initialState);
+    });
+  });
+
   describe('RegisterMap action', () => {
     it('should register map', () => {
       const action = new adminMapActions.RegisterMap({ mapId: 'fakeId' });
