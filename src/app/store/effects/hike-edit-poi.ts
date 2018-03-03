@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import { MapMarkerService, IconService } from 'subrepos/gtrack-common-ngx';
-import { IPoi } from 'subrepos/provider-client';
+import { MapMarkerService, IconService, GeoSearchService, PoiService } from 'subrepos/gtrack-common-ngx';
 import {
   State, hikeEditPoiActions, hikeEditMapActions, IExternalPoiListContextItemState, commonGeoSearchActions
 } from '../index';
@@ -34,7 +33,9 @@ export class HikeEditPoiEffects {
     private _googlePoiService: GooglePoiService,
     private _poiEditorService: PoiEditorService,
     private _adminMapService: AdminMapService,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors
+    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _geoSearchService: GeoSearchService,
+    private _poiService: PoiService
   ) {}
 
   /**
@@ -141,17 +142,34 @@ export class HikeEditPoiEffects {
    * Get gTrack pois from db
    */
   @Effect()
-  getGtrackPois$: Observable<any> = this._actions$
+  getGtrackPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_GTRACK_POIS)
     .map(toPayload)
+    .switchMap(data => {
+      return this._geoSearchService
+        .searchCircle({
+          table: 'pois',
+          circle: {
+            radius: data.radius,
+            center: [data.centerCoord[0], data.centerCoord[1]]
+          }
+        })
+        .flatMap((poiIds: string[]) => {
+          return Observable
+            .combineLatest(...poiIds.map(poiId => {
+              return this._poiService.get(poiId);
+            }))
+            .map(pois => {
+              return _.extend(_.cloneDeep(data), { pois: pois });
+            });
+        });
+    })
+    .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
+    .switchMap(data => this._poiEditorService.handleHikeInclusion(data))
     .map(data => {
-      return new commonGeoSearchActions.SearchInCircle({
-        table: 'pois',
-        circle: {
-          radius: data.radius,
-          center: [data.centerCoord[0], data.centerCoord[1]]
-        }
-      }, uuid());
+      return new hikeEditPoiActions.SetGTrackPois({
+        pois: this._poiEditorService.assignOnOffRoutePois(data)
+      });
     });
 
   /**
@@ -176,8 +194,10 @@ export class HikeEditPoiEffects {
           return new hikeEditMapActions.SetOsmNaturalMarkers({markers: data.markers});
         case 'osmRoute':
           return new hikeEditMapActions.SetOsmRouteMarkers({markers: data.markers});
-        default:
+        case 'wikipedia':
           return new hikeEditMapActions.SetWikipediaMarkers({markers: data.markers});
+        default:
+          return new hikeEditMapActions.SetGTrackMarkers({markers: data.markers});
       }
     });
 

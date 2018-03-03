@@ -27,29 +27,31 @@ export class OsmRoutePoiService {
       .then((response: any) => {
         let _res: OsmPoi[] = [];
 
-        for (let i = 0; i < response.elements.length; i++) {
-          let _point = response.elements[i];
-          if (_point.tags && _point.lat) {
-            // let _type = _point.tags[poiType];
+        if (response.elements) {
+          for (let i = 0; i < response.elements.length; i++) {
+            let _point = response.elements[i];
+            if (_point.tags && _point.lat) {
+              // let _type = _point.tags[poiType];
 
-            console.log('ROUTE TAGS???', _point.tags);
+              console.log('ROUTE TAGS???', _point.tags);
 
-            _res.push(new OsmPoi({
-              id: uuid(),
-              lat: _point.lat,
-              lon: _point.lon,
-              elevation: _point.tags.ele,
-              types: [],
-              description: {
-                [lng]: {
-                  title: _point.tags.name || 'unknown',
+              _res.push(new OsmPoi({
+                id: uuid(),
+                lat: _point.lat,
+                lon: _point.lon,
+                elevation: _point.tags.ele,
+                types: [],
+                description: {
+                  [lng]: {
+                    title: _point.tags.name || 'unknown',
+                  }
+                },
+                objectType: EPoiTypes.osmRoute,
+                osm: {
+                  id: _point.id
                 }
-              },
-              objectType: EPoiTypes.osmRoute,
-              osm: {
-                id: _point.id
-              }
-            }));
+              }));
+            }
           }
         }
 

@@ -3,6 +3,9 @@ import { ITextualDescriptionItem } from 'app/shared/interfaces';
 
 export const SET_HIKE_ID = '[HikeEditGeneralInfo] Set hike id';
 export const SET_ROUTE_ID = '[HikeEditGeneralInfo] Set route id';
+export const SET_IS_ROUND_TRIP = '[HikeEditGeneralInfo] Set isRoundTrip';
+export const SET_DIFFICULTY = '[HikeEditGeneralInfo] Set difficulty';
+export const SET_POIS = '[HikeEditGeneralInfo] Set pois';
 export const SET_DESCRIPTIONS = '[HikeEditGeneralInfo] Set descriptions';
 
 export class SetHikeId implements Action {
@@ -19,6 +22,27 @@ export class SetRouteId implements Action {
   }) { /* EMPTY */ }
 }
 
+export class SetIsRoundTrip implements Action {
+  readonly type = SET_IS_ROUND_TRIP;
+  constructor(public payload: {
+    isRoundTrip: boolean
+  }) { /* EMPTY */ }
+}
+
+export class SetDifficulty implements Action {
+  readonly type = SET_DIFFICULTY;
+  constructor(public payload: {
+    difficulty: number
+  }) { /* EMPTY */ }
+}
+
+export class SetPois implements Action {
+  readonly type = SET_POIS;
+  constructor(public payload: {
+    pois: string[]
+  }) { /* EMPTY */ }
+}
+
 export class SetDescriptions implements Action {
   readonly type = SET_DESCRIPTIONS;
 
@@ -30,4 +54,7 @@ export class SetDescriptions implements Action {
 export type AllHikeEditGeneralInfoActions =
   | SetHikeId
   | SetRouteId
+  | SetIsRoundTrip
+  | SetDifficulty
+  | SetPois
   | SetDescriptions;

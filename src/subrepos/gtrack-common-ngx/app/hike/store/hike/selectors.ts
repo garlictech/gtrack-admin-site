@@ -45,6 +45,12 @@ export class HikeSelectors {
     return createSelector(this.getAllHikes, (hikes: HikeProgram[]) => (hikes.find(hike => (hike.id === context))));
   }
 
+  public getHikeContext(id: string) {
+    return createSelector(this.getAllContexts, (contexts) => {
+      return contexts.find(context => (context.id === id));
+    });
+  }
+
   public getSelectedHike() {
     return createSelector(
       this._selectHikeEntities,

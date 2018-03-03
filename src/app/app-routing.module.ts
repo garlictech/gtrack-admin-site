@@ -23,7 +23,7 @@ export const routes: Routes = [
         component: HikeListComponent
       },
       {
-        path: 'hike/add',
+        path: 'hike/new',
         component: HikeEditComponent
       },
       {

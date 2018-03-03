@@ -1,13 +1,12 @@
 import { EntityAdapter, EntityState } from '@ngrx/entity';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
-import { IPoi } from 'subrepos/provider-client';
+import { IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
 
 export interface IWikipediaPoiEntityState extends EntityState<IWikipediaPoi> {};
 export interface IGooglePoiEntityState extends EntityState<IGooglePoi> {};
 export interface IOsmAmenityPoiEntityState extends EntityState<IOsmPoi> {};
 export interface IOsmNaturalPoiEntityState extends EntityState<IOsmPoi> {};
 export interface IOsmRoutePoiEntityState extends EntityState<IOsmPoi> {};
-export interface IGTrackPoiEntityState extends EntityState<IPoi> {};
+export interface IGTrackPoiEntityState extends EntityState<IGTrackPoi> {};
 
 export interface IExternalPoiListContextItemState {
   loading: boolean;
@@ -21,7 +20,7 @@ export interface IExternalPoiListContextState {
   osmNatural: IExternalPoiListContextItemState,
   osmRoute: IExternalPoiListContextItemState,
   wikipedia: IExternalPoiListContextItemState
-  gTrack: IExternalPoiListContextItemState // todo --- ezzel!!
+  gTrack: IExternalPoiListContextItemState
 };
 
 // State

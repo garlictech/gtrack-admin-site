@@ -43,7 +43,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
-      .takeUntil(this._destroy$)
+      .skipWhile(id => id === '')
+      .take(1)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
@@ -92,15 +93,18 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
     this.loading$ = this._store.select(
       this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
-        this.poiType.subdomain, 'loading'));
+        this.poiType.subdomain, 'loading')
+      );
 
     this.showOnrouteMarkers$ = this._store.select(
       this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
-        this.poiType.subdomain, 'showOnrouteMarkers'));
+        this.poiType.subdomain, 'showOnrouteMarkers')
+      );
 
     this.showOffrouteMarkers$ = this._store.select(
       this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
-        this.poiType.subdomain, 'showOffrouteMarkers'));
+        this.poiType.subdomain, 'showOffrouteMarkers')
+      );
 
     this.showOnrouteMarkers$
       .takeUntil(this._destroy$)
@@ -143,18 +147,14 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
    * Show onroute markers checkbox click
    */
   public toggleOnrouteMarkers() {
-    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers({
-      subdomain: this.poiType.subdomain
-    }));
+    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: this.poiType.subdomain }));
   }
 
   /**
    * Show offroute markers checkbox click
    */
   public toggleOffrouteMarkers() {
-    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers({
-      subdomain: this.poiType.subdomain
-    }));
+    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: this.poiType.subdomain }));
   }
 
   /**

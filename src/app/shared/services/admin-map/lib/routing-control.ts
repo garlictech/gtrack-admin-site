@@ -1,4 +1,5 @@
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 import { State, routingActions } from 'app/store';
 import { environment } from 'environments/environment';
 import { RouteInfo } from './route-info';
@@ -7,11 +8,11 @@ import {
   RouteService
 } from 'subrepos/gtrack-common-ngx/app';
 
+import * as _ from 'lodash';
 import * as L from 'leaflet';
 import 'leaflet-spin';
 import 'leaflet-routing-machine';
-import 'lrm-valhalla';
-import 'lrm-valhalla/src/L.Routing.Valhalla.Formatter';
+import 'lrm-graphhopper';
 
 export class RoutingControl {
   private _controls: Array<L.Routing.Control>;
@@ -92,8 +93,12 @@ export class RoutingControl {
       routeWhileDragging: true,
       autoRoute: false,
       fitSelectedRoutes: 'smart',
-      router: L.Routing.valhalla(environment.valhalla.apiKey, 'pedestrian'),
-      formatter: new L.Routing.Valhalla.Formatter(),
+      router: L.Routing.graphHopper(environment.graphhopper.apiKey, {
+        urlParameters: {
+          vehicle: 'hike',
+          instructions: false
+        }
+      }),
       plan: new L.Routing.Plan([], {
         createMarker: (waypointNum, waypoint) => {
           if (typeof waypoint === 'undefined') {
@@ -113,18 +118,46 @@ export class RoutingControl {
     });
 
     _control.on('routesfound', (e) => {
-      this._elevationService.getData(e.routes[0].coordinates).then(data => {
-        const upDown = {
-          uphill: this._elevationService.calculateUphill(data),
-          downhill: this._elevationService.calculateDownhill(data)
-        };
-        this._routeInfo.planner.addRouteSegment(data, e.routes[0].summary, upDown);
-        this._store.dispatch(new routingActions.RoutingFinished());
-        this._leafletMap.spin(false);
-      }).catch(() => {
-        this._store.dispatch(new routingActions.RoutingError());
-        this._leafletMap.spin(false);
-      });
+      // GraphHopper format fix
+      let _coordsArr = e.routes[0].coordinates.map(coord => [coord.lat, coord.lng]);
+
+      // Google Elevation Service
+      // 2,500 free requests per day
+      // 512 locations per request.
+      // 50 requests per second
+      let _chunks: any[][] = _.chunk(_coordsArr, 500);
+
+      return Observable
+        .interval(100)
+        .take(_chunks.length)
+        .map(counter => {
+          const _chunkCoords: any[] = _chunks[counter];
+
+          return this._elevationService.getData(_chunkCoords).then((data) => {
+            // Update elevation only if we got all data
+            if (data.length === _chunkCoords.length) {
+              for (let i = 0; i < _chunkCoords.length; i++) {
+                _chunkCoords[i][2] = data[i][2];
+              }
+            }
+            return Observable.of(counter);
+          });
+        })
+        .combineAll()
+        .toPromise()
+        .then(() => {
+          const upDown = {
+            uphill: this._elevationService.calculateUphill(_coordsArr),
+            downhill: this._elevationService.calculateDownhill(_coordsArr)
+          };
+
+          this._routeInfo.planner.addRouteSegment(_coordsArr, e.routes[0].summary, upDown);
+          this._store.dispatch(new routingActions.RoutingFinished());
+          this._leafletMap.spin(false);
+        }).catch(() => {
+          this._store.dispatch(new routingActions.RoutingError());
+          this._leafletMap.spin(false);
+        });
     });
 
     _control.on('routingerror', (e) => {

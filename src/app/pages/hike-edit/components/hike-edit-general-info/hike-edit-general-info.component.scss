@@ -1,4 +1,21 @@
 gt-hike-edit-general-info {
+  .inline-checkbox {
+    margin-left: 0;
+  }
+  .inline-checkbox {
+    padding-left: 0;
+  }
+
+  input[type="range"] {
+    position: relative;
+    top: 3px;
+  }
+
+  output.difficulty {
+    width: 20px;
+    font-weight: bold;
+  }
+
   .lang-toolbar {
     span {
       float: right !important;

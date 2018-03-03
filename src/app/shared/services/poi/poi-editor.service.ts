@@ -2,23 +2,23 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import {
-  GeometryService, ElevationService, PoiService, IconService, Poi
+  GeometryService, ElevationService, PoiService, IconService, Poi, CenterRadius
 } from 'subrepos/gtrack-common-ngx';
 import {
   State, IExternalPoiListContextItemState
 } from 'app/store';
 import {
-  HikeEditMapSelectors, HikeEditPoiSelectors,
+  HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditGeneralInfoSelectors,
 } from 'app/store/selectors';
 import { ExternalPoi, GooglePoi, OsmPoi, WikipediaPoi } from './lib';
 import { AdminMap, AdminMapService, AdminMapMarker } from '../admin-map';
 import {
-  IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi
+  IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi
 } from 'app/shared/interfaces/index';
 import { IPoi } from 'subrepos/provider-client';
 
-import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
+import * as uuid from 'uuid/v1';
 import * as turf from '@turf/turf';
 
 @Injectable()
@@ -39,17 +39,8 @@ export class PoiEditorService {
     private _adminMapService: AdminMapService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
   ) {}
-
-  public createGtrackPoi(externalPoi) {
-    console.log('todo: createGtrackPoi');
-    /*
-    FirebaseBackend.getArray("pois").then (pois) ->
-      pois.$add(externalPoi.getDbObj()).then (ref) ->
-        geo = FirebaseBackend.getGeoRef "pois"
-        geo.$set(ref.key(), [externalPoi.lat, externalPoi.lon]).then -> externalPoi.setInGtrackDb()
-    */
-  }
 
   public getDbObj(poi: IExternalPoi) {
     let _poiData = {
@@ -141,7 +132,7 @@ export class PoiEditorService {
   private _organizePois(
     pois: ExternalPoi[],
     path: GeoJSON.Feature<GeoJSON.Polygon>,
-    gTrackPois: ExternalPoi[]
+    gTrackPois?: ExternalPoi[]
   ) {
     let _res: ExternalPoi[] = [];
 
@@ -167,7 +158,7 @@ export class PoiEditorService {
           this._handleTitle(p);
 
           if (gTrackPois) {
-            this._handleGTrackPois(gTrackPois, p);
+            this._handleGTrackPois(gTrackPois, <any>p);
           }
 
           _res.push(p);
@@ -227,10 +218,25 @@ export class PoiEditorService {
   /**
    * _organizePois submethod
    */
-  private _handleGTrackPois(gTrackPois: ExternalPoi[], poi: ExternalPoi) {
-    let _found = _.find(gTrackPois, (p: ExternalPoi) => {
-      return p.objectType === poi.objectType &&
-        p[p.objectType].id === poi[poi.objectType].id
+  private _handleGTrackPois(gTrackPois: IPoi[], poi: GooglePoi | WikipediaPoi | OsmPoi) {
+    const _found = _.find(gTrackPois, (p: IPoi) => {
+      let _idCheck = false;
+
+      if (p.objectType === poi.objectType) {
+        if (p.objectType.substring(0, 3) === 'osm') {
+          _idCheck = p.objectId!.osm === (<OsmPoi>poi).osm.id;
+        } else if (p.objectType === 'google') {
+          _idCheck = p.objectId!.google === (<GooglePoi>poi).google.id;
+        } else if (p.objectType === 'wikipedia') {
+          _idCheck = p.objectId!.wikipedia[
+            (<WikipediaPoi>poi).wikipedia.lng!
+          ] === (<WikipediaPoi>poi).wikipedia.pageid;
+        }
+
+        return _idCheck;
+      } else {
+        return false;
+      }
     });
 
     if (_found) {
@@ -242,8 +248,12 @@ export class PoiEditorService {
    * _organizePois submethod
    */
   private _handleElevation(pois: ExternalPoi[]) {
+    // Google Elevation Service
+    // 2,500 free requests per day
+    // 512 locations per request.
+    // 50 requests per second
     let _poisWithoutElevation = _.filter(pois, (p: ExternalPoi) => !p.elevation);
-    let _chunks: ExternalPoi[][] = _.chunk(_poisWithoutElevation, 20);
+    let _chunks: ExternalPoi[][] = _.chunk(_poisWithoutElevation, 500);
 
     return Observable
       .interval(100)
@@ -283,8 +293,10 @@ export class PoiEditorService {
         pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmNaturalPois); break;
       case 'osmRoute':
         pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmRoutePois); break;
-      default:
+      case 'wikipedia':
         pois$ = this._store.select(this._hikeEditPoiSelectors.getAllWikipediaPois); break;
+      default:
+        pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGTrackPois); break;
     }
 
     return pois$.take(1).map((subdomainPoiData) => {
@@ -333,15 +345,19 @@ export class PoiEditorService {
     let markers$: Observable<AdminMapMarker[]>;
     switch (data.subdomain) {
       case 'google':
-        markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers); break;
+        markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers);
+        break;
       case 'osmAmenity':
         markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmAmenityMarkers); break;
       case 'osmNatural':
         markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmNaturalMarkers); break;
       case 'osmRoute':
         markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmRouteMarkers); break;
-      default:
+      case 'wikipedia':
         markers$ = this._store.select(this._hikeEditMapSelectors.getAllWikipediaMarkers); break;
+      default:
+        markers$ = this._store.select(this._hikeEditMapSelectors.getAllGTrackMarkers);
+        break;
     }
 
     return markers$.take(1).map((subdomainMarkerData) => {
@@ -369,6 +385,7 @@ export class PoiEditorService {
    */
   public handleMarkerChanged(subdomainData) {
     this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
+      .take(1)
       .subscribe((mapId: string) => {
         const _map: AdminMap = this._adminMapService.getMapById(mapId);
 
@@ -415,10 +432,23 @@ export class PoiEditorService {
    * HikeEditPoi effect submethod
    */
   public assignGTrackPois(data) {
-    console.log('poiEditorService - assignGTrackPois: call poiService.search for gTrackPois');
     return this._poiService.search(data.bounds).map((gTrackPois) => {
       return _.extend(_.cloneDeep(data), { gTrackPois: gTrackPois });
     });
+  }
+
+  /**
+   * HikeEditPoi effect submethod
+   */
+  public handleHikeInclusion(data) {
+    return this._store.select((state: State) => state.hikeEditGeneralInfo.generalInfo)
+      .take(1)
+      .map((generalInfo) => {
+        data.pois.map((gTrackpoi: IGTrackPoi) => {
+          gTrackpoi.inHike = _.includes(generalInfo.pois, gTrackpoi.id);
+        });
+        return _.cloneDeep(data);
+      });
   }
 
   /**
@@ -429,7 +459,7 @@ export class PoiEditorService {
 
     return this._organizePois(data.pois, _map.routeInfo.getPath(), data.gTrackPois)
       .then((organizedPois) => {
-        return _.extend(_.cloneDeep(data), { organizedPois: organizedPois });
+        return _.extend(_.cloneDeep(data), { pois: organizedPois });
       });
   }
 
@@ -437,7 +467,7 @@ export class PoiEditorService {
    * HikeEditPoi effect submethod
    */
   public assignOnOffRoutePois(data) {
-    let _pois = _.sortBy(data.organizedPois, (p: ExternalPoi) => p.distFromRoute);
+    let _pois = _.sortBy(data.pois, (p: ExternalPoi) => p.distFromRoute);
     let _onRoutePois = this._getOnroutePois(_pois);
     let _offRoutePois = this._getOffroutePois(_pois);
     _.forEach(_onRoutePois, (p) => (<any>p).inHike = true);

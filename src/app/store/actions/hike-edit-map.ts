@@ -6,6 +6,7 @@ export const SET_OSM_AMENITY_MARKERS = '[HikeEditMap] Set OSM amenity markers';
 export const SET_OSM_NATURAL_MARKERS = '[HikeEditMap] Set OSM natural markers';
 export const SET_OSM_ROUTE_MARKERS = '[HikeEditMap] Set OSM route markers';
 export const SET_WIKIPEDIA_MARKERS = '[HikeEditMap] Set Wikipedia markers';
+export const SET_GTRACK_MARKERS = '[HikeEditMap] Set gTrack markers';
 
 export class SetGoogleMarkers implements Action {
   readonly type = SET_GOOGLE_MARKERS;
@@ -42,9 +43,17 @@ export class SetWikipediaMarkers implements Action {
   }) { /* EMPTY */ }
 }
 
+export class SetGTrackMarkers implements Action {
+  readonly type = SET_GTRACK_MARKERS;
+  constructor(public payload: {
+    markers: AdminMapMarker[]
+  }) { /* EMPTY */ }
+}
+
 export type AllHikeEditMapActions =
   | SetGoogleMarkers
   | SetOsmAmenityMarkers
   | SetOsmNaturalMarkers
   | SetOsmRouteMarkers
-  | SetWikipediaMarkers;
+  | SetWikipediaMarkers
+  | SetGTrackMarkers;

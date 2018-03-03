@@ -25,6 +25,7 @@ describe('HikeEditPoi actions', () => {
 
     expect(HikeEditPoiActions.GET_GTRACK_POIS).toEqual('[HikeEditPoi] Get gTrack pois');
     expect(HikeEditPoiActions.SET_GTRACK_POIS).toEqual('[HikeEditPoi] Set gTrack pois');
+    expect(HikeEditPoiActions.SET_GTRACK_POI_IN_HIKE).toEqual('[HikeEditPoi] Set gTrack poi inHike');
 
     expect(HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle onroute markers');
     expect(HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle offroute markers');
@@ -273,6 +274,20 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_GTRACK_POIS,
+      payload,
+    });
+  });
+
+  it('should create SetGTrackPoiInHike action', () => {
+    const payload = {
+      poiId: 'fakePoiId',
+      isInHike: true
+    };
+    const action = new HikeEditPoiActions.SetGTrackPoiInHike(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_GTRACK_POI_IN_HIKE,
       payload,
     });
   });

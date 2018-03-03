@@ -37,11 +37,10 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     this.routeInfoData$ = this._store.select((state: State) => state.hikeEditRoutePlanner);
 
     this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
-      .takeUntil(this._destroy$)
+      .skipWhile(id => id === '')
+      .take(1)
       .subscribe((mapId: string) => {
-        console.log('mapId', mapId);
         this._map = this._adminMapService.getMapById(mapId);
-        console.log('this map', this._map);
       });
 
     this._store.select((state: State) => state.hikeEditGeneralInfo.generalInfo.routeId)
@@ -50,6 +49,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         return this._store.select(this._routeSelectors.getRouteContext(routeId))
       })
       .subscribe((routeContext) => {
+        console.log('routeContext', routeContext);
         if (routeContext && routeContext.saved) {
           this._toasterService.pop('success', 'Success!', 'Route saved!');
         }

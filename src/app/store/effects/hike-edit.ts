@@ -39,11 +39,7 @@ export class HikeEditEffects {
         .map((routeInfoObj) => _.extend(_.cloneDeep(data), routeInfoObj));
     })
     .switchMap(data => {
-      return this._hikeDataService.collectHikePois()
-        .map((poiIds) => _.extend(_.cloneDeep(data), { pois: poiIds }));
-    })
-    .switchMap(data => {
-      return this._hikeDataService.collectHikeLocation()
+      return this._hikeDataService.collectHikeLocation(data)
         .then((locationObj) => {
           return _.extend(_.cloneDeep(data), locationObj)
         });
@@ -51,24 +47,8 @@ export class HikeEditEffects {
     .map(data => {
       return new commonHikeActions.SaveHikeProgram(
         _.extend(_.cloneDeep(data), {
-          isRoundTrip: false,
-          difficulty: 'hard', // todo numeric - range input
           routeIcon: 'fake',
-          elevationIcon: 'fake', // todo from service
-          stops: [{
-            distanceFromOrigo: 0,
-            isCheckpoint: false,
-            poiId: 'fake',
-            lat: 0,
-            lon: 0,
-            segment: {
-              uphill: 0,
-              downhill: 0,
-              distance: 0,
-              score: 0,
-              time: 0
-            }
-          }]
+          elevationIcon: 'fake' // todo from service
         })
       );
     });

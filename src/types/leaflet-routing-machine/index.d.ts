@@ -94,7 +94,6 @@ declare module 'leaflet' {
     interface ControlOptions {
       fitSelectedRoutes?: string;
       router?: Router;
-      formatter?: L.Routing.Valhalla.Formatter;
       plan?: L.Routing.Plan,
       routeLine?(route, options): Line;
       autoRoute?: boolean;

@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import {
-  hikeEditMapMapReducer, wikipediaMarkerEntityInitialState, googleMarkerEntityInitialState, osmAmenityMarkerEntityInitialState, osmNaturalMarkerEntityInitialState, osmRouteMarkerEntityInitialState, initialMapState, hikeEditMapReducer
+  hikeEditMapMapReducer, wikipediaMarkerEntityInitialState, googleMarkerEntityInitialState, osmAmenityMarkerEntityInitialState, osmNaturalMarkerEntityInitialState, osmRouteMarkerEntityInitialState, initialMapState, hikeEditMapReducer, gTrackMarkerEntityInitialState
 } from '../hike-edit-map';
 import { IHikeEditMapState } from '../../state/hike-edit-map';
 import { hikeEditMapActions, adminMapActions } from '../..';
@@ -17,6 +17,7 @@ describe('HikeEditMap reducers', () => {
       osmAmenityMarkers: osmAmenityMarkerEntityInitialState,
       osmNaturalMarkers: osmNaturalMarkerEntityInitialState,
       osmRouteMarkers: osmRouteMarkerEntityInitialState,
+      gTrackMarkers: gTrackMarkerEntityInitialState,
       map: initialMapState
     };
 
@@ -97,6 +98,15 @@ describe('HikeEditMap reducers', () => {
       const state = hikeEditMapReducer(initialState, action);
 
       expect(state.osmRouteMarkers.entities).toEqual(entities);
+    });
+  });
+
+  describe('SetGTrackMarkers action', () => {
+    it('should set gTrack markers', () => {
+      const action = new hikeEditMapActions.SetGTrackMarkers({ markers: markers });
+      const state = hikeEditMapReducer(initialState, action);
+
+      expect(state.gTrackMarkers.entities).toEqual(entities);
     });
   });
 });
