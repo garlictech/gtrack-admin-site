@@ -39,11 +39,7 @@ export class HikeEditEffects {
         .map((routeInfoObj) => _.extend(_.cloneDeep(data), routeInfoObj));
     })
     .switchMap(data => {
-      return this._hikeDataService.collectHikePois()
-        .map((poiIds) => _.extend(_.cloneDeep(data), { pois: poiIds }));
-    })
-    .switchMap(data => {
-      return this._hikeDataService.collectHikeLocation()
+      return this._hikeDataService.collectHikeLocation(data)
         .then((locationObj) => {
           return _.extend(_.cloneDeep(data), locationObj)
         });
