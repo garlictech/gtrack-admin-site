@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions } from 'app/store';
 
 import { HikeDataService } from 'app/shared/services';
-import { IMockHikeElement } from 'app/shared/interfaces';
 import { IHikeProgramStored } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors } from 'subrepos/gtrack-common-ngx';
 
@@ -20,7 +19,6 @@ import * as uuid from 'uuid/v1';
   styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
-  public hikeData: IMockHikeElement = {};
   private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -38,7 +36,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this._activatedRoute.params
       .takeUntil(this._destroy$)
       .subscribe(params => {
-        // Load hike data from mock DB
         if (params && params.id) {
           // Set page title
           this._title.setTitle('Edit hike');
@@ -48,8 +45,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
             hikeId: params.id
           }));
 
-          // todo: load from db
-          this.hikeData = this._hikeDataService.getHike(params.id);
+          // Load hikeProgram data
+          this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
         // Create new hike
         } else {
           // Set page title

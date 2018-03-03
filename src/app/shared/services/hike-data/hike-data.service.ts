@@ -5,13 +5,10 @@ import { Store } from '@ngrx/store';
 
 import { State } from 'app/store';
 import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
+import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
-
-// TODO del
-import { MOCK_HIKE_LIST, MOCK_HIKE_DATA } from '../../../mock-data';
-import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
 
 @Injectable()
 export class HikeDataService {
@@ -20,14 +17,6 @@ export class HikeDataService {
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _reverseGeocodingService: ReverseGeocodingService
   ) {}
-
-  public getHikes() {
-    return MOCK_HIKE_LIST;
-  }
-
-  public getHike(id) {
-    return MOCK_HIKE_DATA;
-  }
 
   /**
    * collectHikeData effect submethod
