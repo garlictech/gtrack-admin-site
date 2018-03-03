@@ -26,8 +26,9 @@ export class HikeListComponent implements OnInit {
     this._title.setTitle('Hikes');
 
     this._store.select(this._hikeSelectors.getAllHikes)
-      .take(1)
+      .first(hikes => hikes.length > 0)
       .subscribe((hikes) => {
+        console.log(hikes);
         this.hikeList = hikes;
       });
 
