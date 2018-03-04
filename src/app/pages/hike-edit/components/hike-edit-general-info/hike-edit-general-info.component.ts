@@ -11,6 +11,8 @@ import { ITextualDescriptionItem } from 'app/shared/interfaces';
 import { ITextualDescription } from 'subrepos/provider-client';
 import { IGeneralInfoState } from '../../../../store/state';
 
+import * as _ from 'lodash';
+
 // TODO: load from config?
 const LANGS = {
   en_US: 'English',
@@ -29,7 +31,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public textualDescriptions$: Observable<ITextualDescriptionItem[]>;
   public generalInfo$: Observable<IGeneralInfoState>;
   public existingLangKeys$: Observable<string[] | number[]>;
-  public existingLangKeys: string[] | number[] = [];
   public generalInfoForm: FormGroup;
   public descriptionForm: FormGroup;
   public langs = LANGS;
@@ -76,26 +77,46 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   }
 
   private _initFormSubscriptions() {
-    this.generalInfo$.subscribe((generalInfo) => {
-      this.generalInfoForm = this._formBuilder.group({
-        isRoundTrip: generalInfo.isRoundTrip,
-        difficulty: generalInfo.difficulty
-      });
+    //
+    // General info
+    //
+
+    this.generalInfoForm = this._formBuilder.group({
+      isRoundTrip: false,
+      difficulty: 1
     });
 
-    // Fill the form with state values
-    this.textualDescriptions$
-      .subscribe((descriptions) => {
-        this.descriptionForm = this._formBuilder.group({
-          langs: this._formBuilder.array([])
-        });
+    this.generalInfo$.subscribe((generalInfo) => {
+      this.generalInfoForm.patchValue({
+        isRoundTrip: generalInfo.isRoundTrip,
+        difficulty: generalInfo.difficulty
+      })
+    });
 
-        const descriptionArray = <FormArray>this.descriptionForm.controls.langs;
-        for (let desc of descriptions) {
+    //
+    // Descriptions
+    //
+
+    this.descriptionForm = this._formBuilder.group({
+      langs: this._formBuilder.array([])
+    });
+
+    this.textualDescriptions$.subscribe((descriptions) => {
+      let _descriptionArray = <FormArray>this.descriptionForm.controls.langs;
+
+      for (let desc of descriptions) {
+        let _langIdx = _.map(_descriptionArray.value, 'id').indexOf(desc.id);
+
+        // Insert new language
+        if (_langIdx < 0) {
           const formArrayItem = this._createDescriptionItem(desc);
-          descriptionArray.push(formArrayItem);
+          _descriptionArray.push(formArrayItem);
+        // Update existing language
+        } else {
+          _descriptionArray.at(_langIdx).patchValue(desc);
         }
-      });
+      }
+    });
   }
 
   private _createDescriptionItem(desc) {
