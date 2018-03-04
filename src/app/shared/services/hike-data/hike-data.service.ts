@@ -3,12 +3,14 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { State } from 'app/store';
+import { State, hikeEditGeneralInfoActions } from 'app/store';
 import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
 import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
+import { IHikeProgram, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { ITextualDescriptionItem } from '../../interfaces';
 
 @Injectable()
 export class HikeDataService {
@@ -121,5 +123,39 @@ export class HikeDataService {
         resolve({location: 'n/a'});
       });
     });
+  }
+
+  /**
+   * Split hike data to store
+   */
+  public splitHikeDataToStore(hikeData: IHikeProgram) {
+    console.log('splitHikeDataToStore', hikeData);
+
+    this._splitHikeGeneralInfoToStore(hikeData);
+    this._splitHikeDescriptionToStore(hikeData.description);
+  }
+
+  /**
+   * splitHikeDataToStore submethod
+   */
+  private _splitHikeGeneralInfoToStore(hikeData: IHikeProgram) {
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetGeneralInfo({
+      isRoundTrip: hikeData.isRoundTrip,
+      difficulty: parseInt(hikeData.difficulty) // TODO: it will be number!
+    }));
+  }
+
+  /**
+   * splitHikeDataToStore submethod
+   */
+  private _splitHikeDescriptionToStore(descriptions: ILocalizedItem<ITextualDescription>) {
+    let descriptionArray: ITextualDescriptionItem[] = [];
+    for (let key of Object.keys(descriptions)) {
+      descriptionArray.push(_.merge(_.cloneDeep(descriptions[key]), {id: key}));
+    }
+
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
+      descriptions: descriptionArray
+    }));
   }
 }

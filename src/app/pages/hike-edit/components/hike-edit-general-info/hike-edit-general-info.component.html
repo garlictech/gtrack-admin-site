@@ -6,13 +6,16 @@
         Is roundtrip
     </label>
     <label class="form-label ml-5">
-      Difficulty: <output name="diff" class="difficulty mr-2">5</output>
-      <input class="form-input ml-1" name="difficulty" type="range" min="1" max="10" formControlName="difficulty" oninput="diff.value = difficulty.value">
+      Difficulty: <output name="diff" class="difficulty mr-2">{{(generalInfo$ | async).difficulty}}</output>
+      <input class="form-input ml-1" name="difficulty" type="range" min="1" max="10" formControlName="difficulty" onchange="diff.value = difficulty.value">
     </label>
+  </div>
+  <div class="pull-right">
+    <button class="btn btn-sm btn-fill btn-success" (click)="saveToStore()">Save to store</button>
   </div>
 </form>
 
-<div class="lang-toolbar clearfix mt-2 mb-2">
+<div class="lang-toolbar clearfix mt-4 mb-2">
   <button class="btn btn-round btn-sm btn-just-icon btn-success" [disabled]="!selLang" (click)="addTranslation()">
     <i class="material-icons">add</i>
   </button>

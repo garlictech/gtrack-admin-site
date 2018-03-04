@@ -33,16 +33,12 @@ export function generalInfoReducer(
         ...state,
         routeId: action.payload.routeId
       };
-    case hikeEditGeneralInfoActions.SET_IS_ROUND_TRIP:
+    case hikeEditGeneralInfoActions.SET_GENERAL_INFO:
       return {
         ...state,
-        isRoundTrip: action.payload.isRoundTrip
-      };
-    case hikeEditGeneralInfoActions.SET_DIFFICULTY:
-      return {
-        ...state,
+        isRoundTrip: action.payload.isRoundTrip,
         difficulty: action.payload.difficulty
-      };
+      }
     case hikeEditGeneralInfoActions.SET_POIS:
       return {
         ...state,

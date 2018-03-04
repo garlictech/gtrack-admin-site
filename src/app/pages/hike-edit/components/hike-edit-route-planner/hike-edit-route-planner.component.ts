@@ -50,11 +50,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .switchMap((routeId: string) => {
         return this._store.select(this._routeSelectors.getRouteContext(routeId))
       })
+      .skipWhile(routeContext => !routeContext || (routeContext && !routeContext.saved))
       .subscribe((routeContext) => {
-        console.log('routeContext', routeContext);
-        if (routeContext && routeContext.saved) {
-          this._toasterService.pop('success', 'Success!', 'Route saved!');
-        }
+        this._toasterService.pop('success', 'Success!', 'Route saved!');
       });
   }
 

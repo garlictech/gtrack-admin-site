@@ -9,6 +9,7 @@ import { State, hikeEditGeneralInfoActions } from 'app/store';
 import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
 import { ITextualDescription } from 'subrepos/provider-client';
+import { IGeneralInfoState } from '../../../../store/state';
 
 // TODO: load from config?
 const LANGS = {
@@ -26,6 +27,7 @@ const LANGS = {
 })
 export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public textualDescriptions$: Observable<ITextualDescriptionItem[]>;
+  public generalInfo$: Observable<IGeneralInfoState>;
   public existingLangKeys$: Observable<string[] | number[]>;
   public existingLangKeys: string[] | number[] = [];
   public generalInfoForm: FormGroup;
@@ -50,38 +52,11 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     this.textualDescriptions$ = this._store.select(
       this._hikeEditGeneralInfoSelectors.getAllDescriptions
     );
+    this.generalInfo$ = this._store.select(
+      this._hikeEditGeneralInfoSelectors.getHikeEditGeneralInfoSelector()
+    );
 
-    this._initDescriptionsForm();
-
-    // Watch form changes and save values to store (w/ 1 sec delay)
-    this.generalInfoForm.controls.isRoundTrip.valueChanges
-      .takeUntil(this._destroy$)
-      .debounceTime(1000)
-      .subscribe((value) => {
-        this._store.dispatch(new hikeEditGeneralInfoActions.SetIsRoundTrip({
-          isRoundTrip: value
-        }));
-      });
-
-    // Watch form changes and save values to store (w/ 1 sec delay)
-    this.generalInfoForm.controls.difficulty.valueChanges
-      .takeUntil(this._destroy$)
-      .debounceTime(1000)
-      .subscribe((value) => {
-        this._store.dispatch(new hikeEditGeneralInfoActions.SetDifficulty({
-          difficulty: value
-        }));
-      });
-
-    // Watch form changes and save values to store (w/ 1 sec delay)
-    this.descriptionForm.valueChanges
-      .takeUntil(this._destroy$)
-      .debounceTime(1000)
-      .subscribe((value) => {
-        this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
-          descriptions: value.langs
-        }));
-      });
+    this._initFormSubscriptions();
   }
 
   ngOnDestroy() {
@@ -89,20 +64,32 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     this._destroy$.unsubscribe();
   }
 
-  private _initDescriptionsForm() {
-    // Initialize forms
-    this.generalInfoForm = this._formBuilder.group({
-      isRoundTrip: false,
-      difficulty: 5
-    });
-    this.descriptionForm = this._formBuilder.group({
-      langs: this._formBuilder.array([])
+  public saveToStore() {
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetGeneralInfo({
+      isRoundTrip: this.generalInfoForm.controls.isRoundTrip.value,
+      difficulty: this.generalInfoForm.controls.difficulty.value
+    }));
+
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
+      descriptions: this.descriptionForm.value.langs
+    }));
+  }
+
+  private _initFormSubscriptions() {
+    this.generalInfo$.subscribe((generalInfo) => {
+      this.generalInfoForm = this._formBuilder.group({
+        isRoundTrip: generalInfo.isRoundTrip,
+        difficulty: generalInfo.difficulty
+      });
     });
 
     // Fill the form with state values
     this.textualDescriptions$
-      .take(1)
       .subscribe((descriptions) => {
+        this.descriptionForm = this._formBuilder.group({
+          langs: this._formBuilder.array([])
+        });
+
         const descriptionArray = <FormArray>this.descriptionForm.controls.langs;
         for (let desc of descriptions) {
           const formArrayItem = this._createDescriptionItem(desc);

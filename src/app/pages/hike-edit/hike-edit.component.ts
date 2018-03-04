@@ -6,8 +6,8 @@ import { Store } from '@ngrx/store';
 import { State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions } from 'app/store';
 
 import { HikeDataService } from 'app/shared/services';
-import { IHikeProgramStored } from 'subrepos/provider-client';
-import { RouteActionTypes, HikeSelectors } from 'subrepos/gtrack-common-ngx';
+import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
+import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 
 import { ToasterService } from 'angular2-toaster';
 
@@ -79,11 +79,24 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .switchMap((hikeId: string) => {
         return this._store.select(this._hikeSelectors.getHikeContext(hikeId))
       })
+      .skipWhile(hikeContext => !hikeContext || (hikeContext && !hikeContext.saved))
       .subscribe((hikeContext) => {
-        if (hikeContext && hikeContext.saved) {
-          this._toasterService.pop('success', 'Success!', 'Hike saved!');
-          this._router.navigate([`/admin/hike/${hikeContext.id}`]);
-        }
+        this._toasterService.pop('success', 'Success!', 'Hike saved!');
+        this._router.navigate([`/admin/hike/${(<IHikeContextState>hikeContext).id}`]);
+      });
+
+    this._store.select((state: State) => state.hikeEditGeneralInfo.generalInfo.hikeId)
+      .takeUntil(this._destroy$)
+      .switchMap((hikeId: string) => {
+        return this._store.select(this._hikeSelectors.getHikeContext(hikeId))
+      })
+      .skipWhile(hikeContext => !hikeContext || (hikeContext && !hikeContext.loaded))
+      .switchMap((hikeContext) => {
+        return this._store.select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id))
+      })
+      .take(1)
+      .subscribe((hike) => {
+        this._hikeDataService.splitHikeDataToStore(<IHikeProgram>hike);
       });
   }
 
