@@ -11,7 +11,7 @@ import {
 
 @Injectable()
 export class HikeEditPoiSelectors {
-  public hikeEditPoiSelector: MemoizedSelector<object, IHikeEditPoiState>;
+  private _featureSelector: MemoizedSelector<object, IHikeEditPoiState>;
   public getAllWikipediaPois: (state: object) => IWikipediaPoi[];
   public getAllGooglePois: (state: object) => IGooglePoi[];
   public getAllOsmAmenityPois: (state: object) => IOsmPoi[];
@@ -20,54 +20,54 @@ export class HikeEditPoiSelectors {
   public getAllGTrackPois: (state: object) => IGTrackPoi[];
 
   constructor() {
-    this.hikeEditPoiSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
+    this._featureSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
 
-    /**
-     * Poi entity lists
-     */
+    //
+    // Poi entity lists
+    //
 
     const googlePoiSelector = createSelector(
-      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.googlePois
+      this._featureSelector, (state: IHikeEditPoiState) => state.googlePois
     );
     this.getAllGooglePois = googlePoiAdapter.getSelectors(googlePoiSelector).selectAll;
 
     const osmAmenityPoiSelector = createSelector(
-      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.osmAmenityPois
+      this._featureSelector, (state: IHikeEditPoiState) => state.osmAmenityPois
     );
     this.getAllOsmAmenityPois = osmAmenityPoiAdapter.getSelectors(osmAmenityPoiSelector).selectAll;
 
     const osmNaturalPoiSelector = createSelector(
-      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.osmNaturalPois
+      this._featureSelector, (state: IHikeEditPoiState) => state.osmNaturalPois
     );
     this.getAllOsmNaturalPois = osmNaturalPoiAdapter.getSelectors(osmNaturalPoiSelector).selectAll;
 
     const osmRoutePoiSelector = createSelector(
-      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.osmRoutePois
+      this._featureSelector, (state: IHikeEditPoiState) => state.osmRoutePois
     );
     this.getAllOsmRoutePois = osmRoutePoiAdapter.getSelectors(osmRoutePoiSelector).selectAll;
 
     const wikipediaPoiSelector = createSelector(
-      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.wikipediaPois
+      this._featureSelector, (state: IHikeEditPoiState) => state.wikipediaPois
     );
     this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
 
     const gtrackPoiSelector = createSelector(
-      this.hikeEditPoiSelector, (state: IHikeEditPoiState) => state.gTrackPois
+      this._featureSelector, (state: IHikeEditPoiState) => state.gTrackPois
     );
     this.getAllGTrackPois = gTrackPoiAdapter.getSelectors(gtrackPoiSelector).selectAll;
   }
 
-  /**
-   * Context
-   */
+  //
+  // Context
+  //
 
   public getHikeEditContextSelector(poiType) {
-    return createSelector(this.hikeEditPoiSelector,
+    return createSelector(this._featureSelector,
       (state: IHikeEditPoiState) => state.contexts[poiType]);
   };
 
   public getHikeEditContextPropertySelector(poiType, property) {
-    return createSelector(this.hikeEditPoiSelector,
+    return createSelector(this._featureSelector,
       (state: IHikeEditPoiState) => state.contexts[poiType][property]);
   };
 }

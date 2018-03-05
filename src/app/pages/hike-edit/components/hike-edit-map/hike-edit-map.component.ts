@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import { State, hikeEditMapActions } from 'app/store';
+import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { LeafletMouseEvent } from 'leaflet';
 import { Center, ISegment } from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
@@ -45,14 +46,15 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private _store: Store<State>
+    private _store: Store<State>,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
   }
 
   ngOnInit() {
     // Update buffer on each segment update
-    this._store.select((state: State) => state.hikeEditRoutePlanner.segments)
+    this._store.select(this._hikeEditRoutePlannerSelectors.getSegments)
       .takeUntil(this._destroy$)
       .subscribe(() => {
         // Refreh buffer on segment change, if needed

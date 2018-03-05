@@ -9,6 +9,9 @@ import { State, hikeEditGeneralInfoActions } from 'app/store';
 import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
 import { ITextualDescription } from 'subrepos/provider-client';
+import { IGeneralInfoState } from '../../../../store/state';
+
+import * as _ from 'lodash';
 
 // TODO: load from config?
 const LANGS = {
@@ -26,8 +29,8 @@ const LANGS = {
 })
 export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public textualDescriptions$: Observable<ITextualDescriptionItem[]>;
+  public generalInfo$: Observable<IGeneralInfoState>;
   public existingLangKeys$: Observable<string[] | number[]>;
-  public existingLangKeys: string[] | number[] = [];
   public generalInfoForm: FormGroup;
   public descriptionForm: FormGroup;
   public langs = LANGS;
@@ -50,38 +53,9 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     this.textualDescriptions$ = this._store.select(
       this._hikeEditGeneralInfoSelectors.getAllDescriptions
     );
+    this.generalInfo$ = this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo);
 
-    this._initDescriptionsForm();
-
-    // Watch form changes and save values to store (w/ 1 sec delay)
-    this.generalInfoForm.controls.isRoundTrip.valueChanges
-      .takeUntil(this._destroy$)
-      .debounceTime(1000)
-      .subscribe((value) => {
-        this._store.dispatch(new hikeEditGeneralInfoActions.SetIsRoundTrip({
-          isRoundTrip: value
-        }));
-      });
-
-    // Watch form changes and save values to store (w/ 1 sec delay)
-    this.generalInfoForm.controls.difficulty.valueChanges
-      .takeUntil(this._destroy$)
-      .debounceTime(1000)
-      .subscribe((value) => {
-        this._store.dispatch(new hikeEditGeneralInfoActions.SetDifficulty({
-          difficulty: value
-        }));
-      });
-
-    // Watch form changes and save values to store (w/ 1 sec delay)
-    this.descriptionForm.valueChanges
-      .takeUntil(this._destroy$)
-      .debounceTime(1000)
-      .subscribe((value) => {
-        this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
-          descriptions: value.langs
-        }));
-      });
+    this._initFormSubscriptions();
   }
 
   ngOnDestroy() {
@@ -89,26 +63,58 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     this._destroy$.unsubscribe();
   }
 
-  private _initDescriptionsForm() {
-    // Initialize forms
+  public saveToStore() {
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetGeneralInfo({
+      isRoundTrip: this.generalInfoForm.controls.isRoundTrip.value,
+      difficulty: this.generalInfoForm.controls.difficulty.value
+    }));
+
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
+      descriptions: this.descriptionForm.value.langs
+    }));
+  }
+
+  private _initFormSubscriptions() {
+    //
+    // General info
+    //
+
     this.generalInfoForm = this._formBuilder.group({
       isRoundTrip: false,
-      difficulty: 5
+      difficulty: 1
     });
+
+    this.generalInfo$.subscribe((generalInfo) => {
+      this.generalInfoForm.patchValue({
+        isRoundTrip: generalInfo.isRoundTrip,
+        difficulty: generalInfo.difficulty
+      })
+    });
+
+    //
+    // Descriptions
+    //
+
     this.descriptionForm = this._formBuilder.group({
       langs: this._formBuilder.array([])
     });
 
-    // Fill the form with state values
-    this.textualDescriptions$
-      .take(1)
-      .subscribe((descriptions) => {
-        const descriptionArray = <FormArray>this.descriptionForm.controls.langs;
-        for (let desc of descriptions) {
+    this.textualDescriptions$.subscribe((descriptions) => {
+      let _descriptionArray = <FormArray>this.descriptionForm.controls.langs;
+
+      for (let desc of descriptions) {
+        let _langIdx = _.map(_descriptionArray.value, 'id').indexOf(desc.id);
+
+        // Insert new language
+        if (_langIdx < 0) {
           const formArrayItem = this._createDescriptionItem(desc);
-          descriptionArray.push(formArrayItem);
+          _descriptionArray.push(formArrayItem);
+        // Update existing language
+        } else {
+          _descriptionArray.at(_langIdx).patchValue(desc);
         }
-      });
+      }
+    });
   }
 
   private _createDescriptionItem(desc) {

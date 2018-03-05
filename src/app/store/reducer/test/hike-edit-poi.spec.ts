@@ -108,6 +108,7 @@ describe('HikeEditPoi reducers', () => {
       expect(state.osmAmenityPois.ids).toEqual([]);
       expect(state.osmNaturalPois.ids).toEqual([]);
       expect(state.osmRoutePois.ids).toEqual([]);
+      expect(state.gTrackPois.ids).toEqual([]);
     });
   });
 
@@ -167,6 +168,7 @@ describe('HikeEditPoi reducers', () => {
       expect(state.wikipediaPois.ids).toEqual([]);
       expect(state.osmNaturalPois.ids).toEqual([]);
       expect(state.osmRoutePois.ids).toEqual([]);
+      expect(state.gTrackPois.ids).toEqual([]);
     });
   });
 
@@ -226,6 +228,7 @@ describe('HikeEditPoi reducers', () => {
       expect(state.wikipediaPois.ids).toEqual([]);
       expect(state.osmAmenityPois.ids).toEqual([]);
       expect(state.osmRoutePois.ids).toEqual([]);
+      expect(state.gTrackPois.ids).toEqual([]);
     });
   });
 
@@ -285,6 +288,7 @@ describe('HikeEditPoi reducers', () => {
       expect(state.wikipediaPois.ids).toEqual([]);
       expect(state.osmAmenityPois.ids).toEqual([]);
       expect(state.osmNaturalPois.ids).toEqual([]);
+      expect(state.gTrackPois.ids).toEqual([]);
     });
   });
 
@@ -344,6 +348,7 @@ describe('HikeEditPoi reducers', () => {
       expect(state.osmAmenityPois.ids).toEqual([]);
       expect(state.osmNaturalPois.ids).toEqual([]);
       expect(state.osmRoutePois.ids).toEqual([]);
+      expect(state.gTrackPois.ids).toEqual([]);
     });
   });
 
@@ -361,6 +366,67 @@ describe('HikeEditPoi reducers', () => {
       }), action);
 
       expect(state.wikipediaPois.entities['1'].inHike).toEqual(true);
+    });
+
+    it('should set wikipedia poi inHike to false', () => {
+      const action = new hikeEditPoiActions.SetWikipediaPoiInHike({
+        poiId: '1',
+        isInHike: false
+      });
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        wikipediaPois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.wikipediaPois.entities['1'].inHike).toEqual(false);
+    });
+  });
+
+  describe('GetGTrackPois action', () => {
+    it('should get wikipedia pois', () => {
+      const action = new hikeEditPoiActions.GetGTrackPois({
+        centerCoord: [0, 0],
+        radius: 1000,
+        mapId: 'fakeMapId'
+      });
+      const state = hikeEditPoiReducer(initialState, action);
+
+      expect(state.gTrackPois.ids).toEqual([]);
+      expect(state.contexts.gTrack.loading).toEqual(true);
+    });
+  });
+
+  describe('SetGTrackPois action', () => {
+    it('should set gTrack pois', () => {
+      const action = new hikeEditPoiActions.SetGTrackPois({ pois: pois });
+      const state = hikeEditPoiReducer(initialState, action);
+
+      expect(state.gTrackPois.entities).toEqual(entities);
+      // untouched props, good to add regardless
+      expect(state.googlePois.ids).toEqual([]);
+      expect(state.osmAmenityPois.ids).toEqual([]);
+      expect(state.osmNaturalPois.ids).toEqual([]);
+      expect(state.osmRoutePois.ids).toEqual([]);
+      expect(state.wikipediaPois.ids).toEqual([]);
+    });
+  });
+
+  describe('SetGTrackPoiInHike action', () => {
+    it('should set gTrack poi inHike to true', () => {
+      const action = new hikeEditPoiActions.SetGTrackPoiInHike({
+        poiId: '1',
+        isInHike: true
+      });
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        gTrackPois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.gTrackPois.entities['1'].inHike).toEqual(true);
     });
 
     it('should set wikipedia poi inHike to false', () => {

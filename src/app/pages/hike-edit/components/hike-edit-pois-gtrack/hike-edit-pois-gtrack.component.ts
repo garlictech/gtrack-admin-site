@@ -38,7 +38,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
+    this._store.select(this._hikeEditMapSelectors.getMapId)
       .skipWhile(id => id === '')
       .take(1)
       .subscribe((mapId: string) => {
@@ -136,14 +136,14 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public savePois() {
     Observable.combineLatest(
       this.pois$.take(1),
-      this._store.select(this._hikeEditGeneralInfoSelectors.getHikeEditGeneralInfoSelector()).take(1)
+      this._store.select(this._hikeEditGeneralInfoSelectors.getPois).take(1)
     ).subscribe(data => {
       if (data[0] && data[1]) {
         const _gTrackPois = _.filter(data[0], (p: IGTrackPoi) => p.inHike)
           .map((p: IGTrackPoi) => p.id);
 
         this._store.dispatch(new hikeEditGeneralInfoActions.SetPois({
-          pois: _.union(<string[]>_gTrackPois, data[1].pois)
+          pois: _.union(<string[]>_gTrackPois, data[1])
         }));
       }
     });

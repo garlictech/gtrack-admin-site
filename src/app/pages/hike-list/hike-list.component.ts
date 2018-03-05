@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import {
   State, commonHikeActions
 } from 'app/store';
@@ -14,7 +14,7 @@ import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
   styleUrls: ['./hike-list.component.scss']
 })
 export class HikeListComponent implements OnInit {
-  hikeList: IHikeProgram[];
+  public hikeList$: Observable<IHikeProgram[]>;
 
   constructor(
     private _store: Store<State>,
@@ -25,12 +25,7 @@ export class HikeListComponent implements OnInit {
   ngOnInit() {
     this._title.setTitle('Hikes');
 
-    this._store.select(this._hikeSelectors.getAllHikes)
-      .first(hikes => hikes.length > 0)
-      .subscribe((hikes) => {
-        console.log(hikes);
-        this.hikeList = hikes;
-      });
+    this.hikeList$ = this._store.select(this._hikeSelectors.getAllHikes);
 
     this._store.dispatch(new commonHikeActions.LoadHikePrograms());
   }

@@ -1,5 +1,6 @@
 import { Store } from '@ngrx/store';
 import { State } from 'app/store';
+import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { RoutingControl } from './routing-control';
 import { WaypointMarker } from './waypoint-marker';
 import { RouteInfo } from './route-info';
@@ -26,6 +27,7 @@ export class AdminMap extends Map {
     private _store: Store<State>,
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _elevationService: ElevationService
   ) {
     super(id, map, iconService, mapMarkerService);
@@ -33,6 +35,7 @@ export class AdminMap extends Map {
     this._routeInfo = new RouteInfo(
       this._gameRuleService,
       this._routeService,
+      this._hikeEditRoutePlannerSelectors,
       this._store
     );
 

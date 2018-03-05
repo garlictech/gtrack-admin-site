@@ -308,7 +308,8 @@ export class PoiEditorService {
    * HikeEditPoi effect submethod
    */
   public clearSubdomainPoiMarkers(data) {
-    let map$ = this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector());
+    let map$ = this._store.select(this._hikeEditMapSelectors.getMapId);
+
     return map$.map((mapId: string) => {
       const _map: AdminMap = this._adminMapService.getMapById(mapId);
 
@@ -384,7 +385,7 @@ export class PoiEditorService {
    * HikeEditPoi effect submethod
    */
   public handleMarkerChanged(subdomainData) {
-    this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
+    this._store.select(this._hikeEditMapSelectors.getMapId)
       .take(1)
       .subscribe((mapId: string) => {
         const _map: AdminMap = this._adminMapService.getMapById(mapId);
@@ -441,11 +442,11 @@ export class PoiEditorService {
    * HikeEditPoi effect submethod
    */
   public handleHikeInclusion(data) {
-    return this._store.select((state: State) => state.hikeEditGeneralInfo.generalInfo)
+    return this._store.select(this._hikeEditGeneralInfoSelectors.getPois)
       .take(1)
-      .map((generalInfo) => {
+      .map((pois) => {
         data.pois.map((gTrackpoi: IGTrackPoi) => {
-          gTrackpoi.inHike = _.includes(generalInfo.pois, gTrackpoi.id);
+          gTrackpoi.inHike = _.includes(pois, gTrackpoi.id);
         });
         return _.cloneDeep(data);
       });

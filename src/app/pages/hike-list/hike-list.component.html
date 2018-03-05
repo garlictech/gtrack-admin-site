@@ -17,15 +17,17 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>Id</th>
                     <th>Title</th>
+                    <th>Summary</th>
                     <th>&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let hike of hikeList">
-                    <td>{{hike.id}}</td>
-                    <td>{{hike.description.en_US.title}}</td>
+                  <tr *ngFor="let hike of (hikeList$ | async)">
+                    <td><a href="#" routerLink="/admin/hike/{{hike.id}}">{{hike.description.en_US.title}}</a>
+                      <small class="text-secondary">({{hike.id}})</small>
+                    </td>
+                    <td>{{hike.description.en_US.summary}}</td>
                     <td class="td-actions">
                       <button
                         class="btn btn-warning btn-simple btn-link"
