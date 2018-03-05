@@ -3,12 +3,13 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions } from 'app/store';
-
+import {
+  State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions
+} from 'app/store';
+import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
 import { HikeDataService } from 'app/shared/services';
 import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
-
 import { ToasterService } from 'angular2-toaster';
 
 import * as uuid from 'uuid/v1';
@@ -27,6 +28,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _activatedRoute: ActivatedRoute,
     private _hikeDataService: HikeDataService,
     private _hikeSelectors: HikeSelectors,
+    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _toasterService: ToasterService,
     private _router: Router,
     private _title: Title
@@ -74,7 +76,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         }
       });
 
-    this._store.select((state: State) => state.hikeEditGeneralInfo.generalInfo.hikeId)
+    this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)
       .takeUntil(this._destroy$)
       .switchMap((hikeId: string) => {
         return this._store.select(this._hikeSelectors.getHikeContext(hikeId))
@@ -85,7 +87,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         this._router.navigate([`/admin/hike/${(<IHikeContextState>hikeContext).id}`]);
       });
 
-    this._store.select((state: State) => state.hikeEditGeneralInfo.generalInfo.hikeId)
+    this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)
       .takeUntil(this._destroy$)
       .switchMap((hikeId: string) => {
         return this._store.select(this._hikeSelectors.getHikeContext(hikeId))

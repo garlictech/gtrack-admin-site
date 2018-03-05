@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
 import { State, hikeEditGeneralInfoActions } from 'app/store';
-import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
+import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
 
 import * as uuid from 'uuid/v1';
@@ -17,6 +17,7 @@ export class HikeDataService {
   constructor(
     private _store: Store<State>,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _reverseGeocodingService: ReverseGeocodingService
   ) {}
 
@@ -24,7 +25,7 @@ export class HikeDataService {
    * collectHikeData effect submethod
    */
   public collectHikeGeneralInfo() {
-    return this._store.select((state: State) => state.hikeEditGeneralInfo.generalInfo)
+    return this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo)
       .take(1)
       .map((generalInfo) => {
         return {
@@ -56,7 +57,7 @@ export class HikeDataService {
    * collectHikeData effect submethod
    */
   public collectHikeRouteInfo() {
-    return this._store.select((state: State) => state.hikeEditRoutePlanner)
+    return this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
       .take(1)
       .map((routeInfo) => {
         let _routeInfo: any = _.pick(routeInfo.total, [

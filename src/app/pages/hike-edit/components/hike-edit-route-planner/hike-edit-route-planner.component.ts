@@ -8,7 +8,7 @@ import {
   commonHikeActions, commonRouteActions, IHikeEditGeneralInfoState
 } from 'app/store';
 import { RouteSelectors } from 'subrepos/gtrack-common-ngx';
-import { HikeEditMapSelectors, HikeEditGeneralInfoSelectors } from 'app/store/selectors';
+import { HikeEditMapSelectors, HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { IRoute } from 'subrepos/provider-client';
 import { ToasterService } from 'angular2-toaster';
 
@@ -28,6 +28,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _adminMapService: AdminMapService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _routeSelectors: RouteSelectors,
     private _toasterService: ToasterService,
     private _store: Store<State>
@@ -36,16 +37,16 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.routeInfoData$ = this._store.select((state: State) => state.hikeEditRoutePlanner);
+    this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
-    this._store.select(this._hikeEditMapSelectors.getHikeEditMapMapIdSelector())
+    this._store.select(this._hikeEditMapSelectors.getMapId)
       .skipWhile(id => id === '')
       .take(1)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
-    this._store.select((state: State) => state.hikeEditGeneralInfo.generalInfo.routeId)
+    this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId)
       .takeUntil(this._destroy$)
       .switchMap((routeId: string) => {
         return this._store.select(this._routeSelectors.getRouteContext(routeId))
@@ -81,18 +82,18 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
   public saveRoute() {
     const _routePlannerState: Observable<any> = this._store
-      .select((state: State) => state.hikeEditRoutePlanner)
+      .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
       .take(1)
 
     const _generalInfoState: Observable<any> = this._store
-      .select(this._hikeEditGeneralInfoSelectors.getHikeEditGeneralInfoSelector())
+      .select(this._hikeEditGeneralInfoSelectors.getRouteId)
       .take(1)
 
     Observable.forkJoin(_routePlannerState, _generalInfoState)
       .subscribe(data => {
         if (data[0] && data[1]) {
           let _route: IRoute = {
-            id: data[1].routeId,
+            id: data[1],
             bounds: data[0].route.bounds,
             route: _.pick(data[0].route, ['type', 'features'])
           };

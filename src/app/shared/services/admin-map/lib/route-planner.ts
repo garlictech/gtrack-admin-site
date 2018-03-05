@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import { State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions } from 'app/store';
+import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { ISegment, GameRuleService, RouteService } from 'subrepos/gtrack-common-ngx/app';
 
 import * as _ from 'lodash';
@@ -16,6 +17,7 @@ export class RoutePlanner {
   constructor(
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _store: Store<State>
   ) {
     // Initial value
@@ -37,14 +39,14 @@ export class RoutePlanner {
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
 
     // Parent classes use routeInfoData
-    this._store.select((state: State) => state.hikeEditRoutePlanner)
+    this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
       .takeUntil(this._destroy$)
       .subscribe((routeInfoData: IHikeEditRoutePlannerState) => {
         this.routeInfoData = routeInfoData;
       });
 
     // Update totals on each segment update
-    this._store.select((state: State) => state.hikeEditRoutePlanner.segments)
+    this._store.select(this._hikeEditRoutePlannerSelectors.getSegments)
       .takeUntil(this._destroy$)
       .subscribe((segments: ISegment[]) => {
         let _total = this._calculateTotal(segments);

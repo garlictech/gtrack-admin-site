@@ -53,9 +53,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     this.textualDescriptions$ = this._store.select(
       this._hikeEditGeneralInfoSelectors.getAllDescriptions
     );
-    this.generalInfo$ = this._store.select(
-      this._hikeEditGeneralInfoSelectors.getHikeEditGeneralInfoSelector()
-    );
+    this.generalInfo$ = this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo);
 
     this._initFormSubscriptions();
   }

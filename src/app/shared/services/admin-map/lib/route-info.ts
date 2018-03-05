@@ -1,6 +1,7 @@
 /* OLD: RouteService  */
 import { Store } from '@ngrx/store';
 import { State, IHikeEditRoutePlannerState } from 'app/store';
+import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { AdminMap } from './admin-map';
 import { RoutePlanner } from './route-planner';
 import { GameRuleService, RouteService } from 'subrepos/gtrack-common-ngx/app';
@@ -20,6 +21,7 @@ export class RouteInfo {
   constructor(
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _store: Store<State>
   ) {}
 
@@ -27,6 +29,7 @@ export class RouteInfo {
     this.planner = new RoutePlanner(
       this._gameRuleService,
       this._routeService,
+      this._hikeEditRoutePlannerSelectors,
       this._store
     );
   }

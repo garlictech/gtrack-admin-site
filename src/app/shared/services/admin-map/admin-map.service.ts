@@ -1,14 +1,11 @@
 import { Store } from '@ngrx/store';
 import { State, adminMapActions } from 'app/store';
+import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { Injectable } from '@angular/core';
 import { AdminMap } from './lib/admin-map';
 import {
-  IconService,
-  MapMarkerService,
-  MapService,
-  GameRuleService,
-  RouteService,
-  ElevationService
+  IconService, MapMarkerService, MapService, GameRuleService,
+  RouteService, ElevationService
 } from 'subrepos/gtrack-common-ngx/app';
 
 import * as uuid from 'uuid/v1';
@@ -23,6 +20,7 @@ export class AdminMapService extends MapService {
     private _store: Store<State>,
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _elevationService: ElevationService
   ) {
     super(iconService, mapMarkerService);
@@ -38,6 +36,7 @@ export class AdminMapService extends MapService {
       this._store,
       this._gameRuleService,
       this._routeService,
+      this._hikeEditRoutePlannerSelectors,
       this._elevationService
     );
     this._maps[_id] = _map;

@@ -28,7 +28,8 @@ import {
   store, AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects
 } from './store';
 import {
-  HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors
+  HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors,
+  HikeEditRoutePlannerSelectors
 } from './store/selectors';
 import { routing } from './app-routing.module';
 // Page modules
@@ -149,6 +150,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     HikeEditGeneralInfoSelectors,
     HikeEditPoiSelectors,
     HikeEditMapSelectors,
+    HikeEditRoutePlannerSelectors,
     PoiSelectors,
     {
       provide: RouterStateSerializer,

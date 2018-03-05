@@ -9,7 +9,8 @@ import { AdminMapMarker } from 'app/shared/services/admin-map';
 
 @Injectable()
 export class HikeEditMapSelectors {
-  public hikeEditMapSelector: MemoizedSelector<object, IHikeEditMapState>;
+  private _featureSelector: MemoizedSelector<object, IHikeEditMapState>;
+  public getMapId: MemoizedSelector<object, string>;
   public getAllWikipediaMarkers: (state: object) => AdminMapMarker[];
   public getAllGoogleMarkers: (state: object) => AdminMapMarker[];
   public getAllOsmAmenityMarkers: (state: object) => AdminMapMarker[];
@@ -18,45 +19,48 @@ export class HikeEditMapSelectors {
   public getAllGTrackMarkers: (state: object) => AdminMapMarker[];
 
   constructor() {
-    this.hikeEditMapSelector = createFeatureSelector<IHikeEditMapState>('hikeEditMap');
+    this._featureSelector = createFeatureSelector<IHikeEditMapState>('hikeEditMap');
 
-    /**
-     * Marker entity lists
-     */
+    //
+    // Map
+    //
+
+    this.getMapId = createSelector(this._featureSelector,
+      (state: IHikeEditMapState) => state.map.mapId
+    );
+
+    //
+    // Marker entity lists
+    //
 
     const wikipediaMarkerSelector = createSelector(
-      this.hikeEditMapSelector, (state: IHikeEditMapState) => state.wikipediaMarkers
+      this._featureSelector, (state: IHikeEditMapState) => state.wikipediaMarkers
     );
     this.getAllWikipediaMarkers = wikipediaMarkerAdapter.getSelectors(wikipediaMarkerSelector).selectAll;
 
     const googleMarkerSelector = createSelector(
-      this.hikeEditMapSelector, (state: IHikeEditMapState) => state.googleMarkers
+      this._featureSelector, (state: IHikeEditMapState) => state.googleMarkers
     );
     this.getAllGoogleMarkers = googleMarkerAdapter.getSelectors(googleMarkerSelector).selectAll;
 
     const osmAmenityMarkerSelector = createSelector(
-      this.hikeEditMapSelector, (state: IHikeEditMapState) => state.osmAmenityMarkers
+      this._featureSelector, (state: IHikeEditMapState) => state.osmAmenityMarkers
     );
     this.getAllOsmAmenityMarkers = osmAmenityMarkerAdapter.getSelectors(osmAmenityMarkerSelector).selectAll;
 
     const osmNaturalMarkerSelector = createSelector(
-      this.hikeEditMapSelector, (state: IHikeEditMapState) => state.osmNaturalMarkers
+      this._featureSelector, (state: IHikeEditMapState) => state.osmNaturalMarkers
     );
     this.getAllOsmNaturalMarkers = osmNaturalMarkerAdapter.getSelectors(osmNaturalMarkerSelector).selectAll;
 
     const osmRouteMarkerSelector = createSelector(
-      this.hikeEditMapSelector, (state: IHikeEditMapState) => state.osmRouteMarkers
+      this._featureSelector, (state: IHikeEditMapState) => state.osmRouteMarkers
     );
     this.getAllOsmRouteMarkers = osmRouteMarkerAdapter.getSelectors(osmRouteMarkerSelector).selectAll;
 
     const gTrackMarkerSelector = createSelector(
-      this.hikeEditMapSelector, (state: IHikeEditMapState) => state.gTrackMarkers
+      this._featureSelector, (state: IHikeEditMapState) => state.gTrackMarkers
     );
     this.getAllGTrackMarkers = gTrackMarkerAdapter.getSelectors(gTrackMarkerSelector).selectAll;
   }
-
-  public getHikeEditMapMapIdSelector() {
-    return createSelector(this.hikeEditMapSelector,
-      (state: IHikeEditMapState) => state.map.mapId);
-  };
 }
