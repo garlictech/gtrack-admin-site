@@ -42,12 +42,10 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           // Set page title
           this._title.setTitle('Edit hike');
 
-          // Set hike id
+          // Set hike id and load hikeProgram data
           this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({
             hikeId: params.id
           }));
-
-          // Load hikeProgram data
           this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
         // Create new hike
         } else {
@@ -76,26 +74,22 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         }
       });
 
+    // Handling hike save
     this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)
       .takeUntil(this._destroy$)
-      .switchMap((hikeId: string) => {
-        return this._store.select(this._hikeSelectors.getHikeContext(hikeId))
-      })
-      .skipWhile(hikeContext => !hikeContext || (hikeContext && !hikeContext.saved))
+      .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)))
+      .filter(hikeContext => !!(hikeContext && hikeContext.saved))
       .subscribe((hikeContext) => {
         this._toasterService.pop('success', 'Success!', 'Hike saved!');
         this._router.navigate([`/admin/hike/${(<IHikeContextState>hikeContext).id}`]);
       });
 
+    // Handling hike load
     this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)
       .takeUntil(this._destroy$)
-      .switchMap((hikeId: string) => {
-        return this._store.select(this._hikeSelectors.getHikeContext(hikeId))
-      })
-      .skipWhile(hikeContext => !hikeContext || (hikeContext && !hikeContext.loaded))
-      .switchMap((hikeContext) => {
-        return this._store.select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id))
-      })
+      .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)))
+      .filter(hikeContext => !!(hikeContext && hikeContext.loaded))
+      .switchMap((hikeContext) => this._store.select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id)))
       .take(1)
       .subscribe((hike) => {
         this._hikeDataService.splitHikeDataToStore(<IHikeProgram>hike);
