@@ -10,14 +10,14 @@ export const DEEPSTREAM_PERMISSION_RECORD_CHANGED = '[Deepstream] Permission rec
 
 export class DeepstreamLoginSuccess implements Action {
   readonly type = DEEPSTREAM_LOGIN_SUCCESS;
-  constructor(public payload: IClientData) {
+  constructor(public clientData: IClientData) {
     /* EMPTY */
   }
 }
 
 export class DeepstreamAuthSuccess implements Action {
   readonly type = DEEPSTREAM_AUTH_SUCCESS;
-  constructor(public payload: IClientData) {
+  constructor(public clientData: IClientData) {
     /* EMPTY */
   }
 }
@@ -30,13 +30,13 @@ export class DeepstreamLogin implements Action {
   readonly type = DEEPSTREAM_LOGIN;
 
   // The token
-  constructor(public payload: string) {
+  constructor(public token: string) {
     /* EMPTY */
   }
 }
 export class DeepstreamLoginFailed implements Action {
   readonly type = DEEPSTREAM_LOGIN_FAILED;
-  constructor(public payload: any) {
+  constructor(public error: any) {
     /* EMPTY */
   }
 }
@@ -45,7 +45,7 @@ export class DeepstreamPermissionRecordChanged implements Action {
   readonly type = DEEPSTREAM_PERMISSION_RECORD_CHANGED;
 
   // The new permission record
-  constructor(public payload: any) {
+  constructor(public permissionRecord: any) {
     /* EMPTY */
   }
 }

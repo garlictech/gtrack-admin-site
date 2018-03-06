@@ -1,38 +1,38 @@
 {
-    "name": "deepstream-ngx",
-    "description": "deepstream ngx",
-    "main": "index.ts",
-    "version": "0.0.0",
-    "files": ["src", "index.ts"],
-    "license": "SEE LICENSE IN license.txt",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/garlictech/deepstream-ngx.git"
-    },
-    "author": {
-        "name": "Garlictech",
-        "email": "contact@garlictech.com",
-        "url": "http://www.garlictech.com"
-    },
-    "contributors": ["Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"],
-    "keywords": ["deepstream", "angular", "ngx"],
-    "bugs": {
-        "url": "https://github.com/garlictech/deepstream-ngx/issues"
-    },
-    "homepage": "https://github.com/garlictech/deepstream-ngx/wiki/Home",
-    "engines": {
-        "npm": ">=3.0.0",
-        "node": ">=5.0.0"
-    },
-    "dependencies": {
-        "@angular/core": "^5.0.0",
-        "@garlictech/deepstream-rxjs": "^1.0.0",
-        "@ngrx/effects": "^4.1.1",
-        "@ngrx/store": "^4.1.1",
-        "ng2-logger": "^1.0.2",
-        "rxjs": "^5.0.2",
-        "source-map-support": "^0.4.15"
-    },
-    "devDependencies": {},
-    "scripts": {}
+  "name": "deepstream-ngx",
+  "description": "deepstream ngx",
+  "main": "index.ts",
+  "version": "0.0.0",
+  "files": ["src", "index.ts"],
+  "license": "SEE LICENSE IN license.txt",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/garlictech/deepstream-ngx.git"
+  },
+  "author": {
+    "name": "Garlictech",
+    "email": "contact@garlictech.com",
+    "url": "http://www.garlictech.com"
+  },
+  "contributors": ["Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"],
+  "keywords": ["deepstream", "angular", "ngx"],
+  "bugs": {
+    "url": "https://github.com/garlictech/deepstream-ngx/issues"
+  },
+  "homepage": "https://github.com/garlictech/deepstream-ngx/wiki/Home",
+  "engines": {
+    "npm": ">=3.0.0",
+    "node": ">=5.0.0"
+  },
+  "dependencies": {
+    "@angular/core": "^5.0.0",
+    "@garlictech/deepstream-rxjs": "^1.0.0",
+    "@ngrx/effects": "^5.1.0",
+    "@ngrx/store": "^5.1.0",
+    "ng2-logger": "^1.0.2",
+    "rxjs": "^5.0.2",
+    "source-map-support": "^0.4.15"
+  },
+  "devDependencies": {},
+  "scripts": {}
 }

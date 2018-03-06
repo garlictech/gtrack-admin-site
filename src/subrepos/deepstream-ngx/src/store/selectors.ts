@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 export interface ISelectorUserData {
   userId: string | undefined;
   role: string;
-}
+};
 
 @Injectable()
 export class Selectors {

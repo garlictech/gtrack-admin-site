@@ -10,13 +10,13 @@ export const reducer: ActionReducer<IDeepstreamState> = (state = initialState, a
     case Actions.DEEPSTREAM_LOGIN:
       return { ...state, state: EDeepstreamState.LOGGING_IN, failure: null };
     case Actions.DEEPSTREAM_AUTH_SUCCESS:
-      return { ...state, state: EDeepstreamState.LOGGED_IN, failure: null, auth: { ...action.payload } };
+      return { ...state, state: EDeepstreamState.LOGGED_IN, failure: null, auth: { ...action.clientData } };
     case Actions.DEEPSTREAM_LOGOUT_SUCCESS:
       return { ...state, state: EDeepstreamState.LOGGED_OUT, failure: null, auth: null };
     case Actions.DEEPSTREAM_LOGIN_FAILED:
-      return { ...state, state: EDeepstreamState.LOGGED_OUT, failure: { ...action.payload } };
+      return { ...state, state: EDeepstreamState.LOGGED_OUT, failure: { ...action.error } };
     case Actions.DEEPSTREAM_PERMISSION_RECORD_CHANGED:
-      return { ...state, permissionRecord: { ...action.payload } };
+      return { ...state, permissionRecord: { ...action.permissionRecord } };
     default:
       return state;
   }
