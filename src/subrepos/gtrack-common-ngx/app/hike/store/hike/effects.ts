@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/map';
 
 import * as _ from 'lodash';
 
@@ -54,7 +56,5 @@ export class HikeEffects {
       .ofType<LocalActions.HikeProgramSaved>(LocalActions.HikeProgramActionTypes.HIKE_PROGRAM_SAVED)
       .map(action => new LocalActions.LoadHikeProgram(action.context));
 
-  constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {
-    /* EMPTY */
-  }
+  constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {}
 }

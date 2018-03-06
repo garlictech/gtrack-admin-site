@@ -14,23 +14,26 @@ describe('GeoSearchService', () => {
   let service: GeoSearchService;
   let spy: jasmine.Spy;
 
+  spy = jasmine.createSpy('callRpc').and.returnValue(Observable.of([]));
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        DeepstreamModule.forRoot({
-          deepstreamConnectionString: 'localhost:6020',
-          storeDomain: 'deepstream'
-        }),
         StoreModule.forRoot({}),
         EffectsModule.forRoot([])
       ],
       providers: [
-        GeoSearchService
+        GeoSearchService,
+        {
+          provide: DeepstreamService,
+          useValue: {
+            callRpc: spy
+          }
+        }
       ]
     });
 
     let deepstreamService = TestBed.get(DeepstreamService);
-    spy = spyOn(deepstreamService, 'callRpc').and.returnValue(Observable.of([]));
 
     service = TestBed.get(GeoSearchService);
   });

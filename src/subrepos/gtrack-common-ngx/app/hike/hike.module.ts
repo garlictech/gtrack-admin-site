@@ -10,6 +10,8 @@ import { GameRuleService } from './services/game-rule';
 import { GeometryService, CenterRadius } from './services/geometry';
 import { ElevationService } from './services/elevation';
 
+import { UserStatusModule } from '../user-status';
+
 import { EXTERNAL_POI_DEPENDENCIES, EXTERNAL_HIKE_DEPENDENCIES, EXTERNAL_ROUTE_DEPENDENCIES } from './externals';
 
 import {
@@ -31,7 +33,8 @@ import { HikeModuleConfig } from './config';
     CommonModule,
     SharedModule,
     MapModule,
-    RouterModule
+    RouterModule,
+    UserStatusModule
   ],
   providers: [
     HikeProgramService,

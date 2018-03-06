@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import * as loadGoogleMapsAPI from 'load-google-maps-api';
 import { IGoogleMapsConfig, SharedConfig } from '../../config';
 import { /**/ } from '@types/googlemaps';
@@ -11,5 +11,13 @@ export class GoogleMapsService {
   constructor(commonConfig: SharedConfig) {
     this._config = commonConfig.googleMaps;
     this.map = loadGoogleMapsAPI(this._config);
+  }
+
+  autocomplete(element: ElementRef) {
+    return this
+      .map
+      .then(() => {
+        return new google.maps.places.Autocomplete(element.nativeElement);
+      });
   }
 }
