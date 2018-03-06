@@ -257,7 +257,6 @@ describe('Facebook', () => {
     };
 
     oauthWindow.on('changeurl', url => {
-      console.log(url);
       expect(url.indexOf('scope')).toEqual(-1);
       config.facebook.permissions = 'profile';
       done();

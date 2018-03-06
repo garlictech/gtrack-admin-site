@@ -18,7 +18,7 @@ export class VerifySuccessComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: SuccessParams) => {
-      this.store.dispatch(new Actions.Verify(params));
+      this.store.dispatch(new Actions.Verify(params.token, params.uid));
     });
   }
 }

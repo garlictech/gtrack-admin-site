@@ -68,10 +68,7 @@ describe('AuthGuard', () => {
     let store: Store<any> = TestBed.get(Store);
     let guard: AuthGuard = TestBed.get(AuthGuard);
     let router: MockRouterService = TestBed.get(Router);
-    let action = new Actions.RouteForbidden({
-      route: undefined,
-      state: undefined
-    });
+    let action = new Actions.RouteForbidden();
 
     spyOn(store, 'dispatch').and.callThrough();
 

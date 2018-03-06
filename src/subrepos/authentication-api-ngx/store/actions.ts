@@ -21,59 +21,45 @@ export const WINDOW_REOPENED = '[Authentication] Window reopened'
 
 export class RequestVerifyToken implements Action {
   readonly type = REQUEST_VERIFY_TOKEN;
-  // payload: the email
-  constructor(public payload: string) {
-    /* EMPTY */
-  }
+
+  constructor(public email: string) {}
 }
 
 export class Verify implements Action {
   readonly type = VERIFY;
-  constructor(public payload: { token: string; uid: string }) {
-    /* EMPTY */
-  }
+  constructor(public token: string, public uid: string) {}
 }
 
 export class FacebookLogin implements Action {
   readonly type = FACEBOOK_LOGIN;
-  // Payload: the roles array
-  constructor(public payload: string[]) {
-    /* EMPTY */
-  }
+  constructor(public roles: string[]) {}
 }
 
 export class GoogleLogin implements Action {
   readonly type = GOOGLE_LOGIN;
-  // Payload: the roles array
-  constructor(public payload: string[]) {
-    /* EMPTY */
-  }
+  constructor(public roles: string[]) {}
 }
 
 export class TwitterLogin implements Action {
   readonly type = TWITTER_LOGIN;
-  constructor(public payload: string[]) {
-    /* EMPTY */
-  }
+  constructor(public roles: string[]) {}
 }
 export class RequestMagicLinkToken implements Action {
   readonly type = MAGICLINK_REQUEST_TOKEN;
   constructor(
-    public payload: {
-      email: string;
-      language: string;
-      roles: string[];
-    }
-  ) {
-    /* EMPTY */
-  }
+    public email: string,
+    public language: string,
+    public roles: string[]
+  ) {}
 }
 
 export class MagicLinkLogin implements Action {
   readonly type = MAGICLINK_LOGIN;
-  constructor(public payload: { token; uid; roles }) {
-    /* EMPTY */
-  }
+  constructor(
+    public token: string,
+    public uid: string,
+    public roles: string[]
+  ) {}
 }
 
 export class MagicLinkEmailSent implements Action {
@@ -82,33 +68,23 @@ export class MagicLinkEmailSent implements Action {
 
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
-  constructor(public payload: IAuth | null) {
-    /* EMPTY */
-  }
+  constructor(public auth: IAuth | null) {}
 }
 
 export class FailureHappened implements Action {
   readonly type = FAILURE_HAPPENED;
-  // Payload: the error object
-  constructor(public payload: any) {
-    /* EMPTY */
-  }
+  constructor(public error: any) {}
 }
 
 export class UserCancelled implements Action {
   readonly type = USER_CANCELLED;
-  // Payload: the error object
-  constructor(public payload: any) {
-    /* EMPTY */
-  }
+  constructor(public error: any) {}
 }
 
 export class WindowReopened implements Action {
   readonly type = WINDOW_REOPENED;
   // Payload: the error object
-  constructor(public payload: any) {
-    /* EMPTY */
-  }
+  constructor(public error: any) {}
 }
 
 export class LogoutStart implements Action {
@@ -127,13 +103,9 @@ export class RouteForbidden implements Action {
   readonly type = ROUTE_FORBIDDEN;
 
   constructor(
-    public payload: {
-      route?: ActivatedRouteSnapshot;
-      state?: RouterStateSnapshot;
-    }
-  ) {
-    // Empty
-  }
+    public route?: ActivatedRouteSnapshot,
+    public state?: RouterStateSnapshot
+  ) {}
 }
 
 export type AllActions =
