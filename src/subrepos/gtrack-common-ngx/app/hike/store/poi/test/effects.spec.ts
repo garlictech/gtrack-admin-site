@@ -19,6 +19,10 @@ import { DeepstreamModule } from '../../../../deepstream';
 import { Observable } from 'rxjs/Observable';
 import { pois as poiFixtures, poisStored } from './fixtures';
 
+import { GeometryService } from '../../../services/geometry';
+import { GeoSearchService } from '../../../../geosearch';
+
+
 export class TestActions extends Actions {
   constructor() {
     super(Observable.empty());
@@ -71,6 +75,8 @@ describe('Poi effects', () => {
       providers: [
         PoiService,
         PoiEffects,
+        GeometryService,
+        GeoSearchService,
         {
           provide: Actions,
           useFactory: getActions

@@ -21,13 +21,9 @@ export class PasswordlessSuccessComponent implements OnInit {
     this.route.queryParams
       .filter(params => params && params.roles)
       .subscribe((params: SuccessParams) => {
-        this.store.dispatch(
-          new Actions.MagicLinkLogin({
-            token: params.token,
-            uid: params.uid,
-            roles: params.roles.split(',')
-          })
-        );
-      });
+      this.store.dispatch(
+        new Actions.MagicLinkLogin(params.token, params.uid, params.roles.split(','))
+      );
+    });
   }
 }

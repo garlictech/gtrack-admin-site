@@ -19,6 +19,11 @@ import {
   IGeoSearchState
 } from '../geosearch';
 
+import {
+  userStatusReducer,
+  IUserStatusState
+} from '../user-status';
+
 // A module with store must export its reducers and its store interface - do it here, like in teh example
 // import * as Authentication from '../authentication/store'
 
@@ -31,7 +36,8 @@ export interface CommonState {
   poi: IPoiState,
   hike: IHikeState,
   route: IRouteState,
-  geosearch: IGeoSearchState
+  geosearch: IGeoSearchState,
+  userStatus: IUserStatusState
 }
 
 export const commonReducers: ActionReducerMap<CommonState> = {
@@ -40,5 +46,6 @@ export const commonReducers: ActionReducerMap<CommonState> = {
   poi: poiReducer,
   hike: hikeReducer,
   route: routeReducer,
-  geosearch: geoSearchReducer
+  geosearch: geoSearchReducer,
+  userStatus: userStatusReducer
 };

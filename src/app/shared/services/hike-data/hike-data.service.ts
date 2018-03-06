@@ -3,14 +3,14 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { State, hikeEditGeneralInfoActions } from 'app/store';
+import { State, hikeEditGeneralInfoActions, commonRouteActions } from 'app/store';
 import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
+import { ITextualDescriptionItem } from '../../interfaces';
+import { IHikeProgram, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
-import { IHikeProgram, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
-import { ITextualDescriptionItem } from '../../interfaces';
 
 @Injectable()
 export class HikeDataService {
@@ -130,20 +130,20 @@ export class HikeDataService {
    * Split hike data to store
    */
   public splitHikeDataToStore(hikeData: IHikeProgram) {
-    console.log('splitHikeDataToStore', hikeData);
+    // Set route id and load route data
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({
+      routeId: hikeData.routeId
+    }));
+    this._store.dispatch(new commonRouteActions.LoadRoute(hikeData.routeId));
 
-    this._splitHikeGeneralInfoToStore(hikeData);
-    this._splitHikeDescriptionToStore(hikeData.description);
-  }
-
-  /**
-   * splitHikeDataToStore submethod
-   */
-  private _splitHikeGeneralInfoToStore(hikeData: IHikeProgram) {
+    // General info
     this._store.dispatch(new hikeEditGeneralInfoActions.SetGeneralInfo({
       isRoundTrip: hikeData.isRoundTrip,
       difficulty: parseInt(hikeData.difficulty) // TODO: it will be number!
     }));
+
+    // Descriptions
+    this._splitHikeDescriptionToStore(hikeData.description);
   }
 
   /**

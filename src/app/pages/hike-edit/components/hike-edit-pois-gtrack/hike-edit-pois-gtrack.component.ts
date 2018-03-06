@@ -39,7 +39,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._store.select(this._hikeEditMapSelectors.getMapId)
-      .skipWhile(id => id === '')
+      .filter(id => id !== '')
       .take(1)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
@@ -72,10 +72,12 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     );
 
     this.showOnrouteMarkers$ = this._store.select(
-      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOnrouteMarkers'));
+      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOnrouteMarkers')
+    );
 
     this.showOffrouteMarkers$ = this._store.select(
-      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOffrouteMarkers'));
+      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOffrouteMarkers')
+    );
 
     this.showOnrouteMarkers$
       .takeUntil(this._destroy$)
@@ -120,14 +122,18 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
    * Show onroute markers checkbox click
    */
   public toggleOnrouteMarkers() {
-    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'gTrack' }));
+    this._store.dispatch(
+      new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'gTrack' })
+    );
   }
 
   /**
    * Show offroute markers checkbox click
    */
   public toggleOffrouteMarkers() {
-    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'gTrack' }));
+    this._store.dispatch(
+      new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'gTrack' })
+    );
   }
 
   /**
@@ -135,7 +141,9 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
    */
   public savePois() {
     Observable.combineLatest(
+      // gTrack pois from the store
       this.pois$.take(1),
+      // poi ids from the loaded hike program
       this._store.select(this._hikeEditGeneralInfoSelectors.getPois).take(1)
     ).subscribe(data => {
       if (data[0] && data[1]) {

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
 
 import { HikeProgram } from './hike-program';
 import { IHikeProgram, IHikeProgramStored, IHikeProgramSaveResponse } from 'subrepos/provider-client';

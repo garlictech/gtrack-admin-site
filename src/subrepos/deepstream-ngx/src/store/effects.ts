@@ -20,9 +20,9 @@ export class Effects {
   @Effect()
   deepstreamLogin$: Observable<Action> = this._actions$
     .ofType<LocalActions.DeepstreamLogin>(LocalActions.DEEPSTREAM_LOGIN)
-    .switchMap(action => {
+    .mergeMap(action => {
       log.d('Effect: Logging in to deepstream...');
-      return this._deepstreamService.login(action.payload);
+      return this._deepstreamService.login(action.token);
     })
     .filter(auth => !!auth)
     .map((auth: IClientData) => {
@@ -39,7 +39,5 @@ export class Effects {
     private _deepstreamService: DeepstreamService,
     private _store: Store<any>,
     @Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) private _externals: IExternalDeepstreamDependencies
-  ) {
-    /* EMPTY */
-  }
+  ) {}
 }

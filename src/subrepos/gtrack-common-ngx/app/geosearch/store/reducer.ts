@@ -49,9 +49,11 @@ const reducer: ActionReducer<IGeoSearchEntityState> = (
 ): IGeoSearchEntityState => {
   switch (action.type) {
     case GeoSearchActionTypes.GEOSEARCH_COMPLETE:
-      return geoSearchAdapter.addOne({
+      return geoSearchAdapter.upsertOne({
         id: action.context,
-        results: action.results
+        changes: {
+          results: action.results
+        }
       }, state);
 
     default:

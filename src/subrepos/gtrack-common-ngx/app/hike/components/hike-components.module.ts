@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NouisliderModule } from 'ng2-nouislider';
 
 import { TrailBoxComponent } from './trail-box';
 import { HikeCardComponent } from './hike-card';
@@ -8,6 +9,7 @@ import { HikeDataItemComponent } from './hike-data-item';
 import { ElevationProfileComponent } from './elevation-profile';
 import { HikeProgramComponent } from './hike-program';
 import { CheckpointsComponent } from './checkpoints';
+import { LocationSearchComponent } from './location-search';
 
 import { HikeModule } from '../hike.module';
 import { MapModule } from '../../map/map.module';
@@ -19,7 +21,8 @@ import { SharedModule } from '../../shared/shared.module';
     HikeModule,
     MapComponentsModule,
     CommonModule,
-    SharedModule
+    SharedModule,
+    NouisliderModule
   ],
   exports: [
     TrailBoxComponent,
@@ -28,7 +31,8 @@ import { SharedModule } from '../../shared/shared.module';
     HikeDataItemComponent,
     ElevationProfileComponent,
     HikeProgramComponent,
-    CheckpointsComponent
+    CheckpointsComponent,
+    LocationSearchComponent
   ],
   declarations: [
     TrailBoxComponent,
@@ -37,7 +41,8 @@ import { SharedModule } from '../../shared/shared.module';
     HikeDataItemComponent,
     ElevationProfileComponent,
     HikeProgramComponent,
-    CheckpointsComponent
+    CheckpointsComponent,
+    LocationSearchComponent
   ]
 })
 export class HikeComponentsModule {

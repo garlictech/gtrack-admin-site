@@ -31,11 +31,11 @@ export const reducer: ActionReducer<IAuthenticationState> = (state = initialStat
       return { ...state, emailSent: true, failed: null, loggingIn: false };
 
     case ApiActions.LOGIN_SUCCESS:
-      return { ...{ auth: action.payload }, loggingIn: false, failed: null, emailSent: false };
+      return { ...{ auth: action.auth }, loggingIn: false, failed: null, emailSent: false };
 
       case ApiActions.USER_CANCELLED:
       case ApiActions.FAILURE_HAPPENED:
-      return { ...state, ...{ failed: action.payload }, loggingIn: false, emailSent: false };
+      return { ...state, ...{ failed: action.error }, loggingIn: false, emailSent: false };
 
     case ApiActions.LOGOUT_START:
       return { ...state };

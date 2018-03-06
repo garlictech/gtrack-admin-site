@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Client as DeepstreamClient, Record, Query, Rpc, List } from '@garlictech/deepstream-rxjs';
 import { DebugLog } from '../log';
+import { EAuthRoles } from 'subrepos/provider-client';
 
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
 
@@ -42,12 +43,14 @@ export class DeepstreamService {
   }
 
   doQuery<T = any>(queryDesc: IQueryDesc, start = 0): Observable<T[]> {
-    let rpcData: IRpcQuery = { payload: { ...queryDesc } };
+    let rpcData: IRpcQuery = { payload: { ...queryDesc }};
 
-    return this.callRpc('search-provider.serialize', rpcData).switchMap(res => {
-      let query = new Query<T>(this.dsClient);
-      return query.queryForData(res.name, res.table);
-    });
+    return this
+      .callRpc('search-provider.serialize', rpcData)
+      .switchMap(res => {
+        let query = new Query<T>(this.dsClient);
+        return query.queryForData(res.name, res.table);
+      });
   }
 
   doPageQuery<T = any>(queryDesc: IQueryDesc, currentPage, pageSize): Observable<T[]> {
@@ -61,10 +64,12 @@ export class DeepstreamService {
       }
     };
 
-    return this.callRpc('search-provider.serialize', rpcData).switchMap(res => {
-      let query = new Query<T>(this.dsClient);
-      return query.pageableQuery(res.name, start, end, res.table);
-    });
+    return this
+      .callRpc('search-provider.serialize', rpcData)
+      .switchMap(res => {
+        let query = new Query<T>(this.dsClient);
+        return query.pageableQuery(res.name, start, end, res.table);
+      });
   }
 
   getRecord<T = any>(id: string): Record<T> {
@@ -79,12 +84,13 @@ export class DeepstreamService {
     let rpc = new Rpc(this.dsClient);
     let userSelector = this._store.select(this._selectors.userData).take(1);
 
-    return userSelector.filter(user => !!user).switchMap(user => {
-      let sentData = {
-        ...data,
-        userId: user.userId || 'open',
-        role: user.role || 'user'
-      };
+    return userSelector
+    .switchMap(user => {
+        let sentData = {
+          ...data,
+          userId: user.userId || 'open',
+          role: user.role || EAuthRoles.user
+        }
 
       return rpc.make(name, sentData);
     });

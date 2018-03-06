@@ -10,6 +10,7 @@ import { ISegment } from 'subrepos/gtrack-common-ngx';
 export class HikeEditRoutePlannerSelectors {
   private _featureSelector: MemoizedSelector<object, IHikeEditRoutePlannerState>;
   public getRoutePlanner: MemoizedSelector<object, IHikeEditRoutePlannerState>;
+  public getRoute: MemoizedSelector<object, any>;
   public getSegments: MemoizedSelector<object, ISegment[]>;
 
   constructor() {
@@ -17,6 +18,10 @@ export class HikeEditRoutePlannerSelectors {
 
     this.getRoutePlanner = createSelector(this._featureSelector,
       (state: IHikeEditRoutePlannerState) => state
+    );
+
+    this.getRoute = createSelector(this._featureSelector,
+      (state: IHikeEditRoutePlannerState) => state.route
     );
 
     this.getSegments = createSelector(this._featureSelector,

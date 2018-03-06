@@ -9,6 +9,7 @@ import { LeafletMouseEvent } from 'leaflet';
 import { Center, ISegment } from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 import * as L from 'leaflet';
+import { AdminMapService } from '../../../../shared/services';
 
 const CENTER = <Center>{
   lat: 47.689714,
@@ -47,6 +48,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private _store: Store<State>,
+    private _adminMapService: AdminMapService,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
@@ -106,7 +108,12 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public resetMap($event: Event) {
     $event.stopPropagation();
-    this.mapComponent.map.fitBounds(this.mapComponent.map.routeInfo.getRoute());
+
+    this._store.select(this._hikeEditRoutePlannerSelectors.getRoute)
+      .take(1)
+      .subscribe((route) => {
+        this.mapComponent.map.fitBounds(route);
+      });
   }
 
   public buffer($event: Event) {
