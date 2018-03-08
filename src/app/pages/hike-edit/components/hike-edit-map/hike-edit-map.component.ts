@@ -12,8 +12,12 @@ import * as L from 'leaflet';
 import { AdminMapService } from '../../../../shared/services';
 
 const CENTER = <Center>{
-  lat: 47.689714,
-  lng: 18.904206,
+  // London
+  lat: 51.523723,
+  lng: -0.112525,
+  // Pilis hg.
+  // lat: 47.689714,
+  // lng: 18.904206,
   zoom: 12
 };
 
@@ -50,11 +54,11 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
-  ) {
-    this._store.dispatch(new hikeEditMapActions.ResetMapState());
-  }
+  ) {}
 
   ngOnInit() {
+    this._store.dispatch(new hikeEditMapActions.ResetMapState());
+
     // Update buffer on each segment update
     this._store.select(this._hikeEditRoutePlannerSelectors.getSegments)
       .takeUntil(this._destroy$)
