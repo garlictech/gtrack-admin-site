@@ -154,14 +154,18 @@ export class HikeEditPoiEffects {
             center: [data.centerCoord[0], data.centerCoord[1]]
           }
         })
-        .flatMap((poiIds: string[]) => {
-          return Observable
-            .combineLatest(...poiIds.map(poiId => {
-              return this._poiService.get(poiId);
-            }))
-            .map(pois => {
-              return _.extend(_.cloneDeep(data), { pois: pois });
-            });
+        .mergeMap((poiIds: string[]) => {
+          if (poiIds.length > 0) {
+            return Observable
+              .combineLatest(...poiIds.map(poiId => {
+                return this._poiService.get(poiId);
+              }))
+              .map(pois => {
+                return _.extend(_.cloneDeep(data), { pois: pois });
+              });
+          } else {
+            return Observable.of(_.extend(_.cloneDeep(data), { pois: [] }));
+          }
         });
     })
     .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
