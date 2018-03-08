@@ -1,14 +1,13 @@
 import {
-  Injectable, ComponentRef, ApplicationRef, ElementRef, Injector, ComponentFactoryResolver
+  Injectable, ComponentRef, ApplicationRef, ElementRef, Injector, Type, ComponentFactoryResolver
 } from '@angular/core';
-import { ComponentModalComponent } from './component-modal/component-modal.component';
 import { IDynamicComponentModalConfig } from './dynamic-modal.interface';
 
 import * as _ from 'lodash';
 
 @Injectable()
 export class DynamicModalService {
-  private _modalRefList: ComponentRef<ComponentModalComponent>[] = [];
+  private _modalRefList: ComponentRef<any>[] = [];
   private _modalContainer: ElementRef;
 
   constructor(
@@ -21,9 +20,24 @@ export class DynamicModalService {
     this._modalContainer = container;
   }
 
-  public showComponentModal(config: any) {
-    const compFactory = this._resolver.resolveComponentFactory(ComponentModalComponent);
-    const modalRef: ComponentRef<ComponentModalComponent> = compFactory.create(this._injector);
+  public showComponentModal(config: IDynamicComponentModalConfig) {
+
+    if (!config.component.modalComponentName) {
+      config.component.modalComponentName = 'DefaultComponentModalComponent';
+    }
+
+    console.log('config', config);
+
+    const factories = Array.from((<any>this._resolver)._factories.keys());
+    const modalFactoryClass = <Type<any>>factories.find((x: any) => {
+      return x.name === config.component.modalComponentName;
+    });
+
+    if (modalFactoryClass === null) {
+      console.log(`ERROR: factoryClass for component name ${config.component.modalComponentName} not found.`);
+    }
+    const compFactory = this._resolver.resolveComponentFactory(modalFactoryClass);
+    const modalRef: ComponentRef<any> = compFactory.create(this._injector);
 
     this._modalRefList.push(modalRef);
     this._appRef.attachView(modalRef.hostView);
