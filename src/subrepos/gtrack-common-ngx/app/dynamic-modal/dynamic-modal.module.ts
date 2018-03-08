@@ -2,12 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DynamicModalContainerComponent } from './dynamic-modal-container.component';
-import { ComponentModalComponent } from './component-modal/component-modal.component';
+import {
+  DefaultComponentModalComponent
+} from './modal-templates/default-component-modal/default-component-modal.component';
 import { DynamicModalService } from './dynamic-modal.service';
+import { DynamicModalCoreComponent } from './dynamic-modal-core.component';
 
 const COMPONENTS = [
   DynamicModalContainerComponent,
-  ComponentModalComponent
+  DefaultComponentModalComponent,
+  DynamicModalCoreComponent
 ];
 
 @NgModule({
@@ -15,7 +19,8 @@ const COMPONENTS = [
     CommonModule
   ],
   exports: [
-    DynamicModalContainerComponent
+    DynamicModalContainerComponent,
+    DynamicModalCoreComponent
   ],
   declarations: [
     ...COMPONENTS

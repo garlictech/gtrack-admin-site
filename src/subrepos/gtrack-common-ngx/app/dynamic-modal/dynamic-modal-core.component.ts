@@ -1,18 +1,15 @@
 import {
   Component, ViewChild, Type, ElementRef, ComponentRef, ComponentFactoryResolver,
-  Injector, ApplicationRef
+  Injector, ApplicationRef, ComponentFactory
 } from '@angular/core';
-import { IDynamicComponentModalConfig } from '../dynamic-modal.interface';
+import { IDynamicComponentModalConfig } from './dynamic-modal.interface';
+
 import * as _ from 'lodash';
-import { ComponentFactory } from '@angular/core/src/linker/component_factory';
 
 @Component({
-  selector: 'gt-component-modal',
-  templateUrl: './component-modal.component.html',
-  styleUrls: ['./component-modal.component.scss']
+  template: ''
 })
-
-export class ComponentModalComponent {
+export class DynamicModalCoreComponent {
   @ViewChild('modalBody') modalBody: ElementRef;
   public visible = false;
   public visibleAnimate = false;
@@ -32,14 +29,14 @@ export class ComponentModalComponent {
       this._compRef.destroy();
     }
 
-    if (this.modalConfig.component.name) {
+    if (this.modalConfig.component.contentComponentName) {
       const factories = Array.from((<any>this._resolver)._factories.keys());
       const factoryClass = <Type<any>>factories.find((x: any) => {
-        return x.name === this.modalConfig.component.name;
+        return x.name === this.modalConfig.component.contentComponentName;
       });
 
       if (factoryClass === null) {
-        console.log(`ERROR: factoryClass for component name ${this.modalConfig.component.name} not found.`);
+        console.log(`ERROR: factoryClass for component name ${this.modalConfig.component.contentComponentName} not found.`);
       }
       const compFactory = this._resolver.resolveComponentFactory(factoryClass);
       this._compRef = compFactory.create(this._injector);
@@ -64,6 +61,9 @@ export class ComponentModalComponent {
   public show(): void {
     this.visible = true;
 
+    // Bootstrap.js fix
+    document.getElementsByTagName('body')[0].classList.add('modal-open');
+
     setTimeout(() => {
       this.visibleAnimate = true;
     }, 100);
@@ -71,6 +71,9 @@ export class ComponentModalComponent {
 
   public close(): void {
     this.visibleAnimate = false;
+
+    // Bootstrap.js fix
+    document.getElementsByTagName('body')[0].classList.remove('modal-open');
 
     setTimeout(() => {
       this.visible = false;

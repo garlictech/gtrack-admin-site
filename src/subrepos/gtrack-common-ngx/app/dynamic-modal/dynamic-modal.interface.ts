@@ -1,6 +1,7 @@
 export interface IDynamicComponentModalConfig {
   component: {
-    name: string;
+    modalComponentName?: string;
+    contentComponentName: string;
     onClose?: any;
     data?: any;
   };

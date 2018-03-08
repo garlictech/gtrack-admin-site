@@ -43,14 +43,18 @@ export class PoiService {
           center: [_centerCoord[0], _centerCoord[1]]
         }
       })
-      .flatMap((poiIds: string[]) => {
-        return Observable
-          .combineLatest(...poiIds.map(poiId => {
-            return this.get(poiId);
-          }))
-          .map(pois => {
-            return pois;
-          });
+      .mergeMap((poiIds: string[]) => {
+        if (poiIds.length > 0) {
+          return Observable
+            .combineLatest(...poiIds.map(poiId => {
+              return this.get(poiId);
+            }))
+            .map(pois => {
+              return pois;
+            });
+        } else {
+          return Observable.of([]);
+        }
       });
   }
 
