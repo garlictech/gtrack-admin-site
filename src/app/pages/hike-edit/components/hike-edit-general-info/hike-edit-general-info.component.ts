@@ -41,11 +41,11 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _formBuilder: FormBuilder,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
-  ) {
-    this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
-  }
+  ) {}
 
   ngOnInit() {
+    this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
+
     // Selectors
     this.existingLangKeys$ = this._store.select(
       this._hikeEditGeneralInfoSelectors.getAllLangKeys

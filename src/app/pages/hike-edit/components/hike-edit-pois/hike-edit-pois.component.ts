@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, hikeEditPoiActions } from 'app/store';
 import { IExternalPoiType } from 'app/shared/interfaces/index';
@@ -8,7 +8,7 @@ import { IExternalPoiType } from 'app/shared/interfaces/index';
   selector: 'gt-hike-edit-pois',
   templateUrl: './hike-edit-pois.component.html'
 })
-export class HikeEditPoisComponent {
+export class HikeEditPoisComponent implements OnInit {
   public externalPoiTypes: IExternalPoiType[] = [
     {
       title: 'Wikipedia pois',
@@ -35,7 +35,9 @@ export class HikeEditPoisComponent {
 
   constructor(
     private _store: Store<State>
-  ) {
+  ) {}
+
+  ngOnInit() {
     this._store.dispatch(new hikeEditPoiActions.ResetPoiState());
   }
 }
