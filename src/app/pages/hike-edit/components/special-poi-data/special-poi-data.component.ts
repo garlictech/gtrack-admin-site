@@ -23,7 +23,7 @@ export class SpecialPoiDataComponent {
 
     const modalConfig: IDynamicComponentModalConfig = {
       component: {
-        name: 'HikeEditPoiInfoModalContentComponent',
+        contentComponentName: 'HikeEditPoiInfoModalContentComponent',
         data: {
           poi: poi
         }
