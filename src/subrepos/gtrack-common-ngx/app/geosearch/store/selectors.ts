@@ -16,6 +16,10 @@ import {
   EXTERNAL_GEO_SEARCH_DEPENDENCIES
 } from '../externals';
 
+interface GeoSearchableItem {
+  id: string;
+}
+
 @Injectable()
 export class GeoSearchSelectors {
   public selectFeature: MemoizedSelector<object, IGeoSearchState>;
@@ -49,5 +53,19 @@ export class GeoSearchSelectors {
 
   public getGeoSearch(context: string) {
     return createSelector(this.getAllGeoSearches, (searches: IGeoSearchResponseItem[]) => (searches.find(search => (search.id === context))));
+  }
+
+  public getGeoSearchResults<T extends GeoSearchableItem>(context: string, getAllSelector: ((state: object) => T[])) {
+    return createSelector(
+      getAllSelector,
+      this.getGeoSearch(context),
+      (data, results) => {
+        if (typeof results !== 'undefined') {
+          let ids = results.results;
+
+          return data.filter(item => ids.indexOf(item.id) !== -1);
+        }
+      }
+    )
   }
 }
