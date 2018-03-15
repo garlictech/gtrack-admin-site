@@ -64,6 +64,9 @@ const descriptionReducer: ActionReducer<IDescriptionEntityState> = (
     case hikeEditGeneralInfoActions.SET_DESCRIPTIONS: {
       return descriptionAdapter.addAll(action.payload.descriptions, state);
     }
+    case hikeEditGeneralInfoActions.ADD_DESCRIPTION: {
+      return descriptionAdapter.addOne(action.payload.description, state);
+    }
     default:
       return state;
   }

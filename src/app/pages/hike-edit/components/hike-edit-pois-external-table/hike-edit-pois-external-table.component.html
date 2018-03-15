@@ -6,7 +6,7 @@
       <th>Distance from route</th>
       <th>Types</th>
       <th>Special</th>
-      <th>Handles</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -17,13 +17,14 @@
         <td>{{poi.distFromRoute | distance : true}}</td>
         <td>{{poi.types.join(', ')}}</td>
         <td><special-poi-data [poi]="poi"></special-poi-data></td>
-        <td>
-          <a
+        <td class="td-actions">
+          <button
+            class="btn btn-simple btn-link"
+            [ngClass]="{'btn-success': !poi.inHike, 'btn-danger': poi.inHike}"
             (click)="handleInHikePoi($event, poi)" 
-            [ngClass]="{'text-success': !poi.inHike, 'text-danger': poi.inHike}"
-          >
-            {{poi.inHike ? 'remove': 'add'}}
-          </a>
+            title="{{poi.inHike ? 'Remove': 'Add'}} poi">
+            <i class="material-icons">{{poi.inHike ? 'remove_circle': 'add_circle'}}</i>
+          </button>
         </td>
       </tr>
     </ng-container>

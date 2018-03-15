@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { PoiSelectors, CenterRadius, GeometryService } from 'subrepos/gtrack-common-ngx';
+import { PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors } from 'subrepos/gtrack-common-ngx';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import {
@@ -33,6 +33,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
+    private _geoSearchSelectors: GeoSearchSelectors,
     private _geometryService: GeometryService,
     private _poiSelectors: PoiSelectors
   ) {}
@@ -47,6 +48,12 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGTrackPois);
     this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllGTrackMarkers);
+
+    this._store.select(this._geoSearchSelectors.getGeoSearch('gTrackPois'))
+      .takeUntil(this._destroy$)
+      .subscribe((searchData) => {
+        this._store.dispatch(new commonPoiActions.LoadPois((<any>searchData).results));
+      })
 
     this.pois$
       .takeUntil(this._destroy$)
@@ -110,11 +117,13 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     let _centerCoord = _geo!.center!.geometry!.coordinates;
 
     if (_centerCoord) {
-      this._store.dispatch(new hikeEditPoiActions.GetGTrackPois({
-        centerCoord: _centerCoord,
-        radius: _geo.radius,
-        mapId: this._map.id
-      }));
+      this._store.dispatch(new commonGeoSearchActions.SearchInCircle({
+        table: 'pois',
+        circle: {
+          radius: _geo.radius,
+          center: [_centerCoord[0], _centerCoord[1]]
+        }
+      }, 'gTrackPois'));
     }
   }
 

@@ -7,7 +7,7 @@
       <th>Types</th>
       <th>Origin</th>
       <th>Elevation</th>
-      <th>Handles</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -19,13 +19,22 @@
         <td>{{poi.types.join(', ')}}</td>
         <td>{{poi.objectType}}</td>
         <td>{{poi.elevation | distance}}</td>
-        <td>
-          <a
-            (click)="handleInHikePoi($event, poi)" 
-            [ngClass]="{'text-success': !poi.inHike, 'text-danger': poi.inHike}"
+        <td class="td-actions">
+          <button
+            class="btn btn-warning btn-simple btn-link"
+            title="Edit poi"
+            (click)="openModal($event, poi)"
           >
-            {{poi.inHike ? 'remove': 'add'}}
-          </a>
+            <i class="material-icons">edit</i>
+          </button>
+          <button
+            class="btn btn-simple btn-link"
+            [ngClass]="{'btn-success': !poi.inHike, 'btn-danger': poi.inHike}"
+            (click)="handleInHikePoi($event, poi)" 
+            title="{{poi.inHike ? 'Remove': 'Add'}} poi"
+          >
+            <i class="material-icons">{{poi.inHike ? 'remove_circle': 'add_circle'}}</i>
+          </button>
         </td>
       </tr>
     </ng-container>

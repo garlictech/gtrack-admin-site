@@ -57,6 +57,10 @@ export class HikeEditPoiSelectors {
     this.getAllGTrackPois = gTrackPoiAdapter.getSelectors(gtrackPoiSelector).selectAll;
   }
 
+  public getGTrackPoi(id: string) {
+    return createSelector(this.getAllGTrackPois, (pois: IGTrackPoi[]) => pois.find(poi => (poi.id === id)));
+  }
+
   //
   // Context
   //

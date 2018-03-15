@@ -5,22 +5,14 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operators';
+import { DESCRIPTION_LANGS } from 'app/app.constants';
 import { State, hikeEditGeneralInfoActions } from 'app/store';
 import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
+import { IGeneralInfoState } from 'app/store/state';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
 import { ITextualDescription } from 'subrepos/provider-client';
-import { IGeneralInfoState } from '../../../../store/state';
 
 import * as _ from 'lodash';
-
-// TODO: load from config?
-const LANGS = {
-  en_US: 'English',
-  hu_HU: 'Hungarian',
-  de_DE: 'German',
-  fr_FR: 'French',
-  it_IT: 'Italian'
-};
 
 @Component({
   selector: 'gt-hike-edit-general-info',
@@ -33,7 +25,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public existingLangKeys$: Observable<string[] | number[]>;
   public generalInfoForm: FormGroup;
   public descriptionForm: FormGroup;
-  public langs = LANGS;
+  public langs = DESCRIPTION_LANGS;
   public selLang = '';
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -84,12 +76,14 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       difficulty: 1
     });
 
-    this.generalInfo$.subscribe((generalInfo) => {
-      this.generalInfoForm.patchValue({
-        isRoundTrip: generalInfo.isRoundTrip,
-        difficulty: generalInfo.difficulty
-      })
-    });
+    this.generalInfo$
+      .takeUntil(this._destroy$)
+      .subscribe((generalInfo) => {
+        this.generalInfoForm.patchValue({
+          isRoundTrip: generalInfo.isRoundTrip,
+          difficulty: generalInfo.difficulty
+        })
+      });
 
     //
     // Descriptions
@@ -99,22 +93,24 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       langs: this._formBuilder.array([])
     });
 
-    this.textualDescriptions$.subscribe((descriptions) => {
-      let _descriptionArray = <FormArray>this.descriptionForm.controls.langs;
+    this.textualDescriptions$
+      .takeUntil(this._destroy$)
+      .subscribe((descriptions) => {
+        let _descriptionArray = <FormArray>this.descriptionForm.controls.langs;
 
-      for (let desc of descriptions) {
-        let _langIdx = _.map(_descriptionArray.value, 'id').indexOf(desc.id);
+        for (let desc of descriptions) {
+          let _langIdx = _.map(_descriptionArray.value, 'id').indexOf(desc.id);
 
-        // Insert new language
-        if (_langIdx < 0) {
-          const formArrayItem = this._createDescriptionItem(desc);
-          _descriptionArray.push(formArrayItem);
-        // Update existing language
-        } else {
-          _descriptionArray.at(_langIdx).patchValue(desc);
+          // Insert new language
+          if (_langIdx < 0) {
+            const formArrayItem = this._createDescriptionItem(desc);
+            _descriptionArray.push(formArrayItem);
+          // Update existing language
+          } else {
+            _descriptionArray.at(_langIdx).patchValue(desc);
+          }
         }
-      }
-    });
+      });
   }
 
   private _createDescriptionItem(desc) {
@@ -133,12 +129,18 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   }
   */
 
+  /**
+   * Add new language to descriptions
+   */
   public addTranslation() {
     if (this.selLang) {
-      // Add new lang field to the form. Form change will call a store update.
-      const control = <FormArray>this.descriptionForm.controls.langs;
-      control.push(this._createDescriptionItem({
-        id: this.selLang
+      this._store.dispatch(new hikeEditGeneralInfoActions.AddDescription({
+        description: {
+          id: this.selLang,
+          title: '',
+          fullDescription: '',
+          summary: ''
+        }
       }));
 
       // Clear lang selector guide
