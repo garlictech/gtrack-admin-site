@@ -46,6 +46,7 @@ import {
 // Vendor
 import { AngularFireModule } from 'angularfire2';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
+
 // Global styles
 import './styles';
 

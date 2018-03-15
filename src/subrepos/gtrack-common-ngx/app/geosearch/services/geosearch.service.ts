@@ -15,7 +15,6 @@ export class GeoSearchService {
   }
 
   public searchCircle(query: IGeospatialCircleSearchPayload) {
-    console.log('searchCircle');
     return this._deepstream.callRpc<GeospatialSearchResponse>('geo.query.includedInCircle', {
       payload: query
     });
