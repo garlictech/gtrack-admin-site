@@ -1,8 +1,8 @@
-version: '2'
+version: '3.1'
 
 services:
   deepstream:
-    image: docker.garlictech.com/gtrack-deepstream-staging
+    image: docker.garlictech.com/gtrack-deepstream-staging:latest
     ports:
       - 6020:6020
     env_file:
@@ -15,6 +15,8 @@ services:
       - rethinkdb
       - redis
     restart: always
+    secrets:
+      - DEEPSTREAM_PROVIDER_JWT_SECRET
 
   redis:
     image: redis:alpine
@@ -32,3 +34,11 @@ services:
     depends_on:
       - deepstream
     restart: always
+    secrets:
+      - DEEPSTREAM_PROVIDER_JWT_SECRET
+
+secrets:
+  DEEPSTREAM_PROVIDER_JWT_SECRET:
+    file: secrets/DEEPSTREAM_PROVIDER_JWT_SECRET.secret.txt
+  DEEPSTREAM_USER_JWT_SECRET:
+    file: secrets/DEEPSTREAM_USER_JWT_SECRET.secret.txt
