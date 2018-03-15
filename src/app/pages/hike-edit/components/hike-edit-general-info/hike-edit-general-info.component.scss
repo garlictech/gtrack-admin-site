@@ -1,48 +1,46 @@
-gt-hike-edit-general-info {
-  .inline-checkbox {
-    margin-left: 0;
-  }
-  .inline-checkbox {
-    padding-left: 0;
-  }
+.inline-checkbox {
+  margin-left: 0;
+}
+.inline-checkbox {
+  padding-left: 0;
+}
 
-  input[type="range"] {
-    position: relative;
-    top: 3px;
-  }
+input[type="range"] {
+  position: relative;
+  top: 3px;
+}
 
-  output.difficulty {
-    width: 20px;
-    font-weight: bold;
-  }
+output.difficulty {
+  width: 20px;
+  font-weight: bold;
+}
 
-  .lang-toolbar {
-    span {
-      float: right !important;
-      padding: 3px 14px;
-    }
-
-    select {
-      float: right !important;
-      width: 120px !important;
-    }
-
-    button {
-      float: right !important;
-      margin-left: 20px;
-    }
+.lang-toolbar {
+  span {
+    float: right !important;
+    padding: 3px 14px;
   }
 
-  .table {
-    th:first-child,
-    td:first-child {
-      width: 130px;
-    }
+  select {
+    float: right !important;
+    width: 120px !important;
+  }
 
-    .form-group {
-      margin: 0;
-      padding: 0;
-      margin-top: 6px;
-    }
+  button {
+    float: right !important;
+    margin-left: 20px;
+  }
+}
+
+.table {
+  th:first-child,
+  td:first-child {
+    width: 130px;
+  }
+
+  .form-group {
+    margin: 0;
+    padding: 0;
+    margin-top: 6px;
   }
 }

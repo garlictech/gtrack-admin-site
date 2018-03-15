@@ -13,11 +13,11 @@ import { AdminMapService } from '../../../../shared/services';
 
 const CENTER = <Center>{
   // London
-  lat: 51.523723,
-  lng: -0.112525,
+  // lat: 51.523723,
+  // lng: -0.112525,
   // Pilis hg.
-  // lat: 47.689714,
-  // lng: 18.904206,
+  lat: 47.689714,
+  lng: 18.904206,
   zoom: 12
 };
 

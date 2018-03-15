@@ -168,7 +168,7 @@ export class SetWikipediaPoiInHike implements Action {
 }
 
 /**
- * gTRack pois
+ * gTRack pois TODO unused
  */
 
 export class GetGTrackPois implements Action {
