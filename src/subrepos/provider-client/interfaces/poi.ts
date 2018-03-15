@@ -21,6 +21,7 @@ export interface IPoi {
   lon: number;
   objectType: EPoiTypes;
   types: string[];
+  tags: string[];
   description: ILocalizedItem<ITextualDescription>;
   objectId?: {
     [objectType: string]: string | ILocalizedItem<string>  // Google/OSM pageid, wiki multi ids

@@ -19,12 +19,16 @@ import {
   HikeEditPoisExternalTableComponent,
   PoiIconsComponent,
   SpecialPoiDataComponent,
-  HikeEditPoiInfoModalContentComponent
+  // Modals
+  HikeEditExternalPoiInfoComponent,
+  HikeEditGTrackPoiInfoComponent
 } from './components';
 // Shared components
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 // gTrack common
 import { MapModule, HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
+// Lib
+import { TagInputModule } from 'ngx-chips';
 
 const COMPONENTS = [
   HikeEditComponent,
@@ -38,7 +42,9 @@ const COMPONENTS = [
   HikeEditPoisExternalTableComponent,
   PoiIconsComponent,
   SpecialPoiDataComponent,
-  HikeEditPoiInfoModalContentComponent
+  // Modals
+  HikeEditExternalPoiInfoComponent,
+  HikeEditGTrackPoiInfoComponent
 ];
 
 @NgModule({
@@ -49,7 +55,9 @@ const COMPONENTS = [
     ReactiveFormsModule,
     MapModule,
     HikeModule,
-    SharedModule
+    SharedModule,
+    // Lib
+    TagInputModule
   ],
   exports: [
     ...COMPONENTS
