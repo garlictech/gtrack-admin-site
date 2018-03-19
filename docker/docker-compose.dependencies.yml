@@ -10,7 +10,6 @@ services:
       - ./tokens.env
     environment:
       - RETHINKDB_USER=admin
-      - RETHINKDB_PASSWORD=''
     depends_on:
       - rethinkdb
       - redis
@@ -26,6 +25,10 @@ services:
     ports:
       - "28016:28016"
       - "8091:8080"
+    env_file:
+      - "./service.env"
+    command: ["sh", "-c", "rethinkdb --bind all --initial-password $${RETHINKDB_PASSWORD}"]
+
   deepstream_providers:
     image: docker.garlictech.com/gtrack-deepstream-providers-staging
     env_file:
@@ -36,9 +39,12 @@ services:
     restart: always
     secrets:
       - DEEPSTREAM_PROVIDER_JWT_SECRET
+      - RETHINKDB_PASSWORD
 
 secrets:
   DEEPSTREAM_PROVIDER_JWT_SECRET:
     file: secrets/DEEPSTREAM_PROVIDER_JWT_SECRET.secret.txt
   DEEPSTREAM_USER_JWT_SECRET:
     file: secrets/DEEPSTREAM_USER_JWT_SECRET.secret.txt
+  RETHINKDB_PASSWORD:
+    file: secrets/RETHINKDB_PASSWORD.secret.txt
