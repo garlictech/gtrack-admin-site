@@ -5,7 +5,7 @@ import {
   GeometryService, ElevationService, PoiService, IconService, Poi, CenterRadius
 } from 'subrepos/gtrack-common-ngx';
 import {
-  State, IExternalPoiListContextItemState
+  State, IExternalPoiListContextItemState, commonGeoSearchActions
 } from 'app/store';
 import {
   HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditGeneralInfoSelectors,
@@ -121,58 +121,76 @@ export class PoiEditorService {
     };
   }
 
-  private _getOnroutePois(pois: ExternalPoi[]) {
-    return _.filter(pois, (p: ExternalPoi) => p.onRoute);
-  }
-
-  private _getOffroutePois(pois: ExternalPoi[]) {
-    return _.filter(pois, (p: ExternalPoi) => !p.onRoute);
-  }
-
-  private _organizePois(
-    pois: ExternalPoi[],
+  /**
+   * Set the pois' onRoute property
+   */
+  public organizePois (
+    pois: IExternalPoi[] | IGTrackPoi[],
     path: GeoJSON.Feature<GeoJSON.Polygon>,
-    gTrackPois?: ExternalPoi[]
+    isGTrackPoi: Boolean = false
   ) {
-    let _res: ExternalPoi[] = [];
+    let _pois: any[] = [];
 
-    const _smallBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 50, {units: 'meters'});
-    const _bigBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 1000, {units: 'meters'});
+    if (path) {
+      const _smallBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 50, {units: 'meters'});
+      const _bigBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 1000, {units: 'meters'});
 
-    for (let p of pois) {
-      let _point: GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties> = turf.point([p.lon, p.lat]);
+      for (let p of _.cloneDeep(pois)) {
+        let _point: GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties> = turf.point([p.lon, p.lat]);
 
-      if (typeof _smallBuffer !== 'undefined') {
-        if (turf.inside(_point, _smallBuffer)) {
-          p.onRoute = true;
-        } else {
-          p.onRoute = false;
+        if (typeof _smallBuffer !== 'undefined') {
+          p.onRoute = turf.inside(_point, _smallBuffer);
         }
-      }
 
-      if (typeof _bigBuffer !== 'undefined') {
-        if (turf.inside(_point, _bigBuffer)) {
-          p.distFromRoute = this._geometryService.distanceFromRoute(_point!.geometry!.coordinates, path);
+        if (typeof _bigBuffer !== 'undefined') {
+          if (turf.inside(_point, _bigBuffer)) {
+            p.distFromRoute = this._geometryService.distanceFromRoute(_point!.geometry!.coordinates, path);
 
-          this._handleTypes(p);
-          this._handleTitle(p);
+            if (!isGTrackPoi) {
+              this._handleTypes(<IExternalPoi>p);
+              this._handleTitle(<IExternalPoi>p);
+            }
 
-          if (gTrackPois) {
-            this._handleGTrackPois(gTrackPois, <any>p);
+            _pois.push(p);
           }
-
-          _res.push(p);
         }
       }
     }
 
-    return this._handleElevation(_res);
+    return Observable.of(_pois);
   }
 
   /**
-   * _organizePois submethod
+   * HikeEditPoi effect submethod - for gTrack pois
    */
-  private _handleTypes(poi: ExternalPoi) {
+  public handleHikeInclusion(pois: IGTrackPoi[]) {
+    return this._store.select(this._hikeEditGeneralInfoSelectors.getPois)
+      .take(1)
+      .map((hikePois: string[]) => {
+        if (pois) {
+          let gTrackPois = _.cloneDeep(pois);
+          gTrackPois.map((gTrackPoi: IGTrackPoi) => {
+            gTrackPoi.inHike = _.includes(hikePois, gTrackPoi.id);
+          });
+          return gTrackPois;
+        } else {
+          return [];
+        }
+      });
+  }
+
+  private _getOnroutePois(pois: IExternalPoi[]) {
+    return _.filter(pois, (p: IExternalPoi) => p.onRoute);
+  }
+
+  private _getOffroutePois(pois: IExternalPoi[]) {
+    return _.filter(pois, (p: IExternalPoi) => !p.onRoute);
+  }
+
+  /**
+   * organizePois submethod
+   */
+  private _handleTypes(poi: IExternalPoi) {
     let _types: string[] = [];
     let _replaceTypesKeys = _.keys(this._replaceTypes);
 
@@ -192,9 +210,9 @@ export class PoiEditorService {
   }
 
   /**
-   * _organizePois submethod
+   * organizePois submethod
    */
-  private _handleTitle(poi: ExternalPoi) {
+  private _handleTitle(poi: IExternalPoi) {
     /*
     TODO: Handle ILocalizedItem description
     if (!poi.title || poi.title === 'unknown') {
@@ -216,51 +234,36 @@ export class PoiEditorService {
   }
 
   /**
-   * _organizePois submethod
+   * Set the inHike flag on the service pois based on on/off route state
    */
-  private _handleGTrackPois(gTrackPois: IPoi[], poi: GooglePoi | WikipediaPoi | OsmPoi) {
-    const _found = _.find(gTrackPois, (p: IPoi) => {
-      let _idCheck = false;
+  public assignOnOffRoutePois(pois: IExternalPoi[]) {
+    let _pois = _.sortBy(_.cloneDeep(pois), (p: IExternalPoi) => p.distFromRoute);
+    let _onRoutePois = this._getOnroutePois(_pois);
+    let _offRoutePois = this._getOffroutePois(_pois);
+    _.forEach(_onRoutePois, (p) => (<any>p).inHike = true);
+    _.forEach(_offRoutePois, (p) => (<any>p).inHike = false);
 
-      if (p.objectType === poi.objectType) {
-        if (p.objectType.substring(0, 3) === 'osm') {
-          _idCheck = p.objectId!.osm === (<OsmPoi>poi).osm.id;
-        } else if (p.objectType === 'google') {
-          _idCheck = p.objectId!.google === (<GooglePoi>poi).google.id;
-        } else if (p.objectType === 'wikipedia') {
-          _idCheck = p.objectId!.wikipedia[
-            (<WikipediaPoi>poi).wikipedia.lng!
-          ] === (<WikipediaPoi>poi).wikipedia.pageid;
-        }
-
-        return _idCheck;
-      } else {
-        return false;
-      }
-    });
-
-    if (_found) {
-      poi.inGtrackDb = true;
-    }
+    return Observable.of(_pois);
   }
 
   /**
-   * _organizePois submethod
+   * Get elevation data for pois
    */
-  private _handleElevation(pois: ExternalPoi[]) {
+  public handleElevation(pois: IExternalPoi[]) {
     // Google Elevation Service
     // 2,500 free requests per day
     // 512 locations per request.
     // 50 requests per second
-    let _poisWithoutElevation = _.filter(pois, (p: ExternalPoi) => !p.elevation);
-    let _chunks: ExternalPoi[][] = _.chunk(_poisWithoutElevation, 500);
+    let _pois = _.cloneDeep(pois);
+    let _poisWithoutElevation = _.filter(_pois, (p: IExternalPoi) => !p.elevation);
+    let _chunks: IExternalPoi[][] = _.chunk(_poisWithoutElevation, 500);
 
     return Observable
       .interval(100)
       .take(_chunks.length)
       .map(counter => {
-        const _chunk: ExternalPoi[] = _chunks[counter];
-        const _coordinates = _.map(_chunk, (p: ExternalPoi) => [p.lat, p.lon]);
+        const _chunk: IExternalPoi[] = _chunks[counter];
+        const _coordinates = _.map(_chunk, (p: IExternalPoi) => [p.lat, p.lon]);
 
         return this._elevationService.getData(_coordinates).then((data) => {
           // Update elevation only if we got all data
@@ -273,15 +276,65 @@ export class PoiEditorService {
         });
       })
       .combineAll()
-      .toPromise()
-      .then(() => {
-        return pois;
+      .map(() => {
+        return _pois;
       });
+  }
+
+  public getGTrackPois(map) {
+    let _bounds = map.routeInfo.getSearchBounds();
+    let _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);
+    let _centerCoord = _geo!.center!.geometry!.coordinates;
+
+    if (_centerCoord) {
+      this._store.dispatch(new commonGeoSearchActions.SearchInCircle({
+        table: 'pois',
+        circle: {
+          radius: _geo.radius,
+          center: [_centerCoord[0], _centerCoord[1]]
+        }
+      }, 'gTrackPois'));
+    }
+  }
+  /**
+   * Update inGtrackDb property on the given poi
+   */
+  public handleGTrackPois(pois: GooglePoi[] | WikipediaPoi[] | OsmPoi[], gTrackPois: IPoi[], ) {
+    let _pois = _.cloneDeep(pois);
+
+    for (let poi of _pois) {
+      const _found = _.find(gTrackPois, (gTrackPoi: IGTrackPoi) => {
+        let _idCheck = false;
+
+        if (gTrackPoi.objectType === poi.objectType) {
+          if (gTrackPoi.objectType.substring(0, 3) === 'osm') {
+            _idCheck = gTrackPoi.objectId!.osm === (<OsmPoi>poi).osm.id;
+          } else if (gTrackPoi.objectType === 'google') {
+            _idCheck = gTrackPoi.objectId!.google === (<GooglePoi>poi).google.id;
+          } else if (gTrackPoi.objectType === 'wikipedia') {
+            _idCheck = gTrackPoi.objectId!.wikipedia[
+              (<WikipediaPoi>poi).wikipedia.lng!
+            ] === (<WikipediaPoi>poi).wikipedia.pageid;
+          }
+
+          return _idCheck;
+        } else {
+          return false;
+        }
+      });
+
+      if (_found) {
+        poi.inGtrackDb = true;
+      }
+    }
+
+    return _pois;
   }
 
   /**
    * HikeEditPoi effect submethod
    */
+  /*
   public getSubdomainPois(data) {
     let pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
     switch (data.subdomain) {
@@ -296,17 +349,19 @@ export class PoiEditorService {
       case 'wikipedia':
         pois$ = this._store.select(this._hikeEditPoiSelectors.getAllWikipediaPois); break;
       default:
-        pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGTrackPois); break;
+        pois$ = Observable.of([]); break;
     }
 
     return pois$.take(1).map((subdomainPoiData) => {
       return _.extend(_.cloneDeep(data), { pois: subdomainPoiData });
     });
   }
+  */
 
   /**
    * HikeEditPoi effect submethod
    */
+  /*
   public clearSubdomainPoiMarkers(data) {
     let map$ = this._store.select(this._hikeEditMapSelectors.getMapId);
 
@@ -322,10 +377,12 @@ export class PoiEditorService {
       return _.cloneDeep(data);
     });
   }
+  */
 
   /**
    * HikeEditPoi effect submethod
    */
+  /*
   public generatePoiMarkers(data) {
     let markers: AdminMapMarker[] = [];
 
@@ -338,10 +395,12 @@ export class PoiEditorService {
 
     return _.extend(_.cloneDeep(data), { markers: markers });
   }
+  */
 
   /**
    * HikeEditPoi effect submethod
    */
+  /*
   public getSubdomainMarkers(data) {
     let markers$: Observable<AdminMapMarker[]>;
     switch (data.subdomain) {
@@ -365,10 +424,12 @@ export class PoiEditorService {
       return _.extend(_.cloneDeep(data), { markers: subdomainMarkerData });
     });
   }
+  */
 
   /**
    * HikeEditPoi effect submethod
    */
+  /*
   public getSubdomainContext(data) {
     let context$ = this._store.select(
       this._hikeEditPoiSelectors.getHikeEditContextSelector(data.subdomain)
@@ -380,10 +441,11 @@ export class PoiEditorService {
       });
     });
   }
-
+  */
   /**
    * HikeEditPoi effect submethod
    */
+  /*
   public handleMarkerChanged(subdomainData) {
     this._store.select(this._hikeEditMapSelectors.getMapId)
       .take(1)
@@ -428,52 +490,5 @@ export class PoiEditorService {
         }
       });
   }
-
-  /**
-   * HikeEditPoi effect submethod
-   */
-  public assignGTrackPois(data) {
-    return this._poiService.search(data.bounds).map((gTrackPois) => {
-      return _.extend(_.cloneDeep(data), { gTrackPois: gTrackPois });
-    });
-  }
-
-  /**
-   * HikeEditPoi effect submethod
-   */
-  public handleHikeInclusion(data) {
-    return this._store.select(this._hikeEditGeneralInfoSelectors.getPois)
-      .take(1)
-      .map((pois) => {
-        data.pois.map((gTrackpoi: IGTrackPoi) => {
-          gTrackpoi.inHike = _.includes(pois, gTrackpoi.id);
-        });
-        return _.cloneDeep(data);
-      });
-  }
-
-  /**
-   * HikeEditPoi effect submethod
-   */
-  public assignOrganizedPois(data) {
-    const _map: AdminMap = this._adminMapService.getMapById(data.mapId);
-
-    return this._organizePois(data.pois, _map.routeInfo.getPath(), data.gTrackPois)
-      .then((organizedPois) => {
-        return _.extend(_.cloneDeep(data), { pois: organizedPois });
-      });
-  }
-
-  /**
-   * HikeEditPoi effect submethod
-   */
-  public assignOnOffRoutePois(data) {
-    let _pois = _.sortBy(data.pois, (p: ExternalPoi) => p.distFromRoute);
-    let _onRoutePois = this._getOnroutePois(_pois);
-    let _offRoutePois = this._getOffroutePois(_pois);
-    _.forEach(_onRoutePois, (p) => (<any>p).inHike = true);
-    _.forEach(_offRoutePois, (p) => (<any>p).inHike = false);
-
-    return _pois;
-  }
+  */
 }

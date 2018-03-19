@@ -95,7 +95,7 @@ export class RoutingControl {
       fitSelectedRoutes: 'smart',
       router: L.Routing.graphHopper(environment.graphhopper.apiKey, {
         urlParameters: {
-          vehicle: 'hike',
+          vehicle: 'foot',
           instructions: false
         }
       }),
