@@ -47,7 +47,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
-    // Handling route save
+    // Show toaster when the route has been saved
     this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId)
       .takeUntil(this._destroy$)
       .switchMap((routeId: string) => this._store.select(this._routeSelectors.getRouteContext(routeId)))

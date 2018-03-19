@@ -21,10 +21,11 @@ export class HikeEditPoisGTrackTableComponent {
   public handleInHikePoi($event, poi) {
     $event.stopPropagation();
 
+    /*
     this._store.dispatch(new hikeEditPoiActions.SetGTrackPoiInHike({
       poiId: poi.id,
       isInHike: !poi.inHike
-    }));
+    }));*/
   }
 
   public openModal($event, poi: IGTrackPoi) {

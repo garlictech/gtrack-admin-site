@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { PoiEditorService } from 'app/shared/services';
 import { ExternalPoi } from 'app/shared/services/poi/lib';
-import { Poi } from 'subrepos/gtrack-common-ngx';
+import { Poi, PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import { IPoi } from 'subrepos/provider-client';
 import {
   IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi
@@ -38,17 +38,54 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     private _adminMapService: AdminMapService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _poiSelectors: PoiSelectors,
     private _poiEditorService: PoiEditorService
   ) {}
 
   ngOnInit() {
-    this._store.select(this._hikeEditMapSelectors.getMapId)
+    this._store
+      .select(this._hikeEditMapSelectors.getMapId)
       .filter(id => id !== '')
       .take(1)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
+    // Poi list from store
+    this.pois$ = this._getSubdomainSelector(this.poiType.subdomain);
+
+    // Update poi properties after poi list loaded
+    this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(this.poiType.subdomain, 'loaded'))
+      .takeUntil(this._destroy$)
+      .filter(loaded => !!loaded)
+      .subscribe((loaded: boolean) => {
+        this._getSubdomainSelector(this.poiType.subdomain)
+          .take(1)
+          .switchMap((pois: IExternalPoi[]) => this._poiEditorService.organizePois(pois, this._map.routeInfo.getPath()))
+          .switchMap((pois: IExternalPoi[]) => this._poiEditorService.assignOnOffRoutePois(pois))
+          .switchMap((pois: IExternalPoi[]) => this._poiEditorService.handleElevation(pois))
+          .subscribe((pois) => {
+            // Refresh poi list on the store
+            this._updateSubdomainPois(pois);
+
+            // Get gTrack pois for checking inGtrackDb
+            this._poiEditorService.getGTrackPois(this._map);
+          });
+      });
+
+    // Update inGtrackDb properties after common poi list has been refreshed
+    this._store.select(this._poiSelectors.getAllPois)
+      .takeUntil(this._destroy$)
+      .subscribe((gTRackPois) => {
+        this._getSubdomainSelector(this.poiType.subdomain)
+          .take(1)
+          .subscribe((pois) => {
+            this._patchSubdomainPois(this._poiEditorService.handleGTrackPois(pois, gTRackPois), ['id', 'inGtrackDb']);
+          });
+      });
+
+    /*
     switch (this.poiType.subdomain) {
       case 'google':
         this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGooglePois);
@@ -71,7 +108,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmRouteMarkers);
         break;
     }
-
+    */
+    /*
     this.pois$
       .takeUntil(this._destroy$)
       .subscribe((pois) => {
@@ -90,42 +128,93 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           subdomain: this.poiType.subdomain
         }));
       });
+    */
 
-    this.loading$ = this._store.select(
-      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
-        this.poiType.subdomain, 'loading')
-      );
+    this.loading$ = this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(this.poiType.subdomain, 'loading'));
 
-    this.showOnrouteMarkers$ = this._store.select(
-      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
-        this.poiType.subdomain, 'showOnrouteMarkers')
-      );
+    this.showOnrouteMarkers$ = this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers'));
 
-    this.showOffrouteMarkers$ = this._store.select(
-      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(
-        this.poiType.subdomain, 'showOffrouteMarkers')
-      );
+    this.showOffrouteMarkers$ = this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(this.poiType.subdomain, 'showOffrouteMarkers'));
 
     this.showOnrouteMarkers$
       .takeUntil(this._destroy$)
       .subscribe(() => {
+        /*
         this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
           subdomain: this.poiType.subdomain
         }));
+        */
       });
 
     this.showOffrouteMarkers$
       .takeUntil(this._destroy$)
       .subscribe(() => {
+        /*
         this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
           subdomain: this.poiType.subdomain
         }));
+        */
       });
   }
 
   ngOnDestroy() {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
+  }
+
+  private _getSubdomainSelector(subdomain: string) {
+    let _pois$;
+
+    switch (subdomain) {
+      case 'google':
+        _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGooglePois); break;
+      case 'wikipedia':
+        _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllWikipediaPois); break;
+      case 'osmAmenity':
+        _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmAmenityPois); break;
+      case 'osmNatural':
+        _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmNaturalPois); break;
+      case 'osmRoute':
+        _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmRoutePois); break;
+    }
+
+    return _pois$;
+  }
+
+  private _updateSubdomainPois(pois) {
+    switch (this.poiType.subdomain) {
+      case 'google':
+        this._store.dispatch(new hikeEditPoiActions.SetGooglePois({ pois: pois })); break;
+      case 'wikipedia':
+        this._store.dispatch(new hikeEditPoiActions.SetWikipediaPois({ pois: pois })); break;
+      case 'osmAmenity':
+        this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPois({ pois: pois })); break;
+      case 'osmNatural':
+        this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPois({ pois: pois })); break;
+      case 'osmRoute':
+        this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePois({ pois: pois })); break;
+    }
+  }
+
+  private _patchSubdomainPois(pois, props: string[]) {
+    switch (this.poiType.subdomain) {
+      case 'google':
+        this._store.dispatch(new hikeEditPoiActions.SetGooglePois({ pois: pois })); break;
+      case 'wikipedia':
+        this._store.dispatch(new hikeEditPoiActions.SetWikipediaPois({ pois: pois })); break;
+      case 'osmAmenity':
+        this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPois({ pois: pois })); break;
+      case 'osmNatural':
+        this._store.dispatch(new hikeEditPoiActions.PatchOsmNaturalPois({
+          properties: pois.map(p => _.pick(p, props))
+        }));
+        break;
+      case 'osmRoute':
+        this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePois({ pois: pois })); break;
+    }
   }
 
   /**
