@@ -46,15 +46,8 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_WIKIPEDIA_POIS)
     .map((action: hikeEditPoiActions.GetWikipediaPois) => action.payload)
     .switchMap(data => {
-      return this._wikipediaPoiService.get(data.bounds).then((pois) =>  {
-        return _.extend(_.cloneDeep(data), { pois: pois });
-      });
-    })
-    .switchMap(data => this._poiEditorService.assignGTrackPois(data))
-    .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
-    .map(data => {
-      return new hikeEditPoiActions.SetWikipediaPois({
-        pois: this._poiEditorService.assignOnOffRoutePois(data)
+      return this._wikipediaPoiService.get(data.bounds).then((pois: IWikipediaPoi[]) =>  {
+        return new hikeEditPoiActions.SetWikipediaPois({ pois: pois });
       });
     });
 
@@ -66,15 +59,8 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_GOOGLE_POIS)
     .map((action: hikeEditPoiActions.GetGooglePois) => action.payload)
     .switchMap(data => {
-      return this._googlePoiService.get(data.bounds).then((pois) =>  {
-        return _.extend(_.cloneDeep(data), { pois: pois });
-      });
-    })
-    .switchMap(data => this._poiEditorService.assignGTrackPois(data))
-    .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
-    .map(data => {
-      return new hikeEditPoiActions.SetGooglePois({
-        pois: this._poiEditorService.assignOnOffRoutePois(data)
+      return this._googlePoiService.get(data.bounds).then((pois: IGooglePoi[]) =>  {
+        return new hikeEditPoiActions.SetGooglePois({ pois: pois });
       });
     });
 
@@ -86,15 +72,8 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_OSM_NATURAL_POIS)
     .map((action: hikeEditPoiActions.GetOsmNaturalPois) => action.payload)
     .switchMap(data => {
-      return this._osmPoiService.get(data.bounds, 'natural').then((pois) =>  {
-        return _.extend(_.cloneDeep(data), { pois: pois });
-      });
-    })
-    .switchMap(data => this._poiEditorService.assignGTrackPois(data))
-    .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
-    .map(data => {
-      return new hikeEditPoiActions.SetOsmNaturalPois({
-        pois: this._poiEditorService.assignOnOffRoutePois(data)
+      return this._osmPoiService.get(data.bounds, 'natural').then((pois: IOsmPoi[]) =>  {
+        return new hikeEditPoiActions.SetOsmNaturalPois({ pois: pois });
       });
     });
 
@@ -106,15 +85,8 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_OSM_AMENITY_POIS)
     .map((action: hikeEditPoiActions.GetOsmAmenityPois) => action.payload)
     .switchMap(data => {
-      return this._osmPoiService.get(data.bounds, 'amenity').then((pois) =>  {
-        return _.extend(_.cloneDeep(data), { pois: pois });
-      });
-    })
-    .switchMap(data => this._poiEditorService.assignGTrackPois(data))
-    .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
-    .map(data => {
-      return new hikeEditPoiActions.SetOsmAmenityPois({
-        pois: this._poiEditorService.assignOnOffRoutePois(data)
+      return this._osmPoiService.get(data.bounds, 'amenity').then((pois: IOsmPoi[]) =>  {
+        return new hikeEditPoiActions.SetOsmAmenityPois({ pois: pois });
       });
     });
 
@@ -126,59 +98,15 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_OSM_ROUTE_POIS)
     .map((action: hikeEditPoiActions.GetOsmRoutePois) => action.payload)
     .switchMap(data => {
-      return this._osmRoutePoiService.get(data.bounds).then((pois) =>  {
-        return _.extend(_.cloneDeep(data), { pois: pois });
-      });
-    })
-    .switchMap(data => this._poiEditorService.assignGTrackPois(data))
-    .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
-    .map(data => {
-      return new hikeEditPoiActions.SetOsmRoutePois({
-        pois: this._poiEditorService.assignOnOffRoutePois(data)
-      });
-    });
-
-  /**
-   * Get gTrack pois from db
-   */
-  @Effect()
-  getGtrackPois$: Observable<Action> = this._actions$
-    .ofType(hikeEditPoiActions.GET_GTRACK_POIS)
-    .map((action: hikeEditPoiActions.GetGTrackPois) => action.payload)
-    .switchMap(data => {
-      return this._geoSearchService
-        .searchCircle({
-          table: 'pois',
-          circle: {
-            radius: data.radius,
-            center: [data.centerCoord[0], data.centerCoord[1]]
-          }
-        })
-        .mergeMap((poiIds: string[]) => {
-          if (poiIds.length > 0) {
-            return Observable
-              .combineLatest(...poiIds.map(poiId => {
-                return this._poiService.get(poiId);
-              }))
-              .map(pois => {
-                return _.extend(_.cloneDeep(data), { pois: pois });
-              });
-          } else {
-            return Observable.of(_.extend(_.cloneDeep(data), { pois: [] }));
-          }
-        });
-    })
-    .switchMap(data => this._poiEditorService.assignOrganizedPois(data))
-    .switchMap(data => this._poiEditorService.handleHikeInclusion(data))
-    .map(data => {
-      return new hikeEditPoiActions.SetGTrackPois({
-        pois: this._poiEditorService.assignOnOffRoutePois(data)
+      return this._osmRoutePoiService.get(data.bounds).then((pois: IOsmPoi[]) =>  {
+        return new hikeEditPoiActions.SetOsmRoutePois({ pois: pois });
       });
     });
 
   /**
    * Refresh poi markers for the given subdomain
    */
+  /*
   @Effect()
   generateSubdomainPoiMarkers$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GENERATE_SUBDOMAIN_POI_MARKERS)
@@ -204,10 +132,12 @@ export class HikeEditPoiEffects {
           return new hikeEditMapActions.SetGTrackMarkers({markers: data.markers});
       }
     });
+  */
 
   /**
    * Refresh marker visibility for the given subdomain
    */
+  /*
   @Effect()
   markersConfigChanged$: Observable<any> = this._actions$
     .ofType(hikeEditPoiActions.MARKERS_CONFIG_CHANGED)
@@ -220,4 +150,5 @@ export class HikeEditPoiEffects {
       this._poiEditorService.handleMarkerChanged(data);
       return Observable.empty<Response>();
     });
+  */
 }
