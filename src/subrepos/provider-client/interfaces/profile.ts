@@ -28,7 +28,7 @@ export interface ICommonProfile extends IPublicCommonProfile {
 
 export interface ICommonProfileData<PROFILE> {
   firstRegistrationDate?: string;
-  settings: PROFILE;
+  profile: PROFILE;
 }
 
 export interface IProfileDelete extends IProviderInput {}
