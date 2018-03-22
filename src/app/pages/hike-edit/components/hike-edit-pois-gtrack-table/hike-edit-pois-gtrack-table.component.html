@@ -14,7 +14,7 @@
     <ng-container *ngFor="let poi of (pois$ | async); let idx = index">
       <tr *ngIf="!!poi.onRoute === onRouteCheck">
         <td><poi-icons [poi]="poi"></poi-icons></td>
-        <td [ngClass]="{'text-danger': !poi.inGtrackDb}">{{poi.description.en.title}}</td>
+        <td [ngClass]="{'text-danger': !poi.inGtrackDb}">{{translateDescription(poi.description, 'title')}}</td>
         <td>{{poi.distFromRoute | distance : true}}</td>
         <td>{{poi.types.join(', ')}}</td>
         <td>{{poi.objectType}}</td>

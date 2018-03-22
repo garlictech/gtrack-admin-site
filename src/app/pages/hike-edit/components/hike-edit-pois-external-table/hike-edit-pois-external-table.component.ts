@@ -2,6 +2,7 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IExternalPoi } from 'app/shared/interfaces/index';
+import { LanguageService } from 'app/shared/services';
 import { State, hikeEditPoiActions } from 'app/store';
 
 @Component({
@@ -52,5 +53,9 @@ export class HikeEditPoisExternalTableComponent {
         }));
         break;
     }
+  }
+
+  public translateDescription(description, field) {
+    return LanguageService.translateDescription(description, field);
   }
 }

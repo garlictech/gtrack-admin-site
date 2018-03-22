@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, hikeEditPoiActions } from 'app/store';
 import { IGTrackPoi } from 'app/shared/interfaces';
+import { LanguageService } from 'app/shared/services';
 import { IDynamicComponentModalConfig, DynamicModalService } from 'subrepos/gtrack-common-ngx';
 
 @Component({
@@ -31,12 +32,6 @@ export class HikeEditPoisGTrackTableComponent {
   public openModal($event, poi: IGTrackPoi) {
     $event.stopPropagation();
 
-    let _title = '';
-    let _lng = 'en'; // TODO How we get the used lang??
-    if (poi && poi.description && poi.description[_lng] && poi.description[_lng].title) {
-      _title = poi.description[_lng].title;
-    }
-
     const modalConfig: IDynamicComponentModalConfig = {
       component: {
         contentComponentName: 'HikeEditGTrackPoiInfoComponent',
@@ -45,11 +40,15 @@ export class HikeEditPoisGTrackTableComponent {
         }
       },
       modal: {
-        title: _title,
+        title: LanguageService.translateDescription(poi.description, 'title'),
         className: 'modal-lg',
         hasFooter: false
       }
     };
     this._dynamicModalService.showComponentModal(modalConfig);
+  }
+
+  public translateDescription(description, field) {
+    return LanguageService.translateDescription(description, field);
   }
 }
