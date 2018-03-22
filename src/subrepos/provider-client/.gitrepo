@@ -6,6 +6,11 @@
 [subrepo]
 	remote = https://github.com/garlictech/gtrack-provider-client.git
 	branch = master
+<<<<<<< HEAD
 	commit = ce76760dc5ba9503963ea9eddf83d0d5a8cccc3c
 	parent = d9308fdaf2e5d38851d0cd2576215c4d5e95fc5f
+=======
+	commit = b6a0e2d7018d45143301e14834820cdc15a5c2ca
+	parent = 808ddaee5c8e81d30fee3b41fe4cf04209fcb699
+>>>>>>> baacc3eb3bf5e65eae95c1d530d8341f6d0d0c25
 	cmdver = 0.3.1

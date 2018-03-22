@@ -7,5 +7,9 @@
 	remote = https://github.com/garlictech/deepstream-ngx.git
 	branch = master
 	commit = 560dea72acc6f16f2e435bdcd35e009a20e2c0b1
+<<<<<<< HEAD
 	parent = 1d8db336a72b962b48b752defe5d716a1c2f3fbf
+=======
+	parent = feb9a640363f731bd34f32b1460c21f6896f53ce
+>>>>>>> baacc3eb3bf5e65eae95c1d530d8341f6d0d0c25
 	cmdver = 0.3.1
