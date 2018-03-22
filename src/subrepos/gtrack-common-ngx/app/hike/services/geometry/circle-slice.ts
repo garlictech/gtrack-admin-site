@@ -23,7 +23,7 @@ export class CircleSlice {
       return null;
     }
 
-    clipLine = turf.lineString([startVertex.geometry.coordinates]);
+    clipLine = <GeoJSON.Feature<GeoJSON.LineString>>turf.lineString([startVertex.geometry.coordinates]);
 
     if (clipLine === null || clipLine.geometry === null) {
       return null;
