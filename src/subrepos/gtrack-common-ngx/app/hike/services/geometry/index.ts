@@ -43,7 +43,7 @@ export class GeometryService {
 
     return {
       radius: turf.distance(p1, p2, {units: 'kilometers'}) * 500,
-      center: turf.midpoint(p1, p2)
+      center: <GeoJSON.Feature<GeoJSON.Point>>turf.midpoint(p1, p2)
     }
   }
 }
