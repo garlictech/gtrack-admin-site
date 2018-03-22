@@ -13,6 +13,6 @@ export class Environment implements IEnvironment {
   };
 
   graphhopper = {
-    apiKey: '440eeec6-5492-4713-8c7a-2e9f2904d5b3'
+    apiKey: '111444bf-7c37-499b-b87c-b324d7406715'
   };
 }
