@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operators';
-import { DESCRIPTION_LANGS } from 'app/app.constants';
 import { State, hikeEditGeneralInfoActions } from 'app/store';
 import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
 import { IGeneralInfoState } from 'app/store/state';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
+import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
 import { ITextualDescription } from 'subrepos/provider-client';
 
 import * as _ from 'lodash';
@@ -23,10 +23,8 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public textualDescriptions$: Observable<ITextualDescriptionItem[]>;
   public generalInfo$: Observable<IGeneralInfoState>;
   public existingLangKeys$: Observable<string[] | number[]>;
-  public generalInfoForm: FormGroup;
-  public descriptionForm: FormGroup;
-  public langs = DESCRIPTION_LANGS;
-  public selLang = '';
+  public hikeForm: FormGroup;
+  public langs = DESCRIPTION_LANGUAGES;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -57,12 +55,12 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
 
   public saveToStore() {
     this._store.dispatch(new hikeEditGeneralInfoActions.SetGeneralInfo({
-      isRoundTrip: this.generalInfoForm.controls.isRoundTrip.value,
-      difficulty: this.generalInfoForm.controls.difficulty.value
+      isRoundTrip: this.hikeForm.controls.isRoundTrip.value,
+      difficulty: this.hikeForm.controls.difficulty.value
     }));
 
     this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
-      descriptions: this.descriptionForm.value.langs
+      descriptions: this.hikeForm.value.langs
     }));
   }
 
@@ -71,32 +69,26 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     // General info
     //
 
-    this.generalInfoForm = this._formBuilder.group({
+    this.hikeForm = this._formBuilder.group({
+      _selLang: new FormControl('', []),
       isRoundTrip: false,
-      difficulty: 1
+      difficulty: 1,
+      langs: this._formBuilder.array([])
     });
 
     this.generalInfo$
       .takeUntil(this._destroy$)
       .subscribe((generalInfo) => {
-        this.generalInfoForm.patchValue({
+        this.hikeForm.patchValue({
           isRoundTrip: generalInfo.isRoundTrip,
           difficulty: generalInfo.difficulty
         })
       });
 
-    //
-    // Descriptions
-    //
-
-    this.descriptionForm = this._formBuilder.group({
-      langs: this._formBuilder.array([])
-    });
-
     this.textualDescriptions$
       .takeUntil(this._destroy$)
       .subscribe((descriptions) => {
-        let _descriptionArray = <FormArray>this.descriptionForm.controls.langs;
+        let _descriptionArray = <FormArray>this.hikeForm.controls.langs;
 
         for (let desc of descriptions) {
           let _langIdx = _.map(_descriptionArray.value, 'id').indexOf(desc.id);
@@ -133,10 +125,10 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
    * Add new language to descriptions
    */
   public addTranslation() {
-    if (this.selLang) {
+    if (this.hikeForm.controls._selLang.value) {
       this._store.dispatch(new hikeEditGeneralInfoActions.AddDescription({
         description: {
-          id: this.selLang,
+          id: this.hikeForm.controls._selLang.value,
           title: '',
           fullDescription: '',
           summary: ''
@@ -144,7 +136,11 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       }));
 
       // Clear lang selector guide
-      this.selLang = '';
+      this.hikeForm.controls._selLang.setValue('');
     }
+  }
+
+  public getLangName(key) {
+    return LanguageService.localeToName(key);
   }
 }
