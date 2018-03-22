@@ -2,7 +2,7 @@ import { IEnvironment } from './ienvironment';
 
 export class Environment implements IEnvironment {
   production = true;
-  webappServer = 'https://gtrack-admin-zlnhf.firebaseapp.com/';
+  webappServer = 'https://grack-admin-prod.firebaseapp.com/';
   deepstream = 'wss://deepstream.gtracksport.com/deepstream';
 
   authentication = {
@@ -12,16 +12,7 @@ export class Environment implements IEnvironment {
     }
   };
 
-  firebase = {
-    apiKey: 'AIzaSyBCM1WTsTQi7yOXc2WlTVJdGuJEHD4QngE',
-    authDomain: 'gtrack-auth-e2e.firebaseapp.com',
-    databaseURL: 'https://gtrack-auth-e2e.firebaseio.com',
-    storageBucket: 'gtrack-auth-e2e.appspot.com',
-    messagingSenderId: '383921170591'
-  };
-
   graphhopper = {
-    // TODO: '440eeec6-5492-4713-8c7a-2e9f2904d5b3' is a private TEST KEY!!!
     apiKey: '440eeec6-5492-4713-8c7a-2e9f2904d5b3'
   };
 }

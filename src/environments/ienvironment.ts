@@ -10,11 +10,7 @@ export interface IEnvironment {
     };
   };
 
-  firebase: {
+  graphhopper: {
     apiKey: string;
-    authDomain: string;
-    databaseURL: string;
-    storageBucket: string;
-    messagingSenderId: string;
   };
 }

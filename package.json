@@ -4,10 +4,7 @@
     "main": "dist/main.bundle.js",
     "module": "dist/lib/index.js",
     "typings": "dist/lib/index.d.ts",
-    "files": [
-        "dist",
-        "src"
-    ],
+    "files": ["dist", "src"],
     "license": "SEE LICENSE IN license.txt",
     "repository": {
         "type": "git",
@@ -18,14 +15,8 @@
         "email": "contact@garlictech.com",
         "url": "http://www.garlictech.com"
     },
-    "contributors": [
-        "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
-    ],
-    "keywords": [
-        "",
-        "gtrack-admin-site",
-        "garlictech"
-    ],
+    "contributors": ["Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"],
+    "keywords": ["", "gtrack-admin-site", "garlictech"],
     "engines": {
         "npm": ">=3.0.0",
         "node": ">=5.0.0"
@@ -118,7 +109,7 @@
         "typescript": "^2.7.2"
     },
     "config": {
-        "dockerWorkflowVersion": "v5.1.15",
+        "dockerWorkflowVersion": "v5.1.16",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }

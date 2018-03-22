@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "gtrack-admin-zlnhf"
+    "staging": "gtrack-admin-zlnhf",
+    "master": "grack-admin-prod"
   }
 }
