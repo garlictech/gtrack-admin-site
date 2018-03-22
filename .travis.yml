@@ -23,7 +23,8 @@ deploy:
   skip_cleanup: true
   on:
     repo: garlictech/gtrack-admin-site
-    branch: master
+    all_branches: true
+    condition: $TRAVIS_BRANCH == master || $TRAVIS_BRANCH == staging
 after_success:
 - hooks/travis/after_success
 after_deploy:
