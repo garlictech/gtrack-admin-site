@@ -16,7 +16,7 @@ script:
 branches:
   only:
   - master
-  - stable
+  - staging
 deploy:
   provider: script
   script: hooks/travis/deploy
