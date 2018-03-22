@@ -7,6 +7,8 @@ import { EPoiTypes } from 'subrepos/provider-client';
 import { GoogleMapsService } from 'subrepos/gtrack-common-ngx/index';
 
 import { GooglePoi } from './lib/google-poi';
+import { LanguageService } from '../language.service';
+
 import { /**/ } from '@types/googlemaps';
 
 import * as uuid from 'uuid/v1';
@@ -46,7 +48,7 @@ export class GooglePoiService {
                 lon: _point.geometry.location.lng(),
                 elevation: 0,
                 description: {
-                  [lng]: {
+                  [LanguageService.shortToLocale(lng)]: {
                     title: _point.name || 'unknown',
                   }
                 },

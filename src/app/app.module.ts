@@ -41,7 +41,7 @@ import { HikeEditModule } from './pages/hike-edit';
 import {
   AdminMapService,
   PoiEditorService, WikipediaPoiService, OsmPoiService, OsmRoutePoiService, GooglePoiService,
-  HikeDataService, ReverseGeocodingService
+  HikeDataService, ReverseGeocodingService, LanguageService
 } from './shared/services';
 // Vendor
 import { AngularFireModule } from 'angularfire2';
@@ -101,7 +101,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     routing,
     StoreRouterConnectingModule,
     StoreDevtoolsModule.instrument({
-      maxAge: 5
+      maxAge: 25
     }),
     DeepstreamModule.forRoot({
       deepstreamConnectionString: environment.deepstream,
@@ -147,6 +147,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     OsmPoiService,
     OsmRoutePoiService,
     GooglePoiService,
+    LanguageService,
     // Selectors
     HikeEditGeneralInfoSelectors,
     HikeEditPoiSelectors,

@@ -7,6 +7,7 @@ import { WikipediaPoi } from './lib/wikipedia-poi';
 import { EPoiTypes } from 'subrepos/provider-client';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index';
 import { IWikipediaPoi, IWikipediaPageImageInfo } from 'app/shared/interfaces';
+import { LanguageService } from '../language.service';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
@@ -43,7 +44,7 @@ export class WikipediaPoiService {
               types: ['sight'],
               objectType: EPoiTypes.wikipedia,
               description: {
-                [lng]: {
+                [LanguageService.shortToLocale(lng)]: {
                   title: _point.title,
                 }
               },
