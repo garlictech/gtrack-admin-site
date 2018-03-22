@@ -72,7 +72,7 @@ export class AdminMap extends Map {
     const _path = this._routeInfo.getPath();
 
     if (typeof _path !== 'undefined') {
-      let _buffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(
+      let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(
         _path, 50, {units: 'meters'}
       );
 

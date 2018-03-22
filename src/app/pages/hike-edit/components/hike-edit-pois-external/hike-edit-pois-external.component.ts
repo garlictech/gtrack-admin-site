@@ -60,6 +60,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .filter(loaded => !!loaded)
       .subscribe((loaded: boolean) => {
+
         this._getSubdomainSelector(this.poiType.subdomain)
           .take(1)
           .switchMap((pois: IExternalPoi[]) => this._poiEditorService.organizePois(pois, this._map.routeInfo.getPath()))
@@ -264,7 +265,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
         for (let externalPoi of _externalPoisToSave) {
           let _poiData = this._poiEditorService.getDbObj(externalPoi);
-          let _poi = new Poi(<IExternalPoi>_poiData);
+          let _poi = new Poi(<IPoi>_poiData);
 
           this._store.dispatch(new commonPoiActions.SavePoi(_poi));
         }

@@ -132,11 +132,11 @@ export class PoiEditorService {
     let _pois: any[] = [];
 
     if (path) {
-      const _smallBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 50, {units: 'meters'});
-      const _bigBuffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(path, 1000, {units: 'meters'});
+      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 50, {units: 'meters'});
+      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 1000, {units: 'meters'});
 
       for (let p of _.cloneDeep(pois)) {
-        let _point: GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties> = turf.point([p.lon, p.lat]);
+        let _point = turf.point([p.lon, p.lat]);
 
         if (typeof _smallBuffer !== 'undefined') {
           p.onRoute = turf.inside(_point, _smallBuffer);
