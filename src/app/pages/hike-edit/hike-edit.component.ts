@@ -86,7 +86,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
     // Handling hike load
     this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)
-      .takeUntil(this._destroy$)
       .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)))
       .filter(hikeContext => !!(hikeContext && hikeContext.loaded))
       .switchMap((hikeContext) => this._store.select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id)))

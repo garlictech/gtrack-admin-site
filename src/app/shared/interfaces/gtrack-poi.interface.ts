@@ -1,7 +1,7 @@
 import { IPoi } from 'subrepos/provider-client';
 
 export interface IGTrackPoi extends IPoi {
-  id?: string;
+  id: string;
   inHike?: boolean | undefined;
   distFromRoute?: number | undefined;
   onRoute?: boolean | undefined;

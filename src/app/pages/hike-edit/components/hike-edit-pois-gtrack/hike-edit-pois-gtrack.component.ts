@@ -63,7 +63,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     // Poi list
     this.pois$ = this._store
       .select(this._geoSearchSelectors.getGeoSearchResults<(Poi)>('gTrackPois', this._poiSelectors.getAllPois))
-      .switchMap((pois: IGTrackPoi[]) => {
+      .switchMap((pois: Poi[]) => {
         return this._poiEditorService.organizePois(_.cloneDeep(pois), this._map.routeInfo.getPath());
       })
       .switchMap((pois: IGTrackPoi[]) => {
