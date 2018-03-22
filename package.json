@@ -4,7 +4,10 @@
     "main": "dist/main.bundle.js",
     "module": "dist/lib/index.js",
     "typings": "dist/lib/index.d.ts",
-    "files": ["dist", "src"],
+    "files": [
+        "dist",
+        "src"
+    ],
     "license": "SEE LICENSE IN license.txt",
     "repository": {
         "type": "git",
@@ -15,8 +18,14 @@
         "email": "contact@garlictech.com",
         "url": "http://www.garlictech.com"
     },
-    "contributors": ["Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"],
-    "keywords": ["", "gtrack-admin-site", "garlictech"],
+    "contributors": [
+        "Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"
+    ],
+    "keywords": [
+        "",
+        "gtrack-admin-site",
+        "garlictech"
+    ],
     "engines": {
         "npm": ">=3.0.0",
         "node": ">=5.0.0"
@@ -65,6 +74,7 @@
         "@ngrx/store": "^5.1.0",
         "@turf/turf": "^5.1.3",
         "angular2-toaster": "^5.0.0",
+        "angularfire2": "^5.0.0-rc.6",
         "authentication-api-ngx": "file:src/subrepos/authentication-api-ngx",
         "bootstrap": "^4.0.0",
         "bootstrap-material-design": "^4.1.1",
@@ -72,18 +82,21 @@
         "d3-geo": "^1.9.1",
         "debug": "^3.0.0",
         "deepstream-ngx": "file:src/subrepos/deepstream-ngx",
+        "firebase": "^4.12.0",
         "font-awesome": "^4.7.0",
         "geojson-rewind": "^0.3.0",
         "gtrack-common-ngx": "file:src/subrepos/gtrack-common-ngx",
         "hammerjs": "^2.0.8",
         "intl": "^1.2.5",
         "jquery": "3.2.1",
+        "leaflet": "^1.3.1",
         "leaflet-routing-machine": "^3.2.8",
         "lodash": "^4.17.5",
         "lrm-graphhopper": "^1.2.0",
         "ng2-logger": "^1.0.12",
         "ngrx-store-freeze": "^0.2.1",
         "ngrx-store-logger": "^0.2.0",
+        "nouislider": "^11.0.3",
         "popper.js": "^1.13.0",
         "promise-polyfill": "^6.0.2",
         "rxjs": "^5.5.6",
