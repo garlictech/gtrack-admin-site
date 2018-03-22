@@ -43,6 +43,12 @@ export class PoiSelectors {
     return createSelector(this.getAllPois, (pois: Poi[]) => pois.find(poi => (poi.id === context)));
   }
 
+  public getPoiContext(context: string) {
+    return createSelector(this.getAllContexts, (contexts: IPoiContextState[]) => {
+      return contexts.find(c => (c.id === context))
+    });
+  }
+
   public getPois(contexts: string[]) {
     return createSelector(
       this.getAllPois,

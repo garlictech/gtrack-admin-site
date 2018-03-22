@@ -8,7 +8,6 @@ export interface IPoiContextState {
   id: string;
   loading: boolean;
   loaded: boolean;
-  saving: boolean;
   saved: boolean;
 }
 
