@@ -1,31 +1,29 @@
-{{poi | json}}
+<form [formGroup]="poiForm" novalidate>
+  <tag-input formControlName="tags"></tag-input>
 
-<tag-input [(ngModel)]='items'></tag-input>
+  <hr>
 
-<hr>
-<div class="lang-toolbar clearfix mt-4 mb-2">
-  <button class="btn btn-round btn-sm btn-just-icon btn-success" [disabled]="!selLang" (click)="addTranslation()">
-    <i class="material-icons">add</i>
-  </button>
-{{existingLangKeys | json}}
-  <select class="form-control form-control-sm" [(ngModel)]="selLang" title="Select">
-    <ng-container *ngFor="let lang of langs | obj2arr">
-      <option *ngIf="existingLangKeys.indexOf(lang.key) < 0" [value]="lang.key" [innerHTML]="lang.value">
-      </option>
-    </ng-container>
-  </select>
+  <div class="lang-toolbar clearfix mt-4 mb-2">
+    <button class="btn btn-round btn-sm btn-just-icon btn-success" [disabled]="!poiForm.controls._selLang" (click)="addTranslation()">
+      <i class="material-icons">add</i>
+    </button>
+    <select class="form-control form-control-sm" formControlName="_selLang" title="Select">
+      <ng-container *ngFor="let lang of langs">
+        <option *ngIf="existingLangKeys.indexOf(lang.locale) < 0" [value]="lang.locale" [innerHTML]="lang.name">
+        </option>
+      </ng-container>
+    </select>
 
-  <span>Add language:</span>
-</div>
+    <span>Add language:</span>
+  </div>
 
-<form [formGroup]="descriptionForm" novalidate>
   <div aria-multiselectable="true" id="accordion" role="tablist" formArrayName="langs">
-    <div class="card mb-1" *ngFor="let lng of descriptionForm.controls.langs.controls; let i = index">
+    <div class="card mb-1" *ngFor="let lng of poiForm.controls.langs.controls; let i = index">
       <div class="card-header bg-light" id="headingOne" role="tab">
         <h5>
           <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_{{lng.value.id}}" role="button" class="collapsed">
             <div class="text-success">
-              {{langs[lng.value.id]}} {{lng.value.id}}
+              {{getLangName(lng.value.id)}}
               <i class="material-icons pull-right">keyboard_arrow_down</i>
             </div>
           </a>
@@ -63,9 +61,9 @@
 </form>
 
 <div class="row mt-3">
-    <div class="col-md-12">
-      <div class="pull-right">
-        <button class="btn btn-sm btn-fill btn-success" (click)="savePoi()">Save</button>
-      </div>
+  <div class="col-md-12">
+    <div class="pull-right">
+      <button class="btn btn-sm btn-fill btn-success" (click)="savePoi()">Save</button>
     </div>
   </div>
+</div>
