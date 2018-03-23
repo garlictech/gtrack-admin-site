@@ -18,6 +18,7 @@ export class AdminMap extends Map {
   private _waypointMarker: WaypointMarker;
   private _routeInfo: RouteInfo;
   private _routePlanner: RoutePlanner;
+  public markersGroup: L.LayerGroup;
 
   constructor(
     public id: string,

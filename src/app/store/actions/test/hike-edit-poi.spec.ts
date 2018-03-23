@@ -32,7 +32,6 @@ describe('HikeEditPoi actions', () => {
 
     expect(HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle onroute markers');
     expect(HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle offroute markers');
-    expect(HikeEditPoiActions.GENERATE_SUBDOMAIN_POI_MARKERS).toEqual('[HikeEditPoi] Generate subdomain poi markers');
     expect(HikeEditPoiActions.MARKERS_CONFIG_CHANGED).toEqual('[HikeEditPoi] Markers config changed');
   });
 
@@ -341,17 +340,6 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS,
-      payload,
-    });
-  });
-
-  it('should create GenerateSubdomainPoiMarkers action', () => {
-    const payload = { subdomain: 'fakeDomain' };
-    const action = new HikeEditPoiActions.GenerateSubdomainPoiMarkers(payload);
-
-    expect(action).toBeDefined();
-    expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.GENERATE_SUBDOMAIN_POI_MARKERS,
       payload,
     });
   });

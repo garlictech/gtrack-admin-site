@@ -119,7 +119,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     }
 
     this._store.dispatch(new commonPoiActions.SavePoi(
-      <Poi>(_.merge(this._gTrackPoi, {
+      new Poi(_.merge(this._gTrackPoi, {
         description: _descriptions,
         // We have to convert stored tag objects to single string array
         tags: this.poiForm.controls.tags.value.map(tag => tag.value)

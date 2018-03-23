@@ -88,7 +88,7 @@ export class GooglePoiService {
       .interval(200)
       .take(pois.length)
       .mergeMap((idx) => {
-        let _googleData = pois[idx]!.google!;
+        let _googleData = _.cloneDeep(pois[idx]!.google!);
         if (_googleData.id) {
           this._placesService.getDetails({
             placeId: _googleData.id

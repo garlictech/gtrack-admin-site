@@ -59,7 +59,6 @@ hikeModuleConfig.storeDomains = {
 
 const authConfig = new AuthenticationApiConfig();
 authConfig.apiUrl = environment.authentication.server;
-authConfig.firebase = environment.firebase;
 authConfig.webserverUrl = environment.webappServer;
 authConfig.google.appId = environment.authentication.google.appId;
 

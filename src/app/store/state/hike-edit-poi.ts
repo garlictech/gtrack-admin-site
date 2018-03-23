@@ -19,7 +19,8 @@ export interface IExternalPoiListContextState {
   osmAmenity: IExternalPoiListContextItemState,
   osmNatural: IExternalPoiListContextItemState,
   osmRoute: IExternalPoiListContextItemState,
-  wikipedia: IExternalPoiListContextItemState
+  wikipedia: IExternalPoiListContextItemState,
+  gTrack: IExternalPoiListContextItemState // context for common Poi list
 };
 
 // State

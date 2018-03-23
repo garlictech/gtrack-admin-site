@@ -104,37 +104,6 @@ export class HikeEditPoiEffects {
     });
 
   /**
-   * Refresh poi markers for the given subdomain
-   */
-  /*
-  @Effect()
-  generateSubdomainPoiMarkers$: Observable<Action> = this._actions$
-    .ofType(hikeEditPoiActions.GENERATE_SUBDOMAIN_POI_MARKERS)
-    .map((action: hikeEditPoiActions.GenerateSubdomainPoiMarkers) => action.payload)
-    // Load old markers for removing them from the map
-    .switchMap(data => this._poiEditorService.getSubdomainMarkers(data))
-    .switchMap(data => this._poiEditorService.clearSubdomainPoiMarkers(data))
-    .switchMap(data => this._poiEditorService.getSubdomainPois(data))
-    .map(data => this._poiEditorService.generatePoiMarkers(data))
-    .map((data: any) => {
-      switch (data.subdomain) {
-        case 'google':
-          return new hikeEditMapActions.SetGoogleMarkers({markers: data.markers});
-        case 'osmAmenity':
-          return new hikeEditMapActions.SetOsmAmenityMarkers({markers: data.markers});
-        case 'osmNatural':
-          return new hikeEditMapActions.SetOsmNaturalMarkers({markers: data.markers});
-        case 'osmRoute':
-          return new hikeEditMapActions.SetOsmRouteMarkers({markers: data.markers});
-        case 'wikipedia':
-          return new hikeEditMapActions.SetWikipediaMarkers({markers: data.markers});
-        default:
-          return new hikeEditMapActions.SetGTrackMarkers({markers: data.markers});
-      }
-    });
-  */
-
-  /**
    * Refresh marker visibility for the given subdomain
    */
   /*

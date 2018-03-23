@@ -215,7 +215,8 @@ export const externalPoiInitialContextState: IExternalPoiListContextState = {
   osmAmenity: initialContextItemState,
   osmNatural: initialContextItemState,
   osmRoute: initialContextItemState,
-  wikipedia: initialContextItemState
+  wikipedia: initialContextItemState,
+  gTrack: initialContextItemState
 };
 
 export function externalPoiListContextReducer(

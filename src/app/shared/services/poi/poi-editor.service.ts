@@ -2,21 +2,17 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import {
-  GeometryService, ElevationService, PoiService, IconService, Poi, CenterRadius
+  GeometryService, ElevationService, PoiService, IconService, Poi, CenterRadius, GeoSearchSelectors, PoiSelectors
 } from 'subrepos/gtrack-common-ngx';
-import {
-  State, IExternalPoiListContextItemState, commonGeoSearchActions
-} from 'app/store';
-import {
-  HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditGeneralInfoSelectors,
-} from 'app/store/selectors';
+import { IPoi } from 'subrepos/provider-client';
+import { State, IExternalPoiListContextItemState, commonGeoSearchActions, IExternalPoiListContextState } from 'app/store';
+import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditGeneralInfoSelectors, } from 'app/store/selectors';
 import { ExternalPoi, GooglePoi, OsmPoi, WikipediaPoi } from './lib';
 import { AdminMap, AdminMapService, AdminMapMarker } from '../admin-map';
-import {
-  IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi
-} from 'app/shared/interfaces/index';
-import { IPoi } from 'subrepos/provider-client';
+import { LanguageService } from '../language.service';
+import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces/index';
 
+import * as L from 'leaflet';
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
 import * as turf from '@turf/turf';
@@ -40,6 +36,8 @@ export class PoiEditorService {
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
+    private _geoSearchSelectors: GeoSearchSelectors,
+    private _poiSelectors: PoiSelectors,
   ) {}
 
   public getDbObj(poi: IExternalPoi) {
@@ -331,164 +329,110 @@ export class PoiEditorService {
     return _pois;
   }
 
-  /**
-   * HikeEditPoi effect submethod
-   */
-  /*
-  public getSubdomainPois(data) {
-    let pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
-    switch (data.subdomain) {
-      case 'google':
-        pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGooglePois); break;
-      case 'osmAmenity':
-        pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmAmenityPois); break;
-      case 'osmNatural':
-        pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmNaturalPois); break;
-      case 'osmRoute':
-        pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmRoutePois); break;
-      case 'wikipedia':
-        pois$ = this._store.select(this._hikeEditPoiSelectors.getAllWikipediaPois); break;
-      default:
-        pois$ = Observable.of([]); break;
-    }
+  public refreshPoiMarkers(map: AdminMap) {
+    let _pois: any[] = [];
 
-    return pois$.take(1).map((subdomainPoiData) => {
-      return _.extend(_.cloneDeep(data), { pois: subdomainPoiData });
-    });
-  }
-  */
+    //
+    // TODO: Hike pois
+    //
 
-  /**
-   * HikeEditPoi effect submethod
-   */
-  /*
-  public clearSubdomainPoiMarkers(data) {
-    let map$ = this._store.select(this._hikeEditMapSelectors.getMapId);
+    //
+    // gTrackPois
+    //
 
-    return map$.map((mapId: string) => {
-      const _map: AdminMap = this._adminMapService.getMapById(mapId);
-
-      _map.leafletMap.eachLayer(function (layer) {
-        if ((<any>layer).options && (<any>layer).options.subdomain === data.subdomain) {
-          (<any>layer).removeFrom(_map.leafletMap);
-        }
-      });
-
-      return _.cloneDeep(data);
-    });
-  }
-  */
-
-  /**
-   * HikeEditPoi effect submethod
-   */
-  /*
-  public generatePoiMarkers(data) {
-    let markers: AdminMapMarker[] = [];
-
-    for (let poi of data.pois) {
-      let marker = new AdminMapMarker(
-        poi.lat, poi.lon, poi.types || [], poi.title || '', this._iconService, data.subdomain, poi.id
-      );
-      markers.push(marker);
-    }
-
-    return _.extend(_.cloneDeep(data), { markers: markers });
-  }
-  */
-
-  /**
-   * HikeEditPoi effect submethod
-   */
-  /*
-  public getSubdomainMarkers(data) {
-    let markers$: Observable<AdminMapMarker[]>;
-    switch (data.subdomain) {
-      case 'google':
-        markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers);
-        break;
-      case 'osmAmenity':
-        markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmAmenityMarkers); break;
-      case 'osmNatural':
-        markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmNaturalMarkers); break;
-      case 'osmRoute':
-        markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmRouteMarkers); break;
-      case 'wikipedia':
-        markers$ = this._store.select(this._hikeEditMapSelectors.getAllWikipediaMarkers); break;
-      default:
-        markers$ = this._store.select(this._hikeEditMapSelectors.getAllGTrackMarkers);
-        break;
-    }
-
-    return markers$.take(1).map((subdomainMarkerData) => {
-      return _.extend(_.cloneDeep(data), { markers: subdomainMarkerData });
-    });
-  }
-  */
-
-  /**
-   * HikeEditPoi effect submethod
-   */
-  /*
-  public getSubdomainContext(data) {
-    let context$ = this._store.select(
-      this._hikeEditPoiSelectors.getHikeEditContextSelector(data.subdomain)
-    );
-    return context$.map((subdomainContextData: IExternalPoiListContextItemState) => {
-      return _.extend(_.cloneDeep(data), {
-        showOffrouteMarkers: subdomainContextData.showOffrouteMarkers,
-        showOnrouteMarkers: subdomainContextData.showOnrouteMarkers
-      });
-    });
-  }
-  */
-  /**
-   * HikeEditPoi effect submethod
-   */
-  /*
-  public handleMarkerChanged(subdomainData) {
-    this._store.select(this._hikeEditMapSelectors.getMapId)
+    this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditContextSelector('gTrack'))
       .take(1)
-      .subscribe((mapId: string) => {
-        const _map: AdminMap = this._adminMapService.getMapById(mapId);
-
-        if (subdomainData.pois) {
-          const _filteredPoiIds: string[] = [];
-          const _filteredPois: ExternalPoi[] = _.filter(subdomainData.pois, (p: ExternalPoi) => {
-            if (typeof p.inHike !== 'undefined') {
-              if (p.inHike && p.id) {
-                _filteredPoiIds.push(p.id);
-              }
-              return p.inHike;
-            } else {
-              return false;
-            }
-          });
-
-          const _onRoutePois = this._getOnroutePois(_filteredPois);
-          const _offRoutePois = this._getOffroutePois(_filteredPois);
-
-          if (subdomainData.showOnrouteMarkers) {
-            _.forEach(_onRoutePois, (p) => {
-              // Find the poi's marker
-              const marker = _.find(subdomainData.markers, (m: AdminMapMarker) => m.poiId === p.id);
-              if (marker) {
-                marker.addToMap(_map.leafletMap);
-              }
+      .subscribe((gTrackPoiContext: IExternalPoiListContextItemState) => {
+        // Load gTrackPois if there are visible pois
+        if (gTrackPoiContext.showOnrouteMarkers || gTrackPoiContext.showOffrouteMarkers) {
+          this._store
+            .select(this._geoSearchSelectors.getGeoSearchResults<(Poi)>('gTrackPois', this._poiSelectors.getAllPois))
+            .switchMap((pois: Poi[]) => pois ? this.organizePois(_.cloneDeep(pois), map.routeInfo.getPath()) : [])
+            .switchMap((pois: IGTrackPoi[]) => this.handleHikeInclusion(pois))
+            .take(1)
+            .subscribe((pois: IGTrackPoi[]) => {
+              _pois = _pois.concat(pois.filter(p => {
+                let _onRouteCheck = p.onRoute ? gTrackPoiContext.showOnrouteMarkers : gTrackPoiContext.showOffrouteMarkers;
+                return !p.inHike && _onRouteCheck;
+              }));
             });
-          }
-
-          if (subdomainData.showOffrouteMarkers) {
-            _.forEach(_offRoutePois, (p) => {
-              // Find the poi's marker
-              const marker = _.find(subdomainData.markers, (m: AdminMapMarker) => m.poiId === p.id);
-              if (marker) {
-                marker.addToMap(_map.leafletMap);
-              }
-            });
-          }
         }
       });
+
+    //
+    // Service pois
+    //
+
+    this._getVisibleServicePois('google', this._hikeEditPoiSelectors.getAllGooglePois)
+      .subscribe((pois: IExternalPoi[]) => {
+        _pois = _pois.concat(pois);
+      });
+    this._getVisibleServicePois('osmAmenity', this._hikeEditPoiSelectors.getAllOsmAmenityPois)
+      .subscribe((pois: IExternalPoi[]) => {
+        _pois = _pois.concat(pois);
+      });
+    this._getVisibleServicePois('osmNatural', this._hikeEditPoiSelectors.getAllOsmNaturalPois)
+      .subscribe((pois: IExternalPoi[]) => {
+        _pois = _pois.concat(pois);
+      });
+    this._getVisibleServicePois('osmRoute', this._hikeEditPoiSelectors.getAllOsmRoutePois)
+      .subscribe((pois: IExternalPoi[]) => {
+        _pois = _pois.concat(pois);
+      });
+    this._getVisibleServicePois('wikipedia', this._hikeEditPoiSelectors.getAllWikipediaPois)
+      .subscribe((pois: IExternalPoi[]) => {
+        _pois = _pois.concat(pois);
+      });
+
+    //
+    // Generate markers
+    //
+
+    const _markers = this._generatePoiMarkers(_pois);
+
+    if (map.leafletMap.hasLayer(map.markersGroup)) {
+      map.leafletMap.removeLayer(map.markersGroup);
+    }
+
+    if (_markers.length > 0) {
+      map.markersGroup = L.layerGroup(_markers.map(m => m.marker));
+      map.leafletMap.addLayer(map.markersGroup);
+    }
   }
-  */
+
+  /**
+   * refreshPoiMarkers submethod
+   */
+  private _getVisibleServicePois(subdomain, poiSelector) {
+    return Observable.combineLatest(
+      this._store.select(this._hikeEditPoiSelectors.getHikeEditContextSelector(subdomain)).take(1),
+      this._store.select(poiSelector).take(1)
+    ).map((results: [IExternalPoiListContextItemState, IExternalPoi[]]) => {
+      if (results[0].showOnrouteMarkers || results[0].showOffrouteMarkers) {
+        return results[1].filter(p => {
+          let _onRouteCheck = p.onRoute ? results[0].showOnrouteMarkers : results[0].showOffrouteMarkers;
+          return !p.inGtrackDb && _onRouteCheck;
+        });
+      } else {
+        return [];
+      }
+    });
+  }
+
+  /**
+   * refreshPoiMarkers submethod
+   */
+  private _generatePoiMarkers(pois) {
+    let _markers: AdminMapMarker[] = [];
+
+    for (let poi of pois) {
+      let _marker = new AdminMapMarker(
+        poi.lat, poi.lon, poi.types || [], LanguageService.translateDescription(poi.description, 'title'), this._iconService, poi.id
+      );
+      _markers.push(_marker);
+    }
+
+    return _markers;
+  }
 }

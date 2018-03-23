@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors, Poi, PoiSaved } from 'subrepos/gtrack-common-ngx';
+import { PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState } from 'subrepos/gtrack-common-ngx';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { PoiEditorService } from 'app/shared/services';
 import { IGTrackPoi } from 'app/shared/interfaces';
@@ -22,8 +22,7 @@ import { IPoiStored } from 'subrepos/provider-client';
 })
 export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public pois$: Observable<IGTrackPoi[]>;
-  public markers$: Observable<AdminMapMarker[]>;
-  public loading$: Observable<boolean>;
+  public searchContext$: Observable<IGeoSearchContextState | undefined>;
   public showOnrouteMarkers$: Observable<boolean>;
   public showOffrouteMarkers$: Observable<boolean>;
   private _map: AdminMap;
@@ -60,60 +59,42 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         }
       });
 
-    // Poi list
+    // Poi list based on geoSearch results
     this.pois$ = this._store
       .select(this._geoSearchSelectors.getGeoSearchResults<(Poi)>('gTrackPois', this._poiSelectors.getAllPois))
-      .switchMap((pois: Poi[]) => {
-        return this._poiEditorService.organizePois(_.cloneDeep(pois), this._map.routeInfo.getPath());
-      })
-      .switchMap((pois: IGTrackPoi[]) => {
-        return this._poiEditorService.handleHikeInclusion(pois);
-      });
+      .switchMap((pois: Poi[]) => this._poiEditorService.organizePois(_.cloneDeep(pois), this._map.routeInfo.getPath()))
+      .switchMap((pois: IGTrackPoi[]) => this._poiEditorService.handleHikeInclusion(pois));
 
-    // this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllGTrackMarkers);
-
-    /*
-    this.markers$
+    this.pois$
       .takeUntil(this._destroy$)
-      .subscribe((markers) => {
-        this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
-          subdomain: 'gTrack'
-        }));
+      .subscribe((pois: Poi[]) => {
+        // Refresh markers
+        this._poiEditorService.refreshPoiMarkers(this._map);
       });
 
-    */
+    //
+    // Contexts
+    //
 
-    /*
-    this.loading$ = this._store.select(
-      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'loading')
-    );
-    */
+    this.searchContext$ = this._store
+      .select(this._geoSearchSelectors.getGeoSearchContext('gTrackPois'));
 
-    /*
-    this.showOnrouteMarkers$ = this._store.select(
-      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOnrouteMarkers')
-    );
+    this.showOnrouteMarkers$ = this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOnrouteMarkers'));
 
-    this.showOffrouteMarkers$ = this._store.select(
-      this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOffrouteMarkers')
-    );
+    this.showOffrouteMarkers$ = this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOffrouteMarkers'));
 
-    this.showOnrouteMarkers$
-      .takeUntil(this._destroy$)
-      .subscribe(() => {
-        this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
-          subdomain: 'gTrack'
-        }));
-      });
+    //
+    // Refresh markers
+    //
 
-    this.showOffrouteMarkers$
-      .takeUntil(this._destroy$)
-      .subscribe(() => {
-        this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
-          subdomain: 'gTrack'
-        }));
-      });
-      */
+    this.showOnrouteMarkers$.takeUntil(this._destroy$).subscribe(() => {
+      this._poiEditorService.refreshPoiMarkers(this._map);
+    });
+    this.showOffrouteMarkers$.takeUntil(this._destroy$).subscribe(() => {
+      this._poiEditorService.refreshPoiMarkers(this._map);
+    });
   }
 
   ngOnDestroy() {

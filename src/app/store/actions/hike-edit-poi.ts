@@ -30,7 +30,6 @@ export const SET_WIKIPEDIA_POI_IN_HIKE = '[HikeEditPoi] Set Wikipedia poi inHike
 
 export const TOGGLE_ONROUTE_MARKERS = '[HikeEditPoi] Toggle onroute markers';
 export const TOGGLE_OFFROUTE_MARKERS = '[HikeEditPoi] Toggle offroute markers';
-export const GENERATE_SUBDOMAIN_POI_MARKERS = '[HikeEditPoi] Generate subdomain poi markers';
 export const MARKERS_CONFIG_CHANGED = '[HikeEditPoi] Markers config changed';
 
 export class ResetPoiState implements Action {
@@ -228,18 +227,9 @@ export class ToggleOffrouteMarkers implements Action {
   }) { /* EMPTY */ }
 }
 
-export class GenerateSubdomainPoiMarkers implements Action {
-  readonly type = GENERATE_SUBDOMAIN_POI_MARKERS;
-  constructor(public payload: {
-    subdomain: string
-  }) { /* EMPTY */ }
-}
-
 export class MarkersConfigChanged implements Action {
   readonly type = MARKERS_CONFIG_CHANGED;
-  constructor(public payload: {
-    subdomain: string
-  }) { /* EMPTY */ }
+  constructor() { /* EMPTY */ }
 }
 
 export type AllHikeEditPoiActions =
@@ -272,5 +262,4 @@ export type AllHikeEditPoiActions =
   // Markers
   | ToggleOnrouteMarkers
   | ToggleOffrouteMarkers
-  | GenerateSubdomainPoiMarkers
   | MarkersConfigChanged;

@@ -1,5 +1,5 @@
 
-import { Component, Input, Injector, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -25,7 +25,6 @@ import * as _ from 'lodash';
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   @Input() poiType: IExternalPoiType;
   public pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
-  public markers$: Observable<AdminMapMarker[]>;
   public loading$: Observable<boolean>;
   public showOnrouteMarkers$: Observable<boolean>;
   public showOffrouteMarkers$: Observable<boolean>;
@@ -33,7 +32,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private _injector: Injector,
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
@@ -60,7 +58,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .filter(loaded => !!loaded)
       .subscribe((loaded: boolean) => {
-
+        // We have pure poi list on the store, now we have update some property
         this._getSubdomainSelector(this.poiType.subdomain)
           .take(1)
           .switchMap((pois: IExternalPoi[]) => this._poiEditorService.organizePois(pois, this._map.routeInfo.getPath()))
@@ -69,6 +67,9 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           .subscribe((pois) => {
             // Refresh poi list on the store
             this._updateSubdomainPois(pois);
+
+            // Refresh markers
+            this._poiEditorService.refreshPoiMarkers(this._map);
 
             // Get gTrack pois for checking inGtrackDb
             this._poiEditorService.getGTrackPois(this._map);
@@ -86,50 +87,9 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           });
       });
 
-    /*
-    switch (this.poiType.subdomain) {
-      case 'google':
-        this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGooglePois);
-        this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllGoogleMarkers);
-        break;
-      case 'wikipedia':
-        this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllWikipediaPois);
-        this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllWikipediaMarkers);
-        break;
-      case 'osmAmenity':
-        this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmAmenityPois);
-        this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmAmenityMarkers);
-        break;
-      case 'osmNatural':
-        this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmNaturalPois);
-        this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmNaturalMarkers);
-        break;
-      case 'osmRoute':
-        this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmRoutePois);
-        this.markers$ = this._store.select(this._hikeEditMapSelectors.getAllOsmRouteMarkers);
-        break;
-    }
-    */
-    /*
-    this.pois$
-      .takeUntil(this._destroy$)
-      .subscribe((pois) => {
-        if (pois.length > 0) {
-          // Refresh markers when the poi list has been changed
-          this._store.dispatch(new hikeEditPoiActions.GenerateSubdomainPoiMarkers({
-            subdomain: this.poiType.subdomain
-          }));
-        }
-      });
-
-    this.markers$
-      .takeUntil(this._destroy$)
-      .subscribe((markers) => {
-        this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
-          subdomain: this.poiType.subdomain
-        }));
-      });
-    */
+    //
+    // Contexts
+    //
 
     this.loading$ = this._store
       .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(this.poiType.subdomain, 'loading'));
@@ -140,25 +100,16 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this.showOffrouteMarkers$ = this._store
       .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(this.poiType.subdomain, 'showOffrouteMarkers'));
 
-    this.showOnrouteMarkers$
-      .takeUntil(this._destroy$)
-      .subscribe(() => {
-        /*
-        this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
-          subdomain: this.poiType.subdomain
-        }));
-        */
-      });
+    //
+    // Refresh markers
+    //
 
-    this.showOffrouteMarkers$
-      .takeUntil(this._destroy$)
-      .subscribe(() => {
-        /*
-        this._store.dispatch(new hikeEditPoiActions.MarkersConfigChanged({
-          subdomain: this.poiType.subdomain
-        }));
-        */
-      });
+    this.showOnrouteMarkers$.takeUntil(this._destroy$).subscribe(() => {
+      this._poiEditorService.refreshPoiMarkers(this._map);
+    });
+    this.showOffrouteMarkers$.takeUntil(this._destroy$).subscribe(() => {
+      this._poiEditorService.refreshPoiMarkers(this._map);
+    });
   }
 
   ngOnDestroy() {
@@ -254,7 +205,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   /**
    * Save inHike pois as gTrackPoi
    */
-
   public savePois() {
     this.pois$
       .take(1)
@@ -265,7 +215,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
         for (let externalPoi of _externalPoisToSave) {
           let _poiData = this._poiEditorService.getDbObj(externalPoi);
-          let _poi = new Poi(<IPoi>_poiData);
+          let _poi = new Poi(_poiData);
 
           this._store.dispatch(new commonPoiActions.SavePoi(_poi));
         }
