@@ -55,6 +55,10 @@ export class GeoSearchSelectors {
     return createSelector(this.getAllGeoSearches, (searches: IGeoSearchResponseItem[]) => (searches.find(search => (search.id === context))));
   }
 
+  public getGeoSearchContext(context: string) {
+    return createSelector(this.getAllContexts, (searches: IGeoSearchContextState[]) => (searches.find(search => (search.id === context))));
+  }
+
   public getGeoSearchResults<T extends GeoSearchableItem>(context: string, getAllSelector: ((state: object) => T[])) {
     return createSelector(
       getAllSelector,
