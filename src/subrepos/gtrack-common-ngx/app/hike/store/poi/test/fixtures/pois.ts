@@ -3,6 +3,7 @@ import * as uuid from 'uuid/v4';
 
 export const pois: IPoi[] = [
   {
+    id: uuid(),
     lat: 42.25,
     lon: 19.32,
     elevation: 150,
@@ -15,6 +16,7 @@ export const pois: IPoi[] = [
     }
   },
   {
+    id: uuid(),
     lat: 44.55,
     lon: -19.44,
     elevation: 252.1,
@@ -31,12 +33,10 @@ export const pois: IPoi[] = [
 export const poisStored: IPoiStored[] = [
   {
     ...pois[0],
-    id: uuid(),
     timestamp: new Date().getTime()
   },
   {
     ...pois[1],
-    id: uuid(),
     timestamp: new Date().getTime()
   }
 ]

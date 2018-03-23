@@ -10,10 +10,11 @@ describe('Poi actions', () => {
   let poiData: IPoi;
   let poi: Poi;
 
-  beforeEach(() => {
-    id = uuid();
+  id = uuid(),
 
+  beforeEach(() => {
     poiData = {
+      id: id,
       lat: 42.25,
       lon: 19.32,
       elevation: 240,
@@ -28,7 +29,6 @@ describe('Poi actions', () => {
 
     poiDataStored = {
       ...poiData,
-      id,
       timestamp: new Date().getTime()
     };
 

@@ -124,7 +124,7 @@ describe('Poi effects', () => {
 
   describe('savePoi$', () => {
     it('should return the id of the created Poi from PoiCreated', () => {
-      const action = new poiActions.SavePoi(poiFixtures[0]);
+      const action = new poiActions.SavePoi(new Poi(poiFixtures[0]));
       const completion = new poiActions.PoiSaved(newId);
       const expected = cold('-b', {b: completion});
 
