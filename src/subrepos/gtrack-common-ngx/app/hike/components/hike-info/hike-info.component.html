@@ -1,0 +1,7 @@
+<div class="d-flex" *ngIf="hikeProgram">
+    <span class="distance hike-info-item px-1"><i class="ion-android-arrow-forward"></i> {{ hikeProgram.distance | distance }}</span>
+    <span class="uphill hike-info-item px-1"><i class="ion-arrow-graph-up-right"></i> {{ hikeProgram.uphill | distance }}</span>
+    <span class="downhill hike-info-item px-1"><i class="ion-arrow-graph-down-right"></i> {{ hikeProgram.downhill | distance }}</span>
+    <span class="time hike-info-item px-1"><i class="ion-ios-time"></i> {{ hikeProgram.time | duration }}</span>
+    <span class="score hike-info-item px-1"><i class="ion-trophy"></i> {{ hikeProgram.score }}</span>
+</div>
