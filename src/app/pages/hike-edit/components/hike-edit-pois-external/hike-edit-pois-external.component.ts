@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { PoiEditorService } from 'app/shared/services';
-import { ExternalPoi } from 'app/shared/services/poi/lib';
 import { Poi, PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import { IPoi } from 'subrepos/provider-client';
 import {
@@ -215,9 +214,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
         for (let externalPoi of _externalPoisToSave) {
           let _poiData = this._poiEditorService.getDbObj(externalPoi);
-          let _poi = new Poi(_poiData);
 
-          this._store.dispatch(new commonPoiActions.SavePoi(_poi));
+          this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
         }
       });
   }

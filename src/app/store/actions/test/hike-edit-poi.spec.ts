@@ -345,13 +345,11 @@ describe('HikeEditPoi actions', () => {
   });
 
   it('should create MarkersConfigChanged action', () => {
-    const payload = { subdomain: 'fakeDomain' };
-    const action = new HikeEditPoiActions.MarkersConfigChanged(payload);
+    const action = new HikeEditPoiActions.MarkersConfigChanged();
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.MARKERS_CONFIG_CHANGED,
-      payload,
+      type: HikeEditPoiActions.MARKERS_CONFIG_CHANGED
     });
   });
 });

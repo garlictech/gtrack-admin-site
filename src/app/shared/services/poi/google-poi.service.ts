@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { EPoiTypes } from 'subrepos/provider-client';
 import { GoogleMapsService } from 'subrepos/gtrack-common-ngx/index';
 
-import { GooglePoi } from './lib/google-poi';
+import { IGooglePoi } from 'app/shared/interfaces';
 import { LanguageService } from '../language.service';
 
 import { /**/ } from '@types/googlemaps';
@@ -34,7 +34,7 @@ export class GooglePoiService {
           new google.maps.LatLng(bounds.SouthWest.lat, bounds.SouthWest.lon),
           new google.maps.LatLng(bounds.NorthEast.lat, bounds.NorthEast.lon)
         );
-        let _res: GooglePoi[] = [];
+        let _res: IGooglePoi[] = [];
 
         this._placesService = new google.maps.places.PlacesService(_map);
 
@@ -42,7 +42,7 @@ export class GooglePoiService {
           this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
             for (let i = 0; i < result.length; i++) {
               const _point = result[i];
-              const _pointData = {
+              const _pointData: IGooglePoi = {
                 id: uuid(),
                 lat: _point.geometry.location.lat(),
                 lon: _point.geometry.location.lng(),
@@ -62,7 +62,7 @@ export class GooglePoiService {
                 return obj === 'locality' ? 'city' : obj;
               })
 
-              _res.push(new GooglePoi(_pointData));
+              _res.push(_pointData);
             }
 
             if (pagination.hasNextPage) {
@@ -83,7 +83,7 @@ export class GooglePoiService {
   /**
    * get() submethod
    */
-  private _getPlaceInfo(pois: GooglePoi[]) {
+  private _getPlaceInfo(pois: IGooglePoi[]) {
     return Observable
       .interval(200)
       .take(pois.length)

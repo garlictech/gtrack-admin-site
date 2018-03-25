@@ -3,7 +3,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState } from 'subrepos/gtrack-common-ngx';
+import {
+   PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState
+} from 'subrepos/gtrack-common-ngx';
+import { IPoiStored, IPoi } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { PoiEditorService } from 'app/shared/services';
 import { IGTrackPoi } from 'app/shared/interfaces';
@@ -14,7 +17,6 @@ import { HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelector
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
-import { IPoiStored } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gt-hike-edit-pois-gtrack',
@@ -61,7 +63,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     // Poi list based on geoSearch results
     this.pois$ = this._store
-      .select(this._geoSearchSelectors.getGeoSearchResults<(Poi)>('gTrackPois', this._poiSelectors.getAllPois))
+      .select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois))
       .switchMap((pois: Poi[]) => this._poiEditorService.organizePois(_.cloneDeep(pois), this._map.routeInfo.getPath()))
       .switchMap((pois: IGTrackPoi[]) => this._poiEditorService.handleHikeInclusion(pois));
 
@@ -137,8 +139,10 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       // poi ids from the loaded hike program
       this._store.select(this._hikeEditGeneralInfoSelectors.getPois).take(1)
     ).subscribe(data => {
+      console.log('data', data);
+
       if (data[0] && data[1]) {
-        const _gTrackPois = _.filter(data[0], (p: IGTrackPoi) => p.inHike)
+        const _gTrackPois = _.filter(data[0], (p: IGTrackPoi) => true /* p.inHike */)
           .map((p: IGTrackPoi) => p.id);
 
         this._store.dispatch(new hikeEditGeneralInfoActions.SetPois({

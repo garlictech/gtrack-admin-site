@@ -119,11 +119,11 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     }
 
     this._store.dispatch(new commonPoiActions.SavePoi(
-      new Poi(_.merge(this._gTrackPoi, {
+      _.merge(this._gTrackPoi, {
         description: _descriptions,
         // We have to convert stored tag objects to single string array
         tags: this.poiForm.controls.tags.value.map(tag => tag.value)
-      }))
+      })
     ));
   }
 

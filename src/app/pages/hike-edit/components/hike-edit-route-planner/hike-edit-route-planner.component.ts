@@ -102,6 +102,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
     Observable.forkJoin(_routePlannerState, _generalInfoState)
       .subscribe(data => {
+        console.log('data', data);
         if (data[0] && data[1]) {
           let _route: IRoute = {
             id: data[1],

@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import {
-  GeometryService, ElevationService, PoiService, IconService, Poi, CenterRadius, GeoSearchSelectors, PoiSelectors
+  GeometryService, ElevationService, PoiService, IconService, CenterRadius, GeoSearchSelectors, PoiSelectors
 } from 'subrepos/gtrack-common-ngx';
 import { IPoi } from 'subrepos/provider-client';
 import { State, IExternalPoiListContextItemState, commonGeoSearchActions, IExternalPoiListContextState } from 'app/store';
 import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditGeneralInfoSelectors, } from 'app/store/selectors';
-import { ExternalPoi, GooglePoi, OsmPoi, WikipediaPoi } from './lib';
 import { AdminMap, AdminMapService, AdminMapMarker } from '../admin-map';
 import { LanguageService } from '../language.service';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces/index';
@@ -51,15 +50,15 @@ export class PoiEditorService {
 
     switch (poi.objectType) {
       case 'google':
-        this._getGoogleDbObj(_poiData, <GooglePoi>poi);
+        this._getGoogleDbObj(_poiData, <IGooglePoi>poi);
         break;
       case 'wikipedia':
-        this._getWikipediaDbObj(_poiData, <WikipediaPoi>poi);
+        this._getWikipediaDbObj(_poiData, <IWikipediaPoi>poi);
         break;
       case 'osmAmenity':
       case 'osmNatural':
       case 'osmRoute':
-        this._getOsmDbObj(_poiData, <OsmPoi>poi);
+        this._getOsmDbObj(_poiData, <IOsmPoi>poi);
         break;
     }
 
@@ -69,7 +68,7 @@ export class PoiEditorService {
   /**
    * getDbObj submethod
    */
-  private _getGoogleDbObj(poiData: any, poi: GooglePoi) {
+  private _getGoogleDbObj(poiData: any, poi: IGooglePoi) {
     if (poi.google && poi.google.id) {
       poiData.objectId = {
         google: poi.google.id
@@ -96,7 +95,7 @@ export class PoiEditorService {
   /**
    * getDbObj submethod
    */
-  private _getWikipediaDbObj(poiData, poi: WikipediaPoi) {
+  private _getWikipediaDbObj(poiData, poi: IWikipediaPoi) {
     if (poi.wikipedia && poi.wikipedia.pageid) {
       poiData.objectId = {
         wikipedia: {
@@ -113,9 +112,9 @@ export class PoiEditorService {
   /**
    * getDbObj submethod
    */
-  private _getOsmDbObj(poiData, poi: OsmPoi) {
+  private _getOsmDbObj(poiData, poi: IOsmPoi) {
     poiData.objectId = {
-      osm: poi.osm.id
+      osm: poi.osm!.id
     };
   }
 
@@ -297,7 +296,7 @@ export class PoiEditorService {
   /**
    * Update inGtrackDb property on the given poi
    */
-  public handleGTrackPois(pois: GooglePoi[] | WikipediaPoi[] | OsmPoi[], gTrackPois: IPoi[], ) {
+  public handleGTrackPois(pois: IGooglePoi[] | IWikipediaPoi[] | IOsmPoi[], gTrackPois: IPoi[], ) {
     let _pois = _.cloneDeep(pois);
 
     for (let poi of _pois) {
@@ -306,13 +305,13 @@ export class PoiEditorService {
 
         if (gTrackPoi.objectType === poi.objectType) {
           if (gTrackPoi.objectType.substring(0, 3) === 'osm') {
-            _idCheck = gTrackPoi.objectId!.osm === (<OsmPoi>poi).osm.id;
+            _idCheck = gTrackPoi.objectId!.osm === (<IOsmPoi>poi).osm!.id;
           } else if (gTrackPoi.objectType === 'google') {
-            _idCheck = gTrackPoi.objectId!.google === (<GooglePoi>poi).google.id;
+            _idCheck = gTrackPoi.objectId!.google === (<IGooglePoi>poi).google!.id;
           } else if (gTrackPoi.objectType === 'wikipedia') {
             _idCheck = gTrackPoi.objectId!.wikipedia[
-              (<WikipediaPoi>poi).wikipedia.lng!
-            ] === (<WikipediaPoi>poi).wikipedia.pageid;
+              (<IWikipediaPoi>poi).wikipedia!.lng!
+            ] === (<IWikipediaPoi>poi).wikipedia!.pageid;
           }
 
           return _idCheck;
@@ -347,8 +346,8 @@ export class PoiEditorService {
         // Load gTrackPois if there are visible pois
         if (gTrackPoiContext.showOnrouteMarkers || gTrackPoiContext.showOffrouteMarkers) {
           this._store
-            .select(this._geoSearchSelectors.getGeoSearchResults<(Poi)>('gTrackPois', this._poiSelectors.getAllPois))
-            .switchMap((pois: Poi[]) => pois ? this.organizePois(_.cloneDeep(pois), map.routeInfo.getPath()) : [])
+            .select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois))
+            .switchMap((pois: IPoi[]) => pois ? this.organizePois(_.cloneDeep(pois), map.routeInfo.getPath()) : [])
             .switchMap((pois: IGTrackPoi[]) => this.handleHikeInclusion(pois))
             .take(1)
             .subscribe((pois: IGTrackPoi[]) => {

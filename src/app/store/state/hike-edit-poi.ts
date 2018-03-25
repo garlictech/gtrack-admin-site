@@ -15,20 +15,20 @@ export interface IExternalPoiListContextItemState {
 }
 
 export interface IExternalPoiListContextState {
-  google: IExternalPoiListContextItemState,
-  osmAmenity: IExternalPoiListContextItemState,
-  osmNatural: IExternalPoiListContextItemState,
-  osmRoute: IExternalPoiListContextItemState,
-  wikipedia: IExternalPoiListContextItemState,
-  gTrack: IExternalPoiListContextItemState // context for common Poi list
-};
+  google: IExternalPoiListContextItemState;
+  osmAmenity: IExternalPoiListContextItemState;
+  osmNatural: IExternalPoiListContextItemState;
+  osmRoute: IExternalPoiListContextItemState;
+  wikipedia: IExternalPoiListContextItemState;
+  gTrack: IExternalPoiListContextItemState; // context for common Poi list
+}
 
 // State
 export interface IHikeEditPoiState {
-  googlePois: IGooglePoiEntityState,
-  osmAmenityPois: IOsmAmenityPoiEntityState,
-  osmNaturalPois: IOsmNaturalPoiEntityState,
-  osmRoutePois: IOsmRoutePoiEntityState,
-  wikipediaPois: IWikipediaPoiEntityState,
-  contexts: IExternalPoiListContextState
-};
+  googlePois: IGooglePoiEntityState;
+  osmAmenityPois: IOsmAmenityPoiEntityState;
+  osmNaturalPois: IOsmNaturalPoiEntityState;
+  osmRoutePois: IOsmRoutePoiEntityState;
+  wikipediaPois: IWikipediaPoiEntityState;
+  contexts: IExternalPoiListContextState;
+}
