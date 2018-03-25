@@ -2,18 +2,17 @@ import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 import * as actions from '../actions';
 
-import { Poi } from '../../../services/poi';
-
 describe('Poi actions', () => {
   let id;
   let poiDataStored: IPoiStored;
   let poiData: IPoi;
-  let poi: Poi;
+  let poi: IPoiStored;
 
   beforeEach(() => {
     id = uuid();
 
     poiData = {
+      id: id,
       lat: 42.25,
       lon: 19.32,
       elevation: 240,
@@ -26,13 +25,10 @@ describe('Poi actions', () => {
       }
     };
 
-    poiDataStored = {
+    poi = {
       ...poiData,
-      id,
       timestamp: new Date().getTime()
     };
-
-    poi = new Poi(poiDataStored);
   });
 
   describe('LoadPoi action', () => {

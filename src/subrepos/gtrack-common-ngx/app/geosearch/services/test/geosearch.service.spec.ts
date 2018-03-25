@@ -52,7 +52,7 @@ describe('GeoSearchService', () => {
 
       let result = await service.searchBox(query).toPromise();
 
-      expect(spy).toHaveBeenCalledWith('geo.query.includedInBox', {
+      expect(spy).toHaveBeenCalledWith('open.geo.query.includedInBox', {
         payload: query
       });
     });
@@ -70,7 +70,7 @@ describe('GeoSearchService', () => {
 
       let result = await service.searchCircle(query).toPromise();
 
-      expect(spy).toHaveBeenCalledWith('geo.query.includedInCircle', {
+      expect(spy).toHaveBeenCalledWith('open.geo.query.includedInCircle', {
         payload: query
       });
     });

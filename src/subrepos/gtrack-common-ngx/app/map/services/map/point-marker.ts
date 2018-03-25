@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 
-import { Poi } from '../../../hike/services/poi';
 import { MapMarker, MapMarkerService } from '../map-marker';
+import { IPoi } from 'subrepos/provider-client';
 
 export class PointMarker {
   public markers: MapMarker[] = [];
@@ -26,7 +26,7 @@ export class PointMarker {
     this.markers = [];
   }
 
-  public addMarkers(pois: Poi[]) {
+  public addMarkers(pois: IPoi[]) {
     pois.forEach((poi, i) => {
       // TODO: poi.title is deprecated. Use poi.description[lng].title
       let marker = this.mapMarkerService.create(poi.lat, poi.lon, poi.types, poi.description.en_US.title);

@@ -10,12 +10,13 @@ export class Poi implements IPoi {
   public types: string[] = [];
   public description: ILocalizedItem<ITextualDescription>;
   public tags: string[] = [];
+  public isCheckpoint: boolean;
 
   public constructor(data: IPoi) {
-    // Temporary fix for copying isCheckpoint getter
-    _.assign(this, _.omit(data, ['isCheckpoint']));
+    _.assign(this, data);
   }
 
+  /*
   public setToCheckpoint() {
     if (this.isCheckpoint !== true) {
       this.types = this.types || [];
@@ -26,4 +27,5 @@ export class Poi implements IPoi {
   public get isCheckpoint(): boolean {
     return (this.types instanceof Array && this.types.indexOf('checkpoint') > -1);
   }
+  */
 }

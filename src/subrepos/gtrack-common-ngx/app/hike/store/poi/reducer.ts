@@ -13,7 +13,6 @@ import {
   PoiActionTypes,
   AllPoiActions
 } from './actions';
-import { Poi } from '../..';
 
 export const poiContextReducerInitialState = poiContextStateAdapter.getInitialState();
 export const poiReducerInitialState = poiAdapter.getInitialState();

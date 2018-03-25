@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 import { Store, StoreModule, combineReducers } from '@ngrx/store';
-import { IPoiStored } from 'subrepos/provider-client';
+import { IPoi, IPoiStored } from 'subrepos/provider-client';
 import { Subject } from 'rxjs/Subject';
 import * as _ from 'lodash';
 
@@ -13,19 +13,18 @@ import * as actions from '../actions';
 import { PoiSelectors } from '../selectors';
 import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
 import { poisStored as poiFixtures } from './fixtures';
-import { Poi } from '../../../services/poi';
 
 describe('Poi selectors', () => {
   let store: Store<IPoiState>;
   let poisData: IPoiStored[];
-  let pois: Poi[];
+  let pois: IPoi[];
   let ids: string[];
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
     poisData = [ ...poiFixtures ];
     ids = poisData.map(poi => poi.id);
-    pois = poiFixtures.map(data => new Poi(data));
+    pois = poiFixtures.map(data => data);
     destroy$ = new Subject<boolean>();
 
     TestBed.configureTestingModule({

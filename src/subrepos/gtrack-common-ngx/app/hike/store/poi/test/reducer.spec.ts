@@ -4,7 +4,6 @@ import * as uuid from 'uuid/v4';
 import { poiReducer, poiReducerInitialState, poiContextReducerInitialState } from '../reducer';
 import * as actions from '../actions';
 import { IPoiState } from '../state';
-import { Poi } from '../../../services/poi';
 
 import { pois as poiFixtures } from './fixtures'
 
@@ -13,24 +12,21 @@ describe('PoiReducer', () => {
   let initialState: IPoiState;
   let poiData: IPoi;
   let poiStored: IPoiStored;
-  let poi: Poi;
+  let poi: IPoiStored;
 
   beforeEach(() => {
-    id = uuid();
     initialState = {
       pois: poiReducerInitialState,
       contexts: poiContextReducerInitialState
     };
 
     poiData = poiFixtures[0];
+    id = poiData.id;
 
-    poiStored = {
+    poi = {
       ...poiData,
-      id,
       timestamp: new Date().getTime()
     };
-
-    poi = new Poi(poiStored);
   });
 
   describe('undefined action', () => {

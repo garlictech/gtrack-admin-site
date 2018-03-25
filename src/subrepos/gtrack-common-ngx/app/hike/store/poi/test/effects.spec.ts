@@ -13,7 +13,7 @@ import { hot, cold } from 'jasmine-marbles';
 
 import * as poiActions from '../actions';
 import { PoiEffects } from '../effects';
-import { PoiService, Poi } from '../../../services/poi';
+import { PoiService } from '../../../services/poi';
 import { DeepstreamModule } from '../../../../deepstream';
 
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +21,6 @@ import { pois as poiFixtures, poisStored } from './fixtures';
 
 import { GeometryService } from '../../../services/geometry';
 import { GeoSearchService } from '../../../../geosearch';
-
 
 export class TestActions extends Actions {
   constructor() {
@@ -43,7 +42,7 @@ describe('Poi effects', () => {
     [key: string]: IPoiStored
   };
 
-  let pois: Poi[];
+  let pois: IPoi[];
 
   let actions$: TestActions;
   let service: PoiService;
@@ -55,7 +54,7 @@ describe('Poi effects', () => {
   beforeEach(() => {
     ids = poisStored.map(poi => poi.id);
     poisMap = _.zipObject(ids, poisStored);
-    pois = poisStored.map(data => new Poi(data));
+    pois = poisStored.map(data => data);
     newId = uuid();
 
     TestBed.configureTestingModule({
@@ -92,7 +91,7 @@ describe('Poi effects', () => {
     service = TestBed.get(PoiService);
     effects = TestBed.get(PoiEffects);
 
-    spyOn(service, 'get').and.callFake(id => Observable.of(new Poi(poisMap[id])));
+    spyOn(service, 'get').and.callFake(id => Observable.of(poisMap[id]));
     spyOn(service, 'create').and.returnValue(Observable.of({
       id: newId
     }));
