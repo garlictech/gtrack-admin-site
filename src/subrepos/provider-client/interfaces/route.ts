@@ -1,4 +1,3 @@
-import { GeoJSON } from 'geojson-validation';
 import { IProviderInput } from './provider';
 
 export interface IRouteSaveResponse {

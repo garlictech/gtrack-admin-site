@@ -1,5 +1,4 @@
 import { IProviderInput } from './provider';
-import { GeoJSON } from 'geojson-validation';
 
 export enum EGeospatialSearchUnits {
   meter = 'm',
