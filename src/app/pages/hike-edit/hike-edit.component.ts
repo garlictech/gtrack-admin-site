@@ -38,6 +38,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this._activatedRoute.params
       .takeUntil(this._destroy$)
       .subscribe(params => {
+        this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
+
         if (params && params.id) {
           // Set page title
           this._title.setTitle('Edit hike');
