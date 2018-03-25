@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Jsonp, Response } from '@angular/http';
 import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs/Observable';
-import { WikipediaPoi } from './lib/wikipedia-poi';
 import { EPoiTypes } from 'subrepos/provider-client';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index';
 import { IWikipediaPoi, IWikipediaPageImageInfo } from 'app/shared/interfaces';
+import { LanguageService } from '../language.service';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
@@ -29,13 +29,13 @@ export class WikipediaPoiService {
     return this._http.get(request)
       .toPromise()
       .then((data: any) => {
-        let _pois: WikipediaPoi[] = [];
+        let _pois: IWikipediaPoi[] = [];
 
         if (data.query) {
           for (let i = 0; i < data.query.geosearch.length; i++) {
             let _point = data.query.geosearch[i];
 
-            let _poi = new WikipediaPoi({
+            let _poi: IWikipediaPoi = {
               id: uuid(),
               lat: _point.lat,
               lon: _point.lon,
@@ -43,12 +43,12 @@ export class WikipediaPoiService {
               types: ['sight'],
               objectType: EPoiTypes.wikipedia,
               description: {
-                [lng]: {
+                [LanguageService.shortToLocale(lng)]: {
                   title: _point.title,
                 }
               },
               wikipedia: {}
-            });
+            };
             _poi.wikipedia = {
               pageid: _point.pageid,
               url: `https://${lng}.wikipedia.org/?curid=${_point.pageid}`,
@@ -57,7 +57,7 @@ export class WikipediaPoiService {
             _pois.push(_poi);
           }
 
-          let promises: Promise<WikipediaPoi[]>[] = [];
+          let promises: Promise<IWikipediaPoi[]>[] = [];
           promises.push(this._getPageExtracts(_pois, lng));
           promises.push(this._getPageImages(_pois, lng));
 
@@ -76,8 +76,8 @@ export class WikipediaPoiService {
   /**
    * get submethod - load wikipedia lead sections
    */
-  private _getPageExtracts(_pois: WikipediaPoi[], lng) {
-    const _poiIds = _pois.map((p: WikipediaPoi) => {
+  private _getPageExtracts(_pois: IWikipediaPoi[], lng) {
+    const _poiIds = _pois.map((p: IWikipediaPoi) => {
       if (p.wikipedia && p.wikipedia.pageid) {
         return p.wikipedia.pageid
       } else {
@@ -100,7 +100,7 @@ export class WikipediaPoiService {
               const _exData = data.query.pages[idx];
 
               if (_exData.extract) {
-                const _targetPoi = _pois.find(p => p.wikipedia.pageid === _exData.pageid);
+                const _targetPoi = _pois.find(p => p.wikipedia!.pageid === _exData.pageid);
 
                 if (_targetPoi && _targetPoi.wikipedia) {
                   _targetPoi.wikipedia.extract = _exData.extract;
@@ -121,8 +121,8 @@ export class WikipediaPoiService {
   /**
    * get submethod - load wikipedia page images
    */
-  private _getPageImages(_pois: WikipediaPoi[], lng) {
-    const _poiIds = _pois.map((p: WikipediaPoi) => {
+  private _getPageImages(_pois: IWikipediaPoi[], lng) {
+    const _poiIds = _pois.map((p: IWikipediaPoi) => {
       if (p.wikipedia && p.wikipedia.pageid) {
         return p.wikipedia.pageid
       } else {
@@ -150,7 +150,7 @@ export class WikipediaPoiService {
                   original: _imgData.original,
                   thumbnail: _imgData.thumbnail
                 }
-                const _targetPoi = _pois.find(p => p.wikipedia.pageid === _imgData.pageid);
+                const _targetPoi = _pois.find(p => p.wikipedia!.pageid === _imgData.pageid);
 
                 if (_targetPoi && _targetPoi.wikipedia) {
                   _targetPoi.wikipedia.pageImage = _imageInfo;

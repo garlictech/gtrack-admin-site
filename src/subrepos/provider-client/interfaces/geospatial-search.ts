@@ -28,9 +28,9 @@ export interface IGeospatialCircleSearchPayload {
 };
 
 export interface IGeospatialSearchBoxInput extends IProviderInput {
-  payload: IGeospatialBoxSearchPayload
-}
+  payload: IGeospatialBoxSearchPayload;
+};
 
 export interface IGeospatialSearchCircleInput extends IProviderInput {
-  payload: IGeospatialCircleSearchPayload
-}
+  payload: IGeospatialCircleSearchPayload;
+};

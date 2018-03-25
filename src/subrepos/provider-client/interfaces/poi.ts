@@ -15,13 +15,14 @@ export interface IPoiSaveResponse {
 }
 
 export interface IPoi {
-  id?: string;
+  id: string;
   elevation: number;
   lat: number;
   lon: number;
   objectType: EPoiTypes;
   types: string[];
   description: ILocalizedItem<ITextualDescription>;
+  tags?: string[];
   objectId?: {
     [objectType: string]: string | ILocalizedItem<string>  // Google/OSM pageid, wiki multi ids
   };

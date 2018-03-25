@@ -56,3 +56,11 @@ button.btn-just-icon.btn-sm {
   margin-right: -50%;
   transform: translate(-50%, -50%);
 }
+
+.td-actions {
+  white-space: nowrap;
+  text-align: right;
+  button {
+    padding: 0 4px !important;
+  }
+}

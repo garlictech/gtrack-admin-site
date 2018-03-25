@@ -14,7 +14,6 @@ import * as rewind from 'geojson-rewind';
 import * as d3 from 'd3';
 
 export class RouteInfo {
-  private _savedRoute: IHikeEditRoutePlannerState; // Deprecated?
   private _savedMapTrack: any;
   public planner: RoutePlanner;
 
@@ -44,7 +43,15 @@ export class RouteInfo {
    * Get route from current plan
    */
   public getRoute() {
-    return this._getRoute().route;
+    // return this._getRoute().route;
+
+    const route = this._getRoute();
+
+    if (route && route.route) {
+      return route.route;
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -55,19 +62,18 @@ export class RouteInfo {
     const route = this._getRoute();
 
     if (route && route.route) {
-      return this._getRoute().route.features[0];
+      return route.route.features[0];
     } else {
       return null;
     }
   }
 
   private _getRoute() {
-    if (this.planner) {
-      return this.planner.routeInfoData;
-    } else {
-      console.log('TODO is in use??');
-      return this._savedRoute;
+    if (!this.planner) {
+      return null;
     }
+
+    return this.planner.routeInfoData;
   }
 
   /**

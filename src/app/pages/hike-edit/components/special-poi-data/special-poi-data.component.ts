@@ -1,36 +1,37 @@
 // Core
 import { Component, Input } from '@angular/core';
-import { GooglePoi, OsmPoi, WikipediaPoi } from 'app/shared/services/poi/lib';
 import { DynamicModalService, IDynamicComponentModalConfig } from 'subrepos/gtrack-common-ngx';
+import { IGooglePoi, IOsmPoi, IWikipediaPoi } from 'app/shared/interfaces';
 
 @Component({
   selector: 'special-poi-data',
   templateUrl: 'special-poi-data.component.html'
 })
 export class SpecialPoiDataComponent {
-  @Input() poi: GooglePoi | OsmPoi | WikipediaPoi;
+  @Input() poi: IGooglePoi | IOsmPoi | IWikipediaPoi;
 
   constructor(
     private _dynamicModalService: DynamicModalService
   ) {}
 
-  public openModal(poi: GooglePoi | OsmPoi | WikipediaPoi) {
+  public openModal(poi: IGooglePoi | IOsmPoi | IWikipediaPoi) {
     let _title = '';
     let _lng = 'en'; // TODO How we get the used lang??
-    if (poi.description && poi.description[_lng] && poi.description[_lng].title) {
+    if (poi && poi.description && poi.description[_lng] && poi.description[_lng].title) {
       _title = poi.description[_lng].title;
     }
 
     const modalConfig: IDynamicComponentModalConfig = {
       component: {
-        name: 'HikeEditPoiInfoModalContentComponent',
+        contentComponentName: 'HikeEditExternalPoiInfoComponent',
         data: {
           poi: poi
         }
       },
       modal: {
         title: _title,
-        className: 'modal-lg'
+        className: 'modal-lg',
+        hasFooter: false
       }
     };
     this._dynamicModalService.showComponentModal(modalConfig);

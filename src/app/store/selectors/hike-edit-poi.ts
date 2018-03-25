@@ -3,11 +3,9 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 import { State } from '../index';
 import { IHikeEditPoiState } from '../state/index';
 import {
-  wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter, gTrackPoiAdapter
+  wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter
 } from 'app/store/reducer';
-import {
-  IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi
-} from 'app/shared/interfaces';
+import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 
 @Injectable()
 export class HikeEditPoiSelectors {
@@ -17,7 +15,6 @@ export class HikeEditPoiSelectors {
   public getAllOsmAmenityPois: (state: object) => IOsmPoi[];
   public getAllOsmNaturalPois: (state: object) => IOsmPoi[];
   public getAllOsmRoutePois: (state: object) => IOsmPoi[];
-  public getAllGTrackPois: (state: object) => IGTrackPoi[];
 
   constructor() {
     this._featureSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
@@ -50,24 +47,17 @@ export class HikeEditPoiSelectors {
       this._featureSelector, (state: IHikeEditPoiState) => state.wikipediaPois
     );
     this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
-
-    const gtrackPoiSelector = createSelector(
-      this._featureSelector, (state: IHikeEditPoiState) => state.gTrackPois
-    );
-    this.getAllGTrackPois = gTrackPoiAdapter.getSelectors(gtrackPoiSelector).selectAll;
   }
 
   //
   // Context
   //
 
-  public getHikeEditContextSelector(poiType) {
-    return createSelector(this._featureSelector,
-      (state: IHikeEditPoiState) => state.contexts[poiType]);
+  public getHikeEditContextSelector(subdomain) {
+    return createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.contexts[subdomain]);
   };
 
-  public getHikeEditContextPropertySelector(poiType, property) {
-    return createSelector(this._featureSelector,
-      (state: IHikeEditPoiState) => state.contexts[poiType][property]);
+  public getHikeEditContextPropertySelector(subdomain, property) {
+    return createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.contexts[subdomain][property]);
   };
 }

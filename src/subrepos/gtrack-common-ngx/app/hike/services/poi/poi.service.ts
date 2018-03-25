@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { Poi } from './poi';
 import { IPoi, IPoiStored, IPoiInput, IPoiSaveResponse } from 'subrepos/provider-client';
 
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
@@ -21,17 +20,16 @@ export class PoiService {
     private _geoSearchService: GeoSearchService,
   ) { }
 
-  public get(id: string): Observable<Poi> {
+  public get(id: string): Observable<IPoi> {
     return this._deepstream
       .getRecord<IPoiStored>(`pois/${id}`)
       .get()
       .map(data => {
-        let poi = new Poi(data);
-        return poi;
+        return _.cloneDeep(data);
       });
   }
 
-  public search(bounds): Observable<Poi[]> {
+  public search(bounds): Observable<IPoi[]> {
     let _geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
     let _centerCoord = _geo!.center!.geometry!.coordinates;
 
@@ -43,14 +41,18 @@ export class PoiService {
           center: [_centerCoord[0], _centerCoord[1]]
         }
       })
-      .flatMap((poiIds: string[]) => {
-        return Observable
-          .combineLatest(...poiIds.map(poiId => {
-            return this.get(poiId);
-          }))
-          .map(pois => {
-            return pois;
-          });
+      .mergeMap((poiIds: string[]) => {
+        if (poiIds.length > 0) {
+          return Observable
+            .combineLatest(...poiIds.map(poiId => {
+              return this.get(poiId);
+            }))
+            .map(pois => {
+              return pois;
+            });
+        } else {
+          return Observable.of([]);
+        }
       });
   }
 

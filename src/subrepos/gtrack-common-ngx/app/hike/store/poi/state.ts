@@ -1,14 +1,13 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { Poi } from '../../services/poi';
+import { IPoi } from 'subrepos/provider-client';
 
-export const poiAdapter = createEntityAdapter<Poi>();
-export interface IPoiEntityState extends EntityState<Poi> {};
+export const poiAdapter = createEntityAdapter<IPoi>();
+export interface IPoiEntityState extends EntityState<IPoi> {};
 
 export interface IPoiContextState {
   id: string;
   loading: boolean;
   loaded: boolean;
-  saving: boolean;
   saved: boolean;
 }
 

@@ -1,7 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IPoi } from 'subrepos/provider-client';
-
-import { Poi } from '../../services/poi';
+import { IPoi } from '../../../../../provider-client';
 
 export enum PoiActionTypes {
   LOAD_POI = '[Poi] Load poi',
@@ -32,7 +30,7 @@ export class LoadPois implements Action {
 export class PoiLoaded implements Action {
   readonly type = PoiActionTypes.POI_LOADED;
 
-  constructor(public context: string, public poi: Poi) {
+  constructor(public context: string, public poi: IPoi) {
     // Empty
   }
 }
@@ -40,7 +38,7 @@ export class PoiLoaded implements Action {
 export class AllPoiLoaded implements Action {
   readonly type = PoiActionTypes.ALL_POI_LOADED;
 
-  constructor(public contexts: string[], public pois: Poi[]) {
+  constructor(public contexts: string[], public pois: IPoi[]) {
     // Empty
   }
 }
@@ -61,19 +59,10 @@ export class PoiSaved implements Action {
   }
 }
 
-export class AddGTrackPois implements Action {
-  readonly type = PoiActionTypes.ADD_GTRACK_POIS;
-
-  constructor(public pois: Poi[]) {
-    // Empty
-  }
-}
-
 export type AllPoiActions =
   | LoadPoi
   | PoiLoaded
   | LoadPois
   | AllPoiLoaded
   | SavePoi
-  | PoiSaved
-  | AddGTrackPois;
+  | PoiSaved;

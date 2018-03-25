@@ -18,6 +18,7 @@ export class AdminMap extends Map {
   private _waypointMarker: WaypointMarker;
   private _routeInfo: RouteInfo;
   private _routePlanner: RoutePlanner;
+  public markersGroup: L.LayerGroup;
 
   constructor(
     public id: string,
@@ -72,7 +73,7 @@ export class AdminMap extends Map {
     const _path = this._routeInfo.getPath();
 
     if (typeof _path !== 'undefined') {
-      let _buffer: GeoJSON.Feature<GeoJSON.Polygon> | undefined = turf.buffer(
+      let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(
         _path, 50, {units: 'meters'}
       );
 

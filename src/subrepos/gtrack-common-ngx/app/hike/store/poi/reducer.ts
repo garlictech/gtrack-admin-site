@@ -27,8 +27,7 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
         id: action.context,
         loading: true,
         loaded: false,
-        saving: false,
-        saved: true
+        saved: false
       }, state);
 
     case PoiActionTypes.LOAD_POIS:
@@ -37,30 +36,39 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
           id: context,
           loading: true,
           loaded: false,
-          saving: false,
-          saved: true
+          saved: false
         };
       }), state);
 
     case PoiActionTypes.POI_LOADED:
-      return poiContextStateAdapter.updateOne({
+      return poiContextStateAdapter.upsertOne({
         id: action.context,
         changes: {
           loading: false,
-          loaded: true
+          loaded: true,
+          saved: false
         }
       }, state);
 
     case PoiActionTypes.ALL_POI_LOADED:
-      return poiContextStateAdapter.updateMany(action.contexts.map(context => {
+      return poiContextStateAdapter.upsertMany(action.contexts.map(context => {
         return {
           id: context,
           changes: {
             loading: false,
-            loaded: true
+            loaded: true,
+            saved: false
           }
         };
       }), state);
+
+    case PoiActionTypes.POI_SAVED:
+      return poiContextStateAdapter.upsertOne({
+        id: action.context,
+        changes: {
+          saved: true
+        }
+      }, state);
 
     default:
       return state;
@@ -73,13 +81,18 @@ const reducer: ActionReducer<IPoiEntityState> = (
 ): IPoiEntityState => {
   switch (action.type) {
     case PoiActionTypes.POI_LOADED:
-      return poiAdapter.addOne(action.poi, state);
+      return poiAdapter.upsertOne({
+        id: action.poi.id,
+        changes: _.cloneDeep(action.poi)
+      }, state);
 
     case PoiActionTypes.ALL_POI_LOADED:
-      return poiAdapter.addMany(action.pois, state);
-
-    case PoiActionTypes.ADD_GTRACK_POIS:
-      return poiAdapter.addMany(action.pois, state);
+      return poiAdapter.upsertMany(action.pois.map(poi => {
+        return {
+          id: poi.id,
+          changes: _.cloneDeep(poi)
+        }
+      }), state);
 
     default:
       return state;

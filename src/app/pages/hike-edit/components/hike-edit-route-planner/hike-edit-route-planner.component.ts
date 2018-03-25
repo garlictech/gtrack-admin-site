@@ -33,11 +33,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _routeSelectors: RouteSelectors,
     private _toasterService: ToasterService,
     private _store: Store<State>
-  ) {
-    this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
-  }
+  ) {}
 
   ngOnInit() {
+    this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
+
     this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
     this._store.select(this._hikeEditMapSelectors.getMapId)
@@ -47,7 +47,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
-    // Handling route save
+    // Show toaster when the route has been saved
     this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId)
       .takeUntil(this._destroy$)
       .switchMap((routeId: string) => this._store.select(this._routeSelectors.getRouteContext(routeId)))
@@ -102,6 +102,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
     Observable.forkJoin(_routePlannerState, _generalInfoState)
       .subscribe(data => {
+        console.log('data', data);
         if (data[0] && data[1]) {
           let _route: IRoute = {
             id: data[1],

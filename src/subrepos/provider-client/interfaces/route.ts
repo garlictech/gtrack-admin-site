@@ -7,13 +7,13 @@ export interface IRouteSaveResponse {
 
 export interface IRouteBounds {
   NorthEast: {
-    lat: number,
-    lon: number
-  },
+    lat: number;
+    lon: number;
+  };
   SouthWest: {
-    lat: number,
-    lon: number
-  }
+    lat: number;
+    lon: number;
+  };
 }
 
 export interface IRoute {

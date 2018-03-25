@@ -9,13 +9,13 @@ export class GeoSearchService {
   ) { }
 
   public searchBox(query: IGeospatialBoxSearchPayload) {
-    return this._deepstream.callRpc<GeospatialSearchResponse>('geo.query.includedInBox', {
+    return this._deepstream.callRpc<GeospatialSearchResponse>('open.geo.query.includedInBox', {
       payload: query
     });
   }
 
   public searchCircle(query: IGeospatialCircleSearchPayload) {
-    return this._deepstream.callRpc<GeospatialSearchResponse>('geo.query.includedInCircle', {
+    return this._deepstream.callRpc<GeospatialSearchResponse>('open.geo.query.includedInCircle', {
       payload: query
     });
   }

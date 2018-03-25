@@ -1,4 +1,5 @@
 import { IProviderInput } from './provider';
+import { EAuthRoles } from '..';
 
 export enum EMessageContentType {
   text = 'text',
@@ -24,19 +25,28 @@ export enum EMessagePrivacy {
   followers = 'followers'
 }
 
+export interface IMessageContentType {
+  type: EMessageContentType;
+  content: any;
+}
+
 export interface IMessage {
   userId: string;
   message: IMessageContentType[];
   context: string;
   state?: EMessageState;
-  privacy?: EMessagePrivacy
+  privacy?: EMessagePrivacy;
 }
 
-export interface IMessageSent extends IMessage, IProviderInput { }
+export interface IMessageSent extends IMessage, IProviderInput {}
 
 export interface IMessageStored extends IMessageSent {
   timestamp: number;
   id: string;
+  likes?: {
+    userId: string;
+    role: EAuthRoles;
+  }[];
 }
 
 export interface IMessageStateChange extends IProviderInput {
@@ -44,3 +54,10 @@ export interface IMessageStateChange extends IProviderInput {
   desiredPrivacy?: EMessagePrivacy;
   messageId: string;
 }
+
+export interface IMessageLike {
+  messageId: string;
+  like: boolean;
+}
+
+export interface IMessageLikeInput extends IMessageLike, IProviderInput {}

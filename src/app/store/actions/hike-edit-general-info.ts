@@ -9,6 +9,7 @@ export const SET_IS_ROUND_TRIP = '[HikeEditGeneralInfo] Set isRoundTrip';
 export const SET_DIFFICULTY = '[HikeEditGeneralInfo] Set difficulty';
 export const SET_POIS = '[HikeEditGeneralInfo] Set pois';
 export const SET_DESCRIPTIONS = '[HikeEditGeneralInfo] Set descriptions';
+export const ADD_DESCRIPTION = '[HikeEditGeneralInfo] Add description';
 
 export class ResetGeneralInfoState implements Action {
   readonly type = RESET_GENERAL_INFO_STATE;
@@ -52,10 +53,19 @@ export class SetDescriptions implements Action {
   }) { /* EMPTY */ }
 }
 
+export class AddDescription implements Action {
+  readonly type = ADD_DESCRIPTION;
+
+  constructor(public payload: {
+    description: ITextualDescriptionItem
+  }) { /* EMPTY */ }
+}
+
 export type AllHikeEditGeneralInfoActions =
   | ResetGeneralInfoState
   | SetHikeId
   | SetRouteId
   | SetGeneralInfo
   | SetPois
-  | SetDescriptions;
+  | SetDescriptions
+  | AddDescription;

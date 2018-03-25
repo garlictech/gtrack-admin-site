@@ -29,6 +29,7 @@ import { LeafletComponent, Center } from '../../../map';
 import * as L from 'leaflet';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { IPoi } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gc-trail-box',
@@ -64,7 +65,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
   public route: Route;
 
   public route$: Observable<Route | undefined>;
-  public pois$: Observable<Poi[]>;
+  public pois$: Observable<IPoi[]>;
 
   public checkpointsOnly = false;
   protected _geoJsons: L.GeoJSON[] = [];

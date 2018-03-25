@@ -3,8 +3,8 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 
 import { poiAdapter, IPoiState, IPoiContextState } from './state';
 import { EXTERNAL_POI_DEPENDENCIES, IExternalPoiDependencies } from '../../externals';
-import { Poi } from '../../services/poi';
 import { poiContextStateAdapter } from 'subrepos/gtrack-common-ngx/app/hike/store/poi';
+import { IPoi } from 'subrepos/provider-client';
 import { Dictionary } from '@ngrx/entity/src/models';
 
 import * as _ from 'lodash';
@@ -14,8 +14,8 @@ import { Observable } from 'rxjs/Observable';
 export class PoiSelectors {
   public selectFeature: MemoizedSelector<object, IPoiState>;
   public getPoiIds: (state: object) => string[] | number[];
-  public getAllPois: (state: object) => Poi[];
-  public getAllPoiEntities: (state: object) => Dictionary<Poi>;
+  public getAllPois: (state: object) => IPoi[];
+  public getAllPoiEntities: (state: object) => Dictionary<IPoi>;
   public getAllContexts: (state: object) => IPoiContextState[];
   public getAllContextEntities: (state: object) => Dictionary<IPoiContextState>;
 
@@ -40,7 +40,13 @@ export class PoiSelectors {
   }
 
   public getPoi(context: string) {
-    return createSelector(this.getAllPois, (pois: Poi[]) => pois.find(poi => (poi.id === context)));
+    return createSelector(this.getAllPois, (pois: IPoi[]) => pois.find(poi => (poi.id === context)));
+  }
+
+  public getPoiContext(context: string) {
+    return createSelector(this.getAllContexts, (contexts: IPoiContextState[]) => {
+      return contexts.find(c => (c.id === context))
+    });
   }
 
   public getPois(contexts: string[]) {

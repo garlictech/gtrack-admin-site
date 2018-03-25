@@ -1,12 +1,14 @@
 export interface IDynamicComponentModalConfig {
   component: {
-    name: string;
+    modalComponentName?: string;
+    contentComponentName: string;
     onClose?: any;
     data?: any;
   };
   modal: {
     title: string;
     className?: string;
+    hasFooter?: boolean;
     close?: any;
     destroy?: any;
   };

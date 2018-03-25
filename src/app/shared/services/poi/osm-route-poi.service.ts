@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EPoiTypes } from 'subrepos/provider-client';
-import { OsmPoi } from './lib/osm-poi';
+import { IOsmPoi } from 'app/shared/interfaces';
+import { LanguageService } from '../language.service';
+
 import * as uuid from 'uuid/v1';
 
 @Injectable()
@@ -25,7 +27,7 @@ export class OsmRoutePoiService {
     return this._http.post('http://overpass-api.de/api/interpreter', request)
       .toPromise()
       .then((response: any) => {
-        let _res: OsmPoi[] = [];
+        let _res: IOsmPoi[] = [];
 
         if (response.elements) {
           for (let i = 0; i < response.elements.length; i++) {
@@ -35,14 +37,14 @@ export class OsmRoutePoiService {
 
               console.log('ROUTE TAGS???', _point.tags);
 
-              _res.push(new OsmPoi({
+              _res.push({
                 id: uuid(),
                 lat: _point.lat,
                 lon: _point.lon,
                 elevation: _point.tags.ele,
                 types: [],
                 description: {
-                  [lng]: {
+                  [LanguageService.shortToLocale(lng)]: {
                     title: _point.tags.name || 'unknown',
                   }
                 },
@@ -50,7 +52,7 @@ export class OsmRoutePoiService {
                 osm: {
                   id: _point.id
                 }
-              }));
+              });
             }
           }
         }
