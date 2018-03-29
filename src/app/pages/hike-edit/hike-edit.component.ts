@@ -21,7 +21,7 @@ import * as uuid from 'uuid/v1';
   styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
-  public hikePoiIds$: Observable<string[]>;
+  public allowSave$: Observable<boolean>;
   public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -85,8 +85,16 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.hikePoiIds$ = this._store.select(this._hikeEditGeneralInfoSelectors.getPois);
     this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
+
+    this.allowSave$ = Observable.combineLatest(
+      this._store.select(this._hikeEditGeneralInfoSelectors.getPois),
+      this.routeInfoData$
+    ).map(data => {
+      const _pois = data[0];
+      const _segments = data[1].segments;
+      return _pois.length > 0 && (_segments && _segments.length > 0);
+    })
 
     // Handling hike save
     this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)
