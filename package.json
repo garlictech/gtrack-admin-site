@@ -99,11 +99,11 @@
         "lrm-graphhopper": "^1.2.0",
         "ng2-logger": "^1.0.12",
         "ngrx-store-freeze": "^0.2.1",
-        "ngrx-store-logger": "^0.2.0",
+        "ngrx-store-logger": "^0.2.1",
         "ngx-chips": "^1.6.7",
         "popper.js": "^1.14.1",
         "promise-polyfill": "^6.0.2",
-        "rxjs": "^5.5.7",
+        "rxjs": "^5.5.8",
         "tether": "^1.4.3",
         "zone.js": "^0.8.20"
     },
@@ -116,7 +116,7 @@
         "@types/jasmine": "^2.8.6",
         "@types/jquery": "^3.3.1",
         "@types/lodash": "^4.14.106",
-        "@types/node": "^8.10.0",
+        "@types/node": "^8.10.1",
         "codelyzer": "^4.2.1",
         "coffeelint": "^2.1.0",
         "jasmine-core": "^2.99.1",
@@ -124,7 +124,7 @@
         "require-dir": "^0.3.2",
         "tslib": "^1.9.0",
         "tslint": "^5.9.1",
-        "typescript": "^2.7.2"
+        "typescript": "^2.8.1"
     },
     "config": {
         "dockerWorkflowVersion": "v5.2.0",
