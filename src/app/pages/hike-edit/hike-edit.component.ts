@@ -5,9 +5,9 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import {
-  State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions
+  State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions, IHikeEditRoutePlannerState
 } from 'app/store';
-import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
+import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { HikeDataService } from 'app/shared/services';
 import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
@@ -22,6 +22,7 @@ import * as uuid from 'uuid/v1';
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
   public hikePoiIds$: Observable<string[]>;
+  public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -31,6 +32,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _hikeDataService: HikeDataService,
     private _hikeSelectors: HikeSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _toasterService: ToasterService,
     private _router: Router,
     private _title: Title
@@ -82,6 +84,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       });
 
     this.hikePoiIds$ = this._store.select(this._hikeEditGeneralInfoSelectors.getPois);
+    this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
     // Handling hike save
     this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)

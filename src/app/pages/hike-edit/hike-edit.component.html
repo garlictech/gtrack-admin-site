@@ -7,7 +7,7 @@
           <button
             class="btn btn-sm btn-fill btn-success"
             (click)="saveHike()"
-            [disabled]="(hikePoiIds$ | async)?.length < 1"
+            [disabled]="(hikePoiIds$ | async)?.length < 1 || (routeInfoData$ | async)?.segments.length < 1"
           >Save hike</button>
         </div>
       </div>
