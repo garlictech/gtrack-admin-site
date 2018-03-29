@@ -45,6 +45,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
         .take(1)
         .subscribe((poi: Poi) => {
           this._gTrackPoi = _.cloneDeep(poi);
+          console.log('this._gTrackPoi', this._gTrackPoi);
           this._initFormSubscriptions();
         });
 
@@ -71,12 +72,17 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
       langs: this._formBuilder.array([])
     });
 
+    this.poiForm.valueChanges
+      .takeUntil(this._destroy$)
+      .subscribe((value) => {
+        this.existingLangKeys = value.langs.map(lang => lang.id);
+      })
+
     this.poiForm.controls.tags.setValue(this._gTrackPoi.tags || []);
 
     let _descriptionArray = <FormArray>this.poiForm.controls.langs;
 
     if (this._gTrackPoi.description) {
-      this.existingLangKeys = Object.keys(this._gTrackPoi.description);
       for (let lang of Object.keys(this._gTrackPoi.description)) {
         let _langIdx = _.map(_descriptionArray.value, 'id').indexOf(lang);
 
@@ -104,19 +110,29 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   public addTranslation() {
     if (this.poiForm.controls._selLang.value) {
       // Add new lang field to the form. Form change will call a store update.
-      const control = <FormArray>this.poiForm.controls.langs;
-      control.push(this._createDescriptionItem(this.poiForm.controls._selLang.value, {}));
+      const _descriptionArray = <FormArray>this.poiForm.controls.langs;
+      _descriptionArray.push(this._createDescriptionItem(this.poiForm.controls._selLang.value, {}));
 
       // Clear lang selector guide
       this.poiForm.controls._selLang.setValue('');
     }
   }
 
+  public deleteTranslation(lang) {
+    (<FormArray>this.poiForm.controls.langs).removeAt(
+      (<FormArray>this.poiForm.controls.langs).value.findIndex(translation => translation.id === lang)
+    );
+  }
+
   public savePoi() {
     let _descriptions = {};
+
     for (let desc of this.poiForm.value.langs) {
       _descriptions[desc.id] = _.omit(desc, 'id');
     }
+
+    // Clear descriptions before merge
+    this._gTrackPoi.description = {};
 
     this._store.dispatch(new commonPoiActions.SavePoi(
       _.merge(this._gTrackPoi, {
