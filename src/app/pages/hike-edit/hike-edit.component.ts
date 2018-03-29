@@ -73,6 +73,9 @@ export class HikeEditComponent implements OnInit, OnDestroy {
                 summary: 'summary'
             }]
           }));
+
+          // Store has been initialized
+          this._store.dispatch(new hikeEditGeneralInfoActions.SetInitialized());
         }
       });
 
