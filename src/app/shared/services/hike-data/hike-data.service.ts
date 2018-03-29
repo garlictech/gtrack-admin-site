@@ -147,7 +147,7 @@ export class HikeDataService {
     // Descriptions
     this._splitHikeDescriptionToStore(hikeData.description);
 
-    // General info
+    // Store has been initialized
     this._store.dispatch(new hikeEditGeneralInfoActions.SetInitialized());
   }
 
