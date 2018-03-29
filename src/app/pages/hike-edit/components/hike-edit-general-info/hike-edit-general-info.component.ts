@@ -24,7 +24,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public textualDescriptions$: Observable<ITextualDescriptionItem[]>;
   public generalInfo$: Observable<IGeneralInfoState>;
   public isRoundTrip$: Observable<boolean>;
-  public existingLangKeys$: Observable<string[] | number[]>;
+  public existingLangKeys: string[] = [];
   public hikeForm: FormGroup;
   public langs = DESCRIPTION_LANGUAGES;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -39,9 +39,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Selectors
-    this.existingLangKeys$ = this._store.select(
-      this._hikeEditGeneralInfoSelectors.getAllLangKeys
-    );
     this.textualDescriptions$ = this._store.select(
       this._hikeEditGeneralInfoSelectors.getAllDescriptions
     );
@@ -74,6 +71,12 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       difficulty: 1,
       langs: this._formBuilder.array([])
     });
+
+    this.hikeForm.valueChanges
+      .takeUntil(this._destroy$)
+      .subscribe((value) => {
+        this.existingLangKeys = value.langs.map(lang => lang.id);
+      });
 
     // Fill the form on the 1st time
     this._store
@@ -111,7 +114,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
         this.hikeForm.valueChanges
           .debounceTime(1000)
           .takeUntil(this._destroy$)
-          .subscribe((values) => {
+          .subscribe((value) => {
             this._saveToStore();
           });
       });
@@ -136,9 +139,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     }));
   }
 
-  /**
-   * Add new language to descriptions
-   */
   public addTranslation() {
     if (this.hikeForm.controls._selLang.value) {
       (<FormArray>this.hikeForm.controls.langs).push(
@@ -155,9 +155,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Remove language from descriptions
-   */
   public deleteTranslation(lang) {
     (<FormArray>this.hikeForm.controls.langs).removeAt(
       (<FormArray>this.hikeForm.controls.langs).value.findIndex(translation => translation.id === lang)

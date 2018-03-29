@@ -17,7 +17,7 @@
       <option value="">-</option>
       <ng-container *ngFor="let lang of langs">
         <option
-          *ngIf="(existingLangKeys$ | async).indexOf(lang.locale) < 0"
+          *ngIf="existingLangKeys.indexOf(lang.locale) < 0"
           [value]="lang.locale"
           [innerHTML]="lang.name"
         ></option>

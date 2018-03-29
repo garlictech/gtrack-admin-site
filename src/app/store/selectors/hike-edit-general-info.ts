@@ -14,7 +14,6 @@ export class HikeEditGeneralInfoSelectors {
   public getRouteId: MemoizedSelector<object, string>;
   public getPois: MemoizedSelector<object, string[]>;
   public getAllDescriptions: (state: object) => ITextualDescriptionItem[];
-  public getAllLangKeys: (state: object) => string[] | number[];
 
   constructor() {
     this._featureSelector = createFeatureSelector<IHikeEditGeneralInfoState>('hikeEditGeneralInfo');
@@ -51,6 +50,5 @@ export class HikeEditGeneralInfoSelectors {
       this._featureSelector, (state: IHikeEditGeneralInfoState) => state.descriptions
     );
     this.getAllDescriptions = descriptionAdapter.getSelectors(descriptionSelector).selectAll;
-    this.getAllLangKeys = descriptionAdapter.getSelectors(descriptionSelector).selectIds;
   }
 }
