@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import {
-  State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions, IHikeEditRoutePlannerState
+  State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions, IHikeEditRoutePlannerState, hikeEditMapActions, hikeEditRoutePlannerActions
 } from 'app/store';
 import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { HikeDataService } from 'app/shared/services';
@@ -39,11 +39,13 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
+    this._store.dispatch(new hikeEditMapActions.ResetMapState());
+    this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
+
     this._activatedRoute.params
       .takeUntil(this._destroy$)
       .subscribe(params => {
-        this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
-
         if (params && params.id) {
           // Set page title
           this._title.setTitle('Edit hike');
@@ -71,10 +73,10 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           // Create initial language block
           this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
             descriptions: [{
-                id: 'en_US',
-                title: `Test hike #${new Date().getTime()}`,
-                fullDescription: 'desc',
-                summary: 'summary'
+              id: 'en_US',
+              title: `Test hike #${new Date().getTime()}`,
+              fullDescription: 'desc',
+              summary: 'summary'
             }]
           }));
 

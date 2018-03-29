@@ -130,7 +130,7 @@ function logger(reducer: ActionReducer<State>): any {
 const metaReducers: MetaReducer<State>[] = [];
 
 if (!environment.production) {
-  metaReducers.push(logger);
+  // metaReducers.push(logger);
   metaReducers.push(storeFreeze);
 }
 

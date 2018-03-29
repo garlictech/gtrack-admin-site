@@ -73,6 +73,7 @@ export class RouteInfo {
       return null;
     }
 
+    // TODO get from store
     return this.planner.routeInfoData;
   }
 

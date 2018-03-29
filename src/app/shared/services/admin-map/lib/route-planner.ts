@@ -35,9 +35,6 @@ export class RoutePlanner {
       }]
     }
 
-    // Reset the state when the planner has been created
-    this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
-
     // Parent classes use routeInfoData
     this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
       .takeUntil(this._destroy$)
