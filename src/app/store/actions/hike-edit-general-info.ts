@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
 
 export const RESET_GENERAL_INFO_STATE = '[HikeEditGeneralInfo] Reset';
+export const SET_INITIALIZED = '[HikeEditGeneralInfo] Set initialized';
 export const SET_HIKE_ID = '[HikeEditGeneralInfo] Set hike id';
 export const SET_ROUTE_ID = '[HikeEditGeneralInfo] Set route id';
 export const SET_IS_ROUND_TRIP = '[HikeEditGeneralInfo] Set isRoundTrip';
@@ -12,6 +13,11 @@ export const ADD_DESCRIPTION = '[HikeEditGeneralInfo] Add description';
 
 export class ResetGeneralInfoState implements Action {
   readonly type = RESET_GENERAL_INFO_STATE;
+  constructor() { /* EMPTY */ }
+}
+
+export class SetInitialized implements Action {
+  readonly type = SET_INITIALIZED;
   constructor() { /* EMPTY */ }
 }
 
@@ -68,6 +74,7 @@ export class AddDescription implements Action {
 
 export type AllHikeEditGeneralInfoActions =
   | ResetGeneralInfoState
+  | SetInitialized
   | SetHikeId
   | SetRouteId
   | SetIsRoundTrip

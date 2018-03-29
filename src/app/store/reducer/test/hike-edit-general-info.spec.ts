@@ -32,6 +32,21 @@ describe('HikeEditGeneralInfo reducers', () => {
     });
   });
 
+  describe('SetInitialized action', () => {
+    it('should set initialized state', () => {
+      const action = new hikeEditGeneralInfoActions.SetInitialized();
+      const state = hikeEditGeneralInfoReducer(initialState, action);
+
+      expect(state.generalInfo.initialized).toEqual(true);
+      // untouched props, good to add regardless
+      expect(state.generalInfo.routeId).toEqual('');
+      expect(state.generalInfo.isRoundTrip).toEqual(false);
+      expect(state.generalInfo.difficulty).toEqual(5);
+      expect(state.generalInfo.pois).toEqual([]);
+      expect(state.descriptions.ids).toEqual([]);
+    });
+  });
+
   describe('SetHikeId action', () => {
     it('should set hike id', () => {
       const action = new hikeEditGeneralInfoActions.SetHikeId({ hikeId: 'fakeHikeId' });
@@ -39,6 +54,7 @@ describe('HikeEditGeneralInfo reducers', () => {
 
       expect(state.generalInfo.hikeId).toEqual('fakeHikeId');
       // untouched props, good to add regardless
+      expect(state.generalInfo.initialized).toEqual(false);
       expect(state.generalInfo.routeId).toEqual('');
       expect(state.generalInfo.isRoundTrip).toEqual(false);
       expect(state.generalInfo.difficulty).toEqual(5);
@@ -54,6 +70,7 @@ describe('HikeEditGeneralInfo reducers', () => {
 
       expect(state.generalInfo.routeId).toEqual('fakeRouteId');
       // untouched props, good to add regardless
+      expect(state.generalInfo.initialized).toEqual(false);
       expect(state.generalInfo.hikeId).toEqual('');
       expect(state.generalInfo.isRoundTrip).toEqual(false);
       expect(state.generalInfo.difficulty).toEqual(5);
@@ -71,6 +88,7 @@ describe('HikeEditGeneralInfo reducers', () => {
 
       expect(state.generalInfo.difficulty).toEqual(1);
       // untouched props, good to add regardless
+      expect(state.generalInfo.initialized).toEqual(false);
       expect(state.generalInfo.hikeId).toEqual('');
       expect(state.generalInfo.routeId).toEqual('');
       expect(state.generalInfo.isRoundTrip).toEqual(false);
@@ -88,6 +106,7 @@ describe('HikeEditGeneralInfo reducers', () => {
 
       expect(state.generalInfo.isRoundTrip).toEqual(true);
       // untouched props, good to add regardless
+      expect(state.generalInfo.initialized).toEqual(false);
       expect(state.generalInfo.hikeId).toEqual('');
       expect(state.generalInfo.routeId).toEqual('');
       expect(state.generalInfo.pois).toEqual([]);
@@ -103,6 +122,7 @@ describe('HikeEditGeneralInfo reducers', () => {
 
       expect(state.generalInfo.pois).toEqual(['id1', 'id2']);
       // untouched props, good to add regardless
+      expect(state.generalInfo.initialized).toEqual(false);
       expect(state.generalInfo.hikeId).toEqual('');
       expect(state.generalInfo.routeId).toEqual('');
       expect(state.generalInfo.isRoundTrip).toEqual(false);
@@ -122,6 +142,21 @@ describe('HikeEditGeneralInfo reducers', () => {
         'en_US': descriptions[1]
       };
       const action = new hikeEditGeneralInfoActions.SetDescriptions({ descriptions: descriptions });
+      const state = hikeEditGeneralInfoReducer(initialState, action);
+
+      expect(state.descriptions.entities).toEqual(entities);
+    });
+  });
+
+  describe('AddDescription action', () => {
+    it('should add description', () => {
+      const description: ITextualDescriptionItem = {
+        id: 'hu_HU', title: 'Title #1', summary: 'Summary #1', fullDescription: 'Description #1'
+      };
+      const entities = {
+        'hu_HU': description
+      };
+      const action = new hikeEditGeneralInfoActions.AddDescription({ description: description });
       const state = hikeEditGeneralInfoReducer(initialState, action);
 
       expect(state.descriptions.entities).toEqual(entities);

@@ -9,6 +9,7 @@ import { descriptionAdapter } from '../reducer/hike-edig-general-info';
 export class HikeEditGeneralInfoSelectors {
   private _featureSelector: MemoizedSelector<object, IHikeEditGeneralInfoState>;
   public getGeneralInfo: MemoizedSelector<object, IGeneralInfoState>;
+  public getInitialized: MemoizedSelector<object, boolean>;
   public getHikeId: MemoizedSelector<object, string>;
   public getRouteId: MemoizedSelector<object, string>;
   public getPois: MemoizedSelector<object, string[]>;
@@ -24,6 +25,10 @@ export class HikeEditGeneralInfoSelectors {
 
     this.getGeneralInfo = createSelector(this._featureSelector,
       (state: IHikeEditGeneralInfoState) => state.generalInfo
+    );
+
+    this.getInitialized = createSelector(this._featureSelector,
+      (state: IHikeEditGeneralInfoState) => state.generalInfo.initialized
     );
 
     this.getHikeId = createSelector(this._featureSelector,
