@@ -102,7 +102,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
     Observable.forkJoin(_routePlannerState, _generalInfoState)
       .subscribe(data => {
-        console.log('data', data);
         if (data[0] && data[1]) {
           let _route: IRoute = {
             id: data[1],
@@ -116,8 +115,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   }
 
   private _loadRoute(routeData: Route) {
-    console.log('routeData', routeData);
-
     for (let i = 1; i < routeData.route.features.length; i++) {
       let latlng = L.latLng(
         routeData.route.features[i].geometry.coordinates[1],

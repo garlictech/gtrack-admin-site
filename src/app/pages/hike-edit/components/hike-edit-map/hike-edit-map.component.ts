@@ -90,7 +90,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
           // TODO action
           this.mapComponent.map.waypointMarker.addWaypoint(e.latlng);
         } else {
-          console.log('todo _createCheckpoint');
+          // console.log('todo _createCheckpoint');
           // this._createCheckpoint(e.latlng);
         }
       })
