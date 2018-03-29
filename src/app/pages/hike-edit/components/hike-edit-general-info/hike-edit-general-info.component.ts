@@ -136,13 +136,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     }));
   }
 
-  /*
-  public removeTextualDescription(i: number) {
-      const control = <FormArray>this.descriptionForm.controls.langs;
-      control.removeAt(i);
-  }
-  */
-
   /**
    * Add new language to descriptions
    */
@@ -160,6 +153,15 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       // Clear lang selector guide
       this.hikeForm.controls._selLang.setValue('');
     }
+  }
+
+  /**
+   * Remove language from descriptions
+   */
+  public deleteTranslation(lang) {
+    (<FormArray>this.hikeForm.controls.langs).removeAt(
+      (<FormArray>this.hikeForm.controls.langs).value.findIndex(translation => translation.id === lang)
+    );
   }
 
   public getLangName(key) {
