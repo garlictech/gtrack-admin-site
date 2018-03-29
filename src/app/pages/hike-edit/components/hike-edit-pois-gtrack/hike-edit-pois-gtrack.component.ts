@@ -146,8 +146,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       // poi ids from the loaded hike program
       this._store.select(this._hikeEditGeneralInfoSelectors.getPois).take(1)
     ).subscribe(data => {
-      console.log('data', data);
-
       if (data[0] && data[1]) {
         const _gTrackPois = _.filter(data[0], (p: IGTrackPoi) => true /* p.inHike */)
           .map((p: IGTrackPoi) => p.id);
