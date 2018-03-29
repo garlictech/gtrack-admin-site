@@ -11,9 +11,11 @@ import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/a
 import { PoiEditorService } from 'app/shared/services';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import {
-  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, commonGeoSearchActions, hikeEditGeneralInfoActions,
+  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, commonGeoSearchActions, hikeEditGeneralInfoActions, IHikeEditRoutePlannerState,
 } from 'app/store';
-import { HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors } from 'app/store/selectors';
+import {
+  HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors
+} from 'app/store/selectors';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
@@ -24,6 +26,7 @@ import * as uuid from 'uuid/v1';
 })
 export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public pois$: Observable<IGTrackPoi[]>;
+  public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   public searchContext$: Observable<IGeoSearchContextState | undefined>;
   public showOnrouteMarkers$: Observable<boolean>;
   public showOffrouteMarkers$: Observable<boolean>;
@@ -37,6 +40,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _geometryService: GeometryService,
     private _poiSelectors: PoiSelectors
@@ -73,6 +77,9 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
+
+    // Route info from the store (for disabling GET buttons)
+    this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
     //
     // Contexts
