@@ -57,11 +57,19 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-11">
               <div class="form-group form-black label-floating is-empty">
                 <label class="control-label">Summary</label>
                 <input class="form-control" type="text" formControlName="summary">
               </div>
+            </div>
+            <div class="col-md-1">
+              <button
+                class="btn btn-danger btn-simple btn-link pull-right mt-4"
+                (click)="deleteTranslation(lng.value.id)"
+                title="Delete language">
+                <i class="material-icons">delete</i>
+              </button>
             </div>
           </div>
         </div>
