@@ -6,8 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operators';
 import { State, hikeEditGeneralInfoActions } from 'app/store';
-import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
-import { IGeneralInfoState } from 'app/store/state';
+import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { IGeneralInfoState, IHikeEditRoutePlannerState } from 'app/store/state';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
 import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
 import { ITextualDescription } from 'subrepos/provider-client';
@@ -22,6 +22,7 @@ import * as _ from 'lodash';
 export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public textualDescriptions$: Observable<ITextualDescriptionItem[]>;
   public generalInfo$: Observable<IGeneralInfoState>;
+  public isRoundTrip$: Observable<boolean>;
   public existingLangKeys$: Observable<string[] | number[]>;
   public hikeForm: FormGroup;
   public langs = DESCRIPTION_LANGUAGES;
@@ -31,6 +32,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _formBuilder: FormBuilder,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
   ) {}
 
   ngOnInit() {
@@ -42,6 +44,14 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       this._hikeEditGeneralInfoSelectors.getAllDescriptions
     );
     this.generalInfo$ = this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo);
+    this.isRoundTrip$ = this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip);
+
+    this.isRoundTrip$
+      .subscribe((isRoundTrip: boolean) => {
+        this._store.dispatch(new hikeEditGeneralInfoActions.SetIsRoundTrip({
+          isRoundTrip: isRoundTrip
+        }));
+      });
 
     this._initFormSubscriptions();
   }
@@ -52,10 +62,12 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   }
 
   public saveToStore() {
+    /*
     this._store.dispatch(new hikeEditGeneralInfoActions.SetGeneralInfo({
       isRoundTrip: this.hikeForm.controls.isRoundTrip.value,
       difficulty: this.hikeForm.controls.difficulty.value
     }));
+    */
 
     this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
       descriptions: this.hikeForm.value.langs
@@ -63,22 +75,19 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   }
 
   private _initFormSubscriptions() {
-    //
-    // General info
-    //
-
     this.hikeForm = this._formBuilder.group({
       _selLang: new FormControl('', []),
-      isRoundTrip: false,
       difficulty: 1,
       langs: this._formBuilder.array([])
     });
 
     this.generalInfo$
-      .takeUntil(this._destroy$)
+      // .filter(generalInfo => generalInfo)
+      .take(1)
+      // .takeUntil(this._destroy$)
       .subscribe((generalInfo) => {
+        console.log('generalInfo for minit', generalInfo);
         this.hikeForm.patchValue({
-          isRoundTrip: generalInfo.isRoundTrip,
           difficulty: generalInfo.difficulty
         })
       });

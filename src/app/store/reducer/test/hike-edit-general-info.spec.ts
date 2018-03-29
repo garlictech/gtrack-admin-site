@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { IHikeEditGeneralInfoState } from '../../state/hike-edit-general-info';
 import { initialGeneralInfoState, descriptionInitialState, hikeEditGeneralInfoReducer } from '../hike-edig-general-info';
 import { hikeEditGeneralInfoActions } from '../..';
-import { ITextualDescriptionItem } from 'app/shared/interfaces';
+import { ITextualDescriptionItem } from '../../../shared/interfaces';
 
 describe('HikeEditGeneralInfo reducers', () => {
   let initialState: IHikeEditGeneralInfoState;
@@ -64,18 +64,34 @@ describe('HikeEditGeneralInfo reducers', () => {
 
   describe('SetGeneralInfo action', () => {
     it('should set generalInfo', () => {
-      const action = new hikeEditGeneralInfoActions.SetGeneralInfo({
-        isRoundTrip: true,
+      const action = new hikeEditGeneralInfoActions.SetDifficulty({
         difficulty: 1
       });
       const state = hikeEditGeneralInfoReducer(initialState, action);
 
-      expect(state.generalInfo.isRoundTrip).toEqual(true);
       expect(state.generalInfo.difficulty).toEqual(1);
       // untouched props, good to add regardless
       expect(state.generalInfo.hikeId).toEqual('');
       expect(state.generalInfo.routeId).toEqual('');
+      expect(state.generalInfo.isRoundTrip).toEqual(false);
       expect(state.generalInfo.pois).toEqual([]);
+      expect(state.descriptions.ids).toEqual([]);
+    });
+  });
+
+  describe('SetGeneralInfo action', () => {
+    it('should set generalInfo', () => {
+      const action = new hikeEditGeneralInfoActions.SetIsRoundTrip({
+        isRoundTrip: true
+      });
+      const state = hikeEditGeneralInfoReducer(initialState, action);
+
+      expect(state.generalInfo.isRoundTrip).toEqual(true);
+      // untouched props, good to add regardless
+      expect(state.generalInfo.hikeId).toEqual('');
+      expect(state.generalInfo.routeId).toEqual('');
+      expect(state.generalInfo.pois).toEqual([]);
+      expect(state.generalInfo.difficulty).toEqual(5);
       expect(state.descriptions.ids).toEqual([]);
     });
   });
