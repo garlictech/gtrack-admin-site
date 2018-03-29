@@ -137,8 +137,10 @@ export class HikeDataService {
     this._store.dispatch(new commonRouteActions.LoadRoute(hikeData.routeId));
 
     // General info
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetGeneralInfo({
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetIsRoundTrip({
       isRoundTrip: hikeData.isRoundTrip,
+    }));
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetDifficulty({
       difficulty: parseInt(hikeData.difficulty) // TODO: it will be number!
     }));
 
