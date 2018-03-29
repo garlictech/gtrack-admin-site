@@ -143,7 +143,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     if (this.hikeForm.controls._selLang.value) {
       (<FormArray>this.hikeForm.controls.langs).push(
         this._createDescriptionItem({
-          id:   this.hikeForm.controls._selLang.value,
+          id: this.hikeForm.controls._selLang.value,
           title: '',
           fullDescription: '',
           summary: ''
