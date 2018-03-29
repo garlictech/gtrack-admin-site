@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import {
@@ -20,6 +21,7 @@ import * as uuid from 'uuid/v1';
   styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
+  public hikePoiIds$: Observable<string[]>;
   private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -78,6 +80,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           this._store.dispatch(new hikeEditGeneralInfoActions.SetInitialized());
         }
       });
+
+    this.hikePoiIds$ = this._store.select(this._hikeEditGeneralInfoSelectors.getPois);
 
     // Handling hike save
     this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)
