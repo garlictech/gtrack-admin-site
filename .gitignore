@@ -64,7 +64,8 @@ e2e/src/supervisord.log
 .webpack.json
 
 # Doc #
-/doc/
+/docs/
+docs
 
 # IDE #
 .idea/

@@ -51,12 +51,9 @@
         "travis": "docker/travis.sh $@",
         "semantic-release": "docker/semantic-release.sh",
         "deploy": "docker/deploy.sh $@",
-        "doc:build": "compodoc -d ./docs -p tsconfig.json",
-
-        "doc:serve": "compodoc -s -r 8092 -d ./docs -p tsconfig.json",
-        "doc:buildandserve": "compodoc -s -r 8092 -d ./docs -p tsconfig.json"
-
-
+        "doc:build": "docker/npm.sh doc:build",
+        "doc:serve": "docker/npm.sh doc:serve",
+        "doc:buildandserve": "docker/npm.sh doc:buildandserve"
     },
     "dependencies": {
         "@angular/animations": "^5.2.9",
@@ -113,7 +110,6 @@
     "devDependencies": {
         "@angularclass/hmr": "^2.1.3",
         "@angularclass/hmr-loader": "^3.0.2",
-        "@compodoc/compodoc": "^1.0.9",
         "@ngrx/store-devtools": "^5.2.0",
         "@types/d3": "^4.13.0",
         "@types/geojson": "^7946.0.2",
@@ -131,7 +127,7 @@
         "typescript": "^2.7.2"
     },
     "config": {
-        "dockerWorkflowVersion": "v5.1.16",
+        "dockerWorkflowVersion": "v5.2.0",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }
