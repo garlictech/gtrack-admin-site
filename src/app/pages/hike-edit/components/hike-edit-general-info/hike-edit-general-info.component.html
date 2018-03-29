@@ -7,9 +7,6 @@
 
     <label>RoundTrip: <span [ngClass]="{'text-success': (isRoundTrip$ | async)}">{{(isRoundTrip$ | async) ? 'Yes' : 'No'}}</span></label>
   </div>
-  <div class="pull-right">
-    <button class="btn btn-sm btn-fill btn-success" (click)="saveToStore()">Save to store</button>
-  </div>
 
   <div class="lang-toolbar clearfix mt-4 mb-2">
     <button class="btn btn-round btn-sm btn-just-icon btn-success" [disabled]="!hikeForm.controls._selLang" (click)="addTranslation()">
@@ -17,9 +14,13 @@
     </button>
 
     <select class="form-control form-control-sm" formControlName="_selLang" title="Select">
+      <option value="">-</option>
       <ng-container *ngFor="let lang of langs">
-        <option *ngIf="(existingLangKeys$ | async).indexOf(lang.locale) < 0" [value]="lang.locale" [innerHTML]="lang.name">
-        </option>
+        <option
+          *ngIf="(existingLangKeys$ | async).indexOf(lang.locale) < 0"
+          [value]="lang.locale"
+          [innerHTML]="lang.name"
+        ></option>
       </ng-container>
     </select>
 

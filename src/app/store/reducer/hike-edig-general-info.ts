@@ -13,7 +13,8 @@ export const initialGeneralInfoState: IGeneralInfoState = {
   routeId: '',
   isRoundTrip: false,
   difficulty: 5,
-  pois: []
+  pois: [],
+  initialized: false
 };
 
 export function generalInfoReducer(
@@ -23,6 +24,11 @@ export function generalInfoReducer(
   switch (action.type) {
     case hikeEditGeneralInfoActions.RESET_GENERAL_INFO_STATE:
       return initialGeneralInfoState;
+    case hikeEditGeneralInfoActions.SET_INITIALIZED:
+      return {
+        ...state,
+        initialized: true
+      };
     case hikeEditGeneralInfoActions.SET_HIKE_ID:
       return {
         ...state,

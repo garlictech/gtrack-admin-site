@@ -146,6 +146,9 @@ export class HikeDataService {
 
     // Descriptions
     this._splitHikeDescriptionToStore(hikeData.description);
+
+    // General info
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetInitialized());
   }
 
   /**
