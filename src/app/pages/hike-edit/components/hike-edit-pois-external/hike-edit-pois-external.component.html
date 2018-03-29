@@ -1,7 +1,11 @@
 <div class="clearfix mb-2">
   <div class="pull-left">
     <button class="btn btn-sm btn-fill btn-success" (click)="savePois()">Save as gTrackPoi</button>
-    <button class="btn btn-sm btn-fill btn-success" (click)="getPois()">Get new</button>
+    <button
+      class="btn btn-sm btn-fill btn-success"
+      (click)="getPois()"
+      [disabled]="(routeInfoData$ | async)?.segments.length < 1"
+    >Get new</button>
   </div>
 
   <div class="pull-left" *ngIf="loading$ | async"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>

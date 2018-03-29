@@ -11,9 +11,9 @@ import {
   IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi
 } from 'app/shared/interfaces';
 import {
-  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions
+  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, IHikeEditRoutePlannerState
 } from 'app/store';
-import { HikeEditMapSelectors, HikeEditPoiSelectors } from 'app/store/selectors'
+import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors'
 
 import * as _ from 'lodash';
 
@@ -24,6 +24,7 @@ import * as _ from 'lodash';
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   @Input() poiType: IExternalPoiType;
   public pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
+  public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   public loading$: Observable<boolean>;
   public showOnrouteMarkers$: Observable<boolean>;
   public showOffrouteMarkers$: Observable<boolean>;
@@ -36,6 +37,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _poiSelectors: PoiSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _poiEditorService: PoiEditorService
   ) {}
 
@@ -50,6 +52,9 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
     // Poi list from store
     this.pois$ = this._getSubdomainSelector(this.poiType.subdomain);
+
+    // Route info from the store (for disabling GET buttons)
+    this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
     // Update poi properties after poi list loaded
     this._store

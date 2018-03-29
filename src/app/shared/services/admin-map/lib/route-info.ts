@@ -82,7 +82,7 @@ export class RouteInfo {
   public getSearchBounds() {
     let _path = this.getPath();
 
-    if (typeof _path !== 'undefined') {
+    if (_path) {
       // declare as 'any' for avoid d3.geoBounds error
       let _buffer: any = turf.buffer(_path, 1000, {units: 'meters'});
 
