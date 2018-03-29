@@ -110,7 +110,7 @@ export class RoutingControl {
     });
 
     _control.addTo(this._leafletMap);
-    _control.hide();
+    // _control.hide();
 
     _control.on('routingstart', () => {
       this._store.dispatch(new routingActions.RoutingStart());

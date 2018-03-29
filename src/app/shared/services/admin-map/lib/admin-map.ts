@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { State } from 'app/store';
+import { State, adminMapActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { RoutingControl } from './routing-control';
 import { WaypointMarker } from './waypoint-marker';
@@ -52,6 +52,15 @@ export class AdminMap extends Map {
       this._routeInfo,
       this._routingControl
     );
+  }
+
+  public destroy() {
+    this._routeInfo.deletePlan();
+    delete this._routeInfo;
+    delete this._routingControl;
+    delete this._waypointMarker;
+
+    this._store.dispatch(new adminMapActions.ResetMap());
   }
 
   public get routeInfo(): RouteInfo {

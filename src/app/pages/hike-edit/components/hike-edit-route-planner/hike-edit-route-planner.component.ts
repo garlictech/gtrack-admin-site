@@ -36,8 +36,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
-
     this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
     this._store.select(this._hikeEditMapSelectors.getMapId)
@@ -64,7 +62,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .switchMap((routeContext) => this._store.select(this._routeSelectors.getRoute((<IRouteContextState>routeContext).id)))
       .take(1)
       .subscribe((route) => {
-        this._loadRoute(<Route>route);
+        setTimeout(() => {
+          this._loadRoute(<Route>route);
+        });
       });
   }
 
@@ -74,7 +74,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   }
 
   public retrievePlan() {
-    this._map.waypointMarker.deleteLast();
+    console.log('TODO retrievePlan');
   }
 
   public removeLast() {
@@ -100,7 +100,8 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .select(this._hikeEditGeneralInfoSelectors.getRouteId)
       .take(1)
 
-    Observable.forkJoin(_routePlannerState, _generalInfoState)
+    Observable
+      .forkJoin(_routePlannerState, _generalInfoState)
       .subscribe(data => {
         if (data[0] && data[1]) {
           let _route: IRoute = {
@@ -115,13 +116,17 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   }
 
   private _loadRoute(routeData: Route) {
-    for (let i = 1; i < routeData.route.features.length; i++) {
-      let latlng = L.latLng(
-        routeData.route.features[i].geometry.coordinates[1],
-        routeData.route.features[i].geometry.coordinates[0]
-      );
+    if (this._map && this._map.waypointMarker) {
+      this._map.waypointMarker.reset();
 
-      this._map.waypointMarker.addWaypoint(latlng);
+      for (let i = 1; i < routeData.route.features.length; i++) {
+        let latlng = L.latLng(
+          routeData.route.features[i].geometry.coordinates[1],
+          routeData.route.features[i].geometry.coordinates[0]
+        );
+
+        this._map.waypointMarker.addWaypoint(latlng);
+      }
     }
   }
 }
