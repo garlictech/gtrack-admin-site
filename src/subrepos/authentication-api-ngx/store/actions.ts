@@ -17,7 +17,7 @@ export const LOGOUT_SUCCESS = '[Authentication] Logout Success';
 export const UNAUTHORIZED = '[Authentication] Unauthorized';
 export const ROUTE_FORBIDDEN = '[Authentication] Route forbidden';
 export const USER_CANCELLED = '[Authentication] User cancelled';
-export const WINDOW_REOPENED = '[Authentication] Window reopened'
+export const WINDOW_REOPENED = '[Authentication] Window reopened';
 
 export class RequestVerifyToken implements Action {
   readonly type = REQUEST_VERIFY_TOKEN;
@@ -46,20 +46,12 @@ export class TwitterLogin implements Action {
 }
 export class RequestMagicLinkToken implements Action {
   readonly type = MAGICLINK_REQUEST_TOKEN;
-  constructor(
-    public email: string,
-    public language: string,
-    public roles: string[]
-  ) {}
+  constructor(public email: string, public language: string, public roles: string[]) {}
 }
 
 export class MagicLinkLogin implements Action {
   readonly type = MAGICLINK_LOGIN;
-  constructor(
-    public token: string,
-    public uid: string,
-    public roles: string[]
-  ) {}
+  constructor(public token: string, public uid: string, public roles: string[]) {}
 }
 
 export class MagicLinkEmailSent implements Action {
@@ -102,10 +94,7 @@ export class Unauthorized implements Action {
 export class RouteForbidden implements Action {
   readonly type = ROUTE_FORBIDDEN;
 
-  constructor(
-    public route?: ActivatedRouteSnapshot,
-    public state?: RouterStateSnapshot
-  ) {}
+  constructor(public route?: ActivatedRouteSnapshot, public state?: RouterStateSnapshot) {}
 }
 
 export type AllActions =
