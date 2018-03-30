@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed }  from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Actions, Effect, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
@@ -68,11 +68,7 @@ describe('Route effects', () => {
             },
             geometry: {
               type: 'Point',
-              coordinates: [
-                18.95623999999998,
-                47.57855,
-                305.3887023925781
-              ]
+              coordinates: [18.95623999999998, 47.57855, 305.3887023925781]
             }
           }
         ]
@@ -89,9 +85,7 @@ describe('Route effects', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({
-
-        }),
+        StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot({
@@ -119,18 +113,20 @@ describe('Route effects', () => {
     effects = TestBed.get(RouteEffects);
 
     spyOn(routeService, 'get').and.callFake(_id => Observable.of(new Route(routeDataStored)));
-    spyOn(routeService, 'create').and.returnValue(Observable.of({
-      id: newId
-    }));
+    spyOn(routeService, 'create').and.returnValue(
+      Observable.of({
+        id: newId
+      })
+    );
   });
 
   describe('loadRoute$', () => {
     it('should return a Route from RouteLoaded', () => {
       const action = new routeActions.LoadRoute(id);
       const completion = new routeActions.RouteLoaded(id, route);
-      const expected = cold('-b', {b: completion});
+      const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', {a: action});
+      actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadRoute$).toBeObservable(expected);
     });
@@ -140,9 +136,9 @@ describe('Route effects', () => {
     it('should return the id of the created Route from RouteCreated', () => {
       const action = new routeActions.SaveRoute(routeData);
       const completion = new routeActions.RouteSaved(newId);
-      const expected = cold('-b', {b: completion});
+      const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', {a: action});
+      actions$.stream = hot('-a', { a: action });
 
       expect(effects.saveRoute$).toBeObservable(expected);
     });

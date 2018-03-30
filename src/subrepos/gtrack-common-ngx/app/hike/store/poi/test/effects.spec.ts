@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed }  from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Actions, Effect, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
@@ -37,9 +37,8 @@ export function getActions() {
 }
 
 describe('Poi effects', () => {
-
   let poisMap: {
-    [key: string]: IPoiStored
+    [key: string]: IPoiStored;
   };
 
   let pois: IPoi[];
@@ -59,12 +58,8 @@ describe('Poi effects', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({
-
-        }),
-        EffectsModule.forRoot([
-
-        ]),
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot({
           storeDomain: 'deepstream',
@@ -92,18 +87,20 @@ describe('Poi effects', () => {
     effects = TestBed.get(PoiEffects);
 
     spyOn(service, 'get').and.callFake(id => Observable.of(poisMap[id]));
-    spyOn(service, 'create').and.returnValue(Observable.of({
-      id: newId
-    }));
+    spyOn(service, 'create').and.returnValue(
+      Observable.of({
+        id: newId
+      })
+    );
   });
 
   describe('loadPoi$', () => {
     it('should return a Poi from PoiLoaded', () => {
       const action = new poiActions.LoadPoi(ids[0]);
       const completion = new poiActions.PoiLoaded(ids[0], pois[0]);
-      const expected = cold('-b', {b: completion});
+      const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', {a: action});
+      actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadPoi$).toBeObservable(expected);
     });
@@ -113,9 +110,9 @@ describe('Poi effects', () => {
     it('should return all the Pois from AllPoiLoaded', () => {
       const action = new poiActions.LoadPois(ids);
       const completion = new poiActions.AllPoiLoaded(ids, pois);
-      const expected = cold('-b', {b: completion});
+      const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', {a: action});
+      actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadPois$).toBeObservable(expected);
     });
@@ -125,9 +122,9 @@ describe('Poi effects', () => {
     it('should return the id of the created Poi from PoiCreated', () => {
       const action = new poiActions.SavePoi(poiFixtures[0]);
       const completion = new poiActions.PoiSaved(newId);
-      const expected = cold('-b', {b: completion});
+      const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', {a: action});
+      actions$.stream = hot('-a', { a: action });
 
       expect(effects.savePoi$).toBeObservable(expected);
     });

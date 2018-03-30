@@ -12,7 +12,7 @@ import {
 } from 'subrepos/deepstream-ngx';
 
 import { environment } from 'environments/environment';
-import { selectRole, selectUser } from 'app/authentication/store/selectors';
+import { selectRole, selectUser } from '../authentication/store/selectors';
 
 let externalDeepstreamDependencies: IExternalDeepstreamDependencies = {
   deepstreamConnectionString: environment.deepstream,
