@@ -50,7 +50,10 @@
         "bash": "docker/bash.sh",
         "travis": "docker/travis.sh $@",
         "semantic-release": "docker/semantic-release.sh",
-        "deploy": "docker/deploy.sh $@"
+        "deploy": "docker/deploy.sh $@",
+        "doc:build": "docker/npm.sh doc:build",
+        "doc:serve": "docker/npm.sh doc:serve",
+        "doc:buildandserve": "docker/npm.sh doc:buildandserve"
     },
     "dependencies": {
         "@angular/animations": "^5.2.9",
@@ -124,11 +127,14 @@
         "typescript": "^2.8.1"
     },
     "config": {
-        "dockerWorkflowVersion": "v5.1.16",
+        "dockerWorkflowVersion": "v5.2.0",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }
     },
     "optionalDependencies": {},
-    "peerDependencies": {}
+    "peerDependencies": {},
+    "release": {
+        "branch": "staging"
+    }
 }

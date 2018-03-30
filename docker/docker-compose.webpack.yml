@@ -12,6 +12,7 @@ services:
       - "../dist:/app/dist"
       - "./hooks:/app/hooks"
       - "../reports:/app/reports"
+      - "../docs:/app/docs"
     environment:
       - NODE_ENV
       - CI

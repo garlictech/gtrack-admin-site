@@ -5,4 +5,4 @@ if [[ $DEBUG ]]; then
   DOCKER_COMPOSE="${DOCKER_COMPOSE} -f docker/docker-compose.debug.yml"
 fi
 
-${DOCKER_COMPOSE} run --service-ports gtrack-admin-site.webpack-server npm run $@
+${DOCKER_COMPOSE} run -p 8092:8092 gtrack-admin-site.webpack-server npm run $@
