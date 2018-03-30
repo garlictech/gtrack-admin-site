@@ -25,17 +25,18 @@ export class HikeDataService {
    * collectHikeData effect submethod
    */
   public collectHikeGeneralInfo() {
-    return this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo)
-      .take(1)
-      .map((generalInfo) => {
-        return {
-          id: generalInfo.hikeId,
-          routeId: generalInfo.routeId,
-          difficulty: generalInfo.difficulty.toString(), // TODO it will be number!!
-          isRoundTrip: generalInfo.isRoundTrip,
-          pois: generalInfo.pois
-        };
-      });
+    return Observable.combineLatest(
+      this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo),
+      this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
+    ).map(data => {
+      return {
+        id: data[0].hikeId,
+        routeId: data[0].routeId,
+        difficulty: data[0].difficulty.toString(), // TODO it will be number!!
+        isRoundTrip: data[1],
+        pois: data[0].pois
+      };
+    });
   }
 
   /**

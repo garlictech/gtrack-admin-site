@@ -45,14 +45,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     this.generalInfo$ = this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo);
     this.isRoundTrip$ = this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip);
 
-    this.isRoundTrip$
-      .takeUntil(this._destroy$)
-      .subscribe((isRoundTrip: boolean) => {
-        this._store.dispatch(new hikeEditGeneralInfoActions.SetIsRoundTrip({
-          isRoundTrip: isRoundTrip
-        }));
-      });
-
     // Init forms from the store
     this._initForm();
   }
