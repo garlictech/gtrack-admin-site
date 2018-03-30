@@ -39,8 +39,8 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
     this._store.select(this._hikeEditMapSelectors.getMapId)
+      .takeUntil(this._destroy$)
       .filter(id => id !== '')
-      .take(1)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
@@ -63,6 +63,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .take(1)
       .subscribe((route) => {
         setTimeout(() => {
+          this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
+
+          // Todo: load route only on init
           this._loadRoute(<Route>route);
         });
       });

@@ -49,8 +49,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._store
       .select(this._hikeEditMapSelectors.getMapId)
+      .takeUntil(this._destroy$)
       .filter(id => id !== '')
-      .take(1)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
