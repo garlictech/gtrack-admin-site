@@ -4,9 +4,9 @@ import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/models';
 import { storeFreeze } from 'ngrx-store-freeze';
 
-import { IAuthenticationState, Reducer as authReducer } from 'subrepos/authentication-api-ngx';
+import { Reducer as authReducer } from 'subrepos/authentication-api-ngx';
 import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/deepstream-ngx';
-import { CommonState, commonReducers } from 'subrepos/gtrack-common-ngx';
+import { CommonState, commonReducers, IAuthenticationState } from 'subrepos/gtrack-common-ngx';
 
 /////////////
 // Actions
@@ -64,20 +64,30 @@ export { commonGeoSearchActions };
 // Effects
 /////////////
 
-export {
-  AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects
-} from './effects';
-export { RouterEffects, PoiEffects } from 'subrepos/gtrack-common-ngx';
+export { AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects } from './effects';
+export { PoiEffects } from 'subrepos/gtrack-common-ngx';
 
 ////////////
 // States
 ////////////
 
 import {
-  IHikeEditRoutePlannerState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState, IHikeEditGeneralInfoState, IExternalPoiListContextItemState
+  IHikeEditRoutePlannerState,
+  IHikeEditMapState,
+  IHikeEditMapMapState,
+  IHikeEditPoiState,
+  IExternalPoiListContextState,
+  IHikeEditGeneralInfoState,
+  IExternalPoiListContextItemState
 } from './state';
 export {
-  IHikeEditRoutePlannerState, IHikeEditMapState, IHikeEditMapMapState, IHikeEditPoiState, IExternalPoiListContextState, IHikeEditGeneralInfoState, IExternalPoiListContextItemState
+  IHikeEditRoutePlannerState,
+  IHikeEditMapState,
+  IHikeEditMapMapState,
+  IHikeEditPoiState,
+  IExternalPoiListContextState,
+  IHikeEditGeneralInfoState,
+  IExternalPoiListContextItemState
 };
 
 //////////////
@@ -107,9 +117,7 @@ export interface State extends CommonState {
 // Same keys as in the state!!!
 const reducers: ActionReducerMap<State> = {
   ...commonReducers,
-  authentication: authReducer,
   router: routerReducer,
-  deepstream: deepstreamReducer,
   hikeEditRoutePlanner: hikeEditRoutePlannerReducer,
   hikeEditGeneralInfo: hikeEditGeneralInfoReducer,
   hikeEditPoi: hikeEditPoiReducer,
