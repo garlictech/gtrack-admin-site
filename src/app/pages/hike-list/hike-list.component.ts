@@ -7,6 +7,7 @@ import {
 } from 'app/store';
 import { IHikeProgram } from 'subrepos/provider-client';
 import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
+import { LanguageService } from 'app/shared/services';
 
 @Component({
   selector: 'gt-hike-list',
@@ -32,5 +33,9 @@ export class HikeListComponent implements OnInit {
 
   deleteHike(hikeId) {
     // this._store.dispatch(this._actions.deleteHike(hikeId));
+  }
+
+  public translateDescription(description, field) {
+    return LanguageService.translateDescription(description, field);
   }
 }
