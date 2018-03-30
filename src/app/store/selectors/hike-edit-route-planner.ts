@@ -37,11 +37,13 @@ export class HikeEditRoutePlannerSelectors {
         const _coords = _.get(state.route, 'features[0].geometry.coordinates', null);
 
         if (_coords && _coords.length > 1) {
-          return 5 >= Math.round(1000 * turf.distance(
+          const _dist = Math.round(1000 * turf.distance(
             turf.point([_coords[0][1], _coords[0][0]]),
             turf.point([_coords[_coords.length - 1][1], _coords[_coords.length - 1][0]]),
             {units: 'kilometers'}
           ));
+
+          return _dist <= 5;
         } else {
           return false;
         }
