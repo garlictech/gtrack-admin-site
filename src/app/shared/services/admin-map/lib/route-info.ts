@@ -35,8 +35,10 @@ export class RouteInfo {
 
   public deletePlan() {
     // Cleanup subscriptions
-    this.planner.destroy();
-    delete this.planner;
+    if (this.planner) {
+      this.planner.destroy();
+      delete this.planner;
+    }
   }
 
   /**
