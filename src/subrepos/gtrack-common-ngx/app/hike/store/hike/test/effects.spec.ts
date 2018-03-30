@@ -66,10 +66,7 @@ describe('HikeProgram effects', () => {
 
         ]),
         HttpClientTestingModule,
-        DeepstreamModule.forRoot({
-          storeDomain: 'deepstream',
-          deepstreamConnectionString: ''
-        })
+        DeepstreamModule.forRoot()
       ],
       providers: [
         HikeProgramService,

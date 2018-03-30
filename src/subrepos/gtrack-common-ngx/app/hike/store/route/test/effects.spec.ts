@@ -88,10 +88,7 @@ describe('Route effects', () => {
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
         HttpClientTestingModule,
-        DeepstreamModule.forRoot({
-          storeDomain: 'deepstream',
-          deepstreamConnectionString: ''
-        })
+        DeepstreamModule.forRoot()
       ],
       providers: [
         RouteService,
