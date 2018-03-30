@@ -265,7 +265,7 @@ export class PoiEditorService {
         return this._elevationService.getData(_coordinates).then((data) => {
           // Update elevation only if we got all data
           if (data.length === _chunk.length) {
-            for (let i = 0; i < _chunk.length; i++) {
+            for (let i in _chunk) {
               _chunk[i].elevation = data[i][2];
             }
           }

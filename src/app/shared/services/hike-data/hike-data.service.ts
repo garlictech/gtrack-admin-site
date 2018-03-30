@@ -71,7 +71,7 @@ export class HikeDataService {
         console.warn('TODO: collectHikeRouteInfo - Temporary stops array from markers');
         _routeInfo.stops = [];
 
-        for (let i = 1; i < routeInfo.route.features.length; i++) {
+        for (let i in routeInfo.route.features) {
           let _feature = routeInfo.route.features[i];
           let _segment: any = {
             uphill: 0,
@@ -81,8 +81,8 @@ export class HikeDataService {
             time: 0
           };
 
-          if (i > 1) {
-            _segment = _.pick(routeInfo.segments[i - 2], [
+          if (parseInt(i) > 1) {
+            _segment = _.pick(routeInfo.segments[parseInt(i) - 2], [
               'uphill', 'downhill', 'distance', 'score', 'time'
             ])
           }

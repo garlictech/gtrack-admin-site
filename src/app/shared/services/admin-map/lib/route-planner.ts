@@ -112,7 +112,7 @@ export class RoutePlanner {
   private _createGeoJSON(segments) {
     this._resetGeoJSON();
 
-    for (let i = 0; i < segments.length; i++) {
+    for (let i in segments) {
       // Add segment coords to LineString
       const _segment = segments[i];
       for (let p of _segment.coordinates) {

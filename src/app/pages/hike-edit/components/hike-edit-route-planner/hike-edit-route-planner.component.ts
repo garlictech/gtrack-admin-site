@@ -122,10 +122,10 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     if (this._map && this._map.waypointMarker) {
       this._map.waypointMarker.reset();
 
-      for (let i = 1; i < routeData.route.features.length; i++) {
+      for (let feature of routeData.route.features) {
         let latlng = L.latLng(
-          routeData.route.features[i].geometry.coordinates[1],
-          routeData.route.features[i].geometry.coordinates[0]
+          feature.geometry.coordinates[1],
+          feature.geometry.coordinates[0]
         );
 
         this._map.waypointMarker.addWaypoint(latlng);

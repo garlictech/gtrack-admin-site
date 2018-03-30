@@ -32,9 +32,7 @@ export class WikipediaPoiService {
         let _pois: IWikipediaPoi[] = [];
 
         if (data.query) {
-          for (let i = 0; i < data.query.geosearch.length; i++) {
-            let _point = data.query.geosearch[i];
-
+          for (let _point of data.query.geosearch) {
             let _poi: IWikipediaPoi = {
               id: uuid(),
               lat: _point.lat,
