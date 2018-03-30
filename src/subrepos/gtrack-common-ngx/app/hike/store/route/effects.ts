@@ -36,11 +36,6 @@ export class RouteEffects {
           .map(response => new LocalActions.RouteSaved(response.id));
       });
 
-    @Effect()
-    loadSavedRoute$: Observable<Action> = this._actions$
-      .ofType<LocalActions.RouteSaved>(LocalActions.RouteActionTypes.ROUTE_SAVED)
-      .map(action => (new LocalActions.LoadRoute(action.context)));
-
   constructor(private _actions$: Actions, private _routeService: RouteService, private _store: Store<any>) {
     /* EMPTY */
   }

@@ -147,16 +147,4 @@ describe('Route effects', () => {
       expect(effects.saveRoute$).toBeObservable(expected);
     });
   });
-
-  describe('loadSavedRoute$', () => {
-    it('should return a LoadRoute action after RouteSaved', () => {
-      const action = new routeActions.RouteSaved(newId);
-      const completion = new routeActions.LoadRoute(newId);
-      const expected = cold('-b', {b: completion});
-
-      actions$.stream = hot('-a', {a: action});
-
-      expect(effects.loadSavedRoute$).toBeObservable(expected);
-    });
-  });
 });

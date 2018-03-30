@@ -43,11 +43,6 @@ export class PoiEffects {
           .map(response => new LocalActions.PoiSaved(response.id));
       });
 
-    @Effect()
-    loadSavedPoi$: Observable<Action> = this._actions$
-      .ofType<LocalActions.PoiSaved>(LocalActions.PoiActionTypes.POI_SAVED)
-      .map(action => (new LocalActions.LoadPoi(action.context)));
-
   constructor(private _actions$: Actions, private _poiService: PoiService, private _store: Store<any>) {
     /* EMPTY */
   }

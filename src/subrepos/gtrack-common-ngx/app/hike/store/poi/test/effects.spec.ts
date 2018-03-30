@@ -132,16 +132,4 @@ describe('Poi effects', () => {
       expect(effects.savePoi$).toBeObservable(expected);
     });
   });
-
-  describe('loadSavedPoi$', () => {
-    it('should return a LoadPoi action after PoiSaved', () => {
-      const action = new poiActions.PoiSaved(newId);
-      const completion = new poiActions.LoadPoi(newId);
-      const expected = cold('-b', {b: completion});
-
-      actions$.stream = hot('-a', {a: action});
-
-      expect(effects.loadSavedPoi$).toBeObservable(expected);
-    });
-  });
 });

@@ -31,7 +31,6 @@ import {
 
 // Extend the store interface with that.
 export interface CommonState {
-  jwtAuthentication: IAuthenticationState,
   deepstream: IDeepstreamState,
   poi: IPoiState,
   hike: IHikeState,
@@ -40,8 +39,7 @@ export interface CommonState {
   userStatus: IUserStatusState
 }
 
-export const commonReducers: ActionReducerMap<CommonState> = {
-  jwtAuthentication: authReducer,
+export const commonReducers = {
   deepstream: deepstreamReducer,
   poi: poiReducer,
   hike: hikeReducer,

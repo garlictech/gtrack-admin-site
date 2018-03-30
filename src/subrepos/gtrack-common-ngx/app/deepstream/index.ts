@@ -1,1 +1,41 @@
-export * from './deepstream.module';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import * as _ from 'lodash';
+import { createSelector } from '@ngrx/store';
+import { DebugLog } from 'app/log';
+
+import {
+  DeepstreamModule as CoreDeepstreamModule,
+  DeepstreamService,
+  IExternalDeepstreamDependencies,
+  EXTERNAL_DEEPSTREAM_DEPENDENCIES,
+  Selectors
+} from 'subrepos/deepstream-ngx';
+
+import { environment } from 'environments/environment';
+import { selectRole, selectUser } from 'app/authentication/store/selectors';
+
+let externalDeepstreamDependencies: IExternalDeepstreamDependencies = {
+  deepstreamConnectionString: environment.deepstream,
+  storeDomain: 'deepstream',
+  selectors: {
+    getUserId: createSelector(selectUser, state => _.get(state, 'id')),
+    getUserRole: selectRole
+  }
+};
+
+@NgModule({ imports: [CoreDeepstreamModule] })
+export class DeepstreamModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DeepstreamModule,
+      providers: [
+        DeepstreamService,
+        Selectors,
+        { provide: EXTERNAL_DEEPSTREAM_DEPENDENCIES, useValue: externalDeepstreamDependencies }
+      ]
+    };
+  }
+}
+
+export { DeepstreamService, Selectors };
+export { Reducer, IDeepstreamState, Actions as DeepstreamActions } from 'subrepos/deepstream-ngx';
