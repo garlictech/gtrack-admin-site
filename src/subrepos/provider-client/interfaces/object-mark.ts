@@ -8,5 +8,5 @@ export enum EObjectMarkContext {
 export interface IObjectMarkInput extends IProviderInput {
   mark: boolean;
   context: EObjectMarkContext;
-  objectId: string;
+  object: any;
 }
