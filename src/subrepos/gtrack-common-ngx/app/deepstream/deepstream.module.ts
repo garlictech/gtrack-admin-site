@@ -1,7 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import * as _ from 'lodash';
 import { createSelector } from '@ngrx/store';
-import { DebugLog } from 'app/log';
 
 import {
   DeepstreamModule as CoreDeepstreamModule,
@@ -11,8 +10,10 @@ import {
   Selectors
 } from 'subrepos/deepstream-ngx';
 
-import { environment } from 'environments/environment';
-import { selectRole, selectUser } from 'app/authentication/store/selectors';
+import { IDeepstreamModuleConfig } from './interfaces';
+
+let selectAuthFeature = createFeatureSelector<IAuthenticationState>('jwtAuthentication');
+let selectAuth = createSelector(selectAuthFeature, (state: IAuthenticationState) => _.get(state, 'auth'));
 
 let externalDeepstreamDependencies: IExternalDeepstreamDependencies = {
   deepstreamConnectionString: environment.deepstream,
@@ -38,4 +39,4 @@ export class DeepstreamModule {
 }
 
 export { DeepstreamService, Selectors };
-export { Reducer, IDeepstreamState, Actions as DeepstreamActions } from 'subrepos/deepstream-ngx';
+export { Reducer, IDeepstreamState, Actions } from 'subrepos/deepstream-ngx';

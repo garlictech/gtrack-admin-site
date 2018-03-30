@@ -19,13 +19,12 @@ import { userStatusReducer, IUserStatusState } from '../user-status';
 
 // Extend the store interface with that.
 export interface CommonState {
-  deepstream: IDeepstreamState;
-  poi: IPoiState;
-  hike: IHikeState;
-  route: IRouteState;
-  geosearch: IGeoSearchState;
-  userStatus: IUserStatusState;
-  authentication: IAuthenticationState;
+  deepstream: IDeepstreamState,
+  poi: IPoiState,
+  hike: IHikeState,
+  route: IRouteState,
+  geosearch: IGeoSearchState,
+  userStatus: IUserStatusState
 }
 
 export const commonReducers = {
