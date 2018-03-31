@@ -1,2 +1,2 @@
-export * from './store';
+export { RouterActions, RouterSelectors } from './store';
 export * from './router.module';

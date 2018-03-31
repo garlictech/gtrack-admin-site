@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterStateSerializer } from '@ngrx/router-store';
-import { CustomSerializer, RouterEffects, RouterSelectors } from './store';
+import { EffectsModule } from '@ngrx/effects';
+import { CustomSerializer, Effects, RouterSelectors } from './store';
 
 @NgModule({
-  imports: [],
+  imports: [EffectsModule.forFeature([Effects])],
   exports: [],
   providers: [
     RouterSelectors,
-    RouterEffects,
     {
       provide: RouterStateSerializer,
       useClass: CustomSerializer
     }
-  ],
+  ]
 })
-export class RouterModule { }
+export class RouterModule {}

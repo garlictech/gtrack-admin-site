@@ -1,6 +1,12 @@
 import { Observable } from 'rxjs';
 
-import { IHikeProgram, ILocalizedItem, ITextualDescription, IHikeProgramBackgroundImage, IHikeProgramStop } from 'subrepos/provider-client';
+import {
+  IHikeProgram,
+  ILocalizedItem,
+  ITextualDescription,
+  IHikeProgramBackgroundImage,
+  IHikeProgramStop
+} from 'subrepos/provider-client';
 import { CheckpointSequence, CheckpointService } from '../checkpoint';
 import { Poi } from '../poi';
 import * as _ from 'lodash';
@@ -14,13 +20,13 @@ export class HikeProgram implements IHikeProgram {
   public score: number;
   public location: string;
   public difficulty: string;
-  public rate: string;
+  public rate?: string;
   public routeIcon: string;
   public elevationIcon: string;
   public routeId: string;
   public description: ILocalizedItem<ITextualDescription>;
   public backgroundImageUrls?: [IHikeProgramBackgroundImage];
-  public offlineMap: string;
+  public offlineMap?: string;
   public isRoundTrip: boolean;
   public pois: string[];
   public stops: IHikeProgramStop[];
@@ -77,7 +83,7 @@ export class HikeProgram implements IHikeProgram {
 
   private _handleStartFinish() {
     let first = this.stops[0] || null;
-    let last  = this.stops[this.stops.length - 1] || null;
+    let last = this.stops[this.stops.length - 1] || null;
 
     if (this.isRoundTrip === true) {
       last = first;
@@ -90,7 +96,6 @@ export class HikeProgram implements IHikeProgram {
     if (last) {
       last.isFinish = true;
     }
-
   }
 
   public toObject(): IHikeProgram {

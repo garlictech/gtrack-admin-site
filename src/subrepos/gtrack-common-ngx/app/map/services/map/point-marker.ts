@@ -18,7 +18,7 @@ export class PointMarker {
   }
 
   public removeMarkersFromMap() {
-    this.markers.forEach((marker) => marker.removeFromMap(this.map));
+    this.markers.forEach(marker => marker.removeFromMap(this.map));
     this.shownOnMap = false;
   }
 

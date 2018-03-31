@@ -9,6 +9,10 @@ export enum EPoiTypes {
   osmRoute = 'osmRoute'
 };
 
+export interface IPoiArchiveInput extends IProviderInput {
+  id: string;
+};
+
 export interface IPoiSaveResponse {
   success: boolean;
   id: string;

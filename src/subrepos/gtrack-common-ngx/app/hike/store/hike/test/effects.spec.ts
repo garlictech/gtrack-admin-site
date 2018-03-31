@@ -133,16 +133,4 @@ describe('HikeProgram effects', () => {
       expect(effects.saveHike$).toBeObservable(expected);
     });
   });
-
-  describe('loadSavedHikeProgram$', () => {
-    it('should return a LoadHikeProgram action after HikeProgramCreated', () => {
-      const action = new hikeProgramActions.HikeProgramSaved(newId);
-      const completion = new hikeProgramActions.LoadHikeProgram(newId);
-      const expected = cold('-b', {b: completion});
-
-      actions$.stream = hot('-a', {a: action});
-
-      expect(effects.loadSavedHikeProgram$).toBeObservable(expected);
-    });
-  });
 });

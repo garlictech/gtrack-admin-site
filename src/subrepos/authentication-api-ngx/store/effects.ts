@@ -50,19 +50,17 @@ export class Effects {
 
   // Verify
   @Effect()
-  verify$: Observable<Action> = this._actions$
-    .ofType<LocalActions.Verify>(LocalActions.VERIFY)
-    .switchMap(action => {
-      log.d('Effect: Verify initiated');
-      return Observable.fromPromise(this._auth.verify(action.token, action.uid))
-        .map(auth => {
-          log.i('Effect: Verify success');
-          return new LocalActions.LoginSuccess(auth);
-        })
-        .catch(err => {
-          log.er('Effect: Verify error', err);
-          return Observable.of(new LocalActions.FailureHappened(err));
-        });
+  verify$: Observable<Action> = this._actions$.ofType<LocalActions.Verify>(LocalActions.VERIFY).switchMap(action => {
+    log.d('Effect: Verify initiated');
+    return Observable.fromPromise(this._auth.verify(action.token, action.uid))
+      .map(auth => {
+        log.i('Effect: Verify success');
+        return new LocalActions.LoginSuccess(auth);
+      })
+      .catch(err => {
+        log.er('Effect: Verify error', err);
+        return Observable.of(new LocalActions.FailureHappened(err));
+      });
   });
 
   // Google login
@@ -172,5 +170,5 @@ export class Effects {
     private _facebook: FacebookService,
     private _magicLink: PasswordlessService,
     private _auth: AuthService
-  ) { }
+  ) {}
 }

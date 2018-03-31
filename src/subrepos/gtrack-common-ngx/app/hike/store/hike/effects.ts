@@ -51,10 +51,5 @@ export class HikeEffects {
           .map(response => new LocalActions.HikeProgramSaved(response.id));
       });
 
-    @Effect()
-    loadSavedHikeProgram$: Observable<Action> = this._actions$
-      .ofType<LocalActions.HikeProgramSaved>(LocalActions.HikeProgramActionTypes.HIKE_PROGRAM_SAVED)
-      .map(action => new LocalActions.LoadHikeProgram(action.context));
-
   constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {}
 }

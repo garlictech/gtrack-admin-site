@@ -11,24 +11,34 @@ import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router
 import { EffectsModule } from '@ngrx/effects';
 // Subrepos
 import {
-  AuthenticationApiConfig, AuthenticationApiModule,
+  AuthenticationApiConfig,
+  AuthenticationApiModule,
   Actions as JwtActions
 } from 'subrepos/authentication-api-ngx';
 import {
-  SharedModule, SharedConfig, DeepstreamModule, RouterEffects, PoiEffects, HikeEffects, AuthenticationComponentsModule,
+  SharedModule,
+  SharedConfig,
+  DeepstreamModule,
+  RouteEffects,
+  PoiEffects,
+  HikeEffects,
   AuthenticationModule as CommonAuthenticationModule,
-  DynamicModalModule, DynamicModalService,
-  PoiSelectors, HikeModuleConfig, HikeModule, RouteEffects,
-  GeoSearchModule, GeoSearchEffects
+  DynamicModalModule,
+  DynamicModalService,
+  PoiSelectors,
+  HikeModuleConfig,
+  HikeModule,
+  GeoSearchModule,
+  GeoSearchEffects
 } from 'subrepos/gtrack-common-ngx';
 // App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
+import { store, AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects } from './store';
 import {
-  store, AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects
-} from './store';
-import {
-  HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors,
+  HikeEditPoiSelectors,
+  HikeEditMapSelectors,
+  HikeEditGeneralInfoSelectors,
   HikeEditRoutePlannerSelectors
 } from './store/selectors';
 import { routing } from './app-routing.module';
@@ -40,8 +50,14 @@ import { HikeEditModule } from './pages/hike-edit';
 // Services
 import {
   AdminMapService,
-  PoiEditorService, WikipediaPoiService, OsmPoiService, OsmRoutePoiService, GooglePoiService,
-  HikeDataService, ReverseGeocodingService, LanguageService
+  PoiEditorService,
+  WikipediaPoiService,
+  OsmPoiService,
+  OsmRoutePoiService,
+  GooglePoiService,
+  HikeDataService,
+  ReverseGeocodingService,
+  LanguageService
 } from './shared/services';
 // Vendor
 import { AngularFireModule } from 'angularfire2';
@@ -102,10 +118,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     StoreDevtoolsModule.instrument({
       maxAge: 25
     }),
-    DeepstreamModule.forRoot({
-      deepstreamConnectionString: environment.deepstream,
-      storeDomain: 'deepstream'
-    }),
+    DeepstreamModule.forRoot(),
     AngularFireModule.initializeApp(authConfig.firebase),
     AuthenticationApiModule.forRoot(authConfig),
     SharedModule.forRoot(sharedConfig),
@@ -126,11 +139,10 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       HikeEditEffects,
       HikeEditRoutePlannerEffects,
       HikeEditPoiEffects,
-      RouterEffects,
+      RouteEffects,
       // Common-ngx
       PoiEffects,
       HikeEffects,
-      RouteEffects,
       GeoSearchEffects
     ]),
     // Vendor
@@ -162,4 +174,4 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

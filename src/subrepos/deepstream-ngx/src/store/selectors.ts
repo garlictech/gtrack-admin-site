@@ -2,13 +2,14 @@ import { Injectable, Inject } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector, Store } from '@ngrx/store';
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
 import { IDeepstreamState, EDeepstreamState } from './state';
-import * as _ from 'lodash'
 import { Observable } from 'rxjs/Observable';
+
+import * as _ from 'lodash';
 
 export interface ISelectorUserData {
   userId: string | undefined;
   role: string;
-};
+}
 
 @Injectable()
 export class Selectors {
@@ -16,21 +17,20 @@ export class Selectors {
   public loggedIn;
   public loggedOut;
   public failed;
-  public getPermissionRecord
+  public getPermissionRecord;
   public userData: MemoizedSelector<any, ISelectorUserData>;
   public permissions;
   public permissionRecordName;
   private _externals: IExternalDeepstreamDependencies;
 
-  constructor(
-    @Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) externals,
-    private _store: Store<any>
-  ) {
+  constructor(@Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) externals, private _store: Store<any>) {
     this._externals = externals;
 
     let selectFeature = createFeatureSelector<IDeepstreamState>(this._externals.storeDomain);
 
-    this.permissions = createSelector(selectFeature, this._externals.selectors.getUserRole, (state, role) => _.get(state, 'permissionRecord'));
+    this.permissions = createSelector(selectFeature, this._externals.selectors.getUserRole, (state, role) =>
+      _.get(state, 'permissionRecord')
+    );
 
     this.loggingIn = createSelector(
       selectFeature,
@@ -62,6 +62,7 @@ export class Selectors {
     this.getPermissionRecord = Observable.combineLatest(
       this._store.select(this._externals.selectors.getUserRole),
       this._store.select(this.permissions).filter(permissions => !!permissions),
-      (role, permissions) => _.get(permissions, role) || {})
+      (role, permissions) => _.get(permissions, role) || {}
+    );
   }
 }

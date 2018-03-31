@@ -4,6 +4,7 @@ import { State } from 'app/store';
 import { Observable } from 'rxjs/Observable';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 import { Title } from '@angular/platform-browser';
+import { Selectors as AuthSelectors } from 'subrepos/gtrack-common-ngx/app/authentication/store/selectors';
 
 @Component({
   selector: 'gt-login',
@@ -13,15 +14,12 @@ import { Title } from '@angular/platform-browser';
 export class LoginComponent implements OnInit {
   public loggingIn$: Observable<Boolean>;
 
-  constructor(
-    private _store: Store<State>,
-    private _title: Title
-  ) {}
+  constructor(private _store: Store<State>, private _title: Title, private _authSelectors: AuthSelectors) {}
 
   ngOnInit() {
     this._title.setTitle('Login');
 
-    this.loggingIn$ = this._store.select((state: State) => state.authentication.loggingIn);
+    this.loggingIn$ = this._store.select(this._authSelectors.loggingIn);
   }
 
   public login() {

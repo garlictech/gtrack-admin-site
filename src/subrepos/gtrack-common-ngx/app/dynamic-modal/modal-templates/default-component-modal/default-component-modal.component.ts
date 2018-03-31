@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { IDynamicComponentModalConfig } from '../dynamic-modal.interface';
 import { DynamicModalCoreComponent } from '../../dynamic-modal-core.component';
 
 @Component({
