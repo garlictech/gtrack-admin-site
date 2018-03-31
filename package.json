@@ -105,7 +105,7 @@
         "promise-polyfill": "^6.0.2",
         "rxjs": "^5.5.8",
         "tether": "^1.4.3",
-        "zone.js": "^0.8.20"
+        "zone.js": "^0.8.21"
     },
     "devDependencies": {
         "@angularclass/hmr": "^2.1.3",
