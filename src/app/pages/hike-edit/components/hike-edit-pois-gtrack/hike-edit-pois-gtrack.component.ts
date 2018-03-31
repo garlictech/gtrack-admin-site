@@ -60,7 +60,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .select(this._geoSearchSelectors.getGeoSearch('gTrackPois'))
       .takeUntil(this._destroy$)
       .subscribe((searchData) => {
-        console.log('getGeoSearch searchData', searchData);
         if (searchData) {
           this._store.dispatch(new commonPoiActions.LoadPois((<any>searchData).results));
         }
@@ -135,26 +134,5 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     this._store.dispatch(
       new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'gTrack' })
     );
-  }
-
-  /**
-   * Save inHike pois as gTrackPoi
-   */
-  public savePois() {
-    Observable.combineLatest(
-      // gTrack pois from the store
-      this.pois$.take(1),
-      // poi ids from the loaded hike program
-      this._store.select(this._hikeEditGeneralInfoSelectors.getPois).take(1)
-    ).subscribe(data => {
-      if (data[0] && data[1]) {
-        const _gTrackPois = _.filter(data[0], (p: IGTrackPoi) => true /* p.inHike */)
-          .map((p: IGTrackPoi) => p.id);
-
-        this._store.dispatch(new hikeEditGeneralInfoActions.SetPois({
-          pois: _.union(<string[]>_gTrackPois, data[1])
-        }));
-      }
-    });
   }
 }

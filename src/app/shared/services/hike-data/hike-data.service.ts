@@ -145,6 +145,11 @@ export class HikeDataService {
       difficulty: parseInt(hikeData.difficulty) // TODO: it will be number!
     }));
 
+    // Pois
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetPois({
+      pois: hikeData.pois
+    }));
+
     // Descriptions
     this._splitHikeDescriptionToStore(hikeData.description);
 

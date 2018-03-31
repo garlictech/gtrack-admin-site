@@ -1,7 +1,7 @@
 // Core
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, hikeEditPoiActions } from 'app/store';
+import { State, hikeEditPoiActions, hikeEditGeneralInfoActions } from 'app/store';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import { LanguageService } from 'app/shared/services';
 import { IDynamicComponentModalConfig, DynamicModalService } from 'subrepos/gtrack-common-ngx';
@@ -22,11 +22,9 @@ export class HikeEditPoisHikeTableComponent {
   public handleInHikePoi($event, poi) {
     $event.stopPropagation();
 
-    /*
-    this._store.dispatch(new hikeEditPoiActions.SetGTrackPoiInHike({
-      poiId: poi.id,
-      isInHike: !poi.inHike
-    }));*/
+    this._store.dispatch(new hikeEditGeneralInfoActions.RemovePoi({
+      poi: poi.id
+    }));
   }
 
   public openModal($event, poi: IGTrackPoi) {

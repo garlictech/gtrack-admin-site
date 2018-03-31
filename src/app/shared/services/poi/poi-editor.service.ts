@@ -333,8 +333,27 @@ export class PoiEditorService {
       let _pois: any[] = [];
 
       //
-      // TODO: Hike pois
+      // Hike pois
       //
+
+      this._store
+        .select(this._hikeEditPoiSelectors.getHikeEditContextSelector('hike'))
+        .take(1)
+        .subscribe((hikePoiContext: IExternalPoiListContextItemState) => {
+          // Load hike pois if there are visible pois
+          if (hikePoiContext.showOnrouteMarkers || hikePoiContext.showOffrouteMarkers) {
+            this._store
+              .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
+              .switchMap((pois: IPoi[]) => this.organizePois(_.cloneDeep(pois), map.routeInfo.getPath()))
+              .take(1)
+              .subscribe((pois: IGTrackPoi[]) => {
+                _pois = _pois.concat(pois.filter(p => {
+                  let _onRouteCheck = p.onRoute ? hikePoiContext.showOnrouteMarkers : hikePoiContext.showOffrouteMarkers;
+                  return !p.inHike && _onRouteCheck;
+                }));
+              });
+          }
+        });
 
       //
       // gTrackPois

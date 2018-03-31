@@ -4,6 +4,8 @@ import { initialGeneralInfoState, descriptionInitialState, hikeEditGeneralInfoRe
 import { hikeEditGeneralInfoActions } from '../..';
 import { ITextualDescriptionItem } from '../../../shared/interfaces';
 
+import * as _ from 'lodash';
+
 describe('HikeEditGeneralInfo reducers', () => {
   let initialState: IHikeEditGeneralInfoState;
 
@@ -121,6 +123,42 @@ describe('HikeEditGeneralInfo reducers', () => {
       const state = hikeEditGeneralInfoReducer(initialState, action);
 
       expect(state.generalInfo.pois).toEqual(['id1', 'id2']);
+      // untouched props, good to add regardless
+      expect(state.generalInfo.initialized).toEqual(false);
+      expect(state.generalInfo.hikeId).toEqual('');
+      expect(state.generalInfo.routeId).toEqual('');
+      expect(state.generalInfo.isRoundTrip).toEqual(false);
+      expect(state.generalInfo.difficulty).toEqual(5);
+      expect(state.descriptions.ids).toEqual([]);
+    });
+  });
+
+  describe('AddPoi action', () => {
+    it('should add pois', () => {
+      const action = new hikeEditGeneralInfoActions.AddPoi({ poi: 'id1' });
+      const state = hikeEditGeneralInfoReducer(initialState, action);
+
+      expect(state.generalInfo.pois).toEqual(['id1']);
+      // untouched props, good to add regardless
+      expect(state.generalInfo.initialized).toEqual(false);
+      expect(state.generalInfo.hikeId).toEqual('');
+      expect(state.generalInfo.routeId).toEqual('');
+      expect(state.generalInfo.isRoundTrip).toEqual(false);
+      expect(state.generalInfo.difficulty).toEqual(5);
+      expect(state.descriptions.ids).toEqual([]);
+    });
+  });
+
+  describe('RemovePoi action', () => {
+    it('should remove pois', () => {
+      const action = new hikeEditGeneralInfoActions.RemovePoi({ poi: 'id2' });
+      const state = hikeEditGeneralInfoReducer(_.merge({}, initialState, {
+        generalInfo: {
+          pois: ['id1', 'id2']
+        }
+      }), action);
+
+      expect(state.generalInfo.pois).toEqual(['id1']);
       // untouched props, good to add regardless
       expect(state.generalInfo.initialized).toEqual(false);
       expect(state.generalInfo.hikeId).toEqual('');

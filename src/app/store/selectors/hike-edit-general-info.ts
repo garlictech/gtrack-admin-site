@@ -56,16 +56,10 @@ export class HikeEditGeneralInfoSelectors {
     return createSelector(
       getAllSelector,
       this.getPois,
-      (data, results) => {
-        console.log('getHikePois', data, results);
-
-        return [];
-        /*
-        if (typeof results !== 'undefined') {
-          let ids = results.results;
-
-          return data.filter(item => ids.indexOf(item.id) !== -1);
-        }*/
+      (data, poiIds) => {
+        if (typeof poiIds !== 'undefined') {
+          return data.filter(item => poiIds.indexOf((<any>item).id) !== -1);
+        }
       }
     )
   }

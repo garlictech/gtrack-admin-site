@@ -4,6 +4,8 @@ import { ITextualDescriptionItem } from 'app/shared/interfaces';
 import { IDescriptionEntityState, IHikeEditGeneralInfoState, IGeneralInfoState } from '../state';
 import { hikeEditGeneralInfoActions } from '../index';
 
+import * as _ from 'lodash';
+
 /**
  * General info
  */
@@ -53,6 +55,16 @@ export function generalInfoReducer(
       return {
         ...state,
         pois: action.payload.pois
+      };
+    case hikeEditGeneralInfoActions.ADD_POI:
+      return {
+        ...state,
+        pois: _.union(state.pois, [action.payload.poi])
+      };
+    case hikeEditGeneralInfoActions.REMOVE_POI:
+      return {
+        ...state,
+        pois: state.pois.filter(p => p !== action.payload.poi)
       };
     default:
       return state;

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import {
-   PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState
+   PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, RouteSelectors
 } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
@@ -35,6 +35,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _poiEditorService: PoiEditorService,
+
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
@@ -53,18 +54,18 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
-    // Get pois by id from geoSearch result
+    // Get pois by id
     this._store
       .select(this._hikeEditGeneralInfoSelectors.getPois)
       .takeUntil(this._destroy$)
+      .delay(2000) // TODO wait for map.routeInfo with a better way
       .subscribe((poiIds) => {
-        console.log('POIS', poiIds);
         if (poiIds) {
           this._store.dispatch(new commonPoiActions.LoadPois(poiIds));
         }
       });
 
-    // Poi list based on geoSearch results
+    // Poi list
     this.pois$ = this._store
       .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
       .switchMap((pois: Poi[]) => this._poiEditorService.organizePois(_.cloneDeep(pois), this._map.routeInfo.getPath()))
@@ -73,9 +74,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((pois: Poi[]) => {
         // Refresh markers
-        console.log('TODO: refresh poi markers', pois);
         this._poiEditorService.refreshPoiMarkers(this._map);
-
       });
 
     //
@@ -106,18 +105,11 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Get pois for the current subdomain
-   */
-  public getPois() {
-    this._poiEditorService.getGTrackPois(this._map);
-  }
-
-  /**
    * Show onroute markers checkbox click
    */
   public toggleOnrouteMarkers() {
     this._store.dispatch(
-      new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'gTrack' })
+      new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'hike' })
     );
   }
 
@@ -126,28 +118,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
    */
   public toggleOffrouteMarkers() {
     this._store.dispatch(
-      new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'gTrack' })
+      new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'hike' })
     );
-  }
-
-  /**
-   * Save inHike pois as gTrackPoi
-   */
-  public savePois() {
-    Observable.combineLatest(
-      // gTrack pois from the store
-      this.pois$.take(1),
-      // poi ids from the loaded hike program
-      this._store.select(this._hikeEditGeneralInfoSelectors.getPois).take(1)
-    ).subscribe(data => {
-      if (data[0] && data[1]) {
-        const _gTrackPois = _.filter(data[0], (p: IGTrackPoi) => true /* p.inHike */)
-          .map((p: IGTrackPoi) => p.id);
-
-        this._store.dispatch(new hikeEditGeneralInfoActions.SetPois({
-          pois: _.union(<string[]>_gTrackPois, data[1])
-        }));
-      }
-    });
   }
 }

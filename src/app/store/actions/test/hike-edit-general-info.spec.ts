@@ -10,6 +10,8 @@ describe('HikeEditMap actions', () => {
     expect(HikeEditGeneralInfoActions.SET_DIFFICULTY).toEqual('[HikeEditGeneralInfo] Set difficulty');
     expect(HikeEditGeneralInfoActions.SET_IS_ROUND_TRIP).toEqual('[HikeEditGeneralInfo] Set isRoundTrip');
     expect(HikeEditGeneralInfoActions.SET_POIS).toEqual('[HikeEditGeneralInfo] Set pois');
+    expect(HikeEditGeneralInfoActions.ADD_POI).toEqual('[HikeEditGeneralInfo] Add poi');
+    expect(HikeEditGeneralInfoActions.REMOVE_POI).toEqual('[HikeEditGeneralInfo] Remove poi');
     expect(HikeEditGeneralInfoActions.SET_DESCRIPTIONS).toEqual('[HikeEditGeneralInfo] Set descriptions');
     expect(HikeEditGeneralInfoActions.ADD_DESCRIPTION).toEqual('[HikeEditGeneralInfo] Add description');
   });
@@ -87,6 +89,28 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.SET_POIS,
+      payload,
+    });
+  });
+
+  it('should create AddPoi action', () => {
+    const payload = { poi: 'id1' };
+    const action = new HikeEditGeneralInfoActions.AddPoi(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditGeneralInfoActions.ADD_POI,
+      payload,
+    });
+  });
+
+  it('should create RemovePoi action', () => {
+    const payload = { poi: 'id1' };
+    const action = new HikeEditGeneralInfoActions.RemovePoi(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditGeneralInfoActions.REMOVE_POI,
       payload,
     });
   });
