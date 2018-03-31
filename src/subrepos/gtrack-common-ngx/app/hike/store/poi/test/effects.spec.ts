@@ -61,10 +61,7 @@ describe('Poi effects', () => {
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
         HttpClientTestingModule,
-        DeepstreamModule.forRoot({
-          storeDomain: 'deepstream',
-          deepstreamConnectionString: ''
-        })
+        DeepstreamModule.forRoot()
       ],
       providers: [
         PoiService,
