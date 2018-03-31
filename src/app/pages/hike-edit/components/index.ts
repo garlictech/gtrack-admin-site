@@ -5,6 +5,8 @@ export { HikeEditPoisExternalComponent } from './hike-edit-pois-external';
 export { HikeEditPoisExternalTableComponent } from './hike-edit-pois-external-table';
 export { HikeEditPoisGTrackComponent } from './hike-edit-pois-gtrack';
 export { HikeEditPoisGTrackTableComponent } from './hike-edit-pois-gtrack-table';
+export { HikeEditPoisHikeComponent } from './hike-edit-pois-hike';
+export { HikeEditPoisHikeTableComponent } from './hike-edit-pois-hike-table';
 export { HikeEditRoutePlannerComponent } from './hike-edit-route-planner';
 export { PoiIconsComponent } from './poi-icons/poi-icons.component';
 export { SpecialPoiDataComponent } from './special-poi-data/special-poi-data.component';

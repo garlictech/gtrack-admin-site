@@ -51,4 +51,22 @@ export class HikeEditGeneralInfoSelectors {
     );
     this.getAllDescriptions = descriptionAdapter.getSelectors(descriptionSelector).selectAll;
   }
+
+  public getHikePois<IPoi>(getAllSelector: ((state: object) => IPoi[])) {
+    return createSelector(
+      getAllSelector,
+      this.getPois,
+      (data, results) => {
+        console.log('getHikePois', data, results);
+
+        return [];
+        /*
+        if (typeof results !== 'undefined') {
+          let ids = results.results;
+
+          return data.filter(item => ids.indexOf(item.id) !== -1);
+        }*/
+      }
+    )
+  }
 }

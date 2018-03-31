@@ -21,13 +21,11 @@ import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
 
 @Component({
-  selector: 'gt-hike-edit-pois-gtrack',
-  templateUrl: './hike-edit-pois-gtrack.component.html'
+  selector: 'gt-hike-edit-pois-hike',
+  templateUrl: './hike-edit-pois-hike.component.html'
 })
-export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
+export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
   public pois$: Observable<IGTrackPoi[]>;
-  public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
-  public searchContext$: Observable<IGeoSearchContextState | undefined>;
   public showOnrouteMarkers$: Observable<boolean>;
   public showOffrouteMarkers$: Observable<boolean>;
   private _map: AdminMap;
@@ -57,37 +55,31 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     // Get pois by id from geoSearch result
     this._store
-      .select(this._geoSearchSelectors.getGeoSearch('gTrackPois'))
+      .select(this._hikeEditGeneralInfoSelectors.getPois)
       .takeUntil(this._destroy$)
-      .subscribe((searchData) => {
-        console.log('getGeoSearch searchData', searchData);
-        if (searchData) {
-          this._store.dispatch(new commonPoiActions.LoadPois((<any>searchData).results));
+      .subscribe((poiIds) => {
+        console.log('POIS', poiIds);
+        if (poiIds) {
+          this._store.dispatch(new commonPoiActions.LoadPois(poiIds));
         }
       });
 
     // Poi list based on geoSearch results
     this.pois$ = this._store
-      .select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois))
+      .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
       .switchMap((pois: Poi[]) => this._poiEditorService.organizePois(_.cloneDeep(pois), this._map.routeInfo.getPath()))
-      .switchMap((pois: IGTrackPoi[]) => this._poiEditorService.handleHikeInclusion(pois));
 
     this.pois$
       .takeUntil(this._destroy$)
       .subscribe((pois: Poi[]) => {
         // Refresh markers
+        console.log('TODO: refresh poi markers', pois);
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
-
-    // Route info from the store (for disabling GET buttons)
-    this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
     //
     // Contexts
     //
-
-    this.searchContext$ = this._store
-      .select(this._geoSearchSelectors.getGeoSearchContext('gTrackPois'));
 
     this.showOnrouteMarkers$ = this._store
       .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOnrouteMarkers'));
