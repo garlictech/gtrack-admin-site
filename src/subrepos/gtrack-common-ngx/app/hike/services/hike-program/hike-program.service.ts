@@ -27,21 +27,21 @@ export class HikeProgramService {
   }
 
   query(): Observable<HikeProgram[]> {
-    // return this._deepstream
-    //   .doQuery<IHikeProgramStored>({
-    //     table: 'hike_programs',
-    //     query: []
-    //   })
-    //   .map(data => {
-    //     return data
-    //       .filter(item => (item.stops instanceof Array))
-    //       .map(item => {
-    //         let hike: HikeProgram = new HikeProgram(item, this._checkpointService);
+    return this._deepstream
+      .doQuery<IHikeProgramStored>({
+        table: 'hike_programs',
+        query: []
+      })
+      .map(data => {
+        return data
+          .filter(item => (item.stops instanceof Array))
+          .map(item => {
+            let hike: HikeProgram = new HikeProgram(item, this._checkpointService);
+            return hike;
+          });
+      });
 
-    //         return hike;
-    //       });
-    //   });
-
+    /*
     return Observable.of([
       new HikeProgram(
         {
@@ -97,6 +97,7 @@ export class HikeProgramService {
         this._checkpointService
       )
     ]);
+    */
   }
 
   public create(hikeProgram: IHikeProgram) {
