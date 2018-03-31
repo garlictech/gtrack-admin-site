@@ -23,7 +23,7 @@
   <div class="card mb-1">
     <div class="card-header bg-light" id="headingOne" role="tab">
       <h5>
-        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtrack_off" role="button" class="collapsed">
+        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_hike_off" role="button" class="collapsed">
           <div class="text-success">
             On route pois
             <i class="material-icons pull-right">keyboard_arrow_down</i>
@@ -31,12 +31,12 @@
         </a>
       </h5>
     </div>
-    <div aria-labelledby="headingOne" class="collapse" id="collapse_gtrack_off" role="tabpanel" aria-expanded="false" style="height: 0px;">
+    <div aria-labelledby="headingOne" class="collapse" id="collapse_hike_off" role="tabpanel" aria-expanded="false" style="height: 0px;">
       <div class="card-body">
-        <hike-edit-pois-gtrack-table
+        <hike-edit-pois-hike-table
           [pois$]="pois$"
           [onRouteCheck]="true">
-        </hike-edit-pois-gtrack-table>
+        </hike-edit-pois-hike-table>
       </div>
     </div>
   </div>
@@ -44,7 +44,7 @@
   <div class="card mb-1">
     <div class="card-header bg-light" id="headingOne" role="tab">
       <h5>
-        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtrack_on" role="button" class="collapsed">
+        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_hike_on" role="button" class="collapsed">
           <div class="text-success">
             Off route pois
             <i class="material-icons pull-right">keyboard_arrow_down</i>
@@ -52,12 +52,12 @@
         </a>
       </h5>
     </div>
-    <div aria-labelledby="headingOne" class="collapse" id="collapse_gtrack_on" role="tabpanel" aria-expanded="false" style="height: 0px;">
+    <div aria-labelledby="headingOne" class="collapse" id="collapse_hike_on" role="tabpanel" aria-expanded="false" style="height: 0px;">
       <div class="card-body">
-        <hike-edit-pois-gtrack-table
+        <hike-edit-pois-hike-table
           [pois$]="pois$"
           [onRouteCheck]="false">
-        </hike-edit-pois-gtrack-table>
+        </hike-edit-pois-hike-table>
       </div>
     </div>
   </div>

@@ -75,6 +75,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         // Refresh markers
         console.log('TODO: refresh poi markers', pois);
         this._poiEditorService.refreshPoiMarkers(this._map);
+
       });
 
     //
@@ -82,10 +83,10 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     //
 
     this.showOnrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOnrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('hike', 'showOnrouteMarkers'));
 
     this.showOffrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOffrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('hike', 'showOffrouteMarkers'));
 
     //
     // Refresh markers
