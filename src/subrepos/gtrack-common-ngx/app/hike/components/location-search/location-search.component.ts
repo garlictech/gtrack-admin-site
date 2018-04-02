@@ -18,6 +18,9 @@ export class LocationSearchComponent implements OnInit {
   @Input()
   public context: string;
 
+  @Input()
+  public placeholder: string;
+
   public radiusRange = 50;
 
   protected _radius = 50000;

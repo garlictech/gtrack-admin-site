@@ -41,9 +41,17 @@ export class ElevationProfileComponent implements OnInit {
 
     this.routeService
       .get(routeId)
+      .take(1)
       .subscribe((route: Route) => {
         if (!route) {
           throw new Error(`Route #${this.routeId} is unknown`);
+        }
+
+        if (!this.vis) {
+          this.vis = d3
+            .select(this.mainDiv.nativeElement)
+            .append('svg')
+            .attr('viewBox', `0, 0, ${this.width}, ${this.height}`);
         }
 
         this.res = this.routeService.elevationData(route, this.width, this.height, this.margins);
@@ -164,9 +172,6 @@ export class ElevationProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.vis = d3
-      .select(this.mainDiv.nativeElement)
-      .append('svg')
-      .attr('viewBox', `0, 0, ${this.width}, ${this.height}`);
+
   }
 }
