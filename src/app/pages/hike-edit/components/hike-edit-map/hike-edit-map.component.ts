@@ -31,7 +31,7 @@ const LAYERS = [{
 
 const OVERLAYS = [{
   name: 'trails',
-  url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
+  url: 'https://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
 }];
 
 @Component({

@@ -10,21 +10,27 @@ import * as uuid from 'uuid/v1';
 export class OsmPoiService {
   constructor(private _http: HttpClient) {}
 
-  public get(bounds, typeParam, lng = 'en') {
+  public get(bounds, typeParam, lng = 'en') {
     const request = `
       <osm-script output="json" timeout="25">
         <union into="_">
           <query into="_" type="node">
             <has-kv k="${typeParam}" modv="" v=""/>
-            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${bounds.SouthWest.lat}" w="${bounds.SouthWest.lon}"/>
+            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${
+      bounds.SouthWest.lat
+    }" w="${bounds.SouthWest.lon}"/>
           </query>
           <query into="_" type="way">
             <has-kv k="${typeParam}" modv="" v=""/>
-            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${bounds.SouthWest.lat}" w="${bounds.SouthWest.lon}"/>
+            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${
+      bounds.SouthWest.lat
+    }" w="${bounds.SouthWest.lon}"/>
           </query>
           <query into="_" type="relation">
             <has-kv k="${typeParam}" modv="" v=""/>
-            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${bounds.SouthWest.lat}" w="${bounds.SouthWest.lon}"/>
+            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${
+      bounds.SouthWest.lat
+    }" w="${bounds.SouthWest.lon}"/>
           </query>
         </union>
         <print e="" from="_" geometry="skeleton" limit="" mode="body" n="" order="id" s="" w=""/>
@@ -32,7 +38,8 @@ export class OsmPoiService {
         <print e="" from="_" geometry="skeleton" limit="" mode="skeleton" n="" order="quadtile" s="" w=""/>
       </osm-script>`;
 
-    return this._http.post('http://overpass-api.de/api/interpreter', request)
+    return this._http
+      .post('https://overpass-api.de/api/interpreter', request)
       .toPromise()
       .then((response: any) => {
         let _res: IOsmPoi[] = [];
@@ -50,7 +57,7 @@ export class OsmPoiService {
                 types: [type],
                 description: {
                   [LanguageService.shortToLocale(lng)]: {
-                    title: _point.tags.name || 'unknown',
+                    title: _point.tags.name || 'unknown'
                   }
                 },
                 objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,
