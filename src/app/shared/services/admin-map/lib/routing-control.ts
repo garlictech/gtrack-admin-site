@@ -110,7 +110,7 @@ export class RoutingControl {
     });
 
     _control.addTo(this._leafletMap);
-    _control.hide();
+    // _control.hide();
 
     _control.on('routingstart', () => {
       this._store.dispatch(new routingActions.RoutingStart());
@@ -136,7 +136,7 @@ export class RoutingControl {
           return this._elevationService.getData(_chunkCoords).then((data) => {
             // Update elevation only if we got all data
             if (data.length === _chunkCoords.length) {
-              for (let i = 0; i < _chunkCoords.length; i++) {
+              for (let i in _chunkCoords) {
                 _chunkCoords[i][2] = data[i][2];
               }
             }

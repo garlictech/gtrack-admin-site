@@ -35,8 +35,10 @@ export class RouteInfo {
 
   public deletePlan() {
     // Cleanup subscriptions
-    this.planner.destroy();
-    delete this.planner;
+    if (this.planner) {
+      this.planner.destroy();
+      delete this.planner;
+    }
   }
 
   /**
@@ -73,6 +75,7 @@ export class RouteInfo {
       return null;
     }
 
+    // TODO get from store
     return this.planner.routeInfoData;
   }
 
@@ -82,7 +85,7 @@ export class RouteInfo {
   public getSearchBounds() {
     let _path = this.getPath();
 
-    if (typeof _path !== 'undefined') {
+    if (_path) {
       // declare as 'any' for avoid d3.geoBounds error
       let _buffer: any = turf.buffer(_path, 1000, {units: 'meters'});
 

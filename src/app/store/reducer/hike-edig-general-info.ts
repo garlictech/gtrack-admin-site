@@ -4,6 +4,8 @@ import { ITextualDescriptionItem } from 'app/shared/interfaces';
 import { IDescriptionEntityState, IHikeEditGeneralInfoState, IGeneralInfoState } from '../state';
 import { hikeEditGeneralInfoActions } from '../index';
 
+import * as _ from 'lodash';
+
 /**
  * General info
  */
@@ -13,7 +15,8 @@ export const initialGeneralInfoState: IGeneralInfoState = {
   routeId: '',
   isRoundTrip: false,
   difficulty: 5,
-  pois: []
+  pois: [],
+  initialized: false
 };
 
 export function generalInfoReducer(
@@ -23,6 +26,11 @@ export function generalInfoReducer(
   switch (action.type) {
     case hikeEditGeneralInfoActions.RESET_GENERAL_INFO_STATE:
       return initialGeneralInfoState;
+    case hikeEditGeneralInfoActions.SET_INITIALIZED:
+      return {
+        ...state,
+        initialized: true
+      };
     case hikeEditGeneralInfoActions.SET_HIKE_ID:
       return {
         ...state,
@@ -33,16 +41,30 @@ export function generalInfoReducer(
         ...state,
         routeId: action.payload.routeId
       };
-    case hikeEditGeneralInfoActions.SET_GENERAL_INFO:
+    case hikeEditGeneralInfoActions.SET_IS_ROUND_TRIP:
       return {
         ...state,
-        isRoundTrip: action.payload.isRoundTrip,
+        isRoundTrip: action.payload.isRoundTrip
+      }
+    case hikeEditGeneralInfoActions.SET_DIFFICULTY:
+      return {
+        ...state,
         difficulty: action.payload.difficulty
       }
     case hikeEditGeneralInfoActions.SET_POIS:
       return {
         ...state,
         pois: action.payload.pois
+      };
+    case hikeEditGeneralInfoActions.ADD_POI:
+      return {
+        ...state,
+        pois: _.union(state.pois, [action.payload.poi])
+      };
+    case hikeEditGeneralInfoActions.REMOVE_POI:
+      return {
+        ...state,
+        pois: state.pois.filter(p => p !== action.payload.poi)
       };
     default:
       return state;

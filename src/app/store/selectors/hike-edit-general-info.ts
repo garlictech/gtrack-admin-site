@@ -9,11 +9,11 @@ import { descriptionAdapter } from '../reducer/hike-edig-general-info';
 export class HikeEditGeneralInfoSelectors {
   private _featureSelector: MemoizedSelector<object, IHikeEditGeneralInfoState>;
   public getGeneralInfo: MemoizedSelector<object, IGeneralInfoState>;
+  public getInitialized: MemoizedSelector<object, boolean>;
   public getHikeId: MemoizedSelector<object, string>;
   public getRouteId: MemoizedSelector<object, string>;
   public getPois: MemoizedSelector<object, string[]>;
   public getAllDescriptions: (state: object) => ITextualDescriptionItem[];
-  public getAllLangKeys: (state: object) => string[] | number[];
 
   constructor() {
     this._featureSelector = createFeatureSelector<IHikeEditGeneralInfoState>('hikeEditGeneralInfo');
@@ -24,6 +24,10 @@ export class HikeEditGeneralInfoSelectors {
 
     this.getGeneralInfo = createSelector(this._featureSelector,
       (state: IHikeEditGeneralInfoState) => state.generalInfo
+    );
+
+    this.getInitialized = createSelector(this._featureSelector,
+      (state: IHikeEditGeneralInfoState) => state.generalInfo.initialized
     );
 
     this.getHikeId = createSelector(this._featureSelector,
@@ -46,6 +50,17 @@ export class HikeEditGeneralInfoSelectors {
       this._featureSelector, (state: IHikeEditGeneralInfoState) => state.descriptions
     );
     this.getAllDescriptions = descriptionAdapter.getSelectors(descriptionSelector).selectAll;
-    this.getAllLangKeys = descriptionAdapter.getSelectors(descriptionSelector).selectIds;
+  }
+
+  public getHikePois<IPoi>(getAllSelector: ((state: object) => IPoi[])) {
+    return createSelector(
+      getAllSelector,
+      this.getPois,
+      (data, poiIds) => {
+        if (typeof poiIds !== 'undefined') {
+          return data.filter(item => poiIds.indexOf((<any>item).id) !== -1);
+        }
+      }
+    )
   }
 }

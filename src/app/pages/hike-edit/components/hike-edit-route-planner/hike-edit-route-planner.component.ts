@@ -36,13 +36,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
-
     this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
     this._store.select(this._hikeEditMapSelectors.getMapId)
+      .takeUntil(this._destroy$)
       .filter(id => id !== '')
-      .take(1)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
@@ -64,7 +62,12 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .switchMap((routeContext) => this._store.select(this._routeSelectors.getRoute((<IRouteContextState>routeContext).id)))
       .take(1)
       .subscribe((route) => {
-        this._loadRoute(<Route>route);
+        setTimeout(() => {
+          this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
+
+          // Todo: load route only on init
+          this._loadRoute(<Route>route);
+        });
       });
   }
 
@@ -74,7 +77,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   }
 
   public retrievePlan() {
-    this._map.waypointMarker.deleteLast();
+    console.log('TODO retrievePlan');
   }
 
   public removeLast() {
@@ -100,9 +103,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .select(this._hikeEditGeneralInfoSelectors.getRouteId)
       .take(1)
 
-    Observable.forkJoin(_routePlannerState, _generalInfoState)
+    Observable
+      .forkJoin(_routePlannerState, _generalInfoState)
       .subscribe(data => {
-        console.log('data', data);
         if (data[0] && data[1]) {
           let _route: IRoute = {
             id: data[1],
@@ -116,15 +119,17 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   }
 
   private _loadRoute(routeData: Route) {
-    console.log('routeData', routeData);
+    if (this._map && this._map.waypointMarker) {
+      this._map.waypointMarker.reset();
 
-    for (let i = 1; i < routeData.route.features.length; i++) {
-      let latlng = L.latLng(
-        routeData.route.features[i].geometry.coordinates[1],
-        routeData.route.features[i].geometry.coordinates[0]
-      );
+      for (let feature of routeData.route.features) {
+        let latlng = L.latLng(
+          feature.geometry.coordinates[1],
+          feature.geometry.coordinates[0]
+        );
 
-      this._map.waypointMarker.addWaypoint(latlng);
+        this._map.waypointMarker.addWaypoint(latlng);
+      }
     }
   }
 }

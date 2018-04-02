@@ -35,9 +35,6 @@ export class RoutePlanner {
       }]
     }
 
-    // Reset the state when the planner has been created
-    this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
-
     // Parent classes use routeInfoData
     this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
       .takeUntil(this._destroy$)
@@ -115,7 +112,7 @@ export class RoutePlanner {
   private _createGeoJSON(segments) {
     this._resetGeoJSON();
 
-    for (let i = 0; i < segments.length; i++) {
+    for (let i in segments) {
       // Add segment coords to LineString
       const _segment = segments[i];
       for (let p of _segment.coordinates) {

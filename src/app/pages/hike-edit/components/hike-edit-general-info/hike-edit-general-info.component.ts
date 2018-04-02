@@ -6,11 +6,12 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operators';
 import { State, hikeEditGeneralInfoActions } from 'app/store';
-import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
-import { IGeneralInfoState } from 'app/store/state';
+import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { IGeneralInfoState, IHikeEditRoutePlannerState, IHikeEditGeneralInfoState } from 'app/store/state';
 import { ITextualDescriptionItem } from 'app/shared/interfaces';
 import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
 import { ITextualDescription } from 'subrepos/provider-client';
+import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';
 
@@ -22,7 +23,8 @@ import * as _ from 'lodash';
 export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public textualDescriptions$: Observable<ITextualDescriptionItem[]>;
   public generalInfo$: Observable<IGeneralInfoState>;
-  public existingLangKeys$: Observable<string[] | number[]>;
+  public isRoundTrip$: Observable<boolean>;
+  public existingLangKeys: string[] = [];
   public hikeForm: FormGroup;
   public langs = DESCRIPTION_LANGUAGES;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -31,19 +33,20 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _formBuilder: FormBuilder,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _hikeSelectors: HikeSelectors,
   ) {}
 
   ngOnInit() {
     // Selectors
-    this.existingLangKeys$ = this._store.select(
-      this._hikeEditGeneralInfoSelectors.getAllLangKeys
-    );
     this.textualDescriptions$ = this._store.select(
       this._hikeEditGeneralInfoSelectors.getAllDescriptions
     );
     this.generalInfo$ = this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo);
+    this.isRoundTrip$ = this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip);
 
-    this._initFormSubscriptions();
+    // Init forms from the store
+    this._initForm();
   }
 
   ngOnDestroy() {
@@ -51,55 +54,61 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     this._destroy$.unsubscribe();
   }
 
-  public saveToStore() {
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetGeneralInfo({
-      isRoundTrip: this.hikeForm.controls.isRoundTrip.value,
-      difficulty: this.hikeForm.controls.difficulty.value
-    }));
-
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
-      descriptions: this.hikeForm.value.langs
-    }));
-  }
-
-  private _initFormSubscriptions() {
-    //
-    // General info
-    //
-
+  /**
+   * Initialize form and configure saving
+   */
+  private _initForm() {
     this.hikeForm = this._formBuilder.group({
       _selLang: new FormControl('', []),
-      isRoundTrip: false,
       difficulty: 1,
       langs: this._formBuilder.array([])
     });
 
-    this.generalInfo$
+    this.hikeForm.valueChanges
       .takeUntil(this._destroy$)
-      .subscribe((generalInfo) => {
-        this.hikeForm.patchValue({
-          isRoundTrip: generalInfo.isRoundTrip,
-          difficulty: generalInfo.difficulty
-        })
+      .subscribe((value) => {
+        this.existingLangKeys = value.langs.map(lang => lang.id);
       });
 
-    this.textualDescriptions$
-      .takeUntil(this._destroy$)
-      .subscribe((descriptions) => {
-        let _descriptionArray = <FormArray>this.hikeForm.controls.langs;
+    // Fill the form on the 1st time
+    this._store
+      .select(this._hikeEditGeneralInfoSelectors.getInitialized)
+      .skipWhile(initialized => !initialized)
+      .take(1)
+      .subscribe((initialized: boolean) => {
+        this.generalInfo$
+          .take(1)
+          .subscribe((generalInfo) => {
+            this.hikeForm.patchValue({
+              difficulty: generalInfo.difficulty
+            });
+          });
 
-        for (let desc of descriptions) {
-          let _langIdx = _.map(_descriptionArray.value, 'id').indexOf(desc.id);
+        this.textualDescriptions$
+          .take(1)
+          .subscribe((descriptions) => {
+            let _descriptionArray = <FormArray>this.hikeForm.controls.langs;
 
-          // Insert new language
-          if (_langIdx < 0) {
-            const formArrayItem = this._createDescriptionItem(desc);
-            _descriptionArray.push(formArrayItem);
-          // Update existing language
-          } else {
-            _descriptionArray.at(_langIdx).patchValue(desc);
-          }
-        }
+            for (let desc of descriptions) {
+              let _langIdx = _.map(_descriptionArray.value, 'id').indexOf(desc.id);
+
+              // Insert new language
+              if (_langIdx < 0) {
+                _descriptionArray.push(this._createDescriptionItem(desc));
+              // Update existing language
+              } else {
+                _descriptionArray.at(_langIdx).patchValue(desc);
+              }
+            }
+          });
+
+        // Save to store
+        this.hikeForm.valueChanges
+          .debounceTime(1000)
+          .takeUntil(this._destroy$)
+          .subscribe((value) => {
+            this._saveToStore();
+          });
       });
   }
 
@@ -112,30 +121,36 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     });
   }
 
-  /*
-  public removeTextualDescription(i: number) {
-      const control = <FormArray>this.descriptionForm.controls.langs;
-      control.removeAt(i);
-  }
-  */
+  private _saveToStore() {
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetDifficulty({
+      difficulty: this.hikeForm.controls.difficulty.value
+    }));
 
-  /**
-   * Add new language to descriptions
-   */
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
+      descriptions: this.hikeForm.value.langs
+    }));
+  }
+
   public addTranslation() {
     if (this.hikeForm.controls._selLang.value) {
-      this._store.dispatch(new hikeEditGeneralInfoActions.AddDescription({
-        description: {
+      (<FormArray>this.hikeForm.controls.langs).push(
+        this._createDescriptionItem({
           id: this.hikeForm.controls._selLang.value,
           title: '',
           fullDescription: '',
           summary: ''
-        }
-      }));
+        })
+      );
 
       // Clear lang selector guide
       this.hikeForm.controls._selLang.setValue('');
     }
+  }
+
+  public deleteTranslation(lang) {
+    (<FormArray>this.hikeForm.controls.langs).removeAt(
+      (<FormArray>this.hikeForm.controls.langs).value.findIndex(translation => translation.id === lang)
+    );
   }
 
   public getLangName(key) {

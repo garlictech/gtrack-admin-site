@@ -19,6 +19,8 @@ export function hikeEditMapMapReducer(
   action: adminMapActions.AllAdminMapActions
 ): IHikeEditMapMapState {
   switch (action.type) {
+    case adminMapActions.RESET_MAP:
+      return initialMapState;
     case adminMapActions.REGISTER_MAP:
       return {
         ...state,

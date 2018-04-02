@@ -40,8 +40,7 @@ export class GooglePoiService {
 
         return new Promise((resolve, reject) => {
           this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
-            for (let i = 0; i < result.length; i++) {
-              const _point = result[i];
+            for (let _point of result) {
               const _pointData: IGooglePoi = {
                 id: uuid(),
                 lat: _point.geometry.location.lat(),

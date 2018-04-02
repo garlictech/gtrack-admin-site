@@ -65,6 +65,21 @@ describe('HikeEditMap reducers', () => {
     });
   });
 
+  describe('ResetMap action', () => {
+    it('should reset map', () => {
+      const action = new adminMapActions.ResetMap();
+      const state = hikeEditMapReducer(initialState, action);
+
+      expect(state.map.mapId).toEqual('');
+      // untouched props, good to add regardless
+      expect(state.googleMarkers.ids).toEqual([]);
+      expect(state.osmAmenityMarkers.ids).toEqual([]);
+      expect(state.osmNaturalMarkers.ids).toEqual([]);
+      expect(state.osmRouteMarkers.ids).toEqual([]);
+      expect(state.wikipediaMarkers.ids).toEqual([]);
+    });
+  });
+
   describe('SetWikipediaMarkers action', () => {
     it('should set wikipedia markers', () => {
       const action = new hikeEditMapActions.SetWikipediaMarkers({ markers: markers });

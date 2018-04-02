@@ -24,10 +24,11 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let hike of (hikeList$ | async)">
-                    <td><a href="#" routerLink="/admin/hike/{{hike.id}}">{{hike.description.en_US.title}}</a>
+                    <td class="text-nowrap">
+                      <a href="#" routerLink="/admin/hike/{{hike.id}}">{{translateDescription(hike.description, 'title')}}</a>
                       <small class="text-secondary">({{hike.id}})</small>
                     </td>
-                    <td>{{hike.description.en_US.summary}}</td>
+                    <td>{{translateDescription(hike.description, 'summary')}}</td>
                     <td class="td-actions">
                       <button
                         class="btn btn-warning btn-simple btn-link"

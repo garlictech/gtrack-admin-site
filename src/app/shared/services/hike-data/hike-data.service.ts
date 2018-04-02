@@ -25,17 +25,18 @@ export class HikeDataService {
    * collectHikeData effect submethod
    */
   public collectHikeGeneralInfo() {
-    return this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo)
-      .take(1)
-      .map((generalInfo) => {
-        return {
-          id: generalInfo.hikeId,
-          routeId: generalInfo.routeId,
-          difficulty: generalInfo.difficulty.toString(), // TODO it will be number!!
-          isRoundTrip: generalInfo.isRoundTrip,
-          pois: generalInfo.pois
-        };
-      });
+    return Observable.combineLatest(
+      this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo),
+      this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
+    ).map(data => {
+      return {
+        id: data[0].hikeId,
+        routeId: data[0].routeId,
+        difficulty: data[0].difficulty.toString(), // TODO it will be number!!
+        isRoundTrip: data[1],
+        pois: data[0].pois
+      };
+    });
   }
 
   /**
@@ -70,7 +71,7 @@ export class HikeDataService {
         console.warn('TODO: collectHikeRouteInfo - Temporary stops array from markers');
         _routeInfo.stops = [];
 
-        for (let i = 1; i < routeInfo.route.features.length; i++) {
+        for (let i in routeInfo.route.features) {
           let _feature = routeInfo.route.features[i];
           let _segment: any = {
             uphill: 0,
@@ -80,8 +81,8 @@ export class HikeDataService {
             time: 0
           };
 
-          if (i > 1) {
-            _segment = _.pick(routeInfo.segments[i - 2], [
+          if (parseInt(i) > 1) {
+            _segment = _.pick(routeInfo.segments[parseInt(i) - 2], [
               'uphill', 'downhill', 'distance', 'score', 'time'
             ])
           }
@@ -137,13 +138,23 @@ export class HikeDataService {
     this._store.dispatch(new commonRouteActions.LoadRoute(hikeData.routeId));
 
     // General info
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetGeneralInfo({
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetIsRoundTrip({
       isRoundTrip: hikeData.isRoundTrip,
+    }));
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetDifficulty({
       difficulty: parseInt(hikeData.difficulty) // TODO: it will be number!
+    }));
+
+    // Pois
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetPois({
+      pois: hikeData.pois
     }));
 
     // Descriptions
     this._splitHikeDescriptionToStore(hikeData.description);
+
+    // Store has been initialized
+    this._store.dispatch(new hikeEditGeneralInfoActions.SetInitialized());
   }
 
   /**

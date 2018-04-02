@@ -265,7 +265,7 @@ export class PoiEditorService {
         return this._elevationService.getData(_coordinates).then((data) => {
           // Update elevation only if we got all data
           if (data.length === _chunk.length) {
-            for (let i = 0; i < _chunk.length; i++) {
+            for (let i in _chunk) {
               _chunk[i].elevation = data[i][2];
             }
           }
@@ -329,74 +329,95 @@ export class PoiEditorService {
   }
 
   public refreshPoiMarkers(map: AdminMap) {
-    let _pois: any[] = [];
+    if (map) {
+      let _pois: any[] = [];
 
-    //
-    // TODO: Hike pois
-    //
+      //
+      // Hike pois
+      //
 
-    //
-    // gTrackPois
-    //
+      this._store
+        .select(this._hikeEditPoiSelectors.getHikeEditContextSelector('hike'))
+        .take(1)
+        .subscribe((hikePoiContext: IExternalPoiListContextItemState) => {
+          // Load hike pois if there are visible pois
+          if (hikePoiContext.showOnrouteMarkers || hikePoiContext.showOffrouteMarkers) {
+            this._store
+              .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
+              .switchMap((pois: IPoi[]) => this.organizePois(_.cloneDeep(pois), map.routeInfo.getPath()))
+              .take(1)
+              .subscribe((pois: IGTrackPoi[]) => {
+                _pois = _pois.concat(pois.filter(p => {
+                  let _onRouteCheck = p.onRoute ? hikePoiContext.showOnrouteMarkers : hikePoiContext.showOffrouteMarkers;
+                  return !p.inHike && _onRouteCheck;
+                }));
+              });
+          }
+        });
 
-    this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextSelector('gTrack'))
-      .take(1)
-      .subscribe((gTrackPoiContext: IExternalPoiListContextItemState) => {
-        // Load gTrackPois if there are visible pois
-        if (gTrackPoiContext.showOnrouteMarkers || gTrackPoiContext.showOffrouteMarkers) {
-          this._store
-            .select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois))
-            .switchMap((pois: IPoi[]) => pois ? this.organizePois(_.cloneDeep(pois), map.routeInfo.getPath()) : [])
-            .switchMap((pois: IGTrackPoi[]) => this.handleHikeInclusion(pois))
-            .take(1)
-            .subscribe((pois: IGTrackPoi[]) => {
-              _pois = _pois.concat(pois.filter(p => {
-                let _onRouteCheck = p.onRoute ? gTrackPoiContext.showOnrouteMarkers : gTrackPoiContext.showOffrouteMarkers;
-                return !p.inHike && _onRouteCheck;
-              }));
-            });
-        }
-      });
+      //
+      // gTrackPois
+      //
 
-    //
-    // Service pois
-    //
+      this._store
+        .select(this._hikeEditPoiSelectors.getHikeEditContextSelector('gTrack'))
+        .take(1)
+        .subscribe((gTrackPoiContext: IExternalPoiListContextItemState) => {
+          // Load gTrackPois if there are visible pois
+          if (gTrackPoiContext.showOnrouteMarkers || gTrackPoiContext.showOffrouteMarkers) {
+            this._store
+              .select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois))
+              .switchMap((pois: IPoi[]) => pois ? this.organizePois(_.cloneDeep(pois), map.routeInfo.getPath()) : [])
+              .switchMap((pois: IGTrackPoi[]) => this.handleHikeInclusion(pois))
+              .take(1)
+              .subscribe((pois: IGTrackPoi[]) => {
+                _pois = _pois.concat(pois.filter(p => {
+                  let _onRouteCheck = p.onRoute ? gTrackPoiContext.showOnrouteMarkers : gTrackPoiContext.showOffrouteMarkers;
+                  return !p.inHike && _onRouteCheck;
+                }));
+              });
+          }
+        });
 
-    this._getVisibleServicePois('google', this._hikeEditPoiSelectors.getAllGooglePois)
-      .subscribe((pois: IExternalPoi[]) => {
-        _pois = _pois.concat(pois);
-      });
-    this._getVisibleServicePois('osmAmenity', this._hikeEditPoiSelectors.getAllOsmAmenityPois)
-      .subscribe((pois: IExternalPoi[]) => {
-        _pois = _pois.concat(pois);
-      });
-    this._getVisibleServicePois('osmNatural', this._hikeEditPoiSelectors.getAllOsmNaturalPois)
-      .subscribe((pois: IExternalPoi[]) => {
-        _pois = _pois.concat(pois);
-      });
-    this._getVisibleServicePois('osmRoute', this._hikeEditPoiSelectors.getAllOsmRoutePois)
-      .subscribe((pois: IExternalPoi[]) => {
-        _pois = _pois.concat(pois);
-      });
-    this._getVisibleServicePois('wikipedia', this._hikeEditPoiSelectors.getAllWikipediaPois)
-      .subscribe((pois: IExternalPoi[]) => {
-        _pois = _pois.concat(pois);
-      });
+      //
+      // Service pois
+      //
 
-    //
-    // Generate markers
-    //
+      this._getVisibleServicePois('google', this._hikeEditPoiSelectors.getAllGooglePois)
+        .subscribe((pois: IExternalPoi[]) => {
+          _pois = _pois.concat(pois);
+        });
+      this._getVisibleServicePois('osmAmenity', this._hikeEditPoiSelectors.getAllOsmAmenityPois)
+        .subscribe((pois: IExternalPoi[]) => {
+          _pois = _pois.concat(pois);
+        });
+      this._getVisibleServicePois('osmNatural', this._hikeEditPoiSelectors.getAllOsmNaturalPois)
+        .subscribe((pois: IExternalPoi[]) => {
+          _pois = _pois.concat(pois);
+        });
+      this._getVisibleServicePois('osmRoute', this._hikeEditPoiSelectors.getAllOsmRoutePois)
+        .subscribe((pois: IExternalPoi[]) => {
+          _pois = _pois.concat(pois);
+        });
+      this._getVisibleServicePois('wikipedia', this._hikeEditPoiSelectors.getAllWikipediaPois)
+        .subscribe((pois: IExternalPoi[]) => {
+          _pois = _pois.concat(pois);
+        });
 
-    const _markers = this._generatePoiMarkers(_pois);
+      //
+      // Generate markers
+      //
 
-    if (map.leafletMap.hasLayer(map.markersGroup)) {
-      map.leafletMap.removeLayer(map.markersGroup);
-    }
+      const _markers = this._generatePoiMarkers(_pois);
 
-    if (_markers.length > 0) {
-      map.markersGroup = L.layerGroup(_markers.map(m => m.marker));
-      map.leafletMap.addLayer(map.markersGroup);
+      if (map.leafletMap.hasLayer(map.markersGroup)) {
+        map.leafletMap.removeLayer(map.markersGroup);
+      }
+
+      if (_markers.length > 0) {
+        map.markersGroup = L.layerGroup(_markers.map(m => m.marker));
+        map.leafletMap.addLayer(map.markersGroup);
+      }
     }
   }
 

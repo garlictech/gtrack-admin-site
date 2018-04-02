@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import {
-  State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions
+  State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions, IHikeEditRoutePlannerState, hikeEditMapActions, hikeEditRoutePlannerActions
 } from 'app/store';
-import { HikeEditGeneralInfoSelectors } from 'app/store/selectors';
+import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { HikeDataService } from 'app/shared/services';
 import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
@@ -20,6 +21,8 @@ import * as uuid from 'uuid/v1';
   styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
+  public allowSave$: Observable<boolean>;
+  public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -29,17 +32,20 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _hikeDataService: HikeDataService,
     private _hikeSelectors: HikeSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _toasterService: ToasterService,
     private _router: Router,
     private _title: Title
   ) {}
 
   ngOnInit() {
+    this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
+    this._store.dispatch(new hikeEditMapActions.ResetMapState());
+    this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
+
     this._activatedRoute.params
       .takeUntil(this._destroy$)
       .subscribe(params => {
-        this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
-
         if (params && params.id) {
           // Set page title
           this._title.setTitle('Edit hike');
@@ -67,14 +73,28 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           // Create initial language block
           this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
             descriptions: [{
-                id: 'en_US',
-                title: `Test hike #${new Date().getTime()}`,
-                fullDescription: 'desc',
-                summary: 'summary'
+              id: 'en_US',
+              title: `Test hike #${new Date().getTime()}`,
+              fullDescription: 'desc',
+              summary: 'summary'
             }]
           }));
+
+          // Store has been initialized
+          this._store.dispatch(new hikeEditGeneralInfoActions.SetInitialized());
         }
       });
+
+    this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
+
+    this.allowSave$ = Observable.combineLatest(
+      this._store.select(this._hikeEditGeneralInfoSelectors.getPois),
+      this.routeInfoData$
+    ).map(data => {
+      const _pois = data[0];
+      const _segments = data[1].segments;
+      return _pois.length > 0 && (_segments && _segments.length > 0);
+    })
 
     // Handling hike save
     this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)

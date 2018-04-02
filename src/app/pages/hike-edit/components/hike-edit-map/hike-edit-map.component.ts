@@ -57,8 +57,6 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this._store.dispatch(new hikeEditMapActions.ResetMapState());
-
     // Update buffer on each segment update
     this._store.select(this._hikeEditRoutePlannerSelectors.getSegments)
       .takeUntil(this._destroy$)
@@ -76,6 +74,8 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy( ) {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
+
+    this.mapComponent.map.destroy();
   }
 
   ngAfterViewInit() {
@@ -90,7 +90,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
           // TODO action
           this.mapComponent.map.waypointMarker.addWaypoint(e.latlng);
         } else {
-          console.log('todo _createCheckpoint');
+          // console.log('todo _createCheckpoint');
           // this._createCheckpoint(e.latlng);
         }
       })

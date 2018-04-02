@@ -1,17 +1,11 @@
 <form [formGroup]="hikeForm" novalidate>
   <div class="form-check inline-checkbox">
-    <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" formControlName="isRoundTrip">
-        <span class="form-check-sign"></span>
-        Is roundtrip
-    </label>
-    <label class="form-label ml-5">
+    <label class="form-label mr-5">
       Difficulty: <output name="diff" class="difficulty mr-2">{{(generalInfo$ | async).difficulty}}</output>
       <input class="form-input ml-1" name="difficulty" type="range" min="1" max="10" formControlName="difficulty" onchange="diff.value = difficulty.value">
     </label>
-  </div>
-  <div class="pull-right">
-    <button class="btn btn-sm btn-fill btn-success" (click)="saveToStore()">Save to store</button>
+
+    <label>RoundTrip: <span [ngClass]="{'text-success': (isRoundTrip$ | async)}">{{(isRoundTrip$ | async) ? 'Yes' : 'No'}}</span></label>
   </div>
 
   <div class="lang-toolbar clearfix mt-4 mb-2">
@@ -20,9 +14,13 @@
     </button>
 
     <select class="form-control form-control-sm" formControlName="_selLang" title="Select">
+      <option value="">-</option>
       <ng-container *ngFor="let lang of langs">
-        <option *ngIf="(existingLangKeys$ | async).indexOf(lang.locale) < 0" [value]="lang.locale" [innerHTML]="lang.name">
-        </option>
+        <option
+          *ngIf="existingLangKeys.indexOf(lang.locale) < 0"
+          [value]="lang.locale"
+          [innerHTML]="lang.name"
+        ></option>
       </ng-container>
     </select>
 
@@ -59,11 +57,19 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-11">
               <div class="form-group form-black label-floating is-empty">
                 <label class="control-label">Summary</label>
                 <input class="form-control" type="text" formControlName="summary">
               </div>
+            </div>
+            <div class="col-md-1">
+              <button
+                class="btn btn-danger btn-simple btn-link pull-right mt-4"
+                (click)="deleteTranslation(lng.value.id)"
+                title="Delete language">
+                <i class="material-icons">delete</i>
+              </button>
             </div>
           </div>
         </div>

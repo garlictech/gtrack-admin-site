@@ -21,6 +21,7 @@ export interface IExternalPoiListContextState {
   osmRoute: IExternalPoiListContextItemState;
   wikipedia: IExternalPoiListContextItemState;
   gTrack: IExternalPoiListContextItemState; // context for common Poi list
+  hike: IExternalPoiListContextItemState; // context for hike Poi list
 }
 
 // State

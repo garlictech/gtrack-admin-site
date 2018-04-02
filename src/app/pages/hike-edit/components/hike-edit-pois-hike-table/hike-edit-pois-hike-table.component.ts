@@ -7,10 +7,10 @@ import { LanguageService } from 'app/shared/services';
 import { IDynamicComponentModalConfig, DynamicModalService } from 'subrepos/gtrack-common-ngx';
 
 @Component({
-  selector: 'hike-edit-pois-gtrack-table',
-  templateUrl: './hike-edit-pois-gtrack-table.component.html'
+  selector: 'hike-edit-pois-hike-table',
+  templateUrl: './hike-edit-pois-hike-table.component.html'
 })
-export class HikeEditPoisGTrackTableComponent {
+export class HikeEditPoisHikeTableComponent {
   @Input() pois$: IGTrackPoi[];
   @Input() onRouteCheck: boolean;
 
@@ -22,7 +22,7 @@ export class HikeEditPoisGTrackTableComponent {
   public handleInHikePoi($event, poi) {
     $event.stopPropagation();
 
-    this._store.dispatch(new hikeEditGeneralInfoActions.AddPoi({
+    this._store.dispatch(new hikeEditGeneralInfoActions.RemovePoi({
       poi: poi.id
     }));
   }

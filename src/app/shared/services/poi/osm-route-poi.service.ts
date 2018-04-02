@@ -30,8 +30,7 @@ export class OsmRoutePoiService {
         let _res: IOsmPoi[] = [];
 
         if (response.elements) {
-          for (let i = 0; i < response.elements.length; i++) {
-            let _point = response.elements[i];
+          for (let _point of response.elements) {
             if (_point.tags && _point.lat) {
               // let _type = _point.tags[poiType];
 

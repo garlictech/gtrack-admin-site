@@ -39,9 +39,7 @@ export class HikeEditEffects {
     })
     .switchMap(data => {
       return this._hikeDataService.collectHikeLocation(data)
-        .then((locationObj) => {
-          return _.extend(_.cloneDeep(data), locationObj)
-        });
+        .then((locationObj) => _.extend(_.cloneDeep(data), locationObj));
     })
     .map(data => {
       return new commonHikeActions.SaveHikeProgram(
