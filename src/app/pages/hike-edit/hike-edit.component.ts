@@ -9,7 +9,7 @@ import {
 } from 'app/store';
 import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { HikeDataService } from 'app/shared/services';
-import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
+import { IHikeProgramStored, IHikeProgram, IPoi } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 
@@ -63,12 +63,12 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
           const _hikeId = uuid();
           this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({ hikeId: _hikeId }));
-          this._store.dispatch(new commonHikeActions.LoadHikeProgram(_hikeId));
+          this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
 
           // Generate initial route id and load the empty route (for save toaster handling)
           const _routeId = uuid();
           this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({ routeId: _routeId }));
-          this._store.dispatch(new commonRouteActions.LoadRoute(_routeId));
+          this._store.dispatch(new commonRouteActions.RouteUnsaved(_routeId));
 
           // Create initial language block
           this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
@@ -90,10 +90,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this.allowSave$ = Observable.combineLatest(
       this._store.select(this._hikeEditGeneralInfoSelectors.getPois),
       this.routeInfoData$
-    ).map(data => {
-      const _pois = data[0];
-      const _segments = data[1].segments;
-      return _pois.length > 0 && (_segments && _segments.length > 0);
+    ).map(([inHikePois, routeInfoData]: [any[], any]) => {
+      return inHikePois.length > 0 && (routeInfoData.segments && routeInfoData.segments.length > 0);
     })
 
     // Handling hike save

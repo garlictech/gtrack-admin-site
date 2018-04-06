@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-
 import { State, hikeEditGeneralInfoActions, commonRouteActions } from 'app/store';
 import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { IGeneralInfoState } from 'app/store/state';
 import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
 import { ITextualDescriptionItem } from '../../interfaces';
 import { IHikeProgram, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
@@ -28,13 +28,13 @@ export class HikeDataService {
     return Observable.combineLatest(
       this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo),
       this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
-    ).map(data => {
+    ).map(([generalInfo, isRoundTrip]: [IGeneralInfoState, boolean]) => {
       return {
-        id: data[0].hikeId,
-        routeId: data[0].routeId,
-        difficulty: data[0].difficulty.toString(), // TODO it will be number!!
-        isRoundTrip: data[1],
-        pois: data[0].pois
+        id: generalInfo.hikeId,
+        routeId: generalInfo.routeId,
+        difficulty: generalInfo.difficulty.toString(), // TODO it will be number!!
+        isRoundTrip: isRoundTrip,
+        pois: generalInfo.pois
       };
     });
   }

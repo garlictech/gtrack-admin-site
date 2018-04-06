@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import {
-   PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState
+   PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, IGeoSearchResponseItem
 } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
@@ -56,24 +56,51 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       });
 
     // Get pois by id from geoSearch result
-    this._store
-      .select(this._geoSearchSelectors.getGeoSearch('gTrackPois'))
+    Observable
+      .combineLatest(
+        this._store.select(this._geoSearchSelectors.getGeoSearch('gTrackPois')),
+        this._store.select(this._poiSelectors.getPoiIds)
+      )
       .takeUntil(this._destroy$)
-      .subscribe((searchData) => {
+      .debounceTime(100)
+      .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
         if (searchData) {
-          this._store.dispatch(new commonPoiActions.LoadPois((<any>searchData).results));
+          const poiIds = _.difference((<any>searchData).results, _.intersection((<any>searchData).results, inStorePoiIds))
+
+          // Get only the not-loaded pois
+          if (poiIds && poiIds.length > 0) {
+            this._store.dispatch(new commonPoiActions.LoadPois(poiIds));
+          }
         }
       });
 
     // Poi list based on geoSearch results
-    this.pois$ = this._store
-      .select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois))
-      .switchMap((pois: Poi[]) => this._poiEditorService.organizePois(_.cloneDeep(pois), this._map.routeInfo.getPath()))
-      .switchMap((pois: IGTrackPoi[]) => this._poiEditorService.handleHikeInclusion(pois));
+    this.pois$ = Observable
+      .combineLatest(
+        this._store.select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois)),
+        this._store.select(this._hikeEditRoutePlannerSelectors.getPath),
+        this._store.select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'dirty'))
+      )
+      .takeUntil(this._destroy$)
+      .debounceTime(100)
+      .filter(([pois, path, dirty]: [Poi[], any, boolean]) => typeof pois !== 'undefined')
+      .switchMap(([pois, path, dirty]: [Poi[], any, boolean]) => {
+        return Observable.of(this._poiEditorService.organizePois(_.cloneDeep(pois), path));
+      })
+      .switchMap((pois: IGTrackPoi[]) => {
+        this._store.dispatch(new hikeEditPoiActions.SetDirty({
+          subdomain: 'gTrack',
+          dirty: false
+        }));
+
+        return Observable.of(this._poiEditorService.handleHikeInclusion(pois));
+      });
 
     this.pois$
       .takeUntil(this._destroy$)
+      .debounceTime(100)
       .subscribe((pois: Poi[]) => {
+        console.log('POI CAHNGES IN GTRAK');
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);
       });

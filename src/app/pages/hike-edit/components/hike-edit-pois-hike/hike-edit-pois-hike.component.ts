@@ -55,23 +55,39 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       });
 
     // Get pois by id
-    this._store
-      .select(this._hikeEditGeneralInfoSelectors.getPois)
+    Observable
+      .combineLatest(
+        this._store.select(this._hikeEditGeneralInfoSelectors.getPois),
+        this._store.select(this._poiSelectors.getPoiIds)
+      )
       .takeUntil(this._destroy$)
-      .delay(2000) // TODO wait for map.routeInfo with a better way
-      .subscribe((poiIds) => {
-        if (poiIds) {
+      .debounceTime(100)
+      .takeUntil(this._destroy$)
+      .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
+        const poiIds = _.difference(inHikePoiIds, _.intersection(inHikePoiIds, inStorePoiIds))
+
+        // Get only the not-loaded pois
+        if (poiIds && poiIds.length > 0) {
           this._store.dispatch(new commonPoiActions.LoadPois(poiIds));
         }
       });
 
-    // Poi list
-    this.pois$ = this._store
-      .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
-      .switchMap((pois: Poi[]) => this._poiEditorService.organizePois(_.cloneDeep(pois), this._map.routeInfo.getPath()))
+    // Poi list TODO uncomment
+    this.pois$ = Observable
+      .combineLatest(
+        this._store.select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois)),
+        this._store.select(this._hikeEditRoutePlannerSelectors.getPath)
+      )
+      .takeUntil(this._destroy$)
+      .debounceTime(100)
+      .filter(([pois, path]: [Poi[], any]) => typeof pois !== 'undefined')
+      .switchMap(([pois, path]: [Poi[], any]) => {
+        return Observable.of(this._poiEditorService.organizePois(_.cloneDeep(pois), path));
+      });
 
     this.pois$
       .takeUntil(this._destroy$)
+      .debounceTime(100)
       .subscribe((pois: Poi[]) => {
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);

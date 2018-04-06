@@ -65,6 +65,8 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
 
 // Global styles
 import './styles';
+import { RoutePlannerService, RoutingControlService } from './shared/services/admin-map';
+import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
 
 const hikeModuleConfig = new HikeModuleConfig();
 hikeModuleConfig.storeDomains = {
@@ -153,6 +155,9 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     HikeDataService,
     ReverseGeocodingService,
     AdminMapService,
+    RoutePlannerService,
+    RoutingControlService,
+    WaypointMarkerService,
     PoiEditorService,
     WikipediaPoiService,
     OsmPoiService,

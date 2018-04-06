@@ -25,6 +25,11 @@ export class HikeEditPoisHikeTableComponent {
     this._store.dispatch(new hikeEditGeneralInfoActions.RemovePoi({
       poi: poi.id
     }));
+
+    this._store.dispatch(new hikeEditPoiActions.SetDirty({
+      subdomain: 'gTrack',
+      dirty: true
+    }));
   }
 
   public openModal($event, poi: IGTrackPoi) {

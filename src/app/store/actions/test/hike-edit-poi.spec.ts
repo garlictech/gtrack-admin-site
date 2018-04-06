@@ -7,27 +7,27 @@ describe('HikeEditPoi actions', () => {
 
     expect(HikeEditPoiActions.GET_GOOGLE_POIS).toEqual('[HikeEditPoi] Get Google pois');
     expect(HikeEditPoiActions.SET_GOOGLE_POIS).toEqual('[HikeEditPoi] Set Google pois');
-    expect(HikeEditPoiActions.PATCH_GOOGLE_POIS).toEqual('[HikeEditPoi] Patch Google pois');
+    expect(HikeEditPoiActions.SET_GOOGLE_POIS_IN_GTRACK_DB).toEqual('[HikeEditPoi] Set Google pois inGtrackDb');
     expect(HikeEditPoiActions.SET_GOOGLE_POI_IN_HIKE).toEqual('[HikeEditPoi] Set Google poi inHike');
 
     expect(HikeEditPoiActions.GET_OSM_AMENITY_POIS).toEqual('[HikeEditPoi] Get OSM amenity pois');
     expect(HikeEditPoiActions.SET_OSM_AMENITY_POIS).toEqual('[HikeEditPoi] Set OSM amenity pois');
-    expect(HikeEditPoiActions.PATCH_OSM_AMENITY_POIS).toEqual('[HikeEditPoi] Patch OSM amenity pois');
+    expect(HikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_GTRACK_DB).toEqual('[HikeEditPoi] Set OSM amenity pois inGtrackDb');
     expect(HikeEditPoiActions.SET_OSM_AMENITY_POI_IN_HIKE).toEqual('[HikeEditPoi] Set OSM amenity poi inHike');
 
     expect(HikeEditPoiActions.GET_OSM_NATURAL_POIS).toEqual('[HikeEditPoi] Get OSM natural pois');
     expect(HikeEditPoiActions.SET_OSM_NATURAL_POIS).toEqual('[HikeEditPoi] Set OSM natural pois');
-    expect(HikeEditPoiActions.PATCH_OSM_NATURAL_POIS).toEqual('[HikeEditPoi] Patch OSM natural pois');
+    expect(HikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_GTRACK_DB).toEqual('[HikeEditPoi] Set OSM natural pois inGtrackDb');
     expect(HikeEditPoiActions.SET_OSM_NATURAL_POI_IN_HIKE).toEqual('[HikeEditPoi] Set OSM natural poi inHike');
 
     expect(HikeEditPoiActions.GET_OSM_ROUTE_POIS).toEqual('[HikeEditPoi] Get OSM route pois');
     expect(HikeEditPoiActions.SET_OSM_ROUTE_POIS).toEqual('[HikeEditPoi] Set OSM route pois');
-    expect(HikeEditPoiActions.PATCH_OSM_ROUTE_POIS).toEqual('[HikeEditPoi] Patch OSM route pois');
+    expect(HikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_GTRACK_DB).toEqual('[HikeEditPoi] Set OSM route pois inGtrackDb');
     expect(HikeEditPoiActions.SET_OSM_ROUTE_POI_IN_HIKE).toEqual('[HikeEditPoi] Set OSM route poi inHike');
 
     expect(HikeEditPoiActions.GET_WIKIPEDIA_POIS).toEqual('[HikeEditPoi] Get Wikipedia pois');
     expect(HikeEditPoiActions.SET_WIKIPEDIA_POIS).toEqual('[HikeEditPoi] Set Wikipedia pois');
-    expect(HikeEditPoiActions.PATCH_WIKIPEDIA_POIS).toEqual('[HikeEditPoi] Patch Wikipedia pois');
+    expect(HikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_GTRACK_DB).toEqual('[HikeEditPoi] Set Wikipedia pois inGtrackDb');
     expect(HikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE).toEqual('[HikeEditPoi] Set Wikipedia poi inHike');
 
     expect(HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle onroute markers');
@@ -79,11 +79,11 @@ describe('HikeEditPoi actions', () => {
 
   it('should create PatchGooglePois action', () => {
     const payload = { properties: [] };
-    const action = new HikeEditPoiActions.PatchGooglePois(payload);
+    const action = new HikeEditPoiActions.SetGooglePoisInGtrackDb(payload);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.PATCH_GOOGLE_POIS,
+      type: HikeEditPoiActions.SET_GOOGLE_POIS_IN_GTRACK_DB,
       payload,
     });
   });
@@ -133,11 +133,11 @@ describe('HikeEditPoi actions', () => {
 
   it('should create PatchOsmAmenityPois action', () => {
     const payload = { properties: [] };
-    const action = new HikeEditPoiActions.PatchOsmAmenityPois(payload);
+    const action = new HikeEditPoiActions.SetOsmAmenityPoisInGtrackDb(payload);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.PATCH_OSM_AMENITY_POIS,
+      type: HikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_GTRACK_DB,
       payload,
     });
   });
@@ -187,11 +187,11 @@ describe('HikeEditPoi actions', () => {
 
   it('should create PatchOsmNaturalPois action', () => {
     const payload = { properties: [] };
-    const action = new HikeEditPoiActions.PatchOsmNaturalPois(payload);
+    const action = new HikeEditPoiActions.SetOsmNaturalPoisInGtrackDb(payload);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.PATCH_OSM_NATURAL_POIS,
+      type: HikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_GTRACK_DB,
       payload,
     });
   });
@@ -241,11 +241,11 @@ describe('HikeEditPoi actions', () => {
 
   it('should create PatchOsmRoutePois action', () => {
     const payload = { properties: [] };
-    const action = new HikeEditPoiActions.PatchOsmRoutePois(payload);
+    const action = new HikeEditPoiActions.SetOsmRoutePoisInGtrackDb(payload);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.PATCH_OSM_ROUTE_POIS,
+      type: HikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_GTRACK_DB,
       payload,
     });
   });
@@ -295,11 +295,11 @@ describe('HikeEditPoi actions', () => {
 
   it('should create PatchWikipediaPois action', () => {
     const payload = { properties: [] };
-    const action = new HikeEditPoiActions.PatchWikipediaPois(payload);
+    const action = new HikeEditPoiActions.SetWikipediaPoisInGtrackDb(payload);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.PATCH_WIKIPEDIA_POIS,
+      type: HikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_GTRACK_DB,
       payload,
     });
   });
@@ -340,6 +340,17 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS,
+      payload,
+    });
+  });
+
+  it('should create SetDirty action', () => {
+    const payload = { subdomain: 'fakeDomain', dirty: false };
+    const action = new HikeEditPoiActions.SetDirty(payload);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_DIRTY,
       payload,
     });
   });
