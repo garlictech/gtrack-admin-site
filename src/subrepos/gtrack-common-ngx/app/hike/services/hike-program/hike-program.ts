@@ -19,7 +19,7 @@ export class HikeProgram implements IHikeProgram {
   public time: number;
   public score: number;
   public location: string;
-  public difficulty: string;
+  public difficulty: number;
   public rate?: string;
   public routeIcon: string;
   public elevationIcon: string;

@@ -41,7 +41,8 @@
     "ng2-nouislider": "^1.7.7",
     "nouislider": "^11.0.3",
     "promise-polyfill": "^6.0.2",
-    "spin.js": "^2.3.2"
+    "spin.js": "^2.3.2",
+    "jasmine-marbles": "^0.2.0"
   },
   "devDependencies": {}
 }

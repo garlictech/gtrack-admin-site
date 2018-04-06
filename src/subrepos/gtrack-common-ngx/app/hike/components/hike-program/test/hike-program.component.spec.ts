@@ -58,7 +58,7 @@ describe('HikeProgramComponent', () => {
       time: 120,
       score: 500,
       isRoundTrip: false,
-      difficulty: 'hard',
+      difficulty: 5,
       routeIcon: '',
       elevationIcon: '',
       routeId: '',

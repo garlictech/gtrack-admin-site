@@ -1,7 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import * as _ from 'lodash';
 import { createSelector } from '@ngrx/store';
-import { DebugLog } from 'app/log';
 
 import {
   DeepstreamModule as CoreDeepstreamModule,
@@ -26,6 +25,7 @@ let externalDeepstreamDependencies: IExternalDeepstreamDependencies = {
 @NgModule({ imports: [CoreDeepstreamModule] })
 export class DeepstreamModule {
   static forRoot(): ModuleWithProviders {
+    console.log(externalDeepstreamDependencies);
     return {
       ngModule: DeepstreamModule,
       providers: [

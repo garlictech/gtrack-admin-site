@@ -20,7 +20,7 @@ describe('Hike actions', () => {
       time: 20,
       score: 20,
       location: 'Budapest',
-      difficulty: 'hard',
+      difficulty: 5,
       routeIcon: '',
       elevationIcon: '',
       routeId: uuid(),

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
-import { RouterModule, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 
@@ -23,7 +22,7 @@ config.google.appId = _.get(environment, 'authentication.google.appId');
 config.magiclink = { redirectSlug: '/auth/magiclink' };
 
 @NgModule({
-  imports: [DeepstreamModule.forRoot(), AuthenticationApiModule.forRoot(config)],
+  imports: [DeepstreamModule, AuthenticationApiModule.forRoot(config)],
   providers: [AuthenticationSelectors.Selectors, NotAuthGuard]
 })
 export class AuthenticationModule {}
