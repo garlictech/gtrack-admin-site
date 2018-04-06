@@ -17,6 +17,7 @@ export interface IHikeProgramStop {
   poiId: string;
   lat: number;
   lon: number;
+  onRoute?: boolean;
   segment: {
     uphill: number;
     downhill: number;
@@ -37,11 +38,11 @@ export interface IHikeProgram {
   time: number;
   score: number;
   location: string;
-  difficulty: string;
+  difficulty: number;
   backgroundImageUrls?: IHikeProgramBackgroundImage[];
   rate?: string;
-  routeIcon: string;
-  elevationIcon: string;
+  routeIcon?: string;
+  elevationIcon?: string;
   routeId: string;
   description: ILocalizedItem<ITextualDescription>;
   offlineMap?: string;
