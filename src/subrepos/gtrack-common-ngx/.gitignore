@@ -1,7 +1,0 @@
-dist/
-docker/
-node_modules/
-reports/
-src/
-.setup.sh
-.vscode/
