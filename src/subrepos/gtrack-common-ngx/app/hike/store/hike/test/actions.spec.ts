@@ -122,4 +122,15 @@ describe('Hike actions', () => {
     });
   });
 
+  describe('HikeProgramUnsaved action', () => {
+    it('should create an action', () => {
+      let action = new actions.HikeProgramUnsaved(id);
+
+      expect({ ...action }).toEqual({
+        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_UNSAVED,
+        context: id
+      });
+    });
+  });
+
 });

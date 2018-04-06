@@ -49,6 +49,14 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
         }
       }, state);
 
+    case HikeProgramActionTypes.HIKE_PROGRAM_SAVED:
+      return hikeContextStateAdapter.updateOne({
+        id: action.context,
+        changes: {
+          saved: false
+        }
+      }, state);
+
     default:
       return state;
   }

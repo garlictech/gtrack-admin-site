@@ -9,7 +9,8 @@ export enum HikeProgramActionTypes {
   LOAD_HIKE_PROGRAMS = '[HikeProgram] Load hikePrograms',
   ALL_HIKE_PROGRAMS_LOADED = '[HikeProgram] All hikePrograms loaded',
   SAVE_HIKE_PROGRAM = '[HikeProgram] Save hikeProgram',
-  HIKE_PROGRAM_SAVED = '[HikeProgram] HikeProgram saved'
+  HIKE_PROGRAM_SAVED = '[HikeProgram] HikeProgram saved',
+  HIKE_PROGRAM_UNSAVED = '[HikeProgram] HikeProgram unsaved'
 }
 
 export class LoadHikeProgram implements Action {
@@ -64,6 +65,12 @@ export class HikeProgramSaved implements Action {
   constructor(public context: string) {}
 }
 
+export class HikeProgramUnsaved implements Action {
+  readonly type = HikeProgramActionTypes.HIKE_PROGRAM_UNSAVED;
+
+  constructor(public context: string) {}
+}
+
 export type AllHikeActions =
   | LoadHikeProgram
   | HikeProgramLoaded
@@ -71,4 +78,5 @@ export type AllHikeActions =
   | LoadHikePrograms
   | AllHikeProgramsLoaded
   | SaveHikeProgram
+  | HikeProgramUnsaved
   | HikeProgramSaved;
