@@ -7,7 +7,8 @@ export enum RouteActionTypes {
   LOAD_ROUTE_FAILED = '[Route] Load route failed',
   ROUTE_LOADED = '[Route] Route loaded',
   SAVE_ROUTE = '[Route] Save route',
-  ROUTE_SAVED = '[Route] Route saved'
+  ROUTE_SAVED = '[Route] Route saved',
+  ROUTE_UNSAVED = '[Route] Route unsaved'
 }
 
 export class LoadRoute implements Action {
@@ -46,9 +47,16 @@ export class RouteSaved implements Action {
   constructor (public context: string) {}
 }
 
+export class RouteUnsaved implements Action {
+  readonly type = RouteActionTypes.ROUTE_UNSAVED;
+
+  constructor (public context: string) {}
+}
+
 export type AllRouteActions =
   | LoadRoute
   | RouteLoaded
   | LoadRouteFailed
   | SaveRoute
-  | RouteSaved;
+  | RouteSaved
+  | RouteUnsaved;

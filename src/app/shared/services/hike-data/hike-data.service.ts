@@ -142,7 +142,7 @@ export class HikeDataService {
       isRoundTrip: hikeData.isRoundTrip,
     }));
     this._store.dispatch(new hikeEditGeneralInfoActions.SetDifficulty({
-      difficulty: parseInt(hikeData.difficulty) // TODO: it will be number!
+      difficulty: hikeData.difficulty
     }));
 
     // Pois
