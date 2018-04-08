@@ -14,7 +14,6 @@ import { HikeEditMapSelectors, HikeEditGeneralInfoSelectors, HikeEditRoutePlanne
 import { IRoute } from 'subrepos/provider-client';
 import { ToasterService } from 'angular2-toaster';
 
-import * as _ from 'lodash';
 import * as L from 'leaflet';
 
 @Component({
@@ -95,25 +94,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   public deletePlan() {
     this._waypointMarkerService.reset();
     this._routingControlService.clearControls();
-  }
-
-  public saveRoute() {
-    Observable
-      .combineLatest(
-        this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner).take(1),
-        this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId).take(1)
-      )
-      .subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
-        if (routePlannerState && routeId) {
-          let _route: IRoute = {
-            id: routeId,
-            bounds: (<any>routePlannerState.route).bounds,
-            route: _.pick(routePlannerState.route, ['type', 'features'])
-          };
-
-          this._store.dispatch(new commonRouteActions.SaveRoute(_route));
-        }
-      });
   }
 
   private _loadRoute(routeData: Route) {

@@ -91,6 +91,7 @@ export class HikeDataService {
             _routeInfo.stops.push({
               distanceFromOrigo: _segment.distance,
               isCheckpoint: false,
+              onRoute: true,
               poiId: 'fakeId',
               lat: _feature.geometry.coordinates[1],
               lon: _feature.geometry.coordinates[0],

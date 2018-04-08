@@ -9,11 +9,12 @@ import {
 } from 'app/store';
 import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { HikeDataService } from 'app/shared/services';
-import { IHikeProgramStored, IHikeProgram, IPoi } from 'subrepos/provider-client';
+import { IHikeProgramStored, IHikeProgram, IPoi, IRoute } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 
 import * as uuid from 'uuid/v1';
+import * as _ from 'lodash';
 import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
 
 @Component({
@@ -126,6 +127,26 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   }
 
   public saveHike() {
+    this._saveRoute();
     this._store.dispatch(new hikeEditActions.CollectHikeData());
+  }
+
+  private _saveRoute() {
+    Observable
+      .combineLatest(
+        this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner).take(1),
+        this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId).take(1)
+      )
+      .subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
+        if (routePlannerState && routeId) {
+          let _route: IRoute = {
+            id: routeId,
+            bounds: (<any>routePlannerState.route).bounds,
+            route: _.pick(routePlannerState.route, ['type', 'features'])
+          };
+
+          this._store.dispatch(new commonRouteActions.SaveRoute(_route));
+        }
+      });
   }
 }
