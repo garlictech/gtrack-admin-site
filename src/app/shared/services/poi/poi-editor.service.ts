@@ -329,6 +329,8 @@ export class PoiEditorService {
 
       if (_found) {
         poi.inGtrackDb = true;
+      } else {
+        poi.inGtrackDb = false;
       }
     }
 

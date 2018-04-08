@@ -61,7 +61,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         this._store.select(this._poiSelectors.getPoiIds)
       )
       .takeUntil(this._destroy$)
-      .debounceTime(100)
+      .debounceTime(300)
       .takeUntil(this._destroy$)
       .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
         const poiIds = _.difference(inHikePoiIds, _.intersection(inHikePoiIds, inStorePoiIds))
@@ -79,7 +79,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath)
       )
       .takeUntil(this._destroy$)
-      .debounceTime(100)
+      .debounceTime(300)
       .filter(([pois, path]: [Poi[], any]) => typeof pois !== 'undefined')
       .switchMap(([pois, path]: [Poi[], any]) => {
         return Observable.of(this._poiEditorService.organizePois(_.cloneDeep(pois), path));
@@ -87,7 +87,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
     this.pois$
       .takeUntil(this._destroy$)
-      .debounceTime(100)
+      .debounceTime(300)
       .subscribe((pois: Poi[]) => {
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);
