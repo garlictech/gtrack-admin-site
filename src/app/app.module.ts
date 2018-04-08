@@ -34,7 +34,7 @@ import {
 // App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store, AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects } from './store';
+import { store, AuthEffects, HikeEditEffects, HikeEditPoiEffects } from './store';
 import {
   HikeEditPoiSelectors,
   HikeEditMapSelectors,
@@ -139,7 +139,6 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     EffectsModule.forRoot([
       AuthEffects,
       HikeEditEffects,
-      HikeEditRoutePlannerEffects,
       HikeEditPoiEffects,
       RouteEffects,
       // Common-ngx
