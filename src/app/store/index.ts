@@ -60,7 +60,7 @@ export { commonGeoSearchActions };
 // Effects
 /////////////
 
-export { AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects } from './effects';
+export { AuthEffects, HikeEditEffects, HikeEditPoiEffects } from './effects';
 export { PoiEffects } from 'subrepos/gtrack-common-ngx';
 
 ////////////
