@@ -90,7 +90,6 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       // Add markers by click
       .on('click', (e: LeafletMouseEvent) => {
         if (this.mode === 'routing') {
-          // TODO action
           this._waypointMarkerService.addWaypoint(e.latlng);
         } else {
           // console.log('todo _createCheckpoint');
@@ -138,8 +137,8 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   private _addBuffer() {
     this.mapComponent.map
       .getBuffer()
-      .map((buffer) => {
-        console.log('TEST _addBuffer ', buffer);
+      .take(1)
+      .subscribe((buffer) => {
         if (buffer) {
           this._geoJsonOnMap = this.mapComponent.map.addGeoJSON(buffer);
         }

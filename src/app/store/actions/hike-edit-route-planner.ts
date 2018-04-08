@@ -23,9 +23,7 @@ export class RoutingStart implements Action {
 
 export class RoutingFinished implements Action {
   readonly type = ROUTING_FINISHED;
-  constructor(public payload: {
-    controlIdx: number
-  }) { /* EMPTY */ }
+  constructor() { /* EMPTY */ }
 }
 
 export class RoutingError implements Action {

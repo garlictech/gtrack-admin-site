@@ -62,7 +62,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         this._store.select(this._poiSelectors.getPoiIds)
       )
       .takeUntil(this._destroy$)
-      .debounceTime(100)
+      .debounceTime(300)
       .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
         if (searchData) {
           const poiIds = _.difference((<any>searchData).results, _.intersection((<any>searchData).results, inStorePoiIds))
@@ -82,25 +82,26 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         this._store.select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'dirty'))
       )
       .takeUntil(this._destroy$)
-      .debounceTime(100)
+      .debounceTime(300)
       .filter(([pois, path, dirty]: [Poi[], any, boolean]) => typeof pois !== 'undefined')
       .switchMap(([pois, path, dirty]: [Poi[], any, boolean]) => {
-        return Observable.of(this._poiEditorService.organizePois(_.cloneDeep(pois), path));
+        return Observable.of([this._poiEditorService.organizePois(_.cloneDeep(pois), path), dirty]);
       })
-      .switchMap((pois: IGTrackPoi[]) => {
-        this._store.dispatch(new hikeEditPoiActions.SetDirty({
-          subdomain: 'gTrack',
-          dirty: false
-        }));
+      .switchMap(([pois, dirty]: [IGTrackPoi[], boolean]) => {
+        if (dirty) {
+          this._store.dispatch(new hikeEditPoiActions.SetDirty({
+            subdomain: 'gTrack',
+            dirty: false
+          }));
+        }
 
         return Observable.of(this._poiEditorService.handleHikeInclusion(pois));
       });
 
     this.pois$
       .takeUntil(this._destroy$)
-      .debounceTime(100)
+      .debounceTime(300)
       .subscribe((pois: Poi[]) => {
-        console.log('POI CAHNGES IN GTRAK');
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);
       });

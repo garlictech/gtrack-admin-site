@@ -63,7 +63,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .filter(loaded => !!loaded)
       .switchMap(() => Observable.combineLatest(
-        this._getSubdomainSelector(this.poiType.subdomain).take(1),
+        this._getSubdomainSelector(this.poiType.subdomain),
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath)
       ))
       .filter(([pois, path]: [IExternalPoi[], any]) => typeof pois !== 'undefined')
@@ -76,28 +76,29 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         // Refresh poi list on the store
         this._updateSubdomainPois(pois);
 
-        // DIRTY FLAG TODO
-
         // Get gTrack pois for checking inGtrackDb
         if (pois.length > 0) {
           // gTrack poi will call marker refresher!
           this._poiEditorService.getGTrackPois(this._map);
         } else {
-          // Refresh markers
-          console.log('Call refreshPoiMarkers 1');
           this._poiEditorService.refreshPoiMarkers(this._map);
         }
       });
 
     // Update inGtrackDb properties after common poi list has been refreshed
-    Observable.combineLatest(
-      this._store.select(this._poiSelectors.getAllPois),
-      this._getSubdomainSelector(this.poiType.subdomain).take(1)
-    ).subscribe(([gTrackPois, externalPois]: [IGTrackPoi[], IExternalPoi[]]) => {
-      if (gTrackPois.length > 0 && externalPois.length > 0) {
-        this._setSubdomainPoisInGtrackDb(this._poiEditorService.handleGTrackPois(externalPois, gTrackPois));
-      }
-    });
+    this._store
+      .select(this._poiSelectors.getAllPois)
+      .takeUntil(this._destroy$)
+      .filter((gTrackPois: IGTrackPoi[]) => gTrackPois.length > 0)
+      .subscribe((gTrackPois: IGTrackPoi[]) => {
+        this._getSubdomainSelector(this.poiType.subdomain)
+          .take(1)
+          .filter((externalPois: IExternalPoi[]) => externalPois.length > 0)
+          .subscribe((externalPois: IExternalPoi[]) => {
+            console.log('inGtrackDb update');
+            this._setSubdomainPoisInGtrackDb(this._poiEditorService.handleGTrackPois(externalPois, gTrackPois));
+          });
+      });
 
     //
     // Contexts
@@ -164,7 +165,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   }
 
   private _setSubdomainPoisInGtrackDb(pois) {
-    console.log('_patchSubdomainPois', this.poiType.subdomain);
     switch (this.poiType.subdomain) {
       case 'google':
         this._store.dispatch(new hikeEditPoiActions.SetGooglePoisInGtrackDb({

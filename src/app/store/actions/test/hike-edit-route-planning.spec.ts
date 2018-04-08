@@ -34,13 +34,11 @@ describe('HikeEditRoutePlanner actions', () => {
   });
 
   it('should create RoutingFinished action', () => {
-    const payload = { controlIdx: 0 };
-    const action = new HikeEditRoutePlannerActions.RoutingFinished(payload);
+    const action = new HikeEditRoutePlannerActions.RoutingFinished();
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditRoutePlannerActions.ROUTING_FINISHED,
-      payload
+      type: HikeEditRoutePlannerActions.ROUTING_FINISHED
     });
   });
 
