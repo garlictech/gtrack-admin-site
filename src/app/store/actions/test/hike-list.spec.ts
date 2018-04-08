@@ -13,7 +13,7 @@ describe('HikeList actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeListActions.DELETE_HIKE,
-      payload,
+      payload
     });
   });
 });
