@@ -44,7 +44,7 @@ export class AdminMap extends Map {
               }
             });
           }
-          console.log('TEST BUFFER', _buffer);
+
           return _buffer;
         } else {
           return;
@@ -89,12 +89,6 @@ export class AdminMap extends Map {
   private _propagateClick(feature, layer) {
     layer.on('click', event => {
       this.map.fireEvent('click', {
-        latlng: event.latlng,
-        layerPoint: this.map.latLngToLayerPoint(event.latlng),
-        containerPoint: this.map.latLngToContainerPoint(event.latlng)
-      });
-
-      console.log('TEST _propagateClick', {
         latlng: event.latlng,
         layerPoint: this.map.latLngToLayerPoint(event.latlng),
         containerPoint: this.map.latLngToContainerPoint(event.latlng)
