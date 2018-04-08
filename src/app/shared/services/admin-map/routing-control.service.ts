@@ -32,10 +32,10 @@ export class RoutingControlService {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
-    this._reset();
+    this.reset();
   }
 
-  private _reset() {
+  public reset() {
     this._controls = [];
     this._coordinates = [];
   }

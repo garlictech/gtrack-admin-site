@@ -19,7 +19,7 @@ export class HikeEditPoisGTrackTableComponent {
     private _dynamicModalService: DynamicModalService
   ) {}
 
-  public handleInHikePoi($event, poi) {
+  public addPoi($event, poi) {
     $event.stopPropagation();
 
     this._store.dispatch(new hikeEditGeneralInfoActions.AddPoi({
