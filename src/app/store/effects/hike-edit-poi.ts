@@ -102,22 +102,4 @@ export class HikeEditPoiEffects {
         return new hikeEditPoiActions.SetOsmRoutePois({ pois: pois });
       });
     });
-
-  /**
-   * Refresh marker visibility for the given subdomain
-   */
-  /*
-  @Effect()
-  markersConfigChanged$: Observable<any> = this._actions$
-    .ofType(hikeEditPoiActions.MARKERS_CONFIG_CHANGED)
-    .map((action: hikeEditPoiActions.MarkersConfigChanged) => action.payload)
-    .switchMap(data => this._poiEditorService.getSubdomainMarkers(data))
-    .switchMap(data => this._poiEditorService.clearSubdomainPoiMarkers(data))
-    .switchMap(data => this._poiEditorService.getSubdomainPois(data))
-    .switchMap(data => this._poiEditorService.getSubdomainContext(data))
-    .switchMap(data => {
-      this._poiEditorService.handleMarkerChanged(data);
-      return Observable.empty<Response>();
-    });
-  */
 }
