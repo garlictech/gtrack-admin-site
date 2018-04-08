@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { ElevationService } from 'subrepos/gtrack-common-ngx';
-import { State, hikeEditRoutePlannerActions, routingActions } from 'app/store';
+import { State, hikeEditRoutePlannerActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from 'app/store/selectors';
 import { AdminMapService, AdminMap, RoutePlannerService } from './index';
 import { environment } from 'environments/environment';
 
 import * as _ from 'lodash';
+import * as turf from '@turf/turf';
 import * as L from 'leaflet';
 import 'leaflet-spin';
 import 'leaflet-routing-machine';
@@ -112,7 +113,7 @@ export class RoutingControlService {
     _control.hide();
 
     _control.on('routingstart', () => {
-      this._store.dispatch(new routingActions.RoutingStart());
+      this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
       this._map.leafletMap.spin(true);
     });
 
@@ -151,21 +152,49 @@ export class RoutingControlService {
           };
 
           this._routePlannerService.addRouteSegment(_coordsArr, e.routes[0].summary, upDown);
-          this._store.dispatch(new routingActions.RoutingFinished());
+          this._moveLastControlToLine(e.routes[0].coordinates.map(coord => [coord.lng, coord.lat]));
+
+          this._store.dispatch(new hikeEditRoutePlannerActions.RoutingFinished());
+
           this._map.leafletMap.spin(false);
         }).catch(() => {
-          this._store.dispatch(new routingActions.RoutingError());
+          this._store.dispatch(new hikeEditRoutePlannerActions.RoutingError());
           this._map.leafletMap.spin(false);
         });
     });
 
     _control.on('routingerror', (e) => {
-      this._store.dispatch(new routingActions.RoutingError());
+      this._store.dispatch(new hikeEditRoutePlannerActions.RoutingError());
       this._map.leafletMap.spin(false);
     });
 
     this._controls.push(_control);
 
     return _control;
+  }
+
+  /**
+   * Move control waypoint positions to line
+   */
+  private _moveLastControlToLine(coords) {
+    if (this._controls.length > 0) {
+      const lastControl = _.last(this._controls);
+      const wayPoints = (<L.Routing.Control>lastControl).getWaypoints();
+
+      let _fixedWaypoints = _.cloneDeep(wayPoints);
+
+      for (let i in wayPoints) {
+        let line = turf.lineString(coords);
+        let pt = turf.point([(<any>wayPoints[i].latLng).lng, (<any>wayPoints[i].latLng).lat]);
+        let snapped = turf.nearestPointOnLine(line, pt);
+
+        _fixedWaypoints[i].latLng = new L.LatLng(
+          (<any>snapped.geometry).coordinates[1],
+          (<any>snapped.geometry).coordinates[0]
+        );
+      }
+
+      (<L.Routing.Control>lastControl).setWaypoints(_fixedWaypoints);
+    }
   }
 }
