@@ -14,6 +14,7 @@ import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtr
 import { ToasterService } from 'angular2-toaster';
 
 import * as uuid from 'uuid/v1';
+import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
 
 @Component({
   selector: 'gt-hike-edit',
@@ -30,6 +31,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
     private _hikeDataService: HikeDataService,
+    private _routingControlService: RoutingControlService,
+    private _waypointMarkerService: WaypointMarkerService,
     private _hikeSelectors: HikeSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
@@ -39,6 +42,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this._routingControlService.reset();
+    this._waypointMarkerService.reset();
     this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
