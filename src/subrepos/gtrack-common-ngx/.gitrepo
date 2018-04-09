@@ -4,7 +4,7 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = git@github.com:garlictech/gtrack-common-ngx.git
+	remote = https://github.com/garlictech/gtrack-common-ngx.git
 	branch = master
 	commit = b89f51f4b5d2ea24505abcf37dee304de08c0bc2
 	parent = 3f56e049066f207ee72e0bbc91189b6face3edc8
