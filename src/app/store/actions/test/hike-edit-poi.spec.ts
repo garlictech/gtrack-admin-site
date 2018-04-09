@@ -344,9 +344,9 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create SetDirty action', () => {
+  it('should create SetListDirty action', () => {
     const payload = { subdomain: 'fakeDomain', dirty: false };
-    const action = new HikeEditPoiActions.SetDirty(payload);
+    const action = new HikeEditPoiActions.SetListDirty(payload);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({

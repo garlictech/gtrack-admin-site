@@ -59,14 +59,14 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
     // Update poi properties after poi list loaded
     this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(this.poiType.subdomain, 'loaded'))
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'loaded'))
       .takeUntil(this._destroy$)
       .filter(loaded => !!loaded)
       .switchMap(() => Observable.combineLatest(
         this._getSubdomainSelector(this.poiType.subdomain).take(1),
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
       ))
-      .filter(([pois, path]: [IExternalPoi[], any]) => typeof pois !== 'undefined')
+      .filter(([pois, path]: [IExternalPoi[], any]) => (pois && pois.length > 0))
       .switchMap(([pois, path]: [IExternalPoi[], any]) => {
         return Observable.of(this._poiEditorService.organizePois(_.cloneDeep(pois), path));
       })
@@ -95,7 +95,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           .take(1)
           .filter((externalPois: IExternalPoi[]) => externalPois.length > 0)
           .subscribe((externalPois: IExternalPoi[]) => {
-            console.log('inGtrackDb update');
+            // TODO Refresh commonPoiList after poi save
             this._setSubdomainPoisInGtrackDb(this._poiEditorService.handleGTrackPois(externalPois, gTrackPois));
           });
       });
@@ -105,13 +105,13 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     //
 
     this.loading$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(this.poiType.subdomain, 'loading'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'loading'));
 
     this.showOnrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers'));
 
     this.showOffrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector(this.poiType.subdomain, 'showOffrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOffrouteMarkers'));
 
     //
     // Refresh markers

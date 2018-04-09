@@ -541,37 +541,37 @@ describe('HikeEditPoi reducers', () => {
     });
   });
 
-  describe('SetDirty action', () => {
+  describe('SetListDirty action', () => {
     it('should set dirty google pois', () => {
-      const action = new hikeEditPoiActions.SetDirty({ subdomain: 'google', dirty: true });
+      const action = new hikeEditPoiActions.SetListDirty({ subdomain: 'google', dirty: true });
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.google.dirty).toEqual(true);
     });
 
     it('should set dirty osmAmenity pois', () => {
-      const action = new hikeEditPoiActions.SetDirty({ subdomain: 'osmAmenity', dirty: true });
+      const action = new hikeEditPoiActions.SetListDirty({ subdomain: 'osmAmenity', dirty: true });
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmAmenity.dirty).toEqual(true);
     });
 
     it('should set dirty osmNatural pois', () => {
-      const action = new hikeEditPoiActions.SetDirty({ subdomain: 'osmNatural', dirty: true });
+      const action = new hikeEditPoiActions.SetListDirty({ subdomain: 'osmNatural', dirty: true });
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmNatural.dirty).toEqual(true);
     });
 
     it('should set dirty osmRoute pois', () => {
-      const action = new hikeEditPoiActions.SetDirty({ subdomain: 'osmRoute', dirty: true });
+      const action = new hikeEditPoiActions.SetListDirty({ subdomain: 'osmRoute', dirty: true });
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmRoute.dirty).toEqual(true);
     });
 
     it('should set dirty wikipedia pois', () => {
-      const action = new hikeEditPoiActions.SetDirty({ subdomain: 'wikipedia', dirty: true });
+      const action = new hikeEditPoiActions.SetListDirty({ subdomain: 'wikipedia', dirty: true });
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.wikipedia.dirty).toEqual(true);

@@ -60,8 +60,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         this._store.select(this._hikeEditGeneralInfoSelectors.getPois),
         this._store.select(this._poiSelectors.getPoiIds)
       )
-      .takeUntil(this._destroy$)
-      .debounceTime(300)
+      .debounceTime(150)
       .takeUntil(this._destroy$)
       .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
         const poiIds = _.difference(inHikePoiIds, _.intersection(inHikePoiIds, inStorePoiIds))
@@ -73,22 +72,22 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       });
 
     // Poi list
-    // Observable TODO getPath take(1)-el külön + toArray
-    this.pois$ = Observable
-      .combineLatest(
-        this._store.select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois)),
-        this._store.select(this._hikeEditRoutePlannerSelectors.getPath)
-      )
+    this.pois$ = this._store
+      .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
       .takeUntil(this._destroy$)
-      .debounceTime(300)
-      .filter(([pois, path]: [Poi[], any]) => typeof pois !== 'undefined')
-      .switchMap(([pois, path]: [Poi[], any]) => {
-        return Observable.of(this._poiEditorService.organizePois(_.cloneDeep(pois), path));
+      .filter((pois: IPoi[]) => typeof pois !== 'undefined')
+      .switchMap((pois: IPoi[]) => {
+        return this._store
+          .select(this._hikeEditRoutePlannerSelectors.getPath)
+          .take(1)
+          .map((path: any) => {
+            return this._poiEditorService.organizePois(_.cloneDeep(pois), path);
+          });
       });
 
     this.pois$
       .takeUntil(this._destroy$)
-      .debounceTime(300)
+      .debounceTime(150)
       .subscribe((pois: Poi[]) => {
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);
@@ -99,10 +98,10 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     //
 
     this.showOnrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('hike', 'showOnrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOnrouteMarkers'));
 
     this.showOffrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('hike', 'showOffrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers'));
 
     //
     // Refresh markers

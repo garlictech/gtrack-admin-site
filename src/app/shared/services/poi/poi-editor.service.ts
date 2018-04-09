@@ -169,11 +169,11 @@ export class PoiEditorService {
       .take(1)
       .subscribe((hikePois: string[]) => {
         if (pois) {
-          let gTrackPois = _.cloneDeep(pois);
-          gTrackPois.map((gTrackPoi: IGTrackPoi) => {
-            gTrackPoi.inHike = _.includes(hikePois, gTrackPoi.id);
+          let _gTrackPois = _.cloneDeep(pois);
+          _gTrackPois.map((_gTrackPoi: IGTrackPoi) => {
+            _gTrackPoi.inHike = _.includes(hikePois, _gTrackPoi.id);
           });
-          _pois = gTrackPois;
+          _pois = _gTrackPois;
         } else {
           _pois = [];
         }
@@ -346,7 +346,7 @@ export class PoiEditorService {
       //
 
       Observable.combineLatest(
-        this._store.select(this._hikeEditPoiSelectors.getHikeEditContextSelector('hike')).take(1),
+        this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('hike')).take(1),
         this._store.select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois)).take(1),
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
       )
@@ -368,7 +368,7 @@ export class PoiEditorService {
       //
 
       Observable.combineLatest(
-        this._store.select(this._hikeEditPoiSelectors.getHikeEditContextSelector('gTrack')).take(1),
+        this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('gTrack')).take(1),
         this._store.select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois)).take(1),
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
       )
@@ -435,7 +435,7 @@ export class PoiEditorService {
    */
   private _getVisibleServicePois(subdomain, poiSelector) {
     return Observable.combineLatest(
-      this._store.select(this._hikeEditPoiSelectors.getHikeEditContextSelector(subdomain)).take(1),
+      this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector(subdomain)).take(1),
       this._store.select(poiSelector).take(1)
     ).map(([poiContext, pois]: [IExternalPoiListContextItemState, IExternalPoi[]]) => {
       if (poiContext.showOnrouteMarkers || poiContext.showOffrouteMarkers) {

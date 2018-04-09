@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import { State, hikeEditGeneralInfoActions, commonRouteActions } from 'app/store';
+import { State, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions } from 'app/store';
 import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { IGeneralInfoState } from 'app/store/state';
 import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
@@ -132,6 +132,10 @@ export class HikeDataService {
    * Split hike data to store
    */
   public splitHikeDataToStore(hikeData: IHikeProgram) {
+    // Set unsaved states
+    this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(<string>hikeData.id));
+    this._store.dispatch(new commonRouteActions.RouteUnsaved(hikeData.routeId));
+
     // Set route id and load route data
     this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({
       routeId: hikeData.routeId

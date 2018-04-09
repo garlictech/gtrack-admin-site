@@ -26,7 +26,7 @@ export class HikeEditPoisHikeTableComponent {
       poi: poi.id
     }));
 
-    this._store.dispatch(new hikeEditPoiActions.SetDirty({
+    this._store.dispatch(new hikeEditPoiActions.SetListDirty({
       subdomain: 'gTrack',
       dirty: true
     }));

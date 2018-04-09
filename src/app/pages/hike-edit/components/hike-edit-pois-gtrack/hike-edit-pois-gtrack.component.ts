@@ -62,7 +62,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         this._store.select(this._poiSelectors.getPoiIds)
       )
       .takeUntil(this._destroy$)
-      .debounceTime(300)
       .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
         if (searchData) {
           const poiIds = _.difference((<any>searchData).results, _.intersection((<any>searchData).results, inStorePoiIds))
@@ -75,26 +74,24 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       });
 
     // Poi list based on geoSearch results
+    // dirty flag will change on add/remove gTrackPoi to/from the hike
     this.pois$ = Observable
       .combineLatest(
-        this._store.select(
-          this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois)
-        ),
-        this._store.select(this._hikeEditRoutePlannerSelectors.getPath),
-        this._store.select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'dirty'))
+        this._store.select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois)),
+        this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'dirty'))
       )
-
-      // Observable TODO toArray ide, dirty így kell? Minden változást figyelni kell?
-
+      .debounceTime(150)
       .takeUntil(this._destroy$)
-      .debounceTime(300)
-      .filter(([pois, path, dirty]: [Poi[], any, boolean]) => typeof pois !== 'undefined')
-      .switchMap(([pois, path, dirty]: [Poi[], any, boolean]) => {
-        return Observable.of([this._poiEditorService.organizePois(_.cloneDeep(pois), path), dirty]);
-      })
+      .filter(([pois, dirty]: [IGTrackPoi[], boolean]) => typeof pois !== 'undefined')
+      .switchMap(([pois, dirty]: [IGTrackPoi[], boolean]) => this._store
+          .select(this._hikeEditRoutePlannerSelectors.getPath)
+          .switchMap((path: any) => {
+            return Observable.of([this._poiEditorService.organizePois(_.cloneDeep(pois), path), dirty])
+          })
+      )
       .switchMap(([pois, dirty]: [IGTrackPoi[], boolean]) => {
         if (dirty) {
-          this._store.dispatch(new hikeEditPoiActions.SetDirty({
+          this._store.dispatch(new hikeEditPoiActions.SetListDirty({
             subdomain: 'gTrack',
             dirty: false
           }));
@@ -104,8 +101,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       });
 
     this.pois$
+      .debounceTime(150)
       .takeUntil(this._destroy$)
-      .debounceTime(300)
       .subscribe((pois: Poi[]) => {
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);
@@ -122,10 +119,10 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .select(this._geoSearchSelectors.getGeoSearchContext('gTrackPois'));
 
     this.showOnrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOnrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOnrouteMarkers'));
 
     this.showOffrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'showOffrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers'));
 
     //
     // Refresh markers
