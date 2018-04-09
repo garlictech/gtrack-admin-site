@@ -26,8 +26,8 @@ export class HikeDataService {
    */
   public collectHikeGeneralInfo() {
     return Observable.combineLatest(
-      this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo),
-      this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
+      this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo).take(1),
+      this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip).take(1)
     ).map(([generalInfo, isRoundTrip]: [IGeneralInfoState, boolean]) => {
       return {
         id: generalInfo.hikeId,

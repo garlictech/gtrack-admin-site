@@ -72,7 +72,8 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         }
       });
 
-    // Poi list TODO uncomment
+    // Poi list
+    // Observable TODO getPath take(1)-el külön + toArray
     this.pois$ = Observable
       .combineLatest(
         this._store.select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois)),

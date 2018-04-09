@@ -77,10 +77,15 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     // Poi list based on geoSearch results
     this.pois$ = Observable
       .combineLatest(
-        this._store.select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois)),
+        this._store.select(
+          this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois)
+        ),
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath),
         this._store.select(this._hikeEditPoiSelectors.getHikeEditContextPropertySelector('gTrack', 'dirty'))
       )
+
+      // Observable TODO toArray ide, dirty így kell? Minden változást figyelni kell?
+
       .takeUntil(this._destroy$)
       .debounceTime(300)
       .filter(([pois, path, dirty]: [Poi[], any, boolean]) => typeof pois !== 'undefined')

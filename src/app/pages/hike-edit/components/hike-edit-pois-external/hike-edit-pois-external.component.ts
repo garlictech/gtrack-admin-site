@@ -63,8 +63,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .filter(loaded => !!loaded)
       .switchMap(() => Observable.combineLatest(
-        this._getSubdomainSelector(this.poiType.subdomain),
-        this._store.select(this._hikeEditRoutePlannerSelectors.getPath)
+        this._getSubdomainSelector(this.poiType.subdomain).take(1),
+        this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
       ))
       .filter(([pois, path]: [IExternalPoi[], any]) => typeof pois !== 'undefined')
       .switchMap(([pois, path]: [IExternalPoi[], any]) => {
