@@ -41,7 +41,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.SET_HIKE_ID,
-      payload,
+      payload
     });
   });
 
@@ -52,7 +52,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.SET_ROUTE_ID,
-      payload,
+      payload
     });
   });
 
@@ -65,7 +65,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.SET_DIFFICULTY,
-      payload,
+      payload
     });
   });
 
@@ -78,7 +78,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.SET_IS_ROUND_TRIP,
-      payload,
+      payload
     });
   });
 
@@ -89,7 +89,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.SET_POIS,
-      payload,
+      payload
     });
   });
 
@@ -100,7 +100,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.ADD_POI,
-      payload,
+      payload
     });
   });
 
@@ -111,7 +111,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.REMOVE_POI,
-      payload,
+      payload
     });
   });
 
@@ -129,7 +129,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.SET_DESCRIPTIONS,
-      payload,
+      payload
     });
   });
 
@@ -147,7 +147,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditGeneralInfoActions.ADD_DESCRIPTION,
-      payload,
+      payload
     });
   });
 });

@@ -24,50 +24,61 @@ export function generalInfoReducer(
   action: hikeEditGeneralInfoActions.AllHikeEditGeneralInfoActions
 ): IGeneralInfoState {
   switch (action.type) {
+
     case hikeEditGeneralInfoActions.RESET_GENERAL_INFO_STATE:
       return initialGeneralInfoState;
+
     case hikeEditGeneralInfoActions.SET_INITIALIZED:
       return {
         ...state,
         initialized: true
       };
+
     case hikeEditGeneralInfoActions.SET_HIKE_ID:
       return {
         ...state,
         hikeId: action.payload.hikeId
       };
+
     case hikeEditGeneralInfoActions.SET_ROUTE_ID:
       return {
         ...state,
         routeId: action.payload.routeId
       };
+
     case hikeEditGeneralInfoActions.SET_IS_ROUND_TRIP:
       return {
         ...state,
         isRoundTrip: action.payload.isRoundTrip
       }
+
     case hikeEditGeneralInfoActions.SET_DIFFICULTY:
       return {
         ...state,
         difficulty: action.payload.difficulty
       }
+
     case hikeEditGeneralInfoActions.SET_POIS:
       return {
         ...state,
         pois: action.payload.pois
       };
+
     case hikeEditGeneralInfoActions.ADD_POI:
       return {
         ...state,
         pois: _.union(state.pois, [action.payload.poi])
       };
+
     case hikeEditGeneralInfoActions.REMOVE_POI:
       return {
         ...state,
         pois: state.pois.filter(p => p !== action.payload.poi)
       };
+
     default:
       return state;
+
   }
 }
 
@@ -83,14 +94,18 @@ const descriptionReducer: ActionReducer<IDescriptionEntityState> = (
   action: hikeEditGeneralInfoActions.AllHikeEditGeneralInfoActions
 ): IDescriptionEntityState => {
   switch (action.type) {
+
     case hikeEditGeneralInfoActions.SET_DESCRIPTIONS: {
       return descriptionAdapter.addAll(action.payload.descriptions, state);
     }
+
     case hikeEditGeneralInfoActions.ADD_DESCRIPTION: {
       return descriptionAdapter.addOne(action.payload.description, state);
     }
+
     default:
       return state;
+
   }
 }
 

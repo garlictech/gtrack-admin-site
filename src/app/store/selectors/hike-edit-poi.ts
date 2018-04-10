@@ -53,11 +53,11 @@ export class HikeEditPoiSelectors {
   // Context
   //
 
-  public getHikeEditContextSelector(subdomain) {
+  public getHikeEditPoiContextSelector(subdomain) {
     return createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.contexts[subdomain]);
   };
 
-  public getHikeEditContextPropertySelector(subdomain, property) {
+  public getHikeEditPoiContextPropertySelector(subdomain, property) {
     return createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.contexts[subdomain][property]);
   };
 }

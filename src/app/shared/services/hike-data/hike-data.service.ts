@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-
-import { State, hikeEditGeneralInfoActions, commonRouteActions } from 'app/store';
+import { State, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions } from 'app/store';
 import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { IGeneralInfoState } from 'app/store/state';
 import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
 import { ITextualDescriptionItem } from '../../interfaces';
 import { IHikeProgram, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
@@ -26,15 +26,15 @@ export class HikeDataService {
    */
   public collectHikeGeneralInfo() {
     return Observable.combineLatest(
-      this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo),
-      this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
-    ).map(data => {
+      this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo).take(1),
+      this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip).take(1)
+    ).map(([generalInfo, isRoundTrip]: [IGeneralInfoState, boolean]) => {
       return {
-        id: data[0].hikeId,
-        routeId: data[0].routeId,
-        difficulty: data[0].difficulty.toString(), // TODO it will be number!!
-        isRoundTrip: data[1],
-        pois: data[0].pois
+        id: generalInfo.hikeId,
+        routeId: generalInfo.routeId,
+        difficulty: generalInfo.difficulty.toString(), // TODO it will be number!!
+        isRoundTrip: isRoundTrip,
+        pois: generalInfo.pois
       };
     });
   }
@@ -91,6 +91,7 @@ export class HikeDataService {
             _routeInfo.stops.push({
               distanceFromOrigo: _segment.distance,
               isCheckpoint: false,
+              onRoute: true,
               poiId: 'fakeId',
               lat: _feature.geometry.coordinates[1],
               lon: _feature.geometry.coordinates[0],
@@ -131,6 +132,10 @@ export class HikeDataService {
    * Split hike data to store
    */
   public splitHikeDataToStore(hikeData: IHikeProgram) {
+    // Set unsaved states
+    this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(<string>hikeData.id));
+    this._store.dispatch(new commonRouteActions.RouteUnsaved(hikeData.routeId));
+
     // Set route id and load route data
     this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({
       routeId: hikeData.routeId
@@ -142,7 +147,7 @@ export class HikeDataService {
       isRoundTrip: hikeData.isRoundTrip,
     }));
     this._store.dispatch(new hikeEditGeneralInfoActions.SetDifficulty({
-      difficulty: parseInt(hikeData.difficulty) // TODO: it will be number!
+      difficulty: hikeData.difficulty
     }));
 
     // Pois

@@ -28,7 +28,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditMapActions.SET_GOOGLE_MARKERS,
-      payload,
+      payload
     });
   });
 
@@ -39,7 +39,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditMapActions.SET_OSM_AMENITY_MARKERS,
-      payload,
+      payload
     });
   });
 
@@ -50,7 +50,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditMapActions.SET_OSM_NATURAL_MARKERS,
-      payload,
+      payload
     });
   });
 
@@ -61,7 +61,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditMapActions.SET_OSM_ROUTE_MARKERS,
-      payload,
+      payload
     });
   });
 
@@ -72,7 +72,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditMapActions.SET_WIKIPEDIA_MARKERS,
-      payload,
+      payload
     });
   });
 
@@ -83,7 +83,7 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditMapActions.SET_GTRACK_MARKERS,
-      payload,
+      payload
     });
   });
 });

@@ -3,7 +3,7 @@ import { GeospatialSearchResponse  } from 'subrepos/provider-client';
 
 export interface IGeoSearchResponseItem {
   id: string;
-  results: GeospatialSearchResponse
+  results: GeospatialSearchResponse;
 };
 
 export const geoSearchAdapter = createEntityAdapter<IGeoSearchResponseItem>();

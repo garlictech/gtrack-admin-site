@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
+import {
+  AdminMap, AdminMapService, WaypointMarkerService, RoutingControlService
+} from 'app/shared/services/admin-map';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
@@ -12,7 +14,6 @@ import { HikeEditMapSelectors, HikeEditGeneralInfoSelectors, HikeEditRoutePlanne
 import { IRoute } from 'subrepos/provider-client';
 import { ToasterService } from 'angular2-toaster';
 
-import * as _ from 'lodash';
 import * as L from 'leaflet';
 
 @Component({
@@ -27,6 +28,8 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
   constructor(
     private _adminMapService: AdminMapService,
+    private _routingControlService: RoutingControlService,
+    private _waypointMarkerService: WaypointMarkerService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
@@ -81,46 +84,21 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   }
 
   public removeLast() {
-    this._map.waypointMarker.deleteLast();
+    this._waypointMarkerService.deleteLast();
   }
 
   public closeCircle() {
-    this._map.waypointMarker.closeCircle();
+    this._waypointMarkerService.closeCircle();
   }
 
   public deletePlan() {
-    this._map.routeInfo.deletePlan();
-    this._map.waypointMarker.reset();
-    this._map.routingControl.clearControls();
-  }
-
-  public saveRoute() {
-    const _routePlannerState: Observable<any> = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
-      .take(1)
-
-    const _generalInfoState: Observable<any> = this._store
-      .select(this._hikeEditGeneralInfoSelectors.getRouteId)
-      .take(1)
-
-    Observable
-      .forkJoin(_routePlannerState, _generalInfoState)
-      .subscribe(data => {
-        if (data[0] && data[1]) {
-          let _route: IRoute = {
-            id: data[1],
-            bounds: data[0].route.bounds,
-            route: _.pick(data[0].route, ['type', 'features'])
-          };
-
-          this._store.dispatch(new commonRouteActions.SaveRoute(_route));
-        }
-      });
+    this._waypointMarkerService.reset();
+    this._routingControlService.clearControls();
   }
 
   private _loadRoute(routeData: Route) {
-    if (this._map && this._map.waypointMarker) {
-      this._map.waypointMarker.reset();
+    if (this._map && this._waypointMarkerService) {
+      this._waypointMarkerService.reset();
 
       for (let feature of routeData.route.features) {
         let latlng = L.latLng(
@@ -128,7 +106,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
           feature.geometry.coordinates[0]
         );
 
-        this._map.waypointMarker.addWaypoint(latlng);
+        this._waypointMarkerService.addWaypoint(latlng);
       }
     }
   }

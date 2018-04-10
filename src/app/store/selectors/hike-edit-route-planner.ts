@@ -14,6 +14,7 @@ export class HikeEditRoutePlannerSelectors {
   private _featureSelector: MemoizedSelector<object, IHikeEditRoutePlannerState>;
   public getRoutePlanner: MemoizedSelector<object, IHikeEditRoutePlannerState>;
   public getRoute: MemoizedSelector<object, any>;
+  public getPath: MemoizedSelector<object, any>;
   public getSegments: MemoizedSelector<object, ISegment[]>;
   public getIsRoundTrip: MemoizedSelector<object, boolean>;
 
@@ -26,6 +27,10 @@ export class HikeEditRoutePlannerSelectors {
 
     this.getRoute = createSelector(this._featureSelector,
       (state: IHikeEditRoutePlannerState) => state.route
+    );
+
+    this.getPath = createSelector(this._featureSelector,
+      (state: IHikeEditRoutePlannerState) => state.route.features[0]
     );
 
     this.getSegments = createSelector(this._featureSelector,

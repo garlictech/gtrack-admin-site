@@ -17,13 +17,15 @@ export interface Center {
   encapsulation: ViewEncapsulation.None
 })
 export class LeafletComponent implements OnInit {
-  @ViewChild('map') public mapElement: ElementRef;
+  @ViewChild('map')
+  public mapElement: ElementRef;
 
   public map: Map;
 
   public leafletMap: L.Map;
 
-  @Input() public center: Center;
+  @Input()
+  public center: Center;
 
   @Input()
   public layers = [
@@ -37,11 +39,13 @@ export class LeafletComponent implements OnInit {
   public overlays = [
     {
       name: 'trails',
-      url: 'https://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
+      url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
     }
   ];
 
-  @Input() public activeOverlays: string[] = [];
+  @Input()
+  public activeOverlays: string[] = [
+  ];
 
   public baseLayers: {
     [key: string]: L.TileLayer;
@@ -53,11 +57,13 @@ export class LeafletComponent implements OnInit {
 
   public control: L.Control;
 
-  @Input() public markers: any;
+  @Input()
+  public markers: any;
 
-  @Input() public path: any;
+  @Input()
+  public path: any;
 
-  constructor(protected mapService: MapService) {}
+  constructor(protected mapService: MapService) { }
 
   ngOnInit() {
     this.leafletMap = new L.Map(this.mapElement.nativeElement);
@@ -74,7 +80,7 @@ export class LeafletComponent implements OnInit {
       this.baseLayers[layer.name] = tileLayer;
     });
 
-    this.overlays.forEach(layer => {
+    this.overlays.forEach((layer) => {
       let tileLayer = L.tileLayer(layer.url, layer);
 
       if (this.activeOverlays.indexOf(layer.name) !== -1) {

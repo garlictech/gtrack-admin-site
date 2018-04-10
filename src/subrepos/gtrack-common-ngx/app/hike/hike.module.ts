@@ -25,7 +25,6 @@ import {
 
 import { SharedModule } from '../shared';
 import { MapModule } from '../map';
-import { RouterModule } from '../router';
 import { HikeModuleConfig } from './config';
 
 @NgModule({
@@ -33,7 +32,6 @@ import { HikeModuleConfig } from './config';
     CommonModule,
     SharedModule,
     MapModule,
-    RouterModule,
     UserStatusModule
   ],
   providers: [

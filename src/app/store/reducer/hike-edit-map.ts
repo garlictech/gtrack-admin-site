@@ -19,15 +19,19 @@ export function hikeEditMapMapReducer(
   action: adminMapActions.AllAdminMapActions
 ): IHikeEditMapMapState {
   switch (action.type) {
+
     case adminMapActions.RESET_MAP:
       return initialMapState;
+
     case adminMapActions.REGISTER_MAP:
       return {
         ...state,
         mapId: action.payload.mapId
       };
+
     default:
       return state;
+
   }
 }
 
@@ -43,14 +47,18 @@ const wikipediaMarkerReducer: ActionReducer<IWikipediaMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IWikipediaMarkerEntityState => {
   switch (action.type) {
+
     case hikeEditMapActions.RESET_MAP_STATE: {
       return wikipediaMarkerEntityInitialState;
     }
+
     case hikeEditMapActions.SET_WIKIPEDIA_MARKERS: {
       return wikipediaMarkerAdapter.addAll(action.payload.markers, state);
     }
+
     default:
       return state;
+
   }
 }
 
@@ -66,14 +74,18 @@ const googleMarkerReducer: ActionReducer<IGoogleMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IGoogleMarkerEntityState => {
   switch (action.type) {
+
     case hikeEditMapActions.RESET_MAP_STATE: {
       return googleMarkerEntityInitialState;
     }
+
     case hikeEditMapActions.SET_GOOGLE_MARKERS: {
       return googleMarkerAdapter.addAll(action.payload.markers, state);
     }
+
     default:
       return state;
+
   }
 }
 
@@ -89,14 +101,18 @@ const osmAmenityMarkerReducer: ActionReducer<IOsmAmenityMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IOsmAmenityMarkerEntityState => {
   switch (action.type) {
+
     case hikeEditMapActions.RESET_MAP_STATE: {
       return osmAmenityMarkerEntityInitialState;
     }
+
     case hikeEditMapActions.SET_OSM_AMENITY_MARKERS: {
       return osmAmenityMarkerAdapter.addAll(action.payload.markers, state);
     }
+
     default:
       return state;
+
   }
 }
 
@@ -112,14 +128,18 @@ const osmNaturalMarkerReducer: ActionReducer<IOsmNaturalMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IOsmNaturalMarkerEntityState => {
   switch (action.type) {
+
     case hikeEditMapActions.RESET_MAP_STATE: {
       return osmNaturalMarkerEntityInitialState;
     }
+
     case hikeEditMapActions.SET_OSM_NATURAL_MARKERS: {
       return osmNaturalMarkerAdapter.addAll(action.payload.markers, state);
     }
+
     default:
       return state;
+
   }
 }
 
@@ -135,14 +155,18 @@ const osmRouteMarkerReducer: ActionReducer<IOsmRouteMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IOsmRouteMarkerEntityState => {
   switch (action.type) {
+
     case hikeEditMapActions.RESET_MAP_STATE: {
       return osmRouteMarkerEntityInitialState;
     }
+
     case hikeEditMapActions.SET_OSM_ROUTE_MARKERS: {
       return osmRouteMarkerAdapter.addAll(action.payload.markers, state);
     }
+
     default:
       return state;
+
   }
 }
 
@@ -158,13 +182,17 @@ const gTrackMarkerReducer: ActionReducer<IGTrackMarkerEntityState> = (
   action: hikeEditMapActions.AllHikeEditMapActions
 ): IGTrackMarkerEntityState => {
   switch (action.type) {
+
     case hikeEditMapActions.RESET_MAP_STATE:
       return gTrackMarkerEntityInitialState;
+
     case hikeEditMapActions.SET_GTRACK_MARKERS: {
       return gTrackMarkerAdapter.addAll(action.payload.markers, state);
     }
+
     default:
       return state;
+
   }
 }
 

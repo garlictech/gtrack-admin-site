@@ -20,7 +20,7 @@ describe('Hike actions', () => {
       time: 20,
       score: 20,
       location: 'Budapest',
-      difficulty: 'hard',
+      difficulty: 5,
       routeIcon: '',
       elevationIcon: '',
       routeId: uuid(),
@@ -117,6 +117,17 @@ describe('Hike actions', () => {
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.HIKE_PROGRAM_SAVED,
+        context: id
+      });
+    });
+  });
+
+  describe('HikeProgramUnsaved action', () => {
+    it('should create an action', () => {
+      let action = new actions.HikeProgramUnsaved(id);
+
+      expect({ ...action }).toEqual({
+        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_UNSAVED,
         context: id
       });
     });

@@ -6,8 +6,8 @@ import {
 } from 'subrepos/gtrack-common-ngx';
 import { IPoi } from 'subrepos/provider-client';
 import { State, IExternalPoiListContextItemState, commonGeoSearchActions, IExternalPoiListContextState } from 'app/store';
-import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditGeneralInfoSelectors, } from 'app/store/selectors';
-import { AdminMap, AdminMapService, AdminMapMarker } from '../admin-map';
+import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors, } from 'app/store/selectors';
+import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { LanguageService } from '../language.service';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces/index';
 
@@ -28,6 +28,7 @@ export class PoiEditorService {
   constructor(
     private _store: Store<State>,
     private _geometryService: GeometryService,
+    private _routePlannerService: RoutePlannerService,
     private _elevationService: ElevationService,
     private _poiService: PoiService,
     private _iconService: IconService,
@@ -35,6 +36,7 @@ export class PoiEditorService {
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _poiSelectors: PoiSelectors,
   ) {}
@@ -154,26 +156,30 @@ export class PoiEditorService {
       }
     }
 
-    return Observable.of(_pois);
+    return _pois;
   }
 
   /**
    * HikeEditPoi effect submethod - for gTrack pois
    */
   public handleHikeInclusion(pois: IGTrackPoi[]) {
-    return this._store.select(this._hikeEditGeneralInfoSelectors.getPois)
+    let _pois;
+
+    this._store.select(this._hikeEditGeneralInfoSelectors.getPois)
       .take(1)
-      .map((hikePois: string[]) => {
+      .subscribe((hikePois: string[]) => {
         if (pois) {
-          let gTrackPois = _.cloneDeep(pois);
-          gTrackPois.map((gTrackPoi: IGTrackPoi) => {
-            gTrackPoi.inHike = _.includes(hikePois, gTrackPoi.id);
+          let _gTrackPois = _.cloneDeep(pois);
+          _gTrackPois.map((_gTrackPoi: IGTrackPoi) => {
+            _gTrackPoi.inHike = _.includes(hikePois, _gTrackPoi.id);
           });
-          return gTrackPois;
+          _pois = _gTrackPois;
         } else {
-          return [];
+          _pois = [];
         }
       });
+
+    return _pois;
   }
 
   private _getOnroutePois(pois: IExternalPoi[]) {
@@ -279,7 +285,7 @@ export class PoiEditorService {
   }
 
   public getGTrackPois(map) {
-    let _bounds = map.routeInfo.getSearchBounds();
+    let _bounds = this._routePlannerService.getSearchBounds();
     let _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);
     let _centerCoord = _geo!.center!.geometry!.coordinates;
 
@@ -293,6 +299,7 @@ export class PoiEditorService {
       }, 'gTrackPois'));
     }
   }
+
   /**
    * Update inGtrackDb property on the given poi
    */
@@ -322,6 +329,8 @@ export class PoiEditorService {
 
       if (_found) {
         poi.inGtrackDb = true;
+      } else {
+        poi.inGtrackDb = false;
       }
     }
 
@@ -336,48 +345,48 @@ export class PoiEditorService {
       // Hike pois
       //
 
-      this._store
-        .select(this._hikeEditPoiSelectors.getHikeEditContextSelector('hike'))
-        .take(1)
-        .subscribe((hikePoiContext: IExternalPoiListContextItemState) => {
-          // Load hike pois if there are visible pois
-          if (hikePoiContext.showOnrouteMarkers || hikePoiContext.showOffrouteMarkers) {
-            this._store
-              .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
-              .switchMap((pois: IPoi[]) => this.organizePois(_.cloneDeep(pois), map.routeInfo.getPath()))
-              .take(1)
-              .subscribe((pois: IGTrackPoi[]) => {
-                _pois = _pois.concat(pois.filter(p => {
-                  let _onRouteCheck = p.onRoute ? hikePoiContext.showOnrouteMarkers : hikePoiContext.showOffrouteMarkers;
-                  return !p.inHike && _onRouteCheck;
-                }));
-              });
-          }
-        });
+      Observable.combineLatest(
+        this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('hike')).take(1),
+        this._store.select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois)).take(1),
+        this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
+      )
+      .filter(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IExternalPoi[], any]) => {
+        return pois && pois.length > 0 && path && (<any>hikePoiContext).showOnrouteMarkers || (<any>hikePoiContext).showOffrouteMarkers
+      })
+      .switchMap(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IExternalPoi[], any]) => {
+        return Observable.of([(<any>hikePoiContext), this.organizePois(_.cloneDeep(pois), path)]);
+      })
+      .subscribe(([hikePoiContext, pois]: [IExternalPoiListContextItemState, IExternalPoi[]]) => {
+        _pois = _pois.concat(pois.filter(p => {
+          let _onRouteCheck = p.onRoute ? hikePoiContext.showOnrouteMarkers : hikePoiContext.showOffrouteMarkers;
+          return !p.inHike && _onRouteCheck;
+        }));
+      });
 
       //
       // gTrackPois
       //
 
-      this._store
-        .select(this._hikeEditPoiSelectors.getHikeEditContextSelector('gTrack'))
-        .take(1)
-        .subscribe((gTrackPoiContext: IExternalPoiListContextItemState) => {
-          // Load gTrackPois if there are visible pois
-          if (gTrackPoiContext.showOnrouteMarkers || gTrackPoiContext.showOffrouteMarkers) {
-            this._store
-              .select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois))
-              .switchMap((pois: IPoi[]) => pois ? this.organizePois(_.cloneDeep(pois), map.routeInfo.getPath()) : [])
-              .switchMap((pois: IGTrackPoi[]) => this.handleHikeInclusion(pois))
-              .take(1)
-              .subscribe((pois: IGTrackPoi[]) => {
-                _pois = _pois.concat(pois.filter(p => {
-                  let _onRouteCheck = p.onRoute ? gTrackPoiContext.showOnrouteMarkers : gTrackPoiContext.showOffrouteMarkers;
-                  return !p.inHike && _onRouteCheck;
-                }));
-              });
-          }
-        });
+      Observable.combineLatest(
+        this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('gTrack')).take(1),
+        this._store.select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois)).take(1),
+        this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
+      )
+      .filter(([gTrackPoiContext, pois, path]: [IExternalPoiListContextItemState, IGTrackPoi[], any]) => {
+        return pois && pois.length > 0 && path && (<any>gTrackPoiContext).showOnrouteMarkers || (<any>gTrackPoiContext).showOffrouteMarkers
+      })
+      .switchMap(([gTrackPoiContext, pois, path]: [IExternalPoiListContextItemState, IGTrackPoi[], any]) => {
+        return Observable.of([(<any>gTrackPoiContext), this.organizePois(_.cloneDeep(pois), path)]);
+      })
+      .switchMap(([gTrackPoiContext, pois]: [IExternalPoiListContextItemState, IGTrackPoi[]]) => {
+        return Observable.of([(<any>gTrackPoiContext), this.handleHikeInclusion(pois)]);
+      })
+      .subscribe(([gTrackPoiContext, pois]: [IExternalPoiListContextItemState, IGTrackPoi[]]) => {
+        _pois = _pois.concat(pois.filter(p => {
+          let _onRouteCheck = p.onRoute ? gTrackPoiContext.showOnrouteMarkers : gTrackPoiContext.showOffrouteMarkers;
+          return !p.inHike && _onRouteCheck;
+        }));
+      });
 
       //
       // Service pois
@@ -426,12 +435,12 @@ export class PoiEditorService {
    */
   private _getVisibleServicePois(subdomain, poiSelector) {
     return Observable.combineLatest(
-      this._store.select(this._hikeEditPoiSelectors.getHikeEditContextSelector(subdomain)).take(1),
+      this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector(subdomain)).take(1),
       this._store.select(poiSelector).take(1)
-    ).map((results: [IExternalPoiListContextItemState, IExternalPoi[]]) => {
-      if (results[0].showOnrouteMarkers || results[0].showOffrouteMarkers) {
-        return results[1].filter(p => {
-          let _onRouteCheck = p.onRoute ? results[0].showOnrouteMarkers : results[0].showOffrouteMarkers;
+    ).map(([poiContext, pois]: [IExternalPoiListContextItemState, IExternalPoi[]]) => {
+      if (poiContext.showOnrouteMarkers || poiContext.showOffrouteMarkers) {
+        return pois.filter(p => {
+          let _onRouteCheck = p.onRoute ? poiContext.showOnrouteMarkers : poiContext.showOffrouteMarkers;
           return !p.inGtrackDb && _onRouteCheck;
         });
       } else {
