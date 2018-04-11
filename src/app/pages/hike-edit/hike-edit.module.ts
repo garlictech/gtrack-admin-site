@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormModule } from 'subrepos/forms-ngx';
 // Pipes
 import { ObjectToArrayPipe } from 'app/shared/pipes';
 // Modules
@@ -56,6 +57,7 @@ const COMPONENTS = [
     CommonModule,
     RouterModule,
     FormsModule,
+    FormModule,
     ReactiveFormsModule,
     MapModule,
     HikeModule,
@@ -63,19 +65,9 @@ const COMPONENTS = [
     // Lib
     TagInputModule
   ],
-  exports: [
-    ...COMPONENTS
-  ],
-  declarations: [
-    AdminLeafletComponent,
-    ObjectToArrayPipe,
-    ...COMPONENTS
-  ],
-  entryComponents: [
-    ...COMPONENTS
-  ],
-  providers: [
-    DynamicModalService
-  ]
+  exports: [...COMPONENTS],
+  declarations: [AdminLeafletComponent, ObjectToArrayPipe, ...COMPONENTS],
+  entryComponents: [...COMPONENTS],
+  providers: [DynamicModalService]
 })
 export class HikeEditModule {}
