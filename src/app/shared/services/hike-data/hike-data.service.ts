@@ -43,27 +43,31 @@ export class HikeDataService {
    * collectHikeData effect submethod
    */
   public collectHikeDescriptions() {
-    let _textualDescriptions$ = this._store.select(
-      this._hikeEditGeneralInfoSelectors.getAllDescriptions
-    );
+    let _textualDescriptions$ = this._store.select(this._hikeEditGeneralInfoSelectors.getAllDescriptions);
 
-    return _textualDescriptions$
-      .take(1)
-      .map((descriptions) => {
-        return descriptions;
-      });
+    return _textualDescriptions$.take(1).map(descriptions => {
+      return descriptions;
+    });
   }
 
   /**
    * collectHikeData effect submethod
    */
-  public collectHikeRouteInfo() {
-    return this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
+  public collectHikeRouteInfo() {
+    return this._store
+      .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
       .take(1)
-      .map((routeInfo) => {
+      .map(routeInfo => {
         let _routeInfo: any = _.pick(routeInfo.total, [
-          'distance', 'uphill', 'downhill', 'time', 'score',
-          'isRoundTrip', 'difficulty', 'rate', 'routeIcon',
+          'distance',
+          'uphill',
+          'downhill',
+          'time',
+          'score',
+          'isRoundTrip',
+          'difficulty',
+          'rate',
+          'routeIcon',
           'elevationIcon'
         ]);
 
@@ -82,9 +86,7 @@ export class HikeDataService {
           };
 
           if (parseInt(i) > 1) {
-            _segment = _.pick(routeInfo.segments[parseInt(i) - 2], [
-              'uphill', 'downhill', 'distance', 'score', 'time'
-            ])
+            _segment = _.pick(routeInfo.segments[parseInt(i) - 2], ['uphill', 'downhill', 'distance', 'score', 'time']);
           }
 
           if (_feature.geometry.type === 'Point') {
@@ -109,7 +111,7 @@ export class HikeDataService {
   /**
    * collectHikeData effect submethod
    */
-  public collectHikeLocation(data) {
+  public collectHikeLocation(data) {
     return new Promise((resolve, reject) => {
       if (!data.stops[0]) {
         resolve({ location: 'n/a' });
@@ -118,13 +120,16 @@ export class HikeDataService {
       let _startPoint = {
         lat: data.stops[0].lat,
         lon: data.stops[0].lon
-      }
+      };
 
-      this._reverseGeocodingService.get(_startPoint).then((location) => {
-        resolve({ location: location });
-      }, (err) => {
-        resolve({location: 'n/a'});
-      });
+      this._reverseGeocodingService.get(_startPoint).then(
+        location => {
+          resolve({ location: location });
+        },
+        err => {
+          resolve({ location: 'n/a' });
+        }
+      );
     });
   }
 
@@ -137,23 +142,31 @@ export class HikeDataService {
     this._store.dispatch(new commonRouteActions.RouteUnsaved(hikeData.routeId));
 
     // Set route id and load route data
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({
-      routeId: hikeData.routeId
-    }));
+    this._store.dispatch(
+      new hikeEditGeneralInfoActions.SetRouteId({
+        routeId: hikeData.routeId
+      })
+    );
     this._store.dispatch(new commonRouteActions.LoadRoute(hikeData.routeId));
 
     // General info
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetIsRoundTrip({
-      isRoundTrip: hikeData.isRoundTrip,
-    }));
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetDifficulty({
-      difficulty: hikeData.difficulty
-    }));
+    this._store.dispatch(
+      new hikeEditGeneralInfoActions.SetIsRoundTrip({
+        isRoundTrip: hikeData.isRoundTrip
+      })
+    );
+    this._store.dispatch(
+      new hikeEditGeneralInfoActions.SetDifficulty({
+        difficulty: hikeData.difficulty
+      })
+    );
 
     // Pois
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetPois({
-      pois: hikeData.pois
-    }));
+    this._store.dispatch(
+      new hikeEditGeneralInfoActions.SetPois({
+        pois: hikeData.pois
+      })
+    );
 
     // Descriptions
     this._splitHikeDescriptionToStore(hikeData.description);
@@ -165,14 +178,16 @@ export class HikeDataService {
   /**
    * splitHikeDataToStore submethod
    */
-  private _splitHikeDescriptionToStore(descriptions: ILocalizedItem<ITextualDescription>) {
+  private _splitHikeDescriptionToStore(descriptions: ILocalizedItem<ITextualDescription>) {
     let descriptionArray: ITextualDescriptionItem[] = [];
     for (let key of Object.keys(descriptions)) {
-      descriptionArray.push(_.merge(_.cloneDeep(descriptions[key]), {id: key}));
+      descriptionArray.push(_.merge(_.cloneDeep(descriptions[key]), { id: key }));
     }
 
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
-      descriptions: descriptionArray
-    }));
+    this._store.dispatch(
+      new hikeEditGeneralInfoActions.SetDescriptions({
+        descriptions: descriptionArray
+      })
+    );
   }
 }

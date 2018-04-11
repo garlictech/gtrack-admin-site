@@ -15,6 +15,16 @@ import { hikeProgramsStored as hikeProgramFixtures, HikeProgramComponent } from 
 import { HikeProgram } from '../../../services/hike-program';
 import { CheckpointService } from '../../../services/checkpoint';
 
+import {
+  EXTERNAL_SEARCH_FILTERS_DEPENDENCIES,
+  SearchFiltersSelectors
+} from '../../../../search-filters';
+
+import {
+  EXTERNAL_GEO_SEARCH_DEPENDENCIES,
+  GeoSearchSelectors
+} from '../../../../geosearch';
+
 describe('HikeProgram selectors', () => {
   let store: Store<IHikeState>;
   let hikePrograms: HikeProgram[];
@@ -37,10 +47,24 @@ describe('HikeProgram selectors', () => {
       ],
       providers: [
         HikeSelectors,
+        GeoSearchSelectors,
+        SearchFiltersSelectors,
         {
           provide: EXTERNAL_HIKE_DEPENDENCIES,
           useValue: {
             storeDomain: 'hike'
+          }
+        },
+        {
+          provide: EXTERNAL_GEO_SEARCH_DEPENDENCIES,
+          useValue: {
+            storeDomain: 'geoSearch'
+          }
+        },
+        {
+          provide: EXTERNAL_SEARCH_FILTERS_DEPENDENCIES,
+          useValue: {
+            storeDomain: 'searchFilters'
           }
         }
       ]

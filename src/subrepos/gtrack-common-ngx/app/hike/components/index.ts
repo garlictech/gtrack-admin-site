@@ -6,4 +6,5 @@ export * from './hike-info';
 export * from './hike-program';
 export * from './trail-box';
 export * from './location-search';
+export * from './search-filters';
 export * from './hike-components.module';

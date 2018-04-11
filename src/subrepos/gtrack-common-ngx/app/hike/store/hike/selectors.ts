@@ -9,6 +9,9 @@ import { IHikeProgram } from 'subrepos/provider-client';
 
 import { HikeProgram } from '../../services/hike-program';
 
+import { GeoSearchSelectors } from '../../../geosearch';
+import { SearchFiltersSelectors } from '../../../search-filters';
+
 @Injectable()
 export class HikeSelectors {
   public selectFeature: MemoizedSelector<object, IHikeState>;
@@ -21,7 +24,9 @@ export class HikeSelectors {
   protected _externals: IExternalHikeDependencies;
 
   constructor(
-    @Inject(EXTERNAL_HIKE_DEPENDENCIES) externals
+    @Inject(EXTERNAL_HIKE_DEPENDENCIES) externals,
+    private _geoSearchSelectors: GeoSearchSelectors,
+    private _searchFiltersSelectors: SearchFiltersSelectors
   ) {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IHikeState>(this._externals.storeDomain);
@@ -40,12 +45,37 @@ export class HikeSelectors {
   }
 
   public getHike(context: string) {
-    return createSelector(this.getAllHikes, (hikes: HikeProgram[]) => (hikes.find(hike => (hike.id === context))));
+    return createSelector(this.getAllHikes, (hikes: HikeProgram[]) => hikes.find(hike => hike.id === context));
   }
 
   public getHikeContext(id: string) {
-    return createSelector(this.getAllContexts, (contexts) => {
-      return contexts.find(context => (context.id === id));
+    return createSelector(this.getAllContexts, contexts => {
+      return contexts.find(context => context.id === id);
     });
+  }
+
+  public getFilteredSearchResults(context: string) {
+    return createSelector(
+      this._geoSearchSelectors.getGeoSearchResults<HikeProgram>(context, this.getAllHikes),
+      this._searchFiltersSelectors.getFilters,
+      (hikes, filters) => {
+        if (!(hikes instanceof Array)) {
+          return hikes;
+        }
+
+        return hikes
+          .filter(hike => {
+            let difficulty = hike.difficulty || 0;
+
+            return difficulty >= filters.difficulty[0] && difficulty <= filters.difficulty[1];
+          })
+          .filter(hike => {
+            return hike.time >= filters.time[0] && hike.time <= filters.time[1];
+          })
+          .filter(hike => {
+            return hike.distance >= filters.length[0] && hike.distance <= filters.length[1];
+          });
+      }
+    );
   }
 }
