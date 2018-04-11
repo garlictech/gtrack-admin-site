@@ -9,11 +9,13 @@ import {
 } from 'app/store';
 import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { HikeDataService } from 'app/shared/services';
-import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
+import { IHikeProgramStored, IHikeProgram, IPoi, IRoute } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 
 import * as uuid from 'uuid/v1';
+import * as _ from 'lodash';
+import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
 
 @Component({
   selector: 'gt-hike-edit',
@@ -30,6 +32,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
     private _hikeDataService: HikeDataService,
+    private _routingControlService: RoutingControlService,
+    private _waypointMarkerService: WaypointMarkerService,
     private _hikeSelectors: HikeSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
@@ -39,6 +43,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this._routingControlService.reset();
+    this._waypointMarkerService.reset();
     this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
@@ -63,12 +69,12 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
           const _hikeId = uuid();
           this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({ hikeId: _hikeId }));
-          this._store.dispatch(new commonHikeActions.LoadHikeProgram(_hikeId));
+          this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
 
           // Generate initial route id and load the empty route (for save toaster handling)
           const _routeId = uuid();
           this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({ routeId: _routeId }));
-          this._store.dispatch(new commonRouteActions.LoadRoute(_routeId));
+          this._store.dispatch(new commonRouteActions.RouteUnsaved(_routeId));
 
           // Create initial language block
           this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
@@ -90,10 +96,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this.allowSave$ = Observable.combineLatest(
       this._store.select(this._hikeEditGeneralInfoSelectors.getPois),
       this.routeInfoData$
-    ).map(data => {
-      const _pois = data[0];
-      const _segments = data[1].segments;
-      return _pois.length > 0 && (_segments && _segments.length > 0);
+    ).map(([inHikePois, routeInfoData]: [any[], any]) => {
+      return inHikePois.length > 0 && (routeInfoData.segments && routeInfoData.segments.length > 0);
     })
 
     // Handling hike save
@@ -123,6 +127,26 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   }
 
   public saveHike() {
+    this._saveRoute();
     this._store.dispatch(new hikeEditActions.CollectHikeData());
+  }
+
+  private _saveRoute() {
+    Observable
+      .combineLatest(
+        this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner).take(1),
+        this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId).take(1)
+      )
+      .subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
+        if (routePlannerState && routeId) {
+          let _route: IRoute = {
+            id: routeId,
+            bounds: (<any>routePlannerState.route).bounds,
+            route: _.pick(routePlannerState.route, ['type', 'features'])
+          };
+
+          this._store.dispatch(new commonRouteActions.SaveRoute(_route));
+        }
+      });
   }
 }

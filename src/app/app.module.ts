@@ -34,7 +34,7 @@ import {
 // App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store, AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects } from './store';
+import { store, AuthEffects, HikeEditEffects, HikeEditPoiEffects } from './store';
 import {
   HikeEditPoiSelectors,
   HikeEditMapSelectors,
@@ -65,6 +65,8 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
 
 // Global styles
 import './styles';
+import { RoutePlannerService, RoutingControlService } from './shared/services/admin-map';
+import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
 
 const hikeModuleConfig = new HikeModuleConfig();
 hikeModuleConfig.storeDomains = {
@@ -137,7 +139,6 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     EffectsModule.forRoot([
       AuthEffects,
       HikeEditEffects,
-      HikeEditRoutePlannerEffects,
       HikeEditPoiEffects,
       RouteEffects,
       // Common-ngx
@@ -153,6 +154,9 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     HikeDataService,
     ReverseGeocodingService,
     AdminMapService,
+    RoutePlannerService,
+    RoutingControlService,
+    WaypointMarkerService,
     PoiEditorService,
     WikipediaPoiService,
     OsmPoiService,

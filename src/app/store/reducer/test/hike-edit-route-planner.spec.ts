@@ -39,7 +39,7 @@ describe('RouteInfoData reducers', () => {
 
   describe('AddRoute action', () => {
     it('should set route', () => {
-      const routeData = 'fakeRouteData';
+      const routeData: any = {};
       const action = new hikeEditRoutePlannerActions.AddRoute({ route: routeData });
       const state = hikeEditRoutePlannerReducer(initialState, action);
 

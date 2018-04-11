@@ -14,7 +14,7 @@ describe('AdminMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: AdminMapActions.REGISTER_MAP,
-      payload,
+      payload
     });
   });
 

@@ -29,7 +29,7 @@ describe('HikeProgramReducer', () => {
       time: 20,
       score: 20,
       location: 'Budapest',
-      difficulty: 'hard',
+      difficulty: 6,
       routeIcon: '',
       elevationIcon: '',
       routeId: uuid(),

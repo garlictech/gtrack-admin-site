@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
 import { DistancePipe, UnitsService } from '../../../shared';
@@ -10,7 +10,7 @@ import { HikeProgram } from '../../services/hike-program';
   templateUrl: './elevation-profile.component.html',
   styleUrls: ['./elevation-profile.component.scss']
 })
-export class ElevationProfileComponent implements OnInit {
+export class ElevationProfileComponent {
   @ViewChild('elevationProfile')
   public mainDiv: ElementRef;
 
@@ -41,9 +41,17 @@ export class ElevationProfileComponent implements OnInit {
 
     this.routeService
       .get(routeId)
+      .take(1)
       .subscribe((route: Route) => {
         if (!route) {
           throw new Error(`Route #${this.routeId} is unknown`);
+        }
+
+        if (!this.vis) {
+          this.vis = d3
+            .select(this.mainDiv.nativeElement)
+            .append('svg')
+            .attr('viewBox', `0, 0, ${this.width}, ${this.height}`);
         }
 
         this.res = this.routeService.elevationData(route, this.width, this.height, this.margins);
@@ -161,12 +169,5 @@ export class ElevationProfileComponent implements OnInit {
         this.elevationText.text(this.distance.transform(valueY));
       }
     }
-  }
-
-  ngOnInit() {
-   this.vis = d3
-      .select(this.mainDiv.nativeElement)
-      .append('svg')
-      .attr('viewBox', `0, 0, ${this.width}, ${this.height}`);
   }
 }

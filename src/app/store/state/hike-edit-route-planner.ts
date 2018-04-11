@@ -4,5 +4,5 @@ export interface IHikeEditRoutePlannerState {
   segments: ISegment[];
   total: any;
   location: any;
-  route: any;
+  route: GeoJSON.FeatureCollection<any>;
 };

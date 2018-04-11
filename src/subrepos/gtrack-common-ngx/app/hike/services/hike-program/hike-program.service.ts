@@ -37,67 +37,10 @@ export class HikeProgramService {
           .filter(item => (item.stops instanceof Array))
           .map(item => {
             let hike: HikeProgram = new HikeProgram(item, this._checkpointService);
+
             return hike;
           });
       });
-
-    /*
-    return Observable.of([
-      new HikeProgram(
-        {
-          id: '1',
-          distance: 1234,
-          uphill: 123,
-          downhill: 132,
-          time: 123,
-          score: 10,
-          location: 'Alsóberecki, HU',
-          difficulty: 'hard',
-          routeIcon: '',
-          elevationIcon: '',
-          routeId: '12',
-          description: {
-            hu_HU: {
-              title: 'Good hike',
-              summary: ''
-            }
-          },
-          isRoundTrip: false,
-          pois: [],
-          stops: [],
-          rate: 'rate'
-        },
-        this._checkpointService
-      ),
-
-      new HikeProgram(
-        {
-          id: '2',
-          distance: 3432,
-          uphill: 55,
-          downhill: 765,
-          time: 765756,
-          score: 160,
-          location: 'Felsőberecki, HU',
-          difficulty: 'hard',
-          routeIcon: '',
-          elevationIcon: '',
-          routeId: '12',
-          description: {
-            hu_HU: {
-              title: 'Best hike',
-              summary: ''
-            }
-          },
-          isRoundTrip: false,
-          pois: [],
-          stops: [],
-          rate: 'rate'
-        },
-        this._checkpointService
-      )
-    ]);
-    */
   }
 
   public create(hikeProgram: IHikeProgram) {

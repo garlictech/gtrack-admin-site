@@ -48,6 +48,14 @@ const contextReducer: ActionReducer<IAllRouteContextState> = (
         }
       }, state);
 
+    case RouteActionTypes.ROUTE_UNSAVED:
+      return routeContextStateAdapter.upsertOne({
+        id: action.context,
+        changes: {
+          saved: false
+        }
+      }, state);
+
     default:
       return state;
   }

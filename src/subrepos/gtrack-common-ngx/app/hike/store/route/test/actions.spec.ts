@@ -108,4 +108,16 @@ describe('Route actions', () => {
       });
     });
   });
+
+  describe('RouteUnSaved action', () => {
+    it('should create an action', () => {
+      let action = new actions.RouteUnsaved(id);
+
+      expect({ ...action }).toEqual({
+        type: actions.RouteActionTypes.ROUTE_UNSAVED,
+        context: id
+      });
+    });
+  });
+
 });

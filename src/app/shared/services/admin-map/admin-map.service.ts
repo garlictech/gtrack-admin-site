@@ -34,10 +34,7 @@ export class AdminMapService extends MapService {
       this.iconService,
       this.mapMarkerService,
       this._store,
-      this._gameRuleService,
-      this._routeService,
-      this._hikeEditRoutePlannerSelectors,
-      this._elevationService
+      this._hikeEditRoutePlannerSelectors
     );
     this._maps[_id] = _map;
 

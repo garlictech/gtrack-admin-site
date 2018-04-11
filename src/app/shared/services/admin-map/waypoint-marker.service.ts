@@ -1,17 +1,21 @@
-import { RouteInfo } from './route-info';
-import { RoutingControl } from './routing-control';
+import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { State } from 'app/store';
 
 import * as L from 'leaflet';
+import { RoutingControlService } from '.';
 
-export class WaypointMarker {
-  private _maxAllowedValhallaWayPoints = 2;
+@Injectable()
+export class WaypointMarkerService {
+  private _maxAllowedValhallaWayPoints = 2; // TOO: deprecated???
   private _routeSegmentIndex: number;
   private _waypointIndex: number;
 
   constructor(
-    private _routeInfo: RouteInfo,
-    private _routingControl: RoutingControl
+    private _store: Store<State>,
+    private _routingControlService: RoutingControlService
   ) {
+
     this.reset();
   }
 
@@ -31,23 +35,22 @@ export class WaypointMarker {
     }
 
     if (_isLastWaypointInAdditionalSegment) {
-      this._routingControl.pop();
+      this._routingControlService.pop();
       this._routeSegmentIndex--;
       this._waypointIndex = this._maxAllowedValhallaWayPoints;
     } else if (_isFirstWaypointInFirstSegment) {
       this.reset();
-      this._routingControl.clearControls();
+      this._routingControlService.clearControls();
     } else if (_isSecondWaypoint) {
-      const _control = this._routingControl.getActualControl();
+      const _control = this._routingControlService.getActualControl();
       const _latlng = _control.getWaypoints()[0].latLng;
 
-      this._routeInfo.deletePlan();
       this.reset();
 
-      this._routingControl.clearControls();
+      this._routingControlService.clearControls();
       this.addWaypoint(_latlng);
     } else {
-      const _control = this._routingControl.getActualControl();
+      const _control = this._routingControlService.getActualControl();
       _control.spliceWaypoints(this._waypointIndex - 1, 1);
       this._waypointIndex--;
       _control.route();
@@ -71,7 +74,7 @@ export class WaypointMarker {
   }
 
   public closeCircle() {
-    const _firstControl: L.Routing.Control = this._routingControl.getControl(0);
+    const _firstControl: L.Routing.Control = this._routingControlService.getControl(0);
 
     if (_firstControl && _firstControl.getWaypoints().length) {
       const firstPointLatLng = _firstControl.getWaypoints()[0].latLng;
@@ -85,24 +88,22 @@ export class WaypointMarker {
     const _shouldAddNewSegment = this._waypointIndex === this._maxAllowedValhallaWayPoints;
 
     if (_isStartRouting) {
-      this._routeInfo.newPlan();
-
-      _control = this._routingControl.addNew();
+      _control = this._routingControlService.addNew();
 
       this._routeSegmentIndex = 1;
       this._waypointIndex = 0;
     } else if (_shouldAddNewSegment) {
-      const _previousControl = this._routingControl.getActualControl();
+      const _previousControl = this._routingControlService.getActualControl();
       const _waypoints = _previousControl.getWaypoints();
       const _lastWaypoint = _waypoints[_waypoints.length - 1];
 
-      _control = this._routingControl.addNew();
+      _control = this._routingControlService.addNew();
       _control.spliceWaypoints(0, 1, _lastWaypoint);
 
       this._waypointIndex = 1;
       this._routeSegmentIndex++;
     } else {
-      _control = this._routingControl.getActualControl();
+      _control = this._routingControlService.getActualControl();
     }
 
     const _waypoint = {

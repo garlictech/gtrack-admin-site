@@ -22,8 +22,8 @@ export class UserStatusEffects {
   });
 
   constructor(
-    private _actions$: Actions,
-    private _locationService: LocationService,
-    private _store: Store<any>
+    protected _actions$: Actions,
+    protected _locationService: LocationService,
+    protected _store: Store<any>
   ) {}
 };

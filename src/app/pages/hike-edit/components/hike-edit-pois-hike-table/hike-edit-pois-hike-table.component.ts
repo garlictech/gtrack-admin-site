@@ -19,11 +19,16 @@ export class HikeEditPoisHikeTableComponent {
     private _dynamicModalService: DynamicModalService
   ) {}
 
-  public handleInHikePoi($event, poi) {
+  public removePoi($event, poi) {
     $event.stopPropagation();
 
     this._store.dispatch(new hikeEditGeneralInfoActions.RemovePoi({
       poi: poi.id
+    }));
+
+    this._store.dispatch(new hikeEditPoiActions.SetListDirty({
+      subdomain: 'gTrack',
+      dirty: true
     }));
   }
 

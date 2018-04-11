@@ -3,6 +3,8 @@ import * as L from 'leaflet';
 import { MapMarker, MapMarkerService } from '../map-marker';
 import { IPoi } from 'subrepos/provider-client';
 
+import * as _ from 'lodash';
+
 export class PointMarker {
   public markers: MapMarker[] = [];
   public shownOnMap = false;
@@ -29,7 +31,7 @@ export class PointMarker {
   public addMarkers(pois: IPoi[]) {
     pois.forEach((poi, i) => {
       // TODO: poi.title is deprecated. Use poi.description[lng].title
-      let marker = this.mapMarkerService.create(poi.lat, poi.lon, poi.types, poi.description.en_US.title);
+      let marker = this.mapMarkerService.create(poi.lat, poi.lon, poi.types, _.get(poi, 'description.en_US.title', ''));
       this.markers.push(marker);
 
       if (this.shownOnMap === true) {

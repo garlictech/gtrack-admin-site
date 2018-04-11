@@ -1,21 +1,21 @@
-<div class="container" *ngIf="hikeProgram">
-  <div class="row">
-    <div class="col-2"></div>
-    <div class="col-3"><b>Name</b></div>
-    <div class="col-3"><b>From start</b></div>
-    <div class="col-3"><b>To next</b></div>
-  </div>
+<table *ngIf="hikeProgram">
+  <tr>
+    <td></td>
+    <td><b>Name</b></td>
+    <td><b>From start</b></td>
+    <td><b>To next</b></td>
+  </tr>
 
   <ng-container *ngIf="(pois$ | async)">
-    <div class="row" *ngFor="let stop of hikeProgram.stops; let i = index;">
-      <div class="col-2"><gtcn-icon *ngIf="(pois$ | async)[stop.poiId]" [poi]="(pois$ | async)[stop.poiId]"></gtcn-icon></div>
-      <div class="col-3"><ng-container *ngIf="(pois$ | async)[stop.poiId] && (pois$ | async)[stop.poiId].title">{{(pois$ | async)[stop.poiId].title}}</ng-container></div>
-  
-      <div class="col-3" *ngIf="i === 0">START</div>
-      <div class="col-3" *ngIf="i > 0">{{ stop.distanceFromOrigo | distance }}</div>
-  
-      <div class="col-3" *ngIf="i < hikeProgram.stops.length - 1">{{ stop.segment.distance | distance }}</div>
-      <div class="col-3" *ngIf="i === hikeProgram.stops.length - 1">STOP</div>
-    </div>
+    <tr *ngFor="let stop of hikeProgram.stops; let i = index;">
+      <td><gtcn-icon *ngIf="(pois$ | async)[stop.poiId]" [poi]="(pois$ | async)[stop.poiId]"></gtcn-icon></td>
+      <td><ng-container *ngIf="(pois$ | async)[stop.poiId] && (pois$ | async)[stop.poiId].title">{{(pois$ | async)[stop.poiId].title}}</ng-container></td>
+
+      <td *ngIf="i === 0"><b>START</b></td>
+      <td *ngIf="i > 0">{{ stop.distanceFromOrigo | distance }}</td>
+
+      <td *ngIf="i < hikeProgram.stops.length - 1">{{ stop.segment.distance | distance }}</td>
+      <td *ngIf="i === hikeProgram.stops.length - 1"><b>STOP</b></td>
+    </tr>
   </ng-container>
-</div>
+</table>

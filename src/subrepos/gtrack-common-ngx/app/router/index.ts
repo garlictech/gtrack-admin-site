@@ -1,2 +1,2 @@
-export { RouterActions, RouterSelectors } from './store';
+export { RouterActions, RouterSelectors, CustomSerializer } from './store';
 export * from './router.module';

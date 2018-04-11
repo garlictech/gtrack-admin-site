@@ -40,10 +40,6 @@ import * as hikeListActions from './actions/hike-list';
 export type HikeListAction = hikeListActions.AllHikeListActions;
 export { hikeListActions };
 
-import * as routingActions from './actions/routing';
-export type RoutingAction = routingActions.AllRoutingAction;
-export { routingActions };
-
 import * as commonPoiActions from 'subrepos/gtrack-common-ngx/app/hike/store/poi/actions';
 export type CommonPoiAction = commonPoiActions.AllPoiActions;
 export { commonPoiActions };
@@ -64,7 +60,7 @@ export { commonGeoSearchActions };
 // Effects
 /////////////
 
-export { AuthEffects, HikeEditEffects, HikeEditRoutePlannerEffects, HikeEditPoiEffects } from './effects';
+export { AuthEffects, HikeEditEffects, HikeEditPoiEffects } from './effects';
 export { PoiEffects } from 'subrepos/gtrack-common-ngx';
 
 ////////////

@@ -1,29 +1,24 @@
-<div class="list-group">
-  <div class="list-group-item"><i class="ion-ios-location"></i> Number of checkpoints: {{ checkpoints.length }}</div>
-  <div class="list-group-item gtcn-checkpoints-item" *ngFor="let checkpoint of checkpoints; let i = index;">
-    <div class="container">
-      <div class="row">
-        <div class="col-4">{{ checkpoint.name }}</div>
-        <div class="col-4">lat.: <i>{{ checkpoint.stop.lat | coordinate }}</i></div>
-        <div class="col-4">long.: <i>{{ checkpoint.stop.lon | coordinate }}</i></div>
-      </div>
-      <div class="row" *ngIf="i < checkpoints.length - 1">
-        <div class="col-4">
-          <i class="ion-android-arrow-forward"></i> {{ checkpoint.stop.segment.distance | distance}}
-        </div>
-        <div class="col-2">
-          <i class="ion-arrow-graph-up-right"></i> {{ checkpoint.stop.segment.uphill | distance }}
-        </div>
-        <div class="col-2">
-          <i class="ion-arrow-graph-down-right"></i> {{ checkpoint.stop.segment.downhill | distance }}
-        </div>
-        <div class="col-2">
-          <i class="ion-ios-time"></i> {{ checkpoint.stop.segment.time | duration }}
-        </div>
-        <div class="col-2">
-          <i class="ion-trophy"></i> {{ checkpoint.stop.segment.score }}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+<h4><i class="ion-ios-location"></i> Number of checkpoints: {{ checkpoints.length }}</h4>
+<table>
+  <tr *ngFor="let checkpoint of checkpoints; let i = index;">
+    <td>{{ checkpoint.name }}</td>
+    <td>lat.: <i>{{ checkpoint.stop.lat | coordinate }}</i></td>
+    <td>long.: <i>{{ checkpoint.stop.lon | coordinate }}</i></td>
+    <td>
+      <i class="fa fa-arrow-right"></i> {{ checkpoint.stop.segment.distance | distance}}
+    </td>
+    <td>
+      <i class="fa fa-sort-up"></i> {{ checkpoint.stop.segment.uphill | distance }}
+    </td>
+    <td>
+      <i class="fa fa-sort-down"></i> {{ checkpoint.stop.segment.downhill | distance }}
+    </td>
+    <td>
+      <i class="fa fa-clock-o"></i> {{ checkpoint.stop.segment.time | duration }}
+    </td>
+    <td class="col-2">
+      <i class="fa fa-trophy"></i> {{ checkpoint.stop.segment.score }}
+    </td>
+  </tr>
+</table>

@@ -13,11 +13,11 @@ export class GoogleMapsService {
     this.map = loadGoogleMapsAPI(this._config);
   }
 
-  autocomplete(element: ElementRef) {
+  autocomplete(element: HTMLInputElement) {
     return this
       .map
       .then(() => {
-        return new google.maps.places.Autocomplete(element.nativeElement);
+        return new google.maps.places.Autocomplete(element);
       });
   }
 }
