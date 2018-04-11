@@ -22,13 +22,16 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IGooglePoiEntityState => {
   switch (action.type) {
+
     case hikeEditPoiActions.RESET_POI_STATE: {
       return googlePoiInitialState;
     }
+
     case hikeEditPoiActions.SET_GOOGLE_POIS: {
       return googlePoiAdapter.addAll(action.payload.pois, state);
     }
-    case hikeEditPoiActions.PATCH_GOOGLE_POIS: {
+
+    case hikeEditPoiActions.SET_GOOGLE_POIS_IN_GTRACK_DB: {
       return googlePoiAdapter.updateMany(action.payload.properties.map(poi => {
         return {
           id: poi.id,
@@ -36,6 +39,7 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
         };
       }), state);
     }
+
     case hikeEditPoiActions.SET_GOOGLE_POI_IN_HIKE:
       return googlePoiAdapter.updateOne({
         id: action.payload.poiId,
@@ -43,8 +47,10 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
           inHike: action.payload.isInHike
         }
       }, state);
+
     default:
       return state;
+
   }
 }
 
@@ -60,13 +66,16 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmAmenityPoiEntityState => {
   switch (action.type) {
+
     case hikeEditPoiActions.RESET_POI_STATE: {
       return osmAmenityPoiInitialState;
     }
+
     case hikeEditPoiActions.SET_OSM_AMENITY_POIS: {
       return osmAmenityPoiAdapter.addAll(action.payload.pois, state);
     }
-    case hikeEditPoiActions.PATCH_OSM_AMENITY_POIS: {
+
+    case hikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_GTRACK_DB: {
       return osmAmenityPoiAdapter.updateMany(action.payload.properties.map(poi => {
         return {
           id: poi.id,
@@ -74,6 +83,7 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
         };
       }), state);
     }
+
     case hikeEditPoiActions.SET_OSM_AMENITY_POI_IN_HIKE:
       return osmAmenityPoiAdapter.updateOne({
         id: action.payload.poiId,
@@ -81,8 +91,10 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
           inHike: action.payload.isInHike
         }
       }, state);
+
     default:
       return state;
+
   }
 }
 
@@ -98,13 +110,16 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmNaturalPoiEntityState => {
   switch (action.type) {
+
     case hikeEditPoiActions.RESET_POI_STATE: {
       return osmNaturalPoiInitialState;
     }
+
     case hikeEditPoiActions.SET_OSM_NATURAL_POIS: {
       return osmNaturalPoiAdapter.addAll(action.payload.pois, state);
     }
-    case hikeEditPoiActions.PATCH_OSM_NATURAL_POIS: {
+
+    case hikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_GTRACK_DB: {
       return osmNaturalPoiAdapter.updateMany(action.payload.properties.map(poi => {
         return {
           id: poi.id,
@@ -112,6 +127,7 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
         };
       }), state);
     }
+
     case hikeEditPoiActions.SET_OSM_NATURAL_POI_IN_HIKE:
       return osmNaturalPoiAdapter.updateOne({
         id: action.payload.poiId,
@@ -119,8 +135,10 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
           inHike: action.payload.isInHike
         }
       }, state);
+
     default:
       return state;
+
   }
 }
 
@@ -136,13 +154,16 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IOsmRoutePoiEntityState => {
   switch (action.type) {
+
     case hikeEditPoiActions.RESET_POI_STATE: {
       return osmRoutePoiInitialState;
     }
+
     case hikeEditPoiActions.SET_OSM_ROUTE_POIS: {
       return osmRoutePoiAdapter.addAll(action.payload.pois, state);
     }
-    case hikeEditPoiActions.PATCH_OSM_ROUTE_POIS: {
+
+    case hikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_GTRACK_DB: {
       return osmRoutePoiAdapter.updateMany(action.payload.properties.map(poi => {
         return {
           id: poi.id,
@@ -150,6 +171,7 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
         };
       }), state);
     }
+
     case hikeEditPoiActions.SET_OSM_ROUTE_POI_IN_HIKE:
       return osmRoutePoiAdapter.updateOne({
         id: action.payload.poiId,
@@ -157,8 +179,10 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
           inHike: action.payload.isInHike
         }
       }, state);
+
     default:
       return state;
+
   }
 }
 
@@ -174,13 +198,16 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IWikipediaPoiEntityState => {
   switch (action.type) {
+
     case hikeEditPoiActions.RESET_POI_STATE: {
       return wikipediaPoiInitialState;
     }
+
     case hikeEditPoiActions.SET_WIKIPEDIA_POIS: {
       return wikipediaPoiAdapter.addAll(action.payload.pois, state);
     }
-    case hikeEditPoiActions.PATCH_WIKIPEDIA_POIS: {
+
+    case hikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_GTRACK_DB: {
       return wikipediaPoiAdapter.updateMany(action.payload.properties.map(poi => {
         return {
           id: poi.id,
@@ -188,6 +215,7 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
         };
       }), state);
     }
+
     case hikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE:
       return wikipediaPoiAdapter.updateOne({
         id: action.payload.poiId,
@@ -195,8 +223,10 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
           inHike: action.payload.isInHike
         }
       }, state);
+
     default:
       return state;
+
   }
 }
 
@@ -225,6 +255,7 @@ export function externalPoiListContextReducer(
   action: hikeEditPoiActions.AllHikeEditPoiActions
 ): IExternalPoiListContextState {
   switch (action.type) {
+
     case hikeEditPoiActions.RESET_POI_STATE:
       return externalPoiInitialContextState;
 
@@ -241,6 +272,7 @@ export function externalPoiListContextReducer(
         }
       };
     }
+
     case hikeEditPoiActions.SET_WIKIPEDIA_POIS: {
       return {
         ...state,
@@ -265,6 +297,7 @@ export function externalPoiListContextReducer(
         }
       };
     }
+
     case hikeEditPoiActions.SET_GOOGLE_POIS: {
       return {
         ...state,
@@ -289,6 +322,7 @@ export function externalPoiListContextReducer(
         }
       };
     }
+
     case hikeEditPoiActions.SET_OSM_AMENITY_POIS: {
       return {
         ...state,
@@ -313,6 +347,7 @@ export function externalPoiListContextReducer(
         }
       };
     }
+
     case hikeEditPoiActions.SET_OSM_NATURAL_POIS: {
       return {
         ...state,
@@ -337,6 +372,7 @@ export function externalPoiListContextReducer(
         }
       };
     }
+
     case hikeEditPoiActions.SET_OSM_ROUTE_POIS: {
       return {
         ...state,
@@ -349,6 +385,18 @@ export function externalPoiListContextReducer(
     }
 
     /**
+     * GTrack
+     */
+    case hikeEditPoiActions.SET_DIRTY:
+      return {
+        ...state,
+        [action.payload.subdomain]: {
+          ...state[action.payload.subdomain],
+          dirty: action.payload.dirty
+        }
+      };
+
+    /**
      * Toggle markers
      */
     case hikeEditPoiActions.TOGGLE_ONROUTE_MARKERS:
@@ -359,6 +407,7 @@ export function externalPoiListContextReducer(
           showOnrouteMarkers: !state[action.payload.subdomain].showOnrouteMarkers
         }
       };
+
     case hikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS:
       return {
         ...state,
@@ -370,6 +419,7 @@ export function externalPoiListContextReducer(
 
     default:
       return state;
+
   }
 }
 

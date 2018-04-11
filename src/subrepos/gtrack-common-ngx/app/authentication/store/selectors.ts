@@ -6,9 +6,13 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import {
   IDeepstreamState,
-  Selectors as DeepstreamSelectors,
   DeepstreamService
 } from 'subrepos/gtrack-common-ngx/app/deepstream';
+
+import {
+  Selectors as DeepstreamSelectors
+} from 'subrepos/deepstream-ngx';
+
 import { User, IAuthenticationState as IJwtAuthState, IAuth } from 'subrepos/authentication-api-ngx';
 
 import { State } from 'app/store';

@@ -12,8 +12,12 @@ import { UserStatusSelectors } from '../../../user-status/store/selectors';
   styleUrls: ['./location-search.component.scss']
 })
 export class LocationSearchComponent implements OnInit {
-  @ViewChild('search')
+  @ViewChild('search', {
+    read: ElementRef
+  })
   private _searchElementRef: ElementRef;
+
+  private _input: HTMLElement;
 
   @Input()
   public context: string;
@@ -36,22 +40,34 @@ export class LocationSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._googleMapsService
-      .autocomplete(this._searchElementRef)
-      .then(autocomplete => {
-        autocomplete.addListener('place_changed', () => {
-          this._ngZone.run(() => {
-            let place = autocomplete.getPlace();
+    this._input = this._searchElementRef.nativeElement;
 
-            if (typeof place.geometry === 'undefined' || place.geometry === null) {
-              return;
-            }
+    if (!(this._input instanceof HTMLInputElement)) {
+      let input = this._input.querySelector('input');
 
-            this._location = [place.geometry.location.lng(), place.geometry.location.lat()];
-            this._search();
-          });
+      if (input !== null) {
+        this._input = input;
+      }
+    }
+
+    if (this._input instanceof HTMLInputElement) {
+      this._googleMapsService
+        .autocomplete(this._input)
+        .then(autocomplete => {
+          autocomplete.addListener('place_changed', () => {
+            this._ngZone.run(() => {
+              let place = autocomplete.getPlace();
+
+              if (typeof place.geometry === 'undefined' || place.geometry === null) {
+                return;
+              }
+
+              this._location = [place.geometry.location.lng(), place.geometry.location.lat()];
+              this._search();
+            });
+        });
       });
-    });
+    }
 
     this._store
       .select(this._userStatusSelectors.getUserLocation)
@@ -79,7 +95,10 @@ export class LocationSearchComponent implements OnInit {
   }
 
   public requestLocation() {
-    this._searchElementRef.nativeElement.value = '';
+    if (this._input instanceof HTMLInputElement) {
+      this._input.value = '';
+    }
+
     this._store.dispatch(new userStatusActions.RequestLocation());
   }
 

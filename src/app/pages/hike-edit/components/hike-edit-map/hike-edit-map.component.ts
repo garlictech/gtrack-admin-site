@@ -3,13 +3,15 @@ import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, hikeEditMapActions } from 'app/store';
+import { State, hikeEditMapActions, adminMapActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
-import { LeafletMouseEvent } from 'leaflet';
 import { Center, ISegment } from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
+import { AdminMapService } from 'app/shared/services';
+
 import * as L from 'leaflet';
-import { AdminMapService } from '../../../../shared/services';
+import { LeafletMouseEvent } from 'leaflet';
+import { WaypointMarkerService } from '../../../../shared/services/admin-map';
 
 const CENTER = <Center>{
   // London
@@ -53,6 +55,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
+    private _waypointMarkerService: WaypointMarkerService,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {}
 
@@ -75,7 +78,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
 
-    this.mapComponent.map.destroy();
+    this._store.dispatch(new adminMapActions.ResetMap());
   }
 
   ngAfterViewInit() {
@@ -87,8 +90,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       // Add markers by click
       .on('click', (e: LeafletMouseEvent) => {
         if (this.mode === 'routing') {
-          // TODO action
-          this.mapComponent.map.waypointMarker.addWaypoint(e.latlng);
+          this._waypointMarkerService.addWaypoint(e.latlng);
         } else {
           // console.log('todo _createCheckpoint');
           // this._createCheckpoint(e.latlng);
@@ -133,10 +135,14 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private _addBuffer() {
-    const _buffer = this.mapComponent.map.getBuffer();
-    if (_buffer) {
-      this._geoJsonOnMap = this.mapComponent.map.addGeoJSON(_buffer);
-    }
+    this.mapComponent.map
+      .getBuffer()
+      .take(1)
+      .subscribe((buffer) => {
+        if (buffer) {
+          this._geoJsonOnMap = this.mapComponent.map.addGeoJSON(buffer);
+        }
+      });
   }
 
   private _removeBuffer() {

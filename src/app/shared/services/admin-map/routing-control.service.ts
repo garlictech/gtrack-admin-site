@@ -1,34 +1,42 @@
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { State, routingActions } from 'app/store';
+import { ElevationService } from 'subrepos/gtrack-common-ngx';
+import { State, hikeEditRoutePlannerActions } from 'app/store';
+import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from 'app/store/selectors';
+import { AdminMapService, AdminMap, RoutePlannerService } from './index';
 import { environment } from 'environments/environment';
-import { RouteInfo } from './route-info';
-import {
-  ElevationService,
-  RouteService
-} from 'subrepos/gtrack-common-ngx/app';
 
 import * as _ from 'lodash';
+import * as turf from '@turf/turf';
 import * as L from 'leaflet';
 import 'leaflet-spin';
 import 'leaflet-routing-machine';
 import 'lrm-graphhopper';
 
-export class RoutingControl {
+@Injectable()
+export class RoutingControlService {
   private _controls: Array<L.Routing.Control>;
   private _coordinates: Array<any>;
+  private _map: AdminMap;
 
   constructor(
-    private _leafletMap: L.Map,
     private _store: Store<State>,
-    private _elevationService: ElevationService,
-    private _routeService: RouteService,
-    private _routeInfo: RouteInfo
+    private _adminMapService: AdminMapService,
+    private _routePlannerService: RoutePlannerService,
+    private _hikeEditMapSelectors: HikeEditMapSelectors,
+    private _elevationService: ElevationService
   ) {
-    this._reset();
+    this._store.select(this._hikeEditMapSelectors.getMapId)
+      .filter(id => id !== '')
+      .subscribe((mapId: string) => {
+        this._map = this._adminMapService.getMapById(mapId);
+      });
+
+    this.reset();
   }
 
-  private _reset() {
+  public reset() {
     this._controls = [];
     this._coordinates = [];
   }
@@ -43,12 +51,6 @@ export class RoutingControl {
     return this._controls[this._controls.length - 1];
   }
 
-  /*
-  private _getActualControlNum() {
-    return this._controls.length;
-  }
-  */
-
   public getControl(index) {
     return this._controls[index];
   }
@@ -61,11 +63,9 @@ export class RoutingControl {
       return;
     }
 
-    this._leafletMap.removeControl(_control);
+    this._map.leafletMap.removeControl(_control);
 
-    if (this._routeInfo.planner) {
-      this._routeInfo.planner.removeLastSegment();
-    }
+    this._routePlannerService.removeLastSegment();
 
     return _control;
   }
@@ -83,7 +83,7 @@ export class RoutingControl {
       icon: _icon
     });
 
-    _marker.addTo(this._leafletMap);
+    _marker.addTo(this._map.leafletMap);
 
     return _marker;
   }
@@ -109,12 +109,12 @@ export class RoutingControl {
       })
     });
 
-    _control.addTo(this._leafletMap);
-    // _control.hide();
+    _control.addTo(this._map.leafletMap);
+    _control.hide();
 
     _control.on('routingstart', () => {
-      this._store.dispatch(new routingActions.RoutingStart());
-      this._leafletMap.spin(true);
+      this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
+      this._map.leafletMap.spin(true);
     });
 
     _control.on('routesfound', (e) => {
@@ -151,22 +151,50 @@ export class RoutingControl {
             downhill: this._elevationService.calculateDownhill(_coordsArr)
           };
 
-          this._routeInfo.planner.addRouteSegment(_coordsArr, e.routes[0].summary, upDown);
-          this._store.dispatch(new routingActions.RoutingFinished());
-          this._leafletMap.spin(false);
+          this._routePlannerService.addRouteSegment(_coordsArr, e.routes[0].summary, upDown);
+          this._moveLastControlToLine(e.routes[0].coordinates.map(coord => [coord.lng, coord.lat]));
+
+          this._store.dispatch(new hikeEditRoutePlannerActions.RoutingFinished());
+
+          this._map.leafletMap.spin(false);
         }).catch(() => {
-          this._store.dispatch(new routingActions.RoutingError());
-          this._leafletMap.spin(false);
+          this._store.dispatch(new hikeEditRoutePlannerActions.RoutingError());
+          this._map.leafletMap.spin(false);
         });
     });
 
     _control.on('routingerror', (e) => {
-      this._store.dispatch(new routingActions.RoutingError());
-      this._leafletMap.spin(false);
+      this._store.dispatch(new hikeEditRoutePlannerActions.RoutingError());
+      this._map.leafletMap.spin(false);
     });
 
     this._controls.push(_control);
 
     return _control;
+  }
+
+  /**
+   * Move control waypoint positions to line
+   */
+  private _moveLastControlToLine(coords) {
+    if (this._controls.length > 0) {
+      const lastControl = _.last(this._controls);
+      const wayPoints = (<L.Routing.Control>lastControl).getWaypoints();
+
+      let _fixedWaypoints = _.cloneDeep(wayPoints);
+
+      for (let i in wayPoints) {
+        let line = turf.lineString(coords);
+        let pt = turf.point([(<any>wayPoints[i].latLng).lng, (<any>wayPoints[i].latLng).lat]);
+        let snapped = turf.nearestPointOnLine(line, pt);
+
+        _fixedWaypoints[i].latLng = new L.LatLng(
+          (<any>snapped.geometry).coordinates[1],
+          (<any>snapped.geometry).coordinates[0]
+        );
+      }
+
+      (<L.Routing.Control>lastControl).setWaypoints(_fixedWaypoints);
+    }
   }
 }
