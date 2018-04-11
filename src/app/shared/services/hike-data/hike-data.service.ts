@@ -93,6 +93,7 @@ export class HikeDataService {
               isCheckpoint: false,
               onRoute: true,
               poiId: 'fakeId',
+              onRoute: true,
               lat: _feature.geometry.coordinates[1],
               lon: _feature.geometry.coordinates[0],
               segment: _segment
