@@ -62,7 +62,6 @@ const COMPONENTS = [
     MapModule,
     HikeModule,
     SharedModule,
-    // Lib
     TagInputModule
   ],
   exports: [...COMPONENTS],
