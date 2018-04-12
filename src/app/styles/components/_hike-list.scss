@@ -1,0 +1,54 @@
+.hike-list-item {
+    max-width: 100%;
+    .dynamic-list-item-content {
+        @include box-shadow(1px 1px 20px 5px rgba($black, 0.3));
+        position: relative;
+        border-radius: 5px 5px 10px 10px;
+        border: 1px solid $black;
+        overflow: hidden;
+        .dynamic-list-item-body {
+            .background-wrapper {
+                img {
+                    width: 100%;
+                    max-width: 340px;
+                    max-height: 340px;
+                }
+                .thumbnail {
+                    max-width: none;
+                    max-height: none;
+                    min-width: 100%;
+                    min-height: 100%;
+                }
+                .profile {
+                    position: absolute;
+                    left: 50%;
+                    bottom: -30px;
+                    margin-left: -30px;
+                    .profile-picture {
+                        a {
+                            width: 60px;
+                            height: 60px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(sm) {
+    .hike-list-item {
+        max-width: 300px;
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .hike-list-item {
+        .dynamic-list-item-content {
+            border: none;
+            border-radius: 0;
+            margin: 0;
+            box-shadow: none;
+        }
+    }
+}

@@ -1,0 +1,74 @@
+.ui-button {
+    font-size: 1rem;
+    padding: 5px 15px;
+    &[disabled] {
+        cursor: not-allowed;
+    }
+    &.ui-button-text {
+        padding: 0;
+    }
+    &.ui-button-sm {
+        padding: 0 10px;
+    }
+}
+
+.ui-button-default {
+    border: 0;
+    background: transparent;
+    border-radius: $btn-border-radius;
+    border: 1px solid $black;
+}
+
+.ui-button-red {
+    background-color: $red;
+    background: linear-gradient(to bottom, $red 5%, $white 100%);
+    border-radius: $btn-border-radius;
+    border: 2px solid $black;
+    color: $orange;
+    &:hover {
+        background: linear-gradient(to bottom, $white 5%, $red 100%);
+    }
+    &[disabled] {
+        color: rgba($white, 0.6);
+        border-color: $red;
+        background: linear-gradient(to bottom, $red-lighter 5%, $red-light 100%);
+        &:hover {
+            background: linear-gradient(to bottom, $red-lighter 5%, $red-light 100%);
+        }
+    }
+}
+
+.ui-button-red {
+    background-color: $red;
+    background: linear-gradient(to bottom, $red 5%, $white 100%);
+    border-radius: $btn-border-radius;
+    border: 2px solid $black;
+    color: $orange;
+    &:hover {
+        background: linear-gradient(to bottom, $white 5%, $red 100%);
+    }
+    &[disabled] {
+        color: rgba($white, 0.6);
+        border-color: $red;
+        background: linear-gradient(to bottom, $red-lighter 5%, $red-light 100%);
+        &:hover {
+            background: linear-gradient(to bottom, $red-lighter 5%, $red-light 100%);
+        }
+    }
+}
+
+.ui-button-red-light {
+    background-color: $red-lighter;
+    background: linear-gradient(to bottom, $red-lighter 0%, $red-light 100%);
+    border-radius: $btn-border-radius;
+    border: 1px solid $red-lighter;
+    color: $black;
+    &:hover {
+        background: linear-gradient(to bottom, $red-light 5%, $red-lighter 100%);
+    }
+}
+
+.ui-button-only-icon {
+    padding: 5px 30px;
+    border-radius: $btn-only-icon-border-radius;
+}

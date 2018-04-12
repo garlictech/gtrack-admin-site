@@ -11,7 +11,6 @@ import {
 import { FileDropModule } from 'angular2-file-drop';
 
 import { LanguageModule } from 'app/language';
-import { GenericComponentsModule } from 'app/generic-components';
 
 import { DatePickerComponent } from './date-picker';
 import { MultiSelectComponent } from './multi-select';
@@ -24,6 +23,7 @@ import { DynamicFormGroupComponent } from './dynamic-form-group-component';
 import { DynamicFormSectionComponent } from './dynamic-form-section-component';
 import { FileUploadComponent } from './file-upload';
 import { SwitchComponent } from './switch';
+import { BusyIndicatorComponent } from './busy-indicator';
 
 import { XhrFileUpload } from './xhr-file-upload';
 
@@ -38,8 +38,7 @@ import { XhrFileUpload } from './xhr-file-upload';
     RadioButtonModule,
     InputSwitchModule,
     LanguageModule,
-    FileDropModule,
-    GenericComponentsModule
+    FileDropModule
   ],
   declarations: [
     DatePickerComponent,
@@ -52,7 +51,8 @@ import { XhrFileUpload } from './xhr-file-upload';
     DynamicFormSectionComponent,
     DropdownSelectComponent,
     FileUploadComponent,
-    SwitchComponent
+    SwitchComponent,
+    BusyIndicatorComponent
   ],
   providers: [XhrFileUpload],
   exports: [DynamicFormComponent, EmojiInputComponent]

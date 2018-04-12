@@ -1,46 +1,47 @@
-.inline-checkbox {
-  margin-left: 0;
-}
-.inline-checkbox {
-  padding-left: 0;
-}
-
-input[type="range"] {
-  position: relative;
-  top: 3px;
-}
-
-output.difficulty {
-  width: 20px;
-  font-weight: bold;
-}
-
+// .inline-checkbox {
+//   margin-left: 0;
+// }
+// .inline-checkbox {
+//   padding-left: 0;
+// }
+// input[type="range"] {
+//   position: relative;
+//   top: 3px;
+// }
+// output.difficulty {
+//   width: 20px;
+//   font-weight: bold;
+// }
+// .lang-toolbar {
+//   span {
+//     float: right !important;
+//     padding: 3px 14px;
+//   }
+//   select {
+//     float: right !important;
+//     width: 120px !important;
+//   }
+//   button {
+//     float: right !important;
+//     margin-left: 20px;
+//   }
+// }
+// .table {
+//   th:first-child,
+//   td:first-child {
+//     width: 130px;
+//   }
+//   .form-group {
+//     margin: 0;
+//     padding: 0;
+//     margin-top: 6px;
+//   }
+// }
 .lang-toolbar {
-  span {
-    float: right !important;
-    padding: 3px 14px;
-  }
-
-  select {
-    float: right !important;
-    width: 120px !important;
-  }
-
-  button {
-    float: right !important;
-    margin-left: 20px;
-  }
-}
-
-.table {
-  th:first-child,
-  td:first-child {
-    width: 130px;
-  }
-
-  .form-group {
-    margin: 0;
-    padding: 0;
-    margin-top: 6px;
-  }
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .btn {
+        margin: 10px;
+    }
 }

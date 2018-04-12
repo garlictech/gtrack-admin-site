@@ -1,0 +1,31 @@
+.ui-radiobutton {
+    .ui-radiobutton-box {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 1px solid $white;
+        &:hover {
+            &::before {
+                background: $gray;
+            }
+        }
+        &.ui-state-active {
+            &::before {
+                background: $red;
+            }
+        }
+        &::before {
+            @include transition(all 0.3s);
+            display: block;
+            content: '';
+            background: $gray-light;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 4px solid $white;
+        }
+        .ui-radiobutton-icon {
+            display: none;
+        }
+    }
+}

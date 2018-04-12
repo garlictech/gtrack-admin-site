@@ -4,12 +4,14 @@ ARG NPM_TOKEN
 
 RUN mkdir -p /app/src/subrepos && \
   cd /app/src/subrepos && \
-  mkdir -p authentication-api-ngx deepstream-ngx gtrack-common-ngx provider-client
+  mkdir -p mkdir -p /app/src/assets authentication-api-ngx deepstream-ngx gtrack-common-ngx provider-client localize-ngx forms-ngx
 
 COPY src/subrepos/authentication-api-ngx/package.json /app/src/subrepos/authentication-api-ngx
 COPY src/subrepos/deepstream-ngx/package.json /app/src/subrepos/deepstream-ngx
 COPY src/subrepos/gtrack-common-ngx/package.json /app/src/subrepos/gtrack-common-ngx
 COPY src/subrepos/provider-client/package.json /app/src/subrepos/provider-client
+COPY src/subrepos/localize-ngx/package.json /app/src/subrepos/localize-ngx
+COPY src/subrepos/forms-ngx/package.json /app/src/subrepos/forms-ngx
 COPY package.json /app/package.project.json
 
 RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \

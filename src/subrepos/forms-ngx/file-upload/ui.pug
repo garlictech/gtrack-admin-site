@@ -4,7 +4,7 @@
 
     button
       span.ui-clickable.fa.fa-fw.fa-file-o(*ngIf="!uploading")
-      app-busy-indicator(*ngIf="uploading")
+      app-form-busy-indicator(*ngIf="uploading")
 
   input([hidden]="true", type="file", (change)="onChangeInternal($event)", [id]="fileId", [accept]="type")
 
