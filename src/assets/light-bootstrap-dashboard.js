@@ -47,11 +47,17 @@ $(document).ready(function() {
         $("[data-toggle='switch']").bootstrapSwitch();
     }
 
-    $('.form-control').on("focus", function() {
-        $(this).parent('.input-group').addClass("input-group-focus");
-    }).on("blur", function() {
-        $(this).parent(".input-group").removeClass("input-group-focus");
-    });
+    $('.form-control')
+        .on('focus', function() {
+            $(this)
+                .parent('.input-group')
+                .addClass('input-group-focus');
+        })
+        .on('blur', function() {
+            $(this)
+                .parent('.input-group')
+                .removeClass('input-group-focus');
+        });
 
     // Fixes sub-nav not working as expected on IOS
     $('body').on('touchstart.dropdown', '.dropdown-menu', function(e) {
@@ -75,7 +81,7 @@ lbd = {
         image_src = $sidebar.data('image');
 
         if (image_src !== undefined) {
-            sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>'
+            sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>';
             $sidebar.append(sidebar_container);
         } else if (mobile_menu_initialized == true) {
             // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
@@ -90,22 +96,25 @@ lbd = {
         $sidebar_wrapper = $('.sidebar-wrapper');
 
         if (!mobile_menu_initialized) {
-
-            $navbar = $('nav').find('.navbar-collapse').first().clone(true);
+            $navbar = $('nav')
+                .find('.navbar-collapse')
+                .first()
+                .clone(true);
 
             nav_content = '';
             mobile_menu_content = '';
 
             //add the content from the regular header to the mobile menu
             $navbar.children('ul').each(function() {
-
                 content_buff = $(this).html();
                 nav_content = nav_content + content_buff;
             });
 
             nav_content = '<ul class="nav nav-mobile-menu">' + nav_content + '</ul>';
 
-            $navbar_form = $('nav').find('.navbar-form').clone(true);
+            $navbar_form = $('nav')
+                .find('.navbar-form')
+                .clone(true);
 
             $sidebar_nav = $sidebar_wrapper.find(' > .nav');
 
@@ -114,9 +123,8 @@ lbd = {
             $nav_content.insertBefore($sidebar_nav);
             $navbar_form.insertBefore($nav_content);
 
-            $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function(event) {
+            $('.sidebar-wrapper .dropdown .dropdown-menu > li > a').click(function(event) {
                 event.stopPropagation();
-
             });
 
             mobile_menu_initialized = true;
@@ -135,7 +143,6 @@ lbd = {
             $toggle = $('.navbar-toggler');
 
             $toggle.click(function() {
-
                 if (mobile_menu_visible == 1) {
                     $('html').removeClass('nav-open');
 
@@ -150,11 +157,10 @@ lbd = {
                         $toggle.addClass('toggled');
                     }, 430);
 
-
                     main_panel_height = $('.main-panel')[0].scrollHeight;
                     $layer = $('<div class="close-layer"></div>');
                     $layer.css('height', main_panel_height + 'px');
-                    $layer.appendTo(".main-panel");
+                    $layer.appendTo('.main-panel');
 
                     setTimeout(function() {
                         $layer.addClass('visible');
@@ -169,22 +175,18 @@ lbd = {
                         setTimeout(function() {
                             $layer.remove();
                             $toggle.removeClass('toggled');
-
                         }, 400);
                     });
 
                     $('html').addClass('nav-open');
                     mobile_menu_visible = 1;
-
                 }
             });
 
             toggle_initialized = true;
         }
     }
-}
-
-
+};
 
 // Returns a function, that, as long as it continues to be invoked, will not
 // be triggered. The function will be called after it stops being called for
@@ -203,4 +205,4 @@ function debounce(func, wait, immediate) {
         }, wait);
         if (immediate && !timeout) func.apply(context, args);
     };
-};
+}

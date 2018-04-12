@@ -1,0 +1,32 @@
+@function breakpoint-next($name) {
+  $keys: map-keys($breakpoints);
+  $key: index($keys, $name);
+
+  @return if($key < length($keys), nth($keys, $key + 1), null);
+}
+
+@mixin media-breakpoint-up($name) {
+  $min: map-get($breakpoints, $name);
+
+  @if $min > 0 {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($name) {
+  $next: breakpoint-next($name);
+
+  @if $next {
+    $max: map-get($breakpoints, $next) - 1px;
+
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}

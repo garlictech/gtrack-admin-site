@@ -7,6 +7,10 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { Reducer as authReducer } from 'subrepos/authentication-api-ngx';
 import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/deepstream-ngx';
 import { CommonState, commonReducers, IAuthenticationState } from 'subrepos/gtrack-common-ngx';
+import { ILocalizationState, Reducer as LanguageReducer } from 'app/language';
+
+import { IHikeProgram } from 'subrepos/provider-client';
+import { hikeProgramReducer } from './reducer/hike-program-reducer';
 
 /////////////
 // Actions
@@ -108,6 +112,9 @@ export interface State extends CommonState {
   hikeEditGeneralInfo: IHikeEditGeneralInfoState;
   hikeEditMap: IHikeEditMapState;
   hikeEditPoi: IHikeEditPoiState;
+  language: ILocalizationState;
+
+  hikeProgram: IHikeProgram;
 }
 
 // Same keys as in the state!!!
@@ -117,7 +124,9 @@ const reducers: ActionReducerMap<State> = {
   hikeEditRoutePlanner: hikeEditRoutePlannerReducer,
   hikeEditGeneralInfo: hikeEditGeneralInfoReducer,
   hikeEditPoi: hikeEditPoiReducer,
-  hikeEditMap: hikeEditMapReducer
+  hikeEditMap: hikeEditMapReducer,
+  language: LanguageReducer,
+  hikeProgram: hikeProgramReducer
 };
 
 function logger(reducer: ActionReducer<State>): any {

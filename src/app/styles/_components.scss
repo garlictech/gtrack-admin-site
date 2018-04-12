@@ -1,0 +1,40 @@
+/** PrimeNG components **/
+
+@import 'components/primeng/primeng-dialog';
+@import 'components/primeng/primeng-confirm-dialog';
+@import 'components/primeng/primeng-accordion';
+@import 'components/primeng/primeng-dropdown';
+@import 'components/primeng/primeng-multiselect';
+@import 'components/primeng/primeng-sidebar';
+@import 'components/primeng/primeng-tabview';
+@import 'components/primeng/primeng-inputswitch';
+@import 'components/primeng/primeng-calendar';
+@import 'components/primeng/primeng-radiobutton';
+@import 'components/primeng/primeng-spinner';
+@import 'components/primeng/primeng-growl';
+
+/** UI components **/
+
+@import 'components/ui/button';
+@import 'components/ui/form';
+@import 'components/ui/icon';
+@import 'components/ui/input-range';
+@import 'components/ui/file-upload';
+@import 'components/ui/emojionearea';
+@import 'components/ui/table';
+@import 'components/ui/card';
+@import 'components/ui/list';
+@import 'components/ui/social-button';
+@import 'components/ui/slider';
+
+/** Other required components **/
+
+@import 'components/body';
+@import 'components/dynamic-list';
+@import 'components/hike-list';
+@import 'components/content-header';
+@import 'components/dynamic-form-group';
+@import 'components/dashboard';
+@import 'components/search';
+@import 'components/search-filters';
+@import 'components/feedback';

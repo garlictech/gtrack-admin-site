@@ -1,0 +1,44 @@
+.s-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: $black;
+    padding: 7px 15px;
+    border-radius: $input-border-radius;
+    cursor: pointer;
+    &:hover {
+        color: $white;
+    }
+    &.t-1 {
+        background: $google-color;
+    }
+    &.t-3 {
+        background: $facebook-color;
+    }
+    &.t-2 {
+        background: $twitter-color;
+    }
+    i {
+        font-size: 1rem;
+        color: $white;
+    }
+    span {
+        color: $white;
+        font-weight: bold;
+        flex-grow: 1;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1rem;
+        line-height: 1rem;
+        &::before {
+            position: absolute;
+            content: '';
+            display: block;
+            height: 1rem;
+            width: 2px;
+            background: $white;
+            left: 45px;
+            top: 7px;
+        }
+    }
+}

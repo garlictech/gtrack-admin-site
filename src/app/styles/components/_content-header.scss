@@ -1,0 +1,23 @@
+.content-header {
+    margin: 0;
+    font-size: 1.5rem;
+    color: $black;
+    font-weight: 700;
+    &.has-border {
+        border-bottom: 1px solid $orange;
+    }
+}
+
+h1.content-header {
+    text-transform: uppercase;
+}
+
+h2.content-header {
+    color: $orange;
+    text-transform: uppercase;
+}
+
+h3.content-header {
+    font-size: 1.125rem;
+    font-weight: 400;
+}

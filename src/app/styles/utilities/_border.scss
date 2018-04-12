@@ -1,0 +1,53 @@
+@each $name, $size in $breakpoints {
+  @if $size > 0 {
+    @include media-breakpoint-up($name) {
+      .b-#{$name}-1 {
+        border: 1px solid $border-default-color !important;
+      }
+      .bt-#{$name}-1 {
+        border-top: 1px solid $border-default-color !important;
+      }
+      .bb-#{$name}-1 {
+        border-bottom: 1px solid $border-default-color !important;
+      }
+
+      .bl-#{$name}-1 {
+        border-left: 1px solid $border-default-color !important;
+      }
+
+      .br-#{$name}-1 {
+        border-right: 1px solid $border-default-color !important;
+      }
+    }
+  }
+}
+
+.b-1 {
+  border: 1px solid $border-default-color !important;
+}
+.bt-1 {
+  border-top: 1px solid $border-default-color !important;
+}
+.bb-1 {
+  border-bottom: 1px solid $border-default-color !important;
+}
+
+.bl-1 {
+  border-left: 1px solid $border-default-color !important;
+}
+
+.br-1 {
+  border-right: 1px solid $border-default-color !important;
+}
+
+.b-red {
+  border-color: $red !important;
+}
+
+.b-red-dark {
+  border-color: $red-dark !important;
+}
+
+.border-radius-50p {
+  border-radius: 50%;
+}

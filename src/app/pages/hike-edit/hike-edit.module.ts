@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AccordionModule, DropdownModule } from 'primeng/primeng';
 import { FormModule } from 'subrepos/forms-ngx';
 // Pipes
 import { ObjectToArrayPipe } from 'app/shared/pipes';
@@ -62,7 +63,9 @@ const COMPONENTS = [
     MapModule,
     HikeModule,
     SharedModule,
-    TagInputModule
+    TagInputModule,
+    AccordionModule,
+    DropdownModule
   ],
   exports: [...COMPONENTS],
   declarations: [AdminLeafletComponent, ObjectToArrayPipe, ...COMPONENTS],

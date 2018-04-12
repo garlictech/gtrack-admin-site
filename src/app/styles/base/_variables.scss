@@ -1,0 +1,117 @@
+$breakpoints: ( xs: 0, sm: 766px, md: 1024px, lg: 1366px, xl: 1920px, xxl: 2560px, fourk: 3820px, fivek: 5120px, eightk: 7680px);
+$black: #000;
+$white: #fff;
+$gray-light: #e6e6e6;
+$gray: #cacaca;
+$gray-dark: #8a8a8a;
+$green: green;
+$red-lighter: #f26f69;
+$red-light: #ff5a08;
+$red: #d60000;
+$red-dark: #b00000;
+$red-darker: #920202;
+$orange-light: #ffeecc;
+$orange: #ffcd6d;
+$colors: ( black: $black, white: $white, green: $green, red: $red, gray: $gray, gray-dark: $gray-dark);
+$font-family-base: 'Montserrat',
+'Helvetica',
+Arial,
+sans-serif;
+$font-size-base: 14px;
+$font-weight-base: 400;
+$line-height-base: 1.5;
+$body-color: $black;
+$body-bg: $white;
+// $body-bg: linear-gradient(0deg, $red-dark 0%, $red 100%);
+// Social buttons
+$facebook-color: #3b5998;
+$google-color: #d34836;
+$twitter-color: #55a;
+$border-radius: 5px;
+$border-default-color: #cccccc;
+// PrimeNG tabview
+$primeng-tabview-border-radius: $border-radius;
+// PrimeNG dialog
+$primeng-dialog-overlay-bg: $white;
+// PrimeNG accordion
+$primeng-accordion-border-radius: $border-radius;
+// Text shadow
+$text-shadow-default-color: #fefefe;
+// Border radius
+$btn-border-radius: 5px;
+$btn-only-icon-border-radius: $btn-border-radius;
+$btn-border-color: $border-default-color;
+// Input defaults
+$input-border-radius: 5px;
+$input-border-color: $border-default-color;
+$input-padding: 5px 10px;
+// Border defaults
+// Sizes in px for padding, margin and size helpers
+$sizes: ( 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 75, 90, 115, 120);
+// Sizes for font
+$font-sizes: ( 8: 0.5rem, 9: 0.5625rem, 10: 0.625rem, 11: 0.6875rem, 12: 0.75rem, 13: 0.8125rem, 14: 0.875rem, 15: 0.9375rem, 16: 1rem, 18: 1.125rem, 20: 1.25rem, 22: 1.375rem, 24: 1.5rem, 26: 1.625rem, 28: 1.75rem, 30: 1.875rem, 32: 2rem, 34: 2.125rem, 36: 2.25rem, 38: 2.375rem, 40: 2.5rem);
+// Social buttons
+$facebook-color: #3b5998;
+$google-color: #d34836;
+$twitter-color: #55acee;
+// Input range variables
+$track-color: $orange-light;
+$thumb-color: $orange-light;
+$thumb-radius: 10px;
+$thumb-height: 20px;
+$thumb-width: 20px;
+$thumb-shadow-size: 0px;
+$thumb-shadow-blur: 0px;
+$thumb-shadow-color: #fff;
+$thumb-border-width: 0px;
+$thumb-border-color: #fff;
+$track-width: 100%;
+$track-height: 5px;
+$track-shadow-size: 0px;
+$track-shadow-blur: 0px;
+$track-shadow-color: $white;
+$track-border-width: 0px;
+$track-border-color: #fff;
+$track-radius: 5px;
+$contrast: 5%;
+// Live video player
+$vp-overlay-button-border-radius: 20px;
+// ---------------------- OLD ----------------------- //
+// Responsive stuff
+$app-breakpoints: ( small: 0, medium: 640px, large: 1024px, xlarge: 1200px);
+// breakpoints for later use
+$brp-small: 766px; // 766px
+$brp-medium: 1024px; // 1024px
+$brp-large: 1366px; // 1366px
+$brp-xlarge: 1920px; // 1920px
+$brp-xxlarge: 2560px; // 2560px
+$brp-4klarge: 3820px; // 3820px
+$brp-5klarge: 5120px; // 5120px
+$brp-8klarge: 7680px; // 7680px
+// Media Queries
+//@media all and #{$mq-xsmall} {
+$mq-small: '(min-width: #{$brp-small})';
+$mq-medium: '(min-width: #{$brp-medium})';
+$mq-large: '(min-width: #{$brp-large})';
+$mq-xlarge: '(min-width: #{$brp-xlarge})';
+$mq-xxlarge: '(min-width: #{$brp-xxlarge})';
+$mq-4klarge: '(min-width: #{$brp-4klarge})';
+$mq-5klarge: '(min-width: #{$brp-5klarge})';
+$mq-8klarge: '(min-width: #{$brp-8klarge})';
+// Colors
+$light-gray: #e6e6e6;
+$medium-gray: #cacaca;
+$dark-gray: #8a8a8a;
+//$black: #0a0a0a;
+//$white: #fefefe;
+$light-gold: #ffeecc;
+$dark-gold: #ffcd6d;
+$other-text: #e8cabd;
+$circle-shadow: rgba(46, 1, 1, 0.3);
+// Fonts
+$app-default-font: 'Roboto',
+'Raleway',
+sans-serif;
+$body-font-color: #333333;
+$body-font-family: $app-default-font;
+$base-font-color: #333333;

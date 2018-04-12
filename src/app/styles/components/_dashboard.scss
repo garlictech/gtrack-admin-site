@@ -1,0 +1,11 @@
+.dashboard-wrapper {
+  padding: 30px 15px;
+}
+
+@include media-breakpoint-up(md) {
+  .dashboard-content-wrapper {
+    max-width: 1366px;
+    margin: 0 auto;
+  }
+}
+
