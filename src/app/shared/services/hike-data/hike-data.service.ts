@@ -140,8 +140,13 @@ export class HikeDataService {
    */
   public splitHikeDataToStore(hikeData: IHikeProgram) {
     // Set unsaved states
+<<<<<<< HEAD
     this._store.dispatch(new commonHikeActions.HikeProgramModified(<string>hikeData.id));
     this._store.dispatch(new commonRouteActions.RouteModified(hikeData.routeId));
+=======
+    // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(<string>hikeData.id));
+    this._store.dispatch(new commonRouteActions.RouteUnsaved(hikeData.routeId));
+>>>>>>> fix: adding multi language component
 
     // Set route id and load route data
     this._store.dispatch(

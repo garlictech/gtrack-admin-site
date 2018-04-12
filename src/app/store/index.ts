@@ -9,7 +9,7 @@ import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/deepstr
 import { CommonState, commonReducers, IAuthenticationState } from 'subrepos/gtrack-common-ngx';
 import { ILocalizationState, Reducer as LanguageReducer } from 'app/language';
 
-import { IHikeProgram } from 'subrepos/provider-client';
+import { IHikeProgramState } from './state/hike-program';
 import { hikeProgramReducer } from './reducer/hike-program-reducer';
 
 /////////////
@@ -114,7 +114,7 @@ export interface State extends CommonState {
   hikeEditPoi: IHikeEditPoiState;
   language: ILocalizationState;
 
-  hikeProgram: IHikeProgram;
+  hikeProgram: IHikeProgramState;
 }
 
 // Same keys as in the state!!!

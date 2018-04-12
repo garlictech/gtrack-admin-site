@@ -19,6 +19,7 @@ export class HikeEffects {
   loadHike$: Observable<Action> = this._actions$
     .ofType<LocalActions.LoadHikeProgram>(LocalActions.HikeProgramActionTypes.LOAD_HIKE_PROGRAM)
     .mergeMap(action => {
+<<<<<<< HEAD
       return this._hikeProgramService
         .get(action.context)
         .take(1)
@@ -43,8 +44,18 @@ export class HikeEffects {
 
             return new LocalActions.AllHikeProgramsLoaded(ids, hikePrograms);
           });
-      });
+=======
+      return this._hikeProgramService.get(action.context).map(hike => {
+        if (hike !== null) {
+          return new LocalActions.HikeProgramLoaded(action.context, hike);
+        }
 
+        return new LocalActions.LoadHikeProgramFailed(action.context);
+>>>>>>> fix: adding multi language component
+      });
+    });
+
+<<<<<<< HEAD
     @Effect()
     saveHike$: Observable<Action> = this._actions$
       .ofType<LocalActions.SaveHikeProgram>(LocalActions.HikeProgramActionTypes.SAVE_HIKE_PROGRAM)
@@ -53,7 +64,19 @@ export class HikeEffects {
           .create(action.hikeProgram)
           .take(1)
           .map(response => new LocalActions.HikeProgramSaved(response.id));
+=======
+  @Effect()
+  loadHikes$: Observable<Action> = this._actions$
+    .ofType<LocalActions.LoadHikePrograms>(LocalActions.HikeProgramActionTypes.LOAD_HIKE_PROGRAMS)
+    .mergeMap(action => {
+      return this._hikeProgramService.query().map(hikePrograms => {
+        let ids = hikePrograms.map(hikeProgram => hikeProgram.id);
+        return new LocalActions.AllHikeProgramsLoaded(ids, hikePrograms);
+>>>>>>> fix: adding multi language component
       });
+    });
 
-  constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {}
+  constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {
+    /* EMPTY */
+  }
 }
