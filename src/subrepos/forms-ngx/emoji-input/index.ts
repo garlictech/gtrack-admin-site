@@ -1,6 +1,4 @@
-import {
-  Component, Input, Provider, forwardRef, AfterViewInit, ViewChild, ViewEncapsulation
-} from '@angular/core';
+import { Component, Input, Provider, forwardRef, AfterViewInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as $ from 'jquery';
 
@@ -54,6 +52,10 @@ export class EmojiInputComponent extends AbstractValueAccessor implements AfterV
         }
       }
     });
+
+    $(this.emojiArea.nativeElement)
+      .data('emojioneArea')
+      .setText(this.value || '');
   }
 
   public refreshModel() {
