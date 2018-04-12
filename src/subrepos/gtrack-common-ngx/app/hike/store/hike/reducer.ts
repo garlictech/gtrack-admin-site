@@ -1,18 +1,9 @@
 import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
 import * as _ from 'lodash';
 
-import {
-  IAllHikeContextState,
-  hikeContextStateAdapter,
-  IHikeEntityState,
-  IHikeState,
-  hikeAdapter
-} from './state';
+import { IAllHikeContextState, hikeContextStateAdapter, IHikeEntityState, IHikeState, hikeAdapter } from './state';
 
-import {
-  HikeProgramActionTypes,
-  AllHikeActions
-} from './actions';
+import { HikeProgramActionTypes, AllHikeActions } from './actions';
 import { AllHikeProgramsLoaded } from 'subrepos/gtrack-common-ngx';
 
 export const hikeContextReducerInitialState = hikeContextStateAdapter.getInitialState();
@@ -24,38 +15,50 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
 ): IAllHikeContextState => {
   switch (action.type) {
     case HikeProgramActionTypes.LOAD_HIKE_PROGRAM:
-      return hikeContextStateAdapter.addOne({
-        id: action.context,
-        loading: true,
-        loaded: false,
-        saved: false
-      }, state);
+      return hikeContextStateAdapter.addOne(
+        {
+          id: action.context,
+          loading: true,
+          loaded: false,
+          saved: false
+        },
+        state
+      );
 
     case HikeProgramActionTypes.HIKE_PROGRAM_LOADED:
-      return hikeContextStateAdapter.updateOne({
-        id: action.context,
-        changes: {
-          loading: false,
-          loaded: true,
-          saved: false
-        }
-      }, state);
+      return hikeContextStateAdapter.updateOne(
+        {
+          id: action.context,
+          changes: {
+            loading: false,
+            loaded: true,
+            saved: false
+          }
+        },
+        state
+      );
 
-     case HikeProgramActionTypes.HIKE_PROGRAM_SAVED:
-      return hikeContextStateAdapter.updateOne({
-        id: action.context,
-        changes: {
-          saved: true
-        }
-      }, state);
+    case HikeProgramActionTypes.HIKE_PROGRAM_SAVED:
+      return hikeContextStateAdapter.updateOne(
+        {
+          id: action.context,
+          changes: {
+            saved: true
+          }
+        },
+        state
+      );
 
-    case HikeProgramActionTypes.HIKE_PROGRAM_UNSAVED:
-      return hikeContextStateAdapter.upsertOne({
-        id: action.context,
-        changes: {
-          saved: false
-        }
-      }, state);
+    case HikeProgramActionTypes.HIKE_PROGRAM_SAVED:
+      return hikeContextStateAdapter.updateOne(
+        {
+          id: action.context,
+          changes: {
+            saved: false
+          }
+        },
+        state
+      );
 
     default:
       return state;
@@ -76,7 +79,7 @@ const reducer: ActionReducer<IHikeEntityState> = (
     default:
       return state;
   }
-}
+};
 
 const reducerMap: ActionReducerMap<IHikeState> = {
   contexts: contextReducer,
