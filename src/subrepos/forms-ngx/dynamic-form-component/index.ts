@@ -43,7 +43,8 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
         })
         .subscribe(formData => {
           this.formInstance = this._fcs.toFormGroup(this.formDescriptor.fields, formData);
-          this.formInstance.form.patchValue(formData);
+          this.formInstance.form.setValue(formData);
+
           this._cdr.detectChanges();
         });
     }
@@ -52,10 +53,14 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
   onSubmit() {
     if (this.formInstance.form.valid) {
       log.d('Submitting form...');
+
       this.formDescriptor.submit.submitFv(this.formInstance.form);
-    } else {
-      log.d('Form is invalid, not submitting.');
-      this._validateForm(this.formInstance.form);
+
+      if (!!this.formDescriptor.submit.resetOnSubmit) {
+        this._resetForm();
+      }
+
+      return;
     }
 
     log.d('Form is invalid, not submitting.');
