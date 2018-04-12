@@ -1,8 +1,14 @@
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-import { IHikeProgram } from 'subrepos/provider-client';
+import { IHikeProgramState } from '../state';
 
-const featureSelector = createFeatureSelector<IHikeProgram>('hikeProgram');
+const featureSelector = createFeatureSelector<IHikeProgramState>('hikeProgram');
 
-export const selectDescriptions = createSelector(featureSelector, (state: IHikeProgram) => state.description);
+export const selectDescriptions = createSelector(featureSelector, (state: IHikeProgramState) => state.data.description);
 
-export const dataPath = 'hikeProgram';
+export const selectDirty = createSelector(featureSelector, (state: IHikeProgramState) => state.dirty);
+
+export const selectWorking = createSelector(featureSelector, (state: IHikeProgramState) => state.working);
+
+export const selectData = createSelector(featureSelector, (state: IHikeProgramState) => state.data);
+
+export const dataPath = 'hikeProgram.data';

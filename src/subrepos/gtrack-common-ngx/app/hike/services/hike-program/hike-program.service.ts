@@ -41,7 +41,7 @@ export class HikeProgramService {
       });
   }
 
-  public create(hikeProgram: IHikeProgram) {
+  public save(hikeProgram: IHikeProgram) {
     let data = hikeProgram;
 
     if (hikeProgram instanceof HikeProgram) {

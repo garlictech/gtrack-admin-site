@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AccordionModule, DropdownModule } from 'primeng/primeng';
 import { FormModule } from 'subrepos/forms-ngx';
 // Pipes
 import { ObjectToArrayPipe } from 'app/shared/pipes';
@@ -30,9 +29,10 @@ import {
 // Shared components
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 // gTrack common
-import { MapModule, HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
+import { MapModule, HikeModule, SharedModule, UtilsModule } from 'subrepos/gtrack-common-ngx';
 // Lib
 import { TagInputModule } from 'ngx-chips';
+import { SharedComponentsModule } from 'app/shared/components';
 
 const COMPONENTS = [
   HikeEditComponent,
@@ -64,8 +64,8 @@ const COMPONENTS = [
     HikeModule,
     SharedModule,
     TagInputModule,
-    AccordionModule,
-    DropdownModule
+    UtilsModule,
+    SharedComponentsModule
   ],
   exports: [...COMPONENTS],
   declarations: [AdminLeafletComponent, ObjectToArrayPipe, ...COMPONENTS],

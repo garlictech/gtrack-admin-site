@@ -138,7 +138,7 @@ export class HikeDataService {
    */
   public splitHikeDataToStore(hikeData: IHikeProgram) {
     // Set unsaved states
-    this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(<string>hikeData.id));
+    // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(<string>hikeData.id));
     this._store.dispatch(new commonRouteActions.RouteUnsaved(hikeData.routeId));
 
     // Set route id and load route data
