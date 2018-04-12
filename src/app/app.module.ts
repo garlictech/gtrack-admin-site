@@ -29,7 +29,8 @@ import {
   HikeModuleConfig,
   HikeModule,
   GeoSearchModule,
-  GeoSearchEffects
+  GeoSearchEffects,
+  SearchFiltersModule
 } from 'subrepos/gtrack-common-ngx';
 // App
 import { AppComponent } from './app.component';
@@ -129,6 +130,9 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     HikeModule.forRoot(hikeModuleConfig),
     GeoSearchModule.forRoot({
       storeDomain: 'geosearch'
+    }),
+    SearchFiltersModule.forRoot({
+      storeDomain: 'searchFilters'
     }),
     // Page modules
     CoreLayoutModule,
