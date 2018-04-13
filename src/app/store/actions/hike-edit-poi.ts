@@ -35,7 +35,6 @@ export const MARKERS_CONFIG_CHANGED = '[HikeEditPoi] Markers config changed';
 
 export class ResetPoiState implements Action {
   readonly type = RESET_POI_STATE;
-  constructor() { /* EMPTY */ }
 }
 
 /**
@@ -47,21 +46,21 @@ export class GetGooglePois implements Action {
   constructor(public payload: {
     bounds: any,
     mapId: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetGooglePois implements Action {
   readonly type = SET_GOOGLE_POIS;
   constructor(public payload: {
     pois: IGooglePoi[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetGooglePoisInGtrackDb implements Action {
   readonly type = SET_GOOGLE_POIS_IN_GTRACK_DB;
   constructor(public payload: {
     properties: any
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetGooglePoiInHike implements Action {
@@ -69,7 +68,7 @@ export class SetGooglePoiInHike implements Action {
   constructor(public payload: {
     poiId: string,
     isInHike: boolean
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 /**
@@ -81,21 +80,21 @@ export class GetOsmAmenityPois implements Action {
   constructor(public payload: {
     bounds: any,
     mapId: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmAmenityPois implements Action {
   readonly type = SET_OSM_AMENITY_POIS;
   constructor(public payload: {
     pois: IOsmPoi[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmAmenityPoisInGtrackDb implements Action {
   readonly type = SET_OSM_AMENITY_POIS_IN_GTRACK_DB;
   constructor(public payload: {
     properties: any
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmAmenityPoiInHike implements Action {
@@ -103,7 +102,7 @@ export class SetOsmAmenityPoiInHike implements Action {
   constructor(public payload: {
     poiId: string,
     isInHike: boolean
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 /**
@@ -115,21 +114,21 @@ export class GetOsmNaturalPois implements Action {
   constructor(public payload: {
     bounds: any,
     mapId: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmNaturalPois implements Action {
   readonly type = SET_OSM_NATURAL_POIS;
   constructor(public payload: {
     pois: IOsmPoi[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmNaturalPoisInGtrackDb implements Action {
   readonly type = SET_OSM_NATURAL_POIS_IN_GTRACK_DB;
   constructor(public payload: {
     properties: any
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmNaturalPoiInHike implements Action {
@@ -151,21 +150,21 @@ export class GetOsmRoutePois implements Action {
   constructor(public payload: {
     bounds: any,
     mapId: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmRoutePois implements Action {
   readonly type = SET_OSM_ROUTE_POIS;
   constructor(public payload: {
     pois: IOsmPoi[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmRoutePoisInGtrackDb implements Action {
   readonly type = SET_OSM_ROUTE_POIS_IN_GTRACK_DB;
   constructor(public payload: {
     properties: any
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmRoutePoiInHike implements Action {
@@ -173,7 +172,7 @@ export class SetOsmRoutePoiInHike implements Action {
   constructor(public payload: {
     poiId: string,
     isInHike: boolean
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 /**
@@ -185,21 +184,21 @@ export class GetWikipediaPois implements Action {
   constructor(public payload: {
     bounds: any,
     mapId: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetWikipediaPois implements Action {
   readonly type = SET_WIKIPEDIA_POIS;
   constructor(public payload: {
     pois: IWikipediaPoi[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetWikipediaPoisInGtrackDb implements Action {
   readonly type = SET_WIKIPEDIA_POIS_IN_GTRACK_DB;
   constructor(public payload: {
     properties: any
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetWikipediaPoiInHike implements Action {
@@ -207,7 +206,7 @@ export class SetWikipediaPoiInHike implements Action {
   constructor(public payload: {
     poiId: string,
     isInHike: boolean
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 /**
@@ -218,14 +217,14 @@ export class ToggleOnrouteMarkers implements Action {
   readonly type = TOGGLE_ONROUTE_MARKERS;
   constructor(public payload: {
     subdomain: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class ToggleOffrouteMarkers implements Action {
   readonly type = TOGGLE_OFFROUTE_MARKERS;
   constructor(public payload: {
     subdomain: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetListDirty implements Action {
@@ -233,12 +232,11 @@ export class SetListDirty implements Action {
   constructor(public payload: {
     subdomain: string,
     dirty: boolean
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class MarkersConfigChanged implements Action {
   readonly type = MARKERS_CONFIG_CHANGED;
-  constructor() { /* EMPTY */ }
 }
 
 export type AllHikeEditPoiActions =

@@ -11,49 +11,49 @@ export const SET_GTRACK_MARKERS = '[HikeEditMap] Set gTrack markers';
 
 export class ResetMapState implements Action {
   readonly type = RESET_MAP_STATE;
-  constructor() { /* EMPTY */ }
+  constructor() {}
 }
 
 export class SetGoogleMarkers implements Action {
   readonly type = SET_GOOGLE_MARKERS;
   constructor(public payload: {
     markers: AdminMapMarker[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmAmenityMarkers implements Action {
   readonly type = SET_OSM_AMENITY_MARKERS;
   constructor(public payload: {
     markers: AdminMapMarker[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmNaturalMarkers implements Action {
   readonly type = SET_OSM_NATURAL_MARKERS;
   constructor(public payload: {
     markers: AdminMapMarker[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetOsmRouteMarkers implements Action {
   readonly type = SET_OSM_ROUTE_MARKERS;
   constructor(public payload: {
     markers: AdminMapMarker[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetWikipediaMarkers implements Action {
   readonly type = SET_WIKIPEDIA_MARKERS;
   constructor(public payload: {
     markers: AdminMapMarker[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetGTrackMarkers implements Action {
   readonly type = SET_GTRACK_MARKERS;
   constructor(public payload: {
     markers: AdminMapMarker[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export type AllHikeEditMapActions =
