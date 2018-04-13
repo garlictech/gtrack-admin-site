@@ -1,38 +1,5 @@
-
-
-.lang-toolbar {
-  span {
-    float: right !important;
-    padding: 3px 14px;
-  }
-
-  select {
-    float: right !important;
-    width: 120px !important;
-  }
-
-  button {
-    float: right !important;
-    margin-left: 20px;
-  }
-}
-
-.ng2-tag-input {
-  .ng2-tags-container {
-    tag {
-      border-radius: 4px !important;
-      line-height: 30px;
-      height: 30px;
-      padding: 0 10px;
-
-      &:hover {
-        box-shadow: none !important;
-        -webkit-box-shadow: none !important;
-      }
-
-      svg {
-        margin-top: 8px;
-      }
+.contaier {
+    .btn {
+        margin-top: 10px;
     }
-  }
 }

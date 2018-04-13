@@ -11,7 +11,12 @@ import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
 import { IDynamicComponentModalConfig, PoiSelectors, Poi } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi } from 'subrepos/provider-client';
 
-import { selectDescriptions, dataPath as descriptionDataPath, selectData } from 'app/store/selectors/edited-gtrack-poi';
+import {
+  selectDescriptions,
+  dataPath as descriptionDataPath,
+  selectData,
+  selectDirty
+} from 'app/store/selectors/edited-gtrack-poi';
 import * as EditedGtrackPoiActions from 'app/store/actions/edited-gtrack-poi';
 
 import { ToasterService } from 'angular2-toaster';
@@ -26,15 +31,13 @@ import * as _ from 'lodash';
 export class HikeEditGTrackPoiInfoComponent implements AfterViewInit, OnDestroy, OnInit {
   public modalConfig: IDynamicComponentModalConfig;
   public poiId: string;
-  public poiForm: FormGroup;
-  public existingLangKeys: string[] = [];
-  public poiLoaded$: Observable<boolean>;
-  public langs = DESCRIPTION_LANGUAGES;
-  private _gTrackPoi: IPoiStored;
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
-
   public descriptionDataPath = `${descriptionDataPath}.description`;
   public descriptionSelector = selectDescriptions;
+  public poiLoaded$: Observable<boolean>;
+  public isDirty$: Observable<boolean>;
+
+  private _gTrackPoi: IPoiStored;
+  private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   public submitDescription = (langKey: string, data: any) => {
     this._store.dispatch(new EditedGtrackPoiActions.AddNewTranslatedDescription(langKey, data));
@@ -53,6 +56,7 @@ export class HikeEditGTrackPoiInfoComponent implements AfterViewInit, OnDestroy,
 
   ngOnInit() {
     this.poiLoaded$ = this._store.select(selectData).map(data => !!data);
+    this.isDirty$ = this._store.select(selectDirty);
   }
 
   ngAfterViewInit() {
