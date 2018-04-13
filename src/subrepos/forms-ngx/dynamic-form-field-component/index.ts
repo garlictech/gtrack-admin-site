@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,7 +12,8 @@ import { Field, SelectField, ESelectTypes } from '../field';
 @Component({
   selector: 'app-form-field',
   templateUrl: './ui.pug',
-  styleUrls: ['./style.scss']
+  styleUrls: ['./style.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DynamicFormFieldComponent implements OnInit {
   @Input() form: FormGroup;

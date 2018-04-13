@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -14,9 +14,10 @@ import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
 @Component({
   selector: 'gt-localized-description',
   templateUrl: './ui.pug',
-  styleUrls: ['./style.scss']
+  styleUrls: ['./style.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LocalizedDescriptionComponent implements OnInit {
+export class LocalizedDescriptionComponent implements AfterViewInit {
   @Input() descriptionSelector: any;
   @Input() submitFv: (langKey: string, data) => void;
   @Input() deleteFv: (langKey: string) => void;
@@ -30,11 +31,11 @@ export class LocalizedDescriptionComponent implements OnInit {
 
   public selectedLanguage;
 
-  constructor(private _store: Store<State>) {
+  constructor(private _store: Store<State>, private _cdr: ChangeDetectorRef) {
     /* EMPTY */
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.descriptions$ = this._store.select(this.descriptionSelector);
     this.languageKeys$ = this.descriptions$.map(desc => Object.keys(desc));
 
@@ -43,6 +44,7 @@ export class LocalizedDescriptionComponent implements OnInit {
         return { label: lang.name, value: lang.locale };
       })
     );
+    // .do(() => this._cdr.detectChanges());
   }
 
   getLanguageFormDescriptor(languageKey: string) {
@@ -62,7 +64,7 @@ export class LocalizedDescriptionComponent implements OnInit {
           required: false,
           rows: 2
         }),
-        description: new EmojiField({ label: 'form.description', required: false })
+        fullDescription: new EmojiField({ label: 'form.description', required: false })
       }
     };
   }

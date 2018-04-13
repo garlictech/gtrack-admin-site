@@ -1,20 +1,35 @@
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import {
-   PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, RouteSelectors
+  PoiSelectors,
+  CenterRadius,
+  GeometryService,
+  GeoSearchSelectors,
+  Poi,
+  PoiSaved,
+  IGeoSearchContextState,
+  RouteSelectors
 } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { PoiEditorService } from 'app/shared/services';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import {
-  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, commonGeoSearchActions, hikeEditGeneralInfoActions, IHikeEditRoutePlannerState,
+  State,
+  hikeEditPoiActions,
+  IExternalPoiListContextState,
+  commonPoiActions,
+  commonGeoSearchActions,
+  hikeEditGeneralInfoActions,
+  IHikeEditRoutePlannerState
 } from 'app/store';
 import {
-  HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors
+  HikeEditPoiSelectors,
+  HikeEditMapSelectors,
+  HikeEditGeneralInfoSelectors,
+  HikeEditRoutePlannerSelectors
 } from 'app/store/selectors';
 
 import * as _ from 'lodash';
@@ -72,10 +87,11 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
     // Poi list
     this.pois$ = this._store
-      .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
-      .filter((pois: IPoi[]) => typeof pois !== 'undefined')
+
+      .select(this._hikeEditGeneralInfoSelectors.getHikePois<IPoiStored>(this._poiSelectors.getAllPois))
       .takeUntil(this._destroy$)
-      .switchMap((pois: IPoi[]) => {
+      .filter((pois: IPoiStored[]) => typeof pois !== 'undefined')
+      .switchMap((pois: IPoiStored[]) => {
         return this._store
           .select(this._hikeEditRoutePlannerSelectors.getPath)
           .filter((path: any) => path && path.geometry.coordinates.length > 0)
@@ -131,17 +147,13 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
    * Show onroute markers checkbox click
    */
   public toggleOnrouteMarkers() {
-    this._store.dispatch(
-      new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'hike' })
-    );
+    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'hike' }));
   }
 
   /**
    * Show offroute markers checkbox click
    */
   public toggleOffrouteMarkers() {
-    this._store.dispatch(
-      new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'hike' })
-    );
+    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'hike' }));
   }
 }

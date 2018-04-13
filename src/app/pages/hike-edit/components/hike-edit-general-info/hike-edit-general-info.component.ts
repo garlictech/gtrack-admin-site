@@ -20,8 +20,14 @@ import * as HikeProgramActions from 'app/store/actions/hike-program';
 export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public generalInfo$: Observable<IGeneralInfoState>;
   public isRoundTrip$: Observable<boolean>;
-  public submitDescription: (langKey: string, data) => void;
-  public deleteDescription: (langKey: string) => void;
+
+  public submitDescription = (langKey: string, data: any) => {
+    this._store.dispatch(new HikeProgramActions.AddNewTranslatedDescription(langKey, data));
+  };
+
+  public deleteDescription = lang => {
+    this._store.dispatch(new HikeProgramActions.DeleteTranslatedDescription(lang));
+  };
   public descriptionDataPath = `${descriptionDataPath}.description`;
   public descriptionSelector = selectDescriptions;
 
@@ -38,14 +44,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     // Selectors
     this.generalInfo$ = this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo);
     this.isRoundTrip$ = this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip);
-
-    this.submitDescription = (langKey: string, data: any) => {
-      this._store.dispatch(new HikeProgramActions.AddNewTranslatedDescription(langKey, data));
-    };
-
-    this.deleteDescription = lang => {
-      this._store.dispatch(new HikeProgramActions.DeleteTranslatedDescription(lang));
-    };
   }
 
   ngOnDestroy() {
