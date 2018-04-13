@@ -1,14 +1,14 @@
 import { ControlValueAccessor } from '@angular/forms';
 import { Input } from '@angular/core';
-import { DebugLog } from 'app/log'
+import { DebugLog } from 'app/log';
 
 export abstract class AbstractValueAccessor implements ControlValueAccessor {
-  @Input() change
+  @Input() change;
 
   @DebugLog
   doChange() {
     if (this.change) {
-      this.change()
+      this.change();
     }
   }
 

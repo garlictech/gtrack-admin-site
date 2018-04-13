@@ -4,6 +4,7 @@
         "title": "Title",
         "description": "Description",
         "summary": "Summary",
+        "difficulty": "Difficulty",
 
         "errors": {
             "required": "Mandatory",

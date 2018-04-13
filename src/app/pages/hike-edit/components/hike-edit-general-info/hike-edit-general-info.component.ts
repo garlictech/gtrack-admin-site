@@ -11,6 +11,8 @@ import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { selectDescriptions, dataPath as descriptionDataPath } from 'app/store/selectors/hike-program';
 
 import * as HikeProgramActions from 'app/store/actions/hike-program';
+import { IFormDescriptor, SliderField, TextboxField } from 'subrepos/forms-ngx';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'gt-hike-edit-general-info',
@@ -20,6 +22,8 @@ import * as HikeProgramActions from 'app/store/actions/hike-program';
 export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public generalInfo$: Observable<IGeneralInfoState>;
   public isRoundTrip$: Observable<boolean>;
+
+  public generalInfoFormDescriptor: IFormDescriptor;
 
   public submitDescription = (langKey: string, data: any) => {
     this._store.dispatch(new HikeProgramActions.AddNewTranslatedDescription(langKey, data));
@@ -41,6 +45,22 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.generalInfoFormDescriptor = {
+      submit: {
+        translatableLabel: 'form.submit',
+        classList: ['btn', 'btn-sm', 'btn-fill', 'btn-success'],
+        submitFv: (formGroup: FormGroup) => console.log('CLICK')
+      },
+      fields: {
+        difficulty: new SliderField({
+          label: 'form.difficulty',
+          required: true,
+          min: 0,
+          max: 10
+        })
+      }
+    };
+
     // Selectors
     this.generalInfo$ = this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo);
     this.isRoundTrip$ = this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip);
