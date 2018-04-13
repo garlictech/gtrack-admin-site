@@ -9,26 +9,39 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
-  constructor(private _actions$: Actions, private _router: Router) {}
+  constructor(
+    private _actions$: Actions,
+    private _router: Router
+  ) {}
 
   // Auth guard route forbidden
   @Effect()
-  routeForbidden$: Observable<Action> = this._actions$.ofType(AuthActions.ROUTE_FORBIDDEN).switchMap(data => {
-    return Observable.of(new RouterActions.Go(['/login']));
-  });
+  routeForbidden$: Observable<any> = this._actions$
+    .ofType(AuthActions.ROUTE_FORBIDDEN)
+    .switchMap(data => {
+      this._router.navigate(['/login']);
+
+      return Observable.empty();
+    });
 
   // Login
   @Effect()
-  loginSuccess$: Observable<Action> = this._actions$
+  loginSuccess$: Observable<any> = this._actions$
     .ofType(AuthActions.LOGIN_SUCCESS)
     .filter(() => this._router.url === '/login')
     .switchMap(data => {
-      return Observable.of(new RouterActions.Go(['/']));
+      this._router.navigate(['/']);
+
+      return Observable.empty();
     });
 
   // Logut
   @Effect()
-  logoutSuccess$: Observable<Action> = this._actions$.ofType(AuthActions.LOGOUT_SUCCESS).switchMap(data => {
-    return Observable.of(new RouterActions.Go(['/login']));
-  });
+  logoutSuccess$: Observable<any> = this._actions$
+    .ofType(AuthActions.LOGOUT_SUCCESS)
+    .switchMap(data => {
+      this._router.navigate(['/login']);
+
+      return Observable.empty();
+    });
 }
