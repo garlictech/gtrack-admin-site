@@ -45,7 +45,6 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
         .take(1)
         .subscribe((poi: Poi) => {
           this._gTrackPoi = _.cloneDeep(poi);
-          console.log('this._gTrackPoi', this._gTrackPoi);
           this._initFormSubscriptions();
         });
 

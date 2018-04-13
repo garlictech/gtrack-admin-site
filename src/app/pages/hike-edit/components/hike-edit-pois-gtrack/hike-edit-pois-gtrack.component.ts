@@ -58,17 +58,21 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     // Get pois by id from geoSearch result
     Observable
       .combineLatest(
-        this._store.select(this._geoSearchSelectors.getGeoSearch('gTrackPois')),
-        this._store.select(this._poiSelectors.getPoiIds)
+        this._store
+          .select(this._geoSearchSelectors.getGeoSearch('gTrackPois'))
+          .takeUntil(this._destroy$),
+        this._store
+          .select(this._poiSelectors.getPoiIds)
+          .takeUntil(this._destroy$)
       )
       .takeUntil(this._destroy$)
       .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
         if (searchData) {
-          const poiIds = _.difference((<any>searchData).results, _.intersection((<any>searchData).results, inStorePoiIds))
+          const missingPoiIds = _.difference((<any>searchData).results, _.intersection((<any>searchData).results, inStorePoiIds))
 
           // Get only the not-loaded pois
-          if (poiIds && poiIds.length > 0) {
-            this._store.dispatch(new commonPoiActions.LoadPois(poiIds));
+          if (missingPoiIds && missingPoiIds.length > 0) {
+            this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
           }
         }
       });
@@ -77,14 +81,18 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     // dirty flag will change on add/remove gTrackPoi to/from the hike
     this.pois$ = Observable
       .combineLatest(
-        this._store.select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois)),
-        this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'dirty'))
+        this._store
+          .select(this._geoSearchSelectors.getGeoSearchResults<(IPoi)>('gTrackPois', this._poiSelectors.getAllPois))
+          .takeUntil(this._destroy$),
+        this._store
+          .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'dirty'))
+          .takeUntil(this._destroy$)
       )
       .debounceTime(150)
-      .takeUntil(this._destroy$)
       .filter(([pois, dirty]: [IGTrackPoi[], boolean]) => typeof pois !== 'undefined')
       .switchMap(([pois, dirty]: [IGTrackPoi[], boolean]) => this._store
           .select(this._hikeEditRoutePlannerSelectors.getPath)
+          .takeUntil(this._destroy$)
           .switchMap((path: any) => {
             return Observable.of([this._poiEditorService.organizePois(_.cloneDeep(pois), path), dirty])
           })
@@ -98,7 +106,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         }
 
         return Observable.of(this._poiEditorService.handleHikeInclusion(pois));
-      });
+      })
+      .takeUntil(this._destroy$);
 
     this.pois$
       .debounceTime(150)
@@ -116,24 +125,32 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     //
 
     this.searchContext$ = this._store
-      .select(this._geoSearchSelectors.getGeoSearchContext('gTrackPois'));
+      .select(this._geoSearchSelectors.getGeoSearchContext('gTrackPois'))
+      .takeUntil(this._destroy$);
 
     this.showOnrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOnrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOnrouteMarkers'))
+      .takeUntil(this._destroy$);
 
     this.showOffrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers'))
+      .takeUntil(this._destroy$);
 
     //
     // Refresh markers
     //
 
-    this.showOnrouteMarkers$.takeUntil(this._destroy$).subscribe(() => {
-      this._poiEditorService.refreshPoiMarkers(this._map);
-    });
-    this.showOffrouteMarkers$.takeUntil(this._destroy$).subscribe(() => {
-      this._poiEditorService.refreshPoiMarkers(this._map);
-    });
+    this.showOnrouteMarkers$
+      .takeUntil(this._destroy$)
+      .subscribe(() => {
+        this._poiEditorService.refreshPoiMarkers(this._map);
+      });
+
+    this.showOffrouteMarkers$
+      .takeUntil(this._destroy$)
+      .subscribe(() => {
+        this._poiEditorService.refreshPoiMarkers(this._map);
+      });
   }
 
   ngOnDestroy() {

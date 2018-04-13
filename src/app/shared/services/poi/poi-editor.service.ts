@@ -130,7 +130,7 @@ export class PoiEditorService {
   ) {
     let _pois: any[] = [];
 
-    if (path) {
+    if (pois && path) {
       const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 50, {units: 'meters'});
       const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 1000, {units: 'meters'});
 

@@ -20,11 +20,13 @@ export class HikeEditEffects {
   collectHikeData$: Observable<Action> = this._actions$
     .ofType(hikeEditActions.COLLECT_HIKE_DATA)
     .switchMap(data => {
-      return this._hikeDataService.collectHikeGeneralInfo()
+      return this._hikeDataService
+        .collectHikeGeneralInfo()
         .map((generalInfo) => _.extend(_.cloneDeep(data), generalInfo));
     })
     .switchMap(data => {
-      return this._hikeDataService.collectHikeDescriptions()
+      return this._hikeDataService
+        .collectHikeDescriptions()
         .map((descriptions) => {
           const descriptionObj = {};
           descriptions.map(desc => {
@@ -34,16 +36,23 @@ export class HikeEditEffects {
         });
     })
     .switchMap(data => {
-      return this._hikeDataService.collectHikeRouteInfo()
+      return this._hikeDataService
+        .collectHikeRouteInfo()
         .map((routeInfoObj) => _.extend(_.cloneDeep(data), routeInfoObj));
     })
     .switchMap(data => {
-      return this._hikeDataService.collectHikeLocation(data)
+      return this._hikeDataService
+        .collectHikeStops()
+        .map((stopsObj) => _.extend(_.cloneDeep(data), stopsObj));
+    })
+    .switchMap(data => {
+      return this._hikeDataService
+        .collectHikeLocation(data)
         .then((locationObj) => _.extend(_.cloneDeep(data), locationObj));
     })
     .map(data => {
       return new commonHikeActions.SaveHikeProgram(
-        _.extend(_.cloneDeep(data), {
+        _.extend(data, {
           routeIcon: 'fake',
           elevationIcon: 'fake' // todo from service
         })
