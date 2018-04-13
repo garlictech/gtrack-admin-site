@@ -121,7 +121,7 @@ describe('HikeProgram effects', () => {
 
   describe('saveHike$', () => {
     it('should return the id of the saved HikeProgram from HikeProgramSaved', () => {
-      const action = new hikeProgramActions.SaveHikeProgram(hikeProgramFixtures[0]);
+      const action = new hikeProgramActions.SaveHikeProgram(hikeProgramsStored[0]);
       const completion = new hikeProgramActions.HikeProgramSaved(newId);
       const expected = cold('-b', {b: completion});
 

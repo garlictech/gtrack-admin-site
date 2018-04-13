@@ -48,8 +48,8 @@ const contextReducer: ActionReducer<IAllRouteContextState> = (
         state
       );
 
-    case RouteActionTypes.ROUTE_UNSAVED:
-      return routeContextStateAdapter.updateOne(
+    case RouteActionTypes.ROUTE_MODIFIED:
+      return routeContextStateAdapter.upsertOne(
         {
           id: action.context,
           changes: {

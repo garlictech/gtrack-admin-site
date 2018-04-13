@@ -109,12 +109,12 @@ describe('Route actions', () => {
     });
   });
 
-  describe('RouteUnSaved action', () => {
+  describe('RouteModified action', () => {
     it('should create an action', () => {
-      let action = new actions.RouteUnsaved(id);
+      let action = new actions.RouteModified(id);
 
       expect({ ...action }).toEqual({
-        type: actions.RouteActionTypes.ROUTE_UNSAVED,
+        type: actions.RouteActionTypes.ROUTE_MODIFIED,
         context: id
       });
     });
