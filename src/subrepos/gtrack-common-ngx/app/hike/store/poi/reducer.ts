@@ -70,6 +70,14 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
         }
       }, state);
 
+    case PoiActionTypes.POI_MODIFIED:
+      return poiContextStateAdapter.upsertOne({
+        id: action.context,
+        changes: {
+          saved: false
+        }
+      }, state);
+
     default:
       return state;
   }
