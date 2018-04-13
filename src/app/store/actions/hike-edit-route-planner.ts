@@ -43,7 +43,6 @@ export class PushSegment implements Action {
 
 export class PopSegment implements Action {
   readonly type = POP_SEGMENT;
-  constructor() {}
 }
 
 export class UpdateTotal implements Action {

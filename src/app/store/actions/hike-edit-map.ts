@@ -11,7 +11,6 @@ export const SET_GTRACK_MARKERS = '[HikeEditMap] Set gTrack markers';
 
 export class ResetMapState implements Action {
   readonly type = RESET_MAP_STATE;
-  constructor() {}
 }
 
 export class SetGoogleMarkers implements Action {

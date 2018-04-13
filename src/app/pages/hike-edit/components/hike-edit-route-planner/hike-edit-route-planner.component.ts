@@ -56,7 +56,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
           .takeUntil(this._destroy$);
       })
       .filter(routeContext => !!(routeContext && routeContext.saved))
-      .takeUntil(this._destroy$)
+      .take(1)
       .subscribe((routeContext) => {
         this._toasterService.pop('success', 'Success!', 'Route saved!');
       });

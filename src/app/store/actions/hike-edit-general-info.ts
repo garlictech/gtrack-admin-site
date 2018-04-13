@@ -15,12 +15,10 @@ export const ADD_DESCRIPTION = '[HikeEditGeneralInfo] Add description';
 
 export class ResetGeneralInfoState implements Action {
   readonly type = RESET_GENERAL_INFO_STATE;
-  constructor() {}
 }
 
 export class SetInitialized implements Action {
   readonly type = SET_INITIALIZED;
-  constructor() {}
 }
 
 export class SetHikeId implements Action {

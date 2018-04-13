@@ -47,7 +47,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._routingControlService.reset();
     this._waypointMarkerService.reset();
-    this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
+
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
 
@@ -62,11 +62,13 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({
             hikeId: params.id
           }));
+
           this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
         // Create new hike
         } else {
           // Set page title
           this._title.setTitle('New hike');
+          this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
 
           // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
           const _hikeId = uuid();
@@ -99,7 +101,9 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
     this.allowSave$ = Observable
       .combineLatest(
-        this._store.select(this._hikeEditGeneralInfoSelectors.getPois).takeUntil(this._destroy$),
+        this._store
+          .select(this._hikeEditGeneralInfoSelectors.getPois)
+          .takeUntil(this._destroy$),
         this.routeInfoData$
       )
       .takeUntil(this._destroy$)
@@ -110,9 +114,13 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     // Handling hike save
     this._store
       .select(this._hikeEditGeneralInfoSelectors.getHikeId)
-      .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)))
+      .switchMap((hikeId: string) => {
+        return this._store
+          .select(this._hikeSelectors.getHikeContext(hikeId))
+          .takeUntil(this._destroy$)
+      })
       .filter(hikeContext => !!(hikeContext && hikeContext.saved))
-      .takeUntil(this._destroy$)
+      .take(1)
       .subscribe((hikeContext) => {
         this._toasterService.pop('success', 'Success!', 'Hike saved!');
 
