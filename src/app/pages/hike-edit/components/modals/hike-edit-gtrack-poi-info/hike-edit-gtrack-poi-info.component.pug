@@ -1,8 +1,9 @@
-gt-localized-description(
-  *ngIf='poiLoaded$ | async'
-  [descriptionSelector]='descriptionSelector'
-  [storeDataPath]='descriptionDataPath'
-  [submitFv]='submitDescription'
-  [deleteFv]='deleteDescription' )
+.container
+  gt-localized-description(
+    *ngIf='poiLoaded$ | async'
+    [descriptionSelector]='descriptionSelector'
+    [storeDataPath]='descriptionDataPath'
+    [submitFv]='submitDescription'
+    [deleteFv]='deleteDescription' )
 
-button.btn.btn-sm.btn-fill.btn-success((click)="savePoi()") Save
+  button.btn.btn-sm.btn-fill.btn-success((click)="savePoi()" [disabled]="!(isDirty$ | async)") Save
