@@ -7,7 +7,7 @@ import { RoutingControlService } from '.';
 
 @Injectable()
 export class WaypointMarkerService {
-  private _maxAllowedValhallaWayPoints = 2; // TOO: deprecated???
+  private _maxSegmentPoints = 2;
   private _routeSegmentIndex: number;
   private _waypointIndex: number;
 
@@ -15,7 +15,6 @@ export class WaypointMarkerService {
     private _store: Store<State>,
     private _routingControlService: RoutingControlService
   ) {
-
     this.reset();
   }
 
@@ -37,7 +36,7 @@ export class WaypointMarkerService {
     if (_isLastWaypointInAdditionalSegment) {
       this._routingControlService.pop();
       this._routeSegmentIndex--;
-      this._waypointIndex = this._maxAllowedValhallaWayPoints;
+      this._waypointIndex = this._maxSegmentPoints;
     } else if (_isFirstWaypointInFirstSegment) {
       this.reset();
       this._routingControlService.clearControls();
@@ -58,8 +57,8 @@ export class WaypointMarkerService {
   }
 
   /**
-   * The first segment contains _maxAllowedValhallaWayPoints.
-   * The other segments contain _maxAllowedValhallaWayPoints - 1 points,
+   * The first segment contains _maxSegmentPoints.
+   * The other segments contain _maxSegmentPoints - 1 points,
    * as their first point is always duplicate of the last point of the previous segment.
    * So, in case of first segment, we adjust the number...
    */
@@ -69,7 +68,7 @@ export class WaypointMarkerService {
     } else if (this._routeSegmentIndex === 1) {
       return this._waypointIndex;
     } else {
-      return (this._routeSegmentIndex - 1) * (this._maxAllowedValhallaWayPoints - 1) + this._waypointIndex;
+      return (this._routeSegmentIndex - 1) * (this._maxSegmentPoints - 1) + this._waypointIndex;
     }
   }
 
@@ -85,23 +84,29 @@ export class WaypointMarkerService {
   public addWaypoint(latlng) {
     let _control: L.Routing.Control;
     const _isStartRouting = this._getWaypointNum() === 0;
-    const _shouldAddNewSegment = this._waypointIndex === this._maxAllowedValhallaWayPoints;
+    const _shouldAddNewSegment = this._waypointIndex === this._maxSegmentPoints;
 
+    // First marker on the map - it will be the start point of the 1st segment
     if (_isStartRouting) {
       _control = this._routingControlService.addNew();
 
       this._routeSegmentIndex = 1;
       this._waypointIndex = 0;
+    // New marker, we have to add new segment, too
     } else if (_shouldAddNewSegment) {
       const _previousControl = this._routingControlService.getActualControl();
       const _waypoints = _previousControl.getWaypoints();
-      const _lastWaypoint = _waypoints[_waypoints.length - 1];
+
+      const _lastWaypointOfPrevControl = _waypoints[_waypoints.length - 1];
 
       _control = this._routingControlService.addNew();
-      _control.spliceWaypoints(0, 1, _lastWaypoint);
+
+      // The first point of the new segment will be the last point of the previous segment
+      _control.spliceWaypoints(0, 1, _lastWaypointOfPrevControl);
 
       this._waypointIndex = 1;
       this._routeSegmentIndex++;
+    // Second marker - it will be the end point of the 1st segment
     } else {
       _control = this._routingControlService.getActualControl();
     }
@@ -111,8 +116,29 @@ export class WaypointMarkerService {
       name: this._getWaypointNum() + 1
     }
 
+    // Update waypoint at _waypointIndex pos (0/1) on the current segment
     _control.spliceWaypoints(this._waypointIndex, 1, _waypoint);
     _control.route();
     this._waypointIndex++;
+  }
+
+  public addWaypointList(coords) {
+    for (let i = 1; i < coords.length; i++) {
+      const _control: L.Routing.Control = this._routingControlService.addNew();
+      const _sp: L.Routing.Waypoint = {
+        latLng: coords[i - 1],
+        name: i.toString()
+      }
+      const _ep: L.Routing.Waypoint = {
+        latLng: coords[i],
+        name: (i + 1).toString()
+      }
+
+      _control.setWaypoints([_sp, _ep]);
+      _control.route();
+    }
+
+    this._waypointIndex = 1;
+    this._routeSegmentIndex = coords.length - 1;
   }
 }
