@@ -90,7 +90,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         // Generate initial route id and load the empty route (for save toaster handling)
         const _routeId = uuid();
         this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({ routeId: _routeId }));
-        this._store.dispatch(new commonRouteActions.RouteUnsaved(_routeId));
+        this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
 
         // Create initial language block
         this._store.dispatch(
@@ -110,7 +110,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         this._store.dispatch(new hikeEditGeneralInfoActions.SetInitialized());
       }
     });
-
 
     this.routeInfoData$ = this._store
       .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)

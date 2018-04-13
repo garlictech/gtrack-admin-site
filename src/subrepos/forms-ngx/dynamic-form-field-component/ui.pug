@@ -106,6 +106,15 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
         [change]="getOnChange()"
       )
 
+    ng-container(*ngSwitchCase="'slider'")
+      app-form-slider.field(
+        [id]="field.key",
+        [formControlName]="field.key",
+        [change]="getOnChange()"
+        [min]="field.min"
+        [max]="field.max"
+      )
+
   div.feedback.info(*ngIf="field.infoText") {{ field.infoText | translate }}
   div.feedback.invalid(*ngIf="showError") {{actualError}}
   div.feedback.invalid(*ngIf="remoteError$ | async") {{ remoteError$ | async }}

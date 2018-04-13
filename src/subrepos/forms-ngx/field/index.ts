@@ -17,6 +17,7 @@ export * from './switch';
 export * from './checkbox';
 export * from './html';
 export * from './text';
+export * from './slider';
 
 export interface IResetFv {
   (formDescriptor: IFormDescriptor): IFormInstance;

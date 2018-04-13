@@ -44,7 +44,6 @@ export class LocalizedDescriptionComponent implements AfterViewInit {
         return { label: lang.name, value: lang.locale };
       })
     );
-    // .do(() => this._cdr.detectChanges());
   }
 
   getLanguageFormDescriptor(languageKey: string) {

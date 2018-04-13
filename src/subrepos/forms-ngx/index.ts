@@ -6,7 +6,8 @@ import {
   DropdownModule,
   MultiSelectModule,
   RadioButtonModule,
-  InputSwitchModule
+  InputSwitchModule,
+  SliderModule
 } from 'primeng/primeng';
 import { FileDropModule } from 'angular2-file-drop';
 
@@ -23,6 +24,7 @@ import { DynamicFormGroupComponent } from './dynamic-form-group-component';
 import { DynamicFormSectionComponent } from './dynamic-form-section-component';
 import { FileUploadComponent } from './file-upload';
 import { SwitchComponent } from './switch';
+import { SliderComponent } from './slider';
 import { BusyIndicatorComponent } from './busy-indicator';
 
 import { XhrFileUpload } from './xhr-file-upload';
@@ -37,6 +39,7 @@ import { XhrFileUpload } from './xhr-file-upload';
     MultiSelectModule,
     RadioButtonModule,
     InputSwitchModule,
+    SliderModule,
     LanguageModule,
     FileDropModule
   ],
@@ -52,7 +55,8 @@ import { XhrFileUpload } from './xhr-file-upload';
     DropdownSelectComponent,
     FileUploadComponent,
     SwitchComponent,
-    BusyIndicatorComponent
+    BusyIndicatorComponent,
+    SliderComponent
   ],
   providers: [XhrFileUpload],
   exports: [DynamicFormComponent, EmojiInputComponent]
