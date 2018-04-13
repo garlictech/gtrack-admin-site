@@ -1,6 +1,6 @@
 import { storeLogger } from 'ngrx-store-logger';
 import { StoreModule } from '@ngrx/store';
-import { routerReducer, RouterReducerState } from '@ngrx/router-store';
+import { routerReducer } from '@ngrx/router-store';
 import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/models';
 import { storeFreeze } from 'ngrx-store-freeze';
 
@@ -67,29 +67,6 @@ export { commonGeoSearchActions };
 export { AuthEffects, HikeEditEffects, HikeEditPoiEffects } from './effects';
 export { PoiEffects } from 'subrepos/gtrack-common-ngx';
 
-////////////
-// States
-////////////
-
-import {
-  IHikeEditRoutePlannerState,
-  IHikeEditMapState,
-  IHikeEditMapMapState,
-  IHikeEditPoiState,
-  IExternalPoiListContextState,
-  IHikeEditGeneralInfoState,
-  IExternalPoiListContextItemState
-} from './state';
-export {
-  IHikeEditRoutePlannerState,
-  IHikeEditMapState,
-  IHikeEditMapMapState,
-  IHikeEditPoiState,
-  IExternalPoiListContextState,
-  IHikeEditGeneralInfoState,
-  IExternalPoiListContextItemState
-};
-
 //////////////
 // Reducers
 //////////////
@@ -98,24 +75,13 @@ import { hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer } f
 import { hikeEditGeneralInfoReducer } from './reducer/hike-edig-general-info';
 import { environment } from 'environments/environment';
 export { hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer };
-
+import { State } from './state';
+import { editedGtrackPoiReducer } from './reducer/edited-gtrack-poi';
 //////////////
 // State
 //////////////
 
 // Extend the store interface with that.
-export interface State extends CommonState {
-  authentication: IAuthenticationState;
-  router: RouterReducerState; // ngrx/router
-  deepstream: IDeepstreamState;
-  hikeEditRoutePlanner: IHikeEditRoutePlannerState;
-  hikeEditGeneralInfo: IHikeEditGeneralInfoState;
-  hikeEditMap: IHikeEditMapState;
-  hikeEditPoi: IHikeEditPoiState;
-  language: ILocalizationState;
-
-  hikeProgram: IHikeProgramState;
-}
 
 // Same keys as in the state!!!
 const reducers: ActionReducerMap<State> = {
@@ -126,7 +92,8 @@ const reducers: ActionReducerMap<State> = {
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditMap: hikeEditMapReducer,
   language: LanguageReducer,
-  hikeProgram: hikeProgramReducer
+  hikeProgram: hikeProgramReducer,
+  editedGtrackPoi: editedGtrackPoiReducer
 };
 
 function logger(reducer: ActionReducer<State>): any {
@@ -140,3 +107,4 @@ if (!environment.production) {
 }
 
 export const store = StoreModule.forRoot(reducers, { metaReducers });
+export * from './state';
