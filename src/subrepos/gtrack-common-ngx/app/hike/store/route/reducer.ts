@@ -70,7 +70,10 @@ const reducer: ActionReducer<IRouteEntityState> = (
 ): IRouteEntityState => {
   switch (action.type) {
     case RouteActionTypes.ROUTE_LOADED:
-      return routeAdapter.addOne(action.route, state);
+      return routeAdapter.upsertOne({
+        id: action.route.id,
+        changes: _.cloneDeep(action.route)
+      }, state);
 
     default:
       return state;

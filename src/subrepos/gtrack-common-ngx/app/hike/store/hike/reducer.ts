@@ -71,10 +71,18 @@ const reducer: ActionReducer<IHikeEntityState> = (
 ): IHikeEntityState => {
   switch (action.type) {
     case HikeProgramActionTypes.HIKE_PROGRAM_LOADED:
-      return hikeAdapter.addOne(action.hikeProgram, state);
+      return hikeAdapter.upsertOne({
+        id: action.hikeProgram.id,
+        changes: _.cloneDeep(action.hikeProgram)
+      }, state);
 
     case HikeProgramActionTypes.ALL_HIKE_PROGRAMS_LOADED:
-      return hikeAdapter.addMany(action.hikePrograms, state);
+      return hikeAdapter.upsertMany(action.hikePrograms.map(poi => {
+        return {
+          id: poi.id,
+          changes: _.cloneDeep(poi)
+        }
+      }), state);
 
     default:
       return state;
