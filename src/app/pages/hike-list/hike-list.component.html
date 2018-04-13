@@ -25,8 +25,11 @@
                 <tbody>
                   <tr *ngFor="let hike of (hikeList$ | async)">
                     <td class="text-nowrap">
-                      <a href="#" routerLink="/admin/hike/{{hike.id}}">{{translateDescription(hike.description, 'title')}}</a>
-                      <small class="text-secondary">({{hike.id}})</small>
+                      <div>
+                        <a href="#" routerLink="/admin/hike/{{hike.id}}">{{translateDescription(hike.description, 'title')}}</a>
+                      </div>
+                      <div><small class="text-secondary">ID: {{hike.id}}</small></div>
+                      <div><small class="text-secondary">Last update: {{hike.timestamp | date: 'yyyy.MM.dd. HH:mm'}}</small></div>
                     </td>
                     <td>{{translateDescription(hike.description, 'summary')}}</td>
                     <td class="td-actions">
