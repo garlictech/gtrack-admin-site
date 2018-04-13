@@ -88,7 +88,7 @@ export class HikeDataService {
           for (let poi of hikePois) {
             stops.push({
               distanceFromOrigo: (<IGTrackPoi>poi).distFromRoute,
-              isCheckpoint: poi.isCheckpoint || false,
+              isCheckpoint: false, // TODO: from checkpoint array
               onRoute: (<IGTrackPoi>poi).onRoute || false,
               poiId: poi.id,
               lat: poi.lat,
