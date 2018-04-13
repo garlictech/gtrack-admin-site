@@ -6,11 +6,13 @@ import { State, hikeEditGeneralInfoActions, commonRouteActions, commonHikeAction
 import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { IGeneralInfoState } from 'app/store/state';
 import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
-import { ITextualDescriptionItem } from '../../interfaces';
-import { IHikeProgram, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { ITextualDescriptionItem, IGTrackPoi } from '../../interfaces';
+import { IHikeProgram, ILocalizedItem, ITextualDescription, IPoi } from 'subrepos/provider-client';
+import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Injectable()
 export class HikeDataService {
@@ -18,6 +20,7 @@ export class HikeDataService {
     private _store: Store<State>,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _poiSelectors: PoiSelectors,
     private _reverseGeocodingService: ReverseGeocodingService
   ) {}
 
@@ -32,9 +35,10 @@ export class HikeDataService {
       return {
         id: generalInfo.hikeId,
         routeId: generalInfo.routeId,
-        difficulty: generalInfo.difficulty.toString(), // TODO it will be number!!
+        difficulty: generalInfo.difficulty,
         isRoundTrip: isRoundTrip,
-        pois: generalInfo.pois
+        timestamp: moment().valueOf(),
+        pois: generalInfo.pois // id list
       };
     });
   }
@@ -63,48 +67,46 @@ export class HikeDataService {
           'uphill',
           'downhill',
           'time',
-          'score',
-          'isRoundTrip',
-          'difficulty',
-          'rate',
-          'routeIcon',
-          'elevationIcon'
+          'score'
         ]);
 
-        // TEST DATA FOR STOPS ====>
-        console.warn('TODO: collectHikeRouteInfo - Temporary stops array from markers');
-        _routeInfo.stops = [];
+        return _routeInfo;
+      });
+  }
 
-        for (let i in routeInfo.route.features) {
-          let _feature = routeInfo.route.features[i];
-          let _segment: any = {
-            uphill: 0,
-            downhill: 0,
-            distance: 0,
-            score: 0,
-            time: 0
-          };
+  /**
+   * collectHikeData effect submethod
+   */
+  public collectHikeStops() {
+    return this._store
+      .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
+      .take(1)
+      .map(hikePois => {
+        const stops: any[] = [];
 
-          if (parseInt(i) > 1) {
-            _segment = _.pick(routeInfo.segments[parseInt(i) - 2], ['uphill', 'downhill', 'distance', 'score', 'time']);
-          }
-
-          if (_feature.geometry.type === 'Point') {
-            _routeInfo.stops.push({
-              distanceFromOrigo: _segment.distance,
-              isCheckpoint: false,
-              onRoute: true,
-              poiId: 'fakeId',
-              lat: _feature.geometry.coordinates[1],
-              lon: _feature.geometry.coordinates[0],
-              segment: _segment
+        if (hikePois && hikePois.length > 0) {
+          for (let poi of hikePois) {
+            stops.push({
+              distanceFromOrigo: (<IGTrackPoi>poi).distFromRoute,
+              isCheckpoint: poi.isCheckpoint || false,
+              onRoute: (<IGTrackPoi>poi).onRoute || false,
+              poiId: poi.id,
+              lat: poi.lat,
+              lon: poi.lon,
+              segment: {
+                uphill: 0,
+                downhill: 0,
+                distance: 0,
+                score: 0,
+                time: 0
+              }
             });
           }
         }
 
-        // <=== TEST DATA FOR STOPS
-
-        return _routeInfo;
+        return {
+          stops: stops
+        };
       });
   }
 
@@ -138,8 +140,8 @@ export class HikeDataService {
    */
   public splitHikeDataToStore(hikeData: IHikeProgram) {
     // Set unsaved states
-    this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(<string>hikeData.id));
-    this._store.dispatch(new commonRouteActions.RouteUnsaved(hikeData.routeId));
+    this._store.dispatch(new commonHikeActions.HikeProgramModified(<string>hikeData.id));
+    this._store.dispatch(new commonRouteActions.RouteModified(hikeData.routeId));
 
     // Set route id and load route data
     this._store.dispatch(
