@@ -47,7 +47,7 @@ export class PoiEditorService {
     };
     _.defaultsDeep(
       _poiData,
-      _.pick(poi, ['elevation', 'lat', 'lon', 'objectType', 'distFromRoute', 'description', 'types'])
+      _.pick(poi, ['elevation', 'lat', 'lon', 'objectType', 'description', 'types'])
     );
 
     switch (poi.objectType) {
