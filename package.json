@@ -105,7 +105,13 @@
         "promise-polyfill": "^6.0.2",
         "rxjs": "^5.5.8",
         "tether": "^1.4.3",
-        "zone.js": "^0.8.26"
+        "zone.js": "^0.8.26",
+        "primeng": "^5.2.0",
+        "localize-ngx": "file:./src/subrepos/localize-ngx",
+        "forms-ngx": "file:./src/subrepos/forms-ngx",
+        "emojionearea": "^3.4.1",
+        "angular2-file-drop": "^0.2.0",
+        "normalize.scss": "^0.1.0"
     },
     "devDependencies": {
         "@angularclass/hmr": "^2.1.3",

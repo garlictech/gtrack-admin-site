@@ -1,0 +1,12 @@
+.file-upload-wrapper(fileDrop, (onFileDrop)="onFileDrop($event)", [options]="options")
+  label([for]="fileId")
+    input.input(type="text", [(ngModel)]="value", [ngStyle]="{'background': generateBackground()}")
+
+    button
+      span.ui-clickable.fa.fa-fw.fa-file-o(*ngIf="!uploading")
+      app-form-busy-indicator(*ngIf="uploading")
+
+  input([hidden]="true", type="file", (change)="onChangeInternal($event)", [id]="fileId", [accept]="type")
+
+  .thumbnail(*ngIf="type === 'image/*' && thumbnailUrl")
+    img.thumbnail([src]="thumbnailUrl")

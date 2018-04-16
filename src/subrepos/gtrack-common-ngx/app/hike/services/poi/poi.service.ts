@@ -17,10 +17,10 @@ export class PoiService {
   constructor(
     private _deepstream: DeepstreamService,
     private _geometryService: GeometryService,
-    private _geoSearchService: GeoSearchService,
-  ) { }
+    private _geoSearchService: GeoSearchService
+  ) {}
 
-  public get(id: string): Observable<IPoi> {
+  public get(id: string): Observable<IPoiStored> {
     return this._deepstream
       .getRecord<IPoiStored>(`pois/${id}`)
       .get()
@@ -42,14 +42,14 @@ export class PoiService {
         }
       })
       .mergeMap((poiIds: string[]) => {
-        if (poiIds.length > 0) {
-          return Observable
-            .combineLatest(...poiIds.map(poiId => {
+        if (poiIds.length > 0) {
+          return Observable.combineLatest(
+            ...poiIds.map(poiId => {
               return this.get(poiId);
-            }))
-            .map(pois => {
-              return pois;
-            });
+            })
+          ).map(pois => {
+            return pois;
+          });
         } else {
           return Observable.of([]);
         }

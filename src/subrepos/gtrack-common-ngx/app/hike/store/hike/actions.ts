@@ -7,10 +7,7 @@ export enum HikeProgramActionTypes {
   LOAD_HIKE_PROGRAM_FAILED = '[HikeProgram] Load hikeProgram failed',
   HIKE_PROGRAM_LOADED = '[HikeProgram] HikeProgram loaded',
   LOAD_HIKE_PROGRAMS = '[HikeProgram] Load hikePrograms',
-  ALL_HIKE_PROGRAMS_LOADED = '[HikeProgram] All hikePrograms loaded',
-  SAVE_HIKE_PROGRAM = '[HikeProgram] Save hikeProgram',
-  HIKE_PROGRAM_SAVED = '[HikeProgram] HikeProgram saved',
-  HIKE_PROGRAM_UNSAVED = '[HikeProgram] HikeProgram unsaved'
+  ALL_HIKE_PROGRAMS_LOADED = '[HikeProgram] All hikePrograms loaded'
 }
 
 export class LoadHikeProgram implements Action {
@@ -53,30 +50,9 @@ export class AllHikeProgramsLoaded implements Action {
   }
 }
 
-export class SaveHikeProgram implements Action {
-  readonly type = HikeProgramActionTypes.SAVE_HIKE_PROGRAM;
-
-  constructor(public hikeProgram: IHikeProgram) {}
-}
-
-export class HikeProgramSaved implements Action {
-  readonly type = HikeProgramActionTypes.HIKE_PROGRAM_SAVED;
-
-  constructor(public context: string) {}
-}
-
-export class HikeProgramUnsaved implements Action {
-  readonly type = HikeProgramActionTypes.HIKE_PROGRAM_UNSAVED;
-
-  constructor(public context: string) {}
-}
-
 export type AllHikeActions =
   | LoadHikeProgram
   | HikeProgramLoaded
   | LoadHikeProgramFailed
   | LoadHikePrograms
-  | AllHikeProgramsLoaded
-  | SaveHikeProgram
-  | HikeProgramSaved
-  | HikeProgramUnsaved;
+  | AllHikeProgramsLoaded;

@@ -1,0 +1,7 @@
+@each $size in $sizes {
+  .p-#{$size} { padding: #{$size}px !important; }
+  .pt-#{$size} { padding-top: #{$size}px !important; }
+  .pb-#{$size} { padding-bottom: #{$size}px !important; }
+  .pl-#{$size} { padding-left: #{$size}px !important; }
+  .pr-#{$size} { padding-right: #{$size}px !important; }
+}

@@ -33,17 +33,15 @@ export class HikeProgramService {
         query: []
       })
       .map(data => {
-        return data
-          .filter(item => (item.stops instanceof Array))
-          .map(item => {
-            let hike: HikeProgram = new HikeProgram(item, this._checkpointService);
+        return data.filter(item => item.stops instanceof Array).map(item => {
+          let hike: HikeProgram = new HikeProgram(item, this._checkpointService);
 
-            return hike;
-          });
+          return hike;
+        });
       });
   }
 
-  public create(hikeProgram: IHikeProgram) {
+  public save(hikeProgram: IHikeProgram) {
     let data = hikeProgram;
 
     if (hikeProgram instanceof HikeProgram) {

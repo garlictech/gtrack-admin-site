@@ -1,0 +1,31 @@
+@each $name, $size in $breakpoints {
+  @if $size > 0 {
+    @include media-breakpoint-up($name) {
+      .text-#{$name}-left { text-align: left !important; }
+      .text-#{$name}-center { text-align: center !important; }
+      .text-#{$name}-right { text-align: right !important; }
+    }
+  }
+}
+
+@each $color, $value in $colors {
+  .text-#{$color} {
+    color: $value !important;
+  }
+}
+
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}

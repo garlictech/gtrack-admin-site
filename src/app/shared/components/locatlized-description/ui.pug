@@ -1,0 +1,11 @@
+
+.lang-toolbar
+    p-dropdown([options]="selectableLanguages$ | async" [(ngModel)]="selectedLanguage" placeholder="Add language" optionLabel="label")
+    button.btn.btn-round.btn-sm.btn-just-icon.btn-success((click)="addTranslation()")
+      i.material-icons add
+
+p-accordion
+    p-accordionTab(*ngFor="let lng of (languageKeys$ | async)" [header]="getLangName(lng)")
+      button.btn.btn-danger.btn-simple.btn-link.pull-right((click)="deleteTranslation(lng)" title="Delete language" *ngIf="lng !== 'en_US'")
+        i.material-icons delete
+      app-dynamic-form([formDescriptor]='getLanguageFormDescriptor(lng)' [formDataPath$]='getLanguageFormDataPath(lng)')

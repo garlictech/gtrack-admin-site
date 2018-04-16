@@ -1,3 +1,4 @@
+import './styles/styles.scss';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
@@ -31,10 +32,16 @@ import {
   GeoSearchModule,
   GeoSearchEffects
 } from 'subrepos/gtrack-common-ngx';
+
+import { LanguageModule } from './language';
+
 // App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store, AuthEffects, HikeEditEffects, HikeEditPoiEffects } from './store';
+import { AuthEffects, HikeEditEffects, HikeEditPoiEffects, HikeProgramEffects } from './store/effects';
+
+import { store } from './store';
+
 import {
   HikeEditPoiSelectors,
   HikeEditMapSelectors,
@@ -63,8 +70,6 @@ import {
 import { AngularFireModule } from 'angularfire2';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 
-// Global styles
-import './styles';
 import { RoutePlannerService, RoutingControlService } from './shared/services/admin-map';
 import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
 
@@ -144,10 +149,12 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       // Common-ngx
       PoiEffects,
       HikeEffects,
-      GeoSearchEffects
+      GeoSearchEffects,
+      HikeProgramEffects
     ]),
     // Vendor
-    ToasterModule.forRoot()
+    ToasterModule.forRoot(),
+    LanguageModule
   ],
   providers: [
     // Services
@@ -176,6 +183,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     // Lib
     ToasterService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [LanguageModule]
 })
 export class AppModule {}

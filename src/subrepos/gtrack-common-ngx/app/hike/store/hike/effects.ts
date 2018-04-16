@@ -19,37 +19,26 @@ export class HikeEffects {
   loadHike$: Observable<Action> = this._actions$
     .ofType<LocalActions.LoadHikeProgram>(LocalActions.HikeProgramActionTypes.LOAD_HIKE_PROGRAM)
     .mergeMap(action => {
-      return this._hikeProgramService
-        .get(action.context)
-        .map(hike => {
-          if (hike !== null) {
-            return new LocalActions.HikeProgramLoaded(action.context, hike);
-          }
+      return this._hikeProgramService.get(action.context).map(hike => {
+        if (hike !== null) {
+          return new LocalActions.HikeProgramLoaded(action.context, hike);
+        }
 
-          return new LocalActions.LoadHikeProgramFailed(action.context);
-        });
+        return new LocalActions.LoadHikeProgramFailed(action.context);
+      });
     });
 
-    @Effect()
-    loadHikes$: Observable<Action> = this._actions$
-      .ofType<LocalActions.LoadHikePrograms>(LocalActions.HikeProgramActionTypes.LOAD_HIKE_PROGRAMS)
-      .mergeMap(action => {
-        return this._hikeProgramService
-          .query()
-          .map(hikePrograms => {
-            let ids = hikePrograms.map(hikeProgram => hikeProgram.id);
-            return new LocalActions.AllHikeProgramsLoaded(ids, hikePrograms);
-          });
+  @Effect()
+  loadHikes$: Observable<Action> = this._actions$
+    .ofType<LocalActions.LoadHikePrograms>(LocalActions.HikeProgramActionTypes.LOAD_HIKE_PROGRAMS)
+    .mergeMap(action => {
+      return this._hikeProgramService.query().map(hikePrograms => {
+        let ids = hikePrograms.map(hikeProgram => hikeProgram.id);
+        return new LocalActions.AllHikeProgramsLoaded(ids, hikePrograms);
       });
+    });
 
-    @Effect()
-    saveHike$: Observable<Action> = this._actions$
-      .ofType<LocalActions.SaveHikeProgram>(LocalActions.HikeProgramActionTypes.SAVE_HIKE_PROGRAM)
-      .mergeMap(action => {
-        return this._hikeProgramService
-          .create(action.hikeProgram)
-          .map(response => new LocalActions.HikeProgramSaved(response.id));
-      });
-
-  constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {}
+  constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {
+    /* EMPTY */
+  }
 }

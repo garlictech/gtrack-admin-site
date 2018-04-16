@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormModule } from 'subrepos/forms-ngx';
 // Pipes
 import { ObjectToArrayPipe } from 'app/shared/pipes';
 // Modules
@@ -28,9 +29,11 @@ import {
 // Shared components
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 // gTrack common
-import { MapModule, HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
+import { MapModule, HikeModule, SharedModule, UtilsModule } from 'subrepos/gtrack-common-ngx';
 // Lib
 import { TagInputModule } from 'ngx-chips';
+import { SharedComponentsModule } from 'app/shared/components';
+import { LanguageModule } from 'app/language';
 
 const COMPONENTS = [
   HikeEditComponent,
@@ -56,26 +59,19 @@ const COMPONENTS = [
     CommonModule,
     RouterModule,
     FormsModule,
+    FormModule,
     ReactiveFormsModule,
     MapModule,
     HikeModule,
     SharedModule,
-    // Lib
-    TagInputModule
+    TagInputModule,
+    UtilsModule,
+    SharedComponentsModule,
+    LanguageModule
   ],
-  exports: [
-    ...COMPONENTS
-  ],
-  declarations: [
-    AdminLeafletComponent,
-    ObjectToArrayPipe,
-    ...COMPONENTS
-  ],
-  entryComponents: [
-    ...COMPONENTS
-  ],
-  providers: [
-    DynamicModalService
-  ]
+  exports: [...COMPONENTS],
+  declarations: [AdminLeafletComponent, ObjectToArrayPipe, ...COMPONENTS],
+  entryComponents: [...COMPONENTS],
+  providers: [DynamicModalService]
 })
 export class HikeEditModule {}

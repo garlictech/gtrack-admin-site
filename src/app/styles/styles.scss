@@ -1,0 +1,73 @@
+@import '~normalize.scss/normalize';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '../../assets/sass/gtrack-material-dashboard.scss';
+@import '../../assets/sass/light-bootstrap-dashboard.scss';
+@import '~font-awesome/scss/font-awesome';
+@import '~primeng/resources/themes/omega/theme.css';
+@import '~primeng/resources/primeng.min.css';
+@import '~leaflet/dist/leaflet.css';
+@import '~leaflet-routing-machine/dist/leaflet-routing-machine.css';
+@import '~angular2-toaster/src/toaster';
+@import '~nouislider/distribute/nouislider.css';
+@import 'base/variables';
+@import 'link';
+@import 'mixins';
+@import 'defaults';
+@import 'utilities';
+@import 'components';
+a {
+    cursor: pointer;
+}
+
+// input,
+// select,
+// textarea {
+//     font-weight: 300 !important;
+// }
+
+/*
+table.table {
+  td {
+    padding: 4px 8px !important;
+    .btn-control > button {
+      padding: 6px !important;
+      margin-left: 10px;
+    }
+  }
+}
+*/
+
+.btn .material-icons {
+    vertical-align: middle;
+    font-size: 17px;
+    top: -1px;
+    position: relative;
+}
+
+button.btn-just-icon.btn-sm {
+    padding: 5px !important;
+}
+
+.clearfix {
+    &::after {
+        display: block;
+        content: '';
+        clear: both;
+    }
+}
+
+.main-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.td-actions {
+    white-space: nowrap;
+    text-align: right;
+    button {
+        padding: 0 4px !important;
+    }
+}

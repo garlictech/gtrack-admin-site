@@ -1,0 +1,120 @@
+div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
+  h2(*ngIf="field.title") {{field.title | translate}}
+  h3(*ngIf="field.subTitle") {{field.subTitle | translate}}
+
+  input.input(
+    *ngIf="field.controlType === 'checkbox'",
+    type="checkbox",
+    [formControlName]="field.key",
+    [id]="field.key",
+    [attr.disabled]="!!field.disabled ? true : null",
+    [ngClass]="['input-checkbox']"
+  )
+
+  label.label(*ngIf="!field.disableLabel && field.label", [attr.for]="field.key")
+    span([innerHtml]="field.label | translate:labelParams")
+    span.required(*ngIf="field?.required") *
+    small(*ngIf="field.helpText") {{ field.helpText | translate }}
+
+  ng-container([ngSwitch]="field.controlType")
+    input.input(
+      *ngSwitchCase="'textbox'",
+      [formControlName]="field.key",
+      [id]="field.key",
+      [type]="field.type",
+      [ngClass]="['input-' + field.type]",
+      [placeholder]="sanitizedPlaceholder | translate"
+    )
+
+    textarea.field.textarea(
+      *ngSwitchCase="'textarea'",
+      [formControlName]="field.key",
+      [id]="field.key",
+      [rows]="field.rows",
+      [placeholder]="sanitizedPlaceholder | translate"
+    )
+
+    div.field-text(*ngSwitchCase="'text'") {{ field.textKey | translate }}
+    div.field-html(*ngSwitchCase="'html'", [innerHtml]="field.content")
+
+    ng-container(*ngSwitchCase="'select'")
+      ng-container([ngSwitch]="field.type")
+        app-form-radio-select.field(
+          *ngSwitchCase="'radio'",
+          [options]= "field.selectOptions",
+          [formControlName]="field.key",
+          ngDefaultControl,
+          [id]="field.key"
+        )
+
+        app-form-dropdown-select.field(
+          *ngSwitchCase="'dropdown'",
+          [options]="field.selectOptions",
+          [formControlName]="field.key",
+          [id]="field.key",
+          [change]="getOnChange()"
+        )
+
+    pioneer-wst-form-multi-select.field(
+      *ngSwitchCase="'multi-select'",
+      [options]="field.selectOptions",
+      [formControlName]="field.key",
+      [id]="field.key",
+      [change]="getOnChange()"
+    )
+
+    app-form-date-picker.field(
+      *ngSwitchCase="'date'",
+      [formControlName]="field.key",
+      [id]="field.key",
+      [maxDate]="field.maxDate",
+      [defaultDate]="field.defaultDate"
+    )
+
+    app-form-emoji-input.field(
+      *ngSwitchCase="'emoji'",
+      [formControlName]="field.key",
+      [id]="field.key",
+      [rows]="field.rows",
+      [placeholder]="sanitizedPlaceholder | translate"
+    )
+
+    app-form-file-upload.field(
+      *ngSwitchCase="'file'",
+      [formControlName]="field.key",
+      [id]="field.key",
+      [fileId]="field.fileId",
+      [type]="field.type"
+    )
+
+    ng-container(*ngSwitchCase="'group'")
+      app-dynamic-form-group(
+        [fields]="field",
+        [controlGroup]="form.controls[field.key]"
+      )
+
+    ng-container(*ngSwitchCase="'section'")
+      app-dynamic-form-section(
+        [fields]="field",
+        [formControlName]="field.key"
+      )
+
+    ng-container(*ngSwitchCase="'switch'")
+      app-form-switch.field(
+        [id]="field.key",
+        [formControlName]="field.key",
+        [change]="getOnChange()"
+      )
+
+    ng-container(*ngSwitchCase="'slider'")
+      app-form-slider.field(
+        [id]="field.key",
+        [formControlName]="field.key",
+        [change]="getOnChange()"
+        [min]="field.min"
+        [max]="field.max"
+      )
+
+  div.feedback.info(*ngIf="field.infoText") {{ field.infoText | translate }}
+  div.feedback.invalid(*ngIf="showError") {{actualError}}
+  div.feedback.invalid(*ngIf="remoteError$ | async") {{ remoteError$ | async }}

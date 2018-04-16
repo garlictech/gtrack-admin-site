@@ -1,0 +1,6 @@
+.feedback {
+    margin-top: 5px;
+    &.invalid {
+        color: $red;
+    }
+}

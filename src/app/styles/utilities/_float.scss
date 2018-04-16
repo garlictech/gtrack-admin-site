@@ -1,0 +1,23 @@
+.f-right {
+  float: right !important;
+}
+
+.f-left {
+  float: left !important;
+}
+
+.f-none {
+  float: none !important;
+}
+
+.clearfix {
+	&:before,
+	&:after {
+		content: " ";
+		display: table;
+	}
+
+	&:after {
+		clear: both;
+	}
+}

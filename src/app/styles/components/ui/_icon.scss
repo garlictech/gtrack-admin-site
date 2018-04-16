@@ -1,0 +1,16 @@
+.has-counter {
+  position: relative;
+
+  &::after {
+    display: block;
+    content: attr(data-counter);
+    position: absolute;
+    font-size: 0.75rem;
+    background: $orange;
+    padding: 5px;
+    border-radius: 50%;
+    top: -10px;
+    right: -10px;
+    color: $red;
+  }
+}

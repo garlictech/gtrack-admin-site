@@ -1,0 +1,15 @@
+gt-localized-description(
+  [descriptionSelector]='descriptionSelector'
+  [storeDataPath]='descriptionDataPath'
+  [submitFv]='submitDescription'
+  [deleteFv]='deleteDescription'
+)
+
+app-dynamic-form([formDescriptor]='generalInfoFormDescriptor')
+
+div RoundTrip:
+  span([ngClass]="{'text-success': (isRoundTrip$ | async)}") {{(isRoundTrip$ | async) ? 'Yes' : 'No'}}
+
+div Location:
+  span([ngClass]="{'text-success': (generalInfo$ | async)?.location}") {{(generalInfo$ | async)?.location}}
+  div.feedback.invalid(*ngIf="(remoteError$ | async)?.location") {{(remoteError$ | async)?.location[0] | translate}}

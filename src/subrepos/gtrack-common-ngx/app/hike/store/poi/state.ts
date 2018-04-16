@@ -1,8 +1,8 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { IPoi } from 'subrepos/provider-client';
+import { IPoiStored } from 'subrepos/provider-client';
 
-export const poiAdapter = createEntityAdapter<IPoi>();
-export interface IPoiEntityState extends EntityState<IPoi> {};
+export const poiAdapter = createEntityAdapter<IPoiStored>();
+export interface IPoiEntityState extends EntityState<IPoiStored> {}
 
 export interface IPoiContextState {
   id: string;
@@ -11,11 +11,11 @@ export interface IPoiContextState {
   saved: boolean;
 }
 
-export interface IAllPoiContextState extends EntityState<IPoiContextState> {};
+export interface IAllPoiContextState extends EntityState<IPoiContextState> {}
 
 export const poiContextStateAdapter = createEntityAdapter<IPoiContextState>();
 
 export interface IPoiState {
-  pois: IPoiEntityState,
-  contexts: IAllPoiContextState
+  pois: IPoiEntityState;
+  contexts: IAllPoiContextState;
 }
