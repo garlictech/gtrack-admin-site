@@ -21,6 +21,7 @@ export class HikeEffects {
     .mergeMap(action => {
       return this._hikeProgramService
         .get(action.context)
+        .take(1)
         .map(hike => {
           if (hike !== null) {
             return new LocalActions.HikeProgramLoaded(action.context, hike);
@@ -36,8 +37,10 @@ export class HikeEffects {
       .mergeMap(action => {
         return this._hikeProgramService
           .query()
+          .take(1)
           .map(hikePrograms => {
             let ids = hikePrograms.map(hikeProgram => hikeProgram.id);
+
             return new LocalActions.AllHikeProgramsLoaded(ids, hikePrograms);
           });
       });
@@ -48,6 +51,7 @@ export class HikeEffects {
       .mergeMap(action => {
         return this._hikeProgramService
           .create(action.hikeProgram)
+          .take(1)
           .map(response => new LocalActions.HikeProgramSaved(response.id));
       });
 

@@ -19,6 +19,7 @@ export class HikeProgramService {
       .getRecord<IHikeProgramStored>(`hike_programs/${id}`)
       .get()
       .filter(data => data.stops instanceof Array)
+      .take(1)
       .map(data => {
         let hike: HikeProgram = new HikeProgram(data, this._checkpointService);
 
@@ -32,6 +33,7 @@ export class HikeProgramService {
         table: 'hike_programs',
         query: []
       })
+      .take(1)
       .map(data => {
         return data.filter(item => item.stops instanceof Array).map(item => {
           let hike: HikeProgram = new HikeProgram(item, this._checkpointService);
@@ -48,6 +50,8 @@ export class HikeProgramService {
       data = hikeProgram.toObject();
     }
 
-    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data);
+    return this._deepstream
+      .callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data)
+      .take(1);
   }
 }

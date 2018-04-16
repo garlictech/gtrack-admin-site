@@ -18,6 +18,7 @@ export class RouteEffects {
     .mergeMap(action => {
       return this._routeService
         .get(action.context)
+        .take(1)
         .map(route => {
           if (route !== null) {
             return new LocalActions.RouteLoaded(action.context, route);
@@ -33,6 +34,7 @@ export class RouteEffects {
       .mergeMap(action => {
         return this._routeService
           .create(action.route)
+          .take(1)
           .map(response => new LocalActions.RouteSaved(response.id));
       });
 

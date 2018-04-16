@@ -50,6 +50,7 @@ export class RouteService {
     return this._deepstream
       .getRecord<IRouteStored>(`routes/${id}`)
       .get()
+      .take(1)
       .map(data => {
         if (!data.id) {
           return null;

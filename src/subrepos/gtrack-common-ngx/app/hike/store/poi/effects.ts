@@ -15,6 +15,7 @@ export class PoiEffects {
     .mergeMap(action => {
       return this._poiService
         .get(action.context)
+        .take(1)
         .map(poi => {
           return new LocalActions.PoiLoaded(action.context, poi);
         });
@@ -29,6 +30,7 @@ export class PoiEffects {
             return this._poiService
               .get(context);
           }))
+          .take(1)
           .map(pois => {
             return new LocalActions.AllPoiLoaded(action.contexts, pois);
           });
@@ -40,6 +42,7 @@ export class PoiEffects {
       .mergeMap(action => {
         return this._poiService
           .create(action.poi)
+          .take(1)
           .map(response => new LocalActions.PoiSaved(response.id));
       });
 

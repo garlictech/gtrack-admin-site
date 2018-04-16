@@ -24,6 +24,7 @@ export class PoiService {
     return this._deepstream
       .getRecord<IPoiStored>(`pois/${id}`)
       .get()
+      .take(1)
       .map(data => {
         return _.cloneDeep(data);
       });
