@@ -10,3 +10,8 @@ export const selectCurrentLocation = createSelector(
   geolocationBaseFeature,
   (state: IBackgroundGeolocationState) => state.currentLocation
 );
+
+export const selectTracking = createSelector(
+  geolocationBaseFeature,
+  (state: IBackgroundGeolocationState) => state.tracking
+);

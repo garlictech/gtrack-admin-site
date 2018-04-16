@@ -1,22 +1,20 @@
-import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { BackgroundGeolocationService } from './provider';
+import { BackgroundGeolocationEffects } from './store/effects';
 import { Config } from './config';
-// import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule()
 export class BackgroundGeolocationModule {
-  static forRoot(config?: Config): ModuleWithProviders {
+  static forRoot(config = new Config()): ModuleWithProviders {
     return {
       ngModule: BackgroundGeolocationModule,
       providers: [
         BackgroundGeolocationService,
+        BackgroundGeolocationEffects,
         // Geolocation,
-        { provide: Config, useValue: config || new Config() },
         {
-          provide: APP_INITIALIZER,
-          useFactory: (bgl: BackgroundGeolocationService) => () => bgl.init(),
-          deps: [BackgroundGeolocationService],
-          multi: true
+          provide: Config,
+          useValue: config
         }
       ]
     };

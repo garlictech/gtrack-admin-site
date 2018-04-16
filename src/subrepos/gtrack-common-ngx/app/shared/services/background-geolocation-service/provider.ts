@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import { Subscription } from 'rxjs/Subscription';
+
 import * as Actions from './store/actions';
 import { Config } from './config';
 import { Observable } from 'rxjs/Observable';
@@ -9,14 +11,21 @@ import { State } from 'app/store';
 
 @Injectable()
 export class BackgroundGeolocationService {
-  constructor(private _store: Store<State>, private _config: Config) {
-    /* EMPTY */
-  }
+
+  private _subscription: Subscription | undefined;
+
+  constructor(
+    private _store: Store<State>,
+    private _config: Config
+  ) {}
 
   @DebugLog
-  public init() {
+  public start() {
     log.d('Determining current location starts in browser mode');
-    Observable.timer(0, 60000)
+    this.end();
+
+    this._subscription = Observable
+      .timer(0, 60000)
       .map(() => {
         log.d('Getting current location...');
         navigator.geolocation.getCurrentPosition(
@@ -32,5 +41,13 @@ export class BackgroundGeolocationService {
       .subscribe();
 
     return true;
+  }
+
+  @DebugLog
+  public end() {
+    if (this._subscription) {
+      this._subscription.unsubscribe();
+      this._subscription = undefined;
+    }
   }
 }

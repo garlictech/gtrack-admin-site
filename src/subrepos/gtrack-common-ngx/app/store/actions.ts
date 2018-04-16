@@ -1,8 +1,8 @@
 import {
-  CURRENT_LOCATION_OBTAINED,
+  BackgroundGeolocationActionTypes,
   Actions as BackgroundGeolocationActions
 } from '../shared/services/background-geolocation-service';
 
-export { CURRENT_LOCATION_OBTAINED };
+export { BackgroundGeolocationActions };
 
 export type AllActions = BackgroundGeolocationActions;

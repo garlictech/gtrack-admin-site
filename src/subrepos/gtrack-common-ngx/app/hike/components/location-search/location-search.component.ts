@@ -2,15 +2,19 @@ import { Component, NgZone, OnInit, OnDestroy, ViewChild, ElementRef, Input } fr
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import * as turf from '@turf/turf';
 
 import 'rxjs/add/operator/debounceTime';
 
 import { GoogleMapsService } from '../../../shared';
 import * as geoSearchActions from '../../../geosearch/store/actions';
-import { selectCurrentLocation } from '../../../store';
+import { selectCurrentLocation, selectTracking } from '../../../store';
 import { IGeoPosition } from '../../../shared/services/background-geolocation-service';
 
 import { SearchFiltersSelectors } from '../../../search-filters/store/selectors';
+
+import * as BackgroundGeolocationActions from '../../../shared/services/background-geolocation-service/store/actions';
 
 @Component({
   selector: 'gtcn-location-search',
@@ -25,6 +29,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
 
   private _input: HTMLElement;
   private _destroy$ = new Subject<boolean>();
+  private _locate$ = new Subject<boolean>();
 
   @Input() public context: string;
 
@@ -45,6 +50,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._destroy$.next(true);
     this._destroy$.complete();
+    this._store.dispatch(new BackgroundGeolocationActions.EndTracking());
   }
 
   ngOnInit() {
@@ -68,21 +74,61 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
               return;
             }
 
+            this._locate$.next(false);
+
             this._location = [place.geometry.location.lng(), place.geometry.location.lat()];
             this._search();
           });
         });
       });
     }
+
     this._store
+      .select(selectTracking)
+      .take(1)
+      .subscribe(tracking => {
+        if (tracking === false) {
+          this._store.dispatch(new BackgroundGeolocationActions.StartTracking());
+        }
+      });
+
+    let location$ = this._store
       .select(selectCurrentLocation)
       .takeUntil(this._destroy$)
       .filter((location: IGeoPosition) => !!_.get(location, 'coords.latitude') && !!_.get(location, 'coords.latitude'))
       .map((location: IGeoPosition) => <GeoJSON.Position>[location.coords.longitude, location.coords.latitude])
+      .distinctUntilChanged((position1, position2) => {
+        let point1: turf.Coord = {
+          type: 'Point',
+          coordinates: [
+            position1[0],
+            position1[1]
+          ]
+        };
+
+        let point2: turf.Coord = {
+          type: 'Point',
+          coordinates: [
+            position2[0],
+            position2[1]
+          ]
+        };
+
+        return (turf.distance(point1, point2) <= 0.1);
+      });
+
+    this
+      ._locate$
+      .takeUntil(this._destroy$)
+      .switchMap(locate => {
+        return locate ? location$ : Observable.never<number[]>();
+      })
       .subscribe(coords => {
         this._location = coords;
         this._search();
       });
+
+    this._locate$.next(true);
 
     this._store
       .select(this._searchFiltersSelectors.getFilter('radius'))
@@ -118,6 +164,8 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     if (this._input instanceof HTMLInputElement) {
       this._input.value = '';
     }
+
+    this._locate$.next(true);
   }
 
   public onRadiusChange(data: number) {
