@@ -3,6 +3,7 @@ import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 
 export const ADD_NEW_TRANSLATED_DESCRIPTION = '[HikeProgram] Add new translated description';
 export const DELETE_TRANSLATED_DESCRIPTION = '[HikeProgram] Delete translated description';
+export const ADD_DETAILS = '[HikeProgram] Add some details';
 export const SAVE = '[HikeProgram] Save hike program';
 export const SAVE_SUCCESS = '[HikeProgram] Saved successfully';
 export const SAVE_FAILED = '[HikeProgram] Save failure';
@@ -12,6 +13,15 @@ export class AddNewTranslatedDescription implements Action {
   constructor(public languageKey: string, public content: ITextualDescription) {
     /* EMPTY */
   }
+}
+
+export interface IDetails {
+  difficulty?: number;
+}
+
+export class AddDetails implements Action {
+  readonly type = ADD_DETAILS;
+  constructor(public details: IDetails) {}
 }
 
 export class DeleteTranslatedDescription implements Action {
@@ -36,4 +46,10 @@ export class SaveFailed implements Action {
     /* EMPTY */
   }
 }
-export type Actions = AddNewTranslatedDescription | DeleteTranslatedDescription | SaveFailed | SaveSuccess | Save;
+export type Actions =
+  | AddNewTranslatedDescription
+  | DeleteTranslatedDescription
+  | SaveFailed
+  | SaveSuccess
+  | Save
+  | AddDetails;

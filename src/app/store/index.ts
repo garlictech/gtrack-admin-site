@@ -9,8 +9,8 @@ import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/deepstr
 import { CommonState, commonReducers, IAuthenticationState } from 'subrepos/gtrack-common-ngx';
 import { ILocalizationState, Reducer as LanguageReducer } from 'app/language';
 
-import { IHikeProgramState } from './state/hike-program';
-import { hikeProgramReducer } from './reducer/hike-program-reducer';
+import { IEditedHikeProgramState } from './state/hike-program';
+import { editedHikeProgramReducer } from './reducer/edited-hike-program';
 
 /////////////
 // Actions
@@ -92,7 +92,7 @@ const reducers: ActionReducerMap<State> = {
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditMap: hikeEditMapReducer,
   language: LanguageReducer,
-  hikeProgram: hikeProgramReducer,
+  editedHikeProgram: editedHikeProgramReducer,
   editedGtrackPoi: editedGtrackPoiReducer
 };
 

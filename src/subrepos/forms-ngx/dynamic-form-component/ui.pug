@@ -6,7 +6,8 @@ form.form((ngSubmit)="onSubmit()", [formGroup]="formInstance?.form", *ngIf='form
 
   button.mt-15(
     *ngIf="formDescriptor.submit?.translatableLabel",
-    [ngClass]="formDescriptor.submit?.classList",
-    [disabled]="formInstance?.form.untouched || formInstance?.form.pristine"
+    [ngClass]="formDescriptor.submit?.classList"
   )
     | {{formDescriptor.submit?.translatableLabel | translate}}
+
+//- [disabled]="formInstance?.form.untouched || formInstance?.form.pristine"

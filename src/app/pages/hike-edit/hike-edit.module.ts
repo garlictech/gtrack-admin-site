@@ -33,6 +33,7 @@ import { MapModule, HikeModule, SharedModule, UtilsModule } from 'subrepos/gtrac
 // Lib
 import { TagInputModule } from 'ngx-chips';
 import { SharedComponentsModule } from 'app/shared/components';
+import { LanguageModule } from 'app/language';
 
 const COMPONENTS = [
   HikeEditComponent,
@@ -65,7 +66,8 @@ const COMPONENTS = [
     SharedModule,
     TagInputModule,
     UtilsModule,
-    SharedComponentsModule
+    SharedComponentsModule,
+    LanguageModule
   ],
   exports: [...COMPONENTS],
   declarations: [AdminLeafletComponent, ObjectToArrayPipe, ...COMPONENTS],

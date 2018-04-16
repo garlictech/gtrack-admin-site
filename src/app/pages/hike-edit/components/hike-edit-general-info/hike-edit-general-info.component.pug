@@ -7,79 +7,9 @@ gt-localized-description(
 
 app-dynamic-form([formDescriptor]='generalInfoFormDescriptor')
 
-//- <form [formGroup]="hikeForm" novalidate>
-//-     <div class="form-check inline-checkbox">
-//-         <label class="form-label mr-5">
-//-       Difficulty: <output name="diff" class="difficulty mr-2">{{(generalInfo$ | async).difficulty}}</output>
-//-       <input class="form-input ml-1" name="difficulty" type="range" min="1" max="10" formControlName="difficulty" onchange="diff.value = difficulty.value">
-//-     </label>
+div RoundTrip:
+  span([ngClass]="{'text-success': (isRoundTrip$ | async)}") {{(isRoundTrip$ | async) ? 'Yes' : 'No'}}
 
-//-         <label>RoundTrip: <span [ngClass]="{'text-success': (isRoundTrip$ | async)}">{{(isRoundTrip$ | async) ? 'Yes' : 'No'}}</span></label>
-//-     </div>
-
-//-     <div class="lang-toolbar clearfix mt-4 mb-2">
-//-         <button class="btn btn-round btn-sm btn-just-icon btn-success" [disabled]="!hikeForm.controls._selLang" (click)="addTranslation()">
-//-       <i class="material-icons">add</i>
-//-     </button>
-
-//-         <select class="form-control form-control-sm" formControlName="_selLang" title="Select">
-//-       <option value="">-</option>
-//-       <ng-container *ngFor="let lang of langs">
-//-         <option
-//-           *ngIf="existingLangKeys.indexOf(lang.locale) < 0"
-//-           [value]="lang.locale"
-//-           [innerHTML]="lang.name"
-//-         ></option>
-//-       </ng-container>
-//-     </select>
-
-//-         <span>Add language:</span>
-//-     </div>
-
-//-     <div aria-multiselectable="true" id="accordion" role="tablist" formArrayName="langs">
-//-         <div class="card mb-1" *ngFor="let lng of hikeForm.controls.langs.controls; let i = index">
-//-             <div class="card-header bg-light" id="headingOne" role="tab">
-//-                 <h5>
-//-                     <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_{{lng.value.id}}" role="button" class="collapsed">
-//-                         <div class="text-success">
-//-                             {{getLangName(lng.value.id)}}
-//-                             <i class="material-icons pull-right">keyboard_arrow_down</i>
-//-                         </div>
-//-                     </a>
-//-                 </h5>
-//-             </div>
-
-//-             <div aria-labelledby="headingOne" class="collapse" id="collapse_{{lng.value.id}}" role="tabpanel" aria-expanded="false" style="height: 0px;">
-//-                 <div class="card-body" [formGroupName]="i">
-//-                     <div class="row">
-//-                         <div class="col-md-6">
-//-                             <div class="form-group form-black label-floating is-empty">
-//-                                 <label class="control-label">Title</label>
-//-                                 <input class="form-control" type="text" formControlName="title">
-//-                             </div>
-//-                         </div>
-//-                         <div class="col-md-6">
-//-                             <div class="form-group form-black label-floating is-empty">
-//-                                 <label class="control-label">Description</label>
-//-                                 <input class="form-control" type="text" formControlName="fullDescription">
-//-                             </div>
-//-                         </div>
-//-                     </div>
-//-                     <div class="row">
-//-                         <div class="col-md-11">
-//-                             <div class="form-group form-black label-floating is-empty">
-//-                                 <label class="control-label">Summary</label>
-//-                                 <input class="form-control" type="text" formControlName="summary">
-//-                             </div>
-//-                         </div>
-//-                         <div class="col-md-1">
-//-                             <button class="btn btn-danger btn-simple btn-link pull-right mt-4" (click)="deleteTranslation(lng.value.id)" title="Delete language">
-//-                 <i class="material-icons">delete</i>
-//-               </button>
-//-                         </div>
-//-                     </div>
-//-                 </div>
-//-             </div>
-//-         </div>
-//-     </div>
-//- </form>
+div Location:
+  span([ngClass]="{'text-success': (generalInfo$ | async)?.location}") {{(generalInfo$ | async)?.location}}
+  div.feedback.invalid(*ngIf="(remoteError$ | async)?.location") {{(remoteError$ | async)?.location[0] | translate}}

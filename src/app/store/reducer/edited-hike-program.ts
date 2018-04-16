@@ -1,11 +1,11 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import * as _ from 'lodash';
 
-import { IHikeProgramState } from '../state/hike-program';
+import { IEditedHikeProgramState } from '../state/edited-hike-program';
 
-import * as HikeProgramActions from '../actions/hike-program';
+import * as HikeProgramActions from '../actions/edited-hike-program';
 
-export const initialState: IHikeProgramState = {
+export const initialState: IEditedHikeProgramState = {
   data: {
     distance: 0,
     isRoundTrip: false,
@@ -26,7 +26,10 @@ export const initialState: IHikeProgramState = {
   failed: null
 };
 
-export function hikeProgramReducer(state = initialState, action: HikeProgramActions.Actions): IHikeProgramState {
+export function editedHikeProgramReducer(
+  state = initialState,
+  action: HikeProgramActions.Actions
+): IEditedHikeProgramState {
   let newState = _.cloneDeep(state);
   switch (action.type) {
     case HikeProgramActions.ADD_NEW_TRANSLATED_DESCRIPTION: {
@@ -57,6 +60,12 @@ export function hikeProgramReducer(state = initialState, action: HikeProgramActi
     case HikeProgramActions.SAVE_FAILED: {
       newState.working = null;
       newState.failed = action.error;
+      return newState;
+    }
+
+    case HikeProgramActions.ADD_DETAILS: {
+      newState.dirty = true;
+      newState.data = _.assign(newState.data, action.details);
       return newState;
     }
 

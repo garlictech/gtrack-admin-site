@@ -23,8 +23,8 @@ import { ToasterService } from 'angular2-toaster';
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
 import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
-import { selectDirty, selectWorking } from '../../store/selectors/hike-program';
-import * as HikeProgramActions from '../../store/actions/hike-program';
+import { selectDirty, selectWorking } from '../../store/selectors/edited-hike-program';
+import * as HikeProgramActions from '../../store/actions/edited-hike-program';
 
 @Component({
   selector: 'gt-hike-edit',

@@ -5,15 +5,16 @@ export interface IGeneralInfoState {
   hikeId: string;
   routeId: string;
   isRoundTrip: boolean;
+  location: string;
   difficulty: number;
   pois: string[];
   initialized: boolean;
 }
 
-export interface IDescriptionEntityState extends EntityState<ITextualDescriptionItem> {};
+export interface IDescriptionEntityState extends EntityState<ITextualDescriptionItem> {}
 
 // State
 export interface IHikeEditGeneralInfoState {
-  generalInfo: IGeneralInfoState,
-  descriptions: IDescriptionEntityState
-};
+  generalInfo: IGeneralInfoState;
+  descriptions: IDescriptionEntityState;
+}
