@@ -56,7 +56,8 @@ export class LocalizedDescriptionComponent implements AfterViewInit {
       fields: {
         title: new TextboxField({
           label: 'form.title',
-          required: true
+          // TODO Set back to true
+          required: false
         }),
         summary: new TextareaField({
           label: 'form.summary',

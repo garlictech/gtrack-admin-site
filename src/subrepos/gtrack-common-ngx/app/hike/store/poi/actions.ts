@@ -60,21 +60,10 @@ export class PoiSaved implements Action {
   }
 }
 
-<<<<<<< HEAD
-export class PoiModified implements Action {
-  readonly type = PoiActionTypes.POI_MODIFIED
-
-  constructor(public context: string) {}
-}
-
 export type AllPoiActions =
   | LoadPoi
   | PoiLoaded
   | LoadPois
   | AllPoiLoaded
   | SavePoi
-  | PoiSaved
-  | PoiModified;
-=======
-export type AllPoiActions = LoadPoi | PoiLoaded | LoadPois | AllPoiLoaded | SavePoi | PoiSaved;
->>>>>>> feat: multilanguage component for poi save
+  | PoiSaved;

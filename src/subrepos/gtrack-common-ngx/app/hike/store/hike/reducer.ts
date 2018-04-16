@@ -23,7 +23,6 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
         },
         state
       );
-<<<<<<< HEAD
 
     case HikeProgramActionTypes.HIKE_PROGRAM_LOADED:
       return hikeContextStateAdapter.updateOne(
@@ -32,38 +31,6 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
           changes: {
             loading: false,
             loaded: true,
-            saved: false
-          }
-        },
-        state
-      );
-
-    case HikeProgramActionTypes.HIKE_PROGRAM_SAVED:
-      return hikeContextStateAdapter.updateOne(
-        {
-          id: action.context,
-          changes: {
-            saved: true
-          }
-        },
-        state
-      );
-
-    case HikeProgramActionTypes.HIKE_PROGRAM_MODIFIED:
-      return hikeContextStateAdapter.upsertOne(
-        {
-          id: action.context,
-          changes: {
-=======
-
-    case HikeProgramActionTypes.HIKE_PROGRAM_LOADED:
-      return hikeContextStateAdapter.updateOne(
-        {
-          id: action.context,
-          changes: {
-            loading: false,
-            loaded: true,
->>>>>>> fix: adding multi language component
             saved: false
           }
         },

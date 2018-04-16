@@ -8,9 +8,13 @@ import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app
 import { IGeneralInfoState, IHikeEditRoutePlannerState, IHikeEditGeneralInfoState } from 'app/store/state';
 import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 
-import { selectDescriptions, dataPath as descriptionDataPath } from 'app/store/selectors/hike-program';
+import {
+  selectDescriptions,
+  dataPath as descriptionDataPath,
+  selectError
+} from 'app/store/selectors/edited-hike-program';
 
-import * as HikeProgramActions from 'app/store/actions/hike-program';
+import * as HikeProgramActions from 'app/store/actions/edited-hike-program';
 import { IFormDescriptor, SliderField, TextboxField } from 'subrepos/forms-ngx';
 import { FormGroup } from '@angular/forms';
 
@@ -22,6 +26,7 @@ import { FormGroup } from '@angular/forms';
 export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public generalInfo$: Observable<IGeneralInfoState>;
   public isRoundTrip$: Observable<boolean>;
+  public remoteError$: Observable<any>;
 
   public generalInfoFormDescriptor: IFormDescriptor;
 
@@ -49,7 +54,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       submit: {
         translatableLabel: 'form.submit',
         classList: ['btn', 'btn-sm', 'btn-fill', 'btn-success'],
-        submitFv: (formGroup: FormGroup) => console.log('CLICK')
+        submitFv: (formGroup: FormGroup) => this._store.dispatch(new HikeProgramActions.AddDetails(formGroup.value))
       },
       fields: {
         difficulty: new SliderField({
@@ -63,7 +68,10 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
 
     // Selectors
     this.generalInfo$ = this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo);
+
     this.isRoundTrip$ = this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip);
+
+    this.remoteError$ = this._store.select(selectError);
   }
 
   ngOnDestroy() {

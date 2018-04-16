@@ -6,14 +6,10 @@ export enum HikeProgramActionTypes {
   LOAD_HIKE_PROGRAM_FAILED = '[HikeProgram] Load hikeProgram failed',
   HIKE_PROGRAM_LOADED = '[HikeProgram] HikeProgram loaded',
   LOAD_HIKE_PROGRAMS = '[HikeProgram] Load hikePrograms',
-<<<<<<< HEAD
   ALL_HIKE_PROGRAMS_LOADED = '[HikeProgram] All hikePrograms loaded',
   SAVE_HIKE_PROGRAM = '[HikeProgram] Save hikeProgram',
   HIKE_PROGRAM_SAVED = '[HikeProgram] HikeProgram saved',
   HIKE_PROGRAM_MODIFIED = '[HikeProgram] HikeProgram modified'
-=======
-  ALL_HIKE_PROGRAMS_LOADED = '[HikeProgram] All hikePrograms loaded'
->>>>>>> fix: adding multi language component
 }
 
 export class LoadHikeProgram implements Action {
@@ -56,7 +52,6 @@ export class AllHikeProgramsLoaded implements Action {
   }
 }
 
-<<<<<<< HEAD
 export class SaveHikeProgram implements Action {
   readonly type = HikeProgramActionTypes.SAVE_HIKE_PROGRAM;
 
@@ -75,18 +70,12 @@ export class HikeProgramModified implements Action {
   constructor(public context: string) {}
 }
 
-=======
->>>>>>> fix: adding multi language component
 export type AllHikeActions =
   | LoadHikeProgram
   | HikeProgramLoaded
   | LoadHikeProgramFailed
   | LoadHikePrograms
-<<<<<<< HEAD
   | AllHikeProgramsLoaded
   | SaveHikeProgram
   | HikeProgramSaved
   | HikeProgramModified;
-=======
-  | AllHikeProgramsLoaded;
->>>>>>> fix: adding multi language component

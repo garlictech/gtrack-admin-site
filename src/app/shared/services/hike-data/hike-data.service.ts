@@ -7,7 +7,7 @@ import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app
 import { IGeneralInfoState } from 'app/store/state';
 import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
 import { ITextualDescriptionItem, IGTrackPoi } from '../../interfaces';
-import { IHikeProgram, ILocalizedItem, ITextualDescription, IPoi } from 'subrepos/provider-client';
+import { IHikeProgram, ILocalizedItem, ITextualDescription, IPoi, IPoiStored } from 'subrepos/provider-client';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import * as uuid from 'uuid/v1';
@@ -79,7 +79,7 @@ export class HikeDataService {
    */
   public collectHikeStops() {
     return this._store
-      .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
+      .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoiStored)>(this._poiSelectors.getAllPois))
       .take(1)
       .map(hikePois => {
         const stops: any[] = [];
@@ -140,13 +140,8 @@ export class HikeDataService {
    */
   public splitHikeDataToStore(hikeData: IHikeProgram) {
     // Set unsaved states
-<<<<<<< HEAD
     this._store.dispatch(new commonHikeActions.HikeProgramModified(<string>hikeData.id));
     this._store.dispatch(new commonRouteActions.RouteModified(hikeData.routeId));
-=======
-    // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(<string>hikeData.id));
-    this._store.dispatch(new commonRouteActions.RouteUnsaved(hikeData.routeId));
->>>>>>> fix: adding multi language component
 
     // Set route id and load route data
     this._store.dispatch(

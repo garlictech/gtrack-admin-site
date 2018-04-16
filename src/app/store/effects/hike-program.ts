@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import * as HikeProgramActions from '../actions/hike-program';
-import { selectData } from '../selectors/hike-program';
 import { HikeProgramService } from 'subrepos/gtrack-common-ngx';
 import { State } from 'app/store';
 import { IHikeProgram } from 'subrepos/provider-client';
 import { log } from 'app/log';
+
+import { selectData } from '../selectors/edited-hike-program';
+import * as HikeProgramActions from '../actions/edited-hike-program';
 
 @Injectable()
 export class HikeProgramEffects {

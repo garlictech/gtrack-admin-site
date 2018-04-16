@@ -63,27 +63,6 @@ export class HikeEditGTrackPoiInfoComponent implements AfterViewInit, OnDestroy,
     if (this.modalConfig && this.modalConfig.component.data) {
       this.poiId = this.modalConfig.component.data.poiId;
 
-<<<<<<< HEAD
-      this._store.dispatch(new commonPoiActions.PoiModified(this.poiId));
-
-      // Poi data
-      this._store.select(this._poiSelectors.getPoi(<string>this.poiId))
-        .take(1)
-        .subscribe((poi: Poi) => {
-          this._gTrackPoi = _.cloneDeep(poi);
-          this._initFormSubscriptions();
-        });
-
-      // Watch poi saved context
-      this._store.select(this._poiSelectors.getPoiContext(<string>this.poiId))
-        .filter(poiContext => !!(poiContext && poiContext.saved))
-        .take(1)
-        .subscribe(poiContext => {
-          this._toasterService.pop('success', 'Success!', 'Poi saved!');
-
-          this.modalConfig.modal.close();
-        });
-=======
       this._store
         .select(this._poiSelectors.getPoi(<string>this.poiId))
         .takeUntil(this._destroy$)
@@ -109,7 +88,6 @@ export class HikeEditGTrackPoiInfoComponent implements AfterViewInit, OnDestroy,
       //     this._toasterService.pop('success', 'Success!', 'Poi saved!');
       //     this.modalConfig.modal.close();
       //   });
->>>>>>> feat: multilanguage component for poi save
     }
 
     // this.submitDescription = (langKey: string, data: any) => {
