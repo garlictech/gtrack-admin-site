@@ -11,7 +11,7 @@ import {
 } from 'app/store';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
 import { HikeEditMapSelectors, HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
-import { IRoute } from 'subrepos/provider-client';
+import { IRouteStored } from 'subrepos/provider-client';
 import { ToasterService } from 'angular2-toaster';
 
 import * as L from 'leaflet';
@@ -75,12 +75,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
           .takeUntil(this._destroy$);
       })
       .take(1)
-      .subscribe((route) => {
+      .subscribe((route: IRouteStored) => {
         setTimeout(() => {
           this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
 
-          // Todo: load route only on init
-          this._loadRoute(<Route>route);
+          this._loadRoute(route);
         });
       });
   }
@@ -107,7 +106,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     this._routingControlService.clearControls();
   }
 
-  private _loadRoute(routeData: Route) {
+  private _loadRoute(routeData: IRouteStored) {
     if (this._map && this._waypointMarkerService) {
       const coords: L.LatLng[] = [];
       for (let feature of routeData.route.features) {

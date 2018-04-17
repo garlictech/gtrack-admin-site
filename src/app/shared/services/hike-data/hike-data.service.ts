@@ -87,13 +87,13 @@ export class HikeDataService {
         if (hikePois && hikePois.length > 0) {
           for (let poi of hikePois) {
             stops.push({
-              distanceFromOrigo: (<IGTrackPoi>poi).distFromRoute,
+              distanceFromOrigo: (<IGTrackPoi>poi).distFromRoute, // TODO: w/ turf
               isCheckpoint: false, // TODO: from checkpoint array
               onRoute: (<IGTrackPoi>poi).onRoute || false,
               poiId: poi.id,
               lat: poi.lat,
               lon: poi.lon,
-              segment: {
+              segment: { // TODO: w/ turf
                 uphill: 0,
                 downhill: 0,
                 distance: 0,
