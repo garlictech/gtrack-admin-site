@@ -46,16 +46,11 @@ export class RouteService {
     private unitsService: UnitsService
   ) { }
 
-  public get(id: string): Observable<Route | null> {
+  public get(id: string): Observable<IRouteStored | null> {
     return this._deepstream
       .getRecord<IRouteStored>(`routes/${id}`)
       .get()
-      .map(data => {
-        if (!data.id) {
-          return null;
-        }
-        return new Route(data);
-      });
+      .take(1);
   }
 
   public create(route: IRoute) {

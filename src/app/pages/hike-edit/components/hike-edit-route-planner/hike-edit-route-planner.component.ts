@@ -11,7 +11,7 @@ import {
 } from 'app/store';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
 import { HikeEditMapSelectors, HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
-import { IRoute } from 'subrepos/provider-client';
+import { IRouteStored } from 'subrepos/provider-client';
 import { ToasterService } from 'angular2-toaster';
 
 import * as L from 'leaflet';
@@ -42,34 +42,44 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
     this._store.select(this._hikeEditMapSelectors.getMapId)
-      .takeUntil(this._destroy$)
       .filter(id => id !== '')
+      .takeUntil(this._destroy$)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
     // Show toaster when the route has been saved
     this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId)
-      .takeUntil(this._destroy$)
-      .switchMap((routeId: string) => this._store.select(this._routeSelectors.getRouteContext(routeId)))
+      .switchMap((routeId: string) => {
+        return this._store
+          .select(this._routeSelectors.getRouteContext(routeId))
+          .takeUntil(this._destroy$);
+      })
       .filter(routeContext => !!(routeContext && routeContext.saved))
+      .take(1)
       .subscribe((routeContext) => {
         this._toasterService.pop('success', 'Success!', 'Route saved!');
       });
 
     // Handling route load
     this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId)
-      .takeUntil(this._destroy$)
-      .switchMap((routeId: string) => this._store.select(this._routeSelectors.getRouteContext(routeId)))
+      .switchMap((routeId: string) => {
+        return this._store
+          .select(this._routeSelectors.getRouteContext(routeId))
+          .takeUntil(this._destroy$);
+      })
       .filter(routeContext => !!(routeContext && routeContext.loaded))
-      .switchMap((routeContext) => this._store.select(this._routeSelectors.getRoute((<IRouteContextState>routeContext).id)))
+      .switchMap((routeContext) => {
+        return this._store
+          .select(this._routeSelectors.getRoute((<IRouteContextState>routeContext).id))
+          .takeUntil(this._destroy$);
+      })
       .take(1)
-      .subscribe((route) => {
+      .subscribe((route: IRouteStored) => {
         setTimeout(() => {
           this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
 
-          // Todo: load route only on init
-          this._loadRoute(<Route>route);
+          this._loadRoute(route);
         });
       });
   }
@@ -96,18 +106,19 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     this._routingControlService.clearControls();
   }
 
-  private _loadRoute(routeData: Route) {
+  private _loadRoute(routeData: IRouteStored) {
     if (this._map && this._waypointMarkerService) {
-      this._waypointMarkerService.reset();
-
+      const coords: L.LatLng[] = [];
       for (let feature of routeData.route.features) {
-        let latlng = L.latLng(
-          feature.geometry.coordinates[1],
-          feature.geometry.coordinates[0]
-        );
-
-        this._waypointMarkerService.addWaypoint(latlng);
+        if (feature.geometry.type === 'Point') {
+          coords.push(L.latLng(
+            feature.geometry.coordinates[1],
+            feature.geometry.coordinates[0]
+          ));
+        }
       }
+
+      this._waypointMarkerService.addWaypointList(coords);
     }
   }
 }

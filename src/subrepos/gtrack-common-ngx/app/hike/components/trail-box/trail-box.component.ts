@@ -82,7 +82,13 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
     let route = this.hikeProgram.routeId;
 
     this.pois$ = this._store.select(this._poiSelectors.getPois(pois));
-    this.route$ = this._store.select(this._routeSelectors.getRoute(route));
+    this.route$ = this._store
+      .select(this._routeSelectors.getRoute(route))
+      .map(data => {
+        if (data) {
+          return new Route(data);
+        }
+      });
 
     this._store.dispatch(new poiActions.LoadPois(pois));
     this._store.dispatch(new routeActions.LoadRoute(route));

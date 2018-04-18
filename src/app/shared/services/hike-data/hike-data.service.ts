@@ -6,11 +6,13 @@ import { State, hikeEditGeneralInfoActions, commonRouteActions, commonHikeAction
 import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { IGeneralInfoState } from 'app/store/state';
 import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
-import { ITextualDescriptionItem } from '../../interfaces';
-import { IHikeProgram, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { ITextualDescriptionItem, IGTrackPoi } from '../../interfaces';
+import { IHikeProgram, ILocalizedItem, ITextualDescription, IPoi } from 'subrepos/provider-client';
+import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Injectable()
 export class HikeDataService {
@@ -18,6 +20,7 @@ export class HikeDataService {
     private _store: Store<State>,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _poiSelectors: PoiSelectors,
     private _reverseGeocodingService: ReverseGeocodingService
   ) {}
 
@@ -32,9 +35,10 @@ export class HikeDataService {
       return {
         id: generalInfo.hikeId,
         routeId: generalInfo.routeId,
-        difficulty: generalInfo.difficulty.toString(), // TODO it will be number!!
+        difficulty: generalInfo.difficulty,
         isRoundTrip: isRoundTrip,
-        pois: generalInfo.pois
+        timestamp: moment().valueOf(),
+        pois: generalInfo.pois // id list
       };
     });
   }
@@ -43,64 +47,28 @@ export class HikeDataService {
    * collectHikeData effect submethod
    */
   public collectHikeDescriptions() {
-    let _textualDescriptions$ = this._store.select(
-      this._hikeEditGeneralInfoSelectors.getAllDescriptions
-    );
+    let _textualDescriptions$ = this._store.select(this._hikeEditGeneralInfoSelectors.getAllDescriptions);
 
-    return _textualDescriptions$
-      .take(1)
-      .map((descriptions) => {
-        return descriptions;
-      });
+    return _textualDescriptions$.take(1).map(descriptions => {
+      return descriptions;
+    });
   }
 
   /**
    * collectHikeData effect submethod
    */
-  public collectHikeRouteInfo() {
-    return this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
+  public collectHikeRouteInfo() {
+    return this._store
+      .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
       .take(1)
-      .map((routeInfo) => {
+      .map(routeInfo => {
         let _routeInfo: any = _.pick(routeInfo.total, [
-          'distance', 'uphill', 'downhill', 'time', 'score',
-          'isRoundTrip', 'difficulty', 'rate', 'routeIcon',
-          'elevationIcon'
+          'distance',
+          'uphill',
+          'downhill',
+          'time',
+          'score'
         ]);
-
-        // TEST DATA FOR STOPS ====>
-        console.warn('TODO: collectHikeRouteInfo - Temporary stops array from markers');
-        _routeInfo.stops = [];
-
-        for (let i in routeInfo.route.features) {
-          let _feature = routeInfo.route.features[i];
-          let _segment: any = {
-            uphill: 0,
-            downhill: 0,
-            distance: 0,
-            score: 0,
-            time: 0
-          };
-
-          if (parseInt(i) > 1) {
-            _segment = _.pick(routeInfo.segments[parseInt(i) - 2], [
-              'uphill', 'downhill', 'distance', 'score', 'time'
-            ])
-          }
-
-          if (_feature.geometry.type === 'Point') {
-            _routeInfo.stops.push({
-              distanceFromOrigo: _segment.distance,
-              isCheckpoint: false,
-              onRoute: true,
-              poiId: 'fakeId',
-              lat: _feature.geometry.coordinates[1],
-              lon: _feature.geometry.coordinates[0],
-              segment: _segment
-            });
-          }
-        }
-
-        // <=== TEST DATA FOR STOPS
 
         return _routeInfo;
       });
@@ -109,7 +77,43 @@ export class HikeDataService {
   /**
    * collectHikeData effect submethod
    */
-  public collectHikeLocation(data) {
+  public collectHikeStops() {
+    return this._store
+      .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
+      .take(1)
+      .map(hikePois => {
+        const stops: any[] = [];
+
+        if (hikePois && hikePois.length > 0) {
+          for (let poi of hikePois) {
+            stops.push({
+              distanceFromOrigo: (<IGTrackPoi>poi).distFromRoute, // TODO: w/ turf
+              isCheckpoint: false, // TODO: from checkpoint array
+              onRoute: (<IGTrackPoi>poi).onRoute || false,
+              poiId: poi.id,
+              lat: poi.lat,
+              lon: poi.lon,
+              segment: { // TODO: w/ turf
+                uphill: 0,
+                downhill: 0,
+                distance: 0,
+                score: 0,
+                time: 0
+              }
+            });
+          }
+        }
+
+        return {
+          stops: stops
+        };
+      });
+  }
+
+  /**
+   * collectHikeData effect submethod
+   */
+  public collectHikeLocation(data) {
     return new Promise((resolve, reject) => {
       if (!data.stops[0]) {
         resolve({ location: 'n/a' });
@@ -118,13 +122,16 @@ export class HikeDataService {
       let _startPoint = {
         lat: data.stops[0].lat,
         lon: data.stops[0].lon
-      }
+      };
 
-      this._reverseGeocodingService.get(_startPoint).then((location) => {
-        resolve({ location: location });
-      }, (err) => {
-        resolve({location: 'n/a'});
-      });
+      this._reverseGeocodingService.get(_startPoint).then(
+        location => {
+          resolve({ location: location });
+        },
+        err => {
+          resolve({ location: 'n/a' });
+        }
+      );
     });
   }
 
@@ -133,27 +140,35 @@ export class HikeDataService {
    */
   public splitHikeDataToStore(hikeData: IHikeProgram) {
     // Set unsaved states
-    this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(<string>hikeData.id));
-    this._store.dispatch(new commonRouteActions.RouteUnsaved(hikeData.routeId));
+    this._store.dispatch(new commonHikeActions.HikeProgramModified(<string>hikeData.id));
+    this._store.dispatch(new commonRouteActions.RouteModified(hikeData.routeId));
 
     // Set route id and load route data
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({
-      routeId: hikeData.routeId
-    }));
+    this._store.dispatch(
+      new hikeEditGeneralInfoActions.SetRouteId({
+        routeId: hikeData.routeId
+      })
+    );
     this._store.dispatch(new commonRouteActions.LoadRoute(hikeData.routeId));
 
     // General info
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetIsRoundTrip({
-      isRoundTrip: hikeData.isRoundTrip,
-    }));
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetDifficulty({
-      difficulty: hikeData.difficulty
-    }));
+    this._store.dispatch(
+      new hikeEditGeneralInfoActions.SetIsRoundTrip({
+        isRoundTrip: hikeData.isRoundTrip
+      })
+    );
+    this._store.dispatch(
+      new hikeEditGeneralInfoActions.SetDifficulty({
+        difficulty: hikeData.difficulty
+      })
+    );
 
     // Pois
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetPois({
-      pois: hikeData.pois
-    }));
+    this._store.dispatch(
+      new hikeEditGeneralInfoActions.SetPois({
+        pois: hikeData.pois
+      })
+    );
 
     // Descriptions
     this._splitHikeDescriptionToStore(hikeData.description);
@@ -165,14 +180,16 @@ export class HikeDataService {
   /**
    * splitHikeDataToStore submethod
    */
-  private _splitHikeDescriptionToStore(descriptions: ILocalizedItem<ITextualDescription>) {
+  private _splitHikeDescriptionToStore(descriptions: ILocalizedItem<ITextualDescription>) {
     let descriptionArray: ITextualDescriptionItem[] = [];
     for (let key of Object.keys(descriptions)) {
-      descriptionArray.push(_.merge(_.cloneDeep(descriptions[key]), {id: key}));
+      descriptionArray.push(_.merge(_.cloneDeep(descriptions[key]), { id: key }));
     }
 
-    this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
-      descriptions: descriptionArray
-    }));
+    this._store.dispatch(
+      new hikeEditGeneralInfoActions.SetDescriptions({
+        descriptions: descriptionArray
+      })
+    );
   }
 }

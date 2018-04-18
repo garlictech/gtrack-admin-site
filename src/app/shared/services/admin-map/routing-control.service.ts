@@ -27,7 +27,8 @@ export class RoutingControlService {
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _elevationService: ElevationService
   ) {
-    this._store.select(this._hikeEditMapSelectors.getMapId)
+    this._store
+      .select(this._hikeEditMapSelectors.getMapId)
       .filter(id => id !== '')
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
@@ -64,7 +65,6 @@ export class RoutingControlService {
     }
 
     this._map.leafletMap.removeControl(_control);
-
     this._routePlannerService.removeLastSegment();
 
     return _control;
@@ -110,7 +110,7 @@ export class RoutingControlService {
     });
 
     _control.addTo(this._map.leafletMap);
-    _control.hide();
+    _control.hide(); // Hide visual control
 
     _control.on('routingstart', () => {
       this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
@@ -152,7 +152,7 @@ export class RoutingControlService {
           };
 
           this._routePlannerService.addRouteSegment(_coordsArr, e.routes[0].summary, upDown);
-          this._moveLastControlToLine(e.routes[0].coordinates.map(coord => [coord.lng, coord.lat]));
+          this._moveLastWaypointToRoute(e.routes[0].coordinates.map(coord => [coord.lng, coord.lat]));
 
           this._store.dispatch(new hikeEditRoutePlannerActions.RoutingFinished());
 
@@ -176,7 +176,7 @@ export class RoutingControlService {
   /**
    * Move control waypoint positions to line
    */
-  private _moveLastControlToLine(coords) {
+  private _moveLastWaypointToRoute(coords) {
     if (this._controls.length > 0) {
       const lastControl = _.last(this._controls);
       const wayPoints = (<L.Routing.Control>lastControl).getWaypoints();

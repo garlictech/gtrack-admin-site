@@ -9,31 +9,19 @@ import { CheckpointService, Checkpoint, CheckpointSequence } from './services/ch
 import { GameRuleService } from './services/game-rule';
 import { GeometryService, CenterRadius } from './services/geometry';
 import { ElevationService } from './services/elevation';
-
-import { UserStatusModule } from '../user-status';
+import { SearchFiltersModule } from '../search-filters';
+import { GeoSearchModule } from '../geosearch';
 
 import { EXTERNAL_POI_DEPENDENCIES, EXTERNAL_HIKE_DEPENDENCIES, EXTERNAL_ROUTE_DEPENDENCIES } from './externals';
 
-import {
-  HikeSelectors,
-  PoiSelectors,
-  RouteSelectors,
-  HikeEffects,
-  PoiEffects,
-  RouteEffects
-} from './store';
+import { HikeSelectors, PoiSelectors, RouteSelectors, HikeEffects, PoiEffects, RouteEffects } from './store';
 
 import { SharedModule } from '../shared';
 import { MapModule } from '../map';
 import { HikeModuleConfig } from './config';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    MapModule,
-    UserStatusModule
-  ],
+  imports: [CommonModule, SharedModule, MapModule, SearchFiltersModule, GeoSearchModule],
   providers: [
     HikeProgramService,
     HikeProgramService,
@@ -49,7 +37,7 @@ import { HikeModuleConfig } from './config';
     HikeEffects,
     RouteSelectors,
     RouteEffects
-  ],
+  ]
 })
 export class HikeModule {
   static forRoot(config: HikeModuleConfig): ModuleWithProviders {
@@ -74,8 +62,7 @@ export class HikeModule {
             storeDomain: config.storeDomains.route
           }
         }
-
       ]
-    }
+    };
   }
 }

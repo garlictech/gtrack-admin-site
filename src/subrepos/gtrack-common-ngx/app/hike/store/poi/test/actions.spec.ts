@@ -98,4 +98,15 @@ describe('Poi actions', () => {
       });
     });
   });
+
+  describe('PoiModified action', () => {
+    it('should create an action', () => {
+      let action = new actions.PoiModified(id);
+
+      expect({ ...action }).toEqual({
+        type: actions.PoiActionTypes.POI_MODIFIED,
+        context: id
+      });
+    });
+  });
 })

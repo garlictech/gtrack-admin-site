@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -16,6 +16,7 @@ import { ToasterService } from 'angular2-toaster';
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
 import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
+import { IGeneralInfoState } from '../../store/state';
 
 @Component({
   selector: 'gt-hike-edit',
@@ -39,13 +40,14 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _toasterService: ToasterService,
     private _router: Router,
-    private _title: Title
+    private _title: Title,
+    private _zone: NgZone
   ) {}
 
   ngOnInit() {
     this._routingControlService.reset();
     this._waypointMarkerService.reset();
-    this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
+
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
 
@@ -60,21 +62,23 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({
             hikeId: params.id
           }));
+
           this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
         // Create new hike
         } else {
           // Set page title
           this._title.setTitle('New hike');
+          this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
 
           // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
           const _hikeId = uuid();
           this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({ hikeId: _hikeId }));
-          this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
+          this._store.dispatch(new commonHikeActions.HikeProgramModified(_hikeId));
 
           // Generate initial route id and load the empty route (for save toaster handling)
           const _routeId = uuid();
           this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({ routeId: _routeId }));
-          this._store.dispatch(new commonRouteActions.RouteUnsaved(_routeId));
+          this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
 
           // Create initial language block
           this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
@@ -91,30 +95,54 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
+    this.routeInfoData$ = this._store
+      .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
+      .takeUntil(this._destroy$);
 
-    this.allowSave$ = Observable.combineLatest(
-      this._store.select(this._hikeEditGeneralInfoSelectors.getPois),
-      this.routeInfoData$
-    ).map(([inHikePois, routeInfoData]: [any[], any]) => {
-      return inHikePois.length > 0 && (routeInfoData.segments && routeInfoData.segments.length > 0);
-    })
+    this.allowSave$ = Observable
+      .combineLatest(
+        this._store
+          .select(this._hikeEditGeneralInfoSelectors.getPois)
+          .takeUntil(this._destroy$),
+        this.routeInfoData$
+      )
+      .takeUntil(this._destroy$)
+      .map(([inHikePois, routeInfoData]: [any[], any]) => {
+        return inHikePois.length > 0 && (routeInfoData.segments && routeInfoData.segments.length > 0);
+      })
 
     // Handling hike save
-    this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)
-      .takeUntil(this._destroy$)
-      .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)))
+    this._store
+      .select(this._hikeEditGeneralInfoSelectors.getHikeId)
+      .switchMap((hikeId: string) => {
+        return this._store
+          .select(this._hikeSelectors.getHikeContext(hikeId))
+          .takeUntil(this._destroy$)
+      })
       .filter(hikeContext => !!(hikeContext && hikeContext.saved))
+      .take(1)
       .subscribe((hikeContext) => {
         this._toasterService.pop('success', 'Success!', 'Hike saved!');
+
+        this._store.dispatch(new commonHikeActions.HikeProgramModified((<IHikeContextState>hikeContext).id));
+
         this._router.navigate([`/admin/hike/${(<IHikeContextState>hikeContext).id}`]);
       });
 
     // Handling hike load
-    this._store.select(this._hikeEditGeneralInfoSelectors.getHikeId)
-      .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)))
+    this._store
+      .select(this._hikeEditGeneralInfoSelectors.getHikeId)
+      .switchMap((hikeId: string) => {
+        return this._store
+          .select(this._hikeSelectors.getHikeContext(hikeId))
+          .takeUntil(this._destroy$)
+      })
       .filter(hikeContext => !!(hikeContext && hikeContext.loaded))
-      .switchMap((hikeContext) => this._store.select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id)))
+      .switchMap((hikeContext) => {
+        return this._store
+          .select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id))
+          .takeUntil(this._destroy$)
+      })
       .take(1)
       .subscribe((hike) => {
         this._hikeDataService.splitHikeDataToStore(<IHikeProgram>hike);
@@ -137,6 +165,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner).take(1),
         this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId).take(1)
       )
+      .takeUntil(this._destroy$)
       .subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
         if (routePlannerState && routeId) {
           let _route: IRoute = {

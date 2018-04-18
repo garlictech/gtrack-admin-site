@@ -1,4 +1,4 @@
-import { IRoute, IRouteBounds } from 'subrepos/provider-client';
+import { IRoute, IRouteBounds, IRouteStored } from 'subrepos/provider-client';
 
 export class Route implements IRoute {
   public id: string;
@@ -13,7 +13,7 @@ export class Route implements IRoute {
     return this.route;
   }
 
-  constructor(data: IRoute) {
+  constructor(data: IRouteStored) {
     Object.assign(this, data);
   }
 }

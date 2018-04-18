@@ -66,13 +66,12 @@ describe('Hike actions', () => {
 
   describe('HikeProgramLoaded action', () => {
     it('should create an action', () => {
-      let hikeProgram = new HikeProgram(hikeProgramStoredData, new CheckpointService());
-      let action = new actions.HikeProgramLoaded(id, hikeProgram);
+      let action = new actions.HikeProgramLoaded(id, hikeProgramStoredData);
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.HIKE_PROGRAM_LOADED,
         context: id,
-        hikeProgram: hikeProgram
+        hikeProgram: hikeProgramStoredData
       });
     });
   });
@@ -89,24 +88,23 @@ describe('Hike actions', () => {
 
   describe('AllHikeProgramsLoaded action', () => {
     it('should create an action', () => {
-      let hikeProgram = new HikeProgram(hikeProgramStoredData, new CheckpointService());
-      let action = new actions.AllHikeProgramsLoaded([id], [hikeProgram]);
+      let action = new actions.AllHikeProgramsLoaded([id], [hikeProgramStoredData]);
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.ALL_HIKE_PROGRAMS_LOADED,
         contexts: [id],
-        hikePrograms: [hikeProgram]
+        hikePrograms: [hikeProgramStoredData]
       });
     });
   });
 
   describe('SaveHikeProgram action', () => {
     it('should create an action', () => {
-      let action = new actions.SaveHikeProgram(hikeProgramData);
+      let action = new actions.SaveHikeProgram(hikeProgramStoredData);
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.SAVE_HIKE_PROGRAM,
-        hikeProgram: hikeProgramData
+        hikeProgram: hikeProgramStoredData
       });
     });
   });
@@ -122,12 +120,12 @@ describe('Hike actions', () => {
     });
   });
 
-  describe('HikeProgramUnsaved action', () => {
+  describe('HikeProgramModified action', () => {
     it('should create an action', () => {
-      let action = new actions.HikeProgramUnsaved(id);
+      let action = new actions.HikeProgramModified(id);
 
       expect({ ...action }).toEqual({
-        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_UNSAVED,
+        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_MODIFIED,
         context: id
       });
     });

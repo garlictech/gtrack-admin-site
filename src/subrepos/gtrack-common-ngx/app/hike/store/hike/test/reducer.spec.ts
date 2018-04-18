@@ -4,15 +4,13 @@ import * as uuid from 'uuid/v1';
 import { hikeReducer, hikeReducerInitialState, hikeContextReducerInitialState } from '../reducer';
 import * as actions from '../actions';
 import { IHikeState } from '../state';
-import { HikeProgram } from '../../../services/hike-program';
 import { CheckpointService } from '../../../services/checkpoint';
 
 describe('HikeProgramReducer', () => {
   let id: string;
   let initialState: IHikeState;
   let hikeProgramData: IHikeProgram;
-  let hikeProgram: HikeProgram;
-  let hikeProgramStored: IHikeProgramStored;
+  let hikeProgram: IHikeProgramStored;
 
   beforeEach(() => {
     id = uuid();
@@ -44,13 +42,11 @@ describe('HikeProgramReducer', () => {
       stops: []
     };
 
-    hikeProgramStored = {
+    hikeProgram = {
       ...hikeProgramData,
       id,
       timestamp: new Date().getTime()
     };
-
-    hikeProgram = new HikeProgram(hikeProgramStored, new CheckpointService());
   });
 
   describe('undefined action', () => {

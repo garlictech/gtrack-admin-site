@@ -35,7 +35,6 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _poiEditorService: PoiEditorService,
-
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
@@ -48,8 +47,8 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._store
       .select(this._hikeEditMapSelectors.getMapId)
-      .takeUntil(this._destroy$)
       .filter(id => id !== '')
+      .takeUntil(this._destroy$)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
@@ -57,37 +56,38 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     // Get pois by id
     Observable
       .combineLatest(
-        this._store.select(this._hikeEditGeneralInfoSelectors.getPois),
-        this._store.select(this._poiSelectors.getPoiIds)
+        this._store.select(this._hikeEditGeneralInfoSelectors.getPois).takeUntil(this._destroy$),
+        this._store.select(this._poiSelectors.getPoiIds).takeUntil(this._destroy$)
       )
       .debounceTime(150)
       .takeUntil(this._destroy$)
       .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
-        const poiIds = _.difference(inHikePoiIds, _.intersection(inHikePoiIds, inStorePoiIds))
+        const missingPoiIds = _.difference(inHikePoiIds, _.intersection(inHikePoiIds, inStorePoiIds))
 
         // Get only the not-loaded pois
-        if (poiIds && poiIds.length > 0) {
-          this._store.dispatch(new commonPoiActions.LoadPois(poiIds));
+        if (missingPoiIds && missingPoiIds.length > 0) {
+          this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
         }
       });
 
     // Poi list
     this.pois$ = this._store
       .select(this._hikeEditGeneralInfoSelectors.getHikePois<(IPoi)>(this._poiSelectors.getAllPois))
-      .takeUntil(this._destroy$)
       .filter((pois: IPoi[]) => typeof pois !== 'undefined')
+      .takeUntil(this._destroy$)
       .switchMap((pois: IPoi[]) => {
         return this._store
           .select(this._hikeEditRoutePlannerSelectors.getPath)
-          .take(1)
+          .filter((path: any) => path && path.geometry.coordinates.length > 0)
+          .takeUntil(this._destroy$)
           .map((path: any) => {
             return this._poiEditorService.organizePois(_.cloneDeep(pois), path);
           });
       });
 
     this.pois$
-      .takeUntil(this._destroy$)
       .debounceTime(150)
+      .takeUntil(this._destroy$)
       .subscribe((pois: Poi[]) => {
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);
@@ -98,21 +98,28 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     //
 
     this.showOnrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOnrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOnrouteMarkers'))
+      .takeUntil(this._destroy$);
 
     this.showOffrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers'));
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers'))
+      .takeUntil(this._destroy$);
 
     //
     // Refresh markers
     //
 
-    this.showOnrouteMarkers$.takeUntil(this._destroy$).subscribe(() => {
-      this._poiEditorService.refreshPoiMarkers(this._map);
-    });
-    this.showOffrouteMarkers$.takeUntil(this._destroy$).subscribe(() => {
-      this._poiEditorService.refreshPoiMarkers(this._map);
-    });
+    this.showOnrouteMarkers$
+      .takeUntil(this._destroy$)
+      .subscribe(() => {
+        this._poiEditorService.refreshPoiMarkers(this._map);
+      });
+
+    this.showOffrouteMarkers$
+      .takeUntil(this._destroy$)
+      .subscribe(() => {
+        this._poiEditorService.refreshPoiMarkers(this._map);
+      });
   }
 
   ngOnDestroy() {

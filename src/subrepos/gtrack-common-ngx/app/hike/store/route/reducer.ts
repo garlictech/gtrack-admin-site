@@ -1,18 +1,8 @@
 import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
-import * as _ from 'lodash';
 
-import {
-  IAllRouteContextState,
-  routeContextStateAdapter,
-  IRouteEntityState,
-  IRouteState,
-  routeAdapter
-} from './state';
+import { IAllRouteContextState, routeContextStateAdapter, IRouteEntityState, IRouteState, routeAdapter } from './state';
 
-import {
-  RouteActionTypes,
-  AllRouteActions
-} from './actions';
+import { RouteActionTypes, AllRouteActions } from './actions';
 
 export const routeReducerInitialState = routeAdapter.getInitialState();
 export const routeContextReducerInitialState = routeContextStateAdapter.getInitialState();
@@ -23,38 +13,50 @@ const contextReducer: ActionReducer<IAllRouteContextState> = (
 ): IAllRouteContextState => {
   switch (action.type) {
     case RouteActionTypes.LOAD_ROUTE:
-      return routeContextStateAdapter.addOne({
-        id: action.context,
-        loading: true,
-        loaded: false,
-        saved: false
-      }, state);
+      return routeContextStateAdapter.addOne(
+        {
+          id: action.context,
+          loading: true,
+          loaded: false,
+          saved: false
+        },
+        state
+      );
 
     case RouteActionTypes.ROUTE_LOADED:
-      return routeContextStateAdapter.updateOne({
-        id: action.context,
-        changes: {
-          loading: false,
-          loaded: true,
-          saved: false
-        }
-      }, state);
+      return routeContextStateAdapter.updateOne(
+        {
+          id: action.context,
+          changes: {
+            loading: false,
+            loaded: true,
+            saved: false
+          }
+        },
+        state
+      );
 
     case RouteActionTypes.ROUTE_SAVED:
-      return routeContextStateAdapter.updateOne({
-        id: action.context,
-        changes: {
-          saved: true
-        }
-      }, state);
+      return routeContextStateAdapter.updateOne(
+        {
+          id: action.context,
+          changes: {
+            saved: true
+          }
+        },
+        state
+      );
 
-    case RouteActionTypes.ROUTE_UNSAVED:
-      return routeContextStateAdapter.upsertOne({
-        id: action.context,
-        changes: {
-          saved: false
-        }
-      }, state);
+    case RouteActionTypes.ROUTE_MODIFIED:
+      return routeContextStateAdapter.upsertOne(
+        {
+          id: action.context,
+          changes: {
+            saved: false
+          }
+        },
+        state
+      );
 
     default:
       return state;
@@ -67,12 +69,15 @@ const reducer: ActionReducer<IRouteEntityState> = (
 ): IRouteEntityState => {
   switch (action.type) {
     case RouteActionTypes.ROUTE_LOADED:
-      return routeAdapter.addOne(action.route, state);
+      return routeAdapter.upsertOne({
+        id: action.route.id,
+        changes: action.route
+      }, state);
 
     default:
       return state;
   }
-}
+};
 
 const reducerMap: ActionReducerMap<IRouteState> = {
   contexts: contextReducer,

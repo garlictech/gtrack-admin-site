@@ -6,8 +6,7 @@ import { Route } from '../../../services/route';
 describe('Route actions', () => {
   let id: string;
   let routeData: IRoute;
-  let routeDataStored: IRouteStored;
-  let route: Route;
+  let route: IRouteStored;
 
   beforeEach(() => {
     id = uuid();
@@ -44,13 +43,11 @@ describe('Route actions', () => {
       }
     };
 
-    routeDataStored = {
+    route = {
       ...routeData,
       id,
       timestamp: new Date().getTime()
     };
-
-    route = new Route(routeData);
   });
 
   describe('Load route action', () => {
@@ -109,12 +106,12 @@ describe('Route actions', () => {
     });
   });
 
-  describe('RouteUnSaved action', () => {
+  describe('RouteModified action', () => {
     it('should create an action', () => {
-      let action = new actions.RouteUnsaved(id);
+      let action = new actions.RouteModified(id);
 
       expect({ ...action }).toEqual({
-        type: actions.RouteActionTypes.ROUTE_UNSAVED,
+        type: actions.RouteActionTypes.ROUTE_MODIFIED,
         context: id
       });
     });

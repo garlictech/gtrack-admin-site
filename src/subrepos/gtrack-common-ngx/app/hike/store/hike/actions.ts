@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
-import { HikeProgram } from '../../services/hike-program';
-import { IPoi, IHikeProgram, IHikeProgramStored } from 'subrepos/provider-client';
+import { IPoi, IHikeProgramStored } from 'subrepos/provider-client';
 
 export enum HikeProgramActionTypes {
   LOAD_HIKE_PROGRAM = '[HikeProgram] Load hikeProgram',
@@ -10,7 +9,7 @@ export enum HikeProgramActionTypes {
   ALL_HIKE_PROGRAMS_LOADED = '[HikeProgram] All hikePrograms loaded',
   SAVE_HIKE_PROGRAM = '[HikeProgram] Save hikeProgram',
   HIKE_PROGRAM_SAVED = '[HikeProgram] HikeProgram saved',
-  HIKE_PROGRAM_UNSAVED = '[HikeProgram] HikeProgram unsaved'
+  HIKE_PROGRAM_MODIFIED = '[HikeProgram] HikeProgram modified'
 }
 
 export class LoadHikeProgram implements Action {
@@ -32,7 +31,7 @@ export class LoadHikeProgramFailed implements Action {
 export class HikeProgramLoaded implements Action {
   readonly type = HikeProgramActionTypes.HIKE_PROGRAM_LOADED;
 
-  constructor(public context: string, public hikeProgram: HikeProgram) {
+  constructor(public context: string, public hikeProgram: IHikeProgramStored) {
     // Empty
   }
 }
@@ -48,7 +47,7 @@ export class LoadHikePrograms implements Action {
 export class AllHikeProgramsLoaded implements Action {
   readonly type = HikeProgramActionTypes.ALL_HIKE_PROGRAMS_LOADED;
 
-  constructor(public contexts: string[], public hikePrograms: HikeProgram[]) {
+  constructor(public contexts: string[], public hikePrograms: IHikeProgramStored[]) {
     // Empty
   }
 }
@@ -56,7 +55,7 @@ export class AllHikeProgramsLoaded implements Action {
 export class SaveHikeProgram implements Action {
   readonly type = HikeProgramActionTypes.SAVE_HIKE_PROGRAM;
 
-  constructor(public hikeProgram: IHikeProgram) {}
+  constructor(public hikeProgram: IHikeProgramStored) {}
 }
 
 export class HikeProgramSaved implements Action {
@@ -65,8 +64,8 @@ export class HikeProgramSaved implements Action {
   constructor(public context: string) {}
 }
 
-export class HikeProgramUnsaved implements Action {
-  readonly type = HikeProgramActionTypes.HIKE_PROGRAM_UNSAVED;
+export class HikeProgramModified implements Action {
+  readonly type = HikeProgramActionTypes.HIKE_PROGRAM_MODIFIED;
 
   constructor(public context: string) {}
 }
@@ -79,4 +78,4 @@ export type AllHikeActions =
   | AllHikeProgramsLoaded
   | SaveHikeProgram
   | HikeProgramSaved
-  | HikeProgramUnsaved;
+  | HikeProgramModified;

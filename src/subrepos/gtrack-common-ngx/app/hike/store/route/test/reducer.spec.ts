@@ -15,8 +15,7 @@ describe('Route reducer', () => {
   let initialState: IRouteState;
   let id: string;
   let routeData: IRoute;
-  let routeDataStored: IRouteStored;
-  let route: Route;
+  let route: IRouteStored;
 
   beforeEach(() => {
     id = uuid();
@@ -57,13 +56,11 @@ describe('Route reducer', () => {
       }
     };
 
-    routeDataStored = {
+    route = {
       ...routeData,
       id,
       timestamp: new Date().getTime()
     };
-
-    route = new Route(routeDataStored);
   });
 
   describe('undefined action', () => {

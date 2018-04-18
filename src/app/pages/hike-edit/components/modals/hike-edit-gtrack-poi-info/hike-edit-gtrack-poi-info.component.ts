@@ -40,12 +40,13 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     if (this.modalConfig && this.modalConfig.component.data) {
       this.poiId = this.modalConfig.component.data.poiId;
 
+      this._store.dispatch(new commonPoiActions.PoiModified(this.poiId));
+
       // Poi data
       this._store.select(this._poiSelectors.getPoi(<string>this.poiId))
         .take(1)
         .subscribe((poi: Poi) => {
           this._gTrackPoi = _.cloneDeep(poi);
-          console.log('this._gTrackPoi', this._gTrackPoi);
           this._initFormSubscriptions();
         });
 
@@ -55,6 +56,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
         .take(1)
         .subscribe(poiContext => {
           this._toasterService.pop('success', 'Success!', 'Poi saved!');
+
           this.modalConfig.modal.close();
         });
     }

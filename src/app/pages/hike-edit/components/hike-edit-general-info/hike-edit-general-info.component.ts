@@ -39,14 +39,19 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Selectors
-    this.textualDescriptions$ = this._store.select(
-      this._hikeEditGeneralInfoSelectors.getAllDescriptions
-    );
-    this.generalInfo$ = this._store.select(this._hikeEditGeneralInfoSelectors.getGeneralInfo);
-    this.isRoundTrip$ = this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip);
+    this.textualDescriptions$ = this._store
+      .select(this._hikeEditGeneralInfoSelectors.getAllDescriptions)
+      .takeUntil(this._destroy$);
+    this.generalInfo$ = this._store
+      .select(this._hikeEditGeneralInfoSelectors.getGeneralInfo)
+      .takeUntil(this._destroy$);
+    this.isRoundTrip$ = this._store
+      .select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
+      .takeUntil(this._destroy$);
 
     // Init forms from the store
     this._initForm();
+
   }
 
   ngOnDestroy() {
@@ -71,9 +76,11 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
       });
 
     // Fill the form on the 1st time
+
     this._store
       .select(this._hikeEditGeneralInfoSelectors.getInitialized)
-      .skipWhile(initialized => !initialized)
+      .filter(initialized => initialized)
+      // .takeUntil(this._destroy$)
       .take(1)
       .subscribe((initialized: boolean) => {
         this.generalInfo$

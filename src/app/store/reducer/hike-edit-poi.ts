@@ -240,14 +240,19 @@ const initialContextItemState = {
   showOnrouteMarkers: true,
   showOffrouteMarkers: false
 };
+
 export const externalPoiInitialContextState: IExternalPoiListContextState = {
-  google: initialContextItemState,
-  osmAmenity: initialContextItemState,
-  osmNatural: initialContextItemState,
-  osmRoute: initialContextItemState,
-  wikipedia: initialContextItemState,
-  gTrack: initialContextItemState,
-  hike: initialContextItemState
+  google: _.cloneDeep(initialContextItemState),
+  osmAmenity: _.cloneDeep(initialContextItemState),
+  osmNatural: _.cloneDeep(initialContextItemState),
+  osmRoute: _.cloneDeep(initialContextItemState),
+  wikipedia: _.cloneDeep(initialContextItemState),
+  gTrack: _.merge(_.cloneDeep(initialContextItemState), {
+    showOnrouteMarkers: false,
+  }),
+  hike: _.merge(_.cloneDeep(initialContextItemState), {
+    showOffrouteMarkers: true
+  })
 };
 
 export function externalPoiListContextReducer(

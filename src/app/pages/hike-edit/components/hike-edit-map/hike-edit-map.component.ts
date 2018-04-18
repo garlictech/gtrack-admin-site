@@ -61,7 +61,8 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     // Update buffer on each segment update
-    this._store.select(this._hikeEditRoutePlannerSelectors.getSegments)
+    this._store
+      .select(this._hikeEditRoutePlannerSelectors.getSegments)
       .takeUntil(this._destroy$)
       .subscribe(() => {
         // Refreh buffer on segment change, if needed
@@ -115,7 +116,8 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public resetMap($event: Event) {
     $event.stopPropagation();
 
-    this._store.select(this._hikeEditRoutePlannerSelectors.getRoute)
+    this._store
+      .select(this._hikeEditRoutePlannerSelectors.getRoute)
       .take(1)
       .subscribe((route) => {
         this.mapComponent.map.fitBounds(route);

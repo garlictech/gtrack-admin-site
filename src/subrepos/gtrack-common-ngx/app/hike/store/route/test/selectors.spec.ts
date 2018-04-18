@@ -12,21 +12,18 @@ import { IRouteState } from '../state';
 import * as actions from '../actions';
 import { RouteSelectors } from '../selectors';
 import { EXTERNAL_ROUTE_DEPENDENCIES } from '../../../externals';
-import { Route } from '../../../services/route';
 
 import { routesStored as routeFixtures } from './fixtures';
 
 describe('Route selectors', () => {
   let store: Store<IRouteState>;
-  let routesData: IRouteStored[];
-  let routes: Route[];
+  let routes: IRouteStored[];
   let ids: string[];
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
-    routesData = [ ...routeFixtures ];
-    ids = routesData.map(route => route.id);
-    routes = routeFixtures.map(data => new Route(data));
+    routes = [ ...routeFixtures ];
+    ids = routes.map(route => route.id);
     destroy$ = new Subject<boolean>();
 
     TestBed.configureTestingModule({

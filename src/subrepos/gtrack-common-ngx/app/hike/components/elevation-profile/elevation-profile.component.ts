@@ -2,7 +2,7 @@ import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
 import { DistancePipe, UnitsService } from '../../../shared';
-import { Route, RouteService, IElevationData } from '../../services/route'
+import { Route, RouteService, IElevationData } from '../../services/route';
 import { HikeProgram } from '../../services/hike-program';
 
 @Component({
@@ -11,15 +11,14 @@ import { HikeProgram } from '../../services/hike-program';
   styleUrls: ['./elevation-profile.component.scss']
 })
 export class ElevationProfileComponent {
-  @ViewChild('elevationProfile')
-  public mainDiv: ElementRef;
+  @ViewChild('elevationProfile') public mainDiv: ElementRef;
 
-  public route: (Route | null);
+  public route: Route | null;
   public marker: d3.Selection<d3.BaseType, {}, null, undefined>;
   public elevationText: d3.Selection<d3.BaseType, {}, null, undefined>;
 
   protected vis: d3.Selection<d3.BaseType, {}, null, undefined>;
-  protected res: (IElevationData|null);
+  protected res: IElevationData | null;
   protected markerOn = false;
   protected distance: DistancePipe;
 
@@ -42,7 +41,12 @@ export class ElevationProfileComponent {
     this.routeService
       .get(routeId)
       .take(1)
-      .subscribe((route: Route) => {
+      .map(route => {
+        if (route) {
+          return new Route(route);
+        }
+      })
+      .subscribe(route => {
         if (!route) {
           throw new Error(`Route #${this.routeId} is unknown`);
         }
@@ -60,11 +64,9 @@ export class ElevationProfileComponent {
           return;
         }
 
-        let xAxis = d3.axisBottom(this.res.xRange)
-          .tickSize(5);
+        let xAxis = d3.axisBottom(this.res.xRange).tickSize(5);
 
-        let yAxis = d3.axisLeft(this.res.yRange)
-          .tickSize(5)
+        let yAxis = d3.axisLeft(this.res.yRange).tickSize(5);
 
         this.vis
           .append('svg:g')
@@ -127,11 +129,9 @@ export class ElevationProfileComponent {
       });
   }
 
-  @Input()
-  public width = 450;
+  @Input() public width = 450;
 
-  @Input()
-  public height = 200;
+  @Input() public height = 200;
 
   @Input()
   public margins = {

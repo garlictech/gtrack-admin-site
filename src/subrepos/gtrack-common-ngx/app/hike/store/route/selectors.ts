@@ -5,18 +5,18 @@ import * as _ from 'lodash';
 import { routeAdapter, routeContextStateAdapter, IRouteState, IRouteContextState } from './state';
 import { EXTERNAL_ROUTE_DEPENDENCIES, IExternalRouteDependencies } from '../../externals';
 import { Dictionary } from '@ngrx/entity/src/models';
-import { Route, RouteService  } from '../../services/route';
-import { Poi } from '../../services/poi';
+import { IRouteStored } from 'subrepos/provider-client';
+
 
 @Injectable()
 export class RouteSelectors {
   public selectFeature: MemoizedSelector<object, IRouteState>;
   public getRouteIds: (state: object) => string[] | number[];
-  public getAllRoutes: (state: object) => Route[];
+  public getAllRoutes: (state: object) => IRouteStored[];
   public getAllContexts: (state: object) => IRouteContextState[];
 
   private _selectContextEntities: (state: object) => Dictionary<IRouteContextState>;
-  private _selectRouteEntities: (state: object) => Dictionary<Route>;
+  private _selectRouteEntities: (state: object) => Dictionary<IRouteStored>;
   private _externals: IExternalRouteDependencies;
 
   constructor(
@@ -39,7 +39,7 @@ export class RouteSelectors {
   }
 
   public getRoute(context: string) {
-    return createSelector(this.getAllRoutes, (routes: Route[]) => (routes.find(route => (route.id === context))));
+    return createSelector(this.getAllRoutes, (routes: IRouteStored[]) => (routes.find(route => (route.id === context))));
   }
 
   public getRouteContext(id: string) {

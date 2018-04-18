@@ -47,7 +47,7 @@ export class PoiEditorService {
     };
     _.defaultsDeep(
       _poiData,
-      _.pick(poi, ['elevation', 'lat', 'lon', 'objectType', 'distFromRoute', 'description', 'types'])
+      _.pick(poi, ['elevation', 'lat', 'lon', 'objectType', 'description', 'types'])
     );
 
     switch (poi.objectType) {
@@ -130,7 +130,7 @@ export class PoiEditorService {
   ) {
     let _pois: any[] = [];
 
-    if (path) {
+    if (pois && path) {
       const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 50, {units: 'meters'});
       const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 1000, {units: 'meters'});
 

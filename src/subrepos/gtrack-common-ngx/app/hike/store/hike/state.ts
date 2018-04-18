@@ -1,8 +1,8 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { HikeProgram } from '../../services/hike-program';
+import { IHikeProgramStored } from 'subrepos/provider-client';
 
-export const hikeAdapter = createEntityAdapter<HikeProgram>();
-export interface IHikeEntityState extends EntityState<HikeProgram> {};
+export const hikeAdapter = createEntityAdapter<IHikeProgramStored>();
+export interface IHikeEntityState extends EntityState<IHikeProgramStored> {};
 
 export interface IHikeContextState {
   id: string;

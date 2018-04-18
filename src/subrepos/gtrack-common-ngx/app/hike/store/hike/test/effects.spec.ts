@@ -13,7 +13,7 @@ import { hot, cold } from 'jasmine-marbles';
 
 import * as hikeProgramActions from '../actions';
 import { HikeEffects } from '../effects';
-import { HikeProgramService, HikeProgram } from '../../../services/hike-program';
+import { HikeProgramService } from '../../../services/hike-program';
 import { DeepstreamModule } from '../../../../deepstream';
 import { CheckpointService, Checkpoint } from '../../../services/checkpoint';
 
@@ -40,7 +40,7 @@ describe('HikeProgram effects', () => {
     [key: string]: IHikeProgramStored
   };
 
-  let hikePrograms: HikeProgram[];
+  let hikePrograms: IHikeProgramStored[];
 
   let actions$: TestActions;
   let hikeProgramService: HikeProgramService;
@@ -55,7 +55,7 @@ describe('HikeProgram effects', () => {
     ids = hikeProgramsStored.map(hikeProgram => hikeProgram.id);
     hikeProgramsMap = _.zipObject(ids, hikeProgramsStored);
     newId = uuid();
-    hikePrograms = hikeProgramsStored.map(data => new HikeProgram(data, checkpointService));
+    hikePrograms = [ ...hikeProgramsStored ];
 
     TestBed.configureTestingModule({
       imports: [
@@ -88,7 +88,7 @@ describe('HikeProgram effects', () => {
     effects = TestBed.get(HikeEffects);
     checkpointService = TestBed.get(CheckpointService);
 
-    spyOn(hikeProgramService, 'get').and.callFake(id => Observable.of(new HikeProgram(hikeProgramsMap[id], checkpointService)));
+    spyOn(hikeProgramService, 'get').and.callFake(id => Observable.of(hikeProgramsMap[id]));
     spyOn(hikeProgramService, 'query').and.returnValue(Observable.of(hikePrograms));
     spyOn(hikeProgramService, 'create').and.returnValue(Observable.of({
       id: newId
@@ -121,7 +121,7 @@ describe('HikeProgram effects', () => {
 
   describe('saveHike$', () => {
     it('should return the id of the saved HikeProgram from HikeProgramSaved', () => {
-      const action = new hikeProgramActions.SaveHikeProgram(hikeProgramFixtures[0]);
+      const action = new hikeProgramActions.SaveHikeProgram(hikeProgramsStored[0]);
       const completion = new hikeProgramActions.HikeProgramSaved(newId);
       const expected = cold('-b', {b: completion});
 

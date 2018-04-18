@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
 
 import { TrailBoxComponent } from './trail-box';
@@ -10,11 +11,13 @@ import { ElevationProfileComponent } from './elevation-profile';
 import { HikeProgramComponent } from './hike-program';
 import { CheckpointsComponent } from './checkpoints';
 import { LocationSearchComponent } from './location-search';
+import { SearchFiltersComponent } from './search-filters';
 
 import { HikeModule } from '../hike.module';
 import { MapModule } from '../../map/map.module';
 import { MapComponentsModule } from '../../map/components/map-components.module';
 import { SharedModule } from '../../shared/shared.module';
+import { SearchFiltersModule } from '../../search-filters/search-filters.module';
 
 @NgModule({
   imports: [
@@ -22,7 +25,9 @@ import { SharedModule } from '../../shared/shared.module';
     MapComponentsModule,
     CommonModule,
     SharedModule,
-    NouisliderModule
+    NouisliderModule,
+    ReactiveFormsModule,
+    SearchFiltersModule
   ],
   exports: [
     TrailBoxComponent,
@@ -32,7 +37,8 @@ import { SharedModule } from '../../shared/shared.module';
     ElevationProfileComponent,
     HikeProgramComponent,
     CheckpointsComponent,
-    LocationSearchComponent
+    LocationSearchComponent,
+    SearchFiltersComponent
   ],
   declarations: [
     TrailBoxComponent,
@@ -42,7 +48,8 @@ import { SharedModule } from '../../shared/shared.module';
     ElevationProfileComponent,
     HikeProgramComponent,
     CheckpointsComponent,
-    LocationSearchComponent
+    LocationSearchComponent,
+    SearchFiltersComponent
   ]
 })
 export class HikeComponentsModule {

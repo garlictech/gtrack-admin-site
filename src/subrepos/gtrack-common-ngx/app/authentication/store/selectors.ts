@@ -70,7 +70,7 @@ export class Selectors {
     this.loggedIn = createSelector(
       this.token,
       this._deepstreamSelectors.loggedIn,
-      (token, dsState) => token && dsState
+      (token, dsState) => !!token && dsState
     );
 
     this.magicLinkEmailSent = createSelector(selectJwtFeature, state => state.emailSent);

@@ -15,61 +15,59 @@ export const ADD_DESCRIPTION = '[HikeEditGeneralInfo] Add description';
 
 export class ResetGeneralInfoState implements Action {
   readonly type = RESET_GENERAL_INFO_STATE;
-  constructor() { /* EMPTY */ }
 }
 
 export class SetInitialized implements Action {
   readonly type = SET_INITIALIZED;
-  constructor() { /* EMPTY */ }
 }
 
 export class SetHikeId implements Action {
   readonly type = SET_HIKE_ID;
   constructor(public payload: {
     hikeId: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetRouteId implements Action {
   readonly type = SET_ROUTE_ID;
   constructor(public payload: {
     routeId: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetIsRoundTrip implements Action {
   readonly type = SET_IS_ROUND_TRIP;
   constructor(public payload: {
     isRoundTrip: boolean
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetDifficulty implements Action {
   readonly type = SET_DIFFICULTY;
   constructor(public payload: {
     difficulty: number
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetPois implements Action {
   readonly type = SET_POIS;
   constructor(public payload: {
     pois: string[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class AddPoi implements Action {
   readonly type = ADD_POI;
   constructor(public payload: {
     poi: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class RemovePoi implements Action {
   readonly type = REMOVE_POI;
   constructor(public payload: {
     poi: string
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class SetDescriptions implements Action {
@@ -77,7 +75,7 @@ export class SetDescriptions implements Action {
 
   constructor(public payload: {
     descriptions: ITextualDescriptionItem[]
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export class AddDescription implements Action {
@@ -85,7 +83,7 @@ export class AddDescription implements Action {
 
   constructor(public payload: {
     description: ITextualDescriptionItem
-  }) { /* EMPTY */ }
+  }) {}
 }
 
 export type AllHikeEditGeneralInfoActions =

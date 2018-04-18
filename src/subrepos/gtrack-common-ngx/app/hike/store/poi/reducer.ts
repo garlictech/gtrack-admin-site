@@ -1,5 +1,4 @@
 import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
-import * as _ from 'lodash';
 
 import {
   IAllPoiContextState,
@@ -70,6 +69,14 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
         }
       }, state);
 
+    case PoiActionTypes.POI_MODIFIED:
+      return poiContextStateAdapter.upsertOne({
+        id: action.context,
+        changes: {
+          saved: false
+        }
+      }, state);
+
     default:
       return state;
   }
@@ -83,14 +90,14 @@ const reducer: ActionReducer<IPoiEntityState> = (
     case PoiActionTypes.POI_LOADED:
       return poiAdapter.upsertOne({
         id: action.poi.id,
-        changes: _.cloneDeep(action.poi)
+        changes: action.poi
       }, state);
 
     case PoiActionTypes.ALL_POI_LOADED:
       return poiAdapter.upsertMany(action.pois.map(poi => {
         return {
           id: poi.id,
-          changes: _.cloneDeep(poi)
+          changes: poi
         }
       }), state);
 
