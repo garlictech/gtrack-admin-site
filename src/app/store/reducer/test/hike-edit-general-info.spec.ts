@@ -1,6 +1,8 @@
 import { Action } from '@ngrx/store';
 import { IHikeEditGeneralInfoState } from '../../state/hike-edit-general-info';
-import { initialGeneralInfoState, descriptionInitialState, hikeEditGeneralInfoReducer } from '../hike-edig-general-info';
+import {
+  initialGeneralInfoState, descriptionInitialState, hikeEditGeneralInfoReducer
+} from '../hike-edit-general-info';
 import { hikeEditGeneralInfoActions } from '../..';
 import { ITextualDescriptionItem } from '../../../shared/interfaces';
 

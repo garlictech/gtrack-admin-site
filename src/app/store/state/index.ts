@@ -4,7 +4,7 @@ import { RouterReducerState } from '@ngrx/router-store';
 import { ILocalizationState } from 'app/language';
 
 import { IHikeEditRoutePlannerState } from './hike-edit-route-planner';
-import { IHikeEditMapState, IHikeEditMapMapState } from './hike-edit-map';
+import { IHikeEditMapState } from './hike-edit-map';
 import { IHikeEditPoiState, IExternalPoiListContextState, IExternalPoiListContextItemState } from './hike-edit-poi';
 import { IHikeEditGeneralInfoState, IGeneralInfoState } from './hike-edit-general-info';
 import { IEditedHikeProgramState } from './edited-hike-program';

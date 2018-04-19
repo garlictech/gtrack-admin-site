@@ -1,6 +1,6 @@
 import { IPoiStored } from 'subrepos/provider-client';
-import { IGenericState } from './generic';
+import { IGenericEditedState } from './generic';
 
-export interface IEditedGtrackPoiState extends IGenericState {
+export interface IEditedGtrackPoiState extends IGenericEditedState {
   data: IPoiStored;
 }

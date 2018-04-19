@@ -9,8 +9,7 @@ import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/deepstr
 import { CommonState, commonReducers, IAuthenticationState } from 'subrepos/gtrack-common-ngx';
 import { ILocalizationState, Reducer as LanguageReducer } from 'app/language';
 
-import { IEditedHikeProgramState } from './state/hike-program';
-import { editedHikeProgramReducer } from './reducer/edited-hike-program';
+import { environment } from 'environments/environment';
 
 /////////////
 // Actions
@@ -19,6 +18,14 @@ import { editedHikeProgramReducer } from './reducer/edited-hike-program';
 import * as adminMapActions from './actions/admin-map';
 export type AdminMapAction = adminMapActions.AllAdminMapActions;
 export { adminMapActions };
+
+import * as editedGTrackPoiActions from './actions/edited-gtrack-poi';
+export type EditedGTrackPoiAction = editedGTrackPoiActions.AllEditedGTrackPoiActions;
+export { editedGTrackPoiActions };
+
+import * as editedHikeProgramActions from './actions/edited-hike-program';
+export type EditedHikeProgramAction = editedHikeProgramActions.AllEditedHikeProgramActions;
+export { editedHikeProgramActions };
 
 import * as hikeEditActions from './actions/hike-edit';
 export type HikeEditAction = hikeEditActions.AllHikeEditActions;
@@ -71,17 +78,21 @@ export { PoiEffects } from 'subrepos/gtrack-common-ngx';
 // Reducers
 //////////////
 
-import { hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
-import { hikeEditGeneralInfoReducer } from './reducer/hike-edig-general-info';
-import { environment } from 'environments/environment';
-export { hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer };
-import { State } from './state';
-import { editedGtrackPoiReducer } from './reducer/edited-gtrack-poi';
+import {
+  hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer,
+  editedGTrackPoiReducer, editedHikeProgramReducer, hikeEditGeneralInfoReducer
+} from './reducer';
+
+export {
+  hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer
+};
+
 //////////////
 // State
 //////////////
 
-// Extend the store interface with that.
+import { State } from './state';
+import { IEditedHikeProgramState } from './state/hike-program';
 
 // Same keys as in the state!!!
 const reducers: ActionReducerMap<State> = {
@@ -93,7 +104,7 @@ const reducers: ActionReducerMap<State> = {
   hikeEditMap: hikeEditMapReducer,
   language: LanguageReducer,
   editedHikeProgram: editedHikeProgramReducer,
-  editedGtrackPoi: editedGtrackPoiReducer
+  editedGtrackPoi: editedGTrackPoiReducer
 };
 
 function logger(reducer: ActionReducer<State>): any {

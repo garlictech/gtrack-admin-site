@@ -1,6 +1,6 @@
-import { IHikeProgram } from 'subrepos/provider-client';
-import { IGenericState } from './generic';
+import { IHikeProgramStored } from 'subrepos/provider-client';
+import { IGenericEditedState } from './generic';
 
-export interface IEditedHikeProgramState extends IGenericState {
-  data: IHikeProgram;
+export interface IEditedHikeProgramState extends IGenericEditedState {
+  data: IHikeProgramStored;
 }

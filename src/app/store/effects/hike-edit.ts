@@ -1,16 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { HikeDataService } from 'app/shared/services';
 import { HikeEditPoiSelectors } from 'app/selectors/hike-edit-poi';
-import { State, hikeEditActions, commonHikeActions, commonRouteActions, hikeEditGeneralInfoActions } from '../index';
+import {
+  State, hikeEditActions, commonHikeActions, commonRouteActions, hikeEditGeneralInfoActions
+} from '../index';
 
 import * as _ from 'lodash';
 
+//
+// TODO: remove this file ???
+//
+
 @Injectable()
 export class HikeEditEffects {
-  constructor(private _actions$: Actions, private _store: Store<State>, private _hikeDataService: HikeDataService) {}
+  constructor(
+    private _actions$: Actions,
+    private _store: Store<State>,
+    private _hikeDataService: HikeDataService
+  ) {}
 
   // @Effect()
   // collectHikeData$: Observable<Action> = this._actions$

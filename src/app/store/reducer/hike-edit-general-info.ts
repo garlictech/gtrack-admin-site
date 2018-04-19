@@ -14,6 +14,7 @@ export const initialGeneralInfoState: IGeneralInfoState = {
   hikeId: '',
   routeId: '',
   isRoundTrip: false,
+  location: '',
   difficulty: 5,
   pois: [],
   initialized: false

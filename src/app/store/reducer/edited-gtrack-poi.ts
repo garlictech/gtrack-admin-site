@@ -1,11 +1,10 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
+import { IEditedGtrackPoiState } from '../state';
+import { editedGTrackPoiActions } from '../index';
+
 import * as _ from 'lodash';
 
-import { IEditedGtrackPoiState } from '../state/edited-gtrack-poi';
-
-import * as EditedPoiActions from '../actions/edited-gtrack-poi';
-
-export const initialState: IEditedGtrackPoiState = {
+export const initialEditedGTrackPoiState: IEditedGtrackPoiState = {
   data: {
     id: '',
     timestamp: 0,
@@ -20,41 +19,45 @@ export const initialState: IEditedGtrackPoiState = {
   failed: null
 };
 
-export function editedGtrackPoiReducer(state = initialState, action: EditedPoiActions.Actions): IEditedGtrackPoiState {
+export function editedGTrackPoiReducer(
+  state = initialEditedGTrackPoiState,
+  action: editedGTrackPoiActions.AllEditedGTrackPoiActions
+): IEditedGtrackPoiState {
   let newState = _.cloneDeep(state);
+
   switch (action.type) {
-    case EditedPoiActions.ADD_NEW_TRANSLATED_DESCRIPTION: {
+    case editedGTrackPoiActions.ADD_NEW_TRANSLATED_POI_DESCRIPTION: {
       newState.data.description[action.languageKey] = action.content;
       newState.dirty = true;
       return newState;
     }
 
-    case EditedPoiActions.DELETE_TRANSLATED_DESCRIPTION: {
+    case editedGTrackPoiActions.DELETE_TRANSLATED_POI_DESCRIPTION: {
       newState.data.description = _.omit(newState.data.description, action.languageKey);
       newState.dirty = true;
       return newState;
     }
 
-    case EditedPoiActions.SAVE: {
+    case editedGTrackPoiActions.SAVE_POI: {
       newState.working = 'saving...';
       newState.failed = null;
       return newState;
     }
 
-    case EditedPoiActions.SAVE_SUCCESS: {
+    case editedGTrackPoiActions.POI_SAVE_SUCCESS: {
       newState.working = null;
       newState.failed = null;
       newState.dirty = false;
       return newState;
     }
 
-    case EditedPoiActions.SAVE_FAILED: {
+    case editedGTrackPoiActions.POI_SAVE_FAILED: {
       newState.working = null;
       newState.failed = action.error;
       return newState;
     }
 
-    case EditedPoiActions.LOAD_POI: {
+    case editedGTrackPoiActions.LOAD_POI: {
       newState.working = null;
       newState.failed = null;
       newState.dirty = false;

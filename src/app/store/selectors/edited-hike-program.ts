@@ -1,23 +1,44 @@
+import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-import * as _ from 'lodash';
+
 import { IEditedHikeProgramState } from '../state';
+import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
 
-const featureSelector = createFeatureSelector<IEditedHikeProgramState>('editedHikeProgram');
+import * as _ from 'lodash';
 
-export const selectDescriptions = createSelector(
-  featureSelector,
-  (state: IEditedHikeProgramState) => state.data.description
-);
+@Injectable()
+export class EditedHikeProgramSelectors {
+  private _featureSelector: MemoizedSelector<object, IEditedHikeProgramState>;
+  public getDescriptions: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
+  public getDirty: MemoizedSelector<object, boolean>;
+  public getWorking: MemoizedSelector<object, string | null>;
+  public getData: MemoizedSelector<object, IHikeProgramStored>;
+  public getError: MemoizedSelector<object, any>;
 
-export const selectDirty = createSelector(featureSelector, (state: IEditedHikeProgramState) => state.dirty);
+  public dataPath = 'editedHikeProgram.data';
+  public remiteErrorDataPath = 'editedHikeProgram.failed.data';
 
-export const selectWorking = createSelector(featureSelector, (state: IEditedHikeProgramState) => state.working);
+  constructor() {
+    this._featureSelector = createFeatureSelector<IEditedHikeProgramState>('editedHikeProgram');
 
-export const selectData = createSelector(featureSelector, (state: IEditedHikeProgramState) => state.data);
+    this.getDescriptions = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => _.get(state, 'data.description')
+    );
 
-export const selectError = createSelector(featureSelector, (state: IEditedHikeProgramState) =>
-  _.get(state, 'failed.data')
-);
+    this.getDirty = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => state.dirty
+    );
 
-export const dataPath = 'editedHikeProgram.data';
-export const remiteErrorDataPath = 'editedHikeProgram.failed.data';
+    this.getWorking = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => state.working
+    );
+
+    this.getData = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => state.data
+    );
+
+    this.getError = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => _.get(state, 'failed.data')
+    );
+  }
+}

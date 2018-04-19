@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+
 import { State } from '../index';
-import { IHikeEditGeneralInfoState, IGeneralInfoState, IHikeEditRoutePlannerState } from '../state/index';
-import { ITextualDescriptionItem } from 'app/shared/interfaces';
-import { descriptionAdapter } from '../reducer/hike-edig-general-info';
+import { IHikeEditRoutePlannerState } from '../state/index';
 import { ISegment } from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';

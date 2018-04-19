@@ -44,6 +44,8 @@ import { AuthEffects, HikeEditEffects, HikeEditPoiEffects, HikeProgramEffects } 
 import { store } from './store';
 
 import {
+  EditedGTrackPoiSelectors,
+  EditedHikeProgramSelectors,
   HikeEditPoiSelectors,
   HikeEditMapSelectors,
   HikeEditGeneralInfoSelectors,
@@ -175,6 +177,8 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     GooglePoiService,
     LanguageService,
     // Selectors
+    EditedGTrackPoiSelectors,
+    EditedHikeProgramSelectors,
     HikeEditGeneralInfoSelectors,
     HikeEditPoiSelectors,
     HikeEditMapSelectors,

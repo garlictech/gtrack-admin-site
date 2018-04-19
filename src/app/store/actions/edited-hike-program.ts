@@ -1,55 +1,55 @@
 import { Action } from '@ngrx/store';
 import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 
-export const ADD_NEW_TRANSLATED_DESCRIPTION = '[HikeProgram] Add new translated description';
-export const DELETE_TRANSLATED_DESCRIPTION = '[HikeProgram] Delete translated description';
-export const ADD_DETAILS = '[HikeProgram] Add some details';
-export const SAVE = '[HikeProgram] Save hike program';
-export const SAVE_SUCCESS = '[HikeProgram] Saved successfully';
-export const SAVE_FAILED = '[HikeProgram] Save failure';
+export const ADD_NEW_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Add new translated hike description';
+export const DELETE_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Delete translated hike description';
+export const ADD_HIKE_PROGRAM_DETAILS = '[HikeProgram] Add some details';
+export const SAVE_HIKE_PROGRAM = '[HikeProgram] Save hike program';
+export const HIKE_PROGRAM_SAVE_SUCCESS = '[HikeProgram] Hike program saved successfully';
+export const HIKE_PROGRAM_SAVE_FAILED = '[HikeProgram] Hike program save failure';
 
-export class AddNewTranslatedDescription implements Action {
-  readonly type = ADD_NEW_TRANSLATED_DESCRIPTION;
-  constructor(public languageKey: string, public content: ITextualDescription) {
-    /* EMPTY */
-  }
+export class AddNewTranslatedHikeProgramDescription implements Action {
+  readonly type = ADD_NEW_TRANSLATED_HIKE_DESCRIPTION;
+
+  constructor(
+    public languageKey: string,
+    public content: ITextualDescription
+  ) {}
 }
 
 export interface IDetails {
   difficulty?: number;
 }
 
-export class AddDetails implements Action {
-  readonly type = ADD_DETAILS;
+export class AddHikeProgramDetails implements Action {
+  readonly type = ADD_HIKE_PROGRAM_DETAILS;
+
   constructor(public details: IDetails) {}
 }
 
-export class DeleteTranslatedDescription implements Action {
-  readonly type = DELETE_TRANSLATED_DESCRIPTION;
-  constructor(public languageKey: string) {
-    /* EMPTY */
-  }
+export class DeleteTranslatedHikeProgramDescription implements Action {
+  readonly type = DELETE_TRANSLATED_HIKE_DESCRIPTION;
+
+  constructor(public languageKey: string) {}
 }
 
-export class Save implements Action {
-  readonly type = SAVE;
+export class SaveHikeProgram implements Action {
+  readonly type = SAVE_HIKE_PROGRAM;
 }
 
-export class SaveSuccess implements Action {
-  readonly type = SAVE_SUCCESS;
+export class HikeProgramSaveSuccess implements Action {
+  readonly type = HIKE_PROGRAM_SAVE_SUCCESS;
 }
 
-export class SaveFailed implements Action {
-  readonly type = SAVE_FAILED;
+export class HikeProgramSaveFailed implements Action {
+  readonly type = HIKE_PROGRAM_SAVE_FAILED;
 
-  constructor(public error: any) {
-    /* EMPTY */
-  }
+  constructor(public error: any) {}
 }
-export type Actions =
-  | AddNewTranslatedDescription
-  | DeleteTranslatedDescription
-  | SaveFailed
-  | SaveSuccess
-  | Save
-  | AddDetails;
+export type AllEditedHikeProgramActions =
+  | AddNewTranslatedHikeProgramDescription
+  | AddHikeProgramDetails
+  | DeleteTranslatedHikeProgramDescription
+  | SaveHikeProgram
+  | HikeProgramSaveSuccess
+  | HikeProgramSaveFailed;

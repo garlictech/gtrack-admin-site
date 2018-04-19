@@ -1,0 +1,16 @@
+<div class="container">
+  <gt-localized-description
+    *ngIf="deleteDescription"
+    [descriptionSelector]="descriptionSelector"
+    [storeDataPath]="storeDataPath"
+    [submitFv]="submitDescription"
+    [deleteFv]="deleteDescription"
+  ></gt-localized-description>
+
+  <button
+    class="btn btn-sm btn-fill btn-success"
+    (click)="savePoi()"
+    [disabled]="!(isDirty$ | async)"
+  >Save</button>
+
+</div>

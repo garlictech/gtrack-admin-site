@@ -2,61 +2,57 @@ import { Component, AfterViewInit, OnDestroy, ChangeDetectionStrategy, OnInit } 
 import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { Store, createSelector } from '@ngrx/store';
-import { State, commonPoiActions } from 'app/store';
+import { Store, createSelector, MemoizedSelector } from '@ngrx/store';
+import { State, commonPoiActions, editedGTrackPoiActions } from 'app/store';
 import { HikeEditPoiSelectors } from 'app/store/selectors';
 import { DESCRIPTION_LANGS } from 'app/app.constants';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi, ITextualDescriptionItem, IGTrackPoi } from 'app/shared/interfaces';
 import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
 import { IDynamicComponentModalConfig, PoiSelectors, Poi } from 'subrepos/gtrack-common-ngx';
-import { IPoiStored, IPoi } from 'subrepos/provider-client';
-
-import {
-  selectDescriptions,
-  dataPath as descriptionDataPath,
-  selectData,
-  selectDirty
-} from 'app/store/selectors/edited-gtrack-poi';
-import * as EditedGtrackPoiActions from 'app/store/actions/edited-gtrack-poi';
+import { IPoiStored, IPoi, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { EditedGTrackPoiSelectors } from 'app/store/selectors';
 
 import { ToasterService } from 'angular2-toaster';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'gt-hike-edit-gtrack-poi-info',
-  templateUrl: './hike-edit-gtrack-poi-info.component.pug',
+  templateUrl: './hike-edit-gtrack-poi-info.component.html',
   styleUrls: ['./hike-edit-gtrack-poi-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HikeEditGTrackPoiInfoComponent implements AfterViewInit, OnDestroy, OnInit {
   public modalConfig: IDynamicComponentModalConfig;
   public poiId: string;
-  public descriptionDataPath = `${descriptionDataPath}.description`;
-  public descriptionSelector = selectDescriptions;
+
+  public storeDataPath: string;
+  public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
+
   public poiLoaded$: Observable<boolean>;
   public isDirty$: Observable<boolean>;
 
   private _gTrackPoi: IPoiStored;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
-  public submitDescription = (langKey: string, data: any) => {
-    this._store.dispatch(new EditedGtrackPoiActions.AddNewTranslatedDescription(langKey, data));
-  };
-
-  public deleteDescription = lang => {
-    this._store.dispatch(new EditedGtrackPoiActions.DeleteTranslatedDescription(lang));
-  };
-
   constructor(
     private _store: Store<State>,
     private _formBuilder: FormBuilder,
     private _poiSelectors: PoiSelectors,
+    private _editedGTrackPoiSelectors: EditedGTrackPoiSelectors,
     private _toasterService: ToasterService
-  ) {}
+  ) {
+    this.descriptionSelector = this._editedGTrackPoiSelectors.getDescriptions;
+    this.storeDataPath = `${this._editedGTrackPoiSelectors.dataPath}.description`;
+  }
 
   ngOnInit() {
-    this.poiLoaded$ = this._store.select(selectData).map(data => !!data);
-    this.isDirty$ = this._store.select(selectDirty);
+    this.poiLoaded$ = this._store
+      .select(this._editedGTrackPoiSelectors.getData)
+      .map(data => !!data);
+
+    this.isDirty$ = this._store
+      .select(this._editedGTrackPoiSelectors.getDirty)
+      .takeUntil(this._destroy$);
   }
 
   ngAfterViewInit() {
@@ -65,9 +61,8 @@ export class HikeEditGTrackPoiInfoComponent implements AfterViewInit, OnDestroy,
 
       this._store
         .select(this._poiSelectors.getPoi(<string>this.poiId))
-        .takeUntil(this._destroy$)
         .take(1)
-        .subscribe((poi: IPoiStored) => this._store.dispatch(new EditedGtrackPoiActions.LoadPoi(poi)));
+        .subscribe((poi: IPoiStored) => this._store.dispatch(new editedGTrackPoiActions.LoadPoi(poi)));
 
       // // Poi data
       // this._store
@@ -163,10 +158,17 @@ export class HikeEditGTrackPoiInfoComponent implements AfterViewInit, OnDestroy,
 
   public savePoi() {
     this._store
-      .select(selectData)
+      .select(this._editedGTrackPoiSelectors.getData)
       .filter(data => !!data)
-      .takeUntil(this._destroy$)
       .take(1)
       .subscribe((data: IPoi) => this._store.dispatch(new commonPoiActions.SavePoi(data)));
   }
+
+  public submitDescription = (langKey: string, data: any) => {
+    this._store.dispatch(new editedGTrackPoiActions.AddNewTranslatedPoiDescription(langKey, data));
+  };
+
+  public deleteDescription = (lang) => {
+    this._store.dispatch(new editedGTrackPoiActions.DeleteTranslatedPoiDescription(lang));
+  };
 }

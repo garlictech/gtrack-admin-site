@@ -12,20 +12,20 @@ import {
   commonHikeActions,
   IHikeEditRoutePlannerState,
   hikeEditMapActions,
-  hikeEditRoutePlannerActions
+  hikeEditRoutePlannerActions,
+  editedHikeProgramActions
 } from 'app/store';
-import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import {
+  HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
+} from 'app/store/selectors';
 import { HikeDataService } from 'app/shared/services';
+import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
 import { IHikeProgramStored, IHikeProgram, IPoi, IRoute } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
-import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
-
-import { selectDirty, selectWorking } from '../../store/selectors/edited-hike-program';
-import * as HikeProgramActions from '../../store/actions/edited-hike-program';
 
 @Component({
   selector: 'gt-hike-edit',
@@ -49,6 +49,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _hikeSelectors: HikeSelectors,
     private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _toasterService: ToasterService,
     private _router: Router,
     private _title: Title,
@@ -56,7 +57,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.working$ = this._store.select(selectWorking);
+    this.working$ = this._store.select(this._editedHikeProgramSelectors.getWorking);
 
     this._routingControlService.reset();
     this._waypointMarkerService.reset();
@@ -114,7 +115,9 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
       .takeUntil(this._destroy$);
 
-    this.allowSave$ = this._store.select(selectDirty);
+    this.allowSave$ = this._store.select(this._editedHikeProgramSelectors.getDirty);
+
+    // TODO: clear
     // this.allowSave$ = Observable.combineLatest(
     //   this._store.select(this._hikeEditGeneralInfoSelectors.getPois),
     //   this.routeInfoData$
@@ -157,9 +160,10 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   public saveHike() {
     // this._saveRoute();
     // this._store.dispatch(new hikeEditActions.CollectHikeData());
-    this._store.dispatch(new HikeProgramActions.Save());
+    this._store.dispatch(new editedHikeProgramActions.SaveHikeProgram());
   }
 
+  /* TODO: remove this func?
   private _saveRoute() {
     Observable.combineLatest(
       this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner).take(1),
@@ -176,4 +180,5 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       }
     });
   }
+  */
 }
