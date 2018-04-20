@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, Input, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -17,7 +17,7 @@ import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
   styleUrls: ['./style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LocalizedDescriptionComponent implements AfterViewInit, OnInit {
+export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnDestroy {
   @Input() descriptionSelector: any;
   @Input() submitFv: (langKey: string, data) => void;
   @Input() deleteFv: (langKey: string) => void;
@@ -30,14 +30,18 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit {
   public langs = DESCRIPTION_LANGUAGES;
   public selectedLanguage;
 
+  private _destroy$: Subject<boolean> = new Subject<boolean>();
+
   constructor(
     private _store: Store<State>,
     private _cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.descriptions$ = this._store.select(this.descriptionSelector);
-    this.languageKeys$ = this.descriptions$.map(desc => Object.keys(desc));
+    this.languageKeys$ = this._store
+      .select(this.descriptionSelector)
+      .takeUntil(this._destroy$)
+      .map(desc => Object.keys(desc));
   }
 
   ngAfterViewInit() {
@@ -48,6 +52,11 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit {
           return { label: lang.name, value: lang.locale };
         })
     );
+  }
+
+  ngOnDestroy() {
+    this._destroy$.next(true);
+    this._destroy$.unsubscribe();
   }
 
   getLanguageFormDescriptor(languageKey: string) {
