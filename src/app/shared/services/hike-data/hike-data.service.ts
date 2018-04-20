@@ -6,7 +6,7 @@ import { State, commonRouteActions, commonHikeActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { ReverseGeocodingService } from '../hike-data/reverse-geocoding.service';
 import { ITextualDescriptionItem, IGTrackPoi } from '../../interfaces';
-import { IHikeProgram, ILocalizedItem, ITextualDescription, IPoi, IPoiStored } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription, IPoi, IPoiStored } from 'subrepos/provider-client';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import * as uuid from 'uuid/v1';
