@@ -4,6 +4,8 @@ import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 export const ADD_NEW_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Add new translated hike description';
 export const DELETE_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Delete translated hike description';
 export const ADD_HIKE_PROGRAM_DETAILS = '[HikeProgram] Add some details';
+export const ADD_POI = '[HikeProgram] Add poi';
+export const REMOVE_POI = '[HikeProgram] Remove poi';
 export const SAVE_HIKE_PROGRAM = '[HikeProgram] Save hike program';
 export const HIKE_PROGRAM_SAVE_SUCCESS = '[HikeProgram] Hike program saved successfully';
 export const HIKE_PROGRAM_SAVE_FAILED = '[HikeProgram] Hike program save failure';
@@ -17,8 +19,17 @@ export class AddNewTranslatedHikeProgramDescription implements Action {
   ) {}
 }
 
+export class DeleteTranslatedHikeProgramDescription implements Action {
+  readonly type = DELETE_TRANSLATED_HIKE_DESCRIPTION;
+
+  constructor(public languageKey: string) {}
+}
+
 export interface IDetails {
+  id?: string;
+  routeId?: string;
   difficulty?: number;
+  isRoundTrip?: boolean;
 }
 
 export class AddHikeProgramDetails implements Action {
@@ -27,10 +38,14 @@ export class AddHikeProgramDetails implements Action {
   constructor(public details: IDetails) {}
 }
 
-export class DeleteTranslatedHikeProgramDescription implements Action {
-  readonly type = DELETE_TRANSLATED_HIKE_DESCRIPTION;
+export class AddPoi implements Action {
+  readonly type = ADD_POI;
+  constructor(public poi: string) {}
+}
 
-  constructor(public languageKey: string) {}
+export class RemovePoi implements Action {
+  readonly type = REMOVE_POI;
+  constructor(public poi: string) {}
 }
 
 export class SaveHikeProgram implements Action {
@@ -48,8 +63,10 @@ export class HikeProgramSaveFailed implements Action {
 }
 export type AllEditedHikeProgramActions =
   | AddNewTranslatedHikeProgramDescription
-  | AddHikeProgramDetails
   | DeleteTranslatedHikeProgramDescription
+  | AddHikeProgramDetails
+  | AddPoi
+  | RemovePoi
   | SaveHikeProgram
   | HikeProgramSaveSuccess
   | HikeProgramSaveFailed;

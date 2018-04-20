@@ -1,10 +1,10 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
-import { IEditedGtrackPoiState } from '../state';
+import { IEditedGTrackPoiState } from '../state';
 import { editedGTrackPoiActions } from '../index';
 
 import * as _ from 'lodash';
 
-export const initialEditedGTrackPoiState: IEditedGtrackPoiState = {
+export const initialEditedGTrackPoiState: IEditedGTrackPoiState = {
   data: {
     id: '',
     timestamp: 0,
@@ -19,10 +19,10 @@ export const initialEditedGTrackPoiState: IEditedGtrackPoiState = {
   failed: null
 };
 
-export function editedGTrackPoiReducer(
+export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
   state = initialEditedGTrackPoiState,
   action: editedGTrackPoiActions.AllEditedGTrackPoiActions
-): IEditedGtrackPoiState {
+): IEditedGTrackPoiState => {
   let newState = _.cloneDeep(state);
 
   switch (action.type) {

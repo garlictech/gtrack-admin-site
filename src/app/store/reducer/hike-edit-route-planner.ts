@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action, ActionReducer } from '@ngrx/store';
 import { IHikeEditRoutePlannerState } from '../state';
 import { hikeEditRoutePlannerActions } from '../index';
 
@@ -23,10 +23,11 @@ export const initialRouteInfoDataState: IHikeEditRoutePlannerState = {
   route: initialRouteDataState
 };
 
-export function hikeEditRoutePlannerReducer(
+// export function hikeEditRoutePlannerReducer(
+export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerState> = (
   state = initialRouteInfoDataState,
   action: hikeEditRoutePlannerActions.AllHikeEditRoutePlannerActions
-): IHikeEditRoutePlannerState {
+): IHikeEditRoutePlannerState => {
   switch (action.type) {
 
     case hikeEditRoutePlannerActions.RESET_ROUTE_PLANNING_STATE:

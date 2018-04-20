@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
-import { IEditedGtrackPoiState } from '../state';
+import { IEditedGTrackPoiState } from '../state/edited-gtrack-poi';
 import { ITextualDescription, ILocalizedItem, IPoiStored } from 'subrepos/provider-client';
 
 import * as _ from 'lodash';
 
 @Injectable()
 export class EditedGTrackPoiSelectors {
-  private _featureSelector: MemoizedSelector<object, IEditedGtrackPoiState>;
+  private _featureSelector: MemoizedSelector<object, IEditedGTrackPoiState>;
 
   public getDescriptions: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
   public getDirty: MemoizedSelector<object, boolean>;
@@ -18,22 +18,22 @@ export class EditedGTrackPoiSelectors {
   public dataPath = 'editedGtrackPoi.data';
 
   constructor() {
-    this._featureSelector = createFeatureSelector<IEditedGtrackPoiState>('editedGtrackPoi');
+    this._featureSelector = createFeatureSelector<IEditedGTrackPoiState>('editedGtrackPoi');
 
     this.getDescriptions = createSelector(this._featureSelector,
-      (state: IEditedGtrackPoiState) => _.get(state, 'data.description')
+      (state: IEditedGTrackPoiState) => _.get(state, 'data.description')
     );
 
     this.getDirty = createSelector(this._featureSelector,
-      (state: IEditedGtrackPoiState) => state.dirty
+      (state: IEditedGTrackPoiState) => state.dirty
     );
 
     this.getWorking = createSelector(this._featureSelector,
-      (state: IEditedGtrackPoiState) => state.working
+      (state: IEditedGTrackPoiState) => state.working
     );
 
     this.getData = createSelector(this._featureSelector,
-      (state: IEditedGtrackPoiState) => state.data
+      (state: IEditedGTrackPoiState) => state.data
     );
 
   }

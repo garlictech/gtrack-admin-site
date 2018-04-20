@@ -27,10 +27,10 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
   failed: null
 };
 
-export function editedHikeProgramReducer(
+export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = (
   state = initialEditedHikeProgramState,
   action: editedHikeProgramActions.AllEditedHikeProgramActions
-): IEditedHikeProgramState {
+): IEditedHikeProgramState => {
   let newState = _.cloneDeep(state);
   switch (action.type) {
     case editedHikeProgramActions.ADD_NEW_TRANSLATED_HIKE_DESCRIPTION: {
@@ -67,6 +67,18 @@ export function editedHikeProgramReducer(
     case editedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS: {
       newState.dirty = true;
       newState.data = _.assign(newState.data, action.details);
+      return newState;
+    }
+
+    case editedHikeProgramActions.ADD_POI: {
+      newState.dirty = true;
+      newState.data.pois = _.union(state.data.pois, [action.poi])
+      return newState;
+    }
+
+    case editedHikeProgramActions.REMOVE_POI: {
+      newState.dirty = true;
+      newState.data.pois = newState.data.pois.filter(p => p !== action.poi)
       return newState;
     }
 
