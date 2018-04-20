@@ -8,6 +8,6 @@ export * from './router';
 export * from './styles';
 export * from './store';
 export * from './geosearch';
-
-export * from './user-status';
+export * from './shared/services/background-geolocation-service';
+export * from './search-filters';
 export * from './utils';
