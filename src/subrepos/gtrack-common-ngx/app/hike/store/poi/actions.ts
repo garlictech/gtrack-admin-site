@@ -60,10 +60,19 @@ export class PoiSaved implements Action {
   }
 }
 
+export class PoiModified implements Action {
+  readonly type = PoiActionTypes.POI_MODIFIED;
+
+  constructor(public context: string) {
+    // Empty
+  }
+}
+
 export type AllPoiActions =
   | LoadPoi
   | PoiLoaded
   | LoadPois
   | AllPoiLoaded
   | SavePoi
-  | PoiSaved;
+  | PoiSaved
+  | PoiModified;
