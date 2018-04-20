@@ -10,6 +10,7 @@ import { CommonState, commonReducers, IAuthenticationState } from 'subrepos/gtra
 import { ILocalizationState, Reducer as LanguageReducer } from 'app/language';
 
 import { environment } from 'environments/environment';
+import { IEditedHikeProgramState } from './state/hike-program';
 
 /////////////
 // Actions
@@ -30,10 +31,6 @@ export { editedHikeProgramActions };
 import * as hikeEditActions from './actions/hike-edit';
 export type HikeEditAction = hikeEditActions.AllHikeEditActions;
 export { hikeEditActions };
-
-import * as hikeEditGeneralInfoActions from './actions/hike-edit-general-info';
-export type HikeEditGeneralInfoAction = hikeEditGeneralInfoActions.AllHikeEditGeneralInfoActions;
-export { hikeEditGeneralInfoActions };
 
 import * as hikeEditMapActions from './actions/hike-edit-map';
 export type HikeEditMapAction = hikeEditMapActions.AllHikeEditMapActions;
@@ -78,28 +75,23 @@ export { PoiEffects } from 'subrepos/gtrack-common-ngx';
 // Reducers
 //////////////
 
-import {
-  hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer,
-  editedGTrackPoiReducer, editedHikeProgramReducer, hikeEditGeneralInfoReducer
-} from './reducer';
-
-export {
-  hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer
-};
+import { hikeEditRoutePlannerReducer } from './reducer/hike-edit-route-planner';
+import { hikeEditPoiReducer } from './reducer/hike-edit-poi';
+import { hikeEditMapReducer } from './reducer/hike-edit-map';
+import { editedHikeProgramReducer } from './reducer/edited-hike-program';
+import { editedGTrackPoiReducer } from './reducer/edited-gtrack-poi';
 
 //////////////
 // State
 //////////////
 
 import { State } from './state';
-import { IEditedHikeProgramState } from './state/hike-program';
 
 // Same keys as in the state!!!
 const reducers: ActionReducerMap<State> = {
   ...commonReducers,
   router: routerReducer,
   hikeEditRoutePlanner: hikeEditRoutePlannerReducer,
-  hikeEditGeneralInfo: hikeEditGeneralInfoReducer,
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditMap: hikeEditMapReducer,
   language: LanguageReducer,

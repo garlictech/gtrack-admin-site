@@ -20,8 +20,8 @@ import {
 import {
   HikeEditMapSelectors,
   HikeEditPoiSelectors,
-  HikeEditGeneralInfoSelectors,
-  HikeEditRoutePlannerSelectors
+  HikeEditRoutePlannerSelectors,
+  EditedHikeProgramSelectors
 } from 'app/store/selectors';
 import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { LanguageService } from '../language.service';
@@ -49,9 +49,9 @@ export class PoiEditorService {
     private _poiService: PoiService,
     private _iconService: IconService,
     private _adminMapService: AdminMapService,
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
-    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _poiSelectors: PoiSelectors
@@ -182,7 +182,7 @@ export class PoiEditorService {
     let _pois;
 
     this._store
-      .select(this._hikeEditGeneralInfoSelectors.getPois)
+      .select(this._editedHikeProgramSelectors.getPois)
       .take(1)
       .subscribe((hikePois: string[]) => {
         if (pois) {
@@ -368,7 +368,7 @@ export class PoiEditorService {
 
       Observable.combineLatest(
         this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('hike')).take(1),
-        this._store.select(this._hikeEditGeneralInfoSelectors.getHikePois<IPoi>(this._poiSelectors.getAllPois)).take(1),
+        this._store.select(this._editedHikeProgramSelectors.getHikePois<IPoi>(this._poiSelectors.getAllPois)).take(1),
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
       )
         .filter(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IExternalPoi[], any]) => {

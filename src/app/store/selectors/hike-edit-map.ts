@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
-import { State } from '../index';
-import { IHikeEditMapState } from '../state/index';
+import { IHikeEditMapState } from '../state/hike-edit-map';
 
 @Injectable()
 export class HikeEditMapSelectors {

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { HikeDataService } from 'app/shared/services';
 import { HikeEditPoiSelectors } from 'app/selectors/hike-edit-poi';
 import {
-  State, hikeEditActions, commonHikeActions, commonRouteActions, hikeEditGeneralInfoActions
+  State, hikeEditActions, commonHikeActions, commonRouteActions
 } from '../index';
 
 import * as _ from 'lodash';
