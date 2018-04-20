@@ -17,8 +17,8 @@
 
 <div>
   Location:
-  <span [ngClass]="{'text-success': (generalInfo$ | async)?.location}">
-    {{(generalInfo$ | async)?.location}}
+  <span [ngClass]="{'text-success': (hikeProgramData$ | async)?.location}">
+    {{(hikeProgramData$ | async)?.location}}
   </span>
 
   <div class="feedback invalid" *ngIf="(remoteError$ | async)?.location">

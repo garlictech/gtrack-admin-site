@@ -7,10 +7,10 @@ import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import {
   State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions,
-  commonHikeActions, commonRouteActions, IHikeEditGeneralInfoState
+  commonHikeActions, commonRouteActions
 } from 'app/store';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
-import { HikeEditMapSelectors, HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
 import { IRouteStored } from 'subrepos/provider-client';
 import { ToasterService } from 'angular2-toaster';
 
@@ -31,8 +31,8 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _routingControlService: RoutingControlService,
     private _waypointMarkerService: WaypointMarkerService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _routeSelectors: RouteSelectors,
     private _toasterService: ToasterService,
     private _store: Store<State>
@@ -49,7 +49,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       });
 
     // Show toaster when the route has been saved
-    this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId)
+    this._store.select(this._editedHikeProgramSelectors.getRouteId)
       .switchMap((routeId: string) => {
         return this._store
           .select(this._routeSelectors.getRouteContext(routeId))
@@ -62,7 +62,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       });
 
     // Handling route load
-    this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId)
+    this._store.select(this._editedHikeProgramSelectors.getRouteId)
       .switchMap((routeId: string) => {
         return this._store
           .select(this._routeSelectors.getRouteContext(routeId))
@@ -109,6 +109,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   private _loadRoute(routeData: IRouteStored) {
     if (this._map && this._waypointMarkerService) {
       const coords: L.LatLng[] = [];
+
       for (let feature of routeData.route.features) {
         if (feature.geometry.type === 'Point') {
           coords.push(L.latLng(

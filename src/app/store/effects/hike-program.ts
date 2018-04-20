@@ -3,18 +3,18 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { HikeProgramService } from 'subrepos/gtrack-common-ngx';
-import { State } from 'app/store';
+import { State, editedHikeProgramActions } from 'app/store';
 import { IHikeProgram } from 'subrepos/provider-client';
 import { log } from 'app/log';
 
-import { selectData } from '../selectors/edited-hike-program';
-import * as HikeProgramActions from '../actions/edited-hike-program';
+import { EditedHikeProgramSelectors } from '../selectors/edited-hike-program';
 
 @Injectable()
 export class HikeProgramEffects {
   constructor(
     private _actions$: Actions,
     private _hikeProgramService: HikeProgramService,
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _store: Store<State>
   ) {
     /* EMPTY */
@@ -22,16 +22,16 @@ export class HikeProgramEffects {
 
   @Effect()
   save$: Observable<Action> = this._actions$
-    .ofType(HikeProgramActions.SAVE)
-    .switchMap(() => this._store.select(selectData).take(1))
+    .ofType(editedHikeProgramActions.SAVE_HIKE_PROGRAM)
+    .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getData).take(1))
     .switchMap((data: IHikeProgram) =>
       this._hikeProgramService
         .save(data)
         .take(1)
-        .map(() => new HikeProgramActions.SaveSuccess())
+        .map(() => new editedHikeProgramActions.HikeProgramSaveSuccess())
         .catch(error => {
           log.er('Effect: Hike program save error: ', error);
-          return Observable.of(new HikeProgramActions.SaveFailed(error));
+          return Observable.of(new editedHikeProgramActions.HikeProgramSaveFailed(error));
         })
     );
 }

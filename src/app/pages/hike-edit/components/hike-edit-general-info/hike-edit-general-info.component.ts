@@ -4,15 +4,13 @@ import { Store, MemoizedSelector } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { State, hikeEditGeneralInfoActions, editedHikeProgramActions } from 'app/store';
-import {
-  HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
-} from 'app/store/selectors';
-import { IGeneralInfoState, IHikeEditRoutePlannerState, IHikeEditGeneralInfoState } from 'app/store/state';
+import { State, editedHikeProgramActions } from 'app/store';
+import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
+import { IHikeEditRoutePlannerState } from 'app/store/state';
 
 import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { IFormDescriptor, SliderField, TextboxField } from 'subrepos/forms-ngx';
-import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
 
 import * as _ from 'lodash';
 
@@ -22,7 +20,7 @@ import * as _ from 'lodash';
   styleUrls: ['./hike-edit-general-info.component.scss']
 })
 export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
-  public generalInfo$: Observable<IGeneralInfoState>;
+  public hikeProgramData$: Observable<IHikeProgramStored>;
   public isRoundTrip$: Observable<boolean>;
   public remoteError$: Observable<any>;
 
@@ -35,16 +33,30 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
 
   constructor(
     private _store: Store<State>,
-    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _hikeSelectors: HikeSelectors
-  ) {
-    this.descriptionSelector = this._editedHikeProgramSelectors.getDescriptions;
-    this.storeDataPath = `${this._editedHikeProgramSelectors.dataPath}.description`;
-  }
+  ) {}
 
   ngOnInit() {
+    this._initDescriptionFormConfig();
+
+    // Selectors
+    this.isRoundTrip$ = this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
+    this.hikeProgramData$ = this._store.select(this._editedHikeProgramSelectors.getData)
+    this.remoteError$ = this._store.select(this._editedHikeProgramSelectors.getError)
+
+    this.isRoundTrip$
+      .takeUntil(this._destroy$)
+      .subscribe((isRoundTrip: boolean) => {
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({isRoundTrip: isRoundTrip}));
+      });
+  }
+
+  private _initDescriptionFormConfig() {
+    this.descriptionSelector = this._editedHikeProgramSelectors.getDescriptions;
+    this.storeDataPath = `${this._editedHikeProgramSelectors.dataPath}.description`;
+
     this.generalInfoFormDescriptor = {
       submit: {
         translatableLabel: 'form.submit',
@@ -62,37 +74,11 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
         })
       }
     };
-
-    // Selectors
-    this.generalInfo$ = this._store
-      .select(this._hikeEditGeneralInfoSelectors.getGeneralInfo)
-      .takeUntil(this._destroy$);
-
-    this.isRoundTrip$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
-      .takeUntil(this._destroy$);
-
-    this.remoteError$ = this._store
-      .select(this._editedHikeProgramSelectors.getError)
-      .takeUntil(this._destroy$);
   }
 
   ngOnDestroy() {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
-  }
-
-  private _saveToStore() {
-    // this._store.dispatch(
-    //   new hikeEditGeneralInfoActions.SetDifficulty({
-    //     difficulty: this.hikeForm.controls.difficulty.value
-    //   })
-    // );
-    // this._store.dispatch(
-    //   new hikeEditGeneralInfoActions.SetDescriptions({
-    //     descriptions: this.hikeForm.value.langs
-    //   })
-    // );
   }
 
   public submitDescription = (langKey: string, data: any) => {

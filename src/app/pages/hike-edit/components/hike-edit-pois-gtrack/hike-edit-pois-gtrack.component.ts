@@ -22,13 +22,11 @@ import {
   IExternalPoiListContextState,
   commonPoiActions,
   commonGeoSearchActions,
-  hikeEditGeneralInfoActions,
   IHikeEditRoutePlannerState
 } from 'app/store';
 import {
   HikeEditPoiSelectors,
   HikeEditMapSelectors,
-  HikeEditGeneralInfoSelectors,
   HikeEditRoutePlannerSelectors
 } from 'app/store/selectors';
 
@@ -54,7 +52,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _poiEditorService: PoiEditorService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
-    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _geometryService: GeometryService,

@@ -28,7 +28,6 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit {
   public selectableLanguages$: Observable<{ label: string; value: string }[]>;
   public existingLangKeys: string[] = [];
   public langs = DESCRIPTION_LANGUAGES;
-
   public selectedLanguage;
 
   constructor(

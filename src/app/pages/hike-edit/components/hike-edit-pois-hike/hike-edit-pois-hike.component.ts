@@ -22,14 +22,13 @@ import {
   IExternalPoiListContextState,
   commonPoiActions,
   commonGeoSearchActions,
-  hikeEditGeneralInfoActions,
   IHikeEditRoutePlannerState
 } from 'app/store';
 import {
   HikeEditPoiSelectors,
   HikeEditMapSelectors,
-  HikeEditGeneralInfoSelectors,
-  HikeEditRoutePlannerSelectors
+  HikeEditRoutePlannerSelectors,
+  EditedHikeProgramSelectors
 } from 'app/store/selectors';
 
 import * as _ from 'lodash';
@@ -50,9 +49,9 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _poiEditorService: PoiEditorService,
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
-    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _geometryService: GeometryService,
@@ -71,7 +70,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     // Get pois by id
     Observable
       .combineLatest(
-        this._store.select(this._hikeEditGeneralInfoSelectors.getPois).takeUntil(this._destroy$),
+        this._store.select(this._editedHikeProgramSelectors.getPois).takeUntil(this._destroy$),
         this._store.select(this._poiSelectors.getPoiIds).takeUntil(this._destroy$)
       )
       .debounceTime(150)
@@ -88,7 +87,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     // Poi list
     this.pois$ = this._store
 
-      .select(this._hikeEditGeneralInfoSelectors.getHikePois<IPoiStored>(this._poiSelectors.getAllPois))
+      .select(this._editedHikeProgramSelectors.getHikePois<IPoiStored>(this._poiSelectors.getAllPois))
       .takeUntil(this._destroy$)
       .filter((pois: IPoiStored[]) => typeof pois !== 'undefined')
       .switchMap((pois: IPoiStored[]) => {
