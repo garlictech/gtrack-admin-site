@@ -30,7 +30,7 @@ export class PointMarker {
 
   public addMarkers(pois: IPoi[]) {
     pois.forEach((poi, i) => {
-      // TODO: poi.title is deprecated. Use poi.description[lng].title
+      // TODO: poi.title is deprecated. Use localize-ngx
       let marker = this.mapMarkerService.create(poi.lat, poi.lon, poi.types, _.get(poi, 'description.en_US.title', ''));
       this.markers.push(marker);
 
