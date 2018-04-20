@@ -23,7 +23,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
   public hikeProgramData$: Observable<IHikeProgramStored>;
   public isRoundTrip$: Observable<boolean>;
   public remoteError$: Observable<any>;
-
+  public formDataPath$ = Observable.of('editedHikeProgram.data');
   public generalInfoFormDescriptor: IFormDescriptor;
 
   public storeDataPath: string;

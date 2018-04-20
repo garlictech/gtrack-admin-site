@@ -1,12 +1,15 @@
 <gt-localized-description
   [descriptionSelector]="descriptionSelector"
-  [storeDataPath]="descriptionDataPath"
+  [storeDataPath]="storeDataPath"
   [submitFv]="submitDescription"
   [deleteFv]="deleteDescription"
 >
 </gt-localized-description>
 
-<app-dynamic-form [formDescriptor]="generalInfoFormDescriptor"></app-dynamic-form>
+<app-dynamic-form
+  [formDescriptor]="generalInfoFormDescriptor"
+  [formDataPath$]="formDataPath$"
+></app-dynamic-form>
 
 <div>
   RoundTrip:
