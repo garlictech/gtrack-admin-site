@@ -16,7 +16,7 @@ export * from './edited-hike-program';
 export * from './edited-gtrack-poi';
 
 export interface State extends CommonState {
-  authentication: IAuthenticationState;
+  // authentication: IAuthenticationState;
   router: RouterReducerState; // ngrx/router
   hikeEditRoutePlanner: IHikeEditRoutePlannerState;
   hikeEditMap: IHikeEditMapState;
