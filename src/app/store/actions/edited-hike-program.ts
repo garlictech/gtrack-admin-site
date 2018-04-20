@@ -30,6 +30,11 @@ export interface IDetails {
   routeId?: string;
   difficulty?: number;
   isRoundTrip?: boolean;
+  distance?: number;
+  uphill?: number;
+  downhill?: number;
+  time?: number;
+  score?: number;
 }
 
 export class AddHikeProgramDetails implements Action {

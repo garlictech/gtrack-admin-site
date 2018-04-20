@@ -133,13 +133,10 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   }
 
   public saveHike() {
-    this._saveRoute();
-
+    // Save hikeProgram
     this._store.dispatch(new editedHikeProgramActions.SaveHikeProgram());
-  }
 
-  private _saveRoute() {
-    /*
+    // Save route
     Observable.combineLatest(
       this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner).take(1),
       this._store.select(this._editedHikeProgramSelectors.getRouteId).take(1)
@@ -154,6 +151,5 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         this._store.dispatch(new commonRouteActions.SaveRoute(_route));
       }
     });
-    */
   }
 }

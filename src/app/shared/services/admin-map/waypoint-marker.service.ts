@@ -121,24 +121,4 @@ export class WaypointMarkerService {
     _control.route();
     this._waypointIndex++;
   }
-
-  public addWaypointList(coords) {
-    for (let i = 1; i < coords.length; i++) {
-      const _control: L.Routing.Control = this._routingControlService.addNew();
-      const _sp: L.Routing.Waypoint = {
-        latLng: coords[i - 1],
-        name: i.toString()
-      }
-      const _ep: L.Routing.Waypoint = {
-        latLng: coords[i],
-        name: (i + 1).toString()
-      }
-
-      _control.setWaypoints([_sp, _ep]);
-      _control.route();
-    }
-
-    this._waypointIndex = 1;
-    this._routeSegmentIndex = coords.length - 1;
-  }
 }
