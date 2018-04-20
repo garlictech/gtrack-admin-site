@@ -40,12 +40,12 @@ export class HikeEditGTrackPoiInfoComponent implements AfterViewInit, OnDestroy,
     private _poiSelectors: PoiSelectors,
     private _editedGTrackPoiSelectors: EditedGTrackPoiSelectors,
     private _toasterService: ToasterService
-  ) {
-    this.descriptionSelector = this._editedGTrackPoiSelectors.getDescriptions;
-    this.storeDataPath = `${this._editedGTrackPoiSelectors.dataPath}.description`;
-  }
+  ) {}
 
   ngOnInit() {
+    this.descriptionSelector = this._editedGTrackPoiSelectors.getDescriptions;
+    this.storeDataPath = `${this._editedGTrackPoiSelectors.dataPath}.description`;
+
     this.poiLoaded$ = this._store
       .select(this._editedGTrackPoiSelectors.getData)
       .map(data => !!data);
