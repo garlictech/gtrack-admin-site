@@ -99,7 +99,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath).switchMap((path: any) => {
           return Observable.of([this._poiEditorService.organizePois(<any>_.cloneDeep(pois), path), dirty]);
         })
-
       )
       .switchMap(([pois, dirty]: [IGTrackPoi[], boolean]) => {
         if (dirty) {

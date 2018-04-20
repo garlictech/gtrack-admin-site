@@ -6,6 +6,8 @@ export const DELETE_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Delete translat
 export const ADD_HIKE_PROGRAM_DETAILS = '[HikeProgram] Add some details';
 export const ADD_POI = '[HikeProgram] Add poi';
 export const REMOVE_POI = '[HikeProgram] Remove poi';
+export const ADD_STOP = '[HikeProgram] Add stop';
+export const REMOVE_STOP_BY_POI_ID = '[HikeProgram] Remove stop by poi id';
 export const SAVE_HIKE_PROGRAM = '[HikeProgram] Save hike program';
 export const HIKE_PROGRAM_SAVE_SUCCESS = '[HikeProgram] Hike program saved successfully';
 export const HIKE_PROGRAM_SAVE_FAILED = '[HikeProgram] Hike program save failure';
@@ -53,6 +55,16 @@ export class RemovePoi implements Action {
   constructor(public poi: string) {}
 }
 
+export class AddStop implements Action {
+  readonly type = ADD_STOP;
+  constructor(public stop: any) {}
+}
+
+export class RemoveStopByPoiId implements Action {
+  readonly type = REMOVE_STOP_BY_POI_ID;
+  constructor(public poiId: string) {}
+}
+
 export class SaveHikeProgram implements Action {
   readonly type = SAVE_HIKE_PROGRAM;
 }
@@ -72,6 +84,8 @@ export type AllEditedHikeProgramActions =
   | AddHikeProgramDetails
   | AddPoi
   | RemovePoi
+  | AddStop
+  | RemoveStopByPoiId
   | SaveHikeProgram
   | HikeProgramSaveSuccess
   | HikeProgramSaveFailed;

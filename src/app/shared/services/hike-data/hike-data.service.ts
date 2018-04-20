@@ -22,7 +22,6 @@ export class HikeDataService {
     private _reverseGeocodingService: ReverseGeocodingService
   ) {}
 
-
   /**
    * collectHikeData effect submethod
    */
