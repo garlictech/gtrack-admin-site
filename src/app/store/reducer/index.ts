@@ -1,4 +1,3 @@
-
 export * from './edited-gtrack-poi';
 export * from './edited-hike-program';
 export * from './hike-edit-map';

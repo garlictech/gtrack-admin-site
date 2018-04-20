@@ -48,7 +48,6 @@ import {
   EditedHikeProgramSelectors,
   HikeEditPoiSelectors,
   HikeEditMapSelectors,
-  HikeEditGeneralInfoSelectors,
   HikeEditRoutePlannerSelectors
 } from './store/selectors';
 import { routing } from './app-routing.module';
@@ -179,7 +178,6 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     // Selectors
     EditedGTrackPoiSelectors,
     EditedHikeProgramSelectors,
-    HikeEditGeneralInfoSelectors,
     HikeEditPoiSelectors,
     HikeEditMapSelectors,
     HikeEditRoutePlannerSelectors,
