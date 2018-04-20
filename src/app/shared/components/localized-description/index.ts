@@ -48,8 +48,6 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit {
           return { label: lang.name, value: lang.locale };
         })
     );
-
-    this.selectableLanguages$.subscribe(l => console.log(l));
   }
 
   getLanguageFormDescriptor(languageKey: string) {
