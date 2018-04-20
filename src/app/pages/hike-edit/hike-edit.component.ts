@@ -49,7 +49,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _toasterService: ToasterService,
     private _router: Router,
     private _title: Title,
-
   ) {}
 
   ngOnInit() {

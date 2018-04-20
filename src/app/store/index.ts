@@ -64,13 +64,6 @@ import * as commonGeoSearchActions from 'subrepos/gtrack-common-ngx/app/geosearc
 export type CommonGeoSearchAction = commonGeoSearchActions.AllGeoSearchActions;
 export { commonGeoSearchActions };
 
-/////////////
-// Effects
-/////////////
-
-export { AuthEffects, HikeEditEffects, HikeEditPoiEffects } from './effects';
-export { PoiEffects } from 'subrepos/gtrack-common-ngx';
-
 //////////////
 // Reducers
 //////////////

@@ -22,25 +22,6 @@ export class HikeDataService {
     private _reverseGeocodingService: ReverseGeocodingService
   ) {}
 
-  /**
-   * collectHikeData effect submethod
-   */
-  public collectHikeRouteInfo() {
-    return this._store
-      .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
-      .take(1)
-      .map(routeInfo => {
-        let _routeInfo: any = _.pick(routeInfo.total, [
-          'distance',
-          'uphill',
-          'downhill',
-          'time',
-          'score'
-        ]);
-
-        return _routeInfo;
-      });
-  }
 
   /**
    * collectHikeData effect submethod
