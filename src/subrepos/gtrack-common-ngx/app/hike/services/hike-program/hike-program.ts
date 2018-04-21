@@ -37,7 +37,7 @@ export class HikeProgram implements IHikeProgram {
   private locale = 'en_US';
 
   constructor(data: IHikeProgram, private _checkpointService: CheckpointService) {
-    let converted = _.clone(data);
+    let converted = _.cloneDeep(data);
     Object.assign(this, converted);
 
     this._calculatePhysicalValues();

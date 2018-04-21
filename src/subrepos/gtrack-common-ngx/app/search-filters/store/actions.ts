@@ -14,8 +14,6 @@ export class ChangeFilters implements Action {
 
 export class ResetFilters implements Action {
   readonly type = SearchFilterActionTypes.RESET_FILTERS;
-
-  constructor() {}
 }
 
 export type AllSearchFiltersAction =

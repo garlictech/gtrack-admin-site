@@ -12,6 +12,7 @@ export class Poi implements IPoi {
   public tags: string[] = [];
 
   public constructor(data: IPoi) {
-    _.assign(this, data);
+    let converted = _.cloneDeep(data);
+    Object.assign(this, converted);
   }
 }

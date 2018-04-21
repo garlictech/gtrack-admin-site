@@ -1,4 +1,5 @@
 import { IRoute, IRouteBounds, IRouteStored } from 'subrepos/provider-client';
+import * as _ from 'lodash';
 
 export class Route implements IRoute {
   public id: string;
@@ -14,6 +15,7 @@ export class Route implements IRoute {
   }
 
   constructor(data: IRouteStored) {
-    Object.assign(this, data);
+    let converted = _.cloneDeep(data);
+    Object.assign(this, converted);
   }
 }
