@@ -37,6 +37,7 @@ export interface IDetails {
   downhill?: number;
   time?: number;
   score?: number;
+  location?: string;
 }
 
 export class AddHikeProgramDetails implements Action {

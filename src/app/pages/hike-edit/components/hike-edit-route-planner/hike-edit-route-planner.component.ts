@@ -16,6 +16,7 @@ import { ToasterService } from 'angular2-toaster';
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
+import { ReverseGeocodingService } from '../../../../shared/services';
 
 @Component({
   selector: 'gt-hike-edit-route-planner',
@@ -36,7 +37,8 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _routeSelectors: RouteSelectors,
     private _toasterService: ToasterService,
-    private _store: Store<State>
+    private _store: Store<State>,
+    private _reverseGeocodingService: ReverseGeocodingService
   ) {}
 
   ngOnInit() {
@@ -49,6 +51,18 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
+      });
+
+    this._store.select(this._hikeEditRoutePlannerSelectors.getRoute)
+      .takeUntil(this._destroy$)
+      .subscribe((route: any) => {
+        // Clear location
+        if (route.features.length === 1) {
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }));
+        // 1st segment added (line + 2 points)
+        } else if (route.features.length === 3) {
+          this._updateLocation(route.features[1].geometry.coordinates);
+        }
       });
 
     this._store.select(this._hikeEditRoutePlannerSelectors.getTotal)
@@ -121,5 +135,19 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
+
+  private _updateLocation(coords) {
+    this._reverseGeocodingService
+      .get({
+        lat: coords[1],
+        lon: coords[0]
+      })
+      .then((location: string) => {
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: location }));
+      }, err => {
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }));
+      }
+    );
   }
 }
