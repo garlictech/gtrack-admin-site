@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { hikeListActions } from '../../../store/';
-import { HikeDataService } from '../../../shared/services';
-import { HikeDataServiceStub } from '../../../test/helpers/services';
 import { MockStore } from '../../../test/helpers/store/';
 import { HikeListComponent } from '../hike-list.component';
 
@@ -27,10 +25,6 @@ fdescribe('HikeListComponent', () => {
         {
           provide: Store,
           useValue: new MockStore({})
-        },
-        {
-          provide: HikeDataService,
-          useClass: HikeDataServiceStub
         }
       ]
     }).compileComponents();

@@ -64,7 +64,6 @@ import {
   OsmPoiService,
   OsmRoutePoiService,
   GooglePoiService,
-  HikeDataService,
   ReverseGeocodingService,
   LanguageService
 } from './shared/services';
@@ -162,7 +161,6 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
   ],
   providers: [
     // Services
-    HikeDataService,
     ReverseGeocodingService,
     AdminMapService,
     RoutePlannerService,

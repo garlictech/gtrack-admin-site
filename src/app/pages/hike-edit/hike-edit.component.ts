@@ -14,10 +14,7 @@ import {
   hikeEditRoutePlannerActions,
   editedHikeProgramActions
 } from 'app/store';
-import {
-  HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
-} from 'app/store/selectors';
-import { HikeDataService } from 'app/shared/services';
+import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
 import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
 import { IHikeProgramStored, IHikeProgram, IPoi, IRoute } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
@@ -40,7 +37,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   constructor(
     private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
-    private _hikeDataService: HikeDataService,
     private _routingControlService: RoutingControlService,
     private _waypointMarkerService: WaypointMarkerService,
     private _hikeSelectors: HikeSelectors,
