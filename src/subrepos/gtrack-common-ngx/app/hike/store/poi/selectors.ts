@@ -4,7 +4,7 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 import { poiAdapter, IPoiState, IPoiContextState } from './state';
 import { EXTERNAL_POI_DEPENDENCIES, IExternalPoiDependencies } from '../../externals';
 import { poiContextStateAdapter } from 'subrepos/gtrack-common-ngx/app/hike/store/poi';
-import { IPoi } from 'subrepos/provider-client';
+import { IPoi, IPoiStored } from 'subrepos/provider-client';
 import { Dictionary } from '@ngrx/entity/src/models';
 
 import * as _ from 'lodash';
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs/Observable';
 export class PoiSelectors {
   public selectFeature: MemoizedSelector<object, IPoiState>;
   public getPoiIds: (state: object) => string[] | number[];
-  public getAllPois: (state: object) => IPoi[];
+  public getAllPois: (state: object) => IPoiStored[];
   public getAllPoiEntities: (state: object) => Dictionary<IPoi>;
   public getAllContexts: (state: object) => IPoiContextState[];
   public getAllContextEntities: (state: object) => Dictionary<IPoiContextState>;

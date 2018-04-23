@@ -20,6 +20,7 @@ describe('HikeProgramReducer', () => {
     };
 
     hikeProgramData = {
+      id: id,
       distance: 5,
       isRoundTrip: false,
       uphill: 1,
@@ -44,7 +45,6 @@ describe('HikeProgramReducer', () => {
 
     hikeProgram = {
       ...hikeProgramData,
-      id,
       timestamp: new Date().getTime()
     };
   });
