@@ -86,7 +86,6 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
     // Poi list
     this.pois$ = this._store
-
       .select(this._editedHikeProgramSelectors.getHikePois<IPoiStored>(this._poiSelectors.getAllPois))
       .takeUntil(this._destroy$)
       .filter((pois: IPoiStored[]) => typeof pois !== 'undefined')

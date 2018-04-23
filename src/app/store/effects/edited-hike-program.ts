@@ -10,6 +10,8 @@ import { EditedHikeProgramSelectors } from '../selectors/edited-hike-program';
 import { IGTrackPoi } from '../../shared/interfaces';
 
 import * as _ from 'lodash';
+import { HikeEditRoutePlannerSelectors } from '../selectors';
+import { GeospatialService } from '../../shared/services';
 
 @Injectable()
 export class EditedHikeProgramEffects {
@@ -17,7 +19,9 @@ export class EditedHikeProgramEffects {
     private _actions$: Actions,
     private _hikeProgramService: HikeProgramService,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _poiSelectors: PoiSelectors,
+    private _geospatialService: GeospatialService,
     private _store: Store<State>
   ) {
     /* EMPTY */
@@ -44,10 +48,19 @@ export class EditedHikeProgramEffects {
   addPoi$: Observable<Action> = this._actions$
     .ofType(editedHikeProgramActions.ADD_POI)
     .map((action: editedHikeProgramActions.AddPoi) => action.poi)
-    .switchMap((poiId) => this._store.select(this._poiSelectors.getPoi(poiId)).take(1))
-    .switchMap((poi) => {
+    .switchMap((poiId) => Observable
+      .combineLatest(
+        this._store.select(this._poiSelectors.getPoi(poiId)).take(1),
+        this._store.select(this._hikeEditRoutePlannerSelectors.getRoute).take(1)
+      )
+    )
+    .switchMap(([poi, route]) => {
       const stop = {
-        distanceFromOrigo: (<IGTrackPoi>poi).distFromRoute, // TODO: w/ turf
+        distanceFromOrigo: this._geospatialService.distanceOnLine(
+          [route.features[1].geometry.coordinates[0], route.features[1].geometry.coordinates[1]],
+          [(<IGTrackPoi>poi).lon, (<IGTrackPoi>poi).lat],
+          route.features[0]
+        ),
         isCheckpoint: false, // TODO: from checkpoint array
         onRoute: (<IGTrackPoi>poi).onRoute || false,
         poiId: (<IGTrackPoi>poi).id,

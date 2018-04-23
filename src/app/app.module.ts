@@ -65,7 +65,8 @@ import {
   OsmRoutePoiService,
   GooglePoiService,
   ReverseGeocodingService,
-  LanguageService
+  LanguageService,
+  GeospatialService
 } from './shared/services';
 // Vendor
 import { AngularFireModule } from 'angularfire2';
@@ -171,6 +172,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     OsmPoiService,
     OsmRoutePoiService,
     GooglePoiService,
+    GeospatialService,
     LanguageService,
     // Selectors
     EditedGTrackPoiSelectors,
