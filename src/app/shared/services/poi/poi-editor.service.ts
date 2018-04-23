@@ -324,7 +324,7 @@ export class PoiEditorService {
   /**
    * Update inGtrackDb property on the given poi
    */
-  public handleGTrackPois(pois: IGooglePoi[] | IWikipediaPoi[] | IOsmPoi[], gTrackPois: IPoi[]) {
+  public handleGTrackPois(pois: IGooglePoi[] | IWikipediaPoi[] | IOsmPoi[], gTrackPois: IGTrackPoi[]) {
     let _pois = _.cloneDeep(pois);
 
     for (let poi of _pois) {
@@ -368,19 +368,19 @@ export class PoiEditorService {
 
       Observable.combineLatest(
         this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('hike')).take(1),
-        this._store.select(this._editedHikeProgramSelectors.getHikePois<IPoi>(this._poiSelectors.getAllPois)).take(1),
+        this._store.select(this._editedHikeProgramSelectors.getHikePois<IPoiStored>(this._poiSelectors.getAllPois)).take(1),
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
       )
-        .filter(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IExternalPoi[], any]) => {
+        .filter(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IPoiStored[], any]) => {
           return (
             (pois && pois.length > 0 && path && (<any>hikePoiContext).showOnrouteMarkers) ||
             (<any>hikePoiContext).showOffrouteMarkers
           );
         })
-        .switchMap(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IExternalPoi[], any]) => {
+        .switchMap(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IPoiStored[], any]) => {
           return Observable.of([<any>hikePoiContext, this.organizePois(_.cloneDeep(pois), path)]);
         })
-        .subscribe(([hikePoiContext, pois]: [IExternalPoiListContextItemState, IExternalPoi[]]) => {
+        .subscribe(([hikePoiContext, pois]: [IExternalPoiListContextItemState, IGTrackPoi[]]) => {
           _pois = _pois.concat(
             pois.filter(p => {
               let _onRouteCheck = p.onRoute ? hikePoiContext.showOnrouteMarkers : hikePoiContext.showOffrouteMarkers;
@@ -396,7 +396,7 @@ export class PoiEditorService {
       Observable.combineLatest(
         this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('gTrack')).take(1),
         this._store
-          .select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois', this._poiSelectors.getAllPois))
+          .select(this._geoSearchSelectors.getGeoSearchResults<IPoi>('gTrackPois', this._poiSelectors.getAllPois))
           .take(1),
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
       )

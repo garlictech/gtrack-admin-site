@@ -94,7 +94,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     )
       .debounceTime(150)
       .takeUntil(this._destroy$)
-      .filter(([pois, dirty]: [IGTrackPoi[] | undefined, boolean]) => typeof pois !== 'undefined')
+      .filter(([pois, dirty]: [IPoiStored[] | undefined, boolean]) => typeof pois !== 'undefined')
       .switchMap(([pois, dirty]) =>
         this._store.select(this._hikeEditRoutePlannerSelectors.getPath).switchMap((path: any) => {
           return Observable.of([this._poiEditorService.organizePois(<any>_.cloneDeep(pois), path), dirty]);
@@ -112,7 +112,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     this.pois$
       .debounceTime(150)
       .takeUntil(this._destroy$)
-      .subscribe((pois: Poi[]) => {
+      .subscribe((pois: IGTrackPoi[]) => {
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);
       });

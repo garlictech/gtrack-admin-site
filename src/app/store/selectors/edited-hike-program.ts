@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
 import { IEditedHikeProgramState } from '../state/edited-hike-program';
-import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription, IHikeProgramStored, IPoiStored } from 'subrepos/provider-client';
 
 import * as _ from 'lodash';
 
@@ -57,7 +57,7 @@ export class EditedHikeProgramSelectors {
     );
   }
 
-  public getHikePois<IPoi>(getAllSelector: ((state: object) => IPoi[])) {
+  public getHikePois<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
     return createSelector(
       getAllSelector,
       this.getPois,
