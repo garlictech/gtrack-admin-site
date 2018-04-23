@@ -12,7 +12,9 @@ describe('Hike actions', () => {
 
   beforeEach(() => {
     id = uuid();
+
     hikeProgramData = {
+      id: id,
       distance: 5,
       isRoundTrip: false,
       uphill: 1,
@@ -37,7 +39,6 @@ describe('Hike actions', () => {
 
     hikeProgramStoredData = {
       ...hikeProgramData,
-      id,
       timestamp: new Date().getTime()
     }
   });

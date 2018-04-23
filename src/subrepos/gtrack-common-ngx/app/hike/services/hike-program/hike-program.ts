@@ -100,6 +100,7 @@ export class HikeProgram implements IHikeProgram {
 
   public toObject(): IHikeProgram {
     let data: IHikeProgram = {
+      id: this.id,
       distance: this.distance,
       isRoundTrip: this.isRoundTrip,
       uphill: this.uphill,

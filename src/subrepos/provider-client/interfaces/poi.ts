@@ -19,6 +19,7 @@ export interface IPoiSaveResponse {
 }
 
 export interface IPoi {
+  id: string;
   elevation: number;
   lat: number;
   lon: number;
@@ -37,6 +38,5 @@ export interface IPoi {
 export interface IPoiInput extends IPoi, IProviderInput {}
 
 export interface IPoiStored extends IPoi {
-  id: string;
   timestamp: number;
 }

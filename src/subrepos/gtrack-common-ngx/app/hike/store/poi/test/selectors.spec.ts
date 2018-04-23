@@ -16,14 +16,12 @@ import { poisStored as poiFixtures } from './fixtures';
 
 describe('Poi selectors', () => {
   let store: Store<IPoiState>;
-  let poisData: IPoiStored[];
-  let pois: IPoi[];
+  let pois: IPoiStored[];
   let ids: string[];
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
-    poisData = [ ...poiFixtures ];
-    ids = poisData.map(poi => poi.id);
+    ids = poiFixtures.map(poi => poi.id);
     pois = poiFixtures.map(data => data);
     destroy$ = new Subject<boolean>();
 

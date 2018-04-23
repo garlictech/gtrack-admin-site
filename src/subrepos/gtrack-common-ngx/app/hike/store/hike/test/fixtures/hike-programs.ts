@@ -3,6 +3,7 @@ import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
 
 export const hikePrograms: IHikeProgram[] = [
   {
+    id: uuid(),
     distance: 5,
     isRoundTrip: false,
     uphill: 1,
@@ -25,6 +26,7 @@ export const hikePrograms: IHikeProgram[] = [
     stops: []
   },
   {
+    id: uuid(),
     distance: 10,
     isRoundTrip: true,
     uphill: 20,
@@ -51,12 +53,10 @@ export const hikePrograms: IHikeProgram[] = [
 export const hikeProgramsStored: IHikeProgramStored[] = [
   {
     ...hikePrograms[0],
-    id: uuid(),
     timestamp: new Date().getTime()
   },
   {
     ...hikePrograms[1],
-    id: uuid(),
     timestamp: new Date().getTime()
   }
 ];
