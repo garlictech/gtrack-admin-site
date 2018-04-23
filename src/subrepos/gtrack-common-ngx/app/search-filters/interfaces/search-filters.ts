@@ -3,4 +3,5 @@ export interface ISearchFilters {
   difficulty: [number, number];
   time: [number, number];
   length: [number, number];
+  location: string;
 };

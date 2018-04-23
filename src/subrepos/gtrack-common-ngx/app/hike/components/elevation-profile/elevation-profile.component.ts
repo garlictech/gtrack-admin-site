@@ -68,7 +68,9 @@ export class ElevationProfileComponent implements OnDestroy {
       .takeUntil(this._destroy$)
       .filter(route => (typeof route !== 'undefined'))
       .map(route => {
-        return new Route(route);
+        if (route) {
+          return new Route(route);
+        }
       })
       .subscribe(route => {
         if (!route) {

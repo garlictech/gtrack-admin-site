@@ -92,7 +92,6 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this._store.dispatch(new poiActions.LoadPois(pois));
 
-
     this._store
       .select(this._routeSelectors.getRouteContext(route))
       .subscribe(context => {
