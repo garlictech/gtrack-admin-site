@@ -1,0 +1,6 @@
+<div class="search">
+  <i class="fa fa-search"></i>
+  <input type="text" #search [placeholder]="placeholder" autocorrect="off" autocapitalize="off" spellcheck="off" />
+  <button class="ui-button ui-button-sm ui-button-default" (click)="searchLocation()">Search</button>
+  <button class="ui-button ui-button-sm ui-button-default" (click)="requestLocation()">Use my location</button>
+</div>
