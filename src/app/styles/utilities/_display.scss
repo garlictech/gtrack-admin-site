@@ -1,0 +1,36 @@
+/*
+ * Generate display helpers, control display property with classes
+ *
+ * Usage:
+ * .d-{breakpoint name}-{block|none}
+ *
+ * Example:
+ * .d-sm-block => The element will show above the size of "sm" breakpoint
+ * .d-md-none => The element will hide above the size of "md" breakpoint
+ */
+@each $name, $size in $breakpoints {
+  @if $size > 0 {
+    @include media-breakpoint-up($name) {
+      .d-#{$name}-flex { display: flex !important; }
+      .d-#{$name}-block { display: block !important; }
+      .d-#{$name}-inline-block { display: inline-block !important; }
+      .d-#{$name}-none { display: none !important; }
+    }
+  }
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-inline-block {
+  display: inline-block !important;
+}
+
+.d-none {
+  display: none !important;
+}

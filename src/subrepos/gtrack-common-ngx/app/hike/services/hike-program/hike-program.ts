@@ -37,7 +37,7 @@ export class HikeProgram implements IHikeProgram {
   private locale = 'en_US';
 
   constructor(data: IHikeProgram, private _checkpointService: CheckpointService) {
-    let converted = _.clone(data);
+    let converted = _.cloneDeep(data);
     Object.assign(this, converted);
 
     this._calculatePhysicalValues();
@@ -100,6 +100,7 @@ export class HikeProgram implements IHikeProgram {
 
   public toObject(): IHikeProgram {
     let data: IHikeProgram = {
+      id: this.id,
       distance: this.distance,
       isRoundTrip: this.isRoundTrip,
       uphill: this.uphill,

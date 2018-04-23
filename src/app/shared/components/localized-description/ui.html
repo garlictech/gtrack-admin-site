@@ -1,0 +1,28 @@
+<div class="lang-toolbar">
+  <p-dropdown
+    [options]="selectableLanguages$ | async"
+    [(ngModel)]="selectedLanguage"
+    placeholder="Add language"
+    optionLabel="label"
+  ></p-dropdown>
+
+  <button class="btn btn-round btn-sm btn-just-icon btn-success" (click)="addTranslation()">
+    <i class="material-icons">add</i>
+  </button>
+</div>
+
+<p-accordion>
+  <p-accordionTab *ngFor="let lng of (languageKeys$ | async)" [header]="getLangName(lng)">
+    <button
+      class="btn btn-danger btn-simple btn-link pull-right"
+      (click)="deleteTranslation(lng)"
+      title="Delete language"
+      *ngIf="lng !== 'en_US'"
+    ><i class="material-icons">delete</i></button>
+
+    <app-dynamic-form
+      [formDescriptor]="getLanguageFormDescriptor(lng)"
+      [formDataPath$]="getLanguageFormDataPath(lng)"
+    ></app-dynamic-form>
+  </p-accordionTab>
+</p-accordion>

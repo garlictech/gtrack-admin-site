@@ -1,0 +1,53 @@
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    margin: 30px auto 0 auto;
+    color: $black;
+    width: 100%;
+    &.align-first-last {
+        thead {
+            tr {
+                th {
+                    &:first-of-type {
+                        text-align: left;
+                    }
+                    &:last-of-type {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+        tbody {
+            tr {
+                td {
+                    text-align: center;
+                    &:first-of-type {
+                        text-align: left;
+                    }
+                    &:last-of-type {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+    thead {
+        tr {
+            th {
+                padding: 10px 0;
+                text-transform: uppercase;
+            }
+        }
+    }
+    tbody {
+        tr {
+            td {
+                padding: 10px 0;
+                border-top: 1px solid $red;
+            }
+        }
+    }
+}

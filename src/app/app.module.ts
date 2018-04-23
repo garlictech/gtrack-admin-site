@@ -1,3 +1,4 @@
+import './styles/styles.scss';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
@@ -32,14 +33,21 @@ import {
   GeoSearchEffects,
   SearchFiltersModule
 } from 'subrepos/gtrack-common-ngx';
+
+import { LanguageModule } from './language';
+
 // App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { store, AuthEffects, HikeEditEffects, HikeEditPoiEffects } from './store';
+import { AuthEffects, HikeEditPoiEffects, EditedHikeProgramEffects } from './store/effects';
+
+import { store } from './store';
+
 import {
+  EditedGTrackPoiSelectors,
+  EditedHikeProgramSelectors,
   HikeEditPoiSelectors,
   HikeEditMapSelectors,
-  HikeEditGeneralInfoSelectors,
   HikeEditRoutePlannerSelectors
 } from './store/selectors';
 import { routing } from './app-routing.module';
@@ -56,16 +64,14 @@ import {
   OsmPoiService,
   OsmRoutePoiService,
   GooglePoiService,
-  HikeDataService,
   ReverseGeocodingService,
-  LanguageService
+  LanguageService,
+  GeospatialService
 } from './shared/services';
 // Vendor
 import { AngularFireModule } from 'angularfire2';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 
-// Global styles
-import './styles';
 import { RoutePlannerService, RoutingControlService } from './shared/services/admin-map';
 import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
 
@@ -142,20 +148,20 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     // Effects
     EffectsModule.forRoot([
       AuthEffects,
-      HikeEditEffects,
       HikeEditPoiEffects,
       RouteEffects,
+      EditedHikeProgramEffects,
       // Common-ngx
       PoiEffects,
       HikeEffects,
       GeoSearchEffects
     ]),
     // Vendor
-    ToasterModule.forRoot()
+    ToasterModule.forRoot(),
+    LanguageModule
   ],
   providers: [
     // Services
-    HikeDataService,
     ReverseGeocodingService,
     AdminMapService,
     RoutePlannerService,
@@ -166,9 +172,11 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     OsmPoiService,
     OsmRoutePoiService,
     GooglePoiService,
+    GeospatialService,
     LanguageService,
     // Selectors
-    HikeEditGeneralInfoSelectors,
+    EditedGTrackPoiSelectors,
+    EditedHikeProgramSelectors,
     HikeEditPoiSelectors,
     HikeEditMapSelectors,
     HikeEditRoutePlannerSelectors,
@@ -180,6 +188,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     // Lib
     ToasterService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [LanguageModule]
 })
 export class AppModule {}

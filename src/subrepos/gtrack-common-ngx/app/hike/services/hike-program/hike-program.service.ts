@@ -32,7 +32,7 @@ export class HikeProgramService {
       .take(1);
   }
 
-  public create(hikeProgram: IHikeProgram) {
+  public save(hikeProgram: IHikeProgram) {
     let data = hikeProgram;
 
     if (hikeProgram instanceof HikeProgram) {

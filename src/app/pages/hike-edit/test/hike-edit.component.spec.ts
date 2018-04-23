@@ -8,11 +8,9 @@ import { Store } from '@ngrx/store';
 // import { GtActions } from 'app/store/';
 import { MockStore } from '../../../test/helpers/store/';
 import { ActivatedRouteStub } from '../../../test/helpers/services';
-import { HikeDataServiceStub } from '../../../test/helpers/services';
 
 import { HikeEditComponent } from '../hike-edit.component';
 import { ObjectToArrayPipe } from '../../../shared/pipes/';
-import { HikeDataService } from '../../../shared/services';
 
 declare const $: any;
 
@@ -21,7 +19,6 @@ let fixture: ComponentFixture<HikeEditComponent>;
 let store: any;
 let mockParams;
 let mockActivatedRoute;
-let hikeDataService: HikeDataService;
 
 /*
 describe('HikeEditComponent', () => {
@@ -45,7 +42,6 @@ describe('HikeEditComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        HikeDataServiceStub,
         {
           provide: Store,
           useValue: new MockStore({})
@@ -53,10 +49,6 @@ describe('HikeEditComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: mockActivatedRoute
-        },
-        {
-          provide: HikeDataService,
-          useClass: HikeDataServiceStub
         }
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
@@ -65,7 +57,7 @@ describe('HikeEditComponent', () => {
     fixture = TestBed.createComponent(HikeEditComponent);
     comp = fixture.debugElement.componentInstance;
     store = fixture.debugElement.injector.get(Store);
-    hikeDataService = TestBed.get(HikeDataService);
+
   }));
 
   afterEach(() => {
@@ -95,19 +87,6 @@ describe('HikeEditComponent', () => {
     it('should existingLangKeys is an empty set initially', async(() => {
       fixture.detectChanges();
       expect(comp.existingLangKeys).toEqual(new Set([]));
-    }));
-  });
-
-  describe('Edit hike', () => {
-    beforeEach(async(() => {
-      mockActivatedRoute.testParams = {id: '3'};
-    }));
-
-    it('should hikeData read hike id', async(() => {
-      spyOn(hikeDataService, 'getHike').and.callThrough();
-
-      fixture.detectChanges();
-      expect(hikeDataService.getHike).toHaveBeenCalledWith('3');
     }));
   });
 

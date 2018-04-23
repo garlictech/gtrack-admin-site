@@ -38,6 +38,7 @@ export class BackgroundGeolocationService {
           err => log.er('Current location error: ', err)
         );
       })
+      .retry()
       .subscribe();
 
     return true;

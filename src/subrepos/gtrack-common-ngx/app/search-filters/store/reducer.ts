@@ -9,7 +9,8 @@ export const initialState: ISearchFilterState = {
   radius: 50000,
   difficulty: [0, 10],
   length: [0, 50000],
-  time: [0, 600]
+  time: [0, 600],
+  location: 'my-location'
 };
 
 export const searchFiltersReducer: ActionReducer<ISearchFilterState> = (

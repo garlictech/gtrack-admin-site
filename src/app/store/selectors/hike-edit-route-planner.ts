@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-import { State } from '../index';
-import { IHikeEditGeneralInfoState, IGeneralInfoState, IHikeEditRoutePlannerState } from '../state/index';
-import { ITextualDescriptionItem } from 'app/shared/interfaces';
-import { descriptionAdapter } from '../reducer/hike-edig-general-info';
+
+import { IHikeEditRoutePlannerState } from '../state/hike-edit-route-planner';
 import { ISegment } from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';
@@ -16,6 +14,7 @@ export class HikeEditRoutePlannerSelectors {
   public getRoute: MemoizedSelector<object, any>;
   public getPath: MemoizedSelector<object, any>;
   public getSegments: MemoizedSelector<object, ISegment[]>;
+  public getTotal: MemoizedSelector<object, any>;
   public getIsRoundTrip: MemoizedSelector<object, boolean>;
 
   constructor() {
@@ -35,6 +34,10 @@ export class HikeEditRoutePlannerSelectors {
 
     this.getSegments = createSelector(this._featureSelector,
       (state: IHikeEditRoutePlannerState) => state.segments
+    );
+
+    this.getTotal = createSelector(this._featureSelector,
+      (state: IHikeEditRoutePlannerState) => state.total
     );
 
     this.getIsRoundTrip = createSelector(this._featureSelector,

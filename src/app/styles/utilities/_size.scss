@@ -1,0 +1,21 @@
+@each $size in $sizes {
+  .w-p#{$size} { width: #{$size}px !important; }
+  .h-p#{$size} { height: #{$size}px !important; }
+
+  @each $name, $size in $breakpoints {
+    @if $size > 0 {
+      @include media-breakpoint-up($name) {
+        .w-#{$name}-p#{$size} { width: #{$size}px !important; }
+        .h-#{$name}-p#{$size} { height: #{$size}px !important; }
+      }
+    }
+  }
+}
+
+.w-100p {
+  width: 100%;
+}
+
+.h-100p {
+  height: 100%;
+}

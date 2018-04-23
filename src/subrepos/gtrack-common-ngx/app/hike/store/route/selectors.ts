@@ -7,7 +7,6 @@ import { EXTERNAL_ROUTE_DEPENDENCIES, IExternalRouteDependencies } from '../../e
 import { Dictionary } from '@ngrx/entity/src/models';
 import { IRouteStored } from 'subrepos/provider-client';
 
-
 @Injectable()
 export class RouteSelectors {
   public selectFeature: MemoizedSelector<object, IRouteState>;

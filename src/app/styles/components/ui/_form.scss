@@ -1,0 +1,90 @@
+.form-groups-wrapper {
+    margin-top: 15px;
+    .form-group-header {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+}
+
+.form-check {
+    margin-top: 15px;
+    clear: both;
+    display: flex;
+    align-items: center;
+    input {
+        margin-right: 5px;
+    }
+}
+
+.form-group {
+    margin-top: 15px;
+    clear: both;
+    &+.ui-button {
+        margin-top: 15px;
+    }
+    >label {
+        display: block;
+        margin-bottom: 5px;
+    }
+}
+
+.switch-group {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    clear: both;
+    label {
+        margin-right: 10px;
+    }
+}
+
+.form-radio {
+    margin-top: 15px;
+    &.wrap-lines {
+        p-radiobutton {
+            display: block;
+            padding: 5px 0;
+        }
+    }
+    >label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .ui-radiobutton-label {
+        margin-right: 15px;
+    }
+}
+
+.label {
+    color: $black;
+}
+
+.input {
+    border: 1px solid $input-border-color;
+    border-radius: $input-border-radius;
+    background: $white;
+    color: $black;
+    padding: $input-padding;
+    width: 100%;
+    .input-email,
+    .input-text,
+    .input-password {}
+}
+
+.select {
+    border: 1px solid$input-border-color;
+    border-radius: $input-border-radius;
+    background: $white;
+    color: $black;
+    width: 100%;
+    padding: $input-padding;
+}
+
+.textarea {
+    border: 1px solid $input-border-color;
+    border-radius: $input-border-radius;
+    background: $white;
+    color: $black;
+    width: 100%;
+    padding: $input-padding;
+}

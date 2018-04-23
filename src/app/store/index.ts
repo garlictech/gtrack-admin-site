@@ -1,12 +1,16 @@
 import { storeLogger } from 'ngrx-store-logger';
 import { StoreModule } from '@ngrx/store';
-import { routerReducer, RouterReducerState } from '@ngrx/router-store';
+import { routerReducer } from '@ngrx/router-store';
 import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/models';
 import { storeFreeze } from 'ngrx-store-freeze';
 
 import { Reducer as authReducer } from 'subrepos/authentication-api-ngx';
 import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/deepstream-ngx';
 import { CommonState, commonReducers, IAuthenticationState } from 'subrepos/gtrack-common-ngx';
+import { ILocalizationState, Reducer as LanguageReducer } from 'app/language';
+
+import { environment } from 'environments/environment';
+import { IEditedHikeProgramState } from './state/hike-program';
 
 /////////////
 // Actions
@@ -16,13 +20,17 @@ import * as adminMapActions from './actions/admin-map';
 export type AdminMapAction = adminMapActions.AllAdminMapActions;
 export { adminMapActions };
 
+import * as editedGTrackPoiActions from './actions/edited-gtrack-poi';
+export type EditedGTrackPoiAction = editedGTrackPoiActions.AllEditedGTrackPoiActions;
+export { editedGTrackPoiActions };
+
+import * as editedHikeProgramActions from './actions/edited-hike-program';
+export type EditedHikeProgramAction = editedHikeProgramActions.AllEditedHikeProgramActions;
+export { editedHikeProgramActions };
+
 import * as hikeEditActions from './actions/hike-edit';
 export type HikeEditAction = hikeEditActions.AllHikeEditActions;
 export { hikeEditActions };
-
-import * as hikeEditGeneralInfoActions from './actions/hike-edit-general-info';
-export type HikeEditGeneralInfoAction = hikeEditGeneralInfoActions.AllHikeEditGeneralInfoActions;
-export { hikeEditGeneralInfoActions };
 
 import * as hikeEditMapActions from './actions/hike-edit-map';
 export type HikeEditMapAction = hikeEditMapActions.AllHikeEditMapActions;
@@ -56,68 +64,32 @@ import * as commonGeoSearchActions from 'subrepos/gtrack-common-ngx/app/geosearc
 export type CommonGeoSearchAction = commonGeoSearchActions.AllGeoSearchActions;
 export { commonGeoSearchActions };
 
-/////////////
-// Effects
-/////////////
-
-export { AuthEffects, HikeEditEffects, HikeEditPoiEffects } from './effects';
-export { PoiEffects } from 'subrepos/gtrack-common-ngx';
-
-////////////
-// States
-////////////
-
-import {
-  IHikeEditRoutePlannerState,
-  IHikeEditMapState,
-  IHikeEditMapMapState,
-  IHikeEditPoiState,
-  IExternalPoiListContextState,
-  IHikeEditGeneralInfoState,
-  IExternalPoiListContextItemState
-} from './state';
-export {
-  IHikeEditRoutePlannerState,
-  IHikeEditMapState,
-  IHikeEditMapMapState,
-  IHikeEditPoiState,
-  IExternalPoiListContextState,
-  IHikeEditGeneralInfoState,
-  IExternalPoiListContextItemState
-};
-
 //////////////
 // Reducers
 //////////////
 
-import { hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer } from './reducer';
-import { hikeEditGeneralInfoReducer } from './reducer/hike-edig-general-info';
-import { environment } from 'environments/environment';
-export { hikeEditRoutePlannerReducer, hikeEditMapReducer, hikeEditPoiReducer };
+import { hikeEditRoutePlannerReducer } from './reducer/hike-edit-route-planner';
+import { hikeEditPoiReducer } from './reducer/hike-edit-poi';
+import { hikeEditMapReducer } from './reducer/hike-edit-map';
+import { editedHikeProgramReducer } from './reducer/edited-hike-program';
+import { editedGTrackPoiReducer } from './reducer/edited-gtrack-poi';
 
 //////////////
 // State
 //////////////
 
-// Extend the store interface with that.
-export interface State extends CommonState {
-  authentication: IAuthenticationState;
-  router: RouterReducerState; // ngrx/router
-  deepstream: IDeepstreamState;
-  hikeEditRoutePlanner: IHikeEditRoutePlannerState;
-  hikeEditGeneralInfo: IHikeEditGeneralInfoState;
-  hikeEditMap: IHikeEditMapState;
-  hikeEditPoi: IHikeEditPoiState;
-}
+import { State } from './state';
 
 // Same keys as in the state!!!
 const reducers: ActionReducerMap<State> = {
   ...commonReducers,
   router: routerReducer,
   hikeEditRoutePlanner: hikeEditRoutePlannerReducer,
-  hikeEditGeneralInfo: hikeEditGeneralInfoReducer,
   hikeEditPoi: hikeEditPoiReducer,
-  hikeEditMap: hikeEditMapReducer
+  hikeEditMap: hikeEditMapReducer,
+  language: LanguageReducer,
+  editedHikeProgram: editedHikeProgramReducer,
+  editedGtrackPoi: editedGTrackPoiReducer
 };
 
 function logger(reducer: ActionReducer<State>): any {
@@ -131,3 +103,4 @@ if (!environment.production) {
 }
 
 export const store = StoreModule.forRoot(reducers, { metaReducers });
+export * from './state';

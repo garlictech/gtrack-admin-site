@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import {
   State, commonHikeActions
 } from 'app/store';
-import { IHikeProgram } from 'subrepos/provider-client';
+import { IHikeProgramStored } from 'subrepos/provider-client';
 import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
 import { LanguageService } from 'app/shared/services';
 
@@ -18,7 +18,7 @@ import * as _ from 'lodash';
   styleUrls: ['./hike-list.component.scss']
 })
 export class HikeListComponent implements OnInit, OnDestroy {
-  public hikeList$: Observable<IHikeProgram[]>;
+  public hikeList$: Observable<IHikeProgramStored[]>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(

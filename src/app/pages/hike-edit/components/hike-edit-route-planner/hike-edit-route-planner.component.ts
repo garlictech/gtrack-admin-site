@@ -7,14 +7,16 @@ import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import {
   State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions,
-  commonHikeActions, commonRouteActions, IHikeEditGeneralInfoState
+  commonHikeActions, commonRouteActions, editedHikeProgramActions, IHikeEditRoutePlannerTotalState
 } from 'app/store';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
-import { HikeEditMapSelectors, HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
 import { IRouteStored } from 'subrepos/provider-client';
 import { ToasterService } from 'angular2-toaster';
 
 import * as L from 'leaflet';
+import * as _ from 'lodash';
+import { ReverseGeocodingService } from '../../../../shared/services';
 
 @Component({
   selector: 'gt-hike-edit-route-planner',
@@ -31,56 +33,72 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _routingControlService: RoutingControlService,
     private _waypointMarkerService: WaypointMarkerService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _routeSelectors: RouteSelectors,
     private _toasterService: ToasterService,
-    private _store: Store<State>
+    private _store: Store<State>,
+    private _reverseGeocodingService: ReverseGeocodingService
   ) {}
 
   ngOnInit() {
+
     this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
 
-    this._store.select(this._hikeEditMapSelectors.getMapId)
+    this._store
+      .select(this._hikeEditMapSelectors.getMapId)
       .filter(id => id !== '')
       .takeUntil(this._destroy$)
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
-    // Show toaster when the route has been saved
-    this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId)
-      .switchMap((routeId: string) => {
-        return this._store
-          .select(this._routeSelectors.getRouteContext(routeId))
-          .takeUntil(this._destroy$);
-      })
-      .filter(routeContext => !!(routeContext && routeContext.saved))
-      .take(1)
-      .subscribe((routeContext) => {
-        this._toasterService.pop('success', 'Success!', 'Route saved!');
+    this._store.select(this._hikeEditRoutePlannerSelectors.getRoute)
+      .takeUntil(this._destroy$)
+      .subscribe((route: any) => {
+        // Clear location
+        if (route.features.length === 1) {
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }));
+        // 1st segment added (line + 2 points)
+        } else if (route.features.length === 3) {
+          this._updateLocation(route.features[1].geometry.coordinates);
+        }
       });
 
-    // Handling route load
-    this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId)
+    this._store.select(this._hikeEditRoutePlannerSelectors.getTotal)
+      .takeUntil(this._destroy$)
+      .subscribe((total: IHikeEditRoutePlannerTotalState) => {
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(
+          _.pick(total, ['distance', 'uphill', 'downhill', 'time', 'score'])
+        ));
+      });
+
+    // Show toaster when the route has been saved
+    this._store
+      .select(this._editedHikeProgramSelectors.getRouteId)
       .switchMap((routeId: string) => {
         return this._store
           .select(this._routeSelectors.getRouteContext(routeId))
           .takeUntil(this._destroy$);
       })
-      .filter(routeContext => !!(routeContext && routeContext.loaded))
-      .switchMap((routeContext) => {
-        return this._store
-          .select(this._routeSelectors.getRoute((<IRouteContextState>routeContext).id))
-          .takeUntil(this._destroy$);
-      })
-      .take(1)
-      .subscribe((route: IRouteStored) => {
-        setTimeout(() => {
-          this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
+      .filter(routeContext => !!routeContext)
+      .subscribe((routeContext: IRouteContextState) => {
+        // Route saved
+        if (routeContext.saved) {
+          this._toasterService.pop('success', 'Success!', 'Route saved!');
+        // Route loaded
+        } else if (routeContext.loaded) {
+          this._store
+            .select(this._routeSelectors.getRoute((<IRouteContextState>routeContext).id))
+            .take(1)
+            .subscribe((route: IRouteStored) => {
+              setTimeout(() => {
+                this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
 
-          this._loadRoute(route);
-        });
+                this._loadRoute(route);
+              });
+            });
+        }
       });
   }
 
@@ -108,17 +126,28 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
   private _loadRoute(routeData: IRouteStored) {
     if (this._map && this._waypointMarkerService) {
-      const coords: L.LatLng[] = [];
       for (let feature of routeData.route.features) {
         if (feature.geometry.type === 'Point') {
-          coords.push(L.latLng(
+          this._waypointMarkerService.addWaypoint(L.latLng(
             feature.geometry.coordinates[1],
             feature.geometry.coordinates[0]
           ));
         }
       }
-
-      this._waypointMarkerService.addWaypointList(coords);
     }
+  }
+
+  private _updateLocation(coords) {
+    this._reverseGeocodingService
+      .get({
+        lat: coords[1],
+        lon: coords[0]
+      })
+      .then((location: string) => {
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: location }));
+      }, err => {
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }));
+      }
+    );
   }
 }

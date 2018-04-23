@@ -13,6 +13,7 @@ import { selectCurrentLocation, selectTracking } from '../../../store';
 import { IGeoPosition } from '../../../shared/services/background-geolocation-service';
 
 import { SearchFiltersSelectors } from '../../../search-filters/store/selectors';
+import * as searchFilterActions from '../../../search-filters/store/actions';
 
 import * as BackgroundGeolocationActions from '../../../shared/services/background-geolocation-service/store/actions';
 
@@ -38,7 +39,8 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   public radiusRange = 50;
 
   protected _radius = 50000;
-  protected _location: GeoJSON.Position;
+  protected _location: (GeoJSON.Position | null) = null;
+  protected _address = 'my-location';
 
   constructor(
     private _googleMapsService: GoogleMapsService,
@@ -77,7 +79,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
             this._locate$.next(false);
 
             this._location = [place.geometry.location.lng(), place.geometry.location.lat()];
-            this._search();
+            this._address = place.formatted_address;
           });
         });
       });
@@ -121,9 +123,10 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
       ._locate$
       .takeUntil(this._destroy$)
       .switchMap(locate => {
-        return locate ? location$ : Observable.never<number[]>();
+        return locate ? location$.take(1) : Observable.never<number[]>();
       })
       .subscribe(coords => {
+        this._address = 'my-location';
         this._location = coords;
         this._search();
       });
@@ -145,6 +148,12 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this._address) {
+      this._store.dispatch(new searchFilterActions.ChangeFilters({
+        location: this._address
+      }));
+    }
+
     this._store.dispatch(
       new geoSearchActions.SearchInCircle(
         {
@@ -160,9 +169,19 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     );
   }
 
+  public searchLocation() {
+    if (this._input instanceof HTMLInputElement) {
+      this._input.value = '';
+    }
+
+    this._locate$.next(false);
+    this._search();
+  }
+
   public requestLocation() {
     if (this._input instanceof HTMLInputElement) {
       this._input.value = '';
+      this._location = null;
     }
 
     this._locate$.next(true);

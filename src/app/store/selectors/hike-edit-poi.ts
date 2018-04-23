@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-import { State } from '../index';
-import { IHikeEditPoiState } from '../state/index';
+
+import { IHikeEditPoiState } from '../state/hike-edit-poi';
 import {
   wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter
 } from 'app/store/reducer';

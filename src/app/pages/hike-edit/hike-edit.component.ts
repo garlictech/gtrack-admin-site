@@ -1,22 +1,27 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import {
-  State, hikeEditActions, hikeEditGeneralInfoActions, commonRouteActions, commonHikeActions, IHikeEditRoutePlannerState, hikeEditMapActions, hikeEditRoutePlannerActions
+  State,
+  hikeEditActions,
+  commonRouteActions,
+  commonHikeActions,
+  IHikeEditRoutePlannerState,
+  hikeEditMapActions,
+  hikeEditRoutePlannerActions,
+  editedHikeProgramActions
 } from 'app/store';
-import { HikeEditGeneralInfoSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
-import { HikeDataService } from 'app/shared/services';
+import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
+import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
 import { IHikeProgramStored, IHikeProgram, IPoi, IRoute } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
-import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
-import { IGeneralInfoState } from '../../store/state';
 
 @Component({
   selector: 'gt-hike-edit',
@@ -25,157 +30,121 @@ import { IGeneralInfoState } from '../../store/state';
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
   public allowSave$: Observable<boolean>;
-  public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
-  private _hikeId: string;
+  public working$: Observable<string | null>;
+
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
-    private _hikeDataService: HikeDataService,
     private _routingControlService: RoutingControlService,
     private _waypointMarkerService: WaypointMarkerService,
     private _hikeSelectors: HikeSelectors,
-    private _hikeEditGeneralInfoSelectors: HikeEditGeneralInfoSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _toasterService: ToasterService,
     private _router: Router,
     private _title: Title,
-    private _zone: NgZone
   ) {}
 
   ngOnInit() {
+    this.working$ = this._store.select(this._editedHikeProgramSelectors.getWorking);
+
     this._routingControlService.reset();
     this._waypointMarkerService.reset();
 
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
 
-    this._activatedRoute.params
+    this._activatedRoute.params.takeUntil(this._destroy$).subscribe(params => {
+      // Edit existing hike
+      if (params && params.id) {
+        // Set page title
+        this._title.setTitle('Edit hike');
+
+        // Set hike id and load hikeProgram data
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: params.id }));
+        this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
+      // Create new hike
+      } else {
+        // Set page title
+        this._title.setTitle('New hike');
+
+        // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
+        const _hikeId = uuid();
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: _hikeId }));
+        // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
+
+        // Generate initial route id and load the empty route (for save toaster handling)
+        const _routeId = uuid();
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ routeId: _routeId }));
+        // Update the routes's dirty flag
+        this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
+
+        // Create initial language block
+        this._store.dispatch(
+          new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('en_US', {
+            title: `Test hike #${new Date().getTime()}`,
+            fullDescription: 'desc',
+            summary: 'summary'
+          })
+        );
+      }
+    });
+
+    this.allowSave$ = this._store.select(this._editedHikeProgramSelectors.getDirty);
+
+    // Handling hike context changes
+    this._store
+      .select(this._editedHikeProgramSelectors.getHikeId)
       .takeUntil(this._destroy$)
-      .subscribe(params => {
-        if (params && params.id) {
-          // Set page title
-          this._title.setTitle('Edit hike');
+      .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)))
+      .filter(hikeContext => !!(hikeContext))
+      .subscribe((hikeContext: IHikeContextState) => {
+        // Hike saved
+        if (hikeContext.saved) {
+          this._toasterService.pop('success', 'Success!', 'Hike saved!');
+          this._store.dispatch(new commonHikeActions.HikeProgramModified((<IHikeContextState>hikeContext).id));
+          this._router.navigate([`/admin/hike/${(<IHikeContextState>hikeContext).id}`]);
+        // Hike loaded
+        } else if (hikeContext.loaded) {
+          this._store
+            .select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id))
+            .take(1)
+            .subscribe((hikeData: IHikeProgramStored) => {
+              // Add the whole data to store
+              this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(hikeData));
 
-          // Set hike id and load hikeProgram data
-          this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({
-            hikeId: params.id
-          }));
-
-          this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
-        // Create new hike
-        } else {
-          // Set page title
-          this._title.setTitle('New hike');
-          this._store.dispatch(new hikeEditGeneralInfoActions.ResetGeneralInfoState());
-
-          // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
-          const _hikeId = uuid();
-          this._store.dispatch(new hikeEditGeneralInfoActions.SetHikeId({ hikeId: _hikeId }));
-          this._store.dispatch(new commonHikeActions.HikeProgramModified(_hikeId));
-
-          // Generate initial route id and load the empty route (for save toaster handling)
-          const _routeId = uuid();
-          this._store.dispatch(new hikeEditGeneralInfoActions.SetRouteId({ routeId: _routeId }));
-          this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
-
-          // Create initial language block
-          this._store.dispatch(new hikeEditGeneralInfoActions.SetDescriptions({
-            descriptions: [{
-              id: 'en_US',
-              title: `Test hike #${new Date().getTime()}`,
-              fullDescription: 'desc',
-              summary: 'summary'
-            }]
-          }));
-
-          // Store has been initialized
-          this._store.dispatch(new hikeEditGeneralInfoActions.SetInitialized());
+              // Load route
+              this._store.dispatch(new commonRouteActions.LoadRoute(hikeData.routeId));
+            });
         }
-      });
-
-    this.routeInfoData$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
-      .takeUntil(this._destroy$);
-
-    this.allowSave$ = Observable
-      .combineLatest(
-        this._store
-          .select(this._hikeEditGeneralInfoSelectors.getPois)
-          .takeUntil(this._destroy$),
-        this.routeInfoData$
-      )
-      .takeUntil(this._destroy$)
-      .map(([inHikePois, routeInfoData]: [any[], any]) => {
-        return inHikePois.length > 0 && (routeInfoData.segments && routeInfoData.segments.length > 0);
-      })
-
-    // Handling hike save
-    this._store
-      .select(this._hikeEditGeneralInfoSelectors.getHikeId)
-      .switchMap((hikeId: string) => {
-        return this._store
-          .select(this._hikeSelectors.getHikeContext(hikeId))
-          .takeUntil(this._destroy$)
-      })
-      .filter(hikeContext => !!(hikeContext && hikeContext.saved))
-      .take(1)
-      .subscribe((hikeContext) => {
-        this._toasterService.pop('success', 'Success!', 'Hike saved!');
-
-        this._store.dispatch(new commonHikeActions.HikeProgramModified((<IHikeContextState>hikeContext).id));
-
-        this._router.navigate([`/admin/hike/${(<IHikeContextState>hikeContext).id}`]);
-      });
-
-    // Handling hike load
-    this._store
-      .select(this._hikeEditGeneralInfoSelectors.getHikeId)
-      .switchMap((hikeId: string) => {
-        return this._store
-          .select(this._hikeSelectors.getHikeContext(hikeId))
-          .takeUntil(this._destroy$)
-      })
-      .filter(hikeContext => !!(hikeContext && hikeContext.loaded))
-      .switchMap((hikeContext) => {
-        return this._store
-          .select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id))
-          .takeUntil(this._destroy$)
-      })
-      .take(1)
-      .subscribe((hike) => {
-        this._hikeDataService.splitHikeDataToStore(<IHikeProgram>hike);
       });
   }
 
-  ngOnDestroy( ) {
+  ngOnDestroy() {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
   }
 
   public saveHike() {
-    this._saveRoute();
-    this._store.dispatch(new hikeEditActions.CollectHikeData());
-  }
+    // Save hikeProgram
+    this._store.dispatch(new editedHikeProgramActions.SaveHikeProgram());
 
-  private _saveRoute() {
-    Observable
-      .combineLatest(
-        this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner).take(1),
-        this._store.select(this._hikeEditGeneralInfoSelectors.getRouteId).take(1)
-      )
-      .takeUntil(this._destroy$)
-      .subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
-        if (routePlannerState && routeId) {
-          let _route: IRoute = {
-            id: routeId,
-            bounds: (<any>routePlannerState.route).bounds,
-            route: _.pick(routePlannerState.route, ['type', 'features'])
-          };
+    // Save route
+    Observable.combineLatest(
+      this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner).take(1),
+      this._store.select(this._editedHikeProgramSelectors.getRouteId).take(1)
+    ).subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
+      if (routePlannerState && routeId) {
+        let _route: IRoute = {
+          id: routeId,
+          bounds: (<any>routePlannerState.route).bounds,
+          route: _.pick(routePlannerState.route, ['type', 'features'])
+        };
 
-          this._store.dispatch(new commonRouteActions.SaveRoute(_route));
-        }
-      });
+        this._store.dispatch(new commonRouteActions.SaveRoute(_route));
+      }
+    });
   }
 }

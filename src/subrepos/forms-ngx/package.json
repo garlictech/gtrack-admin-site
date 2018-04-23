@@ -1,0 +1,16 @@
+{
+    "name": "forms-ngx",
+    "description": "ngx forms library",
+    "version": "0.0.0-local",
+    "license": "SEE LICENSE IN license.txt",
+    "engines": {
+        "npm": ">=3.0.0",
+        "node": ">=5.0.0"
+    },
+    "peerDependencies": {
+        "primeng": "^5.2.0",
+        "emojionearea": "^3.4.1",
+        "angular2-file-drop": "^0.2.0",
+        "normalize.scss": "^0.1.0"
+    }
+}

@@ -1,7 +1,7 @@
 import { Log, Level } from 'ng2-logger'
 
-export const log = Log.create('@pioneer-wst/main-website')
-log.color = 'black'
+export const log = Log.create('@garlictech/gtrack-admin-site')
+log.color = 'lightgreen'
 
 export function DebugLog(target: Object, key: string, descriptor: TypedPropertyDescriptor<any>) {
   return {

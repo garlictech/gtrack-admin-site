@@ -1,8 +1,14 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Component, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import * as d3 from 'd3';
+
+import { State } from 'app/store';
+import { Subject } from 'rxjs/Subject';
 
 import { DistancePipe, UnitsService } from '../../../shared';
 import { Route, RouteService, IElevationData } from '../../services/route';
+import { RouteSelectors } from '../../store/route/selectors';
+import * as routeActions from '../../store/route/actions';
 import { HikeProgram } from '../../services/hike-program';
 
 @Component({
@@ -10,7 +16,7 @@ import { HikeProgram } from '../../services/hike-program';
   templateUrl: './elevation-profile.component.html',
   styleUrls: ['./elevation-profile.component.scss']
 })
-export class ElevationProfileComponent {
+export class ElevationProfileComponent implements OnDestroy {
   @ViewChild('elevationProfile') public mainDiv: ElementRef;
 
   public route: Route | null;
@@ -22,6 +28,17 @@ export class ElevationProfileComponent {
   protected markerOn = false;
   protected distance: DistancePipe;
 
+  private _destroy$ = new Subject<boolean>();
+
+  constructor(
+    private _routeService: RouteService,
+    private _store: Store<State>,
+    private _routeSelectors: RouteSelectors,
+    unitsService: UnitsService
+  ) {
+    this.distance = new DistancePipe(unitsService);
+  }
+
   @Input()
   public set hikeProgram(hikeProgram: HikeProgram) {
     if (hikeProgram) {
@@ -31,16 +48,25 @@ export class ElevationProfileComponent {
     }
   }
 
-  @Input()
   public set routeId(routeId: string | null) {
     if (!routeId) {
       this.route = null;
       return;
     }
 
-    this.routeService
-      .get(routeId)
-      .take(1)
+    this._store
+      .select(this._routeSelectors.getRouteContext(routeId))
+      .takeUntil(this._destroy$)
+      .subscribe(context => {
+        if ((typeof context === 'undefined') || (context.loaded !== true && context.loading !== true)) {
+          this._store.dispatch(new routeActions.LoadRoute(routeId));
+        }
+      });
+
+    this._store
+      .select(this._routeSelectors.getRoute(routeId))
+      .takeUntil(this._destroy$)
+      .filter(route => (typeof route !== 'undefined'))
       .map(route => {
         if (route) {
           return new Route(route);
@@ -48,8 +74,10 @@ export class ElevationProfileComponent {
       })
       .subscribe(route => {
         if (!route) {
-          throw new Error(`Route #${this.routeId} is unknown`);
+          throw new Error(`Route ${routeId} is unknown`);
         }
+
+        console.log(route);
 
         if (!this.vis) {
           this.vis = d3
@@ -58,7 +86,7 @@ export class ElevationProfileComponent {
             .attr('viewBox', `0, 0, ${this.width}, ${this.height}`);
         }
 
-        this.res = this.routeService.elevationData(route, this.width, this.height, this.margins);
+        this.res = this._routeService.elevationData(route, this.width, this.height, this.margins);
 
         if (this.res === null) {
           return;
@@ -141,8 +169,9 @@ export class ElevationProfileComponent {
     left: 50
   };
 
-  constructor(private routeService: RouteService, unitsService: UnitsService) {
-    this.distance = new DistancePipe(unitsService);
+  ngOnDestroy() {
+    this._destroy$.next(true);
+    this._destroy$.complete();
   }
 
   protected moveHandler(eventX: number) {

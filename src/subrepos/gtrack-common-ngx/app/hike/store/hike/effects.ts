@@ -50,7 +50,7 @@ export class HikeEffects {
       .ofType<LocalActions.SaveHikeProgram>(LocalActions.HikeProgramActionTypes.SAVE_HIKE_PROGRAM)
       .mergeMap(action => {
         return this._hikeProgramService
-          .create(action.hikeProgram)
+          .save(action.hikeProgram)
           .take(1)
           .map(response => new LocalActions.HikeProgramSaved(response.id));
       });
