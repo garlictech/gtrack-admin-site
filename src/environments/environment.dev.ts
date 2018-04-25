@@ -2,6 +2,7 @@ import { IEnvironment } from './ienvironment';
 
 export class Environment implements IEnvironment {
   production = false;
+  staging = false;
   webappServer = 'http://localhost:8081';
   deepstream = 'ws://localhost:6020/deepstream';
 

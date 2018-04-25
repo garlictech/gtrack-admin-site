@@ -2,6 +2,7 @@ import { IEnvironment } from './ienvironment';
 
 export class Environment implements IEnvironment {
   production = true;
+  staging = true;
   webappServer = 'https://gtrack-admin-zlnhf.firebaseapp.com/';
   deepstream = 'wss://deepstream-staging.gtracksport.com/deepstream';
 

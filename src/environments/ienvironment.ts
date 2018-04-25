@@ -1,5 +1,6 @@
 export interface IEnvironment {
   production: boolean;
+  staging: boolean;
   webappServer: string;
   deepstream: string;
 

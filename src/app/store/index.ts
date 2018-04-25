@@ -97,7 +97,7 @@ function logger(reducer: ActionReducer<State>): any {
 }
 const metaReducers: MetaReducer<State>[] = [];
 
-if (!environment.production) {
+if (!environment.production || environment.staging) {
   metaReducers.push(logger);
   metaReducers.push(storeFreeze);
 }
