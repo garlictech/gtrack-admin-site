@@ -8,7 +8,7 @@ import { IDynamicComponentModalConfig, DynamicModalService } from 'subrepos/gtra
 
 @Component({
   selector: 'hike-edit-pois-gtrack-table',
-  templateUrl: './hike-edit-pois-gtrack-table.component.html'
+  templateUrl: './ui.html'
 })
 export class HikeEditPoisGTrackTableComponent {
   @Input() pois$: IGTrackPoi[];
