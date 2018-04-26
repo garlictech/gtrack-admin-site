@@ -182,13 +182,13 @@ export class PoiEditorService {
     let _pois;
 
     this._store
-      .select(this._editedHikeProgramSelectors.getPois)
+      .select(this._editedHikeProgramSelectors.getPoiIds)
       .take(1)
-      .subscribe((hikePois: string[]) => {
+      .subscribe((hikePoiIds: string[]) => {
         if (pois) {
           let _gTrackPois = _.cloneDeep(pois);
           _gTrackPois.map((_gTrackPoi: IGTrackPoi) => {
-            _gTrackPoi.inHike = _.includes(hikePois, _gTrackPoi.id);
+            _gTrackPoi.inHike = _.includes(hikePoiIds, _gTrackPoi.id);
           });
           _pois = _gTrackPois;
         } else {

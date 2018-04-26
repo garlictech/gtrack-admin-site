@@ -70,7 +70,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     // Get pois by id
     Observable
       .combineLatest(
-        this._store.select(this._editedHikeProgramSelectors.getPois).takeUntil(this._destroy$),
+        this._store.select(this._editedHikeProgramSelectors.getPoiIds).takeUntil(this._destroy$),
         this._store.select(this._poiSelectors.getPoiIds).takeUntil(this._destroy$)
       )
       .debounceTime(150)
