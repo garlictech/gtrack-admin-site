@@ -32,11 +32,11 @@ $(document).ready(function() {
     window_width = $(window).width();
 
     // check if there is an image set for the sidebar's background
-    // disabled by petrot // lbd.checkSidebarImage();
+    // *** disabled by petrot *** lbd.checkSidebarImage();
 
     // Init navigation toggle for small screens
     if (window_width <= 991) {
-        lbd.initRightMenu();
+        // *** disabled by petrot *** lbd.initRightMenu();
     }
 
     //  Activate the tooltips
@@ -68,7 +68,7 @@ $(document).ready(function() {
 // activate collapse right menu when the windows is resized
 $(window).resize(function() {
     if ($(window).width() <= 991) {
-        lbd.initRightMenu();
+        // *** disabled by petrot *** lbd.initRightMenu();
     }
 });
 
