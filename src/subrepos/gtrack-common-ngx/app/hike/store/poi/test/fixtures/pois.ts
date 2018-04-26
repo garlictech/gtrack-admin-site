@@ -33,10 +33,12 @@ export const pois: IPoi[] = [
 export const poisStored: IPoiStored[] = [
   {
     ...pois[0],
+    id: uuid(),
     timestamp: new Date().getTime()
   },
   {
     ...pois[1],
+    id: uuid(),
     timestamp: new Date().getTime()
   }
 ]

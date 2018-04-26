@@ -39,12 +39,12 @@ describe('HikeProgramReducer', () => {
           summary: ''
         }
       },
-      pois: [],
       stops: []
     };
 
     hikeProgram = {
       ...hikeProgramData,
+      id: id,
       timestamp: new Date().getTime()
     };
   });
