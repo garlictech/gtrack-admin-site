@@ -344,17 +344,6 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create SetListDirty action', () => {
-    const payload = { subdomain: 'fakeDomain', dirty: false };
-    const action = new HikeEditPoiActions.SetListDirty(payload);
-
-    expect(action).toBeDefined();
-    expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.SET_DIRTY,
-      payload,
-    });
-  });
-
   it('should create MarkersConfigChanged action', () => {
     const action = new HikeEditPoiActions.MarkersConfigChanged();
 

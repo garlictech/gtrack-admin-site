@@ -101,10 +101,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         })
       )
       .switchMap(([pois, dirty]: [IGTrackPoi[], boolean]) => {
-        if (dirty) {
-          this._store.dispatch(new hikeEditPoiActions.SetListDirty({ subdomain: 'gTrack', dirty: false }));
-        }
-
+        // TODO: refactor
         return Observable.of(this._poiEditorService.handleHikeInclusion(pois));
       })
       .takeUntil(this._destroy$);
