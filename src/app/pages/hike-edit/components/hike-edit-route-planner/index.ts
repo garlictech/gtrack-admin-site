@@ -97,8 +97,8 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((total: IHikeEditRoutePlannerTotalState) => {
         this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(
-          _.pick(total, ['distance', 'uphill', 'downhill', 'time', 'score'])
-        ), true);
+          _.pick(total, ['distance', 'uphill', 'downhill', 'time', 'score']), true
+        ));
       });
   }
 
