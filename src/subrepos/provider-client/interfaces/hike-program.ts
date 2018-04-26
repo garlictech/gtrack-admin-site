@@ -9,7 +9,7 @@ export interface IHikeProgramSaveResponse {
 
 export interface IHikeProgramBackgroundImage {
   url: string;
-};
+}
 
 export interface IHikeProgramStop {
   distanceFromOrigo: number;
@@ -24,10 +24,10 @@ export interface IHikeProgramStop {
     distance: number;
     score: number;
     time: number;
-  },
+  };
   isStart?: boolean;
   isFinish?: boolean;
-};
+}
 
 export interface IHikeProgram {
   id: string;
@@ -46,11 +46,10 @@ export interface IHikeProgram {
   routeId: string;
   description: ILocalizedItem<ITextualDescription>;
   offlineMap?: string;
-  pois: string[];
   stops: IHikeProgramStop[];
 }
 
-export interface IHikeProgramInput extends IHikeProgram, IProviderInput { }
+export interface IHikeProgramInput extends IHikeProgram, IProviderInput {}
 
 export interface IHikeProgramStored extends IHikeProgram {
   timestamp: number;
