@@ -85,7 +85,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .subscribe((route: any) => {
         // Clear location
         if (route.features.length === 1) {
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }));
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
         // 1st segment added (line + 2 points)
         } else if (route.features.length === 3) {
           this._updateLocation(route.features[1].geometry.coordinates);
@@ -98,7 +98,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .subscribe((total: IHikeEditRoutePlannerTotalState) => {
         this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(
           _.pick(total, ['distance', 'uphill', 'downhill', 'time', 'score'])
-        ));
+        ), true);
       });
   }
 
@@ -146,9 +146,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         lon: coords[0]
       })
       .then((location: string) => {
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: location }));
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: location }, false));
       }, err => {
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }));
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
       }
     );
   }

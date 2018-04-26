@@ -42,14 +42,22 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     this._initDescriptionFormConfig();
 
     // Selectors
-    this.isRoundTrip$ = this._store.select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
-    this.hikeProgramData$ = this._store.select(this._editedHikeProgramSelectors.getData)
-    this.remoteError$ = this._store.select(this._editedHikeProgramSelectors.getError)
+    this.isRoundTrip$ = this._store
+      .select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
+      .takeUntil(this._destroy$);
+    this.hikeProgramData$ = this._store
+      .select(this._editedHikeProgramSelectors.getData)
+      .takeUntil(this._destroy$);
+    this.remoteError$ = this._store
+      .select(this._editedHikeProgramSelectors.getError)
+      .takeUntil(this._destroy$);
 
     this.isRoundTrip$
       .takeUntil(this._destroy$)
       .subscribe((isRoundTrip: boolean) => {
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({isRoundTrip: isRoundTrip}));
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({
+          isRoundTrip: isRoundTrip
+        }, false));
       });
   }
 
@@ -62,7 +70,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
         translatableLabel: 'form.submit',
         classList: ['btn', 'btn-sm', 'btn-fill', 'btn-success'],
         submitFv: (formGroup: FormGroup) => {
-          return this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(formGroup.value));
+          return this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(formGroup.value, true));
         }
       },
       fields: {

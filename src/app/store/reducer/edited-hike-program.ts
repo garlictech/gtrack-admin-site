@@ -64,8 +64,11 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
     }
 
     case editedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS: {
-      newState.dirty = true;
       newState.data = _.assign(newState.data, action.details);
+      if (action.setDirty) {
+        newState.dirty = true;
+      }
+
       return newState;
     }
 

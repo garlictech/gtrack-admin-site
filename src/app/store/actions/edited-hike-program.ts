@@ -43,7 +43,7 @@ export interface IDetails {
 export class AddHikeProgramDetails implements Action {
   readonly type = ADD_HIKE_PROGRAM_DETAILS;
 
-  constructor(public details: IDetails) {}
+  constructor(public details: IDetails, public setDirty: boolean) {}
 }
 
 export class AddStop implements Action {

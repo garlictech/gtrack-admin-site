@@ -40,12 +40,13 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create AddHikeProgramDetails action', () => {
-    const action = new EditedHikeProgramActions.AddHikeProgramDetails({ distance: 10 });
+    const action = new EditedHikeProgramActions.AddHikeProgramDetails({ distance: 10 }, true);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS,
-      details: { distance: 10 }
+      details: { distance: 10 },
+      setDirty: true
     });
   });
 
