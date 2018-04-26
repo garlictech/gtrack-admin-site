@@ -9,7 +9,6 @@ import { IGeospatialBoxSearchPayload, IGeospatialCircleSearchPayload } from 'sub
 
 import { GeoSearchService } from '../geosearch.service';
 
-
 describe('GeoSearchService', () => {
   let service: GeoSearchService;
   let spy: jasmine.Spy;

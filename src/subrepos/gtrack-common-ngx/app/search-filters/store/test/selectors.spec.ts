@@ -53,12 +53,12 @@ describe('SearchFilters selectors', () => {
         .subscribe(filters => (results = filters));
 
       store.dispatch(new actions.ChangeFilters({
-        difficulty: [4,6]
+        difficulty: [4, 6]
       }));
 
       expect(results).toEqual({
         ...initialState,
-        difficulty: [4,6]
+        difficulty: [4, 6]
       });
     });
   });

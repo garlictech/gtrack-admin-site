@@ -10,7 +10,6 @@ import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
 
 import { HikeProgramComponent } from '../';
 
-
 @Pipe({
   name: 'distance'
 })
