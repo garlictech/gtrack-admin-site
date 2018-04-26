@@ -95,7 +95,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
           .filter((path: any) => path && path.geometry.coordinates.length > 0)
           .takeUntil(this._destroy$)
           .map((path: any) => {
-            return this._poiEditorService.organizePois(_.cloneDeep(pois), path);
+            return this._poiEditorService.organizePois(pois, path);
           });
       });
 

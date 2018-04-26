@@ -27,7 +27,8 @@ import {
 import {
   HikeEditPoiSelectors,
   HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors
+  HikeEditRoutePlannerSelectors,
+  EditedHikeProgramSelectors
 } from 'app/store/selectors';
 
 import * as _ from 'lodash';
@@ -53,6 +54,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _geometryService: GeometryService,
     private _poiSelectors: PoiSelectors
@@ -76,7 +78,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
         if (searchData) {
           const missingPoiIds = _.difference((<any>searchData).results, _.intersection((<any>searchData).results, inStorePoiIds))
-
           // Get only the not-loaded pois
           if (missingPoiIds && missingPoiIds.length > 0) {
             this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
@@ -86,25 +87,27 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     // Poi list based on geoSearch results
     // dirty flag will change on add/remove gTrackPoi to/from the hike
-    this.pois$ = Observable.combineLatest(
-      this._store.select(
-        this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois', this._poiSelectors.getAllPois)
-      ),
-      this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'dirty'))
-    )
-      .debounceTime(150)
+    this.pois$ = this._store
+      .select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois', this._poiSelectors.getAllPois))
       .takeUntil(this._destroy$)
-      .filter(([pois, dirty]: [IPoiStored[] | undefined, boolean]) => typeof pois !== 'undefined')
-      .switchMap(([pois, dirty]) =>
-        this._store.select(this._hikeEditRoutePlannerSelectors.getPath).switchMap((path: any) => {
-          return Observable.of([this._poiEditorService.organizePois(<any>_.cloneDeep(pois), path), dirty]);
-        })
+      .filter((pois: IPoiStored[]) => typeof pois !== 'undefined' && pois.length > 0)
+      .switchMap((pois: IPoiStored[]) => {
+        return this._store
+          .select(this._hikeEditRoutePlannerSelectors.getPath)
+          .take(1)
+          .switchMap((path: any) => {
+            return Observable.of(this._poiEditorService.organizePois(pois, path));
+          })
+        }
       )
-      .switchMap(([pois, dirty]: [IGTrackPoi[], boolean]) => {
-        // TODO: refactor
-        return Observable.of(this._poiEditorService.handleHikeInclusion(pois));
-      })
-      .takeUntil(this._destroy$);
+      .switchMap((pois: IGTrackPoi[]) => {
+        return this._store
+          .select(this._editedHikeProgramSelectors.getStops)
+          .takeUntil(this._destroy$)
+          .switchMap((stops: any) => {
+            return Observable.of(this._poiEditorService.handleHikeInclusion(pois));
+          })
+      });
 
     this.pois$
       .debounceTime(150)

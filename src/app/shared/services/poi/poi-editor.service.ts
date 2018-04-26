@@ -366,11 +366,12 @@ export class PoiEditorService {
       // Hike pois
       //
 
-      Observable.combineLatest(
-        this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('hike')).take(1),
-        this._store.select(this._editedHikeProgramSelectors.getHikePois<IPoiStored>(this._poiSelectors.getAllPois)).take(1),
-        this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
-      )
+      Observable
+        .combineLatest(
+          this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('hike')).take(1),
+          this._store.select(this._editedHikeProgramSelectors.getHikePois<IPoiStored>(this._poiSelectors.getAllPois)).take(1),
+          this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
+        )
         .filter(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IPoiStored[], any]) => {
           return (
             (pois && pois.length > 0 && path && (<any>hikePoiContext).showOnrouteMarkers) ||
@@ -378,7 +379,7 @@ export class PoiEditorService {
           );
         })
         .switchMap(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IPoiStored[], any]) => {
-          return Observable.of([<any>hikePoiContext, this.organizePois(_.cloneDeep(pois), path)]);
+          return Observable.of([<any>hikePoiContext, this.organizePois(pois, path)]);
         })
         .subscribe(([hikePoiContext, pois]: [IExternalPoiListContextItemState, IGTrackPoi[]]) => {
           _pois = _pois.concat(
@@ -393,13 +394,14 @@ export class PoiEditorService {
       // gTrackPois
       //
 
-      Observable.combineLatest(
-        this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('gTrack')).take(1),
-        this._store
-          .select(this._geoSearchSelectors.getGeoSearchResults<IPoi>('gTrackPois', this._poiSelectors.getAllPois))
-          .take(1),
-        this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
-      )
+      Observable
+        .combineLatest(
+          this._store.select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('gTrack')).take(1),
+          this._store
+            .select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois', this._poiSelectors.getAllPois))
+            .take(1),
+          this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
+        )
         .filter(([gTrackPoiContext, pois, path]: [IExternalPoiListContextItemState, IGTrackPoi[] | undefined, any]) => {
           return (
             (pois && pois.length > 0 && path && (<any>gTrackPoiContext).showOnrouteMarkers) ||
@@ -408,7 +410,7 @@ export class PoiEditorService {
         })
         .switchMap(
           ([gTrackPoiContext, pois, path]: [IExternalPoiListContextItemState, IGTrackPoi[] | undefined, any]) => {
-            return Observable.of([<any>gTrackPoiContext, this.organizePois(<any>_.cloneDeep(pois), path)]);
+            return Observable.of([<any>gTrackPoiContext, this.organizePois(<any>pois, path)]);
           }
         )
         .switchMap(([gTrackPoiContext, pois]: [IExternalPoiListContextItemState, IGTrackPoi[]]) => {
@@ -429,28 +431,28 @@ export class PoiEditorService {
       // Service pois
       //
 
-      this._getVisibleServicePois('google', this._hikeEditPoiSelectors.getAllGooglePois).subscribe(
-        (pois: IExternalPoi[]) => {
+      this._getVisibleServicePois('google', this._hikeEditPoiSelectors.getAllGooglePois)
+        .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);
         }
       );
-      this._getVisibleServicePois('osmAmenity', this._hikeEditPoiSelectors.getAllOsmAmenityPois).subscribe(
-        (pois: IExternalPoi[]) => {
+      this._getVisibleServicePois('osmAmenity', this._hikeEditPoiSelectors.getAllOsmAmenityPois)
+        .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);
         }
       );
-      this._getVisibleServicePois('osmNatural', this._hikeEditPoiSelectors.getAllOsmNaturalPois).subscribe(
-        (pois: IExternalPoi[]) => {
+      this._getVisibleServicePois('osmNatural', this._hikeEditPoiSelectors.getAllOsmNaturalPois)
+        .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);
         }
       );
-      this._getVisibleServicePois('osmRoute', this._hikeEditPoiSelectors.getAllOsmRoutePois).subscribe(
-        (pois: IExternalPoi[]) => {
+      this._getVisibleServicePois('osmRoute', this._hikeEditPoiSelectors.getAllOsmRoutePois)
+        .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);
         }
       );
-      this._getVisibleServicePois('wikipedia', this._hikeEditPoiSelectors.getAllWikipediaPois).subscribe(
-        (pois: IExternalPoi[]) => {
+      this._getVisibleServicePois('wikipedia', this._hikeEditPoiSelectors.getAllWikipediaPois)
+        .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);
         }
       );

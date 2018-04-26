@@ -69,7 +69,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       ))
       .filter(([pois, path]: [IExternalPoi[], any]) => (pois && pois.length > 0))
       .switchMap(([pois, path]: [IExternalPoi[], any]) => {
-        return Observable.of(this._poiEditorService.organizePois(_.cloneDeep(pois), path));
+        return Observable.of(this._poiEditorService.organizePois(pois, path));
       })
       .switchMap((pois: IExternalPoi[]) => this._poiEditorService.assignOnOffRoutePois(pois))
       .switchMap((pois: IExternalPoi[]) => this._poiEditorService.handleElevation(pois))
