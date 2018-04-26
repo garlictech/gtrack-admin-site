@@ -48,7 +48,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.working$ = this._store.select(this._editedHikeProgramSelectors.getWorking);
+    this.working$ = this._store.select(this._editedHikeProgramSelectors.getWorking).takeUntil(this._destroy$);
 
     this._routingControlService.reset();
     this._waypointMarkerService.reset();
@@ -92,15 +92,17 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.allowSave$ = this._store.select(this._editedHikeProgramSelectors.getDirty);
+    this.allowSave$ = this._store.select(this._editedHikeProgramSelectors.getDirty).takeUntil(this._destroy$);
 
     // Handling hike context changes
     this._store
       .select(this._editedHikeProgramSelectors.getHikeId)
+      .filter(hikeId => hikeId !== '')
       .takeUntil(this._destroy$)
-      .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)))
+      .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)).takeUntil(this._destroy$))
       .filter(hikeContext => !!(hikeContext))
       .subscribe((hikeContext: IHikeContextState) => {
+
         // Hike saved
         if (hikeContext.saved) {
           this._toasterService.pop('success', 'Success!', 'Hike saved!');

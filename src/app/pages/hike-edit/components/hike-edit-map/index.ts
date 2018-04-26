@@ -49,7 +49,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public overlays = OVERLAYS;
   public mode = 'routing';
   private _bufferShown = false;
-  private _geoJsonOnMap: L.GeoJSON;
+  private _bufferOnMap: L.GeoJSON;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -142,14 +142,14 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       .take(1)
       .subscribe((buffer) => {
         if (buffer) {
-          this._geoJsonOnMap = this.mapComponent.map.addGeoJSON(buffer);
+          this._bufferOnMap = this.mapComponent.map.addGeoJSON(buffer);
         }
       });
   }
 
   private _removeBuffer() {
-    if (this._geoJsonOnMap) {
-      this.mapComponent.map.removeGeoJSON(this._geoJsonOnMap);
+    if (this._bufferOnMap) {
+      this.mapComponent.map.removeGeoJSON(this._bufferOnMap);
     }
   }
 

@@ -53,7 +53,7 @@ export class AdminMap extends Map {
   }
 
   /**
-   * Add buffer geoJSON to map
+   * Add geoJSON to map
    */
   public addGeoJSON(geoJson): L.GeoJSON {
     const _geoJSON = L.geoJSON(geoJson, {
@@ -67,19 +67,11 @@ export class AdminMap extends Map {
 
   /**
    * addGeoJSON submethod
-   *
-   * TODO: when called with route_{n} ???
    */
   private _getGeoJsonStyle(feature) {
     switch (feature.properties.draw_type) {
-      case 'route_0':
-        return { color: 'black', opacity: 0.15, weight: 9 };
-      case 'route_1':
-        return { color: 'white', opacity: 0.8, weight: 6 };
-      case 'route_2':
-        return { color: 'red', opacity: 1, weight: 2 };
       case 'small_buffer':
-        return { color: '#000044', weight: 2, fillColor: '#000077' };
+        return { color: '#000044', weight: 6, fillColor: '#000077' };
     }
   }
 
@@ -97,7 +89,7 @@ export class AdminMap extends Map {
   }
 
   /**
-   * Remove buffer geoJSON from map
+   * Remove geoJSON from map
    */
   public removeGeoJSON(geojson) {
     if (geojson) {
