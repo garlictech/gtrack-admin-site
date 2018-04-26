@@ -19,3 +19,4 @@ export * from './poi';
 export * from './geospatial-search';
 export * from './route';
 export * from './track';
+export * from './checkpoint';

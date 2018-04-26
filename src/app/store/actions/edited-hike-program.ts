@@ -46,16 +46,6 @@ export class AddHikeProgramDetails implements Action {
   constructor(public details: IDetails) {}
 }
 
-export class AddPoi implements Action {
-  readonly type = ADD_POI;
-  constructor(public poi: string) {}
-}
-
-export class RemovePoi implements Action {
-  readonly type = REMOVE_POI;
-  constructor(public poi: string) {}
-}
-
 export class AddStop implements Action {
   readonly type = ADD_STOP;
   constructor(public stop: any) {}
@@ -83,8 +73,6 @@ export type AllEditedHikeProgramActions =
   | AddNewTranslatedHikeProgramDescription
   | DeleteTranslatedHikeProgramDescription
   | AddHikeProgramDetails
-  | AddPoi
-  | RemovePoi
   | AddStop
   | RemoveStopByPoiId
   | SaveHikeProgram

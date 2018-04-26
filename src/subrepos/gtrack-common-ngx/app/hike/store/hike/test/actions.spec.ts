@@ -32,12 +32,12 @@ describe('Hike actions', () => {
           summary: ''
         }
       },
-      pois: [],
       stops: []
     };
 
     hikeProgramStoredData = {
       ...hikeProgramData,
+      id: id,
       timestamp: new Date().getTime()
     }
   });

@@ -25,6 +25,7 @@ describe('PoiReducer', () => {
 
     poi = {
       ...poiData,
+      id: id,
       timestamp: new Date().getTime()
     };
   });

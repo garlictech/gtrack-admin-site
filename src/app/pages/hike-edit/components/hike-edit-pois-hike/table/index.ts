@@ -8,7 +8,7 @@ import { IDynamicComponentModalConfig, DynamicModalService } from 'subrepos/gtra
 
 @Component({
   selector: 'hike-edit-pois-hike-table',
-  templateUrl: './hike-edit-pois-hike-table.component.html'
+  templateUrl: './ui.html'
 })
 export class HikeEditPoisHikeTableComponent {
   @Input() pois$: IGTrackPoi[];
@@ -22,12 +22,7 @@ export class HikeEditPoisHikeTableComponent {
   public removePoi($event, poi) {
     $event.stopPropagation();
 
-    this._store.dispatch(new editedHikeProgramActions.RemovePoi(poi.id));
-
-    this._store.dispatch(new hikeEditPoiActions.SetListDirty({
-      subdomain: 'gTrack',
-      dirty: true
-    }));
+    this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(poi.id));
   }
 
   public openModal($event, poi: IGTrackPoi) {
