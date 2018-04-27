@@ -18,7 +18,6 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
     backgroundImageUrls: [],
     routeId: '',
     description: { en_US: { title: 'a new hike' } },
-    pois: [],
     stops: [],
     timestamp: 0
   },
@@ -65,20 +64,11 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
     }
 
     case editedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS: {
-      newState.dirty = true;
       newState.data = _.assign(newState.data, action.details);
-      return newState;
-    }
+      if (action.setDirty) {
+        newState.dirty = true;
+      }
 
-    case editedHikeProgramActions.ADD_POI: {
-      newState.dirty = true;
-      newState.data.pois = _.union(state.data.pois, [action.poi])
-      return newState;
-    }
-
-    case editedHikeProgramActions.REMOVE_POI: {
-      newState.dirty = true;
-      newState.data.pois = newState.data.pois.filter(p => p !== action.poi)
       return newState;
     }
 

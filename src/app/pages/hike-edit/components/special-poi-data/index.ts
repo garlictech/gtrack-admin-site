@@ -5,7 +5,7 @@ import { IGooglePoi, IOsmPoi, IWikipediaPoi } from 'app/shared/interfaces';
 
 @Component({
   selector: 'special-poi-data',
-  templateUrl: 'special-poi-data.component.html'
+  templateUrl: 'ui.html'
 })
 export class SpecialPoiDataComponent {
   @Input() poi: IGooglePoi | IOsmPoi | IWikipediaPoi;

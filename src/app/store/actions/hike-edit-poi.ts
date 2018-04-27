@@ -227,14 +227,6 @@ export class ToggleOffrouteMarkers implements Action {
   }) {}
 }
 
-export class SetListDirty implements Action {
-  readonly type = SET_DIRTY;
-  constructor(public payload: {
-    subdomain: string,
-    dirty: boolean
-  }) {}
-}
-
 export class MarkersConfigChanged implements Action {
   readonly type = MARKERS_CONFIG_CHANGED;
 }
@@ -269,5 +261,4 @@ export type AllHikeEditPoiActions =
   // Markers
   | ToggleOnrouteMarkers
   | ToggleOffrouteMarkers
-  | SetListDirty
   | MarkersConfigChanged;

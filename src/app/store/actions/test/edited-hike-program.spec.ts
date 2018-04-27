@@ -6,8 +6,6 @@ describe('EditedHikeProgram actions', () => {
     expect(EditedHikeProgramActions.ADD_NEW_TRANSLATED_HIKE_DESCRIPTION).toEqual('[HikeProgram] Add new translated hike description');
     expect(EditedHikeProgramActions.DELETE_TRANSLATED_HIKE_DESCRIPTION).toEqual('[HikeProgram] Delete translated hike description');
     expect(EditedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS).toEqual('[HikeProgram] Add some details');
-    expect(EditedHikeProgramActions.ADD_POI).toEqual('[HikeProgram] Add poi');
-    expect(EditedHikeProgramActions.REMOVE_POI).toEqual('[HikeProgram] Remove poi');
     expect(EditedHikeProgramActions.ADD_STOP).toEqual('[HikeProgram] Add stop');
     expect(EditedHikeProgramActions.REMOVE_STOP_BY_POI_ID).toEqual('[HikeProgram] Remove stop by poi id');
     expect(EditedHikeProgramActions.SAVE_HIKE_PROGRAM).toEqual('[HikeProgram] Save hike program');
@@ -42,32 +40,13 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create AddHikeProgramDetails action', () => {
-    const action = new EditedHikeProgramActions.AddHikeProgramDetails({ distance: 10 });
+    const action = new EditedHikeProgramActions.AddHikeProgramDetails({ distance: 10 }, true);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS,
-      details: { distance: 10 }
-    });
-  });
-
-  it('should create AddPoi action', () => {
-    const action = new EditedHikeProgramActions.AddPoi('fakePoiId');
-
-    expect(action).toBeDefined();
-    expect({ ...action }).toEqual({
-      type: EditedHikeProgramActions.ADD_POI,
-      poi: 'fakePoiId'
-    });
-  });
-
-  it('should create RemovePoi action', () => {
-    const action = new EditedHikeProgramActions.RemovePoi('fakePoiId');
-
-    expect(action).toBeDefined();
-    expect({ ...action }).toEqual({
-      type: EditedHikeProgramActions.REMOVE_POI,
-      poi: 'fakePoiId'
+      details: { distance: 10 },
+      setDirty: true
     });
   });
 

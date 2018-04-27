@@ -27,6 +27,7 @@ describe('Poi actions', () => {
 
     poi = {
       ...poiData,
+      id: id,
       timestamp: new Date().getTime()
     };
   });
