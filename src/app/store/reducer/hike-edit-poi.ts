@@ -390,18 +390,6 @@ export function externalPoiListContextReducer(
     }
 
     /**
-     * GTrack
-     */
-    case hikeEditPoiActions.SET_DIRTY:
-      return {
-        ...state,
-        [action.payload.subdomain]: {
-          ...state[action.payload.subdomain],
-          dirty: action.payload.dirty
-        }
-      };
-
-    /**
      * Toggle markers
      */
     case hikeEditPoiActions.TOGGLE_ONROUTE_MARKERS:

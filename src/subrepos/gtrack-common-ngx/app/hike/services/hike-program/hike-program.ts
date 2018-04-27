@@ -116,7 +116,6 @@ export class HikeProgram implements IHikeProgram {
       routeId: this.routeId,
       description: this.description,
       offlineMap: this.offlineMap,
-      pois: this.pois,
       stops: this.stops
     };
 

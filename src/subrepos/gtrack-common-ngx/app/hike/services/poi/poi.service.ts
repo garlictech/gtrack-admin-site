@@ -20,7 +20,7 @@ export class PoiService {
     private _geoSearchService: GeoSearchService,
   ) { }
 
-  public get(id: string): Observable<IPoi> {
+  public get(id: string): Observable<IPoiStored> {
     return this._deepstream
       .getRecord<IPoiStored>(`pois/${id}`)
       .get()

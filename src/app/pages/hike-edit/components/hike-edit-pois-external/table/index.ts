@@ -7,7 +7,7 @@ import { State, hikeEditPoiActions } from 'app/store';
 
 @Component({
   selector: 'hike-edit-pois-external-table',
-  templateUrl: './hike-edit-pois-external-table.component.html'
+  templateUrl: './ui.html'
 })
 export class HikeEditPoisExternalTableComponent {
   @Input() pois$: IExternalPoi[];

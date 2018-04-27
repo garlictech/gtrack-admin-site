@@ -72,3 +72,18 @@ button.btn-just-icon.btn-sm {
         padding: 0 4px !important;
     }
 }
+
+/* ngprime fixes */
+.card .card-header {
+    padding: 15px 15px 0 !important;
+}
+.card .card-body {
+    padding: 15px 15px 10px 15px;
+}
+.table {
+    margin: 0 auto;
+
+    tbody tr td {
+        border-top: 1px solid #dee2e6;
+    }
+}

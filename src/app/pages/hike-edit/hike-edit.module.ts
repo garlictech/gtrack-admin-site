@@ -30,6 +30,7 @@ import {
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 // gTrack common
 import { MapModule, HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
+import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 // Lib
 import { TagInputModule } from 'ngx-chips';
 import { SharedComponentsModule } from 'app/shared/components';
@@ -68,9 +69,20 @@ const COMPONENTS = [
     SharedComponentsModule,
     LanguageModule
   ],
-  exports: [...COMPONENTS],
-  declarations: [AdminLeafletComponent, ObjectToArrayPipe, ...COMPONENTS],
-  entryComponents: [...COMPONENTS],
-  providers: [DynamicModalService]
+  exports: [
+    ...COMPONENTS
+  ],
+  declarations: [
+    AdminLeafletComponent,
+    ObjectToArrayPipe,
+    ...COMPONENTS
+  ],
+  entryComponents: [
+    ...COMPONENTS
+  ],
+  providers: [
+    DynamicModalService,
+    GeospatialService
+  ]
 })
 export class HikeEditModule {}

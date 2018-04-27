@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
 import { IEditedHikeProgramState } from '../state/edited-hike-program';
-import { ILocalizedItem, ITextualDescription, IHikeProgramStored, IPoiStored } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription, IHikeProgramStored, IPoiStored, IHikeProgramStop } from 'subrepos/provider-client';
 
 import * as _ from 'lodash';
 
@@ -12,7 +12,8 @@ export class EditedHikeProgramSelectors {
   public getDescriptions: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
   public getHikeId: MemoizedSelector<object, string>;
   public getRouteId: MemoizedSelector<object, string>;
-  public getPois: MemoizedSelector<object, string[]>;
+  public getPoiIds: MemoizedSelector<object, string[]>;
+  public getStops: MemoizedSelector<object, IHikeProgramStop[]>;
   public getDirty: MemoizedSelector<object, boolean>;
   public getWorking: MemoizedSelector<object, string | null>;
   public getData: MemoizedSelector<object, IHikeProgramStored>;
@@ -36,8 +37,14 @@ export class EditedHikeProgramSelectors {
       (state: IEditedHikeProgramState) => state.data.routeId
     );
 
-    this.getPois = createSelector(this._featureSelector,
-      (state: IEditedHikeProgramState) => state.data.pois
+    this.getPoiIds = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => {
+        return state.data.stops.map((stop: IHikeProgramStop) => stop.poiId).filter(poiId => !!poiId);
+      }
+    );
+
+    this.getStops = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => state.data.stops
     );
 
     this.getDescriptions = createSelector(this._featureSelector,
@@ -60,7 +67,7 @@ export class EditedHikeProgramSelectors {
   public getHikePois<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
     return createSelector(
       getAllSelector,
-      this.getPois,
+      this.getPoiIds,
       (data, poiIds) => {
         if (typeof poiIds !== 'undefined') {
           return data.filter(item => poiIds.indexOf((<any>item).id) !== -1);

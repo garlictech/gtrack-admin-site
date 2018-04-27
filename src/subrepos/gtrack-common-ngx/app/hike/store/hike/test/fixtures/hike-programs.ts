@@ -22,7 +22,6 @@ export const hikePrograms: IHikeProgram[] = [
         summary: 'Test hike'
       }
     },
-    pois: [],
     stops: []
   },
   {
@@ -45,7 +44,6 @@ export const hikePrograms: IHikeProgram[] = [
         summary: 'Test hike 2'
       }
     },
-    pois: [],
     stops: []
   }
 ];
@@ -53,10 +51,12 @@ export const hikePrograms: IHikeProgram[] = [
 export const hikeProgramsStored: IHikeProgramStored[] = [
   {
     ...hikePrograms[0],
+    id: uuid(),
     timestamp: new Date().getTime()
   },
   {
     ...hikePrograms[1],
+    id: uuid(),
     timestamp: new Date().getTime()
   }
 ];

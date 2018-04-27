@@ -30,7 +30,7 @@ export interface IHikeProgramStop {
 }
 
 export interface IHikeProgram {
-  id: string;
+  id?: string;
   distance: number;
   isRoundTrip: boolean;
   uphill: number;
@@ -52,5 +52,6 @@ export interface IHikeProgram {
 export interface IHikeProgramInput extends IHikeProgram, IProviderInput {}
 
 export interface IHikeProgramStored extends IHikeProgram {
+  id: string;
   timestamp: number;
 }
