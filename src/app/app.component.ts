@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToasterConfig } from 'angular2-toaster';
+import { ToasterConfig, BodyOutputType } from 'angular2-toaster';
 
 @Component({
   selector: 'gtrack-main',
@@ -10,6 +10,7 @@ export class AppComponent {
   public toasterConfig: ToasterConfig = new ToasterConfig({
     showCloseButton: true,
     tapToDismiss: false,
-    timeout: 3000
+    timeout: 3000,
+    bodyOutputType: BodyOutputType.TrustedHtml
   });
 }
