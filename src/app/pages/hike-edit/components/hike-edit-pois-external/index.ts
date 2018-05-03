@@ -97,7 +97,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           .filter((externalPois: IExternalPoi[]) => externalPois.length > 0)
           .take(1)
           .subscribe((externalPois: IExternalPoi[]) => {
-            // TODO Refresh commonPoiList after poi save
             this._setSubdomainPoisInGtrackDb(this._poiEditorService.handleGTrackPois(externalPois, gTrackPois));
           });
       });
@@ -156,7 +155,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmRoutePois); break;
     }
 
-    return _pois$;
+    return _pois$.takeUntil(this._destroy$);
   }
 
   private _updateSubdomainPois(pois) {
