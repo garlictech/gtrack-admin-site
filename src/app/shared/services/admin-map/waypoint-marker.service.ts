@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { State } from 'app/store';
 
 import * as L from 'leaflet';
-import { RoutingControlService } from '.';
+import { RoutingControlService, RoutePlannerService } from '.';
 
 @Injectable()
 export class WaypointMarkerService {
@@ -13,7 +13,8 @@ export class WaypointMarkerService {
 
   constructor(
     private _store: Store<State>,
-    private _routingControlService: RoutingControlService
+    private _routingControlService: RoutingControlService,
+    private _routePlannerService: RoutePlannerService,
   ) {
     this.reset();
   }

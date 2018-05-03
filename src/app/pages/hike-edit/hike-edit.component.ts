@@ -99,8 +99,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     // Handling saving error
     this._store
       .select(this._editedHikeProgramSelectors.getError)
-      .takeUntil(this._destroy$)
       .filter(error => !!error)
+      .takeUntil(this._destroy$)
       .subscribe(error => {
         let msg: string[] = [];
         for (let idx in error) {
