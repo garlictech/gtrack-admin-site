@@ -114,6 +114,20 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         });
       });
 
+    // Handling save success
+    this._store
+      .select(this._editedHikeProgramSelectors.getWorking)
+      .filter(working => working !== null)
+      .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getWorking).takeUntil(this._destroy$))
+      .filter(working => working === null)
+      .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getHikeId).take(1))
+      .take(1)
+      .subscribe((hikeId: string) => {
+        this._toasterService.pop('success', 'Success!', 'Hike saved!');
+        this._store.dispatch(new commonHikeActions.HikeProgramModified(hikeId));
+        this._router.navigate([`/admin/hike/${hikeId}`]);
+      });
+
     // Handling hike context changes
     this._store
       .select(this._editedHikeProgramSelectors.getHikeId)
@@ -122,13 +136,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)).takeUntil(this._destroy$))
       .filter(hikeContext => !!(hikeContext))
       .subscribe((hikeContext: IHikeContextState) => {
-        // Hike saved
-        if (hikeContext.saved) {
-          this._toasterService.pop('success', 'Success!', 'Hike saved!');
-          this._store.dispatch(new commonHikeActions.HikeProgramModified((<IHikeContextState>hikeContext).id));
-          this._router.navigate([`/admin/hike/${(<IHikeContextState>hikeContext).id}`]);
-        // Hike loaded
-        } else if (hikeContext.loaded) {
+        if (hikeContext.loaded) {
           this._store
             .select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id))
             .take(1)
@@ -163,7 +171,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           bounds: (<any>routePlannerState.route).bounds,
           route: _.pick(routePlannerState.route, ['type', 'features'])
         };
-
         this._store.dispatch(new commonRouteActions.SaveRoute(_route));
       }
     });
