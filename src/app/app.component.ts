@@ -10,7 +10,7 @@ export class AppComponent {
   public toasterConfig: ToasterConfig = new ToasterConfig({
     showCloseButton: true,
     tapToDismiss: false,
-    timeout: 3000,
+    timeout: 5000,
     bodyOutputType: BodyOutputType.TrustedHtml
   });
 }
