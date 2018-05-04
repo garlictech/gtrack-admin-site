@@ -37,13 +37,11 @@ export class RoutePlannerService {
   }
 
   /**
-   * Add path of the loaded route
-   * This is an initial drawing method, the segment based route drawing will replace it.
+   * Add the loaded route to the store
+   * This is an initial loading method, the segment based route drawing will replace it.
    */
-  public addLoadedRoutePath(path) {
-    let _geoJSON: any = _.cloneDeep(initialRouteDataState);
-
-    _geoJSON.features[0] = _.cloneDeep(path);
+  public addLoadedRoute(route) {
+    let _geoJSON = _.cloneDeep(route);
     _geoJSON.bounds = this._routeService.getBounds(_geoJSON);
 
     this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute({
