@@ -99,8 +99,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     // Handling saving error
     this._store
       .select(this._editedHikeProgramSelectors.getError)
-      .filter(error => !!error)
       .takeUntil(this._destroy$)
+      .filter(error => !!error)
       .subscribe(error => {
         let msg: string[] = [];
         for (let idx in error) {
@@ -117,22 +117,30 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     // Handling save success
     this._store
       .select(this._editedHikeProgramSelectors.getWorking)
+      .takeUntil(this._destroy$)
       .filter(working => working !== null)
-      .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getWorking).takeUntil(this._destroy$))
+      .switchMap(() => {
+        return this._store.select(this._editedHikeProgramSelectors.getWorking).takeUntil(this._destroy$);
+      })
       .filter(working => working === null)
-      .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getHikeId).take(1))
-      .take(1)
+      .switchMap(() => {
+        return this._store.select(this._editedHikeProgramSelectors.getHikeId).takeUntil(this._destroy$);
+      })
+      .takeUntil(this._destroy$)
       .subscribe((hikeId: string) => {
         this._toasterService.pop('success', 'Success!', 'Hike saved!');
-        this._store.dispatch(new commonHikeActions.HikeProgramModified(hikeId));
-        this._router.navigate([`/admin/hike/${hikeId}`]);
+
+        // Deprecated??? this._store.dispatch(new commonHikeActions.HikeProgramModified(hikeId));
+
+        // Angular 5 doesn't reload the route!
+        // this._router.navigate([`/admin/hike/${hikeId}`]);
       });
 
     // Handling hike context changes
     this._store
       .select(this._editedHikeProgramSelectors.getHikeId)
-      .filter(hikeId => hikeId !== '')
       .takeUntil(this._destroy$)
+      .filter(hikeId => hikeId !== '')
       .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)).takeUntil(this._destroy$))
       .filter(hikeContext => !!(hikeContext))
       .subscribe((hikeContext: IHikeContextState) => {
