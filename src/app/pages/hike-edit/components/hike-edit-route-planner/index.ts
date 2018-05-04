@@ -81,7 +81,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
               this._routeOnMap = this._addRouteLineGeoJSON(route.route.features[0]);
 
               // Load path to routePlanner state - necessary for drawing pois
-              this._routePlannerService.addLoadedRoutePath(route.route.features[0]);
+              this._routePlannerService.addLoadedRoute(route.route);
             });
         }
       });
@@ -125,11 +125,17 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .switchMap((routeId: string) => this._store.select(this._routeSelectors.getRoute(routeId)).take(1))
       .take(1)
       .subscribe((storedRoute: any) => {
-        for (let feature of storedRoute.route.features) {
-          if (feature.geometry.type === 'Point') {
-            this._waypointMarkerService.addWaypoint(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
-          }
-        }
+        this._waypointMarkerService.reset();
+
+        Observable
+          .interval(500)
+          .take(storedRoute.route.features.length)
+          .subscribe((idx) => {
+            const feature = storedRoute.route.features[idx];
+            if (feature.geometry.type === 'Point') {
+              this._waypointMarkerService.addWaypoint(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
+            }
+          });
       });
   }
 
