@@ -73,6 +73,14 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       })
       .switchMap((pois: IExternalPoi[]) => this._poiEditorService.assignOnOffRoutePois(pois))
       .switchMap((pois: IExternalPoi[]) => this._poiEditorService.handleElevation(pois))
+      .switchMap((pois: IExternalPoi[]) => {
+        return this._store
+          .select(this._poiSelectors.getAllPois)
+          .take(1)
+          .map((gTrackPois) => {
+            return this._poiEditorService.handleGTrackPois(pois, gTrackPois);
+          });
+      })
       .takeUntil(this._destroy$)
       .subscribe((pois) => {
         // Refresh poi list on the store
@@ -82,6 +90,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         if (pois.length > 0) {
           // gTrack poi will call marker refresher!
           this._poiEditorService.getGTrackPois(this._map);
+        // We have to refresh markers w/ empty poi list, too.
         } else {
           this._poiEditorService.refreshPoiMarkers(this._map);
         }
@@ -90,6 +99,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     // Update inGtrackDb properties after common poi list has been refreshed
     this._store
       .select(this._poiSelectors.getAllPois)
+      .debounceTime(200)
       .filter((gTrackPois: IGTrackPoi[]) => gTrackPois.length > 0)
       .takeUntil(this._destroy$)
       .subscribe((gTrackPois: IGTrackPoi[]) => {
@@ -97,7 +107,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           .filter((externalPois: IExternalPoi[]) => externalPois.length > 0)
           .take(1)
           .subscribe((externalPois: IExternalPoi[]) => {
-            // TODO Refresh commonPoiList after poi save
             this._setSubdomainPoisInGtrackDb(this._poiEditorService.handleGTrackPois(externalPois, gTrackPois));
           });
       });
@@ -156,7 +165,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmRoutePois); break;
     }
 
-    return _pois$;
+    return _pois$.takeUntil(this._destroy$);
   }
 
   private _updateSubdomainPois(pois) {

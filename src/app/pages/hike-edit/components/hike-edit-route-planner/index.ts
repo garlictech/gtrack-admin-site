@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
-  AdminMap, AdminMapService, WaypointMarkerService, RoutingControlService
+  AdminMap, AdminMapService, WaypointMarkerService, RoutingControlService, RoutePlannerService
 } from 'app/shared/services/admin-map';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -24,15 +24,16 @@ import { ReverseGeocodingService } from '../../../../shared/services';
 })
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
+  public route$: Observable<any>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
   private _map: AdminMap;
-  private _routeId: string;
   private _routeOnMap: L.FeatureGroup;
 
   constructor(
     private _adminMapService: AdminMapService,
     private _routingControlService: RoutingControlService,
     private _waypointMarkerService: WaypointMarkerService,
+    private _routePlannerService: RoutePlannerService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
@@ -54,8 +55,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .switchMap((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
-
-        return this._store.select(this._editedHikeProgramSelectors.getRouteId)
+        return this._store
+          .select(this._editedHikeProgramSelectors.getRouteId)
+          .takeUntil(this._destroy$)
       })
       .takeUntil(this._destroy$)
       .switchMap((routeId: string) => {
@@ -72,33 +74,42 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         } else if (routeContext.loaded) {
           this._store
             .select(this._routeSelectors.getRoute((<IRouteContextState>routeContext).id))
+            .filter((route: IRouteStored) => !!route)
             .take(1)
             .subscribe((route: IRouteStored) => {
+              // Draw an independent path to the map
               this._routeOnMap = this._addRouteLineGeoJSON(route.route.features[0]);
+
+              // Load path to routePlanner state - necessary for drawing pois
+              this._routePlannerService.addLoadedRoute(route.route);
             });
         }
       });
 
-    this._store
+    this.route$ = this._store
       .select(this._hikeEditRoutePlannerSelectors.getRoute)
+      .takeUntil(this._destroy$);
+
+    this.route$
       .takeUntil(this._destroy$)
       .subscribe((route: any) => {
-        // Clear location
-        if (route.features.length === 1) {
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
-        // 1st segment added (line + 2 points)
-        } else if (route.features.length === 3) {
-          this._updateLocation(route.features[1].geometry.coordinates);
-        }
-      });
+          // Clear location
+          if (route.features.length === 1) {
+            this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
+          // 1st segment added (line + 2 points)
+          } else if (route.features.length === 3) {
+            this._updateLocation(route.features[1].geometry.coordinates);
+          }
+        });
 
     this._store
       .select(this._hikeEditRoutePlannerSelectors.getTotal)
       .takeUntil(this._destroy$)
       .subscribe((total: IHikeEditRoutePlannerTotalState) => {
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(
-          _.pick(total, ['distance', 'uphill', 'downhill', 'time', 'score']), true
-        ));
+        const fields = _.pick(total, ['distance', 'uphill', 'downhill', 'time', 'score']);
+        if (_.values(fields).length > 0) {
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(fields, true));
+        }
       });
   }
 
@@ -108,7 +119,24 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   }
 
   public retrievePlan() {
-    console.log('TODO retrievePlan');
+    this._store
+      .select(this._editedHikeProgramSelectors.getRouteId)
+      .take(1)
+      .switchMap((routeId: string) => this._store.select(this._routeSelectors.getRoute(routeId)).take(1))
+      .take(1)
+      .subscribe((storedRoute: any) => {
+        this._waypointMarkerService.reset();
+
+        Observable
+          .interval(500)
+          .take(storedRoute.route.features.length)
+          .subscribe((idx) => {
+            const feature = storedRoute.route.features[idx];
+            if (feature.geometry.type === 'Point') {
+              this._waypointMarkerService.addWaypoint(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
+            }
+          });
+      });
   }
 
   public removeLast() {
@@ -123,21 +151,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     this._waypointMarkerService.reset();
     this._routingControlService.clearControls();
   }
-
-  /*
-  private _loadRoute(routeData: IRouteStored) {
-    if (this._map && this._waypointMarkerService) {
-      for (let feature of routeData.route.features) {
-        if (feature.geometry.type === 'Point') {
-          this._waypointMarkerService.addWaypoint(L.latLng(
-            feature.geometry.coordinates[1],
-            feature.geometry.coordinates[0]
-          ));
-        }
-      }
-    }
-  }
-  */
 
   private _updateLocation(coords) {
     this._reverseGeocodingService
@@ -159,9 +172,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   private _addRouteLineGeoJSON(geoJson): L.FeatureGroup {
     const group = new L.FeatureGroup();
     const styles = [
-      { color: 'black',   opacity: 0.15,  weight: 9 },
-      { color: 'white',   opacity: 0.8,   weight: 6 },
-      { color: '#722ad6', opacity: 1,     weight: 2 }
+      { color: 'black',   opacity: 0.15,  weight: 12 },
+      { color: 'white',   opacity: 0.8,   weight: 8 },
+      { color: '#722ad6', opacity: 1,     weight: 3 }
     ];
 
     for (let num of [0, 1, 2]) {

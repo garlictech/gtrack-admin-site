@@ -24,7 +24,7 @@
         "npm": ">=3.0.0",
         "node": ">=5.0.0"
     },
-    "dependencies": {
+    "peerDependencies": {
         "@angular/core": "^5.0.0",
         "@garlictech/deepstream-rxjs": "^1.0.0",
         "@ngrx/effects": "^5.1.0",

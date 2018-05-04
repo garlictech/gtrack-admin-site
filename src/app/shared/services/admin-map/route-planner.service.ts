@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import * as turf from '@turf/turf';
 import * as rewind from 'geojson-rewind';
 import * as d3 from 'd3';
+import { LineString } from '@turf/turf';
 
 @Injectable()
 export class RoutePlannerService {
@@ -33,6 +34,19 @@ export class RoutePlannerService {
           route: this._createGeoJSON(segments)
         }));
       });
+  }
+
+  /**
+   * Add the loaded route to the store
+   * This is an initial loading method, the segment based route drawing will replace it.
+   */
+  public addLoadedRoute(route) {
+    let _geoJSON = _.cloneDeep(route);
+    _geoJSON.bounds = this._routeService.getBounds(_geoJSON);
+
+    this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute({
+      route: _geoJSON
+    }));
   }
 
   public addRouteSegment(coordinates, summary, updown) {
@@ -97,7 +111,6 @@ export class RoutePlannerService {
       _geoJSON.features.push(<any>(this._createRoutePoint(this._getLastPointOfLastSegment(segments), segments.length + 1)));
     }
 
-    // todo: getBounds fails when segments array is empty
     if (segments.length > 0) {
       _geoJSON.bounds = this._routeService.getBounds(_geoJSON);
     }
