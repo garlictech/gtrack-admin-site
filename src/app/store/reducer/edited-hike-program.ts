@@ -32,6 +32,10 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
 ): IEditedHikeProgramState => {
   let newState = _.cloneDeep(state);
   switch (action.type) {
+    case editedHikeProgramActions.RESET_HIKE_PROGRAM: {
+      return initialEditedHikeProgramState;
+    }
+
     case editedHikeProgramActions.ADD_NEW_TRANSLATED_HIKE_DESCRIPTION: {
       newState.data.description[action.languageKey] = action.content;
       newState.dirty = true;

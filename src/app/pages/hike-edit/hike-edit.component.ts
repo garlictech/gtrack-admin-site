@@ -55,6 +55,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
+    this._store.dispatch(new editedHikeProgramActions.ResetHikeProgram());
 
     this._activatedRoute.params
       .takeUntil(this._destroy$)
