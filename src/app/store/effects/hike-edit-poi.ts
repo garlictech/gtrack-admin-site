@@ -4,7 +4,7 @@ import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { MapMarkerService, IconService, GeoSearchService, PoiService } from 'subrepos/gtrack-common-ngx';
 import {
-  State, hikeEditPoiActions, hikeEditMapActions, IExternalPoiListContextItemState, commonGeoSearchActions, commonPoiActions
+  State, hikeEditPoiActions, hikeEditMapActions, IExternalPoiListContextItemState, commonGeoSearchActions, commonPoiActions, editedGTrackPoiActions
 } from '../index';
 import { HikeEditPoiSelectors } from 'app/store/selectors/'
 import {
@@ -104,7 +104,7 @@ export class HikeEditPoiEffects {
     });
 
   /**
-   * Load gTrackPoi after save
+   * Load gTrackPoi after save from servicePoi
    */
   @Effect()
   loadSavedPoi$: Observable<Action> = this._actions$

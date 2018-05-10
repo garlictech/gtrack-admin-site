@@ -14,6 +14,7 @@ export class EditedGTrackPoiSelectors {
   public getDirty: MemoizedSelector<object, boolean>;
   public getWorking: MemoizedSelector<object, string | null>;
   public getData: MemoizedSelector<object, IPoiStored>;
+  public getError: MemoizedSelector<object, any>;
 
   public dataPath = 'editedGtrackPoi.data';
 
@@ -34,6 +35,10 @@ export class EditedGTrackPoiSelectors {
 
     this.getData = createSelector(this._featureSelector,
       (state: IEditedGTrackPoiState) => state.data
+    );
+
+    this.getError = createSelector(this._featureSelector,
+      (state: IEditedGTrackPoiState) => _.get(state, 'failed')
     );
 
   }

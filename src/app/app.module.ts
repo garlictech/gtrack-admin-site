@@ -39,7 +39,7 @@ import { LanguageModule } from './language';
 // App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { AuthEffects, HikeEditPoiEffects, EditedHikeProgramEffects } from './store/effects';
+import { AuthEffects, HikeEditPoiEffects, EditedHikeProgramEffects, EditedGTrackPoiEffects } from './store/effects';
 
 import { store } from './store';
 
@@ -150,6 +150,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       HikeEditPoiEffects,
       RouteEffects,
       EditedHikeProgramEffects,
+      EditedGTrackPoiEffects,
       // Common-ngx
       PoiEffects,
       HikeEffects,
