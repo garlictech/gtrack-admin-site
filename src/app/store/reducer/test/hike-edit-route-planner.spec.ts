@@ -40,7 +40,7 @@ describe('RouteInfoData reducers', () => {
   describe('AddRoute action', () => {
     it('should set route', () => {
       const routeData: any = {};
-      const action = new hikeEditRoutePlannerActions.AddRoute({ route: routeData });
+      const action = new hikeEditRoutePlannerActions.AddRoute(routeData);
       const state = hikeEditRoutePlannerReducer(initialState, action);
 
       expect(state.route).toEqual(routeData);
@@ -49,7 +49,7 @@ describe('RouteInfoData reducers', () => {
 
   describe('PushSegment action', () => {
     it('should push segment', () => {
-      const action = new hikeEditRoutePlannerActions.PushSegment({ segment: segmentData });
+      const action = new hikeEditRoutePlannerActions.PushSegment(segmentData);
       const state = hikeEditRoutePlannerReducer(initialState, action);
 
       expect(state.segments).toEqual([segmentData]);
@@ -72,7 +72,7 @@ describe('RouteInfoData reducers', () => {
       const total = {
         distance: 100
       };
-      const action = new hikeEditRoutePlannerActions.UpdateTotal({ total: total });
+      const action = new hikeEditRoutePlannerActions.UpdateTotal(total);
       const state = hikeEditRoutePlannerReducer(initialState, action);
 
       expect(state.total).toEqual(total);
