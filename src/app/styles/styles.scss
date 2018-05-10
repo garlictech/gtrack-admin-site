@@ -17,7 +17,7 @@
 @import 'components';
 
 a {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 // input,
@@ -39,57 +39,60 @@ table.table {
 */
 
 .btn .material-icons {
-    vertical-align: middle;
-    font-size: 17px;
-    top: -1px;
-    position: relative;
+  vertical-align: middle;
+  font-size: 17px;
+  top: -1px;
+  position: relative;
 }
 
 button.btn-just-icon.btn-sm {
-    padding: 5px !important;
+  padding: 5px !important;
 }
 
 .clearfix {
-    &::after {
-        display: block;
-        content: '';
-        clear: both;
-    }
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
 }
 
 .main-spinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
 }
 
 .td-actions {
-    white-space: nowrap;
-    text-align: right;
-    button {
-        padding: 0 4px !important;
-    }
+  white-space: nowrap;
+  text-align: right;
+  button {
+    padding: 0 4px !important;
+  }
 }
 
 /* ngprime fixes */
 .card .card-header {
-    padding: 15px 15px 0 !important;
+  padding: 15px 15px 0 !important;
 }
 .card .card-body {
-    padding: 15px 15px 10px 15px;
+  padding: 15px 15px 10px 15px;
 }
 .table {
-    margin: 0 auto;
+  margin: 0 auto;
 
-    tbody tr td {
-        border-top: 1px solid #dee2e6;
-    }
+  tbody tr td {
+    border-top: 1px solid #dee2e6;
+  }
+}
+.form-check {
+  margin-top: 0 !important;
 }
 
 .collapsing {
-    -webkit-transition: none !important;
-    transition: none !important;
-    display: none !important;
+  -webkit-transition: none !important;
+  transition: none !important;
+  display: none !important;
 }
