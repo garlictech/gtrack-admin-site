@@ -26,8 +26,6 @@ export class DynamicModalService {
       config.component.modalComponentName = 'DefaultComponentModalComponent';
     }
 
-    console.log('config', config);
-
     const factories = Array.from((<any>this._resolver)._factories.keys());
     const modalFactoryClass = <Type<any>>factories.find((x: any) => {
       return x.name === config.component.modalComponentName;

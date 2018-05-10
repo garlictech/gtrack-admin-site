@@ -98,37 +98,4 @@ describe('Hike actions', () => {
     });
   });
 
-  describe('SaveHikeProgram action', () => {
-    it('should create an action', () => {
-      let action = new actions.SaveHikeProgram(hikeProgramStoredData);
-
-      expect({ ...action }).toEqual({
-        type: actions.HikeProgramActionTypes.SAVE_HIKE_PROGRAM,
-        hikeProgram: hikeProgramStoredData
-      });
-    });
-  });
-
-  describe('HikeProgramSaved action', () => {
-    it('should create an action', () => {
-      let action = new actions.HikeProgramSaved(id);
-
-      expect({ ...action }).toEqual({
-        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_SAVED,
-        context: id
-      });
-    });
-  });
-
-  describe('HikeProgramModified action', () => {
-    it('should create an action', () => {
-      let action = new actions.HikeProgramModified(id);
-
-      expect({ ...action }).toEqual({
-        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_MODIFIED,
-        context: id
-      });
-    });
-  });
-
 });
