@@ -25,14 +25,10 @@ export class RoutePlannerService {
       .select(this._hikeEditRoutePlannerSelectors.getSegments)
       .subscribe((segments: ISegment[]) => {
         // Update total for route info
-        this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal({
-          total: this._calculateTotal(segments)
-        }));
+        this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
 
         // Refresh route data
-        this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute({
-          route: this._createGeoJSON(segments)
-        }));
+        this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(this._createGeoJSON(segments)));
       });
   }
 
@@ -44,9 +40,7 @@ export class RoutePlannerService {
     let _geoJSON = _.cloneDeep(route);
     _geoJSON.bounds = this._routeService.getBounds(_geoJSON);
 
-    this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute({
-      route: _geoJSON
-    }));
+    this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_geoJSON));
   }
 
   public addRouteSegment(coordinates, summary, updown) {
@@ -62,9 +56,7 @@ export class RoutePlannerService {
     _segment.score = this._gameRuleService.score(_segment.distance, _segment.uphill)
 
     // Add segment to store
-    this._store.dispatch(new hikeEditRoutePlannerActions.PushSegment({
-      segment: _segment
-    }));
+    this._store.dispatch(new hikeEditRoutePlannerActions.PushSegment(_segment));
   }
 
   public removeLastSegment() {

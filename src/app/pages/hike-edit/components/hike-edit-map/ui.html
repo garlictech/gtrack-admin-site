@@ -16,12 +16,14 @@
   <div class="btn-group btn-toggle">
     <button
       class="btn btn-sm btn-fill"
+      [disabled]="!allowPlanning"
       [ngClass]="{'btn-primary': mode === 'routing', 'btn-success': mode === 'checkpoint'}"
       (click)="setMode($event, 'routing')">
       Routing mode
     </button>
     <button
       class="btn btn-sm btn-fill"
+      [disabled]="!allowPlanning"
       [ngClass]="{'btn-primary': mode === 'checkpoint', 'btn-success': mode === 'routing'}"
       (click)="setMode($event, 'checkpoint')">
       Checkpoint mode

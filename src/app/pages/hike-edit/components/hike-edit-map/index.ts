@@ -48,6 +48,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public layers = LAYERS;
   public overlays = OVERLAYS;
   public mode = 'routing';
+  public allowPlanning: boolean;
   private _bufferShown = false;
   private _bufferOnMap: L.GeoJSON;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -73,6 +74,13 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         });
       });
+
+    this._store
+      .select(this._hikeEditRoutePlannerSelectors.getIsPlanning)
+      .takeUntil(this._destroy$)
+      .subscribe((planning: boolean) => {
+        this.allowPlanning = planning;
+      });
   }
 
   ngOnDestroy( ) {
@@ -90,22 +98,26 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     this.mapComponent.leafletMap
       // Add markers by click
       .on('click', (e: LeafletMouseEvent) => {
-        if (this.mode === 'routing') {
-          this._waypointMarkerService.addWaypoint(e.latlng);
-        } else {
-          // console.log('todo _createCheckpoint');
-          // this._createCheckpoint(e.latlng);
+        if (this.allowPlanning) {
+          if (this.mode === 'routing') {
+            this._waypointMarkerService.addWaypoint(e.latlng);
+          } else {
+            // console.log('todo _createCheckpoint');
+            // this._createCheckpoint(e.latlng);
+          }
         }
       })
 
-      // Turn on scrollWheelZoom after the first interaction (click/drag)
-      .on('mouseup', () => {
-        this.mapComponent.leafletMap.scrollWheelZoom.enable();
-      })
-      // Turn off scrollWheelZoom on mouse out
-      .on('mouseout', () => {
-        this.mapComponent.leafletMap.scrollWheelZoom.disable();
-      });
+    /* WARNING: CAUSES BROWSER LAG!!
+    // Turn on scrollWheelZoom after the first interaction (click/drag)
+    .on('mouseup', () => {
+      this.mapComponent.leafletMap.scrollWheelZoom.enable();
+    })
+    // Turn off scrollWheelZoom on mouse out
+    .on('mouseout', () => {
+      this.mapComponent.leafletMap.scrollWheelZoom.disable();
+    });
+    */
   }
 
   public toggleCurrentPositionMarker($event: Event) {
