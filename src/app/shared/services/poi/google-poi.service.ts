@@ -38,9 +38,22 @@ export class GooglePoiService {
 
         this._placesService = new google.maps.places.PlacesService(_map);
 
+        // this._placesService.getDetails
+        /// https://developers.google.com/maps/documentation/javascript/places#places_photos
+
         return new Promise((resolve, reject) => {
           this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
+            // console.log('GOOGLE RESULT', result);
             for (let _point of result) {
+
+              /*
+              if (_point.photos) {
+                for (let photo of _point.photos) {
+                  console.log('PHOTO', photo.getUrl({'maxWidth': 5000}));
+                }
+              }
+              */
+
               const _pointData: IGooglePoi = {
                 id: uuid(),
                 lat: _point.geometry.location.lat(),
