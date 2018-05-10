@@ -3,9 +3,9 @@ import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, hikeEditMapActions, adminMapActions } from 'app/store';
+import { State, hikeEditMapActions, adminMapActions, commonBackgroundGeolocationActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
-import { Center, ISegment } from 'subrepos/gtrack-common-ngx';
+import { Center, ISegment, BackgroundGeolocationActionTypes, selectCurrentLocation, IGeoPosition } from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 import { AdminMapService } from 'app/shared/services';
 
@@ -49,6 +49,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public overlays = OVERLAYS;
   public mode = 'routing';
   public allowPlanning: boolean;
+  public currentLocation$: Observable<IGeoPosition | null>;
   private _bufferShown = false;
   private _bufferOnMap: L.GeoJSON;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -81,12 +82,17 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((planning: boolean) => {
         this.allowPlanning = planning;
       });
+
+    this._store.dispatch(new commonBackgroundGeolocationActions.StartTracking());
+
+    this.currentLocation$ = this._store.select(selectCurrentLocation).takeUntil(this._destroy$);
   }
 
   ngOnDestroy( ) {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
 
+    this._store.dispatch(new commonBackgroundGeolocationActions.EndTracking());
     this._store.dispatch(new adminMapActions.ResetMap());
   }
 
@@ -122,7 +128,13 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
-    this.mapComponent.map.currentPositionMarker.goToCurrentPosition();
+
+    this.currentLocation$.take(1).subscribe((position: IGeoPosition) => {
+      if (position && position.coords) {
+        const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude)
+        this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
+      }
+    });
   }
 
   public resetMap($event: Event) {

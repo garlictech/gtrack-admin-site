@@ -4,7 +4,11 @@
 </div>
 
 <div class="button-container mt-2">
-  <button class="btn btn-sm btn-success btn-fill" (click)="toggleCurrentPositionMarker($event)">
+  <button
+    class="btn btn-sm btn-success btn-fill"
+    (click)="toggleCurrentPositionMarker($event)"
+    [disabled]="!(this.currentLocation$ | async)?.coords"
+  >
     <i class="fa fa-crosshairs"></i>
   </button>
   <button class="btn btn-sm btn-success btn-fill" (click)="resetMap($event)">
