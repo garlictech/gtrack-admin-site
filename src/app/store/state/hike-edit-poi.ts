@@ -10,9 +10,9 @@ export interface IOsmRoutePoiEntityState extends EntityState<IOsmPoi> {};
 export interface IExternalPoiListContextItemState {
   loading: boolean;
   loaded: boolean;
+  saving: boolean;
   showOnrouteMarkers?: boolean;
   showOffrouteMarkers?: boolean;
-  dirty?: boolean;
 }
 
 export interface IExternalPoiListContextState {

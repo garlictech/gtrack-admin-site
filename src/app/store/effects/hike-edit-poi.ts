@@ -44,10 +44,10 @@ export class HikeEditPoiEffects {
   @Effect()
   getWikipediaPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_WIKIPEDIA_POIS)
-    .map((action: hikeEditPoiActions.GetWikipediaPois) => action.payload)
-    .switchMap(data => {
-      return this._wikipediaPoiService.get(data.bounds).then((pois: IWikipediaPoi[]) =>  {
-        return new hikeEditPoiActions.SetWikipediaPois({ pois: pois });
+    .map((action: hikeEditPoiActions.GetWikipediaPois) => action.bounds)
+    .switchMap(bounds => {
+      return this._wikipediaPoiService.get(bounds).then((pois: IWikipediaPoi[]) =>  {
+        return new hikeEditPoiActions.SetWikipediaPois(pois);
       });
     });
 
@@ -57,10 +57,10 @@ export class HikeEditPoiEffects {
   @Effect()
   getGooglePois$: Observable<any> = this._actions$
     .ofType(hikeEditPoiActions.GET_GOOGLE_POIS)
-    .map((action: hikeEditPoiActions.GetGooglePois) => action.payload)
-    .switchMap(data => {
-      return this._googlePoiService.get(data.bounds).then((pois: IGooglePoi[]) =>  {
-        return new hikeEditPoiActions.SetGooglePois({ pois: pois });
+    .map((action: hikeEditPoiActions.GetGooglePois) => action.bounds)
+    .switchMap(bounds => {
+      return this._googlePoiService.get(bounds).then((pois: IGooglePoi[]) =>  {
+        return new hikeEditPoiActions.SetGooglePois(pois);
       });
     });
 
@@ -70,10 +70,10 @@ export class HikeEditPoiEffects {
   @Effect()
   getOsmNaturalPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_NATURAL_POIS)
-    .map((action: hikeEditPoiActions.GetOsmNaturalPois) => action.payload)
-    .switchMap(data => {
-      return this._osmPoiService.get(data.bounds, 'natural').then((pois: IOsmPoi[]) =>  {
-        return new hikeEditPoiActions.SetOsmNaturalPois({ pois: pois });
+    .map((action: hikeEditPoiActions.GetOsmNaturalPois) => action.bounds)
+    .switchMap(bounds => {
+      return this._osmPoiService.get(bounds, 'natural').then((pois: IOsmPoi[]) =>  {
+        return new hikeEditPoiActions.SetOsmNaturalPois(pois);
       });
     });
 
@@ -83,10 +83,10 @@ export class HikeEditPoiEffects {
   @Effect()
   getOsmAmenityPois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_AMENITY_POIS)
-    .map((action: hikeEditPoiActions.GetOsmAmenityPois) => action.payload)
-    .switchMap(data => {
-      return this._osmPoiService.get(data.bounds, 'amenity').then((pois: IOsmPoi[]) =>  {
-        return new hikeEditPoiActions.SetOsmAmenityPois({ pois: pois });
+    .map((action: hikeEditPoiActions.GetOsmAmenityPois) => action.bounds)
+    .switchMap(bounds => {
+      return this._osmPoiService.get(bounds, 'amenity').then((pois: IOsmPoi[]) =>  {
+        return new hikeEditPoiActions.SetOsmAmenityPois(pois);
       });
     });
 
@@ -96,10 +96,10 @@ export class HikeEditPoiEffects {
   @Effect()
   getOsmRoutePois$: Observable<Action> = this._actions$
     .ofType(hikeEditPoiActions.GET_OSM_ROUTE_POIS)
-    .map((action: hikeEditPoiActions.GetOsmRoutePois) => action.payload)
-    .switchMap(data => {
-      return this._osmRoutePoiService.get(data.bounds).then((pois: IOsmPoi[]) =>  {
-        return new hikeEditPoiActions.SetOsmRoutePois({ pois: pois });
+    .map((action: hikeEditPoiActions.GetOsmRoutePois) => action.bounds)
+    .switchMap(bounds => {
+      return this._osmRoutePoiService.get(bounds).then((pois: IOsmPoi[]) =>  {
+        return new hikeEditPoiActions.SetOsmRoutePois(pois);
       });
     });
 

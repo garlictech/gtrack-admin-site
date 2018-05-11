@@ -21,6 +21,7 @@
           <button
             class="btn btn-simple btn-link"
             [ngClass]="{'btn-success': !poi.inHike, 'btn-danger': poi.inHike}"
+            *ngIf="!poi.inGtrackDb"
             (click)="handleInHikePoi($event, poi)" 
             title="{{poi.inHike ? 'Remove': 'Add'}} poi">
             <i class="material-icons">{{poi.inHike ? 'remove_circle': 'add_circle'}}</i>
