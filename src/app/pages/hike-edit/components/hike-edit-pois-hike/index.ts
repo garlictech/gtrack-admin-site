@@ -150,14 +150,14 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
    * Show onroute markers checkbox click
    */
   public toggleOnrouteMarkers() {
-    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'hike' }));
+    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers('hike'));
   }
 
   /**
    * Show offroute markers checkbox click
    */
   public toggleOffrouteMarkers() {
-    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'hike' }));
+    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('hike'));
   }
 
   /**
