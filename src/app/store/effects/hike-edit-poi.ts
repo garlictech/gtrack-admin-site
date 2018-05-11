@@ -110,4 +110,12 @@ export class HikeEditPoiEffects {
   loadSavedPoi$: Observable<Action> = this._actions$
     .ofType<commonPoiActions.PoiSaved>(commonPoiActions.PoiActionTypes.POI_SAVED)
     .map(action => (new commonPoiActions.LoadPoi(action.context)));
+
+  /**
+   * Load gTrackPoi after modal edit
+   */
+  @Effect()
+  loadModifiedPoi$: Observable<Action> = this._actions$
+    .ofType<editedGTrackPoiActions.PoiSaveSuccess>(editedGTrackPoiActions.POI_SAVE_SUCCESS)
+    .map(action => (new commonPoiActions.LoadPoi(action.poiId)));
 }
