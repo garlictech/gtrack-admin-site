@@ -69,7 +69,7 @@ describe('RouteInfoData reducers', () => {
 
   describe('UpdateTotal action', () => {
     it('should set total', () => {
-      const total = 100;
+      const total = { score: 100 };
       const action = new hikeEditRoutePlannerActions.UpdateTotal(total);
       const state = hikeEditRoutePlannerReducer(initialState, action);
 
