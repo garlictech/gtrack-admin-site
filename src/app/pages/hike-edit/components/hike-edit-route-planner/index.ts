@@ -75,6 +75,8 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         // Route saved
         if (routeContext.saved) {
           this._toasterService.pop('success', 'Route', 'Success!');
+
+          this._refreshRouteOnMap();
         // Route loaded
         } else if (routeContext.loaded) {
           this._store
@@ -193,5 +195,21 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     group.addTo(this._map.leafletMap);
 
     return group;
+  }
+
+  /**
+   * Refresh route path after save
+   */
+  private _refreshRouteOnMap() {
+    if (this._routeOnMap) {
+      this._map.removeGeoJSON(this._routeOnMap);
+    }
+
+    this._store
+      .select(this._hikeEditRoutePlannerSelectors.getPath)
+      .take(1)
+      .subscribe((path: any) => {
+        this._routeOnMap = this._addRouteLineGeoJSON(path);
+      });
   }
 }
