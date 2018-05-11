@@ -24,7 +24,7 @@ import * as _ from 'lodash';
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   @Input() poiType: IExternalPoiType;
   public pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
-  public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
+  public routePath$: Observable<any>;
   public loading$: Observable<boolean>;
   public showOnrouteMarkers$: Observable<boolean>;
   public showOffrouteMarkers$: Observable<boolean>;
@@ -55,8 +55,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this.pois$ = this._getSubdomainSelector(this.poiType.subdomain);
 
     // Route info from the store (for disabling GET buttons)
-    this.routeInfoData$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
+    this.routePath$ = this._store
+      .select(this._hikeEditRoutePlannerSelectors.getPath)
       .takeUntil(this._destroy$);
 
     // Update poi properties after poi list loaded

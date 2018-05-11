@@ -4,7 +4,7 @@
     <button
       class="btn btn-sm btn-fill btn-success"
       (click)="getPois()"
-      [disabled]="(routeInfoData$ | async)?.segments.length < 1"
+      [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1"
     >Get new</button>
   </div>
 

@@ -40,7 +40,7 @@ import * as uuid from 'uuid/v1';
 })
 export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public pois$: Observable<IGTrackPoi[]>;
-  public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
+  public routePath$: Observable<any>;
   public searchContext$: Observable<IGeoSearchContextState | undefined>;
   public showOnrouteMarkers$: Observable<boolean>;
   public showOffrouteMarkers$: Observable<boolean>;
@@ -118,7 +118,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       });
 
     // Route info from the store (for disabling GET buttons)
-    this.routeInfoData$ = this._store.select(this._hikeEditRoutePlannerSelectors.getRoutePlanner);
+    this.routePath$ = this._store.select(this._hikeEditRoutePlannerSelectors.getPath);
 
     //
     // Contexts
