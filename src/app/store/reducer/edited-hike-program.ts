@@ -82,6 +82,12 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
       return newState;
     }
 
+    case editedHikeProgramActions.SET_STOPS: {
+      newState.dirty = true;
+      newState.data.stops = _.cloneDeep(action.stops)
+      return newState;
+    }
+
     case editedHikeProgramActions.REMOVE_STOP_BY_POI_ID: {
       newState.dirty = true;
       newState.data.stops = newState.data.stops.filter(s => s.poiId !== action.poiId)

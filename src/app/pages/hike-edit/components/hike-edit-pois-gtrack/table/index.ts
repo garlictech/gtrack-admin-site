@@ -27,20 +27,21 @@ export class HikeEditPoisGTrackTableComponent {
     $event.stopPropagation();
 
     this._store
-      .select(this._hikeEditRoutePlannerSelectors.getRoute)
+      .select(this._hikeEditRoutePlannerSelectors.getPath)
       .take(1)
-      .subscribe((route) => {
+      .subscribe((path) => {
         const stop = {
           distanceFromOrigo: this._geospatialService.distanceOnLine(
-            [route.features[1].geometry.coordinates[0], route.features[1].geometry.coordinates[1]],
+            path.geometry.coordinates[0],
             [poi.lon, poi.lat],
-            route.features[0]
+            path
           ),
           onRoute: poi.onRoute || false,
           poiId: poi.id,
           lat: poi.lat,
           lon: poi.lon,
-          segment: { // TODO: w/ turf
+          // Segment data will be calculated after inserting the stop
+          segment: {
             uphill: 0,
             downhill: 0,
             distance: 0,

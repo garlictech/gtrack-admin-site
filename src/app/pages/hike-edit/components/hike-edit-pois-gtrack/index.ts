@@ -3,32 +3,17 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import {
-  PoiSelectors,
-  CenterRadius,
-  GeometryService,
-  GeoSearchSelectors,
-  Poi,
-  PoiSaved,
-  IGeoSearchContextState,
-  IGeoSearchResponseItem
+  PoiSelectors, CenterRadius, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, IGeoSearchResponseItem
 } from 'subrepos/gtrack-common-ngx';
-import { IPoiStored, IPoi } from 'subrepos/provider-client';
+import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { PoiEditorService } from 'app/shared/services';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import {
-  State,
-  hikeEditPoiActions,
-  IExternalPoiListContextState,
-  commonPoiActions,
-  commonGeoSearchActions,
-  IHikeEditRoutePlannerState
+  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions
 } from 'app/store';
 import {
-  HikeEditPoiSelectors,
-  HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors
+  HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
 } from 'app/store/selectors';
 
 import * as _ from 'lodash';
@@ -56,7 +41,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
-    private _geometryService: GeometryService,
     private _poiSelectors: PoiSelectors
   ) {}
 

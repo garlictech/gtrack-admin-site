@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription, IHikeProgramStop } from 'subrepos/provider-client';
 
 export const RESET_HIKE_PROGRAM = '[HikeProgram] Reset';
 export const ADD_NEW_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Add new translated hike description';
@@ -8,6 +8,7 @@ export const ADD_HIKE_PROGRAM_DETAILS = '[HikeProgram] Add some details';
 export const ADD_POI = '[HikeProgram] Add poi';
 export const REMOVE_POI = '[HikeProgram] Remove poi';
 export const ADD_STOP = '[HikeProgram] Add stop';
+export const SET_STOPS = '[HikeProgram] Set stops';
 export const REMOVE_STOP_BY_POI_ID = '[HikeProgram] Remove stop by poi id';
 export const SAVE_HIKE_PROGRAM = '[HikeProgram] Save hike program';
 export const HIKE_PROGRAM_SAVE_SUCCESS = '[HikeProgram] Hike program saved successfully';
@@ -53,7 +54,12 @@ export class AddHikeProgramDetails implements Action {
 
 export class AddStop implements Action {
   readonly type = ADD_STOP;
-  constructor(public stop: any) {}
+  constructor(public stop: IHikeProgramStop) {}
+}
+
+export class SetStops implements Action {
+  readonly type = SET_STOPS;
+  constructor(public stops: IHikeProgramStop[]) {}
 }
 
 export class RemoveStopByPoiId implements Action {
@@ -80,6 +86,7 @@ export type AllEditedHikeProgramActions =
   | DeleteTranslatedHikeProgramDescription
   | AddHikeProgramDetails
   | AddStop
+  | SetStops
   | RemoveStopByPoiId
   | SaveHikeProgram
   | HikeProgramSaveSuccess
