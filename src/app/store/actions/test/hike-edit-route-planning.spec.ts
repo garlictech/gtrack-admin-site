@@ -103,4 +103,14 @@ describe('HikeEditRoutePlanner actions', () => {
       location
     });
   });
+
+  it('should create SetPlanning action', () => {
+    const action = new HikeEditRoutePlannerActions.SetPlanning(true);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditRoutePlannerActions.SET_PLANNING,
+      planning: true
+    });
+  });
 });

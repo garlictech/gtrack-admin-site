@@ -69,13 +69,20 @@ describe('RouteInfoData reducers', () => {
 
   describe('UpdateTotal action', () => {
     it('should set total', () => {
-      const total = {
-        distance: 100
-      };
+      const total = 100;
       const action = new hikeEditRoutePlannerActions.UpdateTotal(total);
       const state = hikeEditRoutePlannerReducer(initialState, action);
 
       expect(state.total).toEqual(total);
+    });
+  });
+
+  describe('UpdateTotal action', () => {
+    it('should set total', () => {
+      const action = new hikeEditRoutePlannerActions.SetPlanning(true);
+      const state = hikeEditRoutePlannerReducer(initialState, action);
+
+      expect(state.planning).toEqual(true);
     });
   });
 });

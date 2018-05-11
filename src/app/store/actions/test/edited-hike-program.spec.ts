@@ -13,6 +13,15 @@ describe('EditedHikeProgram actions', () => {
     expect(EditedHikeProgramActions.HIKE_PROGRAM_SAVE_FAILED).toEqual('[HikeProgram] Hike program save failure');
   });
 
+  it('should create ResetHikeProgram action', () => {
+    const action = new EditedHikeProgramActions.ResetHikeProgram();
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: EditedHikeProgramActions.RESET_HIKE_PROGRAM
+    });
+  });
+
   it('should create AddNewTranslatedHikeProgramDescription action', () => {
     const desc = {
       title: 'Test hike',
@@ -51,13 +60,24 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create AddStop action', () => {
-    const stopData = { poiId: 'fakePoiId' };
-    const action = new EditedHikeProgramActions.AddStop(stopData);
+    const stop = { poiId: 'fakePoiId' };
+    const action = new EditedHikeProgramActions.AddStop(stop);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.ADD_STOP,
-      stop: stopData
+      stop: stop
+    });
+  });
+
+  it('should create SetStops action', () => {
+    const stops = [{ poiId: 'fakePoiId' }];
+    const action = new EditedHikeProgramActions.SetStops(stops);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: EditedHikeProgramActions.SET_STOPS,
+      stops: stops
     });
   });
 
