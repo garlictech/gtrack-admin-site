@@ -85,20 +85,17 @@ describe('HikeEditPoi reducers', () => {
 
   describe('GetGooglePois action', () => {
     it('should get google pois', () => {
-      const action = new hikeEditPoiActions.GetGooglePois({
-        bounds: null,
-        mapId: 'fakeMapId'
-      });
+      const action = new hikeEditPoiActions.GetGooglePois(null, 'fakeMapId');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.googlePois.ids).toEqual([]);
-      expect(state.contexts.google.loading).toEqual(true);
+      expect(state.contexts.google.working).toEqual(true);
     });
   });
 
   describe('SetGooglePois action', () => {
     it('should set google pois', () => {
-      const action = new hikeEditPoiActions.SetGooglePois({ pois: pois });
+      const action = new hikeEditPoiActions.SetGooglePois(pois);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.googlePois.entities).toEqual(entities);
@@ -129,10 +126,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetGooglePoiInHike action', () => {
     it('should set google poi inHike to true', () => {
-      const action = new hikeEditPoiActions.SetGooglePoiInHike({
-        poiId: '1',
-        isInHike: true
-      });
+      const action = new hikeEditPoiActions.SetGooglePoiInHike('1', true);
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         googlePois: {
           ids: ['1', '2'],
@@ -144,10 +138,7 @@ describe('HikeEditPoi reducers', () => {
     });
 
     it('should set google poi inHike to false', () => {
-      const action = new hikeEditPoiActions.SetGooglePoiInHike({
-        poiId: '1',
-        isInHike: false
-      });
+      const action = new hikeEditPoiActions.SetGooglePoiInHike('1', false);
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         googlePois: {
           ids: ['1', '2'],
@@ -161,20 +152,17 @@ describe('HikeEditPoi reducers', () => {
 
   describe('GetOsmAmenityPois action', () => {
     it('should get osmAmenity pois', () => {
-      const action = new hikeEditPoiActions.GetOsmAmenityPois({
-        bounds: null,
-        mapId: 'fakeMapId'
-      });
+      const action = new hikeEditPoiActions.GetOsmAmenityPois(null, 'fakeMapId');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmAmenityPois.ids).toEqual([]);
-      expect(state.contexts.osmAmenity.loading).toEqual(true);
+      expect(state.contexts.osmAmenity.working).toEqual(true);
     });
   });
 
   describe('SetOsmAmenityPois action', () => {
     it('should set osmAmenity pois', () => {
-      const action = new hikeEditPoiActions.SetOsmAmenityPois({ pois: pois });
+      const action = new hikeEditPoiActions.SetOsmAmenityPois(pois);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmAmenityPois.entities).toEqual(entities);
@@ -205,10 +193,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetOsmAmenityPoiInHike action', () => {
     it('should set osmAmenity poi inHike to true', () => {
-      const action = new hikeEditPoiActions.SetOsmAmenityPoiInHike({
-        poiId: '1',
-        isInHike: true
-      });
+      const action = new hikeEditPoiActions.SetOsmAmenityPoiInHike('1', true);
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmAmenityPois: {
           ids: ['1', '2'],
@@ -220,10 +205,7 @@ describe('HikeEditPoi reducers', () => {
     });
 
     it('should set osmAmenity poi inHike to false', () => {
-      const action = new hikeEditPoiActions.SetOsmAmenityPoiInHike({
-        poiId: '1',
-        isInHike: false
-      });
+      const action = new hikeEditPoiActions.SetOsmAmenityPoiInHike('1', false);
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmAmenityPois: {
           ids: ['1', '2'],
@@ -237,20 +219,17 @@ describe('HikeEditPoi reducers', () => {
 
   describe('GetOsmNaturalPois action', () => {
     it('should get osmNatural pois', () => {
-      const action = new hikeEditPoiActions.GetOsmNaturalPois({
-        bounds: null,
-        mapId: 'fakeMapId'
-      });
+      const action = new hikeEditPoiActions.GetOsmNaturalPois(null, 'fakeMapId');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmNaturalPois.ids).toEqual([]);
-      expect(state.contexts.osmNatural.loading).toEqual(true);
+      expect(state.contexts.osmNatural.working).toEqual(true);
     });
   });
 
   describe('SetOsmNaturalPois action', () => {
     it('should set osmNatural pois', () => {
-      const action = new hikeEditPoiActions.SetOsmNaturalPois({ pois: pois });
+      const action = new hikeEditPoiActions.SetOsmNaturalPois(pois);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmNaturalPois.entities).toEqual(entities);
@@ -281,10 +260,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetOsmNaturalPoiInHike action', () => {
     it('should set osmNatural poi inHike to true', () => {
-      const action = new hikeEditPoiActions.SetOsmNaturalPoiInHike({
-        poiId: '1',
-        isInHike: true
-      });
+      const action = new hikeEditPoiActions.SetOsmNaturalPoiInHike('1', true);
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmNaturalPois: {
           ids: ['1', '2'],
@@ -296,10 +272,7 @@ describe('HikeEditPoi reducers', () => {
     });
 
     it('should set osmNatural poi inHike to false', () => {
-      const action = new hikeEditPoiActions.SetOsmNaturalPoiInHike({
-        poiId: '1',
-        isInHike: false
-      });
+      const action = new hikeEditPoiActions.SetOsmNaturalPoiInHike('1', false);
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmNaturalPois: {
           ids: ['1', '2'],
@@ -313,20 +286,17 @@ describe('HikeEditPoi reducers', () => {
 
   describe('GetOsmRoutePois action', () => {
     it('should get osmRoute pois', () => {
-      const action = new hikeEditPoiActions.GetOsmRoutePois({
-        bounds: null,
-        mapId: 'fakeMapId'
-      });
+      const action = new hikeEditPoiActions.GetOsmRoutePois(null, 'fakeMapId');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmRoutePois.ids).toEqual([]);
-      expect(state.contexts.osmRoute.loading).toEqual(true);
+      expect(state.contexts.osmRoute.working).toEqual(true);
     });
   });
 
   describe('SetOsmRoutePois action', () => {
     it('should set osmRoute pois', () => {
-      const action = new hikeEditPoiActions.SetOsmRoutePois({ pois: pois });
+      const action = new hikeEditPoiActions.SetOsmRoutePois(pois);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmRoutePois.entities).toEqual(entities);
@@ -357,10 +327,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetOsmRoutePoiInHike action', () => {
     it('should set osmRoute poi inHike to true', () => {
-      const action = new hikeEditPoiActions.SetOsmRoutePoiInHike({
-        poiId: '1',
-        isInHike: true
-      });
+      const action = new hikeEditPoiActions.SetOsmRoutePoiInHike('1', true)
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmRoutePois: {
           ids: ['1', '2'],
@@ -372,10 +339,7 @@ describe('HikeEditPoi reducers', () => {
     });
 
     it('should set osmRoute poi inHike to false', () => {
-      const action = new hikeEditPoiActions.SetOsmRoutePoiInHike({
-        poiId: '1',
-        isInHike: false
-      });
+      const action = new hikeEditPoiActions.SetOsmRoutePoiInHike('1', false);
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmRoutePois: {
           ids: ['1', '2'],
@@ -389,20 +353,17 @@ describe('HikeEditPoi reducers', () => {
 
   describe('GetWikipediaPois action', () => {
     it('should get wikipedia pois', () => {
-      const action = new hikeEditPoiActions.GetWikipediaPois({
-        bounds: null,
-        mapId: 'fakeMapId'
-      });
+      const action = new hikeEditPoiActions.GetWikipediaPois(null, 'fakeMapId');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.wikipediaPois.ids).toEqual([]);
-      expect(state.contexts.wikipedia.loading).toEqual(true);
+      expect(state.contexts.wikipedia.working).toEqual(true);
     });
   });
 
   describe('SetWikipediaPois action', () => {
     it('should set wikipedia pois', () => {
-      const action = new hikeEditPoiActions.SetWikipediaPois({ pois: pois });
+      const action = new hikeEditPoiActions.SetWikipediaPois(pois);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.wikipediaPois.entities).toEqual(entities);
@@ -433,10 +394,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetWikipediaPoiInHike action', () => {
     it('should set wikipedia poi inHike to true', () => {
-      const action = new hikeEditPoiActions.SetWikipediaPoiInHike({
-        poiId: '1',
-        isInHike: true
-      });
+      const action = new hikeEditPoiActions.SetWikipediaPoiInHike('1', false);
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         wikipediaPois: {
           ids: ['1', '2'],
@@ -448,10 +406,7 @@ describe('HikeEditPoi reducers', () => {
     });
 
     it('should set wikipedia poi inHike to false', () => {
-      const action = new hikeEditPoiActions.SetWikipediaPoiInHike({
-        poiId: '1',
-        isInHike: false
-      });
+      const action = new hikeEditPoiActions.SetWikipediaPoiInHike('1', false);
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         wikipediaPois: {
           ids: ['1', '2'],
@@ -467,35 +422,35 @@ describe('HikeEditPoi reducers', () => {
     // showOnrouteMarkers is true initially
 
     it('should toggle google onroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'google' });
+      const action = new hikeEditPoiActions.ToggleOnrouteMarkers('google');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.google.showOnrouteMarkers).toEqual(false);
     });
 
     it('should toggle osmAmenity onroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'osmAmenity' });
+      const action = new hikeEditPoiActions.ToggleOnrouteMarkers('osmAmenity');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmAmenity.showOnrouteMarkers).toEqual(false);
     });
 
     it('should toggle osmNatural onroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'osmNatural' });
+      const action = new hikeEditPoiActions.ToggleOnrouteMarkers('osmNatural');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmNatural.showOnrouteMarkers).toEqual(false);
     });
 
     it('should toggle osmRoute onroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'osmRoute' });
+      const action = new hikeEditPoiActions.ToggleOnrouteMarkers('osmRoute');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmRoute.showOnrouteMarkers).toEqual(false);
     });
 
     it('should toggle wikipedia onroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'wikipedia' });
+      const action = new hikeEditPoiActions.ToggleOnrouteMarkers('wikipedia');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.wikipedia.showOnrouteMarkers).toEqual(false);
@@ -506,35 +461,35 @@ describe('HikeEditPoi reducers', () => {
     // showOffrouteMarkers is false initially
 
     it('should toggle google offroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'google' });
+      const action = new hikeEditPoiActions.ToggleOffrouteMarkers('google');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.google.showOffrouteMarkers).toEqual(true);
     });
 
     it('should toggle osmAmenity offroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'osmAmenity' });
+      const action = new hikeEditPoiActions.ToggleOffrouteMarkers('osmAmenity');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmAmenity.showOffrouteMarkers).toEqual(true);
     });
 
     it('should toggle osmNatural offroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'osmNatural' });
+      const action = new hikeEditPoiActions.ToggleOffrouteMarkers('osmNatural');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmNatural.showOffrouteMarkers).toEqual(true);
     });
 
     it('should toggle osmRoute offroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'osmRoute' });
+      const action = new hikeEditPoiActions.ToggleOffrouteMarkers('osmRoute');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmRoute.showOffrouteMarkers).toEqual(true);
     });
 
     it('should toggle wikipedia offroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'wikipedia' });
+      const action = new hikeEditPoiActions.ToggleOffrouteMarkers('wikipedia');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.wikipedia.showOffrouteMarkers).toEqual(true);

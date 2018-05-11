@@ -23,34 +23,19 @@ export class HikeEditPoisExternalTableComponent {
 
     switch (this.subdomain) {
       case 'google':
-        this._store.dispatch(new hikeEditPoiActions.SetGooglePoiInHike({
-          poiId: poi.id,
-          isInHike: !poi.inHike
-        }));
+        this._store.dispatch(new hikeEditPoiActions.SetGooglePoiInHike(poi.id, !poi.inHike));
         break;
       case 'wikipedia':
-        this._store.dispatch(new hikeEditPoiActions.SetWikipediaPoiInHike({
-          poiId: poi.id,
-          isInHike: !poi.inHike
-        }));
+        this._store.dispatch(new hikeEditPoiActions.SetWikipediaPoiInHike(poi.id, !poi.inHike));
         break;
       case 'osmAmenity':
-        this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPoiInHike({
-          poiId: poi.id,
-          isInHike: !poi.inHike
-        }));
+        this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPoiInHike(poi.id, !poi.inHike));
         break;
       case 'osmNatural':
-        this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPoiInHike({
-          poiId: poi.id,
-          isInHike: !poi.inHike
-        }));
+        this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPoiInHike(poi.id, !poi.inHike));
         break;
       case 'osmRoute':
-        this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiInHike({
-          poiId: poi.id,
-          isInHike: !poi.inHike
-        }));
+        this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiInHike(poi.id, !poi.inHike));
         break;
     }
   }
