@@ -89,7 +89,7 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.googlePois.ids).toEqual([]);
-      expect(state.contexts.google.working).toEqual(true);
+      expect(state.contexts.google.loading).toEqual(true);
     });
   });
 
@@ -109,9 +109,9 @@ describe('HikeEditPoi reducers', () => {
 
   describe('PatchGooglePois action', () => {
     it('should patch google pois', () => {
-      const action = new hikeEditPoiActions.SetGooglePoisInGtrackDb({
-        properties: pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
-      });
+      const action = new hikeEditPoiActions.SetGooglePoisInGtrackDb(
+        pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
+      );
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         googlePois: {
           ids: ['1', '2'],
@@ -156,7 +156,7 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmAmenityPois.ids).toEqual([]);
-      expect(state.contexts.osmAmenity.working).toEqual(true);
+      expect(state.contexts.osmAmenity.loading).toEqual(true);
     });
   });
 
@@ -176,9 +176,9 @@ describe('HikeEditPoi reducers', () => {
 
   describe('PatchOsmAmenityPois action', () => {
     it('should patch osmAmenity pois', () => {
-      const action = new hikeEditPoiActions.SetOsmAmenityPoisInGtrackDb({
-        properties: pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
-      });
+      const action = new hikeEditPoiActions.SetOsmAmenityPoisInGtrackDb(
+        pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
+      );
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmAmenityPois: {
           ids: ['1', '2'],
@@ -223,7 +223,7 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmNaturalPois.ids).toEqual([]);
-      expect(state.contexts.osmNatural.working).toEqual(true);
+      expect(state.contexts.osmNatural.loading).toEqual(true);
     });
   });
 
@@ -243,9 +243,9 @@ describe('HikeEditPoi reducers', () => {
 
   describe('PatchOsmNaturalPois action', () => {
     it('should patch osmNatural pois', () => {
-      const action = new hikeEditPoiActions.SetOsmNaturalPoisInGtrackDb({
-        properties: pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
-      });
+      const action = new hikeEditPoiActions.SetOsmNaturalPoisInGtrackDb(
+        pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
+      );
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmNaturalPois: {
           ids: ['1', '2'],
@@ -290,7 +290,7 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmRoutePois.ids).toEqual([]);
-      expect(state.contexts.osmRoute.working).toEqual(true);
+      expect(state.contexts.osmRoute.loading).toEqual(true);
     });
   });
 
@@ -310,9 +310,9 @@ describe('HikeEditPoi reducers', () => {
 
   describe('PatchOsmRoutePois action', () => {
     it('should patch osmNRoute pois', () => {
-      const action = new hikeEditPoiActions.SetOsmRoutePoisInGtrackDb({
-        properties: pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
-      });
+      const action = new hikeEditPoiActions.SetOsmRoutePoisInGtrackDb(
+        pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
+      );
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmRoutePois: {
           ids: ['1', '2'],
@@ -357,7 +357,7 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.wikipediaPois.ids).toEqual([]);
-      expect(state.contexts.wikipedia.working).toEqual(true);
+      expect(state.contexts.wikipedia.loading).toEqual(true);
     });
   });
 
@@ -377,9 +377,9 @@ describe('HikeEditPoi reducers', () => {
 
   describe('PatchWikipediaPois action', () => {
     it('should patch wikipedia pois', () => {
-      const action = new hikeEditPoiActions.SetWikipediaPoisInGtrackDb({
-        properties: pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
-      });
+      const action = new hikeEditPoiActions.SetWikipediaPoisInGtrackDb(
+        pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
+      );
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         wikipediaPois: {
           ids: ['1', '2'],
@@ -394,7 +394,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetWikipediaPoiInHike action', () => {
     it('should set wikipedia poi inHike to true', () => {
-      const action = new hikeEditPoiActions.SetWikipediaPoiInHike('1', false);
+      const action = new hikeEditPoiActions.SetWikipediaPoiInHike('1', true);
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         wikipediaPois: {
           ids: ['1', '2'],
@@ -493,6 +493,15 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.wikipedia.showOffrouteMarkers).toEqual(true);
+    });
+  });
+
+  describe('SetSaving action', () => {
+    it('should set saving pois', () => {
+      const action = new hikeEditPoiActions.SetSaving('wikipedia', true);
+      const state = hikeEditPoiReducer(initialState, action);
+
+      expect(state.contexts.wikipedia.saving).toEqual(true);
     });
   });
 });

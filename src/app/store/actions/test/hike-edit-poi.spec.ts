@@ -32,7 +32,9 @@ describe('HikeEditPoi actions', () => {
 
     expect(HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle onroute markers');
     expect(HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle offroute markers');
-    expect(HikeEditPoiActions.MARKERS_CONFIG_CHANGED).toEqual('[HikeEditPoi] Markers config changed');
+    expect(HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle offroute markers');
+
+    expect(HikeEditPoiActions.SET_SAVING).toEqual('[HikeEditPoi] Set saving');
   });
 
   /**
@@ -360,6 +362,17 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.MARKERS_CONFIG_CHANGED
+    });
+  });
+
+  it('should create SetSaving action', () => {
+    const action = new HikeEditPoiActions.SetSaving('google', true);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_SAVING,
+      subdomain: 'google',
+      saving: true
     });
   });
 });
