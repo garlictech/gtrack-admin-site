@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import * as EditedHikeProgramActions from '../edited-hike-program';
+import { IHikeProgramStop } from 'subrepos/provider-client';
 
 describe('EditedHikeProgram actions', () => {
   it('should have action names defined', () => {
@@ -60,7 +61,17 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create AddStop action', () => {
-    const stop = { poiId: 'fakePoiId' };
+    const stop: IHikeProgramStop = {
+      distanceFromOrigo: 0,
+      poiId: 'fakePoiId',
+      lat: 0,
+      lon: 0,
+      segment: {
+        uphill: 0,
+        downhill: 0,
+        distance: 0
+      }
+    };
     const action = new EditedHikeProgramActions.AddStop(stop);
 
     expect(action).toBeDefined();
@@ -71,7 +82,17 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create SetStops action', () => {
-    const stops = [{ poiId: 'fakePoiId' }];
+    const stops = [{
+      distanceFromOrigo: 0,
+      poiId: 'fakePoiId',
+      lat: 0,
+      lon: 0,
+      segment: {
+        uphill: 0,
+        downhill: 0,
+        distance: 0
+      }
+    }];
     const action = new EditedHikeProgramActions.SetStops(stops);
 
     expect(action).toBeDefined();
