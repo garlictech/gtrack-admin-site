@@ -3,9 +3,9 @@ import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State, hikeEditMapActions, adminMapActions } from 'app/store';
+import { State, hikeEditMapActions, adminMapActions, commonBackgroundGeolocationActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
-import { Center, ISegment } from 'subrepos/gtrack-common-ngx';
+import { Center, ISegment, BackgroundGeolocationActionTypes, selectCurrentLocation, IGeoPosition } from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 import { AdminMapService } from 'app/shared/services';
 
@@ -33,7 +33,7 @@ const LAYERS = [{
 
 const OVERLAYS = [{
   name: 'trails',
-  url: 'https://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
+  url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
 }];
 
 @Component({
@@ -48,6 +48,8 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public layers = LAYERS;
   public overlays = OVERLAYS;
   public mode = 'routing';
+  public allowPlanning: boolean;
+  public currentLocation$: Observable<IGeoPosition | null>;
   private _bufferShown = false;
   private _bufferOnMap: L.GeoJSON;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -73,12 +75,24 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         });
       });
+
+    this._store
+      .select(this._hikeEditRoutePlannerSelectors.getIsPlanning)
+      .takeUntil(this._destroy$)
+      .subscribe((planning: boolean) => {
+        this.allowPlanning = planning;
+      });
+
+    this._store.dispatch(new commonBackgroundGeolocationActions.StartTracking());
+
+    this.currentLocation$ = this._store.select(selectCurrentLocation).takeUntil(this._destroy$);
   }
 
   ngOnDestroy( ) {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
 
+    this._store.dispatch(new commonBackgroundGeolocationActions.EndTracking());
     this._store.dispatch(new adminMapActions.ResetMap());
   }
 
@@ -90,27 +104,37 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     this.mapComponent.leafletMap
       // Add markers by click
       .on('click', (e: LeafletMouseEvent) => {
-        if (this.mode === 'routing') {
-          this._waypointMarkerService.addWaypoint(e.latlng);
-        } else {
-          // console.log('todo _createCheckpoint');
-          // this._createCheckpoint(e.latlng);
+        if (this.allowPlanning) {
+          if (this.mode === 'routing') {
+            this._waypointMarkerService.addWaypoint(e.latlng);
+          } else {
+            // console.log('todo _createCheckpoint');
+            // this._createCheckpoint(e.latlng);
+          }
         }
       })
 
-      // Turn on scrollWheelZoom after the first interaction (click/drag)
-      .on('mouseup', () => {
-        this.mapComponent.leafletMap.scrollWheelZoom.enable();
-      })
-      // Turn off scrollWheelZoom on mouse out
-      .on('mouseout', () => {
-        this.mapComponent.leafletMap.scrollWheelZoom.disable();
-      });
+    /* WARNING: CAUSES BROWSER LAG!!
+    // Turn on scrollWheelZoom after the first interaction (click/drag)
+    .on('mouseup', () => {
+      this.mapComponent.leafletMap.scrollWheelZoom.enable();
+    })
+    // Turn off scrollWheelZoom on mouse out
+    .on('mouseout', () => {
+      this.mapComponent.leafletMap.scrollWheelZoom.disable();
+    });
+    */
   }
 
   public toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
-    this.mapComponent.map.currentPositionMarker.goToCurrentPosition();
+
+    this.currentLocation$.take(1).subscribe((position: IGeoPosition) => {
+      if (position && position.coords) {
+        const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude)
+        this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
+      }
+    });
   }
 
   public resetMap($event: Event) {

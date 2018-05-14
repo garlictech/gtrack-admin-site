@@ -11,19 +11,22 @@ export interface IHikeProgramBackgroundImage {
   url: string;
 }
 
+export interface IRouteSegment {
+  uphill: number;
+  downhill: number;
+  distance: number;
+  score?: number;
+  time?: number;
+  difficulty?: number;
+}
+
 export interface IHikeProgramStop {
   distanceFromOrigo: number;
   poiId: string;
   lat: number;
   lon: number;
   onRoute?: boolean;
-  segment: {
-    uphill: number;
-    downhill: number;
-    distance: number;
-    score: number;
-    time: number;
-  };
+  segment: IRouteSegment;
   isStart?: boolean;
   isFinish?: boolean;
 }

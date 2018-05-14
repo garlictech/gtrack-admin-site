@@ -31,7 +31,9 @@ import {
   HikeModule,
   GeoSearchModule,
   GeoSearchEffects,
-  SearchFiltersModule
+  SearchFiltersModule,
+  BackgroundGeolocationEffects,
+  BackgroundGeolocationModule
 } from 'subrepos/gtrack-common-ngx';
 
 import { LanguageModule } from './language';
@@ -39,7 +41,7 @@ import { LanguageModule } from './language';
 // App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { AuthEffects, HikeEditPoiEffects, EditedHikeProgramEffects } from './store/effects';
+import { AuthEffects, HikeEditPoiEffects, EditedHikeProgramEffects, EditedGTrackPoiEffects } from './store/effects';
 
 import { store } from './store';
 
@@ -139,6 +141,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     SearchFiltersModule.forRoot({
       storeDomain: 'searchFilters'
     }),
+    BackgroundGeolocationModule.forRoot(),
     // Page modules
     CoreLayoutModule,
     AuthModule,
@@ -150,10 +153,12 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       HikeEditPoiEffects,
       RouteEffects,
       EditedHikeProgramEffects,
+      EditedGTrackPoiEffects,
       // Common-ngx
       PoiEffects,
       HikeEffects,
-      GeoSearchEffects
+      GeoSearchEffects,
+      BackgroundGeolocationEffects
     ]),
     // Vendor
     ToasterModule.forRoot(),

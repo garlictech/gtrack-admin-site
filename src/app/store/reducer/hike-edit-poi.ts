@@ -28,11 +28,11 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
     }
 
     case hikeEditPoiActions.SET_GOOGLE_POIS: {
-      return googlePoiAdapter.addAll(action.payload.pois, state);
+      return googlePoiAdapter.addAll(action.pois, state);
     }
 
     case hikeEditPoiActions.SET_GOOGLE_POIS_IN_GTRACK_DB: {
-      return googlePoiAdapter.updateMany(action.payload.properties.map(poi => {
+      return googlePoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
           changes: _.omit(poi, ['id'])
@@ -42,9 +42,9 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
 
     case hikeEditPoiActions.SET_GOOGLE_POI_IN_HIKE:
       return googlePoiAdapter.updateOne({
-        id: action.payload.poiId,
+        id: action.poiId,
         changes: {
-          inHike: action.payload.isInHike
+          inHike: action.isInHike
         }
       }, state);
 
@@ -72,11 +72,11 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
     }
 
     case hikeEditPoiActions.SET_OSM_AMENITY_POIS: {
-      return osmAmenityPoiAdapter.addAll(action.payload.pois, state);
+      return osmAmenityPoiAdapter.addAll(action.pois, state);
     }
 
     case hikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_GTRACK_DB: {
-      return osmAmenityPoiAdapter.updateMany(action.payload.properties.map(poi => {
+      return osmAmenityPoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
           changes: _.omit(poi, ['id'])
@@ -86,9 +86,9 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
 
     case hikeEditPoiActions.SET_OSM_AMENITY_POI_IN_HIKE:
       return osmAmenityPoiAdapter.updateOne({
-        id: action.payload.poiId,
+        id: action.poiId,
         changes: {
-          inHike: action.payload.isInHike
+          inHike: action.isInHike
         }
       }, state);
 
@@ -116,11 +116,11 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
     }
 
     case hikeEditPoiActions.SET_OSM_NATURAL_POIS: {
-      return osmNaturalPoiAdapter.addAll(action.payload.pois, state);
+      return osmNaturalPoiAdapter.addAll(action.pois, state);
     }
 
     case hikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_GTRACK_DB: {
-      return osmNaturalPoiAdapter.updateMany(action.payload.properties.map(poi => {
+      return osmNaturalPoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
           changes: _.omit(poi, ['id'])
@@ -130,9 +130,9 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
 
     case hikeEditPoiActions.SET_OSM_NATURAL_POI_IN_HIKE:
       return osmNaturalPoiAdapter.updateOne({
-        id: action.payload.poiId,
+        id: action.poiId,
         changes: {
-          inHike: action.payload.isInHike
+          inHike: action.isInHike
         }
       }, state);
 
@@ -160,11 +160,11 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
     }
 
     case hikeEditPoiActions.SET_OSM_ROUTE_POIS: {
-      return osmRoutePoiAdapter.addAll(action.payload.pois, state);
+      return osmRoutePoiAdapter.addAll(action.pois, state);
     }
 
     case hikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_GTRACK_DB: {
-      return osmRoutePoiAdapter.updateMany(action.payload.properties.map(poi => {
+      return osmRoutePoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
           changes: _.omit(poi, ['id'])
@@ -174,9 +174,9 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
 
     case hikeEditPoiActions.SET_OSM_ROUTE_POI_IN_HIKE:
       return osmRoutePoiAdapter.updateOne({
-        id: action.payload.poiId,
+        id: action.poiId,
         changes: {
-          inHike: action.payload.isInHike
+          inHike: action.isInHike
         }
       }, state);
 
@@ -204,11 +204,11 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
     }
 
     case hikeEditPoiActions.SET_WIKIPEDIA_POIS: {
-      return wikipediaPoiAdapter.addAll(action.payload.pois, state);
+      return wikipediaPoiAdapter.addAll(action.pois, state);
     }
 
     case hikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_GTRACK_DB: {
-      return wikipediaPoiAdapter.updateMany(action.payload.properties.map(poi => {
+      return wikipediaPoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
           changes: _.omit(poi, ['id'])
@@ -218,9 +218,9 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
 
     case hikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE:
       return wikipediaPoiAdapter.updateOne({
-        id: action.payload.poiId,
+        id: action.poiId,
         changes: {
-          inHike: action.payload.isInHike
+          inHike: action.isInHike
         }
       }, state);
 
@@ -237,6 +237,7 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
 const initialContextItemState = {
   loading: false,
   loaded: false,
+  saving: false,
   showOnrouteMarkers: true,
   showOffrouteMarkers: false
 };
@@ -395,18 +396,31 @@ export function externalPoiListContextReducer(
     case hikeEditPoiActions.TOGGLE_ONROUTE_MARKERS:
       return {
         ...state,
-        [action.payload.subdomain]: {
-          ...state[action.payload.subdomain],
-          showOnrouteMarkers: !state[action.payload.subdomain].showOnrouteMarkers
+        [action.subdomain]: {
+          ...state[action.subdomain],
+          showOnrouteMarkers: !state[action.subdomain].showOnrouteMarkers
         }
       };
 
     case hikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS:
       return {
         ...state,
-        [action.payload.subdomain]: {
-          ...state[action.payload.subdomain],
-          showOffrouteMarkers: !state[action.payload.subdomain].showOffrouteMarkers
+        [action.subdomain]: {
+          ...state[action.subdomain],
+          showOffrouteMarkers: !state[action.subdomain].showOffrouteMarkers
+        }
+      };
+
+    /**
+     * Saving
+     */
+
+    case hikeEditPoiActions.SET_SAVING:
+      return {
+        ...state,
+        [action.subdomain]: {
+          ...state[action.subdomain],
+          saving: action.saving
         }
       };
 

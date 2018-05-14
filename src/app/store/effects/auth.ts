@@ -35,7 +35,7 @@ export class AuthEffects {
       return Observable.empty();
     });
 
-  // Logut
+  // Logout
   @Effect()
   logoutSuccess$: Observable<any> = this._actions$
     .ofType(AuthActions.LOGOUT_SUCCESS)

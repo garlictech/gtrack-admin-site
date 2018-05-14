@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import * as EditedHikeProgramActions from '../edited-hike-program';
+import { IHikeProgramStop } from 'subrepos/provider-client';
 
 describe('EditedHikeProgram actions', () => {
   it('should have action names defined', () => {
@@ -11,6 +12,15 @@ describe('EditedHikeProgram actions', () => {
     expect(EditedHikeProgramActions.SAVE_HIKE_PROGRAM).toEqual('[HikeProgram] Save hike program');
     expect(EditedHikeProgramActions.HIKE_PROGRAM_SAVE_SUCCESS).toEqual('[HikeProgram] Hike program saved successfully');
     expect(EditedHikeProgramActions.HIKE_PROGRAM_SAVE_FAILED).toEqual('[HikeProgram] Hike program save failure');
+  });
+
+  it('should create ResetHikeProgram action', () => {
+    const action = new EditedHikeProgramActions.ResetHikeProgram();
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: EditedHikeProgramActions.RESET_HIKE_PROGRAM
+    });
   });
 
   it('should create AddNewTranslatedHikeProgramDescription action', () => {
@@ -51,13 +61,44 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create AddStop action', () => {
-    const stopData = { poiId: 'fakePoiId' };
-    const action = new EditedHikeProgramActions.AddStop(stopData);
+    const stop: IHikeProgramStop = {
+      distanceFromOrigo: 0,
+      poiId: 'fakePoiId',
+      lat: 0,
+      lon: 0,
+      segment: {
+        uphill: 0,
+        downhill: 0,
+        distance: 0
+      }
+    };
+    const action = new EditedHikeProgramActions.AddStop(stop);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.ADD_STOP,
-      stop: stopData
+      stop: stop
+    });
+  });
+
+  it('should create SetStops action', () => {
+    const stops = [{
+      distanceFromOrigo: 0,
+      poiId: 'fakePoiId',
+      lat: 0,
+      lon: 0,
+      segment: {
+        uphill: 0,
+        downhill: 0,
+        distance: 0
+      }
+    }];
+    const action = new EditedHikeProgramActions.SetStops(stops);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: EditedHikeProgramActions.SET_STOPS,
+      stops: stops
     });
   });
 

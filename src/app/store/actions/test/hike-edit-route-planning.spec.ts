@@ -52,24 +52,24 @@ describe('HikeEditRoutePlanner actions', () => {
   });
 
   it('should create Addroute action', () => {
-    const payload = { route: 'fakeRouteData' };
-    const action = new HikeEditRoutePlannerActions.AddRoute(payload);
+    const route = 'fakeRouteData';
+    const action = new HikeEditRoutePlannerActions.AddRoute(route);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditRoutePlannerActions.ADD_ROUTE,
-      payload
+      route
     });
   });
 
   it('should create PushSegment action', () => {
-    const payload = { segment: 'fakeSegmentData' };
-    const action = new HikeEditRoutePlannerActions.PushSegment(payload);
+    const segment = 'fakeSegmentData';
+    const action = new HikeEditRoutePlannerActions.PushSegment(segment);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditRoutePlannerActions.PUSH_SEGMENT,
-      payload
+      segment
     });
   });
 
@@ -83,24 +83,34 @@ describe('HikeEditRoutePlanner actions', () => {
   });
 
   it('should create UpdateTotal action', () => {
-    const payload = { total: 'fakeValue' };
-    const action = new HikeEditRoutePlannerActions.UpdateTotal(payload);
+    const total = 'fakeValue';
+    const action = new HikeEditRoutePlannerActions.UpdateTotal(total);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditRoutePlannerActions.UPDATE_TOTAL,
-      payload
+      total
     });
   });
 
   it('should create SetLocation action', () => {
-    const payload = { location: 'fakeLocation' };
-    const action = new HikeEditRoutePlannerActions.SetLocation(payload);
+    const location = 'fakeLocation';
+    const action = new HikeEditRoutePlannerActions.SetLocation(location);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditRoutePlannerActions.SET_LOCATION,
-      payload
+      location
+    });
+  });
+
+  it('should create SetPlanning action', () => {
+    const action = new HikeEditRoutePlannerActions.SetPlanning(true);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditRoutePlannerActions.SET_PLANNING,
+      planning: true
     });
   });
 });

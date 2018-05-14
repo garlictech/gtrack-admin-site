@@ -30,7 +30,7 @@ export const SET_WIKIPEDIA_POI_IN_HIKE = '[HikeEditPoi] Set Wikipedia poi inHike
 
 export const TOGGLE_ONROUTE_MARKERS = '[HikeEditPoi] Toggle onroute markers';
 export const TOGGLE_OFFROUTE_MARKERS = '[HikeEditPoi] Toggle offroute markers';
-export const SET_DIRTY = '[HikeEditPoi] Set dirty';
+export const SET_SAVING = '[HikeEditPoi] Set saving';
 export const MARKERS_CONFIG_CHANGED = '[HikeEditPoi] Markers config changed';
 
 export class ResetPoiState implements Action {
@@ -43,32 +43,22 @@ export class ResetPoiState implements Action {
 
 export class GetGooglePois implements Action {
   readonly type = GET_GOOGLE_POIS;
-  constructor(public payload: {
-    bounds: any,
-    mapId: string
-  }) {}
+  constructor(public bounds: any, public mapId: string) {}
 }
 
 export class SetGooglePois implements Action {
   readonly type = SET_GOOGLE_POIS;
-  constructor(public payload: {
-    pois: IGooglePoi[]
-  }) {}
+  constructor(public pois: IGooglePoi[]) {}
 }
 
 export class SetGooglePoisInGtrackDb implements Action {
   readonly type = SET_GOOGLE_POIS_IN_GTRACK_DB;
-  constructor(public payload: {
-    properties: any
-  }) {}
+  constructor(public properties: any) {}
 }
 
 export class SetGooglePoiInHike implements Action {
   readonly type = SET_GOOGLE_POI_IN_HIKE;
-  constructor(public payload: {
-    poiId: string,
-    isInHike: boolean
-  }) {}
+  constructor(public poiId: string, public isInHike: boolean) {}
 }
 
 /**
@@ -77,32 +67,22 @@ export class SetGooglePoiInHike implements Action {
 
 export class GetOsmAmenityPois implements Action {
   readonly type = GET_OSM_AMENITY_POIS;
-  constructor(public payload: {
-    bounds: any,
-    mapId: string
-  }) {}
+  constructor(public bounds: any, public mapId: string) {}
 }
 
 export class SetOsmAmenityPois implements Action {
   readonly type = SET_OSM_AMENITY_POIS;
-  constructor(public payload: {
-    pois: IOsmPoi[]
-  }) {}
+  constructor(public pois: IOsmPoi[]) {}
 }
 
 export class SetOsmAmenityPoisInGtrackDb implements Action {
   readonly type = SET_OSM_AMENITY_POIS_IN_GTRACK_DB;
-  constructor(public payload: {
-    properties: any
-  }) {}
+  constructor(public properties: any) {}
 }
 
 export class SetOsmAmenityPoiInHike implements Action {
   readonly type = SET_OSM_AMENITY_POI_IN_HIKE;
-  constructor(public payload: {
-    poiId: string,
-    isInHike: boolean
-  }) {}
+  constructor(public poiId: string, public isInHike: boolean) {}
 }
 
 /**
@@ -111,34 +91,22 @@ export class SetOsmAmenityPoiInHike implements Action {
 
 export class GetOsmNaturalPois implements Action {
   readonly type = GET_OSM_NATURAL_POIS;
-  constructor(public payload: {
-    bounds: any,
-    mapId: string
-  }) {}
+  constructor(public bounds: any, public mapId: string) {}
 }
 
 export class SetOsmNaturalPois implements Action {
   readonly type = SET_OSM_NATURAL_POIS;
-  constructor(public payload: {
-    pois: IOsmPoi[]
-  }) {}
+  constructor(public pois: IOsmPoi[]) {}
 }
 
 export class SetOsmNaturalPoisInGtrackDb implements Action {
   readonly type = SET_OSM_NATURAL_POIS_IN_GTRACK_DB;
-  constructor(public payload: {
-    properties: any
-  }) {}
+  constructor(public properties: any) {}
 }
 
 export class SetOsmNaturalPoiInHike implements Action {
   readonly type = SET_OSM_NATURAL_POI_IN_HIKE;
-  constructor(public payload: {
-    poiId: string,
-    isInHike: boolean
-  }) {
-    /* EMPTY */
-  }
+  constructor(public poiId: string, public isInHike: boolean) {}
 }
 
 /**
@@ -147,32 +115,22 @@ export class SetOsmNaturalPoiInHike implements Action {
 
 export class GetOsmRoutePois implements Action {
   readonly type = GET_OSM_ROUTE_POIS;
-  constructor(public payload: {
-    bounds: any,
-    mapId: string
-  }) {}
+  constructor(public bounds: any, public mapId: string) {}
 }
 
 export class SetOsmRoutePois implements Action {
   readonly type = SET_OSM_ROUTE_POIS;
-  constructor(public payload: {
-    pois: IOsmPoi[]
-  }) {}
+  constructor(public pois: IOsmPoi[]) {}
 }
 
 export class SetOsmRoutePoisInGtrackDb implements Action {
   readonly type = SET_OSM_ROUTE_POIS_IN_GTRACK_DB;
-  constructor(public payload: {
-    properties: any
-  }) {}
+  constructor(public properties: any) {}
 }
 
 export class SetOsmRoutePoiInHike implements Action {
   readonly type = SET_OSM_ROUTE_POI_IN_HIKE;
-  constructor(public payload: {
-    poiId: string,
-    isInHike: boolean
-  }) {}
+  constructor(public poiId: string, public isInHike: boolean) {}
 }
 
 /**
@@ -181,32 +139,22 @@ export class SetOsmRoutePoiInHike implements Action {
 
 export class GetWikipediaPois implements Action {
   readonly type = GET_WIKIPEDIA_POIS;
-  constructor(public payload: {
-    bounds: any,
-    mapId: string
-  }) {}
+  constructor(public bounds: any, public mapId: string) {}
 }
 
 export class SetWikipediaPois implements Action {
   readonly type = SET_WIKIPEDIA_POIS;
-  constructor(public payload: {
-    pois: IWikipediaPoi[]
-  }) {}
+  constructor(public pois: IWikipediaPoi[]) {}
 }
 
 export class SetWikipediaPoisInGtrackDb implements Action {
   readonly type = SET_WIKIPEDIA_POIS_IN_GTRACK_DB;
-  constructor(public payload: {
-    properties: any
-  }) {}
+  constructor(public properties: any) {}
 }
 
 export class SetWikipediaPoiInHike implements Action {
   readonly type = SET_WIKIPEDIA_POI_IN_HIKE;
-  constructor(public payload: {
-    poiId: string,
-    isInHike: boolean
-  }) {}
+  constructor(public poiId: string, public isInHike: boolean) {}
 }
 
 /**
@@ -215,16 +163,17 @@ export class SetWikipediaPoiInHike implements Action {
 
 export class ToggleOnrouteMarkers implements Action {
   readonly type = TOGGLE_ONROUTE_MARKERS;
-  constructor(public payload: {
-    subdomain: string
-  }) {}
+  constructor(public subdomain: string) {}
 }
 
 export class ToggleOffrouteMarkers implements Action {
   readonly type = TOGGLE_OFFROUTE_MARKERS;
-  constructor(public payload: {
-    subdomain: string
-  }) {}
+  constructor(public subdomain: string) {}
+}
+
+export class SetSaving implements Action {
+  readonly type = SET_SAVING;
+  constructor(public subdomain: string, public saving: boolean) {}
 }
 
 export class MarkersConfigChanged implements Action {
@@ -261,4 +210,5 @@ export type AllHikeEditPoiActions =
   // Markers
   | ToggleOnrouteMarkers
   | ToggleOffrouteMarkers
+  | SetSaving
   | MarkersConfigChanged;

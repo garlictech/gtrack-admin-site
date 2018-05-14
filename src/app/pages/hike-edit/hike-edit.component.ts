@@ -31,7 +31,8 @@ import * as _ from 'lodash';
 export class HikeEditComponent implements OnInit, OnDestroy {
   public allowSave$: Observable<boolean>;
   public working$: Observable<string | null>;
-
+  private _paramsId: string;
+  private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -55,26 +56,32 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
+    this._store.dispatch(new editedHikeProgramActions.ResetHikeProgram());
 
     this._activatedRoute.params
       .takeUntil(this._destroy$)
       .subscribe(params => {
         // Edit existing hike
         if (params && params.id) {
+          this._paramsId = params.id;
+
           // Set page title
           this._title.setTitle('Edit hike');
 
           // Set hike id and load hikeProgram data
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: params.id }, false));
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this._paramsId }, false));
           this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
+
+          // Disable planning
+          this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(false));
         // Create new hike
         } else {
           // Set page title
           this._title.setTitle('New hike');
 
           // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
-          const _hikeId = uuid();
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: _hikeId }, false));
+          this._hikeId = uuid();
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this._hikeId }, false));
           // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
 
           // Generate initial route id and load the empty route (for save toaster handling)
@@ -96,44 +103,39 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
     this.allowSave$ = this._store.select(this._editedHikeProgramSelectors.getDirty).takeUntil(this._destroy$);
 
-    // Handling saving error
-    this._store
-      .select(this._editedHikeProgramSelectors.getError)
-      .takeUntil(this._destroy$)
-      .filter(error => !!error)
-      .subscribe(error => {
-        let msg: string[] = [];
-        for (let idx in error) {
-          msg.push(`<br>${idx}: ${error[idx]}`);
-        }
-        this._toasterService.pop({
-          type: 'error',
-          title: 'Hike not saved!',
-          body: `Error(s):${msg.join()}`,
-          timeout: 8000
-        });
-      });
-
     // Handling save success
     this._store
       .select(this._editedHikeProgramSelectors.getWorking)
       .takeUntil(this._destroy$)
       .filter(working => working !== null)
-      .switchMap(() => {
-        return this._store.select(this._editedHikeProgramSelectors.getWorking).takeUntil(this._destroy$);
-      })
+      .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getWorking).takeUntil(this._destroy$))
       .filter(working => working === null)
-      .switchMap(() => {
-        return this._store.select(this._editedHikeProgramSelectors.getHikeId).takeUntil(this._destroy$);
-      })
+      .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getError).take(1))
       .takeUntil(this._destroy$)
-      .subscribe((hikeId: string) => {
-        this._toasterService.pop('success', 'Success!', 'Hike saved!');
+      .subscribe(error => {
+        if (error) {
+          let msg: string[] = [];
+          for (let idx in error) {
+            msg.push(`${idx}: ${error[idx]}`);
+          }
 
-        // Deprecated??? this._store.dispatch(new commonHikeActions.HikeProgramModified(hikeId));
+          this._toasterService.pop({
+            type: 'error',
+            title: 'Hike',
+            body: `Error:<br>${msg.join('<br>')}`,
+            timeout: 8000
+          });
+        } else {
+          this._toasterService.pop('success', 'Hike', 'Success!');
 
-        // Angular 5 doesn't reload the route!
-        // this._router.navigate([`/admin/hike/${hikeId}`]);
+          // Load the hike page if it's a new hike
+          if (!this._paramsId) {
+            this._router.navigate([`/admin/hike/${this._hikeId}`]);
+          } else {
+            // Disable planning
+            this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(false));
+          }
+        }
       });
 
     // Handling hike context changes

@@ -25,6 +25,7 @@ import { ReverseGeocodingService } from '../../../../shared/services';
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   public route$: Observable<any>;
+  public isPlanning$: Observable<boolean>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
   private _map: AdminMap;
   private _routeOnMap: L.FeatureGroup;
@@ -49,6 +50,10 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
       .takeUntil(this._destroy$);
 
+    this.isPlanning$ = this._store
+      .select(this._hikeEditRoutePlannerSelectors.getIsPlanning)
+      .takeUntil(this._destroy$);
+
     this._store
       .select(this._hikeEditMapSelectors.getMapId)
       .filter(id => id !== '')
@@ -69,7 +74,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .subscribe((routeContext: IRouteContextState) => {
         // Route saved
         if (routeContext.saved) {
-          this._toasterService.pop('success', 'Success!', 'Route saved!');
+          this._toasterService.pop('success', 'Route', 'Success!');
+
+          this._refreshRouteOnMap();
         // Route loaded
         } else if (routeContext.loaded) {
           this._store
@@ -136,6 +143,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
               this._waypointMarkerService.addWaypoint(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
             }
           });
+
+        // Enable planning
+        this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(true));
       });
   }
 
@@ -185,5 +195,21 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     group.addTo(this._map.leafletMap);
 
     return group;
+  }
+
+  /**
+   * Refresh route path after save
+   */
+  private _refreshRouteOnMap() {
+    if (this._routeOnMap) {
+      this._map.removeGeoJSON(this._routeOnMap);
+    }
+
+    this._store
+      .select(this._hikeEditRoutePlannerSelectors.getPath)
+      .take(1)
+      .subscribe((path: any) => {
+        this._routeOnMap = this._addRouteLineGeoJSON(path);
+      });
   }
 }

@@ -3,36 +3,24 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import {
-  PoiSelectors,
-  CenterRadius,
-  GeometryService,
-  GeoSearchSelectors,
-  Poi,
-  PoiSaved,
-  IGeoSearchContextState,
-  RouteSelectors
+  PoiSelectors, CenterRadius, GeometryService, GeoSearchSelectors, Poi,
+  PoiSaved, IGeoSearchContextState, RouteSelectors, ElevationService, ISegment, GameRuleService
 } from 'subrepos/gtrack-common-ngx';
-import { IPoiStored, IPoi } from 'subrepos/provider-client';
+import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
+import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { PoiEditorService } from 'app/shared/services';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import {
-  State,
-  hikeEditPoiActions,
-  IExternalPoiListContextState,
-  commonPoiActions,
-  commonGeoSearchActions,
-  IHikeEditRoutePlannerState
+  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, commonGeoSearchActions, IHikeEditRoutePlannerState, editedHikeProgramActions
 } from 'app/store';
 import {
-  HikeEditPoiSelectors,
-  HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors
+  HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
 } from 'app/store/selectors';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
+import * as turf from '@turf/turf';
 
 @Component({
   selector: 'gt-hike-edit-pois-hike',
@@ -55,6 +43,9 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _geometryService: GeometryService,
+    private _geospatialService: GeospatialService,
+    private _elevationService: ElevationService,
+    private _gameRuleService: GameRuleService,
     private _poiSelectors: PoiSelectors
   ) {}
 
@@ -107,6 +98,20 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
 
+    this._store
+      .select(this._editedHikeProgramSelectors.getStopsCount)
+      .takeUntil(this._destroy$)
+      .subscribe((stopsCount: number) => {
+        if (stopsCount > 0) {
+          this._store
+            .select(this._editedHikeProgramSelectors.getStops)
+            .take(1)
+            .subscribe((stops: IHikeProgramStop[]) => {
+              this._updateStopsSegment(_.orderBy(_.cloneDeep(stops), ['distanceFromOrigo']));
+            });
+        }
+      });
+
     //
     // Contexts
     //
@@ -145,13 +150,46 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
    * Show onroute markers checkbox click
    */
   public toggleOnrouteMarkers() {
-    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'hike' }));
+    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers('hike'));
   }
 
   /**
    * Show offroute markers checkbox click
    */
   public toggleOffrouteMarkers() {
-    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'hike' }));
+    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('hike'));
+  }
+
+  /**
+   * Update stops' segment info
+   */
+  private _updateStopsSegment(stops: IHikeProgramStop[]) {
+    this._store
+      .select(this._hikeEditRoutePlannerSelectors.getPath)
+      .take(1)
+      .subscribe(path => {
+        if (path.geometry.coordinates.length > 0) {
+          let _segmentStartPoint =  path.geometry.coordinates[0];
+
+          for (const stop of stops) {
+            const _segmentEndPoint = [stop.lon, stop.lat];
+            const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
+            const _segmentDistance = 1000 * turf.lineDistance(_segmentPath, {units: 'kilometers'});
+
+            stop.segment = {
+              uphill: this._elevationService.calculateUphill((<any>_segmentPath).geometry.coordinates),
+              downhill: this._elevationService.calculateDownhill((<any>_segmentPath).geometry.coordinates),
+              distance: _segmentDistance
+            }
+            stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, stop.segment.uphill),
+            stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill)
+
+            // Save coords for the next segment
+            _segmentStartPoint = [stop.lon, stop.lat];
+          }
+
+          this._store.dispatch(new editedHikeProgramActions.SetStops(stops));
+        }
+      });
   }
 }

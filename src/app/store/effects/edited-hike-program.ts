@@ -19,9 +19,7 @@ export class EditedHikeProgramEffects {
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _poiSelectors: PoiSelectors,
     private _store: Store<State>
-  ) {
-    /* EMPTY */
-  }
+  ) {}
 
   @Effect()
   save$: Observable<Action> = this._actions$
@@ -31,7 +29,7 @@ export class EditedHikeProgramEffects {
       const hikeProgramData = _.omit(data, ['timestamp']);
 
       return this._hikeProgramService
-        .save(<HikeProgram>hikeProgramData)
+        .save(<IHikeProgram>hikeProgramData)
         .take(1)
         .map(() => new editedHikeProgramActions.HikeProgramSaveSuccess())
         .catch(error => {

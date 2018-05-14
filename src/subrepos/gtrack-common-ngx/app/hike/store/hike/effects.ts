@@ -31,29 +31,19 @@ export class HikeEffects {
         });
     });
 
-    @Effect()
-    loadHikes$: Observable<Action> = this._actions$
-      .ofType<LocalActions.LoadHikePrograms>(LocalActions.HikeProgramActionTypes.LOAD_HIKE_PROGRAMS)
-      .mergeMap(action => {
-        return this._hikeProgramService
-          .query()
-          .take(1)
-          .map(hikePrograms => {
-            let ids = hikePrograms.map(hikeProgram => hikeProgram.id);
+  @Effect()
+  loadHikes$: Observable<Action> = this._actions$
+    .ofType<LocalActions.LoadHikePrograms>(LocalActions.HikeProgramActionTypes.LOAD_HIKE_PROGRAMS)
+    .mergeMap(action => {
+      return this._hikeProgramService
+        .query()
+        .take(1)
+        .map(hikePrograms => {
+          let ids = hikePrograms.map(hikeProgram => hikeProgram.id);
 
-            return new LocalActions.AllHikeProgramsLoaded(ids, hikePrograms);
-          });
-      });
-
-    @Effect()
-    saveHike$: Observable<Action> = this._actions$
-      .ofType<LocalActions.SaveHikeProgram>(LocalActions.HikeProgramActionTypes.SAVE_HIKE_PROGRAM)
-      .mergeMap(action => {
-        return this._hikeProgramService
-          .save(action.hikeProgram)
-          .take(1)
-          .map(response => new LocalActions.HikeProgramSaved(response.id));
-      });
+          return new LocalActions.AllHikeProgramsLoaded(ids, hikePrograms);
+        });
+    });
 
   constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {}
 }
