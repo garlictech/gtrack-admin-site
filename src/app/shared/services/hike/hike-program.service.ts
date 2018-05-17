@@ -33,7 +33,7 @@ export class HikeProgramService {
       .take(1)
       .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
         const poiStops = _.cloneDeep(stops).filter(stop => stop.poiId);
-        console.log('poiStops', poiStops);
+
         if (path.geometry.coordinates.length > 0) {
           poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
           poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
@@ -72,7 +72,7 @@ export class HikeProgramService {
   private _updateStopsSegment(stops: IHikeProgramStop[], path: any) {
     if (_.get(path, 'geometry.coordinates', []).length > 0) {
       let _segmentStartPoint =  path.geometry.coordinates[0];
-      console.log('_segmentStartPoint', _segmentStartPoint);
+
       for (const stop of stops) {
         const _segmentEndPoint = [stop.lon, stop.lat];
         const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
