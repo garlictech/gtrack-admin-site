@@ -22,6 +22,7 @@ import * as _ from 'lodash';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
+  public static componentName = 'HikeEditGTrackPoiInfoComponent';
   public modalConfig: IDynamicComponentModalConfig;
   public poiId: string;
 
