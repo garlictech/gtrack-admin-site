@@ -94,7 +94,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       });
 
     this.pois$
-      .debounceTime(150)
+      .debounceTime(200)
       .takeUntil(this._destroy$)
       .subscribe((pois: IGTrackPoi[]) => {
         // Refresh markers
