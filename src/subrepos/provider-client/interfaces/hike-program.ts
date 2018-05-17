@@ -22,7 +22,7 @@ export interface IRouteSegment {
 
 export interface IHikeProgramStop {
   distanceFromOrigo: number;
-  poiId?: string;
+  poiId: string;
   lat: number;
   lon: number;
   onRoute?: boolean;

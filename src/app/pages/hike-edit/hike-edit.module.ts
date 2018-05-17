@@ -22,6 +22,7 @@ import {
   HikeEditPoisExternalTableComponent,
   PoiIconsComponent,
   SpecialPoiDataComponent,
+  GpxInputComponent,
   // Modals
   HikeEditExternalPoiInfoComponent,
   HikeEditGTrackPoiInfoComponent
@@ -50,6 +51,7 @@ const COMPONENTS = [
   HikeEditPoisExternalTableComponent,
   PoiIconsComponent,
   SpecialPoiDataComponent,
+  GpxInputComponent,
   // Modals
   HikeEditExternalPoiInfoComponent,
   HikeEditGTrackPoiInfoComponent

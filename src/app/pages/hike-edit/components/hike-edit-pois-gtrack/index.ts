@@ -54,14 +54,16 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       });
 
     // Get pois by id from geoSearch result
-    Observable.combineLatest(
-      this._store.select(this._geoSearchSelectors.getGeoSearch('gTrackPois')),
-      this._store.select(this._poiSelectors.getPoiIds)
-    )
+    Observable
+      .combineLatest(
+        this._store.select(this._geoSearchSelectors.getGeoSearch('gTrackPois')),
+        this._store.select(this._poiSelectors.getPoiIds)
+      )
       .takeUntil(this._destroy$)
       .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
         if (searchData) {
-          const missingPoiIds = _.difference((<any>searchData).results, _.intersection((<any>searchData).results, inStorePoiIds))
+          const missingPoiIds = _.difference((<any>searchData).results, _.intersection((<any>searchData).results, inStorePoiIds));
+
           // Get only the not-loaded pois
           if (missingPoiIds && missingPoiIds.length > 0) {
             this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));

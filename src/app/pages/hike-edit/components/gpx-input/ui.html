@@ -1,0 +1,5 @@
+<input type="file" class="hidden" (change)="gpxInputListener($event)" accept=".gpx" #gpxInput/>
+<div class="btn-group" role="group" aria-label="GPX">
+  <button class="btn btn-sm btn-fill btn-primary" (click)="openGPX()">Import GPX</button>
+  <button class="btn btn-sm btn-fill btn-primary" [disabled]="!gpxRoute" (click)="route()">Routing</button>
+</div>

@@ -32,8 +32,9 @@ export class HikeProgramService {
       )
       .take(1)
       .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
-        const poiStops = _.cloneDeep(stops).filter(stop => stop.poiId);
+        const poiStops = _.cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
 
+        console.log('poiStops', poiStops);
         if (path.geometry.coordinates.length > 0) {
           poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
           poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
@@ -54,6 +55,7 @@ export class HikeProgramService {
         path
       ),
       onRoute: true,
+      poiId: 'endpoint',
       lat: coord[1],
       lon: coord[0],
       segment: {
