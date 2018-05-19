@@ -76,3 +76,4 @@ secrets.tgz
 .vscode
 firebase-debug.log
 .setup.sh
+reports
