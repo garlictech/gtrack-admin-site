@@ -1,0 +1,5 @@
+dist/
+docker/
+e2e/
+node_modules/
+src/
