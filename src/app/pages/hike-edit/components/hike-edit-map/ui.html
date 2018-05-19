@@ -4,7 +4,11 @@
 </div>
 
 <div class="button-container mt-2">
-  <button class="btn btn-sm btn-success btn-fill" (click)="toggleCurrentPositionMarker($event)">
+  <button
+    class="btn btn-sm btn-success btn-fill"
+    (click)="toggleCurrentPositionMarker($event)"
+    [disabled]="!(this.currentLocation$ | async)?.coords"
+  >
     <i class="fa fa-crosshairs"></i>
   </button>
   <button class="btn btn-sm btn-success btn-fill" (click)="resetMap($event)">
@@ -16,12 +20,14 @@
   <div class="btn-group btn-toggle">
     <button
       class="btn btn-sm btn-fill"
+      [disabled]="!allowPlanning"
       [ngClass]="{'btn-primary': mode === 'routing', 'btn-success': mode === 'checkpoint'}"
       (click)="setMode($event, 'routing')">
       Routing mode
     </button>
     <button
       class="btn btn-sm btn-fill"
+      [disabled]="!allowPlanning"
       [ngClass]="{'btn-primary': mode === 'checkpoint', 'btn-success': mode === 'routing'}"
       (click)="setMode($event, 'checkpoint')">
       Checkpoint mode

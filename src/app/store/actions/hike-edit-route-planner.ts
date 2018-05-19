@@ -10,6 +10,7 @@ export const POP_SEGMENT = '[HikeEditRoutePlanner] Pop segment';
 export const UPDATE_TOTAL = '[HikeEditRoutePlanner] Update total';
 export const SET_LOCATION = '[HikeEditRoutePlanner] Set location';
 export const SAVE_ROUTE = '[HikeEditRoutePlanner] Save route';
+export const SET_PLANNING = '[HikeEditRoutePlanner] Set planning';
 
 export class ResetRoutePlanningState implements Action {
   readonly type = RESET_ROUTE_PLANNING_STATE;
@@ -29,16 +30,12 @@ export class RoutingError implements Action {
 
 export class AddRoute implements Action {
   readonly type = ADD_ROUTE;
-  constructor(public payload: {
-    route: any
-  }) {}
+  constructor(public route: any) {}
 }
 
 export class PushSegment implements Action {
   readonly type = PUSH_SEGMENT;
-  constructor(public payload: {
-    segment: any
-  }) {}
+  constructor(public segment: any) {}
 }
 
 export class PopSegment implements Action {
@@ -47,16 +44,17 @@ export class PopSegment implements Action {
 
 export class UpdateTotal implements Action {
   readonly type = UPDATE_TOTAL;
-  constructor(public payload: {
-    total: any
-  }) {}
+  constructor(public total: any) {}
 }
 
 export class SetLocation implements Action {
   readonly type = SET_LOCATION;
-  constructor(public payload: {
-    location: any
-  }) {}
+  constructor(public location: any) {}
+}
+
+export class SetPlanning implements Action {
+  readonly type = SET_PLANNING;
+  constructor(public planning: boolean) {}
 }
 
 export type AllHikeEditRoutePlannerActions =
@@ -68,4 +66,5 @@ export type AllHikeEditRoutePlannerActions =
   | PushSegment
   | PopSegment
   | UpdateTotal
-  | SetLocation;
+  | SetLocation
+  | SetPlanning;

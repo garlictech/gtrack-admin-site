@@ -4,7 +4,7 @@ import { DynamicModalService, IDynamicComponentModalConfig } from 'subrepos/gtra
 import { IGooglePoi, IOsmPoi, IWikipediaPoi } from 'app/shared/interfaces';
 
 @Component({
-  selector: 'special-poi-data',
+  selector: 'gt-special-poi-data',
   templateUrl: 'ui.html'
 })
 export class SpecialPoiDataComponent {

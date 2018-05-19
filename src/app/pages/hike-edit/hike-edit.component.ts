@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -31,7 +31,8 @@ import * as _ from 'lodash';
 export class HikeEditComponent implements OnInit, OnDestroy {
   public allowSave$: Observable<boolean>;
   public working$: Observable<string | null>;
-
+  private _paramsId: string;
+  private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -55,61 +56,97 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
+    this._store.dispatch(new editedHikeProgramActions.ResetHikeProgram());
 
-    this._activatedRoute.params.takeUntil(this._destroy$).subscribe(params => {
-      // Edit existing hike
-      if (params && params.id) {
-        // Set page title
-        this._title.setTitle('Edit hike');
+    this._activatedRoute.params
+      .takeUntil(this._destroy$)
+      .subscribe(params => {
+        // Edit existing hike
+        if (params && params.id) {
+          this._paramsId = params.id;
 
-        // Set hike id and load hikeProgram data
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: params.id }, false));
-        this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
-      // Create new hike
-      } else {
-        // Set page title
-        this._title.setTitle('New hike');
+          // Set page title
+          this._title.setTitle('Edit hike');
 
-        // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
-        const _hikeId = uuid();
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: _hikeId }, false));
-        // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
+          // Set hike id and load hikeProgram data
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this._paramsId }, false));
+          this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
 
-        // Generate initial route id and load the empty route (for save toaster handling)
-        const _routeId = uuid();
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ routeId: _routeId }, false));
-        // Update the routes's dirty flag
-        this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
+          // Disable planning
+          this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(false));
+        // Create new hike
+        } else {
+          // Set page title
+          this._title.setTitle('New hike');
 
-        // Create initial language block
-        this._store.dispatch(
-          new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('en_US', {
-            title: `Test hike #${new Date().getTime()}`,
-            fullDescription: 'desc',
-            summary: 'summary'
-          })
-        );
-      }
-    });
+          // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
+          this._hikeId = uuid();
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this._hikeId }, false));
+          // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
+
+          // Generate initial route id and load the empty route (for save toaster handling)
+          const _routeId = uuid();
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ routeId: _routeId }, false));
+          // Update the routes's dirty flag
+          this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
+
+          // Create initial language block
+          this._store.dispatch(
+            new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('en_US', {
+              title: `Test hike #${new Date().getTime()}`,
+              fullDescription: 'desc',
+              summary: 'summary'
+            })
+          );
+        }
+      });
 
     this.allowSave$ = this._store.select(this._editedHikeProgramSelectors.getDirty).takeUntil(this._destroy$);
+
+    // Handling save success
+    this._store
+      .select(this._editedHikeProgramSelectors.getWorking)
+      .takeUntil(this._destroy$)
+      .filter(working => working !== null)
+      .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getWorking).takeUntil(this._destroy$))
+      .filter(working => working === null)
+      .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getError).take(1))
+      .takeUntil(this._destroy$)
+      .subscribe(error => {
+        if (error) {
+          let msg: string[] = [];
+          for (let idx in error) {
+            msg.push(`${idx}: ${error[idx]}`);
+          }
+
+          this._toasterService.pop({
+            type: 'error',
+            title: 'Hike',
+            body: `Error:<br>${msg.join('<br>')}`,
+            timeout: 8000
+          });
+        } else {
+          this._toasterService.pop('success', 'Hike', 'Success!');
+
+          // Load the hike page if it's a new hike
+          if (!this._paramsId) {
+            this._router.navigate([`/admin/hike/${this._hikeId}`]);
+          } else {
+            // Disable planning
+            this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(false));
+          }
+        }
+      });
 
     // Handling hike context changes
     this._store
       .select(this._editedHikeProgramSelectors.getHikeId)
-      .filter(hikeId => hikeId !== '')
       .takeUntil(this._destroy$)
+      .filter(hikeId => hikeId !== '')
       .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)).takeUntil(this._destroy$))
       .filter(hikeContext => !!(hikeContext))
       .subscribe((hikeContext: IHikeContextState) => {
-
-        // Hike saved
-        if (hikeContext.saved) {
-          this._toasterService.pop('success', 'Success!', 'Hike saved!');
-          this._store.dispatch(new commonHikeActions.HikeProgramModified((<IHikeContextState>hikeContext).id));
-          this._router.navigate([`/admin/hike/${(<IHikeContextState>hikeContext).id}`]);
-        // Hike loaded
-        } else if (hikeContext.loaded) {
+        if (hikeContext.loaded) {
           this._store
             .select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id))
             .take(1)
@@ -144,7 +181,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           bounds: (<any>routePlannerState.route).bounds,
           route: _.pick(routePlannerState.route, ['type', 'features'])
         };
-
         this._store.dispatch(new commonRouteActions.SaveRoute(_route));
       }
     });

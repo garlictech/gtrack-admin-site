@@ -1,8 +1,27 @@
 <div class="clearfix mb-2">
-  <button class="btn btn-sm btn-success btn-fill" (click)="retrievePlan()">Retrieve plan</button>
-  <button class="btn btn-sm btn-success btn-fill" (click)="removeLast()">Remove last</button>
-  <button class="btn btn-sm btn-success btn-fill" (click)="closeCircle()">Close circle</button>
-  <button class="btn btn-sm btn-success btn-fill" (click)="deletePlan()">Delete plan</button>
+  <button
+    class="btn btn-sm btn-success btn-fill"
+    [disabled]="(isPlanning$| async)"
+    (click)="retrievePlan()"
+  >Retrieve plan</button>
+
+  <button
+    class="btn btn-sm btn-success btn-fill"
+    [disabled]="!(isPlanning$| async)"
+    (click)="removeLast()"
+  >Remove last</button>
+
+  <button
+    class="btn btn-sm btn-success btn-fill"
+    [disabled]="!(isPlanning$| async) || (route$ | async)?.features.length < 3"
+    (click)="closeCircle()"
+  >Close circle</button>
+
+  <button
+    class="btn btn-sm btn-success btn-fill"
+    [disabled]="!(isPlanning$| async)"
+    (click)="deletePlan()"
+  >Delete plan</button>
 </div>
 
 <table class="table table-hover" *ngIf="(routeInfoData$ | async)?.segments.length > 0">

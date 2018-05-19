@@ -49,6 +49,20 @@ export class HikeEditPoiSelectors {
     this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
   }
 
+  public getSaveablePois(subdomain) {
+    const allPoiSelectorMap = {
+      'google': this.getAllGooglePois,
+      'osmAmenity': this.getAllOsmAmenityPois,
+      'osmNatural': this.getAllOsmNaturalPois,
+      'osmRoute': this.getAllOsmRoutePois,
+      'wikipedia': this.getAllWikipediaPois
+    }
+
+    return createSelector(allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
+      return pois.filter(p => p.inHike && !p.inGtrackDb);
+    });
+  }
+
   //
   // Context
   //

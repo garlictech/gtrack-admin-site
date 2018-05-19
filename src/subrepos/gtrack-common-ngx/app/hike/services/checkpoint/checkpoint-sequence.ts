@@ -6,7 +6,7 @@ export class CheckpointSequence {
 
   constructor(stops: IHikeProgramStop[]) {
     this.checkpoints = stops
-      .filter(stop => stop.isCheckpoint)
+      // .filter(stop => stop.isCheckpoint)
       .map((stop, i) => {
         return new Checkpoint(stop, i);
       });

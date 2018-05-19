@@ -48,4 +48,19 @@ export class CurrentPositionMarker {
       maximumAge: this.positioningInverval
     });
   }
+
+  public goToPosition(pos: L.LatLng) {
+    if (!this.marker) {
+      this.marker = L
+        .userMarker(pos, {
+          pulsing: true,
+          smallIcon: true
+        })
+        .addTo(this.map);
+    }
+
+    this.marker.setLatLng(pos);
+    this.map.setView(pos, this.map.getZoom());
+    this.map.spin(false);
+  }
 }

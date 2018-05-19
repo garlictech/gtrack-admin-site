@@ -66,11 +66,12 @@ describe('EditedGTrackPoi actions', () => {
   });
 
   it('should create SavePoi action', () => {
-    const action = new EditedGTrackPoiActions.PoiSaveSuccess();
+    const action = new EditedGTrackPoiActions.PoiSaveSuccess('fakeId');
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: EditedGTrackPoiActions.POI_SAVE_SUCCESS
+      type: EditedGTrackPoiActions.POI_SAVE_SUCCESS,
+      poiId: 'fakeId'
     });
   });
 

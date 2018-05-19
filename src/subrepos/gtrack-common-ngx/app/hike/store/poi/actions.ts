@@ -15,49 +15,37 @@ export enum PoiActionTypes {
 export class LoadPoi implements Action {
   readonly type = PoiActionTypes.LOAD_POI;
 
-  constructor(public context: string) {
-    // Empty
-  }
+  constructor(public context: string) {}
 }
 
 export class LoadPois implements Action {
   readonly type = PoiActionTypes.LOAD_POIS;
 
-  constructor(public contexts: string[]) {
-    // Empty
-  }
+  constructor(public contexts: string[]) {}
 }
 
 export class PoiLoaded implements Action {
   readonly type = PoiActionTypes.POI_LOADED;
 
-  constructor(public context: string, public poi: IPoiStored) {
-    // Empty
-  }
+  constructor(public context: string, public poi: IPoiStored) {}
 }
 
 export class AllPoiLoaded implements Action {
   readonly type = PoiActionTypes.ALL_POI_LOADED;
 
-  constructor(public contexts: string[], public pois: IPoiStored[]) {
-    // Empty
-  }
+  constructor(public contexts: string[], public pois: IPoiStored[]) {}
 }
 
 export class SavePoi implements Action {
   readonly type = PoiActionTypes.SAVE_POI;
 
-  constructor(public poi: IPoi) {
-    // Empty
-  }
+  constructor(public poi: IPoi) {}
 }
 
 export class PoiSaved implements Action {
   readonly type = PoiActionTypes.POI_SAVED
 
-  constructor(public context: string) {
-    // Empty
-  }
+  constructor(public context: string) {}
 }
 
 export class PoiModified implements Action {

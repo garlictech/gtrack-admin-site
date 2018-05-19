@@ -14,6 +14,7 @@ export class EditedHikeProgramSelectors {
   public getRouteId: MemoizedSelector<object, string>;
   public getPoiIds: MemoizedSelector<object, string[]>;
   public getStops: MemoizedSelector<object, IHikeProgramStop[]>;
+  public getStopsCount: MemoizedSelector<object, number>;
   public getDirty: MemoizedSelector<object, boolean>;
   public getWorking: MemoizedSelector<object, string | null>;
   public getData: MemoizedSelector<object, IHikeProgramStored>;
@@ -45,6 +46,10 @@ export class EditedHikeProgramSelectors {
 
     this.getStops = createSelector(this._featureSelector,
       (state: IEditedHikeProgramState) => state.data.stops
+    );
+
+    this.getStopsCount = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => state.data.stops.length
     );
 
     this.getDescriptions = createSelector(this._featureSelector,

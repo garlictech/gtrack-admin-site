@@ -2,33 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import {
-  PoiSelectors,
-  CenterRadius,
-  GeometryService,
-  GeoSearchSelectors,
-  Poi,
-  PoiSaved,
-  IGeoSearchContextState,
-  RouteSelectors
-} from 'subrepos/gtrack-common-ngx';
-import { IPoiStored, IPoi } from 'subrepos/provider-client';
+import { PoiSelectors, GeoSearchSelectors, Poi } from 'subrepos/gtrack-common-ngx';
+import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
+import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
-import { PoiEditorService } from 'app/shared/services';
+import { PoiEditorService, HikeProgramService } from 'app/shared/services';
 import { IGTrackPoi } from 'app/shared/interfaces';
+import { State, hikeEditPoiActions, commonPoiActions } from 'app/store';
 import {
-  State,
-  hikeEditPoiActions,
-  IExternalPoiListContextState,
-  commonPoiActions,
-  commonGeoSearchActions,
-  IHikeEditRoutePlannerState
-} from 'app/store';
-import {
-  HikeEditPoiSelectors,
-  HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors
+  HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
 } from 'app/store/selectors';
 
 import * as _ from 'lodash';
@@ -54,7 +36,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
-    private _geometryService: GeometryService,
+    private _hikeProgramService: HikeProgramService,
     private _poiSelectors: PoiSelectors
   ) {}
 
@@ -73,7 +55,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         this._store.select(this._editedHikeProgramSelectors.getPoiIds).takeUntil(this._destroy$),
         this._store.select(this._poiSelectors.getPoiIds).takeUntil(this._destroy$)
       )
-      .debounceTime(150)
+      .debounceTime(200)
       .takeUntil(this._destroy$)
       .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
         const missingPoiIds = _.difference(inHikePoiIds, _.intersection(inHikePoiIds, inStorePoiIds))
@@ -87,6 +69,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     // Poi list
     this.pois$ = this._store
       .select(this._editedHikeProgramSelectors.getHikePois<IPoiStored>(this._poiSelectors.getAllPois))
+      .debounceTime(200)
       .takeUntil(this._destroy$)
       .filter((pois: IPoiStored[]) => typeof pois !== 'undefined')
       .switchMap((pois: IPoiStored[]) => {
@@ -100,11 +83,25 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       });
 
     this.pois$
-      .debounceTime(150)
+      .debounceTime(200)
       .takeUntil(this._destroy$)
       .subscribe((pois: IGTrackPoi[]) => {
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);
+      });
+
+    this._store
+      .select(this._editedHikeProgramSelectors.getStopsCount)
+      .takeUntil(this._destroy$)
+      .subscribe((stopsCount: number) => {
+        this._hikeProgramService.updateHikeProgramStops();
+      });
+
+    this._store
+      .select(this._hikeEditRoutePlannerSelectors.getPathLength)
+      .takeUntil(this._destroy$)
+      .subscribe((pathLength: number) => {
+        this._hikeProgramService.updateHikeProgramStops();
       });
 
     //
@@ -145,13 +142,13 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
    * Show onroute markers checkbox click
    */
   public toggleOnrouteMarkers() {
-    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers({ subdomain: 'hike' }));
+    this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers('hike'));
   }
 
   /**
    * Show offroute markers checkbox click
    */
   public toggleOffrouteMarkers() {
-    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers({ subdomain: 'hike' }));
+    this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('hike'));
   }
 }

@@ -12,15 +12,16 @@
   <tbody>
     <ng-container *ngFor="let poi of (pois$ | async); let idx = index">
       <tr *ngIf="!!poi.onRoute === onRouteCheck">
-        <td><poi-icons [poi]="poi"></poi-icons></td>
+        <td><gt-poi-icons [poi]="poi"></gt-poi-icons></td>
         <td [ngClass]="{'text-danger': !poi.inGtrackDb}">{{translateDescription(poi.description, 'title')}}</td>
         <td>{{poi.distFromRoute | distance : true}}</td>
         <td>{{poi.types.join(', ')}}</td>
-        <td><special-poi-data [poi]="poi"></special-poi-data></td>
+        <td><gt-special-poi-data [poi]="poi"></gt-special-poi-data></td>
         <td class="td-actions">
           <button
             class="btn btn-simple btn-link"
             [ngClass]="{'btn-success': !poi.inHike, 'btn-danger': poi.inHike}"
+            *ngIf="!poi.inGtrackDb"
             (click)="handleInHikePoi($event, poi)" 
             title="{{poi.inHike ? 'Remove': 'Add'}} poi">
             <i class="material-icons">{{poi.inHike ? 'remove_circle': 'add_circle'}}</i>

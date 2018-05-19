@@ -152,7 +152,7 @@ export class RoutingControlService {
           };
 
           this._routePlannerService.addRouteSegment(_coordsArr, e.routes[0].summary, upDown);
-          this._moveLastWaypointToRoute(e.routes[0].coordinates.map(coord => [coord.lng, coord.lat]));
+          this._moveLastWaypointToRoute(_control, e.routes[0].coordinates.map(coord => [coord.lng, coord.lat]));
 
           this._store.dispatch(new hikeEditRoutePlannerActions.RoutingFinished());
 
@@ -176,25 +176,21 @@ export class RoutingControlService {
   /**
    * Move control waypoint positions to line
    */
-  private _moveLastWaypointToRoute(coords) {
-    if (this._controls.length > 0) {
-      const lastControl = _.last(this._controls);
-      const wayPoints = (<L.Routing.Control>lastControl).getWaypoints();
+  private _moveLastWaypointToRoute(control, coords) {
+    const wayPoints = (<L.Routing.Control>control).getWaypoints();
+    let _fixedWaypoints = _.cloneDeep(wayPoints);
 
-      let _fixedWaypoints = _.cloneDeep(wayPoints);
+    for (let i in wayPoints) {
+      let line = turf.lineString(coords);
+      let pt = turf.point([(<any>wayPoints[i].latLng).lng, (<any>wayPoints[i].latLng).lat]);
+      let snapped = turf.nearestPointOnLine(line, pt);
 
-      for (let i in wayPoints) {
-        let line = turf.lineString(coords);
-        let pt = turf.point([(<any>wayPoints[i].latLng).lng, (<any>wayPoints[i].latLng).lat]);
-        let snapped = turf.nearestPointOnLine(line, pt);
-
-        _fixedWaypoints[i].latLng = new L.LatLng(
-          (<any>snapped.geometry).coordinates[1],
-          (<any>snapped.geometry).coordinates[0]
-        );
-      }
-
-      (<L.Routing.Control>lastControl).setWaypoints(_fixedWaypoints);
+      _fixedWaypoints[i].latLng = new L.LatLng(
+        (<any>snapped.geometry).coordinates[1],
+        (<any>snapped.geometry).coordinates[0]
+      );
     }
+
+    (<L.Routing.Control>control).setWaypoints(_fixedWaypoints);
   }
 }

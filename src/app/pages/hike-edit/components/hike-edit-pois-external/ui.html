@@ -4,11 +4,11 @@
     <button
       class="btn btn-sm btn-fill btn-success"
       (click)="getPois()"
-      [disabled]="(routeInfoData$ | async)?.segments.length < 1"
+      [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1"
     >Get new</button>
   </div>
 
-  <div class="pull-left" *ngIf="loading$ | async"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
+  <div class="pull-left" *ngIf="(loading$ | async) || (saving$ | async)"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
 
   <div class="pull-right">
     <div class="form-check inline-checkbox">

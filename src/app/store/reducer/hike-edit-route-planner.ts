@@ -20,7 +20,8 @@ export const initialRouteInfoDataState: IHikeEditRoutePlannerState = {
   segments: [],
   total: {},
   location: '',
-  route: initialRouteDataState
+  route: initialRouteDataState,
+  planning: true
 };
 
 // export function hikeEditRoutePlannerReducer(
@@ -36,7 +37,7 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
     case hikeEditRoutePlannerActions.ADD_ROUTE:
       return {
         ...state,
-        route: action.payload.route
+        route: action.route
       };
 
     case hikeEditRoutePlannerActions.PUSH_SEGMENT:
@@ -44,7 +45,7 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
         ...state,
         segments: [
           ...state.segments,
-          action.payload.segment
+          action.segment
         ]
       };
 
@@ -57,7 +58,13 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
     case hikeEditRoutePlannerActions.UPDATE_TOTAL:
       return {
         ...state,
-        total: action.payload.total
+        total: action.total
+      };
+
+    case hikeEditRoutePlannerActions.SET_PLANNING:
+      return {
+        ...state,
+        planning: action.planning
       };
 
     default:

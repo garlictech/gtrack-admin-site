@@ -32,7 +32,9 @@ import {
   HikeModule,
   GeoSearchModule,
   GeoSearchEffects,
-  SearchFiltersModule
+  SearchFiltersModule,
+  BackgroundGeolocationEffects,
+  BackgroundGeolocationModule
 } from 'subrepos/gtrack-common-ngx';
 
 import { LanguageModule } from './language';
@@ -40,7 +42,7 @@ import { LanguageModule } from './language';
 // App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { AuthEffects, HikeEditPoiEffects, EditedHikeProgramEffects } from './store/effects';
+import { AuthEffects, HikeEditPoiEffects, EditedHikeProgramEffects, EditedGTrackPoiEffects } from './store/effects';
 
 import { store } from './store';
 
@@ -66,7 +68,8 @@ import {
   OsmRoutePoiService,
   GooglePoiService,
   ReverseGeocodingService,
-  LanguageService
+  LanguageService,
+  HikeProgramService
 } from './shared/services';
 // Vendor
 import { AngularFireModule } from 'angularfire2';
@@ -156,6 +159,7 @@ export class RavenErrorHandler implements ErrorHandler {
     SearchFiltersModule.forRoot({
       storeDomain: 'searchFilters'
     }),
+    BackgroundGeolocationModule.forRoot(),
     // Page modules
     CoreLayoutModule,
     AuthModule,
@@ -167,10 +171,12 @@ export class RavenErrorHandler implements ErrorHandler {
       HikeEditPoiEffects,
       RouteEffects,
       EditedHikeProgramEffects,
+      EditedGTrackPoiEffects,
       // Common-ngx
       PoiEffects,
       HikeEffects,
-      GeoSearchEffects
+      GeoSearchEffects,
+      BackgroundGeolocationEffects
     ]),
     // Vendor
     ToasterModule.forRoot(),
@@ -189,6 +195,7 @@ export class RavenErrorHandler implements ErrorHandler {
     OsmRoutePoiService,
     GooglePoiService,
     LanguageService,
+    HikeProgramService,
     // Selectors
     EditedGTrackPoiSelectors,
     EditedHikeProgramSelectors,

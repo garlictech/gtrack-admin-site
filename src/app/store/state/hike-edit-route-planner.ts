@@ -14,4 +14,5 @@ export interface IHikeEditRoutePlannerState {
   total: IHikeEditRoutePlannerTotalState;
   location: any;
   route: GeoJSON.FeatureCollection<any>;
+  planning: boolean;
 };

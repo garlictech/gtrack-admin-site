@@ -29,6 +29,8 @@ export class SavePoi implements Action {
 
 export class PoiSaveSuccess implements Action {
   readonly type = POI_SAVE_SUCCESS;
+
+  constructor(public poiId: string) {}
 }
 
 export class PoiSaveFailed implements Action {
