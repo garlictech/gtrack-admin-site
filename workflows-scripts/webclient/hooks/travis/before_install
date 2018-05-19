@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+if [[ "$TRAVIS_EVENT_TYPE" != "pull_request" ]]; then
+  pip install --user awscli
+  docker/login.sh
+fi
+
+npm run travis before_install
