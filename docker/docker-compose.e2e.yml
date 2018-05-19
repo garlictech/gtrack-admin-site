@@ -1,13 +1,13 @@
 version: '3.1'
 
 services:
-  garlictech.gtrack-admin-site.e2e-tester:
-    build: ../e2e
+  garlictech.gtrack-admin.e2e-tester:
+    build:
+      context: "../e2e"
     volumes:
-      - "../e2e/src:/protractor"
+      - "../e2e/src:/protractor/src"
+      - "../e2e/dist:/protractor/dist"
+      - "../reports/e2e:/protractor/reports"
       - "/dev/shm:/dev/shm"
-    environment:
-      - WEBSERVER_IP=gtrack-admin-site.webpack-server
     privileged: true
-    depends_on:
-      - gtrack-admin-site.webpack-server
+    network_mode: "host"
