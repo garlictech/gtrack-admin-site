@@ -6,8 +6,10 @@ import { DebugLog, log } from '../../log';
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   // tslint:disable no-forward-ref
+  // tslint:disable no-use-before-declare
   useExisting: forwardRef(() => DatePickerComponent),
   // tslint:enable no-forward-ref
+  // tslint:enable no-use-before-declare
   multi: true
 };
 
@@ -22,7 +24,7 @@ export class DatePickerComponent extends AbstractValueAccessor {
   @Input() defaultDate;
 
   constructor() {
-    super()
+    super();
     this._value = typeof this.defaultDate === 'string' ? new Date(<string>this.defaultDate) : this.value;
   }
 

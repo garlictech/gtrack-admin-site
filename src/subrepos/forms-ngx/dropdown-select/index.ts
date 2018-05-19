@@ -5,8 +5,10 @@ import { AbstractValueAccessor } from '../abstract-value-accessor';
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   // tslint:disable no-forward-ref
+  // tslint:disable no-use-before-declare
   useExisting: forwardRef(() => DropdownSelectComponent),
   // tslint:enable no-forward-ref
+  // tslint:enable no-use-before-declare
   multi: true
 };
 

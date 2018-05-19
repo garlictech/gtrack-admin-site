@@ -22,8 +22,10 @@ import { Store } from '@ngrx/store';
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   // tslint:disable no-forward-ref
+  // tslint:disable no-use-before-declare
   useExisting: forwardRef(() => FileUploadComponent),
   // tslint:enable no-forward-ref
+  // tslint:enable no-use-before-declare
   multi: true
 };
 

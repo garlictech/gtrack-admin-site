@@ -13,8 +13,8 @@ export interface IFieldBase {
   helpText?: string;
   title?: string;
   subTitle?: string;
-  hidden?: boolean
-  submitOnChange?: boolean
+  hidden?: boolean;
+  submitOnChange?: boolean;
 }
 
 export interface IField<T> extends IFieldBase {
