@@ -1,7 +1,7 @@
 import './styles/styles.scss';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { RouterStateSnapshot, Params } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { JsonpModule } from '@angular/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
+import * as Raven from 'raven-js';
 // Subrepos
 import {
   AuthenticationApiConfig,
@@ -74,6 +75,12 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { RoutePlannerService, RoutingControlService } from './shared/services/admin-map';
 import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
 
+console.log('ENVIRONMENT: ', process.env, environment);
+
+if (process.env.NODE_ENV !== 'development') {
+  Raven.config(environment.raven).install();
+}
+
 const hikeModuleConfig = new HikeModuleConfig();
 hikeModuleConfig.storeDomains = {
   hike: 'hike',
@@ -108,6 +115,16 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
     // Only return an object including the URL, params and query params
     // instead of the entire snapshot
     return { url, params, queryParams };
+  }
+}
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    console.error(err);
+
+    if (process.env.NODE_ENV !== 'development') {
+      Raven.captureException(err);
+    }
   }
 }
 
@@ -183,6 +200,7 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
       provide: RouterStateSerializer,
       useClass: CustomRouterStateSerializer
     },
+    { provide: ErrorHandler, useClass: RavenErrorHandler },
     // Lib
     ToasterService
   ],

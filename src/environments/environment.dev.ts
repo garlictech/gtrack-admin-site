@@ -12,4 +12,5 @@ export class Environment implements IEnvironment {
   };
 
   graphhopper = { apiKey: '111444bf-7c37-499b-b87c-b324d7406715' };
+  raven = 'no-raven-in-dev';
 }

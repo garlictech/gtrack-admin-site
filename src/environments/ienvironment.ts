@@ -14,4 +14,6 @@ export interface IEnvironment {
   graphhopper: {
     apiKey: string;
   };
+
+  raven: string;
 }

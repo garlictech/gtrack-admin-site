@@ -1,8 +1,1 @@
-#!/usr/bin/env bash
-set -e
-
-# DO NOT REMOVE THIS SECTION UNLESS YOU KNOW WHAT YOU DO
-npm run travis deploy
-
-# ADD YOUR PARTS HERE
-npm run deploy
+../../workflows-scripts/webclient/hooks/travis/deploy

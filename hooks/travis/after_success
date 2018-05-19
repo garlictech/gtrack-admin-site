@@ -1,5 +1,1 @@
-#!/usr/bin/env bash
-npm run travis after_success
-set -e
-
-# ADD YOUR PARTS HERE
+../../workflows-scripts/webclient/hooks/travis/after_success
