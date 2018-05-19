@@ -32,29 +32,30 @@ export class DynamicModalCoreComponent {
     if (this.modalConfig.component.contentComponentName) {
       const factories = Array.from((<any>this._resolver)._factories.keys());
       const factoryClass = <Type<any>>factories.find((x: any) => {
-        return x.name === this.modalConfig.component.contentComponentName;
+        return x.componentName === this.modalConfig.component.contentComponentName;
       });
 
       if (factoryClass === null) {
         console.log(`ERROR: factoryClass for component name ${this.modalConfig.component.contentComponentName} not found.`);
-      }
-      const compFactory = this._resolver.resolveComponentFactory(factoryClass);
-      this._compRef = compFactory.create(this._injector);
+      } else {
+        const compFactory = this._resolver.resolveComponentFactory(factoryClass);
+        this._compRef = compFactory.create(this._injector);
 
-      // Pass params to the loaded component
-      this._compRef.instance.modalConfig = _.merge({
-        modal: {
-          close: () => {
-            this.close();
+        // Pass params to the loaded component
+        this._compRef.instance.modalConfig = _.merge({
+          modal: {
+            close: () => {
+              this.close();
+            }
           }
-        }
-      }, this.modalConfig);
+        }, this.modalConfig);
 
-      this._appRef.attachView(this._compRef.hostView);
-      this._compRef.onDestroy(() => {
-        this._appRef.detachView(this._compRef.hostView);
-      });
-      this.modalBody.nativeElement.appendChild(this._compRef.location.nativeElement);
+        this._appRef.attachView(this._compRef.hostView);
+        this._compRef.onDestroy(() => {
+          this._appRef.detachView(this._compRef.hostView);
+        });
+        this.modalBody.nativeElement.appendChild(this._compRef.location.nativeElement);
+      }
     }
   }
 

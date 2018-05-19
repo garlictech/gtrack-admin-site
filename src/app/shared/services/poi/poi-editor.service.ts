@@ -139,12 +139,12 @@ export class PoiEditorService {
    */
   public organizePois(
     pois: IExternalPoi[] | IGTrackPoi[],
-    path: GeoJSON.Feature<GeoJSON.Polygon>,
+    path: GeoJSON.Feature<GeoJSON.LineString>,
     isGTrackPoi: Boolean = false
   ) {
     let _pois: any[] = [];
 
-    if (pois && path) {
+    if (pois && pois.length > 0 && path) {
       const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 50, {units: 'meters'});
       const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 1000, {units: 'meters'});
 

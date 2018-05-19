@@ -8,6 +8,7 @@ import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
   templateUrl: './ui.html'
 })
 export class HikeEditExternalPoiInfoComponent implements OnInit {
+  public static componentName = 'HikeEditExternalPoiInfoComponent';
   public poi: IGooglePoi | IOsmPoi | IWikipediaPoi;
   public modalConfig: IDynamicComponentModalConfig;
 

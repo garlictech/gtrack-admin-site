@@ -28,7 +28,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   public isPlanning$: Observable<boolean>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
   private _map: AdminMap;
-  private _routeOnMap: L.FeatureGroup;
 
   constructor(
     private _adminMapService: AdminMapService,
@@ -76,7 +75,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         if (routeContext.saved) {
           this._toasterService.pop('success', 'Route', 'Success!');
 
-          this._refreshRouteOnMap();
+          this._routePlannerService.refreshRouteOnMap();
         // Route loaded
         } else if (routeContext.loaded) {
           this._store
@@ -85,10 +84,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
             .take(1)
             .subscribe((route: IRouteStored) => {
               // Draw an independent path to the map
-              this._routeOnMap = this._addRouteLineGeoJSON(route.route.features[0]);
+              this._routePlannerService.drawRouteLineGeoJSON(route.route.features[0]);
+              this._map.fitBounds(route);
 
               // Load path to routePlanner state - necessary for drawing pois
-              this._routePlannerService.addLoadedRoute(route.route);
+              this._routePlannerService.addRouteToTheStore(route.route);
             });
         }
       });
@@ -174,42 +174,5 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
       }
     );
-  }
-
-  /**
-   * Create multi-line group from a LineString
-   */
-  private _addRouteLineGeoJSON(geoJson): L.FeatureGroup {
-    const group = new L.FeatureGroup();
-    const styles = [
-      { color: 'black',   opacity: 0.15,  weight: 12 },
-      { color: 'white',   opacity: 0.8,   weight: 8 },
-      { color: '#722ad6', opacity: 1,     weight: 3 }
-    ];
-
-    for (let num of [0, 1, 2]) {
-      group.addLayer(L.geoJSON(geoJson, {
-        style: <any>styles[num]
-      }));
-    }
-    group.addTo(this._map.leafletMap);
-
-    return group;
-  }
-
-  /**
-   * Refresh route path after save
-   */
-  private _refreshRouteOnMap() {
-    if (this._routeOnMap) {
-      this._map.removeGeoJSON(this._routeOnMap);
-    }
-
-    this._store
-      .select(this._hikeEditRoutePlannerSelectors.getPath)
-      .take(1)
-      .subscribe((path: any) => {
-        this._routeOnMap = this._addRouteLineGeoJSON(path);
-      });
   }
 }

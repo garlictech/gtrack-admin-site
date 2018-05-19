@@ -1,4 +1,4 @@
-import { Route } from '../../../hike/services/route';
+import { IRoute } from '../../../../../provider-client';
 import { IconService } from '../icon';
 
 import { CurrentPositionMarker } from './current-position-marker';
@@ -47,7 +47,7 @@ export class Map {
     return this.map;
   }
 
-  public getBounds(route: Route): L.LatLngBoundsExpression {
+  public getBounds(route: IRoute): L.LatLngBoundsExpression {
     let bounds = route.bounds;
 
     return [
@@ -64,7 +64,7 @@ export class Map {
     });
   }
 
-  public fitBounds(route: Route) {
+  public fitBounds(route: IRoute) {
     return this.fitBox(this.getBounds(route));
   }
 

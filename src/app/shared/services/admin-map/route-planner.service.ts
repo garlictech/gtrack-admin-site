@@ -4,22 +4,36 @@ import { Store } from '@ngrx/store';
 import { State, hikeEditRoutePlannerActions } from 'app/store';
 import { GameRuleService, ISegment, RouteService } from 'subrepos/gtrack-common-ngx';
 import { initialRouteDataState } from 'app/store/reducer';
-import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from 'app/store/selectors';
+import { AdminMap } from './lib/admin-map';
+import { AdminMapService } from './admin-map.service';
 
+import * as L from 'leaflet';
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
 import * as rewind from 'geojson-rewind';
 import * as d3 from 'd3';
-import { LineString } from '@turf/turf';
 
 @Injectable()
 export class RoutePlannerService {
+  private _map: AdminMap;
+  private _routeOnMap: L.FeatureGroup;
+
   constructor(
     private _store: Store<State>,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
+    private _adminMapService: AdminMapService,
   ) {
+    this._store
+      .select(this._hikeEditMapSelectors.getMapId)
+      .filter(id => id !== '')
+      .subscribe((mapId: string) => {
+        this._map = this._adminMapService.getMapById(mapId);
+      });
+
     // Update totals on each segment update
     this._store
       .select(this._hikeEditRoutePlannerSelectors.getSegments)
@@ -28,7 +42,7 @@ export class RoutePlannerService {
         this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
 
         // Refresh route data
-        this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(this._createGeoJSON(segments)));
+        this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(this._createGeoJsonFromSegments(segments)));
       });
   }
 
@@ -36,9 +50,8 @@ export class RoutePlannerService {
    * Add the loaded route to the store
    * This is an initial loading method, the segment based route drawing will replace it.
    */
-  public addLoadedRoute(route) {
+  public addRouteToTheStore(route) {
     let _geoJSON = _.cloneDeep(route);
-    _geoJSON.bounds = this._routeService.getBounds(_geoJSON);
 
     this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_geoJSON));
   }
@@ -84,7 +97,7 @@ export class RoutePlannerService {
   /**
    * Create track from geoJson
    */
-  private _createGeoJSON(segments) {
+  private _createGeoJsonFromSegments(segments) {
     let _geoJSON: any = _.cloneDeep(initialRouteDataState);
 
     for (let i in segments) {
@@ -111,7 +124,7 @@ export class RoutePlannerService {
   }
 
   /**
-   * _createGeoJSON submethod
+   * _createGeoJsonFromSegments submethod
    */
   private _createRoutePoint(dataPoint, index) {
     return {
@@ -127,7 +140,7 @@ export class RoutePlannerService {
   }
 
   /**
-   * _createGeoJSON submethod
+   * _createGeoJsonFromSegments submethod
    */
   private _getLastPointOfLastSegment(segments) {
     const _lastSegment = segments[segments.length - 1];
@@ -168,5 +181,41 @@ export class RoutePlannerService {
       });
 
     return _path;
+  }
+
+  /**
+   * Create multi-line group from a LineString
+   */
+  public drawRouteLineGeoJSON(geoJSON) {
+    if (this._routeOnMap) {
+      this._map.removeGeoJSON(this._routeOnMap);
+      delete this._routeOnMap;
+    }
+
+    this._routeOnMap = new L.FeatureGroup();
+    const styles = [
+      { color: 'black',   opacity: 0.15,  weight: 12 },
+      { color: 'white',   opacity: 0.8,   weight: 8 },
+      { color: '#722ad6', opacity: 1,     weight: 3 }
+    ];
+
+    for (let num of [0, 1, 2]) {
+      this._routeOnMap.addLayer(L.geoJSON(geoJSON, {
+        style: <any>styles[num]
+      }));
+    }
+    this._routeOnMap.addTo(this._map.leafletMap);
+  }
+
+  /**
+   * Refresh route path after save
+   */
+  public refreshRouteOnMap() {
+    this._store
+      .select(this._hikeEditRoutePlannerSelectors.getPath)
+      .take(1)
+      .subscribe((path: any) => {
+        this.drawRouteLineGeoJSON(path);
+      });
   }
 }
