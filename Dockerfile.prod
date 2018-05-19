@@ -1,0 +1,2 @@
+FROM garlictech2/angular2-app-server:v5.3.3
+COPY dist/ /usr/share/nginx/html

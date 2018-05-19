@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this._title.setTitle('Login');
+    this._title.setTitle('gTrack Login');
 
     this.loggingIn$ = this._store.select(this._authSelectors.loggingIn);
   }
