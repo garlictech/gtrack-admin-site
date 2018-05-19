@@ -21,7 +21,7 @@ describe('GeoSearch selectors', () => {
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
-    searches = [ ...fixtures ];
+    searches = [...fixtures];
     contexts = searches.map(search => search.id);
     destroy$ = new Subject<boolean>();
 
@@ -59,7 +59,7 @@ describe('GeoSearch selectors', () => {
       store
         .select(geoSearchSelectors.getGeoSearchContexts)
         .takeUntil(destroy$)
-        .subscribe(contexts => (result = contexts));
+        .subscribe(_contexts => (result = _contexts));
 
       expect(result).toEqual([]);
 
@@ -106,5 +106,4 @@ describe('GeoSearch selectors', () => {
       expect(result).toEqual(searches[0]);
     });
   });
-
 });
