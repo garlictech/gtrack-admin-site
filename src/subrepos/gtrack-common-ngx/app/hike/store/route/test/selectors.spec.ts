@@ -22,7 +22,7 @@ describe('Route selectors', () => {
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
-    routes = [ ...routeFixtures ];
+    routes = [...routeFixtures];
     ids = routes.map(route => route.id);
     destroy$ = new Subject<boolean>();
 
@@ -60,7 +60,7 @@ describe('Route selectors', () => {
       store
         .select(routeSelectors.getRouteIds)
         .takeUntil(destroy$)
-        .subscribe(ids => (result = ids));
+        .subscribe(_ids => (result = _ids));
 
       expect(result).toEqual([]);
 
@@ -80,7 +80,7 @@ describe('Route selectors', () => {
       store
         .select(routeSelectors.getAllRoutes)
         .takeUntil(destroy$)
-        .subscribe(routes => (result = routes));
+        .subscribe(_routes => (result = _routes));
 
       expect(result).toEqual([]);
 
@@ -111,5 +111,4 @@ describe('Route selectors', () => {
       expect(result).toEqual(routes[0]);
     });
   });
-
 });
