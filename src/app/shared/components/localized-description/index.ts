@@ -34,7 +34,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
 
   constructor(
     private _store: Store<State>,
-    private _cdr: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -45,13 +45,17 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   }
 
   ngAfterViewInit() {
-    this.selectableLanguages$ = this.languageKeys$.map(usedKeys =>
-      DESCRIPTION_LANGUAGES
-        .filter(lang => usedKeys.indexOf(lang.locale) === -1)
-        .map(lang => {
-          return { label: lang.name, value: lang.locale };
-        })
-    );
+    this._changeDetectorRef.detectChanges();
+
+    this.selectableLanguages$ = this.languageKeys$
+      .takeUntil(this._destroy$)
+      .map(usedKeys =>
+        DESCRIPTION_LANGUAGES
+          .filter(lang => usedKeys.indexOf(lang.locale) === -1)
+          .map(lang => {
+            return { label: lang.name, value: lang.locale };
+          })
+      );
   }
 
   ngOnDestroy() {
