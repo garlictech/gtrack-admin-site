@@ -1,5 +1,6 @@
 import { IProviderInput } from './provider';
 import { ILocalizedItem, ITextualDescription } from './common';
+import { IPublishable, EObjectState } from './state';
 
 export enum EPoiTypes {
   google = 'google',
@@ -11,6 +12,10 @@ export enum EPoiTypes {
 
 export interface IPoiArchiveInput extends IProviderInput {
   id: string;
+}
+
+export interface IPoiMergeInput extends IProviderInput {
+  ids: string[]
 }
 
 export interface IPoiSaveResponse {
@@ -37,7 +42,7 @@ export interface IPoi {
 
 export interface IPoiInput extends IPoi, IProviderInput {}
 
-export interface IPoiStored extends IPoi {
+export interface IPoiStored extends IPoi, IPublishable {
   id: string;
   timestamp: number;
 }

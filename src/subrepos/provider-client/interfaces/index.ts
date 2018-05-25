@@ -20,3 +20,4 @@ export * from './geospatial-search';
 export * from './route';
 export * from './track';
 export * from './checkpoint';
+export * from './state';

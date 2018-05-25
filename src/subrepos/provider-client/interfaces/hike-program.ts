@@ -1,6 +1,7 @@
 import { IPoi } from './poi';
 import { IProviderInput } from './provider';
 import { ILocalizedItem, ITextualDescription } from './common';
+import { IPublishable } from './state';
 
 export interface IHikeProgramSaveResponse {
   id: string;
@@ -53,7 +54,7 @@ export interface IHikeProgram {
 
 export interface IHikeProgramInput extends IHikeProgram, IProviderInput {}
 
-export interface IHikeProgramStored extends IHikeProgram {
+export interface IHikeProgramStored extends IHikeProgram, IPublishable {
   id: string;
   timestamp: number;
 }
