@@ -3,7 +3,7 @@
     <button
       class="btn btn-sm btn-fill btn-success"
       (click)="getPois()"
-      [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1"
+      [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (searchContext$ | async)?.working"
     >Get new</button>
   </div>
 
