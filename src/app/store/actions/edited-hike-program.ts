@@ -64,7 +64,7 @@ export class SetStops implements Action {
 
 export class RemoveStopByPoiId implements Action {
   readonly type = REMOVE_STOP_BY_POI_ID;
-  constructor(public poiId: string) {}
+  constructor(public poiIds: string[]) {}
 }
 
 export class SaveHikeProgram implements Action {

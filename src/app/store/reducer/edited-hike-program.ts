@@ -90,7 +90,7 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
 
     case editedHikeProgramActions.REMOVE_STOP_BY_POI_ID: {
       newState.dirty = true;
-      newState.data.stops = newState.data.stops.filter(s => s.poiId !== action.poiId)
+      newState.data.stops = newState.data.stops.filter(s => action.poiIds.indexOf(s.poiId) < 0)
       return newState;
     }
 

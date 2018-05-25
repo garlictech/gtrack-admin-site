@@ -22,7 +22,7 @@ export class HikeEditPoisHikeTableComponent {
   public removePoi($event, poi) {
     $event.stopPropagation();
 
-    this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(poi.id));
+    this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId([poi.id]));
   }
 
   public openModal($event, poi: IGTrackPoi) {

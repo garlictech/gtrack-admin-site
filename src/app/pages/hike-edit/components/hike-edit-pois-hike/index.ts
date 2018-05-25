@@ -8,7 +8,7 @@ import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { PoiEditorService, HikeProgramService } from 'app/shared/services';
 import { IGTrackPoi } from 'app/shared/interfaces';
-import { State, hikeEditPoiActions, commonPoiActions } from 'app/store';
+import { State, hikeEditPoiActions, commonPoiActions, editedHikeProgramActions } from 'app/store';
 import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
 } from 'app/store/selectors';
@@ -78,7 +78,16 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
           .filter((path: any) => path && path.geometry.coordinates.length > 0)
           .takeUntil(this._destroy$)
           .map((path: any) => {
-            return this._poiEditorService.organizePois(pois, path);
+            const organizedPois = this._poiEditorService.organizePois(pois, path);
+            const poiIds = _.map(pois, 'id');
+            const organizedPoiIds = _.map(organizedPois, 'id');
+            const removablePoiIds = _.difference(poiIds, _.intersection(poiIds, organizedPoiIds))
+
+            if (removablePoiIds.length > 0) {
+              this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(removablePoiIds));
+            }
+
+            return organizedPois;
           });
       });
 
