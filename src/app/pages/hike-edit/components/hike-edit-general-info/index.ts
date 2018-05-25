@@ -66,7 +66,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
 
   ngAfterViewInit() {
     this._changeDetectorRef.detectChanges();
-}
+  }
 
   private _initDescriptionFormConfig() {
     this.descriptionSelector = this._editedHikeProgramSelectors.getDescriptions;

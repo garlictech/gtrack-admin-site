@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -9,7 +9,7 @@ import { DESCRIPTION_LANGS } from 'app/app.constants';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi, ITextualDescriptionItem, IGTrackPoi } from 'app/shared/interfaces';
 import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
 import { IDynamicComponentModalConfig, PoiSelectors, Poi } from 'subrepos/gtrack-common-ngx';
-import { IPoiStored, IPoi, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { IPoiStored, IPoi, ILocalizedItem, ITextualDescription, EObjectState } from 'subrepos/provider-client';
 import { EditedGTrackPoiSelectors } from 'app/store/selectors';
 
 import { ToasterService } from 'angular2-toaster';
@@ -32,7 +32,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   public poiLoaded$: Observable<boolean>;
   public isDirty$: Observable<boolean>;
 
-  private _gTrackPoi: IPoiStored;
+  public gTrackPoi: IPoiStored;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -49,7 +49,16 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
 
     this.poiLoaded$ = this._store
       .select(this._editedGTrackPoiSelectors.getData)
+      .takeUntil(this._destroy$)
       .map(data => !!data);
+
+    this._store
+      .select(this._editedGTrackPoiSelectors.getData)
+      .takeUntil(this._destroy$)
+      .subscribe(data => {
+        this.gTrackPoi = data;
+        console.log('this.gTrackPoi', this.gTrackPoi);
+      });
 
     this.isDirty$ = this._store
       .select(this._editedGTrackPoiSelectors.getDirty)
@@ -100,6 +109,15 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   public savePoi() {
     // Save hikeProgram
     this._store.dispatch(new editedGTrackPoiActions.SavePoi());
+  }
+
+  public deletePoi(poiId: string) {
+    this._store.dispatch(new commonPoiActions.UpdatePoiState(poiId, EObjectState.archived));
+  }
+
+  // TODO: just for testing!!
+  public resetPoi(poiId: string) {
+    this._store.dispatch(new commonPoiActions.UpdatePoiState(poiId, EObjectState.draft));
   }
 
   public submitDescription = (langKey: string, data: any) => {

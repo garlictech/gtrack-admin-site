@@ -13,4 +13,15 @@
     [disabled]="!(isDirty$ | async)"
   >Save</button>
 
+  <button
+    class="btn btn-sm btn-fill btn-danger"
+    (click)="deletePoi(poiId)"
+  >Delete</button>
+
+  <button
+    class="btn btn-sm btn-fill btn-warning"
+    (click)="resetPoi(poiId)"
+  >Reset</button>
+
+  <pre>{{gTrackPoi | json}}</pre>
 </div>

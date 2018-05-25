@@ -1,7 +1,7 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { IEditedGTrackPoiState } from '../state';
 import { editedGTrackPoiActions } from '../index';
-
+import { EObjectState } from 'subrepos/provider-client';
 import * as _ from 'lodash';
 
 export const initialEditedGTrackPoiState: IEditedGTrackPoiState = {
@@ -12,7 +12,8 @@ export const initialEditedGTrackPoiState: IEditedGTrackPoiState = {
     lat: 0,
     lon: 0,
     description: { en_US: { title: 'A new poi' } },
-    types: []
+    types: [],
+    state: EObjectState.draft
   },
   dirty: false,
   working: null,
