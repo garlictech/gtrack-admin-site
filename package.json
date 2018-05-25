@@ -156,7 +156,7 @@
         "protractor": "^5.3.1"
     },
     "config": {
-        "dockerWorkflowVersion": "v5.3.3",
+        "dockerWorkflowVersion": "v5.4.1",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }
