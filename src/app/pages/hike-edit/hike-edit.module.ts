@@ -20,6 +20,7 @@ import {
   HikeEditPoisHikeTableComponent,
   HikeEditPoisExternalComponent,
   HikeEditPoisExternalTableComponent,
+  HikeEditOutlineComponent,
   PoiIconsComponent,
   SpecialPoiDataComponent,
   // Modals
@@ -48,6 +49,7 @@ const COMPONENTS = [
   HikeEditPoisHikeTableComponent,
   HikeEditPoisExternalComponent,
   HikeEditPoisExternalTableComponent,
+  HikeEditOutlineComponent,
   PoiIconsComponent,
   SpecialPoiDataComponent,
   // Modals

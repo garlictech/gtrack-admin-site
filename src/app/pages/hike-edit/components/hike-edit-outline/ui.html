@@ -1,0 +1,20 @@
+<table class="table table-hover">
+  <thead class="text-success">
+    <tr>
+      <th>#</th>
+      <th>Poi</th>
+      <th>Distance from origo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let stop of (stops$ | async); let idx = index; let l = count">
+      <tr>
+        <td>{{idx + 1}}.</td>
+        <td *ngIf="idx > 0 && idx < l - 1">{{translateDescription(stop.description, 'title')}}</td>
+        <td *ngIf="idx === 0">Start point</td>
+        <td *ngIf="idx === l - 1">End point</td>
+        <td>{{stop.distanceFromOrigo | distance}}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

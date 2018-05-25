@@ -81,4 +81,24 @@ export class EditedHikeProgramSelectors {
     )
   }
 
+  public getStopsWithPoiNames<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
+    return createSelector(
+      getAllSelector,
+      this.getStops,
+      (pois, stops) => {
+        const _stops = _.cloneDeep(stops);
+
+        for (let stop of _stops) {
+          const stopPoi = pois.find(p => p.id === stop.poiId);
+
+          if (stopPoi) {
+            (<any>stop).description = stopPoi.description;
+          }
+        }
+
+        return _stops;
+      }
+    )
+  }
+
 }
