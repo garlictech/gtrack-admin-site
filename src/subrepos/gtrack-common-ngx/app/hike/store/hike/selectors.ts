@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { hikeAdapter, hikeContextStateAdapter, IHikeState, IHikeContextState } from './state';
 import { EXTERNAL_HIKE_DEPENDENCIES, IExternalHikeDependencies } from '../../externals';
 import { Dictionary } from '@ngrx/entity/src/models';
-import { IHikeProgram, IHikeProgramStored } from 'subrepos/provider-client';
+import { IHikeProgram, IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 
 import { GeoSearchSelectors } from '../../../geosearch';
 import { SearchFiltersSelectors } from '../../../search-filters';
@@ -44,6 +44,10 @@ export class HikeSelectors {
 
   public getHike(context: string) {
     return createSelector(this.getAllHikes, (hikes: IHikeProgramStored[]) => hikes.find(hike => hike.id === context));
+  }
+
+  public getActiveHikes() {
+    return createSelector(this.getAllHikes, (hikes: IHikeProgramStored[]) => hikes.filter(hike => hike.state !== EObjectState.archived));
   }
 
   public getHikeContext(id: string) {

@@ -1,12 +1,13 @@
 import { Action } from '@ngrx/store';
-import { IPoi, IHikeProgramStored } from 'subrepos/provider-client';
+import { IPoi, IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 
 export enum HikeProgramActionTypes {
   LOAD_HIKE_PROGRAM = '[HikeProgram] Load hikeProgram',
   LOAD_HIKE_PROGRAM_FAILED = '[HikeProgram] Load hikeProgram failed',
   HIKE_PROGRAM_LOADED = '[HikeProgram] HikeProgram loaded',
   LOAD_HIKE_PROGRAMS = '[HikeProgram] Load hikePrograms',
-  ALL_HIKE_PROGRAMS_LOADED = '[HikeProgram] All hikePrograms loaded'
+  ALL_HIKE_PROGRAMS_LOADED = '[HikeProgram] All hikePrograms loaded',
+  UPDATE_HIKE_PROGRAM_STATE = '[HikeProgram] Update hike program state'
 }
 
 export class LoadHikeProgram implements Action {
@@ -37,9 +38,16 @@ export class AllHikeProgramsLoaded implements Action {
   constructor(public contexts: string[], public hikePrograms: IHikeProgramStored[]) {}
 }
 
+export class UpdateHikeProgramState implements Action {
+  readonly type = HikeProgramActionTypes.UPDATE_HIKE_PROGRAM_STATE;
+
+  constructor(public id: string, public state: EObjectState) {}
+}
+
 export type AllHikeActions =
   | LoadHikeProgram
   | HikeProgramLoaded
   | LoadHikeProgramFailed
   | LoadHikePrograms
-  | AllHikeProgramsLoaded;
+  | AllHikeProgramsLoaded
+  | UpdateHikeProgramState;
