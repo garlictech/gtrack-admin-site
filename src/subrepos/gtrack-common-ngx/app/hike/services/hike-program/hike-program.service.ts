@@ -7,7 +7,7 @@ import 'rxjs/add/operator/filter';
 
 import { HikeProgram } from './hike-program';
 
-import { IHikeProgram, IHikeProgramStored, IHikeProgramSaveResponse } from 'subrepos/provider-client';
+import { IHikeProgram, IHikeProgramStored, IHikeProgramSaveResponse, EObjectState } from 'subrepos/provider-client';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 import { CheckpointService } from '../checkpoint';
 
@@ -41,6 +41,16 @@ export class HikeProgramService {
 
     return this._deepstream
       .callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data)
+      .take(1);
+  }
+
+  public updateState(id: string, state: EObjectState) {
+    return this._deepstream
+      .callRpc('admin.state', {
+        id: id,
+        table: 'hike_programs',
+        state: state
+      })
       .take(1);
   }
 }

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import {
   State, commonHikeActions
 } from 'app/store';
-import { IHikeProgramStored } from 'subrepos/provider-client';
+import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
 import { LanguageService } from 'app/shared/services';
 
@@ -31,7 +31,7 @@ export class HikeListComponent implements OnInit, OnDestroy {
     this._title.setTitle('Hikes');
 
     this.hikeList$ = this._store
-      .select(this._hikeSelectors.getAllHikes)
+      .select(this._hikeSelectors.getAllHikes) // TODO: getActiveHikes
       .takeUntil(this._destroy$)
       .map((hikes) => _.orderBy(hikes, ['timestamp'], ['desc']));
 
@@ -43,8 +43,17 @@ export class HikeListComponent implements OnInit, OnDestroy {
     this._destroy$.unsubscribe();
   }
 
-  deleteHike(hikeId) {
-    // this._store.dispatch(this._actions.deleteHike(hikeId));
+  public publishHike(hikeId: string) {
+    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(hikeId, EObjectState.published));
+  }
+
+  public deleteHike(hikeId: string) {
+    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(hikeId, EObjectState.archived));
+  }
+
+  // TODO: just for testing!!
+  public resetState(hikeId: string) {
+    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(hikeId, EObjectState.draft));
   }
 
   public translateDescription(description, field) {

@@ -1,6 +1,7 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { IEditedHikeProgramState } from '../state';
 import { editedHikeProgramActions } from '../index';
+import { EObjectState } from 'subrepos/provider-client';
 
 import * as _ from 'lodash';
 
@@ -19,7 +20,8 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
     routeId: '',
     description: { en_US: { title: 'a new hike' } },
     stops: [],
-    timestamp: 0
+    timestamp: 0,
+    state: EObjectState.draft
   },
   dirty: false,
   working: null,
