@@ -131,7 +131,7 @@
         "@angularclass/hmr-loader": "^3.0.2",
         "@ngrx/store-devtools": "^4.1.1",
         "@ngrx/schematics": "github:ngrx/schematics-builds",
-        "@types/d3": "^4.13.0",
+        "@types/d3": "^4.7.0",
         "@types/geojson": "^7946.0.3",
         "@types/googlemaps": "^3.26.8",
         "@types/jasmine": "^2.8.7",
@@ -156,7 +156,7 @@
         "protractor": "^5.3.1"
     },
     "config": {
-        "dockerWorkflowVersion": "v5.4.1",
+        "dockerWorkflowVersion": "v5.3.3",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }
