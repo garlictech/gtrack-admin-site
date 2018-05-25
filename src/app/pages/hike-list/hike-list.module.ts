@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { HikeListComponent } from './hike-list.component';
+import { GpxInputComponent } from './components';
 
 const COMPONENTS = [
-  HikeListComponent
+  HikeListComponent,
+  GpxInputComponent,
 ];
 
 @NgModule({

@@ -10,7 +10,6 @@ export { HikeEditPoisHikeTableComponent } from './hike-edit-pois-hike/table';
 export { HikeEditRoutePlannerComponent } from './hike-edit-route-planner';
 export { PoiIconsComponent } from './poi-icons';
 export { SpecialPoiDataComponent } from './special-poi-data';
-export { GpxInputComponent } from './gpx-input';
 // Modals
 export { HikeEditExternalPoiInfoComponent } from './modals/hike-edit-external-poi-info';
 export { HikeEditGTrackPoiInfoComponent } from './modals/hike-edit-gtrack-poi-info';

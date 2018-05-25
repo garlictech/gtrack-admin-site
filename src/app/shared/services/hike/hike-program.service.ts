@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { State, editedHikeProgramActions } from 'app/store';
 import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
-import { IHikeProgramStop } from 'subrepos/provider-client';
+import { IHikeProgramStop, IRoute } from 'subrepos/provider-client';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 import { ElevationService, GameRuleService } from 'subrepos/gtrack-common-ngx';
 
@@ -12,6 +12,8 @@ import * as turf from '@turf/turf';
 
 @Injectable()
 export class HikeProgramService {
+  public gpxRoute: IRoute;
+
   constructor(
     private _store: Store<State>,
     private _geospatialService: GeospatialService,

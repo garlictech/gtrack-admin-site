@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { State } from 'app/store';
 import { RoutePlannerService, AdminMapService, WaypointMarkerService } from '../../../../shared/services/admin-map';
 import { HikeEditMapSelectors } from '../../../../store/selectors';
+import { HikeProgramService } from '../../../../shared/services';
 import { RouteService } from 'subrepos/gtrack-common-ngx';
 import { IRoute } from 'subrepos/provider-client';
 
@@ -12,6 +13,7 @@ import * as L from 'leaflet';
 import * as toGeoJSON from '@mapbox/togeojson';
 import * as turf from '@turf/turf';
 import * as _ from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'gt-gpx-input',
@@ -24,7 +26,9 @@ export class GpxInputComponent {
 
   constructor(
     private _store: Store<State>,
+    private _router: Router,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
+    private _hikeProgramService: HikeProgramService,
     private _routePlannerService: RoutePlannerService,
     private _waypointMarkerService: WaypointMarkerService,
     private _adminMapService: AdminMapService,
@@ -42,26 +46,16 @@ export class GpxInputComponent {
       this._loadFile(file).then((content: string) => {
         const _doc = new DOMParser().parseFromString(content, 'application/xml');
         const _route = toGeoJSON.gpx(_doc);
-        this.gpxRoute = {
+
+        this._checkAndFixMultiLineString(_route);
+
+        this._hikeProgramService.gpxRoute = {
           route: _route,
           bounds: this._routeService.getBounds(_route)
         }
 
-        // Draw an independent path to the map
-        this._routePlannerService.drawRouteLineGeoJSON(this.gpxRoute.route.features[0]);
-
-        // Load path to routePlanner state - necessary for drawing pois
-        this._routePlannerService.addRouteToTheStore(this.gpxRoute.route);
-
-        this._store
-          .select(this._hikeEditMapSelectors.getMapId)
-          .filter(id => id !== '')
-          .take(1)
-          .subscribe((mapId: string) => {
-            const _map = this._adminMapService.getMapById(mapId);
-            _map.fitBounds(this.gpxRoute);
-          });
-      })
+        this._router.navigate(['/admin/hike/new']);
+      });
     }
   }
 
@@ -78,6 +72,30 @@ export class GpxInputComponent {
     });
   }
 
+  /**
+   * Fix MultiLineString if needed (convert to single LineString)
+   */
+  private _checkAndFixMultiLineString(route) {
+    const _geometry = _.get(route, 'features[0].geometry');
+    let _lineString: number[][] = [];
+
+    if (_geometry && _geometry.type === 'MultiLineString') {
+      for (let i in _geometry.coordinates) {
+        const coords = _geometry.coordinates[i];
+
+        if (<any>i === 0) {
+          _lineString = _lineString.concat(coords);
+        } else {
+          // Drop the 1st coord, it's same as the prev last coord...
+          _lineString = _lineString.concat(coords.slice(1));
+        }
+      }
+
+      _geometry.type = 'LineString';
+      _geometry.coordinates = _.cloneDeep(_lineString);
+    }
+  }
+  /* Temporary disabled
   public route() {
     const _segments = turf.lineChunk(this.gpxRoute.route, 10, {units: 'kilometers'});
 
@@ -96,4 +114,5 @@ export class GpxInputComponent {
         }
       });
   }
+  */
 }

@@ -61,6 +61,12 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
           isRoundTrip: isRoundTrip
         }, false));
       });
+
+    this.hikeProgramData$
+      .takeUntil(this._destroy$)
+      .subscribe((data: IHikeProgramStored) => {
+        console.log('IHikeProgramStored', data);
+      });
   }
 
   private _initDescriptionFormConfig() {

@@ -4,14 +4,14 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import { State, hikeEditMapActions, adminMapActions, commonBackgroundGeolocationActions } from 'app/store';
-import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from 'app/store/selectors';
 import { Center, ISegment, BackgroundGeolocationActionTypes, selectCurrentLocation, IGeoPosition } from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
-import { AdminMapService } from 'app/shared/services';
+import { AdminMapService, HikeProgramService } from 'app/shared/services';
 
 import * as L from 'leaflet';
 import { LeafletMouseEvent } from 'leaflet';
-import { WaypointMarkerService } from '../../../../shared/services/admin-map';
+import { WaypointMarkerService, RoutePlannerService } from '../../../../shared/services/admin-map';
 
 const CENTER = <Center>{
   // London
@@ -57,8 +57,11 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
+    private _hikeProgramService: HikeProgramService,
     private _waypointMarkerService: WaypointMarkerService,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
+    private _routePlannerService: RoutePlannerService,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _hikeEditMapSelectors: HikeEditMapSelectors
   ) {}
 
   ngOnInit() {

@@ -14,14 +14,15 @@ import {
   hikeEditRoutePlannerActions,
   editedHikeProgramActions
 } from 'app/store';
-import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
-import { RoutingControlService, WaypointMarkerService } from '../../shared/services/admin-map';
+import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from 'app/store/selectors';
+import { RoutingControlService, WaypointMarkerService, RoutePlannerService, AdminMapService } from '../../shared/services/admin-map';
 import { IHikeProgramStored, IHikeProgram, IPoi, IRoute } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
+import { HikeProgramService } from '../../shared/services';
 
 @Component({
   selector: 'gt-hike-edit',
@@ -38,10 +39,14 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   constructor(
     private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
+    private _adminMapService: AdminMapService,
     private _routingControlService: RoutingControlService,
     private _waypointMarkerService: WaypointMarkerService,
+    private _routePlannerService: RoutePlannerService,
+    private _hikeProgramService: HikeProgramService,
     private _hikeSelectors: HikeSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _toasterService: ToasterService,
     private _router: Router,
@@ -98,6 +103,11 @@ export class HikeEditComponent implements OnInit, OnDestroy {
               summary: 'summary'
             })
           );
+
+          // Draw an independent path to the map
+          if (typeof this._hikeProgramService.gpxRoute !== 'undefined') {
+            this._parseGpxRoute();
+          }
         }
       });
 
@@ -184,5 +194,24 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         this._store.dispatch(new commonRouteActions.SaveRoute(_route));
       }
     });
+  }
+
+  private _parseGpxRoute() {
+    this._store
+      .select(this._hikeEditMapSelectors.getMapId)
+      .filter(id => id !== '')
+      .take(1)
+      .subscribe((mapId: string) => {
+        const _map = this._adminMapService.getMapById(mapId);
+
+        this._routePlannerService.drawRouteLineGeoJSON(this._hikeProgramService.gpxRoute.route.features[0]);
+
+        // Load path to routePlanner state - necessary for drawing pois
+        this._routePlannerService.addRouteToTheStore(this._hikeProgramService.gpxRoute.route);
+
+        _map.fitBounds(this._hikeProgramService.gpxRoute);
+
+        delete this._hikeProgramService.gpxRoute;
+      });
   }
 }
