@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -19,7 +19,7 @@ import * as _ from 'lodash';
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })
-export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
+export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterViewInit {
   public hikeProgramData$: Observable<IHikeProgramStored>;
   public isRoundTrip$: Observable<boolean>;
   public remoteError$: Observable<any>;
@@ -35,7 +35,8 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeSelectors: HikeSelectors
+    private _hikeSelectors: HikeSelectors,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -61,13 +62,11 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy {
           isRoundTrip: isRoundTrip
         }, false));
       });
-
-    this.hikeProgramData$
-      .takeUntil(this._destroy$)
-      .subscribe((data: IHikeProgramStored) => {
-        console.log('IHikeProgramStored', data);
-      });
   }
+
+  ngAfterViewInit() {
+    this._changeDetectorRef.detectChanges();
+}
 
   private _initDescriptionFormConfig() {
     this.descriptionSelector = this._editedHikeProgramSelectors.getDescriptions;
