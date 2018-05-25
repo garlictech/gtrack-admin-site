@@ -46,5 +46,17 @@ export class PoiEffects {
         .map(response => new LocalActions.PoiSaved(response.id));
     });
 
+  @Effect()
+  updateState$: Observable<Action> = this._actions$
+    .ofType<LocalActions.UpdatePoiState>(LocalActions.PoiActionTypes.UPDATE_POI_STATE)
+    .mergeMap(action => {
+      return this._poiService
+        .updateState(action.id, action.state)
+        .take(1)
+        .map(result => {
+          return new LocalActions.LoadPoi(action.id);
+        });
+    });
+
   constructor(private _actions$: Actions, private _poiService: PoiService, private _store: Store<any>) {}
 }

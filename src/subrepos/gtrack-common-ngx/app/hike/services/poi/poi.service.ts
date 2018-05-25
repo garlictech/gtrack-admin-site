@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { IPoi, IPoiStored, IPoiInput, IPoiSaveResponse } from 'subrepos/provider-client';
+import { IPoi, IPoiStored, IPoiInput, IPoiSaveResponse, EObjectState } from 'subrepos/provider-client';
 
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
@@ -59,5 +59,15 @@ export class PoiService {
 
   public create(poi: IPoi) {
     return this._deepstream.callRpc<IPoiSaveResponse>('admin.poi.save', poi);
+  }
+
+  public updateState(id: string, state: EObjectState) {
+    return this._deepstream
+      .callRpc('admin.state', {
+        id: id,
+        table: 'pois',
+        state: state
+      })
+      .take(1);
   }
 }
