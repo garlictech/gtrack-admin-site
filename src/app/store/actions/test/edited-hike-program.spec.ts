@@ -104,12 +104,12 @@ describe('EditedHikeProgram actions', () => {
 
   it('should create RemoveStopByPoiId action', () => {
     const stopData = { poiId: 'fakePoiId' };
-    const action = new EditedHikeProgramActions.RemoveStopByPoiId('fakePoiId');
+    const action = new EditedHikeProgramActions.RemoveStopByPoiId(['fakePoiId']);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.REMOVE_STOP_BY_POI_ID,
-      poiId: 'fakePoiId'
+      poiIds: ['fakePoiId']
     });
   });
 
