@@ -5,7 +5,7 @@ import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs/Observable';
 import { EPoiTypes } from 'subrepos/provider-client';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index';
-import { IWikipediaPoi, IWikipediaPageImageInfo } from 'app/shared/interfaces';
+import { IWikipediaPoi, IWikipediaPhotoInfo } from 'app/shared/interfaces';
 import { LanguageService } from '../language.service';
 
 import * as _ from 'lodash';
@@ -143,7 +143,7 @@ export class WikipediaPoiService {
               const _imgData = imageData.query.pages[idx];
 
               if (_imgData.original) {
-                const _imageInfo: IWikipediaPageImageInfo = {
+                const _imageInfo: IWikipediaPhotoInfo = {
                   title: _imgData.title,
                   original: _imgData.original,
                   thumbnail: _imgData.thumbnail
@@ -151,7 +151,7 @@ export class WikipediaPoiService {
                 const _targetPoi = _pois.find(p => p.wikipedia!.pageid === _imgData.pageid);
 
                 if (_targetPoi && _targetPoi.wikipedia) {
-                  _targetPoi.wikipedia.pageImage = _imageInfo;
+                  _targetPoi.wikipedia.photos = [_imageInfo];
                 }
               }
             }

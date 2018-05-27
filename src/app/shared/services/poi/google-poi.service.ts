@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { EPoiTypes } from 'subrepos/provider-client';
 import { GoogleMapsService } from 'subrepos/gtrack-common-ngx/index';
 
-import { IGooglePoi } from 'app/shared/interfaces';
+import { IGooglePoi, IGooglePhotoInfo } from 'app/shared/interfaces';
 import { LanguageService } from '../language.service';
 
 import { /**/ } from '@types/googlemaps';
@@ -43,16 +43,29 @@ export class GooglePoiService {
 
         return new Promise((resolve, reject) => {
           this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
-            // console.log('GOOGLE RESULT', result);
-            for (let _point of result) {
+            const thumbnailWidth = 200;
 
-              /*
+            for (let _point of result) {
+              const _photos: IGooglePhotoInfo[] = [];
+
               if (_point.photos) {
                 for (let photo of _point.photos) {
-                  console.log('PHOTO', photo.getUrl({'maxWidth': 5000}));
+                  const _photoInfo: IGooglePhotoInfo = {
+                    title: photo.html_attributions[0] || '',
+                    original: {
+                      source: photo.getUrl({'maxWidth': photo.width}),
+                      width: photo.width,
+                      height: photo.height
+                    },
+                    thumbnail: {
+                      source: photo.getUrl({'maxWidth': thumbnailWidth}),
+                      width: thumbnailWidth,
+                      height: Math.round((thumbnailWidth * photo.height) / photo.width)
+                    }
+                  }
+                  _photos.push(_photoInfo);
                 }
               }
-              */
 
               const _pointData: IGooglePoi = {
                 id: uuid(),
@@ -69,6 +82,9 @@ export class GooglePoiService {
                 google: {
                   id: _point.place_id
                 }
+              }
+              if (_photos.length > 0) {
+                (<any>_pointData.google).photos = _photos;
               }
               _pointData.types = _.map(_point.types, (obj) => {
                 return obj === 'locality' ? 'city' : obj;

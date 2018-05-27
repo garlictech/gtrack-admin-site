@@ -9,6 +9,8 @@ export { HikeEditPoisHikeComponent } from './hike-edit-pois-hike';
 export { HikeEditPoisHikeTableComponent } from './hike-edit-pois-hike/table';
 export { HikeEditRoutePlannerComponent } from './hike-edit-route-planner';
 export { HikeEditOutlineComponent } from './hike-edit-outline';
+export { HikeEditPhotosComponent } from './hike-edit-photos';
+export { HikeEditPhotosTableComponent } from './hike-edit-photos/table';
 export { PoiIconsComponent } from './poi-icons';
 export { SpecialPoiDataComponent } from './special-poi-data';
 // Modals

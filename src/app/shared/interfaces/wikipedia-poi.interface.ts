@@ -1,15 +1,9 @@
-import { IExternalPoi } from './external-poi.interface';
+import { IExternalPoi, IExternalPoiImageData } from './external-poi.interface';
 
-interface IWikipediaImageData {
-  source: string;
-  width: number;
-  height: number;
-}
-
-export interface IWikipediaPageImageInfo {
+export interface IWikipediaPhotoInfo {
   title: string;
-  original: IWikipediaImageData;
-  thumbnail: IWikipediaImageData;
+  original: IExternalPoiImageData;
+  thumbnail: IExternalPoiImageData;
 }
 
 export interface IWikipediaPoiInfo {
@@ -17,7 +11,7 @@ export interface IWikipediaPoiInfo {
   lng?: string;
   url?: string;
   extract?: string;
-  pageImage?: IWikipediaPageImageInfo
+  photos?: IWikipediaPhotoInfo[]
 }
 
 export interface IWikipediaPoi extends IExternalPoi {

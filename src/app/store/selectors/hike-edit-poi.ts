@@ -15,6 +15,7 @@ export class HikeEditPoiSelectors {
   public getAllOsmAmenityPois: (state: object) => IOsmPoi[];
   public getAllOsmNaturalPois: (state: object) => IOsmPoi[];
   public getAllOsmRoutePois: (state: object) => IOsmPoi[];
+  private _allPoiSelectorMap = {}
 
   constructor() {
     this._featureSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
@@ -47,19 +48,29 @@ export class HikeEditPoiSelectors {
       this._featureSelector, (state: IHikeEditPoiState) => state.wikipediaPois
     );
     this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
-  }
 
-  public getSaveablePois(subdomain) {
-    const allPoiSelectorMap = {
+    this._allPoiSelectorMap = {
       'google': this.getAllGooglePois,
       'osmAmenity': this.getAllOsmAmenityPois,
       'osmNatural': this.getAllOsmNaturalPois,
       'osmRoute': this.getAllOsmRoutePois,
       'wikipedia': this.getAllWikipediaPois
     }
+  }
 
-    return createSelector(allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
+  public getSaveablePois(subdomain) {
+    return createSelector(this._allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
       return pois.filter(p => p.inHike && !p.inGtrackDb);
+    });
+  }
+
+  public getPoiPhotos(subdomain) {
+    return createSelector(this._allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
+      let _photos = [];
+      pois.filter(p => p[subdomain].photos).map(p => p[subdomain].photos).map(photoArray => {
+        _photos = _photos.concat(photoArray);
+      });
+      return _photos;
     });
   }
 

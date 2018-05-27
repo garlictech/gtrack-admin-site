@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormModule } from 'subrepos/forms-ngx';
 // Pipes
 import { ObjectToArrayPipe } from 'app/shared/pipes';
+import { TrustedHtmlPipe } from 'app/shared/pipes';
 // Modules
 import { DynamicModalService } from 'subrepos/gtrack-common-ngx';
 // Components
@@ -21,6 +22,8 @@ import {
   HikeEditPoisExternalComponent,
   HikeEditPoisExternalTableComponent,
   HikeEditOutlineComponent,
+  HikeEditPhotosComponent,
+  HikeEditPhotosTableComponent,
   PoiIconsComponent,
   SpecialPoiDataComponent,
   // Modals
@@ -50,6 +53,8 @@ const COMPONENTS = [
   HikeEditPoisExternalComponent,
   HikeEditPoisExternalTableComponent,
   HikeEditOutlineComponent,
+  HikeEditPhotosComponent,
+  HikeEditPhotosTableComponent,
   PoiIconsComponent,
   SpecialPoiDataComponent,
   // Modals
@@ -77,6 +82,7 @@ const COMPONENTS = [
   declarations: [
     AdminLeafletComponent,
     ObjectToArrayPipe,
+    TrustedHtmlPipe,
     ...COMPONENTS
   ],
   entryComponents: [

@@ -1,0 +1,43 @@
+<div id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="card mb-1">
+    <div class="card-header bg-light" id="headingOne" role="tab">
+      <h5>
+        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_google_photo" role="button" class="collapsed">
+          <div class="text-success">
+            Google
+            <i class="material-icons pull-right">keyboard_arrow_down</i>
+          </div>
+        </a>
+      </h5>
+    </div>
+    <div aria-labelledby="headingOne" class="collapse" id="collapse_google_photo" role="tabpanel" aria-expanded="false" style="height: 0px;">
+      <div class="card-body">
+        <hike-edit-photos-table
+          [photos$]="googlePhotos$"
+          [subdomain]="google"
+        ></hike-edit-photos-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-1">
+    <div class="card-header bg-light" id="headingOne" role="tab">
+      <h5>
+        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_wikipedia_photo" role="button" class="collapsed">
+          <div class="text-success">
+            Wikipedia
+            <i class="material-icons pull-right">keyboard_arrow_down</i>
+          </div>
+        </a>
+      </h5>
+    </div>
+    <div aria-labelledby="headingOne" class="collapse" id="collapse_wikipedia_photo" role="tabpanel" aria-expanded="false" style="height: 0px;">
+      <div class="card-body">
+        <hike-edit-photos-table
+          [photos$]="wikipediaPhotos$"
+          [subdomain]="wikipedia"
+        ></hike-edit-photos-table>
+      </div>
+    </div>
+  </div>
+</div>
