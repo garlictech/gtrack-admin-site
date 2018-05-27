@@ -1,5 +1,5 @@
 import * as uuid from 'uuid/v4';
-import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
+import { IHikeProgramStored, IHikeProgram, EObjectState } from 'subrepos/provider-client';
 
 export const hikePrograms: IHikeProgram[] = [
   {
@@ -52,11 +52,13 @@ export const hikeProgramsStored: IHikeProgramStored[] = [
   {
     ...hikePrograms[0],
     id: uuid(),
-    timestamp: new Date().getTime()
+    timestamp: new Date().getTime(),
+    state: EObjectState.draft
   },
   {
     ...hikePrograms[1],
     id: uuid(),
-    timestamp: new Date().getTime()
+    timestamp: new Date().getTime(),
+    state: EObjectState.draft
   }
 ];

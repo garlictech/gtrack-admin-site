@@ -1,4 +1,4 @@
-import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
+import { IPoi, IPoiStored, EPoiTypes, EObjectState } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 
 export const pois: IPoi[] = [
@@ -34,11 +34,13 @@ export const poisStored: IPoiStored[] = [
   {
     ...pois[0],
     id: uuid(),
-    timestamp: new Date().getTime()
+    timestamp: new Date().getTime(),
+    state: EObjectState.draft
   },
   {
     ...pois[1],
     id: uuid(),
-    timestamp: new Date().getTime()
+    timestamp: new Date().getTime(),
+    state: EObjectState.draft
   }
 ]

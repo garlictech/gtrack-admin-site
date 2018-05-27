@@ -1,4 +1,4 @@
-import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
+import { IPoi, IPoiStored, EPoiTypes, EObjectState } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 import * as actions from '../actions';
 
@@ -28,7 +28,8 @@ describe('Poi actions', () => {
     poi = {
       ...poiData,
       id: id,
-      timestamp: new Date().getTime()
+      timestamp: new Date().getTime(),
+      state: EObjectState.draft
     };
   });
 

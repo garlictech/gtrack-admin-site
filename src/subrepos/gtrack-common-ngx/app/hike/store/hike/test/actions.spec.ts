@@ -1,6 +1,5 @@
 import * as uuid from 'uuid/v4';
-import { IHikeProgram, IHikeProgramStored } from 'subrepos/provider-client';
-
+import { IHikeProgram, IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import * as actions from '../actions';
 import { HikeProgram } from '../../../services/hike-program';
 import { CheckpointService } from '../../../services/checkpoint';
@@ -38,7 +37,8 @@ describe('Hike actions', () => {
     hikeProgramStoredData = {
       ...hikeProgramData,
       id: id,
-      timestamp: new Date().getTime()
+      timestamp: new Date().getTime(),
+      state: EObjectState.draft
     }
   });
 

@@ -1,4 +1,4 @@
-import { IPoi, IPoiStored } from 'subrepos/provider-client';
+import { IPoi, IPoiStored, EObjectState } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 
 import { poiReducer, poiReducerInitialState, poiContextReducerInitialState } from '../reducer';
@@ -26,7 +26,8 @@ describe('PoiReducer', () => {
     poi = {
       ...poiData,
       id: id,
-      timestamp: new Date().getTime()
+      timestamp: new Date().getTime(),
+      state: EObjectState.draft
     };
   });
 

@@ -1,4 +1,4 @@
-import { IHikeProgram, IHikeProgramStored } from 'subrepos/provider-client';
+import { IHikeProgram, IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v1';
 
 import { hikeReducer, hikeReducerInitialState, hikeContextReducerInitialState } from '../reducer';
@@ -45,7 +45,8 @@ describe('HikeProgramReducer', () => {
     hikeProgram = {
       ...hikeProgramData,
       id: id,
-      timestamp: new Date().getTime()
+      timestamp: new Date().getTime(),
+      state: EObjectState.draft
     };
   });
 
