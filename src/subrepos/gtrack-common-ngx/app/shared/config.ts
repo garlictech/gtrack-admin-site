@@ -2,7 +2,7 @@ export interface IGoogleMapsConfig {
   key: string;
   libraries?: string[];
   v?: string;
-};
+}
 
 export class SharedConfig {
   googleMaps: IGoogleMapsConfig = {

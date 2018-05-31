@@ -7,7 +7,7 @@ export class Checkpoint {
   constructor(public stop: IHikeProgramStop, public index: number) {
     this._name = `Checkpoint ${index}`;
     this.id = stop.poiId;
-  };
+  }
 
   public get name(): string {
     let name = this._name;

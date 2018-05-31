@@ -7,8 +7,7 @@ import { IHikeProgram, IHikeProgramBackgroundImage } from 'subrepos/provider-cli
   styleUrls: ['./hike-card.component.scss']
 })
 export class HikeCardComponent {
-  @Input()
-  public hikeProgram: IHikeProgram;
+  @Input() public hikeProgram: IHikeProgram;
 
   public get image(): string {
     let url = '';

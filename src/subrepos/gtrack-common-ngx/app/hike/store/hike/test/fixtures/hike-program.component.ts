@@ -4,5 +4,4 @@ import { Component, OnInit } from '@angular/core';
   selector: 'hike-page',
   template: ''
 })
-export class HikeProgramComponent {
-}
+export class HikeProgramComponent {}

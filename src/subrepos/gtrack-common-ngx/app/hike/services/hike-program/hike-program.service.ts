@@ -39,9 +39,7 @@ export class HikeProgramService {
       data = hikeProgram.toObject();
     }
 
-    return this._deepstream
-      .callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data)
-      .take(1);
+    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data).take(1);
   }
 
   public updateState(id: string, state: EObjectState) {

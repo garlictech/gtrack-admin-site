@@ -11,7 +11,4 @@ export class CheckpointService {
   }
 }
 
-export {
-  CheckpointSequence,
-  Checkpoint
-}
+export { CheckpointSequence, Checkpoint };

@@ -8,9 +8,9 @@ import * as uuid from 'uuid';
 
 @Injectable()
 export class MapService {
-  protected _maps: {[id: string]: Map} = {};
+  protected _maps: { [id: string]: Map } = {};
 
-  constructor(protected iconService: IconService, protected mapMarkerService: MapMarkerService) { }
+  constructor(protected iconService: IconService, protected mapMarkerService: MapMarkerService) {}
 
   get(leafletMap: L.Map): Map {
     const id = uuid();
@@ -24,8 +24,4 @@ export class MapService {
   }
 }
 
-export {
-  Map,
-  CurrentPositionMarker,
-  CheckpointMarker
-};
+export { Map, CurrentPositionMarker, CheckpointMarker };

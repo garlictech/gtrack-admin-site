@@ -14,15 +14,9 @@ import { EXTERNAL_HIKE_DEPENDENCIES } from '../../../externals';
 import { hikeProgramsStored as hikeProgramFixtures, HikeProgramComponent } from './fixtures';
 import { CheckpointService } from '../../../services/checkpoint';
 
-import {
-  EXTERNAL_SEARCH_FILTERS_DEPENDENCIES,
-  SearchFiltersSelectors
-} from '../../../../search-filters';
+import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES, SearchFiltersSelectors } from '../../../../search-filters';
 
-import {
-  EXTERNAL_GEO_SEARCH_DEPENDENCIES,
-  GeoSearchSelectors
-} from '../../../../geosearch';
+import { EXTERNAL_GEO_SEARCH_DEPENDENCIES, GeoSearchSelectors } from '../../../../geosearch';
 
 describe('HikeProgram selectors', () => {
   let store: Store<IHikeState>;
@@ -31,7 +25,7 @@ describe('HikeProgram selectors', () => {
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
-    hikePrograms = [ ... hikeProgramFixtures ];
+    hikePrograms = [...hikeProgramFixtures];
     ids = hikePrograms.map(hikeProgram => hikeProgram.id);
     destroy$ = new Subject<boolean>();
 
@@ -41,9 +35,7 @@ describe('HikeProgram selectors', () => {
           hike: hikeReducer
         })
       ],
-      declarations: [
-        HikeProgramComponent
-      ],
+      declarations: [HikeProgramComponent],
       providers: [
         HikeSelectors,
         GeoSearchSelectors,

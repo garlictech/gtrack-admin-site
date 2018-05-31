@@ -5,28 +5,13 @@ import { GoogleMapsService } from './services/google-maps';
 
 import { SharedConfig } from './config';
 
-import {
-  DistancePipe,
-  DurationPipe,
-  CoordinatePipe
-} from './pipes';
+import { DistancePipe, DurationPipe, CoordinatePipe } from './pipes';
 
 @NgModule({
   imports: [],
-  exports: [
-    DistancePipe,
-    DurationPipe,
-    CoordinatePipe
-  ],
-  declarations: [
-    DistancePipe,
-    DurationPipe,
-    CoordinatePipe
-  ],
-  providers: [
-    UnitsService,
-    GoogleMapsService
-  ],
+  exports: [DistancePipe, DurationPipe, CoordinatePipe],
+  declarations: [DistancePipe, DurationPipe, CoordinatePipe],
+  providers: [UnitsService, GoogleMapsService]
 })
 export class SharedModule {
   static forRoot(config: SharedConfig): ModuleWithProviders {
@@ -42,11 +27,4 @@ export class SharedModule {
   }
 }
 
-export {
-  DistancePipe,
-  DurationPipe,
-  CoordinatePipe,
-  UnitsService,
-  GoogleMapsService,
-  SharedConfig
-};
+export { DistancePipe, DurationPipe, CoordinatePipe, UnitsService, GoogleMapsService, SharedConfig };

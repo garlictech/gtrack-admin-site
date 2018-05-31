@@ -1,9 +1,6 @@
 import { ActionReducer } from '@ngrx/store';
 import { ISearchFilterState } from './state';
-import {
-  AllSearchFiltersAction,
-  SearchFilterActionTypes
-} from './actions';
+import { AllSearchFiltersAction, SearchFilterActionTypes } from './actions';
 
 export const initialState: ISearchFilterState = {
   radius: 50000,
@@ -18,7 +15,6 @@ export const searchFiltersReducer: ActionReducer<ISearchFilterState> = (
   action: AllSearchFiltersAction
 ): ISearchFilterState => {
   switch (action.type) {
-
     case SearchFilterActionTypes.CHANGE_FILTERS:
       return {
         ...state,

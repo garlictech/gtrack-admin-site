@@ -6,17 +6,8 @@ import { IconComponent } from './icon';
 import { LeafletComponent, Center } from './leaflet';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MapModule
-  ],
-  exports: [
-    LeafletComponent,
-    IconComponent
-  ],
-  declarations: [
-    LeafletComponent,
-    IconComponent
-  ]
+  imports: [CommonModule, MapModule],
+  exports: [LeafletComponent, IconComponent],
+  declarations: [LeafletComponent, IconComponent]
 })
-export class MapComponentsModule { }
+export class MapComponentsModule {}

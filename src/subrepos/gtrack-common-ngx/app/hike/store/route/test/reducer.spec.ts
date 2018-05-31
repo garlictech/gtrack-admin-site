@@ -1,10 +1,6 @@
 import * as uuid from 'uuid/v4';
 
-import {
-  routeReducer,
-  routeReducerInitialState,
-  routeContextReducerInitialState
-} from '../reducer';
+import { routeReducer, routeReducerInitialState, routeContextReducerInitialState } from '../reducer';
 
 import { IRoute, IRouteStored } from 'subrepos/provider-client';
 import * as actions from '../actions';
@@ -45,11 +41,7 @@ describe('Route reducer', () => {
             },
             geometry: {
               type: 'Point',
-              coordinates: [
-                18.95623999999998,
-                47.57855,
-                305.3887023925781
-              ]
+              coordinates: [18.95623999999998, 47.57855, 305.3887023925781]
             }
           }
         ]
@@ -88,7 +80,7 @@ describe('Route reducer', () => {
     it('should set the route', () => {
       const action = new actions.RouteLoaded(id, route);
       const loadAction = new actions.LoadRoute(id);
-      const beforeState = routeReducer(initialState, loadAction)
+      const beforeState = routeReducer(initialState, loadAction);
       const state = routeReducer(beforeState, action);
 
       expect(state.routes.ids).toEqual([id]);
@@ -97,6 +89,5 @@ describe('Route reducer', () => {
       expect(state.contexts.entities[id].loading).toEqual(false);
       expect(state.routes.entities[id]).toEqual(route);
     });
-
   });
 });

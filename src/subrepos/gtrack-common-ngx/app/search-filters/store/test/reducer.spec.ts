@@ -43,4 +43,4 @@ describe('SearchFiltersReducer', () => {
       expect(resetState).toEqual(initialState);
     });
   });
-})
+});

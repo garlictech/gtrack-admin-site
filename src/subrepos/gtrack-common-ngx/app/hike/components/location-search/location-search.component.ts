@@ -39,7 +39,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   public radiusRange = 50;
 
   protected _radius = 50000;
-  protected _location: (GeoJSON.Position | null) = null;
+  protected _location: GeoJSON.Position | null = null;
   protected _address = 'my-location';
 
   constructor(
@@ -102,25 +102,18 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
       .distinctUntilChanged((position1, position2) => {
         let point1: turf.Coord = {
           type: 'Point',
-          coordinates: [
-            position1[0],
-            position1[1]
-          ]
+          coordinates: [position1[0], position1[1]]
         };
 
         let point2: turf.Coord = {
           type: 'Point',
-          coordinates: [
-            position2[0],
-            position2[1]
-          ]
+          coordinates: [position2[0], position2[1]]
         };
 
-        return (turf.distance(point1, point2) <= 0.1);
+        return turf.distance(point1, point2) <= 0.1;
       });
 
-    this
-      ._locate$
+    this._locate$
       .takeUntil(this._destroy$)
       .switchMap(locate => {
         return locate ? location$.take(1) : Observable.never<number[]>();
@@ -149,9 +142,11 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     }
 
     if (this._address) {
-      this._store.dispatch(new searchFilterActions.ChangeFilters({
-        location: this._address
-      }));
+      this._store.dispatch(
+        new searchFilterActions.ChangeFilters({
+          location: this._address
+        })
+      );
     }
 
     this._store.dispatch(

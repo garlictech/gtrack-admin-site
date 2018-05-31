@@ -3,34 +3,34 @@
 import * as L from 'leaflet';
 
 declare module 'leaflet' {
-    interface UserMarker extends L.Marker {
-        options: UserMarkerOptions;
+  interface UserMarker extends L.Marker {
+    options: UserMarkerOptions;
 
-        initialize(latlng: LatLngExpression, options: UserMarkerOptions);
+    initialize(latlng: LatLngExpression, options: UserMarkerOptions);
 
-        setPulsing(pulsing: boolean);
+    setPulsing(pulsing: boolean);
 
-        setAccuracy(accuracy: number);
+    setAccuracy(accuracy: number);
 
-        onAdd(map: L.Map);
-    }
+    onAdd(map: L.Map);
+  }
 
-    interface UserMarkerCircleStyleOptions {
-      stroke?: boolean;
-      color?: string;
-      weight?: number;
-      opacity?: number;
-      fillOpacity?: number;
-      fillColor?: number;
-      clickable?: boolean;
-    }
+  interface UserMarkerCircleStyleOptions {
+    stroke?: boolean;
+    color?: string;
+    weight?: number;
+    opacity?: number;
+    fillOpacity?: number;
+    fillColor?: number;
+    clickable?: boolean;
+  }
 
-    interface UserMarkerOptions extends L.MarkerOptions {
-        pulsing?: boolean;
-        smallIcon?: boolean;
-        accuracy?: number;
-        circleOpts?: UserMarkerCircleStyleOptions
-    }
+  interface UserMarkerOptions extends L.MarkerOptions {
+    pulsing?: boolean;
+    smallIcon?: boolean;
+    accuracy?: number;
+    circleOpts?: UserMarkerCircleStyleOptions;
+  }
 
-    function userMarker(latlng: LatLngExpression, options: UserMarkerOptions): UserMarker;
+  function userMarker(latlng: LatLngExpression, options: UserMarkerOptions): UserMarker;
 }

@@ -10,10 +10,7 @@ import {
   geoSearchContextStateAdapter
 } from './state';
 
-import {
-  AllGeoSearchActions,
-  GeoSearchActionTypes
-} from './actions';
+import { AllGeoSearchActions, GeoSearchActionTypes } from './actions';
 
 export const geoSearchContextReducerInitialState = geoSearchContextStateAdapter.getInitialState();
 export const geoSearchReducerInitialState = geoSearchAdapter.getInitialState();
@@ -25,18 +22,27 @@ const contextReducer: ActionReducer<IAllGeoSearchContextState> = (
   switch (action.type) {
     case GeoSearchActionTypes.SEARCH_IN_BOX:
     case GeoSearchActionTypes.SEARCH_IN_CIRCLE:
-      return geoSearchContextStateAdapter.addOne({
-        id: action.context,
-        working: true
-      }, state);
+      return geoSearchContextStateAdapter.upsertOne(
+        {
+          id: action.context,
+          changes: {
+            id: action.context,
+            working: true
+          }
+        },
+        state
+      );
 
     case GeoSearchActionTypes.GEOSEARCH_COMPLETE:
-      return geoSearchContextStateAdapter.updateOne({
-        id: action.context,
-        changes: {
-          working: false,
-        }
-      }, state);
+      return geoSearchContextStateAdapter.updateOne(
+        {
+          id: action.context,
+          changes: {
+            working: false
+          }
+        },
+        state
+      );
 
     default:
       return state;
@@ -49,17 +55,20 @@ const reducer: ActionReducer<IGeoSearchEntityState> = (
 ): IGeoSearchEntityState => {
   switch (action.type) {
     case GeoSearchActionTypes.GEOSEARCH_COMPLETE:
-      return geoSearchAdapter.upsertOne({
-        id: action.context,
-        changes: {
-          results: action.results
-        }
-      }, state);
+      return geoSearchAdapter.upsertOne(
+        {
+          id: action.context,
+          changes: {
+            results: action.results
+          }
+        },
+        state
+      );
 
     default:
       return state;
   }
-}
+};
 
 const reducerMap: ActionReducerMap<IGeoSearchState> = {
   contexts: contextReducer,

@@ -39,10 +39,9 @@ describe('HikeProgramComponent', () => {
           poi: poiReducer
         })
       ],
-      declarations: [ HikeProgramComponent, DistancePipe ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-    })
-    .compileComponents();
+      declarations: [HikeProgramComponent, DistancePipe],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

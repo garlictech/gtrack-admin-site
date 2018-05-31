@@ -1,10 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import {
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Params,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Params } from '@angular/router';
 
 import * as fromRouter from '@ngrx/router-store';
 
@@ -21,9 +17,7 @@ export interface IRouterState {
 export class RouterSelectors {
   public getRouterState: MemoizedSelector<object, fromRouter.RouterReducerState<IRouterState>>;
 
-  constructor(
-
-  ) {
+  constructor() {
     this.getRouterState = createFeatureSelector<fromRouter.RouterReducerState<IRouterState>>('router');
   }
 }

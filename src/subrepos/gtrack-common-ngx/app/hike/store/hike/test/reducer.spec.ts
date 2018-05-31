@@ -75,7 +75,7 @@ describe('HikeProgramReducer', () => {
     it('should set the hikeProgram', () => {
       const action = new actions.HikeProgramLoaded(id, hikeProgram);
       const loadAction = new actions.LoadHikeProgram(id);
-      const beforeState = hikeReducer(initialState, loadAction)
+      const beforeState = hikeReducer(initialState, loadAction);
       const state = hikeReducer(beforeState, action);
 
       expect(state.hikes.ids).toEqual([id]);

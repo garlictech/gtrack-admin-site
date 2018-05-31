@@ -69,10 +69,13 @@ const reducer: ActionReducer<IRouteEntityState> = (
 ): IRouteEntityState => {
   switch (action.type) {
     case RouteActionTypes.ROUTE_LOADED:
-      return routeAdapter.upsertOne({
-        id: action.route.id,
-        changes: action.route
-      }, state);
+      return routeAdapter.upsertOne(
+        {
+          id: action.route.id,
+          changes: action.route
+        },
+        state
+      );
 
     default:
       return state;

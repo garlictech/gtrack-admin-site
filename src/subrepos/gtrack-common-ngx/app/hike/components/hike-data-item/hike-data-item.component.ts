@@ -8,6 +8,5 @@ import { IHikeProgram } from 'subrepos/provider-client';
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HikeDataItemComponent {
-  @Input()
-  public hikeProgram: IHikeProgram;
+  @Input() public hikeProgram: IHikeProgram;
 }

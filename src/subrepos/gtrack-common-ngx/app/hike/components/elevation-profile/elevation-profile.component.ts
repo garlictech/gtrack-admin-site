@@ -58,7 +58,7 @@ export class ElevationProfileComponent implements OnDestroy {
       .select(this._routeSelectors.getRouteContext(routeId))
       .takeUntil(this._destroy$)
       .subscribe(context => {
-        if ((typeof context === 'undefined') || (context.loaded !== true && context.loading !== true)) {
+        if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
           this._store.dispatch(new routeActions.LoadRoute(routeId));
         }
       });
@@ -66,7 +66,7 @@ export class ElevationProfileComponent implements OnDestroy {
     this._store
       .select(this._routeSelectors.getRoute(routeId))
       .takeUntil(this._destroy$)
-      .filter(route => (typeof route !== 'undefined'))
+      .filter(route => typeof route !== 'undefined')
       .map(route => {
         if (route) {
           return new Route(route);

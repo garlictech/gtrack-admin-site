@@ -3,11 +3,11 @@ import 'leaflet-usermarker';
 import 'leaflet-spin';
 
 export class CurrentPositionMarker {
-  protected marker: (L.UserMarker|null) = null;
+  protected marker: L.UserMarker | null = null;
   public positioningInverval = 10000;
   public timeout = 10000;
 
-  constructor(protected map: L.Map) {};
+  constructor(protected map: L.Map) {}
 
   public stopPositioning() {
     if (this.marker) {
@@ -23,12 +23,10 @@ export class CurrentPositionMarker {
     let locationFound = (e: L.LocationEvent) => {
       this.map.off('locationfound', locationFound);
       if (!this.marker) {
-        this.marker = L
-          .userMarker(e.latlng, {
-            pulsing: true,
-            smallIcon: true
-          })
-          .addTo(this.map);
+        this.marker = L.userMarker(e.latlng, {
+          pulsing: true,
+          smallIcon: true
+        }).addTo(this.map);
       }
 
       this.marker.setLatLng(e.latlng);

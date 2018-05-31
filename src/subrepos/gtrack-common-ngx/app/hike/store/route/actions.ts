@@ -31,25 +31,19 @@ export class RouteLoaded implements Action {
 export class SaveRoute implements Action {
   readonly type = RouteActionTypes.SAVE_ROUTE;
 
-  constructor (public route: IRoute) {}
+  constructor(public route: IRoute) {}
 }
 
 export class RouteSaved implements Action {
   readonly type = RouteActionTypes.ROUTE_SAVED;
 
-  constructor (public context: string) {}
+  constructor(public context: string) {}
 }
 
 export class RouteModified implements Action {
   readonly type = RouteActionTypes.ROUTE_MODIFIED;
 
-  constructor (public context: string) {}
+  constructor(public context: string) {}
 }
 
-export type AllRouteActions =
-  | LoadRoute
-  | RouteLoaded
-  | LoadRouteFailed
-  | SaveRoute
-  | RouteSaved
-  | RouteModified;
+export type AllRouteActions = LoadRoute | RouteLoaded | LoadRouteFailed | SaveRoute | RouteSaved | RouteModified;

@@ -17,10 +17,7 @@ describe('GeoSearchService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({}),
-        EffectsModule.forRoot([])
-      ],
+      imports: [StoreModule.forRoot({}), EffectsModule.forRoot([])],
       providers: [
         GeoSearchService,
         {
@@ -38,14 +35,12 @@ describe('GeoSearchService', () => {
   });
 
   describe('searchInBox', () => {
-    it('should call the provider', async() => {
+    it('should call the provider', async () => {
       let query: IGeospatialBoxSearchPayload = {
         table: 'test',
         box: {
           type: 'Polygon',
-          coordinates: [[
-            [41.23, 12.43]
-          ]]
+          coordinates: [[[41.23, 12.43]]]
         }
       };
 
@@ -74,5 +69,4 @@ describe('GeoSearchService', () => {
       });
     });
   });
-
 });

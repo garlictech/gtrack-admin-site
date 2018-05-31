@@ -5,9 +5,7 @@ import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES } from './externals';
 
 @NgModule({
   imports: [],
-  providers: [
-    SearchFiltersSelectors
-  ],
+  providers: [SearchFiltersSelectors]
 })
 export class SearchFiltersModule {
   static forRoot(config: SearchFiltersModuleConfig): ModuleWithProviders {
@@ -21,6 +19,6 @@ export class SearchFiltersModule {
           }
         }
       ]
-    }
+    };
   }
 }

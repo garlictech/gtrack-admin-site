@@ -4,14 +4,9 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-import {
-  IDeepstreamState,
-  DeepstreamService
-} from 'subrepos/gtrack-common-ngx/app/deepstream';
+import { IDeepstreamState, DeepstreamService } from 'subrepos/gtrack-common-ngx/app/deepstream';
 
-import {
-  Selectors as DeepstreamSelectors
-} from 'subrepos/deepstream-ngx';
+import { Selectors as DeepstreamSelectors } from 'subrepos/deepstream-ngx';
 
 import { User, IAuthenticationState as IJwtAuthState, IAuth } from 'subrepos/authentication-api-ngx';
 

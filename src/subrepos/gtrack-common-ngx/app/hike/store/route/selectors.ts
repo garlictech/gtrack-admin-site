@@ -18,9 +18,7 @@ export class RouteSelectors {
   private _selectRouteEntities: (state: object) => Dictionary<IRouteStored>;
   private _externals: IExternalRouteDependencies;
 
-  constructor(
-    @Inject(EXTERNAL_ROUTE_DEPENDENCIES) externals
-  ) {
+  constructor(@Inject(EXTERNAL_ROUTE_DEPENDENCIES) externals) {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IRouteState>(this._externals.storeDomain);
 
@@ -38,12 +36,12 @@ export class RouteSelectors {
   }
 
   public getRoute(context: string) {
-    return createSelector(this.getAllRoutes, (routes: IRouteStored[]) => (routes.find(route => (route.id === context))));
+    return createSelector(this.getAllRoutes, (routes: IRouteStored[]) => routes.find(route => route.id === context));
   }
 
   public getRouteContext(id: string) {
-    return createSelector(this.getAllContexts, (contexts) => {
-      return contexts.find(context => (context.id === id));
+    return createSelector(this.getAllContexts, contexts => {
+      return contexts.find(context => context.id === id);
     });
   }
 }

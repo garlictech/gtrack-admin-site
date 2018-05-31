@@ -17,8 +17,8 @@ export class PoiService {
   constructor(
     private _deepstream: DeepstreamService,
     private _geometryService: GeometryService,
-    private _geoSearchService: GeoSearchService,
-  ) { }
+    private _geoSearchService: GeoSearchService
+  ) {}
 
   public get(id: string): Observable<IPoiStored> {
     return this._deepstream
@@ -27,33 +27,6 @@ export class PoiService {
       .take(1)
       .map(data => {
         return _.cloneDeep(data);
-      });
-  }
-
-  public search(bounds): Observable<IPoi[]> {
-    let _geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
-    let _centerCoord = _geo!.center!.geometry!.coordinates;
-
-    return this._geoSearchService
-      .searchCircle({
-        table: 'pois',
-        circle: {
-          radius: _geo.radius,
-          center: [_centerCoord[0], _centerCoord[1]]
-        }
-      })
-      .mergeMap((poiIds: string[]) => {
-        if (poiIds.length > 0) {
-          return Observable
-            .combineLatest(...poiIds.map(poiId => {
-              return this.get(poiId);
-            }))
-            .map(pois => {
-              return pois;
-            });
-        } else {
-          return Observable.of([]);
-        }
       });
   }
 

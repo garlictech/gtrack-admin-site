@@ -11,10 +11,7 @@ import {
   IGeoSearchResponseItem
 } from './state';
 
-import {
-  IExternalGeoSearchDependencies,
-  EXTERNAL_GEO_SEARCH_DEPENDENCIES
-} from '../externals';
+import { IExternalGeoSearchDependencies, EXTERNAL_GEO_SEARCH_DEPENDENCIES } from '../externals';
 
 interface GeoSearchableItem {
   id: string;
@@ -31,10 +28,7 @@ export class GeoSearchSelectors {
   private _selectGeoSearchEntities: (state: object) => Dictionary<IGeoSearchResponseItem>;
   private _externals: IExternalGeoSearchDependencies;
 
-  constructor(
-    @Inject(EXTERNAL_GEO_SEARCH_DEPENDENCIES)
-    externals
-  ) {
+  constructor(@Inject(EXTERNAL_GEO_SEARCH_DEPENDENCIES) externals) {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IGeoSearchState>(this._externals.storeDomain);
 
@@ -52,24 +46,24 @@ export class GeoSearchSelectors {
   }
 
   public getGeoSearch(context: string) {
-    return createSelector(this.getAllGeoSearches, (searches: IGeoSearchResponseItem[]) => (searches.find(search => (search.id === context))));
+    return createSelector(this.getAllGeoSearches, (searches: IGeoSearchResponseItem[]) =>
+      searches.find(search => search.id === context)
+    );
   }
 
   public getGeoSearchContext(context: string) {
-    return createSelector(this.getAllContexts, (searches: IGeoSearchContextState[]) => (searches.find(search => (search.id === context))));
+    return createSelector(this.getAllContexts, (searches: IGeoSearchContextState[]) =>
+      searches.find(search => search.id === context)
+    );
   }
 
   public getGeoSearchResults<T extends GeoSearchableItem>(context: string, getAllSelector: ((state: object) => T[])) {
-    return createSelector(
-      getAllSelector,
-      this.getGeoSearch(context),
-      (data, results) => {
-        if (typeof results !== 'undefined') {
-          let ids = results.results;
+    return createSelector(getAllSelector, this.getGeoSearch(context), (data, results) => {
+      if (typeof results !== 'undefined') {
+        let ids = results.results;
 
-          return data.filter(item => ids.indexOf(item.id) !== -1);
-        }
+        return data.filter(item => ids.indexOf(item.id) !== -1);
       }
-    )
+    });
   }
 }

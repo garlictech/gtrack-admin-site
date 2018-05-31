@@ -50,5 +50,4 @@ export class UnitsService {
   private getActualUnits(): LengthUnit {
     return units.length[this.units.length] || units.length.metric;
   }
-
 }

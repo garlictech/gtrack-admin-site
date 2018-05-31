@@ -9,7 +9,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class BackgroundGeolocationEffects {
-
   @Effect({
     dispatch: false
   })
@@ -28,8 +27,5 @@ export class BackgroundGeolocationEffects {
       this._bgl.end();
     });
 
-  constructor(
-    private _bgl: BackgroundGeolocationService,
-    private _actions$: Actions
-  ) {}
+  constructor(private _bgl: BackgroundGeolocationService, private _actions$: Actions) {}
 }

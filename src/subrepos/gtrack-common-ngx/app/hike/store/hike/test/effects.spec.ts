@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed }  from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Actions, Effect, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
@@ -35,9 +35,8 @@ export function getActions() {
 }
 
 describe('HikeProgram effects', () => {
-
   let hikeProgramsMap: {
-    [key: string]: IHikeProgramStored
+    [key: string]: IHikeProgramStored;
   };
 
   let hikePrograms: IHikeProgramStored[];
@@ -55,16 +54,12 @@ describe('HikeProgram effects', () => {
     ids = hikeProgramsStored.map(hikeProgram => hikeProgram.id);
     hikeProgramsMap = _.zipObject(ids, hikeProgramsStored);
     newId = uuid();
-    hikePrograms = [ ...hikeProgramsStored ];
+    hikePrograms = [...hikeProgramsStored];
 
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({
-
-        }),
-        EffectsModule.forRoot([
-
-        ]),
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot()
       ],
@@ -90,18 +85,20 @@ describe('HikeProgram effects', () => {
 
     spyOn(hikeProgramService, 'get').and.callFake(id => Observable.of(hikeProgramsMap[id]));
     spyOn(hikeProgramService, 'query').and.returnValue(Observable.of(hikePrograms));
-    spyOn(hikeProgramService, 'save').and.returnValue(Observable.of({
-      id: newId
-    }));
+    spyOn(hikeProgramService, 'save').and.returnValue(
+      Observable.of({
+        id: newId
+      })
+    );
   });
 
   describe('loadHike$', () => {
     it('should return a HikeProgram from HikeProgramLoaded', () => {
       const action = new hikeProgramActions.LoadHikeProgram(ids[0]);
       const completion = new hikeProgramActions.HikeProgramLoaded(ids[0], hikePrograms[0]);
-      const expected = cold('-b', {b: completion});
+      const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', {a: action});
+      actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadHike$).toBeObservable(expected);
     });
@@ -111,9 +108,9 @@ describe('HikeProgram effects', () => {
     it('should return all the HikePrograms from AllHikeProgramsLoaded', () => {
       const action = new hikeProgramActions.LoadHikePrograms();
       const completion = new hikeProgramActions.AllHikeProgramsLoaded(ids, hikePrograms);
-      const expected = cold('-b', {b: completion});
+      const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', {a: action});
+      actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadHikes$).toBeObservable(expected);
     });

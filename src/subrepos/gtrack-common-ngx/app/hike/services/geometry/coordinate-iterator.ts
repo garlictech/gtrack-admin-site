@@ -25,14 +25,14 @@ export class CoordinateIterator {
     return this.coordinates[index] || null;
   }
 
-  public next(): (GeoJSON.Position|null) {
-    let next: (GeoJSON.Position|null) = null;
+  public next(): GeoJSON.Position | null {
+    let next: GeoJSON.Position | null = null;
 
     if (this.coordinates) {
       this.index++;
       next = this.coordinates[this.index] || null;
 
-      if ((this.index === this.coordinates.length - 1) && this.loop === true) {
+      if (this.index === this.coordinates.length - 1 && this.loop === true) {
         next = this.start();
       }
     }
@@ -45,7 +45,7 @@ export class CoordinateIterator {
   }
 
   public end(): boolean {
-    return (this.index >= this.coordinates.length);
+    return this.index >= this.coordinates.length;
   }
 
   protected isLoop(): boolean {
@@ -55,7 +55,7 @@ export class CoordinateIterator {
     };
 
     let first = _.first(this.coordinates);
-    let last  = _.last(this.coordinates);
+    let last = _.last(this.coordinates);
 
     if (first && last) {
       isLoop = _.isEqual(round(first), round(last));

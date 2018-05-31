@@ -26,15 +26,16 @@ describe('GeoSearchReducer', () => {
   describe('SEARCH_IN_BOX', () => {
     it('should set working to true', () => {
       const context = uuid();
-      const action = new actions.SearchInBox({
-        table: 'test',
-        box: {
-          type: 'Polygon',
-          coordinates: [[
-            [14.4, 47.3]
-          ]]
-        }
-      }, context);
+      const action = new actions.SearchInBox(
+        {
+          table: 'test',
+          box: {
+            type: 'Polygon',
+            coordinates: [[[14.4, 47.3]]]
+          }
+        },
+        context
+      );
 
       const state = geoSearchReducer(initialState, action);
 
@@ -46,13 +47,16 @@ describe('GeoSearchReducer', () => {
   describe('SEARCH_IN_CIRCLE', () => {
     it('should set working to true', () => {
       const context = uuid();
-      const action = new actions.SearchInCircle({
-        table: 'test',
-        circle: {
-          center: [14.4, 47.3],
-          radius: 500
-        }
-      }, context);
+      const action = new actions.SearchInCircle(
+        {
+          table: 'test',
+          circle: {
+            center: [14.4, 47.3],
+            radius: 500
+          }
+        },
+        context
+      );
 
       const state = geoSearchReducer(initialState, action);
 
@@ -64,18 +68,21 @@ describe('GeoSearchReducer', () => {
   describe('GEOSEARCH_COMPLETE', () => {
     it('should set working to false', () => {
       const context = uuid();
-      const searchAction = new actions.SearchInCircle({
-        table: 'test',
-        circle: {
-          center: [14.4, 47.3],
-          radius: 500
-        }
-      }, context);
+      const searchAction = new actions.SearchInCircle(
+        {
+          table: 'test',
+          circle: {
+            center: [14.4, 47.3],
+            radius: 500
+          }
+        },
+        context
+      );
 
       const searchState = geoSearchReducer(initialState, searchAction);
 
       const action = new actions.GeoSearchComplete([], context);
-      const state  = geoSearchReducer(searchState, action);
+      const state = geoSearchReducer(searchState, action);
 
       expect(state.contexts.entities[context].working).toEqual(false);
       expect(state.contexts.ids).toEqual([context]);
@@ -85,18 +92,21 @@ describe('GeoSearchReducer', () => {
       const context = uuid();
       const results = [uuid(), uuid()];
 
-      const searchAction = new actions.SearchInCircle({
-        table: 'test',
-        circle: {
-          center: [14.4, 47.3],
-          radius: 500
-        }
-      }, context);
+      const searchAction = new actions.SearchInCircle(
+        {
+          table: 'test',
+          circle: {
+            center: [14.4, 47.3],
+            radius: 500
+          }
+        },
+        context
+      );
 
       const searchState = geoSearchReducer(initialState, searchAction);
 
       const action = new actions.GeoSearchComplete(results, context);
-      const state  = geoSearchReducer(searchState, action);
+      const state = geoSearchReducer(searchState, action);
 
       expect(state.geoSearches.entities[context]).toEqual({
         id: context,

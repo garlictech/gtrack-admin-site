@@ -43,4 +43,4 @@ export const poisStored: IPoiStored[] = [
     timestamp: new Date().getTime(),
     state: EObjectState.draft
   }
-]
+];

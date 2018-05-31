@@ -9,7 +9,6 @@ import { iconmap as redIconmap } from './red';
 
 @Injectable()
 export class IconService {
-
   protected iconMap = {
     default: defaultIconmap,
     grey: greyIconmap,
@@ -25,12 +24,12 @@ export class IconService {
   }
 
   public urls(types: Array<string>, iconType = 'default'): string[] {
-    return types.map((type) => {
+    return types.map(type => {
       return this.url(type, iconType);
     });
   }
 
-  public getLeafletIcon(types: (string[] | string) = '', iconType = 'default') {
+  public getLeafletIcon(types: string[] | string = '', iconType = 'default') {
     let type: string;
 
     if (!(types instanceof Array)) {
@@ -45,5 +44,4 @@ export class IconService {
       iconAnchor: [16, 37]
     });
   }
-
 }

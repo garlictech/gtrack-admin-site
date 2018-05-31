@@ -6,7 +6,7 @@ export class GameRuleService {
 
   public segmentTime(distance, uphill, avgSpeed = this._averageSpeed): number {
     let distanceInKm = distance / 1000;
-    let time = (distanceInKm / avgSpeed) * 60; // minutes
+    let time = distanceInKm / avgSpeed * 60; // minutes
 
     time += Math.round(uphill / 10);
 

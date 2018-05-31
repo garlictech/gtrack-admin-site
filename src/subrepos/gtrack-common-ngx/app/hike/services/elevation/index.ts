@@ -4,46 +4,46 @@ import { /**/ } from '@types/googlemaps';
 
 @Injectable()
 export class ElevationService {
-
-  constructor(private googleMapsService: GoogleMapsService) { }
+  constructor(private googleMapsService: GoogleMapsService) {}
 
   public calculateUphill(data: number[][]): number {
-    return this._calculateHill(data, (diff) => (diff > 0));
+    return this._calculateHill(data, diff => diff > 0);
   }
 
   public calculateDownhill(data: number[][]): number {
-    return this._calculateHill(data, (diff) => (diff < 0), -1);
+    return this._calculateHill(data, diff => diff < 0, -1);
   }
 
   public getData(coordinates: number[][]): Promise<number[][]> {
-    return this.googleMapsService.map
-      .then(() => {
-        let locations: google.maps.LatLng[] = coordinates.map((coordinate: number[]) => {
-          return new google.maps.LatLng(coordinate[0], coordinate[1]);
-        });
-
-        let elevationService: google.maps.ElevationService = new google.maps.ElevationService();
-        let request: google.maps.LocationElevationRequest = {
-          locations: locations
-        };
-
-        return new Promise<number[][]>((resolve, reject) => {
-          elevationService
-            .getElevationForLocations(request, (results: google.maps.ElevationResult[], status: google.maps.ElevationStatus) => {
-              if (status === google.maps.ElevationStatus.OK) {
-                let elevations: number[][] = results.map((point: google.maps.ElevationResult) => {
-                  return [point.location.lat(), point.location.lng(), point.elevation];
-                });
-
-                resolve(elevations);
-              } else {
-                // Return with the original coordinates and 0 elevation
-                resolve(coordinates.map(coord => [coord[0], coord[1], 0]));
-                // reject(status);
-              }
-            });
-        });
+    return this.googleMapsService.map.then(() => {
+      let locations: google.maps.LatLng[] = coordinates.map((coordinate: number[]) => {
+        return new google.maps.LatLng(coordinate[0], coordinate[1]);
       });
+
+      let elevationService: google.maps.ElevationService = new google.maps.ElevationService();
+      let request: google.maps.LocationElevationRequest = {
+        locations: locations
+      };
+
+      return new Promise<number[][]>((resolve, reject) => {
+        elevationService.getElevationForLocations(
+          request,
+          (results: google.maps.ElevationResult[], status: google.maps.ElevationStatus) => {
+            if (status === google.maps.ElevationStatus.OK) {
+              let elevations: number[][] = results.map((point: google.maps.ElevationResult) => {
+                return [point.location.lat(), point.location.lng(), point.elevation];
+              });
+
+              resolve(elevations);
+            } else {
+              // Return with the original coordinates and 0 elevation
+              resolve(coordinates.map(coord => [coord[0], coord[1], 0]));
+              // reject(status);
+            }
+          }
+        );
+      });
+    });
   }
 
   private _calculateHill(data: number[][], bigEnough: ((diff: number) => boolean), multiplier = 1): number {
@@ -54,7 +54,7 @@ export class ElevationService {
         let diff = point[2] - data[i - 1][2];
 
         if (bigEnough(diff) === true) {
-          sum += (diff * multiplier);
+          sum += diff * multiplier;
         }
       }
     });

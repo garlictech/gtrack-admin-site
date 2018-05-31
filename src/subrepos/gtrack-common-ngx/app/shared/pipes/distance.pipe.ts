@@ -5,7 +5,6 @@ import { UnitsService } from '../services/units';
   name: 'distance'
 })
 export class DistancePipe implements PipeTransform {
-
   constructor(private units: UnitsService) {}
 
   transform(value: number): string {

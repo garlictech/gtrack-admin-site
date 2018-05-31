@@ -1,5 +1,9 @@
 import { ActionReducer } from '@ngrx/store';
-import { IGeoPosition, BackgroundGeolocationActionTypes, Actions } from '../../shared/services/background-geolocation-service';
+import {
+  IGeoPosition,
+  BackgroundGeolocationActionTypes,
+  Actions
+} from '../../shared/services/background-geolocation-service';
 
 import * as actions from '../../shared/services/background-geolocation-service/store/actions';
 
@@ -25,7 +29,7 @@ export const reducer: ActionReducer<IBackgroundGeolocationState> = (
       return { ...state, tracking: true };
 
     case BackgroundGeolocationActionTypes.END_TRACKING:
-      return { ...state, tracking: false }
+      return { ...state, tracking: false };
 
     default:
       return state;

@@ -1,5 +1,11 @@
 import {
-  Injectable, ComponentRef, ApplicationRef, ElementRef, Injector, Type, ComponentFactoryResolver
+  Injectable,
+  ComponentRef,
+  ApplicationRef,
+  ElementRef,
+  Injector,
+  Type,
+  ComponentFactoryResolver
 } from '@angular/core';
 import { IDynamicComponentModalConfig } from './dynamic-modal.interface';
 
@@ -14,14 +20,13 @@ export class DynamicModalService {
     private _appRef: ApplicationRef,
     private _injector: Injector,
     private _resolver: ComponentFactoryResolver
-  ) { }
+  ) {}
 
   public registerModalContainer(container: ElementRef) {
     this._modalContainer = container;
   }
 
   public showComponentModal(config: IDynamicComponentModalConfig) {
-
     if (!config.component.modalComponentName) {
       config.component.modalComponentName = 'DefaultComponentModalComponent';
     }
@@ -42,14 +47,17 @@ export class DynamicModalService {
 
     // Initialize data in modal
     // Config object can overwrite the initial settings
-    const modalConfig: IDynamicComponentModalConfig = _.merge({
-      // Default values
-      modal: {
-        destroy: () => {
-          modalRef.destroy();
+    const modalConfig: IDynamicComponentModalConfig = _.merge(
+      {
+        // Default values
+        modal: {
+          destroy: () => {
+            modalRef.destroy();
+          }
         }
-      }
-    }, config);
+      },
+      config
+    );
 
     modalRef.instance.init(modalConfig);
     modalRef.onDestroy(() => this._removeModalRef(modalRef));

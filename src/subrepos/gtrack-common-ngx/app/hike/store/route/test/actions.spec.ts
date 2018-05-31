@@ -32,11 +32,7 @@ describe('Route actions', () => {
             },
             geometry: {
               type: 'Point',
-              coordinates: [
-                18.95623999999998,
-                47.57855,
-                305.3887023925781
-              ]
+              coordinates: [18.95623999999998, 47.57855, 305.3887023925781]
             }
           }
         ]
@@ -116,5 +112,4 @@ describe('Route actions', () => {
       });
     });
   });
-
 });

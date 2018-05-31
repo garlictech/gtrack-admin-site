@@ -1,11 +1,8 @@
 import * as actions from '../actions';
 import * as uuid from 'uuid/v1';
-import {
-  IGeospatialBoxSearchPayload, IGeospatialCircleSearchPayload
-} from 'subrepos/provider-client';
+import { IGeospatialBoxSearchPayload, IGeospatialCircleSearchPayload } from 'subrepos/provider-client';
 
 describe('GeoSearch actions', () => {
-
   describe('SearchInBox action', () => {
     it('should create an action', () => {
       let context = uuid();
@@ -14,12 +11,7 @@ describe('GeoSearch actions', () => {
         table: 'test',
         box: {
           type: 'Polygon',
-          coordinates: [[
-            [
-              19.32,
-              47.14
-            ]
-          ]]
+          coordinates: [[[19.32, 47.14]]]
         }
       };
 

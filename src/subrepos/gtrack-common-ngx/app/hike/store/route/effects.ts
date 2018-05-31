@@ -26,15 +26,15 @@ export class RouteEffects {
         });
     });
 
-    @Effect()
-    saveRoute$: Observable<Action> = this._actions$
-      .ofType<LocalActions.SaveRoute>(LocalActions.RouteActionTypes.SAVE_ROUTE)
-      .mergeMap(action => {
-        return this._routeService
-          .create(action.route)
-          .take(1)
-          .map(response => new LocalActions.RouteSaved(response.id));
-      });
+  @Effect()
+  saveRoute$: Observable<Action> = this._actions$
+    .ofType<LocalActions.SaveRoute>(LocalActions.RouteActionTypes.SAVE_ROUTE)
+    .mergeMap(action => {
+      return this._routeService
+        .create(action.route)
+        .take(1)
+        .map(response => new LocalActions.RouteSaved(response.id));
+    });
 
   constructor(private _actions$: Actions, private _routeService: RouteService, private _store: Store<any>) {}
 }

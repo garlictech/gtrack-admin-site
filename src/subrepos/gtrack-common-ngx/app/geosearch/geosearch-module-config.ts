@@ -1,3 +1,3 @@
 export class GeoSearchModuleConfig {
-  storeDomain: string
-};
+  storeDomain: string;
+}

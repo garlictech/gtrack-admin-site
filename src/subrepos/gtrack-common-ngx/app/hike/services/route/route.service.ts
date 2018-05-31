@@ -16,7 +16,7 @@ export interface IElevationMargin {
   right: number;
   bottom: number;
   left: number;
-};
+}
 
 export interface IElevationData {
   highestElevation: number;
@@ -25,26 +25,22 @@ export interface IElevationData {
   yRange: d3.ScaleLinear<number, number>;
   lineData: [number, number][];
   lineFunc: d3.Line<[number, number]>;
-};
+}
 
 export interface IBounds {
   NorthEast: {
-    lat: number,
-    lon: number
-  },
+    lat: number;
+    lon: number;
+  };
   SouthWest: {
-    lat: number,
-    lon: number
-  }
+    lat: number;
+    lon: number;
+  };
 }
 
 @Injectable()
 export class RouteService {
-
-  constructor(
-    private _deepstream: DeepstreamService,
-    private unitsService: UnitsService
-  ) { }
+  constructor(private _deepstream: DeepstreamService, private unitsService: UnitsService) {}
 
   public get(id: string): Observable<IRouteStored | null> {
     return this._deepstream
@@ -67,7 +63,7 @@ export class RouteService {
       right: 0,
       bottom: 0
     }
-  ): (IElevationData|null) {
+  ): IElevationData | null {
     let lineData: [number, number][] = [];
     let distance = 0;
 
@@ -84,18 +80,12 @@ export class RouteService {
 
         previousPoint = {
           type: 'Point',
-          coordinates: [
-            previous[0],
-            previous[1]
-          ]
+          coordinates: [previous[0], previous[1]]
         };
 
         currentPoint = {
           type: 'Point',
-          coordinates: [
-           coordinate[0],
-           coordinate[1]
-          ]
+          coordinates: [coordinate[0], coordinate[1]]
         };
 
         distance += turf.distance(currentPoint, previousPoint) * 1000;
@@ -107,10 +97,10 @@ export class RouteService {
       }
     });
 
-    let xRangeMin = d3.min(lineData, (d) => d[0]);
-    let xRangeMax = d3.max(lineData, (d) => d[0]);
-    let yRangeMin = d3.min(lineData, (d) => d[1]);
-    let yRangeMax = d3.max(lineData, (d) => d[1]);
+    let xRangeMin = d3.min(lineData, d => d[0]);
+    let xRangeMax = d3.max(lineData, d => d[0]);
+    let yRangeMin = d3.min(lineData, d => d[1]);
+    let yRangeMax = d3.max(lineData, d => d[1]);
 
     let xRange: ScaleLinear<number, number>;
     let yRange: ScaleLinear<number, number>;
@@ -139,9 +129,10 @@ export class RouteService {
       xRange: xRange,
       yRange: yRange,
       lineData: lineData,
-      lineFunc: d3.line()
-        .x((d) => xRange(d[0]))
-        .y((d) => yRange(d[1]))
+      lineFunc: d3
+        .line()
+        .x(d => xRange(d[0]))
+        .y(d => yRange(d[1]))
         .curve(d3.curveBasis)
     };
   }
@@ -159,7 +150,7 @@ export class RouteService {
         lat: d3Bounds[1][1] + padding,
         lon: d3Bounds[1][0] + padding
       }
-    }
+    };
   }
 }
 

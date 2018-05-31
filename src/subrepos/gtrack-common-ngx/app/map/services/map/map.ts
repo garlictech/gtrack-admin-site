@@ -50,10 +50,7 @@ export class Map {
   public getBounds(route: IRoute): L.LatLngBoundsExpression {
     let bounds = route.bounds;
 
-    return [
-      [bounds.NorthEast.lat, bounds.NorthEast.lon],
-      [bounds.SouthWest.lat, bounds.SouthWest.lon]
-    ];
+    return [[bounds.NorthEast.lat, bounds.NorthEast.lon], [bounds.SouthWest.lat, bounds.SouthWest.lon]];
   }
 
   public fitBox(box: L.LatLngBoundsExpression) {
@@ -67,5 +64,4 @@ export class Map {
   public fitBounds(route: IRoute) {
     return this.fitBox(this.getBounds(route));
   }
-
 }

@@ -10,7 +10,10 @@ describe('UnitsService', () => {
     });
   });
 
-  it('should ...', inject([UnitsService], (service: UnitsService) => {
-    expect(service).toBeTruthy();
-  }));
+  it(
+    'should ...',
+    inject([UnitsService], (service: UnitsService) => {
+      expect(service).toBeTruthy();
+    })
+  );
 });

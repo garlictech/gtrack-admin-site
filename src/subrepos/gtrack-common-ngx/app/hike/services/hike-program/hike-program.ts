@@ -1,17 +1,19 @@
 import { Observable } from 'rxjs';
 
 import {
-  IHikeProgram,
+  IHikeProgramStored,
   ILocalizedItem,
   ITextualDescription,
   IHikeProgramBackgroundImage,
-  IHikeProgramStop
+  IHikeProgramStop,
+  EObjectState
 } from 'subrepos/provider-client';
+
 import { CheckpointSequence, CheckpointService } from '../checkpoint';
 import { Poi } from '../poi';
 import * as _ from 'lodash';
 
-export class HikeProgram implements IHikeProgram {
+export class HikeProgram implements IHikeProgramStored {
   public id: string;
   public distance: number;
   public uphill: number;
@@ -28,7 +30,8 @@ export class HikeProgram implements IHikeProgram {
   public backgroundImageUrls?: [IHikeProgramBackgroundImage];
   public offlineMap?: string;
   public isRoundTrip: boolean;
-  public pois: string[];
+  public timestamp: number;
+  public state: EObjectState;
   public stops: IHikeProgramStop[];
   public checkpoints: CheckpointSequence;
 
@@ -36,7 +39,7 @@ export class HikeProgram implements IHikeProgram {
 
   private locale = 'en_US';
 
-  constructor(data: IHikeProgram, private _checkpointService: CheckpointService) {
+  constructor(data: IHikeProgramStored, private _checkpointService: CheckpointService) {
     let converted = _.cloneDeep(data);
     Object.assign(this, converted);
 
@@ -98,8 +101,8 @@ export class HikeProgram implements IHikeProgram {
     }
   }
 
-  public toObject(): IHikeProgram {
-    let data: IHikeProgram = {
+  public toObject(): IHikeProgramStored {
+    let data: IHikeProgramStored = {
       id: this.id,
       distance: this.distance,
       isRoundTrip: this.isRoundTrip,
@@ -116,6 +119,8 @@ export class HikeProgram implements IHikeProgram {
       routeId: this.routeId,
       description: this.description,
       offlineMap: this.offlineMap,
+      timestamp: this.timestamp,
+      state: this.state,
       stops: this.stops
     };
 

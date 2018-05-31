@@ -21,7 +21,4 @@ export class EndTracking {
   readonly type = BackgroundGeolocationActionTypes.END_TRACKING;
 }
 
-export type Actions =
-  | CurrentLocationObtained
-  | StartTracking
-  | EndTracking;
+export type Actions = CurrentLocationObtained | StartTracking | EndTracking;

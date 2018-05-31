@@ -3,5 +3,5 @@ export class HikeModuleConfig {
     poi: string;
     hike: string;
     route: string;
-  }
-};
+  };
+}

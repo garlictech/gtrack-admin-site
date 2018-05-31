@@ -11,21 +11,16 @@ import { State } from 'app/store';
 
 @Injectable()
 export class BackgroundGeolocationService {
-
   protected _subscription: Subscription | undefined;
 
-  constructor(
-    protected _store: Store<State>,
-    protected _config: BackgroundGeolocationServiceConfig
-  ) {}
+  constructor(protected _store: Store<State>, protected _config: BackgroundGeolocationServiceConfig) {}
 
   @DebugLog
   public start() {
     log.d('Determining current location starts in browser mode');
     this.end();
 
-    this._subscription = Observable
-      .timer(0, 60000)
+    this._subscription = Observable.timer(0, 60000)
       .map(() => {
         log.d('Getting current location...');
         navigator.geolocation.getCurrentPosition(

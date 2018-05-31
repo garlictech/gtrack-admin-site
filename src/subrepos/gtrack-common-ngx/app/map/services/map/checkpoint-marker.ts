@@ -7,7 +7,7 @@ import { IconService } from '../icon';
 import { IHikeProgramStop } from 'subrepos/provider-client';
 
 export class CheckpointMarker {
-  public markers: {[key: string]: L.Marker} = {};
+  public markers: { [key: string]: L.Marker } = {};
   public shownOnMap = false;
   public checkpoints: Checkpoint[] = [];
 
@@ -102,6 +102,6 @@ export class CheckpointMarker {
   }
 
   protected get opacity(): number {
-    return (this.shownOnMap === true) ? 1 : 0;
+    return this.shownOnMap === true ? 1 : 0;
   }
 }

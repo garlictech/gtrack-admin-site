@@ -4,4 +4,4 @@ export interface ISearchFilters {
   time: [number, number];
   length: [number, number];
   location: string;
-};
+}

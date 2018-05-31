@@ -14,15 +14,10 @@ describe('LeafletComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LeafletComponent ],
-      providers: [
-        MapService,
-        IconService,
-        MapMarkerService
-      ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-    })
-    .compileComponents();
+      declarations: [LeafletComponent],
+      providers: [MapService, IconService, MapMarkerService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,22 +1,11 @@
-import {
-  Component,
-  Input,
-  ViewChild,
-  AfterViewInit,
-  ViewEncapsulation,
-  OnInit,
-  OnDestroy
-} from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 
 import { HikeProgram } from '../../services/hike-program';
 
-import {
-  PoiSelectors,
-  RouteSelectors
-} from '../../store';
+import { PoiSelectors, RouteSelectors } from '../../store';
 
 import * as poiActions from '../../store/poi/actions';
 import * as routeActions from '../../store/route/actions';
@@ -52,15 +41,13 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
     lat: 51.505,
     lng: -0.09,
     zoom: 14
-  }
+  };
 
   public offlineMap = false;
 
-  @Input()
-  public hikeProgram: HikeProgram;
+  @Input() public hikeProgram: HikeProgram;
 
-  @ViewChild('map')
-  public map: LeafletComponent;
+  @ViewChild('map') public map: LeafletComponent;
 
   public route: Route;
 
@@ -82,30 +69,26 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
     let route = this.hikeProgram.routeId;
 
     this.pois$ = this._store.select(this._poiSelectors.getPois(pois));
-    this.route$ = this._store
-      .select(this._routeSelectors.getRoute(route))
-      .map(data => {
-        if (data) {
-          return new Route(data);
-        }
-      });
+    this.route$ = this._store.select(this._routeSelectors.getRoute(route)).map(data => {
+      if (data) {
+        return new Route(data);
+      }
+    });
 
     this._store.dispatch(new poiActions.LoadPois(pois));
 
-    this._store
-      .select(this._routeSelectors.getRouteContext(route))
-      .subscribe(context => {
-        if ((typeof context === 'undefined') || (context.loaded !== true && context.loading !== true)) {
-          this._store.dispatch(new routeActions.LoadRoute(route));
-        }
-      });
+    this._store.select(this._routeSelectors.getRouteContext(route)).subscribe(context => {
+      if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
+        this._store.dispatch(new routeActions.LoadRoute(route));
+      }
+    });
   }
 
   ngAfterViewInit() {
     let map = this.map.map;
 
     this.route$
-      .filter((route: Route) => (typeof route !== 'undefined'))
+      .filter((route: Route) => typeof route !== 'undefined')
       .takeUntil(this._destroy$)
       .subscribe((route: Route) => {
         this.route = route;
@@ -124,9 +107,8 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
         map.fitBounds(route);
       });
 
-    this
-      .pois$
-      .filter(pois => (!_.isEmpty(pois)))
+    this.pois$
+      .filter(pois => !_.isEmpty(pois))
       .take(1)
       .subscribe(pois => {
         map.pointMarker.removeMarkers();
@@ -205,5 +187,4 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
       }
     }
   }
-
 }

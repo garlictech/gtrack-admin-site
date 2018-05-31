@@ -5,7 +5,7 @@ import { poiReducer, poiReducerInitialState, poiContextReducerInitialState } fro
 import * as actions from '../actions';
 import { IPoiState } from '../state';
 
-import { pois as poiFixtures } from './fixtures'
+import { pois as poiFixtures } from './fixtures';
 
 describe('PoiReducer', () => {
   let id: string;
@@ -56,7 +56,7 @@ describe('PoiReducer', () => {
     it('should set the poi', () => {
       const action = new actions.PoiLoaded(id, poi);
       const loadAction = new actions.LoadPoi(id);
-      const beforeState = poiReducer(initialState, loadAction)
+      const beforeState = poiReducer(initialState, loadAction);
       const state = poiReducer(beforeState, action);
 
       expect(state.pois.ids).toEqual([id]);

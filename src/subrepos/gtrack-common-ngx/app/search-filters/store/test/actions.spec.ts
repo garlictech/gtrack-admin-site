@@ -12,7 +12,7 @@ describe('SearchFilters actions', () => {
 
       let action = new actions.ChangeFilters(filters);
 
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: actions.SearchFilterActionTypes.CHANGE_FILTERS,
         filters: filters
       });
@@ -23,7 +23,7 @@ describe('SearchFilters actions', () => {
     it('should create an action', () => {
       let action = new actions.ResetFilters();
 
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: actions.SearchFilterActionTypes.RESET_FILTERS
       });
     });

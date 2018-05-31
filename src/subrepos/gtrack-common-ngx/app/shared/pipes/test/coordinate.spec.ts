@@ -1,7 +1,6 @@
 import { CoordinatePipe } from '../coordinate.pipe';
 
 describe('CoordinatePipe', () => {
-
   it('should round to 5 digits', () => {
     let coordinate = new CoordinatePipe();
 

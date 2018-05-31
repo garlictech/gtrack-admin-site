@@ -14,22 +14,16 @@ import { Dictionary } from '@ngrx/entity/src/models';
   styleUrls: ['./hike-program.component.scss']
 })
 export class HikeProgramComponent implements OnInit {
-  @Input()
-  public hikeProgram: IHikeProgram;
+  @Input() public hikeProgram: IHikeProgram;
 
   public pois$: Observable<Partial<Dictionary<IPoi>>>;
 
-  constructor(
-    private _poiSelectors: PoiSelectors,
-    private _store: Store<any>
-  ) {}
+  constructor(private _poiSelectors: PoiSelectors, private _store: Store<any>) {}
 
   ngOnInit() {
     let hikePois = this.hikeProgram.stops.map(stop => stop.poiId);
 
-    this.pois$ = this._store
-      .select(this._poiSelectors.getPoiEntities(hikePois))
-      .filter(pois => (!_.isEmpty(pois)));
+    this.pois$ = this._store.select(this._poiSelectors.getPoiEntities(hikePois)).filter(pois => !_.isEmpty(pois));
 
     this._store.dispatch(new poiActions.LoadPois(hikePois));
   }

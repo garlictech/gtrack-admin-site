@@ -14,10 +14,8 @@ export class GoogleMapsService {
   }
 
   autocomplete(element: HTMLInputElement) {
-    return this
-      .map
-      .then(() => {
-        return new google.maps.places.Autocomplete(element);
-      });
+    return this.map.then(() => {
+      return new google.maps.places.Autocomplete(element);
+    });
   }
 }

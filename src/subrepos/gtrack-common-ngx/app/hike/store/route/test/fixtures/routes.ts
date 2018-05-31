@@ -23,11 +23,7 @@ export const routes: IRoute[] = [
           },
           geometry: {
             type: 'Point',
-            coordinates: [
-              18.95623999999998,
-              47.57855,
-              305.3887023925781
-            ]
+            coordinates: [18.95623999999998, 47.57855, 305.3887023925781]
           }
         }
       ]
@@ -54,11 +50,7 @@ export const routes: IRoute[] = [
           },
           geometry: {
             type: 'Point',
-            coordinates: [
-              18.95623999999998,
-              47.57855,
-              305.3887023925781
-            ]
+            coordinates: [18.95623999999998, 47.57855, 305.3887023925781]
           }
         },
         {
@@ -68,16 +60,12 @@ export const routes: IRoute[] = [
           },
           geometry: {
             type: 'Point',
-            coordinates: [
-              14.95623999999998,
-              40.57855,
-              25.3887023925781
-            ]
+            coordinates: [14.95623999999998, 40.57855, 25.3887023925781]
           }
         }
       ]
     }
-  },
+  }
 ];
 
 export const routesStored: IRouteStored[] = [
@@ -91,4 +79,4 @@ export const routesStored: IRouteStored[] = [
     id: uuid(),
     timestamp: new Date().getTime()
   }
-]
+];

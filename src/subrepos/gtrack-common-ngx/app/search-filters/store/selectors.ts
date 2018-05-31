@@ -11,9 +11,7 @@ export class SearchFiltersSelectors {
 
   protected _externals: IExternalSearchFiltersDependencies;
 
-  constructor(
-    @Inject(EXTERNAL_SEARCH_FILTERS_DEPENDENCIES) externals
-  ) {
+  constructor(@Inject(EXTERNAL_SEARCH_FILTERS_DEPENDENCIES) externals) {
     this._externals = externals;
     let filterSelector = createFeatureSelector<ISearchFilterState>(this._externals.storeDomain);
 

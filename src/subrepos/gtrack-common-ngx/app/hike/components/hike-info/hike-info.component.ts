@@ -7,6 +7,5 @@ import { IHikeProgram } from 'subrepos/provider-client';
   styleUrls: ['./hike-info.component.scss']
 })
 export class HikeInfoComponent {
-  @Input()
-  public hikeProgram: IHikeProgram;
+  @Input() public hikeProgram: IHikeProgram;
 }

@@ -14,7 +14,7 @@ export class IconComponent {
 
   @Input()
   public set poi(poi: Poi) {
-    if (poi && (poi.types instanceof Array)) {
+    if (poi && poi.types instanceof Array) {
       this._poi = poi;
       this.urls = this.iconService.urls(poi.types);
     }

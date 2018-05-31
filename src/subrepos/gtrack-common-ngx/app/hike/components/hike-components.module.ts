@@ -52,6 +52,4 @@ import { SearchFiltersModule } from '../../search-filters/search-filters.module'
     SearchFiltersComponent
   ]
 })
-export class HikeComponentsModule {
-
-}
+export class HikeComponentsModule {}

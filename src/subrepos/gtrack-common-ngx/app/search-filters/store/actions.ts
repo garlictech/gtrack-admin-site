@@ -16,6 +16,4 @@ export class ResetFilters implements Action {
   readonly type = SearchFilterActionTypes.RESET_FILTERS;
 }
 
-export type AllSearchFiltersAction =
-  | ChangeFilters
-  | ResetFilters;
+export type AllSearchFiltersAction = ChangeFilters | ResetFilters;
