@@ -9,7 +9,7 @@
   <tbody>
     <ng-container *ngFor="let photo of (photos$ | async); let idx = index">
       <tr>
-        <td><img src="{{photo.thumbnail.source}}"></td>
+        <td><img class="thumbs" src="{{photo.thumbnail.source}}"></td>
         <td [innerHTML]="photo.title | trustedHtml"></td>
         <td class="td-actions">
           ...
