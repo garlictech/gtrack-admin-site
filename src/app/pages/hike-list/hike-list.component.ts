@@ -19,6 +19,8 @@ import * as _ from 'lodash';
 })
 export class HikeListComponent implements OnInit, OnDestroy {
   public hikeList$: Observable<IHikeProgramStored[]>;
+  public EObjectState = EObjectState;
+  public selectedListState: EObjectState = EObjectState.published;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -31,7 +33,7 @@ export class HikeListComponent implements OnInit, OnDestroy {
     this._title.setTitle('Hikes');
 
     this.hikeList$ = this._store
-      .select(this._hikeSelectors.getAllHikes) // TODO: getActiveHikes
+      .select(this._hikeSelectors.getHikes())
       .takeUntil(this._destroy$)
       .map((hikes) => _.orderBy(hikes, ['timestamp'], ['desc']));
 
@@ -43,12 +45,16 @@ export class HikeListComponent implements OnInit, OnDestroy {
     this._destroy$.unsubscribe();
   }
 
-  public publishHike(hikeId: string) {
-    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(hikeId, EObjectState.published));
+  public selectStateList(state: EObjectState) {
+    this.selectedListState = state;
+  }
+
+  public updateHikeState(hikeId: string, state: EObjectState) {
+    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(hikeId, state));
   }
 
   public deleteHike(hikeId: string) {
-    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(hikeId, EObjectState.archived));
+    this._store.dispatch(new commonHikeActions.DeleteHikeProgram(hikeId));
   }
 
   // TODO: just for testing!!

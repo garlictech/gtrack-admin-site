@@ -5,14 +5,24 @@
         <div class="card">
           <div class="card-header">
               <button
-                class="btn btn-round float-right"
+                class="btn btn-round btn-sm float-right"
                 routerLink="/admin/hike/new"
-                title="Add new hike">
-                <i class="material-icons">add</i>
-              </button>
+                title="Add new hike"
+              >new hike</button>
 
               <gt-gpx-input title="Import GPX" class="float-right"></gt-gpx-input>
-            <h4 class="card-title">Hikes</h4>
+            <h4 class="card-title">
+              Hikes
+              <div class="btn-group btn-toggle">
+                <button
+                  type="button"
+                  *ngFor="let state of [EObjectState.published, EObjectState.draft, EObjectState.archived]"
+                  (click)="selectStateList(state)"
+                  [ngClass]="{'btn-fill': selectedListState === state}"
+                  class="btn btn-round btn-sm ml-3"
+                >{{state}}</button>
+              </div>
+            </h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -21,49 +31,55 @@
                   <tr>
                     <th>Title</th>
                     <th>Summary</th>
-                    <th>State</th>
+                    <th>Published</th>
                     <th>&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let hike of (hikeList$ | async)">
-                    <td class="text-nowrap">
-                      <div>
-                        <a href="#" routerLink="/admin/hike/{{hike.id}}">{{translateDescription(hike.description, 'title')}}</a>
-                      </div>
-                      <div><small class="text-secondary">ID: {{hike.id}}</small></div>
-                      <div><small class="text-secondary">Last update: {{hike.timestamp | date: 'yyyy.MM.dd. HH:mm'}}</small></div>
-                    </td>
-                    <td>{{translateDescription(hike.description, 'summary')}}</td>
-                    <td [ngClass]="{'text-success': hike.state === 'published'}">{{hike.state}}</td>
-                    <td class="td-actions">
-                      <button
-                        class="btn btn-warning btn-simple btn-link"
-                        routerLink="/admin/hike/{{hike.id}}"
-                        title="Edit hike">
-                        <i class="material-icons">edit</i>
-                      </button>
-                      <button
-                        class="btn btn-success btn-simple btn-link"
-                        (click)="publishHike(hike.id)"
-                        title="Publish hike">
-                        <i class="material-icons">publish</i>
-                      </button>
-                      <button
-                        class="btn btn-secondary btn-simple btn-link"
-                        (click)="resetState(hike.id)"
-                        title="DRAFT - for testing">
-                        <i class="material-icons">restore</i>
-                      </button>
-                      <button
-                        class="btn btn-danger btn-simple btn-link"
-                        (click)="deleteHike(hike.id)"
-                        [disabled]="hike.state !== 'draft'"
-                        title="Delete hike">
-                        <i class="material-icons">delete</i>
-                      </button>
-                    </td>
-                  </tr>
+                  <ng-container *ngFor="let hike of (hikeList$ | async)">
+                    <tr *ngIf="hike.state === selectedListState">
+                      <td class="text-nowrap">
+                        <div>
+                          <a href="#" routerLink="/admin/hike/{{hike.id}}">{{translateDescription(hike.description, 'title')}}</a>
+                        </div>
+                        <div><small class="text-secondary">ID: {{hike.id}}</small></div>
+                        <div><small class="text-secondary">Last update: {{hike.timestamp | date: 'yyyy.MM.dd. HH:mm'}}</small></div>
+                      </td>
+                      <td>{{translateDescription(hike.description, 'summary')}}</td>
+                      <td>{{hike.published | date: 'yyyy.MM.dd. HH:mm'}}</td>
+                      <td class="td-actions">
+                        <button
+                          class="btn btn-warning btn-simple btn-link"
+                          routerLink="/admin/hike/{{hike.id}}"
+                          title="Edit hike"
+                        ><i class="material-icons">edit</i></button>
+                        <button
+                          class="btn btn-success btn-simple btn-link"
+                          (click)="updateHikeState(hike.id, EObjectState.published)"
+                          title="Publish hike"
+                          *ngIf="hike.state === EObjectState.draft"
+                        ><i class="material-icons">publish</i></button>
+                        <button
+                          class="btn btn-secondary btn-simple btn-link"
+                          (click)="updateHikeState(hike.id, EObjectState.draft)"
+                          title="DRAFT - for testing"
+                          *ngIf="hike.state === EObjectState.archived"
+                        ><i class="material-icons">restore</i></button>
+                        <button
+                          class="btn btn-danger btn-simple btn-link"
+                          (click)="deleteHike(hike.id)"
+                          title="Delete hike"
+                          *ngIf="hike.state === EObjectState.draft && !hike.published"
+                        ><i class="material-icons">delete</i></button>
+                        <button
+                          class="btn btn-danger btn-simple btn-link"
+                          (click)="updateHikeState(hike.id, EObjectState.archived)"
+                          title="Archive hike"
+                          *ngIf="hike.state === EObjectState.published"
+                        ><i class="material-icons">archive</i></button>
+                      </td>
+                    </tr>
+                  </ng-container>
                 </tbody>
               </table>
             </div>
