@@ -16,7 +16,7 @@ import {
 } from 'app/store';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from 'app/store/selectors';
 import { RoutingControlService, WaypointMarkerService, RoutePlannerService, AdminMapService } from '../../shared/services/admin-map';
-import { IHikeProgramStored, IHikeProgram, IPoi, IRoute } from 'subrepos/provider-client';
+import { IHikeProgramStored, IHikeProgram, IPoi, IRoute, EObjectState } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 
@@ -30,9 +30,11 @@ import { HikeProgramService } from '../../shared/services';
   styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
+  public hikeProgramData$: Observable<IHikeProgramStored>;
   public allowSave$: Observable<boolean>;
   public working$: Observable<string | null>;
-  private _paramsId: string;
+  public EObjectState = EObjectState;
+  public paramsId: string;
   private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -68,13 +70,13 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         // Edit existing hike
         if (params && params.id) {
-          this._paramsId = params.id;
+          this.paramsId = params.id;
 
           // Set page title
           this._title.setTitle('Edit hike');
 
           // Set hike id and load hikeProgram data
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this._paramsId }, false));
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this.paramsId }, false));
           this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
 
           // Disable planning
@@ -139,7 +141,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           this._toasterService.pop('success', 'Hike', 'Success!');
 
           // Load the hike page if it's a new hike
-          if (!this._paramsId) {
+          if (!this.paramsId) {
             this._router.navigate([`/admin/hike/${this._hikeId}`]);
           } else {
             // Disable planning
@@ -147,6 +149,10 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           }
         }
       });
+
+    this.hikeProgramData$ = this._store
+      .select(this._editedHikeProgramSelectors.getData)
+      .takeUntil(this._destroy$);
 
     // Handling hike context changes
     this._store
@@ -213,5 +219,9 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
         delete this._hikeProgramService.gpxRoute;
       });
+  }
+
+  public updateHikeState(state: EObjectState) {
+    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(this.paramsId, state));
   }
 }

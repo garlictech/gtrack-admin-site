@@ -15,13 +15,7 @@
 
   <button
     class="btn btn-sm btn-fill btn-danger"
-    (click)="deletePoi(poiId)"
+    (click)="deletePoi(gTrackPoi.id)"
+    *ngIf="gTrackPoi.state === EObjectState.draft"
   >Delete</button>
-
-  <button
-    class="btn btn-sm btn-fill btn-warning"
-    (click)="resetPoi(poiId)"
-  >Reset</button>
-
-  <pre>{{gTrackPoi | json}}</pre>
 </div>

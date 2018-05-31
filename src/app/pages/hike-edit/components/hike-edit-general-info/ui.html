@@ -11,20 +11,32 @@
   [formDataPath$]="formDataPath$"
 ></app-dynamic-form>
 
-<div>
-  RoundTrip:
-  <span [ngClass]="{'text-success': (isRoundTrip$ | async)}">
-    {{(isRoundTrip$ | async) ? 'Yes' : 'No'}}
-  </span>
-</div>
+<div class="row mt-4">
+  <div class="col-md-3">
+    <strong>RoundTrip:</strong>
+    <span [ngClass]="{'text-success': (isRoundTrip$ | async)}">
+      {{(isRoundTrip$ | async) ? 'Yes' : 'No'}}
+    </span>
+  </div>
 
-<div>
-  Location:
-  <span [ngClass]="{'text-success': (hikeProgramData$ | async)?.location}">
-    {{(hikeProgramData$ | async)?.location}}
-  </span>
+  <div class="col-md-3">
+      <strong>State:</strong> {{(hikeProgramData$ | async)?.state}}
+  </div>
 
-  <div class="feedback invalid" *ngIf="(remoteError$ | async)?.location">
-    {{(remoteError$ | async)?.location[0] | translate}}
+  <div class="col-md-3">
+      <strong>Published:</strong> {{(hikeProgramData$ | async)?.published | date: 'yyyy.MM.dd. HH:mm'}}
+  </div>
+
+  <div class="col-md-3">
+    <strong>Location:</strong>
+    <span [ngClass]="{'text-success': (hikeProgramData$ | async)?.location}">
+      {{(hikeProgramData$ | async)?.location}}
+    </span>
+
+    <div class="feedback invalid" *ngIf="(remoteError$ | async)?.location">
+      {{(remoteError$ | async)?.location[0] | translate}}
+    </div>
   </div>
 </div>
+
+

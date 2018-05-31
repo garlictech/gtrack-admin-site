@@ -1,92 +1,112 @@
 <div class="content" [hidden]='working$ | async'>
-    <div class="container-fluid">
+  <div class="container-fluid">
 
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <div class="pull-right">
-                    <button class="btn btn-sm btn-fill btn-success" (click)="saveHike()" [disabled]="!(allowSave$ | async)">Save hike</button>
-                </div>
-            </div>
-        </div>
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <div class="pull-right">
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">General info</h4>
-                    </div>
-                    <div class="card-body">
-                        <gt-hike-edit-general-info></gt-hike-edit-general-info>
-                    </div>
-                </div>
-            </div>
-        </div>
+          <button
+            class="btn btn-sm btn-fill btn-success"
+            (click)="updateHikeState(EObjectState.published)"
+            title="Publish hike"
+            *ngIf="paramsId && (hikeProgramData$ | async).state === EObjectState.draft"
+          >Publish</button>
+          <button
+            class="btn btn-sm btn-fill btn-secondary"
+            (click)="updateHikeState(EObjectState.draft)"
+            title="Move to draft"
+            *ngIf="paramsId && (hikeProgramData$ | async).state === EObjectState.archived"
+          >Draft</button>
+          <button
+            class="btn btn-sm btn-fill btn-danger"
+            (click)="updateHikeState(EObjectState.archived)"
+            title="Archive hike"
+            *ngIf="paramsId && (hikeProgramData$ | async).state === EObjectState.published"
+          >Archive</button>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Map</h4>
-                    </div>
-                    <div class="card-body">
-                        <gt-hike-edit-map></gt-hike-edit-map>
-                    </div>
-                </div>
-            </div>
+          <button class="btn btn-sm btn-fill btn-success" (click)="saveHike()" [disabled]="!(allowSave$ | async)">Save hike</button>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Hike outline</h4>
-                    </div>
-                    <div class="card-body">
-                        <gt-hike-edit-outline></gt-hike-edit-outline>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Route planning</h4>
-                    </div>
-                    <div class="card-body">
-                        <gt-hike-edit-route-planner></gt-hike-edit-route-planner>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Pois</h4>
-                    </div>
-                    <div class="card-body">
-                        <gt-hike-edit-pois></gt-hike-edit-pois>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Photos</h4>
-                    </div>
-                    <div class="card-body">
-                        <gt-hike-edit-photos></gt-hike-edit-photos>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">General info</h4>
+          </div>
+          <div class="card-body">
+            <gt-hike-edit-general-info></gt-hike-edit-general-info>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Map</h4>
+          </div>
+          <div class="card-body">
+            <gt-hike-edit-map></gt-hike-edit-map>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Hike outline</h4>
+          </div>
+          <div class="card-body">
+            <gt-hike-edit-outline></gt-hike-edit-outline>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Route planning</h4>
+          </div>
+          <div class="card-body">
+            <gt-hike-edit-route-planner></gt-hike-edit-route-planner>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Pois</h4>
+          </div>
+          <div class="card-body">
+            <gt-hike-edit-pois></gt-hike-edit-pois>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Photos</h4>
+          </div>
+          <div class="card-body">
+            <gt-hike-edit-photos></gt-hike-edit-photos>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!--app-page-busy [text]='working$ | async' [hidden]='!(working$ | async)'></app-page-busy-->

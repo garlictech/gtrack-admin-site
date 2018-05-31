@@ -8,7 +8,7 @@
                 class="btn btn-round btn-sm float-right"
                 routerLink="/admin/hike/new"
                 title="Add new hike"
-              >new hike</button>
+              ><i class="material-icons">add</i></button>
 
               <gt-gpx-input title="Import GPX" class="float-right"></gt-gpx-input>
             <h4 class="card-title">
@@ -54,29 +54,11 @@
                           title="Edit hike"
                         ><i class="material-icons">edit</i></button>
                         <button
-                          class="btn btn-success btn-simple btn-link"
-                          (click)="updateHikeState(hike.id, EObjectState.published)"
-                          title="Publish hike"
-                          *ngIf="hike.state === EObjectState.draft"
-                        ><i class="material-icons">publish</i></button>
-                        <button
-                          class="btn btn-secondary btn-simple btn-link"
-                          (click)="updateHikeState(hike.id, EObjectState.draft)"
-                          title="DRAFT - for testing"
-                          *ngIf="hike.state === EObjectState.archived"
-                        ><i class="material-icons">restore</i></button>
-                        <button
                           class="btn btn-danger btn-simple btn-link"
                           (click)="deleteHike(hike.id)"
                           title="Delete hike"
                           *ngIf="hike.state === EObjectState.draft && !hike.published"
                         ><i class="material-icons">delete</i></button>
-                        <button
-                          class="btn btn-danger btn-simple btn-link"
-                          (click)="updateHikeState(hike.id, EObjectState.archived)"
-                          title="Archive hike"
-                          *ngIf="hike.state === EObjectState.published"
-                        ><i class="material-icons">archive</i></button>
                       </td>
                     </tr>
                   </ng-container>

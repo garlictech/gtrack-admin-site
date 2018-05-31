@@ -33,6 +33,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   public isDirty$: Observable<boolean>;
 
   public gTrackPoi: IPoiStored;
+  public EObjectState = EObjectState;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -112,12 +113,8 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   }
 
   public deletePoi(poiId: string) {
-    this._store.dispatch(new commonPoiActions.UpdatePoiState(poiId, EObjectState.archived));
-  }
-
-  // TODO: just for testing!!
-  public resetPoi(poiId: string) {
-    this._store.dispatch(new commonPoiActions.UpdatePoiState(poiId, EObjectState.draft));
+    this._store.dispatch(new commonPoiActions.DeletePoi(poiId));
+    this.modalConfig.modal.close();
   }
 
   public submitDescription = (langKey: string, data: any) => {

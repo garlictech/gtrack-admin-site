@@ -49,17 +49,8 @@ export class HikeListComponent implements OnInit, OnDestroy {
     this.selectedListState = state;
   }
 
-  public updateHikeState(hikeId: string, state: EObjectState) {
-    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(hikeId, state));
-  }
-
   public deleteHike(hikeId: string) {
     this._store.dispatch(new commonHikeActions.DeleteHikeProgram(hikeId));
-  }
-
-  // TODO: just for testing!!
-  public resetState(hikeId: string) {
-    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(hikeId, EObjectState.draft));
   }
 
   public translateDescription(description, field) {
