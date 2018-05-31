@@ -40,9 +40,9 @@ export class HikeEffects {
         .query()
         .take(1)
         .map(hikePrograms => {
-          let ids = hikePrograms.map(hikeProgram => hikeProgram.id);
-
-          return new LocalActions.AllHikeProgramsLoaded(ids, hikePrograms);
+          let _hikePrograms = hikePrograms.filter(hikeProgram => hikeProgram.id);
+          let ids = _hikePrograms.map(hikeProgram => hikeProgram.id);
+          return new LocalActions.AllHikeProgramsLoaded(ids, _hikePrograms);
         });
     });
 
@@ -55,6 +55,18 @@ export class HikeEffects {
         .take(1)
         .map(result => {
           return new LocalActions.LoadHikeProgram(action.id);
+        });
+    });
+
+  @Effect()
+  deleteHike$: Observable<Action> = this._actions$
+    .ofType<LocalActions.UpdateHikeProgramState>(LocalActions.HikeProgramActionTypes.DELETE_HIKE_PROGRAM)
+    .mergeMap(action => {
+      return this._hikeProgramService
+        .delete(action.id)
+        .take(1)
+        .map(result => {
+          return new LocalActions.HikeProgramDeleted(action.id);
         });
     });
 

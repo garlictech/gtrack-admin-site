@@ -111,4 +111,50 @@ describe('Poi actions', () => {
       });
     });
   });
+
+  describe('UpdatePoiState action', () => {
+    it('should create an action', () => {
+      const payload = {
+        id: 'fakeId',
+        state: EObjectState.draft
+      };
+      let action = new actions.UpdatePoiState(payload.id, payload.state);
+
+      expect({ ...action }).toEqual({
+        type: actions.PoiActionTypes.UPDATE_POI_STATE,
+        id: payload.id,
+        state: EObjectState.draft
+      });
+    });
+  });
+
+  describe('DeletePoi action', () => {
+    it('should create an action', () => {
+      const payload = {
+        id: 'fakeId'
+      };
+      let action = new actions.DeletePoi(payload.id);
+
+      expect({ ...action }).toEqual({
+        type: actions.PoiActionTypes.DELETE_POI,
+        id: payload.id
+      });
+    });
+  });
+
+  describe('PoiDeleted action', () => {
+    const payload = {
+      id: 'fakeId'
+    };
+
+    it('should create an action', () => {
+      let action = new actions.PoiDeleted(payload.id);
+
+      expect({ ...action }).toEqual({
+        type: actions.PoiActionTypes.POI_DELETED,
+        context: payload.id
+      });
+    });
+  });
+
 })

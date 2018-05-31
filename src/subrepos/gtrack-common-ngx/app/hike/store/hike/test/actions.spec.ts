@@ -98,4 +98,51 @@ describe('Hike actions', () => {
     });
   });
 
+  describe('UpdateHikeProgramState action', () => {
+    const payload = {
+      id: 'fakeId',
+      state: EObjectState.draft
+    };
+
+    it('should create an action', () => {
+      let action = new actions.UpdateHikeProgramState(payload.id, payload.state);
+
+      expect({ ...action }).toEqual({
+        type: actions.HikeProgramActionTypes.UPDATE_HIKE_PROGRAM_STATE,
+        id: payload.id,
+        state: EObjectState.draft
+      });
+    });
+  });
+
+  describe('DeleteHikeProgram action', () => {
+    const payload = {
+      id: 'fakeId'
+    };
+
+    it('should create an action', () => {
+      let action = new actions.DeleteHikeProgram(payload.id);
+
+      expect({ ...action }).toEqual({
+        type: actions.HikeProgramActionTypes.DELETE_HIKE_PROGRAM,
+        id: payload.id
+      });
+    });
+  });
+
+  describe('HikeProgramDeleted action', () => {
+    const payload = {
+      id: 'fakeId'
+    };
+
+    it('should create an action', () => {
+      let action = new actions.HikeProgramDeleted(payload.id);
+
+      expect({ ...action }).toEqual({
+        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_DELETED,
+        context: payload.id
+      });
+    });
+  });
+
 });

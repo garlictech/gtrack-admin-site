@@ -58,5 +58,17 @@ export class PoiEffects {
         });
     });
 
+  @Effect()
+  deletePoi$: Observable<Action> = this._actions$
+    .ofType<LocalActions.UpdatePoiState>(LocalActions.PoiActionTypes.DELETE_POI)
+    .mergeMap(action => {
+      return this._poiService
+        .delete(action.id)
+        .take(1)
+        .map(result => {
+          return new LocalActions.PoiDeleted(action.id);
+        });
+    });
+
   constructor(private _actions$: Actions, private _poiService: PoiService, private _store: Store<any>) {}
 }

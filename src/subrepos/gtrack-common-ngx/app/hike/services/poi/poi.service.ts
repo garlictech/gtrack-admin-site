@@ -70,4 +70,13 @@ export class PoiService {
       })
       .take(1);
   }
+
+  public delete(id: string) {
+    return this._deepstream
+      .callRpc('admin.delete', {
+        id: id,
+        table: 'pois'
+      })
+      .take(1);
+  }
 }

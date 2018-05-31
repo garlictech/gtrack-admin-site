@@ -10,7 +10,9 @@ export enum PoiActionTypes {
   POI_SAVED = '[Poi] Poi saved',
   POI_MODIFIED = '[Poi] Poi modified',
   ADD_GTRACK_POIS = '[Poi] Add gTrack pois',
-  UPDATE_POI_STATE = '[Poi] Update gTrack poi state'
+  UPDATE_POI_STATE = '[Poi] Update gTrack poi state',
+  DELETE_POI = '[Poi] Delete gTrack poi',
+  POI_DELETED = '[Poi] gTrack poi deleted'
 }
 
 export class LoadPoi implements Action {
@@ -61,6 +63,18 @@ export class UpdatePoiState implements Action {
   constructor(public id: string, public state: EObjectState) {}
 }
 
+export class DeletePoi implements Action {
+  readonly type = PoiActionTypes.DELETE_POI;
+
+  constructor(public id: string) {}
+}
+
+export class PoiDeleted implements Action {
+  readonly type = PoiActionTypes.POI_DELETED;
+
+  constructor(public context: string) {}
+}
+
 export type AllPoiActions =
   | LoadPoi
   | PoiLoaded
@@ -69,4 +83,6 @@ export type AllPoiActions =
   | SavePoi
   | PoiSaved
   | PoiModified
-  | UpdatePoiState;
+  | UpdatePoiState
+  | DeletePoi
+  | PoiDeleted;
