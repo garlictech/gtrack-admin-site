@@ -78,6 +78,11 @@ export class DynamicModalCoreComponent {
 
     setTimeout(() => {
       this.visible = false;
+
+      if (this._compRef) {
+        this._compRef.destroy();
+      }
+
       this.modalConfig.modal.destroy();
     }, 300);
   }
