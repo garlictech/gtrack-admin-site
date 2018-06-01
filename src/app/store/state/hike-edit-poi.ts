@@ -25,6 +25,10 @@ export interface IExternalPoiListContextState {
   hike: IExternalPoiListContextItemState; // context for hike Poi list
 }
 
+export interface IGTrackPoiMergeState {
+  selections: string[]
+}
+
 // State
 export interface IHikeEditPoiState {
   googlePois: IGooglePoiEntityState;
@@ -33,4 +37,5 @@ export interface IHikeEditPoiState {
   osmRoutePois: IOsmRoutePoiEntityState;
   wikipediaPois: IWikipediaPoiEntityState;
   contexts: IExternalPoiListContextState;
+  gTrackPoiMerge: IGTrackPoiMergeState;
 }

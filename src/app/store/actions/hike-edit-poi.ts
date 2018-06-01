@@ -30,8 +30,12 @@ export const SET_WIKIPEDIA_POI_IN_HIKE = '[HikeEditPoi] Set Wikipedia poi inHike
 
 export const TOGGLE_ONROUTE_MARKERS = '[HikeEditPoi] Toggle onroute markers';
 export const TOGGLE_OFFROUTE_MARKERS = '[HikeEditPoi] Toggle offroute markers';
+
 export const SET_SAVING = '[HikeEditPoi] Set saving';
 export const MARKERS_CONFIG_CHANGED = '[HikeEditPoi] Markers config changed';
+
+export const ADD_GTRACK_POI_TO_MERGE_SELECTION = '[HikeEditPoi] Add gTrack poi to merge selection';
+export const REMOVE_GTRACK_POI_FROM_MERGE_SELECTION = '[HikeEditPoi] Remove gTrack poi from merge selection';
 
 export class ResetPoiState implements Action {
   readonly type = RESET_POI_STATE;
@@ -180,6 +184,20 @@ export class MarkersConfigChanged implements Action {
   readonly type = MARKERS_CONFIG_CHANGED;
 }
 
+/**
+ * Merge selection
+ */
+
+export class AddGTrackPoiToMergeSelection implements Action {
+  readonly type = ADD_GTRACK_POI_TO_MERGE_SELECTION;
+  constructor(public poiId: string) {}
+}
+
+export class RemoveGTrackPoiFromMergeSelection implements Action {
+  readonly type = REMOVE_GTRACK_POI_FROM_MERGE_SELECTION;
+  constructor(public poiId: string) {}
+}
+
 export type AllHikeEditPoiActions =
   | ResetPoiState
   // Google
@@ -211,4 +229,7 @@ export type AllHikeEditPoiActions =
   | ToggleOnrouteMarkers
   | ToggleOffrouteMarkers
   | SetSaving
-  | MarkersConfigChanged;
+  | MarkersConfigChanged
+  // Merge
+  | AddGTrackPoiToMergeSelection
+  | RemoveGTrackPoiFromMergeSelection;

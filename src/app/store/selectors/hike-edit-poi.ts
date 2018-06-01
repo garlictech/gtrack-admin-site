@@ -15,6 +15,8 @@ export class HikeEditPoiSelectors {
   public getAllOsmAmenityPois: (state: object) => IOsmPoi[];
   public getAllOsmNaturalPois: (state: object) => IOsmPoi[];
   public getAllOsmRoutePois: (state: object) => IOsmPoi[];
+  public getMergeSelections: (state: object) => string[];
+  public getMergeSelectionsCount: (state: object) => number;
   private _allPoiSelectorMap = {}
 
   constructor() {
@@ -56,6 +58,14 @@ export class HikeEditPoiSelectors {
       'osmRoute': this.getAllOsmRoutePois,
       'wikipedia': this.getAllWikipediaPois
     }
+
+    this.getMergeSelections = createSelector(this._featureSelector,
+      (state: IHikeEditPoiState) => state.gTrackPoiMerge.selections
+    );
+
+    this.getMergeSelectionsCount = createSelector(this._featureSelector,
+      (state: IHikeEditPoiState) => state.gTrackPoiMerge.selections.length
+    );
   }
 
   public getSaveablePois(subdomain) {

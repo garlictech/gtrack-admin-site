@@ -2,7 +2,7 @@ import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   IHikeEditPoiState, IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
-  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState
+  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState, IGTrackPoiMergeState
 } from '../state';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import { hikeEditPoiActions } from '../index';
@@ -393,6 +393,7 @@ export function externalPoiListContextReducer(
     /**
      * Toggle markers
      */
+
     case hikeEditPoiActions.TOGGLE_ONROUTE_MARKERS:
       return {
         ...state,
@@ -430,13 +431,53 @@ export function externalPoiListContextReducer(
   }
 }
 
+/**
+ * Merge pois
+ */
+
+const initialGTrackPoiMergeState = {
+  selections: []
+};
+
+ // export function hikeEditRoutePlannerReducer(
+export const gTrackPoiMergeReducer: ActionReducer<IGTrackPoiMergeState> = (
+  state = initialGTrackPoiMergeState,
+  action: hikeEditPoiActions.AllHikeEditPoiActions
+): IGTrackPoiMergeState => {
+  switch (action.type) {
+
+    case hikeEditPoiActions.RESET_POI_STATE:
+      return initialGTrackPoiMergeState;
+
+    case hikeEditPoiActions.ADD_GTRACK_POI_TO_MERGE_SELECTION:
+      return {
+        ...state,
+        selections: [
+          ...state.selections,
+          action.poiId
+        ]
+      };
+
+    case hikeEditPoiActions.REMOVE_GTRACK_POI_FROM_MERGE_SELECTION:
+      return {
+        ...state,
+        selections: state.selections.filter(s => s !== action.poiId)
+      };
+
+    default:
+      return state;
+
+  }
+}
+
 const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
   wikipediaPois: wikipediaPoiReducer,
   googlePois: googlePoiReducer,
   osmAmenityPois: osmAmenityPoiReducer,
   osmNaturalPois: osmNaturalPoiReducer,
   osmRoutePois: osmRoutePoiReducer,
-  contexts: externalPoiListContextReducer
+  contexts: externalPoiListContextReducer,
+  gTrackPoiMerge: gTrackPoiMergeReducer
 };
 
 export const hikeEditPoiReducer = combineReducers(reducerMap);

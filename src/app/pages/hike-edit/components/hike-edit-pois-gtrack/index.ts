@@ -29,6 +29,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public searchContext$: Observable<IGeoSearchContextState | undefined>;
   public showOnrouteMarkers$: Observable<boolean>;
   public showOffrouteMarkers$: Observable<boolean>;
+  public mergeSelectionCount$: Observable<number>;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -122,6 +123,10 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers'))
       .takeUntil(this._destroy$);
 
+    this.mergeSelectionCount$ = this._store
+      .select(this._hikeEditPoiSelectors.getMergeSelectionsCount)
+      .takeUntil(this._destroy$);
+
     //
     // Refresh markers
     //
@@ -164,4 +169,18 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public toggleOffrouteMarkers() {
     this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('gTrack'));
   }
+
+  public mergePois() {
+    console.log('merge pois');
+  }
 }
+
+/*
+
+ let result = await rpc
++      .make('admin.poi.merge', testInput)
++      .take(1)
++      .toPromise();
++
+
+*/

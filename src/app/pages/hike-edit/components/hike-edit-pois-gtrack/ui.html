@@ -5,6 +5,12 @@
       (click)="getPois()"
       [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (searchContext$ | async)?.working"
     >Get new</button>
+
+    <button
+      class="btn btn-sm btn-fill btn-success"
+      (click)="mergePois()"
+      [disabled]="(mergeSelectionCount$ | async) < 2"
+    >Merge pois</button>
   </div>
 
   <div class="pull-left" *ngIf="(searchContext$ | async)?.working"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
@@ -43,8 +49,8 @@
       <div class="card-body">
         <hike-edit-pois-gtrack-table
           [pois$]="pois$"
-          [onRouteCheck]="true">
-        </hike-edit-pois-gtrack-table>
+          [onRouteCheck]="true"
+        ></hike-edit-pois-gtrack-table>
       </div>
     </div>
   </div>
@@ -64,9 +70,11 @@
       <div class="card-body">
         <hike-edit-pois-gtrack-table
           [pois$]="pois$"
-          [onRouteCheck]="false">
-        </hike-edit-pois-gtrack-table>
+          [onRouteCheck]="false"
+        ></hike-edit-pois-gtrack-table>
       </div>
     </div>
   </div>
 </div>
+
+{{mergeSelection | json}}
