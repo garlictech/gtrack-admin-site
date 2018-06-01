@@ -1,0 +1,20 @@
+<table class="table table-hover">
+    <thead class="text-success">
+      <tr>
+        <th>Thumbnail</th>
+        <th>Title</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let image of (images$ | async); let idx = index">
+        <tr>
+          <td><img class="thumbs" src="https://d1cuyjsrcm0gby.cloudfront.net/{{image.key}}/thumb-320.jpg"></td>
+          <td class="p-3">{{image | json}}</td>
+          <td class="td-actions">
+            ...
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>

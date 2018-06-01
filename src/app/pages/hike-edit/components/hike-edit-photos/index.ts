@@ -2,10 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { State } from 'app/store';
+import { State, hikeEditImageActions } from 'app/store';
 
-import { IGooglePhotoInfo, IWikipediaPhotoInfo } from 'app/shared/interfaces';
-import { HikeEditPoiSelectors } from '../../../../store/selectors';
+import { IGooglePhotoInfo, IWikipediaPhotoInfo, IMapillaryImage } from 'app/shared/interfaces';
+import { HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors } from '../../../../store/selectors';
+import { RoutePlannerService } from '../../../../shared/services/admin-map';
 
 @Component({
   selector: 'gt-hike-edit-photos',
@@ -14,11 +15,17 @@ import { HikeEditPoiSelectors } from '../../../../store/selectors';
 export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   public googlePhotos$: Observable<IGooglePhotoInfo[]>;
   public wikipediaPhotos$: Observable<IWikipediaPhotoInfo[]>;
+  public mapillaryImages$: Observable<IMapillaryImage[]>;
+  public routePath$: Observable<any>;
+  public mapillaryLoading$: Observable<boolean>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors
+    private _routePlannerService: RoutePlannerService,
+    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _hikeEditImageSelectors: HikeEditImageSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {}
 
   ngOnInit() {
@@ -29,6 +36,19 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     this.wikipediaPhotos$ = this._store
       .select(this._hikeEditPoiSelectors.getPoiPhotos('wikipedia'))
       .takeUntil(this._destroy$);
+
+    this.mapillaryImages$ = this._store
+      .select(this._hikeEditImageSelectors.getAllMapillaryImages)
+      .takeUntil(this._destroy$);
+
+    // Route info from the store (for disabling GET buttons)
+    this.routePath$ = this._store
+      .select(this._hikeEditRoutePlannerSelectors.getPath)
+      .takeUntil(this._destroy$);
+
+    this.mapillaryLoading$ = this._store
+      .select(this._hikeEditImageSelectors.getHikeEditImageContextPropertySelector('mapillary', 'loading'))
+      .takeUntil(this._destroy$);
   }
 
   ngOnDestroy() {
@@ -36,4 +56,12 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     this._destroy$.unsubscribe();
   }
 
+  public getMapillaryPhotos() {
+    let _bounds = this._routePlannerService.getSearchBounds();
+
+    if (_bounds) {
+      // Get pois for the current domain
+      this._store.dispatch(new hikeEditImageActions.GetMapillaryImages(_bounds));
+    }
+  }
 }

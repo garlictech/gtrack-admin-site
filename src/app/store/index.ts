@@ -40,6 +40,10 @@ import * as hikeEditPoiActions from './actions/hike-edit-poi';
 export type HikeEditPoiAction = hikeEditPoiActions.AllHikeEditPoiActions;
 export { hikeEditPoiActions };
 
+import * as hikeEditImageActions from './actions/hike-edit-image';
+export type HikeEditImageAction = hikeEditImageActions.AllHikeEditImageActions;
+export { hikeEditImageActions };
+
 import * as hikeEditRoutePlannerActions from './actions/hike-edit-route-planner';
 export type HikeEditRoutePlannerAction = hikeEditRoutePlannerActions.AllHikeEditRoutePlannerActions;
 export { hikeEditRoutePlannerActions };
@@ -73,6 +77,7 @@ export { commonBackgroundGeolocationActions };
 
 import { hikeEditRoutePlannerReducer } from './reducer/hike-edit-route-planner';
 import { hikeEditPoiReducer } from './reducer/hike-edit-poi';
+import { hikeEditImageReducer } from './reducer/hike-edit-image';
 import { hikeEditMapReducer } from './reducer/hike-edit-map';
 import { editedHikeProgramReducer } from './reducer/edited-hike-program';
 import { editedGTrackPoiReducer } from './reducer/edited-gtrack-poi';
@@ -89,6 +94,7 @@ const reducers: ActionReducerMap<State> = {
   router: routerReducer,
   hikeEditRoutePlanner: hikeEditRoutePlannerReducer,
   hikeEditPoi: hikeEditPoiReducer,
+  hikeEditImage: hikeEditImageReducer,
   hikeEditMap: hikeEditMapReducer,
   language: LanguageReducer,
   editedHikeProgram: editedHikeProgramReducer,

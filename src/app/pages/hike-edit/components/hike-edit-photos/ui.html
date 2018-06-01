@@ -40,4 +40,34 @@
       </div>
     </div>
   </div>
+
+  <div class="card mb-1">
+    <div class="card-header bg-light" id="headingOne" role="tab">
+      <h5>
+        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_mapillary_photo" role="button" class="collapsed">
+          <div class="text-success">
+            Mapillary
+            <i class="material-icons pull-right">keyboard_arrow_down</i>
+          </div>
+        </a>
+      </h5>
+    </div>
+    <div aria-labelledby="headingOne" class="collapse" id="collapse_mapillary_photo" role="tabpanel" aria-expanded="false" style="height: 0px;">
+      <div class="card-body">
+        <div class="pull-left">
+          <button
+            class="btn btn-sm btn-fill btn-success"
+            (click)="getMapillaryPhotos()"
+            [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (mapillaryLoading$ | async)"
+          >Get new</button>
+        </div>
+
+        <div class="pull-left" *ngIf="(mapillaryLoading$ | async)"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
+
+        <hike-edit-photos-mapillary-images-table
+          [images$]="mapillaryImages$"
+        ></hike-edit-photos-mapillary-images-table>
+      </div>
+    </div>
+  </div>
 </div>

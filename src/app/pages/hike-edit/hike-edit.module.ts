@@ -24,6 +24,7 @@ import {
   HikeEditOutlineComponent,
   HikeEditPhotosComponent,
   HikeEditPhotosTableComponent,
+  HikeEditMapillaryImageTableComponent,
   PoiIconsComponent,
   SpecialPoiDataComponent,
   // Modals
@@ -55,6 +56,7 @@ const COMPONENTS = [
   HikeEditOutlineComponent,
   HikeEditPhotosComponent,
   HikeEditPhotosTableComponent,
+  HikeEditMapillaryImageTableComponent,
   PoiIconsComponent,
   SpecialPoiDataComponent,
   // Modals

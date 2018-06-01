@@ -42,7 +42,7 @@ import { LanguageModule } from './language';
 // App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { AuthEffects, HikeEditPoiEffects, EditedHikeProgramEffects, EditedGTrackPoiEffects } from './store/effects';
+import { AuthEffects, HikeEditPoiEffects, EditedHikeProgramEffects, EditedGTrackPoiEffects, HikeEditImageEffects } from './store/effects';
 
 import { store } from './store';
 
@@ -51,7 +51,8 @@ import {
   EditedHikeProgramSelectors,
   HikeEditPoiSelectors,
   HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors
+  HikeEditRoutePlannerSelectors,
+  HikeEditImageSelectors
 } from './store/selectors';
 import { routing } from './app-routing.module';
 // Page modules
@@ -69,7 +70,8 @@ import {
   GooglePoiService,
   ReverseGeocodingService,
   LanguageService,
-  HikeProgramService
+  HikeProgramService,
+  MapillaryService
 } from './shared/services';
 // Vendor
 import { AngularFireModule } from 'angularfire2';
@@ -172,6 +174,7 @@ export class RavenErrorHandler implements ErrorHandler {
       RouteEffects,
       EditedHikeProgramEffects,
       EditedGTrackPoiEffects,
+      HikeEditImageEffects,
       // Common-ngx
       PoiEffects,
       HikeEffects,
@@ -196,10 +199,12 @@ export class RavenErrorHandler implements ErrorHandler {
     GooglePoiService,
     LanguageService,
     HikeProgramService,
+    MapillaryService,
     // Selectors
     EditedGTrackPoiSelectors,
     EditedHikeProgramSelectors,
     HikeEditPoiSelectors,
+    HikeEditImageSelectors,
     HikeEditMapSelectors,
     HikeEditRoutePlannerSelectors,
     PoiSelectors,

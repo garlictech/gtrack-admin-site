@@ -1,10 +1,8 @@
-// Core
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'hike-edit-photos-table',
-  templateUrl: './ui.html',
-  styleUrls: ['./style.scss']
+  templateUrl: './ui.html'
 })
 export class HikeEditPhotosTableComponent {
   @Input() photos$: any[];
