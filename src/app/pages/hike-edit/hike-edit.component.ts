@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, state } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -12,11 +12,12 @@ import {
   IHikeEditRoutePlannerState,
   hikeEditMapActions,
   hikeEditRoutePlannerActions,
-  editedHikeProgramActions
+  editedHikeProgramActions,
+  commonPoiActions
 } from 'app/store';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from 'app/store/selectors';
 import { RoutingControlService, WaypointMarkerService, RoutePlannerService, AdminMapService } from '../../shared/services/admin-map';
-import { IHikeProgramStored, IHikeProgram, IPoi, IRoute, EObjectState } from 'subrepos/provider-client';
+import { IHikeProgramStored, IHikeProgram, IPoi, IRoute, EObjectState, IHikeProgramStop } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 
@@ -30,7 +31,7 @@ import { HikeProgramService } from '../../shared/services';
   styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
-  public hikeProgramData$: Observable<IHikeProgramStored>;
+  public hikeProgramState$: Observable<EObjectState>;
   public allowSave$: Observable<boolean>;
   public working$: Observable<string | null>;
   public EObjectState = EObjectState;
@@ -150,8 +151,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.hikeProgramData$ = this._store
-      .select(this._editedHikeProgramSelectors.getData)
+    this.hikeProgramState$ = this._store
+      .select(this._editedHikeProgramSelectors.getState)
       .takeUntil(this._destroy$);
 
     // Handling hike context changes
@@ -221,7 +222,22 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       });
   }
 
-  public updateHikeState(state: EObjectState) {
-    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(this.paramsId, state));
+  public updateHikeState(hikeProgramState: EObjectState) {
+    this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(this.paramsId, hikeProgramState));
+
+    // Publish pois
+    if (hikeProgramState === EObjectState.published) {
+      this.hikeProgramState$
+        .skipWhile((hikeState: EObjectState) => hikeState !== EObjectState.published)
+        .take(1)
+        .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getStops).take(1))
+        .subscribe((stops: IHikeProgramStop[]) => {
+          for (const stop of stops) {
+            if (stop.poiId !== 'endpoint') {
+              this._store.dispatch(new commonPoiActions.UpdatePoiState(stop.poiId, EObjectState.published));
+            }
+          }
+        });
+    }
   }
 }

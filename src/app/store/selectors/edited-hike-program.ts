@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
 import { IEditedHikeProgramState } from '../state/edited-hike-program';
-import { ILocalizedItem, ITextualDescription, IHikeProgramStored, IPoiStored, IHikeProgramStop } from 'subrepos/provider-client';
+import {
+  ILocalizedItem, ITextualDescription, IHikeProgramStored, IPoiStored, IHikeProgramStop, EObjectState
+} from 'subrepos/provider-client';
 
 import * as _ from 'lodash';
 
@@ -15,6 +17,7 @@ export class EditedHikeProgramSelectors {
   public getPoiIds: MemoizedSelector<object, string[]>;
   public getStops: MemoizedSelector<object, IHikeProgramStop[]>;
   public getStopsCount: MemoizedSelector<object, number>;
+  public getState: MemoizedSelector<object, EObjectState>;
   public getDirty: MemoizedSelector<object, boolean>;
   public getWorking: MemoizedSelector<object, string | null>;
   public getData: MemoizedSelector<object, IHikeProgramStored>;
@@ -54,6 +57,10 @@ export class EditedHikeProgramSelectors {
 
     this.getDescriptions = createSelector(this._featureSelector,
       (state: IEditedHikeProgramState) => _.get(state, 'data.description')
+    );
+
+    this.getState = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => _.get(state, 'data.state')
     );
 
     this.getDirty = createSelector(this._featureSelector,

@@ -16,6 +16,6 @@
   <button
     class="btn btn-sm btn-fill btn-danger"
     (click)="deletePoi(gTrackPoi.id)"
-    *ngIf="gTrackPoi.state === EObjectState.draft"
+    *ngIf="(gTrackPoi$ | async).state === EObjectState.draft"
   >Delete</button>
 </div>

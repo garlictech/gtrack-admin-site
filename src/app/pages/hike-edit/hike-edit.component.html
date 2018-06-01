@@ -9,19 +9,19 @@
             class="btn btn-sm btn-fill btn-success"
             (click)="updateHikeState(EObjectState.published)"
             title="Publish hike"
-            *ngIf="paramsId && (hikeProgramData$ | async).state === EObjectState.draft"
+            *ngIf="paramsId && (hikeProgramState$ | async) === EObjectState.draft"
           >Publish</button>
           <button
             class="btn btn-sm btn-fill btn-secondary"
             (click)="updateHikeState(EObjectState.draft)"
             title="Move to draft"
-            *ngIf="paramsId && (hikeProgramData$ | async).state === EObjectState.archived"
+            *ngIf="paramsId && (hikeProgramState$ | async) === EObjectState.archived"
           >Draft</button>
           <button
             class="btn btn-sm btn-fill btn-danger"
             (click)="updateHikeState(EObjectState.archived)"
             title="Archive hike"
-            *ngIf="paramsId && (hikeProgramData$ | async).state === EObjectState.published"
+            *ngIf="paramsId && (hikeProgramState$ | async) === EObjectState.published"
           >Archive</button>
 
           <button class="btn btn-sm btn-fill btn-success" (click)="saveHike()" [disabled]="!(allowSave$ | async)">Save hike</button>
