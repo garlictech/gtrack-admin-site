@@ -17,3 +17,4 @@ export { SpecialPoiDataComponent } from './special-poi-data';
 // Modals
 export { HikeEditExternalPoiInfoComponent } from './modals/hike-edit-external-poi-info';
 export { HikeEditGTrackPoiInfoComponent } from './modals/hike-edit-gtrack-poi-info';
+export { HikeEditMergeGTrackPoiComponent } from './modals/hike-edit-merge-gtrack-poi';

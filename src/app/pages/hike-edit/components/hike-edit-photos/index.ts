@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { State, hikeEditImageActions } from 'app/store';
 
 import { IGooglePhotoInfo, IWikipediaPhotoInfo, IMapillaryImage } from 'app/shared/interfaces';
-import { HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors } from '../../../../store/selectors';
-import { RoutePlannerService } from '../../../../shared/services/admin-map';
+import { HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors } from 'app/store/selectors';
+import { RoutePlannerService } from 'app/shared/services/admin-map';
 
 @Component({
   selector: 'gt-hike-edit-photos',

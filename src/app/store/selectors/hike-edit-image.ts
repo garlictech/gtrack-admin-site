@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 import { IHikeEditImageState } from '../state/hike-edit-image';
-import { IMapillaryImage } from '../../shared/interfaces';
+import { IMapillaryImage } from 'app/shared/interfaces';
 import { mapillaryImageAdapter } from '../reducer';
 
 @Injectable()

@@ -11,7 +11,7 @@ import { AdminMapService, HikeProgramService } from 'app/shared/services';
 
 import * as L from 'leaflet';
 import { LeafletMouseEvent } from 'leaflet';
-import { WaypointMarkerService, RoutePlannerService } from '../../../../shared/services/admin-map';
+import { WaypointMarkerService, RoutePlannerService } from 'app/shared/services/admin-map';
 
 const CENTER = <Center>{
   // London

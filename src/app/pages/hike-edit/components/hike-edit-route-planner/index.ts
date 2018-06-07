@@ -16,7 +16,7 @@ import { ToasterService } from 'angular2-toaster';
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
-import { ReverseGeocodingService } from '../../../../shared/services';
+import { ReverseGeocodingService } from 'app/shared/services';
 
 @Component({
   selector: 'gt-hike-edit-route-planner',

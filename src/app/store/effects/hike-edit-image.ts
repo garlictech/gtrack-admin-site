@@ -8,7 +8,7 @@ import { MapillaryService } from 'app/shared/services';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
-import { IMapillaryImageStored } from '../../shared/interfaces/mapillary-image.interface';
+import { IMapillaryImageStored } from 'app/shared/interfaces/mapillary-image.interface';
 
 @Injectable()
 export class HikeEditImageEffects {

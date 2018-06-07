@@ -29,7 +29,8 @@ import {
   SpecialPoiDataComponent,
   // Modals
   HikeEditExternalPoiInfoComponent,
-  HikeEditGTrackPoiInfoComponent
+  HikeEditGTrackPoiInfoComponent,
+  HikeEditMergeGTrackPoiComponent
 } from './components';
 // Shared components
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
@@ -61,7 +62,8 @@ const COMPONENTS = [
   SpecialPoiDataComponent,
   // Modals
   HikeEditExternalPoiInfoComponent,
-  HikeEditGTrackPoiInfoComponent
+  HikeEditGTrackPoiInfoComponent,
+  HikeEditMergeGTrackPoiComponent
 ];
 
 @NgModule({

@@ -7,7 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import { LanguageService } from 'app/shared/services';
 import { IDynamicComponentModalConfig, DynamicModalService } from 'subrepos/gtrack-common-ngx';
-import { HikeEditRoutePlannerSelectors, HikeEditPoiSelectors } from '../../../../../store/selectors';
+import { HikeEditRoutePlannerSelectors, HikeEditPoiSelectors } from 'app/store/selectors';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 
 @Component({

@@ -6,7 +6,7 @@ import { HikeProgramService, HikeProgram, PoiSelectors, PoiService } from 'subre
 import { State, editedHikeProgramActions, editedGTrackPoiActions } from 'app/store';
 import { IHikeProgramStored, IHikeProgram, IPoiStored, IPoi } from 'subrepos/provider-client';
 import { log } from 'app/log';
-import { IGTrackPoi } from '../../shared/interfaces';
+import { IGTrackPoi } from 'app/shared/interfaces';
 
 import * as _ from 'lodash';
 import { EditedGTrackPoiSelectors } from '../selectors';

@@ -1,6 +1,6 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { IMapillaryImageStored } from '../../shared/interfaces';
+import { IMapillaryImageStored } from 'app/shared/interfaces';
 import { IMapillaryImageEntityState, hikeEditImageActions, IImageListContextState, IHikeEditImageState } from '../index';
 import * as _ from 'lodash';
 

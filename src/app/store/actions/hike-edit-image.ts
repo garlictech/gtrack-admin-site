@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IMapillaryImageStored } from '../../shared/interfaces/mapillary-image.interface';
+import { IMapillaryImageStored } from 'app/shared/interfaces/mapillary-image.interface';
 
 export const RESET_MAPILLARY_IMAGE_STATE = '[HikeEditImage] Reset Mapillary images';
 
