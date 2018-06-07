@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-
+import { environment } from 'environments/environment';
 import { EPoiTypes } from 'subrepos/provider-client';
 import { GoogleMapsService } from 'subrepos/gtrack-common-ngx/index';
 
@@ -43,30 +43,7 @@ export class GooglePoiService {
 
         return new Promise((resolve, reject) => {
           this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
-            const thumbnailWidth = 200;
-
             for (let _point of result) {
-              const _photos: IGooglePhotoInfo[] = [];
-
-              if (_point.photos) {
-                for (let photo of _point.photos) {
-                  const _photoInfo: IGooglePhotoInfo = {
-                    title: photo.html_attributions[0] || '',
-                    original: {
-                      source: photo.getUrl({'maxWidth': photo.width}),
-                      width: photo.width,
-                      height: photo.height
-                    },
-                    thumbnail: {
-                      source: photo.getUrl({'maxWidth': thumbnailWidth}),
-                      width: thumbnailWidth,
-                      height: Math.round((thumbnailWidth * photo.height) / photo.width)
-                    }
-                  }
-                  _photos.push(_photoInfo);
-                }
-              }
-
               const _pointData: IGooglePoi = {
                 id: uuid(),
                 lat: _point.geometry.location.lat(),
@@ -83,9 +60,7 @@ export class GooglePoiService {
                   id: _point.place_id
                 }
               }
-              if (_photos.length > 0) {
-                (<any>_pointData.google).photos = _photos;
-              }
+
               _pointData.types = _.map(_point.types, (obj) => {
                 return obj === 'locality' ? 'city' : obj;
               })
@@ -112,34 +87,65 @@ export class GooglePoiService {
    * get() submethod
    */
   private _getPlaceInfo(pois: IGooglePoi[]) {
+    const thumbnailWidth = 200;
+
     return Observable
       .interval(200)
       .take(pois.length)
-      .mergeMap((idx) => {
-        let _googleData = _.cloneDeep(pois[idx]!.google!);
+      .flatMap((idx) => {
+        let _googleData = pois[idx]!.google!;
+
         if (_googleData.id) {
-          this._placesService.getDetails({
-            placeId: _googleData.id
-          }, (place, status) => {
-            if (status !== google.maps.places.PlacesServiceStatus.OK) {
-              return Observable.empty();
-            }
-
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-              _googleData.formatted_address = place.formatted_address;
-              _googleData.international_phone_number = place.international_phone_number;
-
-              if (place.opening_hours) {
-                _googleData.opening_hours = place!.opening_hours;
+          const promise = new Promise((resolve, reject) => {
+            this._placesService.getDetails({
+              placeId: _googleData.id
+            }, (place, status) => {
+              if (status !== google.maps.places.PlacesServiceStatus.OK) {
+                console.log('ERROR', status);
+                resolve();
               }
-              if (place.photos) {
-                _googleData.photos = place!.photos;
-              }
-            }
 
-            return Observable.empty();
-          })
-          return Observable.empty();
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                _googleData.formatted_address = place.formatted_address;
+                _googleData.international_phone_number = place.international_phone_number;
+
+                if (place.opening_hours) {
+                  _googleData.opening_hours = place!.opening_hours;
+                }
+
+                const _photos: IGooglePhotoInfo[] = [];
+                if (place.photos) {
+                  let _placePhotos = place.photos;
+                  if (environment.googlePhotoLimit) {
+                    _placePhotos = _.take(_placePhotos, environment.googlePhotoLimit);
+                  }
+
+                  for (let _photo of _placePhotos) {
+                    const _photoInfo: IGooglePhotoInfo = {
+                      title: _photo.html_attributions[0] || '',
+                      original: {
+                        source: _photo.getUrl({'maxWidth': _photo.width}),
+                        width: _photo.width,
+                        height: _photo.height
+                      },
+                      thumbnail: {
+                        source: _photo.getUrl({'maxWidth': thumbnailWidth}),
+                        width: thumbnailWidth,
+                        height: Math.round((thumbnailWidth * _photo.height) / _photo.width)
+                      }
+                    }
+                    _photos.push(_photoInfo);
+                  }
+
+                  _googleData.photos = _photos;
+                }
+              }
+
+              resolve();
+            });
+          });
+
+          return Observable.of(promise);
         } else {
           return Observable.empty();
         }

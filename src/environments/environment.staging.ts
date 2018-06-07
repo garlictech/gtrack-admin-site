@@ -16,4 +16,6 @@ export class Environment implements IEnvironment {
   graphhopper = { apiKey: '111444bf-7c37-499b-b87c-b324d7406715' };
 
   mapillary = { clientID: 'bWxkcHdGR0dyRVJPNU1wRklzVHZoZzo5YmE0YzlmNzQ1NmY0ZWFh' };
+
+  googlePhotoLimit = 0; // no limit
 }
