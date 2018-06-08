@@ -271,7 +271,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
         for (let externalPoi of _externalPoisToSave) {
           let _poiData = this._poiEditorService.getDbObj(externalPoi);
-
           this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
         }
       });
