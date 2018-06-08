@@ -3,8 +3,9 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import { State, hikeEditImageActions } from 'app/store';
-import { IMapillaryImage } from 'app/shared/interfaces';
-import { HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
+import {
+  HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors, EditedHikeProgramSelectors
+} from 'app/store/selectors';
 import { RoutePlannerService } from 'app/shared/services/admin-map';
 import { IBackgroundImageData } from 'subrepos/provider-client';
 
@@ -15,7 +16,7 @@ import { IBackgroundImageData } from 'subrepos/provider-client';
 export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   public googlePhotos$: Observable<IBackgroundImageData[]>;
   public wikipediaPhotos$: Observable<IBackgroundImageData[]>;
-  public mapillaryImages$: Observable<IMapillaryImage[]>;
+  public mapillaryImages$: Observable<IBackgroundImageData[]>;
   public routePath$: Observable<any>;
   public mapillaryLoading$: Observable<boolean>;
   public bgImages$: Observable<IBackgroundImageData[]>;

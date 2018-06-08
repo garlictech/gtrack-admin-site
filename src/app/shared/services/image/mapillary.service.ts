@@ -4,7 +4,7 @@ import { environment } from 'environments/environment';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
-import { IMapillaryImageStored } from '../../interfaces/mapillary-image.interface';
+import { IBackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
 import { EPoiImageTypes } from 'subrepos/provider-client';
 
 @Injectable()
@@ -19,11 +19,11 @@ export class MapillaryService {
       .toPromise()
       .then((response: any) => {
         const _features = _.get(response, 'features');
-        const _images: IMapillaryImageStored[] = [];
+        const _images: IBackgroundImageDataStored[] = [];
 
         if (_features) {
           for (let _feature of _features) {
-            const _image: IMapillaryImageStored = {
+            const _image: IBackgroundImageDataStored = {
               id: uuid(),
               title: 'untitled',
               source: {

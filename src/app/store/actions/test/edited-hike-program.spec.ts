@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import * as EditedHikeProgramActions from '../edited-hike-program';
-import { IHikeProgramStop } from 'subrepos/provider-client';
+import { IHikeProgramStop, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 
 describe('EditedHikeProgram actions', () => {
   it('should have action names defined', () => {
@@ -149,12 +149,34 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create AddBackgroundImage action', () => {
-    const action = new EditedHikeProgramActions.AddBackgroundImage('fakeImageData');
+    const imageData: IBackgroundImageData = {
+      title: 'title',
+      original: {
+        url: '...',
+        width: 100,
+        height: 100
+      },
+      card: {
+        url: '...',
+        width: 100,
+        height: 100
+      },
+      thumbnail: {
+        url: '...',
+        width: 100,
+        height: 100
+      },
+      source: {
+        type: EPoiImageTypes.google,
+        poiObjectId: 'id'
+      }
+    };
+    const action = new EditedHikeProgramActions.AddBackgroundImage(imageData);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.ADD_BACKGROUND_IMAGE,
-      imageData: 'fakeImageData'
+      imageData: imageData
     });
   });
 

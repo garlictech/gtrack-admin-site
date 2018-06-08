@@ -13,7 +13,8 @@ import {
   hikeEditMapActions,
   hikeEditRoutePlannerActions,
   editedHikeProgramActions,
-  commonPoiActions
+  commonPoiActions,
+  hikeEditImageActions
 } from 'app/store';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from 'app/store/selectors';
 import { RoutingControlService, WaypointMarkerService, RoutePlannerService, AdminMapService } from 'app/shared/services/admin-map';
@@ -63,6 +64,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this._waypointMarkerService.reset();
 
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
+    this._store.dispatch(new hikeEditImageActions.ResetImageState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
     this._store.dispatch(new editedHikeProgramActions.ResetHikeProgram());
 

@@ -8,7 +8,7 @@ import { MapillaryService } from 'app/shared/services';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
-import { IMapillaryImageStored } from 'app/shared/interfaces/mapillary-image.interface';
+import { IBackgroundImageDataStored } from 'app/shared/interfaces/mapillary-image.interface';
 
 @Injectable()
 export class HikeEditImageEffects {
@@ -26,7 +26,7 @@ export class HikeEditImageEffects {
     .ofType(hikeEditImageActions.GET_MAPILLARY_IMAGES)
     .map((action: hikeEditImageActions.GetMapillaryImages) => action.bounds)
     .switchMap(bounds => {
-      return this._mapillaryService.get(bounds).then((images: IMapillaryImageStored[]) =>  {
+      return this._mapillaryService.get(bounds).then((images: IBackgroundImageDataStored[]) =>  {
         return new hikeEditImageActions.SetMapillaryImages(images);
       });
     });

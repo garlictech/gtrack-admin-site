@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 import { IHikeEditImageState } from '../state/hike-edit-image';
-import { IMapillaryImage } from 'app/shared/interfaces';
 import { mapillaryImageAdapter } from '../reducer';
+import { IBackgroundImageData } from 'subrepos/provider-client';
 
 @Injectable()
 export class HikeEditImageSelectors {
   private _featureSelector: MemoizedSelector<object, IHikeEditImageState>;
-  public getAllMapillaryImages: (state: object) => IMapillaryImage[];
+  public getAllMapillaryImages: (state: object) => IBackgroundImageData[];
 
   constructor() {
     this._featureSelector = createFeatureSelector<IHikeEditImageState>('hikeEditImage');

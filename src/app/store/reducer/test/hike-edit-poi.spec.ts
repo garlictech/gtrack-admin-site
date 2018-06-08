@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { EPoiTypes } from 'subrepos/provider-client';
 import {
-  hikeEditPoiReducer, wikipediaPoiInitialState, googlePoiInitialState, osmAmenityPoiInitialState, osmNaturalPoiInitialState, osmRoutePoiInitialState, externalPoiInitialContextState
+  hikeEditPoiReducer, wikipediaPoiInitialState, googlePoiInitialState, osmAmenityPoiInitialState, osmNaturalPoiInitialState, osmRoutePoiInitialState, externalPoiInitialContextState, initialGTrackPoiMergeState
 } from '../hike-edit-poi';
 import { IHikeEditPoiState, hikeEditPoiActions } from '../..';
 import { IExternalPoi } from 'app/shared/interfaces';
@@ -21,7 +21,8 @@ describe('HikeEditPoi reducers', () => {
       osmAmenityPois: osmAmenityPoiInitialState,
       osmNaturalPois: osmNaturalPoiInitialState,
       osmRoutePois: osmRoutePoiInitialState,
-      contexts: externalPoiInitialContextState
+      contexts: externalPoiInitialContextState,
+      gTrackPoiMerge: initialGTrackPoiMergeState
     };
 
     pois = [

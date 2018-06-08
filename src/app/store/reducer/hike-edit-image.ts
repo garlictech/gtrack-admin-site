@@ -1,6 +1,6 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { IMapillaryImageStored } from 'app/shared/interfaces';
+import { IBackgroundImageDataStored } from 'app/shared/interfaces';
 import { IMapillaryImageEntityState, hikeEditImageActions, IImageListContextState, IHikeEditImageState } from '../index';
 import * as _ from 'lodash';
 
@@ -8,7 +8,7 @@ import * as _ from 'lodash';
  * Mapillary
  */
 
-export const mapillaryImageAdapter: EntityAdapter<IMapillaryImageStored> = createEntityAdapter<IMapillaryImageStored>();
+export const mapillaryImageAdapter: EntityAdapter<IBackgroundImageDataStored> = createEntityAdapter<IBackgroundImageDataStored>();
 export const mapillaryImageInitialState = mapillaryImageAdapter.getInitialState();
 
 const mapillaryImageReducer: ActionReducer<IMapillaryImageEntityState> = (
@@ -17,7 +17,7 @@ const mapillaryImageReducer: ActionReducer<IMapillaryImageEntityState> = (
 ): IMapillaryImageEntityState => {
   switch (action.type) {
 
-    case hikeEditImageActions.RESET_MAPILLARY_IMAGE_STATE: {
+    case hikeEditImageActions.RESET_IMAGE_STATE: {
       return mapillaryImageInitialState;
     }
 
@@ -51,7 +51,7 @@ export function imageListContextReducer(
 ): IImageListContextState {
   switch (action.type) {
 
-    case hikeEditImageActions.RESET_MAPILLARY_IMAGE_STATE:
+    case hikeEditImageActions.RESET_IMAGE_STATE:
       return imageListInitialContextState;
 
     /**

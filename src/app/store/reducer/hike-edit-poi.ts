@@ -435,7 +435,7 @@ export function externalPoiListContextReducer(
  * Merge pois
  */
 
-const initialGTrackPoiMergeState = {
+export const initialGTrackPoiMergeState = {
   selections: []
 };
 

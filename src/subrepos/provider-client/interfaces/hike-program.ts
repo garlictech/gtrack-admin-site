@@ -34,6 +34,10 @@ export interface IBackgroundImageData {
   additionalData?: any;
 }
 
+export interface IBackgroundImageDataStored {
+  id: string;
+}
+
 export interface IRouteSegment {
   uphill: number;
   downhill: number;

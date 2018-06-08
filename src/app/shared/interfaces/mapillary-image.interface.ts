@@ -12,6 +12,6 @@ export interface IMapillaryImage {
   username: string; // Username of who captured the image.
 }
 
-export interface IMapillaryImageStored extends IBackgroundImageData {
+export interface IBackgroundImageDataStored extends IBackgroundImageData {
   id: string;
 }
