@@ -12,7 +12,9 @@ export enum PoiActionTypes {
   ADD_GTRACK_POIS = '[Poi] Add gTrack pois',
   UPDATE_POI_STATE = '[Poi] Update gTrack poi state',
   DELETE_POI = '[Poi] Delete gTrack poi',
-  POI_DELETED = '[Poi] gTrack poi deleted'
+  POI_DELETED = '[Poi] gTrack poi deleted',
+  MERGE_POI = '[Poi] Merge gTrack poi',
+  POI_MERGED = '[Poi] gTrack poi merged'
 }
 
 export class LoadPoi implements Action {
@@ -75,6 +77,18 @@ export class PoiDeleted implements Action {
   constructor(public context: string) {}
 }
 
+export class MergePoi implements Action {
+  readonly type = PoiActionTypes.MERGE_POI;
+
+  constructor(public ids: string[], public newData: any) {}
+}
+
+export class PoiMerged implements Action {
+  readonly type = PoiActionTypes.POI_MERGED;
+
+  constructor(public newId: string, public mergedIds: string[]) {}
+}
+
 export type AllPoiActions =
   | LoadPoi
   | PoiLoaded
@@ -85,4 +99,6 @@ export type AllPoiActions =
   | PoiModified
   | UpdatePoiState
   | DeletePoi
-  | PoiDeleted;
+  | PoiDeleted
+  | MergePoi
+  | PoiMerged;

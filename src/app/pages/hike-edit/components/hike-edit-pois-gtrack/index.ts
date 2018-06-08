@@ -3,11 +3,11 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import {
-  PoiSelectors, CenterRadius, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, IGeoSearchResponseItem
+  PoiSelectors, CenterRadius, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, IGeoSearchResponseItem, IDynamicComponentModalConfig, DynamicModalService
 } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
-import { PoiEditorService } from 'app/shared/services';
+import { PoiEditorService, PoiMergeService } from 'app/shared/services';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import {
   State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions
@@ -17,7 +17,6 @@ import {
 } from 'app/store/selectors';
 
 import * as _ from 'lodash';
-import * as uuid from 'uuid/v1';
 
 @Component({
   selector: 'gt-hike-edit-pois-gtrack',
@@ -37,12 +36,14 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _poiEditorService: PoiEditorService,
+    private _poiMergeService: PoiMergeService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
-    private _poiSelectors: PoiSelectors
+    private _poiSelectors: PoiSelectors,
+    private _dynamicModalService: DynamicModalService,
   ) {}
 
   ngOnInit() {
@@ -171,16 +172,31 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   }
 
   public mergePois() {
-    console.log('merge pois');
+    this._store
+      .select(this._hikeEditPoiSelectors.getMergeSelections)
+      .take(1)
+      .subscribe((selections: string[]) => {
+        Observable
+          .combineLatest(...selections.map(poiId => this._store.select(this._poiSelectors.getPoi(poiId)).take(1)))
+          .take(1)
+          .subscribe(pois => {
+            const properties = this._poiMergeService.collectFlatKeyValues(pois);
+            const newPoiData = this._poiMergeService.createGTrackPoiFromUniqueValues(properties.unique);
+
+            if (_.keys(properties.conflicts).length > 0) {
+              this._poiMergeService.openConflictModal(properties.conflicts, mergedData => {
+                console.log('mergedData', mergedData);
+
+                for (const key in mergedData) {
+                  _.set(newPoiData, key, mergedData[key]);
+                }
+
+                this._store.dispatch(new commonPoiActions.MergePoi(_.map(pois, 'id'), newPoiData));
+              });
+            } else {
+              this._store.dispatch(new commonPoiActions.MergePoi(_.map(pois, 'id'), newPoiData));
+            }
+          });
+      });
   }
 }
-
-/*
-
- let result = await rpc
-+      .make('admin.poi.merge', testInput)
-+      .take(1)
-+      .toPromise();
-+
-
-*/

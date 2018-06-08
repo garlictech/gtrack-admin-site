@@ -34,6 +34,7 @@ import {
 } from './components';
 // Shared components
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
+import { PoiMergeService } from '../../shared/services';
 // gTrack common
 import { MapModule, HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
@@ -94,7 +95,8 @@ const COMPONENTS = [
   ],
   providers: [
     DynamicModalService,
-    GeospatialService
+    GeospatialService,
+    PoiMergeService
   ]
 })
 export class HikeEditModule {}

@@ -52,4 +52,13 @@ export class PoiService {
       })
       .take(1);
   }
+
+  public merge(ids: string[], newData: IPoi) {
+    return this._deepstream
+      .callRpc('admin.poi.merge', {
+        ids: ids,
+        newData: newData
+      })
+      .take(1);
+  }
 }

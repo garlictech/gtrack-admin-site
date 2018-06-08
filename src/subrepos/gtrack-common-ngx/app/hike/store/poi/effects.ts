@@ -60,13 +60,29 @@ export class PoiEffects {
 
   @Effect()
   deletePoi$: Observable<Action> = this._actions$
-    .ofType<LocalActions.UpdatePoiState>(LocalActions.PoiActionTypes.DELETE_POI)
+    .ofType<LocalActions.DeletePoi>(LocalActions.PoiActionTypes.DELETE_POI)
     .mergeMap(action => {
       return this._poiService
         .delete(action.id)
         .take(1)
         .map(result => {
           return new LocalActions.PoiDeleted(action.id);
+        });
+    });
+
+  @Effect()
+  mergePoi$: Observable<Action> = this._actions$
+    .ofType<LocalActions.MergePoi>(LocalActions.PoiActionTypes.MERGE_POI)
+    .mergeMap(action => {
+
+      delete action.newData.additionalData;
+      console.log('merge action', action);
+      return this._poiService
+        .merge(action.ids, action.newData)
+        .take(1)
+        .map(result => {
+          console.log('merge res', result);
+          return new LocalActions.PoiMerged(result, action.ids);
         });
     });
 

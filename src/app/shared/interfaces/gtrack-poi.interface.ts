@@ -5,3 +5,14 @@ export interface IGTrackPoi extends IPoiStored {
   distFromRoute?: number | undefined;
   onRoute?: boolean | undefined;
 }
+
+// gTRackPoi merge
+
+export interface IComparedProperty {
+  [flatKey: string]: any[];
+}
+
+export interface IFilteredProperties {
+  unique: IComparedProperty,
+  conflicts: IComparedProperty
+}

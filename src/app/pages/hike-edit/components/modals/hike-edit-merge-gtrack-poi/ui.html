@@ -1,0 +1,19 @@
+<form [formGroup]="mergeForm">
+  <div class="card" *ngFor="let conflict of conflicts | obj2arr; let cIdx = index;">
+    <div class="card-header">
+      <strong>{{conflict.key}}</strong>
+    </div>
+    <div class="card-body">
+      <div class="form-check form-check-inline" *ngFor="let option of conflict.value; let oIdx = index;">
+        <input [formControlName]="conflict.key" class="form-check-input" type="radio" id="{{cIdx}}-{{oIdx}}" [value]="option">
+        <label class="form-check-label" for="{{cIdx}}-{{oIdx}}">{{option}}</label>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <div class="col-12">
+    <button class="btn btn-sm btn-fill btn-success" (click)="saveMerge()">Save</button>
+  </div>
+</div>
