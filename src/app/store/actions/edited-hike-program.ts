@@ -1,18 +1,18 @@
 import { Action } from '@ngrx/store';
-import { ILocalizedItem, ITextualDescription, IHikeProgramStop } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
 
 export const RESET_HIKE_PROGRAM = '[HikeProgram] Reset';
 export const ADD_NEW_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Add new translated hike description';
 export const DELETE_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Delete translated hike description';
 export const ADD_HIKE_PROGRAM_DETAILS = '[HikeProgram] Add some details';
-export const ADD_POI = '[HikeProgram] Add poi';
-export const REMOVE_POI = '[HikeProgram] Remove poi';
 export const ADD_STOP = '[HikeProgram] Add stop';
 export const SET_STOPS = '[HikeProgram] Set stops';
 export const REMOVE_STOP_BY_POI_ID = '[HikeProgram] Remove stop by poi id';
 export const SAVE_HIKE_PROGRAM = '[HikeProgram] Save hike program';
 export const HIKE_PROGRAM_SAVE_SUCCESS = '[HikeProgram] Hike program saved successfully';
 export const HIKE_PROGRAM_SAVE_FAILED = '[HikeProgram] Hike program save failure';
+export const ADD_BACKGROUND_IMAGE = '[HikeProgram] Add background image';
+export const REMOVE_BACKGROUND_IMAGE = '[HikeProgram] Remove background image';
 
 export class ResetHikeProgram implements Action {
   readonly type = RESET_HIKE_PROGRAM;
@@ -80,6 +80,19 @@ export class HikeProgramSaveFailed implements Action {
 
   constructor(public error: any) {}
 }
+
+export class AddBackgroundImage implements Action {
+  readonly type = ADD_BACKGROUND_IMAGE;
+
+  constructor(public imageData: IBackgroundImageData) {}
+}
+
+export class RemoveBackgroundImage implements Action {
+  readonly type = REMOVE_BACKGROUND_IMAGE;
+
+  constructor(public origUrl: string) {}
+}
+
 export type AllEditedHikeProgramActions =
   | ResetHikeProgram
   | AddNewTranslatedHikeProgramDescription
@@ -90,4 +103,6 @@ export type AllEditedHikeProgramActions =
   | RemoveStopByPoiId
   | SaveHikeProgram
   | HikeProgramSaveSuccess
-  | HikeProgramSaveFailed;
+  | HikeProgramSaveFailed
+  | AddBackgroundImage
+  | RemoveBackgroundImage;

@@ -1,3 +1,5 @@
+import { IBackgroundImageData } from 'subrepos/provider-client';
+
 export interface IMapillaryImage {
   ca?: number; // Image's camera angle in range  [0, 360)
   camera_make:	string; // Camera make.
@@ -10,6 +12,6 @@ export interface IMapillaryImage {
   username: string; // Username of who captured the image.
 }
 
-export interface IMapillaryImageStored extends IMapillaryImage {
+export interface IMapillaryImageStored extends IBackgroundImageData {
   id: string;
 }

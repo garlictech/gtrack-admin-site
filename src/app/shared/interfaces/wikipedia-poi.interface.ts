@@ -1,17 +1,12 @@
-import { IExternalPoi, IExternalPoiImageData } from './external-poi.interface';
-
-export interface IWikipediaPhotoInfo {
-  title: string;
-  original: IExternalPoiImageData;
-  thumbnail: IExternalPoiImageData;
-}
+import { IExternalPoi } from './external-poi.interface';
+import { IBackgroundImageData } from 'subrepos/provider-client';
 
 export interface IWikipediaPoiInfo {
   pageid?: string;
   lng?: string;
   url?: string;
   extract?: string;
-  photos?: IWikipediaPhotoInfo[]
+  photos?: IBackgroundImageData[]
 }
 
 export interface IWikipediaPoi extends IExternalPoi {

@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { environment } from 'environments/environment';
-import { EPoiTypes } from 'subrepos/provider-client';
+import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import { GoogleMapsService } from 'subrepos/gtrack-common-ngx/index';
 
-import { IGooglePoi, IGooglePhotoInfo } from 'app/shared/interfaces';
+import { IGooglePoi } from 'app/shared/interfaces';
 import { LanguageService } from '../language.service';
 
 import { /**/ } from '@types/googlemaps';
@@ -83,7 +83,8 @@ export class GooglePoiService {
    * get() submethod
    */
   private _getPlaceInfo(pois: IGooglePoi[]) {
-    const thumbnailWidth = 200;
+    const thumbnailWidth = 320;
+    const cardWidth = 640;
 
     return Observable
       .interval(200)
@@ -109,7 +110,7 @@ export class GooglePoiService {
                   _googleData.opening_hours = place!.opening_hours;
                 }
 
-                const _photos: IGooglePhotoInfo[] = [];
+                const _photos: IBackgroundImageData[] = [];
                 if (place.photos) {
                   let _placePhotos = place.photos;
                   if (environment.googlePhotoLimit) {
@@ -117,17 +118,26 @@ export class GooglePoiService {
                   }
 
                   for (let _photo of _placePhotos) {
-                    const _photoInfo: IGooglePhotoInfo = {
+                    const _photoInfo: IBackgroundImageData = {
                       title: _photo.html_attributions[0] || '',
                       original: {
-                        source: _photo.getUrl({'maxWidth': _photo.width}),
+                        url: _photo.getUrl({'maxWidth': _photo.width}),
                         width: _photo.width,
                         height: _photo.height
                       },
+                      card: {
+                        url: _photo.getUrl({'maxWidth': cardWidth}),
+                        width: cardWidth,
+                        height: Math.round((cardWidth * _photo.height) / _photo.width)
+                      },
                       thumbnail: {
-                        source: _photo.getUrl({'maxWidth': thumbnailWidth}),
+                        url: _photo.getUrl({'maxWidth': thumbnailWidth}),
                         width: thumbnailWidth,
                         height: Math.round((thumbnailWidth * _photo.height) / _photo.width)
+                      },
+                      source: {
+                        type: EPoiImageTypes.google,
+                        poiObjectId: _googleData.id
                       }
                     }
                     _photos.push(_photoInfo);

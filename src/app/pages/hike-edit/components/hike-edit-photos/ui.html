@@ -1,3 +1,5 @@
+<gt-background-images [bgImages$]="bgImages$"></gt-background-images>
+
 <div id="accordion" role="tablist" aria-multiselectable="true">
   <div class="card mb-1">
     <div class="card-header bg-light" id="headingOne" role="tab">
@@ -13,7 +15,8 @@
     <div aria-labelledby="headingOne" class="collapse" id="collapse_google_photo" role="tabpanel" aria-expanded="false" style="height: 0px;">
       <div class="card-body">
         <hike-edit-photos-table
-          [photos$]="googlePhotos$"
+          [images$]="googlePhotos$"
+          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
           [subdomain]="google"
         ></hike-edit-photos-table>
       </div>
@@ -34,7 +37,8 @@
     <div aria-labelledby="headingOne" class="collapse" id="collapse_wikipedia_photo" role="tabpanel" aria-expanded="false" style="height: 0px;">
       <div class="card-body">
         <hike-edit-photos-table
-          [photos$]="wikipediaPhotos$"
+          [images$]="wikipediaPhotos$"
+          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
           [subdomain]="wikipedia"
         ></hike-edit-photos-table>
       </div>
@@ -64,9 +68,11 @@
 
         <div class="pull-left" *ngIf="(mapillaryLoading$ | async)"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
 
-        <hike-edit-photos-mapillary-images-table
+        <hike-edit-photos-table
           [images$]="mapillaryImages$"
-        ></hike-edit-photos-mapillary-images-table>
+          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+          [subdomain]="mapillary"
+        ></hike-edit-photos-table>
       </div>
     </div>
   </div>

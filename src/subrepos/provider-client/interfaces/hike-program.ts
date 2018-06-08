@@ -8,8 +8,30 @@ export interface IHikeProgramSaveResponse {
   success: boolean;
 }
 
-export interface IHikeProgramBackgroundImage {
+export interface IPoiImageInfo {
   url: string;
+  width?: number;
+  height?: number;
+}
+
+export enum EPoiImageTypes {
+  google = 'google',
+  wikipedia = 'wikipedia',
+  mapillary = 'mapillary'
+}
+
+export interface IPoiImageSource {
+  type: EPoiImageTypes;
+  poiObjectId: string;
+}
+
+export interface IBackgroundImageData {
+  title: string;
+  original: IPoiImageInfo;
+  card: IPoiImageInfo;
+  thumbnail: IPoiImageInfo;
+  source: IPoiImageSource;
+  additionalData?: any;
 }
 
 export interface IRouteSegment {
@@ -42,7 +64,7 @@ export interface IHikeProgram {
   score: number;
   location: string;
   difficulty: number;
-  backgroundImageUrls?: IHikeProgramBackgroundImage[];
+  backgroundImages?: IBackgroundImageData[];
   rate?: string;
   routeIcon?: string;
   elevationIcon?: string;

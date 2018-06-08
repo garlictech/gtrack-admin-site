@@ -11,9 +11,9 @@ export { HikeEditRoutePlannerComponent } from './hike-edit-route-planner';
 export { HikeEditOutlineComponent } from './hike-edit-outline';
 export { HikeEditPhotosComponent } from './hike-edit-photos';
 export { HikeEditPhotosTableComponent } from './hike-edit-photos/table';
-export { HikeEditMapillaryImageTableComponent } from './hike-edit-photos/mapillary-table';
 export { PoiIconsComponent } from './poi-icons';
 export { SpecialPoiDataComponent } from './special-poi-data';
+export { BackgroundImagesComponent } from './background-images';
 // Modals
 export { HikeEditExternalPoiInfoComponent } from './modals/hike-edit-external-poi-info';
 export { HikeEditGTrackPoiInfoComponent } from './modals/hike-edit-gtrack-poi-info';

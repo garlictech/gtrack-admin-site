@@ -1,11 +1,5 @@
 import { IPoi } from 'subrepos/provider-client';
 
-export interface IExternalPoiImageData {
-  source: string;
-  width?: number;
-  height?: number;
-}
-
 export interface IExternalPoi extends IPoi {
   id: string;
   inHike?: boolean | undefined;

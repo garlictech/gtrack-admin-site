@@ -4,14 +4,18 @@ import { IHikeProgramStop } from 'subrepos/provider-client';
 
 describe('EditedHikeProgram actions', () => {
   it('should have action names defined', () => {
+    expect(EditedHikeProgramActions.RESET_HIKE_PROGRAM).toEqual('[HikeProgram] Reset');
     expect(EditedHikeProgramActions.ADD_NEW_TRANSLATED_HIKE_DESCRIPTION).toEqual('[HikeProgram] Add new translated hike description');
     expect(EditedHikeProgramActions.DELETE_TRANSLATED_HIKE_DESCRIPTION).toEqual('[HikeProgram] Delete translated hike description');
     expect(EditedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS).toEqual('[HikeProgram] Add some details');
     expect(EditedHikeProgramActions.ADD_STOP).toEqual('[HikeProgram] Add stop');
+    expect(EditedHikeProgramActions.SET_STOPS).toEqual('[HikeProgram] Set stops');
     expect(EditedHikeProgramActions.REMOVE_STOP_BY_POI_ID).toEqual('[HikeProgram] Remove stop by poi id');
     expect(EditedHikeProgramActions.SAVE_HIKE_PROGRAM).toEqual('[HikeProgram] Save hike program');
     expect(EditedHikeProgramActions.HIKE_PROGRAM_SAVE_SUCCESS).toEqual('[HikeProgram] Hike program saved successfully');
     expect(EditedHikeProgramActions.HIKE_PROGRAM_SAVE_FAILED).toEqual('[HikeProgram] Hike program save failure');
+    expect(EditedHikeProgramActions.ADD_BACKGROUND_IMAGE).toEqual('[HikeProgram] Add background image');
+    expect(EditedHikeProgramActions.REMOVE_BACKGROUND_IMAGE).toEqual('[HikeProgram] Remove background image');
   });
 
   it('should create ResetHikeProgram action', () => {
@@ -141,6 +145,26 @@ describe('EditedHikeProgram actions', () => {
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.HIKE_PROGRAM_SAVE_FAILED,
       error: 'fakeError'
+    });
+  });
+
+  it('should create AddBackgroundImage action', () => {
+    const action = new EditedHikeProgramActions.AddBackgroundImage('fakeImageData');
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: EditedHikeProgramActions.ADD_BACKGROUND_IMAGE,
+      imageData: 'fakeImageData'
+    });
+  });
+
+  it('should create RemoveBackgroundImage action', () => {
+    const action = new EditedHikeProgramActions.RemoveBackgroundImage('fakeUrl');
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: EditedHikeProgramActions.REMOVE_BACKGROUND_IMAGE,
+      origUrl: 'fakeUrl'
     });
   });
 });

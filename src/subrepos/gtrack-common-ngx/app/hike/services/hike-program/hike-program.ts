@@ -4,9 +4,9 @@ import {
   IHikeProgramStored,
   ILocalizedItem,
   ITextualDescription,
-  IHikeProgramBackgroundImage,
   IHikeProgramStop,
-  EObjectState
+  EObjectState,
+  IBackgroundImageData
 } from 'subrepos/provider-client';
 
 import { CheckpointSequence, CheckpointService } from '../checkpoint';
@@ -27,13 +27,13 @@ export class HikeProgram implements IHikeProgramStored {
   public elevationIcon: string;
   public routeId: string;
   public description: ILocalizedItem<ITextualDescription>;
-  public backgroundImageUrls?: [IHikeProgramBackgroundImage];
+  public backgroundImages?: IBackgroundImageData[];
   public offlineMap?: string;
   public isRoundTrip: boolean;
   public timestamp: number;
   public stops: IHikeProgramStop[];
   public checkpoints: CheckpointSequence;
-
+  public state: EObjectState;
   private observable: Observable<HikeProgram>;
 
   private locale = 'en_US';
@@ -111,7 +111,7 @@ export class HikeProgram implements IHikeProgramStored {
       score: this.score,
       location: this.location,
       difficulty: this.difficulty,
-      backgroundImageUrls: this.backgroundImageUrls,
+      backgroundImages: this.backgroundImages,
       rate: this.rate,
       routeIcon: this.routeIcon,
       elevationIcon: this.elevationIcon,
@@ -119,7 +119,8 @@ export class HikeProgram implements IHikeProgramStored {
       description: this.description,
       offlineMap: this.offlineMap,
       timestamp: this.timestamp,
-      stops: this.stops
+      stops: this.stops,
+      state: this.state
     };
 
     return data;

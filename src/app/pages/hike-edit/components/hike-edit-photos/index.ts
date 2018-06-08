@@ -3,21 +3,23 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import { State, hikeEditImageActions } from 'app/store';
-
-import { IGooglePhotoInfo, IWikipediaPhotoInfo, IMapillaryImage } from 'app/shared/interfaces';
-import { HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors } from 'app/store/selectors';
+import { IMapillaryImage } from 'app/shared/interfaces';
+import { HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
 import { RoutePlannerService } from 'app/shared/services/admin-map';
+import { IBackgroundImageData } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gt-hike-edit-photos',
   templateUrl: './ui.html'
 })
 export class HikeEditPhotosComponent implements OnInit, OnDestroy {
-  public googlePhotos$: Observable<IGooglePhotoInfo[]>;
-  public wikipediaPhotos$: Observable<IWikipediaPhotoInfo[]>;
+  public googlePhotos$: Observable<IBackgroundImageData[]>;
+  public wikipediaPhotos$: Observable<IBackgroundImageData[]>;
   public mapillaryImages$: Observable<IMapillaryImage[]>;
   public routePath$: Observable<any>;
   public mapillaryLoading$: Observable<boolean>;
+  public bgImages$: Observable<IBackgroundImageData[]>;
+  public backgroundOriginalUrls$: Observable<string[]>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -25,7 +27,8 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     private _routePlannerService: RoutePlannerService,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditImageSelectors: HikeEditImageSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors
   ) {}
 
   ngOnInit() {
@@ -39,6 +42,14 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
 
     this.mapillaryImages$ = this._store
       .select(this._hikeEditImageSelectors.getAllMapillaryImages)
+      .takeUntil(this._destroy$);
+
+    this.backgroundOriginalUrls$ = this._store
+      .select(this._editedHikeProgramSelectors.getBackgroundOriginalUrls())
+      .takeUntil(this._destroy$);
+
+    this.bgImages$ = this._store
+      .select(this._editedHikeProgramSelectors.getBackgroundImages)
       .takeUntil(this._destroy$);
 
     // Route info from the store (for disabling GET buttons)

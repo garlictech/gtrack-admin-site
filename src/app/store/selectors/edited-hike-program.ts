@@ -3,7 +3,7 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 
 import { IEditedHikeProgramState } from '../state/edited-hike-program';
 import {
-  ILocalizedItem, ITextualDescription, IHikeProgramStored, IPoiStored, IHikeProgramStop, EObjectState
+  ILocalizedItem, ITextualDescription, IHikeProgramStored, IPoiStored, IHikeProgramStop, EObjectState, IBackgroundImageData
 } from 'subrepos/provider-client';
 
 import * as _ from 'lodash';
@@ -18,6 +18,7 @@ export class EditedHikeProgramSelectors {
   public getStops: MemoizedSelector<object, IHikeProgramStop[]>;
   public getStopsCount: MemoizedSelector<object, number>;
   public getState: MemoizedSelector<object, EObjectState>;
+  public getBackgroundImages: MemoizedSelector<object, IBackgroundImageData[]>;
   public getDirty: MemoizedSelector<object, boolean>;
   public getWorking: MemoizedSelector<object, string | null>;
   public getData: MemoizedSelector<object, IHikeProgramStored>;
@@ -61,6 +62,10 @@ export class EditedHikeProgramSelectors {
 
     this.getState = createSelector(this._featureSelector,
       (state: IEditedHikeProgramState) => _.get(state, 'data.state')
+    );
+
+    this.getBackgroundImages = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => _.get(state, 'data.backgroundImages')
     );
 
     this.getDirty = createSelector(this._featureSelector,
@@ -108,4 +113,9 @@ export class EditedHikeProgramSelectors {
     )
   }
 
+  public getBackgroundOriginalUrls() {
+    return createSelector(this._featureSelector, (state: IEditedHikeProgramState) => {
+      return (<IBackgroundImageData[]>state.data.backgroundImages).map((img: IBackgroundImageData) => img.original.url);
+    });
+  }
 }

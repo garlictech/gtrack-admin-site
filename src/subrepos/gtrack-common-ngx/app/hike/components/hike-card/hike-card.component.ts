@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IHikeProgram, IHikeProgramBackgroundImage } from 'subrepos/provider-client';
+import { IHikeProgram, IBackgroundImageData } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gtcn-hike-card',
@@ -12,10 +12,10 @@ export class HikeCardComponent {
   public get image(): string {
     let url = '';
 
-    if (this.hikeProgram && this.hikeProgram.backgroundImageUrls) {
-      let imageUrls = this.hikeProgram.backgroundImageUrls || [];
+    if (this.hikeProgram && this.hikeProgram.backgroundImages) {
+      let imageUrls = this.hikeProgram.backgroundImages || [];
       let firstImage = imageUrls[0] || {};
-      url = (<IHikeProgramBackgroundImage>firstImage).url || '';
+      url = (<IBackgroundImageData>firstImage).card.url || '';
     }
 
     return url;

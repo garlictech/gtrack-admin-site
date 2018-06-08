@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
 import { IMapillaryImageStored } from '../../interfaces/mapillary-image.interface';
+import { EPoiImageTypes } from 'subrepos/provider-client';
 
 @Injectable()
 export class MapillaryService {
@@ -22,8 +23,28 @@ export class MapillaryService {
 
         if (_features) {
           for (let _feature of _features) {
-            const _image = _.cloneDeep(_feature.properties);
-            _image.id = uuid();
+            const _image: IMapillaryImageStored = {
+              id: uuid(),
+              title: 'untitled',
+              source: {
+                type: EPoiImageTypes.mapillary,
+                poiObjectId: _feature.properties.key
+              },
+              original: {
+                url: `https://d1cuyjsrcm0gby.cloudfront.net/${_feature.properties.key}/thumb-2048.jpg`,
+                width: 2048
+              },
+              card: {
+                url: `https://d1cuyjsrcm0gby.cloudfront.net/${_feature.properties.key}/thumb-640.jpg`,
+                width: 640
+              },
+              thumbnail: {
+                url: `https://d1cuyjsrcm0gby.cloudfront.net/${_feature.properties.key}/thumb-320.jpg`,
+                width: 320
+              },
+              additionalData: _.cloneDeep(_feature.properties)
+            }
+
             _images.push(_image);
           }
         }

@@ -1,4 +1,4 @@
-<table class="table table-hover">
+<table class="table table-hover table-images">
   <thead class="text-success">
     <tr>
       <th>Thumbnail</th>
@@ -7,12 +7,23 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let photo of (photos$ | async); let idx = index">
+    <ng-container *ngFor="let image of (images$ | async); let idx = index">
       <tr>
-        <td><a href="{{photo.original.source}}" target="_blank"><img class="thumbs" src="{{photo.thumbnail.source}}"></a></td>
-        <td [innerHTML]="photo.title | trustedHtml"></td>
-        <td class="td-actions">
-          ...
+        <td><a href="{{image.original.url}}" target="_blank"><img class="thumbs" src="{{image.thumbnail.url}}"></a></td>
+        <td [innerHTML]="image.title | trustedHtml"></td>
+        <td>
+          <span class="form-check p-0">
+            <label class="form-check-label">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="image"
+                [checked]="(backgroundOriginalUrls$ | async).indexOf(image.original.url) >= 0"
+                (click)="toggleBackgroundImage(image)"
+              >
+              <span class="form-check-sign"></span>
+            </label>
+          </span>
         </td>
       </tr>
     </ng-container>

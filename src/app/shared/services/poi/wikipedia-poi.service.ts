@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Jsonp, Response } from '@angular/http';
 import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs/Observable';
-import { EPoiTypes } from 'subrepos/provider-client';
+import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index';
-import { IWikipediaPoi, IWikipediaPhotoInfo } from 'app/shared/interfaces';
+import { IWikipediaPoi } from 'app/shared/interfaces';
 import { LanguageService } from '../language.service';
 
 import * as _ from 'lodash';
@@ -143,10 +143,21 @@ export class WikipediaPoiService {
               const _imgData = imageData.query.pages[idx];
 
               if (_imgData.original) {
-                const _imageInfo: IWikipediaPhotoInfo = {
+                // Rename properties
+                _imgData.original.url = _imgData.original.source;
+                _imgData.thumbnail.url = _imgData.thumbnail.source;
+                delete _imgData.original.source;
+                delete _imgData.thumbnail.source;
+
+                const _imageInfo: IBackgroundImageData = {
                   title: _imgData.title,
                   original: _imgData.original,
-                  thumbnail: _imgData.thumbnail
+                  card: _imgData.original,
+                  thumbnail: _imgData.thumbnail,
+                  source: {
+                    type: EPoiImageTypes.wikipedia,
+                    poiObjectId: _imgData.pageid
+                  }
                 }
                 const _targetPoi = _pois.find(p => p.wikipedia!.pageid === _imgData.pageid);
 

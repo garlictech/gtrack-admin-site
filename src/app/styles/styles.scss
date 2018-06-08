@@ -78,8 +78,19 @@ button.btn-just-icon.btn-sm {
   }
 }
 
+/* images */
+
+table.table-images {
+  td:first-child {
+    width: 200px;
+  }
+  td:last-child {
+    width: 60px;
+    text-align: left;
+  }
+}
 img.thumbs {
-  width: 150px;
+  width: 160px;
   border: 0;
 }
 
@@ -101,8 +112,14 @@ img.thumbs {
   margin-top: 0 !important;
 }
 
+/* Remove animations */
 .collapsing {
   -webkit-transition: none !important;
   transition: none !important;
   display: none !important;
+}
+
+.form-check .form-check-sign::before, .form-check .form-check-sign::after {
+  -webkit-transition: none !important;
+  transition: none !important;
 }

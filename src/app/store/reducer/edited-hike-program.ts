@@ -16,7 +16,7 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
     score: 0,
     location: '',
     difficulty: 1,
-    backgroundImageUrls: [],
+    backgroundImages: [],
     routeId: '',
     description: { en_US: { title: 'a new hike' } },
     stops: [],
@@ -93,6 +93,23 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
     case editedHikeProgramActions.REMOVE_STOP_BY_POI_ID: {
       newState.dirty = true;
       newState.data.stops = newState.data.stops.filter(s => action.poiIds.indexOf(s.poiId) < 0)
+      return newState;
+    }
+
+    case editedHikeProgramActions.ADD_BACKGROUND_IMAGE: {
+      // newState.dirty = true;
+
+      newState.data.backgroundImages = [
+        ...<any>state.data.backgroundImages,
+        action.imageData
+      ]
+
+      return newState;
+    }
+
+    case editedHikeProgramActions.REMOVE_BACKGROUND_IMAGE: {
+      // newState.dirty = true;
+      newState.data.backgroundImages = (<any>newState.data.backgroundImages).filter(img => img.original.url !== action.origUrl);
       return newState;
     }
 
