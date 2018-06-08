@@ -35,10 +35,6 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
         state
       );
 
-    case HikeProgramActionTypes.HIKE_PROGRAM_DELETED: {
-      return hikeContextStateAdapter.removeOne(action.context, state);
-    }
-
     default:
       return state;
   }
@@ -68,10 +64,6 @@ const reducer: ActionReducer<IHikeEntityState> = (
         }),
         state
       );
-
-    case HikeProgramActionTypes.HIKE_PROGRAM_DELETED: {
-      return hikeAdapter.removeOne(action.context, state);
-    }
 
     default:
       return state;

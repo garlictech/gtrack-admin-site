@@ -51,13 +51,4 @@ export class HikeProgramService {
       })
       .take(1);
   }
-
-  public delete(id: string) {
-    return this._deepstream
-      .callRpc('admin.delete', {
-        id: id,
-        table: 'hike_programs'
-      })
-      .take(1);
-  }
 }

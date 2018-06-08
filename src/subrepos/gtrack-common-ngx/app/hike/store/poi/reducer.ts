@@ -86,10 +86,6 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
         state
       );
 
-    case PoiActionTypes.POI_DELETED: {
-      return poiContextStateAdapter.removeOne(action.context, state);
-    }
-
     default:
       return state;
   }
@@ -119,10 +115,6 @@ const reducer: ActionReducer<IPoiEntityState> = (
         }),
         state
       );
-
-    case PoiActionTypes.POI_DELETED: {
-      return poiAdapter.removeOne(action.context, state);
-    }
 
     default:
       return state;

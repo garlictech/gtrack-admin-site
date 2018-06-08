@@ -5,7 +5,6 @@ export * from './shared';
 export * from './map';
 export * from './hike';
 export * from './router';
-export * from './styles';
 export * from './store';
 export * from './geosearch';
 export * from './shared/services/background-geolocation-service';

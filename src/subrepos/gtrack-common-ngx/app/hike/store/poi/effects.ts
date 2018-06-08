@@ -25,11 +25,11 @@ export class PoiEffects {
   loadPois$: Observable<Action> = this._actions$
     .ofType<LocalActions.LoadPois>(LocalActions.PoiActionTypes.LOAD_POIS)
     .mergeMap(action => {
-      return Observable
-        .combineLatest(...action.contexts.map(context => {
-          return this._poiService
-            .get(context);
-        }))
+      return Observable.combineLatest(
+        ...action.contexts.map(context => {
+          return this._poiService.get(context);
+        })
+      )
         .take(1)
         .map(pois => {
           return new LocalActions.AllPoiLoaded(action.contexts, pois);

@@ -1,7 +1,7 @@
 import { Injectable, ElementRef } from '@angular/core';
 import * as loadGoogleMapsAPI from 'load-google-maps-api';
 import { IGoogleMapsConfig, SharedConfig } from '../../config';
-import { /**/ } from '@types/googlemaps';
+import /**/ '@types/googlemaps';
 
 @Injectable()
 export class GoogleMapsService {

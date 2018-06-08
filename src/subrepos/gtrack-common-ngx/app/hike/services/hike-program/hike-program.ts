@@ -31,7 +31,6 @@ export class HikeProgram implements IHikeProgramStored {
   public offlineMap?: string;
   public isRoundTrip: boolean;
   public timestamp: number;
-  public state: EObjectState;
   public stops: IHikeProgramStop[];
   public checkpoints: CheckpointSequence;
 
@@ -120,7 +119,6 @@ export class HikeProgram implements IHikeProgramStored {
       description: this.description,
       offlineMap: this.offlineMap,
       timestamp: this.timestamp,
-      state: this.state,
       stops: this.stops
     };
 

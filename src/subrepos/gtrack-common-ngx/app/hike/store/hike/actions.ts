@@ -7,9 +7,7 @@ export enum HikeProgramActionTypes {
   HIKE_PROGRAM_LOADED = '[HikeProgram] HikeProgram loaded',
   LOAD_HIKE_PROGRAMS = '[HikeProgram] Load hikePrograms',
   ALL_HIKE_PROGRAMS_LOADED = '[HikeProgram] All hikePrograms loaded',
-  UPDATE_HIKE_PROGRAM_STATE = '[HikeProgram] Update hikeProgram state',
-  DELETE_HIKE_PROGRAM = '[HikeProgram] Delete hikeProgram',
-  HIKE_PROGRAM_DELETED = '[HikeProgram] HikeProgram deleted'
+  UPDATE_HIKE_PROGRAM_STATE = '[HikeProgram] Update hike program state'
 }
 
 export class LoadHikeProgram implements Action {
@@ -46,24 +44,10 @@ export class UpdateHikeProgramState implements Action {
   constructor(public id: string, public state: EObjectState) {}
 }
 
-export class DeleteHikeProgram implements Action {
-  readonly type = HikeProgramActionTypes.DELETE_HIKE_PROGRAM;
-
-  constructor(public id: string) {}
-}
-
-export class HikeProgramDeleted implements Action {
-  readonly type = HikeProgramActionTypes.HIKE_PROGRAM_DELETED;
-
-  constructor(public context: string) {}
-}
-
 export type AllHikeActions =
   | LoadHikeProgram
   | HikeProgramLoaded
   | LoadHikeProgramFailed
   | LoadHikePrograms
   | AllHikeProgramsLoaded
-  | UpdateHikeProgramState
-  | DeleteHikeProgram
-  | HikeProgramDeleted;
+  | UpdateHikeProgramState;

@@ -5,3 +5,9 @@ reports/
 src/
 .setup.sh
 .vscode/
+artifacts
+node_modules
+angular.json
+docker
+docs
+src

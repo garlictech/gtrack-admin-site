@@ -48,13 +48,13 @@ export class SavePoi implements Action {
 }
 
 export class PoiSaved implements Action {
-  readonly type = PoiActionTypes.POI_SAVED
+  readonly type = PoiActionTypes.POI_SAVED;
 
   constructor(public context: string) {}
 }
 
 export class PoiModified implements Action {
-  readonly type = PoiActionTypes.POI_MODIFIED
+  readonly type = PoiActionTypes.POI_MODIFIED;
 
   constructor(public context: string) {}
 }

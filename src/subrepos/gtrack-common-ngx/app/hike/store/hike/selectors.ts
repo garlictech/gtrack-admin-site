@@ -46,10 +46,10 @@ export class HikeSelectors {
     return createSelector(this.getAllHikes, (hikes: IHikeProgramStored[]) => hikes.find(hike => hike.id === context));
   }
 
-  public getHikes() {
-    return createSelector(this.getAllHikes, (hikes: IHikeProgramStored[]) => hikes.filter(hike => {
-      return _.includes([EObjectState.draft, EObjectState.published, EObjectState.archived], hike.state);
-    }));
+  public getActiveHikes() {
+    return createSelector(this.getAllHikes, (hikes: IHikeProgramStored[]) =>
+      hikes.filter(hike => hike.state !== EObjectState.archived)
+    );
   }
 
   public getHikeContext(id: string) {
