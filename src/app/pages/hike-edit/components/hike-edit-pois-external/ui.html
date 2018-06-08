@@ -1,6 +1,10 @@
 <div class="clearfix mb-2">
   <div class="pull-left">
-    <button class="btn btn-sm btn-fill btn-success" (click)="savePois()">Save as gTrackPoi</button>
+    <button
+      class="btn btn-sm btn-fill btn-success"
+      (click)="savePois()"
+      [disabled]="(pois$ | async).length === 0"
+    >Save as gTrackPoi</button>
     <button
       class="btn btn-sm btn-fill btn-success"
       (click)="getPois()"
