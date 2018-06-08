@@ -20,7 +20,6 @@ export class GooglePoiService {
   private _placesService: google.maps.places.PlacesService;
 
   constructor(
-    private _http: HttpClient,
     private _googleMapsService: GoogleMapsService
   ) {}
 
@@ -37,9 +36,6 @@ export class GooglePoiService {
         let _res: IGooglePoi[] = [];
 
         this._placesService = new google.maps.places.PlacesService(_map);
-
-        // this._placesService.getDetails
-        /// https://developers.google.com/maps/documentation/javascript/places#places_photos
 
         return new Promise((resolve, reject) => {
           this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {

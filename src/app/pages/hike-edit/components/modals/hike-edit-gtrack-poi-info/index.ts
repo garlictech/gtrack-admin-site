@@ -32,7 +32,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   public poiLoaded$: Observable<boolean>;
   public isDirty$: Observable<boolean>;
 
-  public gTrackPoi$: Observable<IPoiStored>;
+  public gTrackPoi: IPoiStored;
   public EObjectState = EObjectState;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -53,9 +53,12 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .map(data => !!data);
 
-    this.gTrackPoi$ = this._store
+    this._store
       .select(this._editedGTrackPoiSelectors.getData)
-      .takeUntil(this._destroy$);
+      .takeUntil(this._destroy$)
+      .subscribe((gTrackPoi: IPoiStored) => {
+        this.gTrackPoi = gTrackPoi;
+      });
 
     this.isDirty$ = this._store
       .select(this._editedGTrackPoiSelectors.getDirty)
