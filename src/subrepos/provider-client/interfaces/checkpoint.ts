@@ -19,7 +19,7 @@ export interface ICheckpoint {
   description: ILocalizedItem<ITextualDescription>;
 }
 
-export interface ICheckpointInput extends ICheckpoint, IProviderInput {};
+export interface ICheckpointInput extends ICheckpoint, IProviderInput {}
 
 export interface ICheckpointStored extends ICheckpoint {
   id: string;
