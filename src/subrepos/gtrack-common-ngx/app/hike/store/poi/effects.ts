@@ -74,16 +74,24 @@ export class PoiEffects {
   mergePoi$: Observable<Action> = this._actions$
     .ofType<LocalActions.MergePoi>(LocalActions.PoiActionTypes.MERGE_POI)
     .mergeMap(action => {
-
-      delete action.newData.additionalData;
-      console.log('merge action', action);
       return this._poiService
         .merge(action.ids, action.newData)
         .take(1)
         .map(result => {
-          console.log('merge res', result);
-          return new LocalActions.PoiMerged(result, action.ids);
+          if (result.success) {
+            // Reducer will removes the merged pois, then the next effect load the new poi
+            return new LocalActions.PoiMergedSuccessfully(result, action.ids);
+          } else {
+            return new LocalActions.PoiMergeFailed(result);
+          }
         });
+    });
+
+  @Effect()
+  poiMerged$: Observable<Action> = this._actions$
+    .ofType<LocalActions.PoiMergedSuccessfully>(LocalActions.PoiActionTypes.POI_MERGED_SUCCESSFULLY)
+    .map(action => {
+      return new LocalActions.LoadPoi(action.newId);
     });
 
   constructor(private _actions$: Actions, private _poiService: PoiService, private _store: Store<any>) {}

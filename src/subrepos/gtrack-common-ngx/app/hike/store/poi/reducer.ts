@@ -86,6 +86,9 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
         state
       );
 
+    case PoiActionTypes.POI_MERGED_SUCCESSFULLY:
+      return poiContextStateAdapter.removeMany(action.mergedIds, state);
+
     default:
       return state;
   }
@@ -115,6 +118,9 @@ const reducer: ActionReducer<IPoiEntityState> = (
         }),
         state
       );
+
+    case PoiActionTypes.POI_MERGED_SUCCESSFULLY:
+      return poiAdapter.removeMany(action.mergedIds, state);
 
     default:
       return state;

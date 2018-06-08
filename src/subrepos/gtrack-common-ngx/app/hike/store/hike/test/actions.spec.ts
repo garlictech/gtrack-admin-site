@@ -97,4 +97,38 @@ describe('Hike actions', () => {
       });
     });
   });
+
+  describe('UpdateHikeProgramState action', () => {
+    it('should create an action', () => {
+      let action = new actions.UpdateHikeProgramState(id, EObjectState.published);
+
+      expect({ ...action }).toEqual({
+        type: actions.HikeProgramActionTypes.UPDATE_HIKE_PROGRAM_STATE,
+        id: id,
+        state: EObjectState.published
+      });
+    });
+  });
+
+  describe('DeleteHikeProgram action', () => {
+    it('should create an action', () => {
+      let action = new actions.DeleteHikeProgram(id);
+
+      expect({ ...action }).toEqual({
+        type: actions.HikeProgramActionTypes.DELETE_HIKE_PROGRAM,
+        id: id
+      });
+    });
+  });
+
+  describe('HikeProgramDeleted action', () => {
+    it('should create an action', () => {
+      let action = new actions.HikeProgramDeleted(id);
+
+      expect({ ...action }).toEqual({
+        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_DELETED,
+        context: id
+      });
+    });
+  });
 });
