@@ -449,6 +449,9 @@ export const gTrackPoiMergeReducer: ActionReducer<IGTrackPoiMergeState> = (
     case hikeEditPoiActions.RESET_POI_STATE:
       return initialGTrackPoiMergeState;
 
+    case hikeEditPoiActions.RESET_POI_MERGE_SELECTION:
+      return initialGTrackPoiMergeState;
+
     case hikeEditPoiActions.ADD_GTRACK_POI_TO_MERGE_SELECTION:
       return {
         ...state,

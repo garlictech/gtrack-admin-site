@@ -183,10 +183,10 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
             const properties = this._poiMergeService.collectFlatKeyValues(pois);
             const newPoiData = this._poiMergeService.createGTrackPoiFromUniqueValues(properties.unique);
 
+            this._store.dispatch(new hikeEditPoiActions.ResetPoiMergeSelection());
+
             if (_.keys(properties.conflicts).length > 0) {
               this._poiMergeService.openConflictModal(properties.conflicts, mergedData => {
-                console.log('mergedData', mergedData);
-
                 for (const key in mergedData) {
                   _.set(newPoiData, key, mergedData[key]);
                 }

@@ -23,14 +23,16 @@ export class PoiMergeService {
         if (!flatProperties[key]) {
           flatProperties[key] = [];
         }
-
-        // Add unique values
-        if (flatProperties[key].indexOf(flatPoi[key]) < 0) {
-          flatProperties[key].push(flatPoi[key]);
-        }
+        flatProperties[key].push(flatPoi[key]);
       }
 
       commonTypes = commonTypes.concat(poi.types);
+    }
+
+    // Remove duplicated values and empty objects
+    for (const key in flatProperties) {
+      flatProperties[key] = flatProperties[key].filter(item => !(_.isObject(item) && Object.keys(item).length === 0));
+      flatProperties[key] = _.uniq(flatProperties[key]);
     }
 
     // Separate
@@ -44,7 +46,7 @@ export class PoiMergeService {
     for (let prop in flatProperties) {
       if (flatProperties[prop].length > 1) {
         filteredProperties.conflicts[prop] = flatProperties[prop];
-      } else {
+      } else if (flatProperties[prop].length === 1) {
         filteredProperties.unique[prop] = flatProperties[prop][0];
       }
     }

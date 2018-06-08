@@ -34,6 +34,7 @@ export const TOGGLE_OFFROUTE_MARKERS = '[HikeEditPoi] Toggle offroute markers';
 export const SET_SAVING = '[HikeEditPoi] Set saving';
 export const MARKERS_CONFIG_CHANGED = '[HikeEditPoi] Markers config changed';
 
+export const RESET_POI_MERGE_SELECTION = '[HikeEditPoi] Reset poi merge selection';
 export const ADD_GTRACK_POI_TO_MERGE_SELECTION = '[HikeEditPoi] Add gTrack poi to merge selection';
 export const REMOVE_GTRACK_POI_FROM_MERGE_SELECTION = '[HikeEditPoi] Remove gTrack poi from merge selection';
 
@@ -188,6 +189,10 @@ export class MarkersConfigChanged implements Action {
  * Merge selection
  */
 
+export class ResetPoiMergeSelection implements Action {
+  readonly type = RESET_POI_MERGE_SELECTION;
+}
+
 export class AddGTrackPoiToMergeSelection implements Action {
   readonly type = ADD_GTRACK_POI_TO_MERGE_SELECTION;
   constructor(public poiId: string) {}
@@ -231,5 +236,6 @@ export type AllHikeEditPoiActions =
   | SetSaving
   | MarkersConfigChanged
   // Merge
+  | ResetPoiMergeSelection
   | AddGTrackPoiToMergeSelection
   | RemoveGTrackPoiFromMergeSelection;
