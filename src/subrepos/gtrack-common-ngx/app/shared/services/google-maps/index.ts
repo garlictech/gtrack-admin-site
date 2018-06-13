@@ -1,14 +1,13 @@
-import { Injectable, ElementRef } from '@angular/core';
+import { Injectable, ElementRef, Inject } from '@angular/core';
 import * as loadGoogleMapsAPI from 'load-google-maps-api';
-import { IGoogleMapsConfig, SharedConfig } from '../../config';
-import { /**/ } from '@types/googlemaps';
+import { IGoogleMapsConfig, ISharedConfig, SHARED_CONFIG_TOKEN } from '../../config';
 
 @Injectable()
 export class GoogleMapsService {
   public map: Promise<google.maps.Map>;
   private _config: IGoogleMapsConfig;
 
-  constructor(commonConfig: SharedConfig) {
+  constructor(@Inject(SHARED_CONFIG_TOKEN) commonConfig: ISharedConfig) {
     this._config = commonConfig.googleMaps;
     this.map = loadGoogleMapsAPI(this._config);
   }

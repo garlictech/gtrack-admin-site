@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { GoogleMapsService } from '../../../shared';
-import { /**/ } from '@types/googlemaps';
 
 @Injectable()
 export class ElevationService {

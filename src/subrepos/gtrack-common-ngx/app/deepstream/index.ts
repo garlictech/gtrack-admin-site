@@ -13,29 +13,29 @@ import {
 import { environment } from 'environments/environment';
 import { selectRole, selectUser } from '../authentication/store/selectors';
 
-let externalDeepstreamDependencies: IExternalDeepstreamDependencies = {
-  deepstreamConnectionString: environment.deepstream,
-  storeDomain: 'deepstream',
-  selectors: {
-    getUserId: createSelector(selectUser, state => _.get(state, 'id')),
-    getUserRole: selectRole
-  }
-};
+export const userIdSelector = createSelector(selectUser, state => _.get(state, 'id'));
+
+export function externalDeepstreamDependencies(): IExternalDeepstreamDependencies {
+  return {
+    deepstreamConnectionString: environment.deepstream,
+    storeDomain: 'deepstream',
+    selectors: { getUserId: userIdSelector, getUserRole: selectRole }
+  };
+}
 
 @NgModule({ imports: [CoreDeepstreamModule] })
 export class DeepstreamModule {
   static forRoot(): ModuleWithProviders {
-    console.log(externalDeepstreamDependencies);
     return {
       ngModule: DeepstreamModule,
       providers: [
         DeepstreamService,
         Selectors,
-        { provide: EXTERNAL_DEEPSTREAM_DEPENDENCIES, useValue: externalDeepstreamDependencies }
+        { provide: EXTERNAL_DEEPSTREAM_DEPENDENCIES, useFactory: externalDeepstreamDependencies }
       ]
     };
   }
 }
 
 export { DeepstreamService, Selectors };
-export { Reducer, IDeepstreamState, Actions as DeepstreamActions } from 'subrepos/deepstream-ngx';
+export { Reducer as DeepstreamReducer, IDeepstreamState, Actions as DeepstreamActions } from 'subrepos/deepstream-ngx';

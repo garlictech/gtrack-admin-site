@@ -1,4 +1,4 @@
-export class HikeModuleConfig {
+export interface IHikeModuleConfig {
   storeDomains: {
     poi: string;
     hike: string;

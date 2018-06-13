@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { APP_BASE_HREF } from '@angular/common';
-import { Store, StoreModule, combineReducers } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { IHikeProgramStored } from 'subrepos/provider-client';
 import { Subject } from 'rxjs/Subject';
 
@@ -12,7 +10,6 @@ import * as actions from '../actions';
 import { HikeSelectors } from '../selectors';
 import { EXTERNAL_HIKE_DEPENDENCIES } from '../../../externals';
 import { hikeProgramsStored as hikeProgramFixtures, HikeProgramComponent } from './fixtures';
-import { CheckpointService } from '../../../services/checkpoint';
 
 import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES, SearchFiltersSelectors } from '../../../../search-filters';
 
