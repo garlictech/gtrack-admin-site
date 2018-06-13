@@ -2,9 +2,8 @@ import { Injectable, Inject } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector, Store } from '@ngrx/store';
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
 import { IDeepstreamState, EDeepstreamState } from './state';
-import { Observable } from 'rxjs/Observable';
-
 import * as _ from 'lodash';
+import { Observable } from 'rxjs/Observable';
 
 export interface ISelectorUserData {
   userId: string | undefined;
@@ -21,6 +20,7 @@ export class Selectors {
   public userData: MemoizedSelector<any, ISelectorUserData>;
   public permissions;
   public permissionRecordName;
+  public isOpenUser;
   private _externals: IExternalDeepstreamDependencies;
 
   constructor(@Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) externals, private _store: Store<any>) {
@@ -58,6 +58,8 @@ export class Selectors {
         return { userId, role };
       }
     );
+
+    this.isOpenUser = createSelector(selectFeature, state => _.get(state, 'auth.id') === 'open');
 
     this.getPermissionRecord = Observable.combineLatest(
       this._store.select(this._externals.selectors.getUserRole),

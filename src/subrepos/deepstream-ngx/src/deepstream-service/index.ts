@@ -1,15 +1,15 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { Observer } from 'rxjs/Observer';
 import { Store } from '@ngrx/store';
 import { Client as DeepstreamClient, Record, Query, Rpc, List } from '@garlictech/deepstream-rxjs';
-import { DebugLog } from '../log';
 import { EAuthRoles } from 'subrepos/provider-client';
 
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
-
 import { Selectors } from '../store/selectors';
 import { DeepstreamPermissionRecordChanged } from '../store/actions';
-import { log } from '../log';
+import { log, DebugLog } from '../log';
 
 export interface IQueryDesc {
   table: string;
@@ -26,6 +26,8 @@ export interface IRpcQuery {
 @Injectable()
 export class DeepstreamService {
   private dsClient: DeepstreamClient;
+  private _liveQueries: { [key: string]: Observable<any[]> } = {};
+
   constructor(
     @Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) private _externals: IExternalDeepstreamDependencies,
     private _selectors: Selectors,
@@ -46,8 +48,8 @@ export class DeepstreamService {
     let rpcData: IRpcQuery = { payload: { ...queryDesc } };
 
     return this.callRpc('open.search-provider.serialize', rpcData).switchMap(res => {
-      let query = new Query<T>(this.dsClient);
-      return query.queryForData(res.name, res.table);
+      const query = new Query<T>(this.dsClient);
+      return this._initLiveQuery(res, query.queryForData(res.name, res.table));
     });
   }
 
@@ -63,8 +65,22 @@ export class DeepstreamService {
     };
 
     return this.callRpc('open.search-provider.serialize', rpcData).switchMap(res => {
-      let query = new Query<T>(this.dsClient);
-      return query.pageableQuery(res.name, start, end, res.table);
+      const query = new Query<T>(this.dsClient);
+      return this._initLiveQuery(res, query.pageableQuery(res.name, start, end, res.table));
+    });
+  }
+
+  doWindowedQuery<T = any>(queryDesc: IQueryDesc, start, end): Observable<T[]> {
+    let rpcData: IRpcQuery = {
+      payload: {
+        ...queryDesc,
+        limit: end
+      }
+    };
+
+    return this.callRpc('open.search-provider.serialize', rpcData).switchMap(res => {
+      const query = new Query<T>(this.dsClient);
+      return this._initLiveQuery(res, query.pageableQuery(res.name, start, end, res.table));
     });
   }
 
@@ -88,6 +104,19 @@ export class DeepstreamService {
       };
 
       return rpc.make(name, sentData);
+    });
+  }
+
+  listenUserEvents() {
+    let userSelector = this._store.select(this._selectors.userData);
+    return userSelector.filter((user: any) => user.role && user.userId).switchMap((user: any) => {
+      let topic = `${user.role}/${user.userId}`;
+      return new Observable<any>((obs: Observer<any>) => {
+        this.dsClient.client.event.subscribe(topic, payload => {
+          obs.next(payload);
+          return () => this.dsClient.client.event.unsubscribe(topic);
+        });
+      });
     });
   }
 
@@ -118,5 +147,23 @@ export class DeepstreamService {
         log.i('Deepstream permission record changed', permissionRecord);
         return this._store.dispatch(new DeepstreamPermissionRecordChanged(permissionRecord));
       });
+  }
+
+  private _initLiveQuery<T>(res: any, cb: Observable<T[]>) {
+    const runningQuery = this._liveQueries[res.name];
+    if (runningQuery) {
+      return this._liveQueries[res.name];
+    } else {
+      const subject = new Subject<T[]>();
+      const query = new Query<T>(this.dsClient);
+      const source = cb;
+      const liveQuery = source.multicast(subject).refCount();
+      this._liveQueries[res.name] = liveQuery;
+
+      return liveQuery.finally(() => {
+        log.d('Disposing live query', res.name);
+        delete this._liveQueries[res.name];
+      });
+    }
   }
 }
