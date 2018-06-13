@@ -8,7 +8,7 @@ import { Subject } from 'rxjs/Subject';
 import { StoreModule, Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { Observable } from 'rxjs';
-import { AuthenticationApiConfig, AuthenticationApiModule } from '../../lib';
+import { AUTH_CONFIG_TOKEN, defaultAuthenticationApiConfig, AuthenticationApiModule } from '../../lib';
 
 import { IAuthenticationState, Reducer as authReducer, domain } from '../../store';
 import * as Actions from '../../store/actions';
@@ -28,25 +28,21 @@ describe('AuthGuard', () => {
   let apiUrl = 'http://localhost/api';
   let webserverUrl = 'http://localhost/api';
 
-  let authConfig = new AuthenticationApiConfig();
+  let authConfig = { ...defaultAuthenticationApiConfig };
 
   authConfig.apiUrl = apiUrl;
   authConfig.webserverUrl = webserverUrl;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot(reducer),
-        EffectsModule.forRoot([]),
-        AuthenticationApiModule.forRoot(authConfig)
-      ],
+      imports: [StoreModule.forRoot(reducer), EffectsModule.forRoot([]), AuthenticationApiModule.forRoot(authConfig)],
       providers: [
         {
           provide: Router,
           useClass: MockRouterService
         },
         {
-          provide: AuthenticationApiConfig,
+          provide: AUTH_CONFIG_TOKEN,
           useFactory: () => authConfig
         },
         AuthGuard

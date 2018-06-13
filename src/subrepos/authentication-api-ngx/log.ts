@@ -1,5 +1,4 @@
 import { Log } from 'ng2-logger';
-import { Logger } from 'ng2-logger/src/logger';
 
 export const log = Log.create('@garlictech/authentication-api');
 log.color = 'blue';

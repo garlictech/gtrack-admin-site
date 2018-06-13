@@ -26,14 +26,17 @@ export class AuthProviderBase {
       options.roles = roles;
     }
 
-    return this.http.post(url, options).toPromise().then(response => {
-      let body = response.json();
-      let data = body;
-      let token = data.token;
-      let refreshToken = data.refreshToken;
+    return this.http
+      .post(url, options)
+      .toPromise()
+      .then(response => {
+        let body = response.json();
+        let data = body;
+        let token = data.token;
+        let refreshToken = data.refreshToken;
 
-      return this.auth.init(token, refreshToken);
-    });
+        return this.auth.init(token, refreshToken);
+      });
   }
 
   /**
@@ -47,15 +50,13 @@ export class AuthProviderBase {
     permissions: string,
     roles?: string[]
   ): Promise<IAuth> {
-    return this
-      ._login(loginUrl, redirectUri, permissions)
-      .then(response => {
-        /* jshint camelcase: false */
-        let accessToken = response.access_token;
-        /* jshint camelcase: true */
+    return this._login(loginUrl, redirectUri, permissions).then(response => {
+      /* jshint camelcase: false */
+      let accessToken = response.access_token;
+      /* jshint camelcase: true */
 
-        return this.restApiLogin(accessToken, tokenUrl, roles);
-      });
+      return this.restApiLogin(accessToken, tokenUrl, roles);
+    });
   }
 
   @DebugLog

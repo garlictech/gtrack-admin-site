@@ -12,7 +12,7 @@ import { OauthWindowService } from '../../oauth-window';
 import { WindowModule, WindowService } from '../../window';
 import { GoogleService } from '../google.service';
 import { Reducer as authReducer } from '../../store';
-import { AuthenticationApiConfig, AuthenticationApiModule, IGoogleConfig } from '../../lib';
+import { defaultAuthenticationApiConfig, AuthenticationApiModule, IGoogleConfig, AUTH_CONFIG_TOKEN } from '../../lib';
 import { ApiModule } from '../../api';
 import { OauthWindowMockService } from '../../oauth-window/test/oauth-window.service.mock';
 import { LocalStorage } from '../../storage/local-storage.service';
@@ -29,7 +29,7 @@ describe('Google', () => {
     permissions: 'email'
   };
 
-  let config = new AuthenticationApiConfig();
+  let config = { ...defaultAuthenticationApiConfig };
 
   config.webserverUrl = webserverUrl;
   config.apiUrl = apiUrl;
@@ -57,7 +57,7 @@ describe('Google', () => {
         },
         GoogleService,
         {
-          provide: AuthenticationApiConfig,
+          provide: AUTH_CONFIG_TOKEN,
           useFactory: () => config
         },
         {

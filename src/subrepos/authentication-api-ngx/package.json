@@ -23,9 +23,6 @@
         "npm": ">=3.0.0",
         "node": ">=5.0.0"
     },
-    "peerDependencies": {
-        "firebase": "4.8.0",
-        "angularfire2": "5.0.0-rc.4"
-    },
+    "peerDependencies": {},
     "devDependencies": {}
 }

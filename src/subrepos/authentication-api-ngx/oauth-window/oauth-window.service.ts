@@ -90,15 +90,12 @@ export class OauthWindowService {
   private _startPolling(window): void {
     clearInterval(this._pollTimer);
 
-    this._pollTimer = setInterval(
-      () => {
-        if (window.closed !== false) {
-          clearInterval(this._pollTimer);
-          this.loginWindowExitHandler();
-        }
-      },
-      200
-    );
+    this._pollTimer = setInterval(() => {
+      if (window.closed !== false) {
+        clearInterval(this._pollTimer);
+        this.loginWindowExitHandler();
+      }
+    }, 200);
   }
 
   private loadStartHandler(e: any, parameter: any): void {
