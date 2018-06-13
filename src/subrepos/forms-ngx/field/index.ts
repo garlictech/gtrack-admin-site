@@ -8,16 +8,22 @@ export * from './select';
 export * from './textarea';
 export * from './textbox';
 export * from './date-picker';
-export * from './emoji';
 export * from './multi-select';
 export * from './group';
 export * from './section';
-export * from './file-upload';
 export * from './switch';
 export * from './checkbox';
 export * from './html';
 export * from './text';
+<<<<<<< HEAD
 export * from './slider';
+=======
+export * from './password';
+export * from './template';
+export * from './phone-number';
+export * from './emoji';
+export * from './file-upload';
+>>>>>>> refs/subrepo/src/subrepos/forms-ngx/fetch
 
 export interface IResetFv {
   (formDescriptor: IFormDescriptor): IFormInstance;

@@ -4,12 +4,9 @@ import * as _ from 'lodash';
 
 import { ISectionField } from '../field';
 
-import { log, DebugLog } from '../../log';
-
 @Component({
-  selector: 'app-dynamic-form-section',
-  templateUrl: './ui.pug',
-  styleUrls: ['./style.scss']
+  selector: 'app-form-section',
+  template: ''
 })
 export class DynamicFormSectionComponent implements OnInit {
   @Input() public controlGroup: FormGroup;

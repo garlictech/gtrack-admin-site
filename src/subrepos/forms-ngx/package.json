@@ -1,16 +1,30 @@
 {
     "name": "forms-ngx",
     "description": "ngx forms library",
+<<<<<<< HEAD
     "version": "0.0.0-local",
+=======
+    "main": "index.ts",
+    "version": "0.0.0-local",
+    "files": ["."],
+>>>>>>> refs/subrepo/src/subrepos/forms-ngx/fetch
     "license": "SEE LICENSE IN license.txt",
     "engines": {
         "npm": ">=3.0.0",
         "node": ">=5.0.0"
     },
+<<<<<<< HEAD
     "peerDependencies": {
         "primeng": "^5.2.0",
         "emojionearea": "^3.4.1",
         "angular2-file-drop": "^0.2.0",
         "normalize.scss": "^0.1.0"
+=======
+    "scripts": {},
+    "peerDependencies": {
+        "emojionearea": "^3.4.1",
+        "password-validator": "^4.1.1",
+        "google-libphonenumber": "^3.1.6"
+>>>>>>> refs/subrepo/src/subrepos/forms-ngx/fetch
     }
 }

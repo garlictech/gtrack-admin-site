@@ -4,17 +4,14 @@ import { FormGroup, FormArray } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import * as _ from 'lodash';
 
-import { log } from 'app/log';
-import { State } from 'app/store';
+import { log } from '../log';
 
 import { Field, IFormDescriptor } from '../field';
 import { FieldControlService, IFormInstance } from '../field-control-service';
 
 @Component({
-  selector: 'app-dynamic-form',
-  templateUrl: './ui.pug',
-  styleUrls: ['./style.scss'],
-  providers: [FieldControlService]
+  selector: 'app-form',
+  template: ''
 })
 export class DynamicFormComponent implements AfterViewInit, OnDestroy {
   @Input() formDescriptor: IFormDescriptor;
@@ -23,7 +20,7 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
   public formInstance: IFormInstance;
   private _componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(private _fcs: FieldControlService, private _store: Store<State>, private _cdr: ChangeDetectorRef) {
+  constructor(private _fcs: FieldControlService, private _store: Store<any>, private _cdr: ChangeDetectorRef) {
     /* EMPTY */
   }
 
@@ -34,7 +31,7 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
     if (this.formDataPath$) {
       this.formDataPath$
         .filter(formDataPath => !!formDataPath)
-        .switchMap(formDataPath => this._store.select((state: State) => _.get(state, formDataPath)))
+        .switchMap(formDataPath => this._store.select(state => _.get(state, formDataPath)))
         .takeUntil(this._componentDestroyed$)
         .filter(formData => !!formData)
         .map(formData => {

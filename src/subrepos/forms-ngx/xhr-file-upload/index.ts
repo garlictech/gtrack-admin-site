@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
 
 @Injectable()
 export class XhrFileUpload {
@@ -26,7 +27,7 @@ export class XhrFileUpload {
       };
       xhr.upload.onprogress = e => {
         if (progressHandler) {
-          const progress = Math.ceil(e.loaded / e.total * 100);
+          const progress = Math.ceil((e.loaded / e.total) * 100);
           progressHandler(progress);
         }
       };

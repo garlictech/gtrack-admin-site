@@ -1,27 +1,15 @@
-import { Component, Input, Provider, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input } from '@angular/core';
 import { AbstractValueAccessor } from '../abstract-value-accessor';
-import { DebugLog, log } from '../../log';
-
-const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
-  provide: NG_VALUE_ACCESSOR,
-  // tslint:disable no-forward-ref
-  // tslint:disable no-use-before-declare
-  useExisting: forwardRef(() => DatePickerComponent),
-  // tslint:enable no-forward-ref
-  // tslint:enable no-use-before-declare
-  multi: true
-};
 
 @Component({
   selector: 'app-form-date-picker',
-  templateUrl: './ui.pug',
-  styleUrls: ['./style.scss'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  template: ''
 })
 export class DatePickerComponent extends AbstractValueAccessor {
   @Input() maxDate;
+  @Input() minDate;
   @Input() defaultDate;
+  @Input() placeholder;
 
   constructor() {
     super();
@@ -31,5 +19,9 @@ export class DatePickerComponent extends AbstractValueAccessor {
   writeValue(value: Date | string) {
     this._value = typeof value === 'string' ? new Date(<string>value) : value;
     this.onChange(value);
+  }
+
+  get currentYear() {
+    return new Date().getFullYear();
   }
 }

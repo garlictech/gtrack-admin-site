@@ -6,14 +6,17 @@ import { Observable } from 'rxjs';
 
 import * as _ from 'lodash';
 
-import { State } from 'app/store';
 import { Field, SelectField, ESelectTypes } from '../field';
 
 @Component({
   selector: 'app-form-field',
+<<<<<<< HEAD
   templateUrl: './ui.pug',
   styleUrls: ['./style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
+=======
+  template: ''
+>>>>>>> refs/subrepo/src/subrepos/forms-ngx/fetch
 })
 export class DynamicFormFieldComponent implements OnInit {
   @Input() form: FormGroup;
@@ -23,7 +26,7 @@ export class DynamicFormFieldComponent implements OnInit {
 
   public remoteError$: Observable<string> = Observable.empty();
 
-  constructor(private _translate: TranslateService, private _store: Store<State>) {
+  constructor(private _translate: TranslateService, private _store: Store<any>) {
     /* EMPTY */
   }
 
@@ -33,6 +36,7 @@ export class DynamicFormFieldComponent implements OnInit {
 
       this.remoteError$ = this._store
         .select(state => _.get(state, `${path}`))
+        .filter(err => this.field.remoteErrorStateFilter.indexOf(err) === -1)
         .map(label => (label ? this._translate.instant(`form.errors.${label}`) : null));
     }
   }
@@ -72,6 +76,16 @@ export class DynamicFormFieldComponent implements OnInit {
 
     if (!!fieldObj) {
       return fieldObj.invalid && (fieldObj.dirty || fieldObj.touched);
+    } else {
+      return false;
+    }
+  }
+
+  get showRemoteError() {
+    let fieldObj = this._fieldObj();
+
+    if (!!fieldObj) {
+      return !(fieldObj.touched || fieldObj.dirty);
     } else {
       return false;
     }

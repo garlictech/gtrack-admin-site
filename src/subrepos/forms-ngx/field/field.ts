@@ -8,6 +8,7 @@ export interface IFieldBase {
   infoText?: string;
   required?: boolean;
   remoteErrorStatePath?: string;
+  remoteErrorStateFilter?: string[];
   validators?: ValidatorFn[];
   controlType?: string;
   helpText?: string;
@@ -15,6 +16,7 @@ export interface IFieldBase {
   subTitle?: string;
   hidden?: boolean;
   submitOnChange?: boolean;
+  placeholder?: string;
 }
 
 export interface IField<T> extends IFieldBase {
@@ -29,6 +31,7 @@ export class Field<T> implements IField<T> {
   controlType?: string;
   validators?: ValidatorFn[];
   remoteErrorStatePath?: string;
+  remoteErrorStateFilter: string[];
   defaultValue?: T;
   helpText?: string;
   title?: string;
@@ -36,11 +39,13 @@ export class Field<T> implements IField<T> {
   hidden?: boolean;
   required?: boolean;
   submitOnChange?: boolean;
+  placeholder?: string;
 
   constructor(options: IField<T>) {
     this.label = options.label || '';
     this.validators = options.validators || [];
     this.remoteErrorStatePath = options.remoteErrorStatePath;
+    this.remoteErrorStateFilter = options.remoteErrorStateFilter || [];
     this.key = options.key;
     this.defaultValue = options.defaultValue;
     this.helpText = options.helpText;
@@ -51,6 +56,7 @@ export class Field<T> implements IField<T> {
     this.submitOnChange = !!options.submitOnChange;
     this.disableLabel = !!options.disableLabel;
     this.labelParams = options.labelParams;
+    this.placeholder = options.placeholder;
 
     if (!!options.required) {
       this.validators.unshift(Validators.required);
