@@ -14,13 +14,8 @@ const languages: ILanguageDesc[] = [
     flagImg: require('./flags/us.png'),
     flagTitle: 'United States'
   },
-  {
-    id: 'hu_HU',
-    title: 'Hungarian',
-    name: 'Magyar',
-    flagImg: require('./flags/hu.png'),
-    flagTitle: 'Hungary'
-  },
+  // The only available language is english
+  // until the translations arrive
   {
     id: 'fr_FR',
     title: 'French (France)',

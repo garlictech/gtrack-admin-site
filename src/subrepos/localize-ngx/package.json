@@ -15,11 +15,8 @@
         "node": ">=5.0.0"
     },
     "scripts": {},
-    "dependencies": {
+    "peerDependencies": {
         "@ngx-translate/core": "^9.0.1",
         "@ngx-translate/http-loader": "^2.0.0"
-    },
-    "devDependencies": {},
-    "optionalDependencies": {},
-    "peerDependencies": {}
+    }
 }

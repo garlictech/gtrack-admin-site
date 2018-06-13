@@ -5,8 +5,8 @@ import { LanguageService } from '../language-service';
 import { ILanguageDesc } from '../languages';
 
 @Component({
-  selector: 'app-language-selector',
-  template: '',
+  selector: 'pioneer-wst-language-selector',
+  template: '<h1>Language Selector Module - Tb Be Redefined</h1>',
   styles: ['']
 })
 export class LanguageSelectorComponent {

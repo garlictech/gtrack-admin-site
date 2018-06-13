@@ -1,11 +1,11 @@
-import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Action, Store } from '@ngrx/store';
 import { TranslateModule, TranslateLoader, TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { LocalizeConfig } from './config';
+import { ILocalizeConfig } from './config';
 import { LanguageService } from '../language-service';
 import { LanguageSelectorComponent } from '../language-selector';
 import { log, DebugLog } from '../log';
@@ -28,21 +28,13 @@ import { Actions } from '../store';
   exports: [TranslateModule, LanguageSelectorComponent]
 })
 export class LocalizeModule {
-  static forRoot(config: LocalizeConfig): ModuleWithProviders {
+  static forRoot(config: ILocalizeConfig): ModuleWithProviders {
     return {
       ngModule: LocalizeModule,
       providers: [
         {
-          provide: LocalizeConfig,
+          provide: 'LOCALIZE_CONFIG',
           useValue: config
-        },
-        {
-          provide: APP_INITIALIZER,
-          useFactory: () => () => {
-            log.d('[LocalizeModule:app init] initializing localization module...');
-          },
-          deps: [],
-          multi: true
         }
       ]
     };
