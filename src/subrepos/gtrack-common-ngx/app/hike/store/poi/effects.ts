@@ -87,12 +87,5 @@ export class PoiEffects {
         });
     });
 
-  @Effect()
-  poiMerged$: Observable<Action> = this._actions$
-    .ofType<LocalActions.PoiMergedSuccessfully>(LocalActions.PoiActionTypes.POI_MERGED_SUCCESSFULLY)
-    .map(action => {
-      return new LocalActions.LoadPoi(action.newId);
-    });
-
   constructor(private _actions$: Actions, private _poiService: PoiService, private _store: Store<any>) {}
 }
