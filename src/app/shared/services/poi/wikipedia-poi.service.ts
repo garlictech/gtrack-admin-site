@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Jsonp, Response } from '@angular/http';
 import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs/Observable';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
@@ -15,14 +14,13 @@ import * as uuid from 'uuid/v1';
 export class WikipediaPoiService {
   constructor(
     private _http: HttpClient,
-    private _jsonp: Jsonp,
     private _geometryService: GeometryService,
     private _toasterService: ToasterService
   ) {}
 
   public get(bounds, lng = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
-    const gsLimit = 50;
+    const gsLimit = 500;
     const request = `https://${lng}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo!.radius!}&gscoord=${geo!.center!.geometry!.coordinates![1]}%7C${geo!.center!.geometry!.coordinates![0]}&format=json&gslimit=${gsLimit}&origin=*`;
 
     // Get basic poi list
@@ -175,5 +173,35 @@ export class WikipediaPoiService {
       .then(() => {
         return _pois;
       });
+  }
+
+  /**
+   * Wikipedia API has a 10.000 radius limit on the bounds..
+   * So we have to pass gridded bounds if the original rectangle is too large
+   */
+  public getSearchBounds(bounds, boundsArr) {
+    const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
+
+    if (geo.radius < 10000) {
+      boundsArr.push(bounds);
+    } else {
+      // Chech quarter rectangles
+      this.getSearchBounds({
+        SouthWest: { lat: bounds.SouthWest.lat, lon: bounds.SouthWest.lon },
+        NorthEast: { lat: geo.center.geometry.coordinates[1], lon: geo.center.geometry.coordinates[0] }
+      }, boundsArr);
+      this.getSearchBounds({
+        SouthWest: { lat: geo.center.geometry.coordinates[1], lon: bounds.SouthWest.lon },
+        NorthEast: { lat: bounds.NorthEast.lat, lon: geo.center.geometry.coordinates[0] }
+      }, boundsArr);
+      this.getSearchBounds({
+        SouthWest: { lat: bounds.SouthWest.lat, lon: geo.center.geometry.coordinates[0] },
+        NorthEast: { lat: geo.center.geometry.coordinates[1], lon: bounds.NorthEast.lon }
+      }, boundsArr);
+      this.getSearchBounds({
+        SouthWest: { lat: geo.center.geometry.coordinates[1], lon: geo.center.geometry.coordinates[0] },
+        NorthEast: { lat: bounds.NorthEast.lat, lon: bounds.NorthEast.lon }
+      }, boundsArr);
+    }
   }
 }
