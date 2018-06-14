@@ -14,7 +14,6 @@ import {
 } from 'app/store/selectors';
 
 import * as _ from 'lodash';
-import * as uuid from 'uuid/v1';
 
 @Component({
   selector: 'gt-hike-edit-pois-hike',

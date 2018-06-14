@@ -5,6 +5,8 @@ import { AccordionModule, DropdownModule } from 'primeng/primeng';
 
 import { FormModule } from 'subrepos/forms-ngx';
 import { LocalizedDescriptionComponent } from './localized-description';
+import { TableSpinnerComponent } from './table-spinner';
+import { AdminLeafletComponent } from './admin-leaflet';
 
 @NgModule({
   imports: [
@@ -15,10 +17,14 @@ import { LocalizedDescriptionComponent } from './localized-description';
     FormsModule
   ],
   declarations: [
-    LocalizedDescriptionComponent
+    AdminLeafletComponent,
+    LocalizedDescriptionComponent,
+    TableSpinnerComponent
   ],
   exports: [
-    LocalizedDescriptionComponent
+    AdminLeafletComponent,
+    LocalizedDescriptionComponent,
+    TableSpinnerComponent
   ]
 })
 export class SharedComponentsModule {}

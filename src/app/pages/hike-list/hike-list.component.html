@@ -25,7 +25,11 @@
             </h4>
           </div>
           <div class="card-body">
-            <div class="table-responsive">
+            <ng-template #hikeListSpinner>
+              <gt-table-spinner></gt-table-spinner>
+            </ng-template>
+
+            <div class="table-responsive" *ngIf="(hikeList$ | async) as hikeList; else hikeListSpinner">
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -36,7 +40,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <ng-container *ngFor="let hike of (hikeList$ | async)">
+                  <ng-container *ngFor="let hike of hikeList">
                     <tr *ngIf="hike.state === selectedListState">
                       <td class="text-nowrap">
                         <div>

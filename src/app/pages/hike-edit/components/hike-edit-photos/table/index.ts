@@ -5,12 +5,11 @@ import { State, editedHikeProgramActions } from 'app/store';
 import { IBackgroundImageData } from 'subrepos/provider-client';
 
 @Component({
-  selector: 'hike-edit-photos-table',
+  selector: 'gt-hike-edit-photos-table',
   templateUrl: './ui.html'
 })
 export class HikeEditPhotosTableComponent {
-  @Input() images$: any[];
-  @Input() subdomain: string;
+  @Input() images$: Observable<IBackgroundImageData[]>;
   @Input() backgroundOriginalUrls$: Observable<string[]>;
 
   constructor (

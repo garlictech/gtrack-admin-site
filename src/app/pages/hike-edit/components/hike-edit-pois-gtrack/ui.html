@@ -13,8 +13,6 @@
     >Merge pois</button>
   </div>
 
-  <div class="pull-left" *ngIf="(searchContext$ | async)?.working"><i class="fa-li fa fa-spinner fa-spin poi-spinner"></i></div>
-
   <div class="pull-right">
     <div class="form-check inline-checkbox">
       <label class="form-check-label">
@@ -33,48 +31,50 @@
   </div>
 </div>
 
-<div id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="card mb-1">
-    <div class="card-header bg-light" id="headingOne" role="tab">
-      <h5>
-        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtrack_off" role="button" class="collapsed">
-          <div class="text-success">
-            On route pois
-            <i class="material-icons pull-right">keyboard_arrow_down</i>
-          </div>
-        </a>
-      </h5>
+<gt-table-spinner *ngIf="(searchContext$ | async)?.working as working; else hikePoiTable"></gt-table-spinner>
+
+<ng-template #hikePoiTable>
+  <div id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="card mb-1">
+      <div class="card-header bg-light" id="headingOne" role="tab">
+        <h5>
+          <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtrack_off" role="button" class="collapsed">
+            <div class="text-success">
+              On route pois
+              <i class="material-icons pull-right">keyboard_arrow_down</i>
+            </div>
+          </a>
+        </h5>
+      </div>
+      <div aria-labelledby="headingOne" class="collapse" id="collapse_gtrack_off" role="tabpanel" aria-expanded="false" style="height: 0px;">
+        <div class="card-body">
+          <hike-edit-pois-gtrack-table
+            [pois$]="pois$"
+            [onRouteCheck]="true"
+          ></hike-edit-pois-gtrack-table>
+        </div>
+      </div>
     </div>
-    <div aria-labelledby="headingOne" class="collapse" id="collapse_gtrack_off" role="tabpanel" aria-expanded="false" style="height: 0px;">
-      <div class="card-body">
-        <hike-edit-pois-gtrack-table
-          [pois$]="pois$"
-          [onRouteCheck]="true"
-        ></hike-edit-pois-gtrack-table>
+
+    <div class="card mb-1">
+      <div class="card-header bg-light" id="headingOne" role="tab">
+        <h5>
+          <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtrack_on" role="button" class="collapsed">
+            <div class="text-success">
+              Off route pois
+              <i class="material-icons pull-right">keyboard_arrow_down</i>
+            </div>
+          </a>
+        </h5>
+      </div>
+      <div aria-labelledby="headingOne" class="collapse" id="collapse_gtrack_on" role="tabpanel" aria-expanded="false" style="height: 0px;">
+        <div class="card-body">
+          <hike-edit-pois-gtrack-table
+            [pois$]="pois$"
+            [onRouteCheck]="false"
+          ></hike-edit-pois-gtrack-table>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="card mb-1">
-    <div class="card-header bg-light" id="headingOne" role="tab">
-      <h5>
-        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtrack_on" role="button" class="collapsed">
-          <div class="text-success">
-            Off route pois
-            <i class="material-icons pull-right">keyboard_arrow_down</i>
-          </div>
-        </a>
-      </h5>
-    </div>
-    <div aria-labelledby="headingOne" class="collapse" id="collapse_gtrack_on" role="tabpanel" aria-expanded="false" style="height: 0px;">
-      <div class="card-body">
-        <hike-edit-pois-gtrack-table
-          [pois$]="pois$"
-          [onRouteCheck]="false"
-        ></hike-edit-pois-gtrack-table>
-      </div>
-    </div>
-  </div>
-</div>
-
-{{mergeSelection | json}}
+</ng-template>

@@ -11,7 +11,7 @@
   [formDataPath$]="formDataPath$"
 ></app-dynamic-form>
 
-<div class="row mt-4">
+<div class="row mt-4" *ngIf="(hikeProgramData$ | async) as hikeProgramData">
   <div class="col-md-3">
     <strong>RoundTrip:</strong>
     <span [ngClass]="{'text-success': (isRoundTrip$ | async)}">
@@ -20,21 +20,21 @@
   </div>
 
   <div class="col-md-3">
-    <strong>State:</strong> {{(hikeProgramData$ | async)?.state}}
+    <strong>State:</strong> {{hikeProgramData.state}}
   </div>
 
   <div class="col-md-3">
-    <strong>Published:</strong> {{(hikeProgramData$ | async)?.published | date: 'yyyy.MM.dd. HH:mm'}}
+    <strong>Published:</strong> {{hikeProgramData.published | date: 'yyyy.MM.dd. HH:mm'}}
   </div>
 
   <div class="col-md-3">
     <strong>Location:</strong>
-    <span [ngClass]="{'text-success': (hikeProgramData$ | async)?.location}">
-      {{(hikeProgramData$ | async)?.location}}
+    <span [ngClass]="{'text-success': hikeProgramData.location}">
+      {{hikeProgramData.location}}
     </span>
 
-    <div class="feedback invalid" *ngIf="(remoteError$ | async)?.location">
-      {{(remoteError$ | async)?.location[0] | translate}}
+    <div class="feedback invalid" *ngIf="(remoteError$ | async)?.location as locationError">
+      {{locationError[0] | translate}}
     </div>
   </div>
 </div>

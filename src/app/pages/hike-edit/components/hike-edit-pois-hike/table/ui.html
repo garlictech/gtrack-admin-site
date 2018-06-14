@@ -11,27 +11,29 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let poi of (pois$ | async); let idx = index">
-      <tr *ngIf="!!poi.onRoute === onRouteCheck">
-        <td><gt-poi-icons [poi]="poi"></gt-poi-icons></td>
-        <td>{{translateDescription(poi.description, 'title')}}</td>
-        <td>{{poi.distFromRoute | distance : true}}</td>
-        <td>{{poi.types.join(', ')}}</td>
-        <td>{{poi.objectType}}</td>
-        <td>{{poi.elevation | distance}}</td>
-        <td class="td-actions">
-          <button
-            class="btn btn-simple btn-link btn-danger"
-            title="Remove poi"
-            (click)="removePoi($event, poi)" 
-          ><i class="material-icons">remove_circle</i></button>
-          <button
-            class="btn btn-warning btn-simple btn-link"
-            title="Edit poi"
-            (click)="openModal($event, poi)"
-          ><i class="material-icons">edit</i></button>
-        </td>
-      </tr>
+    <ng-container *ngIf="(pois$ | async) as pois">
+      <ng-container *ngFor="let poi of pois; let idx = index">
+        <tr *ngIf="!!poi.onRoute === onRouteCheck">
+          <td><gt-poi-icons [poi]="poi"></gt-poi-icons></td>
+          <td>{{translateDescription(poi.description, 'title')}}</td>
+          <td>{{poi.distFromRoute | distance : true}}</td>
+          <td>{{poi.types.join(', ')}}</td>
+          <td>{{poi.objectType}}</td>
+          <td>{{poi.elevation | distance}}</td>
+          <td class="td-actions">
+            <button
+              class="btn btn-simple btn-link btn-danger"
+              title="Remove poi"
+              (click)="removePoi($event, poi)" 
+            ><i class="material-icons">remove_circle</i></button>
+            <button
+              class="btn btn-warning btn-simple btn-link"
+              title="Edit poi"
+              (click)="openModal($event, poi)"
+            ><i class="material-icons">edit</i></button>
+          </td>
+        </tr>
+      </ng-container>
     </ng-container>
   </tbody>
 </table>

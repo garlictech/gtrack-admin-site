@@ -7,14 +7,15 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let stop of (stops$ | async); let idx = index; let l = count">
-      <tr>
+    <ng-container *ngIf="(stops$ | async) as stops">
+      <tr *ngFor="let stop of stops; let idx = index; let l = count">
         <td>{{idx + 1}}.</td>
         <td *ngIf="idx > 0 && idx < l - 1">{{translateDescription(stop.description, 'title')}}</td>
         <td *ngIf="idx === 0">Start point</td>
         <td *ngIf="idx === l - 1">End point</td>
         <td>{{stop.distanceFromOrigo | distance}}</td>
       </tr>
+      <tr *ngIf="stops.length === 0"><td colspan="5">No stops.</td></tr>
     </ng-container>
   </tbody>
 </table>
