@@ -37,6 +37,8 @@ export class GooglePoiService {
 
         this._placesService = new google.maps.places.PlacesService(_map);
 
+        // https://developers.google.com/maps/documentation/javascript/places#places_photos
+
         return new Promise((resolve, reject) => {
           this._placesService.nearbySearch({bounds: _bnds}, (result, status, pagination) => {
             for (let _point of result) {

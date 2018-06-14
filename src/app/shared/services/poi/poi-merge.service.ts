@@ -26,7 +26,7 @@ export class PoiMergeService {
         flatProperties[key].push(flatPoi[key]);
       }
 
-      commonTypes = commonTypes.concat(poi.types);
+      commonTypes = commonTypes.concat(poi.types.filter(t => ['unknown', 'undefined'].indexOf(t) < 0));
     }
 
     // Remove duplicated values and empty objects
