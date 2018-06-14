@@ -18,7 +18,7 @@ import { HikeSelectors, PoiSelectors, RouteSelectors, HikeEffects, PoiEffects, R
 
 import { SharedModule } from '../shared';
 import { MapModule } from '../map';
-import { HikeModuleConfig } from './config';
+import { IHikeModuleConfig } from './config';
 
 @NgModule({
   imports: [CommonModule, SharedModule, MapModule, SearchFiltersModule, GeoSearchModule],
@@ -40,7 +40,7 @@ import { HikeModuleConfig } from './config';
   ]
 })
 export class HikeModule {
-  static forRoot(config: HikeModuleConfig): ModuleWithProviders {
+  static forRoot(config: IHikeModuleConfig): ModuleWithProviders {
     return {
       ngModule: HikeModule,
       providers: [

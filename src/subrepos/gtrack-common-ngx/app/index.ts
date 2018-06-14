@@ -1,5 +1,6 @@
 export { DeepstreamService, Selectors, DeepstreamModule } from './deepstream';
 export * from './authentication';
+export * from './deepstream';
 export * from './dynamic-modal';
 export * from './shared';
 export * from './map';

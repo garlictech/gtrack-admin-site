@@ -4,7 +4,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 
-import { AuthenticationApiConfig, AuthenticationApiModule } from 'subrepos/authentication-api-ngx';
+import { defaultAuthenticationApiConfig, AuthenticationApiModule } from 'subrepos/authentication-api-ngx';
 import { DeepstreamModule, DeepstreamActions } from '../deepstream';
 
 import { environment } from 'environments/environment';
@@ -14,7 +14,10 @@ import { State } from 'app/store';
 import { AuthenticationSelectors } from './store';
 import { NotAuthGuard } from './guards';
 
-const config = new AuthenticationApiConfig();
+const config = {
+  ...defaultAuthenticationApiConfig
+};
+
 config.apiUrl = environment.authentication.server;
 config.webserverUrl = environment.webappServer;
 config.facebook.appId = _.get(environment, 'authentication.facebook.appId');

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { Subscription } from 'rxjs/Subscription';
 
 import * as Actions from './store/actions';
-import { BackgroundGeolocationServiceConfig } from './config';
+import { BACKGROUND_GEOLOCATION_CONFIG_TOKEN, IBackgroundGeolocationServiceConfig } from './config';
 import { Observable } from 'rxjs/Observable';
 import { log, DebugLog } from 'app/log';
 import { State } from 'app/store';
@@ -13,7 +13,12 @@ import { State } from 'app/store';
 export class BackgroundGeolocationService {
   protected _subscription: Subscription | undefined;
 
-  constructor(protected _store: Store<State>, protected _config: BackgroundGeolocationServiceConfig) {}
+  constructor(
+    protected _store: Store<State>,
+    @Inject(BACKGROUND_GEOLOCATION_CONFIG_TOKEN) protected _config: IBackgroundGeolocationServiceConfig
+  ) {
+    /* EMPTY */
+  }
 
   @DebugLog
   public start() {
