@@ -115,11 +115,25 @@ img.thumbs {
 /* Remove animations */
 .collapsing {
   -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
   transition: none !important;
   display: none !important;
 }
 
 .form-check .form-check-sign::before, .form-check .form-check-sign::after {
   -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
+}
+
+div, p, span, input, form {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
   transition: none !important;
 }

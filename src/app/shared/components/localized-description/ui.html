@@ -21,8 +21,8 @@
     ><i class="material-icons">delete</i></button>
 
     <app-dynamic-form
-      [formDescriptor]="getLanguageFormDescriptor(lng)"
-      [formDataPath$]="getLanguageFormDataPath(lng)"
+      [formDescriptor]="languageFormDescriptors[lng]"
+      [formDataPath$]="languageFormDataPaths[lng]"
     ></app-dynamic-form>
   </p-accordionTab>
 </p-accordion>
