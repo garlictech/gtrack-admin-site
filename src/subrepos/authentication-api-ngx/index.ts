@@ -7,3 +7,4 @@ export * from './google';
 export * from './storage';
 export * from './store';
 export * from './lib';
+export * from './interfaces';

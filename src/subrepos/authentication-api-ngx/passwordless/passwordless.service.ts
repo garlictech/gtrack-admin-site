@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response } from '@angular/http';
 import { AuthService } from '../auth';
 import { IAuth } from '../store';
 import { DebugLog } from '../log';
-import { AuthenticationApiConfig, IMagiclinkConfig } from '../lib/config';
+import { AUTH_CONFIG_TOKEN, IAuthenticationApiConfig, IMagiclinkConfig } from '../lib/config';
 
 interface RequestTokenParams {
   user: string;
@@ -20,7 +20,11 @@ export class PasswordlessService {
   private redirectUri: URL;
   private config: IMagiclinkConfig;
 
-  constructor(private auth: AuthService, private authConfig: AuthenticationApiConfig, private http: Http) {
+  constructor(
+    private auth: AuthService,
+    @Inject(AUTH_CONFIG_TOKEN) private authConfig: IAuthenticationApiConfig,
+    private http: Http
+  ) {
     this._init();
   }
 
@@ -68,7 +72,7 @@ export class PasswordlessService {
     this.redirectUri = new URL(`${this._redirectServerUrl}${this.config.redirectSlug}`);
   }
 
-  private get _redirectServerUrl(): string {
+  private get _redirectServerUrl(): string | undefined {
     return this.config.redirectServerUrl || this.authConfig.webserverUrl;
   }
 }

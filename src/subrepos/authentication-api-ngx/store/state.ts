@@ -1,12 +1,9 @@
-import { User } from '../';
-import * as firebase from 'firebase';
+import { User } from '../interfaces';
 
 export interface IAuth {
   token: string | null;
   user: User | null;
   refreshToken?: string | null;
-  firebaseToken?: string | null;
-  firebaseUser?: firebase.User;
 }
 
 export interface IAuthenticationState {

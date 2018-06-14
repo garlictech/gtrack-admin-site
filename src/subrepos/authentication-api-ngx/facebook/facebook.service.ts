@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { OauthWindowService } from '../oauth-window';
 import { AuthService } from '../auth';
 import { WindowService } from '../window';
 import { IAuth } from '../store';
-import { AuthenticationApiConfig, IFacebookConfig } from '../lib/config';
+import { AUTH_CONFIG_TOKEN, IAuthenticationApiConfig, IFacebookConfig } from '../lib/config';
 import { DebugLog } from '../log';
 import { AuthProviderBase } from '../auth-provider-base';
 
@@ -15,7 +15,7 @@ export class FacebookService extends AuthProviderBase {
   private config: IFacebookConfig;
 
   constructor(
-    private authConfig: AuthenticationApiConfig,
+    @Inject(AUTH_CONFIG_TOKEN) private authConfig: IAuthenticationApiConfig,
     auth: AuthService,
     oauthWindow: OauthWindowService,
     private windowService: WindowService,

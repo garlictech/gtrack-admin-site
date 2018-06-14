@@ -1,19 +1,18 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, Optional, Inject } from '@angular/core';
 import { Http, Response, URLSearchParams } from '@angular/http';
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+// import { AngularFireAuth } from 'angularfire2/auth';
 import { Store } from '@ngrx/store';
 
 import { LocalStorage } from '../storage/local-storage.service';
-import { User } from '../';
+import { User } from '../interfaces';
 import { IAuth } from '../store';
 import * as Actions from '../store/actions';
-import { AuthenticationApiConfig } from '../lib/config';
+import { AUTH_CONFIG_TOKEN, IAuthenticationApiConfig } from '../lib/config';
 import { ApiService } from '../api';
 import { DebugLog } from '../log';
 
 import 'rxjs/add/operator/toPromise';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
@@ -28,10 +27,9 @@ export class AuthService {
   constructor(
     private api: ApiService,
     private storage: LocalStorage,
-    private authConfig: AuthenticationApiConfig,
+    @Inject(AUTH_CONFIG_TOKEN) private authConfig: IAuthenticationApiConfig,
     private http: Http,
-    private store: Store<any>,
-    @Optional() private afAuth: AngularFireAuth
+    private store: Store<any>
   ) {
     this.authenticated = this.initFromLocalStore();
   }
@@ -54,7 +52,9 @@ export class AuthService {
       .switchMap(response => {
         let user = <User>response.json();
 
-        let afObs = this.afAuth ? this._getFirebaseData() : Observable.of({ firebaseToken: null, firebaseUser: null });
+        // let afObs = this.afAuth ? this._getFirebaseData() : Observable.of({ firebaseToken: null, firebaseUser: null });
+
+        let afObs = Observable.of({ firebaseToken: null, firebaseUser: null });
 
         return Observable.combineLatest(Observable.of({ token, refreshToken, user }), afObs);
       })
@@ -62,36 +62,12 @@ export class AuthService {
         let auth: IAuth = {
           token: values[0].token,
           refreshToken: values[0].refreshToken,
-          user: values[0].user,
-          firebaseToken: values[1].firebaseToken,
-          firebaseUser: values[1].firebaseUser || undefined
+          user: values[0].user
         };
 
         return auth;
       })
       .toPromise());
-  }
-
-  @DebugLog
-  private _getFirebaseData(): Observable<{ firebaseToken: string | null; firebaseUser: firebase.User | null }> {
-    return Observable.fromPromise(this.getFirebaseToken())
-      .switchMap(response => {
-        let body: string | null = response && response.text();
-        let firebaseToken: string | null = null;
-
-        if (body) {
-          firebaseToken = body.replace(/"/g, '');
-        }
-
-        let firebaseUser = firebaseToken
-          ? Observable.fromPromise(this.afAuth.auth.signInWithCustomToken(firebaseToken))
-          : Observable.of(null);
-
-        return Observable.combineLatest(Observable.of(firebaseToken), firebaseUser);
-      })
-      .map(values => {
-        return { firebaseToken: values[0], firebaseUser: values[1] };
-      });
   }
 
   @DebugLog
@@ -148,7 +124,8 @@ export class AuthService {
 
     return this.destroyRefreshToken()
       .then(() => this.storage.removeItem('refreshToken'))
-      .then(() => (this.afAuth ? this.afAuth.auth.signOut() : Promise.resolve()));
+      .then(() => Promise.resolve());
+    // .then(() => (this.afAuth ? this.afAuth.auth.signOut() : Promise.resolve()));
   }
 
   @DebugLog

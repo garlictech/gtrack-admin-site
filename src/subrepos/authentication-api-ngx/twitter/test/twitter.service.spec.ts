@@ -13,7 +13,7 @@ import { WindowModule, WindowService } from '../../window';
 import { TwitterService } from '../twitter.service';
 import { AuthModule } from '../../auth';
 import { Reducer as authReducer } from '../../store';
-import { AuthenticationApiConfig, AuthenticationApiModule } from '../../lib';
+import { AUTH_CONFIG_TOKEN, defaultAuthenticationApiConfig, AuthenticationApiModule } from '../../lib';
 import { ApiModule } from '../../api';
 import { OauthWindowMockService } from '../../oauth-window/test/oauth-window.service.mock';
 import { LocalStorage } from '../../storage/local-storage.service';
@@ -25,7 +25,7 @@ describe('TwitterService', () => {
   let apiUrl = 'http://api';
   let webserverUrl = 'http://webserver';
 
-  let config = new AuthenticationApiConfig();
+  let config = { ...defaultAuthenticationApiConfig };
   config.webserverUrl = webserverUrl;
   config.apiUrl = apiUrl;
   config.twitter = true;

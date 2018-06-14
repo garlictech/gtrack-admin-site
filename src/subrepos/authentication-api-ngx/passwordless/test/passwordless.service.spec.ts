@@ -10,7 +10,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { PasswordlessService } from '../passwordless.service';
 import { AuthModule } from '../../auth';
 import { Reducer as authReducer } from '../../store';
-import { AuthenticationApiConfig, AuthenticationApiModule, IMagiclinkConfig } from '../../lib';
+import {
+  defaultAuthenticationApiConfig,
+  AuthenticationApiModule,
+  IMagiclinkConfig,
+  AUTH_CONFIG_TOKEN
+} from '../../lib';
 
 import { ApiModule } from '../../api';
 import { LocalStorage } from '../../storage/local-storage.service';
@@ -27,7 +32,7 @@ describe('PasswordlessService', () => {
   let apiUrl = 'http://localhost/api';
   let webserverUrl = 'http://localhost/web';
 
-  let config = new AuthenticationApiConfig();
+  let config = { ...defaultAuthenticationApiConfig };
   config.webserverUrl = webserverUrl;
   config.apiUrl = apiUrl;
 
@@ -44,14 +49,15 @@ describe('PasswordlessService', () => {
       imports: [
         StoreModule.forRoot(authReducer),
         EffectsModule.forRoot([]),
-        AuthenticationApiModule.forRoot(config), ApiModule
+        AuthenticationApiModule.forRoot(config),
+        ApiModule
       ],
       providers: [
         BaseRequestOptions,
         MockBackend,
         PasswordlessService,
         {
-          provide: AuthenticationApiConfig,
+          provide: AUTH_CONFIG_TOKEN,
           useFactory: () => config
         },
         {

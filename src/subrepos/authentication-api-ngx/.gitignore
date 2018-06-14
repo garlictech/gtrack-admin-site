@@ -74,3 +74,4 @@ tokens.env
 secrets.tgz
 .vscode
 .setup.sh
+artifacts

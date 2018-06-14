@@ -5,7 +5,7 @@ import { Emitter } from '../../emitter';
 
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/elementAt';
-import 'rxjs/add/observable/interval'
+import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
@@ -172,10 +172,9 @@ describe('OauthWindow', () => {
     });
 
     // wait for OauthWindow to have the window istance
-    Observable
-      .interval(200)
+    Observable.interval(200)
       .map(() => oauthWindow.isOpened())
-      .filter(opened => (opened === true))
+      .filter(opened => opened === true)
       .take(1)
       .subscribe(() => {
         oauthWindow.changeUrl(url2);
@@ -318,10 +317,9 @@ describe('OauthWindow', () => {
       });
 
       // wait for OauthWindow to have the window istance
-      Observable
-        .interval(200)
+      Observable.interval(200)
         .map(() => oauthWindow.isOpened())
-        .filter(opened => (opened === true))
+        .filter(opened => opened === true)
         .take(1)
         .subscribe(() => oauthWindow.close());
     });

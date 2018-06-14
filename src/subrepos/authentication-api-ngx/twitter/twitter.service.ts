@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 import { AuthService } from '../auth';
 import { OauthWindowService } from '../oauth-window/oauth-window.service';
 import { WindowService } from '../window';
 import { IAuth } from '../store';
-import { AuthenticationApiConfig } from '../lib/config';
+import { AUTH_CONFIG_TOKEN, IAuthenticationApiConfig } from '../lib/config';
 import { DebugLog } from '../log';
 import { AuthProviderBase } from '../auth-provider-base';
 
@@ -17,7 +17,7 @@ export class TwitterService extends AuthProviderBase {
   constructor(
     http: Http,
     auth: AuthService,
-    private authConfig: AuthenticationApiConfig,
+    @Inject(AUTH_CONFIG_TOKEN) private authConfig: IAuthenticationApiConfig,
     oauthWindow: OauthWindowService,
     private windowService: WindowService
   ) {
@@ -108,9 +108,9 @@ export class TwitterService extends AuthProviderBase {
     let requestTokenProxy = `${this.authConfig.apiUrl}/auth/twitter/oauth/request_token`;
 
     // Avoid pop-up block
-    this
-      .oauthWindow
-      .open('', 'oauth_verifier').then(url => {
+    this.oauthWindow
+      .open('', 'oauth_verifier')
+      .then(url => {
         this.oauthCallback(url);
 
         return this.deferred.promise;

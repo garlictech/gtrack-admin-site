@@ -1,3 +1,5 @@
+import { InjectionToken } from '@angular/core';
+
 export interface IFacebookConfig {
   version: string;
   permissions: string;
@@ -20,35 +22,42 @@ export interface IVerifyConfig {
 }
 
 export interface IAuthenticationApiConfig {
-  apiUrl: string;
-  webserverUrl: string;
+  apiUrl?: string;
+  webserverUrl?: string;
   authGuardRedirectSlug: string;
   twitter: boolean;
   magiclink: IMagiclinkConfig;
   facebook: IFacebookConfig;
   google: IGoogleConfig;
   firebase?: any;
+
+  verify: {
+    redirectSlug: string;
+  };
 }
 
-export class AuthenticationApiConfig implements IAuthenticationApiConfig {
-  apiUrl: string;
-  webserverUrl: string;
-  authGuardRedirectSlug = '/denied';
-  twitter = true;
-  magiclink: IMagiclinkConfig = {
+export const defaultAuthenticationApiConfig: IAuthenticationApiConfig = {
+  authGuardRedirectSlug: '/denied',
+  twitter: true,
+
+  magiclink: {
     redirectSlug: '/magiclink'
-  };
-  verify: IVerifyConfig = {
+  },
+
+  verify: {
     redirectSlug: '/verify'
-  };
-  facebook: IFacebookConfig = {
+  },
+
+  facebook: {
     version: '2.8',
     permissions: 'email',
     appId: null
-  };
-  google: IGoogleConfig = {
+  },
+
+  google: {
     permissions: 'email',
     appId: null
-  };
-  firebase: any;
-}
+  }
+};
+
+export const AUTH_CONFIG_TOKEN = new InjectionToken<IAuthenticationApiConfig>('Auth config');

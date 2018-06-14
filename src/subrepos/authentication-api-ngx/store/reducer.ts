@@ -33,8 +33,8 @@ export const reducer: ActionReducer<IAuthenticationState> = (state = initialStat
     case ApiActions.LOGIN_SUCCESS:
       return { ...{ auth: action.auth }, loggingIn: false, failed: null, emailSent: false };
 
-      case ApiActions.USER_CANCELLED:
-      case ApiActions.FAILURE_HAPPENED:
+    case ApiActions.USER_CANCELLED:
+    case ApiActions.FAILURE_HAPPENED:
       return { ...state, ...{ failed: action.error }, loggingIn: false, emailSent: false };
 
     case ApiActions.LOGOUT_START:

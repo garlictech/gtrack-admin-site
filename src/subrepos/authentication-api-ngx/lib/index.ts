@@ -1,8 +1,8 @@
-import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
+import { NgModule, ModuleWithProviders, InjectionToken, APP_INITIALIZER } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { AuthenticationApiConfig } from './config';
+import { IAuthenticationApiConfig, AUTH_CONFIG_TOKEN } from './config';
 import { AuthService } from '../auth';
 
 import { IAuth, Effects } from '../store';
@@ -16,6 +16,19 @@ import { GoogleModule } from '../google';
 import { FacebookModule } from '../facebook';
 import { AuthModule } from '../auth';
 
+export function initializerFactory(auth: AuthService, store: Store<any>) {
+  return function() {
+    log.d('[AuthenticationApiModule:app init] Retrieving authentication info with stored token...');
+    auth.authenticated
+      .then((authData: IAuth) => {
+        store.dispatch(new Actions.LoginSuccess(authData));
+      })
+      .catch(err => {
+        log.i('Authentication lib init: not authenticated');
+      });
+  };
+}
+
 @NgModule({
   imports: [
     AuthModule,
@@ -25,30 +38,17 @@ import { AuthModule } from '../auth';
     PasswordlessModule,
     EffectsModule.forFeature([Effects])
   ],
-  providers: [Effects],
   exports: [PasswordlessSuccessComponent]
 })
 export class AuthenticationApiModule {
-  static forRoot(config: AuthenticationApiConfig): ModuleWithProviders {
+  static forRoot(config: IAuthenticationApiConfig): ModuleWithProviders {
     return {
       ngModule: AuthenticationApiModule,
       providers: [
-        {
-          provide: AuthenticationApiConfig,
-          useValue: config
-        },
+        { provide: AUTH_CONFIG_TOKEN, useValue: config },
         {
           provide: APP_INITIALIZER,
-          useFactory: (auth: AuthService, store: Store<any>) => () => {
-            log.d('[AuthenticationApiModule:app init] Retrieving authentication info with stored token...');
-            auth.authenticated
-              .then((authData: IAuth) => {
-                store.dispatch(new Actions.LoginSuccess(authData));
-              })
-              .catch(err => {
-                log.i('Authentication lib init: not authenticated');
-              });
-          },
+          useFactory: initializerFactory,
           deps: [AuthService, Store],
           multi: true
         }
@@ -58,14 +58,3 @@ export class AuthenticationApiModule {
 }
 
 export * from './config';
-
-export interface User {
-  id: string;
-  createdAt: Date;
-  email: string;
-  facebookId: string;
-  lastLogin: Date;
-  modifiedAt: Date;
-  roles: [string];
-  verified: boolean;
-}

@@ -1,5 +1,5 @@
 import { Http } from '@angular/http';
-import { Store, StoreModule }  from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { Component, Injector } from '@angular/core';
 import { TestBed, inject, async } from '@angular/core/testing';
 import { BaseRequestOptions, ResponseOptions, XHRBackend, Response, RequestMethod } from '@angular/http';

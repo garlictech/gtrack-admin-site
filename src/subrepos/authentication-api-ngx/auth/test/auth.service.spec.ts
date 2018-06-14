@@ -4,18 +4,14 @@ import { TestBed, inject, async } from '@angular/core/testing';
 import { BaseRequestOptions, ResponseOptions, XHRBackend, Response, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AngularFireModule, FirebaseAppConfig } from 'angularfire2';
-import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
 import { Subject } from 'rxjs/Subject';
 import { StoreModule, Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import * as firebase from 'firebase';
-
 import { ApiModule } from '../../api';
 import { ApiService } from '../../api/api.service';
 import { AuthService } from '../auth.service';
-import { AuthenticationApiConfig, AuthenticationApiModule } from '../../lib';
+import { defaultAuthenticationApiConfig, AUTH_CONFIG_TOKEN, AuthenticationApiModule } from '../../lib';
 import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
 import { Reducer as authReducer, IAuthenticationState, domain } from '../../store';
@@ -40,22 +36,10 @@ describe('AuthService', () => {
     provider: 'facebook'
   };
 
-  let mockFirebaseUser: firebase.User = <firebase.User>{
-    uid: '1'
-  };
-
-  let firebaseConfig = <FirebaseAppConfig>{
-    apiKey: 'testApiKey',
-    authDomain: 'test-app.firebaseapp.com',
-    databaseURL: 'https://test-app.firebaseio.com',
-    storageBucket: 'test-app.appspot.com',
-    messagingSenderId: '123123123123'
-  };
-
   let apiUrl = 'http://localhost/api';
   let webserverUrl = 'http://localhost/web';
 
-  let authConfig = new AuthenticationApiConfig();
+  let authConfig = { ...defaultAuthenticationApiConfig };
 
   authConfig.apiUrl = apiUrl;
   authConfig.webserverUrl = webserverUrl;
@@ -70,8 +54,6 @@ describe('AuthService', () => {
       imports: [
         StoreModule.forRoot(reducer),
         EffectsModule.forRoot([]),
-        AngularFireModule.initializeApp(firebaseConfig),
-        AngularFireAuthModule,
         AuthenticationApiModule.forRoot(authConfig),
         ApiModule
       ],
@@ -80,7 +62,7 @@ describe('AuthService', () => {
         BaseRequestOptions,
         MockBackend,
         {
-          provide: AuthenticationApiConfig,
+          provide: AUTH_CONFIG_TOKEN,
           useValue: authConfig
         },
         {
@@ -98,7 +80,6 @@ describe('AuthService', () => {
     });
 
     let backend = TestBed.get(MockBackend);
-    let af: AngularFireAuth = TestBed.get(AngularFireAuth);
 
     let storage: MockStorageService = TestBed.get(LocalStorage);
     let auth: AuthService = TestBed.get(AuthService);
@@ -107,12 +88,9 @@ describe('AuthService', () => {
     storage.clear();
     auth.logout();
 
-    firebaseLoginSpy = spyOn(af.auth, 'signInWithCustomToken').and.returnValue(Promise.resolve(mockFirebaseUser));
-    firebaseLogoutSpy = spyOn(af.auth, 'signOut').and.returnValue(Promise.resolve());
-
     backend.connections.subscribe((connection: MockConnection) => {
       let header = connection.request.headers.get('Authorization');
-      let token  = '';
+      let token = '';
 
       if (header !== null) {
         token = header.replace(/JWT /, '');
@@ -216,64 +194,6 @@ describe('AuthService', () => {
         done();
       })
       .catch(err => done.fail(err));
-  });
-
-  it('should get firebase user', done => {
-    let authService: AuthService = TestBed.get(AuthService);
-    let store: Store<any> = TestBed.get(Store);
-
-    authService
-      .init('token')
-      .then(auth => {
-        let firebaseUser = auth.firebaseUser;
-
-        expect(firebaseLoginSpy.calls.count()).toBe(1);
-        expect(firebaseLoginSpy.calls.first().args[0]).toBe('firebasetoken');
-        expect(firebaseUser).toBeDefined();
-        if (typeof firebaseUser !== 'undefined') {
-          expect(firebaseUser.uid).toEqual(mockFirebaseUser.uid);
-        }
-
-        done();
-      })
-      .catch(err => done.fail(err));
-  });
-
-  it("should init when API's firebase URL is disabled", done => {
-    let authService: AuthService = TestBed.get(AuthService);
-    let store: Store<any> = TestBed.get(Store);
-
-    authService
-      .init('firebase-missing-token')
-      .then(auth => {
-        expect(firebaseLoginSpy.calls.count()).toBe(0);
-        expect(auth.firebaseUser).not.toBeDefined();
-        expect(auth.firebaseToken).toBeNull();
-        expect(auth.user).not.toBeNull();
-
-        if (auth.user !== null) {
-          expect(auth.user.id).toEqual(user.id);
-        }
-
-        done();
-      })
-      .catch(err => done.fail(err));
-  });
-
-  it("should fail when API's firebase URL responds with not 404 errors", done => {
-    let auth: AuthService = TestBed.get(AuthService);
-
-    auth
-      .init('firebase-error-token')
-      .then(() => {
-        done.fail(new Error('Not failed'));
-      })
-      .catch((err: Error | Response) => {
-        expect(err instanceof Response).toBeTruthy();
-        expect((<Response>err).status).toBe(500);
-
-        done();
-      });
   });
 
   it('should get auth state after init', done => {

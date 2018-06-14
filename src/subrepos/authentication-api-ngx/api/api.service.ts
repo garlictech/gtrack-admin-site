@@ -7,11 +7,7 @@ import * as Actions from '../store/actions';
 
 @Injectable()
 export class ApiService {
-  constructor(
-    private _http: Http,
-    private _localStorage: LocalStorage,
-    private _store: Store<any>
-  ) {}
+  constructor(private _http: Http, private _localStorage: LocalStorage, private _store: Store<any>) {}
 
   get(url: string): Observable<Response> {
     let headers = this.getAuthorizationHeaders();

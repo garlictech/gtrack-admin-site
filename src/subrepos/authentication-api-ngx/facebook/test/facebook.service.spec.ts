@@ -13,7 +13,7 @@ import { WindowModule, WindowService } from '../../window';
 import { FacebookService } from '../facebook.service';
 import { AuthModule } from '../../auth';
 import { Reducer as authReducer } from '../../store';
-import { AuthenticationApiConfig, AuthenticationApiModule, IFacebookConfig } from '../../lib';
+import { defaultAuthenticationApiConfig, AuthenticationApiModule, IFacebookConfig, AUTH_CONFIG_TOKEN } from '../../lib';
 import { ApiModule } from '../../api';
 import { OauthWindowMockService } from '../../oauth-window/test/oauth-window.service.mock';
 import { LocalStorage } from '../../storage/local-storage.service';
@@ -31,7 +31,7 @@ describe('Facebook', () => {
     permissions: 'profile'
   };
 
-  let config = new AuthenticationApiConfig();
+  let config = { ...defaultAuthenticationApiConfig };
   config.webserverUrl = webserverUrl;
   config.apiUrl = apiUrl;
 
@@ -59,7 +59,7 @@ describe('Facebook', () => {
         },
         FacebookService,
         {
-          provide: AuthenticationApiConfig,
+          provide: AUTH_CONFIG_TOKEN,
           useFactory: () => config
         },
         {
