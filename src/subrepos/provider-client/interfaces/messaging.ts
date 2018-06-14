@@ -5,7 +5,9 @@ export enum EMessageContentType {
   text = 'text',
   url = 'url',
   image = 'image',
-  translateable = 'translateable'
+  translateable = 'translateable',
+  any = 'any',
+  title = 'title'
 }
 
 export interface IMessageContentType {
@@ -22,20 +24,18 @@ export enum EMessageState {
 export enum EMessagePrivacy {
   private = 'private',
   public = 'public',
-  followers = 'followers'
-}
-
-export interface IMessageContentType {
-  type: EMessageContentType;
-  content: any;
+  followers = 'followers',
+  featured = 'featured'
 }
 
 export interface IMessage {
   userId: string;
   message: IMessageContentType[];
   context: string;
+  likes?: Array<any>;
   state?: EMessageState;
   privacy?: EMessagePrivacy;
+  shareCount?: number;
 }
 
 export interface IMessageSent extends IMessage, IProviderInput {}
@@ -47,6 +47,7 @@ export interface IMessageStored extends IMessageSent {
     userId: string;
     role: EAuthRoles;
   }[];
+  isModerated?: boolean;
 }
 
 export interface IMessageStateChange extends IProviderInput {
@@ -61,3 +62,29 @@ export interface IMessageLike {
 }
 
 export interface IMessageLikeInput extends IMessageLike, IProviderInput {}
+
+export interface IMessageThread {
+  partnerId: string;
+  partnerRole: EAuthRoles;
+  lastMessageContent: any;
+  lastMessageTimestamp: number;
+  lastMessageState?: EMessageState;
+  lastMessageRole: EAuthRoles;
+  lastMessageUserId: string;
+}
+
+export interface IMessageDelete extends IProviderInput {
+  messageId: string;
+  context: string;
+}
+
+export interface IMessageFeatured extends IProviderInput {
+  messageId: string;
+  isFeatured: boolean;
+}
+
+export interface IMessageModerate extends IProviderInput {
+  messageId: string;
+  isBanned: boolean;
+  reason?: string;
+}
