@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/garlictech/forms-ngx.git
+	branch = master
+	commit = 44dadca65bcac53182f04278f101580afd247370
+	parent = e7b2b48f35aa7a8876e37eff40a967b5b90a3bad
+	method = merge
+	cmdver = 0.3.1
