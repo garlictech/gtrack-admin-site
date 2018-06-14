@@ -3,18 +3,13 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { State, hikeEditImageActions } from '../index';
-import { HikeEditPoiSelectors } from 'app/store/selectors/'
 import { MapillaryService } from 'app/shared/services';
-
-import * as _ from 'lodash';
-import * as uuid from 'uuid/v1';
 import { IBackgroundImageDataStored } from 'app/shared/interfaces/mapillary-image.interface';
 
 @Injectable()
 export class HikeEditImageEffects {
   constructor(
     private _actions$: Actions,
-    private _store: Store<State>,
     private _mapillaryService: MapillaryService
   ) {}
 

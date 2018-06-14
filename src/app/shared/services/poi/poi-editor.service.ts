@@ -29,7 +29,6 @@ import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'ap
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
-import * as uuid from 'uuid/v1';
 import * as turf from '@turf/turf';
 
 @Injectable()
@@ -46,11 +45,8 @@ export class PoiEditorService {
     private _geometryService: GeometryService,
     private _routePlannerService: RoutePlannerService,
     private _elevationService: ElevationService,
-    private _poiService: PoiService,
     private _iconService: IconService,
-    private _adminMapService: AdminMapService,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,

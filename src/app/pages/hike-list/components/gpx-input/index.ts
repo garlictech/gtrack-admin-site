@@ -1,6 +1,6 @@
 // Core
 import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from 'app/store';
 import { RoutePlannerService, AdminMapService, WaypointMarkerService } from 'app/shared/services/admin-map';
@@ -9,11 +9,8 @@ import { HikeProgramService } from 'app/shared/services';
 import { RouteService } from 'subrepos/gtrack-common-ngx';
 import { IRoute } from 'subrepos/provider-client';
 
-import * as L from 'leaflet';
 import * as toGeoJSON from '@mapbox/togeojson';
-import * as turf from '@turf/turf';
 import * as _ from 'lodash';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'gt-gpx-input',
@@ -25,13 +22,8 @@ export class GpxInputComponent {
   public gpxRoute: IRoute;
 
   constructor(
-    private _store: Store<State>,
     private _router: Router,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeProgramService: HikeProgramService,
-    private _routePlannerService: RoutePlannerService,
-    private _waypointMarkerService: WaypointMarkerService,
-    private _adminMapService: AdminMapService,
     private _routeService: RouteService,
   ) {}
 

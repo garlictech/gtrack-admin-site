@@ -6,7 +6,6 @@ import { HikeProgramService, HikeProgram, PoiSelectors, PoiService } from 'subre
 import { State, editedHikeProgramActions, editedGTrackPoiActions } from 'app/store';
 import { IHikeProgramStored, IHikeProgram, IPoiStored, IPoi } from 'subrepos/provider-client';
 import { log } from 'app/log';
-import { IGTrackPoi } from 'app/shared/interfaces';
 
 import * as _ from 'lodash';
 import { EditedGTrackPoiSelectors } from '../selectors';
@@ -17,7 +16,6 @@ export class EditedGTrackPoiEffects {
     private _actions$: Actions,
     private _poiService: PoiService,
     private _editedGTrackPoiSelectors: EditedGTrackPoiSelectors,
-    private _poiSelectors: PoiSelectors,
     private _store: Store<State>
   ) {}
 

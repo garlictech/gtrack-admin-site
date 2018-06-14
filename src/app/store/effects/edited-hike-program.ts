@@ -7,7 +7,6 @@ import { State, editedHikeProgramActions } from 'app/store';
 import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
 import { log } from 'app/log';
 import { EditedHikeProgramSelectors } from '../selectors/edited-hike-program';
-import { IGTrackPoi } from 'app/shared/interfaces';
 
 import * as _ from 'lodash';
 
@@ -17,7 +16,6 @@ export class EditedHikeProgramEffects {
     private _actions$: Actions,
     private _hikeProgramService: HikeProgramService,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _poiSelectors: PoiSelectors,
     private _store: Store<State>
   ) {}
 
