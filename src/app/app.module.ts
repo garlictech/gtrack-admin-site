@@ -80,7 +80,7 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { RoutePlannerService, RoutingControlService } from './shared/services/admin-map';
 import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
 
-console.log('ENVIRONMENT: ', process.env, environment);
+// console.log('ENVIRONMENT: ', process.env, environment);
 
 if (process.env.NODE_ENV !== 'development') {
   Raven.config(environment.raven).install();
