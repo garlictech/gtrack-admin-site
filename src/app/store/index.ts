@@ -1,16 +1,10 @@
 import { storeLogger } from 'ngrx-store-logger';
-import { StoreModule } from '@ngrx/store';
 import { routerReducer } from '@ngrx/router-store';
 import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/models';
 import { storeFreeze } from 'ngrx-store-freeze';
 
-import { Reducer as authReducer } from 'subrepos/authentication-api-ngx';
-import { Reducer as deepstreamReducer, IDeepstreamState } from 'subrepos/deepstream-ngx';
-import { CommonState, commonReducers, IAuthenticationState } from 'subrepos/gtrack-common-ngx';
-import { ILocalizationState, Reducer as LanguageReducer } from 'app/language';
-
-import { environment } from 'environments/environment';
-import { IEditedHikeProgramState } from './state/hike-program';
+import { commonReducers } from 'subrepos/gtrack-common-ngx';
+import { Reducer as LanguageReducer } from 'app/language';
 
 /////////////
 // Actions
@@ -87,6 +81,8 @@ import { editedGTrackPoiReducer } from './reducer/edited-gtrack-poi';
 //////////////
 
 import { State } from './state';
+import { LOGOUT_SUCCESS } from 'subrepos/authentication-api-ngx/store/actions';
+import { InjectionToken } from '@angular/core';
 
 // Same keys as in the state!!!
 const reducers: ActionReducerMap<State> = {
@@ -101,15 +97,29 @@ const reducers: ActionReducerMap<State> = {
   editedGtrackPoi: editedGTrackPoiReducer
 };
 
-function logger(reducer: ActionReducer<State>): any {
-  return storeLogger()(reducer);
+// Clear the store at logout
+export function logout(_reducer) {
+  return function(state, action) {
+    return _reducer(action.type === LOGOUT_SUCCESS ? undefined : state, action);
+  };
 }
-const metaReducers: MetaReducer<State>[] = [];
 
-if (!environment.production || environment.staging) {
-  metaReducers.push(logger);
+export function logger(_reducer: ActionReducer<State>): any {
+  return storeLogger()(_reducer);
+}
+
+let metaReducers = [logger, logout];
+
+if (process.env.ENV !== 'production') {
   metaReducers.push(storeFreeze);
 }
 
-export const store = StoreModule.forRoot(reducers, { metaReducers });
+export { metaReducers };
+
+export const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<State>>('Registered Reducers');
+
+export function getReducers() {
+  return reducers;
+}
+
 export * from './state';

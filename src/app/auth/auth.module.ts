@@ -6,9 +6,7 @@ import { DeepstreamActions } from 'subrepos/gtrack-common-ngx/app/deepstream';
 import { Store } from '@ngrx/store';
 import { State } from '../store';
 
-const COMPONENTS = [
-  LoginComponent
-];
+const COMPONENTS = [LoginComponent];
 
 @NgModule({
   imports: [CommonModule],
@@ -17,10 +15,7 @@ const COMPONENTS = [
   entryComponents: [...COMPONENTS]
 })
 export class AuthModule {
-  constructor(
-    private _authSelectors: AuthenticationSelectors.Selectors,
-    private _store: Store<State>
-  ) {
+  constructor(private _authSelectors: AuthenticationSelectors.Selectors, private _store: Store<State>) {
     this._init();
   }
 

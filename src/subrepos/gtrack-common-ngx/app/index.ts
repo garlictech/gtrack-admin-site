@@ -9,4 +9,4 @@ export * from './router';
 export * from './store';
 export * from './geosearch';
 export * from './shared/services/background-geolocation-service';
-export * from './search-filters';
+export * from './module';

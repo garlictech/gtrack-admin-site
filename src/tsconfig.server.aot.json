@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.server.json",
+    "angularCompilerOptions": {
+        "genDir": "ngfactory",
+        "entryModule": "./app/server.app.module#ServerAppModule"
+    },
+    "exclude": [
+        "node_modules",
+        "compiled",
+        "artifacts",
+        "e2e/**/*.ts",
+        "test-config/**/*.ts",
+        "src/**/test/*",
+        "src/**/*.spec.ts",
+        "src/server.ts"
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "extends": "../tsconfig.webpack.json",
+    "angularCompilerOptions": {
+        "entryModule": "./app/browser.app.module#BrowserAppModule"
+    },
+    "compilerOptions": {
+        "types": ["node", "jasmine", "spin.js", "googlemaps"]
+    }
+}
