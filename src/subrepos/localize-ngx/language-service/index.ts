@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { LocalizeConfig } from '../lib/config';
+import { ILocalizeConfig } from '../lib/config';
 import { Languages, ILanguageDesc } from '../languages';
 import { log, DebugLog } from '../log';
 
@@ -9,7 +9,7 @@ import { log, DebugLog } from '../log';
 export class LanguageService {
   private _supportedLanguages: any[];
 
-  constructor(private _translate: TranslateService, private _config: LocalizeConfig) {
+  constructor(private _translate: TranslateService, @Inject('LOCALIZE_CONFIG') private _config: ILocalizeConfig) {
     this._init();
   }
 

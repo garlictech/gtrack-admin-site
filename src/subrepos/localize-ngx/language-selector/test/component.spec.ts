@@ -12,30 +12,32 @@ import { LanguageService } from '../../language-service';
 describe('LanguageSelectorComponent', () => {
   let component: LanguageSelectorComponent;
   let fixture: ComponentFixture<LanguageSelectorComponent>;
-  let language = [{ id: 'hu_HU', name: 'Magyar' }, { id: 'en_US', name: 'English' }];
+  let language = [{ id: 'en_US', name: 'English' }];
 
   class MockLanguageService {
     getSupportedLanguages() {
-      return 'hu_HU';
+      return 'en_US';
     }
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [LanguageSelectorComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: (http: HttpClient) => new TranslateHttpLoader(http, '/assets/i18n', '.json'),
-            deps: [HttpClient]
-          }
-        })
-      ],
-      providers: [{ provide: LanguageService, useClass: MockLanguageService }]
-    }).compileComponents();
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [LanguageSelectorComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        imports: [
+          TranslateModule.forRoot({
+            loader: {
+              provide: TranslateLoader,
+              useFactory: (http: HttpClient) => new TranslateHttpLoader(http, '/assets/i18n', '.json'),
+              deps: [HttpClient]
+            }
+          })
+        ],
+        providers: [{ provide: LanguageService, useClass: MockLanguageService }]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LanguageSelectorComponent);
