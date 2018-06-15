@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { IDynamicComponentModalConfig } from 'subrepos/gtrack-common-ngx';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
@@ -9,12 +8,12 @@ import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 })
 export class HikeEditExternalPoiInfoComponent implements OnInit {
   public static componentName = 'HikeEditExternalPoiInfoComponent';
-  public poi: IGooglePoi | IOsmPoi | IWikipediaPoi;
+  public poi: any;
   public modalConfig: IDynamicComponentModalConfig;
 
   ngOnInit() {
     if (this.modalConfig && this.modalConfig.component.data) {
       this.poi = this.modalConfig.component.data.poi;
     }
- }
+  }
 }
