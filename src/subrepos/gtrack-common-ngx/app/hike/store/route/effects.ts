@@ -6,7 +6,6 @@ import 'rxjs/add/operator/mergeMap';
 
 import { RouteService, Route } from '../../services/route';
 import * as LocalActions from './actions';
-import * as PoiActions from '../poi/actions';
 
 @Injectable()
 export class RouteEffects {

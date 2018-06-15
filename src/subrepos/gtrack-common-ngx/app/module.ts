@@ -4,6 +4,29 @@ import { JsonpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 
+import { SearchFiltersModule } from './search-filters';
+
+import { DeepstreamModule } from './deepstream';
+import { AuthenticationModule } from './authentication';
+import { DynamicModalModule } from './dynamic-modal';
+import { SharedModule, defaultSharedConfig } from './shared';
+import { MapModule, MapComponentsModule } from './map';
+import {
+  IHikeModuleConfig,
+  HikeComponentsModule,
+  HikeEffects,
+  HikeModule,
+  RouteEffects,
+  PoiEffects,
+  PoiSelectors
+} from './hike';
+import { RouterModule } from './router';
+import { GeoSearchModule, GeoSearchEffects } from './geosearch';
+import {
+  BackgroundGeolocationModule,
+  BackgroundGeolocationEffects
+} from './shared/services/background-geolocation-service';
+
 const sharedConfig = { ...defaultSharedConfig };
 
 const hikeModuleConfig: IHikeModuleConfig = {
@@ -14,32 +37,14 @@ const hikeModuleConfig: IHikeModuleConfig = {
   }
 };
 
-import {
-  SharedModule,
-  DeepstreamModule,
-  MapModule,
-  MapComponentsModule,
-  HikeModule,
-  RouterModule,
-  IHikeModuleConfig,
-  HikeComponentsModule,
-  HikeEffects,
-  PoiEffects,
-  RouteEffects,
-  DynamicModalModule,
-  GeoSearchModule,
-  GeoSearchEffects,
-  BackgroundGeolocationModule,
-  BackgroundGeolocationEffects,
-  defaultSharedConfig,
-  PoiSelectors
-} from './';
-
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     JsonpModule,
+    SearchFiltersModule.forRoot({
+      storeDomain: 'searchFilters'
+    }),
     SharedModule.forRoot(sharedConfig),
     MapModule,
     MapComponentsModule,
@@ -55,7 +60,8 @@ import {
     }),
     DeepstreamModule.forRoot(),
     HikeModule.forRoot(hikeModuleConfig),
-    BackgroundGeolocationModule.forRoot()
+    BackgroundGeolocationModule.forRoot(),
+    AuthenticationModule
   ],
   declarations: [],
   providers: [PoiSelectors],
