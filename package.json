@@ -37,6 +37,7 @@
         "build:all": "docker/build-dev-all.sh $@",
         "build:prod": "docker/build-prod.sh",
         "build:prod:aot": "docker/build-prod.sh aot",
+        "build:debug:aot": "docker/build-prod.sh debug:aot",
         "build:universal": "docker/build-universal.sh",
         "build:universal:aot": "docker/build-universal.sh aot",
         "npm": "docker/npm.sh",
@@ -162,7 +163,7 @@
         "typescript": "^2.9.2"
     },
     "config": {
-        "dockerWorkflowVersion": "v6.0.8",
+        "dockerWorkflowVersion": "v6.0.9",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }
