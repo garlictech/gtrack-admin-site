@@ -44,7 +44,6 @@ export class FacebookService extends AuthProviderBase {
   @DebugLog
   private _init() {
     this.config = this.authConfig.facebook;
-
     let window: any = this.windowService.nativeWindow;
     this.facebookApiUrl = `https://www.facebook.com/v${this.config.version}`;
 

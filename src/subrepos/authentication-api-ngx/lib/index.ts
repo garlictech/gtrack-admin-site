@@ -41,11 +41,11 @@ export function initializerFactory(auth: AuthService, store: Store<any>) {
   exports: [PasswordlessSuccessComponent]
 })
 export class AuthenticationApiModule {
-  static forRoot(config: IAuthenticationApiConfig): ModuleWithProviders {
+  static forRoot(configFactory: any): ModuleWithProviders {
     return {
       ngModule: AuthenticationApiModule,
       providers: [
-        { provide: AUTH_CONFIG_TOKEN, useValue: config },
+        { provide: AUTH_CONFIG_TOKEN, useFactory: configFactory },
         {
           provide: APP_INITIALIZER,
           useFactory: initializerFactory,
