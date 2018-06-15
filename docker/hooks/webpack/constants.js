@@ -21,7 +21,6 @@ exports.myConstants = {
         "tether",
         "angular2-file-drop",
         "enum-values",
-        "google-maps",
         "leaflet",
         "leaflet-spin",
         "leaflet-usermarker",
@@ -29,10 +28,11 @@ exports.myConstants = {
         "moment",
         "ng2-nouislider",
         "nouislider",
-        "perfect-scrollbar",
         "popper.js",
         "spin.js",
         "webfontloader",
-        "raven-js"
+        "raven-js",
+        "google-libphonenumber",
+        "password-validator"
     ]
 };

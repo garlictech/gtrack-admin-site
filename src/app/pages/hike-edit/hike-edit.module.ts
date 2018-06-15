@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormModule } from 'subrepos/forms-ngx';
+import { FormModule } from 'app/forms';
 // Pipes
 import { ObjectToArrayPipe } from 'app/shared/pipes';
 import { TrustedHtmlPipe } from 'app/shared/pipes';
@@ -81,22 +81,9 @@ const COMPONENTS = [
     SharedComponentsModule,
     LanguageModule
   ],
-  exports: [
-    ...COMPONENTS
-  ],
-  declarations: [
-    AdminLeafletComponent,
-    ObjectToArrayPipe,
-    TrustedHtmlPipe,
-    ...COMPONENTS
-  ],
-  entryComponents: [
-    ...COMPONENTS
-  ],
-  providers: [
-    DynamicModalService,
-    GeospatialService,
-    PoiMergeService
-  ]
+  exports: [...COMPONENTS],
+  declarations: [AdminLeafletComponent, ObjectToArrayPipe, TrustedHtmlPipe, ...COMPONENTS],
+  entryComponents: [...COMPONENTS],
+  providers: [DynamicModalService, GeospatialService, PoiMergeService]
 })
 export class HikeEditModule {}

@@ -9,8 +9,8 @@ import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/s
 import { IHikeEditRoutePlannerState } from 'app/store/state';
 
 import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
-import { IFormDescriptor, SliderField, TextboxField } from 'subrepos/forms-ngx';
 import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
+import { IFormDescriptor, SliderField, TextboxField } from 'app/forms';
 
 import * as _ from 'lodash';
 
@@ -47,21 +47,20 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
       .select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
       .takeUntil(this._destroy$);
 
-    this.hikeProgramData$ = this._store
-      .select(this._editedHikeProgramSelectors.getData)
-      .takeUntil(this._destroy$);
+    this.hikeProgramData$ = this._store.select(this._editedHikeProgramSelectors.getData).takeUntil(this._destroy$);
 
-    this.remoteError$ = this._store
-      .select(this._editedHikeProgramSelectors.getError)
-      .takeUntil(this._destroy$);
+    this.remoteError$ = this._store.select(this._editedHikeProgramSelectors.getError).takeUntil(this._destroy$);
 
-    this.isRoundTrip$
-      .takeUntil(this._destroy$)
-      .subscribe((isRoundTrip: boolean) => {
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({
-          isRoundTrip: isRoundTrip
-        }, false));
-      });
+    this.isRoundTrip$.takeUntil(this._destroy$).subscribe((isRoundTrip: boolean) => {
+      this._store.dispatch(
+        new editedHikeProgramActions.AddHikeProgramDetails(
+          {
+            isRoundTrip: isRoundTrip
+          },
+          false
+        )
+      );
+    });
   }
 
   ngAfterViewInit() {

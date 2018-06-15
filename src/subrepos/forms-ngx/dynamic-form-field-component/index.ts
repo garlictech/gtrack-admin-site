@@ -10,13 +10,7 @@ import { Field, SelectField, ESelectTypes } from '../field';
 
 @Component({
   selector: 'app-form-field',
-<<<<<<< HEAD
-  templateUrl: './ui.pug',
-  styleUrls: ['./style.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
-=======
   template: ''
->>>>>>> refs/subrepo/src/subrepos/forms-ngx/fetch
 })
 export class DynamicFormFieldComponent implements OnInit {
   @Input() form: FormGroup;

@@ -6,6 +6,8 @@ export class Environment implements IEnvironment {
   webappServer = 'http://localhost:8081';
   deepstream = 'ws://localhost:6020/deepstream';
 
+  lambdaEndpoint = 'https://ii1rrhpq2a.execute-api.us-east-1.amazonaws.com/latest';
+
   authentication = {
     server: 'https://lz679q1jla.execute-api.us-east-1.amazonaws.com/latest',
     google: { appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com' }
@@ -13,9 +15,14 @@ export class Environment implements IEnvironment {
 
   raven = 'no-raven-in-dev';
 
-  graphhopper = { apiKey: '111444bf-7c37-499b-b87c-b324d7406715'};
+  graphhopper = { apiKey: '111444bf-7c37-499b-b87c-b324d7406715' };
 
   mapillary = { clientID: 'bWxkcHdGR0dyRVJPNU1wRklzVHZoZzo5YmE0YzlmNzQ1NmY0ZWFh' };
 
   googlePhotoLimit = 2;
+
+  awsConfig = {
+    s3: 'to-be-configured',
+    policyGenerator: this.lambdaEndpoint + '/generate-s3-policy'
+  };
 }

@@ -9,11 +9,10 @@ services:
         NPM_TOKEN: $NPM_TOKEN_Garlictech
     volumes:
       - "../src:/app/src"
-      - "../dist:/app/dist"
+      - "../artifacts:/app/artifacts"
       - "./hooks:/app/hooks"
-      - "../reports:/app/reports"
-      - "../docs:/app/docs"
+      - "../angular.json:/app/angular.json"
     environment:
       - NODE_ENV
       - CI
-    command: "npm start"
+    command: "npm run webdev:hmr"

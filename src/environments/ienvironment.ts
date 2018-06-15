@@ -16,4 +16,11 @@ export interface IEnvironment {
   };
 
   raven: string;
+
+  awsConfig: {
+    s3: string;
+    policyGenerator: string;
+  };
+
+  lambdaEndpoint: string;
 }

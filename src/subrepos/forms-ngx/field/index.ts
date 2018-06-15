@@ -15,15 +15,13 @@ export * from './switch';
 export * from './checkbox';
 export * from './html';
 export * from './text';
-<<<<<<< HEAD
-export * from './slider';
-=======
 export * from './password';
 export * from './template';
 export * from './phone-number';
 export * from './emoji';
-export * from './file-upload';
->>>>>>> refs/subrepo/src/subrepos/forms-ngx/fetch
+export * from './slider';
+export * from './file';
+// export * from './file-s3';
 
 export interface IResetFv {
   (formDescriptor: IFormDescriptor): IFormInstance;

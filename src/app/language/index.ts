@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LocalizeModule, LocalizeConfig, LanguageService } from 'subrepos/localize-ngx';
+import { LocalizeModule, defaultLocalizeConfig, LanguageService } from 'subrepos/localize-ngx';
 
-const languageConfig = new LocalizeConfig();
-languageConfig.defaultLanguage = 'en_US';
-languageConfig.supportedLanguages = ['en_US'];
+const languageConfig = {
+  ...defaultLocalizeConfig,
+  defaultLanguage: 'en_US',
+  supportedLanguages: ['en_US']
+};
 
 @NgModule({
   imports: [CommonModule, LocalizeModule.forRoot(languageConfig)],

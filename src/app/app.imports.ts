@@ -4,11 +4,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ToasterModule } from 'angular2-toaster';
 import { EffectsModule } from '@ngrx/effects';
 
-import { GtrackCommonModule, defaultSharedConfig } from 'subrepos/gtrack-common-ngx';
+import { GtrackCommonModule, defaultSharedConfig, DynamicModalModule } from 'subrepos/gtrack-common-ngx';
 import { REDUCER_TOKEN, metaReducers } from './store';
 import { LanguageModule } from './language';
 import { CoreLayoutModule } from './core';
 import { AuthModule } from './auth';
+import { FormModule } from './forms';
 import { HikeListModule } from './pages/hike-list';
 import { HikeEditModule } from './pages/hike-edit';
 import {
@@ -42,5 +43,7 @@ export const APP_IMPORTS = [
     EditedGTrackPoiEffects,
     HikeEditImageEffects
   ]),
-  ToasterModule.forRoot()
+  ToasterModule.forRoot(),
+  FormModule,
+  DynamicModalModule
 ];

@@ -1,0 +1,6 @@
+{
+    "extends": "../tsconfig.test.json",
+    "compilerOptions": {
+        "types": ["jasmine", "node", "uglify-js", "webpack", "spin.js", "googlemaps"]
+    }
+}

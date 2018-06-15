@@ -1,4 +1,12 @@
-import { Component, Input, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -6,7 +14,7 @@ import * as _ from 'lodash';
 import { FormGroup } from '@angular/forms';
 
 import { ITextualDescription, ILocalizedItem } from 'subrepos/provider-client';
-import { TextboxField, TextareaField, EmojiField, IFormDescriptor } from 'subrepos/forms-ngx';
+import { TextboxField, TextareaField, EmojiField, IFormDescriptor } from 'app/forms';
 
 import { State } from 'app/store';
 import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
@@ -32,10 +40,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
 
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(
-    private _store: Store<State>,
-    private _changeDetectorRef: ChangeDetectorRef
-  ) {}
+  constructor(private _store: Store<State>, private _changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.languageKeys$ = this._store
@@ -47,15 +52,11 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   ngAfterViewInit() {
     this._changeDetectorRef.detectChanges();
 
-    this.selectableLanguages$ = this.languageKeys$
-      .takeUntil(this._destroy$)
-      .map(usedKeys =>
-        DESCRIPTION_LANGUAGES
-          .filter(lang => usedKeys.indexOf(lang.locale) === -1)
-          .map(lang => {
-            return { label: lang.name, value: lang.locale };
-          })
-      );
+    this.selectableLanguages$ = this.languageKeys$.takeUntil(this._destroy$).map(usedKeys =>
+      DESCRIPTION_LANGUAGES.filter(lang => usedKeys.indexOf(lang.locale) === -1).map(lang => {
+        return { label: lang.name, value: lang.locale };
+      })
+    );
   }
 
   ngOnDestroy() {

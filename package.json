@@ -80,6 +80,7 @@
         "@angular/platform-browser": "^5.2.11",
         "@angular/platform-browser-dynamic": "^5.2.11",
         "@angular/router": "^5.2.11",
+        "@fortawesome/fontawesome-free-webfonts": "^1.0.5",
         "@garlictech/deepstream-rxjs": "1.7.0",
         "@garlictech/gtrack-provider-client": "file:src/subrepos/provider-client",
         "@mapbox/corslite": "0.0.7",
@@ -100,11 +101,12 @@
         "d3-geo": "^1.10.0",
         "deepstream-ngx": "file:src/subrepos/deepstream-ngx",
         "emojionearea": "^3.4.1",
+        "enum-values": "^1.2.0",
         "flat": "^4.0.0",
-        "@fortawesome/fontawesome-free-webfonts": "^1.0.5",
         "forms-ngx": "file:./src/subrepos/forms-ngx",
         "geojson-rewind": "^0.3.1",
         "geojson-validation": "^0.2.1",
+        "google-libphonenumber": "^3.1.6",
         "gtrack-common-ngx": "file:src/subrepos/gtrack-common-ngx",
         "intl": "^1.2.5",
         "jquery": "3.2.1",
@@ -123,13 +125,14 @@
         "ngrx-store-logger": "^0.2.2",
         "ngx-chips": "^1.9.2",
         "nouislider": "^10.0.0",
+        "password-validator": "^4.1.1",
         "popper.js": "^1.14.3",
         "primeng": "^5.2.6",
         "raven-js": "^3.25.2",
         "rxjs": "^5.5.11",
         "tether": "^1.4.4",
-        "zone.js": "^0.8.26",
-        "webfontloader": "^1.6.28"
+        "webfontloader": "^1.6.28",
+        "zone.js": "^0.8.26"
     },
     "devDependencies": {
         "@angular/cli": "^1.7.4",
@@ -159,7 +162,7 @@
         "typescript": "^2.9.1"
     },
     "config": {
-        "dockerWorkflowVersion": "v6.0.6",
+        "dockerWorkflowVersion": "v6.0.7",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }

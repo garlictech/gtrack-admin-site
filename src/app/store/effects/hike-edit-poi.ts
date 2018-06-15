@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import { MapMarkerService, IconService, GeoSearchService, PoiService } from 'subrepos/gtrack-common-ngx';
-import {
-  State, hikeEditPoiActions, hikeEditMapActions, IExternalPoiListContextItemState, commonGeoSearchActions, commonPoiActions, editedGTrackPoiActions
-} from '../index';
-import { HikeEditPoiSelectors } from 'app/store/selectors/'
+import { GeoSearchService, PoiService } from 'subrepos/gtrack-common-ngx';
+import { State, hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../index';
+import { HikeEditPoiSelectors } from 'app/store/selectors/';
 import {
   OsmPoiService,
   OsmRoutePoiService,
@@ -15,9 +13,7 @@ import {
   GooglePoiService,
   AdminMapService
 } from 'app/shared/services';
-import { AdminMap, AdminMapMarker } from 'app/shared/services/admin-map';
-import { IExternalPoi, IWikipediaPoi, IOsmPoi, IGooglePoi } from 'app/shared/interfaces';
-import { ExternalPoi } from 'app/shared/services/poi/external-poi';
+import { IWikipediaPoi, IOsmPoi, IGooglePoi } from 'app/shared/interfaces';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
@@ -46,7 +42,7 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_WIKIPEDIA_POIS)
     .map((action: hikeEditPoiActions.GetWikipediaPois) => action.bounds)
     .switchMap(bounds => {
-      return this._wikipediaPoiService.get(bounds).then((pois: IWikipediaPoi[]) =>  {
+      return this._wikipediaPoiService.get(bounds).then((pois: IWikipediaPoi[]) => {
         return new hikeEditPoiActions.SetWikipediaPois(pois);
       });
     });
@@ -59,7 +55,7 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_GOOGLE_POIS)
     .map((action: hikeEditPoiActions.GetGooglePois) => action.bounds)
     .switchMap(bounds => {
-      return this._googlePoiService.get(bounds).then((pois: IGooglePoi[]) =>  {
+      return this._googlePoiService.get(bounds).then((pois: IGooglePoi[]) => {
         return new hikeEditPoiActions.SetGooglePois(pois);
       });
     });
@@ -72,7 +68,7 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_OSM_NATURAL_POIS)
     .map((action: hikeEditPoiActions.GetOsmNaturalPois) => action.bounds)
     .switchMap(bounds => {
-      return this._osmPoiService.get(bounds, 'natural').then((pois: IOsmPoi[]) =>  {
+      return this._osmPoiService.get(bounds, 'natural').then((pois: IOsmPoi[]) => {
         return new hikeEditPoiActions.SetOsmNaturalPois(pois);
       });
     });
@@ -85,7 +81,7 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_OSM_AMENITY_POIS)
     .map((action: hikeEditPoiActions.GetOsmAmenityPois) => action.bounds)
     .switchMap(bounds => {
-      return this._osmPoiService.get(bounds, 'amenity').then((pois: IOsmPoi[]) =>  {
+      return this._osmPoiService.get(bounds, 'amenity').then((pois: IOsmPoi[]) => {
         return new hikeEditPoiActions.SetOsmAmenityPois(pois);
       });
     });
@@ -98,7 +94,7 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_OSM_ROUTE_POIS)
     .map((action: hikeEditPoiActions.GetOsmRoutePois) => action.bounds)
     .switchMap(bounds => {
-      return this._osmRoutePoiService.get(bounds).then((pois: IOsmPoi[]) =>  {
+      return this._osmRoutePoiService.get(bounds).then((pois: IOsmPoi[]) => {
         return new hikeEditPoiActions.SetOsmRoutePois(pois);
       });
     });
@@ -109,7 +105,7 @@ export class HikeEditPoiEffects {
   @Effect()
   loadSavedPoi$: Observable<Action> = this._actions$
     .ofType<commonPoiActions.PoiSaved>(commonPoiActions.PoiActionTypes.POI_SAVED)
-    .map(action => (new commonPoiActions.LoadPoi(action.context)));
+    .map(action => new commonPoiActions.LoadPoi(action.context));
 
   /**
    * Load gTrackPoi after modal edit
@@ -117,5 +113,5 @@ export class HikeEditPoiEffects {
   @Effect()
   loadModifiedPoi$: Observable<Action> = this._actions$
     .ofType<editedGTrackPoiActions.PoiSaveSuccess>(editedGTrackPoiActions.POI_SAVE_SUCCESS)
-    .map(action => (new commonPoiActions.LoadPoi(action.poiId)));
+    .map(action => new commonPoiActions.LoadPoi(action.poiId));
 }

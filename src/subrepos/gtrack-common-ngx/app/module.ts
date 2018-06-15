@@ -1,3 +1,6 @@
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { JsonpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -31,9 +34,6 @@ import {
   defaultSharedConfig,
   PoiSelectors
 } from './';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { JsonpModule } from '@angular/http';
 
 @NgModule({
   imports: [

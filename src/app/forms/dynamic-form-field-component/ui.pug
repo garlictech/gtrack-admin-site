@@ -18,6 +18,7 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
 
   ng-container([ngSwitch]="field.controlType")
     input.input(
+      pInputText
       *ngSwitchCase="'textbox'",
       [formControlName]="field.key",
       [id]="field.key",
@@ -27,6 +28,7 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
     )
 
     textarea.field.textarea(
+      pInputTextarea
       *ngSwitchCase="'textarea'",
       [formControlName]="field.key",
       [id]="field.key",
@@ -37,9 +39,12 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
     div.field-text(*ngSwitchCase="'text'") {{ field.textKey | translate }}
     div.field-html(*ngSwitchCase="'html'", [innerHtml]="field.content")
 
+    div(*ngSwitchCase="'template'")
+      ng-container(*ngTemplateOutlet="field.templateRef")
+
     ng-container(*ngSwitchCase="'select'")
       ng-container([ngSwitch]="field.type")
-        app-form-radio-select.field(
+        gtrack-form-radio-select.field(
           *ngSwitchCase="'radio'",
           [options]= "field.selectOptions",
           [formControlName]="field.key",
@@ -47,7 +52,7 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
           [id]="field.key"
         )
 
-        app-form-dropdown-select.field(
+        gtrack-form-dropdown-select.field(
           *ngSwitchCase="'dropdown'",
           [options]="field.selectOptions",
           [formControlName]="field.key",
@@ -55,7 +60,7 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
           [change]="getOnChange()"
         )
 
-    pioneer-wst-form-multi-select.field(
+    gtrack-form-multi-select.field(
       *ngSwitchCase="'multi-select'",
       [options]="field.selectOptions",
       [formControlName]="field.key",
@@ -63,51 +68,37 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
       [change]="getOnChange()"
     )
 
-    app-form-date-picker.field(
+    gtrack-form-date-picker.field(
       *ngSwitchCase="'date'",
       [formControlName]="field.key",
       [id]="field.key",
+      [minDate]="field.minDate",
       [maxDate]="field.maxDate",
-      [defaultDate]="field.defaultDate"
-    )
-
-    app-form-emoji-input.field(
-      *ngSwitchCase="'emoji'",
-      [formControlName]="field.key",
-      [id]="field.key",
-      [rows]="field.rows",
+      [defaultDate]="field.defaultDate",
       [placeholder]="sanitizedPlaceholder | translate"
     )
 
-    app-form-file-upload.field(
-      *ngSwitchCase="'file'",
-      [formControlName]="field.key",
-      [id]="field.key",
-      [fileId]="field.fileId",
-      [type]="field.type"
-    )
-
     ng-container(*ngSwitchCase="'group'")
-      app-dynamic-form-group(
+      gtrack-form-group(
         [fields]="field",
         [controlGroup]="form.controls[field.key]"
       )
 
     ng-container(*ngSwitchCase="'section'")
-      app-dynamic-form-section(
+      gtrack-form-section(
         [fields]="field",
         [formControlName]="field.key"
       )
 
     ng-container(*ngSwitchCase="'switch'")
-      app-form-switch.field(
+      gtrack-form-switch.field(
         [id]="field.key",
         [formControlName]="field.key",
         [change]="getOnChange()"
       )
 
     ng-container(*ngSwitchCase="'slider'")
-      app-form-slider.field(
+      gtrack-form-slider.field(
         [id]="field.key",
         [formControlName]="field.key",
         [change]="getOnChange()"
@@ -115,6 +106,15 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
         [max]="field.max"
       )
 
+    ng-container(*ngSwitchCase="'file'")
+      gtrack-form-file.field(
+        [id]="field.key",
+        [uploadOptions]="field.uploadOptions",
+        [isBasic]="field.isBasic",
+        [formControlName]="field.key",
+        [placeholder]="sanitizedPlaceholder | translate"
+      )
+
   div.feedback.info(*ngIf="field.infoText") {{ field.infoText | translate }}
   div.feedback.invalid(*ngIf="showError") {{actualError}}
-  div.feedback.invalid(*ngIf="remoteError$ | async") {{ remoteError$ | async }}
+  div.feedback.invalid(*ngIf="showRemoteError && (remoteError$ | async)") {{ remoteError$ | async | translate }}

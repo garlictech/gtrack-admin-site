@@ -77,3 +77,4 @@ secrets.tgz
 firebase-debug.log
 .setup.sh
 reports
+artifacts

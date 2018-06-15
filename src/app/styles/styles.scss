@@ -1,8 +1,10 @@
-@import '~normalize.scss/normalize';
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '../../assets/sass/gtrack-material-dashboard.scss';
 @import '../../assets/sass/light-bootstrap-dashboard.scss';
-@import '~font-awesome/scss/font-awesome';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-brands';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-solid';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-regular';
+@import '~@fortawesome/fontawesome-free-webfonts/scss/fontawesome';
 @import '~primeng/resources/themes/omega/theme.css';
 @import '~primeng/resources/primeng.min.css';
 @import '~leaflet/dist/leaflet.css';
@@ -16,9 +18,8 @@
 @import 'defaults';
 @import 'utilities';
 @import 'components';
-
 a {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 // input,
@@ -40,86 +41,95 @@ table.table {
 */
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .btn .material-icons {
-  vertical-align: middle;
-  font-size: 17px;
-  top: -1px;
-  position: relative;
+    vertical-align: middle;
+    font-size: 17px;
+    top: -1px;
+    position: relative;
 }
 
 button.btn-just-icon.btn-sm {
-  padding: 5px !important;
+    padding: 5px !important;
 }
 
 .clearfix {
-  &::after {
-    display: block;
-    content: '';
-    clear: both;
-  }
+    &::after {
+        display: block;
+        content: '';
+        clear: both;
+    }
 }
 
 .main-spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
 }
 
 .td-actions {
-  white-space: nowrap;
-  text-align: right;
-  button {
-    padding: 0 4px !important;
-  }
+    white-space: nowrap;
+    text-align: right;
+    button {
+        padding: 0 4px !important;
+    }
 }
+
 
 /* images */
 
 table.table-images {
-  td:first-child {
-    width: 200px;
-  }
-  td:last-child {
-    width: 60px;
-    text-align: left;
-  }
+    td:first-child {
+        width: 200px;
+    }
+    td:last-child {
+        width: 60px;
+        text-align: left;
+    }
 }
+
 img.thumbs {
-  width: 160px;
-  border: 0;
+    width: 160px;
+    border: 0;
 }
+
 
 /* ngprime fixes */
-.card .card-header {
-  padding: 15px 15px 0 !important;
-}
-.card .card-body {
-  padding: 15px 15px 10px 15px;
-}
-.table {
-  margin: 0 auto;
 
-  tbody tr td {
-    border-top: 1px solid #dee2e6;
-  }
+.card .card-header {
+    padding: 15px 15px 0 !important;
 }
+
+.card .card-body {
+    padding: 15px 15px 10px 15px;
+}
+
+.table {
+    margin: 0 auto;
+    tbody tr td {
+        border-top: 1px solid #dee2e6;
+    }
+}
+
 .form-check {
-  margin-top: 0 !important;
+    margin-top: 0 !important;
 }
+
 
 /* Remove animations */
+
 .collapsing {
-  -webkit-transition: none !important;
-  transition: none !important;
-  display: none !important;
+    -webkit-transition: none !important;
+    transition: none !important;
+    display: none !important;
 }
 
-.form-check .form-check-sign::before, .form-check .form-check-sign::after {
-  -webkit-transition: none !important;
-  transition: none !important;
+.form-check .form-check-sign::before,
+.form-check .form-check-sign::after {
+    -webkit-transition: none !important;
+    transition: none !important;
 }

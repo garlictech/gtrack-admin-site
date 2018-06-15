@@ -5,6 +5,7 @@ export class Environment implements IEnvironment {
   staging = false;
   webappServer = 'https://grack-admin-prod.firebaseapp.com/';
   deepstream = 'wss://deepstream.gtracksport.com/deepstream';
+  lambdaEndpoint = 'https://ii1rrhpq2a.execute-api.us-east-1.amazonaws.com/latest';
 
   authentication = {
     server: 'https://y0z8yjok18.execute-api.us-east-1.amazonaws.com/latest',
@@ -17,4 +18,8 @@ export class Environment implements IEnvironment {
   mapillary = { clientID: 'bWxkcHdGR0dyRVJPNU1wRklzVHZoZzo5YmE0YzlmNzQ1NmY0ZWFh' };
 
   googlePhotoLimit = 0; // no limit
+  awsConfig = {
+    s3: 'to-be-configured',
+    policyGenerator: this.lambdaEndpoint + '/generate-s3-policy'
+  };
 }

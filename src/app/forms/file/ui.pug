@@ -1,0 +1,13 @@
+.content(*ngIf='!(uploadOptions?.uploading$ | async) else spinner')
+  i.fa.fa-check.fa-2x(*ngIf='uploaded$ | async')
+  p-fileUpload(
+    name="myfile[]",
+    [mode]="mode",
+    customUpload="true",
+    (uploadHandler)="uploadOptions.uploadHandler($event)",
+    auto="true",
+    [chooseLabel]="placeholder"
+  )
+
+ng-template(#spinner)
+  app-busy-indicator

@@ -1,3 +1,1 @@
-#!/usr/bin/env bash
-set -e
-docker/npm.sh build:prod
+../workflows-scripts/webclient/docker/build-prod.sh

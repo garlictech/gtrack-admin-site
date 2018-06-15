@@ -1,19 +1,14 @@
 import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { Store, createSelector, MemoizedSelector } from '@ngrx/store';
+import { Store, MemoizedSelector } from '@ngrx/store';
 import { State, commonPoiActions, editedGTrackPoiActions } from 'app/store';
-import { HikeEditPoiSelectors } from 'app/store/selectors';
-import { DESCRIPTION_LANGS } from 'app/app.constants';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi, ITextualDescriptionItem, IGTrackPoi } from 'app/shared/interfaces';
-import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
 import { IDynamicComponentModalConfig, PoiSelectors, Poi } from 'subrepos/gtrack-common-ngx';
-import { IPoiStored, IPoi, ILocalizedItem, ITextualDescription, EObjectState } from 'subrepos/provider-client';
+import { IPoiStored, ILocalizedItem, ITextualDescription, EObjectState } from 'subrepos/provider-client';
 import { EditedGTrackPoiSelectors } from 'app/store/selectors';
 
 import { ToasterService } from 'angular2-toaster';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'gt-hike-edit-gtrack-poi-info',
@@ -60,9 +55,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
         this.gTrackPoi = gTrackPoi;
       });
 
-    this.isDirty$ = this._store
-      .select(this._editedGTrackPoiSelectors.getDirty)
-      .takeUntil(this._destroy$);
+    this.isDirty$ = this._store.select(this._editedGTrackPoiSelectors.getDirty).takeUntil(this._destroy$);
 
     // Handling save success
     this._store
@@ -120,7 +113,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     this._store.dispatch(new editedGTrackPoiActions.AddNewTranslatedPoiDescription(langKey, data));
   };
 
-  public deleteDescription = (lang) => {
+  public deleteDescription = lang => {
     this._store.dispatch(new editedGTrackPoiActions.DeleteTranslatedPoiDescription(lang));
   };
 }

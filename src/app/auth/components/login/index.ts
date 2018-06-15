@@ -1,1 +1,1 @@
-export { LoginComponent } from './login.component.ts';
+export { LoginComponent } from './login.component';
