@@ -4,7 +4,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ToasterModule } from 'angular2-toaster';
 import { EffectsModule } from '@ngrx/effects';
 
-import { GtrackCommonModule, defaultSharedConfig, DynamicModalModule } from 'subrepos/gtrack-common-ngx';
+import { GtrackCommonModule, DynamicModalModule } from 'subrepos/gtrack-common-ngx';
 import { REDUCER_TOKEN, metaReducers } from './store';
 import { LanguageModule } from './language';
 import { CoreLayoutModule } from './core';
@@ -19,8 +19,6 @@ import {
   HikeEditPoiEffects,
   AuthEffects
 } from './store/effects';
-
-const sharedConfig = { ...defaultSharedConfig };
 
 export const APP_IMPORTS = [
   StoreModule.forRoot(REDUCER_TOKEN, {
