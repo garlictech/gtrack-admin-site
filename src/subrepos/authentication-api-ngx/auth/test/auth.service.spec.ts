@@ -1,10 +1,7 @@
 import { Http } from '@angular/http';
-import { Component, Injector } from '@angular/core';
-import { TestBed, inject, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, ResponseOptions, XHRBackend, Response, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Subject } from 'rxjs/Subject';
 import { StoreModule, Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -14,8 +11,7 @@ import { AuthService } from '../auth.service';
 import { defaultAuthenticationApiConfig, AUTH_CONFIG_TOKEN, AuthenticationApiModule } from '../../lib';
 import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
-import { Reducer as authReducer, IAuthenticationState, domain } from '../../store';
-import { User } from '../../lib';
+import { Reducer as authReducer, domain } from '../../store';
 
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/skip';
