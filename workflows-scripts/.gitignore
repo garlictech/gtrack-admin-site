@@ -56,3 +56,4 @@ reports
 docker/volumes
 docker/certs
 .setup.sh
+artifacts
