@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-import { IDeepstreamState, DeepstreamService } from 'subrepos/gtrack-common-ngx/app/deepstream';
+import { IDeepstreamState } from 'subrepos/gtrack-common-ngx/app/deepstream';
 
 import { Selectors as DeepstreamSelectors } from 'subrepos/deepstream-ngx';
 
 import { User, IAuthenticationState as IJwtAuthState, IAuth } from 'subrepos/authentication-api-ngx';
-
-import { State } from 'app/store';
 
 import { IAuthenticationState } from './state';
 

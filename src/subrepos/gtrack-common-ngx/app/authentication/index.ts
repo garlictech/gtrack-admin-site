@@ -1,32 +1,17 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import * as _ from 'lodash';
-
-import { defaultAuthenticationApiConfig, AuthenticationApiModule } from 'subrepos/authentication-api-ngx';
-import { DeepstreamModule, DeepstreamActions } from '../deepstream';
-
-import { environment } from 'environments/environment';
-import { DebugLog, log } from 'app/log';
-import { State } from 'app/store';
-
 import { AuthenticationSelectors } from './store';
 import { NotAuthGuard } from './guards';
-
-const config = {
-  ...defaultAuthenticationApiConfig
-};
-
-config.apiUrl = environment.authentication.server;
-config.webserverUrl = environment.webappServer;
-config.facebook.appId = _.get(environment, 'authentication.facebook.appId');
-config.google.appId = _.get(environment, 'authentication.google.appId');
-config.magiclink = { redirectSlug: '/auth/magiclink' };
+import { Selectors as DeepstreamSelectors } from 'subrepos/deepstream-ngx';
 
 @NgModule({
-  imports: [DeepstreamModule, AuthenticationApiModule.forRoot(config)],
-  providers: [AuthenticationSelectors.Selectors, NotAuthGuard]
+  providers: [
+    {
+      provide: AuthenticationSelectors.Selectors,
+      useClass: AuthenticationSelectors.Selectors,
+      deps: [DeepstreamSelectors]
+    },
+    NotAuthGuard
+  ]
 })
 export class AuthenticationModule {}
 
