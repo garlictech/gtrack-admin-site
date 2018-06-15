@@ -40,10 +40,6 @@ export class EmojiInputComponent extends AbstractValueAccessor implements AfterV
         }
       }
     });
-
-    $(this.emojiArea.nativeElement)
-      .data('emojioneArea')
-      .setText(this.value || '');
   }
 
   public refreshModel() {

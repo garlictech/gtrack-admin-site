@@ -2,48 +2,58 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
-import { GeoSearchService, PoiService } from 'subrepos/gtrack-common-ngx';
 import { State, hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../index';
-import { HikeEditPoiSelectors } from 'app/store/selectors/';
-import {
-  OsmPoiService,
-  OsmRoutePoiService,
-  WikipediaPoiService,
-  PoiEditorService,
-  GooglePoiService,
-  AdminMapService
-} from 'app/shared/services';
+import { EditedHikeProgramSelectors } from 'app/store/selectors/';
+import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService } from 'app/shared/services';
 import { IWikipediaPoi, IOsmPoi, IGooglePoi } from 'app/shared/interfaces';
 
 import * as _ from 'lodash';
-import * as uuid from 'uuid/v1';
 
 @Injectable()
 export class HikeEditPoiEffects {
   constructor(
-    private _actions$: Actions,
     private _store: Store<State>,
+    private _actions$: Actions,
     private _wikipediaPoiService: WikipediaPoiService,
     private _osmPoiService: OsmPoiService,
     private _osmRoutePoiService: OsmRoutePoiService,
     private _googlePoiService: GooglePoiService,
-    private _poiEditorService: PoiEditorService,
-    private _adminMapService: AdminMapService,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
-    private _geoSearchService: GeoSearchService,
-    private _poiService: PoiService
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors
   ) {}
 
   /**
    * Get pois from WikiPedia api
    */
   @Effect()
-  getWikipediaPois$: Observable<Action> = this._actions$
+  getWikipediaPois$: Observable<any> = this._actions$
     .ofType(hikeEditPoiActions.GET_WIKIPEDIA_POIS)
     .map((action: hikeEditPoiActions.GetWikipediaPois) => action.bounds)
     .switchMap(bounds => {
-      return this._wikipediaPoiService.get(bounds).then((pois: IWikipediaPoi[]) => {
-        return new hikeEditPoiActions.SetWikipediaPois(pois);
+      let boundsArr: any[] = [];
+      this._wikipediaPoiService.getSearchBounds(bounds, boundsArr);
+
+      let langs: string[] = [];
+      this._store
+        .select(this._editedHikeProgramSelectors.getDescriptionLangs)
+        .take(1)
+        .subscribe((langKeys: string[]) => {
+          langs = langKeys.map(key => key.substr(0, 2));
+        });
+
+      const _promises: Promise<IWikipediaPoi[]>[] = [];
+
+      for (const lang of langs) {
+        for (const _bounds of boundsArr) {
+          _promises.push(this._wikipediaPoiService.get(_bounds, lang));
+        }
+      }
+
+      return Promise.all(_promises).then(poisArr => {
+        let pois: IWikipediaPoi[] = [];
+        poisArr.map((poiArr: IWikipediaPoi[]) => {
+          pois = _.concat(pois, poiArr);
+        });
+        return new hikeEditPoiActions.SetWikipediaPois(_.uniqBy(pois, 'wikipedia.pageid'));
       });
     });
 

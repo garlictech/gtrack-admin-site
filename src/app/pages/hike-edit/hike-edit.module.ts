@@ -33,14 +33,13 @@ import {
   HikeEditMergeGTrackPoiComponent
 } from './components';
 // Shared components
-import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
 import { PoiMergeService } from '../../shared/services';
 // gTrack common
 import { MapModule, HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 // Lib
 import { TagInputModule } from 'ngx-chips';
-import { SharedComponentsModule } from 'app/shared/components';
+import { SharedComponentsModule, TableSpinnerComponent } from 'app/shared/components';
 import { LanguageModule } from 'app/language';
 
 const COMPONENTS = [
@@ -82,7 +81,7 @@ const COMPONENTS = [
     LanguageModule
   ],
   exports: [...COMPONENTS],
-  declarations: [AdminLeafletComponent, ObjectToArrayPipe, TrustedHtmlPipe, ...COMPONENTS],
+  declarations: [ObjectToArrayPipe, TrustedHtmlPipe, ...COMPONENTS],
   entryComponents: [...COMPONENTS],
   providers: [DynamicModalService, GeospatialService, PoiMergeService]
 })

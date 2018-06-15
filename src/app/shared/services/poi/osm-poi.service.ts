@@ -8,7 +8,9 @@ import * as uuid from 'uuid/v1';
 
 @Injectable()
 export class OsmPoiService {
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient
+  ) {}
 
   public get(bounds, typeParam, lng = 'en') {
     const request = `

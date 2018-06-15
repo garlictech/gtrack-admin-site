@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { environment } from 'environments/environment';
@@ -31,6 +30,8 @@ export class GooglePoiService {
       let _res: IGooglePoi[] = [];
 
       this._placesService = new google.maps.places.PlacesService(_map);
+
+      // https://developers.google.com/maps/documentation/javascript/places#places_photos
 
       return new Promise((resolve, reject) => {
         this._placesService.nearbySearch({ bounds: _bnds }, (result, status, pagination) => {

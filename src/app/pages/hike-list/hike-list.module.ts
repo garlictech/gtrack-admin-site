@@ -4,16 +4,18 @@ import { RouterModule } from '@angular/router';
 
 import { HikeListComponent } from './hike-list.component';
 import { GpxInputComponent } from './components';
+import { SharedComponentsModule } from 'app/shared/components';
 
 const COMPONENTS = [
   HikeListComponent,
-  GpxInputComponent,
+  GpxInputComponent
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    SharedComponentsModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS],

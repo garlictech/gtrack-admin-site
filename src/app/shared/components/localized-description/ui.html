@@ -8,8 +8,10 @@
 
 <p-accordion>
     <p-accordionTab *ngFor="let lng of (languageKeys$ | async)" [header]="getLangName(lng)">
-        <button class="btn btn-danger btn-simple btn-link pull-right" (click)="deleteTranslation(lng)" title="Delete language" *ngIf="lng !== 'en_US'"><i class="material-icons">delete</i></button>
+        <button class="btn btn-danger btn-simple btn-link pull-right" (click)="deleteTranslation(lng)" title="Delete language" *ngIf="lng !== 'en_US'">
+      <i class="material-icons">delete</i>
+    </button>
 
-        <gtrack-form [formDescriptor]="getLanguageFormDescriptor(lng)" [formDataPath$]="getLanguageFormDataPath(lng)"></gtrack-form>
+        <gtrack-form [formDescriptor]="languageFormDescriptors[lng]" [formDataPath$]="languageFormDataPaths[lng]"></gtrack-form>
     </p-accordionTab>
 </p-accordion>

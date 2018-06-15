@@ -6,8 +6,8 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
-    <ng-container *ngFor="let image of (images$ | async); let idx = index">
+  <tbody *ngIf="(images$ | async) as images">
+    <ng-container *ngFor="let image of images; let idx = index">
       <tr>
         <td><a href="{{image.original.url}}" target="_blank"><img class="thumbs" src="{{image.thumbnail.url}}"></a></td>
         <td [innerHTML]="image.title | trustedHtml"></td>

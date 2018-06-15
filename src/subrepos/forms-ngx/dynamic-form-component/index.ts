@@ -40,7 +40,8 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
         })
         .subscribe(formData => {
           this.formInstance = this._fcs.toFormGroup(this.formDescriptor.fields, formData);
-          this.formInstance.form.patchValue(formData);
+          this.formInstance.form.setValue(formData);
+
           this._cdr.detectChanges();
         });
     }

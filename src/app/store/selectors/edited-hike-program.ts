@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 export class EditedHikeProgramSelectors {
   private _featureSelector: MemoizedSelector<object, IEditedHikeProgramState>;
   public getDescriptions: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
+  public getDescriptionLangs: MemoizedSelector<object, string[]>;
   public getHikeId: MemoizedSelector<object, string>;
   public getRouteId: MemoizedSelector<object, string>;
   public getPoiIds: MemoizedSelector<object, string[]>;
@@ -58,6 +59,10 @@ export class EditedHikeProgramSelectors {
 
     this.getDescriptions = createSelector(this._featureSelector,
       (state: IEditedHikeProgramState) => _.get(state, 'data.description')
+    );
+
+    this.getDescriptionLangs = createSelector(this._featureSelector,
+      (state: IEditedHikeProgramState) => _.keys(_.get(state, 'data.description'))
     );
 
     this.getState = createSelector(this._featureSelector,

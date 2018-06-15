@@ -8,5 +8,4 @@ export const environment = new (process.env.NODE_ENV === 'production'
     : stagingenv
   : devenv)();
 
-console.log('ENVIRONMENT: ', environment);
 export * from './ienvironment';

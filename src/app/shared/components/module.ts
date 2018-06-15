@@ -6,10 +6,12 @@ import { DropdownModule } from 'primeng/dropdown';
 
 import { FormModule } from 'app/forms';
 import { LocalizedDescriptionComponent } from './localized-description';
+import { TableSpinnerComponent } from './table-spinner';
+import { AdminLeafletComponent } from './admin-leaflet';
 
 @NgModule({
   imports: [CommonModule, DropdownModule, AccordionModule, FormModule, FormsModule],
-  declarations: [LocalizedDescriptionComponent],
-  exports: [LocalizedDescriptionComponent]
+  declarations: [AdminLeafletComponent, LocalizedDescriptionComponent, TableSpinnerComponent],
+  exports: [AdminLeafletComponent, LocalizedDescriptionComponent, TableSpinnerComponent]
 })
 export class SharedComponentsModule {}

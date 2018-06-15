@@ -3,25 +3,24 @@
 
     <div class="row mb-3">
       <div class="col-md-12">
-        <div class="pull-right">
-
+        <div class="pull-right" *ngIf="(hikeProgramState$ | async) as hikeProgramState">
           <button
             class="btn btn-sm btn-fill btn-success"
             (click)="updateHikeState(EObjectState.published)"
             title="Publish hike"
-            *ngIf="paramsId && (hikeProgramState$ | async) === EObjectState.draft"
+            *ngIf="paramsId && hikeProgramState === EObjectState.draft"
           >Publish</button>
           <button
             class="btn btn-sm btn-fill btn-secondary"
             (click)="updateHikeState(EObjectState.draft)"
             title="Move to draft"
-            *ngIf="paramsId && (hikeProgramState$ | async) === EObjectState.archived"
+            *ngIf="paramsId && hikeProgramState === EObjectState.archived"
           >Draft</button>
           <button
             class="btn btn-sm btn-fill btn-danger"
             (click)="updateHikeState(EObjectState.archived)"
             title="Archive hike"
-            *ngIf="paramsId && (hikeProgramState$ | async) === EObjectState.published"
+            *ngIf="paramsId && hikeProgramState === EObjectState.published"
           >Archive</button>
 
           <button class="btn btn-sm btn-fill btn-success" (click)="saveHike()" [disabled]="!(allowSave$ | async)">Save hike</button>
@@ -108,5 +107,3 @@
     </div>
   </div>
 </div>
-
-<!--app-page-busy [text]='working$ | async' [hidden]='!(working$ | async)'></app-page-busy-->

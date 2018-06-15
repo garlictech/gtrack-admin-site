@@ -10,7 +10,6 @@ import {
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import * as _ from 'lodash';
 import { FormGroup } from '@angular/forms';
 
 import { ITextualDescription, ILocalizedItem } from 'subrepos/provider-client';
@@ -18,6 +17,10 @@ import { TextboxField, TextareaField, EmojiField, IFormDescriptor } from 'app/fo
 
 import { State } from 'app/store';
 import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
+
+interface ILanguageKeyObject {
+  [key: string]: any;
+}
 
 @Component({
   selector: 'gt-localized-description',
@@ -38,6 +41,9 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   public langs = DESCRIPTION_LANGUAGES;
   public selectedLanguage;
 
+  public languageFormDescriptors: ILanguageKeyObject = {};
+  public languageFormDataPaths: ILanguageKeyObject = {};
+
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private _store: Store<State>, private _changeDetectorRef: ChangeDetectorRef) {}
@@ -46,7 +52,19 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
     this.languageKeys$ = this._store
       .select(this.descriptionSelector)
       .takeUntil(this._destroy$)
-      .map(desc => Object.keys(desc));
+      .map(desc => {
+        const langKeys = Object.keys(desc);
+
+        this.languageFormDescriptors = {};
+        this.languageFormDataPaths = {};
+
+        for (const key of langKeys) {
+          this.languageFormDescriptors[key] = this._getLanguageFormDescriptor(key);
+          this.languageFormDataPaths[key] = this._getLanguageFormDataPath(key);
+        }
+
+        return langKeys;
+      });
   }
 
   ngAfterViewInit() {
@@ -64,7 +82,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
     this._destroy$.unsubscribe();
   }
 
-  getLanguageFormDescriptor(languageKey: string) {
+  private _getLanguageFormDescriptor(languageKey: string) {
     return {
       submit: {
         translatableLabel: 'form.submit',
@@ -81,12 +99,13 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
           required: false,
           rows: 2
         }),
-        fullDescription: new EmojiField({ label: 'form.description', required: false })
+        // fullDescription: new EmojiField({ label: 'form.description', required: false })
+        fullDescription: new TextareaField({ label: 'form.description', required: false })
       }
     };
   }
 
-  getLanguageFormDataPath(languageKey: string) {
+  private _getLanguageFormDataPath(languageKey: string) {
     return Observable.of(`${this.storeDataPath}.${languageKey}`);
   }
 

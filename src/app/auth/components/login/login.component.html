@@ -8,10 +8,18 @@
       <p> <!-- [disabled]="loggingIn$ | async"  -->
         <button type="button" class="btn btn-social btn-fill btn-google" (click)="login()">
           <i class="fa fa-google" aria-hidden="true"></i>
-          <span *ngIf="!(loggingIn$ | async)">Login with Google</span>
-          <span *ngIf="loggingIn$ | async">
-            Logging in... <i class="fa-li fa fa-spinner fa-spin login-spinner"></i>
-          </span>
+
+          <ng-container *ngIf="(loggingIn$ | async) as loggingIn; then loginSpinner; else loginButton"></ng-container>
+
+          <ng-template #loginButton>
+            <span>Login with Google</span>
+          </ng-template>
+
+          <ng-template #loginSpinner>
+            <span>
+              Logging in... <i class="fa-li fa fa-spinner fa-spin login-spinner"></i>
+            </span>
+          </ng-template>
         </button>
       </p>
     </div>
