@@ -53,8 +53,8 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     this.backgroundImageUrlSelector = this._editedGTrackPoiSelectors.getBackgroundOriginalUrls();
     console.log('this.backgroundImageUrlSelector', this.backgroundImageUrlSelector);
     this.clickActions = {
-      add: (image) => this._store.dispatch(new editedGTrackPoiActions.AddBackgroundImage(image)),
-      remove: (url) => this._store.dispatch(new editedGTrackPoiActions.RemoveBackgroundImage(url))
+      add: (image) => this._store.dispatch(new editedGTrackPoiActions.AddPoiBackgroundImage(image)),
+      remove: (url) => this._store.dispatch(new editedGTrackPoiActions.RemovePoiBackgroundImage(url))
     }
 
     this.poiLoaded$ = this._store

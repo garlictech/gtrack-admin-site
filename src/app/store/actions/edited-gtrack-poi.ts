@@ -7,8 +7,8 @@ export const LOAD_POI = '[Gtrack Poi Edit] Load poi to the editor space';
 export const SAVE_POI = '[Gtrack Poi Edit] Save poi';
 export const POI_SAVE_SUCCESS = '[Gtrack Poi Edit] Poi saved successfully';
 export const POI_SAVE_FAILED = '[Gtrack Poi Edit] Poi save failure';
-export const ADD_BACKGROUND_IMAGE = '[Gtrack Poi Edit] Add background image';
-export const REMOVE_BACKGROUND_IMAGE = '[Gtrack Poi Edit] Remove background image';
+export const ADD_POI_BACKGROUND_IMAGE = '[Gtrack Poi Edit] Add background image';
+export const REMOVE_POI_BACKGROUND_IMAGE = '[Gtrack Poi Edit] Remove background image';
 
 export class AddNewTranslatedPoiDescription implements Action {
   readonly type = ADD_NEW_TRANSLATED_POI_DESCRIPTION;
@@ -47,14 +47,14 @@ export class LoadPoi implements Action {
   constructor(public data: IPoiStored) {}
 }
 
-export class AddBackgroundImage implements Action {
-  readonly type = ADD_BACKGROUND_IMAGE;
+export class AddPoiBackgroundImage implements Action {
+  readonly type = ADD_POI_BACKGROUND_IMAGE;
 
   constructor(public imageData: IBackgroundImageData) {}
 }
 
-export class RemoveBackgroundImage implements Action {
-  readonly type = REMOVE_BACKGROUND_IMAGE;
+export class RemovePoiBackgroundImage implements Action {
+  readonly type = REMOVE_POI_BACKGROUND_IMAGE;
 
   constructor(public origUrl: string) {}
 }
@@ -66,5 +66,5 @@ export type AllEditedGTrackPoiActions =
   | PoiSaveSuccess
   | PoiSaveFailed
   | LoadPoi
-  | AddBackgroundImage
-  | RemoveBackgroundImage;
+  | AddPoiBackgroundImage
+  | RemovePoiBackgroundImage;

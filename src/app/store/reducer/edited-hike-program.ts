@@ -96,7 +96,7 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
       return newState;
     }
 
-    case editedHikeProgramActions.ADD_BACKGROUND_IMAGE: {
+    case editedHikeProgramActions.ADD_HIKE_PROGRAM_BACKGROUND_IMAGE: {
       newState.dirty = true;
       newState.data.backgroundImages = [
         ...<any>state.data.backgroundImages,
@@ -106,7 +106,7 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
       return newState;
     }
 
-    case editedHikeProgramActions.REMOVE_BACKGROUND_IMAGE: {
+    case editedHikeProgramActions.REMOVE_HIKE_PROGRAM_BACKGROUND_IMAGE: {
       newState.dirty = true;
       newState.data.backgroundImages = (<any>newState.data.backgroundImages).filter(img => img.original.url !== action.origUrl);
       return newState;

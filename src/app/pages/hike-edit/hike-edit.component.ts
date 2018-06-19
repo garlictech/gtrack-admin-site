@@ -186,8 +186,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this.backgroundImageSelector = this._editedHikeProgramSelectors.getBackgroundImages;
     this.backgroundImageUrlSelector = this._editedHikeProgramSelectors.getBackgroundOriginalUrls();
     this.clickActions = {
-      add: (image) => this._store.dispatch(new editedHikeProgramActions.AddBackgroundImage(image)),
-      remove: (url) => this._store.dispatch(new editedHikeProgramActions.RemoveBackgroundImage(url))
+      add: (image) => this._store.dispatch(new editedHikeProgramActions.AddHikeProgramBackgroundImage(image)),
+      remove: (url) => this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(url))
     }
   }
 

@@ -14,8 +14,8 @@ describe('EditedGTrackPoi actions', () => {
     expect(EditedGTrackPoiActions.SAVE_POI).toEqual('[Gtrack Poi Edit] Save poi');
     expect(EditedGTrackPoiActions.POI_SAVE_SUCCESS).toEqual('[Gtrack Poi Edit] Poi saved successfully');
     expect(EditedGTrackPoiActions.POI_SAVE_FAILED).toEqual('[Gtrack Poi Edit] Poi save failure');
-    expect(EditedGTrackPoiActions.ADD_BACKGROUND_IMAGE).toEqual('[Gtrack Poi Edit] Add background image');
-    expect(EditedGTrackPoiActions.REMOVE_BACKGROUND_IMAGE).toEqual('[Gtrack Poi Edit] Remove background image');
+    expect(EditedGTrackPoiActions.ADD_POI_BACKGROUND_IMAGE).toEqual('[Gtrack Poi Edit] Add background image');
+    expect(EditedGTrackPoiActions.REMOVE_POI_BACKGROUND_IMAGE).toEqual('[Gtrack Poi Edit] Remove background image');
   });
 
   it('should create AddNewTranslatedPoiDescription action', () => {
@@ -111,21 +111,21 @@ describe('EditedGTrackPoi actions', () => {
         poiObjectId: 'id'
       }
     };
-    const action = new EditedGTrackPoiActions.AddBackgroundImage(imageData);
+    const action = new EditedGTrackPoiActions.AddPoiBackgroundImage(imageData);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: EditedGTrackPoiActions.ADD_BACKGROUND_IMAGE,
+      type: EditedGTrackPoiActions.ADD_POI_BACKGROUND_IMAGE,
       imageData: imageData
     });
   });
 
   it('should create RemoveBackgroundImage action', () => {
-    const action = new EditedGTrackPoiActions.RemoveBackgroundImage('fakeUrl');
+    const action = new EditedGTrackPoiActions.RemovePoiBackgroundImage('fakeUrl');
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: EditedGTrackPoiActions.REMOVE_BACKGROUND_IMAGE,
+      type: EditedGTrackPoiActions.REMOVE_POI_BACKGROUND_IMAGE,
       origUrl: 'fakeUrl'
     });
   });

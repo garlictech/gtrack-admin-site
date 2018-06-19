@@ -14,8 +14,8 @@ describe('EditedHikeProgram actions', () => {
     expect(EditedHikeProgramActions.SAVE_HIKE_PROGRAM).toEqual('[HikeProgram] Save hike program');
     expect(EditedHikeProgramActions.HIKE_PROGRAM_SAVE_SUCCESS).toEqual('[HikeProgram] Hike program saved successfully');
     expect(EditedHikeProgramActions.HIKE_PROGRAM_SAVE_FAILED).toEqual('[HikeProgram] Hike program save failure');
-    expect(EditedHikeProgramActions.ADD_BACKGROUND_IMAGE).toEqual('[HikeProgram] Add background image');
-    expect(EditedHikeProgramActions.REMOVE_BACKGROUND_IMAGE).toEqual('[HikeProgram] Remove background image');
+    expect(EditedHikeProgramActions.ADD_HIKE_PROGRAM_BACKGROUND_IMAGE).toEqual('[HikeProgram] Add background image');
+    expect(EditedHikeProgramActions.REMOVE_HIKE_PROGRAM_BACKGROUND_IMAGE).toEqual('[HikeProgram] Remove background image');
   });
 
   it('should create ResetHikeProgram action', () => {
@@ -171,21 +171,21 @@ describe('EditedHikeProgram actions', () => {
         poiObjectId: 'id'
       }
     };
-    const action = new EditedHikeProgramActions.AddBackgroundImage(imageData);
+    const action = new EditedHikeProgramActions.AddHikeProgramBackgroundImage(imageData);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: EditedHikeProgramActions.ADD_BACKGROUND_IMAGE,
+      type: EditedHikeProgramActions.ADD_HIKE_PROGRAM_BACKGROUND_IMAGE,
       imageData: imageData
     });
   });
 
   it('should create RemoveBackgroundImage action', () => {
-    const action = new EditedHikeProgramActions.RemoveBackgroundImage('fakeUrl');
+    const action = new EditedHikeProgramActions.RemoveHikeProgramBackgroundImage('fakeUrl');
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: EditedHikeProgramActions.REMOVE_BACKGROUND_IMAGE,
+      type: EditedHikeProgramActions.REMOVE_HIKE_PROGRAM_BACKGROUND_IMAGE,
       origUrl: 'fakeUrl'
     });
   });
