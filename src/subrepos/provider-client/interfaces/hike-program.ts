@@ -23,6 +23,7 @@ export enum EPoiImageTypes {
 export interface IPoiImageSource {
   type: EPoiImageTypes;
   poiObjectId: string;
+  photoReference?: string;
 }
 
 export interface IBackgroundImageData {
