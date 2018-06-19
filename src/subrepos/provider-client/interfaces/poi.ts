@@ -1,6 +1,7 @@
 import { IProviderInput } from './provider';
 import { ILocalizedItem, ITextualDescription } from './common';
 import { IPublishable, EObjectState } from './state';
+import { IBackgroundImageData } from './hike-program';
 
 export enum EPoiTypes {
   google = 'google',
@@ -31,6 +32,7 @@ export interface IPoi {
   objectType?: EPoiTypes;
   types: string[];
   description: ILocalizedItem<ITextualDescription>;
+  backgroundImages?: IBackgroundImageData[];
   tags?: string[];
   objectId?: {
     [objectType: string]: string | ILocalizedItem<string>; // Google/OSM pageid, wiki multi ids
