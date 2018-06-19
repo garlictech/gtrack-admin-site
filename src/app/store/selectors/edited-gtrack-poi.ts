@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
 import { IEditedGTrackPoiState } from '../state/edited-gtrack-poi';
-import { ITextualDescription, ILocalizedItem, IPoiStored } from 'subrepos/provider-client';
+import { ITextualDescription, ILocalizedItem, IPoiStored, IBackgroundImageData } from 'subrepos/provider-client';
 
 import * as _ from 'lodash';
 
@@ -12,6 +12,7 @@ export class EditedGTrackPoiSelectors {
 
   public getDescriptions: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
   public getDirty: MemoizedSelector<object, boolean>;
+  public getBackgroundImages: MemoizedSelector<object, IBackgroundImageData[]>;
   public getWorking: MemoizedSelector<object, string | null>;
   public getData: MemoizedSelector<object, IPoiStored>;
   public getError: MemoizedSelector<object, any>;
@@ -29,6 +30,10 @@ export class EditedGTrackPoiSelectors {
       (state: IEditedGTrackPoiState) => state.dirty
     );
 
+    this.getBackgroundImages = createSelector(this._featureSelector,
+      (state: IEditedGTrackPoiState) => _.get(state, 'data.backgroundImages')
+    );
+
     this.getWorking = createSelector(this._featureSelector,
       (state: IEditedGTrackPoiState) => state.working
     );
@@ -40,6 +45,11 @@ export class EditedGTrackPoiSelectors {
     this.getError = createSelector(this._featureSelector,
       (state: IEditedGTrackPoiState) => _.get(state, 'failed')
     );
+  }
 
+  public getBackgroundOriginalUrls() {
+    return createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => {
+      return _.uniq((<IBackgroundImageData[]>state.data.backgroundImages || []).map((img: IBackgroundImageData) => img.original.url));
+    });
   }
 }

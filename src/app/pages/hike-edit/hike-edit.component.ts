@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { Store } from '@ngrx/store';
+import { Store, MemoizedSelector } from '@ngrx/store';
 import {
   State,
   hikeEditActions,
@@ -18,7 +18,7 @@ import {
 } from 'app/store';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from 'app/store/selectors';
 import { RoutingControlService, WaypointMarkerService, RoutePlannerService, AdminMapService } from 'app/shared/services/admin-map';
-import { IHikeProgramStored, IHikeProgram, IPoi, IRoute, EObjectState, IHikeProgramStop } from 'subrepos/provider-client';
+import { IHikeProgramStored, IHikeProgram, IPoi, IRoute, EObjectState, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 
@@ -37,6 +37,9 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   public working$: Observable<string | null>;
   public EObjectState = EObjectState;
   public paramsId: string;
+  public backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
+  public backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
+  public clickActions: any;
   private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -178,6 +181,14 @@ export class HikeEditComponent implements OnInit, OnDestroy {
             });
         }
       });
+
+    // Attributes for Photos component
+    this.backgroundImageSelector = this._editedHikeProgramSelectors.getBackgroundImages;
+    this.backgroundImageUrlSelector = this._editedHikeProgramSelectors.getBackgroundOriginalUrls();
+    this.clickActions = {
+      add: (image) => this._store.dispatch(new editedHikeProgramActions.AddBackgroundImage(image)),
+      remove: (url) => this._store.dispatch(new editedHikeProgramActions.RemoveBackgroundImage(url))
+    }
   }
 
   ngOnDestroy() {

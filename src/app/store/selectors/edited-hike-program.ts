@@ -120,7 +120,7 @@ export class EditedHikeProgramSelectors {
 
   public getBackgroundOriginalUrls() {
     return createSelector(this._featureSelector, (state: IEditedHikeProgramState) => {
-      return (<IBackgroundImageData[]>state.data.backgroundImages).map((img: IBackgroundImageData) => img.original.url);
+      return _.uniq((<IBackgroundImageData[]>state.data.backgroundImages || []).map((img: IBackgroundImageData) => img.original.url));
     });
   }
 }

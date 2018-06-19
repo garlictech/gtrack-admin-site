@@ -1,20 +1,53 @@
-<div class="container">
-  <gt-localized-description
-    [descriptionSelector]="descriptionSelector"
-    [storeDataPath]="storeDataPath"
-    [submitFv]="submitDescription"
-    [deleteFv]="deleteDescription"
-  ></gt-localized-description>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">General info</h4>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-12">
+            <gt-localized-description
+              [descriptionSelector]="descriptionSelector"
+              [storeDataPath]="storeDataPath"
+              [submitFv]="submitDescription"
+              [deleteFv]="deleteDescription"
+            ></gt-localized-description>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button
+              class="btn btn-sm btn-fill btn-success"
+              (click)="savePoi()"
+              [disabled]="!(isDirty$ | async)"
+            >Save</button>
 
-  <button
-    class="btn btn-sm btn-fill btn-success"
-    (click)="savePoi()"
-    [disabled]="!(isDirty$ | async)"
-  >Save</button>
+            <button
+              class="btn btn-sm btn-fill btn-danger"
+              (click)="deletePoi(gTrackPoi?.id)"
+              *ngIf="gTrackPoi?.state === EObjectState.draft"
+            >Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <button
-    class="btn btn-sm btn-fill btn-danger"
-    (click)="deletePoi(gTrackPoi?.id)"
-    *ngIf="gTrackPoi?.state === EObjectState.draft"
-  >Delete</button>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Photos</h4>
+      </div>
+      <div class="card-body">
+        <gt-hike-edit-photos
+          [backgroundImageSelector]="backgroundImageSelector"
+          [backgroundImageUrlSelector]="backgroundImageUrlSelector"
+          [clickActions]="clickActions"
+        ></gt-hike-edit-photos>
+      </div>
+    </div>
+  </div>
 </div>

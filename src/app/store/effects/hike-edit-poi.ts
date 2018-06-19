@@ -32,6 +32,7 @@ export class HikeEditPoiEffects {
       let boundsArr: any[] = [];
       this._wikipediaPoiService.getSearchBounds(bounds, boundsArr);
 
+      // TODO: move lang list to common service
       let langs: string[] = [];
       this._store
         .select(this._editedHikeProgramSelectors.getDescriptionLangs)

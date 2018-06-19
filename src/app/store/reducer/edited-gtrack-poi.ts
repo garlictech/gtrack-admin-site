@@ -12,6 +12,7 @@ export const initialEditedGTrackPoiState: IEditedGTrackPoiState = {
     lat: 0,
     lon: 0,
     description: { en_US: { title: 'A new poi' } },
+    backgroundImages: [],
     types: [],
     state: EObjectState.draft
   },
@@ -63,6 +64,22 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
       newState.failed = null;
       newState.dirty = false;
       newState.data = action.data;
+      return newState;
+    }
+
+    case editedGTrackPoiActions.ADD_BACKGROUND_IMAGE: {
+      newState.dirty = true;
+      newState.data.backgroundImages = [
+        ...<any>state.data.backgroundImages,
+        action.imageData
+      ]
+
+      return newState;
+    }
+
+    case editedGTrackPoiActions.REMOVE_BACKGROUND_IMAGE: {
+      newState.dirty = true;
+      newState.data.backgroundImages = (<any>newState.data.backgroundImages).filter(img => img.original.url !== action.origUrl);
       return newState;
     }
 

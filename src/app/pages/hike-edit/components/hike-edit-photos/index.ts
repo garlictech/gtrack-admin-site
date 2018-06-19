@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { Store } from '@ngrx/store';
+import { Store, MemoizedSelector } from '@ngrx/store';
 import { State, hikeEditImageActions } from 'app/store';
 import {
   HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors, EditedHikeProgramSelectors
@@ -14,6 +14,9 @@ import { IBackgroundImageData } from 'subrepos/provider-client';
   templateUrl: './ui.html'
 })
 export class HikeEditPhotosComponent implements OnInit, OnDestroy {
+  @Input() backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
+  @Input() backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
+  @Input() clickActions: any;
   public googlePhotos$: Observable<IBackgroundImageData[]>;
   public wikipediaPhotos$: Observable<IBackgroundImageData[]>;
   public mapillaryImages$: Observable<IBackgroundImageData[]>;
@@ -28,11 +31,11 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     private _routePlannerService: RoutePlannerService,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditImageSelectors: HikeEditImageSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {}
 
   ngOnInit() {
+    // Photo sources
     this.googlePhotos$ = this._store
       .select(this._hikeEditPoiSelectors.getPoiPhotos('google'))
       .takeUntil(this._destroy$);
@@ -45,12 +48,13 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
       .select(this._hikeEditImageSelectors.getAllMapillaryImages)
       .takeUntil(this._destroy$);
 
+    // Store path
     this.backgroundOriginalUrls$ = this._store
-      .select(this._editedHikeProgramSelectors.getBackgroundOriginalUrls())
+      .select(this.backgroundImageUrlSelector)
       .takeUntil(this._destroy$);
 
     this.bgImages$ = this._store
-      .select(this._editedHikeProgramSelectors.getBackgroundImages)
+      .select(this.backgroundImageSelector)
       .takeUntil(this._destroy$);
 
     // Route info from the store (for disabling GET buttons)

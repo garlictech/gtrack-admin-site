@@ -11,6 +11,7 @@ import { IBackgroundImageData } from 'subrepos/provider-client';
 export class HikeEditPhotosTableComponent {
   @Input() images$: Observable<IBackgroundImageData[]>;
   @Input() backgroundOriginalUrls$: Observable<string[]>;
+  @Input() clickActions: any;
 
   constructor (
     private _store: Store<State>,
@@ -21,9 +22,9 @@ export class HikeEditPhotosTableComponent {
       .take(1)
       .subscribe((backgroundOriginalUrls: string[]) => {
         if (backgroundOriginalUrls.indexOf(image.original.url) < 0) {
-          this._store.dispatch(new editedHikeProgramActions.AddBackgroundImage(image));
+          this.clickActions.add(image);
         } else {
-          this._store.dispatch(new editedHikeProgramActions.RemoveBackgroundImage(image.original.url));
+          this.clickActions.remove(image.original.url);
         }
       });
   }

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ILocalizedItem, ITextualDescription, IPoiStored } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription, IPoiStored, IBackgroundImageData } from 'subrepos/provider-client';
 
 export const ADD_NEW_TRANSLATED_POI_DESCRIPTION = '[Gtrack Poi Edit] Add new translated poi description';
 export const DELETE_TRANSLATED_POI_DESCRIPTION = '[Gtrack Poi Edit] Delete translated poi description';
@@ -7,6 +7,8 @@ export const LOAD_POI = '[Gtrack Poi Edit] Load poi to the editor space';
 export const SAVE_POI = '[Gtrack Poi Edit] Save poi';
 export const POI_SAVE_SUCCESS = '[Gtrack Poi Edit] Poi saved successfully';
 export const POI_SAVE_FAILED = '[Gtrack Poi Edit] Poi save failure';
+export const ADD_BACKGROUND_IMAGE = '[Gtrack Poi Edit] Add background image';
+export const REMOVE_BACKGROUND_IMAGE = '[Gtrack Poi Edit] Remove background image';
 
 export class AddNewTranslatedPoiDescription implements Action {
   readonly type = ADD_NEW_TRANSLATED_POI_DESCRIPTION;
@@ -44,10 +46,25 @@ export class LoadPoi implements Action {
 
   constructor(public data: IPoiStored) {}
 }
+
+export class AddBackgroundImage implements Action {
+  readonly type = ADD_BACKGROUND_IMAGE;
+
+  constructor(public imageData: IBackgroundImageData) {}
+}
+
+export class RemoveBackgroundImage implements Action {
+  readonly type = REMOVE_BACKGROUND_IMAGE;
+
+  constructor(public origUrl: string) {}
+}
+
 export type AllEditedGTrackPoiActions =
   | AddNewTranslatedPoiDescription
   | DeleteTranslatedPoiDescription
   | SavePoi
   | PoiSaveSuccess
   | PoiSaveFailed
-  | LoadPoi;
+  | LoadPoi
+  | AddBackgroundImage
+  | RemoveBackgroundImage;

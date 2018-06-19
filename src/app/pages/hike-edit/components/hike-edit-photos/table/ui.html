@@ -18,7 +18,7 @@
                 class="form-check-input"
                 type="checkbox"
                 name="image"
-                [checked]="(backgroundOriginalUrls$ | async).indexOf(image.original.url) >= 0"
+                [checked]="(backgroundOriginalUrls$ | async)?.indexOf(image.original.url) >= 0"
                 (click)="toggleBackgroundImage(image)"
               >
               <span class="form-check-sign"></span>

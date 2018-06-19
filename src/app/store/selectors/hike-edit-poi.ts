@@ -7,6 +7,8 @@ import {
 } from 'app/store/reducer';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 
+import * as _ from 'lodash';
+
 @Injectable()
 export class HikeEditPoiSelectors {
   private _featureSelector: MemoizedSelector<object, IHikeEditPoiState>;
@@ -80,7 +82,7 @@ export class HikeEditPoiSelectors {
       pois.filter(p => p[subdomain].photos).map(p => p[subdomain].photos).map(photoArray => {
         _photos = _photos.concat(photoArray);
       });
-      return _photos;
+      return _.uniqBy(_photos, 'original.url');
     });
   }
 

@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { State, commonPoiActions, editedGTrackPoiActions } from 'app/store';
 import { IDynamicComponentModalConfig, PoiSelectors, Poi } from 'subrepos/gtrack-common-ngx';
-import { IPoiStored, ILocalizedItem, ITextualDescription, EObjectState } from 'subrepos/provider-client';
+import { IPoiStored, IPoi, ILocalizedItem, ITextualDescription, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
 import { EditedGTrackPoiSelectors } from 'app/store/selectors';
 
 import { ToasterService } from 'angular2-toaster';
@@ -27,6 +27,10 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   public poiLoaded$: Observable<boolean>;
   public isDirty$: Observable<boolean>;
 
+  public backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
+  public backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
+  public clickActions: any;
+
   public gTrackPoi: IPoiStored;
   public EObjectState = EObjectState;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -42,6 +46,16 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.descriptionSelector = this._editedGTrackPoiSelectors.getDescriptions;
     this.storeDataPath = `${this._editedGTrackPoiSelectors.dataPath}.description`;
+
+    // Attributes for Photos component
+    this.backgroundImageSelector = this._editedGTrackPoiSelectors.getBackgroundImages;
+    console.log('this.backgroundImageSelector', this.backgroundImageSelector);
+    this.backgroundImageUrlSelector = this._editedGTrackPoiSelectors.getBackgroundOriginalUrls();
+    console.log('this.backgroundImageUrlSelector', this.backgroundImageUrlSelector);
+    this.clickActions = {
+      add: (image) => this._store.dispatch(new editedGTrackPoiActions.AddBackgroundImage(image)),
+      remove: (url) => this._store.dispatch(new editedGTrackPoiActions.RemoveBackgroundImage(url))
+    }
 
     this.poiLoaded$ = this._store
       .select(this._editedGTrackPoiSelectors.getData)
