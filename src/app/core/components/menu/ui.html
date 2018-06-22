@@ -1,0 +1,7 @@
+<div class="layout-sidebar" [ngClass]="{'layout-sidebar-active': sidebarActive}">
+  <p-scrollPanel #scrollPanel [style]="{height: '100%'}">
+    <ul app-submenu [item]="pages" [onMenuButtonClick]="onMenuButtonClick" root="true" class="layout-menu"></ul>
+  </p-scrollPanel>
+  <div class="sidebar-background"></div>
+</div>
+

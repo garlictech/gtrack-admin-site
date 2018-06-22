@@ -104,6 +104,7 @@
         "emojionearea": "^3.4.1",
         "enum-values": "^1.2.0",
         "flat": "^4.0.0",
+        "font-awesome": "^4.7.0",
         "forms-ngx": "file:./src/subrepos/forms-ngx",
         "geojson-rewind": "^0.3.1",
         "geojson-validation": "^0.2.1",
@@ -128,8 +129,8 @@
         "nouislider": "^10.0.0",
         "password-validator": "^4.1.1",
         "popper.js": "^1.14.3",
-        "primeng": "^5.2.6",
-        "raven-js": "^3.25.2",
+        "primeng": "^6.0.0",
+        "raven-js": "^3.26.3",
         "rxjs": "^5.5.11",
         "tether": "^1.4.4",
         "webfontloader": "^1.6.28",
@@ -142,10 +143,10 @@
         "@ngrx/schematics": "github:ngrx/schematics-builds",
         "@ngrx/store-devtools": "^4.1.1",
         "@types/d3": "^4.13.0",
-        "@types/geojson": "^7946.0.3",
+        "@types/geojson": "^7946.0.4",
         "@types/googlemaps": "^3.30.10",
         "@types/jasmine": "^2.8.8",
-        "@types/jquery": "^3.3.3",
+        "@types/jquery": "^3.3.4",
         "@types/leaflet": "^1.2.7",
         "@types/lodash": "^4.14.110",
         "@types/node": "^8.10.20",
@@ -158,12 +159,12 @@
         "jasmine-core": "^2.99.1",
         "jasmine-marbles": "^0.2.0",
         "protractor": "^5.3.1",
-        "tslib": "^1.9.2",
+        "tslib": "^1.9.3",
         "tslint": "^5.10.0",
         "typescript": "^2.9.2"
     },
     "config": {
-        "dockerWorkflowVersion": "v6.0.9",
+        "dockerWorkflowVersion": "v6.1.2",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }

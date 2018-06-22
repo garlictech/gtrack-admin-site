@@ -21,10 +21,10 @@ import { RoutingControlService, WaypointMarkerService, RoutePlannerService, Admi
 import { IHikeProgramStored, IHikeProgram, IPoi, IRoute, EObjectState, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
+import { HikeProgramService } from 'app/shared/services';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
-import { HikeProgramService } from 'app/shared/services';
 
 @Component({
   selector: 'gt-hike-edit',

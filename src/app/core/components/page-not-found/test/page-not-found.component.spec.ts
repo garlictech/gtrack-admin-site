@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { PageNotFoundComponent } from '../page-not-found.component';
+import { PageNotFoundComponent } from '../index';
 
 let comp: PageNotFoundComponent;
 let fixture: ComponentFixture<PageNotFoundComponent>;

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ToasterConfig, BodyOutputType } from 'angular2-toaster';
 import { load } from 'webfontloader';
+import { ToasterConfig, BodyOutputType } from 'angular2-toaster';
 
 @Component({
-  selector: 'gtrack-main',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-root',
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
   public toasterConfig: ToasterConfig = new ToasterConfig({

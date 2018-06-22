@@ -1,0 +1,43 @@
+.layout-wrapper {
+  position: relative;
+  bottom: 0;
+
+  .layout-main {
+
+    width: 100%;
+    height: 100%;
+
+    // position: absolute;
+    // top: 0;
+    // bottom: 0;
+
+    .layout-content {
+      width: 100%;
+      padding-top: 60px;
+
+      // position: absolute;
+      // bottom: 0;
+      // top: 0;
+    }
+
+    .layout-main-mask {
+      display: none;
+    }
+
+    .layout-footer {
+      width: 100%;
+      padding: 1em 1.5em;
+      background-color: $footerBgColor;
+      position: relative;
+      bottom: 0;
+
+      .footer-text-right {
+        margin-top: 0.5em;
+
+        span {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}

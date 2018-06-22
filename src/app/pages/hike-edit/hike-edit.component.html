@@ -1,58 +1,42 @@
-<div class="content" [hidden]='working$ | async'>
-  <div class="container-fluid">
+<gt-table-spinner *ngIf="(working$ | async) as working; else pageContent"></gt-table-spinner>
 
-    <div class="row mb-3">
-      <div class="col-md-12">
-        <div class="pull-right" *ngIf="(hikeProgramState$ | async) as hikeProgramState">
-          <button
-            class="btn btn-sm btn-fill btn-success"
-            (click)="updateHikeState(EObjectState.published)"
-            title="Publish hike"
-            *ngIf="paramsId && hikeProgramState === EObjectState.draft"
-          >Publish</button>
-          <button
-            class="btn btn-sm btn-fill btn-secondary"
-            (click)="updateHikeState(EObjectState.draft)"
-            title="Move to draft"
-            *ngIf="paramsId && hikeProgramState === EObjectState.archived"
-          >Draft</button>
-          <button
-            class="btn btn-sm btn-fill btn-danger"
-            (click)="updateHikeState(EObjectState.archived)"
-            title="Archive hike"
-            *ngIf="paramsId && hikeProgramState === EObjectState.published"
-          >Archive</button>
+<ng-template #pageContent>
+  <div class="ui-fluid">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <div class="f-right" *ngIf="(hikeProgramState$ | async) as hikeProgramState">
+          <p-button label="Publish" styleClass="ui-button-success" (click)="updateHikeState(EObjectState.published)" title="Publish hike"
+            *ngIf="paramsId && hikeProgramState === EObjectState.draft"></p-button>
+          <p-button label="Draft" styleClass="ui-button-secondary" (click)="updateHikeState(EObjectState.draft)" title="Move to draft"
+            *ngIf="paramsId && hikeProgramState === EObjectState.archived"></p-button>
+          <p-button label="Archive" styleClass="ui-button-danger" (click)="updateHikeState(EObjectState.archived)" title="Archive hike"
+            *ngIf="paramsId && hikeProgramState === EObjectState.published"></p-button>
 
-          <button class="btn btn-sm btn-fill btn-success" (click)="saveHike()" [disabled]="!(allowSave$ | async)">Save hike</button>
+          <p-button label="Save hike" styleClass="ui-button-success" (click)="saveHike()" [disabled]="!(allowSave$ | async)"></p-button>
         </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">General info</h4>
-          </div>
-          <div class="card-body">
-            <gt-hike-edit-general-info></gt-hike-edit-general-info>
-          </div>
-        </div>
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-card title="General info">
+          <gt-hike-edit-general-info></gt-hike-edit-general-info>
+        </p-card>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Map</h4>
-          </div>
-          <div class="card-body">
+    <div class="ui-g">
+        <div class="ui-g-12">
+          <p-card title="Map">
             <gt-hike-edit-map></gt-hike-edit-map>
-          </div>
+          </p-card>
         </div>
       </div>
-    </div>
+
+  </div>
+</ng-template>
+
+<!--div class="row">
 
     <div class="row">
       <div class="col-md-12">
@@ -108,6 +92,4 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div-->

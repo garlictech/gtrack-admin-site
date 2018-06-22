@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'subrepos/authentication-api-ngx';
-import { LayoutComponent } from './core/components/layout';
 import { PageNotFoundComponent } from './core/components/page-not-found';
 import { LoginComponent } from './auth/components/login';
 import { HikeListComponent } from './pages/hike-list';
 import { HikeEditComponent } from './pages/hike-edit';
+import { LayoutComponent } from './core/components/layout';
 
 export const routes: Routes = [
   {

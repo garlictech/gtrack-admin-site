@@ -1,25 +1,36 @@
 import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
-import { FooterComponent } from './components/footer/footer.component';
-import { LayoutComponent } from './components/layout/layout.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { LayoutComponent } from './components/layout';
+import { MenuComponent } from './components/menu';
+import { TopBarComponent } from './components/topbar';
+import { FooterComponent } from './components/footer';
+import { SubMenuComponent } from './components/sub-menu';
+import { PageNotFoundComponent } from './components/page-not-found';
+import { ScrollPanelModule, CardModule  } from 'primeng/primeng';
 
 const COMPONENTS = [
-  FooterComponent,
-  LayoutComponent,
-  NavbarComponent,
   PageNotFoundComponent,
-  SidebarComponent
+
+  //
+  // PrimeNG wireframe:
+  // https://github.com/primefaces/primeng-blueprint
+  //
+
+  LayoutComponent,
+  MenuComponent,
+  SubMenuComponent,
+  TopBarComponent,
+  FooterComponent
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    // PrimeNG
+    ScrollPanelModule,
+    CardModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS],

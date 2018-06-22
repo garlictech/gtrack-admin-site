@@ -11,6 +11,7 @@ import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
 import { LanguageService } from 'app/shared/services';
 
 import * as _ from 'lodash';
+import { SelectItem } from 'primeng/primeng';
 
 @Component({
   selector: 'gt-hike-list',
@@ -21,6 +22,7 @@ export class HikeListComponent implements OnInit, OnDestroy {
   public hikeList$: Observable<IHikeProgramStored[]>;
   public EObjectState = EObjectState;
   public selectedListState: EObjectState = EObjectState.published;
+  public listStates: SelectItem[] = [];
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -31,6 +33,12 @@ export class HikeListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._title.setTitle('Hikes');
+
+    this.listStates = [
+      { label: 'Published', value: 'published' },
+      { label: 'Draft', value: 'draft' },
+      { label: 'Archived', value: 'archived' }
+    ];
 
     this.hikeList$ = this._store
       .select(this._hikeSelectors.getActiveHikes())
@@ -43,10 +51,6 @@ export class HikeListComponent implements OnInit, OnDestroy {
   ngOnDestroy( ) {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
-  }
-
-  public selectStateList(state: EObjectState) {
-    this.selectedListState = state;
   }
 
   public deleteHike(hikeId: string) {

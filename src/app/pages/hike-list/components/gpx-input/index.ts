@@ -14,7 +14,8 @@ import * as _ from 'lodash';
 
 @Component({
   selector: 'gt-gpx-input',
-  templateUrl: 'ui.html'
+  templateUrl: 'ui.html',
+  styles: ['input[type=file] { display: none; }']
 })
 export class GpxInputComponent {
   @Input() callback: any;
@@ -32,7 +33,8 @@ export class GpxInputComponent {
   }
 
   public gpxInputListener($event) {
-    const file = $event.target.files[0];
+    console.log($event);
+    const file = $event.files[0];
 
     if (file) {
       this._loadFile(file).then((content: string) => {
@@ -87,24 +89,4 @@ export class GpxInputComponent {
       _geometry.coordinates = _.cloneDeep(_lineString);
     }
   }
-  /* Temporary disabled
-  public route() {
-    const _segments = turf.lineChunk(this.gpxRoute.route, 10, {units: 'kilometers'});
-
-    Observable
-      .interval(500)
-      .take(_segments.features.length)
-      .subscribe((idx) => {
-        const _coords = _.get(_segments.features[idx], 'geometry.coordinates', null);
-        const _firstCoord = _.first(_coords);
-        this._waypointMarkerService.addWaypoint(L.latLng((<any>_firstCoord)[1], (<any>_firstCoord)[0]));
-
-        // Add the last coord of the last segment
-        if (idx === _segments.features.length - 1) {
-          const _lastCoord = _.last(_coords);
-          this._waypointMarkerService.addWaypoint(L.latLng((<any>_lastCoord)[1], (<any>_lastCoord)[0]));
-        }
-      });
-  }
-  */
 }

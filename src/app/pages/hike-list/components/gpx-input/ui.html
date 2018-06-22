@@ -1,6 +1,7 @@
 <input type="file" class="hidden" (change)="gpxInputListener($event)" accept=".gpx" #gpxInput/>
 
-<button class="btn btn-sm btn-round" (click)="openGPX()">
-  <i class="material-icons">gesture</i>
-</button>
-<!--button class="btn btn-sm btn-fill btn-primary" [disabled]="!gpxRoute" (click)="route()">Routing</button-->
+<p-button
+  label="Import GPX"
+  (click)="openGPX()"
+  styleClass="ui-button-success"
+></p-button>

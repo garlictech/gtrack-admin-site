@@ -1,0 +1,28 @@
+<div class="ui-fluid">
+  <div class="ui-g mt-50">
+    <div class="ui-md-4 ui-md-offset-4">
+      <p-card class="ui-card">
+        <p class="ui-card-title">Login</p>
+
+        <p class="ui-card-content">
+          <button class="btn-google cursor-pointer" type="button" (click)="login()">
+            <i class="fab fa-google" aria-hidden="true"></i>
+
+            <ng-container *ngIf="(loggingIn$ | async) as loggingIn; then loginSpinner; else loginButton"></ng-container>
+
+            <ng-template #loginButton>
+              <span>Login with Google</span>
+            </ng-template>
+
+            <ng-template #loginSpinner>
+              <span>
+                Logging in...
+                <i class="fa-li fa fa-spinner fa-spin login-spinner"></i>
+              </span>
+            </ng-template>
+          </button>
+        </p>
+      </p-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="layout-wrapper" [ngClass]="{'layout-sidebar-active': sidebarActive}">
+  <app-menu [sidebarActive]="sidebarActive" [onMenuButtonClick]="onMenuButtonClick"></app-menu>
+  <app-topbar [onMenuButtonClick]="onMenuButtonClick"></app-topbar>
+
+  <div class="layout-main">
+    <div class="layout-content">
+      <router-outlet></router-outlet>
+    </div>
+
+    <app-footer></app-footer>
+
+    <div class="layout-main-mask"></div>
+  </div>
+</div>

@@ -1,77 +1,63 @@
-<div class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-              <button
-                class="btn btn-round btn-sm float-right"
-                routerLink="/admin/hike/new"
-                title="Add new hike"
-              ><i class="material-icons">add</i></button>
+<div class="ui-fluid">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-card title="Hikes">
+        <div class="mb-20">
+          <p-button label="New hike" class="f-right" styleClass="ui-button-success" routerLink="/admin/hike/new"></p-button>
 
-              <gt-gpx-input title="Import GPX" class="float-right"></gt-gpx-input>
-            <h4 class="card-title">
-              Hikes
-              <div class="btn-group btn-toggle">
-                <button
-                  type="button"
-                  *ngFor="let state of [EObjectState.published, EObjectState.draft, EObjectState.archived]"
-                  (click)="selectStateList(state)"
-                  [ngClass]="{'btn-fill': selectedListState === state}"
-                  class="btn btn-round btn-sm ml-3"
-                >{{state}}</button>
-              </div>
-            </h4>
-          </div>
-          <div class="card-body">
-            <ng-template #hikeListSpinner>
-              <gt-table-spinner></gt-table-spinner>
-            </ng-template>
+          <gt-gpx-input title="Import GPX" class="f-right mr-10"></gt-gpx-input>
 
-            <div class="table-responsive" *ngIf="(hikeList$ | async) as hikeList; else hikeListSpinner">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Summary</th>
-                    <th>Published</th>
-                    <th>&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <ng-container *ngFor="let hike of hikeList">
-                    <tr *ngIf="hike.state === selectedListState">
-                      <td class="text-nowrap">
-                        <div>
-                          <a href="#" routerLink="/admin/hike/{{hike.id}}">{{translateDescription(hike.description, 'title')}}</a>
-                        </div>
-                        <div><small class="text-secondary">ID: {{hike.id}}</small></div>
-                        <div><small class="text-secondary">Last update: {{hike.timestamp | date: 'yyyy.MM.dd. HH:mm'}}</small></div>
-                      </td>
-                      <td>{{translateDescription(hike.description, 'summary')}}</td>
-                      <td>{{hike.published | date: 'yyyy.MM.dd. HH:mm'}}</td>
-                      <td class="td-actions">
-                        <button
-                          class="btn btn-warning btn-simple btn-link"
-                          routerLink="/admin/hike/{{hike.id}}"
-                          title="Edit hike"
-                        ><i class="material-icons">edit</i></button>
-                        <button
-                          class="btn btn-danger btn-simple btn-link"
-                          (click)="deleteHike(hike.id)"
-                          title="Delete hike"
-                          *ngIf="hike.state === EObjectState.draft && !hike.published"
-                        ><i class="material-icons">delete</i></button>
-                      </td>
-                    </tr>
-                  </ng-container>
-                </tbody>
-              </table>
-            </div>
+          <div class="ui-md-3 ui-g-nopad f-left">
+            <p-selectButton [options]="listStates" [(ngModel)]="selectedListState"></p-selectButton>
           </div>
+
+          <div class="clearfix"></div>
         </div>
-      </div>
+
+        <ng-template #hikeListSpinner>
+          <gt-table-spinner></gt-table-spinner>
+        </ng-template>
+
+        <ng-container *ngIf="(hikeList$ | async) as hikeList; else hikeListSpinner">
+          <p-table [value]="hikeList">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Title</th>
+                <th>Summary</th>
+                <th>Published</th>
+                <th>&nbsp;</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-hike>
+              <tr *ngIf="hike.state === selectedListState">
+                <td>
+                  <div>
+                    <a href="#" routerLink="/admin/hike/{{hike.id}}">
+                      {{translateDescription(hike.description, 'title')}}
+                    </a>
+                  </div>
+                  <div>
+                    <small class="text-secondary">ID: {{hike.id}}</small>
+                  </div>
+                  <div>
+                    <small class="text-secondary">Last update: {{hike.timestamp | date: 'yyyy.MM.dd. HH:mm'}}</small>
+                  </div>
+                </td>
+                <td>{{translateDescription(hike.description, 'summary')}}</td>
+                <td>{{hike.published | date: 'yyyy.MM.dd. HH:mm'}}</td>
+                <td class="td-actions">
+                  <button class="btn btn-warning btn-simple btn-link" routerLink="/admin/hike/{{hike.id}}" title="Edit hike">
+                    <i class="material-icons">edit</i>
+                  </button>
+                  <button class="btn btn-danger btn-simple btn-link" (click)="deleteHike(hike.id)" title="Delete hike" *ngIf="hike.state === EObjectState.draft && !hike.published">
+                    <i class="material-icons">delete</i>
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </ng-container>
+      </p-card>
     </div>
   </div>
 </div>

@@ -8,6 +8,8 @@ import { ObjectToArrayPipe } from 'app/shared/pipes';
 import { TrustedHtmlPipe } from 'app/shared/pipes';
 // Modules
 import { DynamicModalService } from 'subrepos/gtrack-common-ngx';
+// PrimeNG
+import { ButtonModule, CardModule } from 'primeng/primeng';
 // Components
 import { HikeEditComponent } from './hike-edit.component';
 import {
@@ -78,7 +80,10 @@ const COMPONENTS = [
     SharedModule,
     TagInputModule,
     SharedComponentsModule,
-    LanguageModule
+    LanguageModule,
+    // PrimeNG
+    ButtonModule,
+    CardModule
   ],
   exports: [...COMPONENTS],
   declarations: [ObjectToArrayPipe, TrustedHtmlPipe, ...COMPONENTS],
