@@ -1,2 +1,2 @@
-FROM garlictech2/angular2-app-server:v6.0.9
+FROM garlictech2/angular2-app-server:v6.1.2
 COPY artifacts/dist/ /usr/share/nginx/html

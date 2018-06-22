@@ -6,7 +6,7 @@ export class Environment implements IEnvironment {
   webappServer = 'http://localhost:8081';
   deepstream = 'ws://localhost:6020/deepstream';
 
-  lambdaEndpoint = 'https://ii1rrhpq2a.execute-api.us-east-1.amazonaws.com/latest';
+  lambdaEndpoint = 'https://y3nuwgmlpc.execute-api.us-east-1.amazonaws.com/latest';
 
   authentication = {
     server: 'https://lz679q1jla.execute-api.us-east-1.amazonaws.com/latest',
@@ -21,8 +21,5 @@ export class Environment implements IEnvironment {
 
   googlePhotoLimit = 2;
 
-  awsConfig = {
-    s3: 'to-be-configured',
-    policyGenerator: this.lambdaEndpoint + '/generate-s3-policy'
-  };
+  awsConfig = { s3: 'to-be-configured', policyGenerator: this.lambdaEndpoint + '/generate-s3-policy' };
 }

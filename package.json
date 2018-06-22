@@ -144,7 +144,7 @@
         "@types/d3": "^4.13.0",
         "@types/geojson": "^7946.0.3",
         "@types/googlemaps": "^3.30.9",
-        "@types/jasmine": "^2.8.8",
+        "@types/jest": "^23.1.0",
         "@types/jquery": "^3.3.2",
         "@types/leaflet": "^1.2.7",
         "@types/lodash": "^4.14.108",
@@ -155,15 +155,16 @@
         "codelyzer": "^4.3.0",
         "css-loader": "^0.28.11",
         "cucumber": "^4.2.1",
-        "jasmine-core": "^2.99.1",
-        "jasmine-marbles": "^0.2.0",
+        "jest": "^23.1.0",
+        "jest-marbles": "^1.2.0",
+        "jest-preset-angular": "^5.2.2",
         "protractor": "^5.3.1",
         "tslib": "^1.9.2",
         "tslint": "^5.10.0",
         "typescript": "^2.9.2"
     },
     "config": {
-        "dockerWorkflowVersion": "v6.0.9",
+        "dockerWorkflowVersion": "v6.1.2",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }
