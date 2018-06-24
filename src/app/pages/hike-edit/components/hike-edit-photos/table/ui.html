@@ -16,13 +16,11 @@
         </td>
         <td [innerHTML]="image.title | trustedHtml"></td>
         <td>
-          <span class="form-check p-0">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" name="image" [checked]="(backgroundOriginalUrls$ | async)?.indexOf(image.original.url) >= 0"
-                (click)="toggleBackgroundImage(image)">
-              <span class="form-check-sign"></span>
-            </label>
-          </span>
+          <p-checkbox
+            binary="true"
+            [(ngModel)]="imageSelections[image.original.url]"
+            (onChange)="toggleBackgroundImage(image)"
+          ></p-checkbox>
         </td>
       </tr>
     </ng-template>

@@ -99,7 +99,6 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
           required: false,
           rows: 2
         }),
-        // fullDescription: new EmojiField({ label: 'form.description', required: false })
         fullDescription: new TextareaField({ label: 'form.description', required: false })
       }
     };
@@ -111,7 +110,11 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
 
   public addTranslation() {
     if (this.selectedLanguage) {
-      this.submitFv(this.selectedLanguage.value, { title: 'A new hike' });
+      this.submitFv(this.selectedLanguage.value, {
+        title: 'A new hike',
+        fullDescription: '',
+        summary: ''
+      });
     }
   }
 

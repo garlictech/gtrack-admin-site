@@ -1,9 +1,9 @@
 <div *ngIf="poi.objectType === 'wikipedia'">
-  <a (click)="openModal(poi)">Info</a>
+  <a (click)="openPoiModal(poi)">Info</a>
 </div>
 
 <div *ngIf="poi.objectType === 'google'">
-  <a (click)="openModal(poi)">Info</a>
+  <a (click)="openPoiModal(poi)">Info</a>
 </div>
 
 <div *ngIf="poi.objectType.substring(0, 3) === 'osm'">

@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { State, hikeEditPoiActions, editedHikeProgramActions } from 'app/store';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import { LanguageService } from 'app/shared/services';
-import { IDynamicComponentModalConfig, DynamicModalService } from 'subrepos/gtrack-common-ngx';
 
 @Component({
   selector: 'hike-edit-pois-hike-table',
@@ -13,35 +12,16 @@ import { IDynamicComponentModalConfig, DynamicModalService } from 'subrepos/gtra
 export class HikeEditPoisHikeTableComponent {
   @Input() pois$: IGTrackPoi[];
   @Input() onRouteCheck: boolean;
+  @Input() openGTrackPoiModal: any;
 
   constructor(
-    private _store: Store<State>,
-    private _dynamicModalService: DynamicModalService
+    private _store: Store<State>
   ) {}
 
   public removePoi($event, poi) {
     $event.stopPropagation();
 
     this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId([poi.id]));
-  }
-
-  public openModal($event, poi: IGTrackPoi) {
-    $event.stopPropagation();
-
-    const modalConfig: IDynamicComponentModalConfig = {
-      component: {
-        contentComponentName: 'HikeEditGTrackPoiInfoComponent',
-        data: {
-          poiId: <string>poi.id
-        }
-      },
-      modal: {
-        title: LanguageService.translateDescription(poi.description, 'title'),
-        className: 'modal-lg',
-        hasFooter: false
-      }
-    };
-    this._dynamicModalService.showComponentModal(modalConfig);
   }
 
   public translateDescription(description, field) {

@@ -7,7 +7,7 @@ import { TopBarComponent } from './components/topbar';
 import { FooterComponent } from './components/footer';
 import { SubMenuComponent } from './components/sub-menu';
 import { PageNotFoundComponent } from './components/page-not-found';
-import { ScrollPanelModule, CardModule  } from 'primeng/primeng';
+import { ScrollPanelModule, CardModule } from 'primeng/primeng';
 
 const COMPONENTS = [
   PageNotFoundComponent,

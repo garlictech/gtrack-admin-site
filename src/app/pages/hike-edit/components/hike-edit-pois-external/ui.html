@@ -1,3 +1,17 @@
+<p-dialog
+  header="{{translateDescription(modalPoi?.description, 'title')}}"
+  [(visible)]="displayPoiModal"
+  [modal]="true"
+  [closable]="true"
+  [width]="600"
+  >
+  <gt-hike-edit-external-poi-info
+    *ngIf="displayPoiModal"
+    [poi]="modalPoi"
+    [closeCallback]="closeDialog"
+  ></gt-hike-edit-external-poi-info>
+</p-dialog>
+
 <div class="clearfix mb-20">
   <div class="f-left">
     <p-button
@@ -21,7 +35,7 @@
       label="Show offroute markers"
       binary="true"
       [(ngModel)]="showOffrouteMarkers"
-      (onClick)="toggleOffrouteMarkers()"
+      (onChange)="toggleOffrouteMarkers()"
     ></p-checkbox>
 
     <p-checkbox
@@ -29,7 +43,7 @@
       label="Show onroute markers"
       binary="true"
       [(ngModel)]="showOnrouteMarkers"
-      (onClick)="toggleOnrouteMarkers()"
+      (onChange)="toggleOnrouteMarkers()"
     ></p-checkbox>
   </div>
 </div>
@@ -42,15 +56,17 @@
       <hike-edit-pois-external-table
         [pois$]="pois$"
         [subdomain]="poiType.subdomain"
-        [onRouteCheck]="true">
-      </hike-edit-pois-external-table>
+        [onRouteCheck]="true"
+        [openPoiModal]="openPoiModal"
+      ></hike-edit-pois-external-table>
     </p-accordionTab>
     <p-accordionTab header="Off route pois">
       <hike-edit-pois-external-table
         [pois$]="pois$"
         [subdomain]="poiType.subdomain"
-        [onRouteCheck]="false">
-      </hike-edit-pois-external-table>
+        [onRouteCheck]="false"
+        [openPoiModal]="openPoiModal"
+      ></hike-edit-pois-external-table>
     </p-accordionTab>
   </p-accordion>
 </ng-template>

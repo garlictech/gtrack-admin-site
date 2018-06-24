@@ -4,33 +4,9 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as Raven from 'raven-js';
 
-import {
-  SharedModule,
-  DeepstreamModule,
-  RouteEffects,
-  PoiEffects,
-  HikeEffects,
-  AuthenticationModule as CommonAuthenticationModule,
-  DynamicModalModule,
-  HikeModule,
-  GeoSearchModule,
-  GeoSearchEffects,
-  BackgroundGeolocationEffects,
-  BackgroundGeolocationModule
-} from 'subrepos/gtrack-common-ngx';
-
-import { LanguageModule } from './language';
-
 // App
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import {
-  AuthEffects,
-  HikeEditPoiEffects,
-  EditedHikeProgramEffects,
-  EditedGTrackPoiEffects,
-  HikeEditImageEffects
-} from './store/effects';
 
 import { APP_DECLARATIONS } from './app.declarations';
 import { APP_ENTRY_COMPONENTS } from './app.entry-components';

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from 'app/shared/services/admin-map';
-import { PoiEditorService } from 'app/shared/services';
+import { PoiEditorService, LanguageService } from 'app/shared/services';
 import { Poi, PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import { IPoi } from 'subrepos/provider-client';
 import {
@@ -24,12 +24,14 @@ import * as _ from 'lodash';
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   @Input() poiType: IExternalPoiType;
   public pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
+  public modalPoi: IWikipediaPoi | IGooglePoi | IOsmPoi;
   public saveablePois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
   public routePath$: Observable<any>;
   public loading$: Observable<boolean>;
   public saving$: Observable<boolean>;
   public showOnrouteMarkers = true;
   public showOffrouteMarkers = true;
+  public displayPoiModal = false;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -270,5 +272,14 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
         }
       });
+  }
+
+  public openPoiModal = (poi) => {
+    this.modalPoi = _.cloneDeep(poi);
+    this.displayPoiModal = true;
+  }
+
+  public translateDescription(description, field) {
+    return LanguageService.translateDescription(description, field);
   }
 }

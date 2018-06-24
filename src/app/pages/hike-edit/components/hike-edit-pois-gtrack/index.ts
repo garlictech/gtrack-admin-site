@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import {
-  PoiSelectors, CenterRadius, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, IGeoSearchResponseItem, IDynamicComponentModalConfig, DynamicModalService
+  PoiSelectors, CenterRadius, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, IGeoSearchResponseItem
 } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
@@ -34,6 +34,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public mergedPoiIds: string[] = [];
   public mergedPoiData: any;
   public displayMergeModal = false;
+  public displayGTrackPoiModal = false;
+  public modalPoiId: string;
 
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -48,8 +50,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
-    private _poiSelectors: PoiSelectors,
-    private _dynamicModalService: DynamicModalService,
+    private _poiSelectors: PoiSelectors
   ) {}
 
   ngOnInit() {
@@ -215,7 +216,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     this._store.dispatch(new commonPoiActions.MergePoi(this.mergedPoiIds, this.mergedPoiData));
   }
 
-  public closeDialog = () => {
-    this.displayMergeModal = false;
+  public openGTrackPoiModal = (poiId: string) => {
+    this.modalPoiId = poiId;
+    this.displayGTrackPoiModal = true;
   }
 }

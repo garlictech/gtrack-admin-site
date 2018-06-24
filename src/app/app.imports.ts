@@ -8,7 +8,6 @@ import { environment } from 'environments/environment';
 
 import {
   GtrackCommonModule,
-  DynamicModalModule,
   SearchFiltersModule,
   DeepstreamModule,
   AuthenticationModule as CommonAuthenticationModule,
@@ -79,7 +78,6 @@ export const APP_IMPORTS = [
   GenericComponentsModule,
   AuthenticationApiModule.forRoot(getConfig),
   LanguageModule,
-  DynamicModalModule,
   StoreDevtoolsModule.instrument({
     maxAge: 25
   }),
@@ -108,6 +106,5 @@ export const APP_IMPORTS = [
     HikeEffects, PoiEffects, RouteEffects, GeoSearchEffects, BackgroundGeolocationEffects
   ]),
   ToasterModule.forRoot(),
-  FormModule,
-  DynamicModalModule
+  FormModule
 ];

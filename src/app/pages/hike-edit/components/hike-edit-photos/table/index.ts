@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import { State, editedHikeProgramActions } from 'app/store';
 import { IBackgroundImageData } from 'subrepos/provider-client';
@@ -8,24 +9,38 @@ import { IBackgroundImageData } from 'subrepos/provider-client';
   selector: 'gt-hike-edit-photos-table',
   templateUrl: './ui.html'
 })
-export class HikeEditPhotosTableComponent {
+export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
   @Input() images$: Observable<IBackgroundImageData[]>;
   @Input() backgroundOriginalUrls$: Observable<string[]>;
   @Input() clickActions: any;
+  public imageSelections: {[id: string]: boolean} = {}
+  private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor (
     private _store: Store<State>,
   ) {}
 
-  public toggleBackgroundImage(image: IBackgroundImageData) {
+  ngOnInit() {
     this.backgroundOriginalUrls$
       .take(1)
       .subscribe((backgroundOriginalUrls: string[]) => {
-        if (backgroundOriginalUrls.indexOf(image.original.url) < 0) {
-          this.clickActions.add(image);
-        } else {
-          this.clickActions.remove(image.original.url);
-        }
+        this.imageSelections = {};
+        backgroundOriginalUrls.map(url => {
+          this.imageSelections[url] = true;
+        });
       });
+  }
+
+  ngOnDestroy() {
+    this._destroy$.next(true);
+    this._destroy$.unsubscribe();
+  }
+
+  public toggleBackgroundImage(image: IBackgroundImageData) {
+    if (!this.imageSelections[image.original.url]) {
+      this.clickActions.remove(image.original.url);
+    } else {
+      this.clickActions.add(image);
+    }
   }
 }

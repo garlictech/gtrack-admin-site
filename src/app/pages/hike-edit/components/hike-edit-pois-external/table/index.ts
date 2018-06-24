@@ -13,6 +13,7 @@ export class HikeEditPoisExternalTableComponent {
   @Input() pois$: IExternalPoi[];
   @Input() subdomain: string;
   @Input() onRouteCheck: boolean;
+  @Input() openPoiModal: any;
 
   constructor(
     private _store: Store<State>

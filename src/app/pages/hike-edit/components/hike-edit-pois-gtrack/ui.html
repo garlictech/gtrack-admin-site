@@ -1,4 +1,3 @@
-
 <p-dialog
   header="Merge pois"
   [(visible)]="displayMergeModal"
@@ -10,10 +9,21 @@
     *ngIf="displayMergeModal"
     [conflicts]="mergeProperties.conflicts"
     [saveCallback]="saveMergedPoi"
-    [closeCallback]="closeDialog"
   ></gt-hike-edit-merge-gtrack-poi-info>
 </p-dialog>
 
+<p-dialog
+  header="Merge pois"
+  [(visible)]="displayGTrackPoiModal"
+  [modal]="true"
+  [closable]="true"
+  [width]="600"
+>
+  <gt-hike-edit-gtrack-poi-info
+    *ngIf="displayGTrackPoiModal"
+    [poiId]="modalPoiId"
+  ></gt-hike-edit-gtrack-poi-info>
+</p-dialog>
 
 <div class="clearfix mb-20">
   <div class="f-left">
@@ -38,7 +48,7 @@
       label="Show offroute markers"
       binary="true"
       [(ngModel)]="showOffrouteMarkers"
-      (click)="toggleOffrouteMarkers()"
+      (onChange)="toggleOffrouteMarkers()"
     ></p-checkbox>
 
     <p-checkbox
@@ -46,7 +56,7 @@
       label="Show onroute markers"
       binary="true"
       [(ngModel)]="showOnrouteMarkers"
-      (click)="toggleOnrouteMarkers()"
+      (onChange)="toggleOnrouteMarkers()"
     ></p-checkbox>
   </div>
 </div>
@@ -59,12 +69,14 @@
       <hike-edit-pois-gtrack-table
         [pois$]="pois$"
         [onRouteCheck]="true"
+        [openGTrackPoiModal]="openGTrackPoiModal"
       ></hike-edit-pois-gtrack-table>
     </p-accordionTab>
     <p-accordionTab header="Off route pois">
       <hike-edit-pois-gtrack-table
         [pois$]="pois$"
         [onRouteCheck]="false"
+        [openGTrackPoiModal]="openGTrackPoiModal"
       ></hike-edit-pois-gtrack-table>
     </p-accordionTab>
   </p-accordion>

@@ -6,8 +6,6 @@ import { FormModule } from 'app/forms';
 // Pipes
 import { ObjectToArrayPipe } from 'app/shared/pipes';
 import { TrustedHtmlPipe } from 'app/shared/pipes';
-// Modules
-import { DynamicModalService } from 'subrepos/gtrack-common-ngx';
 // PrimeNG
 import { ButtonModule, CardModule, SelectButtonModule, AccordionModule, CheckboxModule, DialogModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
@@ -95,7 +93,6 @@ const COMPONENTS = [
   declarations: [ObjectToArrayPipe, TrustedHtmlPipe, ...COMPONENTS],
   entryComponents: [...COMPONENTS],
   providers: [
-    DynamicModalService,
     GeospatialService,
     PoiMergeService
   ]

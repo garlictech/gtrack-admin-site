@@ -70,7 +70,7 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
     case editedGTrackPoiActions.ADD_POI_BACKGROUND_IMAGE: {
       newState.dirty = true;
       newState.data.backgroundImages = [
-        ...<any>state.data.backgroundImages,
+        ...(<any>state.data.backgroundImages || []),
         action.imageData
       ]
 
@@ -79,7 +79,7 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
 
     case editedGTrackPoiActions.REMOVE_POI_BACKGROUND_IMAGE: {
       newState.dirty = true;
-      newState.data.backgroundImages = (<any>newState.data.backgroundImages).filter(img => img.original.url !== action.origUrl);
+      newState.data.backgroundImages = (<any>newState.data.backgroundImages || []).filter(img => img.original.url !== action.origUrl);
       return newState;
     }
 

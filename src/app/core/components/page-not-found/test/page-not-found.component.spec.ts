@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component } from '@angular/core';
 import { PageNotFoundComponent } from '../index';
+import { CardModule } from 'primeng/card';
 
 let comp: PageNotFoundComponent;
 let fixture: ComponentFixture<PageNotFoundComponent>;

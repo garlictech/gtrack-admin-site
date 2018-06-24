@@ -1,19 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { IDynamicComponentModalConfig } from 'subrepos/gtrack-common-ngx';
+import { Component, Input } from '@angular/core';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 
 @Component({
   selector: 'gt-hike-edit-external-poi-info',
   templateUrl: './ui.html'
 })
-export class HikeEditExternalPoiInfoComponent implements OnInit {
+export class HikeEditExternalPoiInfoComponent {
   public static componentName = 'HikeEditExternalPoiInfoComponent';
-  public poi: any;
-  public modalConfig: IDynamicComponentModalConfig;
+  @Input() poi: IWikipediaPoi | IGooglePoi | IOsmPoi;
+  @Input() closeCallback: any;
 
-  ngOnInit() {
-    if (this.modalConfig && this.modalConfig.component.data) {
-      this.poi = this.modalConfig.component.data.poi;
-    }
-  }
 }

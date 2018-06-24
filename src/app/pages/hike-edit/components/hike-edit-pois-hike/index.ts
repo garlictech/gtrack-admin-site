@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { PoiSelectors, GeoSearchSelectors, Poi } from 'subrepos/gtrack-common-ngx';
-import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { PoiEditorService, HikeProgramService } from 'app/shared/services';
@@ -23,6 +22,8 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
   public pois$: Observable<IGTrackPoi[]>;
   public showOnrouteMarkers = true;
   public showOffrouteMarkers = true;
+  public displayGTrackPoiModal = false;
+  public modalPoiId: string;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -149,5 +150,10 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
    */
   public toggleOffrouteMarkers() {
     this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('hike'));
+  }
+
+  public openGTrackPoiModal = (poiId: string) => {
+    this.modalPoiId = poiId;
+    this.displayGTrackPoiModal = true;
   }
 }

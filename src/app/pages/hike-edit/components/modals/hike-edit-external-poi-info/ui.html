@@ -1,6 +1,6 @@
 <div *ngIf="poi.wikipedia">
   <div [innerHTML]="poi.wikipedia.extract"></div>
-  <div class="mt-2">
+  <div class="mt-20">
     <a [href]="poi.wikipedia.url" target="_blank">WikiPedia</a>
   </div>
 </div>
@@ -18,7 +18,7 @@
       <strong>Opening hours:</strong>
       <div *ngFor="let day of poi.google.opening_hours.weekday_text" [innerHTML]="day"></div>
     </div>
-  <div class="mt-2">
+  <div class="mt-20">
     <a href="https://www.google.com/maps/place/?q=place_id:{{poi.google.id}}" target="_blank">Google</a>
   </div>
 </div>

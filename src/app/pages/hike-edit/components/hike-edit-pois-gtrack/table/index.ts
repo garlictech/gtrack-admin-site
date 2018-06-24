@@ -5,7 +5,6 @@ import { State, editedHikeProgramActions, hikeEditPoiActions } from 'app/store';
 import { Subject } from 'rxjs/Subject';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import { LanguageService } from 'app/shared/services';
-import { IDynamicComponentModalConfig, DynamicModalService } from 'subrepos/gtrack-common-ngx';
 import { HikeEditRoutePlannerSelectors, HikeEditPoiSelectors } from 'app/store/selectors';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 
@@ -16,12 +15,12 @@ import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/service
 export class HikeEditPoisGTrackTableComponent implements OnInit, OnDestroy {
   @Input() pois$: IGTrackPoi[];
   @Input() onRouteCheck: boolean;
+  @Input() openGTrackPoiModal: any;
   public mergeSelections: {[id: string]: boolean} = {}
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
-    private _dynamicModalService: DynamicModalService,
     private _geospatialService: GeospatialService,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
@@ -74,25 +73,6 @@ export class HikeEditPoisGTrackTableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
-  }
-
-  public openModal($event, poi: IGTrackPoi) {
-    $event.stopPropagation();
-
-    const modalConfig: IDynamicComponentModalConfig = {
-      component: {
-        contentComponentName: 'HikeEditGTrackPoiInfoComponent',
-        data: {
-          poiId: <string>poi.id
-        }
-      },
-      modal: {
-        title: LanguageService.translateDescription(poi.description, 'title'),
-        className: 'modal-lg',
-        hasFooter: false
-      }
-    };
-    this._dynamicModalService.showComponentModal(modalConfig);
   }
 
   public translateDescription(description, field) {

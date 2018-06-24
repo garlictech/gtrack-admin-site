@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
+import { IComparedProperty, IFilteredProperties } from '../../interfaces';
 import * as flatten from 'flat';
 import * as _ from 'lodash';
-import { IDynamicComponentModalConfig, DynamicModalService } from 'subrepos/gtrack-common-ngx';
-import { IComparedProperty, IFilteredProperties } from '../../interfaces';
 
 @Injectable()
 export class PoiMergeService {
-
-  constructor(
-    private _dynamicModalService: DynamicModalService
-  ) {}
 
   public collectFlatKeyValues(pois) {
     // Collect properties
@@ -63,23 +58,5 @@ export class PoiMergeService {
     }
 
     return poiData;
-  }
-
-  public openConflictModal(conflicts: IComparedProperty, callback: any) {
-    const modalConfig: IDynamicComponentModalConfig = {
-      component: {
-        contentComponentName: 'HikeEditMergeGTrackPoiComponent',
-        data: {
-          conflicts: conflicts,
-          saveCallback: callback
-        }
-      },
-      modal: {
-        title: 'Merge pois',
-        className: 'modal-lg',
-        hasFooter: false
-      }
-    };
-    this._dynamicModalService.showComponentModal(modalConfig);
   }
 }

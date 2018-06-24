@@ -19,7 +19,7 @@
         <td>{{poi.distFromRoute | distance : true}}</td>
         <td>{{poi.types.join(', ')}}</td>
         <td>
-          <gt-special-poi-data [poi]="poi"></gt-special-poi-data>
+          <gt-special-poi-data [poi]="poi" [openPoiModal]="openPoiModal"></gt-special-poi-data>
         </td>
         <td class="text-center">
 

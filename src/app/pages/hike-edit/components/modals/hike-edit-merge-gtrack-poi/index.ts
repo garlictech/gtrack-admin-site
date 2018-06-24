@@ -13,7 +13,6 @@ export class HikeEditMergeGTrackPoiComponent implements OnInit {
   public static componentName = 'HikeEditMergeGTrackPoiComponent';
   @Input() conflicts: IComparedProperty;
   @Input() saveCallback: any;
-  @Input() closeCallback: any;
   public mergeForm: FormGroup;
 
   ngOnInit() {

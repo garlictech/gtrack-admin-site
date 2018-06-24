@@ -1,10 +1,9 @@
-import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { State, commonPoiActions, editedGTrackPoiActions } from 'app/store';
-import { IDynamicComponentModalConfig, PoiSelectors, Poi } from 'subrepos/gtrack-common-ngx';
+import { PoiSelectors, Poi } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi, ILocalizedItem, ITextualDescription, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
 import { EditedGTrackPoiSelectors } from 'app/store/selectors';
 
@@ -17,9 +16,7 @@ import { ToasterService } from 'angular2-toaster';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
-  public static componentName = 'HikeEditGTrackPoiInfoComponent';
-  public modalConfig: IDynamicComponentModalConfig;
-  public poiId: string;
+  @Input() poiId: string;
 
   public storeDataPath: string;
   public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
@@ -37,7 +34,6 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
 
   constructor(
     private _store: Store<State>,
-    private _formBuilder: FormBuilder,
     private _poiSelectors: PoiSelectors,
     private _editedGTrackPoiSelectors: EditedGTrackPoiSelectors,
     private _toasterService: ToasterService
@@ -98,14 +94,10 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
         }
       });
 
-    if (this.modalConfig && this.modalConfig.component.data) {
-      this.poiId = this.modalConfig.component.data.poiId;
-
-      this._store
-        .select(this._poiSelectors.getPoi(<string>this.poiId))
-        .take(1)
-        .subscribe((poi: IPoiStored) => this._store.dispatch(new editedGTrackPoiActions.LoadPoi(poi)));
-    }
+    this._store
+      .select(this._poiSelectors.getPoi(<string>this.poiId))
+      .take(1)
+      .subscribe((poi: IPoiStored) => this._store.dispatch(new editedGTrackPoiActions.LoadPoi(poi)));
   }
 
   ngOnDestroy() {
@@ -120,7 +112,6 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
 
   public deletePoi(poiId: string) {
     this._store.dispatch(new commonPoiActions.DeletePoi(poiId));
-    this.modalConfig.modal.close();
   }
 
   public submitDescription = (langKey: string, data: any) => {
