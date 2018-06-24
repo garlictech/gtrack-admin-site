@@ -1,80 +1,71 @@
-<div class="clearfix mb-2">
-  <div class="pull-left">
-    <button
-      class="btn btn-sm btn-fill btn-success"
-      (click)="getPois()"
-      [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (searchContext$ | async)?.working"
-    >Get new</button>
 
-    <button
-      class="btn btn-sm btn-fill btn-success"
-      (click)="mergePois()"
+<p-dialog
+  header="Merge pois"
+  [(visible)]="displayMergeModal"
+  [modal]="true"
+  [closable]="true"
+  [width]="600"
+>
+  <gt-hike-edit-merge-gtrack-poi-info
+    *ngIf="displayMergeModal"
+    [conflicts]="mergeProperties.conflicts"
+    [saveCallback]="saveMergedPoi"
+    [closeCallback]="closeDialog"
+  ></gt-hike-edit-merge-gtrack-poi-info>
+</p-dialog>
+
+
+<div class="clearfix mb-20">
+  <div class="f-left">
+    <p-button
+      label="Get new"
+      styleClass="ui-button-success"
+      (onClick)="getPois()"
+      [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (searchContext$ | async)?.working"
+    ></p-button>
+
+    <p-button
+      label="Merge pois"
+      styleClass="ui-button-success"
+      (onClick)="mergePois()"
       [disabled]="(mergeSelectionCount$ | async) < 2"
-    >Merge pois</button>
+    ></p-button>
   </div>
 
-  <div class="pull-right">
-    <div class="form-check inline-checkbox">
-      <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" name="optionsCheckboxes" [checked]="showOnrouteMarkers$ | async" (change)="toggleOnrouteMarkers()">
-          <span class="form-check-sign"></span>
-          Show onroute markers
-      </label>
-    </div>
-    <div class="form-check inline-checkbox">
-      <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" name="optionsCheckboxes" [checked]="showOffrouteMarkers$ | async" (change)="toggleOffrouteMarkers()">
-          <span class="form-check-sign"></span>
-          Show offroute markers
-      </label>
-    </div>
+  <div class="f-right">
+    <p-checkbox
+      class="f-right ml-20"
+      label="Show offroute markers"
+      binary="true"
+      [(ngModel)]="showOffrouteMarkers"
+      (click)="toggleOffrouteMarkers()"
+    ></p-checkbox>
+
+    <p-checkbox
+      class="f-right"
+      label="Show onroute markers"
+      binary="true"
+      [(ngModel)]="showOnrouteMarkers"
+      (click)="toggleOnrouteMarkers()"
+    ></p-checkbox>
   </div>
 </div>
 
 <gt-table-spinner *ngIf="(searchContext$ | async)?.working as working; else hikePoiTable"></gt-table-spinner>
 
 <ng-template #hikePoiTable>
-  <div id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="card mb-1">
-      <div class="card-header bg-light" id="headingOne" role="tab">
-        <h5>
-          <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtrack_off" role="button" class="collapsed">
-            <div class="text-success">
-              On route pois
-              <i class="material-icons pull-right">keyboard_arrow_down</i>
-            </div>
-          </a>
-        </h5>
-      </div>
-      <div aria-labelledby="headingOne" class="collapse" id="collapse_gtrack_off" role="tabpanel" aria-expanded="false" style="height: 0px;">
-        <div class="card-body">
-          <hike-edit-pois-gtrack-table
-            [pois$]="pois$"
-            [onRouteCheck]="true"
-          ></hike-edit-pois-gtrack-table>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mb-1">
-      <div class="card-header bg-light" id="headingOne" role="tab">
-        <h5>
-          <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_gtrack_on" role="button" class="collapsed">
-            <div class="text-success">
-              Off route pois
-              <i class="material-icons pull-right">keyboard_arrow_down</i>
-            </div>
-          </a>
-        </h5>
-      </div>
-      <div aria-labelledby="headingOne" class="collapse" id="collapse_gtrack_on" role="tabpanel" aria-expanded="false" style="height: 0px;">
-        <div class="card-body">
-          <hike-edit-pois-gtrack-table
-            [pois$]="pois$"
-            [onRouteCheck]="false"
-          ></hike-edit-pois-gtrack-table>
-        </div>
-      </div>
-    </div>
-  </div>
+  <p-accordion [multiple]="true">
+    <p-accordionTab header="On route pois">
+      <hike-edit-pois-gtrack-table
+        [pois$]="pois$"
+        [onRouteCheck]="true"
+      ></hike-edit-pois-gtrack-table>
+    </p-accordionTab>
+    <p-accordionTab header="Off route pois">
+      <hike-edit-pois-gtrack-table
+        [pois$]="pois$"
+        [onRouteCheck]="false"
+      ></hike-edit-pois-gtrack-table>
+    </p-accordionTab>
+  </p-accordion>
 </ng-template>

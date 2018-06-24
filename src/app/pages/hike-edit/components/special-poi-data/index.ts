@@ -15,6 +15,7 @@ export class SpecialPoiDataComponent {
   ) {}
 
   public openModal(poi: IGooglePoi | IOsmPoi | IWikipediaPoi) {
+    console.log('openModal', poi);
     let _title = '';
     let _lng = 'en'; // TODO How we get the used lang??
     if (poi && poi.description && poi.description[_lng] && poi.description[_lng].title) {

@@ -1,21 +1,24 @@
-<table class="table table-hover">
-  <thead class="text-success">
-    <tr>
-      <th>#</th>
-      <th>Poi</th>
-      <th>Distance from origo</th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngIf="(stops$ | async) as stops">
-      <tr *ngFor="let stop of stops; let idx = index; let l = count">
-        <td>{{idx + 1}}.</td>
-        <td *ngIf="idx > 0 && idx < l - 1">{{translateDescription(stop.description, 'title')}}</td>
-        <td *ngIf="idx === 0">Start point</td>
-        <td *ngIf="idx === l - 1">End point</td>
+
+<ng-container *ngIf="(stops$ | async) as stops">
+  <p-table [value]="stops" *ngIf="stops.length > 0">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th>Poi</th>
+        <th>Distance from origo</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-stop let-rowIndex="rowIndex">
+      <tr>
+        <td>{{rowIndex + 1}}.</td>
+        <td *ngIf="rowIndex > 0 && rowIndex < (stops.length - 1)">{{translateDescription(stop.description, 'title')}}</td>
+        <td *ngIf="rowIndex === 0">Start point</td>
+        <td *ngIf="rowIndex === (stops.length - 1)">End point</td>
         <td>{{stop.distanceFromOrigo | distance}}</td>
       </tr>
-      <tr *ngIf="stops.length === 0"><td colspan="5">No stops.</td></tr>
-    </ng-container>
-  </tbody>
-</table>
+    </ng-template>
+  </p-table>
+
+  <div *ngIf="stops.length === 0">No stops.</div>
+</ng-container>

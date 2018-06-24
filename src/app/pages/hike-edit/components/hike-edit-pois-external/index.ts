@@ -28,8 +28,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   public routePath$: Observable<any>;
   public loading$: Observable<boolean>;
   public saving$: Observable<boolean>;
-  public showOnrouteMarkers$: Observable<boolean>;
-  public showOffrouteMarkers$: Observable<boolean>;
+  public showOnrouteMarkers = true;
+  public showOffrouteMarkers = true;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -136,27 +136,23 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'saving'))
       .takeUntil(this._destroy$);
 
-    this.showOnrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers'))
-      .takeUntil(this._destroy$);
-
-    this.showOffrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOffrouteMarkers'))
-      .takeUntil(this._destroy$);
-
     //
     // Refresh markers
     //
 
-    this.showOnrouteMarkers$
+    this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers'))
       .takeUntil(this._destroy$)
-      .subscribe(() => {
+      .subscribe((value: boolean) => {
+        this.showOnrouteMarkers = value;
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
 
-    this.showOffrouteMarkers$
+    this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOffrouteMarkers'))
       .takeUntil(this._destroy$)
-      .subscribe(() => {
+      .subscribe((value: boolean) => {
+        this.showOffrouteMarkers = value;
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
   }

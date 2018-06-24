@@ -5,19 +5,17 @@ import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import { State, hikeEditMapActions, adminMapActions, commonBackgroundGeolocationActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from 'app/store/selectors';
-import { Center, ISegment, BackgroundGeolocationActionTypes, selectCurrentLocation, IGeoPosition } from 'subrepos/gtrack-common-ngx';
+import {
+  Center, ISegment, BackgroundGeolocationActionTypes, selectCurrentLocation, IGeoPosition
+} from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
-import { AdminMapService, HikeProgramService } from 'app/shared/services';
+import { WaypointMarkerService, RoutePlannerService } from 'app/shared/services/admin-map';
+import { SelectItem } from 'primeng/primeng';
 
 import * as L from 'leaflet';
 import { LeafletMouseEvent } from 'leaflet';
-import { WaypointMarkerService, RoutePlannerService } from 'app/shared/services/admin-map';
 
 const CENTER = <Center>{
-  // London
-  // lat: 51.523723,
-  // lng: -0.112525,
-  // Pilis hg.
   lat: 47.689714,
   lng: 18.904206,
   zoom: 12
@@ -50,21 +48,23 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public mode = 'routing';
   public allowPlanning: boolean;
   public currentLocation$: Observable<IGeoPosition | null>;
+  public clickModes: SelectItem[] = [];
   private _bufferShown = false;
   private _bufferOnMap: L.GeoJSON;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
-    private _adminMapService: AdminMapService,
-    private _hikeProgramService: HikeProgramService,
     private _waypointMarkerService: WaypointMarkerService,
-    private _routePlannerService: RoutePlannerService,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {}
 
   ngOnInit() {
+    this.clickModes = [
+      { label: 'Routing mode', value: 'routing' },
+      { label: 'Checkpoint mode', value: 'checkpoint' }
+    ];
+
     // Update buffer on each segment update
     this._store
       .select(this._hikeEditRoutePlannerSelectors.getSegments)
@@ -178,10 +178,5 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this._bufferOnMap) {
       this.mapComponent.map.removeGeoJSON(this._bufferOnMap);
     }
-  }
-
-  public setMode($event: Event, mode: string) {
-    $event.stopPropagation();
-    this.mode = mode;
   }
 }

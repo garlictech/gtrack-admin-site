@@ -27,13 +27,14 @@ export class DynamicModalService {
   }
 
   public showComponentModal(config: IDynamicComponentModalConfig) {
+    console.log('showComponentModal', config);
     if (!config.component.modalComponentName) {
       config.component.modalComponentName = 'DefaultComponentModalComponent';
     }
 
     const factories = Array.from((<any>this._resolver)._factories.keys());
     const modalFactoryClass = <Type<any>>factories.find((x: any) => {
-      return x.name === config.component.modalComponentName;
+      return x.componentName === config.component.modalComponentName;
     });
 
     if (modalFactoryClass === null) {

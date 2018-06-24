@@ -1,18 +1,34 @@
-<div class="lang-toolbar">
-    <p-dropdown [options]="selectableLanguages$ | async" [(ngModel)]="selectedLanguage" placeholder="Add language" optionLabel="label"></p-dropdown>
+<div class="lang-toolbar mb-10">
+  <p-dropdown
+    [options]="selectableLanguages$ | async"
+    [(ngModel)]="selectedLanguage"
+    placeholder="Add language"
+    optionLabel="label"
+  ></p-dropdown>
 
-    <button class="btn btn-round btn-sm btn-just-icon btn-success" (click)="addTranslation()">
-    <i class="material-icons">add</i>
-  </button>
+  <p-button
+    styleClass="ui-button-success ml-10"
+    icon="fa fa-plus"
+    (onClick)="addTranslation()"
+    title="Add translation"
+    *ngIf="lng !== 'en_US'"
+  ></p-button>
 </div>
 
 <p-accordion>
-    <p-accordionTab *ngFor="let lng of (languageKeys$ | async)" [header]="getLangName(lng)">
-        <button class="btn btn-danger btn-simple btn-link pull-right" (click)="deleteTranslation(lng)" title="Delete language" *ngIf="lng !== 'en_US'">
-      <i class="material-icons">delete</i>
-    </button>
+  <p-accordionTab *ngFor="let lng of (languageKeys$ | async)" [header]="getLangName(lng)">
+    <p-button
+      styleClass="ui-button-danger f-right"
+      icon="fa fa-trash"
+      (onClick)="deleteTranslation(lng)"
+      title="Delete language"
+      *ngIf="lng !== 'en_US'"
+    ></p-button>
 
-<gtrack-form [formDescriptor]="languageFormDescriptors[lng]" [formDataPath$]="languageFormDataPaths[lng]"></gtrack-form>
+    <gtrack-form
+      [formDescriptor]="languageFormDescriptors[lng]"
+      [formDataPath$]="languageFormDataPaths[lng]"
+    ></gtrack-form>
 
   </p-accordionTab>
 </p-accordion>

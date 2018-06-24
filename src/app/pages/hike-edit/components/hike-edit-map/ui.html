@@ -3,36 +3,33 @@
     </gc-admin-leaflet>
 </div>
 
-<div class="button-container mt-2">
-  <button
-    class="btn btn-sm btn-success btn-fill"
-    (click)="toggleCurrentPositionMarker($event)"
-    [disabled]="!(this.currentLocation$ | async)?.coords"
-  >
-    <i class="fa fa-crosshairs"></i>
-  </button>
-  <button class="btn btn-sm btn-success btn-fill" (click)="resetMap($event)">
-    <i class="fa fa-refresh"></i>
-  </button>
-  <button class="btn btn-sm btn-success btn-fill" (click)="buffer($event)">
-    Buffer
-  </button>
-  <div class="btn-group btn-toggle">
-    <button
-      class="btn btn-sm btn-fill"
-      [disabled]="!allowPlanning"
-      [ngClass]="{'btn-primary': mode === 'routing', 'btn-success': mode === 'checkpoint'}"
-      (click)="setMode($event, 'routing')">
-      Routing mode
-    </button>
-    <button
-      class="btn btn-sm btn-fill"
-      [disabled]="!allowPlanning"
-      [ngClass]="{'btn-primary': mode === 'checkpoint', 'btn-success': mode === 'routing'}"
-      (click)="setMode($event, 'checkpoint')">
-      Checkpoint mode
-    </button>
-  </div>
+<div class="mt-20">
+
+    <p-button
+      type="button"
+      icon="fa fa-crosshairs"
+      styleClass="ui-button-primary"
+      (onClick)="toggleCurrentPositionMarker($event)"
+      [disabled]="!(this.currentLocation$ | async)?.coords"
+      title="Move to current location"
+    ></p-button>
+
+    <p-button
+      type="button"
+      icon="fa fa-sync"
+      styleClass="ui-button-primary"
+      (onClick)="resetMap($event)"
+      title="Reset map"
+    ></p-button>
+
+    <p-button
+      label="Buffer"
+      type="button"
+      styleClass="ui-button-primary"
+      (onClick)="buffer($event)"
+    ></p-button>
+
+    <p-selectButton [options]="clickModes" [(ngModel)]="mode"></p-selectButton>
 </div>
 
 <div class="clearfix"></div>

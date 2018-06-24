@@ -9,6 +9,7 @@ import * as LocalActions from './actions';
 
 @Injectable()
 export class PoiEffects {
+  console.log('PoiEffects **************************');
   @Effect()
   loadPoi$: Observable<Action> = this._actions$
     .ofType<LocalActions.LoadPoi>(LocalActions.PoiActionTypes.LOAD_POI)
@@ -40,6 +41,7 @@ export class PoiEffects {
   savePoi$: Observable<Action> = this._actions$
     .ofType<LocalActions.SavePoi>(LocalActions.PoiActionTypes.SAVE_POI)
     .mergeMap(action => {
+      console.log('SAVE POI');
       return this._poiService
         .create(action.poi)
         .take(1)

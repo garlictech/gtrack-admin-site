@@ -1,60 +1,66 @@
-<div class="clearfix mb-2">
-  <button
-    class="btn btn-sm btn-success btn-fill"
+<div class="clearfix mb-20">
+  <p-button
+    label="Retrieve plan"
+    styleClass="ui-button-primary"
     [disabled]="(isPlanning$| async)"
-    (click)="retrievePlan()"
-  >Retrieve plan</button>
+    (onClick)="retrievePlan()"
+  ></p-button>
 
-  <button
-    class="btn btn-sm btn-success btn-fill"
-    [disabled]="!(isPlanning$| async)"
-    (click)="removeLast()"
-  >Remove last</button>
-
-  <button
-    class="btn btn-sm btn-success btn-fill"
+  <p-button
+    label="Close circle"
+    styleClass="ui-button-primary"
     [disabled]="!(isPlanning$| async) || (route$ | async)?.features.length < 3"
-    (click)="closeCircle()"
-  >Close circle</button>
+    (onClick)="closeCircle()"
+  ></p-button>
 
-  <button
-    class="btn btn-sm btn-success btn-fill"
+  <p-button
+    label="Remove last"
+    styleClass="ui-button-warning"
     [disabled]="!(isPlanning$| async)"
-    (click)="deletePlan()"
-  >Delete plan</button>
+    (onClick)="removeLast()"
+  ></p-button>
+
+  <p-button
+    label="Delete plan"
+    styleClass="ui-button-danger"
+    [disabled]="!(isPlanning$| async)"
+    (onClick)="deletePlan()"
+  ></p-button>
 </div>
 
-<table class="table table-hover" *ngIf="(routeInfoData$ | async)?.segments.length > 0">
-  <thead class="text-success">
-    <tr>
-      <th></th>
-      <th>Distance</th>
-      <th>Time</th>
-      <th>Uphill</th>
-      <th>Downhill</th>
-      <th>Score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let segment of (routeInfoData$ | async)?.segments; let idx = index">
-      <td>{{idx + 1}}</td>
-      <td>{{segment.distance | distance}}</td>
-      <td>{{segment.time | duration}}</td>
-      <td>{{segment.uphill | distance : true}}</td>
-      <td>{{segment.downhill | distance : true}}</td>
-      <td>{{segment.score}}</td>
-    </tr>
-    <tr>
-      <td>Total</td>
-      <td>{{(routeInfoData$ | async)?.total?.distance | distance}}</td>
-      <td>{{(routeInfoData$ | async)?.total?.time | duration}}</td>
-      <td>{{(routeInfoData$ | async)?.total?.uphill | distance : true}}</td>
-      <td>{{(routeInfoData$ | async)?.total?.downhill | distance : true}}</td>
-      <td>{{(routeInfoData$ | async)?.total?.score}}</td>
-    </tr>
-  </tbody>
-</table>
+<ng-container *ngIf="(routeInfoData$ | async)?.segments as segments">
+  <p-table [value]="segments" *ngIf="segments.length > 0">
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <th>Distance</th>
+        <th>Time</th>
+        <th>Uphill</th>
+        <th>Downhill</th>
+        <th>Score</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-segment let let-rowIndex="rowIndex">
+      <tr>
+        <td>{{rowIndex + 1}}</td>
+        <td>{{segment.distance | distance}}</td>
+        <td>{{segment.time | duration}}</td>
+        <td>{{segment.uphill | distance : true}}</td>
+        <td>{{segment.downhill | distance : true}}</td>
+        <td>{{segment.score}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td>Total</td>
+        <td>{{(routeInfoData$ | async)?.total?.distance | distance}}</td>
+        <td>{{(routeInfoData$ | async)?.total?.time | duration}}</td>
+        <td>{{(routeInfoData$ | async)?.total?.uphill | distance : true}}</td>
+        <td>{{(routeInfoData$ | async)?.total?.downhill | distance : true}}</td>
+        <td>{{(routeInfoData$ | async)?.total?.score}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 
-<p *ngIf="(routeInfoData$ | async)?.segments.length === 0">
-  <small>Empty route.</small>
-</p>
+  <div *ngIf="segments.length === 0">Empty route.</div>
+</ng-container>

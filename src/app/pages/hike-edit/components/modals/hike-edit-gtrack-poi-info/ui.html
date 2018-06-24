@@ -19,13 +19,13 @@
           <div class="col-12">
             <button
               class="btn btn-sm btn-fill btn-success"
-              (click)="savePoi()"
+              (onClick)="savePoi()"
               [disabled]="!(isDirty$ | async)"
             >Save</button>
 
             <button
               class="btn btn-sm btn-fill btn-danger"
-              (click)="deletePoi(gTrackPoi?.id)"
+              (onClick)="deletePoi(gTrackPoi?.id)"
               *ngIf="gTrackPoi?.state === EObjectState.draft"
             >Delete</button>
           </div>

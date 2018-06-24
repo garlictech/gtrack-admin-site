@@ -1,31 +1,30 @@
-<table class="table table-hover table-images">
-  <thead class="text-success">
-    <tr>
-      <th>Thumbnail</th>
-      <th>Title</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody *ngIf="(images$ | async) as images">
-    <ng-container *ngFor="let image of images; let idx = index">
+<ng-container *ngIf="(images$ | async) as images">
+  <p-table [value]="images">
+    <ng-template pTemplate="header">
       <tr>
-        <td><a href="{{image.original.url}}" target="_blank"><img class="thumbs" src="{{image.thumbnail.url}}"></a></td>
+        <th>Thumbnail</th>
+        <th>Title</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-image>
+      <tr>
+        <td>
+          <a href="{{image.original.url}}" target="_blank">
+            <img class="thumbs" src="{{image.thumbnail.url}}">
+          </a>
+        </td>
         <td [innerHTML]="image.title | trustedHtml"></td>
         <td>
           <span class="form-check p-0">
             <label class="form-check-label">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                name="image"
-                [checked]="(backgroundOriginalUrls$ | async)?.indexOf(image.original.url) >= 0"
-                (click)="toggleBackgroundImage(image)"
-              >
+              <input class="form-check-input" type="checkbox" name="image" [checked]="(backgroundOriginalUrls$ | async)?.indexOf(image.original.url) >= 0"
+                (click)="toggleBackgroundImage(image)">
               <span class="form-check-sign"></span>
             </label>
           </span>
         </td>
       </tr>
-    </ng-container>
-  </tbody>
-</table>
+    </ng-template>
+  </p-table>
+</ng-container>

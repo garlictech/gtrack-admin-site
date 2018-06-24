@@ -6,4 +6,6 @@ import { DynamicModalCoreComponent } from '../../dynamic-modal-core.component';
   templateUrl: './default-component-modal.component.html',
   styleUrls: ['./default-component-modal.component.scss']
 })
-export class DefaultComponentModalComponent extends DynamicModalCoreComponent {}
+export class DefaultComponentModalComponent extends DynamicModalCoreComponent {
+  public static componentName = 'DefaultComponentModalComponent';
+}

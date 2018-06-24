@@ -9,7 +9,8 @@ import { TrustedHtmlPipe } from 'app/shared/pipes';
 // Modules
 import { DynamicModalService } from 'subrepos/gtrack-common-ngx';
 // PrimeNG
-import { ButtonModule, CardModule } from 'primeng/primeng';
+import { ButtonModule, CardModule, SelectButtonModule, AccordionModule, CheckboxModule, DialogModule } from 'primeng/primeng';
+import { TableModule } from 'primeng/table';
 // Components
 import { HikeEditComponent } from './hike-edit.component';
 import {
@@ -83,11 +84,20 @@ const COMPONENTS = [
     LanguageModule,
     // PrimeNG
     ButtonModule,
-    CardModule
+    CardModule,
+    SelectButtonModule,
+    TableModule,
+    AccordionModule,
+    CheckboxModule,
+    DialogModule
   ],
   exports: [...COMPONENTS],
   declarations: [ObjectToArrayPipe, TrustedHtmlPipe, ...COMPONENTS],
   entryComponents: [...COMPONENTS],
-  providers: [DynamicModalService, GeospatialService, PoiMergeService]
+  providers: [
+    DynamicModalService,
+    GeospatialService,
+    PoiMergeService
+  ]
 })
 export class HikeEditModule {}

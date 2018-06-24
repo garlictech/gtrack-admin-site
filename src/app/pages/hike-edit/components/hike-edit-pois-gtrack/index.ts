@@ -8,7 +8,7 @@ import {
 import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
 import { PoiEditorService, PoiMergeService } from 'app/shared/services';
-import { IGTrackPoi } from 'app/shared/interfaces';
+import { IGTrackPoi, IFilteredProperties } from 'app/shared/interfaces';
 import {
   State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions
 } from 'app/store';
@@ -26,9 +26,15 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public pois$: Observable<IGTrackPoi[]>;
   public routePath$: Observable<any>;
   public searchContext$: Observable<IGeoSearchContextState | undefined>;
-  public showOnrouteMarkers$: Observable<boolean>;
-  public showOffrouteMarkers$: Observable<boolean>;
+  public showOnrouteMarkers = true;
+  public showOffrouteMarkers = true;
   public mergeSelectionCount$: Observable<number>;
+
+  public mergeProperties: IFilteredProperties = {};
+  public mergedPoiIds: string[] = [];
+  public mergedPoiData: any;
+  public displayMergeModal = false;
+
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -116,14 +122,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .select(this._geoSearchSelectors.getGeoSearchContext('gTrackPois'))
       .takeUntil(this._destroy$);
 
-    this.showOnrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOnrouteMarkers'))
-      .takeUntil(this._destroy$);
-
-    this.showOffrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers'))
-      .takeUntil(this._destroy$);
-
     this.mergeSelectionCount$ = this._store
       .select(this._hikeEditPoiSelectors.getMergeSelectionsCount)
       .takeUntil(this._destroy$);
@@ -132,15 +130,19 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     // Refresh markers
     //
 
-    this.showOnrouteMarkers$
+    this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOnrouteMarkers'))
       .takeUntil(this._destroy$)
-      .subscribe(() => {
+      .subscribe((value: boolean) => {
+        this.showOnrouteMarkers = value;
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
 
-    this.showOffrouteMarkers$
+    this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers'))
       .takeUntil(this._destroy$)
-      .subscribe(() => {
+      .subscribe((value: boolean) => {
+        this.showOffrouteMarkers = value;
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
   }
@@ -180,23 +182,41 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
           .combineLatest(...selections.map(poiId => this._store.select(this._poiSelectors.getPoi(poiId)).take(1)))
           .take(1)
           .subscribe(pois => {
-            const properties = this._poiMergeService.collectFlatKeyValues(pois);
-            const newPoiData = this._poiMergeService.createGTrackPoiFromUniqueValues(properties.unique);
+            this.mergeProperties = this._poiMergeService.collectFlatKeyValues(pois);
+            this.mergedPoiIds = _.map(pois, 'id');
+            const mergedPoiData = this._poiMergeService.createGTrackPoiFromUniqueValues(this.mergeProperties.unique);
 
             this._store.dispatch(new hikeEditPoiActions.ResetPoiMergeSelection());
 
-            if (_.keys(properties.conflicts).length > 0) {
-              this._poiMergeService.openConflictModal(properties.conflicts, mergedData => {
-                for (const key in mergedData) {
-                  _.set(newPoiData, key, mergedData[key]);
-                }
+            this.displayMergeModal = true;
 
-                this._store.dispatch(new commonPoiActions.MergePoi(_.map(pois, 'id'), newPoiData));
-              });
+            if (_.keys(this.mergeProperties.conflicts).length > 0) {
+              // TODO vissza this.displayMergeModal = true;
+
+              // this._poiMergeService.openConflictModal(properties.conflicts, mergedData => {
+                // for (const key in mergedData) {
+                //   _.set(newPoiData, key, mergedData[key]);
+                // }
+
+                // this._store.dispatch(new commonPoiActions.MergePoi(this.mergedPoiIds, newPoiData));
+              // });
             } else {
-              this._store.dispatch(new commonPoiActions.MergePoi(_.map(pois, 'id'), newPoiData));
+              // TODO vissza
+              // this._store.dispatch(new commonPoiActions.MergePoi(this.mergedPoiIds, this.mergedPoiData));
             }
           });
       });
+  }
+
+  public saveMergedPoi = (mergedData) => {
+    for (const key in mergedData) {
+      _.set(this.mergedPoiData, key, mergedData[key]);
+    }
+
+    this._store.dispatch(new commonPoiActions.MergePoi(this.mergedPoiIds, this.mergedPoiData));
+  }
+
+  public closeDialog = () => {
+    this.displayMergeModal = false;
   }
 }

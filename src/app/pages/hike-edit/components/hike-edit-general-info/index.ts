@@ -84,7 +84,8 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
           label: 'form.difficulty',
           required: true,
           min: 0,
-          max: 10
+          max: 10,
+          onChange: () => { return }
         })
       }
     };

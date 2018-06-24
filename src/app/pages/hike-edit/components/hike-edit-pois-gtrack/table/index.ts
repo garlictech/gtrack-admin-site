@@ -2,7 +2,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, editedHikeProgramActions, hikeEditPoiActions } from 'app/store';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import { LanguageService } from 'app/shared/services';
@@ -17,7 +16,7 @@ import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/service
 export class HikeEditPoisGTrackTableComponent implements OnInit, OnDestroy {
   @Input() pois$: IGTrackPoi[];
   @Input() onRouteCheck: boolean;
-  public mergeSelection$: Observable<string[]>;
+  public mergeSelections: {[id: string]: boolean} = {}
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -29,9 +28,16 @@ export class HikeEditPoisGTrackTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.mergeSelection$ = this._store
+    // this.mergeSelection$ =
+    this._store
       .select(this._hikeEditPoiSelectors.getMergeSelections)
-      .takeUntil(this._destroy$);
+      .takeUntil(this._destroy$)
+      .subscribe((selections: string[]) => {
+        this.mergeSelections = {};
+        selections.map(id => {
+          this.mergeSelections[id] = true;
+        });
+      });
   }
 
   public addPoi($event, poi: IGTrackPoi) {
@@ -94,15 +100,10 @@ export class HikeEditPoisGTrackTableComponent implements OnInit, OnDestroy {
   }
 
   public toggleMergeSelection(poiId: string) {
-    this.mergeSelection$
-      .take(1)
-      .subscribe((mergeSelection: string[]) => {
-        const _idx = mergeSelection.indexOf(poiId);
-        if (_idx >= 0) {
-          this._store.dispatch(new hikeEditPoiActions.RemoveGTrackPoiFromMergeSelection(poiId));
-        } else {
-          this._store.dispatch(new hikeEditPoiActions.AddGTrackPoiToMergeSelection(poiId));
-        }
-      });
+    if (!this.mergeSelections[poiId]) {
+      this._store.dispatch(new hikeEditPoiActions.RemoveGTrackPoiFromMergeSelection(poiId));
+    } else {
+      this._store.dispatch(new hikeEditPoiActions.AddGTrackPoiToMergeSelection(poiId));
+    }
   }
 }

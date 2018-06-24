@@ -21,8 +21,8 @@ import * as _ from 'lodash';
 })
 export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
   public pois$: Observable<IGTrackPoi[]>;
-  public showOnrouteMarkers$: Observable<boolean>;
-  public showOffrouteMarkers$: Observable<boolean>;
+  public showOnrouteMarkers = true;
+  public showOffrouteMarkers = true;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -34,7 +34,6 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _geoSearchSelectors: GeoSearchSelectors,
     private _hikeProgramService: HikeProgramService,
     private _poiSelectors: PoiSelectors
   ) {}
@@ -113,30 +112,22 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       });
 
     //
-    // Contexts
+    // Contexts & Refresh markers
     //
 
-    this.showOnrouteMarkers$ = this._store
+    this._store
       .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOnrouteMarkers'))
-      .takeUntil(this._destroy$);
-
-    this.showOffrouteMarkers$ = this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers'))
-      .takeUntil(this._destroy$);
-
-    //
-    // Refresh markers
-    //
-
-    this.showOnrouteMarkers$
       .takeUntil(this._destroy$)
-      .subscribe(() => {
+      .subscribe((value: boolean) => {
+        this.showOnrouteMarkers = value;
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
 
-    this.showOffrouteMarkers$
+    this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers'))
       .takeUntil(this._destroy$)
-      .subscribe(() => {
+      .subscribe((value: boolean) => {
+        this.showOffrouteMarkers = value;
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
   }

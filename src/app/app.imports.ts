@@ -88,7 +88,7 @@ export const APP_IMPORTS = [
   }),
   SharedModule.forRoot(sharedConfig),
   BackgroundGeolocationModule.forRoot(),
-  EffectsModule.forRoot([HikeEffects, PoiEffects, RouteEffects, GeoSearchEffects, BackgroundGeolocationEffects]),
+
   GeoSearchModule.forRoot({
     storeDomain: 'geosearch'
   }),
@@ -104,7 +104,8 @@ export const APP_IMPORTS = [
     HikeEditPoiEffects,
     EditedHikeProgramEffects,
     EditedGTrackPoiEffects,
-    HikeEditImageEffects
+    HikeEditImageEffects,
+    HikeEffects, PoiEffects, RouteEffects, GeoSearchEffects, BackgroundGeolocationEffects
   ]),
   ToasterModule.forRoot(),
   FormModule,

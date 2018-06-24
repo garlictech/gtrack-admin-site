@@ -1,19 +1,24 @@
-<form [formGroup]="mergeForm">
-  <div class="card" *ngFor="let conflict of conflicts | obj2arr; let cIdx = index;">
-    <div class="card-header">
-      <strong>{{conflict.key}}</strong>
+<form [formGroup]="mergeForm" *ngIf="initialized">
+  <p-card title="{{conflict.key}}" *ngFor="let conflict of conflicts | obj2arr; let cIdx = index;">
+    <div class="form-check form-check-inline" *ngFor="let option of conflict.value; let oIdx = index;">
+      <input [formControlName]="conflict.key" class="form-check-input" type="radio" id="{{cIdx}}-{{oIdx}}" [value]="option">
+      <label class="form-check-label" for="{{cIdx}}-{{oIdx}}">{{option}}</label>
     </div>
-    <div class="card-body">
-      <div class="form-check form-check-inline" *ngFor="let option of conflict.value; let oIdx = index;">
-        <input [formControlName]="conflict.key" class="form-check-input" type="radio" id="{{cIdx}}-{{oIdx}}" [value]="option">
-        <label class="form-check-label" for="{{cIdx}}-{{oIdx}}">{{option}}</label>
-      </div>
-    </div>
-  </div>
+   </p-card>
 </form>
 
-<div class="row">
-  <div class="col-12">
-    <button class="btn btn-sm btn-fill btn-success" (click)="saveMerge()">Save</button>
+<div class="ui-g mt-20">
+  <div class="ui-g-12 ui-g-nopad">
+    <p-button
+      label="Save"
+      styleClass="ui-button-success"
+      (onClick)="saveMerge()">
+    </p-button>
+
+    <p-button
+      label="Cancel"
+      styleClass="ui-button-warning"
+      (onClick)="closeCallback()">
+    </p-button>
   </div>
 </div>

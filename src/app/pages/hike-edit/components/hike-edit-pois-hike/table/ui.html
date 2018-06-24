@@ -1,39 +1,43 @@
-<table class="table table-hover">
-  <thead class="text-success">
-    <tr>
-      <th>Icon</th>
-      <th>Title</th>
-      <th>Distance from route</th>
-      <th>Types</th>
-      <th>Origin</th>
-      <th>Elevation</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngIf="(pois$ | async) as pois">
-      <ng-container *ngFor="let poi of pois; let idx = index">
-        <tr *ngIf="!!poi.onRoute === onRouteCheck">
-          <td><gt-poi-icons [poi]="poi"></gt-poi-icons></td>
-          <td>{{translateDescription(poi.description, 'title')}}</td>
-          <td>{{poi.distFromRoute | distance : true}}</td>
-          <td>{{poi.types.join(', ')}}</td>
-          <td>{{poi.objectType}}</td>
-          <td>{{poi.elevation | distance}}</td>
-          <td class="td-actions">
-            <button
-              class="btn btn-simple btn-link btn-danger"
-              title="Remove poi"
-              (click)="removePoi($event, poi)" 
-            ><i class="material-icons">remove_circle</i></button>
-            <button
-              class="btn btn-warning btn-simple btn-link"
-              title="Edit poi"
-              (click)="openModal($event, poi)"
-            ><i class="material-icons">edit</i></button>
-          </td>
-        </tr>
-      </ng-container>
-    </ng-container>
-  </tbody>
-</table>
+<ng-container *ngIf="(pois$ | async) as pois">
+  <p-table [value]="pois">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Icon</th>
+        <th>Title</th>
+        <th>Distance from route</th>
+        <th>Types</th>
+        <th>Origin</th>
+        <th>Elevation</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-poi>
+      <tr *ngIf="!!poi.onRoute === onRouteCheck">
+        <td>
+          <gt-poi-icons [poi]="poi"></gt-poi-icons>
+        </td>
+        <td>{{translateDescription(poi.description, 'title')}}</td>
+        <td>{{poi.distFromRoute | distance : true}}</td>
+        <td>{{poi.types.join(', ')}}</td>
+        <td>{{poi.objectType}}</td>
+        <td>{{poi.elevation | distance}}</td>
+        <td class="text-center">
+
+          <p-button
+            *ngIf="!poi.inHike"
+            icon="fa fa-minus"
+            styleClass="ui-button-danger"
+            (onClick)="removePoi($event, poi)"
+          ></p-button>
+
+          <p-button
+            icon="fa fa-edit"
+            styleClass="ui-button-warning"
+            (onClick)="openModal($event, poi)"
+          ></p-button>
+
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-container>

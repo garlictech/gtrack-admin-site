@@ -1,35 +1,44 @@
-<table class="table table-hover">
-  <thead class="text-success">
-    <tr>
-      <th>Icon</th>
-      <th>Title</th>
-      <th>Distance from route</th>
-      <th>Types</th>
-      <th>Special</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngIf="(pois$ | async) as pois">
-      <ng-container *ngFor="let poi of pois; let idx = index">
-        <tr *ngIf="!!poi.onRoute === onRouteCheck">
-          <td><gt-poi-icons [poi]="poi"></gt-poi-icons></td>
-          <td [ngClass]="{'text-danger': !poi.inGtrackDb}">{{translateDescription(poi.description, 'title')}}</td>
-          <td>{{poi.distFromRoute | distance : true}}</td>
-          <td>{{poi.types.join(', ')}}</td>
-          <td><gt-special-poi-data [poi]="poi"></gt-special-poi-data></td>
-          <td class="td-actions">
-            <button
-              class="btn btn-simple btn-link"
-              [ngClass]="{'btn-success': !poi.inHike, 'btn-danger': poi.inHike}"
-              *ngIf="!poi.inGtrackDb"
-              (click)="handleInHikePoi($event, poi)" 
-              title="{{poi.inHike ? 'Remove': 'Add'}} poi">
-              <i class="material-icons">{{poi.inHike ? 'remove_circle': 'add_circle'}}</i>
-            </button>
-          </td>
-        </tr>
-      </ng-container>
-    </ng-container>
-  </tbody>
-</table>
+<ng-container *ngIf="(pois$ | async) as pois">
+  <p-table [value]="pois">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Icon</th>
+        <th>Title</th>
+        <th>Distance from route</th>
+        <th>Types</th>
+        <th>Special</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-poi>
+      <tr *ngIf="!!poi.onRoute === onRouteCheck">
+        <td>
+          <gt-poi-icons [poi]="poi"></gt-poi-icons>
+        </td>
+        <td [ngClass]="{'text-danger': !poi.inGtrackDb}">{{translateDescription(poi.description, 'title')}}</td>
+        <td>{{poi.distFromRoute | distance : true}}</td>
+        <td>{{poi.types.join(', ')}}</td>
+        <td>
+          <gt-special-poi-data [poi]="poi"></gt-special-poi-data>
+        </td>
+        <td class="text-center">
+
+          <p-button
+            *ngIf="!poi.inGtrackDb && !poi.inHike"
+            icon="fa fa-plus"
+            styleClass="ui-button-success"
+            (onClick)="handleInHikePoi($event, poi)"
+          ></p-button>
+
+          <p-button
+            *ngIf="!poi.inGtrackDb && poi.inHike"
+            icon="fa fa-minus"
+            styleClass="ui-button-danger"
+            (onClick)="handleInHikePoi($event, poi)"
+          ></p-button>
+
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-container>

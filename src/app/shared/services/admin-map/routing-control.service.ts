@@ -74,7 +74,8 @@ export class RoutingControlService {
     const _icon = L.divIcon({
       html: `<span>${name}</span>`,
       iconSize: [25, 41],
-      iconAnchor: [13, 41]
+      iconAnchor: [13, 41],
+      className: 'routing-control-marker'
     });
 
     const _marker = L.marker(latLng, {

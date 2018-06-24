@@ -1,81 +1,38 @@
 <gt-background-images [bgImages$]="bgImages$"></gt-background-images>
 
-<div id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="card mb-1">
-    <div class="card-header bg-light" id="headingOne" role="tab">
-      <h5>
-        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_google_photo" role="button" class="collapsed">
-          <div class="text-success">
-            Google ({{(googlePhotos$ | async).length}})
-            <i class="material-icons pull-right">keyboard_arrow_down</i>
-          </div>
-        </a>
-      </h5>
+<p-accordion [multiple]="true">
+  <p-accordionTab header="Google ({{(googlePhotos$ | async).length}})">
+    <gt-hike-edit-photos-table
+      [images$]="googlePhotos$"
+      [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+      [clickActions]="clickActions"
+    ></gt-hike-edit-photos-table>
+  </p-accordionTab>
+  <p-accordionTab header="Wikipedia ({{(wikipediaPhotos$ | async).length}})">
+    <gt-hike-edit-photos-table
+      [images$]="wikipediaPhotos$"
+      [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+      [clickActions]="clickActions"
+    ></gt-hike-edit-photos-table>
+  </p-accordionTab>
+  <p-accordionTab header="Mapillary ({{(mapillaryImages$ | async).length}})">
+    <div>
+      <p-button
+        label="Get new"
+        styleClass="ui-button-success"
+        (onClick)="getMapillaryPhotos()"
+        [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (mapillaryLoading$ | async)"
+      ></p-button>
     </div>
-    <div aria-labelledby="headingOne" class="collapse" id="collapse_google_photo" role="tabpanel" aria-expanded="false" style="height: 0px;">
-      <div class="card-body">
-        <gt-hike-edit-photos-table
-          [images$]="googlePhotos$"
-          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
-          [clickActions]="clickActions"
-        ></gt-hike-edit-photos-table>
-      </div>
-    </div>
-  </div>
 
-  <div class="card mb-1">
-    <div class="card-header bg-light" id="headingOne" role="tab">
-      <h5>
-        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_wikipedia_photo" role="button" class="collapsed">
-          <div class="text-success">
-            Wikipedia ({{(wikipediaPhotos$ | async).length}})
-            <i class="material-icons pull-right">keyboard_arrow_down</i>
-          </div>
-        </a>
-      </h5>
-    </div>
-    <div aria-labelledby="headingOne" class="collapse" id="collapse_wikipedia_photo" role="tabpanel" aria-expanded="false" style="height: 0px;">
-      <div class="card-body">
-        <gt-hike-edit-photos-table
-          [images$]="wikipediaPhotos$"
-          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
-          [clickActions]="clickActions"
-        ></gt-hike-edit-photos-table>
-      </div>
-    </div>
-  </div>
+    <gt-table-spinner *ngIf="(mapillaryLoading$ | async) as mapillaryLoading; else mapillaryTable"></gt-table-spinner>
 
-  <div class="card mb-1">
-    <div class="card-header bg-light" id="headingOne" role="tab">
-      <h5>
-        <a aria-controls="collapseOne" aria-expanded="false" data-toggle="collapse" href="#collapse_mapillary_photo" role="button" class="collapsed">
-          <div class="text-success">
-            Mapillary ({{(mapillaryImages$ | async).length}})
-            <i class="material-icons pull-right">keyboard_arrow_down</i>
-          </div>
-        </a>
-      </h5>
-    </div>
-    <div aria-labelledby="headingOne" class="collapse" id="collapse_mapillary_photo" role="tabpanel" aria-expanded="false" style="height: 0px;">
-      <div class="card-body">
-        <div>
-          <button
-            class="btn btn-sm btn-fill btn-success"
-            (click)="getMapillaryPhotos()"
-            [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (mapillaryLoading$ | async)"
-          >Get new</button>
-        </div>
-
-        <gt-table-spinner *ngIf="(mapillaryLoading$ | async) as mapillaryLoading; else mapillaryTable"></gt-table-spinner>
-
-        <ng-template #mapillaryTable>
-          <gt-hike-edit-photos-table
-            [images$]="mapillaryImages$"
-            [backgroundOriginalUrls$]="backgroundOriginalUrls$"
-            [clickActions]="clickActions"
-          ></gt-hike-edit-photos-table>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-</div>
+    <ng-template #mapillaryTable>
+      <gt-hike-edit-photos-table
+        [images$]="mapillaryImages$"
+        [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+        [clickActions]="clickActions"
+      ></gt-hike-edit-photos-table>
+    </ng-template>
+  </p-accordionTab>
+</p-accordion>

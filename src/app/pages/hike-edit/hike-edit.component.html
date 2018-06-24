@@ -1,18 +1,39 @@
 <gt-table-spinner *ngIf="(working$ | async) as working; else pageContent"></gt-table-spinner>
 
 <ng-template #pageContent>
-  <div class="ui-fluid">
     <div class="ui-g">
       <div class="ui-g-12">
         <div class="f-right" *ngIf="(hikeProgramState$ | async) as hikeProgramState">
-          <p-button label="Publish" styleClass="ui-button-success" (click)="updateHikeState(EObjectState.published)" title="Publish hike"
-            *ngIf="paramsId && hikeProgramState === EObjectState.draft"></p-button>
-          <p-button label="Draft" styleClass="ui-button-secondary" (click)="updateHikeState(EObjectState.draft)" title="Move to draft"
-            *ngIf="paramsId && hikeProgramState === EObjectState.archived"></p-button>
-          <p-button label="Archive" styleClass="ui-button-danger" (click)="updateHikeState(EObjectState.archived)" title="Archive hike"
-            *ngIf="paramsId && hikeProgramState === EObjectState.published"></p-button>
+          <p-button
+            label="Publish"
+            styleClass="ui-button-success"
+            (onClick)="updateHikeState(EObjectState.published)"
+            title="Publish hike"
+            *ngIf="paramsId && hikeProgramState === EObjectState.draft"
+          ></p-button>
 
-          <p-button label="Save hike" styleClass="ui-button-success" (click)="saveHike()" [disabled]="!(allowSave$ | async)"></p-button>
+          <p-button
+            label="Draft"
+            styleClass="ui-button-secondary"
+            (onClick)="updateHikeState(EObjectState.draft)"
+            title="Move to draft"
+            *ngIf="paramsId && hikeProgramState === EObjectState.archived"
+          ></p-button>
+
+          <p-button
+            label="Archive"
+            styleClass="ui-button-danger"
+            (onClick)="updateHikeState(EObjectState.archived)"
+            title="Archive hike"
+            *ngIf="paramsId && hikeProgramState === EObjectState.published"
+          ></p-button>
+
+          <p-button
+            label="Save hike"
+            styleClass="ui-button-success"
+            (onClick)="saveHike()"
+            [disabled]="!(allowSave$ | async)"
+          ></p-button>
         </div>
       </div>
     </div>
@@ -26,70 +47,47 @@
     </div>
 
     <div class="ui-g">
-        <div class="ui-g-12">
-          <p-card title="Map">
-            <gt-hike-edit-map></gt-hike-edit-map>
-          </p-card>
-        </div>
+      <div class="ui-g-12">
+        <p-card title="Map">
+          <gt-hike-edit-map></gt-hike-edit-map>
+        </p-card>
       </div>
+    </div>
 
-  </div>
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-card title="Hike outline">
+          <gt-hike-edit-outline></gt-hike-edit-outline>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-card title="Route planning">
+          <gt-hike-edit-route-planner></gt-hike-edit-route-planner>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-card title="Pois">
+          <gt-hike-edit-pois></gt-hike-edit-pois>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-card title="Photos">
+          <gt-hike-edit-photos
+            [backgroundImageSelector]="backgroundImageSelector"
+            [backgroundImageUrlSelector]="backgroundImageUrlSelector"
+            [clickActions]="clickActions"
+          ></gt-hike-edit-photos>
+        </p-card>
+      </div>
+    </div>
+
 </ng-template>
-
-<!--div class="row">
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Hike outline</h4>
-          </div>
-          <div class="card-body">
-            <gt-hike-edit-outline></gt-hike-edit-outline>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Route planning</h4>
-          </div>
-          <div class="card-body">
-            <gt-hike-edit-route-planner></gt-hike-edit-route-planner>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Pois</h4>
-          </div>
-          <div class="card-body">
-            <gt-hike-edit-pois></gt-hike-edit-pois>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Photos</h4>
-          </div>
-          <div class="card-body">
-            <gt-hike-edit-photos
-              [backgroundImageSelector]="backgroundImageSelector"
-              [backgroundImageUrlSelector]="backgroundImageUrlSelector"
-              [clickActions]="clickActions"
-            ></gt-hike-edit-photos>
-          </div>
-        </div>
-      </div>
-    </div-->
