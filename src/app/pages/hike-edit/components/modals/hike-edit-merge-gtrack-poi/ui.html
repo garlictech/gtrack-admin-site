@@ -1,5 +1,5 @@
-<form [formGroup]="mergeForm" *ngIf="initialized">
-  <p-card title="{{conflict.key}}" *ngFor="let conflict of conflicts | obj2arr; let cIdx = index;">
+<form [formGroup]="mergeForm">
+  <p-card styleClass="mb-10" title="{{conflict.key}}" *ngFor="let conflict of conflicts | obj2arr; let cIdx = index;">
     <div class="form-check form-check-inline" *ngFor="let option of conflict.value; let oIdx = index;">
       <input [formControlName]="conflict.key" class="form-check-input" type="radio" id="{{cIdx}}-{{oIdx}}" [value]="option">
       <label class="form-check-label" for="{{cIdx}}-{{oIdx}}">{{option}}</label>

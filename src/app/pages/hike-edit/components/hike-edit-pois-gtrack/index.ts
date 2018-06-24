@@ -184,35 +184,34 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
           .subscribe(pois => {
             this.mergeProperties = this._poiMergeService.collectFlatKeyValues(pois);
             this.mergedPoiIds = _.map(pois, 'id');
-            const mergedPoiData = this._poiMergeService.createGTrackPoiFromUniqueValues(this.mergeProperties.unique);
+            this.mergedPoiData = this._poiMergeService.createGTrackPoiFromUniqueValues(this.mergeProperties.unique);
 
             this._store.dispatch(new hikeEditPoiActions.ResetPoiMergeSelection());
 
-            this.displayMergeModal = true;
-
             if (_.keys(this.mergeProperties.conflicts).length > 0) {
-              // TODO vissza this.displayMergeModal = true;
-
-              // this._poiMergeService.openConflictModal(properties.conflicts, mergedData => {
-                // for (const key in mergedData) {
-                //   _.set(newPoiData, key, mergedData[key]);
-                // }
-
-                // this._store.dispatch(new commonPoiActions.MergePoi(this.mergedPoiIds, newPoiData));
-              // });
+              this.displayMergeModal = true;
             } else {
-              // TODO vissza
-              // this._store.dispatch(new commonPoiActions.MergePoi(this.mergedPoiIds, this.mergedPoiData));
+              this._store.dispatch(new commonPoiActions.MergePoi(this.mergedPoiIds, this.mergedPoiData));
             }
           });
       });
   }
 
   public saveMergedPoi = (mergedData) => {
+    const _coordsArr = mergedData.coords.slice(1, -1).split(',');
+
+    this.mergedPoiData.lat = parseFloat(_coordsArr[0]);
+    this.mergedPoiData.lon = parseFloat(_coordsArr[1]);
+    if (_coordsArr[2]) {
+      this.mergedPoiData.elevation = parseFloat(_coordsArr[2]);
+    }
+    delete this.mergedPoiData.coords;
+
     for (const key in mergedData) {
       _.set(this.mergedPoiData, key, mergedData[key]);
     }
 
+    this.displayMergeModal = false;
     this._store.dispatch(new commonPoiActions.MergePoi(this.mergedPoiIds, this.mergedPoiData));
   }
 

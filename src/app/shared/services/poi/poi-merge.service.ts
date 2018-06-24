@@ -17,7 +17,8 @@ export class PoiMergeService {
     let commonTypes: string[] = [];
 
     for (const poi of pois) {
-      const flatPoi = flatten(_.omit(poi, ['id', 'published', 'positions', 'types', 'state', 'timestamp']));
+      const flatPoi = flatten(_.omit(poi, ['id', 'lat', 'lon', 'elevation', 'published', 'positions', 'types', 'state', 'timestamp']));
+      flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}]`;
 
       for (const key in flatPoi) {
         if (!flatProperties[key]) {

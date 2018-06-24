@@ -9,7 +9,6 @@ import * as LocalActions from './actions';
 
 @Injectable()
 export class PoiEffects {
-  console.log('PoiEffects **************************');
   @Effect()
   loadPoi$: Observable<Action> = this._actions$
     .ofType<LocalActions.LoadPoi>(LocalActions.PoiActionTypes.LOAD_POI)

@@ -15,7 +15,6 @@ export class HikeEditMergeGTrackPoiComponent implements OnInit {
   @Input() saveCallback: any;
   @Input() closeCallback: any;
   public mergeForm: FormGroup;
-  public initialized = false;
 
   ngOnInit() {
     // Create form
@@ -25,7 +24,6 @@ export class HikeEditMergeGTrackPoiComponent implements OnInit {
     });
 
     this.mergeForm = new FormGroup(_controls);
-    this.initialized = true;
   }
 
   public saveMerge() {
