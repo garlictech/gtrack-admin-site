@@ -3,7 +3,7 @@ import { IEnvironment } from './ienvironment';
 export class Environment implements IEnvironment {
   production = false;
   staging = false;
-  webappServer = 'http://localhost:8081';
+  webappServer = window.location.origin;
   deepstream = 'ws://localhost:6020/deepstream';
 
   lambdaEndpoint = 'https://y3nuwgmlpc.execute-api.us-east-1.amazonaws.com/latest';

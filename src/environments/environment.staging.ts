@@ -3,7 +3,7 @@ import { IEnvironment } from './ienvironment';
 export class Environment implements IEnvironment {
   production = true;
   staging = true;
-  webappServer = 'https://gtrack-admin-zlnhf.firebaseapp.com/';
+  webappServer = window.location.origin;
   deepstream = 'wss://deepstream-staging.gtracksport.com/deepstream';
 
   lambdaEndpoint = 'https://y3nuwgmlpc.execute-api.us-east-1.amazonaws.com/latest';
@@ -21,8 +21,5 @@ export class Environment implements IEnvironment {
 
   googlePhotoLimit = 0; // no limit
 
-  awsConfig = {
-    s3: 'to-be-configured',
-    policyGenerator: this.lambdaEndpoint + '/generate-s3-policy'
-  };
+  awsConfig = { s3: 'to-be-configured', policyGenerator: this.lambdaEndpoint + '/generate-s3-policy' };
 }

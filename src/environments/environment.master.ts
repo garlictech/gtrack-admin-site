@@ -3,7 +3,7 @@ import { IEnvironment } from './ienvironment';
 export class Environment implements IEnvironment {
   production = true;
   staging = false;
-  webappServer = 'https://grack-admin-prod.firebaseapp.com/';
+  webappServer = window.location.origin;
   deepstream = 'wss://deepstream.gtracksport.com/deepstream';
   lambdaEndpoint = 'https://ii1rrhpq2a.execute-api.us-east-1.amazonaws.com/latest';
 
@@ -18,8 +18,5 @@ export class Environment implements IEnvironment {
   mapillary = { clientID: 'bWxkcHdGR0dyRVJPNU1wRklzVHZoZzo5YmE0YzlmNzQ1NmY0ZWFh' };
 
   googlePhotoLimit = 0; // no limit
-  awsConfig = {
-    s3: 'to-be-configured',
-    policyGenerator: this.lambdaEndpoint + '/generate-s3-policy'
-  };
+  awsConfig = { s3: 'to-be-configured', policyGenerator: this.lambdaEndpoint + '/generate-s3-policy' };
 }
