@@ -18,7 +18,7 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
     difficulty: 1,
     backgroundImages: [],
     routeId: '',
-    description: { en_US: { title: 'a new hike' } },
+    description: { en_US: { title: 'A new hike', fullDescription: '', summary: '' } },
     stops: [],
     timestamp: 0,
     state: EObjectState.draft

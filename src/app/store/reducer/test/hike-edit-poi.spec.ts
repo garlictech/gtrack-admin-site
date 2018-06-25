@@ -1,10 +1,9 @@
-import { Action } from '@ngrx/store';
 import { EPoiTypes } from 'subrepos/provider-client';
 import {
   hikeEditPoiReducer, wikipediaPoiInitialState, googlePoiInitialState, osmAmenityPoiInitialState, osmNaturalPoiInitialState, osmRoutePoiInitialState, externalPoiInitialContextState, initialGTrackPoiMergeState
 } from '../hike-edit-poi';
 import { IHikeEditPoiState, hikeEditPoiActions } from '../..';
-import { IExternalPoi } from 'app/shared/interfaces';
+import { IExternalPoi } from '../../../shared/interfaces';
 
 import * as _ from 'lodash';
 

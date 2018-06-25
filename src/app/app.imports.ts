@@ -103,7 +103,11 @@ export const APP_IMPORTS = [
     EditedHikeProgramEffects,
     EditedGTrackPoiEffects,
     HikeEditImageEffects,
-    HikeEffects, PoiEffects, RouteEffects, GeoSearchEffects, BackgroundGeolocationEffects
+    HikeEffects,
+    PoiEffects,
+    RouteEffects,
+    GeoSearchEffects,
+    BackgroundGeolocationEffects
   ]),
   ToasterModule.forRoot(),
   FormModule

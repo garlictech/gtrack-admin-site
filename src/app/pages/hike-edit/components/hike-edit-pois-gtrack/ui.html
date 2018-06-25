@@ -29,14 +29,14 @@
   <div class="f-left">
     <p-button
       label="Get new"
-      styleClass="ui-button-success"
+      styleClass="ui-button-primary"
       (onClick)="getPois()"
       [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (searchContext$ | async)?.working"
     ></p-button>
 
     <p-button
       label="Merge pois"
-      styleClass="ui-button-success"
+      styleClass="ui-button-primary"
       (onClick)="mergePois()"
       [disabled]="(mergeSelectionCount$ | async) < 2"
     ></p-button>

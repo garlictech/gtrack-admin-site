@@ -87,6 +87,8 @@
         "@mapbox/corslite": "0.0.7",
         "@mapbox/polyline": "^0.2.0",
         "@mapbox/togeojson": "^0.16.0",
+        "@ngx-translate/core": "^9.0.1",
+        "@ngx-translate/http-loader": "^2.0.0",
         "@ngrx/core": "^1.2.0",
         "@ngrx/effects": "^5.1.0",
         "@ngrx/entity": "^5.1.0",
