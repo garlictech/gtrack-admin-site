@@ -12,19 +12,10 @@
     position: absolute;
     bottom: 10px;
     left: 10px;
-    z-index: 10000;
+    z-index: 450;
     
     .map-button {
-      float: left;
-      margin-right: 2px;
-      border: 2px solid rgba(0, 0, 0, 0.2);
-      background-clip: padding-box;
-      height: 30px;
-      line-height: 30px;
-      background: #FFFFFF;
-      border-radius: 4px;
-      font-size: 16px;
-      padding: 0 10px;
+      padding: 10px;
     }
   }
 }

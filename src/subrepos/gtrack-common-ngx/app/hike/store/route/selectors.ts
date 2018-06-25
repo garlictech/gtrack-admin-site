@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 import * as _ from 'lodash';
+import 'rxjs/add/operator/takeUntil';
 
 import { routeAdapter, routeContextStateAdapter, IRouteState, IRouteContextState } from './state';
 import { EXTERNAL_ROUTE_DEPENDENCIES, IExternalRouteDependencies } from '../../externals';

@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { StoreModule, createSelector, createFeatureSelector } from '@ngrx/store';
-import { Actions, Effect, EffectsModule } from '@ngrx/effects';
-import * as uuid from 'uuid/v1';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 
 import { DeepstreamService, DeepstreamModule } from 'subrepos/gtrack-common-ngx';

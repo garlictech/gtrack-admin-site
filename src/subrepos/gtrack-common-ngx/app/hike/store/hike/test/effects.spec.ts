@@ -9,7 +9,7 @@ import { DeepstreamService } from 'subrepos/deepstream-ngx';
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
 
-import { hot, cold } from 'jasmine-marbles';
+import { hot, cold } from 'jest-marbles';
 
 import * as hikeProgramActions from '../actions';
 import { HikeEffects } from '../effects';

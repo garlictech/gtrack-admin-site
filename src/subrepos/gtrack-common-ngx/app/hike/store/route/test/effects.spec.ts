@@ -2,14 +2,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Actions, Effect, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import * as uuid from 'uuid/v4';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
 import { Observable } from 'rxjs/Observable';
 
 import * as _ from 'lodash';
-import * as uuid from 'uuid/v4';
 
-import { hot, cold } from 'jasmine-marbles';
+import { hot, cold } from 'jest-marbles';
 
 import { IRouteStored, IRoute } from 'subrepos/provider-client';
 import { Route, RouteService } from '../../../services/route';

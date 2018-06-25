@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { TrailBoxComponent } from './trail-box';
 import { HikeCardComponent } from './hike-card';
@@ -27,7 +28,8 @@ import { SearchFiltersModule } from '../../search-filters/search-filters.module'
     SharedModule,
     NouisliderModule,
     ReactiveFormsModule,
-    SearchFiltersModule
+    SearchFiltersModule,
+    TranslateModule
   ],
   exports: [
     TrailBoxComponent,

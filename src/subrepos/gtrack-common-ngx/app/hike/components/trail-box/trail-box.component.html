@@ -1,7 +1,7 @@
 <gc-leaflet #map [layers]="layers" [center]="center">
   <div class="map-button-container">
-    <button (click)="goToCurrentPosition($event)" class="map-button">Go to current position</button>
-    <button (click)="resetMap($event)" class="map-button">Reset map</button>
+    <button (click)="goToCurrentPosition($event)" class="map-button btn btn-small btn-fill"><i class="fa fa-crosshairs"></i></button>
+    <button (click)="resetMap($event)" class="map-button btn-sm btn-fill"><i class="fa fa-sync-alt"></i></button>
   </div>
 </gc-leaflet>
 

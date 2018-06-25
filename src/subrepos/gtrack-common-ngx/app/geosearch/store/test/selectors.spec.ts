@@ -14,6 +14,8 @@ import { GeoSearchSelectors } from '../selectors';
 import { IGeoSearchResponseItem } from '../state';
 import { EXTERNAL_GEO_SEARCH_DEPENDENCIES } from '../../externals';
 
+import 'rxjs/add/operator/takeUntil';
+
 describe('GeoSearch selectors', () => {
   let store: Store<IGeoSearchState>;
   let searches: IGeoSearchResponseItem[];

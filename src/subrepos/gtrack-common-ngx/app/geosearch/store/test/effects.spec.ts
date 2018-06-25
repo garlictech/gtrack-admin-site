@@ -1,118 +1,118 @@
-// import { TestBed }  from '@angular/core/testing';
-// import { Actions, Effect, EffectsModule } from '@ngrx/effects';
-// import { StoreModule } from '@ngrx/store';
+import { TestBed } from '@angular/core/testing';
+import { Actions, Effect, EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
-// import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
-// import { DeepstreamService } from 'subrepos/deepstream-ngx';
-// import { Observable } from 'rxjs/Observable';
+import { DeepstreamService } from 'subrepos/deepstream-ngx';
+import { Observable } from 'rxjs/Observable';
 
-// import * as _ from 'lodash';
-// import * as uuid from 'uuid/v1';
+import * as _ from 'lodash';
+import * as uuid from 'uuid/v1';
 
-// import { hot, cold } from 'jasmine-marbles';
+import { hot, cold } from 'jest-marbles';
 
-// import { GeoSearchEffects } from '../effects';
-// import * as geoSearchActions from '../actions';
-// import { GeoSearchService } from '../../services';
+import { GeoSearchEffects } from '../effects';
+import * as geoSearchActions from '../actions';
+import { GeoSearchService } from '../../services';
 
-// import { DeepstreamModule } from '../../../deepstream';
+import { DeepstreamModule } from '../../../deepstream';
 
-// export class TestActions extends Actions {
-//   constructor() {
-//     super(Observable.empty());
-//   }
+export class TestActions extends Actions {
+  constructor() {
+    super(Observable.empty());
+  }
 
-//   set stream(source: Observable<any>) {
-//     this.source = source;
-//   }
-// }
+  set stream(source: Observable<any>) {
+    this.source = source;
+  }
+}
 
-// export function getActions() {
-//   return new TestActions();
-// }
+export function getActions() {
+  return new TestActions();
+}
 
-// describe('GeoSearch effects', () => {
-//   let actions$: TestActions;
-//   let geoSearchService: GeoSearchService;
-//   let effects: GeoSearchEffects;
-//   let results: string[];
+describe('GeoSearch effects', () => {
+  let actions$: TestActions;
+  let geoSearchService: GeoSearchService;
+  let effects: GeoSearchEffects;
+  let results: string[];
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       imports: [
-//         StoreModule.forRoot({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
+        DeepstreamModule.forRoot({
+          storeDomain: 'deepstream',
+          deepstreamConnectionString: ''
+        })
+      ],
+      providers: [
+        GeoSearchService,
+        GeoSearchEffects,
+        {
+          provide: Actions,
+          useFactory: getActions
+        },
+        {
+          provide: DeepstreamService,
+          useValue: {}
+        }
+      ]
+    });
 
-//         }),
-//         EffectsModule.forRoot([
+    results = [uuid(), uuid()];
 
-//         ]),
-//         DeepstreamModule.forRoot({
-//           storeDomain: 'deepstream',
-//           deepstreamConnectionString: ''
-//         })
-//       ],
-//       providers: [
-//         GeoSearchService,
-//         GeoSearchEffects,
-//         {
-//           provide: Actions,
-//           useFactory: getActions
-//         },
-//         {
-//           provide: DeepstreamService,
-//           useValue: {}
-//         }
-//       ]
-//     });
+    actions$ = TestBed.get(Actions);
+    geoSearchService = TestBed.get(GeoSearchService);
+    effects = TestBed.get(GeoSearchEffects);
 
-//     results = [uuid(), uuid()];
+    spyOn(geoSearchService, 'searchBox').and.returnValue(Observable.of(results));
+    spyOn(geoSearchService, 'searchCircle').and.returnValue(Observable.of(results));
+  });
 
-//     actions$ = TestBed.get(Actions);
-//     geoSearchService = TestBed.get(GeoSearchService);
-//     effects = TestBed.get(GeoSearchEffects);
+  describe('searchInBox$', () => {
+    it('should return the search results from GeoSearchComplete', () => {
+      const context = uuid();
+      const action = new geoSearchActions.SearchInBox(
+        {
+          table: 'test',
+          box: {
+            type: 'Polygon',
+            coordinates: [[]]
+          }
+        },
+        context
+      );
 
-//     spyOn(geoSearchService, 'searchBox').and.returnValue(Observable.of(results));
-//     spyOn(geoSearchService, 'searchCircle').and.returnValue(Observable.of(results));
-//   });
+      const completion = new geoSearchActions.GeoSearchComplete(results, context);
+      const expected = cold('-b', { b: completion });
 
-//   describe('searchInBox$', () => {
-//     it('should return the search results from GeoSearchComplete', () => {
-//       const context = uuid();
-//       const action = new geoSearchActions.SearchInBox({
-//         table: 'test',
-//         box: {
-//           type: 'Polygon',
-//           coordinates: [[]]
-//         }
-//       }, context);
+      actions$.stream = hot('-a', { a: action });
 
-//       const completion = new geoSearchActions.GeoSearchComplete(results, context);
-//       const expected = cold('-b', {b: completion});
+      expect(effects.searchInBox$).toBeObservable(expected);
+    });
+  });
 
-//       actions$.stream = hot('-a', {a: action});
+  describe('searchInCircle$', () => {
+    it('should return the search results from GeoSearchComplete', () => {
+      const context = uuid();
+      const action = new geoSearchActions.SearchInCircle(
+        {
+          table: 'test',
+          circle: {
+            radius: 500,
+            center: []
+          }
+        },
+        context
+      );
 
-//       expect(effects.searchInBox$).toBeObservable(expected);
-//     });
-//   });
+      const completion = new geoSearchActions.GeoSearchComplete(results, context);
+      const expected = cold('-b', { b: completion });
 
-//   describe('searchInCircle$', () => {
-//     it('should return the search results from GeoSearchComplete', () => {
-//       const context = uuid();
-//       const action = new geoSearchActions.SearchInCircle({
-//         table: 'test',
-//         circle: {
-//           radius: 500,
-//           center: []
-//         }
-//       }, context);
+      actions$.stream = hot('-a', { a: action });
 
-//       const completion = new geoSearchActions.GeoSearchComplete(results, context);
-//       const expected = cold('-b', {b: completion});
-
-//       actions$.stream = hot('-a', {a: action});
-
-//       expect(effects.searchInCircle$).toBeObservable(expected);
-//     });
-//   });
-
-// });
+      expect(effects.searchInCircle$).toBeObservable(expected);
+    });
+  });
+});
