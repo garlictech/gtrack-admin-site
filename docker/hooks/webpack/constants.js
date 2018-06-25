@@ -5,17 +5,13 @@ exports.myConstants = {
         "@mapbox/togeojson",
         "@turf/turf",
         "angular2-toaster",
-        "bootstrap",
-        "bootstrap-material-design",
         "d3",
         "d3-geo",
-        "emojionearea",
         "flat",
         "@fortawesome/fontawesome-free-webfonts",
         "geojson-rewind",
         "geojson-validation",
         "intl",
-        "jquery",
         "leaflet-routing-machine",
         "ngx-chips",
         "tether",
@@ -33,6 +29,8 @@ exports.myConstants = {
         "webfontloader",
         "raven-js",
         "google-libphonenumber",
-        "password-validator"
+        "password-validator",
+        "@garlictech/deepstream-rxjs",
+        "lrm-graphhopper"
     ]
 };
