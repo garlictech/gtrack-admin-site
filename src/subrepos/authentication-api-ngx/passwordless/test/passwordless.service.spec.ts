@@ -167,7 +167,17 @@ describe('PasswordlessService', () => {
 
     passwordless
       .callback('xac32k', 'test@test.com')
-      .then(done)
-      .catch(err => done.fail(err));
+      .then(response => {
+        expect(response.token).toEqual('token');
+        expect(response.user).toEqual(jasmine.objectContaining({
+          email: 'test@test.com',
+          provider: 'passwordless'
+        }));
+
+        done();
+      })
+      .catch(err => {
+        done.fail(err)
+      });
   });
 });

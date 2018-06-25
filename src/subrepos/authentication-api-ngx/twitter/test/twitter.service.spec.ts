@@ -11,7 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { OauthWindowService } from '../../oauth-window';
 import { WindowModule, WindowService } from '../../window';
 import { TwitterService } from '../twitter.service';
-import { AuthModule } from '../../auth';
+import { AuthService } from '../../auth';
 import { Reducer as authReducer } from '../../store';
 import { AUTH_CONFIG_TOKEN, defaultAuthenticationApiConfig, AuthenticationApiModule } from '../../lib';
 import { ApiModule } from '../../api';
@@ -42,12 +42,17 @@ describe('TwitterService', () => {
         StoreModule.forRoot(authReducer),
         EffectsModule.forRoot([]),
         WindowModule,
-        AuthenticationApiModule.forRoot(config),
         ApiModule
       ],
       providers: [
         BaseRequestOptions,
         MockBackend,
+        AuthService,
+        LocalStorage,
+        {
+          provide: AUTH_CONFIG_TOKEN,
+          useValue: config
+        },
         {
           provide: OauthWindowService,
           useClass: OauthWindowMockService

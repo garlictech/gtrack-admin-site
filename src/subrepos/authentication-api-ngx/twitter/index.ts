@@ -5,8 +5,6 @@ import { TwitterService } from './twitter.service';
 import { WindowModule } from '../window';
 import { AuthModule } from '../auth';
 
-import '!file-loader?name=twitter/success.html!./success.html';
-
 @NgModule({
   imports: [OauthWindowModule, WindowModule, HttpModule, AuthModule],
   providers: [TwitterService]
