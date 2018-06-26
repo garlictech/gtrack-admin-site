@@ -1,11 +1,8 @@
 import { Component, NgZone, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { Subject, Observable } from 'rxjs-compat';
 import * as turf from '@turf/turf';
-
-import 'rxjs/add/operator/debounceTime';
 
 import { GoogleMapsService } from '../../../shared';
 import * as geoSearchActions from '../../../geosearch/store/actions';
@@ -116,9 +113,9 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     this._locate$
       .takeUntil(this._destroy$)
       .switchMap(locate => {
-        return locate ? location$.take(1) : Observable.never<number[]>();
+        return locate ? location$.take(1) : Observable.never();
       })
-      .subscribe(coords => {
+      .subscribe((coords: number[]) => {
         this._address = 'my-location';
         this._location = coords;
         this._search();

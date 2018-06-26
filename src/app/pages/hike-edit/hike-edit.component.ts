@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, state } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -17,8 +17,21 @@ import {
   hikeEditImageActions
 } from 'app/store';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from 'app/store/selectors';
-import { RoutingControlService, WaypointMarkerService, RoutePlannerService, AdminMapService } from 'app/shared/services/admin-map';
-import { IHikeProgramStored, IHikeProgram, IPoi, IRoute, EObjectState, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
+import {
+  RoutingControlService,
+  WaypointMarkerService,
+  RoutePlannerService,
+  AdminMapService
+} from 'app/shared/services/admin-map';
+import {
+  IHikeProgramStored,
+  IHikeProgram,
+  IPoi,
+  IRoute,
+  EObjectState,
+  IHikeProgramStop,
+  IBackgroundImageData
+} from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 import { HikeProgramService } from 'app/shared/services';
@@ -57,7 +70,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _toasterService: ToasterService,
     private _router: Router,
-    private _title: Title,
+    private _title: Title
   ) {}
 
   ngOnInit() {
@@ -71,53 +84,51 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
     this._store.dispatch(new editedHikeProgramActions.ResetHikeProgram());
 
-    this._activatedRoute.params
-      .takeUntil(this._destroy$)
-      .subscribe(params => {
-        // Edit existing hike
-        if (params && params.id) {
-          this.paramsId = params.id;
+    this._activatedRoute.params.takeUntil(this._destroy$).subscribe(params => {
+      // Edit existing hike
+      if (params && params.id) {
+        this.paramsId = params.id;
 
-          // Set page title
-          this._title.setTitle('Edit hike');
+        // Set page title
+        this._title.setTitle('Edit hike');
 
-          // Set hike id and load hikeProgram data
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this.paramsId }, false));
-          this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
+        // Set hike id and load hikeProgram data
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this.paramsId }, false));
+        this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
 
-          // Disable planning
-          this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(false));
+        // Disable planning
+        this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(false));
         // Create new hike
-        } else {
-          // Set page title
-          this._title.setTitle('New hike');
+      } else {
+        // Set page title
+        this._title.setTitle('New hike');
 
-          // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
-          this._hikeId = uuid();
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this._hikeId }, false));
-          // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
+        // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
+        this._hikeId = uuid();
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this._hikeId }, false));
+        // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
 
-          // Generate initial route id and load the empty route (for save toaster handling)
-          const _routeId = uuid();
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ routeId: _routeId }, false));
-          // Update the routes's dirty flag
-          this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
+        // Generate initial route id and load the empty route (for save toaster handling)
+        const _routeId = uuid();
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ routeId: _routeId }, false));
+        // Update the routes's dirty flag
+        this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
 
-          // Create initial language block
-          this._store.dispatch(
-            new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('en_US', {
-              title: `Test hike #${new Date().getTime()}`,
-              fullDescription: 'desc',
-              summary: 'summary'
-            })
-          );
+        // Create initial language block
+        this._store.dispatch(
+          new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('en_US', {
+            title: `Test hike #${new Date().getTime()}`,
+            fullDescription: 'desc',
+            summary: 'summary'
+          })
+        );
 
-          // Draw an independent path to the map
-          if (typeof this._hikeProgramService.gpxRoute !== 'undefined') {
-            this._parseGpxRoute();
-          }
+        // Draw an independent path to the map
+        if (typeof this._hikeProgramService.gpxRoute !== 'undefined') {
+          this._parseGpxRoute();
         }
-      });
+      }
+    });
 
     this.allowSave$ = this._store.select(this._editedHikeProgramSelectors.getDirty).takeUntil(this._destroy$);
 
@@ -156,17 +167,17 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.hikeProgramState$ = this._store
-      .select(this._editedHikeProgramSelectors.getState)
-      .takeUntil(this._destroy$);
+    this.hikeProgramState$ = this._store.select(this._editedHikeProgramSelectors.getState).takeUntil(this._destroy$);
 
     // Handling hike context changes
     this._store
       .select(this._editedHikeProgramSelectors.getHikeId)
       .takeUntil(this._destroy$)
       .filter(hikeId => hikeId !== '')
-      .switchMap((hikeId: string) => this._store.select(this._hikeSelectors.getHikeContext(hikeId)).takeUntil(this._destroy$))
-      .filter(hikeContext => !!(hikeContext))
+      .switchMap((hikeId: string) =>
+        this._store.select(this._hikeSelectors.getHikeContext(hikeId)).takeUntil(this._destroy$)
+      )
+      .filter(hikeContext => !!hikeContext)
       .subscribe((hikeContext: IHikeContextState) => {
         if (hikeContext.loaded) {
           this._store
@@ -186,9 +197,9 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this.backgroundImageSelector = this._editedHikeProgramSelectors.getBackgroundImages;
     this.backgroundImageUrlSelector = this._editedHikeProgramSelectors.getBackgroundOriginalUrls();
     this.clickActions = {
-      add: (image) => this._store.dispatch(new editedHikeProgramActions.AddHikeProgramBackgroundImage(image)),
-      remove: (url) => this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(url))
-    }
+      add: image => this._store.dispatch(new editedHikeProgramActions.AddHikeProgramBackgroundImage(image)),
+      remove: url => this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(url))
+    };
   }
 
   ngOnDestroy() {
@@ -216,7 +227,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _parseGpxRoute() {
+  private _parseGpxRoute() {
     this._store
       .select(this._hikeEditMapSelectors.getMapId)
       .filter(id => id !== '')

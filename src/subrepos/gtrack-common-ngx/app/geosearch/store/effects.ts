@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs-compat/Observable';
 import 'rxjs/add/operator/mergeMap';
 
 import { GeoSearchService } from '../services/geosearch.service';

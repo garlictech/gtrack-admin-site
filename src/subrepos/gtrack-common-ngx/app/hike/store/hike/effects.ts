@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs-compat/Observable';
 
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 
-import * as _ from 'lodash';
-
 import { HikeProgramService } from '../../services/hike-program';
-import { IHikeProgram } from 'subrepos/provider-client';
 import * as LocalActions from './actions';
-import * as PoiActions from '../poi/actions';
-import { empty } from 'rxjs/Observer';
 
 @Injectable()
 export class HikeEffects {
@@ -58,5 +53,9 @@ export class HikeEffects {
         });
     });
 
-  constructor(private _actions$: Actions, private _hikeProgramService: HikeProgramService, private _store: Store<any>) {}
+  constructor(
+    private _actions$: Actions,
+    private _hikeProgramService: HikeProgramService,
+    private _store: Store<any>
+  ) {}
 }
