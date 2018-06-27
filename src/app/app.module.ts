@@ -14,6 +14,7 @@ import { APP_IMPORTS } from './app.imports';
 import { APP_PROVIDERS } from './app.providers';
 
 import { AppRoutingModule } from './app-routing.module';
+import { ConfirmDialogModule } from 'primeng/primeng';
 
 if (process.env.NODE_ENV !== 'development') {
   Raven.config(environment.raven).install();
@@ -36,7 +37,8 @@ export class RavenErrorHandler implements ErrorHandler {
     BrowserModule,
     DEV_SERVER ? [BrowserAnimationsModule, BrowserTransferStateModule] : [],
     APP_IMPORTS,
-    AppRoutingModule
+    AppRoutingModule,
+    ConfirmDialogModule
   ],
   providers: [...APP_PROVIDERS, { provide: ErrorHandler, useClass: RavenErrorHandler }],
   bootstrap: [AppComponent],

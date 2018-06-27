@@ -8,6 +8,7 @@ import { IPoiStored, IPoi, ILocalizedItem, ITextualDescription, EObjectState, IB
 import { EditedGTrackPoiSelectors } from 'app/store/selectors';
 
 import { ToasterService } from 'angular2-toaster';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'gt-hike-edit-gtrack-poi-info',
@@ -36,7 +37,8 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _poiSelectors: PoiSelectors,
     private _editedGTrackPoiSelectors: EditedGTrackPoiSelectors,
-    private _toasterService: ToasterService
+    private _toasterService: ToasterService,
+    private _confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -111,7 +113,12 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   }
 
   public deletePoi(poiId: string) {
-    this._store.dispatch(new commonPoiActions.DeletePoi(poiId));
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to delete?',
+      accept: () => {
+        this._store.dispatch(new commonPoiActions.DeletePoi(poiId));
+      }
+    });
   }
 
   public submitDescription = (langKey: string, data: any) => {
@@ -119,6 +126,11 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   };
 
   public deleteDescription = lang => {
-    this._store.dispatch(new editedGTrackPoiActions.DeleteTranslatedPoiDescription(lang));
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to delete?',
+      accept: () => {
+        this._store.dispatch(new editedGTrackPoiActions.DeleteTranslatedPoiDescription(lang));
+      }
+    });
   };
 }

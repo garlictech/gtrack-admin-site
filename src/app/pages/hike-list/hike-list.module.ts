@@ -6,7 +6,7 @@ import { HikeListComponent } from './hike-list.component';
 import { GpxInputComponent } from './components';
 import { SharedComponentsModule } from 'app/shared/components';
 
-import { ButtonModule, SelectButtonModule, FileUploadModule, CardModule, } from 'primeng/primeng';
+import { ButtonModule, SelectButtonModule, FileUploadModule, CardModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 
 const COMPONENTS = [
