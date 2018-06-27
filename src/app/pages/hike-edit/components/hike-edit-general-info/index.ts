@@ -6,13 +6,9 @@ import { Subject } from 'rxjs/Subject';
 
 import { State, editedHikeProgramActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
-import { IHikeEditRoutePlannerState } from 'app/store/state';
-
-import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
+import { ConfirmationService } from 'primeng/primeng';
 import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
 import { IFormDescriptor, SliderField, TextboxField } from 'app/forms';
-
-import * as _ from 'lodash';
 
 @Component({
   selector: 'gt-hike-edit-general-info',
@@ -25,17 +21,15 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
   public remoteError$: Observable<any>;
   public formDataPath$ = Observable.of('editedHikeProgram.data');
   public generalInfoFormDescriptor: IFormDescriptor;
-
   public storeDataPath: string;
   public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
-
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeSelectors: HikeSelectors,
+    private _confirmationService: ConfirmationService,
     private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
@@ -101,6 +95,11 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
   };
 
   public deleteDescription = lang => {
-    this._store.dispatch(new editedHikeProgramActions.DeleteTranslatedHikeProgramDescription(lang));
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to delete?',
+      accept: () => {
+        this._store.dispatch(new editedHikeProgramActions.DeleteTranslatedHikeProgramDescription(lang));
+      }
+    });
   };
 }
