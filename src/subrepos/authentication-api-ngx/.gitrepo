@@ -7,6 +7,6 @@
 	remote = https://github.com/garlictech/authentication-api-ngx.git
 	branch = master
 	commit = 75bb315f22d22119960817b97ad8d777c4a683a6
-	parent = 27d9a196c2acd59ff2de3e6b73d73830274211c8
+	parent = 342b3a8a7a10d8bd5a9f2fab6b97f51067b6042e
 	method = merge
 	cmdver = 0.3.1
