@@ -13,6 +13,7 @@ export class Effects {
     .ofType(RouterActions.GO)
     .do((action: RouterActions.Go) => this.router.navigate(action.path, action.extras));
 
+  @Effect({ dispatch: false })
   navigateReplace$: Observable<Action> = this.actions$
     .ofType(RouterActions.REPLACE)
     .do((action: RouterActions.Replace) => this.router.navigate(action.path, action.extras));
