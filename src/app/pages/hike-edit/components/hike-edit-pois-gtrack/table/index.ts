@@ -2,7 +2,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, editedHikeProgramActions, hikeEditPoiActions } from 'app/store';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import { LanguageService } from 'app/shared/services';
 import { HikeEditRoutePlannerSelectors, HikeEditPoiSelectors } from 'app/store/selectors';

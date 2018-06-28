@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { State, hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../index';
 import { EditedHikeProgramSelectors } from 'app/store/selectors/';
 import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService } from 'app/shared/services';

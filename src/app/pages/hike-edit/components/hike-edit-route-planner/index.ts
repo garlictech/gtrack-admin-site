@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   AdminMap, AdminMapService, WaypointMarkerService, RoutingControlService, RoutePlannerService
 } from 'app/shared/services/admin-map';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
   State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions,

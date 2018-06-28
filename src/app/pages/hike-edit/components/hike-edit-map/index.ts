@@ -1,7 +1,6 @@
 
 import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State, hikeEditMapActions, adminMapActions, commonBackgroundGeolocationActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from 'app/store/selectors';

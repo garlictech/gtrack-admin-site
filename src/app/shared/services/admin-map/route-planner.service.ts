@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { State, hikeEditRoutePlannerActions } from 'app/store';
 import { GameRuleService, ISegment, RouteService } from 'subrepos/gtrack-common-ngx';
