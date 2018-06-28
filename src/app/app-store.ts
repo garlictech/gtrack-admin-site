@@ -1,7 +1,6 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-
-import 'rxjs/add/operator/distinctUntilChanged';
+import { asObservable, distinctUntilChanged } from 'rxjs/operators';
 
 export interface State {
     // define your state here
@@ -17,9 +16,7 @@ export class AppStore {
 
     constructor() {
         this._store = new BehaviorSubject<State>(defaultState);
-        this._store
-            .asObservable()
-            .distinctUntilChanged();
+        this._store.asObservable().distinctUntilChanged();
     }
 
     setState(state: State) {

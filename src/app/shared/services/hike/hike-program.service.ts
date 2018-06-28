@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State, editedHikeProgramActions } from 'app/store';
 import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';

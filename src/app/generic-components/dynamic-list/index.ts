@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'dynamic-list',

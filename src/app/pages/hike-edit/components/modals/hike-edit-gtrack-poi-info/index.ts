@@ -1,6 +1,5 @@
 import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { State, commonPoiActions, editedGTrackPoiActions } from 'app/store';
 import { PoiSelectors, Poi } from 'subrepos/gtrack-common-ngx';

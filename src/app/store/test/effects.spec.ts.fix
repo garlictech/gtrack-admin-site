@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 // import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 import * as GtActions from '../actions';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToasterService } from 'angular2-toaster';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index';
 import { IWikipediaPoi } from 'app/shared/interfaces';

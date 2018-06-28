@@ -1,8 +1,7 @@
 
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from 'app/shared/services/admin-map';
 import { PoiEditorService, LanguageService } from 'app/shared/services';
 import { Poi, PoiSelectors } from 'subrepos/gtrack-common-ngx';

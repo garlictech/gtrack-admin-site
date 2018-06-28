@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store, MemoizedSelector } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 
 import { State, editedHikeProgramActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';

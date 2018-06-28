@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { PoiSelectors, GeoSearchSelectors, Poi } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';

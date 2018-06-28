@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
-import 'rxjs/add/operator/concatMap';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import { GoogleMapsService, GeometryService, CenterRadius, defaultSharedConfig } from 'subrepos/gtrack-common-ngx/index';
