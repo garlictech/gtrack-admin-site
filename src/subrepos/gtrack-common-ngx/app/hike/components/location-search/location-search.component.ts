@@ -144,7 +144,8 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     if (this._address) {
       this._store.dispatch(
         new searchFilterActions.ChangeFilters({
-          location: this._address
+          location: this._address,
+          center: this._location
         })
       );
     }

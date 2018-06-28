@@ -45,4 +45,23 @@ export class GeometryService {
       center: <GeoJSON.Feature<GeoJSON.Point>>turf.midpoint(p1, p2)
     };
   }
+
+  public envelope(points: GeoJSON.Position[]): [GeoJSON.Position, GeoJSON.Position] {
+    let features: GeoJSON.Feature<GeoJSON.Point>[] = points.map(point => this.getPoint(point[0], point[1]));
+
+    let featureCollection = turf.featureCollection(features);
+    let envelope = turf.envelope(featureCollection);
+    let coordinates = envelope.geometry.coordinates[0];
+
+    return [[coordinates[0][1], coordinates[0][0]], [coordinates[2][1], coordinates[2][0]]];
+  }
+
+  public envelopeCircle(center: GeoJSON.Position, radius: number): [GeoJSON.Position, GeoJSON.Position] {
+    let centerPoint = this.getPoint(center[0], center[1]);
+    let circle = turf.circle(centerPoint, Math.ceil(radius / 1000));
+    let envelope = turf.envelope(circle);
+    let coordinates = envelope.geometry.coordinates[0];
+
+    return [[coordinates[0][1], coordinates[0][0]], [coordinates[2][1], coordinates[2][0]]];
+  }
 }

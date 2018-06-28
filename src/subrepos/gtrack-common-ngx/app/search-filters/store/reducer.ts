@@ -7,7 +7,8 @@ export const initialState: ISearchFilterState = {
   difficulty: [0, 10],
   length: [0, 50000],
   time: [0, 600],
-  location: 'my-location'
+  location: 'my-location',
+  center: [19.040235, 47.497912]
 };
 
 export const searchFiltersReducer: ActionReducer<ISearchFilterState> = (
