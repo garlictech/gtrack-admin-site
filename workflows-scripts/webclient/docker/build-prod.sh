@@ -4,6 +4,8 @@ set -e
 
 if [[ "$1" == 'aot' ]]; then
   docker/npm.sh build:aot:prod
+elif [[ "$1" == 'debug' ]]; then
+  docker/npm.sh build:prod:debug
 elif [[ "$1" == 'debug:aot' ]]; then
   docker/npm.sh build:aot:prod:debug
 else
