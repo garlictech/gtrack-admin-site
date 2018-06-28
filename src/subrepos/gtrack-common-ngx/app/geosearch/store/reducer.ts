@@ -25,10 +25,7 @@ const contextReducer: ActionReducer<IAllGeoSearchContextState> = (
       return geoSearchContextStateAdapter.upsertOne(
         {
           id: action.context,
-          changes: {
-            id: action.context,
-            working: true
-          }
+          working: true
         },
         state
       );
@@ -58,9 +55,7 @@ const reducer: ActionReducer<IGeoSearchEntityState> = (
       return geoSearchAdapter.upsertOne(
         {
           id: action.context,
-          changes: {
-            results: action.results
-          }
+          results: action.results
         },
         state
       );

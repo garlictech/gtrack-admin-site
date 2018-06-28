@@ -13,7 +13,7 @@ const contextReducer: ActionReducer<IAllRouteContextState> = (
 ): IAllRouteContextState => {
   switch (action.type) {
     case RouteActionTypes.LOAD_ROUTE:
-      return routeContextStateAdapter.addOne(
+      return routeContextStateAdapter.upsertOne(
         {
           id: action.context,
           loading: true,
@@ -51,9 +51,9 @@ const contextReducer: ActionReducer<IAllRouteContextState> = (
       return routeContextStateAdapter.upsertOne(
         {
           id: action.context,
-          changes: {
-            saved: false
-          }
+          saved: false,
+          loaded: true,
+          loading: false
         },
         state
       );
@@ -70,10 +70,7 @@ const reducer: ActionReducer<IRouteEntityState> = (
   switch (action.type) {
     case RouteActionTypes.ROUTE_LOADED:
       return routeAdapter.upsertOne(
-        {
-          id: action.route.id,
-          changes: action.route
-        },
+        action.route,
         state
       );
 

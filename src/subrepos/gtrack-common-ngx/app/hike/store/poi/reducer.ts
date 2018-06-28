@@ -13,7 +13,7 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
 ): IAllPoiContextState => {
   switch (action.type) {
     case PoiActionTypes.LOAD_POI:
-      return poiContextStateAdapter.addOne(
+      return poiContextStateAdapter.upsertOne(
         {
           id: action.context,
           loading: true,
@@ -24,7 +24,7 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
       );
 
     case PoiActionTypes.LOAD_POIS:
-      return poiContextStateAdapter.addMany(
+      return poiContextStateAdapter.upsertMany(
         action.contexts.map(context => {
           return {
             id: context,
@@ -40,11 +40,9 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
       return poiContextStateAdapter.upsertOne(
         {
           id: action.context,
-          changes: {
-            loading: false,
-            loaded: true,
-            saved: false
-          }
+          loading: false,
+          loaded: true,
+          saved: false
         },
         state
       );
@@ -54,11 +52,9 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
         action.contexts.map(context => {
           return {
             id: context,
-            changes: {
-              loading: false,
-              loaded: true,
-              saved: false
-            }
+            loading: false,
+            loaded: true,
+            saved: false
           };
         }),
         state
@@ -68,9 +64,9 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
       return poiContextStateAdapter.upsertOne(
         {
           id: action.context,
-          changes: {
-            saved: true
-          }
+          saved: true,
+          loading: false,
+          loaded: true
         },
         state
       );
@@ -79,9 +75,9 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
       return poiContextStateAdapter.upsertOne(
         {
           id: action.context,
-          changes: {
-            saved: false
-          }
+          saved: false,
+          loading: false,
+          loaded: true
         },
         state
       );
@@ -101,21 +97,13 @@ const reducer: ActionReducer<IPoiEntityState> = (
   switch (action.type) {
     case PoiActionTypes.POI_LOADED:
       return poiAdapter.upsertOne(
-        {
-          id: action.poi.id,
-          changes: action.poi
-        },
+        action.poi,
         state
       );
 
     case PoiActionTypes.ALL_POI_LOADED:
       return poiAdapter.upsertMany(
-        action.pois.map(poi => {
-          return {
-            id: poi.id,
-            changes: poi
-          };
-        }),
+        action.pois,
         state
       );
 

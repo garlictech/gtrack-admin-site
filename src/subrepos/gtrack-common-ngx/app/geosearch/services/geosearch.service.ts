@@ -12,21 +12,21 @@ import { Observable } from 'rxjs/Observable';
 export class GeoSearchService {
   constructor(private _deepstream: DeepstreamService) {}
 
-  public searchBox(query: IGeospatialBoxSearchPayload) {
-    return Observable.combineLatest([
+  public searchBox(query: IGeospatialBoxSearchPayload): Observable<string[]> {
+    return Observable.combineLatest(
       this._deepstream.callRpc<GeospatialSearchResponse>('open.geo.query.includedInBox', {
         payload: query
       }),
-      Observable.timer(500).take(1)
-    ]).map(results => results[0]);
+      Observable.timer(500).take(1).map(() => '')
+    ).map(results => results[0]);
   }
 
-  public searchCircle(query: IGeospatialCircleSearchPayload) {
-    return Observable.combineLatest([
+  public searchCircle(query: IGeospatialCircleSearchPayload): Observable<string[]> {
+    return Observable.combineLatest(
       this._deepstream.callRpc<GeospatialSearchResponse>('open.geo.query.includedInCircle', {
         payload: query
       }),
-      Observable.timer(500).take(1)
-    ]).map(results => results[0]);
+      Observable.timer(500).take(1).map(() => '')
+    ).map(results => results[0]);
   }
 }

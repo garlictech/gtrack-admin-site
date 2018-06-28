@@ -14,7 +14,7 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
 ): IAllHikeContextState => {
   switch (action.type) {
     case HikeProgramActionTypes.LOAD_HIKE_PROGRAM:
-      return hikeContextStateAdapter.addOne(
+      return hikeContextStateAdapter.upsertOne(
         {
           id: action.context,
           loading: true,
@@ -47,21 +47,13 @@ const reducer: ActionReducer<IHikeEntityState> = (
   switch (action.type) {
     case HikeProgramActionTypes.HIKE_PROGRAM_LOADED:
       return hikeAdapter.upsertOne(
-        {
-          id: action.hikeProgram.id,
-          changes: action.hikeProgram
-        },
+        action.hikeProgram,
         state
       );
 
     case HikeProgramActionTypes.ALL_HIKE_PROGRAMS_LOADED:
       return hikeAdapter.upsertMany(
-        action.hikePrograms.map(hikeProgram => {
-          return {
-            id: hikeProgram.id,
-            changes: hikeProgram
-          };
-        }),
+        action.hikePrograms,
         state
       );
 

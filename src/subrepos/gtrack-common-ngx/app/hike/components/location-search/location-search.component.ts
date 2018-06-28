@@ -4,6 +4,9 @@ import * as _ from 'lodash';
 import { Subject, Observable } from 'rxjs-compat';
 import * as turf from '@turf/turf';
 
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/observable/never';
+
 import { GoogleMapsService } from '../../../shared';
 import * as geoSearchActions from '../../../geosearch/store/actions';
 import { selectCurrentLocation, selectTracking } from '../../../store';
