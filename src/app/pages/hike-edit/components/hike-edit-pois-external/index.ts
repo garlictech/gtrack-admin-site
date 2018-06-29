@@ -87,10 +87,13 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       })
       .switchMap((pois: IExternalPoi[]) => this._poiEditorService.assignOnOffRoutePois(pois))
       .switchMap((pois: IExternalPoi[]) => this._poiEditorService.handleElevation(pois))
-      .switchMap((pois: IExternalPoi[]) => this._poiEditorService.handlePoiDetails(pois, this.poiType.subdomain))
       .switchMap((pois: IExternalPoi[]) => {
-
-        console.log('ITT? ', pois);
+        // Turn on loading before get poi details
+        console.log('turn on');
+        this._store.dispatch(new hikeEditPoiActions.SetLoading(this.poiType.subdomain));
+        return this._poiEditorService.handlePoiDetails(pois, this.poiType.subdomain)
+      })
+      .switchMap((pois: IExternalPoi[]) => {
         return this._store
           .select(this._poiSelectors.getAllPois)
           .take(1)
@@ -100,7 +103,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       })
       .takeUntil(this._destroy$)
       .subscribe((pois) => {
-        console.log('REFRESH SUBDOMAIN POIS', pois);
         // Refresh poi list on the store
         this._updateSubdomainPois(pois);
 

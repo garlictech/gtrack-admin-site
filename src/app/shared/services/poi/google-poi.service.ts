@@ -27,7 +27,6 @@ export class GooglePoiService {
   public get(bounds, lng = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
 
-    console.log('LANG', lng);
     return new Promise((resolve, reject) => {
       this._batchGet(this._getOnePage, {
         geo: geo,
@@ -35,13 +34,6 @@ export class GooglePoiService {
         results: []
       }).then(_res => {
         resolve(_res);
-
-        /* TODO move after buffer check!!!
-        this._getPlaceInfo(_res).then((data: IGooglePoi[]) => {
-          console.log('_res data', data);
-          resolve(data);
-        });
-        */
       });
     });
   }
@@ -114,7 +106,7 @@ export class GooglePoiService {
   /**
    * get() submethod
    */
-  public getPlaceInfo(pois: IGooglePoi[]) {
+  public getPoiDetails(pois: IGooglePoi[]) {
     const thumbnailWidth = 320;
     const cardWidth = 640;
 
@@ -190,7 +182,6 @@ export class GooglePoiService {
       .combineAll()
       .toPromise()
       .then(() => {
-        console.log('FINAL', pois);
         return pois;
       });
   }
