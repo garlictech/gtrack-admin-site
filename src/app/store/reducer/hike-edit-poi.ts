@@ -413,6 +413,20 @@ export function externalPoiListContextReducer(
       };
 
     /**
+     * Loading
+     */
+
+    case hikeEditPoiActions.SET_LOADING:
+      return {
+        ...state,
+        [action.subdomain]: {
+          ...state[action.subdomain],
+          loading: true,
+          loaded: false
+        }
+      };
+
+    /**
      * Saving
      */
 

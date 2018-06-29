@@ -1,4 +1,4 @@
-import { EPoiTypes } from 'subrepos/provider-client';
+import { EPoiTypes } from '../../../../subrepos/provider-client';
 import {
   hikeEditPoiReducer, wikipediaPoiInitialState, googlePoiInitialState, osmAmenityPoiInitialState, osmNaturalPoiInitialState, osmRoutePoiInitialState, externalPoiInitialContextState, initialGTrackPoiMergeState
 } from '../hike-edit-poi';
@@ -502,6 +502,16 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.wikipedia.saving).toEqual(true);
+    });
+  });
+
+  describe('SetLoading action', () => {
+    it('should set loading pois', () => {
+      const action = new hikeEditPoiActions.SetLoading(EPoiTypes.wikipedia);
+      const state = hikeEditPoiReducer(initialState, action);
+
+      expect(state.contexts.wikipedia.loading).toEqual(true);
+      expect(state.contexts.wikipedia.loaded).toEqual(false);
     });
   });
 });

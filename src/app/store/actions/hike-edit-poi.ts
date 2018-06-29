@@ -32,6 +32,7 @@ export const TOGGLE_ONROUTE_MARKERS = '[HikeEditPoi] Toggle onroute markers';
 export const TOGGLE_OFFROUTE_MARKERS = '[HikeEditPoi] Toggle offroute markers';
 
 export const SET_SAVING = '[HikeEditPoi] Set saving';
+export const SET_LOADING = '[HikeEditPoi] Set loading';
 export const MARKERS_CONFIG_CHANGED = '[HikeEditPoi] Markers config changed';
 
 export const RESET_POI_MERGE_SELECTION = '[HikeEditPoi] Reset poi merge selection';
@@ -181,6 +182,11 @@ export class SetSaving implements Action {
   constructor(public subdomain: string, public saving: boolean) {}
 }
 
+export class SetLoading implements Action {
+  readonly type = SET_LOADING;
+  constructor(public subdomain: string) {}
+}
+
 export class MarkersConfigChanged implements Action {
   readonly type = MARKERS_CONFIG_CHANGED;
 }
@@ -234,6 +240,7 @@ export type AllHikeEditPoiActions =
   | ToggleOnrouteMarkers
   | ToggleOffrouteMarkers
   | SetSaving
+  | SetLoading
   | MarkersConfigChanged
   // Merge
   | ResetPoiMergeSelection

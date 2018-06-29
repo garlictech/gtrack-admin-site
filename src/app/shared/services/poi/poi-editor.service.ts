@@ -26,11 +26,12 @@ import {
 import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { LanguageService } from '../language.service';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces/index';
+import { GooglePoiService } from './google-poi.service';
+import { WikipediaPoiService } from './wikipedia-poi.service';
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
-import { GooglePoiService } from './google-poi.service';
 
 @Injectable()
 export class PoiEditorService {
@@ -52,7 +53,8 @@ export class PoiEditorService {
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _poiSelectors: PoiSelectors,
-    private _googlePoiService: GooglePoiService
+    private _googlePoiService: GooglePoiService,
+    private _wikipediaPoiService: WikipediaPoiService
   ) {}
 
   public getDbObj(poi: IExternalPoi) {
@@ -297,21 +299,27 @@ export class PoiEditorService {
   }
 
   public handlePoiDetails(pois, subdomain) {
-    console.log('handlePoiDetails', subdomain, pois);
-
-    switch (subdomain) {
-      case EPoiTypes.google:
-        return this._googlePoiService
-          .getPlaceInfo(pois)
-          .then((detailedPois: IGooglePoi[]) => {
-            return Observable.of(detailedPois);
-          });
-      // case EPoiTypes.wikipedia:
-      //   this._getWikipediaDbObj(_poiData, <IWikipediaPoi>poi);
-      //   break;
-      default:
-        return Observable.of(pois);
-    }
+    return new Promise((resolve) => {
+      switch (subdomain) {
+        case EPoiTypes.google:
+          this._googlePoiService
+            .getPoiDetails(pois)
+            .then((detailedPois: IGooglePoi[]) => {
+              resolve(detailedPois);
+            });
+          break;
+        case EPoiTypes.wikipedia:
+          this._wikipediaPoiService
+            .getPoiDetails(pois)
+            .then((detailedPois: IWikipediaPoi[]) => {
+              resolve(detailedPois);
+            });
+          break;
+        default:
+          resolve(pois);
+          break;
+      }
+    });
   }
 
   public getGTrackPois(map) {
