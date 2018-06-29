@@ -105,6 +105,7 @@
     "deepstream-ngx": "file:src/subrepos/deepstream-ngx",
     "enum-values": "^1.2.0",
     "flat": "^4.0.0",
+    "font-awesome": "^4.7.0",
     "forms-ngx": "file:./src/subrepos/forms-ngx",
     "geojson-rewind": "^0.3.1",
     "geojson-validation": "^0.2.1",
