@@ -1,4 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { EPoiTypes } from 'subrepos/provider-client';
+
 import * as HikeEditPoiActions from '../hike-edit-poi';
 
 describe('HikeEditPoi actions', () => {
@@ -35,6 +37,7 @@ describe('HikeEditPoi actions', () => {
     expect(HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle offroute markers');
 
     expect(HikeEditPoiActions.SET_SAVING).toEqual('[HikeEditPoi] Set saving');
+    expect(HikeEditPoiActions.SET_LOADING).toEqual('[HikeEditPoi] Set loading');
   });
 
   /**
@@ -366,13 +369,23 @@ describe('HikeEditPoi actions', () => {
   });
 
   it('should create SetSaving action', () => {
-    const action = new HikeEditPoiActions.SetSaving('google', true);
+    const action = new HikeEditPoiActions.SetSaving(EPoiTypes.google, true);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_SAVING,
-      subdomain: 'google',
+      subdomain: EPoiTypes.google,
       saving: true
+    });
+  });
+
+  it('should create SetLoading action', () => {
+    const action = new HikeEditPoiActions.SetLoading(EPoiTypes.google);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_LOADING,
+      subdomain: EPoiTypes.google
     });
   });
 });

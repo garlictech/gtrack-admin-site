@@ -1,4 +1,4 @@
-import { EPoiTypes } from 'subrepos/provider-client';
+import { EPoiTypes } from '../../../../subrepos/provider-client';
 import {
   hikeEditPoiReducer, wikipediaPoiInitialState, googlePoiInitialState, osmAmenityPoiInitialState, osmNaturalPoiInitialState, osmRoutePoiInitialState, externalPoiInitialContextState, initialGTrackPoiMergeState
 } from '../hike-edit-poi';
@@ -422,35 +422,35 @@ describe('HikeEditPoi reducers', () => {
     // showOnrouteMarkers is true initially
 
     it('should toggle google onroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOnrouteMarkers('google');
+      const action = new hikeEditPoiActions.ToggleOnrouteMarkers(EPoiTypes.google);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.google.showOnrouteMarkers).toEqual(false);
     });
 
     it('should toggle osmAmenity onroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOnrouteMarkers('osmAmenity');
+      const action = new hikeEditPoiActions.ToggleOnrouteMarkers(EPoiTypes.osmAmenity);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmAmenity.showOnrouteMarkers).toEqual(false);
     });
 
     it('should toggle osmNatural onroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOnrouteMarkers('osmNatural');
+      const action = new hikeEditPoiActions.ToggleOnrouteMarkers(EPoiTypes.osmNatural);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmNatural.showOnrouteMarkers).toEqual(false);
     });
 
     it('should toggle osmRoute onroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOnrouteMarkers('osmRoute');
+      const action = new hikeEditPoiActions.ToggleOnrouteMarkers(EPoiTypes.osmRoute);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmRoute.showOnrouteMarkers).toEqual(false);
     });
 
     it('should toggle wikipedia onroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOnrouteMarkers('wikipedia');
+      const action = new hikeEditPoiActions.ToggleOnrouteMarkers(EPoiTypes.wikipedia);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.wikipedia.showOnrouteMarkers).toEqual(false);
@@ -461,35 +461,35 @@ describe('HikeEditPoi reducers', () => {
     // showOffrouteMarkers is false initially
 
     it('should toggle google offroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOffrouteMarkers('google');
+      const action = new hikeEditPoiActions.ToggleOffrouteMarkers(EPoiTypes.google);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.google.showOffrouteMarkers).toEqual(true);
     });
 
     it('should toggle osmAmenity offroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOffrouteMarkers('osmAmenity');
+      const action = new hikeEditPoiActions.ToggleOffrouteMarkers(EPoiTypes.osmAmenity);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmAmenity.showOffrouteMarkers).toEqual(true);
     });
 
     it('should toggle osmNatural offroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOffrouteMarkers('osmNatural');
+      const action = new hikeEditPoiActions.ToggleOffrouteMarkers(EPoiTypes.osmNatural);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmNatural.showOffrouteMarkers).toEqual(true);
     });
 
     it('should toggle osmRoute offroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOffrouteMarkers('osmRoute');
+      const action = new hikeEditPoiActions.ToggleOffrouteMarkers(EPoiTypes.osmRoute);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.osmRoute.showOffrouteMarkers).toEqual(true);
     });
 
     it('should toggle wikipedia offroute markers', () => {
-      const action = new hikeEditPoiActions.ToggleOffrouteMarkers('wikipedia');
+      const action = new hikeEditPoiActions.ToggleOffrouteMarkers(EPoiTypes.wikipedia);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.wikipedia.showOffrouteMarkers).toEqual(true);
@@ -498,10 +498,20 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetSaving action', () => {
     it('should set saving pois', () => {
-      const action = new hikeEditPoiActions.SetSaving('wikipedia', true);
+      const action = new hikeEditPoiActions.SetSaving(EPoiTypes.wikipedia, true);
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.contexts.wikipedia.saving).toEqual(true);
+    });
+  });
+
+  describe('SetLoading action', () => {
+    it('should set loading pois', () => {
+      const action = new hikeEditPoiActions.SetLoading(EPoiTypes.wikipedia);
+      const state = hikeEditPoiReducer(initialState, action);
+
+      expect(state.contexts.wikipedia.loading).toEqual(true);
+      expect(state.contexts.wikipedia.loaded).toEqual(false);
     });
   });
 });

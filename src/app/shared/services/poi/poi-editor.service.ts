@@ -10,7 +10,7 @@ import {
   GeoSearchSelectors,
   PoiSelectors
 } from 'subrepos/gtrack-common-ngx';
-import { IPoi, IPoiStored } from 'subrepos/provider-client';
+import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
 import {
   State,
   IExternalPoiListContextItemState,
@@ -26,6 +26,8 @@ import {
 import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { LanguageService } from '../language.service';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces/index';
+import { GooglePoiService } from './google-poi.service';
+import { WikipediaPoiService } from './wikipedia-poi.service';
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
@@ -50,7 +52,9 @@ export class PoiEditorService {
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
-    private _poiSelectors: PoiSelectors
+    private _poiSelectors: PoiSelectors,
+    private _googlePoiService: GooglePoiService,
+    private _wikipediaPoiService: WikipediaPoiService
   ) {}
 
   public getDbObj(poi: IExternalPoi) {
@@ -61,15 +65,15 @@ export class PoiEditorService {
     );
 
     switch (poi.objectType) {
-      case 'google':
+      case EPoiTypes.google:
         this._getGoogleDbObj(_poiData, <IGooglePoi>poi);
         break;
-      case 'wikipedia':
+      case EPoiTypes.wikipedia:
         this._getWikipediaDbObj(_poiData, <IWikipediaPoi>poi);
         break;
-      case 'osmAmenity':
-      case 'osmNatural':
-      case 'osmRoute':
+      case EPoiTypes.osmAmenity:
+      case EPoiTypes.osmNatural:
+      case EPoiTypes.osmRoute:
         this._getOsmDbObj(_poiData, <IOsmPoi>poi);
         break;
     }
@@ -294,6 +298,30 @@ export class PoiEditorService {
       });
   }
 
+  public handlePoiDetails(pois, subdomain) {
+    return new Promise((resolve) => {
+      switch (subdomain) {
+        case EPoiTypes.google:
+          this._googlePoiService
+            .getPoiDetails(pois)
+            .then((detailedPois: IGooglePoi[]) => {
+              resolve(detailedPois);
+            });
+          break;
+        case EPoiTypes.wikipedia:
+          this._wikipediaPoiService
+            .getPoiDetails(pois)
+            .then((detailedPois: IWikipediaPoi[]) => {
+              resolve(detailedPois);
+            });
+          break;
+        default:
+          resolve(pois);
+          break;
+      }
+    });
+  }
+
   public getGTrackPois(map) {
     let _bounds = this._routePlannerService.getSearchBounds();
     let _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);
@@ -328,9 +356,9 @@ export class PoiEditorService {
         if (gTrackPoi.objectType === poi.objectType) {
           if ((<any>gTrackPoi).objectType.substring(0, 3) === 'osm') {
             _idCheck = gTrackPoi.objectId!.osm === (<IOsmPoi>poi).osm!.id;
-          } else if (gTrackPoi.objectType === 'google') {
+          } else if (gTrackPoi.objectType === EPoiTypes.google) {
             _idCheck = gTrackPoi.objectId!.google === (<IGooglePoi>poi).google!.id;
-          } else if (gTrackPoi.objectType === 'wikipedia') {
+          } else if (gTrackPoi.objectType === EPoiTypes.wikipedia) {
             _idCheck =
               gTrackPoi.objectId!.wikipedia[(<IWikipediaPoi>poi).wikipedia!.lng!] ===
               (<IWikipediaPoi>poi).wikipedia!.pageid;
@@ -425,27 +453,27 @@ export class PoiEditorService {
       // Service pois
       //
 
-      this._getVisibleServicePois('google', this._hikeEditPoiSelectors.getAllGooglePois)
+      this._getVisibleServicePois(EPoiTypes.google, this._hikeEditPoiSelectors.getAllGooglePois)
         .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);
         }
       );
-      this._getVisibleServicePois('osmAmenity', this._hikeEditPoiSelectors.getAllOsmAmenityPois)
+      this._getVisibleServicePois(EPoiTypes.osmAmenity, this._hikeEditPoiSelectors.getAllOsmAmenityPois)
         .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);
         }
       );
-      this._getVisibleServicePois('osmNatural', this._hikeEditPoiSelectors.getAllOsmNaturalPois)
+      this._getVisibleServicePois(EPoiTypes.osmNatural, this._hikeEditPoiSelectors.getAllOsmNaturalPois)
         .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);
         }
       );
-      this._getVisibleServicePois('osmRoute', this._hikeEditPoiSelectors.getAllOsmRoutePois)
+      this._getVisibleServicePois(EPoiTypes.osmRoute, this._hikeEditPoiSelectors.getAllOsmRoutePois)
         .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);
         }
       );
-      this._getVisibleServicePois('wikipedia', this._hikeEditPoiSelectors.getAllWikipediaPois)
+      this._getVisibleServicePois(EPoiTypes.wikipedia, this._hikeEditPoiSelectors.getAllWikipediaPois)
         .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);
         }

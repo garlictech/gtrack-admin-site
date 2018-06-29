@@ -19,7 +19,7 @@ export class AdminMap extends Map {
     private _store: Store<State>,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {
-    super(id, map, iconService, mapMarkerService);
+    super(id, map, iconService, mapMarkerService, _store);
   }
 
   /**

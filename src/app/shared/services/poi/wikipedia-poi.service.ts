@@ -6,6 +6,7 @@ import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provid
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index';
 import { IWikipediaPoi } from 'app/shared/interfaces';
 import { LanguageService } from '../language.service';
+import { HikeProgramService } from '../hike/hike-program.service';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
@@ -15,7 +16,8 @@ export class WikipediaPoiService {
   constructor(
     private _http: HttpClient,
     private _geometryService: GeometryService,
-    private _toasterService: ToasterService
+    private _toasterService: ToasterService,
+    private _hikeProgramService: HikeProgramService,
   ) {}
 
   public get(bounds, lng = 'en') {
@@ -53,13 +55,7 @@ export class WikipediaPoiService {
             _pois.push(_poi);
           }
 
-          let promises: Promise<IWikipediaPoi[]>[] = [];
-          promises.push(this._getPageExtracts(_pois, lng));
-          promises.push(this._getPageImages(_pois, lng));
-
-          return Promise.all(promises).then(() => {
-            return _pois;
-          });
+          return _pois;
         } else {
           if (data.error) {
             this._toasterService.pop('error', 'Error!', data.error.info || 'Unknown error.');
@@ -67,6 +63,22 @@ export class WikipediaPoiService {
           return _pois;
         }
       });
+  }
+
+  public getPoiDetails(pois: IWikipediaPoi[]) {
+    let langs: string[] = this._hikeProgramService.getDescriptionLaguages();
+    let promises: Promise<IWikipediaPoi[]>[] = [];
+
+    for (const lng of langs) {
+      const langPois = _.filter(pois, p => p.wikipedia.lng === lng);
+
+      promises.push(this._getPageExtracts(langPois, lng));
+      promises.push(this._getPageImages(langPois, lng));
+    }
+
+    return Promise.all(promises).then(() => {
+      return pois;
+    });
   }
 
   /**
@@ -173,35 +185,5 @@ export class WikipediaPoiService {
       .then(() => {
         return _pois;
       });
-  }
-
-  /**
-   * Wikipedia API has a 10.000 radius limit on the bounds..
-   * So we have to pass gridded bounds if the original rectangle is too large
-   */
-  public getSearchBounds(bounds, boundsArr) {
-    const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
-
-    if (geo.radius < 10000) {
-      boundsArr.push(bounds);
-    } else {
-      // Chech quarter rectangles
-      this.getSearchBounds({
-        SouthWest: { lat: bounds.SouthWest.lat, lon: bounds.SouthWest.lon },
-        NorthEast: { lat: geo.center.geometry.coordinates[1], lon: geo.center.geometry.coordinates[0] }
-      }, boundsArr);
-      this.getSearchBounds({
-        SouthWest: { lat: geo.center.geometry.coordinates[1], lon: bounds.SouthWest.lon },
-        NorthEast: { lat: bounds.NorthEast.lat, lon: geo.center.geometry.coordinates[0] }
-      }, boundsArr);
-      this.getSearchBounds({
-        SouthWest: { lat: bounds.SouthWest.lat, lon: geo.center.geometry.coordinates[0] },
-        NorthEast: { lat: geo.center.geometry.coordinates[1], lon: bounds.NorthEast.lon }
-      }, boundsArr);
-      this.getSearchBounds({
-        SouthWest: { lat: geo.center.geometry.coordinates[1], lon: geo.center.geometry.coordinates[0] },
-        NorthEast: { lat: bounds.NorthEast.lat, lon: bounds.NorthEast.lon }
-      }, boundsArr);
-    }
   }
 }

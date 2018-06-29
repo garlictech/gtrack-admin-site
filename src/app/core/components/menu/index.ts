@@ -2,6 +2,7 @@ import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/cor
 import { ScrollPanel } from 'primeng/primeng';
 import { Store } from '@ngrx/store';
 import { State } from 'app/store';
+import { ConfirmationService } from 'primeng/primeng';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 
 @Component({
@@ -15,7 +16,8 @@ export class MenuComponent implements OnInit, AfterViewInit {
   public pages: any[];
 
   constructor(
-    private _store: Store<State>
+    private _store: Store<State>,
+    private _confirmationService: ConfirmationService
   ) {}
 
   ngAfterViewInit() {
@@ -32,6 +34,11 @@ export class MenuComponent implements OnInit, AfterViewInit {
   }
 
   public logout = () => {
-    this._store.dispatch(new AuthActions.LogoutStart());
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to logout?',
+      accept: () => {
+        this._store.dispatch(new AuthActions.LogoutStart());
+      }
+    });
   }
 }

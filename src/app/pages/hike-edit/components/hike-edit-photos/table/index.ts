@@ -6,7 +6,8 @@ import { IBackgroundImageData } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gt-hike-edit-photos-table',
-  templateUrl: './ui.html'
+  templateUrl: './ui.html',
+  styleUrls: ['./style.scss']
 })
 export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
   @Input() images$: Observable<IBackgroundImageData[]>;

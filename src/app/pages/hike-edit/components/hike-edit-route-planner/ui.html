@@ -1,21 +1,21 @@
 <div class="clearfix mb-20">
   <p-button
     label="Retrieve plan"
-    styleClass="ui-button-primary"
+    styleClass="ui-button-primary mr-5"
     [disabled]="(isPlanning$| async)"
     (onClick)="retrievePlan()"
   ></p-button>
 
   <p-button
     label="Close circle"
-    styleClass="ui-button-primary"
+    styleClass="ui-button-primary mr-5"
     [disabled]="!(isPlanning$| async) || (route$ | async)?.features.length < 3"
     (onClick)="closeCircle()"
   ></p-button>
 
   <p-button
     label="Remove last"
-    styleClass="ui-button-warning"
+    styleClass="ui-button-warning mr-5"
     [disabled]="!(isPlanning$| async)"
     (onClick)="removeLast()"
   ></p-button>

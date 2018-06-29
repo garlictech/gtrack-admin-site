@@ -5,7 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from 'app/shared/services/admin-map';
 import { PoiEditorService, LanguageService } from 'app/shared/services';
 import { Poi, PoiSelectors } from 'subrepos/gtrack-common-ngx';
-import { IPoi } from 'subrepos/provider-client';
+import { IPoi, EPoiTypes } from 'subrepos/provider-client';
 import {
   IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi
 } from 'app/shared/interfaces';
@@ -88,6 +88,12 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       .switchMap((pois: IExternalPoi[]) => this._poiEditorService.assignOnOffRoutePois(pois))
       .switchMap((pois: IExternalPoi[]) => this._poiEditorService.handleElevation(pois))
       .switchMap((pois: IExternalPoi[]) => {
+        // Turn on loading before get poi details
+        console.log('turn on');
+        this._store.dispatch(new hikeEditPoiActions.SetLoading(this.poiType.subdomain));
+        return this._poiEditorService.handlePoiDetails(pois, this.poiType.subdomain)
+      })
+      .switchMap((pois: IExternalPoi[]) => {
         return this._store
           .select(this._poiSelectors.getAllPois)
           .take(1)
@@ -167,15 +173,15 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     let _pois$;
 
     switch (subdomain) {
-      case 'google':
+      case EPoiTypes.google:
         _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllGooglePois); break;
-      case 'wikipedia':
+      case EPoiTypes.wikipedia:
         _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllWikipediaPois); break;
-      case 'osmAmenity':
+      case EPoiTypes.osmAmenity:
         _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmAmenityPois); break;
-      case 'osmNatural':
+      case EPoiTypes.osmNatural:
         _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmNaturalPois); break;
-      case 'osmRoute':
+      case EPoiTypes.osmRoute:
         _pois$ = this._store.select(this._hikeEditPoiSelectors.getAllOsmRoutePois); break;
     }
 
@@ -184,42 +190,42 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
   private _updateSubdomainPois(pois) {
     switch (this.poiType.subdomain) {
-      case 'google':
+      case EPoiTypes.google:
         this._store.dispatch(new hikeEditPoiActions.SetGooglePois(pois)); break;
-      case 'wikipedia':
+      case EPoiTypes.wikipedia:
         this._store.dispatch(new hikeEditPoiActions.SetWikipediaPois(pois)); break;
-      case 'osmAmenity':
+      case EPoiTypes.osmAmenity:
         this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPois(pois)); break;
-      case 'osmNatural':
+      case EPoiTypes.osmNatural:
         this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPois(pois)); break;
-      case 'osmRoute':
+      case EPoiTypes.osmRoute:
         this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePois(pois)); break;
     }
   }
 
   private _setSubdomainPoisInGtrackDb(pois) {
     switch (this.poiType.subdomain) {
-      case 'google':
+      case EPoiTypes.google:
         this._store.dispatch(new hikeEditPoiActions.SetGooglePoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
         ));
         break;
-      case 'wikipedia':
+      case EPoiTypes.wikipedia:
         this._store.dispatch(new hikeEditPoiActions.SetWikipediaPoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
         ));
         break;
-      case 'osmAmenity':
+      case EPoiTypes.osmAmenity:
         this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
         ));
         break;
-      case 'osmNatural':
+      case EPoiTypes.osmNatural:
         this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
         ));
         break;
-      case 'osmRoute':
+      case EPoiTypes.osmRoute:
         this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
         ));

@@ -18,12 +18,9 @@ export class AdminMapService extends MapService {
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
     private _store: Store<State>,
-    private _gameRuleService: GameRuleService,
-    private _routeService: RouteService,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _elevationService: ElevationService
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {
-    super(iconService, mapMarkerService);
+    super(iconService, mapMarkerService, _store);
   }
 
   public get(leafletMap: L.Map): AdminMap {
