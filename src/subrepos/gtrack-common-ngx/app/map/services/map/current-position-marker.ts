@@ -1,50 +1,48 @@
 import * as L from 'leaflet';
 import 'leaflet-usermarker';
 import 'leaflet-spin';
+import { Store } from '@ngrx/store';
+
+import { selectCurrentLocation } from '../../../store';
 
 export class CurrentPositionMarker {
   protected marker: L.UserMarker | null = null;
   public positioningInverval = 10000;
   public timeout = 10000;
 
-  constructor(protected map: L.Map) {}
+  constructor(
+    protected map: L.Map,
+    protected _store: Store<any>
+  ) {}
 
   public stopPositioning() {
     if (this.marker) {
       this.map.removeLayer(this.marker);
       this.marker = null;
     }
-
-    this.map.stopLocate();
-    this.map.off('locationfound');
   }
 
   public goToCurrentPosition() {
-    let locationFound = (e: L.LocationEvent) => {
-      this.map.off('locationfound', locationFound);
-      if (!this.marker) {
-        this.marker = L.userMarker(e.latlng, {
-          pulsing: true,
-          smallIcon: true
-        }).addTo(this.map);
-      }
-
-      this.marker.setLatLng(e.latlng);
-      this.marker.setAccuracy(e.accuracy);
-      this.map.setView(e.latlng, this.map.getZoom());
-      this.map.spin(false);
-    };
-
     this.map.spin(true);
-    this.map.on('locationfound', locationFound);
 
-    this.map.locate({
-      watch: true,
-      setView: false,
-      enableHighAccuracy: true,
-      timeout: this.timeout,
-      maximumAge: this.positioningInverval
-    });
+    this._store
+      .select(selectCurrentLocation)
+      .take(1)
+      .subscribe(geoPosition => {
+        console.log(geoPosition);
+        if (!this.marker) {
+          this.marker = L.userMarker([geoPosition.coords.latitude, geoPosition.coords.longitude], {
+            pulsing: true,
+            smallIcon: true
+          }).addTo(this.map);
+        }
+
+        this.marker.setLatLng([geoPosition.coords.latitude, geoPosition.coords.longitude]);
+        this.marker.setAccuracy(geoPosition.coords.accuracy);
+        this.map.setView([geoPosition.coords.latitude, geoPosition.coords.longitude], this.map.getZoom());
+        this.map.spin(false);
+        console.log('DONE');
+      });
   }
 
   public goToPosition(pos: L.LatLng) {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
 import { TranslateModule } from '@ngx-translate/core';
+import { StoreModule } from '@ngrx/store';
 
 import { TrailBoxComponent } from './trail-box';
 import { HikeCardComponent } from './hike-card';
@@ -13,12 +14,13 @@ import { HikeProgramComponent } from './hike-program';
 import { CheckpointsComponent } from './checkpoints';
 import { LocationSearchComponent } from './location-search';
 import { SearchFiltersComponent } from './search-filters';
+import { DownloadGpxButtonComponent } from './download-gpx-button';
 
 import { HikeModule } from '../hike.module';
-import { MapModule } from '../../map/map.module';
 import { MapComponentsModule } from '../../map/components/map-components.module';
 import { SharedModule } from '../../shared/shared.module';
 import { SearchFiltersModule } from '../../search-filters/search-filters.module';
+import { SearchResultsMapComponent } from './search-results-map';
 
 @NgModule({
   imports: [
@@ -29,7 +31,8 @@ import { SearchFiltersModule } from '../../search-filters/search-filters.module'
     NouisliderModule,
     ReactiveFormsModule,
     SearchFiltersModule,
-    TranslateModule
+    TranslateModule,
+    StoreModule
   ],
   exports: [
     TrailBoxComponent,
@@ -40,7 +43,9 @@ import { SearchFiltersModule } from '../../search-filters/search-filters.module'
     HikeProgramComponent,
     CheckpointsComponent,
     LocationSearchComponent,
-    SearchFiltersComponent
+    SearchFiltersComponent,
+    SearchResultsMapComponent,
+    DownloadGpxButtonComponent
   ],
   declarations: [
     TrailBoxComponent,
@@ -51,7 +56,9 @@ import { SearchFiltersModule } from '../../search-filters/search-filters.module'
     HikeProgramComponent,
     CheckpointsComponent,
     LocationSearchComponent,
-    SearchFiltersComponent
+    SearchFiltersComponent,
+    SearchResultsMapComponent,
+    DownloadGpxButtonComponent
   ]
 })
 export class HikeComponentsModule {}

@@ -49,6 +49,18 @@ export class PoiSelectors {
     });
   }
 
+  public getPoiContexts(contexts: string[]) {
+    return createSelector(this.getAllContexts, poiContexts =>
+      poiContexts.filter(context => {
+        if (context.id) {
+          return contexts.indexOf(context.id) !== -1;
+        } else {
+          return false;
+        }
+      })
+    );
+  }
+
   public getPois(contexts: string[]) {
     return createSelector(this.getAllPois, pois =>
       pois.filter(poi => {

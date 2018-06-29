@@ -16,15 +16,17 @@ import { APP_PROVIDERS } from './app.providers';
 import { AppRoutingModule } from './app-routing.module';
 import { ConfirmDialogModule } from 'primeng/primeng';
 
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.ENV !== 'development') {
   Raven.config(environment.raven).install();
 }
+
+console.log('ENVIRONMENT: ', process.env, environment);
 
 export class RavenErrorHandler implements ErrorHandler {
   handleError(err: any): void {
     console.error(err);
 
-    if (process.env.NODE_ENV !== 'development') {
+    if (process.env.ENV !== 'development') {
       Raven.captureException(err);
     }
   }

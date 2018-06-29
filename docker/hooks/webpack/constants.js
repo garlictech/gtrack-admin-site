@@ -31,6 +31,7 @@ exports.myConstants = {
         "google-libphonenumber",
         "password-validator",
         "@garlictech/deepstream-rxjs",
-        "lrm-graphhopper"
+        "lrm-graphhopper",
+        "togpx"
     ]
 };

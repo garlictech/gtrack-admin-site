@@ -40,9 +40,33 @@ export class RouteSelectors {
     return createSelector(this.getAllRoutes, (routes: IRouteStored[]) => routes.find(route => route.id === context));
   }
 
+  public getRoutes(contexts: string[]) {
+    return createSelector(this.getAllRoutes, routes =>
+      routes.filter(route => {
+        if (route.id) {
+          return contexts.indexOf(route.id) !== -1;
+        } else {
+          return false;
+        }
+      })
+    );
+  }
+
   public getRouteContext(id: string) {
     return createSelector(this.getAllContexts, contexts => {
       return contexts.find(context => context.id === id);
     });
+  }
+
+  public getRouteContexts(ids: string[]) {
+    return createSelector(this.getAllContexts, contexts =>
+      contexts.filter(context => {
+        if (context.id) {
+          return ids.indexOf(context.id) !== -1;
+        } else {
+          return false;
+        }
+      })
+    );
   }
 }

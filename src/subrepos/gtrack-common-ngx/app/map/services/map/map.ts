@@ -1,3 +1,4 @@
+import { Store } from '@ngrx/store';
 import { IRoute } from '../../../../../provider-client';
 import { IconService } from '../icon';
 
@@ -16,12 +17,13 @@ export class Map {
     public id: string,
     protected map: L.Map,
     protected iconService: IconService,
-    protected mapMarkerService: MapMarkerService
+    protected mapMarkerService: MapMarkerService,
+    protected store: Store<any>
   ) {}
 
   public get currentPositionMarker(): CurrentPositionMarker {
     if (!this._currentPositionMarker) {
-      this._currentPositionMarker = new CurrentPositionMarker(this.map);
+      this._currentPositionMarker = new CurrentPositionMarker(this.map, this.store);
     }
 
     return this._currentPositionMarker;

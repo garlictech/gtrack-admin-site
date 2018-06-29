@@ -31,8 +31,20 @@ export class BackgroundGeolocationService {
         navigator.geolocation.getCurrentPosition(
           pos => {
             log.d('Current location result: ', pos);
+            console.log('Before');
             if (pos) {
-              this._store.dispatch(new Actions.CurrentLocationObtained(pos));
+              this._store.dispatch(new Actions.CurrentLocationObtained({
+                coords: {
+                  accuracy: pos.coords.accuracy,
+                  altitude: pos.coords.altitude,
+                  altitudeAccuracy: pos.coords.altitudeAccuracy,
+                  heading: pos.coords.heading,
+                  latitude: pos.coords.latitude,
+                  longitude: pos.coords.longitude,
+                  speed: pos.coords.speed
+                },
+                timestamp: pos.timestamp
+              }));
             }
           },
           err => log.er('Current location error: ', err)

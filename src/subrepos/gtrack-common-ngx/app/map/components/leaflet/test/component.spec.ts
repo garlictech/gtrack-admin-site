@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
 
 import { LeafletComponent } from '../';
 import { MapService } from '../../../services/map';
@@ -14,6 +14,7 @@ describe('LeafletComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [StoreModule.forRoot({})],
       declarations: [LeafletComponent],
       providers: [MapService, IconService, MapMarkerService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
