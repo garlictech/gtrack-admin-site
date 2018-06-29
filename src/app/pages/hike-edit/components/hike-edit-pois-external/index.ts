@@ -100,6 +100,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       })
       .takeUntil(this._destroy$)
       .subscribe((pois) => {
+        console.log('REFRESH SUBDOMAIN POIS', pois);
         // Refresh poi list on the store
         this._updateSubdomainPois(pois);
 

@@ -21,22 +21,27 @@ export class GooglePoiService {
 
   constructor(
     private _http: HttpClient,
-    // private _googleMapsService: GoogleMapsService,
     private _geometryService: GeometryService,
   ) {}
 
   public get(bounds, lng = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
 
+    console.log('LANG', lng);
     return new Promise((resolve, reject) => {
       this._batchGet(this._getOnePage, {
         geo: geo,
         lng: lng,
         results: []
       }).then(_res => {
-        this._getPlaceInfo(_res).then((data) => {
+        resolve(_res);
+
+        /* TODO move after buffer check!!!
+        this._getPlaceInfo(_res).then((data: IGooglePoi[]) => {
+          console.log('_res data', data);
           resolve(data);
         });
+        */
       });
     });
   }
@@ -52,9 +57,6 @@ export class GooglePoiService {
       .toPromise()
       .then((data: any) => {
         // DOC: https://developers.google.com/places/web-service/search
-
-        // TODO: Lang params
-        // TODO: get details only on/off route pois
 
         const _res: IGooglePoi[] = [];
         for (let _point of data.results) {
@@ -112,7 +114,7 @@ export class GooglePoiService {
   /**
    * get() submethod
    */
-  private _getPlaceInfo(pois: IGooglePoi[]) {
+  public getPlaceInfo(pois: IGooglePoi[]) {
     const thumbnailWidth = 320;
     const cardWidth = 640;
 
