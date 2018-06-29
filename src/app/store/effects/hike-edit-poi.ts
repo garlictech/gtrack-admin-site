@@ -8,18 +8,19 @@ import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiServic
 import { IWikipediaPoi, IOsmPoi, IGooglePoi } from 'app/shared/interfaces';
 
 import * as _ from 'lodash';
+import { RouteService } from 'subrepos/gtrack-common-ngx';
 
 @Injectable()
 export class HikeEditPoiEffects {
   constructor(
     private _store: Store<State>,
     private _actions$: Actions,
+    private _routeService: RouteService,
     private _wikipediaPoiService: WikipediaPoiService,
     private _osmPoiService: OsmPoiService,
     private _osmRoutePoiService: OsmRoutePoiService,
     private _googlePoiService: GooglePoiService,
-    private _hikeProgramService: HikeProgramService,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors
+    private _hikeProgramService: HikeProgramService
   ) {}
 
   /**
@@ -31,7 +32,7 @@ export class HikeEditPoiEffects {
     .map((action: hikeEditPoiActions.GetWikipediaPois) => action.bounds)
     .switchMap(bounds => {
       let boundsArr: any[] = [];
-      this._wikipediaPoiService.getSearchBounds(bounds, boundsArr);
+      this._routeService.splitBounds(bounds, 10000, boundsArr);
 
       let langs: string[] = this._hikeProgramService.getDescriptionLaguages();
 
