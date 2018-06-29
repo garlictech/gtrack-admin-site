@@ -1,4 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { EPoiTypes } from 'subrepos/provider-client';
+
 import * as HikeEditPoiActions from '../hike-edit-poi';
 
 describe('HikeEditPoi actions', () => {
@@ -366,12 +368,12 @@ describe('HikeEditPoi actions', () => {
   });
 
   it('should create SetSaving action', () => {
-    const action = new HikeEditPoiActions.SetSaving('google', true);
+    const action = new HikeEditPoiActions.SetSaving(EPoiTypes.google, true);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_SAVING,
-      subdomain: 'google',
+      subdomain: EPoiTypes.google,
       saving: true
     });
   });

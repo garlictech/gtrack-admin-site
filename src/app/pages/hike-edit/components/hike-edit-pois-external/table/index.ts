@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { IExternalPoi } from 'app/shared/interfaces/index';
 import { LanguageService } from 'app/shared/services';
 import { State, hikeEditPoiActions } from 'app/store';
+import { EPoiTypes } from 'subrepos/provider-client';
 
 @Component({
   selector: 'hike-edit-pois-external-table',
@@ -23,19 +24,19 @@ export class HikeEditPoisExternalTableComponent {
     $event.stopPropagation();
 
     switch (this.subdomain) {
-      case 'google':
+      case EPoiTypes.google:
         this._store.dispatch(new hikeEditPoiActions.SetGooglePoiInHike(poi.id, !poi.inHike));
         break;
-      case 'wikipedia':
+      case EPoiTypes.wikipedia:
         this._store.dispatch(new hikeEditPoiActions.SetWikipediaPoiInHike(poi.id, !poi.inHike));
         break;
-      case 'osmAmenity':
+      case EPoiTypes.osmAmenity:
         this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPoiInHike(poi.id, !poi.inHike));
         break;
-      case 'osmNatural':
+      case EPoiTypes.osmNatural:
         this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPoiInHike(poi.id, !poi.inHike));
         break;
-      case 'osmRoute':
+      case EPoiTypes.osmRoute:
         this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiInHike(poi.id, !poi.inHike));
         break;
     }

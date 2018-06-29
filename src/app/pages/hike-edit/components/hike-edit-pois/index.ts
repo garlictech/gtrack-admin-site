@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, hikeEditPoiActions } from 'app/store';
 import { IExternalPoiType } from 'app/shared/interfaces/index';
+import { EPoiTypes } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gt-hike-edit-pois',
@@ -12,23 +13,23 @@ export class HikeEditPoisComponent implements OnInit {
   public externalPoiTypes: IExternalPoiType[] = [
     {
       title: 'Wikipedia pois',
-      subdomain: 'wikipedia',
+      subdomain: EPoiTypes.wikipedia,
       getAction: 'GetWikipediaPois'
     }, {
       title: 'Google pois',
-      subdomain: 'google',
+      subdomain: EPoiTypes.google,
       getAction: 'GetGooglePois'
     }, {
       title: 'OSM Natural pois',
-      subdomain: 'osmNatural',
+      subdomain: EPoiTypes.osmNatural,
       getAction: 'GetOsmNaturalPois'
     }, {
       title: 'OSM Amenity pois',
-      subdomain: 'osmAmenity',
+      subdomain: EPoiTypes.osmAmenity,
       getAction: 'GetOsmAmenityPois'
     }, {
       title: 'OSM Route pois',
-      subdomain: 'osmRoute',
+      subdomain: EPoiTypes.osmRoute,
       getAction: 'GetOsmRoutePois'
     }
   ];
