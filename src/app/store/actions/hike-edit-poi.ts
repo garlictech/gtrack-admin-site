@@ -81,11 +81,6 @@ export class SetGooglePoiSelected implements Action {
   constructor(public poiId: string, public isSelected: boolean) {}
 }
 
-export class SetGooglePoiInCollector implements Action {
-  readonly type = SET_GOOGLE_POI_IN_COLLECTOR;
-  constructor(public poiId: string, public isInCollector: boolean) {}
-}
-
 /**
  * OSM natural pois
  */
@@ -113,11 +108,6 @@ export class SetOsmAmenityPoisInCollector implements Action {
 export class SetOsmAmenityPoiSelected implements Action {
   readonly type = SET_OSM_AMENITY_POI_SELECTED;
   constructor(public poiId: string, public isSelected: boolean) {}
-}
-
-export class SetOsmAmenityPoiInCollector implements Action {
-  readonly type = SET_OSM_AMENITY_POI_IN_COLLECTOR;
-  constructor(public poiId: string, public isInCollector: boolean) {}
 }
 
 /**
@@ -149,11 +139,6 @@ export class SetOsmNaturalPoiSelected implements Action {
   constructor(public poiId: string, public isSelected: boolean) {}
 }
 
-export class SetOsmNaturalPoiInCollector implements Action {
-  readonly type = SET_OSM_NATURAL_POI_IN_COLLECTOR;
-  constructor(public poiId: string, public isInCollector: boolean) {}
-}
-
 /**
  * OSM route pois
  */
@@ -183,11 +168,6 @@ export class SetOsmRoutePoiSelected implements Action {
   constructor(public poiId: string, public isSelected: boolean) {}
 }
 
-export class SetOsmRoutePoiInCollector implements Action {
-  readonly type = SET_OSM_ROUTE_POI_IN_COLLECTOR;
-  constructor(public poiId: string, public isInCollector: boolean) {}
-}
-
 /**
  * Wikipedia pois
  */
@@ -215,11 +195,6 @@ export class SetWikipediaPoisInCollector implements Action {
 export class SetWikipediaPoiSelected implements Action {
   readonly type = SET_WIKIPEDIA_POI_SELECTED;
   constructor(public poiId: string, public isSelected: boolean) {}
-}
-
-export class SetWikipediaPoiInCollector implements Action {
-  readonly type = SET_WIKIPEDIA_POI_IN_COLLECTOR;
-  constructor(public poiId: string, public isInCollector: boolean) {}
 }
 
 /**
