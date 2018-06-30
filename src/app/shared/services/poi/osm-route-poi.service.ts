@@ -47,7 +47,9 @@ export class OsmRoutePoiService {
                 types: [],
                 description: {
                   [LanguageService.shortToLocale(lng)]: {
-                    title: _point.tags.name || 'unknown'
+                    title: _point.tags.name || 'unknown',
+                    summary: '',
+                    fullDescription: ''
                   }
                 },
                 objectType: EPoiTypes.osmRoute,

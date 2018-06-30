@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { EPoiTypes } from 'subrepos/provider-client';
+import { EPoiTypes } from '../../../../subrepos/provider-client';
 
 import * as HikeEditPoiActions from '../hike-edit-poi';
 
@@ -10,31 +10,40 @@ describe('HikeEditPoi actions', () => {
     expect(HikeEditPoiActions.GET_GOOGLE_POIS).toEqual('[HikeEditPoi] Get Google pois');
     expect(HikeEditPoiActions.SET_GOOGLE_POIS).toEqual('[HikeEditPoi] Set Google pois');
     expect(HikeEditPoiActions.SET_GOOGLE_POIS_IN_GTRACK_DB).toEqual('[HikeEditPoi] Set Google pois inGtrackDb');
-    expect(HikeEditPoiActions.SET_GOOGLE_POI_IN_HIKE).toEqual('[HikeEditPoi] Set Google poi inHike');
+    expect(HikeEditPoiActions.SET_GOOGLE_POIS_IN_COLLECTOR).toEqual('[HikeEditPoi] Set Google pois inCollector');
+    expect(HikeEditPoiActions.SET_GOOGLE_POI_SELECTED).toEqual('[HikeEditPoi] Set Google poi selected');
 
     expect(HikeEditPoiActions.GET_OSM_AMENITY_POIS).toEqual('[HikeEditPoi] Get OSM amenity pois');
     expect(HikeEditPoiActions.SET_OSM_AMENITY_POIS).toEqual('[HikeEditPoi] Set OSM amenity pois');
     expect(HikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_GTRACK_DB).toEqual('[HikeEditPoi] Set OSM amenity pois inGtrackDb');
-    expect(HikeEditPoiActions.SET_OSM_AMENITY_POI_IN_HIKE).toEqual('[HikeEditPoi] Set OSM amenity poi inHike');
+    expect(HikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_COLLECTOR).toEqual('[HikeEditPoi] Set OSM amenity pois inCollector');
+    expect(HikeEditPoiActions.SET_OSM_AMENITY_POI_SELECTED).toEqual('[HikeEditPoi] Set OSM amenity poi selected');
 
     expect(HikeEditPoiActions.GET_OSM_NATURAL_POIS).toEqual('[HikeEditPoi] Get OSM natural pois');
     expect(HikeEditPoiActions.SET_OSM_NATURAL_POIS).toEqual('[HikeEditPoi] Set OSM natural pois');
     expect(HikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_GTRACK_DB).toEqual('[HikeEditPoi] Set OSM natural pois inGtrackDb');
-    expect(HikeEditPoiActions.SET_OSM_NATURAL_POI_IN_HIKE).toEqual('[HikeEditPoi] Set OSM natural poi inHike');
+    expect(HikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_COLLECTOR).toEqual('[HikeEditPoi] Set OSM natural pois inCollector');
+    expect(HikeEditPoiActions.SET_OSM_NATURAL_POI_SELECTED).toEqual('[HikeEditPoi] Set OSM natural poi selected');
 
     expect(HikeEditPoiActions.GET_OSM_ROUTE_POIS).toEqual('[HikeEditPoi] Get OSM route pois');
     expect(HikeEditPoiActions.SET_OSM_ROUTE_POIS).toEqual('[HikeEditPoi] Set OSM route pois');
     expect(HikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_GTRACK_DB).toEqual('[HikeEditPoi] Set OSM route pois inGtrackDb');
-    expect(HikeEditPoiActions.SET_OSM_ROUTE_POI_IN_HIKE).toEqual('[HikeEditPoi] Set OSM route poi inHike');
+    expect(HikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_COLLECTOR).toEqual('[HikeEditPoi] Set OSM route pois inCollector');
+    expect(HikeEditPoiActions.SET_OSM_ROUTE_POI_SELECTED).toEqual('[HikeEditPoi] Set OSM route poi selected');
 
     expect(HikeEditPoiActions.GET_WIKIPEDIA_POIS).toEqual('[HikeEditPoi] Get Wikipedia pois');
     expect(HikeEditPoiActions.SET_WIKIPEDIA_POIS).toEqual('[HikeEditPoi] Set Wikipedia pois');
     expect(HikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_GTRACK_DB).toEqual('[HikeEditPoi] Set Wikipedia pois inGtrackDb');
-    expect(HikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE).toEqual('[HikeEditPoi] Set Wikipedia poi inHike');
+    expect(HikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_COLLECTOR).toEqual('[HikeEditPoi] Set Wikipedia pois inCollector');
+    expect(HikeEditPoiActions.SET_WIKIPEDIA_POI_SELECTED).toEqual('[HikeEditPoi] Set Wikipedia poi selected');
 
     expect(HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle onroute markers');
     expect(HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle offroute markers');
     expect(HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS).toEqual('[HikeEditPoi] Toggle offroute markers');
+
+    expect(HikeEditPoiActions.ADD_POIS_TO_COLLECTOR).toEqual('[HikeEditPoi] Add pois to collector');
+    expect(HikeEditPoiActions.REMOVE_POIS_FROM_COLLECTOR).toEqual('[HikeEditPoi] Remove pois from collector');
+    expect(HikeEditPoiActions.SET_COLLECTOR_POI_SELECTED).toEqual('[HikeEditPoi] Set collector poi selected');
 
     expect(HikeEditPoiActions.SET_SAVING).toEqual('[HikeEditPoi] Set saving');
     expect(HikeEditPoiActions.SET_LOADING).toEqual('[HikeEditPoi] Set loading');
@@ -83,7 +92,7 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create PatchGooglePois action', () => {
+  it('should create SetGooglePoisInGtrackDb action', () => {
     const properties = [];
     const action = new HikeEditPoiActions.SetGooglePoisInGtrackDb(properties);
 
@@ -94,18 +103,29 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create SetGooglePoiInHike action', () => {
-    const payload = {
-      poiId: 'fakePoiId',
-      isInHike: true
-    };
-    const action = new HikeEditPoiActions.SetGooglePoiInHike(payload.poiId, payload.isInHike);
+  it('should create SetGooglePoisInCollector action', () => {
+    const properties = [];
+    const action = new HikeEditPoiActions.SetGooglePoisInCollector(properties);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.SET_GOOGLE_POI_IN_HIKE,
+      type: HikeEditPoiActions.SET_GOOGLE_POIS_IN_COLLECTOR,
+      properties: properties
+    });
+  });
+
+  it('should create SetGooglePoiSelected action', () => {
+    const payload = {
+      poiId: 'fakePoiId',
+      isSelected: true
+    };
+    const action = new HikeEditPoiActions.SetGooglePoiSelected(payload.poiId, payload.isSelected);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_GOOGLE_POI_SELECTED,
       poiId: payload.poiId,
-      isInHike: payload.isInHike
+      isSelected: payload.isSelected
     });
   });
 
@@ -139,7 +159,7 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create PatchOsmAmenityPois action', () => {
+  it('should create SetOsmAmenityPoisInGtrackDb action', () => {
     const properties = [];
     const action = new HikeEditPoiActions.SetOsmAmenityPoisInGtrackDb(properties);
 
@@ -150,18 +170,29 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create SetOsmAmenityPoiInHike action', () => {
-    const payload = {
-      poiId: 'fakePoiId',
-      isInHike: true
-    };
-    const action = new HikeEditPoiActions.SetOsmAmenityPoiInHike(payload.poiId, payload.isInHike);
+  it('should create SetOsmAmenityPoisInCollector action', () => {
+    const properties = [];
+    const action = new HikeEditPoiActions.SetOsmAmenityPoisInCollector(properties);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.SET_OSM_AMENITY_POI_IN_HIKE,
+      type: HikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_COLLECTOR,
+      properties: properties,
+    });
+  });
+
+  it('should create SetOsmAmenityPoiSelected action', () => {
+    const payload = {
+      poiId: 'fakePoiId',
+      isSelected: true
+    };
+    const action = new HikeEditPoiActions.SetOsmAmenityPoiSelected(payload.poiId, payload.isSelected);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_OSM_AMENITY_POI_SELECTED,
       poiId: payload.poiId,
-      isInHike: payload.isInHike
+      isSelected: payload.isSelected
     });
   });
 
@@ -195,7 +226,7 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create PatchOsmNaturalPois action', () => {
+  it('should create SetOsmNaturalPoisInGtrackDb action', () => {
     const properties = [];
     const action = new HikeEditPoiActions.SetOsmNaturalPoisInGtrackDb(properties);
 
@@ -206,18 +237,29 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create SetOsmNaturalPoiInHike action', () => {
-    const payload = {
-      poiId: 'fakePoiId',
-      isInHike: true
-    };
-    const action = new HikeEditPoiActions.SetOsmNaturalPoiInHike(payload.poiId, payload.isInHike);
+  it('should create SetOsmNaturalPoisInCollector action', () => {
+    const properties = [];
+    const action = new HikeEditPoiActions.SetOsmNaturalPoisInCollector(properties);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.SET_OSM_NATURAL_POI_IN_HIKE,
+      type: HikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_COLLECTOR,
+      properties: properties
+    });
+  });
+
+  it('should create SetOsmNaturalPoiSelected action', () => {
+    const payload = {
+      poiId: 'fakePoiId',
+      isSelected: true
+    };
+    const action = new HikeEditPoiActions.SetOsmNaturalPoiSelected(payload.poiId, payload.isSelected);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_OSM_NATURAL_POI_SELECTED,
       poiId: payload.poiId,
-      isInHike: payload.isInHike
+      isSelected: payload.isSelected
     });
   });
 
@@ -251,7 +293,7 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create PatchOsmRoutePois action', () => {
+  it('should create SetOsmRoutePoisInGtrackDb action', () => {
     const properties = [];
     const action = new HikeEditPoiActions.SetOsmRoutePoisInGtrackDb(properties);
 
@@ -262,18 +304,29 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create SetOsmRoutePoiInHike action', () => {
-    const payload = {
-      poiId: 'fakePoiId',
-      isInHike: true
-    };
-    const action = new HikeEditPoiActions.SetOsmRoutePoiInHike(payload.poiId, payload.isInHike);
+  it('should create SetOsmRoutePoisInCollector action', () => {
+    const properties = [];
+    const action = new HikeEditPoiActions.SetOsmRoutePoisInCollector(properties);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.SET_OSM_ROUTE_POI_IN_HIKE,
+      type: HikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_COLLECTOR,
+      properties: properties,
+    });
+  });
+
+  it('should create SetOsmRoutePoiSelected action', () => {
+    const payload = {
+      poiId: 'fakePoiId',
+      isSelected: true
+    };
+    const action = new HikeEditPoiActions.SetOsmRoutePoiSelected(payload.poiId, payload.isSelected);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_OSM_ROUTE_POI_SELECTED,
       poiId: payload.poiId,
-      isInHike: payload.isInHike
+      isSelected: payload.isSelected
     });
   });
 
@@ -307,7 +360,7 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create PatchWikipediaPois action', () => {
+  it('should create SetWikipediaPoisInGtrackDb action', () => {
     const properties = [];
     const action = new HikeEditPoiActions.SetWikipediaPoisInGtrackDb(properties);
 
@@ -318,18 +371,68 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create SetWikipediaPoiInHike action', () => {
-    const payload = {
-      poiId: 'fakePoiId',
-      isInHike: true
-    };
-    const action = new HikeEditPoiActions.SetWikipediaPoiInHike(payload.poiId, payload.isInHike);
+  it('should create SetWikipediaPoisInCollector action', () => {
+    const properties = [];
+    const action = new HikeEditPoiActions.SetWikipediaPoisInCollector(properties);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: HikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE,
+      type: HikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_COLLECTOR,
+      properties: properties,
+    });
+  });
+
+  it('should create SetWikipediaPoiSelected action', () => {
+    const payload = {
+      poiId: 'fakePoiId',
+      isSelected: true
+    };
+    const action = new HikeEditPoiActions.SetWikipediaPoiSelected(payload.poiId, payload.isSelected);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_WIKIPEDIA_POI_SELECTED,
       poiId: payload.poiId,
-      isInHike: payload.isInHike
+      isSelected: payload.isSelected
+    });
+  });
+
+  /**
+   * Collector
+   */
+
+  it('should create AddPoisToCollector action', () => {
+    const pois = ['fakePoi'];
+    const action = new HikeEditPoiActions.AddPoisToCollector(pois);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.ADD_POIS_TO_COLLECTOR,
+      pois: pois
+    });
+  });
+
+  it('should create AddPoisToCollector action', () => {
+    const poiIds = ['fakeId'];
+    const action = new HikeEditPoiActions.RemovePoisFromCollector(poiIds);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.REMOVE_POIS_FROM_COLLECTOR,
+      poiIds: poiIds
+    });
+  });
+
+  it('should create AddPoisToCollector action', () => {
+    const poiId = 'fakeId';
+    const selected = true;
+    const action = new HikeEditPoiActions.SetCollectorPoiSelected(poiId, selected);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditPoiActions.SET_COLLECTOR_POI_SELECTED,
+      poiId: poiId,
+      isSelected: selected
     });
   });
 

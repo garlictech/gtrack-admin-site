@@ -7,7 +7,7 @@
         <th>Distance from route</th>
         <th>Types</th>
         <th>Special</th>
-        <th></th>
+        <th>Select</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-poi>
@@ -22,24 +22,15 @@
           <gt-special-poi-data [poi]="poi" [openPoiModal]="openPoiModal"></gt-special-poi-data>
         </td>
         <td class="text-center">
-
-          <p-button
-            *ngIf="!poi.inGtrackDb && !poi.inHike"
-            icon="fa fa-plus"
-            styleClass="ui-button-success"
-            (onClick)="handleInHikePoi($event, poi)"
-          ></p-button>
-
-          <p-button
-            *ngIf="!poi.inGtrackDb && poi.inHike"
-            icon="fa fa-minus"
-            styleClass="ui-button-danger"
-            (onClick)="handleInHikePoi($event, poi)"
-          ></p-button>
-
+          <p-checkbox
+            *ngIf="!poi.inCollector && !poi.inGtrackDb"
+            binary="true"
+            [(ngModel)]="poi.selected"
+            (onChange)="handlePoiSelection(poi)"
+          ></p-checkbox>
         </td>
       </tr>
-      <tr *ngIf="pois.length === 0">No pois.</tr>
+      <tr *ngIf="!pois || pois.length === 0">No pois.</tr>
     </ng-template>
   </p-table>
 </ng-container>

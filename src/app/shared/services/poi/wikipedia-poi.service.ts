@@ -43,6 +43,8 @@ export class WikipediaPoiService {
               description: {
                 [LanguageService.shortToLocale(lng)]: {
                   title: _point.title,
+                  summary: '',
+                  fullDescription: '',
                 }
               },
               wikipedia: {}

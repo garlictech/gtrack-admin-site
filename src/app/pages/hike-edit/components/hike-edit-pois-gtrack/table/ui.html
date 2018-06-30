@@ -8,7 +8,6 @@
         <th>Types</th>
         <th>Origin</th>
         <th>Elevation</th>
-        <th>Merge</th>
         <th></th>
       </tr>
     </ng-template>
@@ -23,24 +22,18 @@
         <td>{{poi.objectType}}</td>
         <td>{{poi.elevation | distance}}</td>
         <td class="text-center">
-          <p-checkbox
-            binary="true"
-            [(ngModel)]="mergeSelections[poi.id]"
-            (onChange)="toggleMergeSelection(poi.id)"
-          ></p-checkbox>
-        </td>
-        <td class="text-center">
           <p-button
             *ngIf="!poi.inHike"
             icon="fa fa-plus"
             styleClass="ui-button-success"
             (onClick)="addPoi($event, poi)"
+            title="Add to hike"
           ></p-button>
 
           <p-button
             icon="fa fa-pencil-alt"
-            styleClass="ui-button-warning"
-            (onClick)="openGTrackPoiModal(poi.id)"
+            styleClass="ui-button-warning ml-5"
+            (onClick)="openGTrackPoiModal(poi)"
           ></p-button>
         </td>
       </tr>

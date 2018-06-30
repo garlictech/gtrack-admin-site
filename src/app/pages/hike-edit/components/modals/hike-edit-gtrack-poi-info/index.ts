@@ -17,6 +17,7 @@ import { ConfirmationService } from 'primeng/primeng';
 })
 export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   @Input() poiId: string;
+  @Input() closeModal: any;
 
   public storeDataPath: string;
   public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
@@ -46,9 +47,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
 
     // Attributes for Photos component
     this.backgroundImageSelector = this._editedGTrackPoiSelectors.getBackgroundImages;
-    console.log('this.backgroundImageSelector', this.backgroundImageSelector);
     this.backgroundImageUrlSelector = this._editedGTrackPoiSelectors.getBackgroundOriginalUrls();
-    console.log('this.backgroundImageUrlSelector', this.backgroundImageUrlSelector);
     this.clickActions = {
       add: (image) => this._store.dispatch(new editedGTrackPoiActions.AddPoiBackgroundImage(image)),
       remove: (url) => this._store.dispatch(new editedGTrackPoiActions.RemovePoiBackgroundImage(url))
@@ -116,6 +115,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
       message: 'Are you sure that you want to delete?',
       accept: () => {
         this._store.dispatch(new commonPoiActions.DeletePoi(poiId));
+        this.closeModal();
       }
     });
   }

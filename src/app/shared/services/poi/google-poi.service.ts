@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { concatMap } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import { GoogleMapsService, GeometryService, CenterRadius, defaultSharedConfig } from 'subrepos/gtrack-common-ngx/index';
@@ -10,7 +10,6 @@ import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
-import { HttpClient } from '@angular/common/http';
 
 const PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
 
@@ -60,6 +59,8 @@ export class GooglePoiService {
             description: {
               [LanguageService.shortToLocale(params.lng)]: {
                 title: _point.name || 'unknown',
+                summary: '',
+                fullDescription: '',
               }
             },
             types: _point.types || [],

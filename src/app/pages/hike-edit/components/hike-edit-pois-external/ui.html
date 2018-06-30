@@ -8,16 +8,15 @@
   <gt-hike-edit-external-poi-info
     *ngIf="displayPoiModal"
     [poi]="modalPoi"
-    [closeCallback]="closeDialog"
   ></gt-hike-edit-external-poi-info>
 </p-dialog>
 
 <div class="clearfix mb-20">
   <div class="f-left">
     <p-button
-      label="Save as gTrackPoi"
+      label="Copy to poi collector"
       styleClass="ui-button-success"
-      (onClick)="savePois()"
+      (onClick)="copyToPoiCollector()"
       [disabled]="(pois$ | async).length === 0"
     ></p-button>
 

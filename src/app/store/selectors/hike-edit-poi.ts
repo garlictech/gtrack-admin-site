@@ -17,6 +17,7 @@ export class HikeEditPoiSelectors {
   public getAllOsmAmenityPois: (state: object) => IOsmPoi[];
   public getAllOsmNaturalPois: (state: object) => IOsmPoi[];
   public getAllOsmRoutePois: (state: object) => IOsmPoi[];
+  public getAllCollectorPois: (state: object) => any[];
   public getMergeSelections: (state: object) => string[];
   public getMergeSelectionsCount: (state: object) => number;
   private _allPoiSelectorMap = {}
@@ -53,6 +54,11 @@ export class HikeEditPoiSelectors {
     );
     this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
 
+    const collectedPoiSelector = createSelector(
+      this._featureSelector, (state: IHikeEditPoiState) => state.collectorPois
+    );
+    this.getAllCollectorPois = wikipediaPoiAdapter.getSelectors(collectedPoiSelector).selectAll;
+
     this._allPoiSelectorMap = {
       'google': this.getAllGooglePois,
       'osmAmenity': this.getAllOsmAmenityPois,
@@ -72,8 +78,18 @@ export class HikeEditPoiSelectors {
 
   public getSaveablePois(subdomain) {
     return createSelector(this._allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
-      return pois.filter(p => p.inHike && !p.inGtrackDb);
+      return pois.filter(p => p.selected && !p.inGtrackDb);
     });
+  }
+
+  public getSelectedCollectorPois() {
+    return createSelector(this.getAllCollectorPois, (pois: any[]) => {
+      return pois.filter(p => p.selected);
+    });
+  }
+
+  public getCollectorPoi(poiId: string) {
+    return createSelector(this.getAllCollectorPois, (pois: any[]) => pois.find(poi => poi.id === poiId));
   }
 
   public getPoiPhotos(subdomain) {

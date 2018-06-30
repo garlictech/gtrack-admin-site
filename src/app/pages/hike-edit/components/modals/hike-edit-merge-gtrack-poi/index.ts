@@ -10,7 +10,6 @@ import * as _ from 'lodash';
   styleUrls: ['./style.scss'],
 })
 export class HikeEditMergeGTrackPoiComponent implements OnInit {
-  public static componentName = 'HikeEditMergeGTrackPoiComponent';
   @Input() conflicts: IComparedProperty;
   @Input() saveCallback: any;
   public mergeForm: FormGroup;
