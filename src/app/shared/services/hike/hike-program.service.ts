@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State, editedHikeProgramActions } from 'app/store';
 import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
@@ -95,5 +95,20 @@ export class HikeProgramService {
 
       this._store.dispatch(new editedHikeProgramActions.SetStops(stops));
     }
+  }
+
+  /**
+   * Get current languages from descriptions
+   */
+  public getDescriptionLaguages() {
+    let langs: string[] = [];
+    this._store
+      .select(this._editedHikeProgramSelectors.getDescriptionLangs)
+      .take(1)
+      .subscribe((langKeys: string[]) => {
+        langs = langKeys.map(key => key.substr(0, 2));
+      });
+
+    return langs;
   }
 }

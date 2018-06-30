@@ -7,5 +7,10 @@
 	remote = https://github.com/garlictech/forms-ngx.git
 	branch = master
 	commit = ad0c85dc5ce187ac13f259c5ca7c4379f420a081
+<<<<<<< HEAD
+	parent = 2a881eb5e3eeebd979a2ac89104e188b368dbdeb
+=======
 	parent = 648f398c6140d4208a9bd45bcea5e093c03217a0
+>>>>>>> 8feb3c2f11c7b36c061d656fc8a6eaa0359777c3
 	cmdver = 0.3.1
+	method = merge

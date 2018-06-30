@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
 import { State, adminMapActions } from 'app/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
 import { Map, IconService, MapMarkerService } from 'subrepos/gtrack-common-ngx/app';
 
@@ -19,7 +19,7 @@ export class AdminMap extends Map {
     private _store: Store<State>,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {
-    super(id, map, iconService, mapMarkerService);
+    super(id, map, iconService, mapMarkerService, _store);
   }
 
   /**

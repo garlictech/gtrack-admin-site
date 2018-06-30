@@ -1,13 +1,13 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State, editedHikeProgramActions } from 'app/store';
 import { IBackgroundImageData } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gt-hike-edit-photos-table',
-  templateUrl: './ui.html'
+  templateUrl: './ui.html',
+  styleUrls: ['./style.scss']
 })
 export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
   @Input() images$: Observable<IBackgroundImageData[]>;

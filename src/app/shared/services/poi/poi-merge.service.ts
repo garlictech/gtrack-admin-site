@@ -10,9 +10,10 @@ export class PoiMergeService {
     // Collect properties
     const flatProperties: IComparedProperty = {}
     let commonTypes: string[] = [];
+    let objectTypes: string[] = [];
 
     for (const poi of pois) {
-      const flatPoi = flatten(_.omit(poi, ['id', 'lat', 'lon', 'elevation', 'published', 'positions', 'types', 'state', 'timestamp']));
+      const flatPoi = flatten(_.omit(poi, ['id', 'lat', 'lon', 'elevation', 'published', 'positions', 'types', 'state', 'timestamp', 'objectType']));
       flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}]`;
 
       for (const key in flatPoi) {
@@ -23,6 +24,7 @@ export class PoiMergeService {
       }
 
       commonTypes = commonTypes.concat(poi.types.filter(t => ['unknown', 'undefined'].indexOf(t) < 0));
+      objectTypes = objectTypes.concat(poi.objectType);
     }
 
     // Remove duplicated values and empty objects
@@ -34,7 +36,8 @@ export class PoiMergeService {
     // Separate
     const filteredProperties: IFilteredProperties = {
       unique: {
-        types: _.uniq(commonTypes)
+        types: _.uniq(commonTypes),
+        objectTypes: objectTypes
       },
       conflicts: {}
     }

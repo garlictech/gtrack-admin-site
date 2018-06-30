@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
-import { RouterActions } from 'subrepos/gtrack-common-ngx/app/router';
-
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthEffects {

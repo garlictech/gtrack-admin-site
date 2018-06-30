@@ -27,6 +27,7 @@ import {
 } from './shared/services';
 
 import { REDUCER_TOKEN, getReducers } from './store';
+import { ConfirmationService } from 'primeng/primeng';
 
 export const APP_PROVIDERS = [
   TransferState,
@@ -49,5 +50,6 @@ export const APP_PROVIDERS = [
   HikeEditPoiSelectors,
   HikeEditImageSelectors,
   HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors
+  HikeEditRoutePlannerSelectors,
+  ConfirmationService
 ];

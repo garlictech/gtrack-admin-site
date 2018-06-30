@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { State, hikeEditImageActions } from 'app/store';
 import {
   HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors, EditedHikeProgramSelectors
 } from 'app/store/selectors';
 import { RoutePlannerService } from 'app/shared/services/admin-map';
-import { IBackgroundImageData } from 'subrepos/provider-client';
+import { IBackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gt-hike-edit-photos',
@@ -37,11 +36,11 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Photo sources
     this.googlePhotos$ = this._store
-      .select(this._hikeEditPoiSelectors.getPoiPhotos('google'))
+      .select(this._hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.google))
       .takeUntil(this._destroy$);
 
     this.wikipediaPhotos$ = this._store
-      .select(this._hikeEditPoiSelectors.getPoiPhotos('wikipedia'))
+      .select(this._hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.wikipedia))
       .takeUntil(this._destroy$);
 
     this.mapillaryImages$ = this._store

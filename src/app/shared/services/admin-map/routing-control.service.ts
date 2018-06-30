@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ElevationService } from 'subrepos/gtrack-common-ngx';
 import { State, hikeEditRoutePlannerActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from 'app/store/selectors';
