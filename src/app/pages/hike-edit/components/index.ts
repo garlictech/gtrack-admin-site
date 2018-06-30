@@ -3,6 +3,8 @@ export { HikeEditMapComponent } from './hike-edit-map';
 export { HikeEditPoisComponent } from './hike-edit-pois';
 export { HikeEditPoisExternalComponent } from './hike-edit-pois-external';
 export { HikeEditPoisExternalTableComponent } from './hike-edit-pois-external/table';
+export { HikeEditPoisCollectorComponent } from './hike-edit-pois-collector';
+export { HikeEditPoisCollectorTableComponent } from './hike-edit-pois-collector/table';
 export { HikeEditPoisGTrackComponent } from './hike-edit-pois-gtrack';
 export { HikeEditPoisGTrackTableComponent } from './hike-edit-pois-gtrack/table';
 export { HikeEditPoisHikeComponent } from './hike-edit-pois-hike';

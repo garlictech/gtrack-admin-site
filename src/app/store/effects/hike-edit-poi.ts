@@ -13,7 +13,6 @@ import { RouteService } from 'subrepos/gtrack-common-ngx';
 @Injectable()
 export class HikeEditPoiEffects {
   constructor(
-    private _store: Store<State>,
     private _actions$: Actions,
     private _routeService: RouteService,
     private _wikipediaPoiService: WikipediaPoiService,

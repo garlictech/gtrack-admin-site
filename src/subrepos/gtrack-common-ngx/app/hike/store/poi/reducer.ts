@@ -107,6 +107,12 @@ const reducer: ActionReducer<IPoiEntityState> = (
         state
       );
 
+    case PoiActionTypes.POI_DELETED:
+      return poiAdapter.removeOne(
+        action.context,
+        state
+      );
+
     case PoiActionTypes.POI_MERGED_SUCCESSFULLY:
       return poiAdapter.removeMany(action.mergedIds, state);
 

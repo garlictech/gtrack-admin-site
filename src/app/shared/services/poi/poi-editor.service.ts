@@ -64,18 +64,18 @@ export class PoiEditorService {
       _.pick(poi, ['elevation', 'lat', 'lon', 'objectType', 'description', 'types'])
     );
 
-    switch (poi.objectType) {
-      case EPoiTypes.google:
-        this._getGoogleDbObj(_poiData, <IGooglePoi>poi);
-        break;
-      case EPoiTypes.wikipedia:
-        this._getWikipediaDbObj(_poiData, <IWikipediaPoi>poi);
-        break;
-      case EPoiTypes.osmAmenity:
-      case EPoiTypes.osmNatural:
-      case EPoiTypes.osmRoute:
-        this._getOsmDbObj(_poiData, <IOsmPoi>poi);
-        break;
+    if (poi.objectType.indexOf(EPoiTypes.google) >= 0) {
+      this._getGoogleDbObj(_poiData, <IGooglePoi>poi);
+    }
+    if (poi.objectType.indexOf(EPoiTypes.wikipedia) >= 0) {
+      this._getWikipediaDbObj(_poiData, <IWikipediaPoi>poi);
+    }
+    if (
+      poi.objectType.indexOf(EPoiTypes.osmAmenity) >= 0 ||
+      poi.objectType.indexOf(EPoiTypes.osmNatural) >= 0 ||
+      poi.objectType.indexOf(EPoiTypes.osmRoute) >= 0
+    ) {
+      this._getOsmDbObj(_poiData, <IOsmPoi>poi);
     }
 
     return <IPoi>_poiData;
@@ -86,22 +86,34 @@ export class PoiEditorService {
    */
   private _getGoogleDbObj(poiData: any, poi: IGooglePoi) {
     if (poi.google && poi.google.id) {
-      poiData.objectId = {
-        google: poi.google.id
-      };
-
-      poiData.additionalData = {};
+      _.merge(poiData, {
+        objectId: {
+          google: poi.google.id
+        }
+      });
 
       if (poi.google.formatted_address) {
-        poiData.additionalData.address = poi.google.formatted_address;
+        _.merge(poiData, {
+          additionalData: {
+            address: poi.google.formatted_address
+          }
+        });
       }
 
       if (poi.google.international_phone_number) {
-        poiData.additionalData.phoneNumber = poi.google.international_phone_number;
+        _.merge(poiData, {
+          additionalData: {
+            phoneNumber: poi.google.international_phone_number
+          }
+        });
       }
 
       if (poi.google.opening_hours) {
-        poiData.additionalData.openingHours = poi.google.opening_hours;
+        _.merge(poiData, {
+          additionalData: {
+            openingHours: poi.google.opening_hours
+          }
+        });
       }
     }
 
@@ -113,15 +125,20 @@ export class PoiEditorService {
    */
   private _getWikipediaDbObj(poiData, poi: IWikipediaPoi) {
     if (poi.wikipedia && poi.wikipedia.pageid) {
-      poiData.objectId = {
-        wikipedia: {
-          [<string>poi.wikipedia.lng]: poi.wikipedia.pageid
+      _.merge(poiData, {
+        objectId: {
+          wikipedia: {
+            [<string>poi.wikipedia.lng]: poi.wikipedia.pageid
+          }
+        },
+        additionalData: {
+          wikipedia: {
+            [<string>poi.wikipedia.lng]: {
+              url: poi.wikipedia.url
+            }
+          }
         }
-      };
-
-      poiData.additionalData = {
-        url: poi.wikipedia.url
-      };
+      });
     }
   }
 
@@ -129,9 +146,11 @@ export class PoiEditorService {
    * getDbObj submethod
    */
   private _getOsmDbObj(poiData, poi: IOsmPoi) {
-    poiData.objectId = {
-      osm: poi.osm!.id
-    };
+    _.merge(poiData, {
+      objectId: {
+        osm: poi.osm!.id
+      }
+    });
   }
 
   /**
@@ -161,7 +180,6 @@ export class PoiEditorService {
 
             if (!isGTrackPoi) {
               this._handleTypes(<IExternalPoi>p);
-              this._handleTitle(<IExternalPoi>p);
             }
 
             _pois.push(p);
@@ -228,38 +246,14 @@ export class PoiEditorService {
   }
 
   /**
-   * organizePois submethod
-   */
-  private _handleTitle(poi: IExternalPoi) {
-    /*
-    TODO: Handle ILocalizedItem description
-    if (!poi.title || poi.title === 'unknown') {
-      let _titleParts: string[] = [];
-
-      for (let i = 0; i < poi.types.length; i++) {
-        let _t: string = poi.types[i];
-
-        if (['atm'].indexOf(_t) >= 0) {
-          _titleParts.push(_t.toUpperCase());
-        } else {
-          _titleParts.push(_.capitalize(_t.replace('_', ' ')));
-        }
-      }
-
-      poi.title = _titleParts.join(', ');
-    }
-    */
-  }
-
-  /**
-   * Set the inHike flag on the service pois based on on/off route state
+   * Set the selected flag on the service pois based on on/off route state
    */
   public assignOnOffRoutePois(pois: IExternalPoi[]) {
     let _pois = _.sortBy(_.cloneDeep(pois), (p: IExternalPoi) => p.distFromRoute);
     let _onRoutePois = this._getOnroutePois(_pois);
     let _offRoutePois = this._getOffroutePois(_pois);
-    _.forEach(_onRoutePois, p => ((<any>p).inHike = true));
-    _.forEach(_offRoutePois, p => ((<any>p).inHike = false));
+    _.forEach(_onRoutePois, p => ((<any>p).selected = true));
+    _.forEach(_offRoutePois, p => ((<any>p).selected = false));
 
     return Observable.of(_pois);
   }
@@ -380,6 +374,25 @@ export class PoiEditorService {
     return _pois;
   }
 
+  /**
+   * Update inCollector property on the given poi
+   */
+  public handleInCollectorPois(pois: IGooglePoi[] | IWikipediaPoi[] | IOsmPoi[], collectedPois: any[]) {
+    let _pois = _.cloneDeep(pois);
+
+    for (let poi of _pois) {
+      const _found = _.find(collectedPois, (collectedPoi: any) => collectedPoi.id === poi.id);
+
+      if (_found) {
+        poi.inCollector = true;
+      } else {
+        poi.inCollector = false;
+      }
+    }
+
+    return _pois;
+  }
+
   public refreshPoiMarkers(map: AdminMap) {
     if (map) {
       let _pois: any[] = [];
@@ -453,6 +466,11 @@ export class PoiEditorService {
       // Service pois
       //
 
+      this._getVisibleServicePois('collector', this._hikeEditPoiSelectors.getAllCollectorPois)
+        .subscribe((pois: any[]) => {
+          _pois = _pois.concat(pois);
+        }
+      );
       this._getVisibleServicePois(EPoiTypes.google, this._hikeEditPoiSelectors.getAllGooglePois)
         .subscribe((pois: IExternalPoi[]) => {
           _pois = _pois.concat(pois);

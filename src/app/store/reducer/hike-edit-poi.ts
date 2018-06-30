@@ -2,7 +2,7 @@ import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   IHikeEditPoiState, IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
-  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState, IGTrackPoiMergeState
+  IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState, IGTrackPoiMergeState, IPoiCollectorEntityState
 } from '../state';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
 import { hikeEditPoiActions } from '../index';
@@ -40,11 +40,20 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
       }), state);
     }
 
-    case hikeEditPoiActions.SET_GOOGLE_POI_IN_HIKE:
+    case hikeEditPoiActions.SET_GOOGLE_POIS_IN_COLLECTOR: {
+      return googlePoiAdapter.updateMany(action.properties.map(poi => {
+        return {
+          id: poi.id,
+          changes: _.omit(poi, ['id'])
+        };
+      }), state);
+    }
+
+    case hikeEditPoiActions.SET_GOOGLE_POI_SELECTED:
       return googlePoiAdapter.updateOne({
         id: action.poiId,
         changes: {
-          inHike: action.isInHike
+          selected: action.isSelected
         }
       }, state);
 
@@ -84,11 +93,20 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
       }), state);
     }
 
-    case hikeEditPoiActions.SET_OSM_AMENITY_POI_IN_HIKE:
+    case hikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_COLLECTOR: {
+      return osmAmenityPoiAdapter.updateMany(action.properties.map(poi => {
+        return {
+          id: poi.id,
+          changes: _.omit(poi, ['id'])
+        };
+      }), state);
+    }
+
+    case hikeEditPoiActions.SET_OSM_AMENITY_POI_SELECTED:
       return osmAmenityPoiAdapter.updateOne({
         id: action.poiId,
         changes: {
-          inHike: action.isInHike
+          selected: action.isSelected
         }
       }, state);
 
@@ -128,11 +146,20 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
       }), state);
     }
 
-    case hikeEditPoiActions.SET_OSM_NATURAL_POI_IN_HIKE:
+    case hikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_COLLECTOR: {
+      return osmNaturalPoiAdapter.updateMany(action.properties.map(poi => {
+        return {
+          id: poi.id,
+          changes: _.omit(poi, ['id'])
+        };
+      }), state);
+    }
+
+    case hikeEditPoiActions.SET_OSM_NATURAL_POI_SELECTED:
       return osmNaturalPoiAdapter.updateOne({
         id: action.poiId,
         changes: {
-          inHike: action.isInHike
+          selected: action.isSelected
         }
       }, state);
 
@@ -172,11 +199,20 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
       }), state);
     }
 
-    case hikeEditPoiActions.SET_OSM_ROUTE_POI_IN_HIKE:
+    case hikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_COLLECTOR: {
+      return osmRoutePoiAdapter.updateMany(action.properties.map(poi => {
+        return {
+          id: poi.id,
+          changes: _.omit(poi, ['id'])
+        };
+      }), state);
+    }
+
+    case hikeEditPoiActions.SET_OSM_ROUTE_POI_SELECTED:
       return osmRoutePoiAdapter.updateOne({
         id: action.poiId,
         changes: {
-          inHike: action.isInHike
+          selected: action.isSelected
         }
       }, state);
 
@@ -216,17 +252,70 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
       }), state);
     }
 
-    case hikeEditPoiActions.SET_WIKIPEDIA_POI_IN_HIKE:
+    case hikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_COLLECTOR: {
+      return wikipediaPoiAdapter.updateMany(action.properties.map(poi => {
+        return {
+          id: poi.id,
+          changes: _.omit(poi, ['id'])
+        };
+      }), state);
+    }
+
+    case hikeEditPoiActions.SET_WIKIPEDIA_POI_SELECTED:
       return wikipediaPoiAdapter.updateOne({
         id: action.poiId,
         changes: {
-          inHike: action.isInHike
+          selected: action.isSelected
         }
       }, state);
 
     default:
       return state;
 
+  }
+}
+
+/**
+ * Poi collector
+ */
+
+export const poiCollectorAdapter: EntityAdapter<any> = createEntityAdapter<any>();
+export const poiCollectorInitialState = poiCollectorAdapter.getInitialState();
+
+const poiCollectorReducer: ActionReducer<IPoiCollectorEntityState> = (
+  state: IPoiCollectorEntityState = poiCollectorInitialState,
+  action: hikeEditPoiActions.AllHikeEditPoiActions
+): IPoiCollectorEntityState => {
+  switch (action.type) {
+
+    case hikeEditPoiActions.RESET_POI_STATE: {
+      return poiCollectorInitialState;
+    }
+
+    case hikeEditPoiActions.ADD_POIS_TO_COLLECTOR: {
+      return poiCollectorAdapter.upsertMany(
+        action.pois,
+        state
+      );
+    }
+
+    case hikeEditPoiActions.REMOVE_POIS_FROM_COLLECTOR: {
+      return poiCollectorAdapter.removeMany(
+        action.poiIds,
+        state
+      );
+    }
+
+    case hikeEditPoiActions.SET_COLLECTOR_POI_SELECTED:
+      return poiCollectorAdapter.updateOne({
+        id: action.poiId,
+        changes: {
+          selected: action.isSelected
+        }
+      }, state);
+
+    default:
+      return state;
   }
 }
 
@@ -248,6 +337,7 @@ export const externalPoiInitialContextState: IExternalPoiListContextState = {
   osmNatural: _.cloneDeep(initialContextItemState),
   osmRoute: _.cloneDeep(initialContextItemState),
   wikipedia: _.cloneDeep(initialContextItemState),
+  collector: _.cloneDeep(initialContextItemState),
   gTrack: _.merge(_.cloneDeep(initialContextItemState), {
     showOnrouteMarkers: false,
   }),
@@ -493,6 +583,7 @@ const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
   osmAmenityPois: osmAmenityPoiReducer,
   osmNaturalPois: osmNaturalPoiReducer,
   osmRoutePois: osmRoutePoiReducer,
+  collectorPois: poiCollectorReducer,
   contexts: externalPoiListContextReducer,
   gTrackPoiMerge: gTrackPoiMergeReducer
 };
