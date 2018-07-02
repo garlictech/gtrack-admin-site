@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import {
   PoiSelectors, CenterRadius, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, IGeoSearchResponseItem
 } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
-import { PoiEditorService, PoiMergeService } from 'app/shared/services';
+import { PoiEditorService, PoiMergeService, LanguageService } from 'app/shared/services';
 import { IGTrackPoi, IFilteredProperties } from 'app/shared/interfaces';
 import {
   State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions
@@ -28,15 +27,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public searchContext$: Observable<IGeoSearchContextState | undefined>;
   public showOnrouteMarkers = true;
   public showOffrouteMarkers = true;
-  public mergeSelectionCount$: Observable<number>;
-
-  public mergeProperties: IFilteredProperties = {};
-  public mergedPoiIds: string[] = [];
-  public mergedPoiData: any;
-  public displayMergeModal = false;
   public displayGTrackPoiModal = false;
-  public modalPoiId: string;
-
+  public modalPoi: IGTrackPoi;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -44,7 +36,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _poiEditorService: PoiEditorService,
-    private _poiMergeService: PoiMergeService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
@@ -123,10 +114,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .select(this._geoSearchSelectors.getGeoSearchContext('gTrackPois'))
       .takeUntil(this._destroy$);
 
-    this.mergeSelectionCount$ = this._store
-      .select(this._hikeEditPoiSelectors.getMergeSelectionsCount)
-      .takeUntil(this._destroy$);
-
     //
     // Refresh markers
     //
@@ -174,50 +161,17 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('gTrack'));
   }
 
-  public mergePois() {
-    this._store
-      .select(this._hikeEditPoiSelectors.getMergeSelections)
-      .take(1)
-      .subscribe((selections: string[]) => {
-        Observable
-          .combineLatest(...selections.map(poiId => this._store.select(this._poiSelectors.getPoi(poiId)).take(1)))
-          .take(1)
-          .subscribe(pois => {
-            this.mergeProperties = this._poiMergeService.collectFlatKeyValues(pois);
-            this.mergedPoiIds = _.map(pois, 'id');
-            this.mergedPoiData = this._poiMergeService.createGTrackPoiFromUniqueValues(this.mergeProperties.unique);
-
-            this._store.dispatch(new hikeEditPoiActions.ResetPoiMergeSelection());
-
-            if (_.keys(this.mergeProperties.conflicts).length > 0) {
-              this.displayMergeModal = true;
-            } else {
-              this._store.dispatch(new commonPoiActions.MergePoi(this.mergedPoiIds, this.mergedPoiData));
-            }
-          });
-      });
+  public translateDescription(description, field) {
+    return LanguageService.translateDescription(description, field);
   }
 
-  public saveMergedPoi = (mergedData) => {
-    const _coordsArr = mergedData.coords.slice(1, -1).split(',');
-
-    this.mergedPoiData.lat = parseFloat(_coordsArr[0]);
-    this.mergedPoiData.lon = parseFloat(_coordsArr[1]);
-    if (_coordsArr[2]) {
-      this.mergedPoiData.elevation = parseFloat(_coordsArr[2]);
-    }
-    delete this.mergedPoiData.coords;
-
-    for (const key in mergedData) {
-      _.set(this.mergedPoiData, key, mergedData[key]);
-    }
-
-    this.displayMergeModal = false;
-    this._store.dispatch(new commonPoiActions.MergePoi(this.mergedPoiIds, this.mergedPoiData));
-  }
-
-  public openGTrackPoiModal = (poiId: string) => {
-    this.modalPoiId = poiId;
+  public openGTrackPoiModal = (poi: IGTrackPoi) => {
+    this.modalPoi = poi;
     this.displayGTrackPoiModal = true;
+  }
+
+  public closeModal = () => {
+    delete this.modalPoi;
+    this.displayGTrackPoiModal = false;
   }
 }

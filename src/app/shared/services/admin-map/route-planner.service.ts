@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { State, hikeEditRoutePlannerActions } from 'app/store';
 import { GameRuleService, ISegment, RouteService } from 'subrepos/gtrack-common-ngx';
@@ -153,7 +152,7 @@ export class RoutePlannerService {
    * Get path bounds for POI search
    */
   public getSearchBounds() {
-    let _path;
+    let _bounds;
 
     this._store
       .select(this._hikeEditRoutePlannerSelectors.getPath)
@@ -163,24 +162,24 @@ export class RoutePlannerService {
         let _buffer: any = turf.buffer(path, 1000, {units: 'meters'});
 
         if (typeof _buffer !== 'undefined') {
-          let _bounds = d3.geoBounds(rewind(_buffer, true));
+          let _geoBounds = d3.geoBounds(rewind(_buffer, true));
 
-          _path = {
+          _bounds = {
             NorthEast: {
-              lat: _bounds[1][1],
-              lon: _bounds[1][0]
+              lat: _geoBounds[1][1],
+              lon: _geoBounds[1][0]
             },
             SouthWest: {
-              lat: _bounds[0][1],
-              lon: _bounds[0][0]
+              lat: _geoBounds[0][1],
+              lon: _geoBounds[0][0]
             }
           };
         } else {
-          _path = null;
+          _bounds = null;
         }
       });
 
-    return _path;
+    return _bounds;
   }
 
   /**

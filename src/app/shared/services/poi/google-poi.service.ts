@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
-import 'rxjs/add/operator/concatMap';
-import { Subject } from 'rxjs/Subject';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'environments/environment';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import { GoogleMapsService, GeometryService, CenterRadius, defaultSharedConfig } from 'subrepos/gtrack-common-ngx/index';
@@ -12,7 +10,6 @@ import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
-import { HttpClient } from '@angular/common/http';
 
 const PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
 
@@ -23,7 +20,6 @@ export class GooglePoiService {
 
   constructor(
     private _http: HttpClient,
-    // private _googleMapsService: GoogleMapsService,
     private _geometryService: GeometryService,
   ) {}
 
@@ -36,9 +32,7 @@ export class GooglePoiService {
         lng: lng,
         results: []
       }).then(_res => {
-        this._getPlaceInfo(_res).then((data) => {
-          resolve(data);
-        });
+        resolve(_res);
       });
     });
   }
@@ -55,9 +49,6 @@ export class GooglePoiService {
       .then((data: any) => {
         // DOC: https://developers.google.com/places/web-service/search
 
-        // TODO: Lang params
-        // TODO: get details only on/off route pois
-
         const _res: IGooglePoi[] = [];
         for (let _point of data.results) {
           const _pointData: IGooglePoi = {
@@ -68,6 +59,8 @@ export class GooglePoiService {
             description: {
               [LanguageService.shortToLocale(params.lng)]: {
                 title: _point.name || 'unknown',
+                summary: '',
+                fullDescription: '',
               }
             },
             types: _point.types || [],
@@ -114,7 +107,7 @@ export class GooglePoiService {
   /**
    * get() submethod
    */
-  private _getPlaceInfo(pois: IGooglePoi[]) {
+  public getPoiDetails(pois: IGooglePoi[]) {
     const thumbnailWidth = 320;
     const cardWidth = 640;
 
@@ -190,7 +183,6 @@ export class GooglePoiService {
       .combineAll()
       .toPromise()
       .then(() => {
-        console.log('FINAL', pois);
         return pois;
       });
   }

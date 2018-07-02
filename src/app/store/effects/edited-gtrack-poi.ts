@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { HikeProgramService, HikeProgram, PoiSelectors, PoiService } from 'subrepos/gtrack-common-ngx';
 import { State, editedHikeProgramActions, editedGTrackPoiActions } from 'app/store';
 import { IHikeProgramStored, IHikeProgram, IPoiStored, IPoi } from 'subrepos/provider-client';

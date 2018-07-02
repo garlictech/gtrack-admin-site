@@ -1,8 +1,8 @@
 // Core
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, editedHikeProgramActions, hikeEditPoiActions } from 'app/store';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import { LanguageService } from 'app/shared/services';
 import { HikeEditRoutePlannerSelectors, HikeEditPoiSelectors } from 'app/store/selectors';
@@ -12,32 +12,17 @@ import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/service
   selector: 'hike-edit-pois-gtrack-table',
   templateUrl: './ui.html'
 })
-export class HikeEditPoisGTrackTableComponent implements OnInit, OnDestroy {
+export class HikeEditPoisGTrackTableComponent {
   @Input() pois$: IGTrackPoi[];
   @Input() onRouteCheck: boolean;
   @Input() openGTrackPoiModal: any;
-  public mergeSelections: {[id: string]: boolean} = {}
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
     private _geospatialService: GeospatialService,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {}
-
-  ngOnInit() {
-    // this.mergeSelection$ =
-    this._store
-      .select(this._hikeEditPoiSelectors.getMergeSelections)
-      .takeUntil(this._destroy$)
-      .subscribe((selections: string[]) => {
-        this.mergeSelections = {};
-        selections.map(id => {
-          this.mergeSelections[id] = true;
-        });
-      });
-  }
 
   public addPoi($event, poi: IGTrackPoi) {
     $event.stopPropagation();
@@ -70,20 +55,7 @@ export class HikeEditPoisGTrackTableComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    this._destroy$.next(true);
-    this._destroy$.unsubscribe();
-  }
-
   public translateDescription(description, field) {
     return LanguageService.translateDescription(description, field);
-  }
-
-  public toggleMergeSelection(poiId: string) {
-    if (!this.mergeSelections[poiId]) {
-      this._store.dispatch(new hikeEditPoiActions.RemoveGTrackPoiFromMergeSelection(poiId));
-    } else {
-      this._store.dispatch(new hikeEditPoiActions.AddGTrackPoiToMergeSelection(poiId));
-    }
   }
 }

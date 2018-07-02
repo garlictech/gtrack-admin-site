@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { State, hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../index';
 import { EditedHikeProgramSelectors } from 'app/store/selectors/';
-import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService } from 'app/shared/services';
+import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService, HikeProgramService } from 'app/shared/services';
 import { IWikipediaPoi, IOsmPoi, IGooglePoi } from 'app/shared/interfaces';
 
 import * as _ from 'lodash';
+import { RouteService } from 'subrepos/gtrack-common-ngx';
 
 @Injectable()
 export class HikeEditPoiEffects {
   constructor(
-    private _store: Store<State>,
     private _actions$: Actions,
+    private _routeService: RouteService,
     private _wikipediaPoiService: WikipediaPoiService,
     private _osmPoiService: OsmPoiService,
     private _osmRoutePoiService: OsmRoutePoiService,
     private _googlePoiService: GooglePoiService,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors
+    private _hikeProgramService: HikeProgramService
   ) {}
 
   /**
@@ -30,15 +31,9 @@ export class HikeEditPoiEffects {
     .map((action: hikeEditPoiActions.GetWikipediaPois) => action.bounds)
     .switchMap(bounds => {
       let boundsArr: any[] = [];
-      this._wikipediaPoiService.getSearchBounds(bounds, boundsArr);
+      this._routeService.splitBounds(bounds, 10000, boundsArr);
 
-      let langs: string[] = [];
-      this._store
-        .select(this._editedHikeProgramSelectors.getDescriptionLangs)
-        .take(1)
-        .subscribe((langKeys: string[]) => {
-          langs = langKeys.map(key => key.substr(0, 2));
-        });
+      let langs: string[] = this._hikeProgramService.getDescriptionLaguages();
 
       const _promises: Promise<IWikipediaPoi[]>[] = [];
 
@@ -65,7 +60,21 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_GOOGLE_POIS)
     .map((action: hikeEditPoiActions.GetGooglePois) => action.bounds)
     .switchMap(bounds => {
-      return this._googlePoiService.get(bounds).then((pois: IGooglePoi[]) => {
+      let langs: string[] = this._hikeProgramService.getDescriptionLaguages();
+
+      const _promises: Promise<any>[] = [];
+
+      for (const lang of langs) {
+        _promises.push(this._googlePoiService.get(bounds, lang));
+      }
+
+      return Promise.all(_promises).then(poisArr => {
+        let pois: IGooglePoi[] = [];
+        poisArr.map((poiArr: IGooglePoi[]) => {
+          pois = _.concat(pois, poiArr);
+        });
+        console.log('POIS', pois);
+        // return new hikeEditPoiActions.SetWikipediaPois(_.uniqBy(pois, 'wikipedia.pageid'));
         return new hikeEditPoiActions.SetGooglePois(pois);
       });
     });

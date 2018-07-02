@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   AdminMap, AdminMapService, WaypointMarkerService, RoutingControlService, RoutePlannerService
 } from 'app/shared/services/admin-map';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
   State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions,
@@ -11,12 +10,13 @@ import {
 } from 'app/store';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
 import { HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
+import { ReverseGeocodingService } from 'app/shared/services';
+import { ConfirmationService } from 'primeng/primeng';
 import { IRouteStored } from 'subrepos/provider-client';
 import { ToasterService } from 'angular2-toaster';
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
-import { ReverseGeocodingService } from 'app/shared/services';
 
 @Component({
   selector: 'gt-hike-edit-route-planner',
@@ -40,7 +40,8 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _routeSelectors: RouteSelectors,
     private _toasterService: ToasterService,
     private _store: Store<State>,
-    private _reverseGeocodingService: ReverseGeocodingService
+    private _reverseGeocodingService: ReverseGeocodingService,
+    private _confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -158,8 +159,13 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   }
 
   public deletePlan() {
-    this._waypointMarkerService.reset();
-    this._routingControlService.clearControls();
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to delete?',
+      accept: () => {
+        this._waypointMarkerService.reset();
+        this._routingControlService.clearControls();
+      }
+    });
   }
 
   private _updateLocation(coords) {

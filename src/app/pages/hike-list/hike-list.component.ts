@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
 import {
   State, commonHikeActions
 } from 'app/store';
@@ -11,7 +10,7 @@ import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
 import { LanguageService } from 'app/shared/services';
 
 import * as _ from 'lodash';
-import { SelectItem } from 'primeng/primeng';
+import { SelectItem, ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'gt-hike-list',
@@ -28,7 +27,8 @@ export class HikeListComponent implements OnInit, OnDestroy {
   constructor(
     private _store: Store<State>,
     private _hikeSelectors: HikeSelectors,
-    private _title: Title
+    private _title: Title,
+    private _confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -54,7 +54,12 @@ export class HikeListComponent implements OnInit, OnDestroy {
   }
 
   public deleteHike(hikeId: string) {
-    this._store.dispatch(new commonHikeActions.DeleteHikeProgram(hikeId));
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to delete?',
+      accept: () => {
+        this._store.dispatch(new commonHikeActions.DeleteHikeProgram(hikeId));
+      }
+    });
   }
 
   public translateDescription(description, field) {

@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { PoiSelectors, GeoSearchSelectors, Poi } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
-import { PoiEditorService, HikeProgramService } from 'app/shared/services';
+import { PoiEditorService, HikeProgramService, LanguageService } from 'app/shared/services';
 import { IGTrackPoi } from 'app/shared/interfaces';
 import { State, hikeEditPoiActions, commonPoiActions, editedHikeProgramActions } from 'app/store';
 import {
@@ -23,7 +22,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
   public showOnrouteMarkers = true;
   public showOffrouteMarkers = true;
   public displayGTrackPoiModal = false;
-  public modalPoiId: string;
+  public modalPoi: IGTrackPoi;
   private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -152,8 +151,17 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('hike'));
   }
 
-  public openGTrackPoiModal = (poiId: string) => {
-    this.modalPoiId = poiId;
+  public translateDescription(description, field) {
+    return LanguageService.translateDescription(description, field);
+  }
+
+  public openGTrackPoiModal = (poi: IGTrackPoi) => {
+    this.modalPoi = poi;
     this.displayGTrackPoiModal = true;
+  }
+
+  public closeModal = () => {
+    delete this.modalPoi;
+    this.displayGTrackPoiModal = false;
   }
 }

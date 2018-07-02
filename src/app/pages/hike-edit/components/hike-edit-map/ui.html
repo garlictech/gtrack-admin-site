@@ -8,7 +8,7 @@
     <p-button
       type="button"
       icon="fa fa-crosshairs"
-      styleClass="ui-button-primary"
+      styleClass="ui-button-primary mr-5"
       (onClick)="toggleCurrentPositionMarker($event)"
       [disabled]="!(this.currentLocation$ | async)?.coords"
       title="Move to current location"
@@ -17,7 +17,7 @@
     <p-button
       type="button"
       icon="fa fa-sync"
-      styleClass="ui-button-primary"
+      styleClass="ui-button-primary mr-5"
       (onClick)="resetMap($event)"
       title="Reset map"
     ></p-button>
@@ -25,11 +25,11 @@
     <p-button
       label="Buffer"
       type="button"
-      styleClass="ui-button-primary"
+      styleClass="ui-button-primary mr-5"
       (onClick)="buffer($event)"
     ></p-button>
 
-    <p-selectButton [options]="clickModes" [(ngModel)]="mode"></p-selectButton>
+    <p-selectButton styleClass="mr-10" [options]="clickModes" [(ngModel)]="mode"></p-selectButton>
 </div>
 
 <div class="clearfix"></div>

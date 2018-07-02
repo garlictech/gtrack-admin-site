@@ -59,7 +59,9 @@ export class OsmPoiService {
                 types: [type],
                 description: {
                   [LanguageService.shortToLocale(lng)]: {
-                    title: _point.tags.name || 'unknown'
+                    title: _point.tags.name || 'unknown',
+                    summary: '',
+                    fullDescription: ''
                   }
                 },
                 objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,

@@ -1,6 +1,5 @@
 import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { State, commonPoiActions, editedGTrackPoiActions } from 'app/store';
 import { PoiSelectors, Poi } from 'subrepos/gtrack-common-ngx';
@@ -8,6 +7,7 @@ import { IPoiStored, IPoi, ILocalizedItem, ITextualDescription, EObjectState, IB
 import { EditedGTrackPoiSelectors } from 'app/store/selectors';
 
 import { ToasterService } from 'angular2-toaster';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'gt-hike-edit-gtrack-poi-info',
@@ -17,6 +17,7 @@ import { ToasterService } from 'angular2-toaster';
 })
 export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   @Input() poiId: string;
+  @Input() closeModal: any;
 
   public storeDataPath: string;
   public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
@@ -36,7 +37,8 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _poiSelectors: PoiSelectors,
     private _editedGTrackPoiSelectors: EditedGTrackPoiSelectors,
-    private _toasterService: ToasterService
+    private _toasterService: ToasterService,
+    private _confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -45,9 +47,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
 
     // Attributes for Photos component
     this.backgroundImageSelector = this._editedGTrackPoiSelectors.getBackgroundImages;
-    console.log('this.backgroundImageSelector', this.backgroundImageSelector);
     this.backgroundImageUrlSelector = this._editedGTrackPoiSelectors.getBackgroundOriginalUrls();
-    console.log('this.backgroundImageUrlSelector', this.backgroundImageUrlSelector);
     this.clickActions = {
       add: (image) => this._store.dispatch(new editedGTrackPoiActions.AddPoiBackgroundImage(image)),
       remove: (url) => this._store.dispatch(new editedGTrackPoiActions.RemovePoiBackgroundImage(url))
@@ -111,7 +111,13 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   }
 
   public deletePoi(poiId: string) {
-    this._store.dispatch(new commonPoiActions.DeletePoi(poiId));
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to delete?',
+      accept: () => {
+        this._store.dispatch(new commonPoiActions.DeletePoi(poiId));
+        this.closeModal();
+      }
+    });
   }
 
   public submitDescription = (langKey: string, data: any) => {
@@ -119,6 +125,11 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   };
 
   public deleteDescription = lang => {
-    this._store.dispatch(new editedGTrackPoiActions.DeleteTranslatedPoiDescription(lang));
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to delete?',
+      accept: () => {
+        this._store.dispatch(new editedGTrackPoiActions.DeleteTranslatedPoiDescription(lang));
+      }
+    });
   };
 }

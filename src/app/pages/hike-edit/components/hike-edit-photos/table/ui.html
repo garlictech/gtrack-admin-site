@@ -15,7 +15,7 @@
           </a>
         </td>
         <td [innerHTML]="image.title | trustedHtml"></td>
-        <td>
+        <td class="text-center">
           <p-checkbox
             binary="true"
             [(ngModel)]="imageSelections[image.original.url]"

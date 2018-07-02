@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { IExternalPoi } from 'app/shared/interfaces/index';
 import { LanguageService } from 'app/shared/services';
 import { State, hikeEditPoiActions } from 'app/store';
+import { EPoiTypes } from 'subrepos/provider-client';
 
 @Component({
   selector: 'hike-edit-pois-external-table',
@@ -19,24 +20,22 @@ export class HikeEditPoisExternalTableComponent {
     private _store: Store<State>
   ) {}
 
-  public handleInHikePoi($event, poi) {
-    $event.stopPropagation();
-
+  public handlePoiSelection(poi) {
     switch (this.subdomain) {
-      case 'google':
-        this._store.dispatch(new hikeEditPoiActions.SetGooglePoiInHike(poi.id, !poi.inHike));
+      case EPoiTypes.google:
+        this._store.dispatch(new hikeEditPoiActions.SetGooglePoiSelected(poi.id, !poi.selected));
         break;
-      case 'wikipedia':
-        this._store.dispatch(new hikeEditPoiActions.SetWikipediaPoiInHike(poi.id, !poi.inHike));
+      case EPoiTypes.wikipedia:
+        this._store.dispatch(new hikeEditPoiActions.SetWikipediaPoiSelected(poi.id, !poi.selected));
         break;
-      case 'osmAmenity':
-        this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPoiInHike(poi.id, !poi.inHike));
+      case EPoiTypes.osmAmenity:
+        this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPoiSelected(poi.id, !poi.selected));
         break;
-      case 'osmNatural':
-        this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPoiInHike(poi.id, !poi.inHike));
+      case EPoiTypes.osmNatural:
+        this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPoiSelected(poi.id, !poi.selected));
         break;
-      case 'osmRoute':
-        this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiInHike(poi.id, !poi.inHike));
+      case EPoiTypes.osmRoute:
+        this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiSelected(poi.id, !poi.selected));
         break;
     }
   }

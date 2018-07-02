@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { State, hikeEditImageActions } from '../index';
 import { MapillaryService } from 'app/shared/services';
 import { IBackgroundImageDataStored } from 'app/shared/interfaces/mapillary-image.interface';

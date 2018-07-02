@@ -6,37 +6,47 @@ export const RESET_POI_STATE = '[HikeEditPoi] Reset';
 export const GET_GOOGLE_POIS = '[HikeEditPoi] Get Google pois';
 export const SET_GOOGLE_POIS = '[HikeEditPoi] Set Google pois';
 export const SET_GOOGLE_POIS_IN_GTRACK_DB = '[HikeEditPoi] Set Google pois inGtrackDb';
-export const SET_GOOGLE_POI_IN_HIKE = '[HikeEditPoi] Set Google poi inHike';
+export const SET_GOOGLE_POIS_IN_COLLECTOR = '[HikeEditPoi] Set Google pois inCollector';
+export const SET_GOOGLE_POI_SELECTED = '[HikeEditPoi] Set Google poi selected';
 
 export const GET_OSM_AMENITY_POIS = '[HikeEditPoi] Get OSM amenity pois';
 export const SET_OSM_AMENITY_POIS = '[HikeEditPoi] Set OSM amenity pois';
 export const SET_OSM_AMENITY_POIS_IN_GTRACK_DB = '[HikeEditPoi] Set OSM amenity pois inGtrackDb';
-export const SET_OSM_AMENITY_POI_IN_HIKE = '[HikeEditPoi] Set OSM amenity poi inHike';
+export const SET_OSM_AMENITY_POIS_IN_COLLECTOR = '[HikeEditPoi] Set OSM amenity pois inCollector';
+export const SET_OSM_AMENITY_POI_SELECTED = '[HikeEditPoi] Set OSM amenity poi selected';
 
 export const GET_OSM_NATURAL_POIS = '[HikeEditPoi] Get OSM natural pois';
 export const SET_OSM_NATURAL_POIS = '[HikeEditPoi] Set OSM natural pois';
 export const SET_OSM_NATURAL_POIS_IN_GTRACK_DB = '[HikeEditPoi] Set OSM natural pois inGtrackDb';
-export const SET_OSM_NATURAL_POI_IN_HIKE = '[HikeEditPoi] Set OSM natural poi inHike';
+export const SET_OSM_NATURAL_POIS_IN_COLLECTOR = '[HikeEditPoi] Set OSM natural pois inCollector';
+export const SET_OSM_NATURAL_POI_SELECTED = '[HikeEditPoi] Set OSM natural poi selected';
 
 export const GET_OSM_ROUTE_POIS = '[HikeEditPoi] Get OSM route pois';
 export const SET_OSM_ROUTE_POIS = '[HikeEditPoi] Set OSM route pois';
 export const SET_OSM_ROUTE_POIS_IN_GTRACK_DB = '[HikeEditPoi] Set OSM route pois inGtrackDb';
-export const SET_OSM_ROUTE_POI_IN_HIKE = '[HikeEditPoi] Set OSM route poi inHike';
+export const SET_OSM_ROUTE_POIS_IN_COLLECTOR = '[HikeEditPoi] Set OSM route pois inCollector';
+export const SET_OSM_ROUTE_POI_SELECTED = '[HikeEditPoi] Set OSM route poi selected';
 
 export const GET_WIKIPEDIA_POIS = '[HikeEditPoi] Get Wikipedia pois';
 export const SET_WIKIPEDIA_POIS = '[HikeEditPoi] Set Wikipedia pois';
 export const SET_WIKIPEDIA_POIS_IN_GTRACK_DB = '[HikeEditPoi] Set Wikipedia pois inGtrackDb';
-export const SET_WIKIPEDIA_POI_IN_HIKE = '[HikeEditPoi] Set Wikipedia poi inHike';
+export const SET_WIKIPEDIA_POIS_IN_COLLECTOR = '[HikeEditPoi] Set Wikipedia pois inCollector';
+export const SET_WIKIPEDIA_POI_SELECTED = '[HikeEditPoi] Set Wikipedia poi selected';
 
 export const TOGGLE_ONROUTE_MARKERS = '[HikeEditPoi] Toggle onroute markers';
 export const TOGGLE_OFFROUTE_MARKERS = '[HikeEditPoi] Toggle offroute markers';
 
 export const SET_SAVING = '[HikeEditPoi] Set saving';
+export const SET_LOADING = '[HikeEditPoi] Set loading';
 export const MARKERS_CONFIG_CHANGED = '[HikeEditPoi] Markers config changed';
 
 export const RESET_POI_MERGE_SELECTION = '[HikeEditPoi] Reset poi merge selection';
 export const ADD_GTRACK_POI_TO_MERGE_SELECTION = '[HikeEditPoi] Add gTrack poi to merge selection';
 export const REMOVE_GTRACK_POI_FROM_MERGE_SELECTION = '[HikeEditPoi] Remove gTrack poi from merge selection';
+
+export const ADD_POIS_TO_COLLECTOR = '[HikeEditPoi] Add pois to collector';
+export const REMOVE_POIS_FROM_COLLECTOR = '[HikeEditPoi] Remove pois from collector';
+export const SET_COLLECTOR_POI_SELECTED = '[HikeEditPoi] Set collector poi selected';
 
 export class ResetPoiState implements Action {
   readonly type = RESET_POI_STATE;
@@ -61,9 +71,14 @@ export class SetGooglePoisInGtrackDb implements Action {
   constructor(public properties: any) {}
 }
 
-export class SetGooglePoiInHike implements Action {
-  readonly type = SET_GOOGLE_POI_IN_HIKE;
-  constructor(public poiId: string, public isInHike: boolean) {}
+export class SetGooglePoisInCollector implements Action {
+  readonly type = SET_GOOGLE_POIS_IN_COLLECTOR;
+  constructor(public properties: any) {}
+}
+
+export class SetGooglePoiSelected implements Action {
+  readonly type = SET_GOOGLE_POI_SELECTED;
+  constructor(public poiId: string, public isSelected: boolean) {}
 }
 
 /**
@@ -85,9 +100,14 @@ export class SetOsmAmenityPoisInGtrackDb implements Action {
   constructor(public properties: any) {}
 }
 
-export class SetOsmAmenityPoiInHike implements Action {
-  readonly type = SET_OSM_AMENITY_POI_IN_HIKE;
-  constructor(public poiId: string, public isInHike: boolean) {}
+export class SetOsmAmenityPoisInCollector implements Action {
+  readonly type = SET_OSM_AMENITY_POIS_IN_COLLECTOR;
+  constructor(public properties: any) {}
+}
+
+export class SetOsmAmenityPoiSelected implements Action {
+  readonly type = SET_OSM_AMENITY_POI_SELECTED;
+  constructor(public poiId: string, public isSelected: boolean) {}
 }
 
 /**
@@ -109,9 +129,14 @@ export class SetOsmNaturalPoisInGtrackDb implements Action {
   constructor(public properties: any) {}
 }
 
-export class SetOsmNaturalPoiInHike implements Action {
-  readonly type = SET_OSM_NATURAL_POI_IN_HIKE;
-  constructor(public poiId: string, public isInHike: boolean) {}
+export class SetOsmNaturalPoisInCollector implements Action {
+  readonly type = SET_OSM_NATURAL_POIS_IN_COLLECTOR;
+  constructor(public properties: any) {}
+}
+
+export class SetOsmNaturalPoiSelected implements Action {
+  readonly type = SET_OSM_NATURAL_POI_SELECTED;
+  constructor(public poiId: string, public isSelected: boolean) {}
 }
 
 /**
@@ -133,9 +158,14 @@ export class SetOsmRoutePoisInGtrackDb implements Action {
   constructor(public properties: any) {}
 }
 
-export class SetOsmRoutePoiInHike implements Action {
-  readonly type = SET_OSM_ROUTE_POI_IN_HIKE;
-  constructor(public poiId: string, public isInHike: boolean) {}
+export class SetOsmRoutePoisInCollector implements Action {
+  readonly type = SET_OSM_ROUTE_POIS_IN_COLLECTOR;
+  constructor(public properties: any) {}
+}
+
+export class SetOsmRoutePoiSelected implements Action {
+  readonly type = SET_OSM_ROUTE_POI_SELECTED;
+  constructor(public poiId: string, public isSelected: boolean) {}
 }
 
 /**
@@ -157,9 +187,33 @@ export class SetWikipediaPoisInGtrackDb implements Action {
   constructor(public properties: any) {}
 }
 
-export class SetWikipediaPoiInHike implements Action {
-  readonly type = SET_WIKIPEDIA_POI_IN_HIKE;
-  constructor(public poiId: string, public isInHike: boolean) {}
+export class SetWikipediaPoisInCollector implements Action {
+  readonly type = SET_WIKIPEDIA_POIS_IN_COLLECTOR;
+  constructor(public properties: any) {}
+}
+
+export class SetWikipediaPoiSelected implements Action {
+  readonly type = SET_WIKIPEDIA_POI_SELECTED;
+  constructor(public poiId: string, public isSelected: boolean) {}
+}
+
+/**
+ * Poi collector
+ */
+
+export class AddPoisToCollector implements Action {
+  readonly type = ADD_POIS_TO_COLLECTOR;
+  constructor(public pois: any[]) {}
+}
+
+export class RemovePoisFromCollector implements Action {
+  readonly type = REMOVE_POIS_FROM_COLLECTOR;
+  constructor(public poiIds: string[]) {}
+}
+
+export class SetCollectorPoiSelected implements Action {
+  readonly type = SET_COLLECTOR_POI_SELECTED;
+  constructor(public poiId: string, public isSelected: boolean) {}
 }
 
 /**
@@ -179,6 +233,11 @@ export class ToggleOffrouteMarkers implements Action {
 export class SetSaving implements Action {
   readonly type = SET_SAVING;
   constructor(public subdomain: string, public saving: boolean) {}
+}
+
+export class SetLoading implements Action {
+  readonly type = SET_LOADING;
+  constructor(public subdomain: string) {}
 }
 
 export class MarkersConfigChanged implements Action {
@@ -209,31 +268,41 @@ export type AllHikeEditPoiActions =
   | GetGooglePois
   | SetGooglePois
   | SetGooglePoisInGtrackDb
-  | SetGooglePoiInHike
+  | SetGooglePoisInCollector
+  | SetGooglePoiSelected
   // Osm Amenity
   | GetOsmAmenityPois
   | SetOsmAmenityPois
   | SetOsmAmenityPoisInGtrackDb
-  | SetOsmAmenityPoiInHike
+  | SetOsmAmenityPoisInCollector
+  | SetOsmAmenityPoiSelected
   // Osm Natural
   | GetOsmNaturalPois
   | SetOsmNaturalPois
   | SetOsmNaturalPoisInGtrackDb
-  | SetOsmNaturalPoiInHike
+  | SetOsmNaturalPoisInCollector
+  | SetOsmNaturalPoiSelected
   // Osm Route
   | GetOsmRoutePois
   | SetOsmRoutePois
   | SetOsmRoutePoisInGtrackDb
-  | SetOsmRoutePoiInHike
+  | SetOsmRoutePoisInCollector
+  | SetOsmRoutePoiSelected
   // Wikipedia
   | GetWikipediaPois
   | SetWikipediaPois
   | SetWikipediaPoisInGtrackDb
-  | SetWikipediaPoiInHike
+  | SetWikipediaPoisInCollector
+  | SetWikipediaPoiSelected
+  // Collector
+  | AddPoisToCollector
+  | RemovePoisFromCollector
+  | SetCollectorPoiSelected
   // Markers
   | ToggleOnrouteMarkers
   | ToggleOffrouteMarkers
   | SetSaving
+  | SetLoading
   | MarkersConfigChanged
   // Merge
   | ResetPoiMergeSelection
