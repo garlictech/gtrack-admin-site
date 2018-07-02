@@ -13,6 +13,7 @@ import { LeafletComponent, Center, MapMarkerService, MapMarker } from '../../../
 import * as L from 'leaflet';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'gc-search-results-map',
@@ -56,7 +57,7 @@ export class SearchResultsMapComponent implements AfterViewInit, OnInit, OnDestr
 
   public routes$: Observable<Route[] | undefined>;
 
-  protected _geoJsons: L.GeoJSON[] = [];
+  protected _geoJsons: L.GeoJSON[][] = [];
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   public constructor(
@@ -161,21 +162,27 @@ export class SearchResultsMapComponent implements AfterViewInit, OnInit, OnDestr
   }
 
   addGeoJson(geojson: any, map: L.Map) {
-    console.log(geojson);
-    let response = L.geoJSON(geojson, {
-      style: () => ({
-        color: 'red',
-        opacity: 1,
-        weight: 2
-      })
+    const styles = [
+      { color: 'black', opacity: 0.1, weight: 8 },
+      { color: 'white', opacity: 0.8, weight: 6 },
+      { color: 'red', opacity: 1, weight: 2 }
+    ];
+
+    let responses = styles.map(style => {
+      let response = L.geoJSON(geojson, {
+        style: () => style
+      });
+
+      response.addTo(map);
+
+      return response;
     });
 
-    response.addTo(map);
-    this._geoJsons.push(response);
+    this._geoJsons.push(responses);
   }
 
   clearGeoJson() {
-    this._geoJsons.forEach(geojson => geojson.clearLayers());
+    _.flatten(this._geoJsons).forEach(geojson => geojson.clearLayers());
     this._geoJsons = [];
   }
 

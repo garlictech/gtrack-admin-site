@@ -17,6 +17,7 @@ import { RouteEffects } from '../effects';
 import * as routeActions from '../actions';
 import { DeepstreamModule } from '../../../../deepstream';
 import { UnitsService } from '../../../../shared';
+import { GeometryService } from '../../../services/geometry';
 
 class TestActions extends Actions {
   constructor() {
@@ -90,6 +91,7 @@ describe('Route effects', () => {
       providers: [
         RouteService,
         RouteEffects,
+        GeometryService,
         UnitsService,
         {
           provide: Actions,

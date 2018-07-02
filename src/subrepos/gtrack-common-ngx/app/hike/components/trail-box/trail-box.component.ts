@@ -55,7 +55,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
   public pois$: Observable<IPoi[]>;
 
   public checkpointsOnly = false;
-  protected _geoJsons: L.GeoJSON[] = [];
+  protected _geoJsons: L.GeoJSON[][] = [];
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   public constructor(
@@ -126,20 +126,27 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   addGeoJson(geojson: any, map: L.Map) {
-    let response = L.geoJSON(geojson, {
-      style: () => ({
-        color: 'red',
-        opacity: 1,
-        weight: 2
-      })
+    const styles = [
+      { color: 'black', opacity: 0.1, weight: 8 },
+      { color: 'white', opacity: 0.8, weight: 6 },
+      { color: 'red', opacity: 1, weight: 2 }
+    ];
+
+    let responses = styles.map(style => {
+      let response = L.geoJSON(geojson, {
+        style: () => style
+      });
+
+      response.addTo(map);
+
+      return response;
     });
 
-    response.addTo(map);
-    this._geoJsons.push(response);
+    this._geoJsons.push(responses);
   }
 
   clearGeoJson() {
-    this._geoJsons.forEach(geojson => geojson.clearLayers());
+    _.flatten(this._geoJsons).forEach(geojson => geojson.clearLayers());
     this._geoJsons = [];
   }
 
