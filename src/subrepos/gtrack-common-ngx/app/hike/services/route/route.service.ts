@@ -142,7 +142,7 @@ export class RouteService {
     };
   }
 
-  public getBounds(track): IBounds {
+  public getBounds(track: GeoJSON.FeatureCollection<any>): IBounds {
     let d3Bounds = d3.geoBounds(track.features[0]);
     let padding = 0.003; // about 330m
 
@@ -192,6 +192,10 @@ export class RouteService {
         NorthEast: { lat: bounds.NorthEast.lat, lon: bounds.NorthEast.lon }
       }, maxRadius, boundsArr);
     }
+  }
+
+  public getTrackPoint(route: Route, index: number) {
+    return route.path.coordinates[index];
   }
 }
 

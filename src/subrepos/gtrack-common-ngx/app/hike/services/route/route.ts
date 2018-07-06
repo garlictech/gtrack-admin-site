@@ -6,7 +6,7 @@ export class Route implements IRoute {
   public bounds: IRouteBounds;
   public route: GeoJSON.FeatureCollection<any>;
 
-  public get path() {
+  public get path(): GeoJSON.LineString {
     return this.route.features[0].geometry;
   }
 

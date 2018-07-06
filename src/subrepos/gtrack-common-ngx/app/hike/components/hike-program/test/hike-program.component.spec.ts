@@ -7,6 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { IHikeProgramStored } from 'subrepos/provider-client';
 import { PoiSelectors, poiReducer } from '../../../store/poi';
 import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
+import { IconService } from '../../../../map/services/icon';
 
 import { HikeProgramComponent } from '../';
 
@@ -32,7 +33,8 @@ describe('HikeProgramComponent', () => {
           useValue: {
             storeDomain: 'poi'
           }
-        }
+        },
+        IconService
       ],
       imports: [
         StoreModule.forRoot({
