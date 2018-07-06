@@ -1,7 +1,26 @@
-import { Component, Input, ViewChild, AfterViewInit, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  AfterViewInit,
+  ViewEncapsulation,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
+
+import bbox from '@turf/bbox';
+import bboxPolygon from '@turf/bbox-polygon';
+import transformScale from '@turf/transform-scale';
+import nearestPointOnLine from '@turf/nearest-point-on-line';
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
+import { point as turfPoint, lineString as turfLineString } from '@turf/turf';
 
 import { HikeProgram } from '../../services/hike-program';
 
@@ -12,7 +31,6 @@ import * as routeActions from '../../store/route/actions';
 
 import { Route } from '../../services/route';
 
-import { Poi } from '../../services/poi';
 import { LeafletComponent, Center } from '../../../map';
 
 import * as L from 'leaflet';
@@ -25,7 +43,7 @@ import { IPoi } from 'subrepos/provider-client';
   templateUrl: './trail-box.component.html',
   styleUrls: ['./trail-box.component.scss']
 })
-export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
+export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   public layers = [
     {
       name: 'street',
@@ -47,16 +65,40 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @Input() public hikeProgram: HikeProgram;
 
+  @Output()
+  public elevationLineOver = new EventEmitter<void>();
+
+  @Output()
+  public elevationLineMove = new EventEmitter<GeoJSON.Position>();
+
+  @Output()
+  public elevationLineOut = new EventEmitter<void>();
+
+  @Output()
+  public elevationLineClick = new EventEmitter<GeoJSON.Position>();
+
+  @Input()
+  public elevationMarkerPosition: GeoJSON.Position = [0, 0];
+
+  @Input()
+  public elevationMarkerVisible = false;
+
   @ViewChild('map') public map: LeafletComponent;
 
   public route: Route;
+
+  public markerOn = false;
 
   public route$: Observable<Route | undefined>;
   public pois$: Observable<IPoi[]>;
 
   public checkpointsOnly = false;
+
   protected _geoJsons: L.GeoJSON[][] = [];
+  protected _elevationZoneHover = false;
+
   private _destroy$: Subject<boolean> = new Subject<boolean>();
+  private _runningElevationPointMarker: L.Marker;
 
   public constructor(
     private _store: Store<any>,
@@ -84,6 +126,17 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (typeof changes.elevationMarkerVisible !== 'undefined') {
+      const markerVisible = changes.elevationMarkerVisible;
+      this._showElavationPointMarker(markerVisible.currentValue);
+    }
+
+    if (typeof changes.elevationMarkerPosition !== 'undefined') {
+      this._moveElavationPointMarker(changes.elevationMarkerPosition.currentValue);
+    }
+  }
+
   ngAfterViewInit() {
     let map = this.map.map;
 
@@ -94,17 +147,56 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
         this.route = route;
         this.clearGeoJson();
 
-        for (let i = 0; i <= 2; i++) {
-          let feature = Object.assign({}, route.geojson.features[0]);
+        let feature = Object.assign({}, route.geojson.features[0]) as GeoJSON.Feature<GeoJSON.LineString>;
 
-          feature.properties = {
-            draw_type: `route_${i}`
-          };
+        feature.properties = {
+          draw_type: `route_1`
+        };
 
-          this.addGeoJson(feature, map.leafletMap);
-        }
+        this.addGeoJson(feature, map.leafletMap);
 
         map.fitBounds(route);
+
+        let bounds = bbox(feature);
+        let rectangle = transformScale(bboxPolygon(bounds), 1.3);
+
+        this.map.leafletMap.on('mousemove', (e: L.LeafletMouseEvent) => {
+          let point = turfPoint([e.latlng.lng, e.latlng.lat]);
+
+          if (booleanPointInPolygon(point, rectangle)) {
+            let line = turfLineString(feature.geometry.coordinates);
+            let nearest = nearestPointOnLine(line, point);
+
+            if (this._elevationZoneHover === false) {
+              this._elevationZoneHover = true;
+              this.elevationLineOver.emit();
+            }
+
+            this.elevationLineMove.emit([nearest.geometry.coordinates[0], nearest.geometry.coordinates[1]]);
+          } else {
+            if (this._elevationZoneHover === true) {
+              this.elevationLineOut.emit();
+              this._elevationZoneHover = false;
+            }
+          }
+        });
+
+        this.map.leafletMap.on('click', (e: L.LeafletMouseEvent) => {
+          let point = turfPoint([e.latlng.lng, e.latlng.lat]);
+
+          if (booleanPointInPolygon(point, rectangle)) {
+            let line = turfLineString(feature.geometry.coordinates);
+            let nearest = nearestPointOnLine(line, point);
+            this.elevationLineClick.emit([nearest.geometry.coordinates[0], nearest.geometry.coordinates[1]]);
+          }
+        });
+
+        this.map.leafletMap.on('mouseout', () => {
+          if (this._elevationZoneHover === true) {
+            this.elevationLineOut.emit();
+            this._elevationZoneHover = false;
+          }
+        });
       });
 
     this.pois$
@@ -118,6 +210,24 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
     map.checkpointMarker.removeCheckpointMarkers();
     map.checkpointMarker.addCheckpointMarkers(this.hikeProgram.checkpoints.checkpoints);
     map.pointMarker.addMarkersToMap();
+
+    this._runningElevationPointMarker = new L.Marker([this.elevationMarkerPosition[1], this.elevationMarkerPosition[0]], {
+      opacity: 0,
+      zIndexOffset: 1000,
+      icon: new L.Icon({
+        iconUrl: require('leaflet/dist/images/marker-icon.png'),
+        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+        shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+        iconSize: [25, 41],
+        shadowSize: [41, 41],
+        iconAnchor:  [12, 41],
+        popupAnchor: [1, -34],
+        tooltipAnchor: [16, -28],
+      })
+    });
+
+    this._runningElevationPointMarker.addTo(this.map.leafletMap);
+    this._showElavationPointMarker(this.elevationMarkerVisible);
   }
 
   ngOnDestroy() {
@@ -127,20 +237,20 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
 
   addGeoJson(geojson: any, map: L.Map) {
     const styles = [
-      { color: 'black', opacity: 0.1, weight: 8 },
+      { color: 'black', opacity: 0.15, weight: 9 },
       { color: 'white', opacity: 0.8, weight: 6 },
       { color: 'red', opacity: 1, weight: 2 }
     ];
 
-    let responses = styles.map(style => {
-      let response = L.geoJSON(geojson, {
+    let responses = styles.map((style, i) =>
+      L.geoJSON(geojson, {
         style: () => style
-      });
+      })
+    );
 
+    for (let response of responses) {
       response.addTo(map);
-
-      return response;
-    });
+    }
 
     this._geoJsons.push(responses);
   }
@@ -192,6 +302,20 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnDestroy {
         map.pointMarker.addMarkersToMap();
         map.checkpointMarker.showMarkers(checkpoints, false);
       }
+    }
+  }
+
+  protected _showElavationPointMarker(show = true) {
+    const opacity = (show === true) ? 1 : 0;
+
+    if (this._runningElevationPointMarker) {
+      this._runningElevationPointMarker.setOpacity(opacity);
+    }
+  }
+
+  protected _moveElavationPointMarker(position: GeoJSON.Position) {
+    if (this._runningElevationPointMarker) {
+      this._runningElevationPointMarker.setLatLng([position[1], position[0]]);
     }
   }
 }

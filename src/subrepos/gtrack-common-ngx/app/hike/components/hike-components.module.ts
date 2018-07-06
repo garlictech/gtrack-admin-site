@@ -18,6 +18,7 @@ import { DownloadGpxButtonComponent } from './download-gpx-button';
 
 import { HikeModule } from '../hike.module';
 import { MapComponentsModule } from '../../map/components/map-components.module';
+import { MapModule } from '../../map/map.module';
 import { SharedModule } from '../../shared/shared.module';
 import { SearchFiltersModule } from '../../search-filters/search-filters.module';
 import { SearchResultsMapComponent } from './search-results-map';
@@ -26,6 +27,7 @@ import { SearchResultsMapComponent } from './search-results-map';
   imports: [
     HikeModule,
     MapComponentsModule,
+    MapModule,
     CommonModule,
     SharedModule,
     NouisliderModule,
