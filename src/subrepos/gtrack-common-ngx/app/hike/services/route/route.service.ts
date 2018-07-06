@@ -9,7 +9,7 @@ import { UnitsService } from '../../../shared';
 
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 import { ScaleLinear } from 'd3';
-import { IRoute, IRouteStored, IRouteSaveResponse, EObjectState} from 'subrepos/provider-client';
+import { IRoute, IRouteStored, IRouteSaveResponse, EObjectState } from 'subrepos/provider-client';
 import { CenterRadius, GeometryService } from '../geometry';
 
 export interface IElevationMargin {
