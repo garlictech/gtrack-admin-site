@@ -54,7 +54,7 @@ export class PoiEffects {
       return this._poiService
         .updateState(action.id, action.state)
         .take(1)
-        .map(result => {
+        .map(() => {
           return new LocalActions.LoadPoi(action.id);
         });
     });

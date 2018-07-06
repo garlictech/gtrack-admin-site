@@ -11,7 +11,7 @@ import * as _ from 'lodash';
 
 import { hot, cold } from 'jest-marbles';
 
-import { IRouteStored, IRoute } from 'subrepos/provider-client';
+import { IRouteStored, IRoute, EObjectState } from 'subrepos/provider-client';
 import { Route, RouteService } from '../../../services/route';
 import { RouteEffects } from '../effects';
 import * as routeActions from '../actions';
@@ -114,6 +114,10 @@ describe('Route effects', () => {
         id: newId
       })
     );
+
+    spyOn(routeService, 'updateState').and.returnValue(Observable.of({
+      success: true
+    }));
   });
 
   describe('loadRoute$', () => {
@@ -137,6 +141,18 @@ describe('Route effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.saveRoute$).toBeObservable(expected);
+    });
+  });
+
+  describe('updateState$', () => {
+    it('should return a LoadRoute action', () => {
+      const action = new routeActions.UpdateRouteState(routeData.id, EObjectState.published);
+      const completion = new routeActions.LoadRoute(routeData.id);
+      const expected = cold('-b', { b: completion });
+
+      actions$.stream = hot('-a', { a: action });
+
+      expect(effects.updateState$).toBeObservable(expected);
     });
   });
 });

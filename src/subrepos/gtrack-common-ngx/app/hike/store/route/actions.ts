@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IRoute, IRouteStored, IRouteSaveResponse } from 'subrepos/provider-client';
+import { IRoute, IRouteStored, EObjectState } from 'subrepos/provider-client';
 
 export enum RouteActionTypes {
   LOAD_ROUTE = '[Route] Load route',
@@ -7,7 +7,8 @@ export enum RouteActionTypes {
   ROUTE_LOADED = '[Route] Route loaded',
   SAVE_ROUTE = '[Route] Save route',
   ROUTE_SAVED = '[Route] Route saved',
-  ROUTE_MODIFIED = '[Route] Route modified'
+  ROUTE_MODIFIED = '[Route] Route modified',
+  UPDATE_ROUTE_STATE = '[Route] Update route state'
 }
 
 export class LoadRoute implements Action {
@@ -46,4 +47,17 @@ export class RouteModified implements Action {
   constructor(public context: string) {}
 }
 
-export type AllRouteActions = LoadRoute | RouteLoaded | LoadRouteFailed | SaveRoute | RouteSaved | RouteModified;
+export class UpdateRouteState implements Action {
+  readonly type = RouteActionTypes.UPDATE_ROUTE_STATE;
+
+  constructor(public id: string, public state: EObjectState) {}
+}
+
+export type AllRouteActions =
+  | LoadRoute
+  | RouteLoaded
+  | LoadRouteFailed
+  | SaveRoute
+  | RouteSaved
+  | RouteModified
+  | UpdateRouteState;

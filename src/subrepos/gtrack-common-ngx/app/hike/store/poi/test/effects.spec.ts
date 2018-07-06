@@ -21,6 +21,7 @@ import { pois as poiFixtures, poisStored } from './fixtures';
 
 import { GeometryService } from '../../../services/geometry';
 import { GeoSearchService } from '../../../../geosearch';
+import { EObjectState } from '../../../../../../provider-client';
 
 export class TestActions extends Actions {
   constructor() {
@@ -92,6 +93,9 @@ describe('Poi effects', () => {
         id: newId
       })
     );
+    spyOn(service, 'updateState').and.returnValue(Observable.of({
+      success: true
+    }));
   });
 
   describe('loadPoi$', () => {
@@ -127,6 +131,18 @@ describe('Poi effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.savePoi$).toBeObservable(expected);
+    });
+  });
+
+  describe('updateState$', () => {
+    it('should return a LoadPoi action', () => {
+      const action = new poiActions.UpdatePoiState(poiFixtures[0].id, EObjectState.published);
+      const completion = new poiActions.LoadPoi(poiFixtures[0].id);
+      const expected = cold('-b', { b: completion });
+
+      actions$.stream = hot('-a', { a: action });
+
+      expect(effects.updateState$).toBeObservable(expected);
     });
   });
 });
