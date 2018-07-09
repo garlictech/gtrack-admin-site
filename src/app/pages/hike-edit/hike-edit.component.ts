@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { Store, MemoizedSelector } from '@ngrx/store';
+import { Store, MemoizedSelector, createSelector } from '@ngrx/store';
 import {
   State,
   hikeEditActions,
@@ -248,18 +248,34 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   public updateHikeState(hikeProgramState: EObjectState) {
     this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(this.paramsId, hikeProgramState));
 
-    // Publish pois
     if (hikeProgramState === EObjectState.published) {
+      const selector = createSelector(
+        this._editedHikeProgramSelectors.getStops,
+        this._editedHikeProgramSelectors.getRouteId,
+        (stops, routeId) => ({
+          stops,
+          routeId
+        })
+      );
+
+      // Publish the related objects
       this.hikeProgramState$
         .skipWhile((hikeState: EObjectState) => hikeState !== EObjectState.published)
         .take(1)
-        .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getStops).take(1))
-        .subscribe((stops: IHikeProgramStop[]) => {
+        .switchMap(() => this._store.select(selector).take(1))
+        .subscribe(data => {
+          const stops = data.stops;
+          const routeId = data.routeId;
+
+          // Publish pois
           for (const stop of stops) {
             if (stop.poiId !== 'endpoint') {
               this._store.dispatch(new commonPoiActions.UpdatePoiState(stop.poiId, EObjectState.published));
             }
           }
+
+          // Publish the route
+          this._store.dispatch(new commonRouteActions.UpdateRouteState(routeId, EObjectState.published));
         });
     }
   }

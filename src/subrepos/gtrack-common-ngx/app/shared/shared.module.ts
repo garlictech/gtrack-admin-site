@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { UnitsService } from './services/units';
 import { GoogleMapsService } from './services/google-maps';
+import { GeospatialService } from './services/geospatial';
 
 import { ISharedConfig, SHARED_CONFIG_TOKEN } from './config';
 
@@ -11,7 +12,7 @@ import { DistancePipe, DurationPipe, CoordinatePipe } from './pipes';
   imports: [],
   exports: [DistancePipe, DurationPipe, CoordinatePipe],
   declarations: [DistancePipe, DurationPipe, CoordinatePipe],
-  providers: [UnitsService, GoogleMapsService]
+  providers: [UnitsService, GoogleMapsService, GeospatialService]
 })
 export class SharedModule {
   static forRoot(config: ISharedConfig): ModuleWithProviders {
@@ -19,4 +20,4 @@ export class SharedModule {
   }
 }
 
-export { DistancePipe, DurationPipe, CoordinatePipe, UnitsService, GoogleMapsService, ISharedConfig };
+export { DistancePipe, DurationPipe, CoordinatePipe, UnitsService, GoogleMapsService, ISharedConfig, GeospatialService };

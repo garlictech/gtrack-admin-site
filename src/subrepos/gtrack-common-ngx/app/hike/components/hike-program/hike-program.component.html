@@ -8,7 +8,9 @@
 
   <ng-container *ngIf="(pois$ | async)">
     <tr *ngFor="let stop of hikeProgram.stops; let i = index;">
-      <td><gtcn-icon *ngIf="(pois$ | async)[stop.poiId]" [poi]="(pois$ | async)[stop.poiId]"></gtcn-icon></td>
+      <td *ngIf="i === 0"><img title="Start" [src]="startIcon" /></td>
+      <td *ngIf="i === hikeProgram.stops.length - 1"><img title="Finish" [src]="finishIcon" /></td>
+      <td *ngIf="i > 0 && i < hikeProgram.stops.length - 1"><gtcn-icon *ngIf="(pois$ | async)[stop.poiId]" [poi]="(pois$ | async)[stop.poiId]"></gtcn-icon></td>
       <td><ng-container *ngIf="(pois$ | async)[stop.poiId] && (pois$ | async)[stop.poiId].title">{{(pois$ | async)[stop.poiId].title}}</ng-container></td>
 
       <td *ngIf="i === 0"><b>START</b></td>

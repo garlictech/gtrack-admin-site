@@ -1,7 +1,6 @@
-import { IRoute, IRouteStored, EAuthRoles } from 'subrepos/provider-client';
+import { IRoute, IRouteStored, EObjectState } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 import * as actions from '../actions';
-import { Route } from '../../../services/route';
 
 describe('Route actions', () => {
   let id: string;
@@ -109,6 +108,18 @@ describe('Route actions', () => {
       expect({ ...action }).toEqual({
         type: actions.RouteActionTypes.ROUTE_MODIFIED,
         context: id
+      });
+    });
+  });
+
+  describe('UpdateRouteState action', () => {
+    it('should create an action', () => {
+      let action = new actions.UpdateRouteState(id, EObjectState.published);
+
+      expect({ ...action }).toEqual({
+        type: actions.RouteActionTypes.UPDATE_ROUTE_STATE,
+        id: id,
+        state: EObjectState.published
       });
     });
   });

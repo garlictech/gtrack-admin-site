@@ -9,7 +9,7 @@ import { UnitsService } from '../../../shared';
 
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 import { ScaleLinear } from 'd3';
-import { IRoute, IRouteStored, IRouteSaveResponse } from 'subrepos/provider-client';
+import { IRoute, IRouteStored, IRouteSaveResponse, EObjectState } from 'subrepos/provider-client';
 import { CenterRadius, GeometryService } from '../geometry';
 
 export interface IElevationMargin {
@@ -56,6 +56,16 @@ export class RouteService {
 
   public create(route: IRoute) {
     return this._deepstream.callRpc<IRouteSaveResponse>('admin.route.save', route);
+  }
+
+  public updateState(id: string, state: EObjectState) {
+    return this._deepstream
+      .callRpc('admin.state', {
+        id: id,
+        table: 'routes',
+        state: state
+      })
+      .take(1);
   }
 
   public elevationData(
@@ -142,7 +152,7 @@ export class RouteService {
     };
   }
 
-  public getBounds(track): IBounds {
+  public getBounds(track: GeoJSON.FeatureCollection<any>): IBounds {
     let d3Bounds = d3.geoBounds(track.features[0]);
     let padding = 0.003; // about 330m
 
@@ -192,6 +202,10 @@ export class RouteService {
         NorthEast: { lat: bounds.NorthEast.lat, lon: bounds.NorthEast.lon }
       }, maxRadius, boundsArr);
     }
+  }
+
+  public getTrackPoint(route: Route, index: number) {
+    return route.path.coordinates[index];
   }
 }
 

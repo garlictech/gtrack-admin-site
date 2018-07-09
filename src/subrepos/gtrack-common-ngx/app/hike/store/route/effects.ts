@@ -35,5 +35,17 @@ export class RouteEffects {
         .map(response => new LocalActions.RouteSaved(response.id));
     });
 
+  @Effect()
+  updateState$: Observable<Action> = this._actions$
+    .ofType<LocalActions.UpdateRouteState>(LocalActions.RouteActionTypes.UPDATE_ROUTE_STATE)
+    .mergeMap(action => {
+      return this._routeService
+        .updateState(action.id, action.state)
+        .take(1)
+        .map(result => {
+          return new LocalActions.LoadRoute(action.id);
+        });
+    });
+
   constructor(private _actions$: Actions, private _routeService: RouteService, private _store: Store<any>) {}
 }

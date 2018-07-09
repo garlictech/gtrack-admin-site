@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Actions, Effect, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
+import { IHikeProgramStored, IHikeProgram, EObjectState } from 'subrepos/provider-client';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
 import * as _ from 'lodash';
@@ -90,6 +90,12 @@ describe('HikeProgram effects', () => {
         id: newId
       })
     );
+
+    spyOn(hikeProgramService, 'updateState').and.returnValue(
+      Observable.of({
+        success: true
+      })
+    );
   });
 
   describe('loadHike$', () => {
@@ -113,6 +119,18 @@ describe('HikeProgram effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadHikes$).toBeObservable(expected);
+    });
+  });
+
+  describe('updateState$', () => {
+    it('should return a LoadHikeProgram action', () => {
+      const action = new hikeProgramActions.UpdateHikeProgramState(ids[0], EObjectState.published);
+      const completion = new hikeProgramActions.LoadHikeProgram(ids[0]);
+      const expected = cold('-b', { b: completion });
+
+      actions$.stream = hot('-a', { a: action });
+
+      expect(effects.updateState$).toBeObservable(expected);
     });
   });
 
