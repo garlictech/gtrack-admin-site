@@ -1,4 +1,4 @@
-FROM garlictech2/workflows-angular:v7.0.4
+FROM garlictech2/workflows-angular:v7.0.5
 
 ARG NPM_TOKEN
 ENV NO_UPDATE_NOTIFIER 1
@@ -19,3 +19,4 @@ RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > $HOME/.npmrc && \
   scripts/install_dependencies
 
 COPY tsconfig.json /app/
+#COPY workflows-angular/ /app/
