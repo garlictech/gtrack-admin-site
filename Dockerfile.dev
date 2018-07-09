@@ -1,4 +1,4 @@
-FROM garlictech2/workflows-angular:v7.0.3
+FROM garlictech2/workflows-angular:v7.0.4
 
 ARG NPM_TOKEN
 ENV NO_UPDATE_NOTIFIER 1

@@ -24,7 +24,7 @@ deploy:
   on:
     repo: garlictech/gtrack-admin-site
     all_branches: true
-    condition: $TRAVIS_BRANCH == master || $TRAVIS_BRANCH == staging
+    condition: "$TRAVIS_BRANCH == master || $TRAVIS_BRANCH == staging"
 after_success:
 - hooks/travis/after_success
 after_deploy:
@@ -32,4 +32,4 @@ after_deploy:
 notifications:
   slack:
     rooms:
-      secure: TmkP3khZvoZez68+Q5YSF9Y6cF17gDQCzN+nMkWY/BgV4gay15o0RZRs4gAOARkIuFndfHQDgLTuoDo3/GO04veqRrLXnvs/qhKwZAvCDqc5ZRbEYn3kAYU3Y84VaVEjr0gQR5VbB0d7RcsAna+NRTC2bYCEATYak5wvFjNPxprxpIgtnQu0Rf1cADXlj777WlcFm4nALUqsnBKGtQ9MDCLRNxlsqlTzrFWRmNgJvyyQ3UjJjE5EPSTX2o2DkcWAvsVAKNBHhbyrGgZIfSeYMbzgPJVWm+TWLloAonILWfdHPkpRDqWVU7ay9S10esCj6ERAOgCNEnZHVsQdtc4nIRsmz0NxdQPMWaesbmSbMzqr4ZlfNzeduJjctQxN1bn1+mZLT8tljtwqmA8ycjefWcLyknZ8IhK4Y39U8TguXQ84zjJCNYMZvtSRqOegvG3oM6l+Plp11/3ylWVYOL1hbXLOgL37B1UaM2FbMx4QdP0b7hoPwPynW5MeurxEnUle1b8e/w+HnWDla0ezkRm9mLxXtLol+gCFC2WKqBYVEa+oZVzdKq1PBiXRVM5FXt/cyYGE/R8EfhfY4AEj7FBlKf+1y/7Spuj0onskZRXRUhPf208NGkNKeZcGj+oni6GuTgE/u4Ot8YWkD9IcR9+Vsg6oPMbPjbFYAlo6R5zcbNY=
+      secure: D5yhLbToRIoawgMw6hH3ZE6Re0/weFwqbkxseBrfaFBtFYXjKzv+TdQaNMOVItt16gm0g08VzzmbQ1Ca9VKV06X4ykaWvwAjH99c6hY1YfS8DExafgGmYudVgQqHPXg+SI3QeccE8F8lER0Ucry9xu72u9CZAuN1oC4/2b3Yv21a3qtGcZugi6uWiWe31W0Nm0MxQS2m+bKrkNjrmjleyjkwXrf4mVV0CmGlnHcqsmzNN1DxXuAVAgieJDKuRh9RErcsnwhA6j1/s8cv2A+URZOVHkoFhqikYd2mxg6gPMNkyYrmOvnQPDRK1rYktiqT33u0TTbZMolhop4RUbUmBQ0TETbJ96uw46WbuD45bUb44Da1TSIbwp7fLm1NKJIRByakEP6ybdrt19iWEzPJqJuBwg5q94iRTiUcNiB12eUC3ojFmpSPCKXueoqZfam/uKZYNpKbelmG5hr5Z3aM24ZWQ0WJzU8gEZqTip8sBsSHFxNFh6gxW5TZNZmS7GVz7swNhHJsy5VWOU418nPZRKvVO87zYa7MU59NitGay7la9I6uyFN2BjVWBczzJgcUGv6dJSsyZeGcy6BP6UYqIfaSJxN9hfHHemx9T/uxwfenE+iDg4eUBMANv0uAvZE0+nFOkKa8YHOt/cKRxOzcp/rGrYbttt0so4D9Mz2roUA=
