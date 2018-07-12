@@ -104,7 +104,7 @@ export class DownloadGpxButtonComponent implements OnInit {
         let a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = `${this.hikeProgram.id}.xml`;
+        a.download = `${this.hikeProgram.id}.gpx`;
 
         document.body.appendChild(a);
         a.click();

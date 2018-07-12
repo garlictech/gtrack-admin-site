@@ -2,9 +2,11 @@
 <h4><i class="ion-ios-location"></i> Number of checkpoints: {{ checkpoints.length }}</h4>
 <table>
   <tr *ngFor="let checkpoint of checkpoints; let i = index;">
-    <td>{{ checkpoint.name }}</td>
-    <td>lat.: <i>{{ checkpoint.stop.lat | coordinate }}</i></td>
-    <td>long.: <i>{{ checkpoint.stop.lon | coordinate }}</i></td>
+    <td *ngIf="i === 0">START</td>
+    <td *ngIf="i === checkpoints.length - 1">FINISH</td>
+    <td *ngIf="i > 0 && i < checkpoints.length - 1 && (pois$ | async) as pois"><ng-container *ngIf="pois[checkpoint.id] && (pois$ | async)[checkpoint.id].description">{{ ((pois$ | async)[checkpoint.id].description | localizeDescription).title }}</ng-container></td>
+
+
     <td>
       <i class="fa fa-arrow-right"></i> {{ checkpoint.stop.segment.distance | distance}}
     </td>

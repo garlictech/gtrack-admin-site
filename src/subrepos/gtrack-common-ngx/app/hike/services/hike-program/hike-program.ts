@@ -45,10 +45,6 @@ export class HikeProgram implements IHikeProgramStored {
     this._calculatePhysicalValues();
     this._handleStartFinish();
     this.checkpoints = this._checkpointService.createSequence(this.stops);
-
-    if (this.isRoundTrip === true && this.stops.length > 0) {
-      this.stops.push(this.stops[0]);
-    }
   }
 
   public get title(): string {
@@ -87,16 +83,23 @@ export class HikeProgram implements IHikeProgramStored {
     let first = this.stops[0] || null;
     let last = this.stops[this.stops.length - 1] || null;
 
-    if (this.isRoundTrip === true) {
-      last = first;
-    }
+    first.poiId = 'endpoint-first';
+    last.poiId = 'endpoint-last';
 
     if (first) {
       first.isStart = true;
+
+      if (this.isRoundTrip === true) {
+        first.isFinish = true;
+      }
     }
 
     if (last) {
       last.isFinish = true;
+
+      if (this.isRoundTrip === true) {
+        last.isStart = true;
+      }
     }
   }
 

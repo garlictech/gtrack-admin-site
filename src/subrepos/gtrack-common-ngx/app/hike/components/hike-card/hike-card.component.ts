@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IHikeProgram, IBackgroundImageData } from 'subrepos/provider-client';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'gtcn-hike-card',
@@ -12,10 +13,11 @@ export class HikeCardComponent {
   public get image(): string {
     let url = '';
 
-    if (this.hikeProgram && this.hikeProgram.backgroundImages) {
-      let imageUrls = this.hikeProgram.backgroundImages || [];
-      let firstImage = imageUrls[0] || {};
-      url = (<IBackgroundImageData>firstImage).card.url || '';
+    if (this.hikeProgram && (this.hikeProgram.backgroundImages instanceof Array)) {
+      let imageUrls = this.hikeProgram.backgroundImages;
+      let firstImage = imageUrls[0];
+
+      url = _.get(firstImage, 'card.url', '');
     }
 
     return url;

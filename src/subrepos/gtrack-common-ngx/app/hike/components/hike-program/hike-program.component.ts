@@ -27,7 +27,9 @@ export class HikeProgramComponent implements OnInit {
   }
 
   ngOnInit() {
-    let hikePois = this.hikeProgram.stops.map(stop => stop.poiId);
+    let hikePois = this.hikeProgram.stops
+      .filter(stop => !/^endpoint/.test(stop.poiId))
+      .map(stop => stop.poiId);
 
     this.pois$ = this._store.select(this._poiSelectors.getPoiEntities(hikePois)).filter(pois => !_.isEmpty(pois));
 

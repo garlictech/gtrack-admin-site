@@ -23,6 +23,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { SearchFiltersModule } from '../../search-filters/search-filters.module';
 import { SearchResultsMapComponent } from './search-results-map';
 
+import { LocalizeModule } from '../../localize';
+
 @NgModule({
   imports: [
     HikeModule,
@@ -34,7 +36,8 @@ import { SearchResultsMapComponent } from './search-results-map';
     ReactiveFormsModule,
     SearchFiltersModule,
     TranslateModule,
-    StoreModule
+    StoreModule,
+    LocalizeModule
   ],
   exports: [
     TrailBoxComponent,
