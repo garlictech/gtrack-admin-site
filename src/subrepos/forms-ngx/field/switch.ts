@@ -14,5 +14,9 @@ export class SwitchField extends Field<boolean> {
   constructor(options: ISwitchField) {
     super(options);
     this.onChange = options.onChange;
+
+    if (this.defaultValue === undefined) {
+      this.defaultValue = false;
+    }
   }
 }
