@@ -7,7 +7,6 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor {
 
   @DebugLog
   doChange() {
-    console.log(this.change);
     if (this.change) {
       this.change();
     }

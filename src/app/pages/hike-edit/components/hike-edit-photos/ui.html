@@ -1,4 +1,7 @@
-<gt-background-images [bgImages$]="bgImages$"></gt-background-images>
+<gt-background-images
+  [clickActions]="clickActions"
+  [bgImages$]="bgImages$"
+></gt-background-images>
 
 <p-accordion [multiple]="true">
   <p-accordionTab header="Google ({{(googlePhotos$ | async).length}})">
