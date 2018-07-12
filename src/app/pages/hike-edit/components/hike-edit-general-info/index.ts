@@ -7,7 +7,7 @@ import { State, editedHikeProgramActions } from 'app/store';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
 import { ConfirmationService } from 'primeng/primeng';
 import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
-import { IFormDescriptor, SliderField, TextboxField } from 'app/forms';
+import { IFormDescriptor, SliderField } from 'app/forms';
 
 @Component({
   selector: 'gt-hike-edit-general-info',
@@ -77,8 +77,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
           label: 'form.difficulty',
           required: true,
           min: 0,
-          max: 10,
-          onChange: () => { return }
+          max: 10
         })
       }
     };
