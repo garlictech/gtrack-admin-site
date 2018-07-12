@@ -16,8 +16,8 @@ import { LanguageService } from '../language.service';
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
 
-const PLACE_API_URL = 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place';
-// const PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
+// const PLACE_API_URL = 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place';
+const PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
 
 @Injectable()
 export class GooglePoiService {

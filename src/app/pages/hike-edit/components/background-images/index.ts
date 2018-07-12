@@ -1,15 +1,30 @@
 import { Component, Input } from '@angular/core';
 import { IBackgroundImageData } from 'subrepos/provider-client';
+import { ConfirmationService } from '../../../../../../node_modules/primeng/primeng';
+import { editedHikeProgramActions, State } from '../../../../store';
+import { Store } from '../../../../../../node_modules/@ngrx/store';
 
 @Component({
   selector: 'gt-background-images',
-  template: `
-  <ng-container *ngIf="(bgImages$ | async) as bgImages">
-    <img class="thumbnail" *ngFor="let image of bgImages" [src]="image.thumbnail.url">
-  <ng-container>
-  `,
-  styles: ['img.thumbnail { width: 150px; height: 100px; margin: 15px; object-fit: cover; }']
+  templateUrl: './ui.html',
+  styleUrls: ['./style.scss']
 })
 export class BackgroundImagesComponent {
   @Input() bgImages$: IBackgroundImageData[];
+  @Input() clickActions: any;
+
+  constructor(
+    private _store: Store<State>,
+    private _confirmationService: ConfirmationService
+  ) {}
+
+  public deleteImage(url: string) {
+
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to delete?',
+      accept: () => {
+        this.clickActions.remove(url);
+      }
+    });
+  };
 }

@@ -52,7 +52,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
       .select(this.descriptionSelector)
       .takeUntil(this._destroy$)
       .map(desc => {
-        const langKeys = Object.keys(desc);
+        const langKeys = Object.keys(desc || {});
 
         this.languageFormDescriptors = {};
         this.languageFormDataPaths = {};

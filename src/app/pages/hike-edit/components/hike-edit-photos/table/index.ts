@@ -22,7 +22,8 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.backgroundOriginalUrls$
-      .take(1)
+      // .take(1)
+      .takeUntil(this._destroy$)
       .subscribe((backgroundOriginalUrls: string[]) => {
         this.imageSelections = {};
         backgroundOriginalUrls.map(url => {
