@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from 'app/store';
+import { State } from '../../../store';
 import { Observable } from 'rxjs';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 import { Title } from '@angular/platform-browser';

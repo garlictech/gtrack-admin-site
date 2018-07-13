@@ -2,13 +2,13 @@
 import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, hikeEditMapActions, adminMapActions, commonBackgroundGeolocationActions } from 'app/store';
-import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from 'app/store/selectors';
+import { State, hikeEditMapActions, adminMapActions, commonBackgroundGeolocationActions } from '../../../../store';
+import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from '../../../../store/selectors';
 import {
   Center, ISegment, BackgroundGeolocationActionTypes, selectCurrentLocation, IGeoPosition
 } from 'subrepos/gtrack-common-ngx';
-import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
-import { WaypointMarkerService, RoutePlannerService } from 'app/shared/services/admin-map';
+import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
+import { WaypointMarkerService, RoutePlannerService } from '../../../../shared/services/admin-map';
 import { SelectItem } from 'primeng/primeng';
 
 import * as L from 'leaflet';

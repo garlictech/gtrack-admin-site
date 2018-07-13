@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Input } from '@angular/core';
-import { IComparedProperty } from 'app/shared/interfaces';
+import { IComparedProperty } from '../../../../../shared/interfaces';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as _ from 'lodash';
 

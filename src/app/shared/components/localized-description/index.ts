@@ -12,10 +12,10 @@ import { Observable, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
 import { ITextualDescription, ILocalizedItem } from 'subrepos/provider-client';
-import { TextboxField, TextareaField, EmojiField, IFormDescriptor } from 'app/forms';
+import { TextboxField, TextareaField, EmojiField, IFormDescriptor } from '../../../forms';
 
-import { State } from 'app/store';
-import { DESCRIPTION_LANGUAGES, LanguageService } from 'app/shared/services';
+import { State } from '../../../store';
+import { DESCRIPTION_LANGUAGES, LanguageService } from '../../services';
 
 interface ILanguageKeyObject {
   [key: string]: any;

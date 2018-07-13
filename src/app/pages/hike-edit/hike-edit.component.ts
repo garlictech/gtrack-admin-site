@@ -14,14 +14,14 @@ import {
   editedHikeProgramActions,
   commonPoiActions,
   hikeEditImageActions
-} from 'app/store';
-import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from 'app/store/selectors';
+} from '../../store';
+import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from '../../store/selectors';
 import {
   RoutingControlService,
   WaypointMarkerService,
   RoutePlannerService,
   AdminMapService
-} from 'app/shared/services/admin-map';
+} from '../../shared/services/admin-map';
 import {
   IHikeProgramStored,
   IHikeProgram,
@@ -33,7 +33,7 @@ import {
 } from 'subrepos/provider-client';
 import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
-import { HikeProgramService } from 'app/shared/services';
+import { HikeProgramService } from '../../shared/services';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ScrollPanel } from 'primeng/primeng';
 import { Store } from '@ngrx/store';
-import { State } from 'app/store';
+import { State } from '../../../store';
 import { ConfirmationService } from 'primeng/primeng';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 

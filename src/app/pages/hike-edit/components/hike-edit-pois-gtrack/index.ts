@@ -5,15 +5,15 @@ import {
   PoiSelectors, CenterRadius, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, IGeoSearchResponseItem
 } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
-import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
-import { PoiEditorService, PoiMergeService, LanguageService } from 'app/shared/services';
-import { IGTrackPoi, IFilteredProperties } from 'app/shared/interfaces';
+import { AdminMap, AdminMapService, AdminMapMarker } from '../../../../shared/services/admin-map';
+import { PoiEditorService, PoiMergeService, LanguageService } from '../../../../shared/services';
+import { IGTrackPoi, IFilteredProperties } from '../../../../shared/interfaces';
 import {
   State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions
-} from 'app/store';
+} from '../../../../store';
 import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
-} from 'app/store/selectors';
+} from '../../../../store/selectors';
 
 import * as _ from 'lodash';
 

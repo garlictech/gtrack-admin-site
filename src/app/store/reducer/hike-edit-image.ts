@@ -1,7 +1,7 @@
 import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { IBackgroundImageDataStored } from 'app/shared/interfaces';
-import { IMapillaryImageEntityState, hikeEditImageActions, IImageListContextState, IHikeEditImageState } from '../index';
+import { IBackgroundImageDataStored } from '../../shared/interfaces';
+import { IMapillaryImageEntityState, hikeEditImageActions, IImageListContextState, IHikeEditImageState } from '..';
 import * as _ from 'lodash';
 
 /**

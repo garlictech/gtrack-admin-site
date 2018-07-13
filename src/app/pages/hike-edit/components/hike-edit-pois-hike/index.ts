@@ -3,13 +3,13 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { PoiSelectors, GeoSearchSelectors, Poi } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
-import { AdminMap, AdminMapService, AdminMapMarker } from 'app/shared/services/admin-map';
-import { PoiEditorService, HikeProgramService, LanguageService } from 'app/shared/services';
-import { IGTrackPoi } from 'app/shared/interfaces';
-import { State, hikeEditPoiActions, commonPoiActions, editedHikeProgramActions } from 'app/store';
+import { AdminMap, AdminMapService, AdminMapMarker } from '../../../../shared/services/admin-map';
+import { PoiEditorService, HikeProgramService, LanguageService } from '../../../../shared/services';
+import { IGTrackPoi } from '../../../../shared/interfaces';
+import { State, hikeEditPoiActions, commonPoiActions, editedHikeProgramActions } from '../../../../store';
 import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
-} from 'app/store/selectors';
+} from '../../../../store/selectors';
 
 import * as _ from 'lodash';
 

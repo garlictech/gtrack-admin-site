@@ -4,7 +4,7 @@ import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/mo
 import { storeFreeze } from 'ngrx-store-freeze';
 
 import { commonReducers } from 'subrepos/gtrack-common-ngx';
-import { Reducer as LanguageReducer } from 'app/language';
+import { Reducer as LanguageReducer } from '../language';
 
 /////////////
 // Actions

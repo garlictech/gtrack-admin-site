@@ -1,6 +1,6 @@
 // Core
 import { Component, Input } from '@angular/core';
-import { IGooglePoi, IOsmPoi, IWikipediaPoi } from 'app/shared/interfaces';
+import { IGooglePoi, IOsmPoi, IWikipediaPoi } from '../../../../shared/interfaces';
 
 @Component({
   selector: 'gt-special-poi-data',

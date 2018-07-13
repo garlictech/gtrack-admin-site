@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces';
+import { IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../shared/interfaces';
 
 export const RESET_POI_STATE = '[HikeEditPoi] Reset';
 

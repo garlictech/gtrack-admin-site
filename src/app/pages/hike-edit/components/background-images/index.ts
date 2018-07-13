@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { IBackgroundImageData } from 'subrepos/provider-client';
-import { ConfirmationService } from '../../../../../../node_modules/primeng/primeng';
+import { ConfirmationService } from 'primeng/primeng';
 import { editedHikeProgramActions, State } from '../../../../store';
-import { Store } from '../../../../../../node_modules/@ngrx/store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'gt-background-images',

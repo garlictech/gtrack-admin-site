@@ -1,7 +1,7 @@
 // Core
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, editedHikeProgramActions, hikeEditPoiActions } from 'app/store';
+import { State, editedHikeProgramActions, hikeEditPoiActions } from '../../../../../store';
 import { Subject } from 'rxjs';
 import { LanguageService } from '../../../../../shared/services';
 import { HikeEditPoiSelectors } from '../../../../../store/selectors';
