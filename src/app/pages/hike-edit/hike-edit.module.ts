@@ -2,12 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormModule } from 'app/forms';
-// Pipes
-import { ObjectToArrayPipe } from 'app/shared/pipes';
-import { TrustedHtmlPipe } from 'app/shared/pipes';
+import { FormModule } from '../../forms';
 // PrimeNG
-import { ButtonModule, CardModule, SelectButtonModule, AccordionModule, CheckboxModule, DialogModule } from 'primeng/primeng';
+import {
+  ButtonModule,
+  CardModule,
+  SelectButtonModule,
+  AccordionModule,
+  CheckboxModule,
+  DialogModule
+} from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 // Components
 import { HikeEditComponent } from './hike-edit.component';
@@ -38,12 +42,20 @@ import {
 // Shared components
 import { PoiMergeService } from '../../shared/services';
 // gTrack common
-import { MapModule, HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
+import {
+  MapModule,
+  HikeModule,
+  SharedModule
+} from 'subrepos/gtrack-common-ngx';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 // Lib
 import { TagInputModule } from 'ngx-chips';
-import { SharedComponentsModule, TableSpinnerComponent } from 'app/shared/components';
-import { LanguageModule } from 'app/language';
+import {
+  SharedComponentsModule,
+  TableSpinnerComponent
+} from '../../shared/components';
+import { LanguageModule } from '../../language';
+import { PipesModule } from '../../shared/pipes/pipes.module';
 
 const COMPONENTS = [
   HikeEditComponent,
@@ -91,14 +103,12 @@ const COMPONENTS = [
     TableModule,
     AccordionModule,
     CheckboxModule,
-    DialogModule
+    DialogModule,
+    PipesModule
   ],
   exports: [...COMPONENTS],
-  declarations: [ObjectToArrayPipe, TrustedHtmlPipe, ...COMPONENTS],
+  declarations: [...COMPONENTS],
   entryComponents: [...COMPONENTS],
-  providers: [
-    GeospatialService,
-    PoiMergeService
-  ]
+  providers: [GeospatialService, PoiMergeService]
 })
 export class HikeEditModule {}
