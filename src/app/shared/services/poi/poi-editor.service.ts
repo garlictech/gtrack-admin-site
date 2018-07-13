@@ -16,16 +16,16 @@ import {
   IExternalPoiListContextItemState,
   commonGeoSearchActions,
   IExternalPoiListContextState
-} from 'app/store';
+} from '../../../store';
 import {
   HikeEditMapSelectors,
   HikeEditPoiSelectors,
   HikeEditRoutePlannerSelectors,
   EditedHikeProgramSelectors
-} from 'app/store/selectors';
+} from '../../../store/selectors';
 import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { LanguageService } from '../language.service';
-import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from 'app/shared/interfaces/index';
+import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../interfaces';
 import { GooglePoiService } from './google-poi.service';
 import { WikipediaPoiService } from './wikipedia-poi.service';
 

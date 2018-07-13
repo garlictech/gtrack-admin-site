@@ -8,9 +8,9 @@ import {
   GeometryService,
   CenterRadius,
   defaultSharedConfig
-} from 'subrepos/gtrack-common-ngx/index';
+} from 'subrepos/gtrack-common-ngx';
 
-import { IGooglePoi } from 'app/shared/interfaces';
+import { IGooglePoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';

@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   AdminMap, AdminMapService, WaypointMarkerService, RoutingControlService, RoutePlannerService
-} from 'app/shared/services/admin-map';
+} from '../../../../shared/services/admin-map';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
-  State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions,
-  commonHikeActions, commonRouteActions, editedHikeProgramActions, IHikeEditRoutePlannerTotalState
-} from 'app/store';
+  State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions, editedHikeProgramActions, IHikeEditRoutePlannerTotalState
+} from '../../../../store';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
-import { HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
-import { ReverseGeocodingService } from 'app/shared/services';
+import { HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
+import { ReverseGeocodingService, HikeProgramService } from '../../../../shared/services';
 import { ConfirmationService } from 'primeng/primeng';
 import { IRouteStored } from 'subrepos/provider-client';
 import { ToasterService } from 'angular2-toaster';
@@ -39,6 +38,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _routeSelectors: RouteSelectors,
     private _toasterService: ToasterService,
+    private _hikeProgramService: HikeProgramService,
     private _store: Store<State>,
     private _reverseGeocodingService: ReverseGeocodingService,
     private _confirmationService: ConfirmationService
@@ -108,6 +108,14 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
           } else if (route.features.length === 3) {
             this._updateLocation(route.features[1].geometry.coordinates);
           }
+
+          this.isPlanning$
+            .take(1)
+            .subscribe((isPlanning: boolean) => {
+              if (isPlanning) {
+                this._refreshIcons(route);
+              }
+            });
         });
 
     this._store
@@ -180,5 +188,19 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
       }
     );
+  }
+
+  private _refreshIcons(route) {
+    const _route =  new Route({
+      id: '',
+      timestamp: 0,
+      bounds: route.bounds,
+      route: _.pick(route, ['type', 'features'])
+    });
+
+    this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({
+      elevationIcon: this._hikeProgramService.createElevationIcon(_route),
+      routeIcon: this._hikeProgramService.createRouteIcon(_route)
+    }, false));
   }
 }

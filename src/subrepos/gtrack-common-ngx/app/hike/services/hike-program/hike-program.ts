@@ -7,7 +7,7 @@ import {
   IHikeProgramStop,
   EObjectState,
   IBackgroundImageData
-} from 'subrepos/provider-client';
+} from '../../../../../provider-client';
 
 import { CheckpointSequence, CheckpointService } from '../checkpoint';
 import { Poi } from '../poi';

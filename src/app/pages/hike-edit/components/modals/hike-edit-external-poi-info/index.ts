@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
+import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../../../../shared/interfaces';
 
 @Component({
   selector: 'gt-hike-edit-external-poi-info',

@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Store, MemoizedSelector } from '@ngrx/store';
-import { State, hikeEditImageActions } from 'app/store';
+import { State, hikeEditImageActions } from '../../../../store';
 import {
   HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors, EditedHikeProgramSelectors
-} from 'app/store/selectors';
-import { RoutePlannerService } from 'app/shared/services/admin-map';
+} from '../../../../store/selectors';
+import { RoutePlannerService } from '../../../../shared/services/admin-map';
 import { IBackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
 
 @Component({

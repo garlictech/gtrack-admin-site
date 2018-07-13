@@ -1,4 +1,4 @@
-import { IRoute, IRouteBounds, IRouteStored } from 'subrepos/provider-client';
+import { IRoute, IRouteBounds, IRouteStored } from '../../../../../provider-client';
 import * as _ from 'lodash';
 
 export class Route implements IRoute {

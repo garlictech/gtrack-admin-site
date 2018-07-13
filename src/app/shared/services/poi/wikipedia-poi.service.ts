@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
-import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx/index';
-import { IWikipediaPoi } from 'app/shared/interfaces';
+import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx';
+import { IWikipediaPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 import { HikeProgramService } from '../hike/hike-program.service';
 

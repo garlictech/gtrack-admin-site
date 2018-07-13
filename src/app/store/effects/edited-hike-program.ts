@@ -3,9 +3,9 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { HikeProgramService, HikeProgram, PoiSelectors } from 'subrepos/gtrack-common-ngx';
-import { State, editedHikeProgramActions } from 'app/store';
+import { State, editedHikeProgramActions } from '..';
 import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
-import { log } from 'app/log';
+import { log } from '../../log';
 import { EditedHikeProgramSelectors } from '../selectors/edited-hike-program';
 
 import * as _ from 'lodash';

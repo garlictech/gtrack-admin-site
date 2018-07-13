@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import { Dictionary } from '@ngrx/entity/src/models';
 
-import { IPoi, IHikeProgram } from 'subrepos/provider-client';
+import { IPoi, IHikeProgram } from '../../../../../provider-client';
 import { PoiSelectors } from '../../store/poi';
 import * as poiActions from '../../store/poi/actions';
 import { IconService } from '../../../map/services/icon';

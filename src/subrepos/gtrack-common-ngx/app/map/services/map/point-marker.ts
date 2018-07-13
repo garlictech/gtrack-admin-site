@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 
 import { MapMarker, MapMarkerService } from '../map-marker';
-import { IPoi } from 'subrepos/provider-client';
+import { IPoi } from '../../../../../provider-client';
 
 import * as _ from 'lodash';
 

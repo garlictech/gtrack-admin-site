@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IRoute, IRouteStored, EObjectState } from 'subrepos/provider-client';
+import { IRoute, IRouteStored, EObjectState } from '../../../../../provider-client';
 
 export enum RouteActionTypes {
   LOAD_ROUTE = '[Route] Load route',

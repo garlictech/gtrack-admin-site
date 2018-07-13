@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State } from 'app/store';
-import { EditedHikeProgramSelectors } from 'app/store/selectors';
+import { State } from '../../../../store';
+import { EditedHikeProgramSelectors } from '../../../../store/selectors';
 import { IHikeProgramStop, IPoiStored } from 'subrepos/provider-client';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
-import { LanguageService } from 'app/shared/services';
+import { LanguageService } from '../../../../shared/services';
 
 @Component({
   selector: 'gt-hike-edit-outline',

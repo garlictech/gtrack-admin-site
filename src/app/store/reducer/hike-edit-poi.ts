@@ -4,8 +4,8 @@ import {
   IHikeEditPoiState, IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
   IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState, IGTrackPoiMergeState, IPoiCollectorEntityState
 } from '../state';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
-import { hikeEditPoiActions } from '../index';
+import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
+import { hikeEditPoiActions } from '..';
 import { poiReducer } from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';

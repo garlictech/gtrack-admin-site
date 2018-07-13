@@ -1,11 +1,11 @@
 // Core
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, editedHikeProgramActions, hikeEditPoiActions } from 'app/store';
+import { State, editedHikeProgramActions, hikeEditPoiActions } from '../../../../../store';
 import { Subject } from 'rxjs';
-import { IGTrackPoi } from 'app/shared/interfaces';
-import { LanguageService } from 'app/shared/services';
-import { HikeEditRoutePlannerSelectors, HikeEditPoiSelectors } from 'app/store/selectors';
+import { IGTrackPoi } from '../../../../../shared/interfaces';
+import { LanguageService } from '../../../../../shared/services';
+import { HikeEditRoutePlannerSelectors, HikeEditPoiSelectors } from '../../../../../store/selectors';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 
 @Component({

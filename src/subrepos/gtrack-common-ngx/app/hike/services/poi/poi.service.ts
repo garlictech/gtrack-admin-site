@@ -2,9 +2,9 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { IPoi, IPoiStored, IPoiInput, IPoiSaveResponse, EObjectState } from 'subrepos/provider-client';
+import { IPoi, IPoiStored, IPoiInput, IPoiSaveResponse, EObjectState } from '../../../../../provider-client';
 
-import { DeepstreamService } from 'subrepos/deepstream-ngx';
+import { DeepstreamService } from '../../../../../deepstream-ngx';
 
 import * as _ from 'lodash';
 

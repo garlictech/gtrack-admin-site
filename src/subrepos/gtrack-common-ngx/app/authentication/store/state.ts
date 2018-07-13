@@ -1,4 +1,4 @@
-import { IAuthenticationState as IJwtAuthState } from 'subrepos/authentication-api-ngx';
+import { IAuthenticationState as IJwtAuthState } from '../../../../authentication-api-ngx';
 
 export interface IAuthenticationState {
   jwtAuth: IJwtAuthState;

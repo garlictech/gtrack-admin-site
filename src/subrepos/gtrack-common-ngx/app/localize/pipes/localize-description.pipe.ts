@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Store, createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
-import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription } from '../../../../provider-client';
 import { State } from 'app/store/state';
 import { Selectors as LanguageSelectors } from 'app/language';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { ILocalizationState } from 'subrepos/localize-ngx';
+import { ILocalizationState } from '../../../../localize-ngx';
 
 import * as _ from 'lodash';
 

@@ -7,9 +7,9 @@ import { Observable } from 'rxjs/Observable';
 import { Route } from './route';
 import { UnitsService } from '../../../shared';
 
-import { DeepstreamService } from 'subrepos/deepstream-ngx';
+import { DeepstreamService } from '../../../../../deepstream-ngx';
 import { ScaleLinear } from 'd3';
-import { IRoute, IRouteStored, IRouteSaveResponse, EObjectState } from 'subrepos/provider-client';
+import { IRoute, IRouteStored, IRouteSaveResponse, EObjectState } from '../../../../../provider-client';
 import { CenterRadius, GeometryService } from '../geometry';
 
 export interface IElevationMargin {
@@ -157,13 +157,13 @@ export class RouteService {
     let padding = 0.003; // about 330m
 
     return {
-      NorthEast: {
-        lat: d3Bounds[0][1] - padding,
-        lon: d3Bounds[0][0] - padding
-      },
       SouthWest: {
-        lat: d3Bounds[1][1] + padding,
-        lon: d3Bounds[1][0] + padding
+        lat: d3Bounds[0][1] + padding,
+        lon: d3Bounds[0][0] + padding
+      },
+      NorthEast: {
+        lat: d3Bounds[1][1] - padding,
+        lon: d3Bounds[1][0] - padding
       }
     };
   }

@@ -7,7 +7,7 @@ import { createSelector } from '@ngrx/store';
 import { log, DebugLog } from 'app/log';
 import { State } from 'app/store';
 
-import { AuthenticationSelectors } from '../../store/';
+import { AuthenticationSelectors } from '../../store';
 
 @Injectable()
 export class NotAuthGuard implements CanActivate {

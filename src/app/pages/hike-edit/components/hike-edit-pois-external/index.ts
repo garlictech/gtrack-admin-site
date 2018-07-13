@@ -2,17 +2,17 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from 'app/shared/services/admin-map';
-import { PoiEditorService, LanguageService } from 'app/shared/services';
+import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from '../../../../shared/services/admin-map';
+import { PoiEditorService, LanguageService } from '../../../../shared/services';
 import { Poi, PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import { IPoi, EPoiTypes } from 'subrepos/provider-client';
 import {
   IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi
-} from 'app/shared/interfaces';
+} from '../../../../shared/interfaces';
 import {
   State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, IHikeEditRoutePlannerState
-} from 'app/store';
-import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors'
+} from '../../../../store';
+import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors } from '../../../../store/selectors'
 
 import * as _ from 'lodash';
 

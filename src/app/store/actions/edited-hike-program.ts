@@ -44,6 +44,8 @@ export interface IDetails {
   time?: number;
   score?: number;
   location?: string;
+  routeIcon?: string;
+  elevationIcon?: string;
 }
 
 export class AddHikeProgramDetails implements Action {
