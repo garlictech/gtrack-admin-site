@@ -3,7 +3,7 @@ import {
   IGeospatialBoxSearchPayload,
   IGeospatialCircleSearchPayload,
   GeospatialSearchResponse
-} from 'subrepos/provider-client';
+} from '../../../../provider-client';
 
 export enum GeoSearchActionTypes {
   SEARCH_IN_BOX = '[GeoSearch] Search in box',

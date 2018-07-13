@@ -2,7 +2,7 @@ import { ActionReducer, combineReducers } from '@ngrx/store';
 
 import { IAuthenticationState, IJwtAuthState } from './state';
 import * as Actions from './actions';
-import { Reducer as jwtReducer } from 'subrepos/authentication-api-ngx';
+import { Reducer as jwtReducer } from '../../../../authentication-api-ngx';
 
 export type Action = Actions.AllActions;
 

@@ -36,7 +36,7 @@ import { LeafletComponent, Center } from '../../../map';
 import * as L from 'leaflet';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { IPoi } from 'subrepos/provider-client';
+import { IPoi } from '../../../../../provider-client';
 
 @Component({
   selector: 'gc-trail-box',

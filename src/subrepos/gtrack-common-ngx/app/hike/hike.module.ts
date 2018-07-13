@@ -24,7 +24,6 @@ import { IHikeModuleConfig } from './config';
   imports: [CommonModule, SharedModule, MapModule, SearchFiltersModule, GeoSearchModule],
   providers: [
     HikeProgramService,
-    HikeProgramService,
     RouteService,
     PoiService,
     GameRuleService,

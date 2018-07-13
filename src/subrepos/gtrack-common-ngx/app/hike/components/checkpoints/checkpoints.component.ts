@@ -4,7 +4,7 @@ import { Dictionary } from '@ngrx/entity/src/models';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
 
-import { IPoi } from 'subrepos/provider-client';
+import { IPoi } from '../../../../../provider-client';
 import * as poiActions from '../../store/poi/actions';
 import { Checkpoint } from '../../services/checkpoint';
 import { PoiSelectors } from '../../store/poi';

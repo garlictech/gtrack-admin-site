@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { IHikeProgramStored } from 'subrepos/provider-client';
+import { IHikeProgramStored } from '../../../../../provider-client';
 
 export const hikeAdapter = createEntityAdapter<IHikeProgramStored>();
 export interface IHikeEntityState extends EntityState<IHikeProgramStored> {}

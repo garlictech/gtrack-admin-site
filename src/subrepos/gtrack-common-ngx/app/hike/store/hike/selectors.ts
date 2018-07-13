@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { hikeAdapter, hikeContextStateAdapter, IHikeState, IHikeContextState } from './state';
 import { EXTERNAL_HIKE_DEPENDENCIES, IExternalHikeDependencies } from '../../externals';
 import { Dictionary } from '@ngrx/entity/src/models';
-import { IHikeProgram, IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
+import { IHikeProgram, IHikeProgramStored, EObjectState } from '../../../../../provider-client';
 
 import { GeoSearchSelectors } from '../../../geosearch';
 import { SearchFiltersSelectors } from '../../../search-filters';

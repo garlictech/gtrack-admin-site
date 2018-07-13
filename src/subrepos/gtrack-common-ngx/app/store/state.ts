@@ -1,4 +1,4 @@
-import { IDeepstreamState } from 'subrepos/deepstream-ngx';
+import { IDeepstreamState } from '../../../deepstream-ngx';
 import { IAuthenticationState } from '../authentication';
 import { IPoiState, IHikeState, IRouteState } from '../hike';
 import { IGeoSearchState } from '../geosearch';
