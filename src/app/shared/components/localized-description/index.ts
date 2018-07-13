@@ -12,7 +12,7 @@ import { Observable, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
 import { ITextualDescription, ILocalizedItem } from 'subrepos/provider-client';
-import { TextboxField, TextareaField, EmojiField, IFormDescriptor } from '../../../forms';
+import { TextboxField, TextareaField } from '../../../forms';
 
 import { State } from '../../../store';
 import { DESCRIPTION_LANGUAGES, LanguageService } from '../../services';

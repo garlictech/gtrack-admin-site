@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/primeng';
 
-import { LocalizeModule, defaultLocalizeConfig } from 'subrepos/localize-ngx';
+import { LocalizeModule, defaultLocalizeConfig, LanguageService } from 'subrepos/localize-ngx';
 
 import { LanguageSelectorComponent } from './language-selector';
 import { Selectors } from './store/selectors';
@@ -20,7 +20,11 @@ const languageConfig = {
   providers: [Selectors],
   exports: [LocalizeModule, LanguageSelectorComponent]
 })
-export class LanguageModule {}
+export class LanguageModule {
+  constructor(langService: LanguageService) {
+    langService.setLanguage(languageConfig.defaultLanguage);
+  }
+}
 
 export { Actions, Reducer, ILocalizationState } from 'subrepos/localize-ngx';
 export { Selectors };
