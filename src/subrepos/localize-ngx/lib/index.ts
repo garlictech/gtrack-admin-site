@@ -1,14 +1,14 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Action, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { TranslateModule, TranslateLoader, TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ILocalizeConfig } from './config';
 import { LanguageService } from '../language-service';
 import { LanguageSelectorComponent } from '../language-selector';
-import { log, DebugLog } from '../log';
+import { DebugLog } from '../log';
 import { Actions } from '../store';
 
 @NgModule({
