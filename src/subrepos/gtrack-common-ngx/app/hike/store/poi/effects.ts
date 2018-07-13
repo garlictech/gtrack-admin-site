@@ -40,7 +40,6 @@ export class PoiEffects {
   savePoi$: Observable<Action> = this._actions$
     .ofType<LocalActions.SavePoi>(LocalActions.PoiActionTypes.SAVE_POI)
     .mergeMap(action => {
-      console.log('SAVE POI');
       return this._poiService
         .create(action.poi)
         .take(1)

@@ -32,7 +32,6 @@ export class LocalizeDescriptionPipe implements PipeTransform, OnDestroy {
 
   transform(value: ILocalizedItem<ITextualDescription>): ITextualDescription {
     this._dispose();
-    console.log(value);
 
     if (!this._langChange) {
       this._langChange = this._actualLang$
@@ -65,7 +64,6 @@ export class LocalizeDescriptionPipe implements PipeTransform, OnDestroy {
 
         const transformed = _.get(value, language, fallback);
         const merged: ITextualDescription = _.merge({}, defaults, transformed);
-        console.log(merged);
 
         this._value = merged;
         this._ref.markForCheck();

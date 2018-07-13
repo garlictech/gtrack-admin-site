@@ -75,7 +75,6 @@ export class SearchResultsMapComponent implements AfterViewInit, OnInit, OnDestr
 
         this.routes$ = this._store.select(this._routeSelectors.getRoutes(routes))
           .map(data => {
-            console.log(data);
             if (data) {
               return data
                 .map(routeData => {
@@ -104,7 +103,6 @@ export class SearchResultsMapComponent implements AfterViewInit, OnInit, OnDestr
 
   ngAfterViewInit() {
     let map = this.map.map;
-    console.log(this.circle);
 
     let envelope = this._geometry.envelopeCircle([this.circle.lng, this.circle.lat], this.circle.radius);
     let southWest = new L.LatLng(envelope[0][0], envelope[0][1]);
