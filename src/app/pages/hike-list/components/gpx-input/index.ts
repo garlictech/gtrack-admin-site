@@ -33,7 +33,6 @@ export class GpxInputComponent {
   }
 
   public gpxInputListener($event) {
-    console.log($event);
     const file = $event.target.files[0];
 
     if (file) {

@@ -51,8 +51,7 @@ import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/service
 // Lib
 import { TagInputModule } from 'ngx-chips';
 import {
-  SharedComponentsModule,
-  TableSpinnerComponent
+  SharedComponentsModule
 } from '../../shared/components';
 import { LanguageModule } from '../../language';
 import { PipesModule } from '../../shared/pipes/pipes.module';

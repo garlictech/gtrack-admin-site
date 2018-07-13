@@ -73,7 +73,7 @@ export class HikeEditPoiEffects {
         poisArr.map((poiArr: IGooglePoi[]) => {
           pois = _.concat(pois, poiArr);
         });
-        console.log('POIS', pois);
+
         // return new hikeEditPoiActions.SetWikipediaPois(_.uniqBy(pois, 'wikipedia.pageid'));
         return new hikeEditPoiActions.SetGooglePois(pois);
       });
