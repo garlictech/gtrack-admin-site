@@ -89,7 +89,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       .switchMap((pois: IExternalPoi[]) => this._poiEditorService.handleElevation(pois))
       .switchMap((pois: IExternalPoi[]) => {
         // Turn on loading before get poi details
-        console.log('turn on');
         this._store.dispatch(new hikeEditPoiActions.SetLoading(this.poiType.subdomain));
         return this._poiEditorService.handlePoiDetails(pois, this.poiType.subdomain)
       })

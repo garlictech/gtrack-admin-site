@@ -27,7 +27,6 @@ export class LanguageSelectorComponent extends LanguageSelectorComponentBase imp
   }
 
   ngOnInit() {
-    console.log('ngOnInit LanguageSelectorComponent');
     this.allLanguages = this.supportedLanguages.map(lang => {
       return {
         label: lang.name,
@@ -35,7 +34,6 @@ export class LanguageSelectorComponent extends LanguageSelectorComponentBase imp
       };
     });
     this._store.select(selectActualLangFeature).subscribe(selected => {
-      console.log('selectActualLangFeature', selected);
       let theLanguage = this.allLanguages.find(lang => lang.value.id === selected);
       this.selectedLanguage = theLanguage && theLanguage.value;
     });

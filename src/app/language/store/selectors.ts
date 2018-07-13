@@ -11,7 +11,6 @@ export class Selectors {
   constructor(private _store: Store<State>) {}
 
   getCurrentLanguage(): Observable<string> {
-    console.log('getCurrentLanguage');
     return this._store.select(s => _.get(s, 'actualLanguage'));
   }
 }
