@@ -85,7 +85,7 @@ import { LOGOUT_SUCCESS } from 'subrepos/authentication-api-ngx/store/actions';
 import { InjectionToken } from '@angular/core';
 
 // Same keys as in the state!!!
-const reducers: ActionReducerMap<State> = {
+export const reducer: ActionReducerMap<State> = {
   ...commonReducers,
   router: routerReducer,
   hikeEditRoutePlanner: hikeEditRoutePlannerReducer,
@@ -119,7 +119,7 @@ export { metaReducers };
 export const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<State>>('Registered Reducers');
 
 export function getReducers() {
-  return reducers;
+  return reducer;
 }
 
 export * from './state';
