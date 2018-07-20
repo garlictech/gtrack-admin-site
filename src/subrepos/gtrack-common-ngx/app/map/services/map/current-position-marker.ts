@@ -29,7 +29,6 @@ export class CurrentPositionMarker {
       .select(selectCurrentLocation)
       .take(1)
       .subscribe(geoPosition => {
-        console.log(geoPosition);
         if (!this.marker) {
           this.marker = L.userMarker([geoPosition.coords.latitude, geoPosition.coords.longitude], {
             pulsing: true,
@@ -41,7 +40,6 @@ export class CurrentPositionMarker {
         this.marker.setAccuracy(geoPosition.coords.accuracy);
         this.map.setView([geoPosition.coords.latitude, geoPosition.coords.longitude], this.map.getZoom());
         this.map.spin(false);
-        console.log('DONE');
       });
   }
 

@@ -36,7 +36,7 @@ import { LeafletComponent, Center } from '../../../map';
 import * as L from 'leaflet';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { IPoi } from 'subrepos/provider-client';
+import { IPoi } from '../../../../../provider-client';
 
 @Component({
   selector: 'gc-trail-box',
@@ -107,7 +107,10 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
   ) {}
 
   ngOnInit() {
-    let pois = this.hikeProgram.stops.map(stop => stop.poiId);
+    let pois = this.hikeProgram.stops
+      .filter(stop => !/^endpoint/.test(stop.poiId))
+      .map(stop => stop.poiId);
+
     let route = this.hikeProgram.routeId;
 
     this.pois$ = this._store.select(this._poiSelectors.getPois(pois));

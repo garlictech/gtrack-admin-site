@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 import * as _ from 'lodash';
 
-import { Field, SelectField, ESelectTypes } from '../field';
+import { Field } from '../field';
 
 @Component({
   selector: 'app-form-field',

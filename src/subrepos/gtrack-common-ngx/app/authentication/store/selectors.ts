@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-import { IDeepstreamState } from 'subrepos/gtrack-common-ngx/app/deepstream';
+import { IDeepstreamState } from '../../deepstream';
 
-import { Selectors as DeepstreamSelectors } from 'subrepos/deepstream-ngx';
+import { Selectors as DeepstreamSelectors } from '../../../../deepstream-ngx';
 
-import { User, IAuthenticationState as IJwtAuthState, IAuth } from 'subrepos/authentication-api-ngx';
+import { User, IAuthenticationState as IJwtAuthState, IAuth } from '../../../../authentication-api-ngx';
 
 import { IAuthenticationState } from './state';
 

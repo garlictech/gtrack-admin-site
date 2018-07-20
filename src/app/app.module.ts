@@ -6,7 +6,7 @@ import * as Raven from 'raven-js';
 
 // App
 import { AppComponent } from './app.component';
-import { environment } from '../environments/environment';
+import { environment } from 'environments/environment';
 
 import { APP_DECLARATIONS } from './app.declarations';
 import { APP_ENTRY_COMPONENTS } from './app.entry-components';

@@ -4,8 +4,8 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 import { IHikeEditPoiState } from '../state/hike-edit-poi';
 import {
   wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter
-} from 'app/store/reducer';
-import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from 'app/shared/interfaces';
+} from '../reducer';
+import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 
 import * as _ from 'lodash';
 

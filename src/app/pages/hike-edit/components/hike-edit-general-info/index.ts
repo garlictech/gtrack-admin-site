@@ -3,11 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 
-import { State, editedHikeProgramActions } from 'app/store';
-import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from 'app/store/selectors';
+import { State, editedHikeProgramActions } from '../../../../store';
+import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
 import { ConfirmationService } from 'primeng/primeng';
 import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
-import { IFormDescriptor, SliderField } from 'app/forms';
+import { IFormDescriptor, SliderField } from '../../../../forms';
 
 @Component({
   selector: 'gt-hike-edit-general-info',

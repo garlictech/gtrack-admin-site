@@ -4,9 +4,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Subject } from 'rxjs/Subject';
 
-import * as filterActions from 'subrepos/gtrack-common-ngx/app/search-filters/store/actions';
+import * as filterActions from '../../../search-filters/store/actions';
 
-import { SearchFiltersSelectors } from 'subrepos/gtrack-common-ngx/app/search-filters/store';
+import { SearchFiltersSelectors } from '../../../search-filters/store';
 
 @Component({
   selector: 'gtcn-search-filters',

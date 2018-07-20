@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AdminMap, AdminMapService } from 'app/shared/services/admin-map';
+import { AdminMap, AdminMapService } from '../../services/admin-map';
 import { LeafletComponent } from 'subrepos/gtrack-common-ngx/app';
 
 @Component({

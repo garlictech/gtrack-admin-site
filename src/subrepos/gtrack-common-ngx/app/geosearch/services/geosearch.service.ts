@@ -4,7 +4,7 @@ import {
   IGeospatialBoxSearchPayload,
   IGeospatialCircleSearchPayload,
   GeospatialSearchResponse
-} from 'subrepos/provider-client';
+} from '../../../../provider-client';
 
 import { Observable } from 'rxjs/Observable';
 

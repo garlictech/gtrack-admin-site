@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { Observer } from 'rxjs/Observer';
 import { Store } from '@ngrx/store';
 import { Client as DeepstreamClient, Record, Query, Rpc, List } from '@garlictech/deepstream-rxjs';
-import { EAuthRoles } from 'subrepos/provider-client';
+import { EAuthRoles } from '../../../provider-client';
 
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
 import { Selectors } from '../store/selectors';

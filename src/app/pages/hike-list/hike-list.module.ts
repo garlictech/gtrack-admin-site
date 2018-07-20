@@ -4,15 +4,18 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HikeListComponent } from './hike-list.component';
 import { GpxInputComponent } from './components';
-import { SharedComponentsModule } from 'app/shared/components';
+import { SharedComponentsModule } from '../../shared/components';
 
-import { ButtonModule, SelectButtonModule, FileUploadModule, CardModule } from 'primeng/primeng';
+import {
+  ButtonModule,
+  SelectButtonModule,
+  FileUploadModule,
+  CardModule
+} from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
+import { PipesModule } from '../../shared/pipes/pipes.module';
 
-const COMPONENTS = [
-  HikeListComponent,
-  GpxInputComponent
-];
+const COMPONENTS = [HikeListComponent, GpxInputComponent];
 
 @NgModule({
   imports: [
@@ -25,7 +28,8 @@ const COMPONENTS = [
     SelectButtonModule,
     FileUploadModule,
     CardModule,
-    TableModule
+    TableModule,
+    PipesModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS],

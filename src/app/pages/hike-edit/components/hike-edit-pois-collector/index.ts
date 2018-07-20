@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, hikeEditPoiActions, commonPoiActions } from 'app/store';
+import { State, hikeEditPoiActions, commonPoiActions } from '../../../../store';
 import { IExternalPoi, IFilteredProperties, IGTrackPoi } from '../../../../shared/interfaces';
 import { Subject, Observable } from 'rxjs';
 import { HikeEditPoiSelectors, HikeEditMapSelectors } from '../../../../store/selectors';

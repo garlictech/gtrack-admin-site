@@ -2,10 +2,10 @@
 import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { State } from 'app/store';
-import { RoutePlannerService, AdminMapService, WaypointMarkerService } from 'app/shared/services/admin-map';
-import { HikeEditMapSelectors } from 'app/store/selectors';
-import { HikeProgramService } from 'app/shared/services';
+import { State } from '../../../../store';
+import { RoutePlannerService, AdminMapService, WaypointMarkerService } from '../../../../shared/services/admin-map';
+import { HikeEditMapSelectors } from '../../../../store/selectors';
+import { HikeProgramService } from '../../../../shared/services';
 import { RouteService } from 'subrepos/gtrack-common-ngx';
 import { IRoute } from 'subrepos/provider-client';
 
@@ -33,7 +33,6 @@ export class GpxInputComponent {
   }
 
   public gpxInputListener($event) {
-    console.log($event);
     const file = $event.target.files[0];
 
     if (file) {

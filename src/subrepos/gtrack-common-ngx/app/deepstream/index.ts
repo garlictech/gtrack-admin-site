@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import * as _ from 'lodash';
 import { createSelector } from '@ngrx/store';
 
-import { IExternalDeepstreamDependencies, EXTERNAL_DEEPSTREAM_DEPENDENCIES } from 'subrepos/deepstream-ngx';
+import { IExternalDeepstreamDependencies, EXTERNAL_DEEPSTREAM_DEPENDENCIES } from '../../../deepstream-ngx';
 
 import { environment } from 'environments/environment';
 import { selectRole, selectUser } from '../authentication/store/selectors';
@@ -33,4 +33,4 @@ export {
   Actions as DeepstreamActions,
   DeepstreamService,
   Selectors
-} from 'subrepos/deepstream-ngx';
+} from '../../../deepstream-ngx';

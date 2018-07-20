@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { State, hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../index';
-import { EditedHikeProgramSelectors } from 'app/store/selectors/';
-import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService, HikeProgramService } from 'app/shared/services';
-import { IWikipediaPoi, IOsmPoi, IGooglePoi } from 'app/shared/interfaces';
+import { State, hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '..';
+import { EditedHikeProgramSelectors } from '../selectors';
+import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService, HikeProgramService } from '../../shared/services';
+import { IWikipediaPoi, IOsmPoi, IGooglePoi } from '../../shared/interfaces';
 
 import * as _ from 'lodash';
 import { RouteService } from 'subrepos/gtrack-common-ngx';
@@ -73,7 +73,7 @@ export class HikeEditPoiEffects {
         poisArr.map((poiArr: IGooglePoi[]) => {
           pois = _.concat(pois, poiArr);
         });
-        console.log('POIS', pois);
+
         // return new hikeEditPoiActions.SetWikipediaPois(_.uniqBy(pois, 'wikipedia.pageid'));
         return new hikeEditPoiActions.SetGooglePois(pois);
       });

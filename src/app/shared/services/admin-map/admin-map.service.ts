@@ -1,6 +1,6 @@
 import { Store } from '@ngrx/store';
-import { State, adminMapActions } from 'app/store';
-import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { State, adminMapActions } from '../../../store';
+import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { Injectable } from '@angular/core';
 import { AdminMap } from './lib/admin-map';
 import {

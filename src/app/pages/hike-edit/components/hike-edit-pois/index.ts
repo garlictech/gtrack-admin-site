@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, hikeEditPoiActions } from 'app/store';
-import { IExternalPoiType } from 'app/shared/interfaces/index';
+import { State, hikeEditPoiActions } from '../../../../store';
+import { IExternalPoiType } from '../../../../shared/interfaces';
 import { EPoiTypes } from 'subrepos/provider-client';
 
 @Component({

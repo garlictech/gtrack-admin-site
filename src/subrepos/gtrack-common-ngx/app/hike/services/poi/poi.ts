@@ -1,4 +1,4 @@
-import { IPoi, EPoiTypes, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { IPoi, EPoiTypes, ILocalizedItem, ITextualDescription } from '../../../../../provider-client';
 import * as _ from 'lodash';
 
 export class Poi implements IPoi {

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, hikeEditRoutePlannerActions } from 'app/store';
+import { State, hikeEditRoutePlannerActions } from '../../../store';
 import { GameRuleService, ISegment, RouteService } from 'subrepos/gtrack-common-ngx';
-import { initialRouteDataState } from 'app/store/reducer';
-import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from 'app/store/selectors';
+import { initialRouteDataState } from '../../../store/reducer';
+import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from '../../../store/selectors';
 import { AdminMap } from './lib/admin-map';
 import { AdminMapService } from './admin-map.service';
 
@@ -165,13 +165,13 @@ export class RoutePlannerService {
           let _geoBounds = d3.geoBounds(rewind(_buffer, true));
 
           _bounds = {
-            NorthEast: {
-              lat: _geoBounds[1][1],
-              lon: _geoBounds[1][0]
-            },
             SouthWest: {
               lat: _geoBounds[0][1],
               lon: _geoBounds[0][0]
+            },
+            NorthEast: {
+              lat: _geoBounds[1][1],
+              lon: _geoBounds[1][0]
             }
           };
         } else {

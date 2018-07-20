@@ -23,6 +23,22 @@ import { SharedModule } from '../../shared/shared.module';
 import { SearchFiltersModule } from '../../search-filters/search-filters.module';
 import { SearchResultsMapComponent } from './search-results-map';
 
+import { LocalizeModule } from '../../localize';
+
+const COMPONENTS = [
+  TrailBoxComponent,
+  HikeCardComponent,
+  HikeInfoComponent,
+  HikeDataItemComponent,
+  ElevationProfileComponent,
+  HikeProgramComponent,
+  CheckpointsComponent,
+  LocationSearchComponent,
+  SearchFiltersComponent,
+  SearchResultsMapComponent,
+  DownloadGpxButtonComponent
+];
+
 @NgModule({
   imports: [
     HikeModule,
@@ -34,33 +50,14 @@ import { SearchResultsMapComponent } from './search-results-map';
     ReactiveFormsModule,
     SearchFiltersModule,
     TranslateModule,
-    StoreModule
+    StoreModule,
+    LocalizeModule
   ],
   exports: [
-    TrailBoxComponent,
-    HikeCardComponent,
-    HikeInfoComponent,
-    HikeDataItemComponent,
-    ElevationProfileComponent,
-    HikeProgramComponent,
-    CheckpointsComponent,
-    LocationSearchComponent,
-    SearchFiltersComponent,
-    SearchResultsMapComponent,
-    DownloadGpxButtonComponent
+    ...COMPONENTS
   ],
   declarations: [
-    TrailBoxComponent,
-    HikeCardComponent,
-    HikeInfoComponent,
-    HikeDataItemComponent,
-    ElevationProfileComponent,
-    HikeProgramComponent,
-    CheckpointsComponent,
-    LocationSearchComponent,
-    SearchFiltersComponent,
-    SearchResultsMapComponent,
-    DownloadGpxButtonComponent
+    ...COMPONENTS
   ]
 })
 export class HikeComponentsModule {}

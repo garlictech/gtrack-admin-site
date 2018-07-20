@@ -1,7 +1,7 @@
 // Core
 import { Component, Input, OnInit } from '@angular/core';
-import { IExternalPoi } from 'app/shared/interfaces/index';
-import { IconService, } from 'subrepos/gtrack-common-ngx/index';
+import { IExternalPoi } from '../../../../shared/interfaces';
+import { IconService, } from 'subrepos/gtrack-common-ngx';
 import * as _ from 'lodash';
 
 @Component({

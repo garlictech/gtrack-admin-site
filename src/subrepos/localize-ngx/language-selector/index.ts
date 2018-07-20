@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-
 import { LanguageService } from '../language-service';
 import { ILanguageDesc } from '../languages';
 

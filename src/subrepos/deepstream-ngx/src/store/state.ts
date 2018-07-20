@@ -1,5 +1,5 @@
 import { IClientData } from '@garlictech/deepstream-rxjs';
-import { IPermissionRecord } from 'subrepos/provider-client';
+import { IPermissionRecord } from '../../../provider-client';
 
 export enum EDeepstreamState {
   LOGGING_IN,

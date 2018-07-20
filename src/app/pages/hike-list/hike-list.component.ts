@@ -4,10 +4,10 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import {
   State, commonHikeActions
-} from 'app/store';
+} from '../../store';
 import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
-import { LanguageService } from 'app/shared/services';
+import { LanguageService } from '../../shared/services';
 
 import * as _ from 'lodash';
 import { SelectItem, ConfirmationService } from 'primeng/primeng';

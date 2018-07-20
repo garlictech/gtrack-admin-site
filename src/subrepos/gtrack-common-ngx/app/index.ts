@@ -1,7 +1,6 @@
 export { DeepstreamService, Selectors, DeepstreamModule } from './deepstream';
 export * from './authentication';
 export * from './deepstream';
-export * from './dynamic-modal';
 export * from './shared';
 export * from './map';
 export * from './hike';
@@ -11,3 +10,4 @@ export * from './geosearch';
 export * from './shared/services/background-geolocation-service';
 export * from './search-filters';
 export * from './module';
+export * from './localize';

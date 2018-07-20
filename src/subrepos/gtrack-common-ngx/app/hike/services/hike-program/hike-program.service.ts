@@ -7,8 +7,8 @@ import 'rxjs/add/operator/filter';
 
 import { HikeProgram } from './hike-program';
 
-import { IHikeProgram, IHikeProgramStored, IHikeProgramSaveResponse, EObjectState } from 'subrepos/provider-client';
-import { DeepstreamService } from 'subrepos/deepstream-ngx';
+import { IHikeProgram, IHikeProgramStored, IHikeProgramSaveResponse, EObjectState } from '../../../../../provider-client';
+import { DeepstreamService } from '../../../../../deepstream-ngx';
 import { CheckpointService } from '../checkpoint';
 
 @Injectable()
