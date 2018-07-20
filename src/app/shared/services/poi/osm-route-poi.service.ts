@@ -53,7 +53,8 @@ export class OsmRoutePoiService {
                 objectType: EPoiTypes.osmRoute,
                 osm: {
                   id: _point.id
-                }
+                },
+                selected: false
               });
             }
           }

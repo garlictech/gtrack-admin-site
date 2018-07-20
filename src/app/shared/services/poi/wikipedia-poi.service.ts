@@ -47,7 +47,8 @@ export class WikipediaPoiService {
                   fullDescription: '',
                 }
               },
-              wikipedia: {}
+              wikipedia: {},
+              selected: false
             };
             _poi.wikipedia = {
               pageid: _point.pageid,

@@ -67,7 +67,8 @@ export class OsmPoiService {
                 objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,
                 osm: {
                   id: _point.id
-                }
+                },
+                selected: false
               });
             }
           }
