@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ChangeDetectorRef } from '@angular/core';
 import { StoreModule, Store } from '@ngrx/store';
 import { reducer, State } from 'app/store';
-import { Selectors } from 'app/language';
+// import { Selectors } from 'app/language';
 
 import 'rxjs/add/operator/take';
 
@@ -54,17 +54,12 @@ describe('LocalizeDescriptionPipe', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot(reducer)
-      ],
-      providers: [
-        Selectors
       ]
     });
 
     const store: Store<State> = TestBed.get(Store);
-    const selectors: Selectors = TestBed.get(Selectors);
     ref = new FakeChangeDetectorRef();
-
-    pipe = new LocalizeDescriptionPipe(store, selectors, ref);
+    pipe = new LocalizeDescriptionPipe(store, ref);
   });
 
   it('should transform the description to the default language', () => {

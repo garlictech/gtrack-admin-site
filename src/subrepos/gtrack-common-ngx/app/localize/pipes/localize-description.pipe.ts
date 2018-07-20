@@ -2,7 +2,6 @@ import { Pipe, PipeTransform, OnDestroy, ChangeDetectorRef } from '@angular/core
 import { Store, createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import { ILocalizedItem, ITextualDescription } from '../../../../provider-client';
 import { State } from 'app/store/state';
-import { Selectors as LanguageSelectors } from 'app/language';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -24,7 +23,10 @@ export class LocalizeDescriptionPipe implements PipeTransform, OnDestroy {
   private _language = 'en_US';
   private _value: ITextualDescription;
 
-  constructor(private _store: Store<State>, private _selectors: LanguageSelectors, private _ref: ChangeDetectorRef) {
+  constructor(
+    private _store: Store<State>,
+    private _ref: ChangeDetectorRef
+  ) {
     this._selectLangFeature = createFeatureSelector<ILocalizationState>('language');
     this._selectActualLang = createSelector(this._selectLangFeature, (state: ILocalizationState) => state.actualLanguage);
     this._actualLang$ = this._store.select(this._selectActualLang);
