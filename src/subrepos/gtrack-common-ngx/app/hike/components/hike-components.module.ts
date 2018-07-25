@@ -4,6 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
 import { TranslateModule } from '@ngx-translate/core';
 import { StoreModule } from '@ngrx/store';
+import { ButtonModule } from 'primeng/button';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { TrailBoxComponent } from './trail-box';
 import { HikeCardComponent } from './hike-card';
@@ -51,13 +53,11 @@ const COMPONENTS = [
     SearchFiltersModule,
     TranslateModule,
     StoreModule,
-    LocalizeModule
+    LocalizeModule,
+    FontAwesomeModule,
+    ButtonModule
   ],
-  exports: [
-    ...COMPONENTS
-  ],
-  declarations: [
-    ...COMPONENTS
-  ]
+  exports: [...COMPONENTS],
+  declarations: [...COMPONENTS]
 })
 export class HikeComponentsModule {}

@@ -1,11 +1,9 @@
 import { Component, NgZone, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import { Subject, Observable } from 'rxjs-compat';
 import * as turf from '@turf/turf';
-
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/observable/never';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Subject, never } from 'rxjs';
 
 import { GoogleMapsService } from '../../../shared';
 import * as geoSearchActions from '../../../geosearch/store/actions';
@@ -35,6 +33,8 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   @Input() public context: string;
 
   @Input() public placeholder: string;
+
+  public icon = faSearch;
 
   public radiusRange = 50;
 
@@ -116,7 +116,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     this._locate$
       .takeUntil(this._destroy$)
       .switchMap(locate => {
-        return locate ? location$.take(1) : Observable.never();
+        return locate ? location$.take(1) : never();
       })
       .subscribe((coords: number[]) => {
         this._address = 'my-location';
