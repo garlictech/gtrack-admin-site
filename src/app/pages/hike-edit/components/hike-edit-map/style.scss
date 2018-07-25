@@ -2,3 +2,18 @@
   width: 100%;
   height: 400px;
 }
+
+.search-group {
+  margin-bottom: 10px;
+
+  .ui-inputgroup-addon {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .search-input {
+    padding: 2px 8px;
+    width: 300px;
+  }
+}
+

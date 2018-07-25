@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EPoiTypes } from 'subrepos/provider-client';
-import { IOsmPoi } from 'app/shared/interfaces';
+import { IOsmPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
@@ -67,7 +67,8 @@ export class OsmPoiService {
                 objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,
                 osm: {
                   id: _point.id
-                }
+                },
+                selected: false
               });
             }
           }

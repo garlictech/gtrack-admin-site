@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { GeospatialSearchResponse } from 'subrepos/provider-client';
+import { GeospatialSearchResponse } from '../../../../provider-client';
 
 export interface IGeoSearchResponseItem {
   id: string;

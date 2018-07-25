@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { IRouteStored } from 'subrepos/provider-client';
+import { IRouteStored } from '../../../../../provider-client';
 
 export const routeAdapter = createEntityAdapter<IRouteStored>();
 export interface IRouteEntityState extends EntityState<IRouteStored> {}

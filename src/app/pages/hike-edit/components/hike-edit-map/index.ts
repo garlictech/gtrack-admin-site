@@ -1,14 +1,14 @@
 
-import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit, ElementRef, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, hikeEditMapActions, adminMapActions, commonBackgroundGeolocationActions } from 'app/store';
-import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from 'app/store/selectors';
+import { State, adminMapActions, commonBackgroundGeolocationActions } from '../../../../store';
+import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
 import {
-  Center, ISegment, BackgroundGeolocationActionTypes, selectCurrentLocation, IGeoPosition
+  Center, selectCurrentLocation, IGeoPosition, GoogleMapsService
 } from 'subrepos/gtrack-common-ngx';
-import { AdminLeafletComponent } from 'app/shared/components/admin-leaflet';
-import { WaypointMarkerService, RoutePlannerService } from 'app/shared/services/admin-map';
+import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
+import { WaypointMarkerService } from '../../../../shared/services/admin-map';
 import { SelectItem } from 'primeng/primeng';
 
 import * as L from 'leaflet';
@@ -41,6 +41,9 @@ const OVERLAYS = [{
 export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('map')
   public mapComponent: AdminLeafletComponent;
+  @ViewChild('search')
+  private _searchElementRef: ElementRef;
+  private _searchInput: HTMLInputElement;
   public center: Center = CENTER;
   public layers = LAYERS;
   public overlays = OVERLAYS;
@@ -48,6 +51,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public allowPlanning: boolean;
   public currentLocation$: Observable<IGeoPosition | null>;
   public clickModes: SelectItem[] = [];
+  public locationSearchResult: google.maps.places.PlaceResult;
   private _bufferShown = false;
   private _bufferOnMap: L.GeoJSON;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -55,7 +59,9 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private _store: Store<State>,
     private _waypointMarkerService: WaypointMarkerService,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _googleMapsService: GoogleMapsService,
+    private _ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -88,6 +94,8 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     this._store.dispatch(new commonBackgroundGeolocationActions.StartTracking());
 
     this.currentLocation$ = this._store.select(selectCurrentLocation).takeUntil(this._destroy$);
+
+    this._initLocationSearchInput();
   }
 
   ngOnDestroy( ) {
@@ -176,6 +184,29 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   private _removeBuffer() {
     if (this._bufferOnMap) {
       this.mapComponent.map.removeGeoJSON(this._bufferOnMap);
+    }
+  }
+
+  private _initLocationSearchInput() {
+    this._searchInput = this._searchElementRef.nativeElement;
+
+    this._googleMapsService.autocomplete(this._searchInput).then(autocomplete => {
+      autocomplete.addListener('place_changed', () => {
+        this._ngZone.run(() => {
+          this.locationSearchResult = autocomplete.getPlace();
+        });
+      });
+    });
+  }
+
+  public goToLocation($event) {
+    $event.stopPropagation();
+
+    if (this.locationSearchResult) {
+      this.mapComponent.map.leafletMap.setView([
+        this.locationSearchResult.geometry.location.lat(),
+        this.locationSearchResult.geometry.location.lng()
+      ], 13);
     }
   }
 }

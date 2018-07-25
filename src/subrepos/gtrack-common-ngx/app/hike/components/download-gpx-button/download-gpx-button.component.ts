@@ -8,8 +8,8 @@ import { HikeProgram } from '../../services/hike-program/hike-program';
 import { RouteSelectors } from '../../store/route/selectors';
 import { PoiSelectors } from '../../store/poi/selectors';
 
-import * as RouteActions from 'subrepos/gtrack-common-ngx/app/hike/store/route/actions';
-import * as PoiActions from 'subrepos/gtrack-common-ngx/app/hike/store/poi/actions';
+import * as RouteActions from '../../store/route/actions';
+import * as PoiActions from '../../store/poi/actions';
 
 @Component({
   selector: 'gc-download-gpx',
@@ -104,7 +104,7 @@ export class DownloadGpxButtonComponent implements OnInit {
         let a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = `${this.hikeProgram.id}.xml`;
+        a.download = `${this.hikeProgram.id}.gpx`;
 
         document.body.appendChild(a);
         a.click();

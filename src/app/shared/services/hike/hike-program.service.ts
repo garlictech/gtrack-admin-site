@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, editedHikeProgramActions } from 'app/store';
-import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { State, editedHikeProgramActions } from '../../../store';
+import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { IHikeProgramStop, IRoute } from 'subrepos/provider-client';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
-import { ElevationService, GameRuleService } from 'subrepos/gtrack-common-ngx';
+import { ElevationService, GameRuleService, Route, RouteService } from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
+import * as d3 from 'd3';
+import * as geojson2svg from 'geojson2svg';
 
 @Injectable()
 export class HikeProgramService {
@@ -19,6 +21,7 @@ export class HikeProgramService {
     private _geospatialService: GeospatialService,
     private _elevationService: ElevationService,
     private _gameRuleService: GameRuleService,
+    private _routeService: RouteService,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
   ) {}
@@ -110,5 +113,62 @@ export class HikeProgramService {
       });
 
     return langs;
+  }
+
+  public createElevationIcon(_route: Route) {
+    const _iconWidth = 54;
+    const _iconHeight = 20;
+    const _elevationData = this._routeService.elevationData(_route, _iconWidth, _iconHeight);
+
+    if (_elevationData) {
+      const _div: HTMLDivElement = document.createElement('div');
+
+      d3.select(_div)
+        .append('svg')
+        .attr('xmlns', 'http://www.w3.org/2000/svg')
+        .attr('version', '1.1')
+        .attr('viewBox', `0, 0, ${_iconWidth}, ${_iconHeight}`)
+        .append('svg:path')
+        .attr('d', _elevationData.lineFunc(_elevationData.lineData))
+        .attr('stroke', 'orange')
+        .attr('stroke-width', 2)
+        .attr('fill', 'none');
+
+      return `data:image/svg+xml;utf8,${_div.innerHTML}`;
+    } else {
+      return '';
+    }
+  }
+
+  public createRouteIcon(_route: Route) {
+    const _iconWidth = 54;
+    const _iconHeight = 54;
+
+    if (_route.bounds && _route.path) {
+      const _converter = geojson2svg({
+        viewportSize: {
+          width: _iconWidth,
+          height: _iconHeight
+        },
+        mapExtent: {
+          left: _route.bounds.SouthWest.lon,
+          bottom: _route.bounds.SouthWest.lat,
+          right: _route.bounds.NorthEast.lon,
+          top: _route.bounds.NorthEast.lat
+        },
+        output: 'svg',
+        fitTo: 'width',
+        attributes: {
+          fill: 'none',
+          stroke: 'red',
+          'stroke-width': 2
+        }
+      });
+
+      const _svgString = _converter.convert(_route.path);
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${_iconWidth} ${_iconHeight}">${_svgString}</svg>`;
+    } else {
+      return '';
+    }
   }
 }

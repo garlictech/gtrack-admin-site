@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EPoiTypes } from 'subrepos/provider-client';
-import { IOsmPoi } from 'app/shared/interfaces';
+import { IOsmPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
@@ -37,8 +37,6 @@ export class OsmRoutePoiService {
             if (_point.tags && _point.lat) {
               // let _type = _point.tags[poiType];
 
-              console.log('ROUTE TAGS???', _point.tags);
-
               _res.push({
                 id: uuid(),
                 lat: _point.lat,
@@ -55,7 +53,8 @@ export class OsmRoutePoiService {
                 objectType: EPoiTypes.osmRoute,
                 osm: {
                   id: _point.id
-                }
+                },
+                selected: false
               });
             }
           }

@@ -1,4 +1,4 @@
-import { Reducer as deepstreamReducer } from 'subrepos/deepstream-ngx';
+import { Reducer as deepstreamReducer } from '../../../deepstream-ngx';
 import { Reducer as authReducer } from '../authentication';
 import { poiReducer } from '../hike/store/poi/reducer';
 import { hikeReducer } from '../hike/store/hike/reducer';

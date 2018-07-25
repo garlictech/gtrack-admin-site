@@ -17,18 +17,19 @@
 
 <p-accordion>
   <p-accordionTab *ngFor="let lng of (languageKeys$ | async)" [header]="getLangName(lng)">
+    <gtrack-form
+      [formDescriptor]="languageFormDescriptors[lng]"
+      [formDataPath$]="languageFormDataPaths[lng]"
+    ></gtrack-form>
+
     <p-button
-      styleClass="ui-button-danger f-right"
+      class="trash"
+      styleClass="ui-button-danger"
       icon="fa fa-trash"
       (onClick)="deleteTranslation(lng)"
       title="Delete language"
       *ngIf="lng !== 'en_US'"
     ></p-button>
-
-    <gtrack-form
-      [formDescriptor]="languageFormDescriptors[lng]"
-      [formDataPath$]="languageFormDataPaths[lng]"
-    ></gtrack-form>
 
   </p-accordionTab>
 </p-accordion>

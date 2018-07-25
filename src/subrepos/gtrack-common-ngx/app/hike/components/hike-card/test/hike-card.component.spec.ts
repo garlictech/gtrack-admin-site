@@ -1,8 +1,9 @@
 /* tslint:disable:no-unused-variable */
+import { StoreModule } from '@ngrx/store';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
-import { IHikeProgramStored } from 'subrepos/provider-client';
+import { IHikeProgramStored, ITextualDescription, ILocalizedItem } from 'subrepos/provider-client';
 
 import { HikeCardComponent } from '../';
 
@@ -24,13 +25,26 @@ class DurationPipe implements PipeTransform {
   }
 }
 
+@Pipe({
+  name: 'localizeDescription'
+})
+class LocalizeDescriptionPipe implements PipeTransform {
+  transform(value: ILocalizedItem<ITextualDescription>): ITextualDescription {
+    return {
+      title: '',
+      fullDescription: '',
+      summary: ''
+    };
+  }
+}
+
 describe('HikeCardComponent', () => {
   let component: HikeCardComponent;
   let fixture: ComponentFixture<HikeCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HikeCardComponent, DistancePipe, DurationPipe],
+      declarations: [HikeCardComponent, DistancePipe, DurationPipe, LocalizeDescriptionPipe],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));

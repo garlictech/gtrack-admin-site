@@ -5,7 +5,7 @@
     </div>
 
     <div class="card-center card-row d-flex flex-column justify-content-center">
-      <h2 class="card-title">{{ hikeProgram.name }}</h2>
+      <h2 class="card-title">{{ (hikeProgram.description | localizeDescription).title }}</h2>
       <h6 class="card-subtitle mb2"><i class="ion-ios-location"></i> {{ hikeProgram.location }}</h6>
     </div>
 

@@ -3,8 +3,8 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 
 import { poiAdapter, IPoiState, IPoiContextState } from './state';
 import { EXTERNAL_POI_DEPENDENCIES, IExternalPoiDependencies } from '../../externals';
-import { poiContextStateAdapter } from 'subrepos/gtrack-common-ngx/app/hike/store/poi';
-import { IPoi, IPoiStored } from 'subrepos/provider-client';
+import { poiContextStateAdapter } from '.';
+import { IPoi, IPoiStored } from '../../../../../provider-client';
 import { Dictionary } from '@ngrx/entity/src/models';
 
 import * as _ from 'lodash';

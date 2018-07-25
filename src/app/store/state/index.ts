@@ -1,7 +1,7 @@
 import { CommonState, IAuthenticationState } from 'subrepos/gtrack-common-ngx';
 import { RouterReducerState } from '@ngrx/router-store';
 
-import { ILocalizationState } from 'app/language';
+import { ILocalizationState } from '../../language';
 
 import { IHikeEditRoutePlannerState } from './hike-edit-route-planner';
 import { IHikeEditMapState } from './hike-edit-map';

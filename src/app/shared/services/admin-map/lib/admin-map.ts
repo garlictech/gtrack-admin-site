@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
-import { State, adminMapActions } from 'app/store';
+import { State, adminMapActions } from '../../../../store';
 import { Observable } from 'rxjs';
-import { HikeEditRoutePlannerSelectors } from 'app/store/selectors';
+import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
 import { Map, IconService, MapMarkerService } from 'subrepos/gtrack-common-ngx/app';
 
 import * as L from 'leaflet';

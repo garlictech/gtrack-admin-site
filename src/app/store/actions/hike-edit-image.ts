@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IBackgroundImageDataStored } from 'app/shared/interfaces/mapillary-image.interface';
+import { IBackgroundImageDataStored } from '../../shared/interfaces/mapillary-image.interface';
 
 export const RESET_IMAGE_STATE = '[HikeEditImage] Reset images';
 

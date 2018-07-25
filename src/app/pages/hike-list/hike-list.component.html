@@ -24,6 +24,8 @@
               <th>Title</th>
               <th>Summary</th>
               <th>Published</th>
+              <th>Elevation</th>
+              <th>Route</th>
               <th>&nbsp;</th>
             </tr>
           </ng-template>
@@ -44,6 +46,12 @@
               </td>
               <td>{{translateDescription(hike.description, 'summary')}}</td>
               <td>{{hike.published | date: 'yyyy.MM.dd. HH:mm'}}</td>
+              <td class="icons">
+                <img class="svg" *ngIf="hike.elevationIcon?.length" [src]="hike.elevationIcon | trustedUrl">
+              </td>
+              <td class="icons">
+                <img class="svg ml-25" *ngIf="hike.routeIcon?.length"  [src]="hike.routeIcon | trustedUrl">
+              </td>
               <td class="text-center">
                 <p-button
                   icon="fa fa-pencil-alt"
@@ -54,7 +62,7 @@
 
                 <p-button
                   icon="fa fa-trash-alt"
-                  styleClass="ui-button-danger"
+                  styleClass="ui-button-danger ml-5"
                   (click)="deleteHike(hike.id)"
                   title="Delete hike"
                   *ngIf="hike.state === EObjectState.draft && !hike.published"

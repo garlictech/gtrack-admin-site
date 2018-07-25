@@ -1,35 +1,51 @@
+<div class="ui-g ui-fluid search-group">
+  <div class="ui-g-12 ui-md-4 p-0">
+      <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+          <input type="text" class="search-input" pInputText placeholder="Search" autocorrect="off" autocapitalize="off" spellcheck="off" #search>
+          <button
+            pButton
+            class="ui-button-success"
+            type="button"
+            label="Go"
+            (click)="goToLocation($event)"
+            [disabled]="!locationSearchResult"
+          ></button>
+      </div>
+  </div>
+</div>
+
 <div class="map-container">
     <gc-admin-leaflet #map [id]="'hike-map'" [layers]="layers" [overlays]="overlays" [center]="center">
     </gc-admin-leaflet>
 </div>
 
 <div class="mt-20">
+  <p-button
+    type="button"
+    icon="fa fa-crosshairs"
+    styleClass="ui-button-primary mr-5"
+    (onClick)="toggleCurrentPositionMarker($event)"
+    [disabled]="!(this.currentLocation$ | async)?.coords"
+    title="Move to current location"
+  ></p-button>
 
-    <p-button
-      type="button"
-      icon="fa fa-crosshairs"
-      styleClass="ui-button-primary mr-5"
-      (onClick)="toggleCurrentPositionMarker($event)"
-      [disabled]="!(this.currentLocation$ | async)?.coords"
-      title="Move to current location"
-    ></p-button>
+  <p-button
+    type="button"
+    icon="fa fa-sync"
+    styleClass="ui-button-primary mr-5"
+    (onClick)="resetMap($event)"
+    title="Reset map"
+  ></p-button>
 
-    <p-button
-      type="button"
-      icon="fa fa-sync"
-      styleClass="ui-button-primary mr-5"
-      (onClick)="resetMap($event)"
-      title="Reset map"
-    ></p-button>
+  <p-button
+    label="Buffer"
+    type="button"
+    styleClass="ui-button-primary mr-5"
+    (onClick)="buffer($event)"
+  ></p-button>
 
-    <p-button
-      label="Buffer"
-      type="button"
-      styleClass="ui-button-primary mr-5"
-      (onClick)="buffer($event)"
-    ></p-button>
-
-    <p-selectButton styleClass="mr-10" [options]="clickModes" [(ngModel)]="mode"></p-selectButton>
+  <p-selectButton styleClass="mr-10" [options]="clickModes" [(ngModel)]="mode"></p-selectButton>
 </div>
 
 <div class="clearfix"></div>

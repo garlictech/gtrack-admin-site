@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from 'app/store';
+import { State } from '../../../store';
 
 import * as L from 'leaflet';
 import { RoutingControlService, RoutePlannerService } from '.';

@@ -108,6 +108,7 @@
         "forms-ngx": "file:./src/subrepos/forms-ngx",
         "geojson-rewind": "^0.3.1",
         "geojson-validation": "^0.2.1",
+        "geojson2svg": "^1.2.3",
         "google-libphonenumber": "^3.1.8",
         "gtrack-common-ngx": "file:src/subrepos/gtrack-common-ngx",
         "intl": "^1.2.5",

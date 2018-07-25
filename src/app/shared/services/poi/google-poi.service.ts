@@ -8,23 +8,27 @@ import {
   GeometryService,
   CenterRadius,
   defaultSharedConfig
-} from 'subrepos/gtrack-common-ngx/index';
+} from 'subrepos/gtrack-common-ngx';
 
-import { IGooglePoi } from 'app/shared/interfaces';
+import { IGooglePoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
 
-const PLACE_API_URL = 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place';
-// const PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
+const PURE_PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
+const PLACE_API_URL = `https://cors-anywhere.herokuapp.com/${PURE_PLACE_API_URL}`;
 
 @Injectable()
 export class GooglePoiService {
   private _hasNextPage$: Subject<boolean> = new Subject<boolean>();
   private _placesService: google.maps.places.PlacesService;
 
-  constructor(private _http: HttpClient, private _geometryService: GeometryService) {}
+  constructor(
+    private _http: HttpClient,
+    private _googleMapsService: GoogleMapsService,
+    private _geometryService: GeometryService
+  ) {}
 
   public get(bounds, lng = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
@@ -73,7 +77,8 @@ export class GooglePoiService {
             objectType: EPoiTypes.google,
             google: {
               id: _point.place_id
-            }
+            },
+            selected: false
           };
 
           _pointData.types = _.map(_point.types, obj => {
@@ -154,21 +159,21 @@ export class GooglePoiService {
                     const _photoInfo: IBackgroundImageData = {
                       title: _photo.html_attributions[0] || '',
                       original: {
-                        url: `${PLACE_API_URL}/photo?maxwidth=${_photo.width}&photoreference=${
+                        url: `${PURE_PLACE_API_URL}/photo?maxwidth=${_photo.width}&photoreference=${
                           _photo.photo_reference
                         }&key=${defaultSharedConfig.googleMaps.key}`,
                         width: _photo.width,
                         height: _photo.height
                       },
                       card: {
-                        url: `${PLACE_API_URL}/photo?maxwidth=${cardWidth}&photoreference=${
+                        url: `${PURE_PLACE_API_URL}/photo?maxwidth=${cardWidth}&photoreference=${
                           _photo.photo_reference
                         }&key=${defaultSharedConfig.googleMaps.key}`,
                         width: cardWidth,
                         height: Math.round((cardWidth * _photo.height) / _photo.width)
                       },
                       thumbnail: {
-                        url: `${PLACE_API_URL}/photo?maxwidth=${thumbnailWidth}&photoreference=${
+                        url: `${PURE_PLACE_API_URL}/photo?maxwidth=${thumbnailWidth}&photoreference=${
                           _photo.photo_reference
                         }&key=${defaultSharedConfig.googleMaps.key}`,
                         width: thumbnailWidth,

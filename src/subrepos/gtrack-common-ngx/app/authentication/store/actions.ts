@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Actions, IAuth } from 'subrepos/authentication-api-ngx';
+import { Actions, IAuth } from '../../../../authentication-api-ngx';
 
 export const TERMS_ACCEPTED = '[Authentication] Terms accepted';
 export const LOGIN_REFUSED = '[Authentication] Login refused as term is not accepted';
@@ -23,6 +23,6 @@ export class SelectRole implements Action {
   }
 }
 
-export * from 'subrepos/authentication-api-ngx/store/actions';
+export * from '../../../../authentication-api-ngx/store/actions';
 
 export type AllActions = TermsAccepted | LoginRefused | SelectRole | Actions.AllActions;

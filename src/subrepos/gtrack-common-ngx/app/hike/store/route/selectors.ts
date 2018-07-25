@@ -6,7 +6,7 @@ import 'rxjs/add/operator/takeUntil';
 import { routeAdapter, routeContextStateAdapter, IRouteState, IRouteContextState } from './state';
 import { EXTERNAL_ROUTE_DEPENDENCIES, IExternalRouteDependencies } from '../../externals';
 import { Dictionary } from '@ngrx/entity/src/models';
-import { IRouteStored } from 'subrepos/provider-client';
+import { IRouteStored } from '../../../../../provider-client';
 
 @Injectable()
 export class RouteSelectors {
