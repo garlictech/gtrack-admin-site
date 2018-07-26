@@ -1,4 +1,7 @@
 import { TransferState } from '@angular/platform-browser';
+import { ConfirmationService } from 'primeng/primeng';
+
+import { CONFIG as LANGUAGE_CONFIG } from 'subrepos/localize-ngx';
 
 import { RoutePlannerService, RoutingControlService } from './shared/services/admin-map';
 import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
@@ -27,11 +30,13 @@ import {
 } from './shared/services';
 
 import { REDUCER_TOKEN, getReducers } from './store';
-import { ConfirmationService } from 'primeng/primeng';
+
+import { config } from './config';
 
 export const APP_PROVIDERS = [
   TransferState,
   { provide: REDUCER_TOKEN, useFactory: getReducers },
+  { provide: LANGUAGE_CONFIG, useValue: config.language },
   ReverseGeocodingService,
   AdminMapService,
   RoutePlannerService,

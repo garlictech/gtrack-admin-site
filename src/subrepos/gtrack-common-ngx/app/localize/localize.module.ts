@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { LocalizeDescriptionPipe } from './pipes/localize-description.pipe';
+import { LocalizeSelectors } from './store';
+import { DescriptionLanguageListService } from './services';
 
 @NgModule({
   imports: [],
@@ -9,6 +11,9 @@ import { LocalizeDescriptionPipe } from './pipes/localize-description.pipe';
   declarations: [
     LocalizeDescriptionPipe
   ],
-  providers: [],
+  providers: [
+    LocalizeSelectors,
+    DescriptionLanguageListService
+  ],
 })
 export class LocalizeModule { }

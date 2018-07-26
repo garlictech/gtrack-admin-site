@@ -1,7 +1,4 @@
-import { CommonState, IAuthenticationState } from 'subrepos/gtrack-common-ngx';
-import { RouterReducerState } from '@ngrx/router-store';
-
-import { ILocalizationState } from '../../language';
+import { IState as CommonState } from 'subrepos/gtrack-common-web/store';
 
 import { IHikeEditRoutePlannerState } from './hike-edit-route-planner';
 import { IHikeEditMapState } from './hike-edit-map';
@@ -18,13 +15,10 @@ export * from './edited-hike-program';
 export * from './edited-gtrack-poi';
 
 export interface State extends CommonState {
-  // authentication: IAuthenticationState;
-  router: RouterReducerState; // ngrx/router
   hikeEditRoutePlanner: IHikeEditRoutePlannerState;
   hikeEditMap: IHikeEditMapState;
   hikeEditPoi: IHikeEditPoiState;
   hikeEditImage: IHikeEditImageState;
-  language: ILocalizationState;
   editedHikeProgram: IEditedHikeProgramState;
   editedGtrackPoi: IEditedGTrackPoiState;
 }

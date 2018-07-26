@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule, DropdownModule, ButtonModule } from 'primeng/primeng';
 
-import { FormModule } from '../../forms';
+import { FormModule } from 'subrepos/gtrack-common-web/forms';
 import { LocalizedDescriptionComponent } from './localized-description';
 import { TableSpinnerComponent } from './table-spinner';
 import { AdminLeafletComponent } from './admin-leaflet';

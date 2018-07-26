@@ -21,3 +21,5 @@ export * from './route';
 export * from './track';
 export * from './checkpoint';
 export * from './state';
+export * from './object-delete';
+export * from './location';

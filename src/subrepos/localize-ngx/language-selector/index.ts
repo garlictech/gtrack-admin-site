@@ -3,9 +3,8 @@ import { LanguageService } from '../language-service';
 import { ILanguageDesc } from '../languages';
 
 @Component({
-  selector: 'pioneer-wst-language-selector',
-  template: '<h1>Language Selector Module - Tb Be Redefined</h1>',
-  styles: ['']
+  selector: 'garlictech-language-selector',
+  template: ''
 })
 export class LanguageSelectorComponent {
   supportedLanguages: ILanguageDesc[];

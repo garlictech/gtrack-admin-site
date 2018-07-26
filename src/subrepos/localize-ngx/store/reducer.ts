@@ -1,4 +1,4 @@
-import { Action, ActionReducer, Store } from '@ngrx/store';
+import { ActionReducer } from '@ngrx/store';
 import { MessageActionTypes, AllActions } from './actions';
 import { ILocalizationState } from './state';
 

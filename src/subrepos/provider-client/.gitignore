@@ -52,3 +52,4 @@ secrets.tgz
 *.sublime-workspace
 .vscode/
 reports
+docker

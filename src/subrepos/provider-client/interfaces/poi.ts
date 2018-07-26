@@ -1,6 +1,7 @@
 import { IProviderInput } from './provider';
 import { ILocalizedItem, ITextualDescription } from './common';
-import { IPublishable, EObjectState } from './state';
+import { IPublishable } from './state';
+import { ILocatable } from './location';
 import { IBackgroundImageData } from './hike-program';
 
 export enum EPoiTypes {
@@ -16,7 +17,8 @@ export interface IPoiArchiveInput extends IProviderInput {
 }
 
 export interface IPoiMergeInput extends IProviderInput {
-  ids: string[]
+  ids: string[],
+  newData: IPoi
 }
 
 export interface IPoiSaveResponse {
@@ -44,7 +46,7 @@ export interface IPoi {
 
 export interface IPoiInput extends IPoi, IProviderInput {}
 
-export interface IPoiStored extends IPoi, IPublishable {
+export interface IPoiStored extends IPoi, IPublishable, ILocatable {
   id: string;
   timestamp: number;
 }

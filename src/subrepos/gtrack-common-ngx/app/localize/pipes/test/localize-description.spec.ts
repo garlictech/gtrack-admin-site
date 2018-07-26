@@ -1,16 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { ChangeDetectorRef } from '@angular/core';
 import { StoreModule, Store } from '@ngrx/store';
-import { reducer, State } from 'app/store';
 // import { Selectors } from 'app/language';
 
 import 'rxjs/add/operator/take';
 
-import * as langaugeActions from 'subrepos/localize-ngx/store/actions';
-
 import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 
 import { LocalizeDescriptionPipe } from '../localize-description.pipe';
+import { DescriptionLanguageListService } from '../../services';
+import { LocalizeSelectors } from '../../store';
+import { Observable } from 'rxjs/Observable';
+
+import * as _ from 'lodash';
 
 describe('LocalizeDescriptionPipe', () => {
 
@@ -36,11 +38,18 @@ describe('LocalizeDescriptionPipe', () => {
     }
   };
 
+  let state = {
+    language: 'en_US'
+  };
+
   let description: ILocalizedItem<ITextualDescription>;
   let pipe: LocalizeDescriptionPipe;
   let ref: FakeChangeDetectorRef;
+  let spy: jasmine.Spy;
 
   beforeEach(() => {
+    state.language = 'en_US';
+
     description = {
       hu_HU: {
         title: 'Magyar cím',
@@ -52,52 +61,34 @@ describe('LocalizeDescriptionPipe', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot(reducer)
+      providers: [
+        DescriptionLanguageListService,
+        {
+          provide: LocalizeSelectors,
+          useValue: {}
+        }
       ]
     });
 
-    const store: Store<State> = TestBed.get(Store);
+    const service: DescriptionLanguageListService = TestBed.get(DescriptionLanguageListService);
+
+    spy = spyOn(service, 'getLocalizedDescription').and.callFake((item: ILocalizedItem<ITextualDescription>) => {
+      const localized = _.get(item, state.language, '');
+
+      return Observable.of(localized);
+    });
+
     ref = new FakeChangeDetectorRef();
-    pipe = new LocalizeDescriptionPipe(store, ref);
+    pipe = new LocalizeDescriptionPipe(ref, service);
   });
 
-  it('should transform the description to the default language', () => {
+  it('should transform the description', () => {
     const transformed = pipe.transform(description);
 
     expect(transformed.title).toEqual('English title');
     expect(transformed.summary).toEqual('');
     expect(transformed.fullDescription).toEqual('');
-  });
-
-  it('should transform the description to the actual language', () => {
-    const store: Store<State> = TestBed.get(Store);
-    store.dispatch(new langaugeActions.LanguageChanged('hu_HU'));
-
-    const transformed = pipe.transform(description);
-    expect(transformed.title).toEqual('Magyar cím');
-    expect(transformed.summary).toEqual('Magyar rövid');
-    expect(transformed.fullDescription).toEqual('');
-  });
-
-  it('should fallback to en_US when the language is not available', () => {
-    const store: Store<State> = TestBed.get(Store);
-    store.dispatch(new langaugeActions.LanguageChanged('de_DE'));
-
-    const transformed = pipe.transform(description);
-
-    expect(transformed.title).toEqual('English title');
-    expect(transformed.summary).toEqual('');
-    expect(transformed.fullDescription).toEqual('');
-  });
-
-  it('should work when no textual description is available', () => {
-    delete description.en_US;
-
-    const transformed = pipe.transform(description);
-    expect(transformed.title).toEqual('');
-    expect(transformed.summary).toEqual('');
-    expect(transformed.fullDescription).toEqual('');
+    expect(spy).toHaveBeenCalled();
   });
 
   it('should call markForChanges when it translates a string', () => {
