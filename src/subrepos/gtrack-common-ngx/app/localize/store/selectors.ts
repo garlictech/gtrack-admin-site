@@ -3,36 +3,35 @@ import { Store, createFeatureSelector, MemoizedSelector, createSelector } from '
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 
-import { User } from 'authentication-api-ngx';
 import { ILocalizationState } from 'subrepos/localize-ngx';
+
+const selectFeature = createFeatureSelector<ILocalizationState>('language');
+
+export const currentLanguage = createSelector(selectFeature, state => _.get(state, 'actualLanguage', null));
+
+export const descriptionLanguageList = createSelector(selectFeature, state =>
+  _.get(state, 'descriptionLanguageList', [])
+);
 
 // The various property selectors. Consider using the reselect package.
 @Injectable()
 export class LocalizeSelectors {
-  public selectFeature: MemoizedSelector<object, ILocalizationState>;
-  public currentLanguage: MemoizedSelector<object, string>;
-  public descriptionLanguageList: MemoizedSelector<object, string[]>;
-
   constructor(private _store: Store<any>) {
-    this.selectFeature = createFeatureSelector<ILocalizationState>('language');
-    this.currentLanguage = createSelector(this.selectFeature, state => _.get(state, 'actualLanguage', null));
-    this.descriptionLanguageList = createSelector(this.selectFeature, state => _.get(state, 'descriptionLanguageList', []));
+    /* EMPTY */
   }
 
   getCurrentLanguage(): Observable<string> {
-    return this._store.select(this.currentLanguage);
+    return this._store.select(currentLanguage);
   }
 
   getDescriptionLanguageList(): Observable<string[]> {
-    return this._store.select(this.descriptionLanguageList);
+    return this._store.select(descriptionLanguageList);
   }
 
-  getLanguageSettings(): Observable<ILocalizationState>  {
-    return this._store
-      .select(this.selectFeature)
-      .map(state => ({
-        actualLanguage: _.get(state, 'language', 'en_US'),
-        descriptionLanguageList: _.get(state, 'descriptionLanguageList', [])
-      }));
+  getLanguageSettings(): Observable<ILocalizationState> {
+    return this._store.select(selectFeature).map(state => ({
+      actualLanguage: _.get(state, 'language', 'en_US'),
+      descriptionLanguageList: _.get(state, 'descriptionLanguageList', [])
+    }));
   }
 }

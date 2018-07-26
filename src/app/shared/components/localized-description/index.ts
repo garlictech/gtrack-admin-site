@@ -12,7 +12,7 @@ import { Observable, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
 import { ITextualDescription, ILocalizedItem } from 'subrepos/provider-client';
-import { TextboxField, TextareaField } from '../../../forms';
+import { TextboxField, TextareaField } from 'subrepos/gtrack-common-web/forms';
 
 import { State } from '../../../store';
 import { DESCRIPTION_LANGUAGES, LanguageService } from '../../services';
@@ -57,7 +57,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
         this.languageFormDescriptors = {};
         this.languageFormDataPaths = {};
 
-        for (const key of langKeys) {
+        for (const key of langKeys) {
           this.languageFormDescriptors[key] = this._getLanguageFormDescriptor(key);
           this.languageFormDataPaths[key] = this._getLanguageFormDataPath(key);
         }

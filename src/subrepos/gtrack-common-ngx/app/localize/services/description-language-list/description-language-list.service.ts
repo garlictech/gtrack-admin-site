@@ -7,37 +7,32 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class DescriptionLanguageListService {
-
   private _fallbackLanguage = 'en_US';
 
-  constructor(
-    private _selectors: LocalizeSelectors
-  ) {}
+  constructor(private _selectors: LocalizeSelectors) {}
 
   public getLocalizedDescription(item: ILocalizedItem<ITextualDescription>): Observable<ITextualDescription> {
-    return this._selectors
-      .getLanguageSettings()
-      .map(settings => {
-        let list = [
-          ...settings.descriptionLanguageList,
-          settings.actualLanguage
-        ];
+    return this._selectors.getLanguageSettings().map(settings => {
+      let list = [
+        // ...settings.descriptionLanguageList,
+        settings.actualLanguage
+      ];
 
-        const firstLanguage = Object.keys(item)[0];
+      const firstLanguage = Object.keys(item)[0];
 
-        if (firstLanguage) {
-          list.push(firstLanguage);
-        }
+      if (firstLanguage) {
+        list.push(firstLanguage);
+      }
 
-        list.push(this._fallbackLanguage);
+      list.push(this._fallbackLanguage);
 
-        const preferredLanguage = list.find(language => (typeof item[language] !== 'undefined'));
+      const preferredLanguage = list.find(language => typeof item[language] !== 'undefined');
 
-        const preferredItem = _.get(item, preferredLanguage, {
-          title: ''
-        })
-
-        return preferredItem;
+      const preferredItem = _.get(item, preferredLanguage, {
+        title: ''
       });
+
+      return preferredItem;
+    });
   }
 }

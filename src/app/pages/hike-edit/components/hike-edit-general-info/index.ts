@@ -7,7 +7,7 @@ import { State, editedHikeProgramActions } from '../../../../store';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
 import { ConfirmationService } from 'primeng/primeng';
 import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
-import { IFormDescriptor, SliderField } from '../../../../forms';
+import { IFormDescriptor, SliderField } from 'subrepos/gtrack-common-web/forms';
 
 @Component({
   selector: 'gt-hike-edit-general-info',
