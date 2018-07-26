@@ -1,0 +1,7 @@
+{
+    "generator-garlic-webapp": {
+        "appname": "gtrack common web",
+        "scope": "garlictech",
+        "projectType": "site"
+    }
+}

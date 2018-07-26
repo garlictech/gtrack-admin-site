@@ -1,3 +1,5 @@
+import { InjectionToken } from '@angular/core';
+
 export interface ILocalizeConfig {
   defaultLanguage: string;
   supportedLanguages: string[];
@@ -5,5 +7,7 @@ export interface ILocalizeConfig {
 
 export const defaultLocalizeConfig: ILocalizeConfig = {
   defaultLanguage: 'en_US',
-  supportedLanguages: ['en_US', 'de_DE', 'fr_FR', 'es_ES', 'ru_RU', 'pt_PT', 'ro_RO']
+  supportedLanguages: ['en_US']
 };
+
+export const CONFIG = new InjectionToken<ILocalizeConfig>('Config');

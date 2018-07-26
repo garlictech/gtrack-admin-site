@@ -8,7 +8,6 @@ exports.myConstants = {
         "d3",
         "d3-geo",
         "flat",
-        "@fortawesome/fontawesome-free-webfonts",
         "geojson-rewind",
         "geojson-validation",
         "intl",

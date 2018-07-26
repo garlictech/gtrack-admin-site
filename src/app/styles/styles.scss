@@ -1,8 +1,4 @@
 @import 'base/variables';
-@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-brands';
-@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-solid';
-@import '~@fortawesome/fontawesome-free-webfonts/scss/fa-regular';
-@import '~@fortawesome/fontawesome-free-webfonts/scss/fontawesome';
 @import '~primeicons/primeicons.css';
 @import '~primeng/resources/primeng.css';
 @import 'layout/layout';
@@ -12,162 +8,28 @@
 @import '~leaflet-usermarker/src/leaflet.usermarker.css';
 @import '~angular2-toaster/src/toaster';
 @import '~nouislider/distribute/nouislider.css';
-// @import 'link';
 @import 'mixins';
 @import 'defaults';
 @import 'utilities';
 @import 'components';
 a {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .routing-control-marker {
-  background-image: url('/assets/img/marker-icon.png') !important;
-  background-color: transparent;
-  border: 0;
-  text-align: center;
-  span {
-    position: relative;
-    top: -30px;
-    color: white;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-      1px 1px 0 #000;
-    font-size: 20px;
-  }
+    background-image: url('/assets/img/marker-icon.png') !important;
+    background-color: transparent;
+    border: 0;
+    text-align: center;
+    span {
+        position: relative;
+        top: -30px;
+        color: white;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        font-size: 20px;
+    }
 }
 
 .leaflet-routing-container {
-  display: none !important;
-}
-
-// input,
-// select,
-// textarea {
-//     font-weight: 300 !important;
-// }
-
-/*
-table.table {
-  td {
-    padding: 4px 8px !important;
-    .btn-control > button {
-      padding: 6px !important;
-      margin-left: 10px;
-    }
-  }
-}
-*/
-
-/*
-.hidden {
-    display: none;
-}
-
-.btn .material-icons {
-    vertical-align: middle;
-    font-size: 17px;
-    top: -1px;
-    position: relative;
-}
-
-button.btn-just-icon.btn-sm {
-    padding: 5px !important;
-}
-
-.clearfix {
-    &::after {
-        display: block;
-        content: '';
-        clear: both;
-    }
-}
-
-.main-spinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-}
-
-.td-actions {
-    white-space: nowrap;
-    text-align: right;
-    button {
-        padding: 0 4px !important;
-    }
-}
-
-
-
-
-table.table-images {
-    td:first-child {
-        width: 200px;
-    }
-    td:last-child {
-        width: 60px;
-        text-align: left;
-    }
-}
-
-img.thumbs {
-    width: 160px;
-    border: 0;
-}
-
-
-
-
-.card .card-header {
-    padding: 15px 15px 0 !important;
-}
-
-.card .card-body {
-    padding: 15px 15px 10px 15px;
-}
-
-.table {
-    margin: 0 auto;
-    tbody tr td {
-        border-top: 1px solid #dee2e6;
-    }
-}
-
-.form-check {
-    margin-top: 0 !important;
-}
-
-
-
-
-.collapsing {
-    -webkit-transition: none !important;
-    -moz-transition: none !important;
-    -o-transition: none !important;
-    -ms-transition: none !important;
-    transition: none !important;
     display: none !important;
 }
-
-.form-check .form-check-sign::before,
-.form-check .form-check-sign::after {
-    -webkit-transition: none !important;
-    -moz-transition: none !important;
-    -o-transition: none !important;
-    -ms-transition: none !important;
-    transition: none !important;
-}
-
-div,
-p,
-span,
-input,
-form {
-    -webkit-transition: none !important;
-    -moz-transition: none !important;
-    -o-transition: none !important;
-    -ms-transition: none !important;
-    transition: none !important;
-}
-*/

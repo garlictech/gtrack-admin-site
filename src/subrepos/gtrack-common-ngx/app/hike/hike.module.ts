@@ -1,13 +1,13 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EffectsModule } from '@ngrx/effects';
 
-import { HikeProgramService, HikeProgram } from './services/hike-program';
-import { RouteService, Route } from './services/route';
-import { PoiService, Poi } from './services/poi';
-import { ISegment } from './services/segment';
-import { CheckpointService, Checkpoint, CheckpointSequence } from './services/checkpoint';
+import { HikeProgramService } from './services/hike-program';
+import { RouteService } from './services/route';
+import { PoiService } from './services/poi';
+import { CheckpointService } from './services/checkpoint';
 import { GameRuleService } from './services/game-rule';
-import { GeometryService, CenterRadius } from './services/geometry';
+import { GeometryService } from './services/geometry';
 import { ElevationService } from './services/elevation';
 import { SearchFiltersModule } from '../search-filters';
 import { GeoSearchModule } from '../geosearch';
@@ -21,7 +21,14 @@ import { MapModule } from '../map';
 import { IHikeModuleConfig } from './config';
 
 @NgModule({
-  imports: [CommonModule, SharedModule, MapModule, SearchFiltersModule, GeoSearchModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    MapModule,
+    SearchFiltersModule,
+    GeoSearchModule,
+    EffectsModule.forFeature([HikeEffects, PoiEffects, RouteEffects])
+  ],
   providers: [
     HikeProgramService,
     RouteService,
