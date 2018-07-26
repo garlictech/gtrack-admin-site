@@ -1,7 +1,9 @@
 <div class="ui-g ui-fluid search-group">
   <div class="ui-g-12 ui-md-4 p-0">
       <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+          <span class="ui-inputgroup-addon">
+            <fa-icon [icon]="faSearch"></fa-icon>
+          </span>
           <input type="text" class="search-input" pInputText placeholder="Search" autocorrect="off" autocapitalize="off" spellcheck="off" #search>
           <button
             pButton
@@ -23,7 +25,7 @@
 <div class="mt-20">
   <p-button
     type="button"
-    icon="fa fa-crosshairs"
+    icon="pi pi-home"
     styleClass="ui-button-primary mr-5"
     (onClick)="toggleCurrentPositionMarker($event)"
     [disabled]="!(this.currentLocation$ | async)?.coords"
@@ -32,7 +34,7 @@
 
   <p-button
     type="button"
-    icon="fa fa-sync"
+    icon="pi pi-refresh"
     styleClass="ui-button-primary mr-5"
     (onClick)="resetMap($event)"
     title="Reset map"

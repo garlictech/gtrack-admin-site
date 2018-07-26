@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule, DropdownModule, ButtonModule } from 'primeng/primeng';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormModule } from 'subrepos/gtrack-common-web/forms';
 import { LocalizedDescriptionComponent } from './localized-description';
 import { TableSpinnerComponent } from './table-spinner';
@@ -13,6 +13,7 @@ import { AdminLeafletComponent } from './admin-leaflet';
     CommonModule,
     FormModule,
     FormsModule,
+    FontAwesomeModule,
     // PrimeNG
     DropdownModule,
     AccordionModule,
