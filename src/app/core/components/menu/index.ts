@@ -7,7 +7,8 @@ import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 
 @Component({
   selector: 'app-menu',
-  templateUrl: './ui.html'
+  templateUrl: './ui.html',
+  styles: ['.layout-sidebar { z-index: 99999999999; }']
 })
 export class MenuComponent implements OnInit, AfterViewInit {
   @ViewChild('scrollPanel') layoutMenuScrollerViewChild: ScrollPanel;

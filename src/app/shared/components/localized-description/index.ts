@@ -32,6 +32,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   @Input() submitFv: (langKey: string, data) => void;
   @Input() deleteFv: (langKey: string) => void;
   @Input() storeDataPath?: string;
+  @Input() type?: string;
 
   public descriptions$: Observable<ILocalizedItem<ITextualDescription>>;
   public languageKeys$: Observable<string[]>;
@@ -45,7 +46,10 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
 
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private _store: Store<State>, private _changeDetectorRef: ChangeDetectorRef) {}
+  constructor(
+    private _store: Store<State>,
+    private _changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.languageKeys$ = this._store
@@ -67,13 +71,13 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   }
 
   ngAfterViewInit() {
-    this._changeDetectorRef.detectChanges();
-
     this.selectableLanguages$ = this.languageKeys$.takeUntil(this._destroy$).map(usedKeys =>
       DESCRIPTION_LANGUAGES.filter(lang => usedKeys.indexOf(lang.locale) === -1).map(lang => {
         return { label: lang.name, value: lang.locale };
       })
     );
+
+    this._changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy() {
@@ -110,7 +114,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   public addTranslation() {
     if (this.selectedLanguage) {
       this.submitFv(this.selectedLanguage.value, {
-        title: 'A new hike',
+        title: `A new ${this.type}`,
         fullDescription: '',
         summary: ''
       });

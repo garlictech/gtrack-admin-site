@@ -11,7 +11,8 @@
       <tr>
         <td>
           <a href="{{image.original.url}}" target="_blank">
-            <img class="thumbs" src="{{image.thumbnail.url}}">
+            <img *ngIf="image.source.type === 'wikipedia'" class="thumbs" src="{{image.original.url}}">
+            <img *ngIf="image.source.type !== 'wikipedia'" class="thumbs" src="{{image.thumbnail.url}}">
           </a>
         </td>
         <td [innerHTML]="image.title | trustedHtml"></td>
