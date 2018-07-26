@@ -13,8 +13,8 @@ import { SliderModule } from 'primeng/slider';
 import { FormModule as NativeFormModule } from 'subrepos/forms-ngx';
 
 import { LanguageModule } from '../language';
-import { GenericComponentsModule } from '../generic-components';
 
+import { GenericComponentsModule } from '../components';
 import { DatePickerComponent } from './date-picker';
 import { MultiSelectComponent } from './multi-select';
 import { RadioSelectComponent } from './radio-select';

@@ -2,6 +2,7 @@ import { IPoi } from './poi';
 import { IProviderInput } from './provider';
 import { ILocalizedItem, ITextualDescription } from './common';
 import { IPublishable } from './state';
+import { ILocatable } from '.';
 
 export interface IHikeProgramSaveResponse {
   id: string;
@@ -81,7 +82,7 @@ export interface IHikeProgram {
 
 export interface IHikeProgramInput extends IHikeProgram, IProviderInput {}
 
-export interface IHikeProgramStored extends IHikeProgram, IPublishable {
+export interface IHikeProgramStored extends IHikeProgram, IPublishable, ILocatable {
   id: string;
   timestamp: number;
 }

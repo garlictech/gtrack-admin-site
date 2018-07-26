@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormModule } from '../../forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 // PrimeNG
 import {
   ButtonModule,
@@ -13,7 +14,10 @@ import {
   DialogModule
 } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
+
 // Components
+import { FormModule, LanguageModule } from 'subrepos/gtrack-common-web';
+
 import { HikeEditComponent } from './hike-edit.component';
 import {
   HikeEditGeneralInfoComponent,
@@ -42,18 +46,11 @@ import {
 // Shared components
 import { PoiMergeService } from '../../shared/services';
 // gTrack common
-import {
-  MapModule,
-  HikeModule,
-  SharedModule
-} from 'subrepos/gtrack-common-ngx';
+import { MapModule, HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 // Lib
 import { TagInputModule } from 'ngx-chips';
-import {
-  SharedComponentsModule
-} from '../../shared/components';
-import { LanguageModule } from '../../language';
+import { SharedComponentsModule } from '../../shared/components';
 import { PipesModule } from '../../shared/pipes/pipes.module';
 
 const COMPONENTS = [
@@ -88,13 +85,14 @@ const COMPONENTS = [
     RouterModule,
     FormsModule,
     FormModule,
+    LanguageModule,
     ReactiveFormsModule,
     MapModule,
     HikeModule,
     SharedModule,
     TagInputModule,
     SharedComponentsModule,
-    LanguageModule,
+    FontAwesomeModule,
     // PrimeNG
     ButtonModule,
     CardModule,

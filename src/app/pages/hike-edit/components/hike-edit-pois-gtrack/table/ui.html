@@ -24,14 +24,14 @@
         <td class="text-center">
           <p-button
             *ngIf="!poi.inHike"
-            icon="fa fa-plus"
+            icon="pi pi-plus"
             styleClass="ui-button-success"
             (onClick)="addPoi($event, poi)"
             title="Add to hike"
           ></p-button>
 
           <p-button
-            icon="fa fa-pencil-alt"
+            icon="pi pi-pencil"
             styleClass="ui-button-warning ml-5"
             (onClick)="openGTrackPoiModal(poi)"
           ></p-button>

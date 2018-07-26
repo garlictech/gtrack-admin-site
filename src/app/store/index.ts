@@ -1,10 +1,6 @@
-import { storeLogger } from 'ngrx-store-logger';
-import { routerReducer } from '@ngrx/router-store';
-import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store/src/models';
-import { storeFreeze } from 'ngrx-store-freeze';
+import { ActionReducerMap } from '@ngrx/store/src/models';
 
-import { commonReducers } from 'subrepos/gtrack-common-ngx';
-import { Reducer as LanguageReducer } from '../language';
+import { reducer as commonReducers, metaReducers } from 'subrepos/gtrack-common-web/store';
 
 /////////////
 // Actions
@@ -81,40 +77,18 @@ import { editedGTrackPoiReducer } from './reducer/edited-gtrack-poi';
 //////////////
 
 import { State } from './state';
-import { LOGOUT_SUCCESS } from 'subrepos/authentication-api-ngx/store/actions';
 import { InjectionToken } from '@angular/core';
 
 // Same keys as in the state!!!
 export const reducer: ActionReducerMap<State> = {
   ...commonReducers,
-  router: routerReducer,
   hikeEditRoutePlanner: hikeEditRoutePlannerReducer,
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditImage: hikeEditImageReducer,
   hikeEditMap: hikeEditMapReducer,
-  language: LanguageReducer,
   editedHikeProgram: editedHikeProgramReducer,
   editedGtrackPoi: editedGTrackPoiReducer
 };
-
-// Clear the store at logout
-export function logout(_reducer) {
-  return function(state, action) {
-    return _reducer(action.type === LOGOUT_SUCCESS ? undefined : state, action);
-  };
-}
-
-export function logger(_reducer: ActionReducer<State>): any {
-  return storeLogger()(_reducer);
-}
-
-let metaReducers = [logger, logout];
-
-if (process.env.ENV !== 'production') {
-  metaReducers.push(storeFreeze);
-}
-
-export { metaReducers };
 
 export const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<State>>('Registered Reducers');
 
@@ -123,3 +97,4 @@ export function getReducers() {
 }
 
 export * from './state';
+export { metaReducers };

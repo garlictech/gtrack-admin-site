@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 import * as filterActions from '../../../search-filters/store/actions';
 

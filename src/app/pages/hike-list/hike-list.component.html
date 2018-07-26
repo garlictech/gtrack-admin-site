@@ -54,20 +54,19 @@
               </td>
               <td class="text-center">
                 <p-button
-                  icon="fa fa-pencil-alt"
+                  icon="pi pi-pencil"
                   routerLink="/admin/hike/{{hike.id}}"
                   styleClass="ui-button-warning"
                   title="Edit hike"
                 ></p-button>
 
                 <p-button
-                  icon="fa fa-trash-alt"
+                  icon="pi pi-trash"
                   styleClass="ui-button-danger ml-5"
                   (click)="deleteHike(hike.id)"
                   title="Delete hike"
                   *ngIf="hike.state === EObjectState.draft && !hike.published"
                 ></p-button>
-
               </td>
             </tr>
           </ng-template>

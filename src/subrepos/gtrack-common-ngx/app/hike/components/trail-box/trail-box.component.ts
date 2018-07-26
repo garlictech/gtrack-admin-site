@@ -5,12 +5,13 @@ import {
   EventEmitter,
   ViewChild,
   AfterViewInit,
-  ViewEncapsulation,
   OnInit,
   OnDestroy,
   OnChanges,
   SimpleChanges
 } from '@angular/core';
+
+import { faCrosshairs, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
@@ -44,6 +45,9 @@ import { IPoi } from '../../../../../provider-client';
   styleUrls: ['./trail-box.component.scss']
 })
 export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+  faCrosshairs = faCrosshairs;
+  faSyncAlt = faSyncAlt;
+
   public layers = [
     {
       name: 'street',
@@ -65,23 +69,17 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
   @Input() public hikeProgram: HikeProgram;
 
-  @Output()
-  public elevationLineOver = new EventEmitter<void>();
+  @Output() public elevationLineOver = new EventEmitter<void>();
 
-  @Output()
-  public elevationLineMove = new EventEmitter<GeoJSON.Position>();
+  @Output() public elevationLineMove = new EventEmitter<GeoJSON.Position>();
 
-  @Output()
-  public elevationLineOut = new EventEmitter<void>();
+  @Output() public elevationLineOut = new EventEmitter<void>();
 
-  @Output()
-  public elevationLineClick = new EventEmitter<GeoJSON.Position>();
+  @Output() public elevationLineClick = new EventEmitter<GeoJSON.Position>();
 
-  @Input()
-  public elevationMarkerPosition: GeoJSON.Position = [0, 0];
+  @Input() public elevationMarkerPosition: GeoJSON.Position = [0, 0];
 
-  @Input()
-  public elevationMarkerVisible = false;
+  @Input() public elevationMarkerVisible = false;
 
   @ViewChild('map') public map: LeafletComponent;
 
@@ -107,9 +105,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
   ) {}
 
   ngOnInit() {
-    let pois = this.hikeProgram.stops
-      .filter(stop => !/^endpoint/.test(stop.poiId))
-      .map(stop => stop.poiId);
+    let pois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
 
     let route = this.hikeProgram.routeId;
 
@@ -214,20 +210,23 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
     map.checkpointMarker.addCheckpointMarkers(this.hikeProgram.checkpoints.checkpoints);
     map.pointMarker.addMarkersToMap();
 
-    this._runningElevationPointMarker = new L.Marker([this.elevationMarkerPosition[1], this.elevationMarkerPosition[0]], {
-      opacity: 0,
-      zIndexOffset: 1000,
-      icon: new L.Icon({
-        iconUrl: require('leaflet/dist/images/marker-icon.png'),
-        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-        shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-        iconSize: [25, 41],
-        shadowSize: [41, 41],
-        iconAnchor:  [12, 41],
-        popupAnchor: [1, -34],
-        tooltipAnchor: [16, -28],
-      })
-    });
+    this._runningElevationPointMarker = new L.Marker(
+      [this.elevationMarkerPosition[1], this.elevationMarkerPosition[0]],
+      {
+        opacity: 0,
+        zIndexOffset: 1000,
+        icon: new L.Icon({
+          iconUrl: require('leaflet/dist/images/marker-icon.png'),
+          iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+          shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+          iconSize: [25, 41],
+          shadowSize: [41, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          tooltipAnchor: [16, -28]
+        })
+      }
+    );
 
     this._runningElevationPointMarker.addTo(this.map.leafletMap);
     this._showElavationPointMarker(this.elevationMarkerVisible);
@@ -309,7 +308,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
   }
 
   protected _showElavationPointMarker(show = true) {
-    const opacity = (show === true) ? 1 : 0;
+    const opacity = show === true ? 1 : 0;
 
     if (this._runningElevationPointMarker) {
       this._runningElevationPointMarker.setOpacity(opacity);

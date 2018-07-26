@@ -20,6 +20,7 @@ export const selectUser = createSelector(selectAuth, (state: IAuth) => _.get(sta
 
 export const selectRole = createSelector(selectUser, (user: User) => _.get(user, 'roles[0]'));
 export const selectUserId = createSelector(selectUser, (user: User) => _.get(user, 'id'));
+export const loggedOut = createSelector(selectUser, user => !user);
 
 @Injectable()
 export class Selectors {
@@ -54,7 +55,7 @@ export class Selectors {
       (jwtLoggingIn, dsState) => jwtLoggingIn || dsState
     );
 
-    this.loggedOut = createSelector(this.user, user => !user);
+    this.loggedOut = loggedOut;
 
     this.token = createSelector(selectAuth, state => _.get(state, 'token'));
 

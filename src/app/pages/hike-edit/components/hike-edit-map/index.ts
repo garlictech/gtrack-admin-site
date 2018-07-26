@@ -10,6 +10,7 @@ import {
 import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
 import { WaypointMarkerService } from '../../../../shared/services/admin-map';
 import { SelectItem } from 'primeng/primeng';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import * as L from 'leaflet';
 import { LeafletMouseEvent } from 'leaflet';
@@ -52,6 +53,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public currentLocation$: Observable<IGeoPosition | null>;
   public clickModes: SelectItem[] = [];
   public locationSearchResult: google.maps.places.PlaceResult;
+  public faSearch = faSearch;
   private _bufferShown = false;
   private _bufferOnMap: L.GeoJSON;
   private _destroy$: Subject<boolean> = new Subject<boolean>();

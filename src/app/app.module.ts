@@ -1,8 +1,7 @@
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import * as Raven from 'raven-js';
 
 // App
 import { AppComponent } from './app.component';
@@ -16,21 +15,7 @@ import { APP_PROVIDERS } from './app.providers';
 import { AppRoutingModule } from './app-routing.module';
 import { ConfirmDialogModule } from 'primeng/primeng';
 
-if (process.env.ENV !== 'development') {
-  Raven.config(environment.raven).install();
-}
-
 console.log('ENVIRONMENT: ', process.env, environment);
-
-export class RavenErrorHandler implements ErrorHandler {
-  handleError(err: any): void {
-    console.error(err);
-
-    if (process.env.ENV !== 'development') {
-      Raven.captureException(err);
-    }
-  }
-}
 
 @NgModule({
   declarations: [AppComponent, APP_DECLARATIONS],
@@ -42,7 +27,7 @@ export class RavenErrorHandler implements ErrorHandler {
     AppRoutingModule,
     ConfirmDialogModule
   ],
-  providers: [...APP_PROVIDERS, { provide: ErrorHandler, useClass: RavenErrorHandler }],
+  providers: [...APP_PROVIDERS],
   bootstrap: [AppComponent],
   entryComponents: [APP_ENTRY_COMPONENTS]
 })
