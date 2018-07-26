@@ -83,7 +83,6 @@
     "@angular/platform-browser-dynamic": "6.0.6",
     "@angular/platform-server": "^6.0.6",
     "@angular/router": "6.0.6",
-    "@fortawesome/fontawesome-free-webfonts": "^1.0.5",
     "@garlictech/deepstream-rxjs": "1.7.0",
     "@garlictech/gtrack-provider-client": "file:src/subrepos/provider-client",
     "@mapbox/corslite": "0.0.7",
