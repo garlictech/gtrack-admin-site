@@ -40,7 +40,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
   }
 
   public handlePoiSelection(poi) {
-    this._store.dispatch(new hikeEditPoiActions.SetCollectorPoiSelected(poi.id, !poi.selected));
+    this._store.dispatch(new hikeEditPoiActions.SetCollectorPoiSelected(poi.id));
   }
 
   public toggleMergeSelection(poiId: string) {
