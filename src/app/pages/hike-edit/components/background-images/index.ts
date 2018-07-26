@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IBackgroundImageData } from 'subrepos/provider-client';
 import { ConfirmationService } from 'primeng/primeng';
-import { editedHikeProgramActions, State } from '../../../../store';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'gt-background-images',
@@ -14,12 +12,10 @@ export class BackgroundImagesComponent {
   @Input() clickActions: any;
 
   constructor(
-    private _store: Store<State>,
     private _confirmationService: ConfirmationService
   ) {}
 
   public deleteImage(url: string) {
-
     this._confirmationService.confirm({
       message: 'Are you sure that you want to delete?',
       accept: () => {
