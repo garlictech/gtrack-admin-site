@@ -5,6 +5,7 @@ import { NouisliderModule } from 'ng2-nouislider';
 import { TranslateModule } from '@ngx-translate/core';
 import { StoreModule } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { TrailBoxComponent } from './trail-box';
 import { HikeCardComponent } from './hike-card';
@@ -53,7 +54,8 @@ const COMPONENTS = [
     TranslateModule,
     StoreModule,
     LocalizeModule,
-    ButtonModule
+    ButtonModule,
+    FontAwesomeModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS]
