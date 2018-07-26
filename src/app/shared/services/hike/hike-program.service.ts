@@ -118,7 +118,12 @@ export class HikeProgramService {
   public createElevationIcon(_route: Route) {
     const _iconWidth = 54;
     const _iconHeight = 20;
-    const _elevationData = this._routeService.elevationData(_route, _iconWidth, _iconHeight);
+    const _elevationData = this._routeService.elevationData(_route, _iconWidth, _iconHeight, {
+      top: 2,
+      left: 2,
+      right: 2,
+      bottom: 2
+    });
 
     if (_elevationData) {
       const _div: HTMLDivElement = document.createElement('div');
@@ -166,7 +171,7 @@ export class HikeProgramService {
       });
 
       const _svgString = _converter.convert(_route.path);
-      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${_iconWidth} ${_iconHeight}">${_svgString}</svg>`;
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-2 -2 ${_iconWidth + 2} ${_iconHeight + 2}">${_svgString}</svg>`;
     } else {
       return '';
     }
