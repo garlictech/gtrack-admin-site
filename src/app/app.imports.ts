@@ -1,6 +1,7 @@
 import { StoreModule } from '@ngrx/store';
 import { ToasterModule } from 'angular2-toaster';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as _ from 'lodash';
 
 import { environment } from 'environments/environment';
@@ -60,6 +61,9 @@ export function getConfig() {
 export const APP_IMPORTS = [
   StoreModule.forRoot(REDUCER_TOKEN, {
     metaReducers
+  }),
+  StoreDevtoolsModule.instrument({
+    maxAge: 25
   }),
   DeepstreamModule.forRoot(),
   AuthenticationApiModule.forRoot(getConfig),
