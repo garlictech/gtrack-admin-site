@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  garlictech.gtrack-admin-site.e2e-tester:
+  gtrack-admin-site.e2e-tester:
     build:
       context: "../e2e"
     volumes:
