@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ChangeDetectorRef } from '@angular/core';
 import { StoreModule, Store } from '@ngrx/store';
-// import { Selectors } from 'app/language';
+// import { Selectors } from 'subrepos/gtrack-common-web/language';
 
 import 'rxjs/add/operator/take';
 
