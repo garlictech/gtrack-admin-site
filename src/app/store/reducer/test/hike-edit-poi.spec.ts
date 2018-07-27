@@ -127,7 +127,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetGooglePoiSelected action', () => {
     it('should set google poi selected to true', () => {
-      const action = new hikeEditPoiActions.SetGooglePoiSelected('1', true);
+      const action = new hikeEditPoiActions.SetGooglePoiSelected('1');
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         googlePois: {
           ids: ['1', '2'],
@@ -139,7 +139,9 @@ describe('HikeEditPoi reducers', () => {
     });
 
     it('should set google poi selected to false', () => {
-      const action = new hikeEditPoiActions.SetGooglePoiSelected('1', false);
+      const action = new hikeEditPoiActions.SetGooglePoiSelected('1');
+      entities['1'].selected = true;
+      entities['2'].selected = true;
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         googlePois: {
           ids: ['1', '2'],
@@ -194,7 +196,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetOsmAmenityPoiSelected action', () => {
     it('should set osmAmenity poi selected to true', () => {
-      const action = new hikeEditPoiActions.SetOsmAmenityPoiSelected('1', true);
+      const action = new hikeEditPoiActions.SetOsmAmenityPoiSelected('1');
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmAmenityPois: {
           ids: ['1', '2'],
@@ -206,7 +208,9 @@ describe('HikeEditPoi reducers', () => {
     });
 
     it('should set osmAmenity poi selected to false', () => {
-      const action = new hikeEditPoiActions.SetOsmAmenityPoiSelected('1', false);
+      const action = new hikeEditPoiActions.SetOsmAmenityPoiSelected('1');
+      entities['1'].selected = true;
+      entities['2'].selected = true;
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmAmenityPois: {
           ids: ['1', '2'],
@@ -261,7 +265,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetOsmNaturalPoiSelected action', () => {
     it('should set osmNatural poi selected to true', () => {
-      const action = new hikeEditPoiActions.SetOsmNaturalPoiSelected('1', true);
+      const action = new hikeEditPoiActions.SetOsmNaturalPoiSelected('1');
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmNaturalPois: {
           ids: ['1', '2'],
@@ -273,7 +277,9 @@ describe('HikeEditPoi reducers', () => {
     });
 
     it('should set osmNatural poi selected to false', () => {
-      const action = new hikeEditPoiActions.SetOsmNaturalPoiSelected('1', false);
+      const action = new hikeEditPoiActions.SetOsmNaturalPoiSelected('1');
+      entities['1'].selected = true;
+      entities['2'].selected = true;
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmNaturalPois: {
           ids: ['1', '2'],
@@ -328,7 +334,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetOsmRoutePoiSelected action', () => {
     it('should set osmRoute poi selected to true', () => {
-      const action = new hikeEditPoiActions.SetOsmRoutePoiSelected('1', true)
+      const action = new hikeEditPoiActions.SetOsmRoutePoiSelected('1')
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmRoutePois: {
           ids: ['1', '2'],
@@ -340,7 +346,9 @@ describe('HikeEditPoi reducers', () => {
     });
 
     it('should set osmRoute poi selected to false', () => {
-      const action = new hikeEditPoiActions.SetOsmRoutePoiSelected('1', false);
+      const action = new hikeEditPoiActions.SetOsmRoutePoiSelected('1');
+      entities['1'].selected = true;
+      entities['2'].selected = true;
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         osmRoutePois: {
           ids: ['1', '2'],
@@ -395,7 +403,7 @@ describe('HikeEditPoi reducers', () => {
 
   describe('SetWikipediaPoiSelected action', () => {
     it('should set wikipedia poi selected to true', () => {
-      const action = new hikeEditPoiActions.SetWikipediaPoiSelected('1', true);
+      const action = new hikeEditPoiActions.SetWikipediaPoiSelected('1');
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         wikipediaPois: {
           ids: ['1', '2'],
@@ -407,7 +415,9 @@ describe('HikeEditPoi reducers', () => {
     });
 
     it('should set wikipedia poi selected to false', () => {
-      const action = new hikeEditPoiActions.SetWikipediaPoiSelected('1', false);
+      const action = new hikeEditPoiActions.SetWikipediaPoiSelected('1');
+      entities['1'].selected = true;
+      entities['2'].selected = true;
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
         wikipediaPois: {
           ids: ['1', '2'],

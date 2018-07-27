@@ -8,6 +8,7 @@ import { FooterComponent } from './components/footer';
 import { SubMenuComponent } from './components/sub-menu';
 import { PageNotFoundComponent } from './components/page-not-found';
 import { ScrollPanelModule, CardModule } from 'primeng/primeng';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const COMPONENTS = [
   PageNotFoundComponent,
@@ -28,6 +29,7 @@ const COMPONENTS = [
   imports: [
     CommonModule,
     RouterModule,
+    FontAwesomeModule,
     // PrimeNG
     ScrollPanelModule,
     CardModule
