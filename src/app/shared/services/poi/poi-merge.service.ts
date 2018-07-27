@@ -24,7 +24,7 @@ export class PoiMergeService {
       }
 
       commonTypes = commonTypes.concat(poi.types.filter(t => ['unknown', 'undefined'].indexOf(t) < 0));
-      objectTypes = objectTypes.concat(poi.objectType);
+      objectTypes = _.uniq(objectTypes.concat(poi.objectType));
     }
 
     // Remove duplicated values and empty objects

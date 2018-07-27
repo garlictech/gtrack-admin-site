@@ -23,19 +23,19 @@ export class HikeEditPoisExternalTableComponent {
   public handlePoiSelection(poi) {
     switch (this.subdomain) {
       case EPoiTypes.google:
-        this._store.dispatch(new hikeEditPoiActions.SetGooglePoiSelected(poi.id, !poi.selected));
+        this._store.dispatch(new hikeEditPoiActions.SetGooglePoiSelected(poi.id));
         break;
       case EPoiTypes.wikipedia:
-        this._store.dispatch(new hikeEditPoiActions.SetWikipediaPoiSelected(poi.id, !poi.selected));
+        this._store.dispatch(new hikeEditPoiActions.SetWikipediaPoiSelected(poi.id));
         break;
       case EPoiTypes.osmAmenity:
-        this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPoiSelected(poi.id, !poi.selected));
+        this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPoiSelected(poi.id));
         break;
       case EPoiTypes.osmNatural:
-        this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPoiSelected(poi.id, !poi.selected));
+        this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPoiSelected(poi.id));
         break;
       case EPoiTypes.osmRoute:
-        this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiSelected(poi.id, !poi.selected));
+        this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiSelected(poi.id));
         break;
     }
   }

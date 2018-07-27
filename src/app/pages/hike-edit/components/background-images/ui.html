@@ -1,6 +1,7 @@
 <ng-container *ngIf="(bgImages$ | async) as bgImages">
   <div (click)="deleteImage(image.original.url)" class="thumbnail" *ngFor="let image of bgImages">
-    <img [src]="image.thumbnail.url">
+    <img *ngIf="image.source.type === 'wikipedia'" [src]="image.original.url">
+    <img *ngIf="image.source.type !== 'wikipedia'" [src]="image.thumbnail.url">
     <span class="remove" title="Remove image">x</span>
   </div>
 <ng-container>

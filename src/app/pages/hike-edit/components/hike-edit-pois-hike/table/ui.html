@@ -22,21 +22,18 @@
         <td>{{poi.objectType}}</td>
         <td>{{poi.elevation | distance}}</td>
         <td class="text-center">
-
           <p-button
             *ngIf="!poi.inHike"
-            icon="fa fa-minus"
+            icon="pi pi-minus"
             styleClass="ui-button-danger"
             (onClick)="removePoi($event, poi)"
             title="Remove from hike"
           ></p-button>
-
           <p-button
-            icon="fa fa-edit"
+            icon="pi pi-pencil"
             styleClass="ui-button-warning ml-5"
             (onClick)="openGTrackPoiModal(poi.id)"
           ></p-button>
-
         </td>
       </tr>
     </ng-template>

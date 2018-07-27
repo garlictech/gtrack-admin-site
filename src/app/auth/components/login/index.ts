@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 import { Title } from '@angular/platform-browser';
 import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'gt-login',
@@ -13,6 +15,8 @@ import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
 })
 export class LoginComponent implements OnInit {
   public loggingIn$: Observable<Boolean>;
+  public faSpinner = faSpinner;
+  public faGoogle = faGoogle;
 
   constructor(
     private _store: Store<State>,

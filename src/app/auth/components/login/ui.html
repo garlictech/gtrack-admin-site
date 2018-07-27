@@ -6,7 +6,7 @@
 
         <p class="ui-card-content">
           <button class="btn-google cursor-pointer" type="button" (click)="login()">
-            <i class="fab fa-google" aria-hidden="true"></i>
+            <fa-icon class="icon-google" [icon]="faGoogle"></fa-icon>
 
             <ng-container *ngIf="(loggingIn$ | async) as loggingIn; then loginSpinner; else loginButton"></ng-container>
 
@@ -15,9 +15,9 @@
             </ng-template>
 
             <ng-template #loginSpinner>
-              <span>
+              <span class="login-spinner">
                 Logging in...
-                <i class="fa-li fa fa-spinner fa-spin login-spinner"></i>
+                <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
               </span>
             </ng-template>
           </button>
