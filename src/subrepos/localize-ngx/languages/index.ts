@@ -6,7 +6,7 @@ export interface ILanguageDesc {
   flagTitle: string;
 }
 
-const languages: ILanguageDesc[] = [
+const languages = [
   {
     id: 'en_US',
     title: 'English (US)',
@@ -14,8 +14,13 @@ const languages: ILanguageDesc[] = [
     flagImg: require('./flags/us.png'),
     flagTitle: 'United States'
   },
-  // The only available language is english
-  // until the translations arrive
+  {
+    id: 'hu_HU',
+    title: 'Hungarian',
+    name: 'Magyar',
+    flagImg: require('./flags/hu.png'),
+    flagTitle: 'Hungary'
+  },
   {
     id: 'fr_FR',
     title: 'French (France)',

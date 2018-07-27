@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/garlictech/localize-ngx.git
 	branch = master
-	commit = 813d10be7ae1e963ae8d507fdbb3cf145068fd45
-	parent = f0019e789fe086feb638e50a8d615f1e930077d9
+	commit = 00d325a77c8186775dc9b7612f8c95127af68bbb
+	parent = 023e9ba03936f447f65f8ebd5ba51d7bd078ea30
 	cmdver = 0.3.1
 	method = merge
