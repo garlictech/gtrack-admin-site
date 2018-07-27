@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { FileUpload } from 'primeng/fileupload';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 import { FileComponent as NativeFileComponent } from 'subrepos/forms-ngx';
 
@@ -22,6 +22,7 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 })
 export class FileComponent extends NativeFileComponent implements AfterViewInit {
   mode: string;
+  icon = faCheck;
 
   constructor() {
     super();

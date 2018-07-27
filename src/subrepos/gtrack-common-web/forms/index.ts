@@ -10,11 +10,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SliderModule } from 'primeng/slider';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { FormModule as NativeFormModule } from 'subrepos/forms-ngx';
 
 import { LanguageModule } from '../language';
-
 import { GenericComponentsModule } from '../components';
+
 import { DatePickerComponent } from './date-picker';
 import { MultiSelectComponent } from './multi-select';
 import { RadioSelectComponent } from './radio-select';
@@ -43,6 +45,7 @@ import { EmojiInputComponent } from './emoji-input';
     SliderModule,
     LanguageModule,
     NativeFormModule,
+    FontAwesomeModule,
     GenericComponentsModule
   ],
   declarations: [
@@ -56,11 +59,11 @@ import { EmojiInputComponent } from './emoji-input';
     DropdownSelectComponent,
     SwitchComponent,
     FileComponent,
-    EmojiInputComponent,
-    SliderComponent
+    SliderComponent,
+    EmojiInputComponent
   ],
   exports: [DynamicFormComponent]
 })
 export class FormModule {}
 
-export * from 'subrepos/forms-ngx/field';
+export * from 'subrepos/forms-ngx';
