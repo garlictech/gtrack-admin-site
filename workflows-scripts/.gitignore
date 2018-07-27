@@ -57,3 +57,5 @@ docker/volumes
 docker/certs
 .setup.sh
 artifacts
+DEEPSTREAM_LICENSEKEY.secret.txt
+tokens.prod.env

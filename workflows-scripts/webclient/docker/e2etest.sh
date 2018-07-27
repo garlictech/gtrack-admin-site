@@ -2,7 +2,7 @@
 set -e
 . .env
 
-TESTER_IMAGE=$SCOPE.$PROJECT.e2e-tester
+TESTER_IMAGE=$PROJECT.e2e-tester
 
 DOCKER_COMPOSE_TESTER="docker-compose -f docker/docker-compose.e2e.yml"
 DOCKER_COMPOSE_WEBSERVER="docker-compose -f docker/docker-compose.net.yml -f docker/docker-compose.webpack.yml"
