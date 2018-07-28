@@ -12,7 +12,7 @@ import { Observable, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
 import { ITextualDescription, ILocalizedItem } from 'subrepos/provider-client';
-import { TextboxField, TextareaField } from 'subrepos/gtrack-common-web/forms';
+import { TextboxField, RichTextEditorField } from 'subrepos/gtrack-common-web/forms';
 
 import { State } from '../../../store';
 import { DESCRIPTION_LANGUAGES, LanguageService } from '../../services';
@@ -46,10 +46,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
 
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(
-    private _store: Store<State>,
-    private _changeDetectorRef: ChangeDetectorRef
-  ) {}
+  constructor(private _store: Store<State>, private _changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.languageKeys$ = this._store
@@ -97,12 +94,12 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
           label: 'form.title',
           required: true
         }),
-        summary: new TextareaField({
+        summary: new RichTextEditorField({
           label: 'form.summary',
           required: false,
           rows: 2
         }),
-        fullDescription: new TextareaField({ label: 'form.description', required: false })
+        fullDescription: new RichTextEditorField({ label: 'form.description', required: false })
       }
     };
   }

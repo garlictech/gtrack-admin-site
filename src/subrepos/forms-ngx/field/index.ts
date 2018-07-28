@@ -21,6 +21,8 @@ export * from './phone-number';
 export * from './emoji';
 export * from './slider';
 export * from './file';
+export * from './markdown';
+export * from './rich-text-editor';
 // export * from './file-s3';
 
 export interface IResetFv {

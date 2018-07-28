@@ -115,6 +115,18 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
         [placeholder]="sanitizedPlaceholder | translate"
       )
 
+    ng-container(*ngSwitchCase="'markdown'")
+      gtrack-form-markdown(
+        [rows]="field.rows",
+        [formControlName]="field.key"
+      )
+
+    ng-container(*ngSwitchCase="'richtext'")
+      gtrack-form-rich-text-editor(
+        [rows]="field.rows",
+        [formControlName]="field.key"
+      )
+
   div.feedback.info(*ngIf="field.infoText") {{ field.infoText | translate }}
   div.feedback.invalid(*ngIf="showError") {{actualError}}
   div.feedback.invalid(*ngIf="showRemoteError && (remoteError$ | async)") {{ remoteError$ | async | translate }}
