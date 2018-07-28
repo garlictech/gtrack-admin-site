@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, forwardRef, AfterViewInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 

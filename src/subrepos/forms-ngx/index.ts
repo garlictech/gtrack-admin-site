@@ -17,6 +17,8 @@ import { EmojiInputComponent } from './emoji-input';
 // import { FileUploadS3Component } from './file-upload-s3';
 import { FileComponent } from './file';
 import { SliderComponent } from './slider';
+import { MarkdownComponent } from './markdown';
+import { RichTextEditorComponent } from './rich-text-editor';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
@@ -33,7 +35,9 @@ import { SliderComponent } from './slider';
     SwitchComponent,
     SliderComponent,
     SwitchComponent,
-    EmojiInputComponent
+    EmojiInputComponent,
+    MarkdownComponent,
+    RichTextEditorComponent
   ],
   providers: [FieldControlService]
 })
@@ -53,5 +57,7 @@ export {
   SwitchComponent,
   SliderComponent,
   EmojiInputComponent,
-  FileComponent
+  FileComponent,
+  MarkdownComponent,
+  RichTextEditorComponent
 };

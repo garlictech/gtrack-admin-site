@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -9,10 +10,12 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SliderModule } from 'primeng/slider';
+import { EditorModule } from 'primeng/editor';
+import { NgxMdModule } from 'ngx-md';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { FormModule as NativeFormModule } from 'subrepos/forms-ngx';
+import { FormModule as NativeFormModule } from '../../forms-ngx';
 
 import { LanguageModule } from '../language';
 import { GenericComponentsModule } from '../components';
@@ -29,6 +32,8 @@ import { SwitchComponent } from './switch';
 import { SliderComponent } from './slider';
 import { FileComponent } from './file';
 import { EmojiInputComponent } from './emoji-input';
+import { MarkdownComponent } from './markdown';
+import { RichTextEditorComponent } from './rich-text-editor';
 
 @NgModule({
   imports: [
@@ -46,7 +51,9 @@ import { EmojiInputComponent } from './emoji-input';
     LanguageModule,
     NativeFormModule,
     FontAwesomeModule,
-    GenericComponentsModule
+    GenericComponentsModule,
+    NgxMdModule,
+    EditorModule
   ],
   declarations: [
     DatePickerComponent,
@@ -60,10 +67,12 @@ import { EmojiInputComponent } from './emoji-input';
     SwitchComponent,
     FileComponent,
     SliderComponent,
-    EmojiInputComponent
+    EmojiInputComponent,
+    MarkdownComponent,
+    RichTextEditorComponent
   ],
   exports: [DynamicFormComponent]
 })
 export class FormModule {}
 
-export * from 'subrepos/forms-ngx';
+export * from '../../forms-ngx';

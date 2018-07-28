@@ -13,6 +13,7 @@
     "peerDependencies": {
         "emojionearea": "^3.4.1",
         "password-validator": "^4.1.1",
-        "google-libphonenumber": "^3.1.6"
+        "google-libphonenumber": "^3.1.6",
+        "ngx-md": "^6.0.0"
     }
 }
