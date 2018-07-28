@@ -7,12 +7,13 @@ import { GeospatialService } from './services/geospatial';
 import { ISharedConfig, SHARED_CONFIG_TOKEN } from './config';
 
 import { DistancePipe, DurationPipe, CoordinatePipe } from './pipes';
+import { SanitizeHtmlDirective } from './directives/sanitize-html';
 
 @NgModule({
   imports: [],
-  exports: [DistancePipe, DurationPipe, CoordinatePipe],
-  declarations: [DistancePipe, DurationPipe, CoordinatePipe],
-  providers: [UnitsService, GoogleMapsService, GeospatialService]
+  declarations: [DistancePipe, DurationPipe, CoordinatePipe, SanitizeHtmlDirective],
+  providers: [UnitsService, GoogleMapsService, GeospatialService],
+  exports: [DistancePipe, DurationPipe, CoordinatePipe, SanitizeHtmlDirective]
 })
 export class SharedModule {
   static forRoot(config: ISharedConfig): ModuleWithProviders {
@@ -20,4 +21,12 @@ export class SharedModule {
   }
 }
 
-export { DistancePipe, DurationPipe, CoordinatePipe, UnitsService, GoogleMapsService, ISharedConfig, GeospatialService };
+export {
+  DistancePipe,
+  DurationPipe,
+  CoordinatePipe,
+  UnitsService,
+  GoogleMapsService,
+  ISharedConfig,
+  GeospatialService
+};
