@@ -53,7 +53,7 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
       return googlePoiAdapter.updateOne({
         id: action.poiId,
         changes: {
-          selected: !state.entities[action.poiId].selected
+          selected: !(state.entities[action.poiId].selected)
         }
       }, state);
 
@@ -106,7 +106,7 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
       return osmAmenityPoiAdapter.updateOne({
         id: action.poiId,
         changes: {
-          selected: !state.entities[action.poiId].selected
+          selected: !(state.entities[action.poiId].selected)
         }
       }, state);
 
@@ -159,7 +159,7 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
       return osmNaturalPoiAdapter.updateOne({
         id: action.poiId,
         changes: {
-          selected: !state.entities[action.poiId].selected
+          selected: !(state.entities[action.poiId].selected)
         }
       }, state);
 
@@ -212,7 +212,7 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
       return osmRoutePoiAdapter.updateOne({
         id: action.poiId,
         changes: {
-          selected: !state.entities[action.poiId].selected
+          selected: !(state.entities[action.poiId].selected)
         }
       }, state);
 
@@ -265,7 +265,7 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
       return wikipediaPoiAdapter.updateOne({
         id: action.poiId,
         changes: {
-          selected: !state.entities[action.poiId].selected
+          selected: !(state.entities[action.poiId].selected)
         }
       }, state);
 
@@ -310,7 +310,7 @@ const poiCollectorReducer: ActionReducer<IPoiCollectorEntityState> = (
       return poiCollectorAdapter.updateOne({
         id: action.poiId,
         changes: {
-          selected: !state.entities[action.poiId].selected
+          selected: !(state.entities[action.poiId].selected)
         }
       }, state);
 

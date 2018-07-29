@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import {
@@ -21,9 +21,6 @@ const PLACE_API_URL = `https://cors-anywhere.herokuapp.com/${PURE_PLACE_API_URL}
 
 @Injectable()
 export class GooglePoiService {
-  private _hasNextPage$: Subject<boolean> = new Subject<boolean>();
-  private _placesService: google.maps.places.PlacesService;
-
   constructor(
     private _http: HttpClient,
     private _googleMapsService: GoogleMapsService,
