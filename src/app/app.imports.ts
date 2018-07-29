@@ -34,7 +34,13 @@ import {
   AuthEffects
 } from './store/effects';
 
-const sharedConfig = { ...defaultSharedConfig };
+const sharedConfig = {
+  ...defaultSharedConfig
+};
+
+export function getSharedConfig() {
+  return sharedConfig;
+}
 
 const hikeModuleConfig: IHikeModuleConfig = {
   storeDomains: {
@@ -44,18 +50,18 @@ const hikeModuleConfig: IHikeModuleConfig = {
   }
 };
 
-const config = {
+const authConfig = {
   ...defaultAuthenticationApiConfig
 };
 
-config.apiUrl = environment.authentication.server;
-config.webserverUrl = environment.webappServer;
-config.facebook.appId = _.get(environment, 'authentication.facebook.appId');
-config.google.appId = _.get(environment, 'authentication.google.appId');
-config.magiclink = { redirectSlug: '/auth/magiclink' };
+authConfig.apiUrl = environment.authentication.server;
+authConfig.webserverUrl = environment.webappServer;
+authConfig.facebook.appId = _.get(environment, 'authentication.facebook.appId');
+authConfig.google.appId = _.get(environment, 'authentication.google.appId');
+authConfig.magiclink = { redirectSlug: '/auth/magiclink' };
 
-export function getConfig() {
-  return config;
+export function getAuthConfig() {
+  return authConfig;
 }
 
 export const APP_IMPORTS = [
@@ -66,11 +72,11 @@ export const APP_IMPORTS = [
     maxAge: 25
   }),
   DeepstreamModule.forRoot(),
-  AuthenticationApiModule.forRoot(getConfig),
+  AuthenticationApiModule.forRoot(getAuthConfig),
   SearchFiltersModule.forRoot({
     storeDomain: 'searchFilters'
   }),
-  SharedModule.forRoot(sharedConfig),
+  SharedModule.forRoot(getSharedConfig),
   BackgroundGeolocationModule.forRoot(),
   GeoSearchModule.forRoot({
     storeDomain: 'geosearch'

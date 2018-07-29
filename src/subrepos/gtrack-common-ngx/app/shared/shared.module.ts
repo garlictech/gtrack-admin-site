@@ -16,8 +16,8 @@ import { SanitizeHtmlDirective } from './directives/sanitize-html';
   exports: [DistancePipe, DurationPipe, CoordinatePipe, SanitizeHtmlDirective]
 })
 export class SharedModule {
-  static forRoot(config: ISharedConfig): ModuleWithProviders {
-    return { ngModule: SharedModule, providers: [{ provide: SHARED_CONFIG_TOKEN, useValue: config }] };
+  static forRoot(configFactory: any): ModuleWithProviders {
+    return { ngModule: SharedModule, providers: [{ provide: SHARED_CONFIG_TOKEN, useFactory: configFactory }] };
   }
 }
 
