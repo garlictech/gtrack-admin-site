@@ -6,5 +6,5 @@ import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../../../../shared/interf
   templateUrl: './ui.html'
 })
 export class HikeEditExternalPoiInfoComponent {
-  @Input() poi: IWikipediaPoi | IGooglePoi | IOsmPoi;
+  @Input() poi: any;
 }
