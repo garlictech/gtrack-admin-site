@@ -89,7 +89,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.1.1",
     "@fortawesome/free-regular-svg-icons": "^5.1.1",
     "@fortawesome/free-solid-svg-icons": "^5.1.1",
-    "@garlictech/deepstream-rxjs": "1.7.0",
+    "@garlictech/deepstream-rxjs": "^1.9.2",
     "@garlictech/gtrack-provider-client": "file:src/subrepos/provider-client",
     "@mapbox/corslite": "0.0.7",
     "@mapbox/polyline": "^0.2.0",
