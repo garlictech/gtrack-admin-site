@@ -175,7 +175,9 @@ export class HikeProgramService {
       });
 
       const _svgString = _converter.convert(_route.path);
-      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-4 -4 ${_iconWidth + 4} ${_iconHeight + 4}">${_svgString}</svg>`;
+      const _p = -5; // padding; viewBox: [x, y, w, h]
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="${_p} ${_p} ${_iconWidth - 2 * _p} ${_iconHeight - 2 * _p}">${_svgString}</svg>`;
+
     } else {
       return '';
     }
