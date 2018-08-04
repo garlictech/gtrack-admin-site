@@ -119,7 +119,6 @@
     "gtrack-common-ngx": "file:src/subrepos/gtrack-common-ngx",
     "intl": "^1.2.5",
     "leaflet": "^1.3.3",
-    "leaflet-routing-machine": "^3.2.8",
     "leaflet-spin": "^1.1.0",
     "leaflet-usermarker": "^1.0.0",
     "load-google-maps-api": "1.0.0",

@@ -78,11 +78,12 @@ export class HikeProgramService {
   private _updateStopsSegment(stops: IHikeProgramStop[], path: any) {
     if (_.get(path, 'geometry.coordinates', []).length > 0) {
       let _segmentStartPoint =  path.geometry.coordinates[0];
+      let lastDistance = 0;
 
       for (const stop of stops) {
         const _segmentEndPoint = [stop.lon, stop.lat];
         const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
-        const _segmentDistance = 1000 * turf.lineDistance(_segmentPath, {units: 'kilometers'});
+        const _segmentDistance = 1000 * turf.lineDistance(_segmentPath, {units: 'kilometers'}) - lastDistance;
 
         stop.segment = {
           uphill: this._elevationService.calculateUphill((<any>_segmentPath).geometry.coordinates),
@@ -92,9 +93,12 @@ export class HikeProgramService {
         stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, stop.segment.uphill),
         stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill)
 
+        lastDistance = _segmentDistance;
         // Save coords for the next segment
-        _segmentStartPoint = [stop.lon, stop.lat];
+        // _segmentStartPoint = [stop.lon, stop.lat];
       }
+
+      // console.log('Set Stops on the end of _updateStopsSegment', stops);
 
       this._store.dispatch(new editedHikeProgramActions.SetStops(stops));
     }
@@ -119,10 +123,10 @@ export class HikeProgramService {
     const _iconWidth = 54;
     const _iconHeight = 20;
     const _elevationData = this._routeService.elevationData(_route, _iconWidth, _iconHeight, {
-      top: 2,
-      left: 2,
-      right: 2,
-      bottom: 2
+      top: 4,
+      left: 4,
+      right: 4,
+      bottom: 4
     });
 
     if (_elevationData) {
@@ -171,7 +175,7 @@ export class HikeProgramService {
       });
 
       const _svgString = _converter.convert(_route.path);
-      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-2 -2 ${_iconWidth + 2} ${_iconHeight + 2}">${_svgString}</svg>`;
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-4 -4 ${_iconWidth + 4} ${_iconHeight + 4}">${_svgString}</svg>`;
     } else {
       return '';
     }

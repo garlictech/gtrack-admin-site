@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
-  AdminMap, AdminMapService, WaypointMarkerService, RoutingControlService, RoutePlannerService
+  AdminMap, AdminMapService, WaypointMarkerService, RoutePlannerService
 } from '../../../../shared/services/admin-map';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -30,7 +30,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
   constructor(
     private _adminMapService: AdminMapService,
-    private _routingControlService: RoutingControlService,
     private _waypointMarkerService: WaypointMarkerService,
     private _routePlannerService: RoutePlannerService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
@@ -143,15 +142,15 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .subscribe((storedRoute: any) => {
         this._waypointMarkerService.reset();
 
-        Observable
-          .interval(500)
-          .take(storedRoute.route.features.length)
-          .subscribe((idx) => {
-            const feature = storedRoute.route.features[idx];
-            if (feature.geometry.type === 'Point') {
-              this._waypointMarkerService.addWaypoint(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
-            }
-          });
+        const _coords: L.LatLng[] = [];
+
+        for (const feature of storedRoute.route.features) {
+          if (feature.geometry.type === 'Point') {
+            _coords.push(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
+          }
+        }
+
+        this._waypointMarkerService.addWaypoints(_coords);
 
         // Enable planning
         this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(true));
@@ -171,7 +170,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       message: 'Are you sure that you want to delete?',
       accept: () => {
         this._waypointMarkerService.reset();
-        this._routingControlService.clearControls();
       }
     });
   }

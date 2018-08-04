@@ -17,7 +17,6 @@ import {
 } from '../../store';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from '../../store/selectors';
 import {
-  RoutingControlService,
   WaypointMarkerService,
   RoutePlannerService,
   AdminMapService
@@ -59,7 +58,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _activatedRoute: ActivatedRoute,
     private _adminMapService: AdminMapService,
-    private _routingControlService: RoutingControlService,
     private _waypointMarkerService: WaypointMarkerService,
     private _routePlannerService: RoutePlannerService,
     private _hikeProgramService: HikeProgramService,
@@ -75,7 +73,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.working$ = this._store.select(this._editedHikeProgramSelectors.getWorking).takeUntil(this._destroy$);
 
-    this._routingControlService.reset();
+    // this._routingControlService.reset();
     this._waypointMarkerService.reset();
 
     this._store.dispatch(new hikeEditMapActions.ResetMapState());

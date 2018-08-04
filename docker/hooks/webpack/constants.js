@@ -15,7 +15,6 @@ exports.myConstants = {
     "geojson-rewind",
     "geojson-validation",
     "intl",
-    "leaflet-routing-machine",
     "ngx-chips",
     "tether",
     "angular2-file-drop",
