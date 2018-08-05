@@ -21,6 +21,7 @@ export const initialRouteInfoDataState: IHikeEditRoutePlannerState = {
   total: {},
   location: '',
   route: initialRouteDataState,
+  routing: false,
   planning: true
 };
 
@@ -33,6 +34,18 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
 
     case hikeEditRoutePlannerActions.RESET_ROUTE_PLANNING_STATE:
       return initialRouteInfoDataState;
+
+    case hikeEditRoutePlannerActions.ROUTING_START:
+      return {
+        ...state,
+        routing: true
+      };
+
+    case hikeEditRoutePlannerActions.ROUTING_FINISHED:
+      return {
+        ...state,
+        routing: false
+      };
 
     case hikeEditRoutePlannerActions.ADD_ROUTE:
       return {

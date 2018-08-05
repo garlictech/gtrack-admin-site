@@ -6,6 +6,7 @@
         <th>#</th>
         <th>Poi</th>
         <th>Distance from origo</th>
+        <th>Segment length</th>
       </tr>
     </ng-template>
 
@@ -13,9 +14,10 @@
       <tr>
         <td>{{rowIndex + 1}}.</td>
         <td *ngIf="rowIndex > 0 && rowIndex < (stops.length - 1)">{{translateDescription(stop.description, 'title')}}</td>
-        <td *ngIf="rowIndex === 0">Start point</td>
-        <td *ngIf="rowIndex === (stops.length - 1)">End point</td>
+        <td *ngIf="rowIndex === 0" class="icon"><img title="Start" [src]="startIcon" /></td>
+        <td *ngIf="rowIndex === (stops.length - 1)" class="icon" ><img title="Finish" [src]="finishIcon" /></td>
         <td>{{stop.distanceFromOrigo | distance}}</td>
+        <td>{{stop.segment.distance | distance}}</td>
       </tr>
     </ng-template>
   </p-table>

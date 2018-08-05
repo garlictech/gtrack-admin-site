@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from '../../../store';
+import { State, hikeEditRoutePlannerActions } from '../../../store';
+import { Observable } from 'rxjs';
+import { HikeEditMapSelectors } from '../../../store/selectors';
+import { AdminMapService, AdminMap, RoutePlannerService } from './index';
+import { HttpClient } from '../../../../../node_modules/@angular/common/http';
+import { environment } from 'environments/environment';
+import { ElevationService } from 'subrepos/gtrack-common-ngx';
 
 import * as L from 'leaflet';
-import { RoutingControlService, RoutePlannerService } from '.';
+import * as _ from 'lodash';
+import * as turf from '@turf/turf';
 
 @Injectable()
 export class WaypointMarkerService {
@@ -11,115 +18,177 @@ export class WaypointMarkerService {
   private _routeSegmentIndex: number;
   private _waypointIndex: number;
 
+  private _map: AdminMap;
+  private _markers: L.Marker[] = [];
+
   constructor(
     private _store: Store<State>,
-    private _routingControlService: RoutingControlService,
+    private _adminMapService: AdminMapService,
     private _routePlannerService: RoutePlannerService,
+    private _elevationService: ElevationService,
+    private _hikeEditMapSelectors: HikeEditMapSelectors,
+    private _http: HttpClient,
   ) {
+    this._store
+      .select(this._hikeEditMapSelectors.getMapId)
+      .filter(id => id !== '')
+      .subscribe((mapId: string) => {
+        this._map = this._adminMapService.getMapById(mapId);
+      });
+
     this.reset();
   }
 
   public reset() {
-    this._routeSegmentIndex = 0;
-    this._waypointIndex = 0;
+    for (const marker of this._markers) {
+      if (this._map.leafletMap.hasLayer(marker)) {
+        this._map.leafletMap.removeLayer(marker);
+      }
+    }
+    this._markers = [];
+    this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
   }
 
   public deleteLast() {
-    const _isEmpty = this._getWaypointNum() === 0;
-    const _isLastWaypointInAdditionalSegment = this._routeSegmentIndex > 1 && this._waypointIndex === 2;
-    const _isFirstWaypointInFirstSegment = this._routeSegmentIndex === 1 && this._waypointIndex === 1;
-    const _isSecondWaypoint = this._routeSegmentIndex === 1 && this._waypointIndex === 2;
-
-    if (_isEmpty) {
-      return;
+    // Remove last marker
+    if (this._markers.length > 0) {
+      this._map.leafletMap.removeLayer(this._markers.pop());
     }
-
-    if (_isLastWaypointInAdditionalSegment) {
-      this._routingControlService.pop();
-      this._routeSegmentIndex--;
-      this._waypointIndex = this._maxSegmentPoints;
-    } else if (_isFirstWaypointInFirstSegment) {
-      this.reset();
-      this._routingControlService.clearControls();
-    } else if (_isSecondWaypoint) {
-      const _control = this._routingControlService.getActualControl();
-      const _latlng = _control.getWaypoints()[0].latLng;
-
-      this.reset();
-
-      this._routingControlService.clearControls();
-      this.addWaypoint(_latlng);
-    } else {
-      const _control = this._routingControlService.getActualControl();
-      _control.spliceWaypoints(this._waypointIndex - 1, 1);
-      this._waypointIndex--;
-      _control.route();
-    }
-  }
-
-  /**
-   * The first segment contains _maxSegmentPoints.
-   * The other segments contain _maxSegmentPoints - 1 points,
-   * as their first point is always duplicate of the last point of the previous segment.
-   * So, in case of first segment, we adjust the number...
-   */
-  private _getWaypointNum() {
-    if (this._routeSegmentIndex === 0) {
-      return 0;
-    } else if (this._routeSegmentIndex === 1) {
-      return this._waypointIndex;
-    } else {
-      return (this._routeSegmentIndex - 1) * (this._maxSegmentPoints - 1) + this._waypointIndex;
-    }
+    // Remove last segment
+    this._routePlannerService.removeLastSegment();
   }
 
   public closeCircle() {
-    const _firstControl: L.Routing.Control = this._routingControlService.getControl(0);
-
-    if (_firstControl && _firstControl.getWaypoints().length) {
-      const firstPointLatLng = _firstControl.getWaypoints()[0].latLng;
-      this.addWaypoint(firstPointLatLng);
+    if (this._markers.length > 0) {
+      this.addWaypoints([this._markers[0].getLatLng()]);
     }
   }
 
-  public addWaypoint(latlng) {
-    let _control: L.Routing.Control;
-    const _isStartRouting = this._getWaypointNum() === 0;
-    const _shouldAddNewSegment = this._waypointIndex === this._maxSegmentPoints;
+  public async addWaypoints(latlngs: L.LatLng[]) {
+    this._map.leafletMap.spin(true);
+    this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
 
-    // First marker on the map - it will be the start point of the 1st segment
-    if (_isStartRouting) {
-      _control = this._routingControlService.addNew();
+    for (const idx in latlngs) {
+      const latlng = latlngs[idx];
+      const _waypoint = {
+        latLng: latlng,
+        name: this._markers.length + 1
+      }
+      this._markers.push(this._createMarker(_waypoint));
 
-      this._routeSegmentIndex = 1;
-      this._waypointIndex = 0;
-    // New marker, we have to add new segment, too
-    } else if (_shouldAddNewSegment) {
-      const _previousControl = this._routingControlService.getActualControl();
-      const _waypoints = _previousControl.getWaypoints();
-
-      const _lastWaypointOfPrevControl = _waypoints[_waypoints.length - 1];
-
-      _control = this._routingControlService.addNew();
-
-      // The first point of the new segment will be the last point of the previous segment
-      _control.spliceWaypoints(0, 1, _lastWaypointOfPrevControl);
-
-      this._waypointIndex = 1;
-      this._routeSegmentIndex++;
-    // Second marker - it will be the end point of the 1st segment
-    } else {
-      _control = this._routingControlService.getActualControl();
+      if (this._markers.length > 1) {
+        await this._getRouteFromApi(
+          this._markers[this._markers.length - 2].getLatLng(),
+          this._markers[this._markers.length - 1].getLatLng()
+        );
+      }
     }
 
-    const _waypoint = {
-      latLng: latlng,
-      name: this._getWaypointNum() + 1
-    }
+    this._store.dispatch(new hikeEditRoutePlannerActions.RoutingFinished());
+    this._map.leafletMap.spin(false);
+  }
 
-    // Update waypoint at _waypointIndex pos (0/1) on the current segment
-    _control.spliceWaypoints(this._waypointIndex, 1, _waypoint);
-    _control.route();
-    this._waypointIndex++;
+  private _createMarker(_waypoint) {
+    const _icon = L.divIcon({
+      html: `<span>${_waypoint.name}</span>`,
+      iconSize: [25, 41],
+      iconAnchor: [13, 41],
+      className: 'routing-control-marker'
+    });
+
+    const _marker = L.marker(_waypoint.latLng, {
+      opacity: 1,
+      draggable: false, // Maybe later...
+      icon: _icon,
+      alt: (_waypoint.name - 1).toString() // orderID
+    });
+
+    /* // Maybe later...
+    _marker.on('dragend', function (e) {
+      console.log('marker drag end event', e);
+    });
+    */
+
+    _marker.addTo(this._map.leafletMap);
+
+    return _marker;
+  }
+
+  private _getRouteFromApi(p1, p2) {
+    const _urlParams = {
+      vehicle: 'hike',
+      instructions: false,
+      locale: 'en',
+      key: environment.graphhopper.apiKey,
+      points_encoded: false
+    }
+    const _urlParamsStr = _.map(_urlParams, (v, k) => `${k}=${v}`);
+    const request = `https://graphhopper.com/api/1/route?point=${p1.lat},${p1.lng}&point=${p2.lat},${p2.lng}&${_urlParamsStr.join('&')}`;
+
+    // Get basic poi list
+    return this._http.get(request)
+      .toPromise()
+      .then((data: any) => {
+        return this._calculateCoordsElevation(data);
+      });
+  }
+
+  private _calculateCoordsElevation(routeData: any) {
+    // GraphHopper format fix
+    let _coordsArr = routeData.paths[0].points.coordinates.map(coord => [coord[1], coord[0]]);
+
+    // Google Elevation Service
+    // 2,500 free requests per day
+    // 512 locations per request.
+    // 50 requests per second
+    let _chunks: any[][] = _.chunk(_coordsArr, 500);
+
+    return Observable
+      .interval(100)
+      .take(_chunks.length)
+      .flatMap(counter => {
+        const _chunkCoords: any[] = _chunks[counter];
+
+        return this._elevationService.getData(_chunkCoords).then((data) => {
+          // Update elevation only if we got all data
+          if (data.length === _chunkCoords.length) {
+            for (let i in _chunkCoords) {
+              _chunkCoords[i][2] = data[i][2];
+            }
+          }
+          return Observable.of(counter);
+        });
+      })
+      .combineAll()
+      .toPromise()
+      .then(() => {
+        const upDown = {
+          uphill: this._elevationService.calculateUphill(_coordsArr),
+          downhill: this._elevationService.calculateDownhill(_coordsArr)
+        };
+
+        this._routePlannerService.addRouteSegment(_coordsArr, upDown);
+
+        this._moveLastWaypointToRoute(_coordsArr);
+      }).catch(() => {
+        this._store.dispatch(new hikeEditRoutePlannerActions.RoutingError());
+        this._map.leafletMap.spin(false);
+      });
+  }
+
+  /**
+   * Move marker positions to line
+   */
+  private _moveLastWaypointToRoute(coords) {
+    for (let i = this._markers.length - 2; i < this._markers.length; i++) {
+      let line = turf.lineString(coords);
+      let pt = turf.point([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
+      let snapped = turf.nearestPointOnLine(line, pt);
+
+      this._markers[i].setLatLng(new L.LatLng(
+        (<any>snapped.geometry).coordinates[0],
+        (<any>snapped.geometry).coordinates[1]
+      ));
+    }
   }
 }

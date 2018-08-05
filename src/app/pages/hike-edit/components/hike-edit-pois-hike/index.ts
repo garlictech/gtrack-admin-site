@@ -71,11 +71,14 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .filter((pois: IPoiStored[]) => typeof pois !== 'undefined')
       .switchMap((pois: IPoiStored[]) => {
-        return this._store
-          .select(this._hikeEditRoutePlannerSelectors.getPath)
-          .filter((path: any) => path && path.geometry.coordinates.length > 0)
+        return Observable
+          .combineLatest(
+            this._store.select(this._hikeEditRoutePlannerSelectors.getIsRouting).takeUntil(this._destroy$),
+            this._store.select(this._hikeEditRoutePlannerSelectors.getPath).takeUntil(this._destroy$)
+          )
+          .filter(([routing, path]: [boolean, any]) => !routing && path && path.geometry.coordinates.length > 0)
           .takeUntil(this._destroy$)
-          .map((path: any) => {
+          .map(([routing, path]: [boolean, any]) => {
             const organizedPois = this._poiEditorService.organizePois(pois, path);
             const poiIds = _.map(pois, 'id');
             const organizedPoiIds = _.map(organizedPois, 'id');
