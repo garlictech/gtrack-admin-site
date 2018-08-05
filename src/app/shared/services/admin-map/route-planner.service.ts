@@ -16,7 +16,8 @@ import * as d3 from 'd3';
 @Injectable()
 export class RoutePlannerService {
   private _map: AdminMap;
-  private _routeOnMap: L.FeatureGroup;
+  private _savedRouteOnMap: L.FeatureGroup;
+  private _routePlanOnMap: L.FeatureGroup;
 
   constructor(
     private _store: Store<State>,
@@ -40,8 +41,10 @@ export class RoutePlannerService {
         // Update total for route info
         this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
 
-        // Refresh route data
-        this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(this._createGeoJsonFromSegments(segments)));
+        // Refresh route data and draw to map
+        const _route = this._createGeoJsonFromSegments(segments);
+        this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_route));
+        this.drawRoutePlanGeoJSON(_route.features[0]);
       });
   }
 
@@ -55,9 +58,9 @@ export class RoutePlannerService {
     this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_geoJSON));
   }
 
-  public addRouteSegment(coordinates, summary, updown) {
+  public addRouteSegment(coordinates, updown) {
     let _segment: ISegment = {
-      distance: summary.totalDistance, // in meters
+      distance: turf.lineDistance(turf.lineString(coordinates), {units: 'kilometers'}) * 1000, // summary.totalDistance, // in meters
       uphill: updown.uphill,
       downhill: updown.downhill,
       coordinates: coordinates
@@ -186,12 +189,12 @@ export class RoutePlannerService {
    * Create multi-line group from a LineString
    */
   public drawRouteLineGeoJSON(geoJSON) {
-    if (this._routeOnMap) {
-      this._map.removeGeoJSON(this._routeOnMap);
-      delete this._routeOnMap;
+    if (this._savedRouteOnMap) {
+      this._map.removeGeoJSON(this._savedRouteOnMap);
+      delete this._savedRouteOnMap;
     }
 
-    this._routeOnMap = new L.FeatureGroup();
+    this._savedRouteOnMap = new L.FeatureGroup();
     const styles = [
       { color: 'black',   opacity: 0.15,  weight: 12 },
       { color: 'white',   opacity: 0.8,   weight: 8 },
@@ -199,11 +202,11 @@ export class RoutePlannerService {
     ];
 
     for (let num of [0, 1, 2]) {
-      this._routeOnMap.addLayer(L.geoJSON(geoJSON, {
+      this._savedRouteOnMap.addLayer(L.geoJSON(geoJSON, {
         style: <any>styles[num]
       }));
     }
-    this._routeOnMap.addTo(this._map.leafletMap);
+    this._savedRouteOnMap.addTo(this._map.leafletMap);
   }
 
   /**
@@ -216,5 +219,31 @@ export class RoutePlannerService {
       .subscribe((path: any) => {
         this.drawRouteLineGeoJSON(path);
       });
+  }
+
+  /**
+   * Create multi-line group from a LineString
+   */
+  public drawRoutePlanGeoJSON(geoJSON) {
+    if (this._map) {
+      if (this._routePlanOnMap) {
+        this._map.removeGeoJSON(this._routePlanOnMap);
+        delete this._routePlanOnMap;
+      }
+
+      this._routePlanOnMap = new L.FeatureGroup();
+      const styles = [
+        { color: 'black',   opacity: 0.15,  weight: 12 },
+        { color: 'white',   opacity: 0.8,   weight: 8 },
+        { color: '#F60000', opacity: 1,     weight: 3 }
+      ];
+
+      for (let num of [0, 1, 2]) {
+        this._routePlanOnMap.addLayer(L.geoJSON(geoJSON, {
+          style: <any>styles[num]
+        }));
+      }
+      this._routePlanOnMap.addTo(this._map.leafletMap);
+    }
   }
 }

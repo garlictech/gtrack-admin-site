@@ -3,7 +3,7 @@ import { ConfirmationService } from 'primeng/primeng';
 
 import { CONFIG as LANGUAGE_CONFIG } from 'subrepos/localize-ngx';
 
-import { RoutePlannerService, RoutingControlService } from './shared/services/admin-map';
+import { RoutePlannerService } from './shared/services/admin-map';
 import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
 
 import {
@@ -40,7 +40,6 @@ export const APP_PROVIDERS = [
   ReverseGeocodingService,
   AdminMapService,
   RoutePlannerService,
-  RoutingControlService,
   WaypointMarkerService,
   PoiEditorService,
   WikipediaPoiService,

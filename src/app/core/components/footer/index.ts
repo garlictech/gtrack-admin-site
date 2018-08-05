@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
       </span>
     </div>
   `,
-  styles: ['.layout-footer { z-index: 100000; }']
+  // styles: ['.layout-footer { z-index: 100; }']
 })
 export class FooterComponent implements OnInit {
   public currentDate: Date;
