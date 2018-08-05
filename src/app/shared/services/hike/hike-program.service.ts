@@ -94,7 +94,8 @@ export class HikeProgramService {
         stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill)
 
         lastDistance = _segmentDistance;
-        // Save coords for the next segment
+
+        // Save coords for the next segment - DEPRECATED LOGIC
         // _segmentStartPoint = [stop.lon, stop.lat];
       }
 
