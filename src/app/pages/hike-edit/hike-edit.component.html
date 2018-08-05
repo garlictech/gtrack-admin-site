@@ -2,8 +2,11 @@
 
 <ng-template #pageContent>
     <div class="ui-g">
-      <div class="ui-g-12">
-        <div class="f-right" *ngIf="(hikeProgramState$ | async) as hikeProgramState">
+      <div class="ui-g-12" *ngIf="(hikeProgramState$ | async) as hikeProgramState">
+        <div class="f-left">
+          <strong>State:</strong> {{hikeProgramState}}
+        </div>
+        <div class="f-right">
           <p-button
             label="Publish"
             styleClass="ui-button-success"
