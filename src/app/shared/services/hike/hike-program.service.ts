@@ -78,12 +78,11 @@ export class HikeProgramService {
   private _updateStopsSegment(stops: IHikeProgramStop[], path: any) {
     if (_.get(path, 'geometry.coordinates', []).length > 0) {
       let _segmentStartPoint =  path.geometry.coordinates[0];
-      let lastDistance = 0;
 
       for (const stop of stops) {
         const _segmentEndPoint = [stop.lon, stop.lat];
         const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
-        const _segmentDistance = 1000 * turf.lineDistance(_segmentPath, {units: 'kilometers'}) - lastDistance;
+        const _segmentDistance = 1000 * turf.lineDistance(_segmentPath, {units: 'kilometers'});
 
         stop.segment = {
           uphill: this._elevationService.calculateUphill((<any>_segmentPath).geometry.coordinates),
@@ -93,10 +92,8 @@ export class HikeProgramService {
         stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, stop.segment.uphill),
         stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill)
 
-        lastDistance = _segmentDistance;
-
         // Save coords for the next segment - DEPRECATED LOGIC
-        // _segmentStartPoint = [stop.lon, stop.lat];
+        _segmentStartPoint = [stop.lon, stop.lat];
       }
 
       // console.log('Set Stops on the end of _updateStopsSegment', stops);

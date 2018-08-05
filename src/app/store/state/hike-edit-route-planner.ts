@@ -14,5 +14,6 @@ export interface IHikeEditRoutePlannerState {
   total: IHikeEditRoutePlannerTotalState;
   location: any;
   route: GeoJSON.FeatureCollection<any>;
-  planning: boolean;
+  routing: boolean; // Routing queries are running
+  planning: boolean; // Planing mode on/off
 };
