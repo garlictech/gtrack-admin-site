@@ -77,7 +77,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       .select(this._hikeEditRoutePlannerSelectors.getSegments)
       .takeUntil(this._destroy$)
       .subscribe(() => {
-        // Refreh buffer on segment change, if needed
+        // Refresh buffer on segment change, if needed
         setTimeout(() => {
           if (this._bufferShown) {
             this._removeBuffer();
@@ -118,7 +118,11 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       .on('click', (e: LeafletMouseEvent) => {
         if (this.allowPlanning) {
           if (this.mode === 'routing') {
-            this._waypointMarkerService.addWaypoint(e.latlng);
+            this._waypointMarkerService
+              .addWaypoints([e.latlng])
+              .then(() => {
+                // Waypoint added
+              });
           } else {
             // console.log('todo _createCheckpoint');
             // this._createCheckpoint(e.latlng);

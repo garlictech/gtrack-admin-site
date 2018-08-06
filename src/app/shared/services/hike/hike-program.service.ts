@@ -92,9 +92,11 @@ export class HikeProgramService {
         stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, stop.segment.uphill),
         stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill)
 
-        // Save coords for the next segment
+        // Save coords for the next segment - DEPRECATED LOGIC
         _segmentStartPoint = [stop.lon, stop.lat];
       }
+
+      // console.log('Set Stops on the end of _updateStopsSegment', stops);
 
       this._store.dispatch(new editedHikeProgramActions.SetStops(stops));
     }
@@ -119,10 +121,10 @@ export class HikeProgramService {
     const _iconWidth = 54;
     const _iconHeight = 20;
     const _elevationData = this._routeService.elevationData(_route, _iconWidth, _iconHeight, {
-      top: 2,
-      left: 2,
-      right: 2,
-      bottom: 2
+      top: 4,
+      left: 4,
+      right: 4,
+      bottom: 4
     });
 
     if (_elevationData) {
@@ -171,7 +173,9 @@ export class HikeProgramService {
       });
 
       const _svgString = _converter.convert(_route.path);
-      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-2 -2 ${_iconWidth + 2} ${_iconHeight + 2}">${_svgString}</svg>`;
+      const _p = -5; // padding; viewBox: [x, y, w, h]
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="${_p} ${_p} ${_iconWidth - 2 * _p} ${_iconHeight - 2 * _p}">${_svgString}</svg>`;
+
     } else {
       return '';
     }
