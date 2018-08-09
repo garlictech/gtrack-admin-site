@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription } from '../../../../../provider-client';
 
 @Component({
   selector: 'gtcn-description',

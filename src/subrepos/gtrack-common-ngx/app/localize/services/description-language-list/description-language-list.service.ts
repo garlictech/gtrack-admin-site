@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription } from '../../../../../provider-client';
 import { LocalizeSelectors } from '../../store/selectors';
 
 import { Observable } from 'rxjs/Observable';

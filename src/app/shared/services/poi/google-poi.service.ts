@@ -155,6 +155,8 @@ export class GooglePoiService {
                   for (let _photo of _placePhotos) {
                     const _photoInfo: IBackgroundImageData = {
                       title: _photo.html_attributions[0] || '',
+                      lat: pois[idx].lat,
+                      lon: pois[idx].lon,
                       original: {
                         url: `${PURE_PLACE_API_URL}/photo?maxwidth=${_photo.width}&photoreference=${
                           _photo.photo_reference
