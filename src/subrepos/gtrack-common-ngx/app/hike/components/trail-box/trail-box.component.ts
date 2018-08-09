@@ -41,8 +41,7 @@ import { IPoi } from '../../../../../provider-client';
 
 @Component({
   selector: 'gc-trail-box',
-  templateUrl: './trail-box.component.html',
-  styleUrls: ['./trail-box.component.scss']
+  template: ''
 })
 export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   faCrosshairs = faCrosshairs;
@@ -106,6 +105,8 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
   ngOnInit() {
     let pois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
+
+    console.log(this.hikeProgram.stops);
 
     let route = this.hikeProgram.routeId;
 

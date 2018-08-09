@@ -11,7 +11,13 @@ export class DescriptionLanguageListService {
 
   constructor(private _selectors: LocalizeSelectors) {}
 
-  public getLocalizedDescription(item: ILocalizedItem<ITextualDescription>): Observable<ITextualDescription> {
+  public getLocalizedDescription(item: ILocalizedItem<ITextualDescription>|undefined): Observable<ITextualDescription> {
+    if (!item) {
+      return Observable.of({
+        title: ''
+      });
+    }
+
     return this._selectors.getLanguageSettings().map(settings => {
       let list = [
         // ...settings.descriptionLanguageList,

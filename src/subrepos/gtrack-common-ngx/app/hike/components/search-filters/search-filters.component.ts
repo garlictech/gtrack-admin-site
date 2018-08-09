@@ -9,8 +9,7 @@ import { SearchFiltersSelectors } from '../../../search-filters/store';
 
 @Component({
   selector: 'gtcn-search-filters',
-  templateUrl: './search-filters.component.html',
-  styleUrls: ['./search-filters.component.scss']
+  template: ''
 })
 export class SearchFiltersComponent implements OnInit, OnDestroy {
   public filterForm: FormGroup;
@@ -20,7 +19,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     radius: 50,
     difficulty: [[0, 10]],
     length: [[0, 50]],
-    time: [[0, 10]]
+    time: [[0, 60]]
   };
 
   private _destroy$ = new Subject<boolean>();

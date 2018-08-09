@@ -4,8 +4,7 @@ import * as _ from 'lodash';
 
 @Component({
   selector: 'gtcn-hike-card',
-  templateUrl: './hike-card.component.html',
-  styleUrls: ['./hike-card.component.scss']
+  template: ''
 })
 export class HikeCardComponent {
   @Input() public hikeProgram: IHikeProgram;

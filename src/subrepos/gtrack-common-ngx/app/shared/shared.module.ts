@@ -8,12 +8,14 @@ import { ISharedConfig, SHARED_CONFIG_TOKEN } from './config';
 
 import { DistancePipe, DurationPipe, CoordinatePipe } from './pipes';
 import { SanitizeHtmlDirective } from './directives/sanitize-html';
+import { PoiImagesToGalleryPipe } from './pipes';
+import { GeoIpService } from './services/geoip';
 
 @NgModule({
   imports: [],
-  declarations: [DistancePipe, DurationPipe, CoordinatePipe, SanitizeHtmlDirective],
-  providers: [UnitsService, GoogleMapsService, GeospatialService],
-  exports: [DistancePipe, DurationPipe, CoordinatePipe, SanitizeHtmlDirective]
+  declarations: [DistancePipe, DurationPipe, CoordinatePipe, SanitizeHtmlDirective, PoiImagesToGalleryPipe],
+  providers: [UnitsService, GoogleMapsService, GeospatialService, GeoIpService],
+  exports: [DistancePipe, DurationPipe, CoordinatePipe, SanitizeHtmlDirective, PoiImagesToGalleryPipe]
 })
 export class SharedModule {
   static forRoot(configFactory: any): ModuleWithProviders {
@@ -28,5 +30,6 @@ export {
   UnitsService,
   GoogleMapsService,
   ISharedConfig,
-  GeospatialService
+  GeospatialService,
+  PoiImagesToGalleryPipe
 };

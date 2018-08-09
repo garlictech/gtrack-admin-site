@@ -12,8 +12,7 @@ import { PoiSelectors } from '../../store/poi';
 
 @Component({
   selector: 'gtcn-checkpoints',
-  templateUrl: './checkpoints.component.html',
-  styleUrls: ['./checkpoints.component.scss']
+  template: ''
 })
 export class CheckpointsComponent {
   public pois$: Observable<Partial<Dictionary<IPoi>>>;
