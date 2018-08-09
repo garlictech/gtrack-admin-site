@@ -4,7 +4,7 @@ import { State, hikeEditPoiActions, commonPoiActions } from '../../../../store';
 import { IExternalPoi, IFilteredProperties, IGTrackPoi } from '../../../../shared/interfaces';
 import { Subject, Observable } from 'rxjs';
 import { HikeEditPoiSelectors, HikeEditMapSelectors } from '../../../../store/selectors';
-import { PoiEditorService, LanguageService, PoiMergeService } from '../../../../shared/services';
+import { PoiEditorService, PoiMergeService } from '../../../../shared/services';
 import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
@@ -204,10 +204,6 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
         const _removablePoiIds = _.map(selectedPois, 'id');
         this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(_removablePoiIds));
       });
-  }
-
-  public translateDescription(description, field) {
-    return LanguageService.translateDescription(description, field);
   }
 
   public openPoiModal = (poi) => {

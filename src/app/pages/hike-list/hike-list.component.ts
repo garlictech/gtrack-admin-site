@@ -2,15 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import {
-  State, commonHikeActions
-} from '../../store';
+import { State, commonHikeActions } from '../../store';
 import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
-import { LanguageService } from '../../shared/services';
-
-import * as _ from 'lodash';
 import { SelectItem, ConfirmationService } from 'primeng/primeng';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'gt-hike-list',
@@ -60,9 +56,5 @@ export class HikeListComponent implements OnInit, OnDestroy {
         this._store.dispatch(new commonHikeActions.DeleteHikeProgram(hikeId));
       }
     });
-  }
-
-  public translateDescription(description, field) {
-    return LanguageService.translateDescription(description, field);
   }
 }

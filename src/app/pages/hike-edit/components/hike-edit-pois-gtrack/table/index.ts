@@ -1,11 +1,10 @@
 // Core
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, editedHikeProgramActions, hikeEditPoiActions } from '../../../../../store';
+import { State, editedHikeProgramActions } from '../../../../../store';
 import { Subject } from 'rxjs';
 import { IGTrackPoi } from '../../../../../shared/interfaces';
-import { LanguageService } from '../../../../../shared/services';
-import { HikeEditRoutePlannerSelectors, HikeEditPoiSelectors } from '../../../../../store/selectors';
+import { HikeEditRoutePlannerSelectors } from '../../../../../store/selectors';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 
 @Component({
@@ -53,9 +52,5 @@ export class HikeEditPoisGTrackTableComponent {
 
         this._store.dispatch(new editedHikeProgramActions.AddStop(stop));
       });
-  }
-
-  public translateDescription(description, field) {
-    return LanguageService.translateDescription(description, field);
   }
 }

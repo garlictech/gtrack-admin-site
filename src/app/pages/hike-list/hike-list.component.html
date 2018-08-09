@@ -36,7 +36,7 @@
                   <a
                     href="#"
                     routerLink="/admin/hike/{{hike.id}}"
-                    [innerHTML]="translateDescription(hike.description, 'title') | trustedHtml"
+                    [innerHTML]="(hike.description | localizeDescription).title | trustedHtml"
                   ></a>
                 </div>
                 <div>
@@ -46,7 +46,7 @@
                   <small class="text-secondary">Last update: {{hike.timestamp | date: 'yyyy.MM.dd. HH:mm'}}</small>
                 </div>
               </td>
-              <td [innerHTML]="translateDescription(hike.description, 'summary') | trustedHtml"></td>
+              <td [innerHTML]="(hike.description | localizeDescription).summary | trustedHtml"></td>
               <td>{{hike.published | date: 'yyyy.MM.dd. HH:mm'}}</td>
               <td class="icons">
                 <img class="svg" *ngIf="hike.elevationIcon?.length" [src]="hike.elevationIcon | trustedUrl">

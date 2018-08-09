@@ -1,9 +1,8 @@
 // Core
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, hikeEditPoiActions, editedHikeProgramActions } from '../../../../../store';
+import { State, editedHikeProgramActions } from '../../../../../store';
 import { IGTrackPoi } from '../../../../../shared/interfaces';
-import { LanguageService } from '../../../../../shared/services';
 
 @Component({
   selector: 'hike-edit-pois-hike-table',
@@ -22,9 +21,5 @@ export class HikeEditPoisHikeTableComponent {
     $event.stopPropagation();
 
     this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId([poi.id]));
-  }
-
-  public translateDescription(description, field) {
-    return LanguageService.translateDescription(description, field);
   }
 }

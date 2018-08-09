@@ -4,27 +4,19 @@ import { Observable } from 'rxjs';
 import {
   GeometryService,
   ElevationService,
-  PoiService,
   IconService,
   CenterRadius,
   GeoSearchSelectors,
   PoiSelectors
 } from 'subrepos/gtrack-common-ngx';
 import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
+import { State, IExternalPoiListContextItemState, commonGeoSearchActions } from '../../../store';
 import {
-  State,
-  IExternalPoiListContextItemState,
-  commonGeoSearchActions,
-  IExternalPoiListContextState
-} from '../../../store';
-import {
-  HikeEditMapSelectors,
   HikeEditPoiSelectors,
   HikeEditRoutePlannerSelectors,
   EditedHikeProgramSelectors
 } from '../../../store/selectors';
-import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from '../admin-map';
-import { LanguageService } from '../language.service';
+import { AdminMap, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../interfaces';
 import { GooglePoiService } from './google-poi.service';
 import { WikipediaPoiService } from './wikipedia-poi.service';
@@ -544,7 +536,7 @@ export class PoiEditorService {
         poi.lat,
         poi.lon,
         poi.types || [],
-        LanguageService.translateDescription(poi.description, 'title'),
+        'TODOKA', // this._localizeDescriptionPipe.transform(poi.description).title,
         this._iconService,
         poi.id
       );

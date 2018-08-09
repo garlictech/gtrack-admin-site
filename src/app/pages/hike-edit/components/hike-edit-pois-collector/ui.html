@@ -1,5 +1,5 @@
 <p-dialog
-  header="{{translateDescription(modalPoi?.description, 'title')}}"
+  header="{{(modalPoi?.description | localizeDescription).title}}"
   [(visible)]="displayPoiModal"
   [modal]="true"
   [closable]="true"

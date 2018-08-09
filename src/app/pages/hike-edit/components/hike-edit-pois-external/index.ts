@@ -2,16 +2,14 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { AdminMap, AdminMapService, AdminMapMarker, RoutePlannerService } from '../../../../shared/services/admin-map';
-import { PoiEditorService, LanguageService } from '../../../../shared/services';
-import { Poi, PoiSelectors } from 'subrepos/gtrack-common-ngx';
-import { IPoi, EPoiTypes } from 'subrepos/provider-client';
+import { AdminMap, AdminMapService, RoutePlannerService } from '../../../../shared/services/admin-map';
+import { PoiEditorService } from '../../../../shared/services';
+import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
+import { EPoiTypes } from 'subrepos/provider-client';
 import {
   IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi
 } from '../../../../shared/interfaces';
-import {
-  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions, IHikeEditRoutePlannerState
-} from '../../../../store';
+import { State, hikeEditPoiActions } from '../../../../store';
 import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors } from '../../../../store/selectors'
 
 import * as _ from 'lodash';
@@ -321,9 +319,5 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   public openPoiModal = (poi) => {
     this.modalPoi = _.cloneDeep(poi);
     this.displayPoiModal = true;
-  }
-
-  public translateDescription(description, field) {
-    return LanguageService.translateDescription(description, field);
   }
 }

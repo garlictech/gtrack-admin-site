@@ -2,15 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import {
-  PoiSelectors, CenterRadius, GeoSearchSelectors, Poi, PoiSaved, IGeoSearchContextState, IGeoSearchResponseItem
+  PoiSelectors, GeoSearchSelectors, IGeoSearchContextState, IGeoSearchResponseItem
 } from 'subrepos/gtrack-common-ngx';
-import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
-import { AdminMap, AdminMapService, AdminMapMarker } from '../../../../shared/services/admin-map';
-import { PoiEditorService, PoiMergeService, LanguageService } from '../../../../shared/services';
-import { IGTrackPoi, IFilteredProperties } from '../../../../shared/interfaces';
-import {
-  State, hikeEditPoiActions, IExternalPoiListContextState, commonPoiActions
-} from '../../../../store';
+import { IPoiStored } from 'subrepos/provider-client';
+import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
+import { PoiEditorService } from '../../../../shared/services';
+import { IGTrackPoi } from '../../../../shared/interfaces';
+import { State, hikeEditPoiActions, commonPoiActions } from '../../../../store';
 import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
 } from '../../../../store/selectors';
@@ -159,10 +157,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
    */
   public toggleOffrouteMarkers() {
     this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('gTrack'));
-  }
-
-  public translateDescription(description, field) {
-    return LanguageService.translateDescription(description, field);
   }
 
   public openGTrackPoiModal = (poi: IGTrackPoi) => {
