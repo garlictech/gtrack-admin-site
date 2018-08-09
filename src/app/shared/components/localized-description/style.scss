@@ -12,3 +12,7 @@
   position: relative;
   top: -25px;
 }
+
+:host ::ng-deep form > p-button.btn-success > button.ui-button {
+  margin-top: 5px !important;
+}
