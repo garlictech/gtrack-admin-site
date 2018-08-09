@@ -12,7 +12,7 @@
           ></gt-localized-description>
         </div>
       </div>
-      <div class="ui-g mt-20">
+      <div class="ui-g">
         <div class="ui-g-12">
           <p-button
             label="Save"
@@ -27,6 +27,31 @@
             (onClick)="deletePoi(gTrackPoi?.id)"
             *ngIf="gTrackPoi?.state === EObjectState.draft"
           ></p-button>
+        </div>
+      </div>
+      <div class="ui-g mt-20">
+        <div class="ui-g-12">
+          <div><strong>Position</strong>: {{gTrackPoi?.lat}},{{gTrackPoi?.lon}} ({{gTrackPoi?.elevation.toFixed(1)}} m)
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div><strong>Object type</strong>: {{gTrackPoi?.objectType}}</div>
+        </div>
+        <div class="ui-g-12">
+          <div><strong>Types</strong>: {{gTrackPoi?.types.join(', ')}}</div>
+        </div>
+        <div class="ui-g-12" *ngIf="gTrackPoi?.objectId[gTrackPoi?.objectType]">
+          <div><strong>Object ID</strong>:
+            <pre>{{gTrackPoi?.objectId[gTrackPoi?.objectType] | json}}</pre>
+          </div>
+        </div>
+        <div
+          class="ui-g-12"
+          *ngIf="gTrackPoi?.additionalData && gTrackPoi?.additionalData[gTrackPoi?.objectType]"
+        >
+          <div><strong>Additional data</strong>:
+            <pre>{{gTrackPoi?.additionalData[gTrackPoi?.objectType] | json}}</pre>
+          </div>
         </div>
       </div>
     </p-card>
