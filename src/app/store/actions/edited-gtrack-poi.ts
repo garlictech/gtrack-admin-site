@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ILocalizedItem, ITextualDescription, IPoiStored, IBackgroundImageData } from 'subrepos/provider-client';
+import { ITextualDescription, IPoiStored, IBackgroundImageData } from 'subrepos/provider-client';
 
 export const ADD_NEW_TRANSLATED_POI_DESCRIPTION = '[Gtrack Poi Edit] Add new translated poi description';
 export const DELETE_TRANSLATED_POI_DESCRIPTION = '[Gtrack Poi Edit] Delete translated poi description';

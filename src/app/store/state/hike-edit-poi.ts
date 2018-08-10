@@ -1,4 +1,4 @@
-import { EntityAdapter, EntityState } from '@ngrx/entity';
+import { EntityState } from '@ngrx/entity';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 
 export interface IWikipediaPoiEntityState extends EntityState<IWikipediaPoi> {};

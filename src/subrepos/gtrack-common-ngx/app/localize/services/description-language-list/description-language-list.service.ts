@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { ILocalizedItem, ITextualDescription } from '../../../../../provider-client';
 import { LocalizeSelectors } from '../../store/selectors';
 
 import { Observable } from 'rxjs/Observable';
@@ -11,7 +11,13 @@ export class DescriptionLanguageListService {
 
   constructor(private _selectors: LocalizeSelectors) {}
 
-  public getLocalizedDescription(item: ILocalizedItem<ITextualDescription>): Observable<ITextualDescription> {
+  public getLocalizedDescription(item: ILocalizedItem<ITextualDescription>|undefined): Observable<ITextualDescription> {
+    if (!item) {
+      return Observable.of({
+        title: ''
+      });
+    }
+
     return this._selectors.getLanguageSettings().map(settings => {
       let list = [
         // ...settings.descriptionLanguageList,

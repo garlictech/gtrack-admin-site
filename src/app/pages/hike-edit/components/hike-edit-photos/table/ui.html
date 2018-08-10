@@ -1,5 +1,5 @@
 <ng-container *ngIf="(images$ | async) as images">
-  <p-table [value]="images">
+  <p-table [value]="images | poiImagesWithinCircle : distanceFrom">
     <ng-template pTemplate="header">
       <tr>
         <th>Thumbnail</th>

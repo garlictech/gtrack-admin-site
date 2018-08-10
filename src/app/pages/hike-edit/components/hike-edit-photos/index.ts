@@ -16,6 +16,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   @Input() backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
   @Input() backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
   @Input() clickActions: any;
+  @Input() distanceFrom: number[] = null;
   public googlePhotos$: Observable<IBackgroundImageData[]>;
   public wikipediaPhotos$: Observable<IBackgroundImageData[]>;
   public mapillaryImages$: Observable<IBackgroundImageData[]>;

@@ -28,8 +28,7 @@ import { GeospatialService } from '../../../shared/services/geospatial';
 
 @Component({
   selector: 'gtcn-elevation-profile',
-  templateUrl: './elevation-profile.component.html',
-  styleUrls: ['./elevation-profile.component.scss']
+  template: ''
 })
 export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('elevationProfile') public mainDiv: ElementRef;

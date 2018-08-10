@@ -13,8 +13,7 @@ import * as PoiActions from '../../store/poi/actions';
 
 @Component({
   selector: 'gc-download-gpx',
-  templateUrl: './download-gpx-button.component.html',
-  styleUrls: ['./download-gpx-button.component.scss']
+  template: ''
 })
 export class DownloadGpxButtonComponent implements OnInit {
   @Input()

@@ -29,6 +29,8 @@ export interface IPoiImageSource {
 
 export interface IBackgroundImageData {
   title: string;
+  lat: number;
+  lon: number;
   original: IPoiImageInfo;
   card: IPoiImageInfo;
   thumbnail: IPoiImageInfo;

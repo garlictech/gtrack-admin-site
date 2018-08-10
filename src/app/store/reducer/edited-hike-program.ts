@@ -1,4 +1,4 @@
-import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
+import { ActionReducer } from '@ngrx/store';
 import { IEditedHikeProgramState } from '../state';
 import { editedHikeProgramActions } from '..';
 import { EObjectState } from 'subrepos/provider-client';
@@ -85,7 +85,6 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
     }
 
     case editedHikeProgramActions.SET_STOPS: {
-      newState.dirty = true;
       newState.data.stops = _.cloneDeep(action.stops)
       return newState;
     }

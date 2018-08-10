@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ILocalizedItem, ITextualDescription, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
+import { ITextualDescription, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
 
 export const RESET_HIKE_PROGRAM = '[HikeProgram] Reset';
 export const ADD_NEW_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Add new translated hike description';

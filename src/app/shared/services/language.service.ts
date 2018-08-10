@@ -36,18 +36,4 @@ export class LanguageService {
     const _lang = DESCRIPTION_LANGUAGES.find(lang => lang.locale === locale);
     return _lang ? _lang.name : locale;
   }
-
-  public static translateDescription(description: ILocalizedItem<ITextualDescription>, field: string) {
-    if (description && Object.keys(description).length > 0) {
-      // Primary lang
-      if (description.en_US && description.en_US[field]) {
-        return `${description.en_US[field]} (en_US)`;
-      } else {
-        let lang = Object.keys(description)[0];
-        return `${description[lang][field]} (${lang})`;
-      }
-    } else {
-      return 'n/a';
-    }
-  }
 }

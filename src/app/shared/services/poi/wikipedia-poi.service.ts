@@ -164,6 +164,8 @@ export class WikipediaPoiService {
 
                 const _imageInfo: IBackgroundImageData = {
                   title: _imgData.title,
+                  lat: _pois.find((p: IWikipediaPoi) => p.wikipedia.pageid === _imgData.pageid).lat,
+                  lon: _pois.find((p: IWikipediaPoi) => p.wikipedia.pageid === _imgData.pageid).lon,
                   original: _imgData.original,
                   card: _imgData.original,
                   thumbnail: _imgData.thumbnail,
