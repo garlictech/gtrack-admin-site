@@ -105,9 +105,6 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
   ngOnInit() {
     let pois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
-
-    console.log(this.hikeProgram.stops);
-
     let route = this.hikeProgram.routeId;
 
     this.pois$ = this._store.select(this._poiSelectors.getPois(pois));

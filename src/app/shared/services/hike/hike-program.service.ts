@@ -96,8 +96,6 @@ export class HikeProgramService {
         _segmentStartPoint = [stop.lon, stop.lat];
       }
 
-      // console.log('Set Stops on the end of _updateStopsSegment', stops);
-
       this._store.dispatch(new editedHikeProgramActions.SetStops(stops));
     }
   }

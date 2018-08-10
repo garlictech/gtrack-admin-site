@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { HikeProgramService, HikeProgram, PoiSelectors, PoiService } from 'subrepos/gtrack-common-ngx';
-import { State, editedHikeProgramActions, editedGTrackPoiActions } from '..';
-import { IHikeProgramStored, IHikeProgram, IPoiStored, IPoi } from 'subrepos/provider-client';
+import { PoiService } from 'subrepos/gtrack-common-ngx';
+import { State, editedGTrackPoiActions } from '..';
+import { IPoiStored, IPoi } from 'subrepos/provider-client';
 import { log } from '../../log';
 
 import * as _ from 'lodash';

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-
 import { IHikeEditRoutePlannerState } from '../state/hike-edit-route-planner';
 import { ISegment } from 'subrepos/gtrack-common-ngx';
 

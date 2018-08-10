@@ -1,4 +1,4 @@
-import { EntityAdapter, EntityState } from '@ngrx/entity';
+import { EntityState } from '@ngrx/entity';
 import { IBackgroundImageDataStored } from '../../shared/interfaces/mapillary-image.interface';
 
 export interface IMapillaryImageEntityState extends EntityState<IBackgroundImageDataStored> {};

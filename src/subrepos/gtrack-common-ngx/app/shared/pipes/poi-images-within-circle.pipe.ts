@@ -15,7 +15,6 @@ export class PoiImagesWithinCirclePipe implements PipeTransform {
         const imageLocation = turf.point([image.lon, image.lat]);
         const poiLocation = turf.point([properties[1], properties[0]]);
         const dist = turf.distance(imageLocation, poiLocation) * 1000;
-        console.log(image, dist);
 
         return dist <= properties[2];
       });
