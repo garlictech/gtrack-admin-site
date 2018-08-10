@@ -99,7 +99,10 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
           required: false,
           rows: 2
         }),
-        fullDescription: new RichTextEditorField({ label: 'form.description', required: false })
+        fullDescription: new RichTextEditorField({
+          label: 'form.description',
+          required: false
+        })
       }
     };
   }
