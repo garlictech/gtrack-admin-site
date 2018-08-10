@@ -262,26 +262,30 @@ export class PoiEditorService {
     let _poisWithoutElevation = _.filter(_pois, (p: IExternalPoi) => !p.elevation);
     let _chunks: IExternalPoi[][] = _.chunk(_poisWithoutElevation, 500);
 
-    return Observable.interval(100)
-      .take(_chunks.length)
-      .map(counter => {
-        const _chunk: IExternalPoi[] = _chunks[counter];
-        const _coordinates = _.map(_chunk, (p: IExternalPoi) => [p.lat, p.lon]);
+    if (_chunks.length > 0) {
+      return Observable.interval(100)
+        .take(_chunks.length)
+        .map(counter => {
+          const _chunk: IExternalPoi[] = _chunks[counter];
+          const _coordinates = _.map(_chunk, (p: IExternalPoi) => [p.lat, p.lon]);
 
-        return this._elevationService.getData(_coordinates).then(data => {
-          // Update elevation only if we got all data
-          if (data.length === _chunk.length) {
-            for (let i in _chunk) {
-              _chunk[i].elevation = data[i][2];
+          return this._elevationService.getData(_coordinates).then(data => {
+            // Update elevation only if we got all data
+            if (data.length === _chunk.length) {
+              for (let i in _chunk) {
+                _chunk[i].elevation = data[i][2];
+              }
             }
-          }
-          return Observable.of(counter);
+            return Observable.of(counter);
+          });
+        })
+        .combineAll()
+        .map(() => {
+          return _pois;
         });
-      })
-      .combineAll()
-      .map(() => {
-        return _pois;
-      });
+      } else {
+        return Observable.of(_pois);
+      }
   }
 
   public handlePoiDetails(pois, subdomain) {

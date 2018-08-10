@@ -24,7 +24,7 @@
       label="Get new"
       styleClass="ui-button-primary ml-5"
       (onClick)="getPois()"
-      [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (loading$ | async) || (saving$ | async)"
+      [disabled]="(segments$ | async)?.length < 1 || (searchContext$ | async)?.working || (loading$ | async) || (processing$ | async) || (saving$ | async)"
     ></p-button>
   </div>
 
@@ -47,7 +47,7 @@
   </div>
 </div>
 
-<gt-table-spinner *ngIf="((loading$ | async) || (saving$ | async)) as working; else externalPoiTable"></gt-table-spinner>
+<gt-table-spinner *ngIf="((loading$ | async) || (searchContext$ | async)?.working || (processing$ | async) || (saving$ | async)) as working; else externalPoiTable"></gt-table-spinner>
 
 <ng-template #externalPoiTable>
   <p-accordion [multiple]="true">

@@ -1,4 +1,4 @@
-import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
+import { ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   IHikeEditPoiState, IWikipediaPoiEntityState, IGooglePoiEntityState, IOsmAmenityPoiEntityState,
@@ -6,7 +6,6 @@ import {
 } from '../state';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 import { hikeEditPoiActions } from '..';
-import { poiReducer } from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';
 
@@ -327,6 +326,7 @@ const initialContextItemState = {
   loading: false,
   loaded: false,
   saving: false,
+  processing: false,
   showOnrouteMarkers: true,
   showOffrouteMarkers: false
 };
@@ -513,6 +513,19 @@ export function externalPoiListContextReducer(
           ...state[action.subdomain],
           loading: true,
           loaded: false
+        }
+      };
+
+    /**
+     * Processing
+     */
+
+    case hikeEditPoiActions.SET_PROCESSING:
+      return {
+        ...state,
+        [action.subdomain]: {
+          ...state[action.subdomain],
+          processing: action.processing
         }
       };
 
