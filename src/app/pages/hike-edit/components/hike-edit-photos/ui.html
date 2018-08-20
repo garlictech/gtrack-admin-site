@@ -3,6 +3,8 @@
   [bgImages$]="bgImages$"
 ></gt-background-images>
 
+<div class="clearfix"></div>
+
 <p-accordion [multiple]="true">
   <p-accordionTab header="Google ({{((googlePhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
     <gt-hike-edit-photos-table
