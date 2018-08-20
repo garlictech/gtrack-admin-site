@@ -1,0 +1,17 @@
+.title {
+  margin-bottom: 10px;
+}
+
+.img {
+  float: left;
+  padding: 0 15px 0px 0;
+
+  img {
+    width: 100px;
+  }
+}
+
+:host .leaflet-popup-content {
+  margin: 130px;
+  width:auto !important;
+}
