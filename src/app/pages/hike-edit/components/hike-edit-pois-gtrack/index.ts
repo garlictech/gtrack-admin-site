@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import {
@@ -20,6 +20,7 @@ import * as _ from 'lodash';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
+  @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<IGTrackPoi[]>;
   public segments$: Observable<any>;
   public searchContext$: Observable<IGeoSearchContextState | undefined>;
@@ -34,6 +35,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _poiEditorService: PoiEditorService,
+    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
@@ -70,29 +72,27 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     // Poi list based on geoSearch results
     // dirty flag will change on add/remove gTrackPoi to/from the hike
-    this.pois$ = this._store
-      .select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois', this._poiSelectors.getAllPois))
-      .takeUntil(this._destroy$)
-      .filter((pois: IPoiStored[]) => typeof pois !== 'undefined' && pois.length > 0)
-      .switchMap((pois: IPoiStored[]) => {
+    this.pois$ = Observable
+      .combineLatest(
+        this._store
+          .select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois', this._poiSelectors.getAllPois))
+          .takeUntil(this._destroy$),
+        this._store
+          .select(this._editedHikeProgramSelectors.getStops)
+          .takeUntil(this._destroy$)
+      )
+      .filter(([pois, stops]: [IPoiStored[], any[]]) => typeof pois !== 'undefined' && pois.length > 0)
+      .switchMap(([pois, stops]: [IPoiStored[], any[]]) => {
         return this._store
           .select(this._hikeEditRoutePlannerSelectors.getPath)
           .take(1)
           .switchMap((path: any) => {
             return Observable.of(this._poiEditorService.organizePois(pois, path));
           })
-        }
-      )
-      .switchMap((pois: IGTrackPoi[]) => {
-        return Observable.of(this._poiEditorService.handleHikeInclusion(pois));
-        /*
-        return this._store
-          .select(this._editedHikeProgramSelectors.getStops)
-          .takeUntil(this._destroy$)
-          .switchMap((stops: any) => {
-            return Observable.of(this._poiEditorService.handleHikeInclusion(stops));
-          })*/
-      });
+          .switchMap((organizedPois: IPoiStored[]) => {
+            return Observable.of(this._poiEditorService.handleHikeInclusion(organizedPois));
+          })
+        });
 
     this.pois$
       .debounceTime(200)
@@ -122,7 +122,11 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
-        this._poiEditorService.refreshPoiMarkers(this._map);
+        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
+          if (isPlanning) {
+            this._poiEditorService.refreshPoiMarkers(this._map);
+          }
+        });
       });
 
     this._store
@@ -130,7 +134,11 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
-        this._poiEditorService.refreshPoiMarkers(this._map);
+        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
+          if (isPlanning) {
+            this._poiEditorService.refreshPoiMarkers(this._map);
+          }
+        });
       });
   }
 

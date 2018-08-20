@@ -35,6 +35,7 @@
       binary="true"
       [(ngModel)]="showOffrouteMarkers"
       (onChange)="toggleOffrouteMarkers()"
+      [disabled]="!(isPlanning$ | async)"
     ></p-checkbox>
 
     <p-checkbox
@@ -43,6 +44,7 @@
       binary="true"
       [(ngModel)]="showOnrouteMarkers"
       (onChange)="toggleOnrouteMarkers()"
+      [disabled]="!(isPlanning$ | async)"
     ></p-checkbox>
   </div>
 </div>
