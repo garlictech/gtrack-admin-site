@@ -1,20 +1,23 @@
 <p-accordion [multiple]="true">
   <p-accordionTab header="Hike pois">
-    <gt-hike-edit-pois-hike></gt-hike-edit-pois-hike>
+    <gt-hike-edit-pois-hike [isPlanning$]="isPlanning$"></gt-hike-edit-pois-hike>
   </p-accordionTab>
   <p-accordionTab header="gTrack pois">
-    <gt-hike-edit-pois-gtrack></gt-hike-edit-pois-gtrack>
+    <gt-hike-edit-pois-gtrack [isPlanning$]="isPlanning$"></gt-hike-edit-pois-gtrack>
   </p-accordionTab>
 </p-accordion>
 
 <p-accordion [multiple]="true" styleClass="mt-10">
     <p-accordionTab header="Poi collector">
-      <gt-hike-edit-pois-collector></gt-hike-edit-pois-collector>
+      <gt-hike-edit-pois-collector [isPlanning$]="isPlanning$"></gt-hike-edit-pois-collector>
     </p-accordionTab>
   </p-accordion>
 
 <p-accordion [multiple]="true" styleClass="mt-10">
   <p-accordionTab header="{{poiType.title}}" *ngFor="let poiType of externalPoiTypes; let idx = index;">
-    <gt-hike-edit-pois-external [poiType]="poiType"></gt-hike-edit-pois-external>
+    <gt-hike-edit-pois-external
+      [isPlanning$]="isPlanning$"
+      [poiType]="poiType"
+    ></gt-hike-edit-pois-external>
   </p-accordionTab>
 </p-accordion>

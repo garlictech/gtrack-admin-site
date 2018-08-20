@@ -337,7 +337,9 @@ export const externalPoiInitialContextState: IExternalPoiListContextState = {
   osmNatural: _.cloneDeep(initialContextItemState),
   osmRoute: _.cloneDeep(initialContextItemState),
   wikipedia: _.cloneDeep(initialContextItemState),
-  collector: _.cloneDeep(initialContextItemState),
+  collector: _.merge(_.cloneDeep(initialContextItemState), {
+    showOffrouteMarkers: true
+  }),
   gTrack: _.merge(_.cloneDeep(initialContextItemState), {
     showOnrouteMarkers: false,
   }),

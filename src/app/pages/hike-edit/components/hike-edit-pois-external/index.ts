@@ -20,6 +20,7 @@ import * as _ from 'lodash';
 })
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   @Input() poiType: IExternalPoiType;
+  @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
   public saveablePois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
   public segments$: Observable<any>;
@@ -144,6 +145,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           .take(1)
           .subscribe((externalPois: IExternalPoi[]) => {
             this._setSubdomainPoisInCollector(this._poiEditorService.handleInCollectorPois(externalPois, collectedPois));
+
+            this._poiEditorService.refreshPoiMarkers(this._map);
           });
       });
 
@@ -176,7 +179,11 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
-        this._poiEditorService.refreshPoiMarkers(this._map);
+        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
+          if (isPlanning) {
+            this._poiEditorService.refreshPoiMarkers(this._map);
+          }
+        });
       });
 
     this._store
@@ -184,7 +191,11 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
-        this._poiEditorService.refreshPoiMarkers(this._map);
+        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
+          if (isPlanning) {
+            this._poiEditorService.refreshPoiMarkers(this._map);
+          }
+        });
       });
   }
 

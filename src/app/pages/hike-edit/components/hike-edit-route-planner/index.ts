@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import {
   AdminMap, AdminMapService, WaypointMarkerService, RoutePlannerService
 } from '../../../../shared/services/admin-map';
@@ -22,9 +22,9 @@ import * as _ from 'lodash';
   templateUrl: './ui.html'
 })
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
+  @Input() isPlanning$: Observable<boolean>;
   public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   public route$: Observable<any>;
-  public isPlanning$: Observable<boolean>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
   private _map: AdminMap;
 
@@ -48,10 +48,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
     this.routeInfoData$ = this._store
       .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
-      .takeUntil(this._destroy$);
-
-    this.isPlanning$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getIsPlanning)
       .takeUntil(this._destroy$);
 
     this._store

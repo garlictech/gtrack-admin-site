@@ -68,7 +68,7 @@
     <div class="ui-g">
       <div class="ui-g-12">
         <p-card title="Route planning">
-          <gt-hike-edit-route-planner></gt-hike-edit-route-planner>
+          <gt-hike-edit-route-planner [isPlanning$]="isPlanning$"></gt-hike-edit-route-planner>
         </p-card>
       </div>
     </div>
@@ -76,7 +76,7 @@
     <div class="ui-g">
       <div class="ui-g-12">
         <p-card title="Pois">
-          <gt-hike-edit-pois></gt-hike-edit-pois>
+          <gt-hike-edit-pois [isPlanning$]="isPlanning$"></gt-hike-edit-pois>
         </p-card>
       </div>
     </div>

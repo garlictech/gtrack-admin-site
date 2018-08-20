@@ -97,6 +97,18 @@ export class EditedHikeProgramSelectors {
     )
   }
 
+  public getHikePoisCount<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
+    return createSelector(
+      getAllSelector,
+      this.getPoiIds,
+      (data, poiIds) => {
+        if (typeof poiIds !== 'undefined') {
+          return data.filter(item => poiIds.indexOf((<any>item).id) !== -1).length;
+        }
+      }
+    )
+  }
+
   public getStopsWithPoiNames<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
     return createSelector(
       getAllSelector,

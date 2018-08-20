@@ -12,4 +12,6 @@ import { MapMarkerService, MapMarker } from './services/map-marker';
 })
 export class MapModule {}
 
-export { MapService, CheckpointMarker, CurrentPositionMarker, Map, MapMarker, MapMarkerService, IconService };
+export {
+  MapService, CheckpointMarker, CurrentPositionMarker, Map, MapMarker, MapMarkerService, IconService
+};

@@ -1,15 +1,18 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, hikeEditPoiActions } from '../../../../store';
 import { IExternalPoiType } from '../../../../shared/interfaces';
 import { EPoiTypes } from 'subrepos/provider-client';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'gt-hike-edit-pois',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisComponent implements OnInit {
+  @Input() isPlanning$: Observable<boolean>;
+
   public externalPoiTypes: IExternalPoiType[] = [
     {
       title: 'Wikipedia pois',

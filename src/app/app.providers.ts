@@ -5,6 +5,7 @@ import { CONFIG as LANGUAGE_CONFIG } from 'subrepos/localize-ngx';
 
 import { RoutePlannerService } from './shared/services/admin-map';
 import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
+import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker/marker-popup.service';
 
 import {
   EditedGTrackPoiSelectors,
@@ -55,5 +56,6 @@ export const APP_PROVIDERS = [
   HikeEditImageSelectors,
   HikeEditMapSelectors,
   HikeEditRoutePlannerSelectors,
-  ConfirmationService
+  ConfirmationService,
+  MarkerPopupService
 ];

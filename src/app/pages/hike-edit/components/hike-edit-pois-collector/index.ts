@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, hikeEditPoiActions, commonPoiActions } from '../../../../store';
 import { IExternalPoi, IFilteredProperties, IGTrackPoi } from '../../../../shared/interfaces';
@@ -16,6 +16,7 @@ import * as uuid from 'uuid/v1';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
+  @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<any[]>;
   public selectedPois$: Observable<any[]>;
   public showOnrouteMarkers = true;
@@ -70,7 +71,9 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
           .subscribe((collectedPois: any[]) => {
             const _checkedCollectorPois: any[] = this._poiEditorService.handleGTrackPois(collectedPois, gTrackPois);
             const _removablePoiIds = _.map(_checkedCollectorPois.filter(p => p.inGtrackDb), 'id');
-            this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(_removablePoiIds));
+            if (_removablePoiIds.length > 0) {
+              this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(_removablePoiIds));
+            }
           });
       });
 
@@ -83,7 +86,11 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
-        this._poiEditorService.refreshPoiMarkers(this._map);
+        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
+          if (isPlanning) {
+            this._poiEditorService.refreshPoiMarkers(this._map);
+          }
+        });
       });
 
     this._store
@@ -91,7 +98,12 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
-        this._poiEditorService.refreshPoiMarkers(this._map);
+
+        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
+          if (isPlanning) {
+            this._poiEditorService.refreshPoiMarkers(this._map);
+          }
+        });
       });
   }
 

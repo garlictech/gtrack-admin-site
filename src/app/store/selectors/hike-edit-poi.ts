@@ -91,6 +91,10 @@ export class HikeEditPoiSelectors {
     return createSelector(this.getAllCollectorPois, (pois: any[]) => pois.find(poi => poi.id === poiId));
   }
 
+  public getCollectorPoisCount() {
+    return createSelector(this.getAllCollectorPois, (pois: any[]) => pois.length);
+  }
+
   public getPoiPhotos(subdomain) {
     return createSelector(this._allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
       let _photos = [];
