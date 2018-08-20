@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { HikeProgramService } from 'subrepos/gtrack-common-ngx';
+import { HikeProgramService, GeospatialService } from 'subrepos/gtrack-common-ngx';
 import { State, editedHikeProgramActions } from '..';
 import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
 import { log } from '../../log';
 import { EditedHikeProgramSelectors } from '../selectors/edited-hike-program';
+import { HikeEditRoutePlannerSelectors } from '../selectors';
 
 import * as _ from 'lodash';
 
@@ -16,8 +17,46 @@ export class EditedHikeProgramEffects {
     private _actions$: Actions,
     private _hikeProgramService: HikeProgramService,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _geospatialService: GeospatialService,
     private _store: Store<State>
   ) {}
+
+  /**
+   * Prepare stop from poi then add to store
+   */
+  @Effect()
+  prepareThenAddStop$: Observable<Action> = this._actions$
+    .ofType(editedHikeProgramActions.PREPARE_THEN_ADD_STOP)
+    .map((action: editedHikeProgramActions.PrepareThenAddStop) => action.poi)
+    .switchMap(poi => {
+      return this._store
+        .select(this._hikeEditRoutePlannerSelectors.getPath)
+        .take(1)
+        .map((path) => {
+          const stop = {
+            distanceFromOrigo: this._geospatialService.distanceOnLine(
+              path.geometry.coordinates[0],
+              [poi.lon, poi.lat],
+              path
+            ),
+            onRoute: poi.onRoute || false,
+            poiId: poi.id,
+            lat: poi.lat,
+            lon: poi.lon,
+            // Segment data will be calculated after inserting the stop
+            segment: {
+              uphill: 0,
+              downhill: 0,
+              distance: 0,
+              score: 0,
+              time: 0
+            }
+          }
+
+          return new editedHikeProgramActions.AddStop(stop);
+        })
+    });
 
   @Effect()
   save$: Observable<Action> = this._actions$
