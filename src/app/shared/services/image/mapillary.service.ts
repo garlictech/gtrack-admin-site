@@ -26,6 +26,8 @@ export class MapillaryService {
             const _image: IBackgroundImageDataStored = {
               id: uuid(),
               title: 'untitled',
+              lat: _feature.geometry.coordinates[1],
+              lon: _feature.geometry.coordinates[0],
               source: {
                 type: EPoiImageTypes.mapillary,
                 poiObjectId: _feature.properties.key

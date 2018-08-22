@@ -1,6 +1,6 @@
 // import { MapMarker } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker';
 import { MapMarker, IconService } from 'subrepos/gtrack-common-ngx';
-import * as uuid from 'uuid/v1';
+import { IMarkerPopupData } from 'subrepos/provider-client/interfaces';
 
 export class AdminMapMarker extends MapMarker {
   public poiId: string;
@@ -11,9 +11,10 @@ export class AdminMapMarker extends MapMarker {
     protected types: Array<string>,
     title: string,
     protected iconService: IconService,
-    poiId: string
+    poiId: string,
+    popupData: IMarkerPopupData
   ) {
-    super(lat, lon, types, title, iconService);
+    super(lat, lon, types, title, iconService, popupData);
     this.poiId = poiId;
   }
 }

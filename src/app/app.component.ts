@@ -4,7 +4,8 @@ import { ToasterConfig, BodyOutputType } from 'angular2-toaster';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   public toasterConfig: ToasterConfig = new ToasterConfig({

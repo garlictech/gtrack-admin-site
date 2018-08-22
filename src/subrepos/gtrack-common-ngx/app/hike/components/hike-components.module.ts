@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
 import { TranslateModule } from '@ngx-translate/core';
 import { StoreModule } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { GalleriaModule } from 'primeng/galleria';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { TrailBoxComponent } from './trail-box';
@@ -46,7 +47,6 @@ const COMPONENTS = [
     HikeModule,
     MapComponentsModule,
     MapModule,
-    CommonModule,
     SharedModule,
     NouisliderModule,
     ReactiveFormsModule,
@@ -55,7 +55,9 @@ const COMPONENTS = [
     StoreModule,
     LocalizeModule,
     ButtonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    DialogModule,
+    GalleriaModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS]

@@ -28,5 +28,4 @@ export class GeospatialService {
 
     return 1000 * turf.lineDistance(_lineSlice, {units: 'kilometers'});
   }
-
 }

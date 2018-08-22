@@ -2,7 +2,6 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IExternalPoi } from '../../../../../shared/interfaces';
-import { LanguageService } from '../../../../../shared/services';
 import { State, hikeEditPoiActions } from '../../../../../store';
 import { EPoiTypes } from 'subrepos/provider-client';
 
@@ -38,9 +37,5 @@ export class HikeEditPoisExternalTableComponent {
         this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiSelected(poi.id));
         break;
     }
-  }
-
-  public translateDescription(description, field) {
-    return LanguageService.translateDescription(description, field);
   }
 }

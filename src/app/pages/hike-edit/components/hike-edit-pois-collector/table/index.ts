@@ -50,8 +50,4 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
       this._store.dispatch(new hikeEditPoiActions.AddGTrackPoiToMergeSelection(poiId));
     }
   }
-
-  public translateDescription(description, field) {
-    return LanguageService.translateDescription(description, field);
-  }
 }

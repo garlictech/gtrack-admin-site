@@ -1,15 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import {
   AdminMap, AdminMapService, WaypointMarkerService, RoutePlannerService
 } from '../../../../shared/services/admin-map';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
-  State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions, editedHikeProgramActions, IHikeEditRoutePlannerTotalState
+  State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions, editedHikeProgramActions, IHikeEditRoutePlannerTotalState, hikeEditPoiActions
 } from '../../../../store';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
 import { HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
-import { ReverseGeocodingService, HikeProgramService } from '../../../../shared/services';
+import { ReverseGeocodingService, HikeProgramService, PoiEditorService } from '../../../../shared/services';
 import { ConfirmationService } from 'primeng/primeng';
 import { IRouteStored } from 'subrepos/provider-client';
 import { ToasterService } from 'angular2-toaster';
@@ -22,9 +22,9 @@ import * as _ from 'lodash';
   templateUrl: './ui.html'
 })
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
+  @Input() isPlanning$: Observable<boolean>;
   public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   public route$: Observable<any>;
-  public isPlanning$: Observable<boolean>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
   private _map: AdminMap;
 
@@ -40,17 +40,14 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _hikeProgramService: HikeProgramService,
     private _store: Store<State>,
     private _reverseGeocodingService: ReverseGeocodingService,
-    private _confirmationService: ConfirmationService
+    private _confirmationService: ConfirmationService,
+    private _poiEditorService: PoiEditorService
   ) {}
 
   ngOnInit() {
 
     this.routeInfoData$ = this._store
       .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
-      .takeUntil(this._destroy$);
-
-    this.isPlanning$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getIsPlanning)
       .takeUntil(this._destroy$);
 
     this._store
@@ -169,7 +166,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     this._confirmationService.confirm({
       message: 'Are you sure that you want to delete?',
       accept: () => {
+        this._store.dispatch(new hikeEditPoiActions.ResetPoiState());
         this._waypointMarkerService.reset();
+        this._poiEditorService.refreshPoiMarkers(this._map);
       }
     });
   }

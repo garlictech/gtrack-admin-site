@@ -1,4 +1,4 @@
-import { Action, ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
+import { ActionReducer } from '@ngrx/store';
 import { IEditedGTrackPoiState } from '../state';
 import { editedGTrackPoiActions } from '..';
 import { EObjectState } from 'subrepos/provider-client';

@@ -17,8 +17,7 @@ import * as _ from 'lodash';
 
 @Component({
   selector: 'gc-search-results-map',
-  templateUrl: './search-results-map.component.html',
-  styleUrls: ['./search-results-map.component.scss']
+  template: ''
 })
 export class SearchResultsMapComponent implements AfterViewInit, OnInit, OnDestroy {
   public layers = [

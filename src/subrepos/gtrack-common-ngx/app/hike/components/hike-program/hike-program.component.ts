@@ -4,15 +4,14 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import { Dictionary } from '@ngrx/entity/src/models';
 
-import { IPoi, IHikeProgram } from '../../../../../provider-client';
+import { IPoi, IHikeProgram, IHikeProgramStop } from '../../../../../provider-client';
 import { PoiSelectors } from '../../store/poi';
 import * as poiActions from '../../store/poi/actions';
 import { IconService } from '../../../map/services/icon';
 
 @Component({
   selector: 'gtcn-hike-program',
-  templateUrl: './hike-program.component.html',
-  styleUrls: ['./hike-program.component.scss']
+  template: ''
 })
 export class HikeProgramComponent implements OnInit {
   @Input() public hikeProgram: IHikeProgram;
@@ -20,10 +19,15 @@ export class HikeProgramComponent implements OnInit {
   public pois$: Observable<Partial<Dictionary<IPoi>>>;
   public startIcon: string;
   public finishIcon: string;
+  public activeStop: IHikeProgramStop;
 
   constructor(private _poiSelectors: PoiSelectors, private _store: Store<any>, icon: IconService) {
     this.startIcon = icon.url('start');
     this.finishIcon = icon.url('finish');
+  }
+
+  displayStop(stop: IHikeProgramStop) {
+    this.activeStop = stop;
   }
 
   ngOnInit() {

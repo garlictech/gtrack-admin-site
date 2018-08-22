@@ -7,5 +7,6 @@ export * from './hike-program';
 export * from './trail-box';
 export * from './location-search';
 export * from './search-filters';
+export * from './search-results-map';
 export * from './download-gpx-button';
 export * from './hike-components.module';

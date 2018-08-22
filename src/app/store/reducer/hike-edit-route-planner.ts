@@ -1,4 +1,4 @@
-import { Action, ActionReducer } from '@ngrx/store';
+import { ActionReducer } from '@ngrx/store';
 import { IHikeEditRoutePlannerState } from '../state';
 import { hikeEditRoutePlannerActions } from '..';
 

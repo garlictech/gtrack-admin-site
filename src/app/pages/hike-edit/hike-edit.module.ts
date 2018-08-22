@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { LocalizeModule } from 'subrepos/gtrack-common-ngx';
 // PrimeNG
 import {
   ButtonModule,
@@ -93,6 +93,7 @@ const COMPONENTS = [
     TagInputModule,
     SharedComponentsModule,
     FontAwesomeModule,
+    LocalizeModule,
     // PrimeNG
     ButtonModule,
     CardModule,

@@ -1,5 +1,5 @@
 <p-dialog
-  header="{{translateDescription(modalPoi?.description, 'title')}}"
+  header="{{(modalPoi?.description | localizeDescription).title}}"
   [(visible)]="displayGTrackPoiModal"
   [modal]="true"
   [closable]="true"
@@ -18,7 +18,7 @@
       label="Get new"
       styleClass="ui-button-primary"
       (onClick)="getPois()"
-      [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (searchContext$ | async)?.working"
+      [disabled]="(segments$ | async)?.length < 1 || (searchContext$ | async)?.working"
     ></p-button>
   </div>
 
@@ -29,6 +29,7 @@
       binary="true"
       [(ngModel)]="showOffrouteMarkers"
       (onChange)="toggleOffrouteMarkers()"
+      [disabled]="!(isPlanning$ | async)"
     ></p-checkbox>
 
     <p-checkbox
@@ -37,6 +38,7 @@
       binary="true"
       [(ngModel)]="showOnrouteMarkers"
       (onChange)="toggleOnrouteMarkers()"
+      [disabled]="!(isPlanning$ | async)"
     ></p-checkbox>
   </div>
 </div>

@@ -3,22 +3,26 @@
   [bgImages$]="bgImages$"
 ></gt-background-images>
 
+<div class="clearfix"></div>
+
 <p-accordion [multiple]="true">
-  <p-accordionTab header="Google ({{(googlePhotos$ | async).length}})">
+  <p-accordionTab header="Google ({{((googlePhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
     <gt-hike-edit-photos-table
       [images$]="googlePhotos$"
       [backgroundOriginalUrls$]="backgroundOriginalUrls$"
       [clickActions]="clickActions"
+      [distanceFrom]="distanceFrom"
     ></gt-hike-edit-photos-table>
   </p-accordionTab>
-  <p-accordionTab header="Wikipedia ({{(wikipediaPhotos$ | async).length}})">
+  <p-accordionTab header="Wikipedia ({{((wikipediaPhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
     <gt-hike-edit-photos-table
       [images$]="wikipediaPhotos$"
       [backgroundOriginalUrls$]="backgroundOriginalUrls$"
       [clickActions]="clickActions"
+      [distanceFrom]="distanceFrom"
     ></gt-hike-edit-photos-table>
   </p-accordionTab>
-  <p-accordionTab header="Mapillary ({{(mapillaryImages$ | async).length}})">
+  <p-accordionTab header="Mapillary ({{((mapillaryImages$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
     <div class="mb-20">
       <p-button
         label="Get new"
@@ -35,6 +39,7 @@
         [images$]="mapillaryImages$"
         [backgroundOriginalUrls$]="backgroundOriginalUrls$"
         [clickActions]="clickActions"
+        [distanceFrom]="distanceFrom"
       ></gt-hike-edit-photos-table>
     </ng-template>
   </p-accordionTab>

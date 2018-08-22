@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-
 import { IHikeEditPoiState } from '../state/hike-edit-poi';
 import {
   wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter
@@ -90,6 +89,10 @@ export class HikeEditPoiSelectors {
 
   public getCollectorPoi(poiId: string) {
     return createSelector(this.getAllCollectorPois, (pois: any[]) => pois.find(poi => poi.id === poiId));
+  }
+
+  public getCollectorPoisCount() {
+    return createSelector(this.getAllCollectorPois, (pois: any[]) => pois.length);
   }
 
   public getPoiPhotos(subdomain) {

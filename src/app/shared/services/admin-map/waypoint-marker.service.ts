@@ -14,10 +14,6 @@ import * as turf from '@turf/turf';
 
 @Injectable()
 export class WaypointMarkerService {
-  private _maxSegmentPoints = 2;
-  private _routeSegmentIndex: number;
-  private _waypointIndex: number;
-
   private _map: AdminMap;
   private _markers: L.Marker[] = [];
 

@@ -6,6 +6,14 @@
 
 img.svg {
     width: 60px;
-    top: -3px;
     margin-left: 15px;
+    border: 1px solid lightgray;
+
+    &.svg-elevation {
+        top: -3px;
+    }
+
+    &.svg-route {
+        top: -30px;
+    }
 }

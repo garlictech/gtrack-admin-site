@@ -45,6 +45,7 @@ import * as _ from 'lodash';
 export class HikeEditComponent implements OnInit, OnDestroy {
   public hikeProgramState$: Observable<EObjectState>;
   public allowSave$: Observable<boolean>;
+  public isPlanning$: Observable<boolean>;
   public working$: Observable<string | null>;
   public EObjectState = EObjectState;
   public paramsId: string;
@@ -128,6 +129,10 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     });
 
     this.allowSave$ = this._store.select(this._editedHikeProgramSelectors.getDirty).takeUntil(this._destroy$);
+
+    this.isPlanning$ = this._store
+      .select(this._hikeEditRoutePlannerSelectors.getIsPlanning)
+      .takeUntil(this._destroy$);
 
     // Handling save success
     this._store

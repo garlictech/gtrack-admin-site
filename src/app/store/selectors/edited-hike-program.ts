@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-
 import { IEditedHikeProgramState } from '../state/edited-hike-program';
 import {
   ILocalizedItem, ITextualDescription, IHikeProgramStored, IPoiStored, IHikeProgramStop, EObjectState, IBackgroundImageData
@@ -93,6 +92,18 @@ export class EditedHikeProgramSelectors {
       (data, poiIds) => {
         if (typeof poiIds !== 'undefined') {
           return data.filter(item => poiIds.indexOf((<any>item).id) !== -1);
+        }
+      }
+    )
+  }
+
+  public getHikePoisCount<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
+    return createSelector(
+      getAllSelector,
+      this.getPoiIds,
+      (data, poiIds) => {
+        if (typeof poiIds !== 'undefined') {
+          return data.filter(item => poiIds.indexOf((<any>item).id) !== -1).length;
         }
       }
     )

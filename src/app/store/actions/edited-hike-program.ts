@@ -1,10 +1,12 @@
 import { Action } from '@ngrx/store';
-import { ILocalizedItem, ITextualDescription, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
+import { ITextualDescription, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
+import { IGTrackPoi } from '../../shared/interfaces';
 
 export const RESET_HIKE_PROGRAM = '[HikeProgram] Reset';
 export const ADD_NEW_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Add new translated hike description';
 export const DELETE_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Delete translated hike description';
 export const ADD_HIKE_PROGRAM_DETAILS = '[HikeProgram] Add some details';
+export const PREPARE_THEN_ADD_STOP = '[HikeProgram] Prepare then add stop';
 export const ADD_STOP = '[HikeProgram] Add stop';
 export const SET_STOPS = '[HikeProgram] Set stops';
 export const REMOVE_STOP_BY_POI_ID = '[HikeProgram] Remove stop by poi id';
@@ -59,6 +61,11 @@ export class AddStop implements Action {
   constructor(public stop: IHikeProgramStop) {}
 }
 
+export class PrepareThenAddStop implements Action {
+  readonly type = PREPARE_THEN_ADD_STOP;
+  constructor(public poi: IGTrackPoi) {}
+}
+
 export class SetStops implements Action {
   readonly type = SET_STOPS;
   constructor(public stops: IHikeProgramStop[]) {}
@@ -100,6 +107,7 @@ export type AllEditedHikeProgramActions =
   | AddNewTranslatedHikeProgramDescription
   | DeleteTranslatedHikeProgramDescription
   | AddHikeProgramDetails
+  | PrepareThenAddStop
   | AddStop
   | SetStops
   | RemoveStopByPoiId

@@ -23,3 +23,4 @@ export * from './checkpoint';
 export * from './state';
 export * from './object-delete';
 export * from './location';
+export * from './marker-popup-data';

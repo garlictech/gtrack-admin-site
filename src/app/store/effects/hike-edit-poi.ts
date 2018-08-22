@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { State, hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '..';
-import { EditedHikeProgramSelectors } from '../selectors';
+import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '..';
 import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService, HikeProgramService } from '../../shared/services';
 import { IWikipediaPoi, IOsmPoi, IGooglePoi } from '../../shared/interfaces';
 
@@ -74,7 +73,6 @@ export class HikeEditPoiEffects {
           pois = _.concat(pois, poiArr);
         });
 
-        // return new hikeEditPoiActions.SetWikipediaPois(_.uniqBy(pois, 'wikipedia.pageid'));
         return new hikeEditPoiActions.SetGooglePois(pois);
       });
     });

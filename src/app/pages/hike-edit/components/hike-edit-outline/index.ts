@@ -5,7 +5,6 @@ import { State } from '../../../../store';
 import { EditedHikeProgramSelectors } from '../../../../store/selectors';
 import { IHikeProgramStop, IPoiStored } from 'subrepos/provider-client';
 import { PoiSelectors, IconService } from 'subrepos/gtrack-common-ngx';
-import { LanguageService } from '../../../../shared/services';
 
 @Component({
   selector: 'gt-hike-edit-outline',
@@ -37,9 +36,5 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
-  }
-
-  public translateDescription(description, field) {
-    return LanguageService.translateDescription(description, field);
   }
 }

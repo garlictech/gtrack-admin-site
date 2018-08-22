@@ -1,5 +1,5 @@
 <p-dialog
-  header="{{translateDescription(modalPoi?.description, 'title')}}"
+  header="{{(modalPoi?.description | localizeDescription).title}}"
   [(visible)]="displayGTrackPoiModal"
   [modal]="true"
   [closable]="true"
@@ -19,6 +19,7 @@
     binary="true"
     [(ngModel)]="showOffrouteMarkers"
     (onChange)="toggleOffrouteMarkers()"
+    [disabled]="!(isPlanning$ | async)"
   ></p-checkbox>
 
   <p-checkbox
@@ -27,6 +28,7 @@
     binary="true"
     [(ngModel)]="showOnrouteMarkers"
     (onChange)="toggleOnrouteMarkers()"
+    [disabled]="!(isPlanning$ | async)"
   ></p-checkbox>
 </div>
 

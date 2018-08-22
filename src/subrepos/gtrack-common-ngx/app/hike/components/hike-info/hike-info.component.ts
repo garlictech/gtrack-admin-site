@@ -3,8 +3,7 @@ import { IHikeProgram } from '../../../../../provider-client';
 import { faArrowRight, faSortUp, faSortDown, faClock, faTrophy } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'gtcn-hike-info',
-  templateUrl: './hike-info.component.html',
-  styleUrls: ['./hike-info.component.scss']
+  template: ''
 })
 export class HikeInfoComponent {
   @Input() public hikeProgram: IHikeProgram;

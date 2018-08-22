@@ -17,8 +17,7 @@ import * as BackgroundGeolocationActions from '../../../shared/services/backgrou
 
 @Component({
   selector: 'gtcn-location-search',
-  templateUrl: './location-search.component.html',
-  styleUrls: ['./location-search.component.scss']
+  template: ''
 })
 export class LocationSearchComponent implements OnInit, OnDestroy {
   @ViewChild('search', {
