@@ -4,6 +4,11 @@
 }
 
 :host ::ng-deep p-dialog {
-   z-index: 10000000 !important;
-   position: relative;
+  z-index: 10000000 !important;
+  position: relative;
+
+  .ui-dialog {
+    overflow: scroll;
+    max-height: 90%;
+  }
 }
