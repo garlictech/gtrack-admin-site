@@ -31,7 +31,7 @@
       </div>
       <div class="ui-g mt-20">
         <div class="ui-g-12">
-          <div><strong>Position</strong>: {{gTrackPoi?.lat}},{{gTrackPoi?.lon}} ({{gTrackPoi?.elevation.toFixed(1)}} m)
+          <div><strong>Position</strong>: {{gTrackPoi?.lat || 'n/a'}},{{gTrackPoi?.lon || 'n/a'}} ({{gTrackPoi?.elevation.toFixed(1) || 'n/a'}} m)
           </div>
         </div>
         <div class="ui-g-12">
@@ -40,17 +40,10 @@
         <div class="ui-g-12">
           <div><strong>Types</strong>: {{gTrackPoi?.types.join(', ')}}</div>
         </div>
-        <div class="ui-g-12" *ngIf="gTrackPoi?.objectId[gTrackPoi?.objectType]">
-          <div><strong>Object ID</strong>:
-            <pre>{{gTrackPoi?.objectId[gTrackPoi?.objectType] | json}}</pre>
-          </div>
-        </div>
-        <div
-          class="ui-g-12"
-          *ngIf="gTrackPoi?.additionalData && gTrackPoi?.additionalData[gTrackPoi?.objectType]"
-        >
-          <div><strong>Additional data</strong>:
-            <pre>{{gTrackPoi?.additionalData[gTrackPoi?.objectType] | json}}</pre>
+        <div class="ui-g-12">
+          <strong>Details</strong>:
+          <div class="overflow-details">
+            <pre>{{gTrackPoi | json}}</pre>
           </div>
         </div>
       </div>
@@ -65,7 +58,7 @@
         [backgroundImageSelector]="backgroundImageSelector"
         [backgroundImageUrlSelector]="backgroundImageUrlSelector"
         [clickActions]="clickActions"
-        [distanceFrom]="[gTrackPoi.lat, gTrackPoi.lon, 300]"
+        [distanceFrom]="[gTrackPoi?.lat, gTrackPoi?.lon, 300]"
       ></gt-hike-edit-photos>
     </p-card>
   </div>

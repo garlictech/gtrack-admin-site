@@ -2,3 +2,8 @@
   position: relative !important;
   z-index: 1000000000 !important;
 }
+
+:host ::ng-deep p-dialog {
+   z-index: 10000000 !important;
+   position: relative;
+}
