@@ -1,0 +1,43 @@
+<table class="container" *ngIf="hikeProgram">
+
+    <tr>
+        <td>
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+        </td>
+        <td>Total distance</td>
+        <td>{{hikeProgram.distance | distance}}</td>
+    </tr>
+
+    <tr>
+        <td>
+            <fa-icon [icon]="faSortUp"></fa-icon>
+        </td>
+        <td>Uphill</td>
+        <td>{{hikeProgram.uphill | distance}}</td>
+    </tr>
+
+    <tr>
+        <td>
+            <fa-icon [icon]="faSortDown"></fa-icon>
+        </td>
+        <td>Downhill</td>
+        <td>{{hikeProgram.downhill | distance}}</td>
+    </tr>
+
+    <tr>
+        <td>
+            <fa-icon [icon]="faClock"></fa-icon>
+        </td>
+        <td>Estimated walk time</td>
+        <td>{{ hikeProgram.time | duration }}</td>
+    </tr>
+
+    <tr>
+        <td>
+            <fa-icon [icon]="faTrophy"></fa-icon>
+        </td>
+        <td>Score</td>
+        <td>{{ hikeProgram.score }}</td>
+    </tr>
+
+</table>

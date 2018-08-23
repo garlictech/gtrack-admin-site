@@ -1,0 +1,55 @@
+<table *ngIf="hikeProgram">
+  <tr>
+    <td></td>
+    <td><b>Name</b></td>
+    <td><b>From start</b></td>
+    <td><b>To next</b></td>
+  </tr>
+
+  <ng-container *ngIf="(pois$ | async) as pois">
+    <tr (click)="displayStop(stop)" *ngFor="let stop of hikeProgram.stops; let i = index;">
+      <td *ngIf="i === 0"><img title="Start" [src]="startIcon" /></td>
+      <td *ngIf="i === hikeProgram.stops.length - 1"><img title="Finish" [src]="finishIcon" /></td>
+      <td *ngIf="i > 0 && i < hikeProgram.stops.length - 1"><gtcn-icon *ngIf="pois[stop.poiId]" [poi]="pois[stop.poiId]"></gtcn-icon></td>
+
+      <td *ngIf="i === 0">START</td>
+      <td *ngIf="i === hikeProgram.stops.length - 1">FINISH</td>
+      <td *ngIf="i > 0 && i < hikeProgram.stops.length - 1"><ng-container *ngIf="pois[stop.poiId] && pois[stop.poiId].description">{{ (pois[stop.poiId].description | localizeDescription).title }}</ng-container></td>
+
+      <td *ngIf="i === 0"><b>START</b></td>
+      <td *ngIf="i > 0">{{ stop.distanceFromOrigo | distance }}</td>
+
+      <td *ngIf="i < hikeProgram.stops.length - 1">{{ hikeProgram.stops[i + 1].segment.distance | distance }}</td>
+      <td *ngIf="i === hikeProgram.stops.length - 1"><b>STOP</b></td>
+    </tr>
+  </ng-container>
+</table>
+
+<ng-container *ngIf="(pois$ | async) as pois">
+  <ng-container *ngIf="activeStop?.poiId === 'endpoint-first'">
+    <p-dialog [header]="'Start'" [(visible)]="activeStop" [width]="400">
+      <div><img title="Start" [src]="startIcon" /></div>
+      <strong>{{ activeStop.lat }}, {{ activeStop.lon }}</strong>
+    </p-dialog>
+  </ng-container>
+
+  <ng-container *ngIf="activeStop?.poiId === 'endpoint-last'">
+    <p-dialog [header]="'Finish'" [(visible)]="activeStop" [width]="400">
+      <div><img title="Finish" [src]="finishIcon" /></div>
+      <strong>{{ activeStop.lat }}, {{ activeStop.lon }}</strong>
+      <p>Distance from start: {{ activeStop.distanceFromOrigo | distance }}</p>
+    </p-dialog>
+  </ng-container>
+
+  <ng-container *ngIf="activeStop && activeStop.poiId !== 'endpoint-first' && activeStop.poiId !== 'endpoint-last'">
+    <p-dialog [header]="(pois[activeStop.poiId].description | localizeDescription).title || 'Unknown'" [(visible)]="activeStop" [width]="400">
+      <gtrack-description [description]="pois[activeStop.poiId].description"></gtrack-description>
+
+      <div><gtcn-icon [poi]="pois[activeStop.poiId]"></gtcn-icon></div>
+      <strong>{{ activeStop.lat }}, {{ activeStop.lon }}</strong>
+      <p>Distance from start: {{ activeStop.distanceFromOrigo | distance }}</p>
+      <p>Elevation: {{ pois[activeStop.poiId].elevation | distance }}</p>
+      <p-galleria *ngIf="pois[activeStop.poiId].backgroundImages" [images]="pois[activeStop.poiId].backgroundImages | poiImagesToGallery" panelWidth="340" panelHeight="313" [showCaption]="false"></p-galleria>
+    </p-dialog>
+  </ng-container>
+</ng-container>
