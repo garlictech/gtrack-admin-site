@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { AdminMap, AdminMapService } from '../../services/admin-map';
 import { LeafletComponent } from 'subrepos/gtrack-common-ngx/app';
 
@@ -10,7 +10,9 @@ import { LeafletComponent } from 'subrepos/gtrack-common-ngx/app';
 export class AdminLeafletComponent extends LeafletComponent {
   public map: AdminMap;
 
-  constructor(private adminMapService: AdminMapService) {
-    super(adminMapService);
+  constructor(
+    private _adminMapService: AdminMapService
+  ) {
+    super(_adminMapService);
   }
 }

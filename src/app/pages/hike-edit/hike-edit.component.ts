@@ -5,7 +5,6 @@ import { Observable, Subject } from 'rxjs';
 import { Store, MemoizedSelector, createSelector } from '@ngrx/store';
 import {
   State,
-  hikeEditActions,
   commonRouteActions,
   commonHikeActions,
   IHikeEditRoutePlannerState,
@@ -23,14 +22,11 @@ import {
 } from '../../shared/services/admin-map';
 import {
   IHikeProgramStored,
-  IHikeProgram,
-  IPoi,
   IRoute,
   EObjectState,
-  IHikeProgramStop,
   IBackgroundImageData
 } from 'subrepos/provider-client';
-import { RouteActionTypes, HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
+import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { ToasterService } from 'angular2-toaster';
 import { HikeProgramService } from '../../shared/services';
 
