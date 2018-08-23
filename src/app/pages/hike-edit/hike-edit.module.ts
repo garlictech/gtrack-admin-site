@@ -16,7 +16,7 @@ import {
 import { TableModule } from 'primeng/table';
 
 // Components
-import { FormModule, LanguageModule } from 'subrepos/gtrack-common-web';
+import { FormModule, LanguageModule, HikeComponentsModule } from 'subrepos/gtrack-common-web';
 
 import { HikeEditComponent } from './hike-edit.component';
 import {
@@ -89,6 +89,7 @@ const COMPONENTS = [
     ReactiveFormsModule,
     MapModule,
     HikeModule,
+    HikeComponentsModule,
     SharedModule,
     TagInputModule,
     SharedComponentsModule,

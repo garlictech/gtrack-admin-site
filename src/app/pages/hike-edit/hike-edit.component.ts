@@ -40,6 +40,7 @@ import * as _ from 'lodash';
 })
 export class HikeEditComponent implements OnInit, OnDestroy {
   public hikeProgramState$: Observable<EObjectState>;
+  public hikeProgramData$: Observable<IHikeProgramStored>;
   public allowSave$: Observable<boolean>;
   public isPlanning$: Observable<boolean>;
   public working$: Observable<string | null>;
@@ -48,6 +49,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   public backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
   public backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
   public clickActions: any;
+  public displayPreview = false;
   private _hikeId: string;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -69,8 +71,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.working$ = this._store.select(this._editedHikeProgramSelectors.getWorking).takeUntil(this._destroy$);
+    this.hikeProgramData$ = this._store.select(this._editedHikeProgramSelectors.getData).takeUntil(this._destroy$);
 
-    // this._routingControlService.reset();
     this._waypointMarkerService.reset();
 
     this._store.dispatch(new hikeEditMapActions.ResetMapState());
@@ -277,5 +279,9 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           this._store.dispatch(new commonRouteActions.UpdateRouteState(routeId, EObjectState.published));
         });
     }
+  }
+
+  public openPreview() {
+    this.displayPreview = true;
   }
 }
