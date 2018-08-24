@@ -4,7 +4,8 @@ export class Environment implements IEnvironment {
   production = true;
   staging = true;
   webappServer = window.location.origin;
-  deepstream = 'wss://deepstream.staging.gtracksport.com/deepstream';
+  deepstream = 'wss://deepstream-staging.gtracksport.com/deepstream';
+  // deepstream = 'wss://deepstream.staging.gtracksport.com/deepstream';
 
   lambdaEndpoint = 'https://y3nuwgmlpc.execute-api.us-east-1.amazonaws.com/latest';
 
