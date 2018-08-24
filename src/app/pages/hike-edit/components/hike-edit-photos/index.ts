@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { State, hikeEditImageActions } from '../../../../store';
 import {
-  HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors, EditedHikeProgramSelectors
+  HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors
 } from '../../../../store/selectors';
 import { RoutePlannerService } from '../../../../shared/services/admin-map';
 import { IBackgroundImageData, EPoiTypes } from 'subrepos/provider-client';

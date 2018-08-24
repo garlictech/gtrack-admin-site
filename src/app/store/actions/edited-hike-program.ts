@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { ITextualDescription, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
 import { IGTrackPoi } from '../../shared/interfaces';
+import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 
 export const RESET_HIKE_PROGRAM = '[HikeProgram] Reset';
 export const ADD_NEW_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Add new translated hike description';
@@ -9,6 +10,7 @@ export const ADD_HIKE_PROGRAM_DETAILS = '[HikeProgram] Add some details';
 export const PREPARE_THEN_ADD_STOP = '[HikeProgram] Prepare then add stop';
 export const ADD_STOP = '[HikeProgram] Add stop';
 export const SET_STOPS = '[HikeProgram] Set stops';
+export const SET_CHECKPOINTS = '[HikeProgram] Set checkpoints';
 export const REMOVE_STOP_BY_POI_ID = '[HikeProgram] Remove stop by poi id';
 export const SAVE_HIKE_PROGRAM = '[HikeProgram] Save hike program';
 export const HIKE_PROGRAM_SAVE_SUCCESS = '[HikeProgram] Hike program saved successfully';
@@ -71,6 +73,11 @@ export class SetStops implements Action {
   constructor(public stops: IHikeProgramStop[]) {}
 }
 
+export class SetCheckpoints implements Action {
+  readonly type = SET_CHECKPOINTS;
+  constructor(public checkpoints: CheckpointSequence) {}
+}
+
 export class RemoveStopByPoiId implements Action {
   readonly type = REMOVE_STOP_BY_POI_ID;
   constructor(public poiIds: string[]) {}
@@ -110,6 +117,7 @@ export type AllEditedHikeProgramActions =
   | PrepareThenAddStop
   | AddStop
   | SetStops
+  | SetCheckpoints
   | RemoveStopByPoiId
   | SaveHikeProgram
   | HikeProgramSaveSuccess

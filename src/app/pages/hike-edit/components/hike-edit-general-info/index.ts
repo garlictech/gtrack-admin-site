@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';

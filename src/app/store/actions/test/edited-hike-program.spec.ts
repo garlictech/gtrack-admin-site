@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import * as EditedHikeProgramActions from '../edited-hike-program';
 import { IHikeProgramStop, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
+import { IGTrackPoi } from '../../../shared/interfaces';
 
 describe('EditedHikeProgram actions', () => {
   it('should have action names defined', () => {
@@ -8,8 +9,10 @@ describe('EditedHikeProgram actions', () => {
     expect(EditedHikeProgramActions.ADD_NEW_TRANSLATED_HIKE_DESCRIPTION).toEqual('[HikeProgram] Add new translated hike description');
     expect(EditedHikeProgramActions.DELETE_TRANSLATED_HIKE_DESCRIPTION).toEqual('[HikeProgram] Delete translated hike description');
     expect(EditedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS).toEqual('[HikeProgram] Add some details');
+    expect(EditedHikeProgramActions.PREPARE_THEN_ADD_STOP).toEqual('[HikeProgram] Prepare then add stop');
     expect(EditedHikeProgramActions.ADD_STOP).toEqual('[HikeProgram] Add stop');
     expect(EditedHikeProgramActions.SET_STOPS).toEqual('[HikeProgram] Set stops');
+    expect(EditedHikeProgramActions.SET_CHECKPOINTS).toEqual('[HikeProgram] Set checkpoints');
     expect(EditedHikeProgramActions.REMOVE_STOP_BY_POI_ID).toEqual('[HikeProgram] Remove stop by poi id');
     expect(EditedHikeProgramActions.SAVE_HIKE_PROGRAM).toEqual('[HikeProgram] Save hike program');
     expect(EditedHikeProgramActions.HIKE_PROGRAM_SAVE_SUCCESS).toEqual('[HikeProgram] Hike program saved successfully');
@@ -85,6 +88,17 @@ describe('EditedHikeProgram actions', () => {
     });
   });
 
+  it('should create Prepare then add stop action', () => {
+    const poi: IGTrackPoi = {};
+    const action = new EditedHikeProgramActions.PrepareThenAddStop(poi);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: EditedHikeProgramActions.PREPARE_THEN_ADD_STOP,
+      poi: poi
+    });
+  });
+
   it('should create SetStops action', () => {
     const stops = [{
       distanceFromOrigo: 0,
@@ -106,8 +120,18 @@ describe('EditedHikeProgram actions', () => {
     });
   });
 
+  it('should create SetCheckpoints action', () => {
+    const checkpoints = [];
+    const action = new EditedHikeProgramActions.SetCheckpoints(checkpoints);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: EditedHikeProgramActions.SET_CHECKPOINTS,
+      checkpoints: checkpoints
+    });
+  });
+
   it('should create RemoveStopByPoiId action', () => {
-    const stopData = { poiId: 'fakePoiId' };
     const action = new EditedHikeProgramActions.RemoveStopByPoiId(['fakePoiId']);
 
     expect(action).toBeDefined();
@@ -118,7 +142,6 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create SaveHikeProgram action', () => {
-    const stopData = { poiId: 'fakePoiId' };
     const action = new EditedHikeProgramActions.SaveHikeProgram();
 
     expect(action).toBeDefined();
@@ -128,7 +151,6 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create HikeProgramSaveSuccess action', () => {
-    const stopData = { poiId: 'fakePoiId' };
     const action = new EditedHikeProgramActions.HikeProgramSaveSuccess();
 
     expect(action).toBeDefined();
@@ -138,7 +160,6 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create HikeProgramSaveFailed action', () => {
-    const stopData = { poiId: 'fakePoiId' };
     const action = new EditedHikeProgramActions.HikeProgramSaveFailed('fakeError');
 
     expect(action).toBeDefined();

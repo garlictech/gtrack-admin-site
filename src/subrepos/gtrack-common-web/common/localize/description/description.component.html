@@ -1,0 +1,8 @@
+<ng-container *ngIf="(description | localizeDescription) as localizedDescription">
+  <div class="tim-title">
+    <h1>{{ localizedDescription.title }}</h1>
+  </div>
+
+  <p *ngIf="localizedDescription.summary" [gtrackSanitizeHtml]='localizedDescription.summary'></p>
+  <p *ngIf="localizedDescription.fullDescription" [gtrackSanitizeHtml]='localizedDescription.fullDescription'></p>
+</ng-container>

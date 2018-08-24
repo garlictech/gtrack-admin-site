@@ -20,6 +20,7 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
     routeId: '',
     description: { en_US: { title: 'A new hike', fullDescription: '', summary: '' } },
     stops: [],
+    checkpoints: null,
     timestamp: 0,
     state: EObjectState.draft
   },
@@ -86,6 +87,11 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
 
     case editedHikeProgramActions.SET_STOPS: {
       newState.data.stops = _.cloneDeep(action.stops)
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_CHECKPOINTS: {
+      newState.data.checkpoints = _.cloneDeep(action.checkpoints)
       return newState;
     }
 

@@ -1,9 +1,9 @@
-import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { State, commonPoiActions, editedGTrackPoiActions } from '../../../../../store';
-import { PoiSelectors, Poi } from 'subrepos/gtrack-common-ngx';
-import { IPoiStored, IPoi, ILocalizedItem, ITextualDescription, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
+import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
+import { IPoiStored, ILocalizedItem, ITextualDescription, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
 import { EditedGTrackPoiSelectors } from '../../../../../store/selectors';
 
 import { ToasterService } from 'angular2-toaster';

@@ -1,9 +1,11 @@
+
 <p-dialog
   header="{{(modalPoi?.description | localizeDescription).title}}"
   [(visible)]="displayGTrackPoiModal"
   [modal]="true"
   [closable]="true"
   [width]="600"
+  [blockScroll]="true"
 >
   <gt-hike-edit-gtrack-poi-info
     *ngIf="displayGTrackPoiModal"

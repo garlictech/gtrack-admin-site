@@ -123,6 +123,7 @@ export class HikeProgram implements IHikeProgramStored {
       offlineMap: this.offlineMap,
       timestamp: this.timestamp,
       stops: this.stops,
+      checkpoints: this.checkpoints,
       state: this.state
     };
 

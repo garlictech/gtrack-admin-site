@@ -5,7 +5,7 @@ import { State, editedHikeProgramActions } from '../../../store';
 import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { IHikeProgramStop, IRoute } from 'subrepos/provider-client';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
-import { ElevationService, GameRuleService, Route, RouteService } from 'subrepos/gtrack-common-ngx';
+import { ElevationService, GameRuleService, Route, RouteService, CheckpointService } from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
@@ -24,6 +24,7 @@ export class HikeProgramService {
     private _routeService: RouteService,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _checkpointService: CheckpointService,
   ) {}
 
   /**
@@ -97,6 +98,7 @@ export class HikeProgramService {
       }
 
       this._store.dispatch(new editedHikeProgramActions.SetStops(stops));
+      this._store.dispatch(new editedHikeProgramActions.SetCheckpoints(this._checkpointService.createSequence(stops)));
     }
   }
 

@@ -49,7 +49,11 @@ export class EditedGTrackPoiSelectors {
 
   public getBackgroundOriginalUrls() {
     return createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => {
-      return _.uniq((<IBackgroundImageData[]>state.data.backgroundImages || []).map((img: IBackgroundImageData) => img.original.url));
+      if (state.data) {
+        return _.uniq((<IBackgroundImageData[]>state.data.backgroundImages || []).map((img: IBackgroundImageData) => img.original.url));
+      } else {
+        return [];
+      }
     });
   }
 }

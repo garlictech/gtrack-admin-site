@@ -1,5 +1,19 @@
 <gt-table-spinner *ngIf="(working$ | async) as working; else pageContent"></gt-table-spinner>
 
+<p-dialog
+  header="{{((hikeProgramData$ | async).description | localizeDescription).title}}"
+  [(visible)]="displayPreview"
+  [modal]="true"
+  [closable]="true"
+  [width]="800"
+  [blockScroll]="true"
+>
+  <gtrack-hike-program-page
+    *ngIf="displayPreview"
+    [hikeProgram]="hikeProgramData$ | async"
+  ></gtrack-hike-program-page>
+</p-dialog>
+
 <ng-template #pageContent>
     <div class="ui-g">
       <div class="ui-g-12" *ngIf="(hikeProgramState$ | async) as hikeProgramState">
@@ -7,6 +21,12 @@
           <strong>State:</strong> {{hikeProgramState}}
         </div>
         <div class="f-right">
+          <p-button
+            label="Preview"
+            styleClass="ui-button-warning mr-20"
+            (onClick)="openPreview()"
+          ></p-button>
+
           <p-button
             label="Publish"
             styleClass="ui-button-success"

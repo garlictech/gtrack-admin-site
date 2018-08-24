@@ -3,6 +3,7 @@ import { IProviderInput } from './provider';
 import { ILocalizedItem, ITextualDescription } from './common';
 import { IPublishable } from './state';
 import { ILocatable } from '.';
+import { CheckpointSequence } from '../../gtrack-common-ngx';
 
 export interface IHikeProgramSaveResponse {
   id: string;
@@ -80,6 +81,7 @@ export interface IHikeProgram {
   description: ILocalizedItem<ITextualDescription>;
   offlineMap?: string;
   stops: IHikeProgramStop[];
+  checkpoints: CheckpointSequence
 }
 
 export interface IHikeProgramInput extends IHikeProgram, IProviderInput {}
