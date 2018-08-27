@@ -16,5 +16,20 @@
             "uploadError": "Error adding your file",
             "dateAfter": "Cannot be past date"
         }
+    },
+    "common": {
+        "hike": {
+            "location-search": {
+                "search": "Search",
+                "use-my-location": "Use my location",
+                "close": "Close",
+                "filters": "Filters",
+                "max-distance": "Max distance",
+                "length": "Length",
+                "difficulty": "Difficulty",
+                "distance": "Distance"
+            },
+            "downloadGpx": "Download GPX"
+        }
     }
 }
