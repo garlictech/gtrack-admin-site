@@ -1,27 +1,5 @@
 <button pButton (click)="toggleFilters()" [label]="(showFilters ? 'common.hike.location-search.close' : 'common.hike.location-search.filters') | translate"></button>
 
 <div *ngIf="showFilters" class="filters-container">
-    <form [formGroup]="filterForm">
-        <div class="filters">
-            <div class="filter">
-                <label>{{ 'common.hike.location-search.max-distance' | translate }}: {{ filterForm.get('radius').value }} km</label>
-                <nouislider [connect]="[true, false]" [step]="1" [min]="1" [max]="200" [formControl]="filterForm.controls.radius"></nouislider>
-            </div>
-
-            <div class="filter">
-                <label>{{ 'common.hike.location-search.difficulty' | translate }}: {{ filterForm.get('difficulty').value[0] }} - {{ filterForm.get('difficulty').value[1] }}</label>
-                <nouislider [connect]="true" [step]="1" [min]="0" [max]="10" [formControl]="filterForm.controls.difficulty"></nouislider>
-            </div>
-
-            <div class="filter">
-                <label>{{ 'common.hike.location-search.distance' | translate }}: {{ filterForm.get('length').value[0] }} - {{ filterForm.get('length').value[1] }} km</label>
-                <nouislider [connect]="true" [step]="1" [min]="0" [max]="50" [formControl]="filterForm.controls.length"></nouislider>
-            </div>
-
-            <div class="filter">
-                <label>{{ 'common.hike.location-search.length' | translate }}: {{ filterForm.get('time').value[0] }} - {{ filterForm.get('time').value[1] }}h</label>
-                <nouislider [connect]="true" [step]="1" [min]="0" [max]="60" [formControl]="filterForm.controls.time"></nouislider>
-            </div>
-        </div>
-    </form>
+    <gtrack-form [formDescriptor]='formDescriptor'></gtrack-form>
 </div>
