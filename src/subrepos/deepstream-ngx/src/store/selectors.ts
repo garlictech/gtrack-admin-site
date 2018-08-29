@@ -12,8 +12,8 @@ export interface ISelectorUserData {
 
 @Injectable()
 export class Selectors {
-  public loggingIn;
-  public loggedIn;
+  public loggingIn: MemoizedSelector<object, boolean>;
+  public loggedIn: MemoizedSelector<object, boolean>;
   public loggedOut;
   public failed;
   public getPermissionRecord;
