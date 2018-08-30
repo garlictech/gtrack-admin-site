@@ -48,9 +48,9 @@ export class OsmPoiService {
 
         if (response.elements) {
           for (let _point of response.elements) {
-            if (_point.tags && _point.lat) {
-              let type = _point.tags[typeParam];
+            let type = _.get(_point.tags, typeParam);
 
+            if (_point.lat && this._checkPoiTags(_point, type)) {
               _res.push({
                 id: uuid(),
                 lat: _point.lat,
@@ -76,5 +76,17 @@ export class OsmPoiService {
 
         return _res;
       });
+  }
+
+  private _checkPoiTags(_point, type) {
+    if (_point.tags) {
+      if (type === 'tree') {
+        return _point.tags.name ? true : false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 }
