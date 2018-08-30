@@ -40,7 +40,7 @@ const OVERLAYS = [{
   styleUrls: ['./style.scss']
 })
 export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('map')
+  @ViewChild('adminmap')
   public mapComponent: AdminLeafletComponent;
   @ViewChild('search')
   private _searchElementRef: ElementRef;
