@@ -36,8 +36,6 @@
         "leaflet-usermarker": "^1.0.0",
         "load-google-maps-api": "1.0.0",
         "moment": "^2.18.1",
-        "ng2-nouislider": "^1.7.7",
-        "nouislider": "^10.0.0",
         "promise-polyfill": "^6.0.2",
         "spin.js": "^2.3.2",
         "jest-marbles": "^1.2.0"

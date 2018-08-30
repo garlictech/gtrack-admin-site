@@ -56,37 +56,4 @@ export class MapMarker {
 
     return latlng;
   }
-
-  /*
-  private _onMarkerClick(marker: L.Marker, cacheId: string, e: any): void {
-    if (this._compRef) {
-      this._compRef.destroy();
-    }
-
-    // Dynamically creation component, MapInfoWindow should be declared in entryComponents
-    const compFactory: ComponentFactory<MapInfoWindow> = this._resolver.resolveComponentFactory(MapInfoWindow);
-    this._compRef = compFactory.create(this._injector);
-
-    // Add data
-    this._compRef.instance.cacheId = cacheId;
-    this._compRef.instance.marker = marker;
-    this._compRef.instance.maptype = EMapIds.MAIN_MAP;
-
-    // It's necessary for change detection within MapInfoWindow
-    this._appRef['attachView'](this._compRef.hostView);
-    this._compRef.onDestroy(() => {
-      this._appRef['detachView'](this._compRef.hostView);
-    });
-
-    const div: HTMLDivElement = document.createElement('div');
-    div.appendChild(this._compRef.location.nativeElement);
-
-    // Timeout for waiting appendChild formatting
-    setTimeout(() => {
-      L.popup({ offset: L.point(0, -30) })
-        .setLatLng(e.target.getLatLng())
-        .setContent(div)
-        .openOn(this._map);
-    }, 150);
-  }*/
 }
