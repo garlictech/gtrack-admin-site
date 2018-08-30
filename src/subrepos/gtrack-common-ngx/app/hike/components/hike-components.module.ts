@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NouisliderModule } from 'ng2-nouislider';
 import { TranslateModule } from '@ngx-translate/core';
 import { StoreModule } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { GalleriaModule } from 'primeng/galleria';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+import { FormModule } from 'subrepos/gtrack-common-web/forms';
 
 import { TrailBoxComponent } from './trail-box';
 import { HikeCardComponent } from './hike-card';
@@ -18,6 +19,7 @@ import { CheckpointsComponent } from './checkpoints';
 import { LocationSearchComponent } from './location-search';
 import { SearchFiltersComponent } from './search-filters';
 import { DownloadGpxButtonComponent } from './download-gpx-button';
+import { BookmarkComponent } from './bookmark';
 
 import { HikeModule } from '../hike.module';
 import { MapComponentsModule } from '../../map/components/map-components.module';
@@ -27,6 +29,7 @@ import { SearchFiltersModule } from '../../search-filters/search-filters.module'
 import { SearchResultsMapComponent } from './search-results-map';
 
 import { LocalizeModule } from '../../localize';
+import { ObjectMarkModule } from '../../object-mark';
 
 const COMPONENTS = [
   TrailBoxComponent,
@@ -39,7 +42,8 @@ const COMPONENTS = [
   LocationSearchComponent,
   SearchFiltersComponent,
   SearchResultsMapComponent,
-  DownloadGpxButtonComponent
+  DownloadGpxButtonComponent,
+  BookmarkComponent
 ];
 
 @NgModule({
@@ -48,7 +52,6 @@ const COMPONENTS = [
     MapComponentsModule,
     MapModule,
     SharedModule,
-    NouisliderModule,
     ReactiveFormsModule,
     SearchFiltersModule,
     TranslateModule,
@@ -56,8 +59,10 @@ const COMPONENTS = [
     LocalizeModule,
     ButtonModule,
     FontAwesomeModule,
+    FormModule,
     DialogModule,
-    GalleriaModule
+    GalleriaModule,
+    ObjectMarkModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS]
