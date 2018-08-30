@@ -9,4 +9,5 @@ export * from './location-search';
 export * from './search-filters';
 export * from './search-results-map';
 export * from './download-gpx-button';
+export * from './bookmark';
 export * from './hike-components.module';

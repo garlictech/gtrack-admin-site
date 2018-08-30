@@ -6,6 +6,7 @@ import { routeReducer } from '../hike/store/route/reducer';
 import { geoSearchReducer } from '../geosearch';
 import { reducer as backgroundGeolocationReducer } from './reducers/background-geolocation';
 import { searchFiltersReducer } from '../search-filters';
+import { objectMarkReducer } from '../object-mark';
 
 export const commonReducers = {
   deepstream: deepstreamReducer,
@@ -15,5 +16,6 @@ export const commonReducers = {
   geosearch: geoSearchReducer,
   authentication: authReducer,
   geolocation: backgroundGeolocationReducer,
-  searchFilters: searchFiltersReducer
+  searchFilters: searchFiltersReducer,
+  objectMarks: objectMarkReducer
 };

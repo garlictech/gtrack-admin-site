@@ -16,8 +16,8 @@ export class HikeSelectors {
   public getHikeIds: (state: object) => string[] | number[];
   public getAllHikes: (state: object) => IHikeProgramStored[];
   public getAllContexts: (state: object) => IHikeContextState[];
+  public getAllContextEntities: (state: object) => Dictionary<IHikeContextState>;
 
-  protected _selectContextEntities: (state: object) => Dictionary<IHikeContextState>;
   protected _selectHikeEntities: (state: object) => Dictionary<IHikeProgramStored>;
   protected _externals: IExternalHikeDependencies;
 
@@ -39,11 +39,17 @@ export class HikeSelectors {
     this.getAllHikes = selectors.selectAll;
     this.getAllContexts = contextSelectors.selectAll;
     this._selectHikeEntities = selectors.selectEntities;
-    this._selectContextEntities = contextSelectors.selectEntities;
+    this.getAllContextEntities = contextSelectors.selectEntities;
   }
 
   public getHike(context: string) {
     return createSelector(this.getAllHikes, (hikes: IHikeProgramStored[]) => hikes.find(hike => hike.id === context));
+  }
+
+  public getHikes(contexts: string[]) {
+    return createSelector(this.getAllHikes, (hikes) =>
+      hikes.filter(hike => contexts.indexOf(hike.id) !== -1)
+    );
   }
 
   public getActiveHikes() {
@@ -56,6 +62,24 @@ export class HikeSelectors {
     return createSelector(this.getAllContexts, contexts => {
       return contexts.find(context => context.id === id);
     });
+  }
+
+  public getHikeContexts(ids: string[]) {
+    return createSelector(this.getAllContexts, contexts =>
+      contexts.filter(context => (ids.indexOf(context.id) !== -1))
+    );
+  }
+
+  public getHikeContextEntities(ids: string[]) {
+    return createSelector(this.getAllContextEntities, contexts =>
+      _.pickBy(contexts, context => {
+        if (context.id) {
+          return ids.indexOf(context.id) !== -1;
+        } else {
+          return false;
+        }
+      })
+    );
   }
 
   public getFilteredSearchResults(context: string) {

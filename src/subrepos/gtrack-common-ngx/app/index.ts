@@ -11,3 +11,4 @@ export * from './shared/services/background-geolocation-service';
 export * from './search-filters';
 export * from './module';
 export * from './localize';
+export * from './object-mark';

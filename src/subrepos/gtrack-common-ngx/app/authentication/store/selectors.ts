@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
 import { IDeepstreamState } from '../../deepstream';
 
@@ -24,20 +24,20 @@ export const loggedOut = createSelector(selectUser, user => !user);
 
 @Injectable()
 export class Selectors {
-  public auth;
-  public user;
-  public loggingIn;
-  public jwtLoggingIn;
-  public loggedIn;
-  public loggedOut;
-  public magicLinkEmailSent;
-  public loginFailed;
+  public auth: MemoizedSelector<object, IAuth>;
+  public user: MemoizedSelector<object, User>;
+  public loggingIn: MemoizedSelector<object, boolean>;
+  public jwtLoggingIn: MemoizedSelector<object, boolean>;
+  public loggedIn: MemoizedSelector<object, boolean>;
+  public loggedOut: MemoizedSelector<object, boolean>;
+  public magicLinkEmailSent: MemoizedSelector<object, boolean>;
+  public loginFailed: MemoizedSelector<object, boolean>;
   public role;
   public selectedRole;
-  public token;
-  public termsAccepted;
-  public loginRefused;
-  public selectUserId;
+  public token: MemoizedSelector<object, string>;
+  public termsAccepted: MemoizedSelector<object, boolean>;
+  public loginRefused: MemoizedSelector<object, boolean>;
+  public selectUserId: MemoizedSelector<object, string>;
 
   constructor(private _deepstreamSelectors: DeepstreamSelectors) {
     let selectDeepstreamFeature = createFeatureSelector<IDeepstreamState>('deepstream');

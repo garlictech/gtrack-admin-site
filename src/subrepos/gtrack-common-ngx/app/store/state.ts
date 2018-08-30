@@ -4,6 +4,7 @@ import { IPoiState, IHikeState, IRouteState } from '../hike';
 import { IGeoSearchState } from '../geosearch';
 import { IBackgroundGeolocationState } from './reducers/background-geolocation';
 import { ISearchFilterState } from '../search-filters';
+import { IObjectMarkState } from '../object-mark';
 
 // A module with store must export its reducers and its store interface - do it here, like in the example
 // import * as Authentication from '../authentication/store'
@@ -20,4 +21,5 @@ export interface CommonState {
   authentication: IAuthenticationState;
   geolocation: IBackgroundGeolocationState | null;
   searchFilters: ISearchFilterState;
+  objectMarks: IObjectMarkState;
 }

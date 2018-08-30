@@ -152,7 +152,9 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
         this.addGeoJson(feature, map.leafletMap);
 
-        map.fitBounds(route);
+        setTimeout(() => {
+          map.fitBounds(route);
+        }, 100);
 
         let bounds = bbox(feature);
         let rectangle = transformScale(bboxPolygon(bounds), 1.3);
