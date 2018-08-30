@@ -25,6 +25,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._store
       .select(this._hikeEditPoiSelectors.getMergeSelections)
+      .debounceTime(200)
       .takeUntil(this._destroy$)
       .subscribe((selections: string[]) => {
         this.mergeSelections = {};
@@ -43,11 +44,35 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
     this._store.dispatch(new hikeEditPoiActions.SetCollectorPoiSelected(poi.id));
   }
 
-  public toggleMergeSelection(poiId: string) {
-    if (!this.mergeSelections[poiId]) {
+  public toggleMergeSelection = (poiId: string) => {
+    if (!!this.mergeSelections[poiId]) {
       this._store.dispatch(new hikeEditPoiActions.RemoveGTrackPoiFromMergeSelection(poiId));
     } else {
       this._store.dispatch(new hikeEditPoiActions.AddGTrackPoiToMergeSelection(poiId));
     }
+  }
+
+  public invertMerge() {
+    this.pois$.take(1).subscribe(pois => {
+      const clickablePois = pois.filter(p => {
+        return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
+      });
+
+      for (const poi of clickablePois) {
+        this.toggleMergeSelection(poi.id);
+      }
+    });
+  }
+
+  public invertSelection() {
+    this.pois$.take(1).subscribe(pois => {
+      const clickablePois = pois.filter(p => {
+        return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
+      });
+
+      for (const poi of clickablePois) {
+        this.handlePoiSelection(poi);
+      }
+    });
   }
 }

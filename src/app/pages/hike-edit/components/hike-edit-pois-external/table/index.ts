@@ -4,13 +4,14 @@ import { Store } from '@ngrx/store';
 import { IExternalPoi } from '../../../../../shared/interfaces';
 import { State, hikeEditPoiActions } from '../../../../../store';
 import { EPoiTypes } from 'subrepos/provider-client';
+import { subscribeOn } from 'rxjs-compat/operator/subscribeOn';
 
 @Component({
   selector: 'hike-edit-pois-external-table',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisExternalTableComponent {
-  @Input() pois$: IExternalPoi[];
+  @Input() pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
   @Input() subdomain: string;
   @Input() onRouteCheck: boolean;
   @Input() openPoiModal: any;
@@ -37,5 +38,17 @@ export class HikeEditPoisExternalTableComponent {
         this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiSelected(poi.id));
         break;
     }
+  }
+
+  public invertSelection() {
+    this.pois$.take(1).subscribe(pois => {
+      const clickablePois = pois.filter(p => {
+        return !!p.onRoute === this.onRouteCheck && !p.inCollector && !p.inGtrackDb;
+      });
+
+      for (const poi of clickablePois) {
+        this.handlePoiSelection(poi);
+      }
+    });
   }
 }

@@ -10,7 +10,9 @@ import {
   IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi
 } from '../../../../shared/interfaces';
 import { State, hikeEditPoiActions } from '../../../../store';
-import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors } from '../../../../store/selectors'
+import {
+  HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors
+} from '../../../../store/selectors'
 
 import * as _ from 'lodash';
 
