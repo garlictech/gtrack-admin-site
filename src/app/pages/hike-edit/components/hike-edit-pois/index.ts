@@ -30,11 +30,11 @@ export class HikeEditPoisComponent implements OnInit {
       title: 'OSM Amenity pois',
       subdomain: EPoiTypes.osmAmenity,
       getAction: 'GetOsmAmenityPois'
-    }, {
+    } /*, {
       title: 'OSM Route pois',
       subdomain: EPoiTypes.osmRoute,
       getAction: 'GetOsmRoutePois'
-    }
+    }*/
   ];
 
   constructor(
