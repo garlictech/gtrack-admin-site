@@ -5,8 +5,12 @@ export enum EObjectMarkContext {
   bannedUser = 'bannedUser'
 }
 
-export interface IObjectMarkInput extends IProviderInput {
+export interface IObjectMark {
   mark: boolean;
   context: EObjectMarkContext;
   object: any;
+}
+
+export interface IObjectMarkInput extends IProviderInput, IObjectMark {
+
 }
