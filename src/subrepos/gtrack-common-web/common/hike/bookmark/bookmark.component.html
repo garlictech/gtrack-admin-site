@@ -1,0 +1,3 @@
+<ng-container *ngIf="(state$ | async) !== undefined">
+  <a (click)="bookmarkHike($event)" href="#"><fa-icon [icon]="((state$ | async) === true) ? icons.solid : icons.regular"></fa-icon></a>
+</ng-container>

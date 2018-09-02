@@ -1,5 +1,7 @@
 <div *ngIf="hikeProgram" class="hike-body">
 
+    <gtrack-bookmark [hikeProgramId]="hikeProgram.id"></gtrack-bookmark>
+
     <gtrack-description [description]="hikeProgram.description"></gtrack-description>
 
     <div class="mb-10">

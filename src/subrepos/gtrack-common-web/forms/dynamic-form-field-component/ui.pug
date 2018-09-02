@@ -106,6 +106,15 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
         [max]="field.max"
       )
 
+    ng-container(*ngSwitchCase="'rangeSlider'")
+      gtrack-form-range-slider.field(
+        [id]="field.key",
+        [formControlName]="field.key",
+        [change]="getOnChange()",
+        [min]="field.min",
+        [max]="field.max"
+      )
+
     ng-container(*ngSwitchCase="'file'")
       gtrack-form-file.field(
         [id]="field.key",
