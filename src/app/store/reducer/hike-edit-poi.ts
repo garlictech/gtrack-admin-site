@@ -49,12 +49,14 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
     }
 
     case hikeEditPoiActions.SET_GOOGLE_POI_SELECTED:
-      return googlePoiAdapter.updateOne({
-        id: action.poiId,
-        changes: {
-          selected: !(state.entities[action.poiId].selected)
-        }
-      }, state);
+      return googlePoiAdapter.updateMany(action.poiIds.map(poiId => {
+        return {
+          id: poiId,
+          changes: {
+            selected: !(state.entities[poiId].selected)
+          }
+        };
+      }), state);
 
     default:
       return state;
@@ -102,12 +104,14 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
     }
 
     case hikeEditPoiActions.SET_OSM_AMENITY_POI_SELECTED:
-      return osmAmenityPoiAdapter.updateOne({
-        id: action.poiId,
-        changes: {
-          selected: !(state.entities[action.poiId].selected)
-        }
-      }, state);
+      return osmAmenityPoiAdapter.updateMany(action.poiIds.map(poiId => {
+        return {
+          id: poiId,
+          changes: {
+            selected: !(state.entities[poiId].selected)
+          }
+        };
+      }), state);
 
     default:
       return state;
@@ -155,12 +159,14 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
     }
 
     case hikeEditPoiActions.SET_OSM_NATURAL_POI_SELECTED:
-      return osmNaturalPoiAdapter.updateOne({
-        id: action.poiId,
-        changes: {
-          selected: !(state.entities[action.poiId].selected)
-        }
-      }, state);
+      return osmNaturalPoiAdapter.updateMany(action.poiIds.map(poiId => {
+        return {
+          id: poiId,
+          changes: {
+            selected: !(state.entities[poiId].selected)
+          }
+        };
+      }), state);
 
     default:
       return state;
@@ -208,12 +214,14 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
     }
 
     case hikeEditPoiActions.SET_OSM_ROUTE_POI_SELECTED:
-      return osmRoutePoiAdapter.updateOne({
-        id: action.poiId,
-        changes: {
-          selected: !(state.entities[action.poiId].selected)
-        }
-      }, state);
+      return osmRoutePoiAdapter.updateMany(action.poiIds.map(poiId => {
+        return {
+          id: poiId,
+          changes: {
+            selected: !(state.entities[poiId].selected)
+          }
+        };
+      }), state);
 
     default:
       return state;
@@ -261,12 +269,14 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
     }
 
     case hikeEditPoiActions.SET_WIKIPEDIA_POI_SELECTED:
-      return wikipediaPoiAdapter.updateOne({
-        id: action.poiId,
-        changes: {
-          selected: !(state.entities[action.poiId].selected)
-        }
-      }, state);
+      return wikipediaPoiAdapter.updateMany(action.poiIds.map(poiId => {
+        return {
+          id: poiId,
+          changes: {
+            selected: !(state.entities[poiId].selected)
+          }
+        };
+      }), state);
 
     default:
       return state;
@@ -306,12 +316,14 @@ const poiCollectorReducer: ActionReducer<IPoiCollectorEntityState> = (
     }
 
     case hikeEditPoiActions.SET_COLLECTOR_POI_SELECTED:
-      return poiCollectorAdapter.updateOne({
-        id: action.poiId,
-        changes: {
-          selected: !(state.entities[action.poiId].selected)
-        }
-      }, state);
+      return poiCollectorAdapter.updateMany(action.poiIds.map(poiId => {
+        return {
+          id: poiId,
+          changes: {
+            selected: !(state.entities[poiId].selected)
+          }
+        };
+      }), state);
 
     default:
       return state;
@@ -576,14 +588,14 @@ export const gTrackPoiMergeReducer: ActionReducer<IGTrackPoiMergeState> = (
         ...state,
         selections: [
           ...state.selections,
-          action.poiId
+          ...action.poiIds
         ]
       };
 
     case hikeEditPoiActions.REMOVE_GTRACK_POI_FROM_MERGE_SELECTION:
       return {
         ...state,
-        selections: state.selections.filter(s => s !== action.poiId)
+        selections: state.selections.filter(s => action.poiIds.indexOf(s) < 0)
       };
 
     default:

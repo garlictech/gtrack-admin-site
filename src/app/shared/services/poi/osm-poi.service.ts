@@ -5,6 +5,7 @@ import { IOsmPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
+import * as _ from 'lodash';
 
 @Injectable()
 export class OsmPoiService {

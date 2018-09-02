@@ -72,19 +72,23 @@
   </div>
 </div>
 
-<p-accordion [multiple]="true">
-  <p-accordionTab header="On route pois">
-    <hike-edit-pois-collector-table
-      [pois$]="pois$"
-      [onRouteCheck]="true"
-      [openPoiModal]="openPoiModal"
-    ></hike-edit-pois-collector-table>
-  </p-accordionTab>
-  <p-accordionTab header="Off route pois">
-    <hike-edit-pois-collector-table
-      [pois$]="pois$"
-      [onRouteCheck]="false"
-      [openPoiModal]="openPoiModal"
-    ></hike-edit-pois-collector-table>
-  </p-accordionTab>
-</p-accordion>
+<gt-table-spinner *ngIf="((saving$ | async)) as working; else collectorTable"></gt-table-spinner>
+
+<ng-template #collectorTable>
+  <p-accordion [multiple]="true">
+    <p-accordionTab header="On route pois">
+      <hike-edit-pois-collector-table
+        [pois$]="pois$"
+        [onRouteCheck]="true"
+        [openPoiModal]="openPoiModal"
+      ></hike-edit-pois-collector-table>
+    </p-accordionTab>
+    <p-accordionTab header="Off route pois">
+      <hike-edit-pois-collector-table
+        [pois$]="pois$"
+        [onRouteCheck]="false"
+        [openPoiModal]="openPoiModal"
+      ></hike-edit-pois-collector-table>
+    </p-accordionTab>
+  </p-accordion>
+</ng-template>
