@@ -20,6 +20,7 @@ export * from './template';
 export * from './phone-number';
 export * from './emoji';
 export * from './slider';
+export * from './range-slider';
 export * from './file';
 export * from './markdown';
 export * from './rich-text-editor';
