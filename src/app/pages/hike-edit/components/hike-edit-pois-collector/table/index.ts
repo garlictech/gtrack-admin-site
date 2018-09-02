@@ -1,17 +1,17 @@
 // Core
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, editedHikeProgramActions, hikeEditPoiActions } from '../../../../../store';
-import { Subject } from 'rxjs';
-import { LanguageService } from '../../../../../shared/services';
+import { State, hikeEditPoiActions } from '../../../../../store';
+import { Observable, Subject } from 'rxjs';
 import { HikeEditPoiSelectors } from '../../../../../store/selectors';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'hike-edit-pois-collector-table',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
-  @Input() pois$: any[];
+  @Input() pois$: Observable<any[]>;
   @Input() onRouteCheck: boolean;
   @Input() openPoiModal: any;
   public mergeSelections: {[id: string]: boolean} = {}
@@ -40,39 +40,52 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
     this._destroy$.unsubscribe();
   }
 
-  public handlePoiSelection(poi) {
-    this._store.dispatch(new hikeEditPoiActions.SetCollectorPoiSelected(poi.id));
+  public handlePoiSelection(poiIds) {
+    this._store.dispatch(new hikeEditPoiActions.SetCollectorPoiSelected(poiIds));
   }
 
-  public toggleMergeSelection = (poiId: string) => {
-    if (!!this.mergeSelections[poiId]) {
-      this._store.dispatch(new hikeEditPoiActions.RemoveGTrackPoiFromMergeSelection(poiId));
-    } else {
-      this._store.dispatch(new hikeEditPoiActions.AddGTrackPoiToMergeSelection(poiId));
+  public toggleMergeSelection = (poiIds: string[]) => {
+    const removeblePoiIds = [];
+    const poiIdsToAdd = [];
+
+    for (const poiId of poiIds) {
+      if (!!this.mergeSelections[poiId]) {
+        removeblePoiIds.push(poiId);
+      } else {
+        poiIdsToAdd.push(poiId);
+      }
+    }
+
+    if (removeblePoiIds.length > 0) {
+      this._store.dispatch(new hikeEditPoiActions.RemoveGTrackPoiFromMergeSelection(removeblePoiIds));
+    }
+
+    if (poiIdsToAdd.length > 0) {
+      this._store.dispatch(new hikeEditPoiActions.AddGTrackPoiToMergeSelection(poiIdsToAdd));
     }
   }
 
   public invertMerge() {
-    this.pois$.take(1).subscribe(pois => {
-      const clickablePois = pois.filter(p => {
-        return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
-      });
+    this.pois$
+      .take(1)
+      .subscribe(pois => {
+        const clickablePois = pois.filter(p => {
+          return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
+        });
 
-      for (const poi of clickablePois) {
-        this.toggleMergeSelection(poi.id);
-      }
-    });
+        this.toggleMergeSelection(_.map(clickablePois, 'id'));
+      });
   }
 
   public invertSelection() {
-    this.pois$.take(1).subscribe(pois => {
-      const clickablePois = pois.filter(p => {
-        return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
-      });
+    this.pois$
+      .take(1)
+      .subscribe(pois => {
+        const clickablePois = pois.filter(p => {
+          return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
+        });
 
-      for (const poi of clickablePois) {
-        this.handlePoiSelection(poi);
-      }
-    });
+        this.handlePoiSelection(_.map(clickablePois, 'id'));
+      });
   }
 }

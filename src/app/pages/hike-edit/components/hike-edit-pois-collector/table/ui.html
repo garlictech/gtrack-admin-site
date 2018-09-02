@@ -28,14 +28,14 @@
             <p-checkbox
               binary="true"
               [ngModel]="mergeSelections[poi.id]"
-              (onChange)="toggleMergeSelection(poi.id)"
+              (onChange)="toggleMergeSelection([poi.id])"
             ></p-checkbox>
           </td>
           <td class="text-center">
             <p-checkbox
               binary="true"
               [ngModel]="poi.selected"
-              (onChange)="handlePoiSelection(poi)"
+              (onChange)="handlePoiSelection([poi.id])"
             ></p-checkbox>
           </td>
         </tr>

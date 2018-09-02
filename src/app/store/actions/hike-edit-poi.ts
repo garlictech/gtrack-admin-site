@@ -79,7 +79,7 @@ export class SetGooglePoisInCollector implements Action {
 
 export class SetGooglePoiSelected implements Action {
   readonly type = SET_GOOGLE_POI_SELECTED;
-  constructor(public poiId: string) {}
+  constructor(public poiIds: string[]) {}
 }
 
 /**
@@ -108,7 +108,7 @@ export class SetOsmAmenityPoisInCollector implements Action {
 
 export class SetOsmAmenityPoiSelected implements Action {
   readonly type = SET_OSM_AMENITY_POI_SELECTED;
-  constructor(public poiId: string) {}
+  constructor(public poiIds: string[]) {}
 }
 
 /**
@@ -137,7 +137,7 @@ export class SetOsmNaturalPoisInCollector implements Action {
 
 export class SetOsmNaturalPoiSelected implements Action {
   readonly type = SET_OSM_NATURAL_POI_SELECTED;
-  constructor(public poiId: string) {}
+  constructor(public poiIds: string[]) {}
 }
 
 /**
@@ -166,7 +166,7 @@ export class SetOsmRoutePoisInCollector implements Action {
 
 export class SetOsmRoutePoiSelected implements Action {
   readonly type = SET_OSM_ROUTE_POI_SELECTED;
-  constructor(public poiId: string) {}
+  constructor(public poiIds: string[]) {}
 }
 
 /**
@@ -195,7 +195,7 @@ export class SetWikipediaPoisInCollector implements Action {
 
 export class SetWikipediaPoiSelected implements Action {
   readonly type = SET_WIKIPEDIA_POI_SELECTED;
-  constructor(public poiId: string) {}
+  constructor(public poiIds: string[]) {}
 }
 
 /**
@@ -214,7 +214,7 @@ export class RemovePoisFromCollector implements Action {
 
 export class SetCollectorPoiSelected implements Action {
   readonly type = SET_COLLECTOR_POI_SELECTED;
-  constructor(public poiId: string) {}
+  constructor(public poiIds: string[]) {}
 }
 
 /**
@@ -260,12 +260,12 @@ export class ResetPoiMergeSelection implements Action {
 
 export class AddGTrackPoiToMergeSelection implements Action {
   readonly type = ADD_GTRACK_POI_TO_MERGE_SELECTION;
-  constructor(public poiId: string) {}
+  constructor(public poiIds: string[]) {}
 }
 
 export class RemoveGTrackPoiFromMergeSelection implements Action {
   readonly type = REMOVE_GTRACK_POI_FROM_MERGE_SELECTION;
-  constructor(public poiId: string) {}
+  constructor(public poiIds: string[]) {}
 }
 
 export type AllHikeEditPoiActions =

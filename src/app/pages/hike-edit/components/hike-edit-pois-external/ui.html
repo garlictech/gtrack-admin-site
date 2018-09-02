@@ -18,7 +18,7 @@
       label="Copy to poi collector"
       styleClass="ui-button-success"
       (onClick)="copyToPoiCollector()"
-      [disabled]="(pois$ | async).length === 0"
+      [disabled]="(selectedPoisCount$ | async) === 0 "
     ></p-button>
 
     <p-button

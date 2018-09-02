@@ -4,9 +4,9 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = https://github.com/garlictech/forms-ngx.git
+	remote = https://github.com/garlictech/gtrack-provider-client.git
 	branch = master
-	commit = db330d21565638b46db69ec792570fc5118a0faf
-	parent = 5c6931f3068ccf05159f2e4d1eeb851b67484860
+	commit = 5bdd01f6dc9a1658e7fb4f8efa59ed943d62897c
+	parent = f81f1d14323688ca6126f3dbc5f3efccedd16b2c
 	cmdver = 0.3.1
 	method = merge

@@ -30,6 +30,7 @@ import { DynamicFormGroupComponent } from './dynamic-form-group-component';
 import { DynamicFormSectionComponent } from './dynamic-form-section-component';
 import { SwitchComponent } from './switch';
 import { SliderComponent } from './slider';
+import { RangeSliderComponent } from './range-slider';
 import { FileComponent } from './file';
 import { EmojiInputComponent } from './emoji-input';
 import { MarkdownComponent } from './markdown';
@@ -67,6 +68,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
     SwitchComponent,
     FileComponent,
     SliderComponent,
+    RangeSliderComponent,
     EmojiInputComponent,
     MarkdownComponent,
     RichTextEditorComponent

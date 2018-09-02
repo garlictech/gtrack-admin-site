@@ -95,7 +95,9 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this._store.dispatch(new commonBackgroundGeolocationActions.StartTracking());
 
-    this.currentLocation$ = this._store.select(selectCurrentLocation).takeUntil(this._destroy$);
+    this.currentLocation$ = this._store
+      .select(selectCurrentLocation)
+      .takeUntil(this._destroy$);
 
     this._initLocationSearchInput();
   }
@@ -118,11 +120,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       .on('click', (e: LeafletMouseEvent) => {
         if (this.allowPlanning) {
           if (this.mode === 'routing') {
-            this._waypointMarkerService
-              .addWaypoints([e.latlng])
-              .then(() => {
-                // Waypoint added
-              });
+            this._waypointMarkerService.addWaypoints([e.latlng]);
           } else {
             // console.log('todo _createCheckpoint');
             // this._createCheckpoint(e.latlng);
@@ -145,12 +143,14 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
 
-    this.currentLocation$.take(1).subscribe((position: IGeoPosition) => {
-      if (position && position.coords) {
-        const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude)
-        this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
-      }
-    });
+    this.currentLocation$
+      .take(1)
+      .subscribe((position: IGeoPosition) => {
+        if (position && position.coords) {
+          const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude)
+          this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
+        }
+      });
   }
 
   public resetMap($event: Event) {
@@ -196,13 +196,15 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   private _initLocationSearchInput() {
     this._searchInput = this._searchElementRef.nativeElement;
 
-    this._googleMapsService.autocomplete(this._searchInput).then(autocomplete => {
-      autocomplete.addListener('place_changed', () => {
-        this._ngZone.run(() => {
-          this.locationSearchResult = autocomplete.getPlace();
+    this._googleMapsService
+      .autocomplete(this._searchInput)
+      .then(autocomplete => {
+        autocomplete.addListener('place_changed', () => {
+          this._ngZone.run(() => {
+            this.locationSearchResult = autocomplete.getPlace();
+          });
         });
       });
-    });
   }
 
   public goToLocation($event) {

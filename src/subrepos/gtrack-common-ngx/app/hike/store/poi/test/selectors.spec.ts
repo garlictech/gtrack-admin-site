@@ -122,6 +122,23 @@ describe('Poi selectors', () => {
     });
   });
 
+  describe('getAllPoisCount', () => {
+    it('should return pois count', () => {
+      let result;
+      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+
+      store
+        .select(poiSelectors.getAllPois)
+        .takeUntil(destroy$)
+        .subscribe(_pois => (result = _pois.length));
+
+      expect(result).toEqual(0);
+
+      store.dispatch(new actions.AllPoiLoaded(ids, pois));
+      expect(result).toEqual(pois.length);
+    });
+  });
+
   describe('getPois', () => {
     it('should return pois by id', () => {
       let result;

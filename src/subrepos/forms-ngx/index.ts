@@ -17,6 +17,7 @@ import { EmojiInputComponent } from './emoji-input';
 // import { FileUploadS3Component } from './file-upload-s3';
 import { FileComponent } from './file';
 import { SliderComponent } from './slider';
+import { RangeSliderComponent } from './range-slider';
 import { MarkdownComponent } from './markdown';
 import { RichTextEditorComponent } from './rich-text-editor';
 
@@ -34,6 +35,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
     FileComponent,
     SwitchComponent,
     SliderComponent,
+    RangeSliderComponent,
     SwitchComponent,
     EmojiInputComponent,
     MarkdownComponent,
@@ -56,6 +58,7 @@ export {
   DynamicFormSectionComponent,
   SwitchComponent,
   SliderComponent,
+  RangeSliderComponent,
   EmojiInputComponent,
   FileComponent,
   MarkdownComponent,

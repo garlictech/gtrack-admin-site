@@ -65,7 +65,7 @@ export class GooglePoiService {
             elevation: 0,
             description: {
               [LanguageService.shortToLocale(params.lng)]: {
-                title: _point.name || 'unknown',
+                title: _point.name || _point.types[0] || 'unknown',
                 summary: '',
                 fullDescription: ''
               }

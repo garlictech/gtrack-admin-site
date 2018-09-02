@@ -6,7 +6,6 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { GalleriaModule } from 'primeng/galleria';
 import { TranslateModule } from '@ngx-translate/core';
-import { NouisliderModule } from 'ng2-nouislider';
 
 import { HikeComponentsModule as BaseModule } from '../../../gtrack-common-ngx/app/hike/components';
 
@@ -19,12 +18,14 @@ import { HikeInfoComponent } from './hike-info';
 import { HikeProgramComponent } from './hike-program';
 import { HikeProgramPageComponent } from './hike-program-page';
 import { HikeMapComponent } from './hike-map';
+import { BookmarkComponent } from './bookmark';
 
 import { LocationSearchComponent } from './location-search';
 import { SearchFiltersComponent } from './search-filters';
 import { SearchResultsMapComponent } from './search-results-map';
 import { TrailBoxComponent } from './trail-box';
 import { MapComponentsModule, LocalizeModule, SharedModule } from '../../../gtrack-common-ngx';
+import { FormModule } from '../../forms';
 
 import { LocalizeModule as WebLocalizeModule } from '../localize';
 
@@ -41,7 +42,8 @@ const COMPONENTS = [
   SearchResultsMapComponent,
   DownloadGpxButtonComponent,
   HikeProgramPageComponent,
-  HikeMapComponent
+  HikeMapComponent,
+  BookmarkComponent
 ];
 
 @NgModule({
@@ -57,8 +59,8 @@ const COMPONENTS = [
     GalleriaModule,
     TranslateModule,
     ReactiveFormsModule,
-    NouisliderModule,
-    WebLocalizeModule
+    WebLocalizeModule,
+    FormModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS]

@@ -20,7 +20,6 @@ export class HikeEditImageSelectors {
       this._featureSelector, (state: IHikeEditImageState) => state.mapillaryImages
     );
     this.getAllMapillaryImages = mapillaryImageAdapter.getSelectors(mapillaryImageSelector).selectAll;
-
   }
 
   //
