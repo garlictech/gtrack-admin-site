@@ -115,15 +115,13 @@ describe('HikeEditPoi actions', () => {
   });
 
   it('should create SetGooglePoiSelected action', () => {
-    const payload = {
-      poiId: 'fakePoiId'
-    };
-    const action = new HikeEditPoiActions.SetGooglePoiSelected(payload.poiId);
+    const poiIds = ['fakePoiId'];
+    const action = new HikeEditPoiActions.SetGooglePoiSelected(poiIds);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_GOOGLE_POI_SELECTED,
-      poiId: payload.poiId
+      poiIds: poiIds
     });
   });
 
@@ -180,15 +178,13 @@ describe('HikeEditPoi actions', () => {
   });
 
   it('should create SetOsmAmenityPoiSelected action', () => {
-    const payload = {
-      poiId: 'fakePoiId'
-    };
-    const action = new HikeEditPoiActions.SetOsmAmenityPoiSelected(payload.poiId);
+    const poiIds = ['fakePoiId'];
+    const action = new HikeEditPoiActions.SetOsmAmenityPoiSelected(poiIds);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_AMENITY_POI_SELECTED,
-      poiId: payload.poiId
+      poiIds: poiIds
     });
   });
 
@@ -245,15 +241,13 @@ describe('HikeEditPoi actions', () => {
   });
 
   it('should create SetOsmNaturalPoiSelected action', () => {
-    const payload = {
-      poiId: 'fakePoiId'
-    };
-    const action = new HikeEditPoiActions.SetOsmNaturalPoiSelected(payload.poiId);
+    const poiIds = ['fakePoiId'];
+    const action = new HikeEditPoiActions.SetOsmNaturalPoiSelected(poiIds);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_NATURAL_POI_SELECTED,
-      poiId: payload.poiId
+      poiIds: poiIds
     });
   });
 
@@ -310,15 +304,13 @@ describe('HikeEditPoi actions', () => {
   });
 
   it('should create SetOsmRoutePoiSelected action', () => {
-    const payload = {
-      poiId: 'fakePoiId'
-    };
-    const action = new HikeEditPoiActions.SetOsmRoutePoiSelected(payload.poiId);
+    const poiIds = ['fakePoiId'];
+    const action = new HikeEditPoiActions.SetOsmRoutePoiSelected(poiIds);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_ROUTE_POI_SELECTED,
-      poiId: payload.poiId
+      poiIds: poiIds
     });
   });
 
@@ -375,15 +367,13 @@ describe('HikeEditPoi actions', () => {
   });
 
   it('should create SetWikipediaPoiSelected action', () => {
-    const payload = {
-      poiId: 'fakePoiId'
-    };
-    const action = new HikeEditPoiActions.SetWikipediaPoiSelected(payload.poiId);
+    const poiIds = ['fakePoiId'];
+    const action = new HikeEditPoiActions.SetWikipediaPoiSelected(poiIds);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_WIKIPEDIA_POI_SELECTED,
-      poiId: payload.poiId
+      poiIds: poiIds
     });
   });
 
@@ -402,7 +392,7 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create AddPoisToCollector action', () => {
+  it('should create RemovePoisToCollector action', () => {
     const poiIds = ['fakeId'];
     const action = new HikeEditPoiActions.RemovePoisFromCollector(poiIds);
 
@@ -413,14 +403,14 @@ describe('HikeEditPoi actions', () => {
     });
   });
 
-  it('should create AddPoisToCollector action', () => {
-    const poiId = 'fakeId';
-    const action = new HikeEditPoiActions.SetCollectorPoiSelected(poiId);
+  it('should create SetCollectorPoiSelected action', () => {
+    const poiIds = ['fakeId'];
+    const action = new HikeEditPoiActions.SetCollectorPoiSelected(poiIds);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_COLLECTOR_POI_SELECTED,
-      poiId: poiId
+      poiIds: poiIds
     });
   });
 
