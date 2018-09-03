@@ -1,1 +1,1 @@
-FROM garlictech2/protractor:v7.0.7
+FROM garlictech2/protractor:v7.2.0
