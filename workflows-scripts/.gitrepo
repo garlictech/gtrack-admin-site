@@ -7,5 +7,5 @@
 	remote = https://github.com/garlictech/workflows-scripts.git
 	branch = master
 	commit = aa5009e23c4fcb21e90e154a08b272e42d0e1d52
-	parent = 60cdf482aff3a2e20fec30dc130c060fd9910e93
+	parent = 31cc6500775bac9552ccdcc70f69b3dd579ab012
 	cmdver = 0.3.1
