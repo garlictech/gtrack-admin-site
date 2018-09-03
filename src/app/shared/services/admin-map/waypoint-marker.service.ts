@@ -6,7 +6,7 @@ import { HikeEditMapSelectors } from '../../../store/selectors';
 import { AdminMapService, AdminMap, RoutePlannerService } from './index';
 import { HttpClient } from '../../../../../node_modules/@angular/common/http';
 import { environment } from 'environments/environment';
-import { ElevationService } from 'subrepos/gtrack-common-ngx';
+import { ElevationService, IconService } from 'subrepos/gtrack-common-ngx';
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
@@ -23,6 +23,7 @@ export class WaypointMarkerService {
     private _routePlannerService: RoutePlannerService,
     private _elevationService: ElevationService,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
+    private _iconService: IconService,
     private _http: HttpClient,
   ) {
     this._store
@@ -80,18 +81,14 @@ export class WaypointMarkerService {
       }
     }
 
+    this._refreshEndpointMarkerIcons();
+
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingFinished());
     this._map.leafletMap.spin(false);
   }
 
   private _createMarker(_waypoint) {
-    const _icon = L.divIcon({
-      html: `<span>${_waypoint.name}</span>`,
-      iconSize: [25, 41],
-      iconAnchor: [13, 41],
-      className: 'routing-control-marker'
-    });
-
+    const _icon =  this._getSingleMarkerIcon(_waypoint.name);
     const _marker = L.marker(_waypoint.latLng, {
       opacity: 1,
       draggable: false, // Maybe later...
@@ -108,6 +105,23 @@ export class WaypointMarkerService {
     _marker.addTo(this._map.leafletMap);
 
     return _marker;
+  }
+
+  private _getSingleMarkerIcon(title) {
+    return L.divIcon({
+      html: `<span>${title}</span>`,
+      iconSize: [25, 41],
+      iconAnchor: [13, 41],
+      className: 'routing-control-marker'
+    })
+  }
+
+  private _refreshEndpointMarkerIcons() {
+    for (let i = 1; i < this._markers.length - 1; i++) {
+      this._markers[i].setIcon(this._getSingleMarkerIcon(i + 1));
+    }
+    this._markers[0].setIcon(this._iconService.getLeafletIcon(['start'], 'default'));
+    this._markers[this._markers.length - 1].setIcon(this._iconService.getLeafletIcon(['finish'], 'default'));
   }
 
   private _getRouteFromApi(p1, p2) {

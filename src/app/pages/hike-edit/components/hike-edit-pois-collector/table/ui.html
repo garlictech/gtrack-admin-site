@@ -8,8 +8,8 @@
           <th>Types</th>
           <th>Origin</th>
           <th>Special</th>
-          <th>Merge</th>
-          <th>Select</th>
+          <th (click)="invertMerge()" class="cursor-pointer">[Merge]</th>
+          <th (click)="invertSelection()" class="cursor-pointer">[Select]</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-poi>
@@ -27,15 +27,15 @@
           <td class="text-center">
             <p-checkbox
               binary="true"
-              [(ngModel)]="mergeSelections[poi.id]"
-              (onChange)="toggleMergeSelection(poi.id)"
+              [ngModel]="mergeSelections[poi.id]"
+              (onChange)="toggleMergeSelection([poi.id])"
             ></p-checkbox>
           </td>
           <td class="text-center">
             <p-checkbox
               binary="true"
-              [(ngModel)]="poi.selected"
-              (onChange)="handlePoiSelection(poi)"
+              [ngModel]="poi.selected"
+              (onChange)="handlePoiSelection([poi.id])"
             ></p-checkbox>
           </td>
         </tr>

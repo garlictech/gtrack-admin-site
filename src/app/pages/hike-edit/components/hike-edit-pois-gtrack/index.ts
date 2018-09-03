@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import {
   PoiSelectors, GeoSearchSelectors, IGeoSearchContextState, IGeoSearchResponseItem
 } from 'subrepos/gtrack-common-ngx';
@@ -58,6 +59,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         this._store.select(this._geoSearchSelectors.getGeoSearch('gTrackPois')),
         this._store.select(this._poiSelectors.getPoiIds)
       )
+      .debounceTime(200)
       .takeUntil(this._destroy$)
       .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
         if (searchData) {
@@ -75,23 +77,25 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     this.pois$ = Observable
       .combineLatest(
         this._store
-          .select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois', this._poiSelectors.getAllPois))
+          .select(this._poiSelectors.getAllPoisCount())
           .takeUntil(this._destroy$),
         this._store
-          .select(this._editedHikeProgramSelectors.getStops)
+          .select(this._editedHikeProgramSelectors.getStopsCount)
           .takeUntil(this._destroy$)
       )
-      .filter(([pois, stops]: [IPoiStored[], any[]]) => typeof pois !== 'undefined' && pois.length > 0)
-      .switchMap(([pois, stops]: [IPoiStored[], any[]]) => {
+      .filter(([poiCount, stopsCount]: [number, number]) => poiCount > 0)
+      .debounceTime(200)
+      .switchMap(([poiCount, stopsCount]: [number, number]) => {
+        return this._store
+          .select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois',  this._poiSelectors.getAllPois))
+          .take(1)
+      })
+      .switchMap((pois: IPoiStored[]) => {
         return this._store
           .select(this._hikeEditRoutePlannerSelectors.getPath)
           .take(1)
-          .switchMap((path: any) => {
-            return Observable.of(this._poiEditorService.organizePois(pois, path));
-          })
-          .switchMap((organizedPois: IPoiStored[]) => {
-            return Observable.of(this._poiEditorService.handleHikeInclusion(organizedPois));
-          })
+          .switchMap((path: any) => Observable.of(this._poiEditorService.organizePois(pois, path)))
+          .switchMap((organizedPois: IPoiStored[]) => Observable.of(this._poiEditorService.handleHikeInclusion(organizedPois)))
         });
 
     this.pois$
@@ -103,7 +107,12 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       });
 
     // Route info from the store (for disabling GET buttons)
-    this.segments$ = this._store.select(this._hikeEditRoutePlannerSelectors.getSegments);
+    this.segments$ = this._store
+      .select(this._hikeEditRoutePlannerSelectors.getSegments);
+
+    this.segments$.takeUntil(this._destroy$).subscribe(segments => {
+      console.log('------------------------ segments', segments);
+    });
 
     //
     // Contexts
@@ -122,11 +131,13 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
-        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
-          if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
-          }
-        });
+        this.isPlanning$
+          .take(1)
+          .subscribe((isPlanning: boolean) => {
+            if (isPlanning) {
+              this._poiEditorService.refreshPoiMarkers(this._map);
+            }
+          });
       });
 
     this._store
@@ -134,11 +145,13 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
-        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
-          if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
-          }
-        });
+        this.isPlanning$
+          .take(1)
+          .subscribe((isPlanning: boolean) => {
+            if (isPlanning) {
+              this._poiEditorService.refreshPoiMarkers(this._map);
+            }
+          });
       });
   }
 

@@ -99,7 +99,6 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe(() => {
         // Refresh markers
-        console.log('hike pois call refreshPoiMarkers');
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
 
@@ -127,12 +126,13 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
 
-        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
-          if (isPlanning) {
-            console.log('hike pois showOnrouteMarkers call refreshPoiMarkers');
-            this._poiEditorService.refreshPoiMarkers(this._map);
-          }
-        });
+        this.isPlanning$
+          .take(1)
+          .subscribe((isPlanning: boolean) => {
+            if (isPlanning) {
+              this._poiEditorService.refreshPoiMarkers(this._map);
+            }
+          });
       });
 
     this._store
@@ -141,12 +141,13 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
 
-        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
-          if (isPlanning) {
-            console.log('hike pois showOffrouteMarkers call refreshPoiMarkers');
-            this._poiEditorService.refreshPoiMarkers(this._map);
-          }
-        });
+        this.isPlanning$
+          .take(1)
+          .subscribe((isPlanning: boolean) => {
+            if (isPlanning) {
+              this._poiEditorService.refreshPoiMarkers(this._map);
+            }
+          });
       });
   }
 

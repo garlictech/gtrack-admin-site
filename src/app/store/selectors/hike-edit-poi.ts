@@ -63,7 +63,8 @@ export class HikeEditPoiSelectors {
       'osmAmenity': this.getAllOsmAmenityPois,
       'osmNatural': this.getAllOsmNaturalPois,
       'osmRoute': this.getAllOsmRoutePois,
-      'wikipedia': this.getAllWikipediaPois
+      'wikipedia': this.getAllWikipediaPois,
+      'collector': this.getAllCollectorPois
     }
 
     this.getMergeSelections = createSelector(this._featureSelector,
@@ -75,9 +76,9 @@ export class HikeEditPoiSelectors {
     );
   }
 
-  public getSaveablePois(subdomain) {
+  public getSaveablePoisCount(subdomain) {
     return createSelector(this._allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
-      return pois.filter(p => p.selected && !p.inGtrackDb);
+      return pois.filter(p => p.selected && !p.inGtrackDb).length;
     });
   }
 

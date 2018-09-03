@@ -19,6 +19,8 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<any[]>;
   public selectedPois$: Observable<any[]>;
+  public saveablePoisCount$: Observable<number>;
+  public saving$: Observable<boolean>;
   public showOnrouteMarkers = true;
   public showOffrouteMarkers = true;
   public modalPoi: any;
@@ -51,8 +53,17 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       });
 
     // Poi list from store
-    this.pois$ = this._store.select(this._hikeEditPoiSelectors.getAllCollectorPois);
-    this.selectedPois$ = this._store.select(this._hikeEditPoiSelectors.getSelectedCollectorPois());
+    this.pois$ = this._store
+      .select(this._hikeEditPoiSelectors.getAllCollectorPois)
+      .takeUntil(this._destroy$);
+
+    this.selectedPois$ = this._store
+      .select(this._hikeEditPoiSelectors.getSelectedCollectorPois())
+      .takeUntil(this._destroy$);
+
+    this.saving$ = this._store
+      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving'))
+      .takeUntil(this._destroy$);
 
     this.mergeSelectionCount$ = this._store
       .select(this._hikeEditPoiSelectors.getMergeSelectionsCount)
@@ -65,7 +76,8 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .filter((gTrackPois: IGTrackPoi[]) => gTrackPois.length > 0)
       .takeUntil(this._destroy$)
       .subscribe((gTrackPois: IGTrackPoi[]) => {
-        this._store.select(this._hikeEditPoiSelectors.getAllCollectorPois)
+        this._store
+          .select(this._hikeEditPoiSelectors.getAllCollectorPois)
           .filter((collectedPois: any[]) => collectedPois.length > 0)
           .take(1)
           .subscribe((collectedPois: any[]) => {
@@ -77,6 +89,18 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
           });
       });
 
+    // Turn off saving after a not empty list becames empty
+    this.saveablePoisCount$ = this._store.select(this._hikeEditPoiSelectors.getSaveablePoisCount('collector'));
+    this.saveablePoisCount$
+      .takeUntil(this._destroy$)
+      .filter(poisCount => poisCount > 0)
+      .switchMap((poisCount) => this.saveablePoisCount$.takeUntil(this._destroy$))
+      .filter(poisCount => poisCount === 0)
+      .take(1)
+      .subscribe(() => {
+        this._store.dispatch(new hikeEditPoiActions.SetSaving('collector', false));
+      });
+
     //
     // Refresh markers
     //
@@ -86,11 +110,13 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
-        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
-          if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
-          }
-        });
+        this.isPlanning$
+          .take(1)
+          .subscribe((isPlanning: boolean) => {
+            if (isPlanning) {
+              this._poiEditorService.refreshPoiMarkers(this._map);
+            }
+          });
       });
 
     this._store
@@ -99,16 +125,19 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
 
-        this.isPlanning$.take(1).subscribe((isPlanning: boolean) => {
-          if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
-          }
-        });
+        this.isPlanning$
+          .take(1)
+          .subscribe((isPlanning: boolean) => {
+            if (isPlanning) {
+              this._poiEditorService.refreshPoiMarkers(this._map);
+            }
+          });
       });
   }
 
   ngOnDestroy() {
-    //
+    this._destroy$.next(true);
+    this._destroy$.unsubscribe();
   }
 
   /**
@@ -199,10 +228,14 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
           return (!!(poi.selected && !poi.inGtrackDb));
         });
 
-        for (let externalPoi of _externalPoisToSave) {
-          let _poiData = this._poiEditorService.getDbObj(externalPoi);
-          this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
-        }
+        return Observable
+          .interval(50)
+          .take(pois.length)
+          .subscribe(idx => {
+            let _poiData = this._poiEditorService.getDbObj(_externalPoisToSave[idx]);
+
+            this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
+          });
       });
   }
 

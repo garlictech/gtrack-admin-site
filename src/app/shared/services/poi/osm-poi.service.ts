@@ -5,6 +5,7 @@ import { IOsmPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
+import * as _ from 'lodash';
 
 @Injectable()
 export class OsmPoiService {
@@ -48,9 +49,9 @@ export class OsmPoiService {
 
         if (response.elements) {
           for (let _point of response.elements) {
-            if (_point.tags && _point.lat) {
-              let type = _point.tags[typeParam];
+            let type = _.get(_point.tags, typeParam);
 
+            if (_point.lat && this._checkPoiTags(_point, type)) {
               _res.push({
                 id: uuid(),
                 lat: _point.lat,
@@ -59,7 +60,7 @@ export class OsmPoiService {
                 types: [type],
                 description: {
                   [LanguageService.shortToLocale(lng)]: {
-                    title: _point.tags.name || 'unknown',
+                    title: _point.tags.name || type || 'unknown',
                     summary: '',
                     fullDescription: ''
                   }
@@ -76,5 +77,17 @@ export class OsmPoiService {
 
         return _res;
       });
+  }
+
+  private _checkPoiTags(_point, type) {
+    if (_point.tags) {
+      if (type === 'tree') {
+        return _point.tags.name ? true : false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 }

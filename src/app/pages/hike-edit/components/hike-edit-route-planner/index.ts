@@ -97,22 +97,22 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     this.route$
       .takeUntil(this._destroy$)
       .subscribe((route: any) => {
-          // Clear location
-          if (route.features.length === 1) {
-            this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
-          // 1st segment added (line + 2 points)
-          } else if (route.features.length === 3) {
-            this._updateLocation(route.features[1].geometry.coordinates);
-          }
+        // Clear location
+        if (route.features.length === 1) {
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
+        // 1st segment added (line + 2 points)
+        } else if (route.features.length === 3) {
+          this._updateLocation(route.features[1].geometry.coordinates);
+        }
 
-          this.isPlanning$
-            .take(1)
-            .subscribe((isPlanning: boolean) => {
-              if (isPlanning) {
-                this._refreshIcons(route);
-              }
-            });
-        });
+        this.isPlanning$
+          .take(1)
+          .subscribe((isPlanning: boolean) => {
+            if (isPlanning) {
+              this._refreshIcons(route);
+            }
+          });
+      });
 
     this._store
       .select(this._hikeEditRoutePlannerSelectors.getTotal)
