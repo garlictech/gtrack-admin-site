@@ -28,6 +28,8 @@
             [ngModel]="poi.selected"
             (onChange)="handlePoiSelection([poi.id])"
           ></p-checkbox>
+          <span *ngIf="poi.inCollector && !poi.inGtrackDb">In Poi Collector</span>
+          <span *ngIf="poi.inGtrackDb">In gTrackDB</span>
         </td>
       </tr>
       <tr *ngIf="!pois || pois.length === 0">No pois.</tr>
