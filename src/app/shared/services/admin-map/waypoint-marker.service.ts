@@ -53,6 +53,7 @@ export class WaypointMarkerService {
     }
     // Remove last segment
     this._routePlannerService.removeLastSegment();
+    this._refreshEndpointMarkerIcons();
   }
 
   public closeCircle() {
@@ -116,7 +117,7 @@ export class WaypointMarkerService {
     })
   }
 
-  private _refreshEndpointMarkerIcons() {
+  public _refreshEndpointMarkerIcons() {
     for (let i = 1; i < this._markers.length - 1; i++) {
       this._markers[i].setIcon(this._getSingleMarkerIcon(i + 1));
     }
