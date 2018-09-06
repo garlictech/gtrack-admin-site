@@ -131,6 +131,7 @@
         "ngrx-store-logger": "^0.2.0",
         "ngx-chips": "^1.9.3",
         "ngx-md": "^6.0.0",
+        "overlapping-marker-spiderfier-leaflet": "^0.2.6-2",
         "password-validator": "^4.1.1",
         "popper.js": "^1.14.3",
         "primeicons": "^1.0.0-beta.10",

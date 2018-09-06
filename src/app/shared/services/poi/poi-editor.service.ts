@@ -24,8 +24,11 @@ import { IMarkerPopupData } from 'subrepos/provider-client/interfaces';
 import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker/marker-popup.service';
 
 import * as L from 'leaflet';
+import 'overlapping-marker-spiderfier-leaflet';
 import * as _ from 'lodash';
 import * as turf from '@turf/turf';
+
+declare const OverlappingMarkerSpiderfier;
 
 @Injectable()
 export class PoiEditorService {
@@ -526,13 +529,31 @@ export class PoiEditorService {
 
       const _markers = this._generatePoiMarkers(_pois, map);
 
+      map.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(map.leafletMap, {
+        keepSpiderfied: true
+      });
+
       if (map.leafletMap.hasLayer(map.markersGroup)) {
         map.leafletMap.removeLayer(map.markersGroup);
       }
 
       if (_markers.length > 0) {
-        map.markersGroup = L.layerGroup(_markers.map(m => m.marker));
+        // Add markers to group
+        map.markersGroup = L.layerGroup(_.map(_markers, 'marker'));
         map.leafletMap.addLayer(map.markersGroup);
+
+        // Register marker to spiderfier
+        for (let _marker of _markers) {
+          map.overlappingMarkerSpiderfier.addMarker(_marker.marker);
+        }
+
+        // Currently unused
+        // map.overlappingMarkerSpiderfier.addListener('click', function(marker) {
+        //   console.log('spiderify clic');
+        // });
+        // map.overlappingMarkerSpiderfier.addListener('spiderfy', function(marker) {
+        //   console.log('spiderify spiderfy');
+        // });
       }
     }
   }

@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 
 export class AdminMap extends Map {
   public markersGroup: L.LayerGroup;
+  public overlappingMarkerSpiderfier: any;
 
   constructor(
     public id: string,
