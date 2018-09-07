@@ -2,11 +2,11 @@ import { Store } from '@ngrx/store';
 import { State } from '../../../../store';
 import { Observable } from 'rxjs';
 import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
-import { Map, IconService, MapMarkerService } from 'subrepos/gtrack-common-ngx/app';
+import { Map, IconService, MapMarkerService, DescriptionLanguageListService, MarkerPopupService } from 'subrepos/gtrack-common-ngx/app';
 
 import * as L from 'leaflet';
 import 'leaflet.fullscreen';
-import * as turf from '@turf/turf';
+import * as turfBuffer from '@turf/buffer';
 import * as _ from 'lodash';
 
 export class AdminMap extends Map {
@@ -19,9 +19,11 @@ export class AdminMap extends Map {
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
     private _store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    protected _descriptionLanguageList: DescriptionLanguageListService,
+    protected _markerPopup: MarkerPopupService
   ) {
-    super(id, map, iconService, mapMarkerService, _store);
+    super(id, map, iconService, mapMarkerService, _store, _descriptionLanguageList, _markerPopup);
 
     L.control.fullscreen({
       position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
@@ -43,7 +45,7 @@ export class AdminMap extends Map {
       .take(1)
       .map((path) => {
         if (typeof path !== 'undefined') {
-          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(
+          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(
             path, 50, {units: 'meters'}
           );
 
