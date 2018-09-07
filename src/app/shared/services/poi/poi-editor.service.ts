@@ -113,9 +113,15 @@ export class PoiEditorService {
           }
         });
       }
-    }
 
-    return poiData;
+      if (poi.google.photos) {
+        _.merge(poiData, {
+          additionalData: {
+            photos: poi.google.photos
+          }
+        });
+      }
+    }
   }
 
   /**
@@ -137,6 +143,14 @@ export class PoiEditorService {
           }
         }
       });
+
+      if (poi.wikipedia.photos) {
+        _.merge(poiData, {
+          additionalData: {
+            photos: poi.wikipedia.photos
+          }
+        });
+      }
     }
   }
 
