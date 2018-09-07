@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import * as turf from '@turf/turf';
+import { point as turfPoint, lineString as turfLineString } from '@turf/helpers';
+import nearestPointOnLine from '@turf/nearest-point-on-line';
+import lineSlice from '@turf/line-slice';
+import length from '@turf/length';
 
 @Injectable()
 export class GeospatialService {
@@ -10,13 +13,13 @@ export class GeospatialService {
    * Use [lon, lat] coords!
    */
   public snappedLineSlice(startCoords: number[], endCoords: number[], path: GeoJSON.Feature<GeoJSON.LineString>) {
-    const _line = turf.lineString(path.geometry.coordinates);
-    const _sp = turf.point([startCoords[0], startCoords[1]]);
-    const _snappedStartPoint = turf.nearestPointOnLine(_line, _sp);
-    const _ep = turf.point([endCoords[0], endCoords[1]]);
-    const _snappedEndPoint = turf.nearestPointOnLine(_line, _ep);
+    const _line = turfLineString(path.geometry.coordinates);
+    const _sp = turfPoint([startCoords[0], startCoords[1]]);
+    const _snappedStartPoint = nearestPointOnLine(_line, _sp);
+    const _ep = turfPoint([endCoords[0], endCoords[1]]);
+    const _snappedEndPoint = nearestPointOnLine(_line, _ep);
 
-    return turf.lineSlice(_snappedStartPoint, _snappedEndPoint, _line);
+    return lineSlice(_snappedStartPoint, _snappedEndPoint, _line);
   }
 
   /**
@@ -26,6 +29,6 @@ export class GeospatialService {
   public distanceOnLine(startCoords: number[], endCoords: number[], path: GeoJSON.Feature<GeoJSON.LineString>) {
     const _lineSlice = this.snappedLineSlice(startCoords, endCoords, path);
 
-    return 1000 * turf.lineDistance(_lineSlice, {units: 'kilometers'});
+    return 1000 * length(_lineSlice, {units: 'kilometers'});
   }
 }
