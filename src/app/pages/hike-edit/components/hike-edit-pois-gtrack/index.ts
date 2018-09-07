@@ -110,10 +110,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     this.segments$ = this._store
       .select(this._hikeEditRoutePlannerSelectors.getSegments);
 
-    this.segments$.takeUntil(this._destroy$).subscribe(segments => {
-      console.log('------------------------ segments', segments);
-    });
-
     //
     // Contexts
     //
