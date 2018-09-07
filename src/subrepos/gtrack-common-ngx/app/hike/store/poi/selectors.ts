@@ -47,6 +47,18 @@ export class PoiSelectors {
     return createSelector(this.getAllPois, (pois: IPoi[]) => (pois || []).length);
   }
 
+  public getAllPoiPhotos() {
+    return createSelector(this.getAllPois, pois => {
+      let photos = [];
+
+      pois.forEach(poi => {
+        photos = photos.concat(_.get(poi, 'additionalData.photos', []));
+      });
+
+      return photos;
+    });
+  }
+
   public getPoiContext(context: string) {
     return createSelector(this.getAllContexts, (contexts: IPoiContextState[]) => {
       return contexts.find(c => c.id === context);
