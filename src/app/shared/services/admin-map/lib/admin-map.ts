@@ -6,7 +6,7 @@ import { Map, IconService, MapMarkerService, DescriptionLanguageListService, Mar
 
 import * as L from 'leaflet';
 import 'leaflet.fullscreen';
-import * as turfBuffer from '@turf/buffer';
+import buffer from '@turf/buffer';
 import * as _ from 'lodash';
 
 export class AdminMap extends Map {
@@ -45,7 +45,7 @@ export class AdminMap extends Map {
       .take(1)
       .map((path) => {
         if (typeof path !== 'undefined') {
-          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(
+          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(
             path, 50, {units: 'meters'}
           );
 
