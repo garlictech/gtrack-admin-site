@@ -6,6 +6,14 @@
 <div class="clearfix"></div>
 
 <p-accordion [multiple]="true">
+  <p-accordionTab header="gTrackPoi ({{((gTrackPoiPhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
+    <gt-hike-edit-photos-table
+      [images$]="gTrackPoiPhotos$"
+      [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+      [clickActions]="clickActions"
+      [distanceFrom]="distanceFrom"
+    ></gt-hike-edit-photos-table>
+  </p-accordionTab>
   <p-accordionTab header="Google ({{((googlePhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
     <gt-hike-edit-photos-table
       [images$]="googlePhotos$"

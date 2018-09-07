@@ -7,6 +7,7 @@ import {
 } from '../../../../store/selectors';
 import { RoutePlannerService } from '../../../../shared/services/admin-map';
 import { IBackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
+import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 @Component({
   selector: 'gt-hike-edit-photos',
@@ -17,6 +18,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   @Input() backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
   @Input() clickActions: any;
   @Input() distanceFrom: number[] = null;
+  public gTrackPoiPhotos$: Observable<IBackgroundImageData[]>;
   public googlePhotos$: Observable<IBackgroundImageData[]>;
   public wikipediaPhotos$: Observable<IBackgroundImageData[]>;
   public mapillaryImages$: Observable<IBackgroundImageData[]>;
@@ -29,13 +31,18 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   constructor(
     private _store: Store<State>,
     private _routePlannerService: RoutePlannerService,
+    private _poiSelectors: PoiSelectors,
     private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _hikeEditImageSelectors: HikeEditImageSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {}
 
   ngOnInit() {
-    // Photo sources
+    // Photo sources getAllPoiPhotos
+    this.gTrackPoiPhotos$ = this._store
+      .select(this._poiSelectors.getAllPoiPhotos())
+      .takeUntil(this._destroy$);
+
     this.googlePhotos$ = this._store
       .select(this._hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.google))
       .takeUntil(this._destroy$);
