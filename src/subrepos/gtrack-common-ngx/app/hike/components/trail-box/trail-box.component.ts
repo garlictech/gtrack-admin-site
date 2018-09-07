@@ -203,7 +203,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
       .take(1)
       .subscribe(pois => {
         map.pointMarker.removeMarkers();
-        map.pointMarker.addMarkers(pois);
+        map.pointMarker.addMarkers(pois, this.hikeProgram.stops);
       });
 
     map.checkpointMarker.removeCheckpointMarkers();

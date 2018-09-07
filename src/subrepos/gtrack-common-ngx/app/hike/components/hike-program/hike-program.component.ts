@@ -35,7 +35,17 @@ export class HikeProgramComponent implements OnInit {
       .filter(stop => !/^endpoint/.test(stop.poiId))
       .map(stop => stop.poiId);
 
-    this.pois$ = this._store.select(this._poiSelectors.getPoiEntities(hikePois)).filter(pois => !_.isEmpty(pois));
+    let start = this.hikeProgram.stops.find(stop => stop.poiId === 'endpoint-first');
+    let finish = this.hikeProgram.stops.find(stop => stop.poiId === 'endpoint-last');
+
+    if (hikePois.length > 0) {
+      this.pois$ = this._store
+        .select(this._poiSelectors
+        .getPoiEntities(hikePois))
+        .filter(pois => !_.isEmpty(pois));
+    } else {
+      this.pois$ = Observable.of({});
+    }
 
     this._store.dispatch(new poiActions.LoadPois(hikePois));
   }

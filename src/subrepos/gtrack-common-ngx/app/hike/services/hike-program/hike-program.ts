@@ -42,7 +42,6 @@ export class HikeProgram implements IHikeProgramStored {
     let converted = _.cloneDeep(data);
     Object.assign(this, converted);
 
-    this._calculatePhysicalValues();
     this._handleStartFinish();
     this.checkpoints = this._checkpointService.createSequence(this.stops);
   }
@@ -57,26 +56,6 @@ export class HikeProgram implements IHikeProgramStored {
 
   public get summary(): string {
     return this.description[this.locale].summary || '';
-  }
-
-  private _calculatePhysicalValues() {
-    this.uphill = 0;
-    this.downhill = 0;
-    this.time = 0;
-    this.score = 0;
-
-    if (this.stops instanceof Array) {
-      let lastIndex = this.stops.length - 1;
-
-      this.stops.forEach((stop, index) => {
-        if (index !== lastIndex) {
-          this.uphill += stop.segment.uphill || 0;
-          this.downhill += stop.segment.downhill || 0;
-          this.time += stop.segment.time || 0;
-          this.score += stop.segment.score || 0;
-        }
-      });
-    }
   }
 
   private _handleStartFinish() {

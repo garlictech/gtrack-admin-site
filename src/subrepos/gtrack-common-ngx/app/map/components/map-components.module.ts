@@ -6,6 +6,7 @@ import { IconComponent } from './icon';
 import { LeafletComponent } from './leaflet';
 import { MarkerPopupComponent } from './marker-popup';
 import { LocalizeModule } from '../../localize';
+import { SharedModule } from '../../shared';
 
 // PrimeNG
 import {
@@ -24,7 +25,8 @@ const COMPONENTS = [
     MapModule,
     LocalizeModule,
     // PrimeNG
-    ButtonModule
+    ButtonModule,
+    SharedModule
   ],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],

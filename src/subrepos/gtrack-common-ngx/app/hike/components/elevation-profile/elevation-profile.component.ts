@@ -255,17 +255,19 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       let startData = lineData[index - 1];
       let endData = lineData[index];
 
-      let interpolate = d3.interpolateNumber(startData[1], endData[1]);
-      let range = endData[0] - startData[0];
-      let valueY = interpolate((x % range) / range);
+      if (startData && endData) {
+        let interpolate = d3.interpolateNumber(startData[1], endData[1]);
+        let range = endData[0] - startData[0];
+        let valueY = interpolate((x % range) / range);
 
-      if (this.elevationText) {
-        this.elevationText.text(this.distance.transform(valueY));
-      }
+        if (this.elevationText) {
+          this.elevationText.text(this.distance.transform(valueY));
+        }
 
-      if (this.marker) {
-        this.marker.attr('cx', xRange(distance));
-        this.marker.attr('cy', yRange(valueY));
+        if (this.marker) {
+          this.marker.attr('cx', xRange(distance));
+          this.marker.attr('cy', yRange(valueY));
+        }
       }
     }
   }
