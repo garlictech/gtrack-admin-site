@@ -20,8 +20,8 @@ export class Map {
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
     protected store: Store<any>,
-    private _descriptionLanguageList: DescriptionLanguageListService,
-    private _markerPopup: MarkerPopupService
+    protected _descriptionLanguageList: DescriptionLanguageListService,
+    protected _markerPopup: MarkerPopupService
   ) {}
 
   public get currentPositionMarker(): CurrentPositionMarker {
