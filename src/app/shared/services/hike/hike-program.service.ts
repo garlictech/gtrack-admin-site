@@ -8,7 +8,7 @@ import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/service
 import { ElevationService, GameRuleService, Route, RouteService, CheckpointService } from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';
-import * as turf from '@turf/turf';
+import length from '@turf/length';
 import * as d3 from 'd3';
 import * as geojson2svg from 'geojson2svg';
 
@@ -83,7 +83,7 @@ export class HikeProgramService {
       for (const stop of stops) {
         const _segmentEndPoint = [stop.lon, stop.lat];
         const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
-        const _segmentDistance = 1000 * turf.lineDistance(_segmentPath, {units: 'kilometers'});
+        const _segmentDistance = 1000 * length(_segmentPath, { units: 'kilometers' });
 
         stop.segment = {
           uphill: this._elevationService.calculateUphill((<any>_segmentPath).geometry.coordinates),

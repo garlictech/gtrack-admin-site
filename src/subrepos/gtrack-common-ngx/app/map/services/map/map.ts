@@ -6,7 +6,8 @@ import { CurrentPositionMarker } from './current-position-marker';
 import { CheckpointMarker } from './checkpoint-marker';
 import { PointMarker } from './point-marker';
 
-import { MapMarkerService } from '../map-marker';
+import { MapMarkerService, MarkerPopupService } from '../map-marker';
+import { DescriptionLanguageListService } from '../../../localize';
 
 export class Map {
   protected _currentPositionMarker: CurrentPositionMarker;
@@ -18,7 +19,9 @@ export class Map {
     protected map: L.Map,
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
-    protected store: Store<any>
+    protected store: Store<any>,
+    protected _descriptionLanguageList: DescriptionLanguageListService,
+    protected _markerPopup: MarkerPopupService
   ) {}
 
   public get currentPositionMarker(): CurrentPositionMarker {
@@ -39,7 +42,7 @@ export class Map {
 
   public get pointMarker(): PointMarker {
     if (!this._pointMarker) {
-      this._pointMarker = new PointMarker(this.map, this.mapMarkerService);
+      this._pointMarker = new PointMarker(this.map, this.mapMarkerService, this._descriptionLanguageList, this._markerPopup);
     }
 
     return this._pointMarker;

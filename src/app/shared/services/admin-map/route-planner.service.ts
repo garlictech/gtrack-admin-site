@@ -9,7 +9,9 @@ import { AdminMapService } from './admin-map.service';
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
-import * as turf from '@turf/turf';
+import buffer from '@turf/buffer';
+import { lineString as turfLineString } from '@turf/helpers';
+import length from '@turf/length';
 import * as rewind from 'geojson-rewind';
 import * as d3 from 'd3';
 
@@ -60,7 +62,7 @@ export class RoutePlannerService {
 
   public addRouteSegment(coordinates, updown) {
     let _segment: ISegment = {
-      distance: turf.lineDistance(turf.lineString(coordinates), {units: 'kilometers'}) * 1000, // summary.totalDistance, // in meters
+      distance: length(turfLineString(coordinates), { units: 'kilometers' }) * 1000, // summary.totalDistance, // in meters
       uphill: updown.uphill,
       downhill: updown.downhill,
       coordinates: coordinates
@@ -162,7 +164,7 @@ export class RoutePlannerService {
       .take(1)
       .subscribe((path) => {
         // declare as 'any' for avoid d3.geoBounds error
-        let _buffer: any = turf.buffer(path, 1000, {units: 'meters'});
+        let _buffer: any = buffer(path, 1000, { units: 'meters' });
 
         if (typeof _buffer !== 'undefined') {
           let _geoBounds = d3.geoBounds(rewind(_buffer, true));

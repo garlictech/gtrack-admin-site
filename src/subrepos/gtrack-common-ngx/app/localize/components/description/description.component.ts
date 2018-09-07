@@ -3,7 +3,7 @@ import { ILocalizedItem, ITextualDescription } from '../../../../../provider-cli
 
 @Component({
   selector: 'gtcn-description',
-  template: ''
+  templateUrl: './description.component.html'
 })
 export class DescriptionComponent {
   @Input()

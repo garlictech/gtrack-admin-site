@@ -21,7 +21,7 @@ import bboxPolygon from '@turf/bbox-polygon';
 import transformScale from '@turf/transform-scale';
 import nearestPointOnLine from '@turf/nearest-point-on-line';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import { point as turfPoint, lineString as turfLineString } from '@turf/turf';
+import { point as turfPoint, lineString as turfLineString } from '@turf/helpers';
 
 import { HikeProgram } from '../../services/hike-program';
 
@@ -203,7 +203,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
       .take(1)
       .subscribe(pois => {
         map.pointMarker.removeMarkers();
-        map.pointMarker.addMarkers(pois);
+        map.pointMarker.addMarkers(pois, this.hikeProgram.stops);
       });
 
     map.checkpointMarker.removeCheckpointMarkers();

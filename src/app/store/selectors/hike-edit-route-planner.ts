@@ -4,7 +4,8 @@ import { IHikeEditRoutePlannerState } from '../state/hike-edit-route-planner';
 import { ISegment } from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';
-import * as turf from '@turf/turf';
+import { point as turfPoint } from '@turf/helpers';
+import distance from '@turf/distance';
 
 @Injectable()
 export class HikeEditRoutePlannerSelectors {
@@ -51,9 +52,9 @@ export class HikeEditRoutePlannerSelectors {
         const _coords = _.get(state.route, 'features[0].geometry.coordinates', null);
 
         if (_coords && _coords.length > 1) {
-          const _dist = Math.round(1000 * turf.distance(
-            turf.point([_coords[0][1], _coords[0][0]]),
-            turf.point([_coords[_coords.length - 1][1], _coords[_coords.length - 1][0]]),
+          const _dist = Math.round(1000 * distance(
+            turfPoint([_coords[0][1], _coords[0][0]]),
+            turfPoint([_coords[_coords.length - 1][1], _coords[_coords.length - 1][0]]),
             {units: 'kilometers'}
           ));
 

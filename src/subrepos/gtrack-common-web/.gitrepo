@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/garlictech/gtrack-common-web.git
 	branch = master
-	commit = af516f07412e40100850c3dec187fe8c1bfc7549
-	parent = d630d6be7dc9b02a82443e64b7a1b6948be563e2
+	commit = 8a1a116d6c96550ae3624696f30e599e90fce5df
+	parent = 8764dc6ef37c3a28b59bdf327523bef7298e6ed4
 	cmdver = 0.3.1
 	method = merge

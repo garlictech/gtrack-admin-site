@@ -26,7 +26,9 @@ import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/
 import * as L from 'leaflet';
 import 'overlapping-marker-spiderfier-leaflet';
 import * as _ from 'lodash';
-import * as turf from '@turf/turf';
+import buffer from '@turf/buffer';
+import { point as turfPoint } from '@turf/helpers';
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 
 declare const OverlappingMarkerSpiderfier;
 
@@ -113,9 +115,15 @@ export class PoiEditorService {
           }
         });
       }
-    }
 
-    return poiData;
+      if (poi.google.photos) {
+        _.merge(poiData, {
+          additionalData: {
+            photos: poi.google.photos
+          }
+        });
+      }
+    }
   }
 
   /**
@@ -137,6 +145,14 @@ export class PoiEditorService {
           }
         }
       });
+
+      if (poi.wikipedia.photos) {
+        _.merge(poiData, {
+          additionalData: {
+            photos: poi.wikipedia.photos
+          }
+        });
+      }
     }
   }
 
@@ -162,18 +178,18 @@ export class PoiEditorService {
     let _pois: any[] = [];
 
     if (pois && pois.length > 0 && path) {
-      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 50, {units: 'meters'});
-      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 1000, {units: 'meters'});
+      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(path, 50, {units: 'meters'});
+      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(path, 1000, {units: 'meters'});
 
       for (let p of _.cloneDeep(pois)) {
-        let _point = turf.point([p.lon, p.lat]);
+        let _point = turfPoint([p.lon, p.lat]);
 
         if (typeof _smallBuffer !== 'undefined') {
-          p.onRoute = turf.inside(_point, _smallBuffer);
+          p.onRoute = booleanPointInPolygon(_point, _smallBuffer);
         }
 
         if (typeof _bigBuffer !== 'undefined') {
-          if (turf.inside(_point, _bigBuffer)) {
+          if (booleanPointInPolygon(_point, _bigBuffer)) {
             p.distFromRoute = this._geometryService.distanceFromRoute(_point!.geometry!.coordinates, path);
 
             if (!isGTrackPoi) {

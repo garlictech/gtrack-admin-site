@@ -10,7 +10,8 @@ import { ElevationService, IconService } from 'subrepos/gtrack-common-ngx';
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
-import * as turf from '@turf/turf';
+import { point as turfPoint, lineString as turfLineString } from '@turf/helpers';
+import nearestPointOnLine from '@turf/nearest-point-on-line';
 
 @Injectable()
 export class WaypointMarkerService {
@@ -192,9 +193,9 @@ export class WaypointMarkerService {
    */
   private _moveLastWaypointToRoute(coords) {
     for (let i = this._markers.length - 2; i < this._markers.length; i++) {
-      let line = turf.lineString(coords);
-      let pt = turf.point([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
-      let snapped = turf.nearestPointOnLine(line, pt);
+      let line = turfLineString(coords);
+      let pt = turfPoint([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
+      let snapped = nearestPointOnLine(line, pt);
 
       this._markers[i].setLatLng(new L.LatLng(
         (<any>snapped.geometry).coordinates[0],

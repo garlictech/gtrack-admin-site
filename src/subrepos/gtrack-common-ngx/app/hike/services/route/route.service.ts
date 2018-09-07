@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
-import * as turf from '@turf/turf';
+import distance from '@turf/distance';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -80,7 +80,7 @@ export class RouteService {
     }
   ): IElevationData | null {
     let lineData: [number, number][] = [];
-    let distance = 0;
+    let dist = 0;
 
     route.path.coordinates.forEach((coordinate: [number, number], i: number) => {
       let previous: GeoJSON.Position;
@@ -103,10 +103,10 @@ export class RouteService {
           coordinates: [coordinate[0], coordinate[1]]
         };
 
-        distance += turf.distance(currentPoint, previousPoint) * 1000;
+        dist += distance(currentPoint, previousPoint) * 1000;
 
         lineData.push([
-          this.unitsService.convertDistanceInBigUnit(distance).value,
+          this.unitsService.convertDistanceInBigUnit(dist).value,
           this.unitsService.convertDistance(coordinate[2], true).value
         ]);
       }
