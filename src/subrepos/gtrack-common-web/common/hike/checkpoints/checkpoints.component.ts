@@ -8,6 +8,4 @@ import { CheckpointsComponent as BaseComponent } from 'subrepos/gtrack-common-ng
   templateUrl: './checkpoints.component.html',
   styleUrls: ['./checkpoints.component.scss']
 })
-export class CheckpointsComponent extends BaseComponent {
-
-}
+export class CheckpointsComponent extends BaseComponent {}

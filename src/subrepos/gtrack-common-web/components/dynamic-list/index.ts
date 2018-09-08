@@ -7,11 +7,16 @@ import { Observable } from 'rxjs';
   styleUrls: ['./style.scss']
 })
 export class DynamicListComponent implements OnInit {
-  @Input() items$: Observable<any>;
-  @Input() containerClass?: Array<string>;
-  @Input() itemClass?: Array<string>;
-  @Input() itemTemplate: TemplateRef<any>;
-  @Input() clickHandler: Function;
+  @Input()
+  items$: Observable<any>;
+  @Input()
+  containerClass?: Array<string>;
+  @Input()
+  itemClass?: Array<string>;
+  @Input()
+  itemTemplate: TemplateRef<any>;
+  @Input()
+  clickHandler: Function;
 
   isLoading$: Observable<boolean>;
 
