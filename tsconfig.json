@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "target": "es5",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["dom", "es6", "es2015", "es2016", "es2017"],
+    "noEmitHelpers": true,
+    "importHelpers": true,
+    "skipDefaultLibCheck": true,
+    "pretty": true,
+    "sourceMap": true,
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node", "jest"],
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*", "../node_modules/*"],
+      "fs": ["./global-shims"],
+      "path": ["./global-shims"],
+      "os": ["./global-shims"],
+      "http": ["./global-shims"],
+      "https": ["./global-shims"],
+      "stream": ["./global-shims"],
+      "net": ["./global-shims"],
+      "ws": ["./global-shims"],
+      "tls": ["./global-shims"],
+      "zlib": ["./global-shims"],
+      "crypto": ["./global-shims"],
+      "global": ["./global-shims"],
+      "socket.io-client": ["../node_modules/socket.io-client/dist/socket.io"]
+    }
+  },
+  "exclude": [
+    "artifacts",
+    "e2e/**/*.ts",
+    "src/**/test/**/*",
+    "src/**/*.spec.ts",
+    "universal"
+  ]
+}

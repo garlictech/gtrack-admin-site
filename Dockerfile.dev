@@ -16,4 +16,3 @@ COPY package.json /app/package.project.json
 
 RUN scripts/install_dependencies
 
-COPY tsconfig.json /app/
