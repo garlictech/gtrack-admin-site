@@ -16,7 +16,7 @@ export class AuthProviderBase {
    */
   @DebugLog
   public restApiLogin(accessToken: string, url: string, roles?: string[]): Promise<IAuth> {
-    let options: any = {
+    const options: any = {
       /* jshint camelcase: false */
       access_token: accessToken
       /* jshint camelcase: true */
@@ -30,10 +30,10 @@ export class AuthProviderBase {
       .post(url, options)
       .toPromise()
       .then(response => {
-        let body = response.json();
-        let data = body;
-        let token = data.token;
-        let refreshToken = data.refreshToken;
+        const body = response.json();
+        const data = body;
+        const token = data.token;
+        const refreshToken = data.refreshToken;
 
         return this.auth.init(token, refreshToken);
       });
@@ -52,7 +52,7 @@ export class AuthProviderBase {
   ): Promise<IAuth> {
     return this._login(loginUrl, redirectUri, permissions).then(response => {
       /* jshint camelcase: false */
-      let accessToken = response.access_token;
+      const accessToken = response.access_token;
       /* jshint camelcase: true */
 
       return this.restApiLogin(accessToken, tokenUrl, roles);
@@ -62,11 +62,11 @@ export class AuthProviderBase {
   @DebugLog
   protected _parseQueryString(queryString: string): any {
     queryString = decodeURIComponent(queryString);
-    let obj: any = {};
-    let params: string[] = queryString.split('&');
+    const obj: any = {};
+    const params: string[] = queryString.split('&');
 
-    for (let param of params) {
-      let data: string[] = param.split('=');
+    for (const param of params) {
+      const data: string[] = param.split('=');
       obj[data[0]] = data[1];
     }
 

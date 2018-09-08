@@ -12,7 +12,7 @@ import { ApiService } from '../api';
 import { DebugLog } from '../log';
 
 import 'rxjs/add/operator/toPromise';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -50,16 +50,16 @@ export class AuthService {
     return (this.authenticated = this.api
       .get(`${this.authConfig.apiUrl}/user/me`)
       .switchMap(response => {
-        let user = <User>response.json();
+        const user = <User>response.json();
 
         // let afObs = this.afAuth ? this._getFirebaseData() : Observable.of({ firebaseToken: null, firebaseUser: null });
 
-        let afObs = Observable.of({ firebaseToken: null, firebaseUser: null });
+        const afObs = Observable.of({ firebaseToken: null, firebaseUser: null });
 
         return Observable.combineLatest(Observable.of({ token, refreshToken, user }), afObs);
       })
       .map(values => {
-        let auth: IAuth = {
+        const auth: IAuth = {
           token: values[0].token,
           refreshToken: values[0].refreshToken,
           user: values[0].user
@@ -72,8 +72,8 @@ export class AuthService {
 
   @DebugLog
   initFromLocalStore() {
-    let token = this.storage.getItem('token');
-    let refreshToken = this.storage.getItem('refreshToken');
+    const token = this.storage.getItem('token');
+    const refreshToken = this.storage.getItem('refreshToken');
 
     if (token) {
       return this.init(token, refreshToken);
@@ -85,13 +85,13 @@ export class AuthService {
 
   @DebugLog
   refreshToken(): Promise<IAuth> {
-    let refreshToken = this.storage.getItem('refreshToken');
+    const refreshToken = this.storage.getItem('refreshToken');
 
     if (!refreshToken) {
       return Promise.reject(new Error('Missing refresh token'));
     }
 
-    let params = new URLSearchParams();
+    const params = new URLSearchParams();
     params.set('refreshToken', refreshToken);
 
     return this.http
@@ -100,8 +100,8 @@ export class AuthService {
       })
       .toPromise()
       .then((response: Response) => {
-        let body = response.json();
-        let token = body.token;
+        const body = response.json();
+        const token = body.token;
 
         return this.init(token);
       });
@@ -109,7 +109,7 @@ export class AuthService {
 
   @DebugLog
   destroyRefreshToken(): Promise<Response | void> {
-    let refreshToken = this.storage.getItem('refreshToken');
+    const refreshToken = this.storage.getItem('refreshToken');
 
     if (!refreshToken) {
       return Promise.resolve();
@@ -146,7 +146,7 @@ export class AuthService {
    * Request new verify token
    */
   public requestVerifyToken(email: string): Promise<any> {
-    let tokenRequestUrl = `${this.authConfig.apiUrl}/auth/verify/request`;
+    const tokenRequestUrl = `${this.authConfig.apiUrl}/auth/verify/request`;
 
     return this.api
       .post(tokenRequestUrl, {
@@ -160,7 +160,7 @@ export class AuthService {
    * Verify user by token
    */
   public verify(token: string, uid: string): Promise<IAuth> {
-    let verifyUrl = `${this.authConfig.apiUrl}/auth/verify`;
+    const verifyUrl = `${this.authConfig.apiUrl}/auth/verify`;
 
     return this.api
       .post(verifyUrl, {
@@ -169,8 +169,8 @@ export class AuthService {
       })
       .toPromise()
       .then((response: Response) => {
-        let body = response.json();
-        let responseToken = body.token;
+        const body = response.json();
+        const responseToken = body.token;
 
         return this.init(responseToken);
       });
