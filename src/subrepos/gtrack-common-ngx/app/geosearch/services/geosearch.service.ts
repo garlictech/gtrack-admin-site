@@ -6,7 +6,7 @@ import {
   GeospatialSearchResponse
 } from '../../../../provider-client';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class GeoSearchService {
@@ -17,7 +17,9 @@ export class GeoSearchService {
       this._deepstream.callRpc<GeospatialSearchResponse>('open.geo.query.includedInBox', {
         payload: query
       }),
-      Observable.timer(500).take(1).map(() => '')
+      Observable.timer(500)
+        .take(1)
+        .map(() => '')
     ).map(results => results[0]);
   }
 
@@ -26,7 +28,9 @@ export class GeoSearchService {
       this._deepstream.callRpc<GeospatialSearchResponse>('open.geo.query.includedInCircle', {
         payload: query
       }),
-      Observable.timer(500).take(1).map(() => '')
+      Observable.timer(500)
+        .take(1)
+        .map(() => '')
     ).map(results => results[0]);
   }
 }

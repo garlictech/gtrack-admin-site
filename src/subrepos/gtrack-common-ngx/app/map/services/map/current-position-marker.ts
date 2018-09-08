@@ -10,10 +10,7 @@ export class CurrentPositionMarker {
   public positioningInverval = 10000;
   public timeout = 10000;
 
-  constructor(
-    protected map: L.Map,
-    protected _store: Store<any>
-  ) {}
+  constructor(protected map: L.Map, protected _store: Store<any>) {}
 
   public stopPositioning() {
     if (this.marker) {
@@ -45,12 +42,10 @@ export class CurrentPositionMarker {
 
   public goToPosition(pos: L.LatLng) {
     if (!this.marker) {
-      this.marker = L
-        .userMarker(pos, {
-          pulsing: true,
-          smallIcon: true
-        })
-        .addTo(this.map);
+      this.marker = L.userMarker(pos, {
+        pulsing: true,
+        smallIcon: true
+      }).addTo(this.map);
     }
 
     this.marker.setLatLng(pos);

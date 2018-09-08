@@ -1,7 +1,5 @@
 import { Component, NgZone, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as _ from 'lodash';
-import * as turf from '@turf/turf';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Subject, never } from 'rxjs';
 
@@ -14,6 +12,10 @@ import { SearchFiltersSelectors } from '../../../search-filters/store/selectors'
 import * as searchFilterActions from '../../../search-filters/store/actions';
 
 import * as BackgroundGeolocationActions from '../../../shared/services/background-geolocation-service/store/actions';
+
+import * as _ from 'lodash';
+import distance from '@turf/distance';
+import { Coord as turfCoord } from '@turf/helpers';
 
 @Component({
   selector: 'gtcn-location-search',
@@ -29,9 +31,11 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject<boolean>();
   private _locate$ = new Subject<boolean>();
 
-  @Input() public context: string;
+  @Input()
+  public context: string;
 
-  @Input() public placeholder: string;
+  @Input()
+  public placeholder: string;
 
   public icon = faSearch;
 
@@ -58,7 +62,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     this._input = this._searchElementRef.nativeElement;
 
     if (!(this._input instanceof HTMLInputElement)) {
-      let input = this._input.querySelector('input');
+      const input = this._input.querySelector('input');
 
       if (input !== null) {
         this._input = input;
@@ -69,7 +73,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
       this._googleMapsService.autocomplete(this._input).then(autocomplete => {
         autocomplete.addListener('place_changed', () => {
           this._ngZone.run(() => {
-            let place = autocomplete.getPlace();
+            const place = autocomplete.getPlace();
 
             if (typeof place.geometry === 'undefined' || place.geometry === null) {
               return;
@@ -93,23 +97,23 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
         }
       });
 
-    let location$ = this._store
+    const location$ = this._store
       .select(selectCurrentLocation)
       .takeUntil(this._destroy$)
       .filter((location: IGeoPosition) => !!_.get(location, 'coords.latitude') && !!_.get(location, 'coords.latitude'))
       .map((location: IGeoPosition) => <GeoJSON.Position>[location.coords.longitude, location.coords.latitude])
       .distinctUntilChanged((position1, position2) => {
-        let point1: turf.Coord = {
+        let point1: turfCoord = {
           type: 'Point',
           coordinates: [position1[0], position1[1]]
         };
 
-        let point2: turf.Coord = {
+        let point2: turfCoord = {
           type: 'Point',
           coordinates: [position2[0], position2[1]]
         };
 
-        return turf.distance(point1, point2) <= 0.1;
+        return distance(point1, point2) <= 0.1;
       });
 
     this._locate$

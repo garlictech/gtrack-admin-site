@@ -8,7 +8,7 @@ import * as actions from '../../../object-mark/store/actions';
 
 import { EObjectMarkContext } from 'subrepos/provider-client';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import { take, takeUntil, filter, switchMap, tap, delay } from 'rxjs/operators';
 
@@ -26,19 +26,14 @@ export class BookmarkComponent implements OnDestroy, OnInit {
 
   protected _destroy$ = new Subject<boolean>();
 
-  constructor(
-    protected _objectMarkSelectors: ObjectMarkSelectors,
-    protected _store: Store<State>
-  ) {
+  constructor(protected _objectMarkSelectors: ObjectMarkSelectors, protected _store: Store<State>) {
     this._store
       .select(this._objectMarkSelectors.getObjectMarkContext(EObjectMarkContext.bookmarkedHike))
-      .pipe(
-        take(1)
-      )
+      .pipe(take(1))
       .subscribe(context => {
-        log.d('Current context: ', context);
+        log.data('Current context: ', context);
         if (!context || (!context.loaded && !context.loading)) {
-          log.d('Dispatch load context');
+          log.data('Dispatch load context');
           this._store.dispatch(new actions.LoadContext(EObjectMarkContext.bookmarkedHike));
         }
       });
@@ -51,7 +46,7 @@ export class BookmarkComponent implements OnDestroy, OnInit {
         delay(50) // TODO: remove this
       )
       .subscribe(() => {
-        log.d('Dispatch load context (because of mark)');
+        log.data('Dispatch load context (because of mark)');
         this._store.dispatch(new actions.LoadContext(EObjectMarkContext.bookmarkedHike));
       });
   }
@@ -63,11 +58,9 @@ export class BookmarkComponent implements OnDestroy, OnInit {
 
     this._store
       .select(this._objectMarkSelectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, this.hikeProgramId))
-      .pipe(
-        take(1)
-      )
+      .pipe(take(1))
       .subscribe(state => {
-        log.d('Current state before bookmark', state);
+        log.data('Current state before bookmark', state);
         const mark = !state;
 
         this._store.dispatch(new actions.MarkObject(EObjectMarkContext.bookmarkedHike, this.hikeProgramId, mark));
@@ -79,7 +72,7 @@ export class BookmarkComponent implements OnDestroy, OnInit {
       .select(this._objectMarkSelectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, this.hikeProgramId))
       .pipe(
         takeUntil(this._destroy$),
-        tap(marked => log.d('Current state: ', marked))
+        tap(marked => log.data('Current state: ', marked))
       );
   }
 
@@ -87,5 +80,4 @@ export class BookmarkComponent implements OnDestroy, OnInit {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
-
 }

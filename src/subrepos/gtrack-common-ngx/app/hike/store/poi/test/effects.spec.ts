@@ -16,7 +16,7 @@ import { PoiEffects } from '../effects';
 import { PoiService } from '../../../services/poi';
 import { DeepstreamModule } from '../../../../deepstream';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { pois as poiFixtures, poisStored } from './fixtures';
 
 import { GeometryService } from '../../../services/geometry';
@@ -93,9 +93,11 @@ describe('Poi effects', () => {
         id: newId
       })
     );
-    spyOn(service, 'updateState').and.returnValue(Observable.of({
-      success: true
-    }));
+    spyOn(service, 'updateState').and.returnValue(
+      Observable.of({
+        success: true
+      })
+    );
   });
 
   describe('loadPoi$', () => {

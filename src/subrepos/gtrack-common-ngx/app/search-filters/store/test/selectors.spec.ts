@@ -52,9 +52,11 @@ describe('SearchFilters selectors', () => {
         .takeUntil(destroy$)
         .subscribe(filters => (results = filters));
 
-      store.dispatch(new actions.ChangeFilters({
-        difficulty: [4, 6]
-      }));
+      store.dispatch(
+        new actions.ChangeFilters({
+          difficulty: [4, 6]
+        })
+      );
 
       expect(results).toEqual({
         ...initialState,
@@ -73,13 +75,13 @@ describe('SearchFilters selectors', () => {
         .takeUntil(destroy$)
         .subscribe(filter => (result = filter));
 
-      store.dispatch(new actions.ChangeFilters({
-        radius: 200
-      }));
+      store.dispatch(
+        new actions.ChangeFilters({
+          radius: 200
+        })
+      );
 
       expect(result).toEqual(200);
     });
-
   });
-
 });

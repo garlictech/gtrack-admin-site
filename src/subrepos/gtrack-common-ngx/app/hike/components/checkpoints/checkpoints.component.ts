@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { Component, Input } from '@angular/core';
 import { Dictionary } from '@ngrx/entity/src/models';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 import { faArrowRight, faSortUp, faSortDown, faClock, faTrophy } from '@fortawesome/free-solid-svg-icons';
 
@@ -29,7 +29,9 @@ export class CheckpointsComponent {
     if (checkpoints instanceof Array) {
       this._checkpoints = checkpoints;
 
-      let poiIds = checkpoints.filter(checkpoint => !/^endpoint/.test(checkpoint.id)).map(checkpoint => checkpoint.id);
+      const poiIds = checkpoints
+        .filter(checkpoint => !/^endpoint/.test(checkpoint.id))
+        .map(checkpoint => checkpoint.id);
 
       this.pois$ = this._store.select(this._poiSelectors.getPoiEntities(poiIds)).filter(pois => !_.isEmpty(pois));
 

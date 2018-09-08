@@ -46,16 +46,10 @@ const reducer: ActionReducer<IHikeEntityState> = (
 ): IHikeEntityState => {
   switch (action.type) {
     case HikeProgramActionTypes.HIKE_PROGRAM_LOADED:
-      return hikeAdapter.upsertOne(
-        action.hikeProgram,
-        state
-      );
+      return hikeAdapter.upsertOne(action.hikeProgram, state);
 
     case HikeProgramActionTypes.ALL_HIKE_PROGRAMS_LOADED:
-      return hikeAdapter.upsertMany(
-        action.hikePrograms,
-        state
-      );
+      return hikeAdapter.upsertMany(action.hikePrograms, state);
 
     default:
       return state;

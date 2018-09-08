@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IBackgroundImageData } from '../../../../provider-client';
-import * as turf from '@turf/turf';
+import { IBackgroundImageData } from 'subrepos/provider-client';
+import { point as turfPoint } from '@turf/helpers';
+import distance from '@turf/distance';
 
 @Pipe({
   name: 'poiImagesWithinCircle'
@@ -11,17 +12,17 @@ export class PoiImagesWithinCirclePipe implements PipeTransform {
       return [];
     } else if (properties) {
       // properties: [lat, lon, distance]
-      const filtered =  images.filter((image: IBackgroundImageData) => {
-        const imageLocation = turf.point([image.lon, image.lat]);
-        const poiLocation = turf.point([properties[1], properties[0]]);
-        const dist = turf.distance(imageLocation, poiLocation) * 1000;
+      const filtered = images.filter((image: IBackgroundImageData) => {
+        const imageLocation = turfPoint([image.lon, image.lat]);
+        const poiLocation = turfPoint([properties[1], properties[0]]);
+        const dist = distance(imageLocation, poiLocation) * 1000;
 
         return dist <= properties[2];
       });
 
       return filtered;
     } else {
-      return images
-    };
+      return images;
+    }
   }
 }

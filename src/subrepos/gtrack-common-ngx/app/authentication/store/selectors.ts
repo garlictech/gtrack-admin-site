@@ -10,11 +10,11 @@ import { User, IAuthenticationState as IJwtAuthState, IAuth } from '../../../../
 
 import { IAuthenticationState } from './state';
 
-let selectAuthFeature = createFeatureSelector<IAuthenticationState>('authentication');
+const selectAuthFeature = createFeatureSelector<IAuthenticationState>('authentication');
 
-let selectJwtFeature = createSelector(selectAuthFeature, (state: IAuthenticationState) => state.jwtAuth);
+const selectJwtFeature = createSelector(selectAuthFeature, (state: IAuthenticationState) => state.jwtAuth);
 
-let selectAuth = createSelector(selectJwtFeature, (state: IJwtAuthState) => state.auth);
+const selectAuth = createSelector(selectJwtFeature, (state: IJwtAuthState) => state.auth);
 
 export const selectUser = createSelector(selectAuth, (state: IAuth) => _.get(state, 'user'));
 
@@ -40,9 +40,9 @@ export class Selectors {
   public selectUserId: MemoizedSelector<object, string>;
 
   constructor(private _deepstreamSelectors: DeepstreamSelectors) {
-    let selectDeepstreamFeature = createFeatureSelector<IDeepstreamState>('deepstream');
+    const selectDeepstreamFeature = createFeatureSelector<IDeepstreamState>('deepstream');
 
-    let selectUiFeature = createSelector(selectAuthFeature, (state: IAuthenticationState) => state.uiState);
+    const selectUiFeature = createSelector(selectAuthFeature, (state: IAuthenticationState) => state.uiState);
 
     this.auth = selectAuth;
     this.user = selectUser;
