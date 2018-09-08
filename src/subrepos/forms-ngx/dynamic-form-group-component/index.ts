@@ -10,8 +10,10 @@ import { IGroupField } from '../field';
   template: ''
 })
 export class DynamicFormGroupComponent implements OnInit {
-  @Input() public controlGroup: FormArray;
-  @Input() public fields: IGroupField;
+  @Input()
+  public controlGroup: FormArray;
+  @Input()
+  public fields: IGroupField;
 
   public formFields: any[] = [];
 
@@ -23,7 +25,7 @@ export class DynamicFormGroupComponent implements OnInit {
 
   @DebugLog
   addItem() {
-    let group: any = {};
+    const group: any = {};
 
     _.forEach(this.fields.embeddedForm, (field: any, key) => {
       group[key] = new FormControl(field.defaultValue, field.validators);

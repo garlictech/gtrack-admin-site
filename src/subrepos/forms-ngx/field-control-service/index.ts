@@ -12,16 +12,16 @@ export interface IFormInstance {
 @Injectable()
 export class FieldControlService {
   toFormGroup(fields: any, data: any): IFormInstance {
-    let group: any = {};
-    let formFields: any[] = [];
+    const group: any = {};
+    const formFields: any[] = [];
     _.forEach(fields, (field: any, key) => {
       if (field.controlType === 'group') {
-        let embeddedForm: IFormInstance[] = _.map(data[key], arrayValue =>
+        const embeddedForm: IFormInstance[] = _.map(data[key], arrayValue =>
           this.toFormGroup(field.embeddedForm, arrayValue)
         );
         group[key] = new FormArray(embeddedForm.map(form => form.form));
       } else if (field.controlType === 'section') {
-        let embeddedForm: IFormInstance = this.toFormGroup(field.embeddedForm, data[key] || {});
+        const embeddedForm: IFormInstance = this.toFormGroup(field.embeddedForm, data[key] || {});
         group[key] = embeddedForm.form;
       } else {
         group[key] = new FormControl(data[key] || field.defaultValue, field.validators);

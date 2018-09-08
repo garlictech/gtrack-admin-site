@@ -6,7 +6,8 @@ import { AbstractValueAccessor } from '../abstract-value-accessor';
   template: ''
 })
 export class MultiSelectComponent extends AbstractValueAccessor {
-  @Input() options;
+  @Input()
+  options;
 
   defaultLabel: string;
 

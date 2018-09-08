@@ -3,7 +3,8 @@ import { Input } from '@angular/core';
 import { DebugLog } from '../log';
 
 export abstract class AbstractValueAccessor implements ControlValueAccessor {
-  @Input() change;
+  @Input()
+  change;
 
   @DebugLog
   doChange() {

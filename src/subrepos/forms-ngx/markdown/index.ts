@@ -7,5 +7,6 @@ import { AbstractValueAccessor } from '../abstract-value-accessor';
   template: ''
 })
 export class MarkdownComponent extends AbstractValueAccessor {
-  @Input() rows;
+  @Input()
+  rows;
 }
