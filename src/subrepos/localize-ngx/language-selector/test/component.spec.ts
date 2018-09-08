@@ -19,24 +19,22 @@ describe('LanguageSelectorComponent', () => {
     }
   }
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [LanguageSelectorComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        imports: [
-          TranslateModule.forRoot({
-            loader: {
-              provide: TranslateLoader,
-              useFactory: (http: HttpClient) => new TranslateHttpLoader(http, '/assets/i18n', '.json'),
-              deps: [HttpClient]
-            }
-          })
-        ],
-        providers: [{ provide: LanguageService, useClass: MockLanguageService }]
-      }).compileComponents();
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [LanguageSelectorComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (http: HttpClient) => new TranslateHttpLoader(http, '/assets/i18n', '.json'),
+            deps: [HttpClient]
+          }
+        })
+      ],
+      providers: [{ provide: LanguageService, useClass: MockLanguageService }]
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LanguageSelectorComponent);

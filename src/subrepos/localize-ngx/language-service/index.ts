@@ -38,13 +38,13 @@ export class LanguageService {
 
     if (!actualLanguage) {
       const browserLang = this._translate.getBrowserCultureLang().replace(/-/, '_') || 'en_US';
-      log.d(`Detected browser language: ${browserLang}`);
+      log.data(`Detected browser language: ${browserLang}`);
       actualLanguage =
         this._config.supportedLanguages.indexOf(browserLang) > -1 ? browserLang : this._config.defaultLanguage;
     }
 
     this._translate.use(actualLanguage);
     this._supportedLanguages = Languages.filter(lang => this._config.supportedLanguages.indexOf(lang.id) > -1);
-    log.d('Supported languages: ', this._supportedLanguages);
+    log.data('Supported languages: ', this._supportedLanguages);
   }
 }
