@@ -17,3 +17,6 @@ services:
       - CI
       - PROJECT_CONFIG
     entrypoint: ['sh', '-c', '${DOCKER_CMD}']
+    ports:
+      - '8081:8081'
+      - '7081:4000'

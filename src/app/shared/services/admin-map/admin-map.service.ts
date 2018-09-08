@@ -9,15 +9,16 @@ import * as uuid from 'uuid/v1';
 
 @Injectable()
 export class AdminMapService extends MapService {
-  protected _maps: {[id: string]: AdminMap} = {};
+  protected _maps: { [id: string]: AdminMap } = {};
 
   constructor(
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
-    private _store: Store<State>,
+    store: Store<State>,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {
-    super(iconService, mapMarkerService, _store);
+    // TODO: null-s are introduced to be able to compile, should be checked...
+    super(iconService, mapMarkerService, store, null, null);
   }
 
   public get(leafletMap: L.Map): AdminMap {
@@ -32,9 +33,11 @@ export class AdminMapService extends MapService {
     );
     this._maps[_id] = _map;
 
-    this._store.dispatch(new adminMapActions.RegisterMap({
-      mapId: _id
-    }));
+    this._store.dispatch(
+      new adminMapActions.RegisterMap({
+        mapId: _id
+      })
+    );
 
     return _map;
   }

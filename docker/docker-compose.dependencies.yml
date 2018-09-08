@@ -14,6 +14,8 @@ services:
     restart: always
     secrets:
       - DEEPSTREAM_PROVIDER_JWT_SECRET
+    ports:
+      - 6020:6020
 
   redis:
     image: redis:alpine
@@ -23,6 +25,9 @@ services:
     env_file:
       - './service.env'
     command: ['sh', '-c', 'rethinkdb --bind all --initial-password $${RETHINKDB_PASSWORD}']
+    ports:
+      - '28016:28016'
+      - '8091:8080'
 
   deepstream_providers:
     image: docker.garlictech.com/gtrack-deepstream-providers-staging

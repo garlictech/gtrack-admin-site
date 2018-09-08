@@ -16,7 +16,7 @@ export class MapService {
   constructor(
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
-    protected store: Store<any>,
+    protected _store: Store<any>,
     protected _descriptionLanguageList: DescriptionLanguageListService,
     protected _markerPopup: MarkerPopupService
   ) {}
@@ -28,7 +28,7 @@ export class MapService {
       leafletMap,
       this.iconService,
       this.mapMarkerService,
-      this.store,
+      this._store,
       this._descriptionLanguageList,
       this._markerPopup
     );
