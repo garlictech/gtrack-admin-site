@@ -6,14 +6,9 @@ npm run travis script
 
 # ADD YOUR PARTS HERE
 npm run build
-npm run lint
+#npm run lint
 npm run unittest
-
-if [[ "$BUILD_TYPE" == "aot" ]]; then
-  npm run build:debug:aot
-else
-  npm run build:prod:debug
-fi
+npm run build:prod:debug
 
 if [[ "$TRAVIS_EVENT_TYPE" != "pull_request" ]]; then
   npm run e2e:prod
