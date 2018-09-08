@@ -2,7 +2,7 @@
 set -e
 . .env
 
-DOCKER_COMPOSE="docker-compose -f docker/docker-compose.webpack.yml -f docker/docker-compose.dependencies.yml -f docker/docker-compose.net.yml"
+DOCKER_COMPOSE="docker-compose -f docker/docker-compose.webpack.yml -f docker/docker-compose.dependencies.yml"
 
 if [[ $DEBUG ]]; then
   DOCKER_COMPOSE="${DOCKER_COMPOSE} -f docker/docker-compose.debug.yml"

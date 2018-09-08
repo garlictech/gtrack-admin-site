@@ -5,7 +5,7 @@ set -e
 TESTER_IMAGE=$PROJECT.e2e-tester
 
 DOCKER_COMPOSE_TESTER="docker-compose -f docker/docker-compose.e2e.yml"
-DOCKER_COMPOSE_WEBSERVER="docker-compose -f docker/docker-compose.net.yml -f docker/docker-compose.webpack.yml"
+DOCKER_COMPOSE_WEBSERVER="docker-compose -f docker/docker-compose.webpack.yml"
 
 if [[ $DEBUG ]]; then
   DOCKER_COMPOSE="${DOCKER_COMPOSE_TESTER} -f docker/docker-compose.debug.yml"
@@ -26,10 +26,10 @@ elif [ $1 == "full" ]; then
   $DOCKER_COMPOSE_WEBSERVER down
   exit $EXIT
 elif [ $1 == "prod" ]; then
-  . docker/start-dist.sh
+  npm run start:dist
   $TESTER_RUN -e "WEBSERVER_URL=http://localhost:9081" $TESTER_IMAGE
   EXIT=$?
-  . docker/stop-dist.sh
+  npm run stop:dist
   exit $EXIT
 else
   $DOCKER_COMPOSE_TESTER $@

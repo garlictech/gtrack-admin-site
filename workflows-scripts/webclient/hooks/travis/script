@@ -13,3 +13,8 @@ npm run build:prod:debug
 if [[ "$TRAVIS_EVENT_TYPE" != "pull_request" ]]; then
   npm run e2e:prod
 fi
+
+if [ -f hooks/travis/script_project ]; then
+  hooks/travis/script_project
+fi
+
