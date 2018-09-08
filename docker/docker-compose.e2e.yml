@@ -3,11 +3,11 @@ version: '3.1'
 services:
   gtrack-admin-site.e2e-tester:
     build:
-      context: "../e2e"
+      context: '../e2e'
     volumes:
-      - "../e2e/src:/protractor/src"
-      - "../e2e/dist:/protractor/dist"
-      - "../reports/e2e:/protractor/reports"
-      - "/dev/shm:/dev/shm"
+      - '../e2e/src:/protractor/src'
+      - '../artifacts/e2e/dist:/protractor/dist'
+      - '../artifacts/reports/e2e:/protractor/reports'
+      - '/dev/shm:/dev/shm'
     privileged: true
-    network_mode: "host"
+    network_mode: 'host'

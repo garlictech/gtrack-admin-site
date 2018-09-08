@@ -1,1 +1,0 @@
-../workflows-scripts/webclient/docker/stop-universal.sh

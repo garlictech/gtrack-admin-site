@@ -8,11 +8,12 @@ services:
       args:
         NPM_TOKEN: $NPM_TOKEN_Garlictech
     volumes:
-      - "../src:/app/src"
-      - "../artifacts:/app/artifacts"
-      - "./hooks:/app/hooks"
-      - "../angular.json:/app/angular.json"
+      - '../src:/app/src'
+      - '../artifacts:/app/artifacts'
+      - './hooks:/app/hooks'
+      - '../angular.json:/app/angular.json'
     environment:
       - NODE_ENV
       - CI
-    command: "npm run webdev:hmr"
+      - PROJECT_CONFIG
+    entrypoint: ['sh', '-c', '${DOCKER_CMD}']
