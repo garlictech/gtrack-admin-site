@@ -26,10 +26,10 @@ elif [ $1 == "full" ]; then
   $DOCKER_COMPOSE_WEBSERVER down
   exit $EXIT
 elif [ $1 == "prod" ]; then
-  . docker/start-prod.sh
+  . docker/start-dist.sh
   $TESTER_RUN -e "WEBSERVER_URL=http://localhost:9081" $TESTER_IMAGE
   EXIT=$?
-  . docker/stop-prod.sh
+  . docker/stop-dist.sh
   exit $EXIT
 else
   $DOCKER_COMPOSE_TESTER $@

@@ -8,4 +8,5 @@ if [[ $DEBUG ]]; then
   DOCKER_COMPOSE="${DOCKER_COMPOSE} -f docker/docker-compose.debug.yml"
 fi
 
-${DOCKER_COMPOSE} run --service-ports ${PROJECT}.webpack-server npm run $@
+export DOCKER_CMD="$@"
+${DOCKER_COMPOSE} run ${PROJECT}.webpack-server $DOCKER_CMD
