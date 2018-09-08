@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import { Observer } from 'rxjs/Observer';
 import { Store } from '@ngrx/store';
@@ -45,7 +45,7 @@ export class DeepstreamService {
   }
 
   doQuery<T = any>(queryDesc: IQueryDesc, start = 0): Observable<T[]> {
-    let rpcData: IRpcQuery = { payload: { ...queryDesc } };
+    const rpcData: IRpcQuery = { payload: { ...queryDesc } };
 
     return this.callRpc('open.search-provider.serialize', rpcData).switchMap(res => {
       const query = new Query<T>(this.dsClient);
@@ -54,10 +54,10 @@ export class DeepstreamService {
   }
 
   doPageQuery<T = any>(queryDesc: IQueryDesc, currentPage, pageSize): Observable<T[]> {
-    let start = currentPage * pageSize;
-    let end = start + pageSize;
+    const start = currentPage * pageSize;
+    const end = start + pageSize;
 
-    let rpcData: IRpcQuery = {
+    const rpcData: IRpcQuery = {
       payload: {
         ...queryDesc,
         limit: end
@@ -71,7 +71,7 @@ export class DeepstreamService {
   }
 
   doWindowedQuery<T = any>(queryDesc: IQueryDesc, start, end): Observable<T[]> {
-    let rpcData: IRpcQuery = {
+    const rpcData: IRpcQuery = {
       payload: {
         ...queryDesc,
         limit: end
@@ -93,11 +93,11 @@ export class DeepstreamService {
   }
 
   callRpc<T = any>(name: string, data: any): Observable<T> {
-    let rpc = new Rpc(this.dsClient);
-    let userSelector = this._store.select(this._selectors.userData).take(1);
+    const rpc = new Rpc(this.dsClient);
+    const userSelector = this._store.select(this._selectors.userData).take(1);
 
     return userSelector.switchMap(user => {
-      let sentData = {
+      const sentData = {
         ...data,
         userId: user.userId || 'open',
         role: user.role || EAuthRoles.user
@@ -108,9 +108,9 @@ export class DeepstreamService {
   }
 
   listenUserEvents() {
-    let userSelector = this._store.select(this._selectors.userData);
+    const userSelector = this._store.select(this._selectors.userData);
     return userSelector.filter((user: any) => user.role && user.userId).switchMap((user: any) => {
-      let topic = `${user.role}/${user.userId}`;
+      const topic = `${user.role}/${user.userId}`;
       return new Observable<any>((obs: Observer<any>) => {
         this.dsClient.client.event.subscribe(topic, payload => {
           obs.next(payload);
@@ -129,22 +129,22 @@ export class DeepstreamService {
     this.dsClient = DeepstreamService.getDeepstreamClient(this._externals.deepstreamConnectionString);
 
     this.dsClient.errors$.subscribe(error => {
-      log.er('Deepstream error: ', error);
+      log.error('Deepstream error: ', error);
     });
 
     this._store
       .select(this._selectors.permissionRecordName)
       .filter(recordName => !!recordName)
       .switchMap(recordName => {
-        let record = this.getRecord(recordName);
+        const record = this.getRecord(recordName);
         return record.get();
       })
       .catch((err, caught) => {
-        log.er('Deepstream permission record error', err);
+        log.error('Deepstream permission record error', err);
         return caught;
       })
       .subscribe(permissionRecord => {
-        log.i('Deepstream permission record changed', permissionRecord);
+        log.info('Deepstream permission record changed', permissionRecord);
         return this._store.dispatch(new DeepstreamPermissionRecordChanged(permissionRecord));
       });
   }
@@ -161,7 +161,7 @@ export class DeepstreamService {
       this._liveQueries[res.name] = liveQuery;
 
       return liveQuery.finally(() => {
-        log.d('Disposing live query', res.name);
+        log.data('Disposing live query', res.name);
         delete this._liveQueries[res.name];
       });
     }
