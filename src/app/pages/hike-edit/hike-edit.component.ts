@@ -70,8 +70,12 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.working$ = this._store.select(this._editedHikeProgramSelectors.getWorking).takeUntil(this._destroy$);
-    this.hikeProgramData$ = this._store.select(this._editedHikeProgramSelectors.getData).takeUntil(this._destroy$);
+    this.working$ = this._store
+      .select(this._editedHikeProgramSelectors.getWorking)
+      .takeUntil(this._destroy$);
+    this.hikeProgramData$ = this._store
+      .select(this._editedHikeProgramSelectors.getData)
+      .takeUntil(this._destroy$);
 
     this._waypointMarkerService.reset();
 
@@ -198,7 +202,9 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this.backgroundImageUrlSelector = this._editedHikeProgramSelectors.getBackgroundOriginalUrls();
     this.clickActions = {
       add: image => this._store.dispatch(new editedHikeProgramActions.AddHikeProgramBackgroundImage(image)),
-      remove: url => this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(url))
+      remove: url => this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(url)),
+      addMarker: url => this._store.dispatch(new hikeEditImageActions.AddImageMarker(url)),
+      removeMarker: url => this._store.dispatch(new hikeEditImageActions.RemoveImageMarker(url)),
     };
   }
 

@@ -5,6 +5,4 @@ import { DescriptionComponent as BaseComponent } from 'subrepos/gtrack-common-ng
   selector: 'gtrack-description',
   templateUrl: './description.component.html'
 })
-export class DescriptionComponent extends BaseComponent {
-
-}
+export class DescriptionComponent extends BaseComponent {}

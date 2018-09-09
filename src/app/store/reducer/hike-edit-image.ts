@@ -3,6 +3,7 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { IBackgroundImageDataStored } from '../../shared/interfaces';
 import { IMapillaryImageEntityState, hikeEditImageActions, IImageListContextState, IHikeEditImageState } from '..';
 import * as _ from 'lodash';
+import { IImageMarkerState } from '../state';
 
 /**
  * Mapillary
@@ -23,6 +24,49 @@ const mapillaryImageReducer: ActionReducer<IMapillaryImageEntityState> = (
 
     case hikeEditImageActions.SET_MAPILLARY_IMAGES: {
       return mapillaryImageAdapter.addAll(action.images, state);
+    }
+
+    default:
+      return state;
+
+  }
+}
+
+/**
+ * Context
+ */
+
+export const initialImageMarkerState: IImageMarkerState = {
+  images: []
+};
+
+export function imageMarkerReducer(
+  state = initialImageMarkerState,
+  action: hikeEditImageActions.AllHikeEditImageActions
+): IImageMarkerState {
+  switch (action.type) {
+
+    case hikeEditImageActions.RESET_IMAGE_STATE:
+      return initialImageMarkerState;
+
+    /**
+     * Image marker urls
+     */
+    case hikeEditImageActions.ADD_IMAGE_MARKER: {
+      return {
+        ...state,
+        images: [
+          ...<any>state.images,
+          action.image
+        ]
+      };
+    }
+
+    case hikeEditImageActions.REMOVE_IMAGE_MARKER: {
+      return {
+        ...state,
+        images: (<any>state.images).filter(url => url !== action.image)
+      };
     }
 
     default:
@@ -87,6 +131,7 @@ export function imageListContextReducer(
 
 const reducerMap: ActionReducerMap<IHikeEditImageState> = {
   mapillaryImages: mapillaryImageReducer,
+  imageMarkerUrls: imageMarkerReducer,
   contexts: imageListContextReducer
 };
 

@@ -14,13 +14,14 @@ import { State, IExternalPoiListContextItemState, commonGeoSearchActions } from 
 import {
   HikeEditPoiSelectors,
   HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors
+  EditedHikeProgramSelectors,
+  HikeEditImageSelectors
 } from '../../../store/selectors';
 import { AdminMap, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../interfaces';
 import { GooglePoiService } from './google-poi.service';
 import { WikipediaPoiService } from './wikipedia-poi.service';
-import { IMarkerPopupData } from 'subrepos/provider-client/interfaces';
+import { IMarkerPopupData, IBackgroundImageData } from 'subrepos/provider-client/interfaces';
 import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker/marker-popup.service';
 
 import * as L from 'leaflet';
@@ -54,7 +55,8 @@ export class PoiEditorService {
     private _poiSelectors: PoiSelectors,
     private _googlePoiService: GooglePoiService,
     private _wikipediaPoiService: WikipediaPoiService,
-    private _markerPopupService: MarkerPopupService
+    private _markerPopupService: MarkerPopupService,
+    private _hikeEditImageSelectors: HikeEditImageSelectors,
   ) {}
 
   public getDbObj(poi: IExternalPoi) {
@@ -539,11 +541,13 @@ export class PoiEditorService {
         }
       );
 
-      //
-      // Generate markers
-      //
+      // Generate poi markers
 
-      const _markers = this._generatePoiMarkers(_pois, map);
+      const _poiMarkers = this._generatePoiMarkers(_pois, map);
+      const _imageMarkers = this._generateImageMarkers(map);
+      const _markers = _poiMarkers.concat(_imageMarkers);
+
+      // Add markers to the map
 
       map.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(map.leafletMap, {
         keepSpiderfied: true
@@ -610,6 +614,7 @@ export class PoiEditorService {
         map: map.leafletMap,
         data: _.cloneDeep(poi),
       }
+
       const _marker = new AdminMapMarker(
         poi.lat,
         poi.lon,
@@ -619,8 +624,44 @@ export class PoiEditorService {
         poi.id,
         popupData
       );
+
       _markers.push(_marker);
     }
+
+    return _markers;
+  }
+
+  private _generateImageMarkers(map: AdminMap) {
+    const _markers: AdminMapMarker[] = [];
+
+    this._store
+      .select(this._hikeEditImageSelectors.getImageMarkerUrls)
+      .take(1)
+      .subscribe((images: IBackgroundImageData[]) => {
+        for (let image of images) {
+          const popupData: IMarkerPopupData = {
+            popupComponentName: 'ImageMarkerPopupComponent',
+            markerClickCallback: this._markerPopupService.onUserMarkerClick,
+            closeCallback: () => {
+              map.leafletMap.closePopup();
+              this.refreshPoiMarkers(map);
+            },
+            map: map.leafletMap,
+            data: _.cloneDeep(image),
+          }
+
+          const _marker = new AdminMapMarker(
+            image.lat,
+            image.lon,
+            ['photo'],
+            '',
+            this._iconService,
+            image.original.url,
+            popupData
+          );
+          _markers.push(_marker);
+        }
+      });
 
     return _markers;
   }

@@ -8,6 +8,4 @@ import { LocationSearchComponent as BaseComponent } from 'subrepos/gtrack-common
   templateUrl: './location-search.component.html',
   styleUrls: ['./location-search.component.scss']
 })
-export class LocationSearchComponent extends BaseComponent {
-
-}
+export class LocationSearchComponent extends BaseComponent {}

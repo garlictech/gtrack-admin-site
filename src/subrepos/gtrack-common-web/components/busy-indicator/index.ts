@@ -7,9 +7,12 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./style.scss']
 })
 export class BusyIndicatorComponent {
-  @Input() containerClass?: Array<string>;
-  @Input() text = '';
-  @Input() big = false;
+  @Input()
+  containerClass?: Array<string>;
+  @Input()
+  text = '';
+  @Input()
+  big = false;
 
   icon = faSpinner;
 

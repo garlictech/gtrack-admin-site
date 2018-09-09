@@ -8,13 +8,15 @@ import { LocalizedDescriptionComponent } from './localized-description';
 import { TableSpinnerComponent } from './table-spinner';
 import { AdminLeafletComponent } from './admin-leaflet';
 import { AdminMarkerPopupComponent } from './admin-marker-popup';
-import { LocalizeModule } from 'subrepos/gtrack-common-ngx';
+import { LocalizeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
+import { ImageMarkerPopupComponent } from './image-marker-popup';
 
 const COMPONENTS = [
   AdminLeafletComponent,
   LocalizedDescriptionComponent,
   TableSpinnerComponent,
-  AdminMarkerPopupComponent
+  AdminMarkerPopupComponent,
+  ImageMarkerPopupComponent
 ]
 @NgModule({
   imports: [
@@ -23,6 +25,7 @@ const COMPONENTS = [
     FormsModule,
     FontAwesomeModule,
     LocalizeModule,
+    SharedModule,
     // PrimeNG
     DropdownModule,
     AccordionModule,
@@ -35,7 +38,8 @@ const COMPONENTS = [
     ...COMPONENTS
   ],
   entryComponents: [
-    AdminMarkerPopupComponent
+    AdminMarkerPopupComponent,
+    ImageMarkerPopupComponent
   ]
 })
 export class SharedComponentsModule {}
