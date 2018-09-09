@@ -30,7 +30,7 @@ export class HikeMapComponent {
   onElevationLineOver() {
     const locked = this._elevationMarkerLocked;
 
-    log.d('Locked', locked);
+    log.data('Locked', locked);
 
     if (!locked) {
       this.elevationMarkerVisible$.next(true);
@@ -49,7 +49,7 @@ export class HikeMapComponent {
   onElevationLineClick(position: GeoJSON.Position) {
     const locked = this._elevationMarkerLocked;
 
-    log.d('Locked', locked);
+    log.data('Locked', locked);
 
     if (!locked) {
       this.elevationMarkerPosition$.next(position);
@@ -64,7 +64,7 @@ export class HikeMapComponent {
   onElevationLineOut() {
     const locked = this._elevationMarkerLocked;
 
-    log.d('Locked', locked);
+    log.data('Locked', locked);
 
     if (!locked) {
       this.elevationMarkerVisible$.next(false);

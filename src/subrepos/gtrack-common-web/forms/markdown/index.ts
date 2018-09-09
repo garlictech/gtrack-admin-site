@@ -19,4 +19,4 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   styleUrls: ['./style.scss'],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class MarkdownComponent extends NativeComponent { }
+export class MarkdownComponent extends NativeComponent {}

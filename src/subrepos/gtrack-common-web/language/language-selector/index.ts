@@ -33,7 +33,7 @@ export class LanguageSelectorComponent extends LanguageSelectorComponentBase imp
       .select(currentLanguage)
       .pipe(take(1))
       .subscribe(selected => {
-        let theLanguage = this.allLanguages.find(lang => lang.value.id === selected);
+        const theLanguage = this.allLanguages.find(lang => lang.value.id === selected);
         this.selectedLanguage = theLanguage && theLanguage.value;
       });
   }

@@ -8,6 +8,4 @@ import { HikeDataItemComponent as BaseComponent } from 'subrepos/gtrack-common-n
   templateUrl: './hike-data-item.component.html',
   styleUrls: ['./hike-data-item.component.scss']
 })
-export class HikeDataItemComponent extends BaseComponent {
-
-}
+export class HikeDataItemComponent extends BaseComponent {}

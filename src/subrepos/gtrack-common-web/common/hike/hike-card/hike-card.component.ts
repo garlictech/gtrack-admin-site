@@ -8,6 +8,4 @@ import { HikeCardComponent as BaseComponent } from 'subrepos/gtrack-common-ngx';
   templateUrl: './hike-card.component.html',
   styleUrls: ['./hike-card.component.scss']
 })
-export class HikeCardComponent extends BaseComponent {
-
-}
+export class HikeCardComponent extends BaseComponent {}

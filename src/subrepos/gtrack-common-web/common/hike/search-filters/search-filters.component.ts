@@ -8,6 +8,4 @@ import { SearchFiltersComponent as BaseComponent } from 'subrepos/gtrack-common-
   templateUrl: './search-filters.component.html',
   styleUrls: ['./search-filters.component.scss']
 })
-export class SearchFiltersComponent extends BaseComponent {
-
-}
+export class SearchFiltersComponent extends BaseComponent {}

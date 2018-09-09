@@ -8,6 +8,4 @@ import { TrailBoxComponent as BaseComponent } from 'subrepos/gtrack-common-ngx';
   templateUrl: './trail-box.component.html',
   styleUrls: ['./trail-box.component.scss']
 })
-export class TrailBoxComponent extends BaseComponent {
-
-}
+export class TrailBoxComponent extends BaseComponent {}
