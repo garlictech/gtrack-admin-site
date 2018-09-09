@@ -4,6 +4,7 @@ import { State, editedHikeProgramActions, hikeEditPoiActions, commonPoiActions }
 import { Observable } from 'rxjs';
 import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { PoiEditorService } from '../../services';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'gc-marker-popup',
@@ -15,6 +16,8 @@ export class AdminMarkerPopupComponent implements OnInit {
   public isPlanning$: Observable<boolean>;
   public data: any;
   public closePopup: any;
+
+  public images: string[];
   public btnTitle: string;
   public btn2Title: string;
   public btnClass: string;
@@ -38,11 +41,13 @@ export class AdminMarkerPopupComponent implements OnInit {
         this.btnTitle = 'Remove from hike';
         this.btnClick = this._removeFromHike;
         this.btnClass = 'warning';
+        this.images = _.map(this.data.backgroundImages, 'card.url') || [];
         break;
       case 'gTrack':
         this.btnTitle = 'Add to hike';
         this.btnClick = this._addToHike;
         this.btnClass = 'success';
+        this.images = _.map(this.data.backgroundImages, 'card.url') || [];
         break;
       case 'collector':
         this.btnTitle = 'Remove from collector';
@@ -51,12 +56,24 @@ export class AdminMarkerPopupComponent implements OnInit {
         this.btn2Click = this._addToGTrackPoi;
         this.btnClass = 'warning';
         this.btn2Class = 'success';
+        this.images = this._getBgImagesUrls();
         break;
       default:
         this.btnTitle = 'Add to collector';
         this.btnClick = this._addToCollector;
         this.btnClass = 'success';
+        this.images = this._getBgImagesUrls();
         break;
+    }
+  }
+
+  private _getBgImagesUrls() {
+    if (this.data.google && this.data.google.photos && this.data.google.photos.length > 0) {
+      return _.map(this.data.google.photos, 'card.url');
+    }
+
+    if (this.data.wikipedia && this.data.wikipedia.photos && this.data.wikipedia.photos.length > 0) {
+      return _.map(this.data.wikipedia.photos, 'original.url');
     }
   }
 

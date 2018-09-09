@@ -1,5 +1,6 @@
 import { EntityState } from '@ngrx/entity';
 import { IBackgroundImageDataStored } from '../../shared/interfaces/mapillary-image.interface';
+import { IBackgroundImageData } from 'subrepos/provider-client';
 
 export interface IMapillaryImageEntityState extends EntityState<IBackgroundImageDataStored> {};
 
@@ -9,6 +10,10 @@ export interface IImageListContextItemState {
   saving: boolean;
 }
 
+export interface IImageMarkerState {
+  images: IBackgroundImageData[];
+}
+
 export interface IImageListContextState {
   mapillary: IImageListContextItemState;
 }
@@ -16,5 +21,6 @@ export interface IImageListContextState {
 // State
 export interface IHikeEditImageState {
   mapillaryImages: IMapillaryImageEntityState;
+  imageMarkerUrls: IImageMarkerState;
   contexts: IImageListContextState;
 }

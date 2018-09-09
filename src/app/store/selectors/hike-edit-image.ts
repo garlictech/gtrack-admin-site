@@ -8,6 +8,7 @@ import { IBackgroundImageData } from 'subrepos/provider-client';
 export class HikeEditImageSelectors {
   private _featureSelector: MemoizedSelector<object, IHikeEditImageState>;
   public getAllMapillaryImages: (state: object) => IBackgroundImageData[];
+  public getImageMarkerUrls: MemoizedSelector<object, IBackgroundImageData[]>;
 
   constructor() {
     this._featureSelector = createFeatureSelector<IHikeEditImageState>('hikeEditImage');
@@ -20,6 +21,12 @@ export class HikeEditImageSelectors {
       this._featureSelector, (state: IHikeEditImageState) => state.mapillaryImages
     );
     this.getAllMapillaryImages = mapillaryImageAdapter.getSelectors(mapillaryImageSelector).selectAll;
+
+    // Images markers
+
+    this.getImageMarkerUrls = createSelector(this._featureSelector,
+      (state: IHikeEditImageState) => state.imageMarkerUrls.images
+    );
   }
 
   //

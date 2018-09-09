@@ -1,16 +1,6 @@
 <!-- GTrack poi photo -->
-<div *ngIf="data.backgroundImages && data.backgroundImages.length > 0" class="img">
-  <img src="{{data.backgroundImages[0].card.url}}">
-</div>
-
-<!-- Wikipedia poi photo -->
-<div *ngIf="data.wikipedia && data.wikipedia.photos && data.wikipedia.photos.length > 0" class="img">
-  <img src="{{data.wikipedia.photos[0].original.url}}">
-</div>
-
-<!-- Google poi photo -->
-<div *ngIf="data.google && data.google.photos && data.google.photos.length > 0" class="img">
-  <img src="{{data.google.photos[0].card.url}}">
+<div *ngIf="images.length > 0" class="slideshow-container">
+  <gtrack-slideshow [controls]=true [imageUrls]="images"></gtrack-slideshow>
 </div>
 
 <!-- DATA -->
