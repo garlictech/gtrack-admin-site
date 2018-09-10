@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ILocalizedItem, ITextualDescription } from '../../../../provider-client';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
 
 import { DescriptionLanguageListService } from '../services';
@@ -18,20 +18,15 @@ export class LocalizeDescriptionPipe implements PipeTransform, OnDestroy {
   private _language = 'en_US';
   private _value: ITextualDescription;
 
-  constructor(
-    private _ref: ChangeDetectorRef,
-    private _descriptionLanguageList: DescriptionLanguageListService
-  ) {}
+  constructor(private _ref: ChangeDetectorRef, private _descriptionLanguageList: DescriptionLanguageListService) {}
 
   transform(value: ILocalizedItem<ITextualDescription>): ITextualDescription {
     this._dispose();
 
     if (!this._valueChange) {
-      this._valueChange = this._descriptionLanguageList
-        .getLocalizedDescription(value)
-        .subscribe(localized => {
-          this._updateValue(localized);
-        });
+      this._valueChange = this._descriptionLanguageList.getLocalizedDescription(value).subscribe(localized => {
+        this._updateValue(localized);
+      });
     }
 
     return this._value;

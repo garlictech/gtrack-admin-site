@@ -13,7 +13,7 @@ export class SearchFiltersSelectors {
 
   constructor(@Inject(EXTERNAL_SEARCH_FILTERS_DEPENDENCIES) externals) {
     this._externals = externals;
-    let filterSelector = createFeatureSelector<ISearchFilterState>(this._externals.storeDomain);
+    const filterSelector = createFeatureSelector<ISearchFilterState>(this._externals.storeDomain);
 
     this.getFilters = createSelector(filterSelector, (state: ISearchFilterState) => state);
   }

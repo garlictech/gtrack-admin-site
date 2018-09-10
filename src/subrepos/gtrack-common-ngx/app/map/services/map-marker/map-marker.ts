@@ -52,7 +52,7 @@ export class MapMarker {
   }
 
   public get coordinates(): L.LatLng {
-    let latlng = this.marker.getLatLng();
+    const latlng = this.marker.getLatLng();
 
     return latlng;
   }

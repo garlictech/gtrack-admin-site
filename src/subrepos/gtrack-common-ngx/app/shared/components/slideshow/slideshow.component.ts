@@ -1,14 +1,17 @@
-import { Component, OnInit, AfterViewInit, Input, ViewChildren, ViewEncapsulation, ViewContainerRef, ElementRef, QueryList } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  Input,
+  ViewChildren,
+  ViewEncapsulation,
+  ViewContainerRef,
+  ElementRef,
+  QueryList
+} from '@angular/core';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  AnimationEvent
-} from '@angular/animations';
+import { trigger, state, style, animate, transition, AnimationEvent } from '@angular/animations';
 
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -43,16 +46,7 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
   @ViewChildren('slide')
   public slides: QueryList<ElementRef>;
 
-  private _availableAnimations = [
-    'down-left',
-    'down-right',
-    'down',
-    'left',
-    'right',
-    'up-left',
-    'up-right',
-    'up'
-  ];
+  private _availableAnimations = ['down-left', 'down-right', 'down', 'left', 'right', 'up-left', 'up-right', 'up'];
 
   private _getRandomAnimation() {
     const max = this._availableAnimations.length;
@@ -63,10 +57,12 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.imageUrls.length > 0) {
-      this.images = this.imageUrls.map(url => ({
-        url: url,
-        animation: this._getRandomAnimation()
-      })).reverse();
+      this.images = this.imageUrls
+        .map(url => ({
+          url: url,
+          animation: this._getRandomAnimation()
+        }))
+        .reverse();
     }
 
     this.currentIndex = this.imageUrls.length - 1;

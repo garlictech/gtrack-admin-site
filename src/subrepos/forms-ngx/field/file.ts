@@ -1,6 +1,6 @@
 import { ValidatorFn } from '@angular/forms';
 import { Field, IField } from './field';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 export interface IUploadOptions {
   uploadHandler: (event: any) => void;

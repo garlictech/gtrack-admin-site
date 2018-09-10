@@ -38,7 +38,7 @@ export class PointMarker {
   public addMarkers(pois: IPoi[], stops: IHikeProgramStop[] = []) {
     pois.forEach((poi, i) => {
       const description = this._descriptionLanguageList.getLocalizedDescription(poi.description);
-      const poiStop = stops.find(stop => (stop.poiId === poi.id));
+      const poiStop = stops.find(stop => stop.poiId === poi.id);
 
       const popupData = {
         popupComponentName: 'MarkerPopupComponent',
@@ -53,7 +53,13 @@ export class PointMarker {
         }
       };
 
-      let marker = this.mapMarkerService.create(poi.lat, poi.lon, poi.types, _.get(description, 'title', ''), popupData);
+      const marker = this.mapMarkerService.create(
+        poi.lat,
+        poi.lon,
+        poi.types,
+        _.get(description, 'title', ''),
+        popupData
+      );
       this.markers.push(marker);
 
       if (this.shownOnMap === true) {

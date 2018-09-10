@@ -3,7 +3,7 @@ import { Actions, Effect, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';

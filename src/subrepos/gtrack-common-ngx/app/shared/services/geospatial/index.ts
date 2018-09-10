@@ -7,7 +7,6 @@ import length from '@turf/length';
 
 @Injectable()
 export class GeospatialService {
-
   /**
    * Snap points to the given line and return with the segment
    * Use [lon, lat] coords!
@@ -29,6 +28,6 @@ export class GeospatialService {
   public distanceOnLine(startCoords: number[], endCoords: number[], path: GeoJSON.Feature<GeoJSON.LineString>) {
     const _lineSlice = this.snappedLineSlice(startCoords, endCoords, path);
 
-    return 1000 * length(_lineSlice, {units: 'kilometers'});
+    return 1000 * length(_lineSlice, { units: 'kilometers' });
   }
 }

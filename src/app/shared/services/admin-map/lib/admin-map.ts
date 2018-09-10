@@ -23,16 +23,8 @@ export class AdminMap extends Map {
     protected _descriptionLanguageList: DescriptionLanguageListService,
     protected _markerPopup: MarkerPopupService
   ) {
-    super(id, map, iconService, mapMarkerService, _store, _descriptionLanguageList, _markerPopup);
-
-    L.control.fullscreen({
-      position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
-      title: 'Show me the fullscreen !', // change the title of the button, default Full Screen
-      titleCancel: 'Exit fullscreen mode', // change the title of the button when fullscreen is on, default Exit Full Screen
-      content: null, // change the content of the button, can be HTML, default null
-      forceSeparateButton: true, // force seperate button to detach from zoom buttons, default false
-      forcePseudoFullscreen: true, // force use of pseudo full screen even if full screen API is available, default false
-    }).addTo(this.map);
+    // TODO: null-s are introduced to be able to compile, should be checked...
+    super(id, map, iconService, mapMarkerService, _store, null, null);
   }
 
   /**
@@ -43,11 +35,9 @@ export class AdminMap extends Map {
     return this._store
       .select(this._hikeEditRoutePlannerSelectors.getPath)
       .take(1)
-      .map((path) => {
+      .map(path => {
         if (typeof path !== 'undefined') {
-          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(
-            path, 50, {units: 'meters'}
-          );
+          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 50, { units: 'meters' });
 
           if (typeof _buffer !== 'undefined') {
             _buffer = _.assign(_buffer, {
@@ -92,7 +82,7 @@ export class AdminMap extends Map {
    * addGeoJSON submethod
    */
   private _propagateClick(feature, layer) {
-    layer.on('click', event => {
+    layer.on('click', event => {
       this.map.fireEvent('click', {
         latlng: event.latlng,
         layerPoint: this.map.latLngToLayerPoint(event.latlng),

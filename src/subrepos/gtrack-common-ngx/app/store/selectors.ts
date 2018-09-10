@@ -4,7 +4,7 @@ import { CommonState } from './state';
 import { IBackgroundGeolocationState } from './reducers/background-geolocation';
 
 // Geolocation selectors
-let geolocationBaseFeature = createFeatureSelector<IBackgroundGeolocationState>('geolocation');
+const geolocationBaseFeature = createFeatureSelector<IBackgroundGeolocationState>('geolocation');
 
 export const selectCurrentLocation = createSelector(
   geolocationBaseFeature,

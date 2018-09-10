@@ -7,18 +7,12 @@ import { DescriptionComponent } from './components';
 
 import { SharedModule } from '../shared';
 
-const COMPONENTS = [
-  LocalizeDescriptionPipe,
-  DescriptionComponent
-];
+const COMPONENTS = [LocalizeDescriptionPipe, DescriptionComponent];
 
 @NgModule({
   imports: [SharedModule, CommonModule],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS],
-  providers: [
-    LocalizeSelectors,
-    DescriptionLanguageListService
-  ],
+  providers: [LocalizeSelectors, DescriptionLanguageListService]
 })
-export class LocalizeModule { }
+export class LocalizeModule {}

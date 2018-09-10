@@ -39,7 +39,7 @@ export class HikeProgram implements IHikeProgramStored {
   private locale = 'en_US';
 
   constructor(data: IHikeProgramStored, private _checkpointService: CheckpointService) {
-    let converted = _.cloneDeep(data);
+    const converted = _.cloneDeep(data);
     Object.assign(this, converted);
 
     this._handleStartFinish();
@@ -59,8 +59,8 @@ export class HikeProgram implements IHikeProgramStored {
   }
 
   private _handleStartFinish() {
-    let first = this.stops[0] || null;
-    let last = this.stops[this.stops.length - 1] || null;
+    const first = this.stops[0] || null;
+    const last = this.stops[this.stops.length - 1] || null;
 
     first.poiId = 'endpoint-first';
     last.poiId = 'endpoint-last';
@@ -83,7 +83,7 @@ export class HikeProgram implements IHikeProgramStored {
   }
 
   public toObject(): IHikeProgramStored {
-    let data: IHikeProgramStored = {
+    const data: IHikeProgramStored = {
       id: this.id,
       distance: this.distance,
       isRoundTrip: this.isRoundTrip,

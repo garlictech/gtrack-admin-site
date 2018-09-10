@@ -16,9 +16,7 @@ describe('ObjectMarkService', () => {
   let callRpcSpy: jasmine.Spy;
 
   beforeEach(() => {
-    getSpy = jasmine.createSpy('get').and.returnValue(of([
-      'foo'
-    ]));
+    getSpy = jasmine.createSpy('get').and.returnValue(of(['foo']));
 
     let fakeRecord = {
       get: getSpy
@@ -33,9 +31,7 @@ describe('ObjectMarkService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({})
-      ],
+      imports: [StoreModule.forRoot({})],
       providers: [
         ObjectMarkService,
         {
@@ -52,17 +48,17 @@ describe('ObjectMarkService', () => {
     });
 
     store = TestBed.get(Store);
-    spyOn(store, 'select').and.returnValue(of({
-      roles: [EAuthRoles.user],
-      id: 'foo'
-    }));
+    spyOn(store, 'select').and.returnValue(
+      of({
+        roles: [EAuthRoles.user],
+        id: 'foo'
+      })
+    );
   });
 
   it('should get the context from deepstream', async () => {
     let service: ObjectMarkService = TestBed.get(ObjectMarkService);
-    let data = await service
-      .loadContext(EObjectMarkContext.bookmarkedHike)
-      .toPromise();
+    let data = await service.loadContext(EObjectMarkContext.bookmarkedHike).toPromise();
 
     expect(getRecordSpy).toHaveBeenCalledWith('private_user_profile/foo');
     expect(getSpy).toHaveBeenCalledWith(`markedObjects.${EObjectMarkContext.bookmarkedHike}`);
@@ -72,9 +68,7 @@ describe('ObjectMarkService', () => {
 
   it('should mark an object', async () => {
     let service: ObjectMarkService = TestBed.get(ObjectMarkService);
-    let response = await service
-      .mark(EObjectMarkContext.bookmarkedHike, 'foo', true)
-      .toPromise();
+    let response = await service.mark(EObjectMarkContext.bookmarkedHike, 'foo', true).toPromise();
 
     expect(callRpcSpy).toHaveBeenCalledWith('object-mark', {
       context: EObjectMarkContext.bookmarkedHike,

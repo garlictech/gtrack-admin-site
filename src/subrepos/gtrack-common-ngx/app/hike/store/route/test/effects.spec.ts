@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import * as uuid from 'uuid/v4';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import * as _ from 'lodash';
 
@@ -115,9 +115,11 @@ describe('Route effects', () => {
       })
     );
 
-    spyOn(routeService, 'updateState').and.returnValue(Observable.of({
-      success: true
-    }));
+    spyOn(routeService, 'updateState').and.returnValue(
+      Observable.of({
+        success: true
+      })
+    );
   });
 
   describe('loadRoute$', () => {

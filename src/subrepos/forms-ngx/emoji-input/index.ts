@@ -9,8 +9,10 @@ import { AbstractValueAccessor } from '../abstract-value-accessor';
   template: ''
 })
 export class EmojiInputComponent extends AbstractValueAccessor implements AfterViewInit {
-  @Input() rows;
-  @Input() placeholder?: string;
+  @Input()
+  rows;
+  @Input()
+  placeholder?: string;
   // @ViewChild('emojiArea') emojiArea;
 
   // private _area;

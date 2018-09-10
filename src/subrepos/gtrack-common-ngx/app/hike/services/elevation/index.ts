@@ -15,12 +15,12 @@ export class ElevationService {
 
   public getData(coordinates: number[][]): Promise<number[][]> {
     return this.googleMapsService.map.then(() => {
-      let locations: google.maps.LatLng[] = coordinates.map((coordinate: number[]) => {
+      const locations: google.maps.LatLng[] = coordinates.map((coordinate: number[]) => {
         return new google.maps.LatLng(coordinate[0], coordinate[1]);
       });
 
-      let elevationService: google.maps.ElevationService = new google.maps.ElevationService();
-      let request: google.maps.LocationElevationRequest = {
+      const elevationService: google.maps.ElevationService = new google.maps.ElevationService();
+      const request: google.maps.LocationElevationRequest = {
         locations: locations
       };
 
@@ -29,7 +29,7 @@ export class ElevationService {
           request,
           (results: google.maps.ElevationResult[], status: google.maps.ElevationStatus) => {
             if (status === google.maps.ElevationStatus.OK) {
-              let elevations: number[][] = results.map((point: google.maps.ElevationResult) => {
+              const elevations: number[][] = results.map((point: google.maps.ElevationResult) => {
                 return [point.location.lat(), point.location.lng(), point.elevation];
               });
 
@@ -50,7 +50,7 @@ export class ElevationService {
 
     data.forEach((point, i) => {
       if (i > 0) {
-        let diff = point[2] - data[i - 1][2];
+        const diff = point[2] - data[i - 1][2];
 
         if (bigEnough(diff) === true) {
           sum += diff * multiplier;

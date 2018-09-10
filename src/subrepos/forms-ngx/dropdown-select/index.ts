@@ -6,5 +6,6 @@ import { AbstractValueAccessor } from '../abstract-value-accessor';
   template: ''
 })
 export class DropdownSelectComponent extends AbstractValueAccessor {
-  @Input() options;
+  @Input()
+  options;
 }

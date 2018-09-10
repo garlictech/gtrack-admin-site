@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
 import distance from '@turf/distance';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { Route } from './route';
 import { UnitsService } from '../../../shared';
@@ -44,7 +44,7 @@ export class RouteService {
   constructor(
     private _deepstream: DeepstreamService,
     private unitsService: UnitsService,
-    private _geometryService: GeometryService,
+    private _geometryService: GeometryService
   ) {}
 
   public get(id: string): Observable<IRouteStored | null> {
@@ -112,10 +112,10 @@ export class RouteService {
       }
     });
 
-    let xRangeMin = d3.min(lineData, d => d[0]);
-    let xRangeMax = d3.max(lineData, d => d[0]);
-    let yRangeMin = d3.min(lineData, d => d[1]);
-    let yRangeMax = d3.max(lineData, d => d[1]);
+    const xRangeMin = d3.min(lineData, d => d[0]);
+    const xRangeMax = d3.max(lineData, d => d[0]);
+    const yRangeMin = d3.min(lineData, d => d[1]);
+    const yRangeMax = d3.max(lineData, d => d[1]);
 
     let xRange: ScaleLinear<number, number>;
     let yRange: ScaleLinear<number, number>;
@@ -153,8 +153,8 @@ export class RouteService {
   }
 
   public getBounds(track: GeoJSON.FeatureCollection<any>): IBounds {
-    let d3Bounds = d3.geoBounds(track.features[0]);
-    let padding = 0.003; // about 330m
+    const d3Bounds = d3.geoBounds(track.features[0]);
+    const padding = 0.003; // about 330m
 
     return {
       SouthWest: {
@@ -185,22 +185,38 @@ export class RouteService {
       boundsArr.push(bounds);
     } else {
       // Chech quarter rectangles
-      this.splitBounds({
-        SouthWest: { lat: bounds.SouthWest.lat, lon: bounds.SouthWest.lon },
-        NorthEast: { lat: geo.center.geometry.coordinates[1], lon: geo.center.geometry.coordinates[0] }
-      }, maxRadius, boundsArr);
-      this.splitBounds({
-        SouthWest: { lat: geo.center.geometry.coordinates[1], lon: bounds.SouthWest.lon },
-        NorthEast: { lat: bounds.NorthEast.lat, lon: geo.center.geometry.coordinates[0] }
-      }, maxRadius, boundsArr);
-      this.splitBounds({
-        SouthWest: { lat: bounds.SouthWest.lat, lon: geo.center.geometry.coordinates[0] },
-        NorthEast: { lat: geo.center.geometry.coordinates[1], lon: bounds.NorthEast.lon }
-      }, maxRadius, boundsArr);
-      this.splitBounds({
-        SouthWest: { lat: geo.center.geometry.coordinates[1], lon: geo.center.geometry.coordinates[0] },
-        NorthEast: { lat: bounds.NorthEast.lat, lon: bounds.NorthEast.lon }
-      }, maxRadius, boundsArr);
+      this.splitBounds(
+        {
+          SouthWest: { lat: bounds.SouthWest.lat, lon: bounds.SouthWest.lon },
+          NorthEast: { lat: geo.center.geometry.coordinates[1], lon: geo.center.geometry.coordinates[0] }
+        },
+        maxRadius,
+        boundsArr
+      );
+      this.splitBounds(
+        {
+          SouthWest: { lat: geo.center.geometry.coordinates[1], lon: bounds.SouthWest.lon },
+          NorthEast: { lat: bounds.NorthEast.lat, lon: geo.center.geometry.coordinates[0] }
+        },
+        maxRadius,
+        boundsArr
+      );
+      this.splitBounds(
+        {
+          SouthWest: { lat: bounds.SouthWest.lat, lon: geo.center.geometry.coordinates[0] },
+          NorthEast: { lat: geo.center.geometry.coordinates[1], lon: bounds.NorthEast.lon }
+        },
+        maxRadius,
+        boundsArr
+      );
+      this.splitBounds(
+        {
+          SouthWest: { lat: geo.center.geometry.coordinates[1], lon: geo.center.geometry.coordinates[0] },
+          NorthEast: { lat: bounds.NorthEast.lat, lon: bounds.NorthEast.lon }
+        },
+        maxRadius,
+        boundsArr
+      );
     }
   }
 

@@ -17,7 +17,7 @@ import { HikeProgramService } from '../../../services/hike-program';
 import { DeepstreamModule } from '../../../../deepstream';
 import { CheckpointService, Checkpoint } from '../../../services/checkpoint';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { hikePrograms as hikeProgramFixtures, hikeProgramsStored } from './fixtures';
 
 export class TestActions extends Actions {

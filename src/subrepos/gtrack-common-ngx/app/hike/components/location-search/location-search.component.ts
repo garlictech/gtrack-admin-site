@@ -31,9 +31,11 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject<boolean>();
   private _locate$ = new Subject<boolean>();
 
-  @Input() public context: string;
+  @Input()
+  public context: string;
 
-  @Input() public placeholder: string;
+  @Input()
+  public placeholder: string;
 
   public icon = faSearch;
 
@@ -60,7 +62,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     this._input = this._searchElementRef.nativeElement;
 
     if (!(this._input instanceof HTMLInputElement)) {
-      let input = this._input.querySelector('input');
+      const input = this._input.querySelector('input');
 
       if (input !== null) {
         this._input = input;
@@ -71,7 +73,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
       this._googleMapsService.autocomplete(this._input).then(autocomplete => {
         autocomplete.addListener('place_changed', () => {
           this._ngZone.run(() => {
-            let place = autocomplete.getPlace();
+            const place = autocomplete.getPlace();
 
             if (typeof place.geometry === 'undefined' || place.geometry === null) {
               return;
@@ -95,7 +97,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
         }
       });
 
-    let location$ = this._store
+    const location$ = this._store
       .select(selectCurrentLocation)
       .takeUntil(this._destroy$)
       .filter((location: IGeoPosition) => !!_.get(location, 'coords.latitude') && !!_.get(location, 'coords.latitude'))

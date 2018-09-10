@@ -24,10 +24,7 @@ const DECLARATIONS = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FontAwesomeModule
-  ],
+  imports: [CommonModule, FontAwesomeModule],
   declarations: [...DECLARATIONS],
   providers: [UnitsService, GoogleMapsService, GeospatialService, GeoIpService],
   exports: [...DECLARATIONS]
