@@ -50,12 +50,12 @@ export class CoordinateIterator {
 
   protected isLoop(): boolean {
     let isLoop = false;
-    let round = (numbers: number[]): number[] => {
+    const round = (numbers: number[]): number[] => {
       return numbers.map((n: number) => _.round(n, 6));
     };
 
-    let first = _.first(this.coordinates);
-    let last = _.last(this.coordinates);
+    const first = _.first(this.coordinates);
+    const last = _.last(this.coordinates);
 
     if (first && last) {
       isLoop = _.isEqual(round(first), round(last));

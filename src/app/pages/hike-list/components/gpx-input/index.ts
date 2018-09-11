@@ -9,7 +9,7 @@ import * as toGeoJSON from '@mapbox/togeojson';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gt-gpx-input',
+  selector: 'app-gpx-input',
   templateUrl: 'ui.html',
   styles: ['input[type=file] { display: none; }']
 })

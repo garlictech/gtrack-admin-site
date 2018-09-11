@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { LocalizeSelectors } from '../../../store';
 import { DescriptionLanguageListService } from '../';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ILocalizationState } from 'subrepos/localize-ngx';
 import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 

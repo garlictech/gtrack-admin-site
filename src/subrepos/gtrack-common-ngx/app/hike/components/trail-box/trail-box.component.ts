@@ -35,7 +35,7 @@ import { Route } from '../../services/route';
 import { LeafletComponent, Center } from '../../../map';
 
 import * as L from 'leaflet';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import { IPoi } from '../../../../../provider-client';
 
@@ -66,21 +66,29 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
   public offlineMap = false;
 
-  @Input() public hikeProgram: HikeProgram;
+  @Input()
+  public hikeProgram: HikeProgram;
 
-  @Output() public elevationLineOver = new EventEmitter<void>();
+  @Output()
+  public elevationLineOver = new EventEmitter<void>();
 
-  @Output() public elevationLineMove = new EventEmitter<GeoJSON.Position>();
+  @Output()
+  public elevationLineMove = new EventEmitter<GeoJSON.Position>();
 
-  @Output() public elevationLineOut = new EventEmitter<void>();
+  @Output()
+  public elevationLineOut = new EventEmitter<void>();
 
-  @Output() public elevationLineClick = new EventEmitter<GeoJSON.Position>();
+  @Output()
+  public elevationLineClick = new EventEmitter<GeoJSON.Position>();
 
-  @Input() public elevationMarkerPosition: GeoJSON.Position = [0, 0];
+  @Input()
+  public elevationMarkerPosition: GeoJSON.Position = [0, 0];
 
-  @Input() public elevationMarkerVisible = false;
+  @Input()
+  public elevationMarkerVisible = false;
 
-  @ViewChild('map') public map: LeafletComponent;
+  @ViewChild('map')
+  public map: LeafletComponent;
 
   public route: Route;
 
@@ -104,8 +112,8 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
   ) {}
 
   ngOnInit() {
-    let pois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
-    let route = this.hikeProgram.routeId;
+    const pois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
+    const route = this.hikeProgram.routeId;
 
     this.pois$ = this._store.select(this._poiSelectors.getPois(pois));
     this.route$ = this._store.select(this._routeSelectors.getRoute(route)).map(data => {
@@ -135,7 +143,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
   }
 
   ngAfterViewInit() {
-    let map = this.map.map;
+    const map = this.map.map;
 
     this.route$
       .filter((route: Route) => typeof route !== 'undefined')
@@ -144,7 +152,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
         this.route = route;
         this.clearGeoJson();
 
-        let feature = Object.assign({}, route.geojson.features[0]) as GeoJSON.Feature<GeoJSON.LineString>;
+        const feature = Object.assign({}, route.geojson.features[0]) as GeoJSON.Feature<GeoJSON.LineString>;
 
         feature.properties = {
           draw_type: `route_1`
@@ -152,19 +160,19 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
         this.addGeoJson(feature, map.leafletMap);
 
-        setTimeout(() => {
+        setTimeout(() => {
           map.fitBounds(route);
         }, 100);
 
-        let bounds = bbox(feature);
-        let rectangle = transformScale(bboxPolygon(bounds), 1.3);
+        const bounds = bbox(feature);
+        const rectangle = transformScale(bboxPolygon(bounds), 1.3);
 
         this.map.leafletMap.on('mousemove', (e: L.LeafletMouseEvent) => {
-          let point = turfPoint([e.latlng.lng, e.latlng.lat]);
+          const point = turfPoint([e.latlng.lng, e.latlng.lat]);
 
           if (booleanPointInPolygon(point, rectangle)) {
-            let line = turfLineString(feature.geometry.coordinates);
-            let nearest = nearestPointOnLine(line, point);
+            const line = turfLineString(feature.geometry.coordinates);
+            const nearest = nearestPointOnLine(line, point);
 
             if (this._elevationZoneHover === false) {
               this._elevationZoneHover = true;
@@ -181,11 +189,11 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
         });
 
         this.map.leafletMap.on('click', (e: L.LeafletMouseEvent) => {
-          let point = turfPoint([e.latlng.lng, e.latlng.lat]);
+          const point = turfPoint([e.latlng.lng, e.latlng.lat]);
 
           if (booleanPointInPolygon(point, rectangle)) {
-            let line = turfLineString(feature.geometry.coordinates);
-            let nearest = nearestPointOnLine(line, point);
+            const line = turfLineString(feature.geometry.coordinates);
+            const nearest = nearestPointOnLine(line, point);
             this.elevationLineClick.emit([nearest.geometry.coordinates[0], nearest.geometry.coordinates[1]]);
           }
         });
@@ -244,13 +252,13 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
       { color: 'red', opacity: 1, weight: 2 }
     ];
 
-    let responses = styles.map((style, i) =>
+    const responses = styles.map((style, i) =>
       L.geoJSON(geojson, {
         style: () => style
       })
     );
 
-    for (let response of responses) {
+    for (const response of responses) {
       response.addTo(map);
     }
 
@@ -264,13 +272,13 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
   goToCurrentPosition(e: Event) {
     e.preventDefault();
-    let map = this.map.map;
+    const map = this.map.map;
     map.currentPositionMarker.goToCurrentPosition();
   }
 
   resetMap(e: Event) {
     e.preventDefault();
-    let map = this.map.map;
+    const map = this.map.map;
 
     if (this.route) {
       map.fitBounds(this.route);
@@ -279,10 +287,10 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
   showCheckpointsOnly(e: Event) {
     e.preventDefault();
-    let map = this.map.map;
+    const map = this.map.map;
 
     if (this.hikeProgram) {
-      let checkpoints = this.hikeProgram.checkpoints.checkpoints;
+      const checkpoints = this.hikeProgram.checkpoints.checkpoints;
 
       if (this.checkpointsOnly === false) {
         this.checkpointsOnly = true;
@@ -294,10 +302,10 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
   showAllPoints(e: Event) {
     e.preventDefault();
-    let map = this.map.map;
+    const map = this.map.map;
 
     if (this.hikeProgram) {
-      let checkpoints = this.hikeProgram.checkpoints.checkpoints;
+      const checkpoints = this.hikeProgram.checkpoints.checkpoints;
 
       if (this.checkpointsOnly === true) {
         this.checkpointsOnly = false;

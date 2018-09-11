@@ -34,6 +34,8 @@ import { REDUCER_TOKEN, getReducers } from './store';
 
 import { config } from './config';
 
+import { MessageService } from 'primeng/api';
+
 export const APP_PROVIDERS = [
   TransferState,
   { provide: REDUCER_TOKEN, useFactory: getReducers },
@@ -57,5 +59,6 @@ export const APP_PROVIDERS = [
   HikeEditMapSelectors,
   HikeEditRoutePlannerSelectors,
   ConfirmationService,
-  MarkerPopupService
+  MarkerPopupService,
+  MessageService
 ];

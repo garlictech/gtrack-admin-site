@@ -6,15 +6,15 @@ import * as moment from 'moment';
 })
 export class DurationPipe implements PipeTransform {
   transform(durationInMinutes: number): string {
-    let duration = moment.duration(durationInMinutes, 'minutes');
-    let hours = this.padLeft(duration.hours().toString(), 2, '0');
-    let minutes = this.padLeft(duration.minutes().toString(), 2, '0');
+    const duration = moment.duration(durationInMinutes, 'minutes');
+    const hours = this.padLeft(duration.hours().toString(), 2, '0');
+    const minutes = this.padLeft(duration.minutes().toString(), 2, '0');
 
     return `${hours}:${minutes}`;
   }
 
   private padLeft(str: string, length: number, chars: string): string {
-    let padLength = length - str.length;
+    const padLength = length - str.length;
     let pad = '';
 
     for (let i = 0; i < padLength; i++) {

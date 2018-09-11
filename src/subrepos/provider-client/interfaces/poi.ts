@@ -17,8 +17,8 @@ export interface IPoiArchiveInput extends IProviderInput {
 }
 
 export interface IPoiMergeInput extends IProviderInput {
-  ids: string[],
-  newData: IPoi
+  ids: string[];
+  newData: IPoi;
 }
 
 export interface IPoiSaveResponse {

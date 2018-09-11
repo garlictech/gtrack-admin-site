@@ -1,0 +1,36 @@
+@import 'base/variables';
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.snow.css';
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/primeng.css';
+@import 'layout/layout';
+@import '~primeng/resources/themes/omega/theme.css';
+@import '~leaflet/dist/leaflet.css';
+@import '~leaflet.fullscreen/Control.FullScreen.css';
+@import '~leaflet-usermarker/src/leaflet.usermarker.css';
+@import 'mixins';
+@import 'defaults';
+@import 'utilities';
+@import 'components';
+a {
+  cursor: pointer;
+}
+
+.routing-control-marker {
+  background-image: url('/assets/img/marker-icon.png') !important;
+  background-color: transparent;
+  border: 0;
+  text-align: center;
+  span {
+    position: relative;
+    top: -30px;
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+      1px 1px 0 #000;
+    font-size: 20px;
+  }
+}
+
+.leaflet-routing-container {
+  display: none !important;
+}

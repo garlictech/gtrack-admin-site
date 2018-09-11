@@ -81,7 +81,7 @@ export interface IHikeProgram {
   description: ILocalizedItem<ITextualDescription>;
   offlineMap?: string;
   stops: IHikeProgramStop[];
-  checkpoints: CheckpointSequence
+  checkpoints?: CheckpointSequence;
 }
 
 export interface IHikeProgramInput extends IHikeProgram, IProviderInput {}

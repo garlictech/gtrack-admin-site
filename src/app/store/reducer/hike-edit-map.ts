@@ -1,5 +1,5 @@
 import { IHikeEditMapState } from '../state';
-import { adminMapActions } from '..';
+import { adminMapActions } from '../actions';
 import { ActionReducer } from '@ngrx/store';
 
 export const initialMapState: IHikeEditMapState = {

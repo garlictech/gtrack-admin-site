@@ -1,11 +1,12 @@
 // Core
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, editedHikeProgramActions } from '../../../../../store';
+import { State } from '../../../../../store';
+import { editedHikeProgramActions } from '../../../../../store/actions';
 import { IGTrackPoi } from '../../../../../shared/interfaces';
 
 @Component({
-  selector: 'hike-edit-pois-hike-table',
+  selector: 'app-hike-edit-pois-hike-table',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisHikeTableComponent {

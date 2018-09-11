@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'gt-hike-edit-external-poi-info',
+  selector: 'app-hike-edit-external-poi-info',
   templateUrl: './ui.html'
 })
 export class HikeEditExternalPoiInfoComponent {

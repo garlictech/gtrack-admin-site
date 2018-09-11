@@ -1,4 +1,4 @@
-<gt-table-spinner *ngIf="(working$ | async) as working; else pageContent"></gt-table-spinner>
+<app-table-spinner *ngIf="(working$ | async) as working; else pageContent"></app-table-spinner>
 
 <p-dialog
   header="{{((hikeProgramData$ | async).description | localizeDescription).title}}"
@@ -64,7 +64,7 @@
     <div class="ui-g">
       <div class="ui-g-12">
         <p-card title="General info">
-          <gt-hike-edit-general-info></gt-hike-edit-general-info>
+          <app-hike-edit-general-info></app-hike-edit-general-info>
         </p-card>
       </div>
     </div>
@@ -72,7 +72,7 @@
     <div class="ui-g">
       <div class="ui-g-12">
         <p-card title="Map">
-          <gt-hike-edit-map></gt-hike-edit-map>
+          <app-hike-edit-map></app-hike-edit-map>
         </p-card>
       </div>
     </div>
@@ -80,7 +80,7 @@
     <div class="ui-g">
       <div class="ui-g-12">
         <p-card title="Hike outline">
-          <gt-hike-edit-outline></gt-hike-edit-outline>
+          <app-hike-edit-outline></app-hike-edit-outline>
         </p-card>
       </div>
     </div>
@@ -88,7 +88,7 @@
     <div class="ui-g">
       <div class="ui-g-12">
         <p-card title="Route planning">
-          <gt-hike-edit-route-planner [isPlanning$]="isPlanning$"></gt-hike-edit-route-planner>
+          <app-hike-edit-route-planner [isPlanning$]="isPlanning$"></app-hike-edit-route-planner>
         </p-card>
       </div>
     </div>
@@ -96,7 +96,7 @@
     <div class="ui-g">
       <div class="ui-g-12">
         <p-card title="Pois">
-          <gt-hike-edit-pois [isPlanning$]="isPlanning$"></gt-hike-edit-pois>
+          <app-hike-edit-pois [isPlanning$]="isPlanning$"></app-hike-edit-pois>
         </p-card>
       </div>
     </div>
@@ -104,11 +104,11 @@
     <div class="ui-g">
       <div class="ui-g-12">
         <p-card title="Photos">
-          <gt-hike-edit-photos
+          <app-hike-edit-photos
             [backgroundImageSelector]="backgroundImageSelector"
             [backgroundImageUrlSelector]="backgroundImageUrlSelector"
             [clickActions]="clickActions"
-          ></gt-hike-edit-photos>
+          ></app-hike-edit-photos>
         </p-card>
       </div>
     </div>

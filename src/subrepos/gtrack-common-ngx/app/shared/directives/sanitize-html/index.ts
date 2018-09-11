@@ -5,7 +5,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   selector: '[gtrackSanitizeHtml]'
 })
 export class SanitizeHtmlDirective {
-  @Input() public gtrackSanitizeHtml: string;
+  @Input()
+  public gtrackSanitizeHtml: string;
 
   @HostBinding('innerHtml')
   public get innerHtml(): SafeHtml {

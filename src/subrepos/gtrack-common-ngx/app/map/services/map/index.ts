@@ -16,14 +16,22 @@ export class MapService {
   constructor(
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
-    protected store: Store<any>,
+    protected _store: Store<any>,
     protected _descriptionLanguageList: DescriptionLanguageListService,
     protected _markerPopup: MarkerPopupService
   ) {}
 
   get(leafletMap: L.Map): Map {
     const id = uuid();
-    const map = new Map(id, leafletMap, this.iconService, this.mapMarkerService, this.store, this._descriptionLanguageList, this._markerPopup);
+    const map = new Map(
+      id,
+      leafletMap,
+      this.iconService,
+      this.mapMarkerService,
+      this._store,
+      this._descriptionLanguageList,
+      this._markerPopup
+    );
     this._maps[id] = map;
     return map;
   }

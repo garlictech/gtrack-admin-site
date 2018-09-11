@@ -1,6 +1,6 @@
 import { ActionReducer } from '@ngrx/store';
 import { IHikeEditRoutePlannerState } from '../state';
-import { hikeEditRoutePlannerActions } from '..';
+import { hikeEditRoutePlannerActions } from '../actions';
 
 export const initialRouteDataState: GeoJSON.FeatureCollection<any> = {
   type: 'FeatureCollection',

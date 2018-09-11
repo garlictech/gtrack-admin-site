@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { IGooglePoi, IOsmPoi, IWikipediaPoi } from '../../../../shared/interfaces';
 
 @Component({
-  selector: 'gt-special-poi-data',
+  selector: 'app-special-poi-data',
   templateUrl: 'ui.html'
 })
 export class SpecialPoiDataComponent {

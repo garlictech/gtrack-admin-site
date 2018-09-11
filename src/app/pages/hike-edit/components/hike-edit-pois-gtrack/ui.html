@@ -6,11 +6,11 @@
   [width]="600"
   [blockScroll]="true"
 >
-  <gt-hike-edit-gtrack-poi-info
+  <app-hike-edit-gtrack-poi-info
     *ngIf="displayGTrackPoiModal"
     [poiId]="modalPoi.id"
     [closeModal]="closeModal"
-  ></gt-hike-edit-gtrack-poi-info>
+  ></app-hike-edit-gtrack-poi-info>
 </p-dialog>
 
 <div class="clearfix mb-20">
@@ -44,23 +44,23 @@
   </div>
 </div>
 
-<gt-table-spinner *ngIf="(searchContext$ | async)?.working as working; else hikePoiTable"></gt-table-spinner>
+<app-table-spinner *ngIf="(searchContext$ | async)?.working as working; else hikePoiTable"></app-table-spinner>
 
 <ng-template #hikePoiTable>
   <p-accordion [multiple]="true">
     <p-accordionTab header="On route pois">
-      <hike-edit-pois-gtrack-table
+      <app-hike-edit-pois-gtrack-table
         [pois$]="pois$"
         [onRouteCheck]="true"
         [openGTrackPoiModal]="openGTrackPoiModal"
-      ></hike-edit-pois-gtrack-table>
+      ></app-hike-edit-pois-gtrack-table>
     </p-accordionTab>
     <p-accordionTab header="Off route pois">
-      <hike-edit-pois-gtrack-table
+      <app-hike-edit-pois-gtrack-table
         [pois$]="pois$"
         [onRouteCheck]="false"
         [openGTrackPoiModal]="openGTrackPoiModal"
-      ></hike-edit-pois-gtrack-table>
+      ></app-hike-edit-pois-gtrack-table>
     </p-accordionTab>
   </p-accordion>
 </ng-template>

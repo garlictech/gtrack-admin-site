@@ -3,12 +3,12 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 
 import { poiAdapter, IPoiState, IPoiContextState } from './state';
 import { EXTERNAL_POI_DEPENDENCIES, IExternalPoiDependencies } from '../../externals';
-import { poiContextStateAdapter } from '.';
+import { poiContextStateAdapter } from './state';
 import { IPoi, IPoiStored } from '../../../../../provider-client';
 import { Dictionary } from '@ngrx/entity/src/models';
 
 import * as _ from 'lodash';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class PoiSelectors {
@@ -26,8 +26,8 @@ export class PoiSelectors {
 
     this.selectFeature = createFeatureSelector<IPoiState>(this._externals.storeDomain);
 
-    let poiSelector = createSelector(this.selectFeature, (state: IPoiState) => state.pois);
-    let contextSelector = createSelector(this.selectFeature, (state: IPoiState) => state.contexts);
+    const poiSelector = createSelector(this.selectFeature, (state: IPoiState) => state.pois);
+    const contextSelector = createSelector(this.selectFeature, (state: IPoiState) => state.contexts);
 
     const selectors = poiAdapter.getSelectors(poiSelector);
     const contextSelectors = poiContextStateAdapter.getSelectors(contextSelector);

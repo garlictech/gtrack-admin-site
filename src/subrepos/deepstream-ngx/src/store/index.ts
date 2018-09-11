@@ -1,5 +1,5 @@
 import * as Actions from './actions';
-export { Actions }
+export { Actions };
 
 export type Action = Actions.AllActions;
 export { Effects } from './effects';

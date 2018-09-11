@@ -6,7 +6,8 @@ import { IPoiStored } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
 import { PoiEditorService, HikeProgramService } from '../../../../shared/services';
 import { IGTrackPoi } from '../../../../shared/interfaces';
-import { State, hikeEditPoiActions, commonPoiActions, editedHikeProgramActions } from '../../../../store';
+import { State } from '../../../../store';
+import { hikeEditPoiActions, commonPoiActions, editedHikeProgramActions } from '../../../../store/actions';
 import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
 } from '../../../../store/selectors';
@@ -14,7 +15,7 @@ import {
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gt-hike-edit-pois-hike',
+  selector: 'app-hike-edit-pois-hike',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {

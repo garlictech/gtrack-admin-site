@@ -2,14 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { State, commonHikeActions } from '../../store';
+import { State } from '../../store';
+import { commonHikeActions } from '../../store/actions';
 import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
 import { SelectItem, ConfirmationService } from 'primeng/primeng';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gt-hike-list',
+  selector: 'app-hike-list',
   templateUrl: './hike-list.component.html',
   styleUrls: ['./hike-list.component.scss']
 })

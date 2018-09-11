@@ -12,8 +12,8 @@ export class MarkerPopupComponent {
   public static componentName = 'MarkerPopupComponent';
 
   public data: {
-   poi: IPoi,
-   stop: IHikeProgramStop
+    poi: IPoi;
+    stop: IHikeProgramStop;
   };
 
   public closePopup: any; // Popup close method
@@ -21,9 +21,9 @@ export class MarkerPopupComponent {
   public get image(): string {
     let url = '';
 
-    if (this.data && this.data.poi && (this.data.poi.backgroundImages instanceof Array)) {
-      let imageUrls = this.data.poi.backgroundImages;
-      let firstImage = imageUrls[0];
+    if (this.data && this.data.poi && this.data.poi.backgroundImages instanceof Array) {
+      const imageUrls = this.data.poi.backgroundImages;
+      const firstImage = imageUrls[0];
 
       url = _.get(firstImage, 'card.url', '');
     }

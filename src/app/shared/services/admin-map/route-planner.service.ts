@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, hikeEditRoutePlannerActions } from '../../../store';
+import { State } from '../../../store';
+import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { GameRuleService, ISegment, RouteService } from 'subrepos/gtrack-common-ngx';
 import { initialRouteDataState } from '../../../store/reducer';
 import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from '../../../store/selectors';

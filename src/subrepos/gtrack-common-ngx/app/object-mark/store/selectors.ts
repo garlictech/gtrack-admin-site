@@ -26,14 +26,12 @@ export class ObjectMarkSelectors {
   protected _selectObjectMarkEntities: (state: object) => Dictionary<IObjectMarkData>;
   protected _externals: IExternalObjectMarkDependencies;
 
-  constructor(
-    @Inject(EXTERNAL_OBJECT_MARK_DEPENDENCIES) externals,
-  ) {
+  constructor(@Inject(EXTERNAL_OBJECT_MARK_DEPENDENCIES) externals) {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IObjectMarkState>(externals.storeDomain);
 
-    let objectMarkSelector = createSelector(this.selectFeature, (state: IObjectMarkState) => state.objectMarks);
-    let contextSelector = createSelector(this.selectFeature, (state: IObjectMarkState) => state.contexts);
+    const objectMarkSelector = createSelector(this.selectFeature, (state: IObjectMarkState) => state.objectMarks);
+    const contextSelector = createSelector(this.selectFeature, (state: IObjectMarkState) => state.contexts);
 
     const selectors = objectMarkAdapter.getSelectors(objectMarkSelector);
     const contextSelectors = objectMarkContextAdapter.getSelectors(contextSelector);
@@ -45,11 +43,11 @@ export class ObjectMarkSelectors {
   }
 
   public getObjectMarks(context: EObjectMarkContext) {
-    return createSelector(this.getAllObjectMarks, (objectMarks => {
+    return createSelector(this.getAllObjectMarks, objectMarks => {
       const mark = objectMarks.find(objectMark => objectMark.id === context);
 
       return _.get(mark, 'markedObjects', []);
-    }));
+    });
   }
 
   public getObjectMarkObject(context: EObjectMarkContext, objectToFind: any) {
@@ -60,7 +58,7 @@ export class ObjectMarkSelectors {
 
   public isObjectMarked(context: EObjectMarkContext, objectToFind: any) {
     return createSelector(this.getObjectMarkObject(context, objectToFind), object => {
-      return (typeof object !== 'undefined');
+      return typeof object !== 'undefined';
     });
   }
 

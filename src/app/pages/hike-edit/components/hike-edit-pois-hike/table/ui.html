@@ -14,7 +14,7 @@
     <ng-template pTemplate="body" let-poi>
       <tr *ngIf="!!poi.onRoute === onRouteCheck">
         <td>
-          <gt-poi-icons [poi]="poi"></gt-poi-icons>
+          <app-poi-icons [poi]="poi"></app-poi-icons>
         </td>
         <td [innerHTML]="(poi?.description | localizeDescription).title"></td>
         <td>{{poi.distFromRoute | distance : true}}</td>

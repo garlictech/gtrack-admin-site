@@ -8,6 +8,4 @@ services:
     environment:
       - NODE_ENV
       - CI
-    ports:
-      - "8000:8000"
-    command: "npm run server:universal"
+    command: 'npm run server:universal'

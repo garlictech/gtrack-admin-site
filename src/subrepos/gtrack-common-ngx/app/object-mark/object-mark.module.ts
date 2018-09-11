@@ -8,17 +8,10 @@ import { EXTERNAL_OBJECT_MARK_DEPENDENCIES } from './externals';
 import { IObjectMarkModuleConfig } from './config';
 
 @NgModule({
-  imports: [
-    DeepstreamModule,
-    EffectsModule.forFeature([ObjectMarkEffects])
-  ],
+  imports: [DeepstreamModule, EffectsModule.forFeature([ObjectMarkEffects])],
   exports: [],
   declarations: [],
-  providers: [
-    ObjectMarkService,
-    ObjectMarkEffects,
-    ObjectMarkSelectors
-  ],
+  providers: [ObjectMarkService, ObjectMarkEffects, ObjectMarkSelectors]
 })
 export class ObjectMarkModule {
   static forRoot(config: IObjectMarkModuleConfig): ModuleWithProviders {
@@ -32,7 +25,6 @@ export class ObjectMarkModule {
           }
         }
       ]
-
     };
   }
 }

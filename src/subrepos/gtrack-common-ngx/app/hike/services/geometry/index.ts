@@ -6,17 +6,17 @@ import distance from '@turf/distance';
 import envelope from '@turf/envelope';
 import midpoint from '@turf/midpoint';
 
-export type GeoPoint = {
+export interface GeoPoint {
   lat: number;
   long: number;
-};
+}
 
 export const EARTH_RADIUS = 6371000;
 
-export type CenterRadius = {
+export interface CenterRadius {
   radius: number;
   center: GeoJSON.Feature<GeoJSON.Point>;
-};
+}
 
 @Injectable()
 export class GeometryService {
@@ -32,7 +32,7 @@ export class GeometryService {
   }
 
   public toRadian(n: number): number {
-    return n * Math.PI / 180;
+    return (n * Math.PI) / 180;
   }
 
   public distanceFromRoute(lonLat, path) {

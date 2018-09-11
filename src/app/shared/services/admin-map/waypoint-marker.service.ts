@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, hikeEditRoutePlannerActions } from '../../../store';
+import { State } from '../../../store';
+import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { Observable } from 'rxjs';
 import { HikeEditMapSelectors } from '../../../store/selectors';
-import { AdminMapService, AdminMap, RoutePlannerService } from './index';
+import { AdminMapService } from './admin-map.service';
+import { RoutePlannerService } from './route-planner.service';
+import { AdminMap } from './lib/admin-map';
 import { HttpClient } from '../../../../../node_modules/@angular/common/http';
 import { environment } from 'environments/environment';
 import { ElevationService, IconService } from 'subrepos/gtrack-common-ngx';

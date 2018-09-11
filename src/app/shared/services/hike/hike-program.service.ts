@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, editedHikeProgramActions } from '../../../store';
+import { State } from '../../../store';
+import { editedHikeProgramActions } from '../../../store/actions';
 import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { IHikeProgramStop, IRoute } from 'subrepos/provider-client';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
-import { ElevationService, GameRuleService, Route, RouteService, CheckpointService } from 'subrepos/gtrack-common-ngx';
+import {
+  ElevationService, GameRuleService, Route, RouteService, CheckpointService
+} from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';
 import length from '@turf/length';
@@ -24,7 +27,7 @@ export class HikeProgramService {
     private _routeService: RouteService,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _checkpointService: CheckpointService,
+    private _checkpointService: CheckpointService
   ) {}
 
   /**
@@ -120,7 +123,7 @@ export class HikeProgramService {
   public createElevationIcon(_route: Route) {
     const _iconWidth = 54;
     const _iconHeight = 20;
-    const _elevationData = this._routeService.elevationData(_route, _iconWidth, _iconHeight, {
+    const _elevationData = this._elevationService.getd3ElevationData(_route, _iconWidth, _iconHeight, {
       top: 4,
       left: 4,
       right: 4,

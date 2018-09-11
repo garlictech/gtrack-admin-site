@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 import { IClientData } from '@garlictech/deepstream-rxjs';
 
@@ -21,16 +21,16 @@ export class Effects {
   deepstreamLogin$: Observable<Action> = this._actions$
     .ofType<LocalActions.DeepstreamLogin>(LocalActions.DEEPSTREAM_LOGIN)
     .mergeMap(action => {
-      log.d('Effect: Logging in to deepstream...');
+      log.data('Effect: Logging in to deepstream...');
       return this._deepstreamService.login(action.token);
     })
     .filter(auth => !!auth)
     .map((auth: IClientData) => {
-      log.i('Effect: Deepstream auth success. Auth objct: ', auth);
+      log.info('Effect: Deepstream auth success. Auth objct: ', auth);
       return new LocalActions.DeepstreamAuthSuccess(auth);
     })
     .catch(err => {
-      log.er('Effect: Deepstream auth error', err);
+      log.error('Effect: Deepstream auth error', err);
       return Observable.of(new LocalActions.DeepstreamLoginFailed(err));
     });
 

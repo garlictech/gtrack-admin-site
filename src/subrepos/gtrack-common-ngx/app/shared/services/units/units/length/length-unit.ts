@@ -5,10 +5,10 @@ export class LengthUnit {
   public conversionToBig: number;
 
   public convertDistance(meters: number): number {
-    return Math.round(1.0 * meters / this.conversionFromMeter);
+    return Math.round((1.0 * meters) / this.conversionFromMeter);
   }
 
   public convertDistanceInBigUnit(meters: number): number {
-    return Math.round(10.0 * meters / this.conversionFromMeter / this.conversionToBig) / 10;
+    return Math.round((10.0 * meters) / this.conversionFromMeter / this.conversionToBig) / 10;
   }
 }

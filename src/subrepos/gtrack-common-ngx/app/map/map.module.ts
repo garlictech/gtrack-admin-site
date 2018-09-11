@@ -15,5 +15,12 @@ import { LocalizeModule } from '../localize';
 export class MapModule {}
 
 export {
-  MapService, MarkerPopupService, CheckpointMarker, CurrentPositionMarker, Map, MapMarker, MapMarkerService, IconService
+  MapService,
+  MarkerPopupService,
+  CheckpointMarker,
+  CurrentPositionMarker,
+  Map,
+  MapMarker,
+  MapMarkerService,
+  IconService
 };

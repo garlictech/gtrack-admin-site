@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { DeepstreamService, DeepstreamModule } from 'subrepos/gtrack-common-ngx';
 import { IGeospatialBoxSearchPayload, IGeospatialCircleSearchPayload } from 'subrepos/provider-client';

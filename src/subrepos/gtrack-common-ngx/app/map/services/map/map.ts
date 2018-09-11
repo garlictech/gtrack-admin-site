@@ -42,7 +42,12 @@ export class Map {
 
   public get pointMarker(): PointMarker {
     if (!this._pointMarker) {
-      this._pointMarker = new PointMarker(this.map, this.mapMarkerService, this._descriptionLanguageList, this._markerPopup);
+      this._pointMarker = new PointMarker(
+        this.map,
+        this.mapMarkerService,
+        this._descriptionLanguageList,
+        this._markerPopup
+      );
     }
 
     return this._pointMarker;
@@ -53,7 +58,7 @@ export class Map {
   }
 
   public getBounds(route: IRoute): L.LatLngBoundsExpression {
-    let bounds = route.bounds;
+    const bounds = route.bounds;
 
     return [[bounds.NorthEast.lat, bounds.NorthEast.lon], [bounds.SouthWest.lat, bounds.SouthWest.lon]];
   }

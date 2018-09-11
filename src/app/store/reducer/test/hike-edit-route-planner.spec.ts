@@ -1,7 +1,7 @@
-import { Action } from '@ngrx/store';
-import { ISegment } from 'subrepos/gtrack-common-ngx';
+import { ISegment } from '../../../../subrepos/gtrack-common-ngx';
 import { hikeEditRoutePlannerReducer, initialRouteInfoDataState } from '../hike-edit-route-planner';
-import { hikeEditRoutePlannerActions, IHikeEditRoutePlannerState } from '../..';
+import { hikeEditRoutePlannerActions } from '../../actions';
+import { IHikeEditRoutePlannerState } from '../..';
 
 import * as _ from 'lodash';
 

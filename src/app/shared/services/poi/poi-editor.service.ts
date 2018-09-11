@@ -10,7 +10,8 @@ import {
   PoiSelectors
 } from 'subrepos/gtrack-common-ngx';
 import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
-import { State, IExternalPoiListContextItemState, commonGeoSearchActions } from '../../../store';
+import { State, IExternalPoiListContextItemState } from '../../../store';
+import { commonGeoSearchActions } from '../../../store/actions';
 import {
   HikeEditPoiSelectors,
   HikeEditRoutePlannerSelectors,

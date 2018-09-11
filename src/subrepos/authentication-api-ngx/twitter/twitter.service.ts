@@ -9,7 +9,7 @@ import { AUTH_CONFIG_TOKEN, IAuthenticationApiConfig } from '../lib/config';
 import { DebugLog } from '../log';
 import { AuthProviderBase } from '../auth-provider-base';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/take';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class TwitterService extends AuthProviderBase {
   public oauthCallback(url: string): void {
     let data: any = null;
     let queryString: string;
-    let accessTokenUrl = `${this.authConfig.apiUrl}/auth/twitter/oauth/access_token`;
+    const accessTokenUrl = `${this.authConfig.apiUrl}/auth/twitter/oauth/access_token`;
 
     if (url.indexOf('oauth_token=') > 0) {
       queryString = url.substr(url.indexOf('?') + 1);
@@ -47,7 +47,7 @@ export class TwitterService extends AuthProviderBase {
         })
         .toPromise()
         .then((response: Response) => {
-          let body = response.text().replace(/"(.*)"/, '$1');
+          const body = response.text().replace(/"(.*)"/, '$1');
           data = this._parseQueryString(body);
 
           this.deferred.resolve(data);
@@ -72,8 +72,8 @@ export class TwitterService extends AuthProviderBase {
   public connect(roles?: string[]): Promise<IAuth> {
     return this.login().then(response => {
       /* jshint camelcase: false */
-      let oauthToken = response.oauth_token;
-      let oauthSecret = response.oauth_token_secret;
+      const oauthToken = response.oauth_token;
+      const oauthSecret = response.oauth_token_secret;
       /* jshint camelcase: true */
 
       return this.restApiLogin(oauthToken, oauthSecret, roles);
@@ -82,7 +82,7 @@ export class TwitterService extends AuthProviderBase {
 
   @DebugLog
   public verify(token: string, uid: string): Promise<any> {
-    let tokenUrl = `${this.authConfig.apiUrl}/auth/twitter/verify`;
+    const tokenUrl = `${this.authConfig.apiUrl}/auth/twitter/verify`;
 
     return this.http
       .post(tokenUrl, {
@@ -91,9 +91,9 @@ export class TwitterService extends AuthProviderBase {
       })
       .toPromise()
       .then((response: Response) => {
-        let body = response.json();
-        let data = body;
-        let authToken = data.token;
+        const body = response.json();
+        const data = body;
+        const authToken = data.token;
 
         return this.auth.init(authToken);
       });
@@ -104,8 +104,8 @@ export class TwitterService extends AuthProviderBase {
    */
   @DebugLog
   public login(): Promise<any> {
-    let redirectUri = `${this.authConfig.webserverUrl}/twitter/success.html`;
-    let requestTokenProxy = `${this.authConfig.apiUrl}/auth/twitter/oauth/request_token`;
+    const redirectUri = `${this.authConfig.webserverUrl}/twitter/success.html`;
+    const requestTokenProxy = `${this.authConfig.apiUrl}/auth/twitter/oauth/request_token`;
 
     // Avoid pop-up block
     this.oauthWindow
@@ -122,8 +122,8 @@ export class TwitterService extends AuthProviderBase {
         redirectUri: redirectUri
       })
       .mergeMap(response => {
-        let queryString: string = response.text().replace(/"(.*)"/, '$1');
-        let requestTokenParams: any = this._parseQueryString(queryString);
+        const queryString: string = response.text().replace(/"(.*)"/, '$1');
+        const requestTokenParams: any = this._parseQueryString(queryString);
         let oauthToken: string;
         let oauthSecret: string;
         let loginUrl: string;
@@ -164,8 +164,8 @@ export class TwitterService extends AuthProviderBase {
    */
   @DebugLog
   public restApiLogin(oauthToken: string, oauthSecret: string, roles?: string[]): Promise<IAuth> {
-    let url = `${this.authConfig.apiUrl}/auth/twitter/token`;
-    let options: any = {
+    const url = `${this.authConfig.apiUrl}/auth/twitter/token`;
+    const options: any = {
       /* jshint camelcase: false */
       oauth_token: oauthToken,
       oauth_token_secret: oauthSecret
@@ -180,17 +180,17 @@ export class TwitterService extends AuthProviderBase {
       .post(url, options)
       .toPromise()
       .then(response => {
-        let body = response.json();
-        let data = body;
-        let token = data.token;
-        let refreshToken = data.refreshToken;
+        const body = response.json();
+        const data = body;
+        const token = data.token;
+        const refreshToken = data.refreshToken;
         return this.auth.init(token, refreshToken);
       });
   }
 
   @DebugLog
   private _init() {
-    let window: any = this.windowService.nativeWindow;
+    const window: any = this.windowService.nativeWindow;
     window.twitterOauthCallback = (url: string) => {
       this.oauthWindow.close();
       this.oauthCallback(url);

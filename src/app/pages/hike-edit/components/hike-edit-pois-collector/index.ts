@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, hikeEditPoiActions, commonPoiActions } from '../../../../store';
+import { State } from '../../../../store';
+import { hikeEditPoiActions, commonPoiActions } from '../../../../store/actions';
 import { IExternalPoi, IFilteredProperties, IGTrackPoi } from '../../../../shared/interfaces';
 import { Subject, Observable } from 'rxjs';
 import { HikeEditPoiSelectors, HikeEditMapSelectors } from '../../../../store/selectors';
@@ -12,7 +13,7 @@ import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
 
 @Component({
-  selector: 'gt-hike-edit-pois-collector',
+  selector: 'app-hike-edit-pois-collector',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {

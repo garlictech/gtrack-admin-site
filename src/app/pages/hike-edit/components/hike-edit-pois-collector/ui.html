@@ -6,10 +6,10 @@
   [width]="600"
   [blockScroll]="true"
   >
-  <gt-hike-edit-external-poi-info
+  <app-hike-edit-external-poi-info
     *ngIf="displayPoiModal"
     [poi]="modalPoi"
-  ></gt-hike-edit-external-poi-info>
+  ></app-hike-edit-external-poi-info>
 </p-dialog>
 
 <p-dialog
@@ -20,11 +20,11 @@
   [width]="600"
   [blockScroll]="true"
 >
-  <gt-hike-edit-merge-gtrack-poi-info
+  <app-hike-edit-merge-gtrack-poi-info
     *ngIf="displayMergeModal"
     [conflicts]="mergeProperties.conflicts"
     [saveCallback]="saveMergedPoi"
-  ></gt-hike-edit-merge-gtrack-poi-info>
+  ></app-hike-edit-merge-gtrack-poi-info>
 </p-dialog>
 
 <div class="clearfix mb-20">
@@ -72,23 +72,23 @@
   </div>
 </div>
 
-<gt-table-spinner *ngIf="((saving$ | async)) as working; else collectorTable"></gt-table-spinner>
+<app-table-spinner *ngIf="((saving$ | async)) as working; else collectorTable"></app-table-spinner>
 
 <ng-template #collectorTable>
   <p-accordion [multiple]="true">
     <p-accordionTab header="On route pois">
-      <hike-edit-pois-collector-table
+      <app-hike-edit-pois-collector-table
         [pois$]="pois$"
         [onRouteCheck]="true"
         [openPoiModal]="openPoiModal"
-      ></hike-edit-pois-collector-table>
+      ></app-hike-edit-pois-collector-table>
     </p-accordionTab>
     <p-accordionTab header="Off route pois">
-      <hike-edit-pois-collector-table
+      <app-hike-edit-pois-collector-table
         [pois$]="pois$"
         [onRouteCheck]="false"
         [openPoiModal]="openPoiModal"
-      ></hike-edit-pois-collector-table>
+      ></app-hike-edit-pois-collector-table>
     </p-accordionTab>
   </p-accordion>
 </ng-template>

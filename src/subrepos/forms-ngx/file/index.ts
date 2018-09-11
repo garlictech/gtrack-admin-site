@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
 import { AbstractValueAccessor } from '../abstract-value-accessor';
 import { IUploadOptions } from '../field';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
@@ -10,9 +10,12 @@ import { Subject } from 'rxjs/Subject';
   template: ''
 })
 export class FileComponent extends AbstractValueAccessor implements OnInit, OnDestroy {
-  @Input() uploadOptions: IUploadOptions;
-  @Input() isBasic;
-  @Input() placeholder;
+  @Input()
+  uploadOptions: IUploadOptions;
+  @Input()
+  isBasic;
+  @Input()
+  placeholder;
   uploaded$: Observable<boolean>;
   protected _destroy$ = new Subject<boolean>();
 

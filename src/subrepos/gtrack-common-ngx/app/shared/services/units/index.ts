@@ -21,9 +21,9 @@ export class UnitsService {
   }
 
   public convertDistance(distanceInMeters: number, noBigUnit = false): IUnitValue {
-    let lengthUnit: LengthUnit = this.getActualUnits();
+    const lengthUnit: LengthUnit = this.getActualUnits();
 
-    let distanceValue: IUnitValue = {
+    const distanceValue: IUnitValue = {
       value: lengthUnit.convertDistance(distanceInMeters),
       unit: lengthUnit.smallUnit
     };
@@ -37,9 +37,9 @@ export class UnitsService {
   }
 
   public convertDistanceInBigUnit(distanceInMeters: number): IUnitValue {
-    let lengthUnit: LengthUnit = this.getActualUnits();
+    const lengthUnit: LengthUnit = this.getActualUnits();
 
-    let distanceValue: IUnitValue = {
+    const distanceValue: IUnitValue = {
       value: lengthUnit.convertDistanceInBigUnit(distanceInMeters),
       unit: lengthUnit.bigUnit
     };

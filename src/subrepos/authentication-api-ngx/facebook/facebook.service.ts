@@ -30,7 +30,7 @@ export class FacebookService extends AuthProviderBase {
    */
   @DebugLog
   public connect(roles?: string[]): Promise<IAuth> {
-    let redirectUri = this.config.redirectUri || `${this.authConfig.webserverUrl}/facebook/success.html`;
+    const redirectUri = this.config.redirectUri || `${this.authConfig.webserverUrl}/facebook/success.html`;
 
     return this._connect(
       `${this.facebookApiUrl}/dialog/oauth?client_id=${this.config.appId}`,
@@ -44,7 +44,7 @@ export class FacebookService extends AuthProviderBase {
   @DebugLog
   private _init() {
     this.config = this.authConfig.facebook;
-    let window: any = this.windowService.nativeWindow;
+    const window: any = this.windowService.nativeWindow;
     this.facebookApiUrl = `https://www.facebook.com/v${this.config.version}`;
 
     window.facebookOauthCallback = (url: string) => {

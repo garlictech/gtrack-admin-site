@@ -15,7 +15,7 @@ export class CircleSlice {
     let stopVertex = nearestPointOnLine(this.line, this.endPoint);
     let clipLine: GeoJSON.Feature<GeoJSON.LineString>;
     let it: CoordinateIterator;
-    let property = 'index';
+    const property = 'index';
 
     if (
       startVertex === null ||
@@ -39,7 +39,7 @@ export class CircleSlice {
     it.start(startVertex.properties[property]);
 
     while (it.at() && !stopVertex.properties[property] && !it.end()) {
-      let next = it.next();
+      const next = it.next();
 
       if (next !== null) {
         clipLine.geometry.coordinates.push(next);
