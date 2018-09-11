@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-
 import { IEditedGTrackPoiState } from '../state/edited-gtrack-poi';
 import { ITextualDescription, ILocalizedItem, IPoiStored, IBackgroundImageData } from 'subrepos/provider-client';
-
 import * as _ from 'lodash';
 
 @Injectable()

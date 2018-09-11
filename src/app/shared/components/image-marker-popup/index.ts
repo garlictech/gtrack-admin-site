@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 
 @Component({
-  selector: 'gc-image-marker-popup',
+  selector: 'app-image-marker-popup',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })

@@ -5,7 +5,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gt-hike-edit-merge-gtrack-poi-info',
+  selector: 'app-hike-edit-merge-gtrack-poi-info',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss'],
 })

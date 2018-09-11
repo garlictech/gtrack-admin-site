@@ -3,13 +3,13 @@
     <p-card title="General info">
       <div class="ui-g mt-20">
         <div class="ui-g-12">
-          <gt-localized-description
+          <app-localized-description
             [descriptionSelector]="descriptionSelector"
             [storeDataPath]="storeDataPath"
             [submitFv]="submitDescription"
             [deleteFv]="deleteDescription"
             [type]="'poi'"
-          ></gt-localized-description>
+          ></app-localized-description>
         </div>
       </div>
       <div class="ui-g">
@@ -54,12 +54,12 @@
 <div class="ui-g mb-20">
   <div class="ui-g-12">
     <p-card title="Photos">
-      <gt-hike-edit-photos
+      <app-hike-edit-photos
         [backgroundImageSelector]="backgroundImageSelector"
         [backgroundImageUrlSelector]="backgroundImageUrlSelector"
         [clickActions]="clickActions"
         [distanceFrom]="[gTrackPoi?.lat, gTrackPoi?.lon, 300]"
-      ></gt-hike-edit-photos>
+      ></app-hike-edit-photos>
     </p-card>
   </div>
 </div>

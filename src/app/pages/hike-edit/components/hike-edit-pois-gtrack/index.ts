@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import {
   PoiSelectors, GeoSearchSelectors, IGeoSearchContextState, IGeoSearchResponseItem
 } from 'subrepos/gtrack-common-ngx';
@@ -9,7 +8,8 @@ import { IPoiStored } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
 import { PoiEditorService } from '../../../../shared/services';
 import { IGTrackPoi } from '../../../../shared/interfaces';
-import { State, hikeEditPoiActions, commonPoiActions } from '../../../../store';
+import { State } from '../../../../store';
+import { hikeEditPoiActions, commonPoiActions } from '../../../../store/actions';
 import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
 } from '../../../../store/selectors';
@@ -17,7 +17,7 @@ import {
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gt-hike-edit-pois-gtrack',
+  selector: 'app-hike-edit-pois-gtrack',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {

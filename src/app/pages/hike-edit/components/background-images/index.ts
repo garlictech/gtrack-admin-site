@@ -3,7 +3,7 @@ import { IBackgroundImageData } from 'subrepos/provider-client';
 import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
-  selector: 'gt-background-images',
+  selector: 'app-background-images',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })

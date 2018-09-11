@@ -5,8 +5,10 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
-  State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions, editedHikeProgramActions, IHikeEditRoutePlannerTotalState, hikeEditPoiActions
+  State, IHikeEditRoutePlannerState, IHikeEditRoutePlannerTotalState
 } from '../../../../store';
+import { editedHikeProgramActions, hikeEditPoiActions } from '../../../../store/actions';
+import { hikeEditRoutePlannerActions } from '../../../../store/actions';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
 import { HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
 import { ReverseGeocodingService, HikeProgramService, PoiEditorService } from '../../../../shared/services';
@@ -18,7 +20,7 @@ import * as L from 'leaflet';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gt-hike-edit-route-planner',
+  selector: 'app-hike-edit-route-planner',
   templateUrl: './ui.html'
 })
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {

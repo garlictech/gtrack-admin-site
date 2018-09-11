@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Store, MemoizedSelector } from '@ngrx/store';
-import { State, hikeEditImageActions } from '../../../../store';
+import { State } from '../../../../store';
+import { hikeEditImageActions } from '../../../../store/actions';
 import {
   HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors, HikeEditMapSelectors
 } from '../../../../store/selectors';
@@ -11,7 +12,7 @@ import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gt-hike-edit-photos',
+  selector: 'app-hike-edit-photos',
   templateUrl: './ui.html'
 })
 export class HikeEditPhotosComponent implements OnInit, OnDestroy {

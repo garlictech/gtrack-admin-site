@@ -1,13 +1,14 @@
 // Core
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, hikeEditPoiActions } from '../../../../../store';
+import { State } from '../../../../../store';
+import { hikeEditPoiActions } from '../../../../../store/actions';
 import { Observable, Subject } from 'rxjs';
 import { HikeEditPoiSelectors } from '../../../../../store/selectors';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'hike-edit-pois-collector-table',
+  selector: 'app-hike-edit-pois-collector-table',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {

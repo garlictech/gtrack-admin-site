@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, editedHikeProgramActions, hikeEditPoiActions, commonPoiActions } from '../../../store';
+import { State } from '../../../store';
+import { editedHikeProgramActions, hikeEditPoiActions, commonPoiActions } from '../../../store/actions';
 import { Observable } from 'rxjs';
 import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { PoiEditorService } from '../../services';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gc-marker-popup',
+  selector: 'app-marker-popup',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })

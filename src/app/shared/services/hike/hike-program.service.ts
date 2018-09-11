@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, editedHikeProgramActions } from '../../../store';
+import { State } from '../../../store';
+import { editedHikeProgramActions } from '../../../store/actions';
 import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { IHikeProgramStop, IRoute } from 'subrepos/provider-client';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';

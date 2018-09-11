@@ -23,8 +23,7 @@ export class AdminMap extends Map {
     protected _descriptionLanguageList: DescriptionLanguageListService,
     protected _markerPopup: MarkerPopupService
   ) {
-    // TODO: null-s are introduced to be able to compile, should be checked...
-    super(id, map, iconService, mapMarkerService, _store, null, null);
+    super(id, map, iconService, mapMarkerService, _store, _descriptionLanguageList, _markerPopup);
   }
 
   /**
@@ -37,7 +36,7 @@ export class AdminMap extends Map {
       .take(1)
       .map(path => {
         if (typeof path !== 'undefined') {
-          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 50, { units: 'meters' });
+          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(path, 50, { units: 'meters' });
 
           if (typeof _buffer !== 'undefined') {
             _buffer = _.assign(_buffer, {

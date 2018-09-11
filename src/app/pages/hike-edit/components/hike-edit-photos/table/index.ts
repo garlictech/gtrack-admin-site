@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { IBackgroundImageData } from 'subrepos/provider-client';
 
 @Component({
-  selector: 'gt-hike-edit-photos-table',
+  selector: 'app-hike-edit-photos-table',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })

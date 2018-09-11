@@ -1,6 +1,6 @@
 import { ActionReducer } from '@ngrx/store';
 import { IEditedGTrackPoiState } from '../state';
-import { editedGTrackPoiActions } from '..';
+import { editedGTrackPoiActions } from '../actions';
 import { EObjectState } from 'subrepos/provider-client';
 import * as _ from 'lodash';
 

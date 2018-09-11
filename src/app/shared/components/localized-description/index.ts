@@ -22,7 +22,7 @@ interface ILanguageKeyObject {
 }
 
 @Component({
-  selector: 'gt-localized-description',
+  selector: 'app-localized-description',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

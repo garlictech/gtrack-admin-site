@@ -1,13 +1,14 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, hikeEditPoiActions } from '../../../../store';
+import { State } from '../../../../store';
+import { hikeEditPoiActions } from '../../../../store/actions';
 import { IExternalPoiType } from '../../../../shared/interfaces';
 import { EPoiTypes } from 'subrepos/provider-client';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'gt-hike-edit-pois',
+  selector: 'app-hike-edit-pois',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisComponent implements OnInit {

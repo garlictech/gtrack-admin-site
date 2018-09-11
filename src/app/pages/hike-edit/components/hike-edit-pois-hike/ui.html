@@ -7,11 +7,11 @@
   [width]="600"
   [blockScroll]="true"
 >
-  <gt-hike-edit-gtrack-poi-info
+  <app-hike-edit-gtrack-poi-info
     *ngIf="displayGTrackPoiModal"
     [poiId]="modalPoi.id"
     [closeModal]="closeModal"
-  ></gt-hike-edit-gtrack-poi-info>
+  ></app-hike-edit-gtrack-poi-info>
 </p-dialog>
 
 <div class="clearfix mb-20">
@@ -36,17 +36,17 @@
 
 <p-accordion [multiple]="true">
   <p-accordionTab header="On route pois">
-    <hike-edit-pois-hike-table
+    <app-hike-edit-pois-hike-table
       [pois$]="pois$"
       [onRouteCheck]="true"
       [openGTrackPoiModal]="openGTrackPoiModal"
-    ></hike-edit-pois-hike-table>
+    ></app-hike-edit-pois-hike-table>
   </p-accordionTab>
   <p-accordionTab header="Off route pois">
-    <hike-edit-pois-hike-table
+    <app-hike-edit-pois-hike-table
       [pois$]="pois$"
       [onRouteCheck]="false"
       [openGTrackPoiModal]="openGTrackPoiModal"
-    ></hike-edit-pois-hike-table>
+    ></app-hike-edit-pois-hike-table>
   </p-accordionTab>
 </p-accordion>

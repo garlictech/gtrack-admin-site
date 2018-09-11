@@ -3,17 +3,16 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { Store, MemoizedSelector, createSelector } from '@ngrx/store';
-import {
-  State,
+import { State, IHikeEditRoutePlannerState } from '../../store';
+import {
   commonRouteActions,
   commonHikeActions,
-  IHikeEditRoutePlannerState,
   hikeEditMapActions,
-  hikeEditRoutePlannerActions,
   editedHikeProgramActions,
   commonPoiActions,
   hikeEditImageActions
-} from '../../store';
+} from '../../store/actions';
+import { hikeEditRoutePlannerActions } from '../../store/actions';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from '../../store/selectors';
 import {
   WaypointMarkerService,
@@ -34,7 +33,7 @@ import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gt-hike-edit',
+  selector: 'app-hike-edit',
   templateUrl: './hike-edit.component.html',
   styleUrls: ['./hike-edit.component.scss']
 })

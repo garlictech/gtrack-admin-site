@@ -1,5 +1,6 @@
 import { Store } from '@ngrx/store';
-import { State, adminMapActions } from '../../../store';
+import { State } from '../../../store';
+import { adminMapActions } from '../../../store/actions';
 import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { Injectable } from '@angular/core';
 import { AdminMap } from './lib/admin-map';
@@ -16,11 +17,10 @@ export class AdminMapService extends MapService {
     protected mapMarkerService: MapMarkerService,
     store: Store<State>,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-  protected _descriptionLanguageList: DescriptionLanguageListService,
-  protected _markerPopup: MarkerPopupService
+    protected _descriptionLanguageList: DescriptionLanguageListService,
+    protected _markerPopup: MarkerPopupService
   ) {
-    // TODO: null-s are introduced to be able to compile, should be checked...
-    super(iconService, mapMarkerService, store, null, null, _descriptionLanguageList, _markerPopup);
+    super(iconService, mapMarkerService, store, _descriptionLanguageList, _markerPopup);
   }
 
   public get(leafletMap: L.Map): AdminMap {

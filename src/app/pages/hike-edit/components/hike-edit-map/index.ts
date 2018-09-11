@@ -2,7 +2,8 @@
 import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit, ElementRef, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, adminMapActions, commonBackgroundGeolocationActions } from '../../../../store';
+import { State } from '../../../../store';
+import { adminMapActions, commonBackgroundGeolocationActions } from '../../../../store/actions';
 import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
 import {
   Center, selectCurrentLocation, IGeoPosition, GoogleMapsService
@@ -35,7 +36,7 @@ const OVERLAYS = [{
 }];
 
 @Component({
-  selector: 'gt-hike-edit-map',
+  selector: 'app-hike-edit-map',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })
