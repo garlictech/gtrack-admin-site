@@ -13,23 +13,24 @@
 @import 'utilities';
 @import 'components';
 a {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .routing-control-marker {
-    background-image: url('/assets/img/marker-icon.png') !important;
-    background-color: transparent;
-    border: 0;
-    text-align: center;
-    span {
-        position: relative;
-        top: -30px;
-        color: white;
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        font-size: 20px;
-    }
+  background-image: url('/assets/img/marker-icon.png') !important;
+  background-color: transparent;
+  border: 0;
+  text-align: center;
+  span {
+    position: relative;
+    top: -30px;
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+      1px 1px 0 #000;
+    font-size: 20px;
+  }
 }
 
 .leaflet-routing-container {
-    display: none !important;
+  display: none !important;
 }

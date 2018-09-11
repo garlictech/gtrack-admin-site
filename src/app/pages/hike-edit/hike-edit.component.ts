@@ -153,7 +153,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
           this._messageService.add({
             severity: 'error',
             summary: 'Hike',
-            detail: `Error:<br>${msg.join('<br>')}`,
+            detail: `Error:\n${msg.join('\n')}`,
             life: 8000
           });
         } else {
