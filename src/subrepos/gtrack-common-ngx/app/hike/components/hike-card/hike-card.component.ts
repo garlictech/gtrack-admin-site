@@ -22,18 +22,6 @@ export class HikeCardComponent {
     return urls;
   }
 
-  public get images(): string[] {
-    let urls: string[] = [];
-
-    if (this.hikeProgram && (this.hikeProgram.backgroundImages instanceof Array)) {
-      let imageUrls = this.hikeProgram.backgroundImages;
-
-      urls = imageUrls.map(image => _.get(image, 'card.url', ''));
-    }
-
-    return urls;
-  }
-
   public get image(): string {
     let url = '';
 
