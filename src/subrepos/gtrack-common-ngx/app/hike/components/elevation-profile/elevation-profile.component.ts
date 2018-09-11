@@ -17,22 +17,26 @@ import * as d3 from 'd3';
 import * as _ from 'lodash';
 
 import { State } from 'app/store';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 import { DistancePipe, UnitsService } from '../../../shared';
-import { Route, RouteService, IElevationData } from '../../services/route';
+import { IElevationData, ElevationService } from '../../services/elevation';
+import { Route, RouteService } from '../../services/route';
 import { RouteSelectors } from '../../store/route/selectors';
 import * as routeActions from '../../store/route/actions';
 import { HikeProgram } from '../../services/hike-program';
 import { GeospatialService } from '../../../shared/services/geospatial';
 
 @Component({
-  selector: 'gtcn-elevation-profile',
+  selector: 'gtrack-common-elevation-profile',
   template: ''
 })
 export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('elevationProfile')
   public mainDiv: ElementRef;
+
+  @ViewChild('experiment')
+  public experiment: ElementRef;
 
   @Output()
   public elevationLineOver = new EventEmitter<void>();
@@ -52,18 +56,33 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   public elevationMarkerVisible: boolean;
 
+  @Input()
+  public width = 450;
+
+  @Input()
+  public height = 200;
+
+  @Input()
+  public margins = {
+    top: 20,
+    right: 20,
+    bottom: 20,
+    left: 50
+  };
+
   public route: Route | null;
   public marker: d3.Selection<d3.BaseType, {}, null, undefined>;
   public elevationText: d3.Selection<d3.BaseType, {}, null, undefined>;
 
   protected vis: d3.Selection<d3.BaseType, {}, null, undefined>;
-  protected res: IElevationData | null = null;
+  protected _elevationData: IElevationData | null = null;
   protected markerOn = false;
   protected distance: DistancePipe;
 
   private _destroy$ = new Subject<boolean>();
 
   constructor(
+    private _elevationService: ElevationService,
     private _routeService: RouteService,
     private _store: Store<State>,
     private _routeSelectors: RouteSelectors,
@@ -141,27 +160,16 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
             .attr('viewBox', `0, 0, ${this.width}, ${this.height}`);
         }
 
-        this.res = this._routeService.elevationData(route, this.width, this.height, this.margins);
+        this._elevationData = this._elevationService.getd3ElevationData(route, this.width, this.height, this.margins);
 
-        if (this.res === null) {
+        if (this._elevationData === null) {
           return;
         }
 
-        const xAxis = d3.axisBottom(this.res.xRange).tickSize(5);
-
-        const yAxis = d3.axisLeft(this.res.yRange).tickSize(5);
-
-        this.vis
-          .append('svg:g')
-          .attr('class', 'x axis')
-          .attr('transform', `translate(0, ${this.height - this.margins.bottom})`)
-          .call(xAxis);
-
-        this.vis
-          .append('svg:g')
-          .attr('class', 'y axis')
-          .attr('transform', `translate(${this.margins.left}, 0)`)
-          .call(yAxis);
+        this._addFilledArea();
+        this._addXAxis();
+        this._addYAxis();
+        this._addLineGraph();
 
         this.marker = this.vis
           .append('circle')
@@ -186,17 +194,6 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
           .attr('x', 70)
           .attr('y', this.margins.top);
 
-        const line = this.res.lineFunc(this.res.lineData);
-
-        if (line !== null) {
-          this.vis
-            .append('svg:path')
-            .attr('d', line)
-            .attr('stroke', 'black')
-            .attr('stroke-width', 2)
-            .attr('fill', 'none');
-        }
-
         this.vis.on('mouseover', () => this.elevationLineOver.emit());
 
         this.vis.on('mouseout', () => this.elevationLineOut.emit());
@@ -220,30 +217,16 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       });
   }
 
-  @Input()
-  public width = 450;
-
-  @Input()
-  public height = 200;
-
-  @Input()
-  public margins = {
-    top: 20,
-    right: 20,
-    bottom: 20,
-    left: 50
-  };
-
   ngOnDestroy() {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
   public moveHandlerToCoordinate(position: GeoJSON.Position) {
-    if (this.res !== null) {
-      const lineData = this.res.lineData;
-      const xRange = this.res.xRange;
-      const yRange = this.res.yRange;
+    if (this._elevationData !== null) {
+      const lineData = this._elevationData.lineData;
+      const xRange = this._elevationData.xRange;
+      const yRange = this._elevationData.yRange;
       const coordinates = this.route.path.coordinates;
 
       const distance = this._geospatial.distanceOnLine(coordinates[0], position, this.route.route.features[0]) / 1000;
@@ -288,9 +271,9 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   protected _eventToPosition(eventX: number): GeoJSON.Position | null {
     let trackPoint: GeoJSON.Position = null;
 
-    if (this.res !== null) {
-      const lineData = this.res.lineData;
-      const xRange = this.res.xRange;
+    if (this._elevationData !== null) {
+      const lineData = this._elevationData.lineData;
+      const xRange = this._elevationData.xRange;
       const bisect = d3.bisector((d: [number, number]) => {
         return d[0];
       }).right;
@@ -302,5 +285,110 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     return trackPoint;
+  }
+
+  private _addYAxis() {
+    // The vertical axis
+    const yAxisVertical = d3.axisLeft(this._elevationData.yRange).tickSize(5);
+
+    this.vis
+      .append('svg:g')
+      .attr('class', 'axis-line')
+      .attr('transform', `translate(${this.margins.left}, 0)`)
+      .call(yAxisVertical);
+
+    // The grid lines
+    const lineWidth = this.width - this.margins.left - this.margins.right;
+    const yAxisLines = d3.axisRight(this._elevationData.yRange).tickSize(lineWidth);
+
+    function customYAxis(g) {
+      g.call(yAxisLines);
+      g.select('.domain').remove();
+      g.selectAll('.tick line')
+        .attr('stroke', '#777')
+        .attr('stroke-dasharray', '2,2');
+
+      g.selectAll('text').remove();
+    }
+
+    this.vis
+      .append('svg:g')
+      .attr('class', 'axis-grid')
+      .attr('transform', `translate(${this.margins.left}, 0)`)
+      .call(customYAxis);
+  }
+
+  private _addXAxis() {
+    // The vertical axis
+    const xAxisHorizontal = d3.axisBottom(this._elevationData.xRange).tickSize(5);
+
+    this.vis
+      .append('svg:g')
+      .attr('class', 'axis-line')
+      .attr('transform', `translate(0, ${this.height - this.margins.bottom})`)
+      .call(xAxisHorizontal);
+
+    // The grid lines
+    const lineHeight = this.height - this.margins.top - this.margins.bottom;
+
+    const xAxisLines = d3.axisTop(this._elevationData.xRange).tickSize(lineHeight);
+
+    function customXAxis(g) {
+      g.call(xAxisLines);
+      g.select('.domain').remove();
+      g.selectAll('.tick line')
+        .attr('stroke', '#777')
+        .attr('stroke-dasharray', '2,2');
+
+      g.selectAll('text').remove();
+    }
+
+    this.vis
+      .append('svg:g')
+      .attr('class', 'axis-line')
+      .attr('transform', `translate(0, ${this.height - this.margins.bottom})`)
+      .call(customXAxis);
+  }
+
+  private _addLineGraph() {
+    const line = this._elevationData.lineFunc(this._elevationData.lineData);
+
+    if (line !== null) {
+      this.vis
+        .append('svg:path')
+        .attr('d', line)
+        .attr('stroke', 'black')
+        .attr('stroke-width', 1)
+        .attr('fill', 'none');
+    }
+  }
+
+  private _addFilledArea() {
+    const areaGradient = this.vis
+      .append('defs')
+      .append('linearGradient')
+      .attr('id', 'areaGradient')
+      .attr('x1', '0%')
+      .attr('y1', '0%')
+      .attr('x2', '0%')
+      .attr('y2', '100%');
+
+    areaGradient
+      .append('stop')
+      .attr('offset', '0%')
+      .attr('stop-color', '#21825C')
+      .attr('stop-opacity', 0.6);
+    areaGradient
+      .append('stop')
+      .attr('offset', '80%')
+      .attr('stop-color', 'white')
+      .attr('stop-opacity', 0);
+
+    const area = this._elevationData.areaFunc(this._elevationData.lineData);
+
+    this.vis
+      .append('svg:path')
+      .attr('d', area)
+      .attr('fill', 'url(#areaGradient)');
   }
 }
