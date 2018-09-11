@@ -1,5 +1,4 @@
 import { StoreModule } from '@ngrx/store';
-import { ToasterModule } from 'angular2-toaster';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as _ from 'lodash';
@@ -33,6 +32,7 @@ import {
   HikeEditPoiEffects,
   AuthEffects
 } from './store/effects';
+import { ToastModule } from 'primeng/toast';
 
 const sharedConfig = {
   ...defaultSharedConfig
@@ -94,6 +94,6 @@ export const APP_IMPORTS = [
     EditedGTrackPoiEffects,
     HikeEditImageEffects
   ]),
-  ToasterModule.forRoot(),
-  GtrackCommonWebModule
+  GtrackCommonWebModule,
+  ToastModule
 ];

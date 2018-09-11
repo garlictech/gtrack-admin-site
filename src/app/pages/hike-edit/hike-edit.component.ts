@@ -26,9 +26,8 @@ import {
   IBackgroundImageData
 } from 'subrepos/provider-client';
 import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
-import { ToasterService } from 'angular2-toaster';
 import { HikeProgramService } from '../../shared/services';
-
+import { MessageService } from 'primeng/api';
 import * as uuid from 'uuid/v1';
 import * as _ from 'lodash';
 
@@ -63,7 +62,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _toasterService: ToasterService,
+    private _messageService: MessageService,
     private _router: Router,
     private _title: Title
   ) {}
@@ -151,14 +150,18 @@ export class HikeEditComponent implements OnInit, OnDestroy {
             msg.push(`${idx}: ${error[idx]}`);
           }
 
-          this._toasterService.pop({
-            type: 'error',
-            title: 'Hike',
-            body: `Error:<br>${msg.join('<br>')}`,
-            timeout: 8000
+          this._messageService.add({
+            severity: 'error',
+            summary: 'Hike',
+            detail: `Error:<br>${msg.join('<br>')}`,
+            life: 8000
           });
         } else {
-          this._toasterService.pop('success', 'Hike', 'Success!');
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Hike',
+            detail: 'Success!'
+          });
 
           // Load the hike page if it's a new hike
           if (!this.paramsId) {

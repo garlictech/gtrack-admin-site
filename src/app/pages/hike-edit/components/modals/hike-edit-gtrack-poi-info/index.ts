@@ -7,7 +7,7 @@ import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored, ILocalizedItem, ITextualDescription, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
 import { EditedGTrackPoiSelectors } from '../../../../../store/selectors';
 
-import { ToasterService } from 'angular2-toaster';
+import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
@@ -38,7 +38,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _poiSelectors: PoiSelectors,
     private _editedGTrackPoiSelectors: EditedGTrackPoiSelectors,
-    private _toasterService: ToasterService,
+    private _messageService: MessageService,
     private _confirmationService: ConfirmationService
   ) {}
 
@@ -84,14 +84,18 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
             msg.push(`${idx}: ${error[idx]}`);
           }
 
-          this._toasterService.pop({
-            type: 'error',
-            title: 'Poi',
-            body: `Error:<br>${msg.join('<br>')}`,
-            timeout: 8000
+          this._messageService.add({
+            severity: 'error',
+            summary: 'Poi',
+            detail: `Error:<br>${msg.join('<br>')}`,
+            life: 8000
           });
         } else {
-          this._toasterService.pop('success', 'Poi', 'Success!');
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Poi',
+            detail: 'Success!'
+          });
         }
       });
 

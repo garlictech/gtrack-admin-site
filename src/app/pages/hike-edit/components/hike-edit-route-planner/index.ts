@@ -13,8 +13,8 @@ import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-commo
 import { HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
 import { ReverseGeocodingService, HikeProgramService, PoiEditorService } from '../../../../shared/services';
 import { ConfirmationService } from 'primeng/primeng';
+import { MessageService } from 'primeng/api';
 import { IRouteStored } from 'subrepos/provider-client';
-import { ToasterService } from 'angular2-toaster';
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
@@ -38,12 +38,12 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _routeSelectors: RouteSelectors,
-    private _toasterService: ToasterService,
     private _hikeProgramService: HikeProgramService,
     private _store: Store<State>,
     private _reverseGeocodingService: ReverseGeocodingService,
     private _confirmationService: ConfirmationService,
-    private _poiEditorService: PoiEditorService
+    private _poiEditorService: PoiEditorService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -72,7 +72,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .subscribe((routeContext: IRouteContextState) => {
         // Route saved
         if (routeContext.saved) {
-          this._toasterService.pop('success', 'Route', 'Success!');
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Route',
+            detail: 'Success!'
+          });
 
           this._routePlannerService.refreshRouteOnMap();
         // Route loaded
