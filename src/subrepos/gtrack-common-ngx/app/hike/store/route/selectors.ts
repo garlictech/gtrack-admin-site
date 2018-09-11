@@ -23,8 +23,8 @@ export class RouteSelectors {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IRouteState>(this._externals.storeDomain);
 
-    let routeSelector = createSelector(this.selectFeature, (state: IRouteState) => state.routes);
-    let contextSelector = createSelector(this.selectFeature, (state: IRouteState) => state.contexts);
+    const routeSelector = createSelector(this.selectFeature, (state: IRouteState) => state.routes);
+    const contextSelector = createSelector(this.selectFeature, (state: IRouteState) => state.contexts);
 
     const selectors = routeAdapter.getSelectors(routeSelector);
     const contextSelectors = routeContextStateAdapter.getSelectors(contextSelector);

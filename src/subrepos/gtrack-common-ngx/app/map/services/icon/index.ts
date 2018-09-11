@@ -18,7 +18,7 @@ export class IconService {
   };
 
   public url(type: string, iconType = 'default') {
-    let icon = this.iconMap[iconType][type] || this.iconMap[iconType].unknown;
+    const icon = this.iconMap[iconType][type] || this.iconMap[iconType].unknown;
 
     return icon;
   }

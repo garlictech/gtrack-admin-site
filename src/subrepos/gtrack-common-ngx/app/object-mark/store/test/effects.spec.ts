@@ -10,10 +10,10 @@ import { hot, cold } from 'jest-marbles';
 
 import * as actions from '../actions';
 import { ObjectMarkEffects } from '../effects';
-import { } from '../selectors';
+import {} from '../selectors';
 import { ObjectMarkService } from '../../services';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 
 export class TestActions extends Actions {
@@ -55,10 +55,7 @@ describe('ObjectMark effects', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({}),
-        EffectsModule.forRoot([])
-      ],
+      imports: [StoreModule.forRoot({}), EffectsModule.forRoot([])],
       providers: [
         {
           provide: ObjectMarkService,
@@ -78,25 +75,33 @@ describe('ObjectMark effects', () => {
 
   describe('loadContext$', () => {
     it('should return with a ContextLoaded action', () => {
-      const action = new actions.LoadContext(EObjectMarkContext.bookmarkedHike)
+      const action = new actions.LoadContext(EObjectMarkContext.bookmarkedHike);
       const completion = new actions.ContextLoaded(EObjectMarkContext.bookmarkedHike, testObjectMarks);
       const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadContext$).toBeObservable(expected);
-    })
+    });
   });
 
   describe('markObject$', () => {
     it('should return with an ObjectMarked action', () => {
-      const action = new actions.MarkObject(EObjectMarkContext.bookmarkedHike, {
-        id: 'test3'
-      }, true);
+      const action = new actions.MarkObject(
+        EObjectMarkContext.bookmarkedHike,
+        {
+          id: 'test3'
+        },
+        true
+      );
 
-      const completion = new actions.ObjectMarked(EObjectMarkContext.bookmarkedHike, {
-        id: 'test3'
-      }, true);
+      const completion = new actions.ObjectMarked(
+        EObjectMarkContext.bookmarkedHike,
+        {
+          id: 'test3'
+        },
+        true
+      );
       const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
@@ -104,5 +109,4 @@ describe('ObjectMark effects', () => {
       expect(effects.markObject$).toBeObservable(expected);
     });
   });
-
 });

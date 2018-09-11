@@ -38,12 +38,7 @@ describe('TwitterService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot(authReducer),
-        EffectsModule.forRoot([]),
-        WindowModule,
-        ApiModule
-      ],
+      imports: [StoreModule.forRoot(authReducer), EffectsModule.forRoot([]), WindowModule, ApiModule],
       providers: [
         BaseRequestOptions,
         MockBackend,

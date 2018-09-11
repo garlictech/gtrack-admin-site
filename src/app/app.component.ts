@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { load } from 'webfontloader';
 import { ToasterConfig, BodyOutputType } from 'angular2-toaster';
 
 @Component({
@@ -7,15 +6,11 @@ import { ToasterConfig, BodyOutputType } from 'angular2-toaster';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   public toasterConfig: ToasterConfig = new ToasterConfig({
     showCloseButton: true,
     tapToDismiss: false,
     timeout: 5000,
     bodyOutputType: BodyOutputType.TrustedHtml
   });
-
-  ngOnInit() {
-    load({ google: { families: ['Roboto:300,400,500,700,400italic', 'Material+Icons'] } });
-  }
 }

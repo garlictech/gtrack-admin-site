@@ -6,9 +6,7 @@ import { environment } from 'environments/environment';
 export class GeoIpService {
   private _url: string;
 
-  constructor(
-    private _http: Http
-  ) {
+  constructor(private _http: Http) {
     this._url = `${environment.lambdaEndpoint}/geoip`;
   }
 

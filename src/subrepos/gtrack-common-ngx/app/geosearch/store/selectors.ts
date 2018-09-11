@@ -32,8 +32,8 @@ export class GeoSearchSelectors {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IGeoSearchState>(this._externals.storeDomain);
 
-    let geoSearchSelector = createSelector(this.selectFeature, (state: IGeoSearchState) => state.geoSearches);
-    let contextSelector = createSelector(this.selectFeature, (state: IGeoSearchState) => state.contexts);
+    const geoSearchSelector = createSelector(this.selectFeature, (state: IGeoSearchState) => state.geoSearches);
+    const contextSelector = createSelector(this.selectFeature, (state: IGeoSearchState) => state.contexts);
 
     const selectors = geoSearchAdapter.getSelectors(geoSearchSelector);
     const contextSelectors = geoSearchContextStateAdapter.getSelectors(contextSelector);
@@ -60,7 +60,7 @@ export class GeoSearchSelectors {
   public getGeoSearchResults<T extends GeoSearchableItem>(context: string, getAllSelector: ((state: object) => T[])) {
     return createSelector(getAllSelector, this.getGeoSearch(context), (data, results) => {
       if (typeof results !== 'undefined') {
-        let ids = results.results;
+        const ids = results.results;
 
         return data.filter(item => ids.indexOf(item.id) !== -1);
       }

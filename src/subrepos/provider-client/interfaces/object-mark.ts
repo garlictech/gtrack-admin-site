@@ -11,6 +11,4 @@ export interface IObjectMark {
   object: any;
 }
 
-export interface IObjectMarkInput extends IProviderInput, IObjectMark {
-
-}
+export interface IObjectMarkInput extends IProviderInput, IObjectMark {}

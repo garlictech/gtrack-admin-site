@@ -13,3 +13,4 @@ export class MapMarkerService {
 }
 
 export { MapMarker };
+export * from './marker-popup.service';

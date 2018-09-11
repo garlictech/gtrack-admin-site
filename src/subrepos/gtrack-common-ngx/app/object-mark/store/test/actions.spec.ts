@@ -6,7 +6,7 @@ describe('ObjectMark actions', () => {
     it('should create an action', () => {
       const action = new actions.LoadContext(EObjectMarkContext.bookmarkedHike);
 
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: actions.ObjectMarkActionTypes.LOAD_CONTEXT,
         context: EObjectMarkContext.bookmarkedHike
       });
@@ -17,7 +17,7 @@ describe('ObjectMark actions', () => {
     it('should create an action', () => {
       const action = new actions.ContextLoaded(EObjectMarkContext.bookmarkedHike, ['test']);
 
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: actions.ObjectMarkActionTypes.CONTEXT_LOADED,
         context: EObjectMarkContext.bookmarkedHike,
         objects: ['test']
@@ -29,7 +29,7 @@ describe('ObjectMark actions', () => {
     it('should create an action', () => {
       const action = new actions.MarkObject(EObjectMarkContext.bookmarkedHike, 'test', true);
 
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: actions.ObjectMarkActionTypes.MARK_OBJECT,
         context: EObjectMarkContext.bookmarkedHike,
         object: 'test',
@@ -42,7 +42,7 @@ describe('ObjectMark actions', () => {
     it('should create an action', () => {
       const action = new actions.ObjectMarked(EObjectMarkContext.bookmarkedHike, 'test', true);
 
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: actions.ObjectMarkActionTypes.OBJECT_MARKED,
         context: EObjectMarkContext.bookmarkedHike,
         object: 'test',

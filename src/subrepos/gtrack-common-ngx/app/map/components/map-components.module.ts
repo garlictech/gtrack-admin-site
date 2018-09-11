@@ -6,17 +6,12 @@ import { IconComponent } from './icon';
 import { LeafletComponent } from './leaflet';
 import { MarkerPopupComponent } from './marker-popup';
 import { LocalizeModule } from '../../localize';
+import { SharedModule } from '../../shared';
 
 // PrimeNG
-import {
-  ButtonModule
-} from 'primeng/primeng';
+import { ButtonModule } from 'primeng/primeng';
 
-const COMPONENTS = [
-  LeafletComponent,
-  IconComponent,
-  MarkerPopupComponent
-];
+const COMPONENTS = [LeafletComponent, IconComponent, MarkerPopupComponent];
 
 @NgModule({
   imports: [
@@ -24,12 +19,11 @@ const COMPONENTS = [
     MapModule,
     LocalizeModule,
     // PrimeNG
-    ButtonModule
+    ButtonModule,
+    SharedModule
   ],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
-  entryComponents: [
-    MarkerPopupComponent
-  ]
+  entryComponents: [MarkerPopupComponent]
 })
 export class MapComponentsModule {}

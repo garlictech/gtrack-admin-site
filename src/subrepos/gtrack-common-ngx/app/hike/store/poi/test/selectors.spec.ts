@@ -22,7 +22,7 @@ describe('Poi selectors', () => {
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
-    poisData = [ ...poiFixtures ];
+    poisData = [...poiFixtures];
     ids = poiFixtures.map(poi => poi.id);
     pois = poiFixtures.map(data => data);
     destroy$ = new Subject<boolean>();
@@ -172,5 +172,4 @@ describe('Poi selectors', () => {
       expect(result).toEqual(_.zipObject(ids, pois));
     });
   });
-
 });

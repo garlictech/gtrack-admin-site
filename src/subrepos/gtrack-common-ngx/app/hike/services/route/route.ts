@@ -15,7 +15,7 @@ export class Route implements IRoute {
   }
 
   constructor(data: IRouteStored) {
-    let converted = _.cloneDeep(data);
+    const converted = _.cloneDeep(data);
     Object.assign(this, converted);
   }
 }

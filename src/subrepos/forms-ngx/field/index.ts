@@ -26,13 +26,9 @@ export * from './markdown';
 export * from './rich-text-editor';
 // export * from './file-s3';
 
-export interface IResetFv {
-  (formDescriptor: IFormDescriptor): IFormInstance;
-}
+export type IResetFv = (formDescriptor: IFormDescriptor) => IFormInstance;
 
-export interface ISubmitFv {
-  (formGroup: FormGroup): void;
-}
+export type ISubmitFv = (formGroup: FormGroup) => void;
 
 export interface ISubmit {
   translatableLabel?: string;

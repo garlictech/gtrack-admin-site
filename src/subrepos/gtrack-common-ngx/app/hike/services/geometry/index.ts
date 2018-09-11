@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
-import * as turf from '@turf/turf';
+import { point as turfPoint, featureCollection as turfFeatureCollection } from '@turf/helpers';
+import nearestPointOnLine from '@turf/nearest-point-on-line';
+import circle from '@turf/circle';
+import distance from '@turf/distance';
+import envelope from '@turf/envelope';
+import midpoint from '@turf/midpoint';
 
-export type GeoPoint = {
+export interface GeoPoint {
   lat: number;
   long: number;
-};
+}
 
 export const EARTH_RADIUS = 6371000;
 
-export type CenterRadius = {
+export interface CenterRadius {
   radius: number;
   center: GeoJSON.Feature<GeoJSON.Point>;
-};
+}
 
 @Injectable()
 export class GeometryService {
@@ -27,13 +32,13 @@ export class GeometryService {
   }
 
   public toRadian(n: number): number {
-    return n * Math.PI / 180;
+    return (n * Math.PI) / 180;
   }
 
   public distanceFromRoute(lonLat, path) {
-    let point = turf.point(lonLat);
-    let p2 = turf.pointOnLine(path, point);
-    return Math.round(1000 * turf.distance(point, p2, { units: 'kilometers' }));
+    let point = turfPoint(lonLat);
+    let p2 = nearestPointOnLine(path, point);
+    return Math.round(1000 * distance(point, p2, { units: 'kilometers' }));
   }
 
   public getCenterRadius(bounds): CenterRadius {
@@ -41,26 +46,26 @@ export class GeometryService {
     const p2 = this.getPoint(bounds.NorthEast.lon, bounds.NorthEast.lat);
 
     return {
-      radius: turf.distance(p1, p2, { units: 'kilometers' }) * 500,
-      center: <GeoJSON.Feature<GeoJSON.Point>>turf.midpoint(p1, p2)
+      radius: distance(p1, p2, { units: 'kilometers' }) * 500,
+      center: <GeoJSON.Feature<GeoJSON.Point>>midpoint(p1, p2)
     };
   }
 
-  public envelope(points: GeoJSON.Position[]): [GeoJSON.Position, GeoJSON.Position] {
+  public doEnvelope(points: GeoJSON.Position[]): [GeoJSON.Position, GeoJSON.Position] {
     let features: GeoJSON.Feature<GeoJSON.Point>[] = points.map(point => this.getPoint(point[0], point[1]));
 
-    let featureCollection = turf.featureCollection(features);
-    let envelope = turf.envelope(featureCollection);
-    let coordinates = envelope.geometry.coordinates[0];
+    let featureCollection = turfFeatureCollection(features);
+    let env = envelope(featureCollection);
+    let coordinates = env.geometry.coordinates[0];
 
     return [[coordinates[0][1], coordinates[0][0]], [coordinates[2][1], coordinates[2][0]]];
   }
 
   public envelopeCircle(center: GeoJSON.Position, radius: number): [GeoJSON.Position, GeoJSON.Position] {
     let centerPoint = this.getPoint(center[0], center[1]);
-    let circle = turf.circle(centerPoint, Math.ceil(radius / 1000));
-    let envelope = turf.envelope(circle);
-    let coordinates = envelope.geometry.coordinates[0];
+    let crcl = circle(centerPoint, Math.ceil(radius / 1000));
+    let env = envelope(crcl);
+    let coordinates = env.geometry.coordinates[0];
 
     return [[coordinates[0][1], coordinates[0][0]], [coordinates[2][1], coordinates[2][0]]];
   }

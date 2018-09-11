@@ -31,7 +31,8 @@ import { GeospatialService } from '../../../shared/services/geospatial';
   template: ''
 })
 export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
-  @ViewChild('elevationProfile') public mainDiv: ElementRef;
+  @ViewChild('elevationProfile')
+  public mainDiv: ElementRef;
 
   @Output()
   public elevationLineOver = new EventEmitter<void>();
@@ -146,9 +147,9 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
           return;
         }
 
-        let xAxis = d3.axisBottom(this.res.xRange).tickSize(5);
+        const xAxis = d3.axisBottom(this.res.xRange).tickSize(5);
 
-        let yAxis = d3.axisLeft(this.res.yRange).tickSize(5);
+        const yAxis = d3.axisLeft(this.res.yRange).tickSize(5);
 
         this.vis
           .append('svg:g')
@@ -185,7 +186,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
           .attr('x', 70)
           .attr('y', this.margins.top);
 
-        let line = this.res.lineFunc(this.res.lineData);
+        const line = this.res.lineFunc(this.res.lineData);
 
         if (line !== null) {
           this.vis
@@ -202,8 +203,8 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
         this.vis.on('mousemove', () => {
           if (!this.markerOn) {
-            let mouse = d3.mouse(d3.event.currentTarget);
-            let pos = this._eventToPosition(mouse[0]);
+            const mouse = d3.mouse(d3.event.currentTarget);
+            const pos = this._eventToPosition(mouse[0]);
 
             if (pos) {
               this.elevationLineMove.emit(pos);
@@ -212,16 +213,18 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         });
 
         this.vis.on('click', () => {
-          let mouse = d3.mouse(d3.event.currentTarget);
-          let pos = this._eventToPosition(mouse[0]);
+          const mouse = d3.mouse(d3.event.currentTarget);
+          const pos = this._eventToPosition(mouse[0]);
           this.elevationLineClick.emit(pos);
         });
       });
   }
 
-  @Input() public width = 450;
+  @Input()
+  public width = 450;
 
-  @Input() public height = 200;
+  @Input()
+  public height = 200;
 
   @Input()
   public margins = {
@@ -238,34 +241,36 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
   public moveHandlerToCoordinate(position: GeoJSON.Position) {
     if (this.res !== null) {
-      let lineData = this.res.lineData;
-      let xRange = this.res.xRange;
-      let yRange = this.res.yRange;
-      let coordinates = this.route.path.coordinates;
+      const lineData = this.res.lineData;
+      const xRange = this.res.xRange;
+      const yRange = this.res.yRange;
+      const coordinates = this.route.path.coordinates;
 
-      let distance = this._geospatial.distanceOnLine(coordinates[0], position, this.route.route.features[0]) / 1000;
+      const distance = this._geospatial.distanceOnLine(coordinates[0], position, this.route.route.features[0]) / 1000;
 
-      let bisect = d3.bisector((d: [number, number]) => {
+      const bisect = d3.bisector((d: [number, number]) => {
         return d[0];
       }).right;
 
-      let x = distance;
+      const x = distance;
 
-      let index = bisect(lineData, x);
-      let startData = lineData[index - 1];
-      let endData = lineData[index];
+      const index = bisect(lineData, x);
+      const startData = lineData[index - 1];
+      const endData = lineData[index];
 
-      let interpolate = d3.interpolateNumber(startData[1], endData[1]);
-      let range = endData[0] - startData[0];
-      let valueY = interpolate((x % range) / range);
+      if (startData && endData) {
+        const interpolate = d3.interpolateNumber(startData[1], endData[1]);
+        const range = endData[0] - startData[0];
+        const valueY = interpolate((x % range) / range);
 
-      if (this.elevationText) {
-        this.elevationText.text(this.distance.transform(valueY));
-      }
+        if (this.elevationText) {
+          this.elevationText.text(this.distance.transform(valueY));
+        }
 
-      if (this.marker) {
-        this.marker.attr('cx', xRange(distance));
-        this.marker.attr('cy', yRange(valueY));
+        if (this.marker) {
+          this.marker.attr('cx', xRange(distance));
+          this.marker.attr('cy', yRange(valueY));
+        }
       }
     }
   }
@@ -280,18 +285,18 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  protected _eventToPosition(eventX: number): (GeoJSON.Position|null) {
+  protected _eventToPosition(eventX: number): GeoJSON.Position | null {
     let trackPoint: GeoJSON.Position = null;
 
     if (this.res !== null) {
-      let lineData = this.res.lineData;
-      let xRange = this.res.xRange;
-      let bisect = d3.bisector((d: [number, number]) => {
+      const lineData = this.res.lineData;
+      const xRange = this.res.xRange;
+      const bisect = d3.bisector((d: [number, number]) => {
         return d[0];
       }).right;
 
-      let x = xRange.invert(eventX);
-      let index = bisect(lineData, x);
+      const x = xRange.invert(eventX);
+      const index = bisect(lineData, x);
 
       trackPoint = this._routeService.getTrackPoint(this.route, index);
     }

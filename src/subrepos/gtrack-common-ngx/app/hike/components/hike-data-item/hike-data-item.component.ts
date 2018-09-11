@@ -7,7 +7,8 @@ import { faArrowRight, faSortUp, faSortDown, faClock, faTrophy } from '@fortawes
   template: ''
 })
 export class HikeDataItemComponent {
-  @Input() public hikeProgram: IHikeProgram;
+  @Input()
+  public hikeProgram: IHikeProgram;
   faArrowRight = faArrowRight;
   faSortUp = faSortUp;
   faSortDown = faSortDown;

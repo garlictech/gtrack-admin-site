@@ -31,7 +31,7 @@ export class CheckpointMarker {
 
   public addCheckpointMarkers(checkpoints: Checkpoint[]) {
     checkpoints.forEach((checkpoint, i) => {
-      let stop = checkpoint.stop;
+      const stop = checkpoint.stop;
 
       if (stop.isStart && stop.isFinish && i === checkpoints.length - 1) {
         this.addLastRoundtripMarker(checkpoint);
@@ -44,9 +44,9 @@ export class CheckpointMarker {
   }
 
   protected addRegularMarker(checkpoint: Checkpoint) {
-    let stop = checkpoint.stop;
+    const stop = checkpoint.stop;
 
-    let marker = new L.Marker([stop.lat, stop.lon], {
+    const marker = new L.Marker([stop.lat, stop.lon], {
       icon: this.getIcon(stop),
       opacity: this.opacity,
       title: checkpoint.name
@@ -75,7 +75,7 @@ export class CheckpointMarker {
       }
 
       icon = this.getIcon(checkpoint.stop, type);
-      let marker = this.markers[checkpoint.id];
+      const marker = this.markers[checkpoint.id];
 
       if (marker) {
         marker.setIcon(icon);

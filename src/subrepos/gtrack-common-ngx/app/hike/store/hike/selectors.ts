@@ -29,8 +29,8 @@ export class HikeSelectors {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IHikeState>(this._externals.storeDomain);
 
-    let hikeSelector = createSelector(this.selectFeature, (state: IHikeState) => state.hikes);
-    let contextSelector = createSelector(this.selectFeature, (state: IHikeState) => state.contexts);
+    const hikeSelector = createSelector(this.selectFeature, (state: IHikeState) => state.hikes);
+    const contextSelector = createSelector(this.selectFeature, (state: IHikeState) => state.contexts);
 
     const selectors = hikeAdapter.getSelectors(hikeSelector);
     const contextSelectors = hikeContextStateAdapter.getSelectors(contextSelector);
@@ -47,9 +47,7 @@ export class HikeSelectors {
   }
 
   public getHikes(contexts: string[]) {
-    return createSelector(this.getAllHikes, (hikes) =>
-      hikes.filter(hike => contexts.indexOf(hike.id) !== -1)
-    );
+    return createSelector(this.getAllHikes, hikes => hikes.filter(hike => contexts.indexOf(hike.id) !== -1));
   }
 
   public getActiveHikes() {
@@ -65,9 +63,7 @@ export class HikeSelectors {
   }
 
   public getHikeContexts(ids: string[]) {
-    return createSelector(this.getAllContexts, contexts =>
-      contexts.filter(context => (ids.indexOf(context.id) !== -1))
-    );
+    return createSelector(this.getAllContexts, contexts => contexts.filter(context => ids.indexOf(context.id) !== -1));
   }
 
   public getHikeContextEntities(ids: string[]) {
@@ -93,7 +89,7 @@ export class HikeSelectors {
 
         return hikes
           .filter(hike => {
-            let difficulty = hike.difficulty || 0;
+            const difficulty = hike.difficulty || 0;
 
             return difficulty >= filters.difficulty[0] && difficulty <= filters.difficulty[1];
           })

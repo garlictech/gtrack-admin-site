@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import * as turf from '@turf/turf';
+import { lineString as turfLineString } from '@turf/helpers';
+import nearestPointOnLine from '@turf/nearest-point-on-line';
 import { CoordinateIterator } from './coordinate-iterator';
 
 export class CircleSlice {
@@ -10,11 +11,11 @@ export class CircleSlice {
   ) {}
 
   public get(): GeoJSON.Feature<GeoJSON.LineString> | null {
-    let startVertex = turf.pointOnLine(this.line, this.startPoint);
-    let stopVertex = turf.pointOnLine(this.line, this.endPoint);
+    let startVertex = nearestPointOnLine(this.line, this.startPoint);
+    let stopVertex = nearestPointOnLine(this.line, this.endPoint);
     let clipLine: GeoJSON.Feature<GeoJSON.LineString>;
     let it: CoordinateIterator;
-    let property = 'index';
+    const property = 'index';
 
     if (
       startVertex === null ||
@@ -27,7 +28,7 @@ export class CircleSlice {
       return null;
     }
 
-    clipLine = <GeoJSON.Feature<GeoJSON.LineString>>turf.lineString([startVertex.geometry.coordinates]);
+    clipLine = <GeoJSON.Feature<GeoJSON.LineString>>turfLineString([startVertex.geometry.coordinates]);
 
     if (clipLine === null || clipLine.geometry === null) {
       return null;
@@ -38,7 +39,7 @@ export class CircleSlice {
     it.start(startVertex.properties[property]);
 
     while (it.at() && !stopVertex.properties[property] && !it.end()) {
-      let next = it.next();
+      const next = it.next();
 
       if (next !== null) {
         clipLine.geometry.coordinates.push(next);

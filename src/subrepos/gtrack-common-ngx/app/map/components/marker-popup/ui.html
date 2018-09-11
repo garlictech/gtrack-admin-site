@@ -1,6 +1,11 @@
 <div>
-  <strong>{{(data.description | localizeDescription).title}}</strong>
-</div>
-<div>
-  Sample popup
+  <div class="clearfix">
+    <div *ngIf="image" class="img"><img [src]="image" /></div>
+    <div class="popup-data">
+      <h3>{{ (data.poi.description | localizeDescription).title }}</h3>
+      <p>Elevation: {{ data.poi.elevation | distance }}</p>
+      <p>From origo: {{ data.stop.distanceFromOrigo | distance }}</p>
+      <gtcn-icon width="24" [poi]="data.poi"></gtcn-icon>
+    </div>
+  </div>
 </div>

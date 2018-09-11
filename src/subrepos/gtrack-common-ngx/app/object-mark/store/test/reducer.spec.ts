@@ -1,10 +1,6 @@
 import { EObjectMarkContext } from 'subrepos/provider-client';
 
-import {
-  objectMarkReducerInitialState,
-  objectMarkContextReducerInitialState,
-  objectMarkReducer
-} from '../reducer';
+import { objectMarkReducerInitialState, objectMarkContextReducerInitialState, objectMarkReducer } from '../reducer';
 
 import { IObjectMarkState } from '../state';
 import * as actions from '../actions';

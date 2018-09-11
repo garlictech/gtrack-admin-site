@@ -19,7 +19,8 @@ export class AdminMap extends Map {
     private _store: Store<State>,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
   ) {
-    super(id, map, iconService, mapMarkerService, _store);
+    // TODO: null-s are introduced to be able to compile, should be checked...
+    super(id, map, iconService, mapMarkerService, _store, null, null);
   }
 
   /**
@@ -30,11 +31,9 @@ export class AdminMap extends Map {
     return this._store
       .select(this._hikeEditRoutePlannerSelectors.getPath)
       .take(1)
-      .map((path) => {
+      .map(path => {
         if (typeof path !== 'undefined') {
-          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(
-            path, 50, {units: 'meters'}
-          );
+          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 50, { units: 'meters' });
 
           if (typeof _buffer !== 'undefined') {
             _buffer = _.assign(_buffer, {
@@ -79,7 +78,7 @@ export class AdminMap extends Map {
    * addGeoJSON submethod
    */
   private _propagateClick(feature, layer) {
-    layer.on('click', event => {
+    layer.on('click', event => {
       this.map.fireEvent('click', {
         latlng: event.latlng,
         layerPoint: this.map.latLngToLayerPoint(event.latlng),

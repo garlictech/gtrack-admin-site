@@ -10,10 +10,7 @@ describe('RouteService', () => {
     });
   });
 
-  it(
-    'should ...',
-    inject([RouteService], (service: RouteService) => {
-      expect(service).toBeTruthy();
-    })
-  );
+  it('should ...', inject([RouteService], (service: RouteService) => {
+    expect(service).toBeTruthy();
+  }));
 });
