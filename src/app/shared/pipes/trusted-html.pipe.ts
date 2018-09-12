@@ -5,8 +5,11 @@ import { DomSanitizer } from '@angular/platform-browser';
   name: 'trustedHtml'
 })
 export class TrustedHtmlPipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(
+    private _sanitizer: DomSanitizer
+  ) {}
+
   transform(value: any): any {
-    return this.sanitizer.bypassSecurityTrustHtml(value);
+    return this._sanitizer.bypassSecurityTrustHtml(value);
   }
 }

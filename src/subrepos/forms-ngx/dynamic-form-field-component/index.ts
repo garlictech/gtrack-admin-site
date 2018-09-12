@@ -13,10 +13,13 @@ import { Field } from '../field';
   template: ''
 })
 export class DynamicFormFieldComponent implements OnInit {
-  @Input() form: FormGroup;
+  @Input()
+  form: FormGroup;
 
-  @Input() field: Field<any>;
-  @Input() submit: () => void;
+  @Input()
+  field: Field<any>;
+  @Input()
+  submit: () => void;
 
   public remoteError$: Observable<string> = Observable.empty();
 
@@ -26,7 +29,7 @@ export class DynamicFormFieldComponent implements OnInit {
 
   ngOnInit() {
     if (this.field.remoteErrorStatePath) {
-      let path = <string>_.get(this.field, 'remoteErrorStatePath');
+      const path = <string>_.get(this.field, 'remoteErrorStatePath');
 
       this.remoteError$ = this._store
         .select(state => _.get(state, `${path}`))
@@ -66,7 +69,7 @@ export class DynamicFormFieldComponent implements OnInit {
   }
 
   get showError() {
-    let fieldObj = this._fieldObj();
+    const fieldObj = this._fieldObj();
 
     if (!!fieldObj) {
       return fieldObj.invalid && (fieldObj.dirty || fieldObj.touched);
@@ -76,7 +79,7 @@ export class DynamicFormFieldComponent implements OnInit {
   }
 
   get showRemoteError() {
-    let fieldObj = this._fieldObj();
+    const fieldObj = this._fieldObj();
 
     if (!!fieldObj) {
       return !(fieldObj.touched || fieldObj.dirty);
@@ -86,8 +89,8 @@ export class DynamicFormFieldComponent implements OnInit {
   }
 
   get actualError() {
-    let fieldObj = this._fieldObj();
-    let errorKey = _.keys(fieldObj.errors)[0];
+    const fieldObj = this._fieldObj();
+    const errorKey = _.keys(fieldObj.errors)[0];
     return errorKey ? this._translate.instant(`form.errors.${errorKey}`) : null;
   }
 

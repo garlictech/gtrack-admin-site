@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, editedHikeProgramActions } from '../../../store';
+import { State } from '../../../store';
+import { editedHikeProgramActions } from '../../../store/actions';
 import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { IHikeProgramStop, IRoute } from 'subrepos/provider-client';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
-import { ElevationService, GameRuleService, Route, RouteService, CheckpointService } from 'subrepos/gtrack-common-ngx';
+import {
+  ElevationService, GameRuleService, Route, RouteService, CheckpointService
+} from 'subrepos/gtrack-common-ngx';
 
 import * as _ from 'lodash';
-import * as turf from '@turf/turf';
+import length from '@turf/length';
 import * as d3 from 'd3';
 import * as geojson2svg from 'geojson2svg';
 
@@ -24,7 +27,7 @@ export class HikeProgramService {
     private _routeService: RouteService,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _checkpointService: CheckpointService,
+    private _checkpointService: CheckpointService
   ) {}
 
   /**
@@ -83,7 +86,7 @@ export class HikeProgramService {
       for (const stop of stops) {
         const _segmentEndPoint = [stop.lon, stop.lat];
         const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
-        const _segmentDistance = 1000 * turf.lineDistance(_segmentPath, {units: 'kilometers'});
+        const _segmentDistance = 1000 * length(_segmentPath, { units: 'kilometers' });
 
         stop.segment = {
           uphill: this._elevationService.calculateUphill((<any>_segmentPath).geometry.coordinates),
@@ -120,7 +123,7 @@ export class HikeProgramService {
   public createElevationIcon(_route: Route) {
     const _iconWidth = 54;
     const _iconHeight = 20;
-    const _elevationData = this._routeService.elevationData(_route, _iconWidth, _iconHeight, {
+    const _elevationData = this._elevationService.getd3ElevationData(_route, _iconWidth, _iconHeight, {
       top: 4,
       left: 4,
       right: 4,

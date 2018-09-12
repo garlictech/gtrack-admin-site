@@ -10,22 +10,29 @@ import {
   PoiSelectors
 } from 'subrepos/gtrack-common-ngx';
 import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
-import { State, IExternalPoiListContextItemState, commonGeoSearchActions } from '../../../store';
+import { State, IExternalPoiListContextItemState } from '../../../store';
+import { commonGeoSearchActions } from '../../../store/actions';
 import {
   HikeEditPoiSelectors,
   HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors
+  EditedHikeProgramSelectors,
+  HikeEditImageSelectors
 } from '../../../store/selectors';
 import { AdminMap, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../interfaces';
 import { GooglePoiService } from './google-poi.service';
 import { WikipediaPoiService } from './wikipedia-poi.service';
-import { IMarkerPopupData } from 'subrepos/provider-client/interfaces';
+import { IMarkerPopupData, IBackgroundImageData } from 'subrepos/provider-client/interfaces';
 import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker/marker-popup.service';
 
 import * as L from 'leaflet';
+import 'overlapping-marker-spiderfier-leaflet';
 import * as _ from 'lodash';
-import * as turf from '@turf/turf';
+import buffer from '@turf/buffer';
+import { point as turfPoint } from '@turf/helpers';
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
+
+declare const OverlappingMarkerSpiderfier;
 
 @Injectable()
 export class PoiEditorService {
@@ -49,7 +56,8 @@ export class PoiEditorService {
     private _poiSelectors: PoiSelectors,
     private _googlePoiService: GooglePoiService,
     private _wikipediaPoiService: WikipediaPoiService,
-    private _markerPopupService: MarkerPopupService
+    private _markerPopupService: MarkerPopupService,
+    private _hikeEditImageSelectors: HikeEditImageSelectors,
   ) {}
 
   public getDbObj(poi: IExternalPoi) {
@@ -110,9 +118,15 @@ export class PoiEditorService {
           }
         });
       }
-    }
 
-    return poiData;
+      if (poi.google.photos) {
+        _.merge(poiData, {
+          additionalData: {
+            photos: poi.google.photos
+          }
+        });
+      }
+    }
   }
 
   /**
@@ -134,6 +148,14 @@ export class PoiEditorService {
           }
         }
       });
+
+      if (poi.wikipedia.photos) {
+        _.merge(poiData, {
+          additionalData: {
+            photos: poi.wikipedia.photos
+          }
+        });
+      }
     }
   }
 
@@ -159,18 +181,18 @@ export class PoiEditorService {
     let _pois: any[] = [];
 
     if (pois && pois.length > 0 && path) {
-      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 50, {units: 'meters'});
-      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(path, 1000, {units: 'meters'});
+      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(path, 50, {units: 'meters'});
+      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(path, 1000, {units: 'meters'});
 
       for (let p of _.cloneDeep(pois)) {
-        let _point = turf.point([p.lon, p.lat]);
+        let _point = turfPoint([p.lon, p.lat]);
 
         if (typeof _smallBuffer !== 'undefined') {
-          p.onRoute = turf.inside(_point, _smallBuffer);
+          p.onRoute = booleanPointInPolygon(_point, _smallBuffer);
         }
 
         if (typeof _bigBuffer !== 'undefined') {
-          if (turf.inside(_point, _bigBuffer)) {
+          if (booleanPointInPolygon(_point, _bigBuffer)) {
             p.distFromRoute = this._geometryService.distanceFromRoute(_point!.geometry!.coordinates, path);
 
             if (!isGTrackPoi) {
@@ -520,19 +542,39 @@ export class PoiEditorService {
         }
       );
 
-      //
-      // Generate markers
-      //
+      // Generate poi markers
 
-      const _markers = this._generatePoiMarkers(_pois, map);
+      const _poiMarkers = this._generatePoiMarkers(_pois, map);
+      const _imageMarkers = this._generateImageMarkers(map);
+      const _markers = _poiMarkers.concat(_imageMarkers);
+
+      // Add markers to the map
+
+      map.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(map.leafletMap, {
+        keepSpiderfied: true
+      });
 
       if (map.leafletMap.hasLayer(map.markersGroup)) {
         map.leafletMap.removeLayer(map.markersGroup);
       }
 
       if (_markers.length > 0) {
-        map.markersGroup = L.layerGroup(_markers.map(m => m.marker));
+        // Add markers to group
+        map.markersGroup = L.layerGroup(_.map(_markers, 'marker'));
         map.leafletMap.addLayer(map.markersGroup);
+
+        // Register marker to spiderfier
+        for (let _marker of _markers) {
+          map.overlappingMarkerSpiderfier.addMarker(_marker.marker);
+        }
+
+        // Currently unused
+        // map.overlappingMarkerSpiderfier.addListener('click', function(marker) {
+        //   console.log('spiderify clic');
+        // });
+        // map.overlappingMarkerSpiderfier.addListener('spiderfy', function(marker) {
+        //   console.log('spiderify spiderfy');
+        // });
       }
     }
   }
@@ -573,6 +615,7 @@ export class PoiEditorService {
         map: map.leafletMap,
         data: _.cloneDeep(poi),
       }
+
       const _marker = new AdminMapMarker(
         poi.lat,
         poi.lon,
@@ -582,8 +625,44 @@ export class PoiEditorService {
         poi.id,
         popupData
       );
+
       _markers.push(_marker);
     }
+
+    return _markers;
+  }
+
+  private _generateImageMarkers(map: AdminMap) {
+    const _markers: AdminMapMarker[] = [];
+
+    this._store
+      .select(this._hikeEditImageSelectors.getImageMarkerUrls)
+      .take(1)
+      .subscribe((images: IBackgroundImageData[]) => {
+        for (let image of images) {
+          const popupData: IMarkerPopupData = {
+            popupComponentName: 'ImageMarkerPopupComponent',
+            markerClickCallback: this._markerPopupService.onUserMarkerClick,
+            closeCallback: () => {
+              map.leafletMap.closePopup();
+              this.refreshPoiMarkers(map);
+            },
+            map: map.leafletMap,
+            data: _.cloneDeep(image),
+          }
+
+          const _marker = new AdminMapMarker(
+            image.lat,
+            image.lon,
+            ['photo'],
+            '',
+            this._iconService,
+            image.original.url,
+            popupData
+          );
+          _markers.push(_marker);
+        }
+      });
 
     return _markers;
   }

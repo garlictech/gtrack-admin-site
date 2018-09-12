@@ -3,7 +3,7 @@
         "rules": "firebase.database.rules.json"
     },
     "hosting": {
-        "public": "artifacts/dist",
+        "public": "artifacts/dist/browser",
         "rewrites": [{
             "source": "**",
             "destination": "/index.html"

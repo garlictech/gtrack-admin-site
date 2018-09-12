@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx';
 import { IWikipediaPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 import { HikeProgramService } from '../hike/hike-program.service';
+import { MessageService } from 'primeng/api';
 
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
@@ -16,7 +16,7 @@ export class WikipediaPoiService {
   constructor(
     private _http: HttpClient,
     private _geometryService: GeometryService,
-    private _toasterService: ToasterService,
+    private _messageService: MessageService,
     private _hikeProgramService: HikeProgramService,
   ) {}
 
@@ -61,7 +61,13 @@ export class WikipediaPoiService {
           return _pois;
         } else {
           if (data.error) {
-            this._toasterService.pop('error', 'Error!', data.error.info || 'Unknown error.');
+            this._messageService.add({
+              severity: 'error',
+              summary: 'Error!',
+              detail: data.error.info || 'Unknown error.',
+              life: 8000
+            });
+
           }
           return _pois;
         }

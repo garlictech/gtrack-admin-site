@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import {
-  GoogleMapsService,
   GeometryService,
   CenterRadius,
   defaultSharedConfig
@@ -23,14 +22,13 @@ const PLACE_API_URL = `https://cors-anywhere.herokuapp.com/${PURE_PLACE_API_URL}
 export class GooglePoiService {
   constructor(
     private _http: HttpClient,
-    private _googleMapsService: GoogleMapsService,
     private _geometryService: GeometryService
   ) {}
 
   public get(bounds, lng = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this._batchGet(this._getOnePage, {
         geo: geo,
         lng: lng,
@@ -65,7 +63,7 @@ export class GooglePoiService {
             elevation: 0,
             description: {
               [LanguageService.shortToLocale(params.lng)]: {
-                title: _point.name || _point.types[0] || 'unknown',
+                title: _point.name || LanguageService.pascalize(_point.types[0]) || 'unknown',
                 summary: '',
                 fullDescription: ''
               }

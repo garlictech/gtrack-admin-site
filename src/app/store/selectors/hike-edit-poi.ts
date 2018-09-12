@@ -99,9 +99,12 @@ export class HikeEditPoiSelectors {
   public getPoiPhotos(subdomain) {
     return createSelector(this._allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
       let _photos = [];
-      pois.filter(p => p[subdomain].photos).map(p => p[subdomain].photos).map(photoArray => {
-        _photos = _photos.concat(photoArray);
-      });
+      pois
+        .filter(p => p[subdomain].photos && !p.inGtrackDb)
+        .map(p => p[subdomain].photos)
+        .map(photoArray => {
+          _photos = _photos.concat(photoArray);
+        });
       return _.uniqBy(_photos, 'original.url');
     });
   }

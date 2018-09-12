@@ -8,6 +8,4 @@ import { SearchResultsMapComponent as BaseComponent } from 'subrepos/gtrack-comm
   templateUrl: './search-results-map.component.html',
   styleUrls: ['./search-results-map.component.scss']
 })
-export class SearchResultsMapComponent extends BaseComponent {
-
-}
+export class SearchResultsMapComponent extends BaseComponent {}

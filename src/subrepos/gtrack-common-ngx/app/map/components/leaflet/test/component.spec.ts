@@ -7,6 +7,8 @@ import { LeafletComponent } from '../';
 import { MapService } from '../../../services/map';
 import { IconService } from '../../../services/icon';
 import { MapMarkerService } from '../../../services/map-marker';
+import { LocalizeModule } from '../../../../localize';
+import { MarkerPopupService } from '../../../../map';
 
 describe('LeafletComponent', () => {
   let component: LeafletComponent;
@@ -14,9 +16,9 @@ describe('LeafletComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({})],
+      imports: [StoreModule.forRoot({}), LocalizeModule],
       declarations: [LeafletComponent],
-      providers: [MapService, IconService, MapMarkerService],
+      providers: [MapService, IconService, MapMarkerService, MarkerPopupService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));

@@ -2,15 +2,15 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '
 import { FormGroup } from '@angular/forms';
 import { Store, MemoizedSelector } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-
-import { State, editedHikeProgramActions } from '../../../../store';
+import { State } from '../../../../store';
+import { editedHikeProgramActions } from '../../../../store/actions';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
 import { ConfirmationService } from 'primeng/primeng';
 import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
 import { IFormDescriptor, SliderField } from 'subrepos/gtrack-common-web/forms';
 
 @Component({
-  selector: 'gt-hike-edit-general-info',
+  selector: 'app-hike-edit-general-info',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })

@@ -24,3 +24,5 @@ export class Environment implements IEnvironment {
 
   awsConfig = { s3: 'to-be-configured', policyGenerator: this.lambdaEndpoint + '/generate-s3-policy' };
 }
+
+export const environment = new Environment();

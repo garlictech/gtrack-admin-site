@@ -2,14 +2,16 @@ import { Store } from '@ngrx/store';
 import { State } from '../../../../store';
 import { Observable } from 'rxjs';
 import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
-import { Map, IconService, MapMarkerService } from 'subrepos/gtrack-common-ngx/app';
+import { Map, IconService, MapMarkerService, DescriptionLanguageListService, MarkerPopupService } from 'subrepos/gtrack-common-ngx/app';
 
 import * as L from 'leaflet';
-import * as turf from '@turf/turf';
+import 'leaflet.fullscreen';
+import buffer from '@turf/buffer';
 import * as _ from 'lodash';
 
 export class AdminMap extends Map {
   public markersGroup: L.LayerGroup;
+  public overlappingMarkerSpiderfier: any;
 
   constructor(
     public id: string,
@@ -17,9 +19,11 @@ export class AdminMap extends Map {
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
     private _store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    protected _descriptionLanguageList: DescriptionLanguageListService,
+    protected _markerPopup: MarkerPopupService
   ) {
-    super(id, map, iconService, mapMarkerService, _store);
+    super(id, map, iconService, mapMarkerService, _store, _descriptionLanguageList, _markerPopup);
   }
 
   /**
@@ -30,11 +34,9 @@ export class AdminMap extends Map {
     return this._store
       .select(this._hikeEditRoutePlannerSelectors.getPath)
       .take(1)
-      .map((path) => {
+      .map(path => {
         if (typeof path !== 'undefined') {
-          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turf.buffer(
-            path, 50, {units: 'meters'}
-          );
+          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(path, 50, { units: 'meters' });
 
           if (typeof _buffer !== 'undefined') {
             _buffer = _.assign(_buffer, {
@@ -79,7 +81,7 @@ export class AdminMap extends Map {
    * addGeoJSON submethod
    */
   private _propagateClick(feature, layer) {
-    layer.on('click', event => {
+    layer.on('click', event => {
       this.map.fireEvent('click', {
         latlng: event.latlng,
         layerPoint: this.map.latLngToLayerPoint(event.latlng),

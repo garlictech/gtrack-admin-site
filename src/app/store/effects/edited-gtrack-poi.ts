@@ -3,7 +3,8 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { PoiService } from 'subrepos/gtrack-common-ngx';
-import { State, editedGTrackPoiActions } from '..';
+import { State } from '..';
+import { editedGTrackPoiActions } from '../actions';
 import { IPoiStored, IPoi } from 'subrepos/provider-client';
 import { log } from '../../log';
 

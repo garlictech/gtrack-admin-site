@@ -3,7 +3,7 @@ import {
   initialMapState, hikeEditMapReducer
 } from '../hike-edit-map';
 import { IHikeEditMapState } from '../../state/hike-edit-map';
-import { hikeEditMapActions, adminMapActions } from '../..';
+import { hikeEditMapActions, adminMapActions } from '../../actions';
 
 import * as _ from 'lodash';
 

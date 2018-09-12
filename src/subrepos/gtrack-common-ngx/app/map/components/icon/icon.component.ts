@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { IconService } from '../../services/icon';
 import { Poi } from '../../../hike/services/poi';
 
@@ -11,6 +11,9 @@ export class IconComponent {
   public urls: string[] = [];
 
   private _poi: Poi;
+
+  @Input()
+  public width = 32;
 
   @Input()
   public set poi(poi: Poi) {

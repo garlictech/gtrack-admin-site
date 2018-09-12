@@ -15,7 +15,7 @@ export enum PoiActionTypes {
   POI_DELETED = '[Poi] gTrack poi deleted',
   MERGE_POI = '[Poi] Merge gTrack poi',
   POI_MERGED_SUCCESSFULLY = '[Poi] gTrack poi merged successfully',
-  POI_MERGE_FAILED = '[Poi] gTrack poi merge failed',
+  POI_MERGE_FAILED = '[Poi] gTrack poi merge failed'
 }
 
 export class LoadPoi implements Action {

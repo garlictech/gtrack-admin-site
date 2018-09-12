@@ -3,7 +3,7 @@ import { createSelector, createFeatureSelector, MemoizedSelector, Store } from '
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
 import { IDeepstreamState, EDeepstreamState } from './state';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 export interface ISelectorUserData {
   userId: string | undefined;
@@ -26,7 +26,7 @@ export class Selectors {
   constructor(@Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) externals, private _store: Store<any>) {
     this._externals = externals;
 
-    let selectFeature = createFeatureSelector<IDeepstreamState>(this._externals.storeDomain);
+    const selectFeature = createFeatureSelector<IDeepstreamState>(this._externals.storeDomain);
 
     this.permissions = createSelector(selectFeature, this._externals.selectors.getUserRole, (state, role) =>
       _.get(state, 'permissionRecord')

@@ -5,20 +5,22 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
-  State, IHikeEditRoutePlannerState, hikeEditRoutePlannerActions, editedHikeProgramActions, IHikeEditRoutePlannerTotalState, hikeEditPoiActions
+  State, IHikeEditRoutePlannerState, IHikeEditRoutePlannerTotalState
 } from '../../../../store';
+import { editedHikeProgramActions, hikeEditPoiActions } from '../../../../store/actions';
+import { hikeEditRoutePlannerActions } from '../../../../store/actions';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
 import { HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
 import { ReverseGeocodingService, HikeProgramService, PoiEditorService } from '../../../../shared/services';
 import { ConfirmationService } from 'primeng/primeng';
+import { MessageService } from 'primeng/api';
 import { IRouteStored } from 'subrepos/provider-client';
-import { ToasterService } from 'angular2-toaster';
 
 import * as L from 'leaflet';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gt-hike-edit-route-planner',
+  selector: 'app-hike-edit-route-planner',
   templateUrl: './ui.html'
 })
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
@@ -36,12 +38,12 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _routeSelectors: RouteSelectors,
-    private _toasterService: ToasterService,
     private _hikeProgramService: HikeProgramService,
     private _store: Store<State>,
     private _reverseGeocodingService: ReverseGeocodingService,
     private _confirmationService: ConfirmationService,
-    private _poiEditorService: PoiEditorService
+    private _poiEditorService: PoiEditorService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -70,7 +72,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .subscribe((routeContext: IRouteContextState) => {
         // Route saved
         if (routeContext.saved) {
-          this._toasterService.pop('success', 'Route', 'Success!');
+          this._messageService.add({
+            severity: 'success',
+            summary: 'Route',
+            detail: 'Success!'
+          });
 
           this._routePlannerService.refreshRouteOnMap();
         // Route loaded

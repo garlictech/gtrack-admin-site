@@ -6,4 +6,4 @@ export interface IHikeProgramOutline {
   name: string;
   distanceFromOrigo: number;
   toNextStop: number;
-};
+}

@@ -41,7 +41,7 @@ export class GoogleService extends AuthProviderBase {
 
   @DebugLog
   private _init() {
-    let window: any = this.windowService.nativeWindow;
+    const window: any = this.windowService.nativeWindow;
     this.googleApiUrl = 'https://accounts.google.com/o/oauth2/auth';
 
     this.config = this.authConfig.google;

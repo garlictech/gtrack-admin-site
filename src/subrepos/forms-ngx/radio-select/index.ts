@@ -7,7 +7,8 @@ import { AbstractValueAccessor } from '../abstract-value-accessor';
   template: ''
 })
 export class RadioSelectComponent extends AbstractValueAccessor {
-  @Input() options;
+  @Input()
+  options;
 
   constructor() {
     super();

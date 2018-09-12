@@ -5,7 +5,7 @@ import {
   IOsmNaturalPoiEntityState, IOsmRoutePoiEntityState, IExternalPoiListContextState, IGTrackPoiMergeState, IPoiCollectorEntityState
 } from '../state';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
-import { hikeEditPoiActions } from '..';
+import { hikeEditPoiActions } from '../actions';
 
 import * as _ from 'lodash';
 

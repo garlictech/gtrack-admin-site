@@ -14,8 +14,10 @@ import { FieldControlService, IFormInstance } from '../field-control-service';
   template: ''
 })
 export class DynamicFormComponent implements AfterViewInit, OnDestroy {
-  @Input() formDescriptor: IFormDescriptor;
-  @Input() formDataPath$: Observable<string>;
+  @Input()
+  formDescriptor: IFormDescriptor;
+  @Input()
+  formDataPath$: Observable<string>;
 
   public formInstance: IFormInstance;
   private _componentDestroyed$: Subject<boolean> = new Subject();
@@ -42,7 +44,7 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
           this.formInstance = this._fcs.toFormGroup(this.formDescriptor.fields, formData);
           this.formInstance.form.patchValue(formData);
 
-          setTimeout(() => {
+          setTimeout(() => {
             this._cdr.detectChanges();
           });
         });
@@ -51,7 +53,7 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
 
   onSubmit() {
     if (this.formInstance.form.valid) {
-      log.d('Submitting form...');
+      log.data('Submitting form...');
 
       this.formDescriptor.submit.submitFv(this.formInstance.form);
 
@@ -62,7 +64,7 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    log.d('Form is invalid, not submitting.');
+    log.data('Form is invalid, not submitting.');
 
     this._validateForm(this.formInstance.form);
   }

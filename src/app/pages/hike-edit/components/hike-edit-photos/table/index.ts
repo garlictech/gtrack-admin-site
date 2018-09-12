@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { IBackgroundImageData } from 'subrepos/provider-client';
 
 @Component({
-  selector: 'gt-hike-edit-photos-table',
+  selector: 'app-hike-edit-photos-table',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })
@@ -13,6 +13,7 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
   @Input() clickActions: any;
   @Input() distanceFrom: number[] = null;
   public imageSelections: {[id: string]: boolean} = {}
+  public imageMarkerSelections: {[id: string]: boolean} = {}
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   ngOnInit() {
@@ -36,6 +37,14 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
       this.clickActions.remove(image.original.url);
     } else {
       this.clickActions.add(image);
+    }
+  }
+
+  public toggleImageMarker(image: IBackgroundImageData) {
+    if (!this.imageMarkerSelections[image.original.url]) {
+      this.clickActions.removeMarker(image);
+    } else {
+      this.clickActions.addMarker(image);
     }
   }
 }

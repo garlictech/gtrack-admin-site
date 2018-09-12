@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
 import { HikeProgram } from './hike-program';
 
-import { IHikeProgram, IHikeProgramStored, IHikeProgramSaveResponse, EObjectState } from '../../../../../provider-client';
+import {
+  IHikeProgram,
+  IHikeProgramStored,
+  IHikeProgramSaveResponse,
+  EObjectState
+} from '../../../../../provider-client';
 import { DeepstreamService } from '../../../../../deepstream-ngx';
 import { CheckpointService } from '../checkpoint';
 

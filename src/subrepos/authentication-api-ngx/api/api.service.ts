@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Http, Headers, Response } from '@angular/http';
 import { LocalStorage } from '../storage/local-storage.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as Actions from '../store/actions';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class ApiService {
   constructor(private _http: Http, private _localStorage: LocalStorage, private _store: Store<any>) {}
 
   get(url: string): Observable<Response> {
-    let headers = this.getAuthorizationHeaders();
+    const headers = this.getAuthorizationHeaders();
 
     return this._http
       .get(url, {
@@ -20,7 +20,7 @@ export class ApiService {
   }
 
   post(url: string, data: any): Observable<Response> {
-    let headers = this.getAuthorizationHeaders();
+    const headers = this.getAuthorizationHeaders();
 
     return this._http
       .post(url, data, {
@@ -30,8 +30,8 @@ export class ApiService {
   }
 
   private getAuthorizationHeaders(): Headers {
-    let token = this._localStorage.getItem('token');
-    let headers = new Headers();
+    const token = this._localStorage.getItem('token');
+    const headers = new Headers();
 
     headers.append('Authorization', 'JWT ' + token);
 

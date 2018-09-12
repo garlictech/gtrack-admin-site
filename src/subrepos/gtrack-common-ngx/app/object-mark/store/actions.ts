@@ -6,7 +6,7 @@ export enum ObjectMarkActionTypes {
   CONTEXT_LOADED = '[ObjectMark] Context loaded',
   MARK_OBJECT = '[ObjectMark] Mark object',
   OBJECT_MARKED = '[ObjectMark] Object marked'
-};
+}
 
 export class LoadContext implements Action {
   readonly type = ObjectMarkActionTypes.LOAD_CONTEXT;
@@ -32,8 +32,4 @@ export class ObjectMarked implements Action {
   constructor(public context: EObjectMarkContext, public object: any, public mark: boolean) {}
 }
 
-export type AllObjectMarkActionTypes =
-  | LoadContext
-  | ContextLoaded
-  | MarkObject
-  | ObjectMarked;
+export type AllObjectMarkActionTypes = LoadContext | ContextLoaded | MarkObject | ObjectMarked;

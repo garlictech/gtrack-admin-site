@@ -12,7 +12,7 @@ import { Observable, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
 import { ITextualDescription, ILocalizedItem } from 'subrepos/provider-client';
-import { TextboxField, RichTextEditorField } from 'subrepos/gtrack-common-web/forms';
+import { TextboxField, MarkdownField } from 'subrepos/gtrack-common-web/forms';
 
 import { State } from '../../../store';
 import { DESCRIPTION_LANGUAGES, LanguageService } from '../../services';
@@ -22,17 +22,22 @@ interface ILanguageKeyObject {
 }
 
 @Component({
-  selector: 'gt-localized-description',
+  selector: 'app-localized-description',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnDestroy {
-  @Input() descriptionSelector: any;
-  @Input() submitFv: (langKey: string, data) => void;
-  @Input() deleteFv: (langKey: string) => void;
-  @Input() storeDataPath?: string;
-  @Input() type?: string;
+  @Input()
+  descriptionSelector: any;
+  @Input()
+  submitFv: (langKey: string, data) => void;
+  @Input()
+  deleteFv: (langKey: string) => void;
+  @Input()
+  storeDataPath?: string;
+  @Input()
+  type?: string;
 
   public descriptions$: Observable<ILocalizedItem<ITextualDescription>>;
   public languageKeys$: Observable<string[]>;
@@ -94,12 +99,12 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
           label: 'form.title',
           required: true
         }),
-        summary: new RichTextEditorField({
+        summary: new MarkdownField({
           label: 'form.summary',
           required: false,
           rows: 2
         }),
-        fullDescription: new RichTextEditorField({
+        fullDescription: new MarkdownField({
           label: 'form.description',
           required: false
         })

@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
 import { AuthService } from '../auth';
 import { IAuth } from '../store';
@@ -30,7 +30,7 @@ export class PasswordlessService {
 
   @DebugLog
   public requestToken(email: string, language?: string, roles?: string[]): Observable<Response> {
-    let params: RequestTokenParams = {
+    const params: RequestTokenParams = {
       user: email,
       redirectUri: this.redirectUri.toString()
     };
@@ -56,9 +56,9 @@ export class PasswordlessService {
       })
       .toPromise()
       .then(response => {
-        let body = response.json();
-        let token = body.token;
-        let refreshToken = body.refreshToken;
+        const body = response.json();
+        const token = body.token;
+        const refreshToken = body.refreshToken;
 
         return this.auth.init(token, refreshToken);
       });

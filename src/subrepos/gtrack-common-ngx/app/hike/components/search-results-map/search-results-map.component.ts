@@ -11,7 +11,7 @@ import { Route } from '../../services/route';
 import { LeafletComponent, Center, MapMarkerService, MapMarker } from '../../../map';
 
 import * as L from 'leaflet';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import * as _ from 'lodash';
 
@@ -67,90 +67,87 @@ export class SearchResultsMapComponent implements AfterViewInit, OnInit, OnDestr
   ) {}
 
   ngOnInit() {
-    this.hikePrograms$
-      .takeUntil(this._destroy$)
-      .subscribe(hikePrograms => {
-        let routes = hikePrograms.map(hikeProgram => hikeProgram.routeId);
+    this.hikePrograms$.takeUntil(this._destroy$).subscribe(hikePrograms => {
+      const routes = hikePrograms.map(hikeProgram => hikeProgram.routeId);
 
-        this.routes$ = this._store.select(this._routeSelectors.getRoutes(routes))
-          .map(data => {
-            if (data) {
-              return data
-                .map(routeData => {
-                  if (routeData) {
-                    return new Route(routeData);
-                  }
-                })
-                .filter(route => {
-                  return (typeof route !== 'undefined');
-                });
-            }
-          });
-
-        this._store.select(this._routeSelectors.getRouteContexts(routes))
-          .subscribe(contexts => {
-            for (let route of routes) {
-              let routeContext = contexts.find(context => (context.id === route));
-
-              if (typeof routeContext === 'undefined' || (routeContext.loaded !== true && routeContext.loading !== true)) {
-                this._store.dispatch(new routeActions.LoadRoute(route));
+      this.routes$ = this._store.select(this._routeSelectors.getRoutes(routes)).map(data => {
+        if (data) {
+          return data
+            .map(routeData => {
+              if (routeData) {
+                return new Route(routeData);
               }
-            }
-          });
+            })
+            .filter(route => {
+              return typeof route !== 'undefined';
+            });
+        }
       });
+
+      this._store.select(this._routeSelectors.getRouteContexts(routes)).subscribe(contexts => {
+        for (const route of routes) {
+          const routeContext = contexts.find(context => context.id === route);
+
+          if (typeof routeContext === 'undefined' || (routeContext.loaded !== true && routeContext.loading !== true)) {
+            this._store.dispatch(new routeActions.LoadRoute(route));
+          }
+        }
+      });
+    });
   }
 
   ngAfterViewInit() {
-    let map = this.map.map;
+    const map = this.map.map;
 
-    let envelope = this._geometry.envelopeCircle([this.circle.lng, this.circle.lat], this.circle.radius);
-    let southWest = new L.LatLng(envelope[0][0], envelope[0][1]);
-    let northEast = new L.LatLng(envelope[1][0], envelope[1][1]);
-    let box = new L.LatLngBounds(southWest, northEast);
+    const envelope = this._geometry.envelopeCircle([this.circle.lng, this.circle.lat], this.circle.radius);
+    const southWest = new L.LatLng(envelope[0][0], envelope[0][1]);
+    const northEast = new L.LatLng(envelope[1][0], envelope[1][1]);
+    const box = new L.LatLngBounds(southWest, northEast);
 
-    let circle = new L.Circle({
-      lat: this.circle.lat,
-      lng: this.circle.lng
-    }, this.circle.radius);
+    const circle = new L.Circle(
+      {
+        lat: this.circle.lat,
+        lng: this.circle.lng
+      },
+      this.circle.radius
+    );
 
     circle.addTo(map.leafletMap);
 
     map.fitBox(box);
 
-    this.hikePrograms$
-      .takeUntil(this._destroy$)
-      .subscribe(hikePrograms => {
-        let markers: GeoJSON.Position[] = [];
+    this.hikePrograms$.takeUntil(this._destroy$).subscribe(hikePrograms => {
+      const markers: GeoJSON.Position[] = [];
 
-        for (let hikeProgram of hikePrograms) {
-          let marker = this._mapMarker.create(hikeProgram.stops[0].lat, hikeProgram.stops[0].lon, ['hiking'], hikeProgram.title);
-          markers.push([
-            hikeProgram.stops[0].lon,
-            hikeProgram.stops[0].lat
-          ]);
+      for (const hikeProgram of hikePrograms) {
+        const marker = this._mapMarker.create(
+          hikeProgram.stops[0].lat,
+          hikeProgram.stops[0].lon,
+          ['hiking'],
+          hikeProgram.title
+        );
+        markers.push([hikeProgram.stops[0].lon, hikeProgram.stops[0].lat]);
 
-          marker.addToMap(this.map.leafletMap);
+        marker.addToMap(this.map.leafletMap);
+      }
+    });
+
+    this.routes$.takeUntil(this._destroy$).subscribe((routes: Route[]) => {
+      this.routes = routes;
+      this.clearGeoJson();
+
+      for (const route of routes) {
+        for (let i = 0; i <= 2; i++) {
+          const feature = Object.assign({}, route.geojson.features[0]);
+
+          feature.properties = {
+            draw_type: `route_${i}`
+          };
+
+          this.addGeoJson(feature, map.leafletMap);
         }
-      });
-
-    this.routes$
-      .takeUntil(this._destroy$)
-      .subscribe((routes: Route[]) => {
-        this.routes = routes;
-        this.clearGeoJson();
-
-        for (let route of routes) {
-          for (let i = 0; i <= 2; i++) {
-            let feature = Object.assign({}, route.geojson.features[0]);
-
-            feature.properties = {
-              draw_type: `route_${i}`
-            };
-
-            this.addGeoJson(feature, map.leafletMap);
-          }
-        }
-      });
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -165,8 +162,8 @@ export class SearchResultsMapComponent implements AfterViewInit, OnInit, OnDestr
       { color: 'red', opacity: 1, weight: 2 }
     ];
 
-    let responses = styles.map(style => {
-      let response = L.geoJSON(geojson, {
+    const responses = styles.map(style => {
+      const response = L.geoJSON(geojson, {
         style: () => style
       });
 
@@ -185,7 +182,7 @@ export class SearchResultsMapComponent implements AfterViewInit, OnInit, OnDestr
 
   goToCurrentPosition(e: Event) {
     e.preventDefault();
-    let map = this.map.map;
+    const map = this.map.map;
     map.currentPositionMarker.goToCurrentPosition();
   }
 }

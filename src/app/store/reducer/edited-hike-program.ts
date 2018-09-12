@@ -1,6 +1,6 @@
 import { ActionReducer } from '@ngrx/store';
 import { IEditedHikeProgramState } from '../state';
-import { editedHikeProgramActions } from '..';
+import { editedHikeProgramActions } from '../actions';
 import { EObjectState } from 'subrepos/provider-client';
 
 import * as _ from 'lodash';

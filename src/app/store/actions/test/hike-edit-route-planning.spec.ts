@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import * as HikeEditRoutePlannerActions from '../hike-edit-route-planner';
 
 describe('HikeEditRoutePlanner actions', () => {

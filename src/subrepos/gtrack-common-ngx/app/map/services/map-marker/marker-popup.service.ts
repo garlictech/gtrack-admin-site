@@ -17,10 +17,10 @@ export class MarkerPopupService {
   public onUserMarkerClick = (marker: L.Marker, popupData: IMarkerPopupData, e: L.LeafletMouseEvent) => {
     const factories = Array.from(this._resolver['_factories'].keys());
     const factoryClass = <Type<any>>factories.find((x: any) => {
-        return x.componentName === popupData.popupComponentName;
+      return x.componentName === popupData.popupComponentName;
     });
 
-    if (factoryClass === null ) {
+    if (factoryClass === null) {
       console.log(`factoryClass for component name "${popupData.popupComponentName}" not found.`);
     } else {
       const compFactory = this._resolver.resolveComponentFactory(factoryClass);
@@ -31,7 +31,7 @@ export class MarkerPopupService {
       this._compRef.instance.closePopup = () => {
         this._compRef.destroy();
         popupData.closeCallback();
-      }
+      };
 
       // It's necessary for change detection within MapInfoWindow
       this._appRef['attachView'](this._compRef.hostView);
@@ -45,14 +45,14 @@ export class MarkerPopupService {
       // Timeout for waiting appendChild formatting
       setTimeout(() => {
         L.popup({
-            offset: L.point(0, -30),
-            minWidth: popupData.data.backgroundImages ? 250 : 205
-          })
+          offset: L.point(0, -30),
+          minWidth: popupData.data.backgroundImages ? 250 : 205
+        })
           .setLatLng(e.target.getLatLng())
           .setContent(div)
           .openOn(popupData.map);
       }, 150);
     }
     /* tslint:enable:no-string-literal */
-  }
+  };
 }

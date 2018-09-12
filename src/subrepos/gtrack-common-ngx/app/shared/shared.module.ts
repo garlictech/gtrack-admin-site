@@ -1,4 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { UnitsService } from './services/units';
 import { GoogleMapsService } from './services/google-maps';
@@ -8,21 +10,24 @@ import { ISharedConfig, SHARED_CONFIG_TOKEN } from './config';
 
 import { DistancePipe, DurationPipe, CoordinatePipe, PoiImagesToGalleryPipe, PoiImagesWithinCirclePipe } from './pipes';
 import { SanitizeHtmlDirective } from './directives/sanitize-html';
+import { SlideShowComponent } from './components';
 import { GeoIpService } from './services/geoip';
 
-const PIPES = [
+const DECLARATIONS = [
   DistancePipe,
   DurationPipe,
   CoordinatePipe,
   SanitizeHtmlDirective,
+  SlideShowComponent,
   PoiImagesToGalleryPipe,
   PoiImagesWithinCirclePipe
-]
+];
+
 @NgModule({
-  imports: [],
-  declarations: [...PIPES],
+  imports: [CommonModule, FontAwesomeModule],
+  declarations: [...DECLARATIONS],
   providers: [UnitsService, GoogleMapsService, GeospatialService, GeoIpService],
-  exports: [...PIPES]
+  exports: [...DECLARATIONS]
 })
 export class SharedModule {
   static forRoot(configFactory: any): ModuleWithProviders {
@@ -39,5 +44,6 @@ export {
   ISharedConfig,
   GeospatialService,
   PoiImagesToGalleryPipe,
-  PoiImagesWithinCirclePipe
+  PoiImagesWithinCirclePipe,
+  SlideShowComponent
 };

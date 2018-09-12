@@ -8,7 +8,7 @@ export class DistancePipe implements PipeTransform {
   constructor(private units: UnitsService) {}
 
   transform(value: number): string {
-    let converted = this.units.convertDistance(value);
+    const converted = this.units.convertDistance(value);
     return `${converted.value} ${converted.unit}`;
   }
 }

@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { Component, OnInit, Input } from '@angular/core';
 import * as togpx from 'togpx';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { HikeProgram } from '../../services/hike-program/hike-program';
 import { RouteSelectors } from '../../store/route/selectors';
@@ -23,10 +23,10 @@ export class DownloadGpxButtonComponent implements OnInit {
     private _store: Store<any>,
     private _routeSelectors: RouteSelectors,
     private _poiSelectors: PoiSelectors
-  ) { }
+  ) {}
 
   ngOnInit() {
-    let poiIds = this.hikeProgram.stops.map(stop => stop.poiId);
+    const poiIds = this.hikeProgram.stops.map(stop => stop.poiId);
     this._store
       .select(this._routeSelectors.getRouteContext(this.hikeProgram.routeId))
       .take(1)
@@ -43,12 +43,12 @@ export class DownloadGpxButtonComponent implements OnInit {
       .select(this._poiSelectors.getPoiContexts(poiIds))
       .take(1)
       .subscribe(contexts => {
-        let notLoaded = contexts
+        const notLoaded = contexts
           .filter(context => {
             const loaded = _.get(context, 'loaded', false);
             const loading = _.get(context, 'loading', false);
 
-            return (!loaded && !loading);
+            return !loaded && !loading;
           })
           .map(context => context.id);
 
@@ -59,30 +59,24 @@ export class DownloadGpxButtonComponent implements OnInit {
   public onClick(e: Event) {
     e.preventDefault();
 
-    let poiIds = this.hikeProgram.stops.map(stop => stop.poiId);
+    const poiIds = this.hikeProgram.stops.map(stop => stop.poiId);
 
-    Observable
-      .combineLatest(
-        this._store
-          .select(this._routeSelectors.getRoute(this.hikeProgram.routeId)),
-        this._store
-          .select(this._poiSelectors.getPois(poiIds))
-      )
+    Observable.combineLatest(
+      this._store.select(this._routeSelectors.getRoute(this.hikeProgram.routeId)),
+      this._store.select(this._poiSelectors.getPois(poiIds))
+    )
       .take(1)
       .subscribe(results => {
-        let route = results[0];
-        let pois = results[1];
-        let locale = 'en_US'; // TODO: Use the locale settings
+        const route = results[0];
+        const pois = results[1];
+        const locale = 'en_US'; // TODO: Use the locale settings
 
-        let geojson = _.cloneDeep(route.route);
-        let points: GeoJSON.Feature<GeoJSON.Point>[] = pois.map(poi => ({
+        const geojson = _.cloneDeep(route.route);
+        const points: GeoJSON.Feature<GeoJSON.Point>[] = pois.map(poi => ({
           type: 'Feature' as 'Feature',
           geometry: {
             type: 'Point' as 'Point',
-            coordinates: [
-              poi.lon,
-              poi.lat
-            ]
+            coordinates: [poi.lon, poi.lat]
           },
           properties: {
             title: _.get(poi.description, `${locale}.title`, '')
@@ -94,13 +88,13 @@ export class DownloadGpxButtonComponent implements OnInit {
           ...points
         ];
 
-        let xml = togpx(geojson);
-        let file = new Blob([xml], {
+        const xml = togpx(geojson);
+        const file = new Blob([xml], {
           type: 'text/xml'
         });
-        let url = URL.createObjectURL(file);
+        const url = URL.createObjectURL(file);
 
-        let a = document.createElement('a');
+        const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
         a.download = `${this.hikeProgram.id}.gpx`;

@@ -5,7 +5,7 @@ import { IconService, } from 'subrepos/gtrack-common-ngx';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'gt-poi-icons',
+  selector: 'app-poi-icons',
   template: '<img *ngFor="let url of urls" [src]="url">'
 })
 export class PoiIconsComponent implements OnInit {

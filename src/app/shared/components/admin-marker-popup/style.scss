@@ -2,13 +2,14 @@
   margin-bottom: 10px;
 }
 
-.img {
+.slideshow-container {
   float: left;
-  padding: 0 15px 0px 0;
+  margin: 0 15px 0px 0;
 
-  img {
-    width: 100px;
-  }
+  width: 120px;
+  height: 100px;
+  display: block;
+  position: relative;
 }
 
 :host .leaflet-popup-content {

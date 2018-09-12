@@ -9,8 +9,10 @@ import { ISectionField } from '../field';
   template: ''
 })
 export class DynamicFormSectionComponent implements OnInit {
-  @Input() public controlGroup: FormGroup;
-  @Input() public fields: ISectionField;
+  @Input()
+  public controlGroup: FormGroup;
+  @Input()
+  public fields: ISectionField;
 
   public formFields: any[] = [];
 

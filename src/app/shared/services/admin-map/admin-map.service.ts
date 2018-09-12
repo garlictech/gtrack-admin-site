@@ -1,23 +1,26 @@
 import { Store } from '@ngrx/store';
-import { State, adminMapActions } from '../../../store';
+import { State } from '../../../store';
+import { adminMapActions } from '../../../store/actions';
 import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { Injectable } from '@angular/core';
 import { AdminMap } from './lib/admin-map';
-import { IconService, MapMarkerService, MapService } from 'subrepos/gtrack-common-ngx/app';
+import { IconService, MapMarkerService, MapService, MarkerPopupService, DescriptionLanguageListService } from 'subrepos/gtrack-common-ngx/app';
 
 import * as uuid from 'uuid/v1';
 
 @Injectable()
 export class AdminMapService extends MapService {
-  protected _maps: {[id: string]: AdminMap} = {};
+  protected _maps: { [id: string]: AdminMap } = {};
 
   constructor(
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
-    private _store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
+    store: Store<State>,
+    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    protected _descriptionLanguageList: DescriptionLanguageListService,
+    protected _markerPopup: MarkerPopupService
   ) {
-    super(iconService, mapMarkerService, _store);
+    super(iconService, mapMarkerService, store, _descriptionLanguageList, _markerPopup);
   }
 
   public get(leafletMap: L.Map): AdminMap {
@@ -28,13 +31,17 @@ export class AdminMapService extends MapService {
       this.iconService,
       this.mapMarkerService,
       this._store,
-      this._hikeEditRoutePlannerSelectors
+      this._hikeEditRoutePlannerSelectors,
+      this._descriptionLanguageList,
+      this._markerPopup
     );
     this._maps[_id] = _map;
 
-    this._store.dispatch(new adminMapActions.RegisterMap({
-      mapId: _id
-    }));
+    this._store.dispatch(
+      new adminMapActions.RegisterMap({
+        mapId: _id
+      })
+    );
 
     return _map;
   }

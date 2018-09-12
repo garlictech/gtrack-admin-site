@@ -17,13 +17,15 @@ export interface Center {
   encapsulation: ViewEncapsulation.None
 })
 export class LeafletComponent implements OnInit {
-  @ViewChild('map') public mapElement: ElementRef;
+  @ViewChild('map')
+  public mapElement: ElementRef;
 
   public map: Map;
 
   public leafletMap: L.Map;
 
-  @Input() public center: Center;
+  @Input()
+  public center: Center;
 
   @Input()
   public layers = [
@@ -41,7 +43,8 @@ export class LeafletComponent implements OnInit {
     }
   ];
 
-  @Input() public activeOverlays: string[] = [];
+  @Input()
+  public activeOverlays: string[] = [];
 
   public baseLayers: {
     [key: string]: L.TileLayer;
@@ -53,9 +56,11 @@ export class LeafletComponent implements OnInit {
 
   public control: L.Control;
 
-  @Input() public markers: any;
+  @Input()
+  public markers: any;
 
-  @Input() public path: any;
+  @Input()
+  public path: any;
 
   constructor(protected mapService: MapService) {}
 
@@ -65,7 +70,7 @@ export class LeafletComponent implements OnInit {
     this.leafletMap.setView([this.center.lat, this.center.lng], this.center.zoom);
 
     this.layers.forEach((layer, index) => {
-      let tileLayer = L.tileLayer(layer.url, layer);
+      const tileLayer = L.tileLayer(layer.url, layer);
 
       if (index === 0) {
         tileLayer.addTo(this.leafletMap);
@@ -75,7 +80,7 @@ export class LeafletComponent implements OnInit {
     });
 
     this.overlays.forEach(layer => {
-      let tileLayer = L.tileLayer(layer.url, layer);
+      const tileLayer = L.tileLayer(layer.url, layer);
 
       if (this.activeOverlays.indexOf(layer.name) !== -1) {
         tileLayer.addTo(this.leafletMap);

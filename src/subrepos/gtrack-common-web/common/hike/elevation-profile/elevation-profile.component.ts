@@ -8,6 +8,4 @@ import { ElevationProfileComponent as BaseComponent } from 'subrepos/gtrack-comm
   templateUrl: './elevation-profile.component.html',
   styleUrls: ['./elevation-profile.component.scss']
 })
-export class ElevationProfileComponent extends BaseComponent {
-
-}
+export class ElevationProfileComponent extends BaseComponent {}

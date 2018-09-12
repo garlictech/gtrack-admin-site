@@ -96,22 +96,13 @@ const reducer: ActionReducer<IPoiEntityState> = (
 ): IPoiEntityState => {
   switch (action.type) {
     case PoiActionTypes.POI_LOADED:
-      return poiAdapter.upsertOne(
-        action.poi,
-        state
-      );
+      return poiAdapter.upsertOne(action.poi, state);
 
     case PoiActionTypes.ALL_POI_LOADED:
-      return poiAdapter.upsertMany(
-        action.pois,
-        state
-      );
+      return poiAdapter.upsertMany(action.pois, state);
 
     case PoiActionTypes.POI_DELETED:
-      return poiAdapter.removeOne(
-        action.context,
-        state
-      );
+      return poiAdapter.removeOne(action.context, state);
 
     case PoiActionTypes.POI_MERGED_SUCCESSFULLY:
       return poiAdapter.removeMany(action.mergedIds, state);

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 
 interface ILngObject {
   locale: string;
@@ -35,5 +34,11 @@ export class LanguageService {
   public static localeToName(locale: string) {
     const _lang = DESCRIPTION_LANGUAGES.find(lang => lang.locale === locale);
     return _lang ? _lang.name : locale;
+  }
+
+  public static pascalize(text: string) {
+    const words = text.split('_');
+    words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+    return words.join(' ');
   }
 }

@@ -38,7 +38,7 @@ export class OauthWindowService {
       this._loginWindow.close();
       this._loginWindow = null;
 
-      let err = new LoginError('OAuth window reopened');
+      const err = new LoginError('OAuth window reopened');
       err.code = LoginErrorCodes.REOPENED;
 
       this._deferred.reject(err);
@@ -99,14 +99,14 @@ export class OauthWindowService {
   }
 
   private loadStartHandler(e: any, parameter: any): void {
-    let url = e.url;
+    const url = e.url;
 
     if (url.indexOf(parameter + '=') > 0 || url.indexOf('error=') > 0) {
       // When we get the access token fast, the login window (inappbrowser) is still opening with animation
       // in the Cordova app, and trying to close it while it's animating generates an exception. Wait a little...
-      let timeout = 600 - (new Date().getTime() - this._startTime);
+      const timeout = 600 - (new Date().getTime() - this._startTime);
 
-      let fv = () => {
+      const fv = () => {
         if (this._loginWindow) {
           if (this._loginWindow.removeEventListener) {
             this._loginWindow.removeEventListener('loadstart', this.loadStartHandler);
@@ -135,7 +135,7 @@ export class OauthWindowService {
       this._loginWindow = null;
     }
 
-    let err = new LoginError('User cancelled');
+    const err = new LoginError('User cancelled');
     err.code = LoginErrorCodes.USER_CANCELLED;
 
     this._deferred.reject(err);

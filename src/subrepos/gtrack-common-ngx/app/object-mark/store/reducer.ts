@@ -76,7 +76,6 @@ const reducer: ActionReducer<IObjectMarkEntityState> = (
   state: IObjectMarkEntityState = objectMarkReducerInitialState,
   action: AllObjectMarkActionTypes
 ): IObjectMarkEntityState => {
-
   switch (action.type) {
     case ObjectMarkActionTypes.CONTEXT_LOADED:
       return objectMarkAdapter.upsertOne(
@@ -90,7 +89,7 @@ const reducer: ActionReducer<IObjectMarkEntityState> = (
     default:
       return state;
   }
-}
+};
 
 const reducerMap: ActionReducerMap<IObjectMarkState> = {
   contexts: contextReducer,

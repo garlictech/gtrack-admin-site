@@ -10,12 +10,11 @@ import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 import { LocalizeDescriptionPipe } from '../localize-description.pipe';
 import { DescriptionLanguageListService } from '../../services';
 import { LocalizeSelectors } from '../../store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import * as _ from 'lodash';
 
 describe('LocalizeDescriptionPipe', () => {
-
   class FakeChangeDetectorRef extends ChangeDetectorRef {
     markForCheck(): void {
       // Empty
@@ -36,7 +35,7 @@ describe('LocalizeDescriptionPipe', () => {
     reattach(): void {
       // Empty
     }
-  };
+  }
 
   let state = {
     language: 'en_US'

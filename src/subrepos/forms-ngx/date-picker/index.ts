@@ -6,10 +6,14 @@ import { AbstractValueAccessor } from '../abstract-value-accessor';
   template: ''
 })
 export class DatePickerComponent extends AbstractValueAccessor {
-  @Input() maxDate;
-  @Input() minDate;
-  @Input() defaultDate;
-  @Input() placeholder;
+  @Input()
+  maxDate;
+  @Input()
+  minDate;
+  @Input()
+  defaultDate;
+  @Input()
+  placeholder;
 
   constructor() {
     super();

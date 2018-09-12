@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '..';
+import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../actions';
 import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService, HikeProgramService } from '../../shared/services';
 import { IWikipediaPoi, IOsmPoi, IGooglePoi } from '../../shared/interfaces';
 

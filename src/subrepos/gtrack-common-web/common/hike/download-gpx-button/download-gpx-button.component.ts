@@ -8,6 +8,4 @@ import { DownloadGpxButtonComponent as BaseComponent } from 'subrepos/gtrack-com
   templateUrl: './download-gpx-button.component.html',
   styleUrls: ['./download-gpx-button.component.scss']
 })
-export class DownloadGpxButtonComponent extends BaseComponent {
-
-}
+export class DownloadGpxButtonComponent extends BaseComponent {}

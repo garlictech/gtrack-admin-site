@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { ILocalizedItem, ITextualDescription } from '../../../../../provider-client';
+import { ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 
 @Component({
-  selector: 'gtcn-description',
+  selector: 'gtrack-common-description',
   template: ''
 })
 export class DescriptionComponent {

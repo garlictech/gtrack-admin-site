@@ -3,7 +3,7 @@ import { AdminMap, AdminMapService } from '../../services/admin-map';
 import { LeafletComponent } from 'subrepos/gtrack-common-ngx/app';
 
 @Component({
-  selector: 'gc-admin-leaflet',
+  selector: 'app-admin-leaflet',
   styleUrls: ['./admin-leaflet.component.scss'],
   template: '<div #map class="angular-leaflet-map"><ng-content></ng-content></div>'
 })

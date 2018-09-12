@@ -9,7 +9,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'gt-login',
+  selector: 'app-login',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })

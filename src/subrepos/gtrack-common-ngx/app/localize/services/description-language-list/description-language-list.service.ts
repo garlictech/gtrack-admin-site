@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ILocalizedItem, ITextualDescription } from '../../../../../provider-client';
 import { LocalizeSelectors } from '../../store/selectors';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -11,7 +11,9 @@ export class DescriptionLanguageListService {
 
   constructor(private _selectors: LocalizeSelectors) {}
 
-  public getLocalizedDescription(item: ILocalizedItem<ITextualDescription>|undefined): Observable<ITextualDescription> {
+  public getLocalizedDescription(
+    item: ILocalizedItem<ITextualDescription> | undefined
+  ): Observable<ITextualDescription> {
     if (!item) {
       return Observable.of({
         title: ''
@@ -19,7 +21,7 @@ export class DescriptionLanguageListService {
     }
 
     return this._selectors.getLanguageSettings().map(settings => {
-      let list = [
+      const list = [
         // ...settings.descriptionLanguageList,
         settings.actualLanguage
       ];

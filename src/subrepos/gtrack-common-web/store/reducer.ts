@@ -4,6 +4,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { routerReducer } from '@ngrx/router-store';
 
 import { LOGOUT_SUCCESS } from 'subrepos/authentication-api-ngx/store/actions';
+import { environment } from 'environments/environment';
 
 import { commonReducers } from 'subrepos/gtrack-common-ngx/app/store/reducer';
 import { Reducer as languageReducer } from 'subrepos/localize-ngx/store/reducer';
@@ -26,9 +27,9 @@ export function logout(_reducer) {
   };
 }
 
-let metaReducers = [logger, logout];
+const metaReducers = [logger, logout];
 
-if (process.env.ENV !== 'production') {
+if (!environment.production) {
   metaReducers.push(storeFreeze);
 }
 

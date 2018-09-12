@@ -2,14 +2,14 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IExternalPoi } from '../../../../../shared/interfaces';
-import { State, hikeEditPoiActions } from '../../../../../store';
+import { State } from '../../../../../store';
+import { hikeEditPoiActions } from '../../../../../store/actions';
 import { EPoiTypes } from 'subrepos/provider-client';
 
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'hike-edit-pois-external-table',
+  selector: 'app-hike-edit-pois-external-table',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisExternalTableComponent {

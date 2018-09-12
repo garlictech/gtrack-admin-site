@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Dictionary } from '@ngrx/entity/src/models';
 
 import { IPoi, IHikeProgram, IHikeProgramStop } from '../../../../../provider-client';
@@ -14,7 +14,8 @@ import { IconService } from '../../../map/services/icon';
   template: ''
 })
 export class HikeProgramComponent implements OnInit {
-  @Input() public hikeProgram: IHikeProgram;
+  @Input()
+  public hikeProgram: IHikeProgram;
 
   public pois$: Observable<Partial<Dictionary<IPoi>>>;
   public startIcon: string;
@@ -31,11 +32,16 @@ export class HikeProgramComponent implements OnInit {
   }
 
   ngOnInit() {
-    let hikePois = this.hikeProgram.stops
-      .filter(stop => !/^endpoint/.test(stop.poiId))
-      .map(stop => stop.poiId);
+    const hikePois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
 
-    this.pois$ = this._store.select(this._poiSelectors.getPoiEntities(hikePois)).filter(pois => !_.isEmpty(pois));
+    const start = this.hikeProgram.stops.find(stop => stop.poiId === 'endpoint-first');
+    const finish = this.hikeProgram.stops.find(stop => stop.poiId === 'endpoint-last');
+
+    if (hikePois.length > 0) {
+      this.pois$ = this._store.select(this._poiSelectors.getPoiEntities(hikePois)).filter(pois => !_.isEmpty(pois));
+    } else {
+      this.pois$ = Observable.of({});
+    }
 
     this._store.dispatch(new poiActions.LoadPois(hikePois));
   }

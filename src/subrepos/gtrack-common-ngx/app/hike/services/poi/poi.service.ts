@@ -61,5 +61,4 @@ export class PoiService {
       })
       .take(1);
   }
-
 }

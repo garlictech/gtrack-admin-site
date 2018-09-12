@@ -15,10 +15,7 @@ describe('ObjectMark selectors', () => {
   let store: Store<IObjectMarkState>;
   let destroy$: Subject<boolean>;
 
-  let contexts = [
-    'foo1',
-    'foo2'
-  ];
+  let contexts = ['foo1', 'foo2'];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -56,10 +53,8 @@ describe('ObjectMark selectors', () => {
 
       store
         .select(selectors.getObjectMarks(EObjectMarkContext.bookmarkedHike))
-        .pipe(
-          takeUntil(destroy$)
-        )
-        .subscribe(_data => result = _data);
+        .pipe(takeUntil(destroy$))
+        .subscribe(_data => (result = _data));
 
       expect(result).toEqual([]);
 
@@ -76,10 +71,8 @@ describe('ObjectMark selectors', () => {
 
       store
         .select(selectors.getObjectMarkObject(EObjectMarkContext.bookmarkedHike, contexts[0]))
-        .pipe(
-          takeUntil(destroy$)
-        )
-        .subscribe(_data => result = _data);
+        .pipe(takeUntil(destroy$))
+        .subscribe(_data => (result = _data));
 
       expect(result).toEqual(undefined);
 
@@ -94,10 +87,8 @@ describe('ObjectMark selectors', () => {
 
       store
         .select(selectors.getObjectMarkObject(EObjectMarkContext.bookmarkedHike, 'notfound'))
-        .pipe(
-          takeUntil(destroy$)
-        )
-        .subscribe(_data => result = _data);
+        .pipe(takeUntil(destroy$))
+        .subscribe(_data => (result = _data));
 
       expect(result).toEqual(undefined);
 
@@ -114,10 +105,8 @@ describe('ObjectMark selectors', () => {
 
       store
         .select(selectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, contexts[0]))
-        .pipe(
-          takeUntil(destroy$)
-        )
-        .subscribe(_data => result = _data);
+        .pipe(takeUntil(destroy$))
+        .subscribe(_data => (result = _data));
 
       expect(result).toEqual(false);
 
@@ -132,10 +121,8 @@ describe('ObjectMark selectors', () => {
 
       store
         .select(selectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, 'notfound'))
-        .pipe(
-          takeUntil(destroy$)
-        )
-        .subscribe(_data => result = _data);
+        .pipe(takeUntil(destroy$))
+        .subscribe(_data => (result = _data));
 
       expect(result).toEqual(false);
 
@@ -152,21 +139,20 @@ describe('ObjectMark selectors', () => {
 
       store
         .select(selectors.getObjectMarkContext(EObjectMarkContext.bookmarkedHike))
-        .pipe(
-          takeUntil(destroy$)
-        )
-        .subscribe(_data => result = _data);
+        .pipe(takeUntil(destroy$))
+        .subscribe(_data => (result = _data));
 
       expect(result).toEqual(undefined);
       store.dispatch(new Actions.LoadContext(EObjectMarkContext.bookmarkedHike));
       store.dispatch(new Actions.ContextLoaded(EObjectMarkContext.bookmarkedHike, contexts));
 
-      expect(result).toEqual(jasmine.objectContaining({
-        id: EObjectMarkContext.bookmarkedHike,
-        loaded: true,
-        loading: false
-      }));
+      expect(result).toEqual(
+        jasmine.objectContaining({
+          id: EObjectMarkContext.bookmarkedHike,
+          loaded: true,
+          loading: false
+        })
+      );
     });
-
   });
 });

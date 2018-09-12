@@ -1,26 +1,34 @@
-<gt-background-images
+<app-background-images
   [clickActions]="clickActions"
   [bgImages$]="bgImages$"
-></gt-background-images>
+></app-background-images>
 
 <div class="clearfix"></div>
 
 <p-accordion [multiple]="true">
+  <p-accordionTab header="gTrackPoi ({{((gTrackPoiPhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
+    <app-hike-edit-photos-table
+      [images$]="gTrackPoiPhotos$"
+      [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+      [clickActions]="clickActions"
+      [distanceFrom]="distanceFrom"
+    ></app-hike-edit-photos-table>
+  </p-accordionTab>
   <p-accordionTab header="Google ({{((googlePhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
-    <gt-hike-edit-photos-table
+    <app-hike-edit-photos-table
       [images$]="googlePhotos$"
       [backgroundOriginalUrls$]="backgroundOriginalUrls$"
       [clickActions]="clickActions"
       [distanceFrom]="distanceFrom"
-    ></gt-hike-edit-photos-table>
+    ></app-hike-edit-photos-table>
   </p-accordionTab>
   <p-accordionTab header="Wikipedia ({{((wikipediaPhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
-    <gt-hike-edit-photos-table
+    <app-hike-edit-photos-table
       [images$]="wikipediaPhotos$"
       [backgroundOriginalUrls$]="backgroundOriginalUrls$"
       [clickActions]="clickActions"
       [distanceFrom]="distanceFrom"
-    ></gt-hike-edit-photos-table>
+    ></app-hike-edit-photos-table>
   </p-accordionTab>
   <p-accordionTab header="Mapillary ({{((mapillaryImages$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
     <div class="mb-20">
@@ -32,15 +40,15 @@
       ></p-button>
     </div>
 
-    <gt-table-spinner *ngIf="(mapillaryLoading$ | async) as mapillaryLoading; else mapillaryTable"></gt-table-spinner>
+    <app-table-spinner *ngIf="(mapillaryLoading$ | async) as mapillaryLoading; else mapillaryTable"></app-table-spinner>
 
     <ng-template #mapillaryTable>
-      <gt-hike-edit-photos-table
+      <app-hike-edit-photos-table
         [images$]="mapillaryImages$"
         [backgroundOriginalUrls$]="backgroundOriginalUrls$"
         [clickActions]="clickActions"
         [distanceFrom]="distanceFrom"
-      ></gt-hike-edit-photos-table>
+      ></app-hike-edit-photos-table>
     </ng-template>
   </p-accordionTab>
 </p-accordion>

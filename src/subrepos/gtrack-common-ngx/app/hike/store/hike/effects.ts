@@ -35,7 +35,7 @@ export class HikeEffects {
         .query()
         .take(1)
         .map(hikePrograms => {
-          let ids = hikePrograms.map(hikeProgram => hikeProgram.id);
+          const ids = hikePrograms.map(hikeProgram => hikeProgram.id);
 
           return new LocalActions.AllHikeProgramsLoaded(ids, hikePrograms);
         });

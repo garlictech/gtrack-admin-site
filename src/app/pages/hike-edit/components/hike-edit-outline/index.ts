@@ -7,7 +7,7 @@ import { IHikeProgramStop, IPoiStored } from 'subrepos/provider-client';
 import { PoiSelectors, IconService } from 'subrepos/gtrack-common-ngx';
 
 @Component({
-  selector: 'gt-hike-edit-outline',
+  selector: 'app-hike-edit-outline',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })
