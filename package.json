@@ -116,7 +116,7 @@
         "authentication-api-ngx": "file:src/subrepos/authentication-api-ngx",
         "d3": "^4.12.0",
         "d3-geo": "^1.10.0",
-        "debug": "^3.0.0",
+        "debug": "^3.2.5",
         "deepstream-ngx": "file:src/subrepos/deepstream-ngx",
         "enum-values": "^1.2.0",
         "flat": "^4.1.0",
