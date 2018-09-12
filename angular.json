@@ -33,7 +33,9 @@
                         "scripts": []
                     },
                     "configurations": {
-                        "default": {},
+                        "default": {
+                            "optimization": false
+                        },
                         "production": {
                             "fileReplacements": [{
                                 "replace": "src/environments/environment.ts",
@@ -54,7 +56,7 @@
                                 "replace": "src/environments/environment.ts",
                                 "with": "src/environments/environment.staging.ts"
                             }],
-                            "optimization": true,
+                            "optimization": false,
                             "outputHashing": "all",
                             "sourceMap": true,
                             "extractCss": true,
