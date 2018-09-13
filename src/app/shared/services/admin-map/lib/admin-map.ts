@@ -25,7 +25,7 @@ export class AdminMap extends Map {
   ) {
     super(id, map, iconService, mapMarkerService, _store, _descriptionLanguageList, _markerPopup);
 
-    L.control.fullscreen({
+    (<any>L.control).fullscreen({
       position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
       title: 'Show me the fullscreen !', // change the title of the button, default Full Screen
       titleCancel: 'Exit fullscreen mode', // change the title of the button when fullscreen is on, default Exit Full Screen
