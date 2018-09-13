@@ -133,7 +133,7 @@
         "leaflet.fullscreen": "^1.4.5",
         "load-google-maps-api": "1.0.0",
         "localize-ngx": "file:./src/subrepos/localize-ngx",
-        "lodash": "^4.17.4",
+        "lodash-es": "^4.17.11",
         "lrm-graphhopper": "^1.2.0",
         "moment": "^2.22.2",
         "ng-cli-pug-loader": "^0.1.3",
