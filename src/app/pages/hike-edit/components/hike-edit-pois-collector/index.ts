@@ -97,7 +97,6 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .filter(poisCount => poisCount > 0)
       .switchMap((poisCount) => this.saveablePoisCount$.takeUntil(this._destroy$))
       .filter(poisCount => poisCount === 0)
-      .take(1)
       .subscribe(() => {
         this._store.dispatch(new hikeEditPoiActions.SetSaving('collector', false));
       });

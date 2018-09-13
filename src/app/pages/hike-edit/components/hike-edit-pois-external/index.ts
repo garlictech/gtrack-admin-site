@@ -97,7 +97,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
             return this._poiEditorService.handleGTrackPois(pois, gTrackPois);
           });
       })
-      .take(1)
+      .takeUntil(this._destroy$)
       .subscribe((pois) => {
         // Refresh poi list on the store
         this._updateSubdomainPois(pois);

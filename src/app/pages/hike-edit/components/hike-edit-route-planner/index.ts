@@ -139,7 +139,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   public retrievePlan() {
     this._store
       .select(this._editedHikeProgramSelectors.getRouteId)
-      .take(1)
       .switchMap((routeId: string) => this._store.select(this._routeSelectors.getRoute(routeId)).take(1))
       .take(1)
       .subscribe((storedRoute: any) => {
