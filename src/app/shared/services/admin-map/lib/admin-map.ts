@@ -6,8 +6,8 @@ import { Map, IconService, MapMarkerService, DescriptionLanguageListService, Mar
 
 import * as L from 'leaflet';
 import 'leaflet.fullscreen';
-import buffer from '@turf/buffer';
-import * as _ from 'lodash';
+import turfBuffer from '@turf/buffer';
+import _assign from 'lodash-es/assign';
 
 export class AdminMap extends Map {
   public markersGroup: L.LayerGroup;
@@ -45,10 +45,10 @@ export class AdminMap extends Map {
       .take(1)
       .map(path => {
         if (typeof path !== 'undefined') {
-          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(path, 50, { units: 'meters' });
+          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 50, { units: 'meters' });
 
           if (typeof _buffer !== 'undefined') {
-            _buffer = _.assign(_buffer, {
+            _buffer = _assign(_buffer, {
               properties: {
                 name: 'buffer polygon',
                 draw_type: 'small_buffer'

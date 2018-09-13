@@ -1,7 +1,7 @@
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
 
 import { environment } from 'environments/environment';
 
@@ -56,8 +56,8 @@ const authConfig = {
 
 authConfig.apiUrl = environment.authentication.server;
 authConfig.webserverUrl = environment.webappServer;
-authConfig.facebook.appId = _.get(environment, 'authentication.facebook.appId');
-authConfig.google.appId = _.get(environment, 'authentication.google.appId');
+authConfig.facebook.appId = _get(environment, 'authentication.facebook.appId');
+authConfig.google.appId = _get(environment, 'authentication.google.appId');
 authConfig.magiclink = { redirectSlug: '/auth/magiclink' };
 
 export function getAuthConfig() {

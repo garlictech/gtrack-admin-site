@@ -6,7 +6,7 @@ import {
 } from '../reducer';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 
-import * as _ from 'lodash';
+import _uniqBy from 'lodash-es/uniqBy';
 
 @Injectable()
 export class HikeEditPoiSelectors {
@@ -105,7 +105,7 @@ export class HikeEditPoiSelectors {
         .map(photoArray => {
           _photos = _photos.concat(photoArray);
         });
-      return _.uniqBy(_photos, 'original.url');
+      return _uniqBy(_photos, 'original.url');
     });
   }
 

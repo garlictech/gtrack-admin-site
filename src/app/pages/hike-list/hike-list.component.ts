@@ -7,7 +7,8 @@ import { commonHikeActions } from '../../store/actions';
 import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
 import { SelectItem, ConfirmationService } from 'primeng/primeng';
-import * as _ from 'lodash';
+
+import _orderBy from 'lodash-es/orderBy';
 
 @Component({
   selector: 'app-hike-list',
@@ -40,7 +41,7 @@ export class HikeListComponent implements OnInit, OnDestroy {
     this.hikeList$ = this._store
       .select(this._hikeSelectors.getActiveHikes())
       .takeUntil(this._destroy$)
-      .map((hikes) => _.orderBy(hikes, ['timestamp'], ['desc']));
+      .map((hikes) => _orderBy(hikes, ['timestamp'], ['desc']));
 
     this._store.dispatch(new commonHikeActions.LoadHikePrograms());
   }

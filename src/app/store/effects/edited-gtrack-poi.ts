@@ -8,8 +8,8 @@ import { editedGTrackPoiActions } from '../actions';
 import { IPoiStored, IPoi } from 'subrepos/provider-client';
 import { log } from '../../log';
 
-import * as _ from 'lodash';
 import { EditedGTrackPoiSelectors } from '../selectors';
+import _omit from 'lodash-es/omit';
 
 @Injectable()
 export class EditedGTrackPoiEffects {
@@ -25,7 +25,7 @@ export class EditedGTrackPoiEffects {
     .ofType(editedGTrackPoiActions.SAVE_POI)
     .switchMap(() => this._store.select(this._editedGTrackPoiSelectors.getData).take(1))
     .switchMap((data: IPoiStored) => {
-      const poiData = _.omit(data, ['timestamp']);
+      const poiData = _omit(data, ['timestamp']);
 
       return this._poiService
         .create(<IPoi>poiData)

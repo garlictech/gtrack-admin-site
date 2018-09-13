@@ -10,7 +10,7 @@ import { log } from '../../log';
 import { EditedHikeProgramSelectors } from '../selectors/edited-hike-program';
 import { HikeEditRoutePlannerSelectors } from '../selectors';
 
-import * as _ from 'lodash';
+import _omit from 'lodash-es/omit';
 
 @Injectable()
 export class EditedHikeProgramEffects {
@@ -64,7 +64,7 @@ export class EditedHikeProgramEffects {
     .ofType(editedHikeProgramActions.SAVE_HIKE_PROGRAM)
     .switchMap(() => this._store.select(this._editedHikeProgramSelectors.getData).take(1))
     .switchMap((data: IHikeProgramStored) => {
-      const hikeProgramData = _.omit(data, ['timestamp']);
+      const hikeProgramData = _omit(data, ['timestamp']);
 
       return this._hikeProgramService
         .save(<IHikeProgram>hikeProgramData)

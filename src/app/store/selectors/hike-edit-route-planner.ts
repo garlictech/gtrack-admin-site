@@ -3,9 +3,10 @@ import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/s
 import { IHikeEditRoutePlannerState } from '../state/hike-edit-route-planner';
 import { ISegment } from 'subrepos/gtrack-common-ngx';
 
-import * as _ from 'lodash';
 import { point as turfPoint } from '@turf/helpers';
-import distance from '@turf/distance';
+import turfDistance from '@turf/distance';
+
+import _get from 'lodash-es/get';
 
 @Injectable()
 export class HikeEditRoutePlannerSelectors {
@@ -36,7 +37,7 @@ export class HikeEditRoutePlannerSelectors {
     );
 
     this.getPathLength = createSelector(this._featureSelector,
-      (state: IHikeEditRoutePlannerState) => _.get(state.route.features[0], 'geometry.coordinates', []).length
+      (state: IHikeEditRoutePlannerState) => _get(state.route.features[0], 'geometry.coordinates', []).length
     );
 
     this.getSegments = createSelector(this._featureSelector,
@@ -49,10 +50,10 @@ export class HikeEditRoutePlannerSelectors {
 
     this.getIsRoundTrip = createSelector(this._featureSelector,
       (state: IHikeEditRoutePlannerState) => {
-        const _coords = _.get(state.route, 'features[0].geometry.coordinates', null);
+        const _coords = _get(state.route, 'features[0].geometry.coordinates', null);
 
         if (_coords && _coords.length > 1) {
-          const _dist = Math.round(1000 * distance(
+          const _dist = Math.round(1000 * turfDistance(
             turfPoint([_coords[0][1], _coords[0][0]]),
             turfPoint([_coords[_coords.length - 1][1], _coords[_coords.length - 1][0]]),
             {units: 'kilometers'}

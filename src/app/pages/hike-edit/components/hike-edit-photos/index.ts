@@ -9,7 +9,8 @@ import {
 import { RoutePlannerService, PoiEditorService, AdminMap, AdminMapService } from '../../../../shared/services';
 import { IBackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
-import * as _ from 'lodash';
+
+import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-hike-edit-photos',
@@ -79,7 +80,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     this.bgImages$
       .takeUntil(this._destroy$)
       .subscribe(images => {
-        this.slideShowUrls =  _.map(images, 'original.url');
+        this.slideShowUrls =  _map(images, 'original.url');
       });
 
     // Route info from the store (for disabling GET buttons)

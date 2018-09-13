@@ -15,7 +15,9 @@ import {
   HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors
 } from '../../../../store/selectors'
 
-import * as _ from 'lodash';
+import _pick from 'lodash-es/pick';
+import _filter from 'lodash-es/filter';
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 @Component({
   selector: 'app-hike-edit-pois-external',
@@ -258,27 +260,27 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     switch (this.poiType.subdomain) {
       case EPoiTypes.google:
         this._store.dispatch(new hikeEditPoiActions.SetGooglePoisInGtrackDb(
-          pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
+          pois.map(p => _pick(p, ['id', 'inGtrackDb']))
         ));
         break;
       case EPoiTypes.wikipedia:
         this._store.dispatch(new hikeEditPoiActions.SetWikipediaPoisInGtrackDb(
-          pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
+          pois.map(p => _pick(p, ['id', 'inGtrackDb']))
         ));
         break;
       case EPoiTypes.osmAmenity:
         this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPoisInGtrackDb(
-          pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
+          pois.map(p => _pick(p, ['id', 'inGtrackDb']))
         ));
         break;
       case EPoiTypes.osmNatural:
         this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPoisInGtrackDb(
-          pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
+          pois.map(p => _pick(p, ['id', 'inGtrackDb']))
         ));
         break;
       case EPoiTypes.osmRoute:
         this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoisInGtrackDb(
-          pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
+          pois.map(p => _pick(p, ['id', 'inGtrackDb']))
         ));
         break;
     }
@@ -288,27 +290,27 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     switch (this.poiType.subdomain) {
       case EPoiTypes.google:
         this._store.dispatch(new hikeEditPoiActions.SetGooglePoisInCollector(
-          pois.map(p => _.pick(p, ['id', 'inCollector']))
+          pois.map(p => _pick(p, ['id', 'inCollector']))
         ));
         break;
       case EPoiTypes.wikipedia:
         this._store.dispatch(new hikeEditPoiActions.SetWikipediaPoisInCollector(
-          pois.map(p => _.pick(p, ['id', 'inCollector']))
+          pois.map(p => _pick(p, ['id', 'inCollector']))
         ));
         break;
       case EPoiTypes.osmAmenity:
         this._store.dispatch(new hikeEditPoiActions.SetOsmAmenityPoisInCollector(
-          pois.map(p => _.pick(p, ['id', 'inCollector']))
+          pois.map(p => _pick(p, ['id', 'inCollector']))
         ));
         break;
       case EPoiTypes.osmNatural:
         this._store.dispatch(new hikeEditPoiActions.SetOsmNaturalPoisInCollector(
-          pois.map(p => _.pick(p, ['id', 'inCollector']))
+          pois.map(p => _pick(p, ['id', 'inCollector']))
         ));
         break;
       case EPoiTypes.osmRoute:
         this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoisInCollector(
-          pois.map(p => _.pick(p, ['id', 'inCollector']))
+          pois.map(p => _pick(p, ['id', 'inCollector']))
         ));
         break;
     }
@@ -347,7 +349,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this.pois$
       .take(1)
       .subscribe((pois: IExternalPoi[]) => {
-        const _externalPoisToAdd = _.filter(pois, (poi: IExternalPoi) => {
+        const _externalPoisToAdd = _filter(pois, (poi: IExternalPoi) => {
           return (!!(poi.selected && !poi.inGtrackDb));
         });
 
@@ -356,7 +358,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   }
 
   public openPoiModal = (poi) => {
-    this.modalPoi = _.cloneDeep(poi);
+    this.modalPoi = _cloneDeep(poi);
     this.displayPoiModal = true;
   }
 }

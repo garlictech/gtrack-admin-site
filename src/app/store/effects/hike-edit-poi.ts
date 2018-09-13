@@ -5,9 +5,10 @@ import { Observable } from 'rxjs';
 import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../actions';
 import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService, HikeProgramService } from '../../shared/services';
 import { IWikipediaPoi, IOsmPoi, IGooglePoi } from '../../shared/interfaces';
-
-import * as _ from 'lodash';
 import { RouteService } from 'subrepos/gtrack-common-ngx';
+
+import _concat from 'lodash-es/concat';
+import _uniqBy from 'lodash-es/uniqBy';
 
 @Injectable()
 export class HikeEditPoiEffects {
@@ -45,9 +46,9 @@ export class HikeEditPoiEffects {
       return Promise.all(_promises).then(poisArr => {
         let pois: IWikipediaPoi[] = [];
         poisArr.map((poiArr: IWikipediaPoi[]) => {
-          pois = _.concat(pois, poiArr);
+          pois = _concat(pois, poiArr);
         });
-        return new hikeEditPoiActions.SetWikipediaPois(_.uniqBy(pois, 'wikipedia.pageid'));
+        return new hikeEditPoiActions.SetWikipediaPois(_uniqBy(pois, 'wikipedia.pageid'));
       });
     });
 
@@ -70,7 +71,7 @@ export class HikeEditPoiEffects {
       return Promise.all(_promises).then(poisArr => {
         let pois: IGooglePoi[] = [];
         poisArr.map((poiArr: IGooglePoi[]) => {
-          pois = _.concat(pois, poiArr);
+          pois = _concat(pois, poiArr);
         });
 
         return new hikeEditPoiActions.SetGooglePois(pois);

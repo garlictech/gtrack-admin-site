@@ -28,8 +28,9 @@ import {
 import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { HikeProgramService } from '../../shared/services';
 import { MessageService } from 'primeng/api';
+
 import * as uuid from 'uuid/v1';
-import * as _ from 'lodash';
+import _pick from 'lodash-es/pick';
 
 @Component({
   selector: 'app-hike-edit',
@@ -228,7 +229,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         let _route: IRoute = {
           id: routeId,
           bounds: (<any>routePlannerState.route).bounds,
-          route: _.pick(routePlannerState.route, ['type', 'features'])
+          route: _pick(routePlannerState.route, ['type', 'features'])
         };
         this._store.dispatch(new commonRouteActions.SaveRoute(_route));
       }

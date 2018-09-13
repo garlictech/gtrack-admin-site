@@ -5,7 +5,8 @@ import { State } from '../../../../../store';
 import { hikeEditPoiActions } from '../../../../../store/actions';
 import { Observable, Subject } from 'rxjs';
 import { HikeEditPoiSelectors } from '../../../../../store/selectors';
-import * as _ from 'lodash';
+
+import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-hike-edit-pois-collector-table',
@@ -74,7 +75,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
           return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
         });
 
-        this.toggleMergeSelection(_.map(clickablePois, 'id'));
+        this.toggleMergeSelection(_map(clickablePois, 'id'));
       });
   }
 
@@ -86,7 +87,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
           return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
         });
 
-        this.handlePoiSelection(_.map(clickablePois, 'id'));
+        this.handlePoiSelection(_map(clickablePois, 'id'));
       });
   }
 }
