@@ -5,7 +5,8 @@ import { editedHikeProgramActions, hikeEditPoiActions, commonPoiActions } from '
 import { Observable } from 'rxjs';
 import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { PoiEditorService } from '../../services';
-import * as _ from 'lodash';
+
+import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-marker-popup',
@@ -42,13 +43,13 @@ export class AdminMarkerPopupComponent implements OnInit {
         this.btnTitle = 'Remove from hike';
         this.btnClick = this._removeFromHike;
         this.btnClass = 'warning';
-        this.images = _.map(this.data.backgroundImages, 'card.url') || [];
+        this.images = _map(this.data.backgroundImages, 'card.url') || [];
         break;
       case 'gTrack':
         this.btnTitle = 'Add to hike';
         this.btnClick = this._addToHike;
         this.btnClass = 'success';
-        this.images = _.map(this.data.backgroundImages, 'card.url') || [];
+        this.images = _map(this.data.backgroundImages, 'card.url') || [];
         break;
       case 'collector':
         this.btnTitle = 'Remove from collector';
@@ -70,11 +71,11 @@ export class AdminMarkerPopupComponent implements OnInit {
 
   private _getBgImagesUrls() {
     if (this.data.google && this.data.google.photos && this.data.google.photos.length > 0) {
-      return _.map(this.data.google.photos, 'card.url');
+      return _map(this.data.google.photos, 'card.url');
     }
 
     if (this.data.wikipedia && this.data.wikipedia.photos && this.data.wikipedia.photos.length > 0) {
-      return _.map(this.data.wikipedia.photos, 'original.url');
+      return _map(this.data.wikipedia.photos, 'original.url');
     }
   }
 

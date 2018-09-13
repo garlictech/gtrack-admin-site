@@ -6,7 +6,8 @@ import { IHikeEditPoiState } from '../..';
 import { hikeEditPoiActions } from '../../actions';
 import { IExternalPoi } from '../../../shared/interfaces';
 
-import * as _ from 'lodash';
+import _pick from 'lodash-es/pick';
+import _merge from 'lodash-es/merge';
 
 describe('HikeEditPoi reducers', () => {
   let initialState: IHikeEditPoiState;
@@ -112,9 +113,9 @@ describe('HikeEditPoi reducers', () => {
   describe('PatchGooglePois action', () => {
     it('should patch google pois', () => {
       const action = new hikeEditPoiActions.SetGooglePoisInGtrackDb(
-        pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
+        pois.map(p => p.elevation = 100).map(p => _pick(p, ['id', 'elevation']))
       );
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         googlePois: {
           ids: ['1', '2'],
           entities: entities
@@ -129,7 +130,7 @@ describe('HikeEditPoi reducers', () => {
   describe('SetGooglePoiSelected action', () => {
     it('should set google poi selected to true', () => {
       const action = new hikeEditPoiActions.SetGooglePoiSelected(['1']);
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         googlePois: {
           ids: ['1', '2'],
           entities: entities
@@ -143,7 +144,7 @@ describe('HikeEditPoi reducers', () => {
       const action = new hikeEditPoiActions.SetGooglePoiSelected(['1']);
       entities['1'].selected = true;
       entities['2'].selected = true;
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         googlePois: {
           ids: ['1', '2'],
           entities: entities
@@ -181,9 +182,9 @@ describe('HikeEditPoi reducers', () => {
   describe('PatchOsmAmenityPois action', () => {
     it('should patch osmAmenity pois', () => {
       const action = new hikeEditPoiActions.SetOsmAmenityPoisInGtrackDb(
-        pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
+        pois.map(p => p.elevation = 100).map(p => _pick(p, ['id', 'elevation']))
       );
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         osmAmenityPois: {
           ids: ['1', '2'],
           entities: entities
@@ -198,7 +199,7 @@ describe('HikeEditPoi reducers', () => {
   describe('SetOsmAmenityPoiSelected action', () => {
     it('should set osmAmenity poi selected to true', () => {
       const action = new hikeEditPoiActions.SetOsmAmenityPoiSelected(['1']);
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         osmAmenityPois: {
           ids: ['1', '2'],
           entities: entities
@@ -212,7 +213,7 @@ describe('HikeEditPoi reducers', () => {
       const action = new hikeEditPoiActions.SetOsmAmenityPoiSelected(['1']);
       entities['1'].selected = true;
       entities['2'].selected = true;
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         osmAmenityPois: {
           ids: ['1', '2'],
           entities: entities
@@ -250,9 +251,9 @@ describe('HikeEditPoi reducers', () => {
   describe('PatchOsmNaturalPois action', () => {
     it('should patch osmNatural pois', () => {
       const action = new hikeEditPoiActions.SetOsmNaturalPoisInGtrackDb(
-        pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
+        pois.map(p => p.elevation = 100).map(p => _pick(p, ['id', 'elevation']))
       );
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         osmNaturalPois: {
           ids: ['1', '2'],
           entities: entities
@@ -267,7 +268,7 @@ describe('HikeEditPoi reducers', () => {
   describe('SetOsmNaturalPoiSelected action', () => {
     it('should set osmNatural poi selected to true', () => {
       const action = new hikeEditPoiActions.SetOsmNaturalPoiSelected(['1']);
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         osmNaturalPois: {
           ids: ['1', '2'],
           entities: entities
@@ -281,7 +282,7 @@ describe('HikeEditPoi reducers', () => {
       const action = new hikeEditPoiActions.SetOsmNaturalPoiSelected(['1']);
       entities['1'].selected = true;
       entities['2'].selected = true;
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         osmNaturalPois: {
           ids: ['1', '2'],
           entities: entities
@@ -319,9 +320,9 @@ describe('HikeEditPoi reducers', () => {
   describe('PatchOsmRoutePois action', () => {
     it('should patch osmNRoute pois', () => {
       const action = new hikeEditPoiActions.SetOsmRoutePoisInGtrackDb(
-        pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
+        pois.map(p => p.elevation = 100).map(p => _pick(p, ['id', 'elevation']))
       );
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         osmRoutePois: {
           ids: ['1', '2'],
           entities: entities
@@ -336,7 +337,7 @@ describe('HikeEditPoi reducers', () => {
   describe('SetOsmRoutePoiSelected action', () => {
     it('should set osmRoute poi selected to true', () => {
       const action = new hikeEditPoiActions.SetOsmRoutePoiSelected(['1'])
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         osmRoutePois: {
           ids: ['1', '2'],
           entities: entities
@@ -350,7 +351,7 @@ describe('HikeEditPoi reducers', () => {
       const action = new hikeEditPoiActions.SetOsmRoutePoiSelected(['1']);
       entities['1'].selected = true;
       entities['2'].selected = true;
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         osmRoutePois: {
           ids: ['1', '2'],
           entities: entities
@@ -388,9 +389,9 @@ describe('HikeEditPoi reducers', () => {
   describe('PatchWikipediaPois action', () => {
     it('should patch wikipedia pois', () => {
       const action = new hikeEditPoiActions.SetWikipediaPoisInGtrackDb(
-        pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
+        pois.map(p => p.elevation = 100).map(p => _pick(p, ['id', 'elevation']))
       );
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         wikipediaPois: {
           ids: ['1', '2'],
           entities: entities
@@ -405,7 +406,7 @@ describe('HikeEditPoi reducers', () => {
   describe('SetWikipediaPoiSelected action', () => {
     it('should set wikipedia poi selected to true', () => {
       const action = new hikeEditPoiActions.SetWikipediaPoiSelected(['1']);
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         wikipediaPois: {
           ids: ['1', '2'],
           entities: entities
@@ -419,7 +420,7 @@ describe('HikeEditPoi reducers', () => {
       const action = new hikeEditPoiActions.SetWikipediaPoiSelected(['1']);
       entities['1'].selected = true;
       entities['2'].selected = true;
-      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+      const state = hikeEditPoiReducer(_merge({}, initialState, {
         wikipediaPois: {
           ids: ['1', '2'],
           entities: entities

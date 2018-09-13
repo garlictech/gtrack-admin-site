@@ -16,8 +16,9 @@ import { ConfirmationService } from 'primeng/primeng';
 import { MessageService } from 'primeng/api';
 import { IRouteStored } from 'subrepos/provider-client';
 
+import _pick from 'lodash-es/pick';
+import _values from 'lodash-es/values';
 import * as L from 'leaflet';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-hike-edit-route-planner',
@@ -124,8 +125,8 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .select(this._hikeEditRoutePlannerSelectors.getTotal)
       .takeUntil(this._destroy$)
       .subscribe((total: IHikeEditRoutePlannerTotalState) => {
-        const fields = _.pick(total, ['distance', 'uphill', 'downhill', 'time', 'score']);
-        if (_.values(fields).length > 0) {
+        const fields = _pick(total, ['distance', 'uphill', 'downhill', 'time', 'score']);
+        if (_values(fields).length > 0) {
           this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(fields, true));
         }
       });
@@ -139,7 +140,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   public retrievePlan() {
     this._store
       .select(this._editedHikeProgramSelectors.getRouteId)
-      .take(1)
       .switchMap((routeId: string) => this._store.select(this._routeSelectors.getRoute(routeId)).take(1))
       .take(1)
       .subscribe((storedRoute: any) => {
@@ -198,7 +198,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       id: '',
       timestamp: 0,
       bounds: route.bounds,
-      route: _.pick(route, ['type', 'features'])
+      route: _pick(route, ['type', 'features'])
     });
 
     this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({

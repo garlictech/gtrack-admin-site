@@ -3,7 +3,7 @@ import { hikeEditRoutePlannerReducer, initialRouteInfoDataState } from '../hike-
 import { hikeEditRoutePlannerActions } from '../../actions';
 import { IHikeEditRoutePlannerState } from '../..';
 
-import * as _ from 'lodash';
+import _merge from 'lodash-es/merge';
 
 describe('RouteInfoData reducers', () => {
   let initialState: IHikeEditRoutePlannerState;
@@ -59,7 +59,7 @@ describe('RouteInfoData reducers', () => {
   describe('PopSegment action', () => {
     it('should push segment', () => {
       const action = new hikeEditRoutePlannerActions.PopSegment();
-      const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
+      const state = hikeEditRoutePlannerReducer(_merge({}, initialState, {
         segments: [segmentData, segmentData]
       }), action);
 

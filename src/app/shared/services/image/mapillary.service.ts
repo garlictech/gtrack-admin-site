@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 
 import * as uuid from 'uuid/v1';
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
+import _cloneDeep from 'lodash-es/cloneDeep';
 import { IBackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
 import { EPoiImageTypes } from 'subrepos/provider-client';
 
@@ -18,7 +19,7 @@ export class MapillaryService {
       .get(request)
       .toPromise()
       .then((response: any) => {
-        const _features = _.get(response, 'features');
+        const _features = _get(response, 'features');
         const _images: IBackgroundImageDataStored[] = [];
 
         if (_features) {
@@ -44,7 +45,7 @@ export class MapillaryService {
                 url: `https://d1cuyjsrcm0gby.cloudfront.net/${_feature.properties.key}/thumb-320.jpg`,
                 width: 320
               },
-              additionalData: _.cloneDeep(_feature.properties)
+              additionalData: _cloneDeep(_feature.properties)
             }
 
             _images.push(_image);

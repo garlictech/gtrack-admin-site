@@ -3,13 +3,17 @@ import { IEditedHikeProgramState } from '../state';
 import { editedHikeProgramActions } from '../actions';
 import { EObjectState } from 'subrepos/provider-client';
 
-import * as _ from 'lodash';
+import _omit from 'lodash-es/omit';
+import _assign from 'lodash-es/assign';
+import _union from 'lodash-es/union';
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 export const initialEditedHikeProgramState: IEditedHikeProgramState = {
   data: {
     id: '',
     distance: 0,
     isRoundTrip: false,
+    feature: false,
     uphill: 0,
     downhill: 0,
     time: 0,
@@ -33,7 +37,7 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
   state = initialEditedHikeProgramState,
   action: editedHikeProgramActions.AllEditedHikeProgramActions
 ): IEditedHikeProgramState => {
-  let newState = _.cloneDeep(state);
+  let newState = _cloneDeep(state);
   switch (action.type) {
     case editedHikeProgramActions.RESET_HIKE_PROGRAM: {
       return initialEditedHikeProgramState;
@@ -46,7 +50,7 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
     }
 
     case editedHikeProgramActions.DELETE_TRANSLATED_HIKE_DESCRIPTION: {
-      newState.data.description = _.omit(newState.data.description, action.languageKey);
+      newState.data.description = _omit(newState.data.description, action.languageKey);
       newState.dirty = true;
       return newState;
     }
@@ -71,7 +75,7 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
     }
 
     case editedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS: {
-      newState.data = _.assign(newState.data, action.details);
+      newState.data = _assign(newState.data, action.details);
       if (action.setDirty) {
         newState.dirty = true;
       }
@@ -81,17 +85,17 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
 
     case editedHikeProgramActions.ADD_STOP: {
       newState.dirty = true;
-      newState.data.stops = _.union(state.data.stops, [action.stop])
+      newState.data.stops = _union(state.data.stops, [action.stop])
       return newState;
     }
 
     case editedHikeProgramActions.SET_STOPS: {
-      newState.data.stops = _.cloneDeep(action.stops)
+      newState.data.stops = _cloneDeep(action.stops)
       return newState;
     }
 
     case editedHikeProgramActions.SET_CHECKPOINTS: {
-      newState.data.checkpoints = _.cloneDeep(action.checkpoints)
+      newState.data.checkpoints = _cloneDeep(action.checkpoints)
       return newState;
     }
 

@@ -13,7 +13,8 @@ import { IGooglePoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
-import * as _ from 'lodash';
+import _map from 'lodash-es/map';
+import _take from 'lodash-es/take';
 
 const PURE_PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
 const PLACE_API_URL = `https://cors-anywhere.herokuapp.com/${PURE_PLACE_API_URL}`;
@@ -76,7 +77,7 @@ export class GooglePoiService {
             selected: false
           };
 
-          _pointData.types = _.map(_point.types, obj => {
+          _pointData.types = _map(_point.types, obj => {
             return obj === 'locality' ? 'city' : obj;
           });
 
@@ -147,7 +148,7 @@ export class GooglePoiService {
                 if (data.result.photos) {
                   let _placePhotos = data.result.photos;
                   if (environment.googlePhotoLimit) {
-                    _placePhotos = _.take(_placePhotos, environment.googlePhotoLimit);
+                    _placePhotos = _take(_placePhotos, environment.googlePhotoLimit);
                   }
 
                   for (let _photo of _placePhotos) {

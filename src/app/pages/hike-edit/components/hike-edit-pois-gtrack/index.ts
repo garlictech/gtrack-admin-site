@@ -14,7 +14,8 @@ import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
 } from '../../../../store/selectors';
 
-import * as _ from 'lodash';
+import _difference from 'lodash-es/difference';
+import _intersection from 'lodash-es/intersection';
 
 @Component({
   selector: 'app-hike-edit-pois-gtrack',
@@ -63,7 +64,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
         if (searchData) {
-          const missingPoiIds = _.difference((<any>searchData).results, _.intersection((<any>searchData).results, inStorePoiIds));
+          const missingPoiIds = _difference((<any>searchData).results, _intersection((<any>searchData).results, inStorePoiIds));
 
           // Get only the not-loaded pois
           if (missingPoiIds && missingPoiIds.length > 0) {

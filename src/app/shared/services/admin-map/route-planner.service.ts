@@ -9,12 +9,12 @@ import { AdminMap } from './lib/admin-map';
 import { AdminMapService } from './admin-map.service';
 
 import * as L from 'leaflet';
-import * as _ from 'lodash';
-import buffer from '@turf/buffer';
-import { lineString as turfLineString } from '@turf/helpers';
-import length from '@turf/length';
 import * as rewind from 'geojson-rewind';
-import * as d3 from 'd3';
+import _cloneDeep from 'lodash-es/cloneDeep';
+import turfBuffer from '@turf/buffer';
+import { lineString as turfLineString } from '@turf/helpers';
+import turfLength from '@turf/length';
+import { geoBounds as d3GeoBounds } from 'd3-geo';
 
 @Injectable()
 export class RoutePlannerService {
@@ -56,14 +56,14 @@ export class RoutePlannerService {
    * This is an initial loading method, the segment based route drawing will replace it.
    */
   public addRouteToTheStore(route) {
-    let _geoJSON = _.cloneDeep(route);
+    let _geoJSON = _cloneDeep(route);
 
     this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_geoJSON));
   }
 
   public addRouteSegment(coordinates, updown) {
     let _segment: ISegment = {
-      distance: length(turfLineString(coordinates), { units: 'kilometers' }) * 1000, // summary.totalDistance, // in meters
+      distance: turfLength(turfLineString(coordinates), { units: 'kilometers' }) * 1000, // summary.totalDistance, // in meters
       uphill: updown.uphill,
       downhill: updown.downhill,
       coordinates: coordinates
@@ -103,7 +103,7 @@ export class RoutePlannerService {
    * Create track from geoJson
    */
   private _createGeoJsonFromSegments(segments) {
-    let _geoJSON: any = _.cloneDeep(initialRouteDataState);
+    let _geoJSON: any = _cloneDeep(initialRouteDataState);
 
     for (let i in segments) {
       // Add segment coords to LineString
@@ -165,10 +165,10 @@ export class RoutePlannerService {
       .take(1)
       .subscribe((path) => {
         // declare as 'any' for avoid d3.geoBounds error
-        let _buffer: any = buffer(path, 1000, { units: 'meters' });
+        let _buffer: any = turfBuffer(path, 1000, { units: 'meters' });
 
         if (typeof _buffer !== 'undefined') {
-          let _geoBounds = d3.geoBounds(rewind(_buffer, true));
+          let _geoBounds = d3GeoBounds(rewind(_buffer, true));
 
           _bounds = {
             SouthWest: {

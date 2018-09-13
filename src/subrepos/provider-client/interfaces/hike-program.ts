@@ -67,6 +67,7 @@ export interface IHikeProgram {
   id?: string;
   distance: number;
   isRoundTrip: boolean;
+  feature: boolean;
   uphill: number;
   downhill: number;
   time: number;

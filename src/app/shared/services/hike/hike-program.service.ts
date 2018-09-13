@@ -10,9 +10,11 @@ import {
   ElevationService, GameRuleService, Route, RouteService, CheckpointService
 } from 'subrepos/gtrack-common-ngx';
 
-import * as _ from 'lodash';
-import length from '@turf/length';
-import * as d3 from 'd3';
+import _get from 'lodash-es/get';
+import _cloneDeep from 'lodash-es/cloneDeep';
+import _orderBy from 'lodash-es/orderBy';
+import turfLength from '@turf/length';
+import { select as d3Select } from 'd3-selection';
 import * as geojson2svg from 'geojson2svg';
 
 @Injectable()
@@ -41,13 +43,13 @@ export class HikeProgramService {
       )
       .take(1)
       .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
-        const poiStops = _.cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
+        const poiStops = _cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
 
         if (path.geometry.coordinates.length > 0) {
           poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
           poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
         }
-        this._updateStopsSegment(_.orderBy(poiStops, ['distanceFromOrigo']), path);
+        this._updateStopsSegment(_orderBy(poiStops, ['distanceFromOrigo']), path);
       });
   }
 
@@ -80,13 +82,13 @@ export class HikeProgramService {
    * Update stops' segment info
    */
   private _updateStopsSegment(stops: IHikeProgramStop[], path: any) {
-    if (_.get(path, 'geometry.coordinates', []).length > 0) {
+    if (_get(path, 'geometry.coordinates', []).length > 0) {
       let _segmentStartPoint =  path.geometry.coordinates[0];
 
       for (const stop of stops) {
         const _segmentEndPoint = [stop.lon, stop.lat];
         const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
-        const _segmentDistance = 1000 * length(_segmentPath, { units: 'kilometers' });
+        const _segmentDistance = 1000 * turfLength(_segmentPath, { units: 'kilometers' });
 
         stop.segment = {
           uphill: this._elevationService.calculateUphill((<any>_segmentPath).geometry.coordinates),
@@ -133,7 +135,7 @@ export class HikeProgramService {
     if (_elevationData) {
       const _div: HTMLDivElement = document.createElement('div');
 
-      d3.select(_div)
+      d3Select(_div)
         .append('svg')
         .attr('xmlns', 'http://www.w3.org/2000/svg')
         .attr('version', '1.1')

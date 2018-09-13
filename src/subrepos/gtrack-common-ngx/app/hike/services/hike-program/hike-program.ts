@@ -30,6 +30,7 @@ export class HikeProgram implements IHikeProgramStored {
   public backgroundImages?: IBackgroundImageData[];
   public offlineMap?: string;
   public isRoundTrip: boolean;
+  public feature: boolean;
   public timestamp: number;
   public stops: IHikeProgramStop[];
   public checkpoints: CheckpointSequence;
@@ -87,6 +88,7 @@ export class HikeProgram implements IHikeProgramStored {
       id: this.id,
       distance: this.distance,
       isRoundTrip: this.isRoundTrip,
+      feature: this.feature,
       uphill: this.uphill,
       downhill: this.downhill,
       time: this.time,

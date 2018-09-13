@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { IComparedProperty, IFilteredProperties } from '../../interfaces';
+
 import * as flatten from 'flat';
-import * as _ from 'lodash';
+import _omit from 'lodash-es/pick';
+import _uniq from 'lodash-es/uniq';
+import _set from 'lodash-es/set';
+import _isObject from 'lodash-es/isObject';
 
 @Injectable()
 export class PoiMergeService {
@@ -13,7 +17,7 @@ export class PoiMergeService {
     let objectTypes: string[] = [];
 
     for (const poi of pois) {
-      const flatPoi = flatten(_.omit(poi, ['id', 'lat', 'lon', 'elevation', 'published', 'positions', 'types', 'state', 'timestamp', 'objectType']));
+      const flatPoi = flatten(_omit(poi, ['id', 'lat', 'lon', 'elevation', 'published', 'positions', 'types', 'state', 'timestamp', 'objectType']));
       flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}]`;
 
       for (const key in flatPoi) {
@@ -24,19 +28,19 @@ export class PoiMergeService {
       }
 
       commonTypes = commonTypes.concat(poi.types.filter(t => ['unknown', 'undefined'].indexOf(t) < 0));
-      objectTypes = _.uniq(objectTypes.concat(poi.objectType));
+      objectTypes = _uniq(objectTypes.concat(poi.objectType));
     }
 
     // Remove duplicated values and empty objects
     for (const key in flatProperties) {
-      flatProperties[key] = flatProperties[key].filter(item => !(_.isObject(item) && Object.keys(item).length === 0));
-      flatProperties[key] = _.uniq(flatProperties[key]);
+      flatProperties[key] = flatProperties[key].filter(item => !(_isObject(item) && Object.keys(item).length === 0));
+      flatProperties[key] = _uniq(flatProperties[key]);
     }
 
     // Separate
     const filteredProperties: IFilteredProperties = {
       unique: {
-        types: _.uniq(commonTypes),
+        types: _uniq(commonTypes),
         objectTypes: objectTypes
       },
       conflicts: {}
@@ -57,7 +61,7 @@ export class PoiMergeService {
     let poiData = {};
 
     for (const key in flatProperties) {
-      _.set(poiData, key, flatProperties[key]);
+      _set(poiData, key, flatProperties[key]);
     }
 
     return poiData;

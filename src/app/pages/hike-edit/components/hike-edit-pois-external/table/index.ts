@@ -6,7 +6,7 @@ import { State } from '../../../../../store';
 import { hikeEditPoiActions } from '../../../../../store/actions';
 import { EPoiTypes } from 'subrepos/provider-client';
 
-import * as _ from 'lodash';
+import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-hike-edit-pois-external-table',
@@ -50,7 +50,7 @@ export class HikeEditPoisExternalTableComponent {
           return !!p.onRoute === this.onRouteCheck && !p.inCollector && !p.inGtrackDb;
         });
 
-        this.handlePoiSelection(_.map(clickablePois, 'id'));
+        this.handlePoiSelection(_map(clickablePois, 'id'));
       });
   }
 }
