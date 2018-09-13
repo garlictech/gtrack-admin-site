@@ -292,4 +292,12 @@ export class HikeEditComponent implements OnInit, OnDestroy {
   public openPreview() {
     this.displayPreview = true;
   }
+
+  public handleHikeProgramFeature() {
+    this.hikeProgramData$
+      .take(1)
+      .subscribe((hikeProgramData: IHikeProgramStored) => {
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true));
+      })
+  }
 }

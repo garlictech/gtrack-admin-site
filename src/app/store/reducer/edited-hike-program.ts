@@ -10,6 +10,7 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
     id: '',
     distance: 0,
     isRoundTrip: false,
+    feature: false,
     uphill: 0,
     downhill: 0,
     time: 0,

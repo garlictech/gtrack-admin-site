@@ -42,6 +42,7 @@ export interface IDetails {
   routeId?: string;
   difficulty?: number;
   isRoundTrip?: boolean;
+  feature?: boolean;
   distance?: number;
   uphill?: number;
   downhill?: number;
