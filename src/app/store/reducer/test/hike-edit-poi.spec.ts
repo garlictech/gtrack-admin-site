@@ -2,7 +2,7 @@ import { EPoiTypes } from '../../../../subrepos/provider-client';
 import {
   hikeEditPoiReducer, wikipediaPoiInitialState, googlePoiInitialState, osmAmenityPoiInitialState, osmNaturalPoiInitialState, osmRoutePoiInitialState, externalPoiInitialContextState, initialGTrackPoiMergeState, poiCollectorInitialState
 } from '../hike-edit-poi';
-import { IHikeEditPoiState } from '../..';
+import { IHikeEditPoiState } from '../../index';
 import { hikeEditPoiActions } from '../../actions';
 import { IExternalPoi } from '../../../shared/interfaces';
 
