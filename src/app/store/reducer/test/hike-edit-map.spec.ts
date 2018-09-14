@@ -2,7 +2,7 @@ import { initialMapState, hikeEditMapReducer } from '../hike-edit-map';
 import { IHikeEditMapState } from '../../state/hike-edit-map';
 import { adminMapActions } from '../../actions';
 
-import _cloneDeep from 'lodash-es/cloneDeep';
+import * as _ from 'lodash';
 
 describe('HikeEditMap reducers', () => {
   let initialState: IHikeEditMapState;
@@ -10,7 +10,7 @@ describe('HikeEditMap reducers', () => {
   let entities: any;
 
   beforeEach(() => {
-    initialState = _cloneDeep(initialMapState);
+    initialState = _.cloneDeep(initialMapState);
 
     markers = [
       { id: '1', lat: 0, lon: 0, title: 'Marker #1' },

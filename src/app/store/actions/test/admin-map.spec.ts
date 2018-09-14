@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import * as AdminMapActions from '../admin-map';
 
 describe('AdminMap actions', () => {

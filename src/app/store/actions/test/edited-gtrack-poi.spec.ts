@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import { IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import * as EditedGTrackPoiActions from '../edited-gtrack-poi';
 

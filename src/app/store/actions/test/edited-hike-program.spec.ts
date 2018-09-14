@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import * as EditedHikeProgramActions from '../edited-hike-program';
 import { IHikeProgramStop, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import { IGTrackPoi } from '../../../shared/interfaces';
