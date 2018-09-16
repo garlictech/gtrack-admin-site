@@ -1,4 +1,5 @@
-import { Store } from '@ngrx/store';
+import { filter } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import { Component, Input } from '@angular/core';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { Observable } from 'rxjs';
@@ -33,7 +34,11 @@ export class CheckpointsComponent {
         .filter(checkpoint => !/^endpoint/.test(checkpoint.id))
         .map(checkpoint => checkpoint.id);
 
-      this.pois$ = this._store.select(this._poiSelectors.getPoiEntities(poiIds)).filter(pois => !_.isEmpty(pois));
+      this.pois$ = this._store
+        .pipe(
+          select(this._poiSelectors.getPoiEntities(poiIds)),
+          filter(pois => !_.isEmpty(pois))
+        );
 
       this._store.dispatch(new poiActions.LoadPois(poiIds));
     }

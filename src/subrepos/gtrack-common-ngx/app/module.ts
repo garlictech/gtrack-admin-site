@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { JsonpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 import * as Raven from 'raven-js';
 
@@ -29,7 +28,6 @@ export class RavenErrorHandler implements ErrorHandler {
   imports: [
     CommonModule,
     HttpClientModule,
-    JsonpModule,
     MapModule,
     MapComponentsModule,
     HikeModule,

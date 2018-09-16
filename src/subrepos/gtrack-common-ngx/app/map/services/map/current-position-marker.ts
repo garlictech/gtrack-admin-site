@@ -1,7 +1,8 @@
+import { take } from 'rxjs/operators';
 import * as L from 'leaflet';
 import 'leaflet-usermarker';
 import 'leaflet-spin';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 import { selectCurrentLocation } from '../../../store';
 
@@ -23,8 +24,10 @@ export class CurrentPositionMarker {
     this.map.spin(true);
 
     this._store
-      .select(selectCurrentLocation)
-      .take(1)
+      .pipe(
+        select(selectCurrentLocation),
+        take(1)
+      )
       .subscribe(geoPosition => {
         if (!this.marker) {
           this.marker = L.userMarker([geoPosition.coords.latitude, geoPosition.coords.longitude], {

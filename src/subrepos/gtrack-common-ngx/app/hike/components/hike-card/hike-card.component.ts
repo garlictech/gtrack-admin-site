@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IHikeProgram, IBackgroundImageData } from '../../../../../provider-client';
+import { IHikeProgram } from '../../../../../provider-client';
 import * as _ from 'lodash';
 
 @Component({

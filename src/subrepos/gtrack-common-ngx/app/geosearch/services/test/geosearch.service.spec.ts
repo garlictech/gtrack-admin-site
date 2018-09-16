@@ -3,7 +3,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 
-import { DeepstreamService, DeepstreamModule } from 'subrepos/gtrack-common-ngx';
+import { DeepstreamService } from 'subrepos/gtrack-common-ngx';
 import { IGeospatialBoxSearchPayload, IGeospatialCircleSearchPayload } from 'subrepos/provider-client';
 
 import { GeoSearchService } from '../geosearch.service';
@@ -28,14 +28,14 @@ describe('GeoSearchService', () => {
       ]
     });
 
-    let deepstreamService = TestBed.get(DeepstreamService);
+    const deepstreamService = TestBed.get(DeepstreamService);
 
     service = TestBed.get(GeoSearchService);
   });
 
   describe('searchInBox', () => {
     it('should call the provider', async () => {
-      let query: IGeospatialBoxSearchPayload = {
+      const query: IGeospatialBoxSearchPayload = {
         table: 'test',
         box: {
           type: 'Polygon',
@@ -43,7 +43,7 @@ describe('GeoSearchService', () => {
         }
       };
 
-      let result = await service.searchBox(query).toPromise();
+      const result = await service.searchBox(query).toPromise();
 
       expect(spy).toHaveBeenCalledWith('open.geo.query.includedInBox', {
         payload: query
@@ -53,7 +53,7 @@ describe('GeoSearchService', () => {
 
   describe('searchInCircle', () => {
     it('should call the provider', async () => {
-      let query: IGeospatialCircleSearchPayload = {
+      const query: IGeospatialCircleSearchPayload = {
         table: 'test',
         circle: {
           radius: 500,
@@ -61,7 +61,7 @@ describe('GeoSearchService', () => {
         }
       };
 
-      let result = await service.searchCircle(query).toPromise();
+      const result = await service.searchCircle(query).toPromise();
 
       expect(spy).toHaveBeenCalledWith('open.geo.query.includedInCircle', {
         payload: query

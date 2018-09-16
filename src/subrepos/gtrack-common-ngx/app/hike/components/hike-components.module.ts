@@ -27,6 +27,8 @@ import { MapModule } from '../../map/map.module';
 import { SharedModule } from '../../shared/shared.module';
 import { SearchFiltersModule } from '../../search-filters/search-filters.module';
 import { SearchResultsMapComponent } from './search-results-map';
+import { HikeListMapComponent } from './hike-list-map';
+import { PoiMapComponent } from './poi-map';
 
 import { LocalizeModule } from '../../localize';
 import { ObjectMarkModule } from '../../object-mark';
@@ -43,7 +45,9 @@ const COMPONENTS = [
   SearchFiltersComponent,
   SearchResultsMapComponent,
   DownloadGpxButtonComponent,
-  BookmarkComponent
+  BookmarkComponent,
+  HikeListMapComponent,
+  PoiMapComponent
 ];
 
 @NgModule({

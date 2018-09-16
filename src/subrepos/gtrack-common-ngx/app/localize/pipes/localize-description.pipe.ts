@@ -1,13 +1,10 @@
 import { Pipe, PipeTransform, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ILocalizedItem, ITextualDescription } from '../../../../provider-client';
-import { Observable } from 'rxjs';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { DescriptionLanguageListService } from '../services';
 
 import * as _ from 'lodash';
-
-import 'rxjs/add/operator/take';
 
 @Pipe({
   name: 'localizeDescription',
@@ -15,7 +12,6 @@ import 'rxjs/add/operator/take';
 })
 export class LocalizeDescriptionPipe implements PipeTransform, OnDestroy {
   private _valueChange: Subscription;
-  private _language = 'en_US';
   private _value: ITextualDescription;
 
   constructor(private _ref: ChangeDetectorRef, private _descriptionLanguageList: DescriptionLanguageListService) {}

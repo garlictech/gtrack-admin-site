@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
@@ -27,7 +28,9 @@ export class RouteService {
     return this._deepstream
       .getRecord<IRouteStored>(`routes/${id}`)
       .get()
-      .take(1);
+      .pipe(
+        take(1)
+      );
   }
 
   public create(route: IRoute) {
@@ -41,7 +44,9 @@ export class RouteService {
         table: 'routes',
         state: state
       })
-      .take(1);
+      .pipe(
+       take(1)
+      );
   }
 
   public getBounds(track: GeoJSON.FeatureCollection<any>): IBounds {

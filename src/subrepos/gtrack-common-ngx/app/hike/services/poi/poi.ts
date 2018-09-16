@@ -1,4 +1,4 @@
-import { IPoi, EPoiTypes, ILocalizedItem, ITextualDescription } from '../../../../../provider-client';
+import { IPoi, EPoiTypes, ILocalizedItem, ITextualDescription, IBackgroundImageData } from '../../../../../provider-client';
 import * as _ from 'lodash';
 
 export class Poi implements IPoi {
@@ -10,6 +10,7 @@ export class Poi implements IPoi {
   public types: string[] = [];
   public description: ILocalizedItem<ITextualDescription>;
   public tags: string[] = [];
+  public backgroundImages: IBackgroundImageData[];
 
   public constructor(data: IPoi) {
     const converted = _.cloneDeep(data);

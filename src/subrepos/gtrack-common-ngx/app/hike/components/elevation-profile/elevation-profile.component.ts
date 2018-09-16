@@ -1,4 +1,5 @@
-import { Store } from '@ngrx/store';
+import { map, filter, takeUntil } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 
 import {
   Component,
@@ -14,7 +15,6 @@ import {
 } from '@angular/core';
 
 import * as d3 from 'd3';
-import * as _ from 'lodash';
 
 import { State } from 'app/store';
 import { Subject } from 'rxjs';
@@ -129,8 +129,10 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     this._store
-      .select(this._routeSelectors.getRouteContext(routeId))
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._routeSelectors.getRouteContext(routeId)),
+        takeUntil(this._destroy$)
+      )
       .subscribe(context => {
         if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
           this._store.dispatch(new routeActions.LoadRoute(routeId));
@@ -138,14 +140,16 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       });
 
     this._store
-      .select(this._routeSelectors.getRoute(routeId))
-      .takeUntil(this._destroy$)
-      .filter(route => typeof route !== 'undefined')
-      .map(route => {
-        if (route) {
-          return new Route(route);
-        }
-      })
+      .pipe(
+        select(this._routeSelectors.getRoute(routeId)),
+        takeUntil(this._destroy$),
+        filter(route => typeof route !== 'undefined'),
+        map(route => {
+          if (route) {
+            return new Route(route);
+          }
+        })
+      )
       .subscribe(route => {
         if (!route) {
           throw new Error(`Route ${routeId} is unknown`);

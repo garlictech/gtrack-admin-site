@@ -5,7 +5,6 @@ import { routeReducer, routeReducerInitialState, routeContextReducerInitialState
 import { IRoute, IRouteStored } from 'subrepos/provider-client';
 import * as actions from '../actions';
 import { IRouteState } from '../state';
-import { Route } from '../../../services/route';
 
 describe('Route reducer', () => {
   let initialState: IRouteState;

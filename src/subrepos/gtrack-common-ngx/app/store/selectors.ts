@@ -1,6 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-import { CommonState } from './state';
 import { IBackgroundGeolocationState } from './reducers/background-geolocation';
 
 // Geolocation selectors

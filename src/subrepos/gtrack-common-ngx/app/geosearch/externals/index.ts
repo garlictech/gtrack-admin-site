@@ -1,5 +1,4 @@
 import { InjectionToken } from '@angular/core';
-import { MemoizedSelector } from '@ngrx/store';
 
 export interface IExternalGeoSearchDependencies {
   storeDomain: string;

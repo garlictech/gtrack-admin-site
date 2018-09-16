@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { ChangeDetectorRef } from '@angular/core';
-import { StoreModule, Store } from '@ngrx/store';
 // import { Selectors } from 'subrepos/gtrack-common-web/language';
 
 import 'rxjs/add/operator/take';
@@ -37,7 +36,7 @@ describe('LocalizeDescriptionPipe', () => {
     }
   }
 
-  let state = {
+  const state = {
     language: 'en_US'
   };
 

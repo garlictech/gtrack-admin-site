@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, combineReducers } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 
 import * as actions from '../actions';
@@ -45,7 +45,7 @@ describe('SearchFilters selectors', () => {
   describe('getFilters', () => {
     it('should return the filters', () => {
       let results;
-      let selectors: SearchFiltersSelectors = TestBed.get(SearchFiltersSelectors);
+      const selectors: SearchFiltersSelectors = TestBed.get(SearchFiltersSelectors);
 
       store
         .select(selectors.getFilters)
@@ -68,7 +68,7 @@ describe('SearchFilters selectors', () => {
   describe('getFilter', () => {
     it('should return a filter', () => {
       let result;
-      let selectors: SearchFiltersSelectors = TestBed.get(SearchFiltersSelectors);
+      const selectors: SearchFiltersSelectors = TestBed.get(SearchFiltersSelectors);
 
       store
         .select(selectors.getFilter('radius'))

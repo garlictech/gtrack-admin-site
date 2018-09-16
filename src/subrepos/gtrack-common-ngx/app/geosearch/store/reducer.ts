@@ -1,9 +1,7 @@
 import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
-import * as _ from 'lodash';
 
 import {
   IAllGeoSearchContextState,
-  IGeoSearchContextState,
   IGeoSearchEntityState,
   IGeoSearchState,
   geoSearchAdapter,

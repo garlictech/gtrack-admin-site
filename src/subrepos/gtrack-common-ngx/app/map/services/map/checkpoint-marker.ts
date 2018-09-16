@@ -2,7 +2,6 @@ import * as L from 'leaflet';
 import * as _ from 'lodash';
 
 import { Checkpoint } from '../../../hike/services/checkpoint';
-import { Poi } from '../../../hike/services/poi';
 import { IconService } from '../icon';
 import { IHikeProgramStop } from '../../../../../provider-client';
 

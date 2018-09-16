@@ -8,7 +8,6 @@ import { IPoi, IPoiStored } from '../../../../../provider-client';
 import { Dictionary } from '@ngrx/entity/src/models';
 
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class PoiSelectors {
@@ -18,8 +17,8 @@ export class PoiSelectors {
   public getAllPoiEntities: (state: object) => Dictionary<IPoi>;
   public getAllContexts: (state: object) => IPoiContextState[];
   public getAllContextEntities: (state: object) => Dictionary<IPoiContextState>;
-
-  private _externals: IExternalPoiDependencies;
+  protected _selectPoiEntities: (state: object) => Dictionary<IPoiStored>;
+  protected _externals: IExternalPoiDependencies;
 
   constructor(@Inject(EXTERNAL_POI_DEPENDENCIES) externals) {
     this._externals = externals;
@@ -37,6 +36,7 @@ export class PoiSelectors {
     this.getAllPoiEntities = selectors.selectEntities;
     this.getAllContexts = contextSelectors.selectAll;
     this.getAllContextEntities = contextSelectors.selectEntities;
+    this._selectPoiEntities = selectors.selectEntities;
   }
 
   public getPoi(context: string) {

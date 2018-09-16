@@ -1,5 +1,6 @@
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Store, createFeatureSelector, MemoizedSelector, createSelector } from '@ngrx/store';
+import { Store, createFeatureSelector, createSelector, select } from '@ngrx/store';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 
@@ -21,17 +22,21 @@ export class LocalizeSelectors {
   }
 
   getCurrentLanguage(): Observable<string> {
-    return this._store.select(currentLanguage);
+    return this._store.pipe(select(currentLanguage));
   }
 
   getDescriptionLanguageList(): Observable<string[]> {
-    return this._store.select(descriptionLanguageList);
+    return this._store.pipe(select(descriptionLanguageList));
   }
 
   getLanguageSettings(): Observable<ILocalizationState> {
-    return this._store.select(selectFeature).map(state => ({
-      actualLanguage: _.get(state, 'language', 'en_US'),
-      descriptionLanguageList: _.get(state, 'descriptionLanguageList', [])
-    }));
+    return this._store
+      .pipe(
+        select(selectFeature),
+        map(state => ({
+          actualLanguage: _.get(state, 'language', 'en_US'),
+          descriptionLanguageList: _.get(state, 'descriptionLanguageList', [])
+        }))
+      );
   }
 }

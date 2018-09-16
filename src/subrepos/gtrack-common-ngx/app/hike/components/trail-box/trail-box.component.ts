@@ -1,3 +1,5 @@
+import { take, map as rxjsMap, filter, takeUntil } from 'rxjs/operators';
+
 import {
   Component,
   Input,
@@ -13,7 +15,7 @@ import {
 
 import { faCrosshairs, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as _ from 'lodash';
 
 import bbox from '@turf/bbox';
@@ -35,12 +37,11 @@ import { Route } from '../../services/route';
 import { LeafletComponent, Center } from '../../../map';
 
 import * as L from 'leaflet';
-import { Observable } from 'rxjs';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { IPoi } from '../../../../../provider-client';
 
 @Component({
-  selector: 'gc-trail-box',
+  selector: 'gtcn-trail-box',
   template: ''
 })
 export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
@@ -115,20 +116,28 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
     const pois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
     const route = this.hikeProgram.routeId;
 
-    this.pois$ = this._store.select(this._poiSelectors.getPois(pois));
-    this.route$ = this._store.select(this._routeSelectors.getRoute(route)).map(data => {
-      if (data) {
-        return new Route(data);
-      }
-    });
+    this.pois$ = this._store.pipe(select(this._poiSelectors.getPois(pois)));
+    this.route$ = this._store
+      .pipe(
+        select(this._routeSelectors.getRoute(route)),
+        rxjsMap(data => {
+          if (data) {
+            return new Route(data);
+          }
+        })
+      );
 
     this._store.dispatch(new poiActions.LoadPois(pois));
 
-    this._store.select(this._routeSelectors.getRouteContext(route)).subscribe(context => {
-      if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
-        this._store.dispatch(new routeActions.LoadRoute(route));
-      }
-    });
+    this._store
+      .pipe(
+        select(this._routeSelectors.getRouteContext(route))
+      )
+      .subscribe(context => {
+        if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
+          this._store.dispatch(new routeActions.LoadRoute(route));
+        }
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -146,8 +155,10 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
     const map = this.map.map;
 
     this.route$
-      .filter((route: Route) => typeof route !== 'undefined')
-      .takeUntil(this._destroy$)
+      .pipe(
+        filter((route: Route) => typeof route !== 'undefined'),
+        takeUntil(this._destroy$)
+      )
       .subscribe((route: Route) => {
         this.route = route;
         this.clearGeoJson();
@@ -207,8 +218,10 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
       });
 
     this.pois$
-      .filter(pois => !_.isEmpty(pois))
-      .take(1)
+      .pipe(
+        filter(pois => !_.isEmpty(pois)),
+        take(1)
+      )
       .subscribe(pois => {
         map.pointMarker.removeMarkers();
         map.pointMarker.addMarkers(pois, this.hikeProgram.stops);

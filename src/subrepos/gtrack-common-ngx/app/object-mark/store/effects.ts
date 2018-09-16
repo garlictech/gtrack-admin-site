@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
-import { mergeMap, map, delay, take } from 'rxjs/operators';
+import { mergeMap, map, take } from 'rxjs/operators';
 
 import * as LocalActions from './actions';
 import { ObjectMarkService } from '../services';
@@ -12,8 +12,8 @@ import { ObjectMarkService } from '../services';
 export class ObjectMarkEffects {
   @Effect()
   public loadContext$: Observable<Action> = this._actions$
-    .ofType<LocalActions.LoadContext>(LocalActions.ObjectMarkActionTypes.LOAD_CONTEXT)
     .pipe(
+      ofType<LocalActions.LoadContext>(LocalActions.ObjectMarkActionTypes.LOAD_CONTEXT),
       mergeMap(action => {
         return this._objectMark.loadContext(action.context).pipe(
           take(1),
@@ -24,8 +24,8 @@ export class ObjectMarkEffects {
 
   @Effect()
   public markObject$: Observable<Action> = this._actions$
-    .ofType<LocalActions.MarkObject>(LocalActions.ObjectMarkActionTypes.MARK_OBJECT)
     .pipe(
+      ofType<LocalActions.MarkObject>(LocalActions.ObjectMarkActionTypes.MARK_OBJECT),
       mergeMap(action => {
         return this._objectMark.mark(action.context, action.object, action.mark).pipe(
           take(1),
@@ -34,5 +34,5 @@ export class ObjectMarkEffects {
       })
     );
 
-  constructor(private _actions$: Actions, private _store: Store<any>, private _objectMark: ObjectMarkService) {}
+  constructor(private _actions$: Actions, private _objectMark: ObjectMarkService) {}
 }

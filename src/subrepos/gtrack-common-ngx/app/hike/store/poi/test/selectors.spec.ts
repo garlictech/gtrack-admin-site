@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { APP_BASE_HREF } from '@angular/common';
-import { Store, StoreModule, combineReducers } from '@ngrx/store';
-import { IPoi, IPoiStored } from 'subrepos/provider-client';
+import { Store, StoreModule } from '@ngrx/store';
+import { IPoiStored } from 'subrepos/provider-client';
 import { Subject } from 'rxjs/Subject';
 import * as _ from 'lodash';
 
@@ -56,7 +54,7 @@ describe('Poi selectors', () => {
   describe('getPoiIds', () => {
     it('should return all poi ids', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getPoiIds)
@@ -73,7 +71,7 @@ describe('Poi selectors', () => {
   describe('getAllPois', () => {
     it('should return all pois', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getAllPois)
@@ -90,7 +88,7 @@ describe('Poi selectors', () => {
   describe('getAllPoiEntities', () => {
     it('should return all pois with ids', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getAllPoiEntities)
@@ -108,7 +106,7 @@ describe('Poi selectors', () => {
   describe('getPoi', () => {
     it('should return poi by id', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getPoi(ids[0]))
@@ -125,7 +123,7 @@ describe('Poi selectors', () => {
   describe('getAllPoisCount', () => {
     it('should return pois count', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getAllPois)
@@ -142,7 +140,7 @@ describe('Poi selectors', () => {
   describe('getPois', () => {
     it('should return pois by id', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getPois(ids))
@@ -159,7 +157,7 @@ describe('Poi selectors', () => {
   describe('getPoiEntities', () => {
     it('should return pois as entities by id', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getPoiEntities(ids))

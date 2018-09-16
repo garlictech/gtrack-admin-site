@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
-import { IDeepstreamState } from '../../deepstream';
-
 import { Selectors as DeepstreamSelectors } from '../../../../deepstream-ngx';
 
 import { User, IAuthenticationState as IJwtAuthState, IAuth } from '../../../../authentication-api-ngx';
@@ -40,8 +38,6 @@ export class Selectors {
   public selectUserId: MemoizedSelector<object, string>;
 
   constructor(private _deepstreamSelectors: DeepstreamSelectors) {
-    const selectDeepstreamFeature = createFeatureSelector<IDeepstreamState>('deepstream');
-
     const selectUiFeature = createSelector(selectAuthFeature, (state: IAuthenticationState) => state.uiState);
 
     this.auth = selectAuth;
