@@ -1,5 +1,5 @@
 import * as EditedHikeProgramActions from '../edited-hike-program';
-import { IHikeProgramStop, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
+import { IHikeProgramStop, IBackgroundImageData, EPoiImageTypes } from '../../../../subrepos/provider-client';
 import { IGTrackPoi } from '../../../shared/interfaces';
 
 describe('EditedHikeProgram actions', () => {
@@ -171,6 +171,8 @@ describe('EditedHikeProgram actions', () => {
   it('should create AddBackgroundImage action', () => {
     const imageData: IBackgroundImageData = {
       title: 'title',
+      lat: 0,
+      lon: 0,
       original: {
         url: '...',
         width: 100,
