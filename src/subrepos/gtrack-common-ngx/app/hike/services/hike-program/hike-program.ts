@@ -29,7 +29,6 @@ export class HikeProgram implements IHikeProgramStored {
   public isRoundTrip: boolean;
   public feature: boolean;
   public timestamp: number;
-  public feature: boolean;
   public stops: IHikeProgramStop[];
   public checkpoints: CheckpointSequence;
   public state: EObjectState;
@@ -85,7 +84,6 @@ export class HikeProgram implements IHikeProgramStored {
       id: this.id,
       distance: this.distance,
       isRoundTrip: this.isRoundTrip,
-      feature: this.feature,
       uphill: this.uphill,
       downhill: this.downhill,
       time: this.time,
