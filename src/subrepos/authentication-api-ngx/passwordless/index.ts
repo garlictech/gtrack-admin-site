@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AuthModule } from '../auth';
 
@@ -8,7 +8,7 @@ import { PasswordlessSuccessComponent } from './passwordless-success.component';
 
 @NgModule({
   declarations: [PasswordlessSuccessComponent],
-  imports: [HttpModule, AuthModule],
+  imports: [HttpClientModule, AuthModule],
   exports: [PasswordlessSuccessComponent],
   providers: [PasswordlessService]
 })

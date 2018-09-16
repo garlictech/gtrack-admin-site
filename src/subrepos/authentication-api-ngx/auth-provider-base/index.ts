@@ -1,42 +1,48 @@
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import { OauthWindowService } from '../oauth-window';
-import { Deferred } from '../deferred';
 import { AuthService } from '../auth';
-import { DebugLog } from '../log';
+import { DebugLog, log } from '../log';
 import { IAuth } from '../store';
 
-export class AuthProviderBase {
-  protected deferred: Deferred = new Deferred();
+import { Observable, ReplaySubject, of } from 'rxjs';
+import { switchMap, catchError, take } from 'rxjs/operators';
 
-  constructor(protected oauthWindow: OauthWindowService, protected http: Http, protected auth: AuthService) {}
+export class AuthProviderBase {
+  protected _subject: ReplaySubject<any> = new ReplaySubject<any>(1);
+
+  constructor(protected oauthWindow: OauthWindowService, protected http: HttpClient, protected auth: AuthService) {}
 
   /**
    * Send oauth_token and oauth_secret to API for jwt token
    */
   @DebugLog
-  public restApiLogin(accessToken: string, url: string, roles?: string[]): Promise<IAuth> {
-    const options: any = {
+  public restApiLogin(accessToken: string, url: string, roles?: string[]): Observable<IAuth> {
+    const body: any = {
       /* jshint camelcase: false */
-      access_token: accessToken
+      access_token: accessToken,
       /* jshint camelcase: true */
     };
 
     if (roles) {
-      options.roles = roles;
+      body.roles = roles;
     }
 
-    return this.http
-      .post(url, options)
-      .toPromise()
-      .then(response => {
-        const body = response.json();
-        const data = body;
-        const token = data.token;
-        const refreshToken = data.refreshToken;
+    log.data('Rest api login: ', url);
 
-        return this.auth.init(token, refreshToken);
-      });
+    return this.http
+      .post<{
+        token: string,
+        refreshToken: string
+      }>(url, body)
+      .pipe(
+        switchMap(data => {
+          const token = data.token;
+          const refreshToken = data.refreshToken;
+
+          return this.auth.init(token, refreshToken);
+        })
+      );
   }
 
   /**
@@ -49,14 +55,18 @@ export class AuthProviderBase {
     tokenUrl: string,
     permissions: string,
     roles?: string[]
-  ): Promise<IAuth> {
-    return this._login(loginUrl, redirectUri, permissions).then(response => {
-      /* jshint camelcase: false */
-      const accessToken = response.access_token;
-      /* jshint camelcase: true */
+  ): Observable<IAuth> {
+    return this._login(loginUrl, redirectUri, permissions)
+      .pipe(
+        take(1),
+        switchMap(response => {
+          /* jshint camelcase: false */
+          const accessToken = response.access_token;
+          /* jshint camelcase: true */
 
-      return this.restApiLogin(accessToken, tokenUrl, roles);
-    });
+          return this.restApiLogin(accessToken, tokenUrl, roles);
+        })
+      );
   }
 
   @DebugLog
@@ -74,7 +84,7 @@ export class AuthProviderBase {
   }
 
   @DebugLog
-  protected _oauthCallback(url: string) {
+  public oauthCallback(url: string) {
     let data: any;
     let queryString: string;
 
@@ -82,22 +92,25 @@ export class AuthProviderBase {
       queryString = url.substr(url.indexOf('#') + 1);
       data = this._parseQueryString(queryString);
 
-      this.deferred.resolve(data);
+      this._subject.next(data);
+      this._subject.complete();
     } else {
       if (url.indexOf('error=') > 0) {
         queryString = url.substring(url.indexOf('?') + 1, url.indexOf('#'));
         data = this._parseQueryString(queryString);
       }
 
-      this.deferred.reject({
+      this._subject.error({
         error: 'Not authorized',
         data: data
       });
+
+      this._subject.complete();
     }
   }
 
   @DebugLog
-  protected _login(loginUrl: string, redirectUri: string, permissions: string): Promise<any> {
+  protected _login(loginUrl: string, redirectUri: string, permissions: string): Observable<any> {
     loginUrl += '&redirect_uri=' + redirectUri + '&response_type=token';
 
     if (permissions) {
@@ -106,13 +119,22 @@ export class AuthProviderBase {
 
     this.oauthWindow
       .open(loginUrl, 'access_token')
-      .then(url => {
-        this._oauthCallback(url);
+      .pipe(
+        take(1),
+        switchMap(url => {
+          this.oauthCallback(url);
 
-        return this.deferred.promise;
-      })
-      .catch(err => this.deferred.reject(err));
+          return this._subject.asObservable();
+        }),
+        catchError(err => {
+          this._subject.error(err);
+          this._subject.complete();
 
-    return this.deferred.promise;
+          return of(undefined);
+        })
+      )
+      .subscribe();
+
+    return this._subject.asObservable();
   }
 }

@@ -1,32 +1,32 @@
-import { Injectable, Injector } from '@angular/core';
-import { WindowService } from '../../window';
-import { Deferred } from '../../deferred';
-import { Emitter } from '../../emitter';
+import { Injectable } from '@angular/core';
+import { Observable, Subject, ReplaySubject } from 'rxjs';
 
 @Injectable()
-export class OauthWindowMockService extends Emitter {
-  public deferred: Deferred;
+export class OauthWindowMockService {
+  public subject: ReplaySubject<string>;
 
-  constructor(private windowService: WindowService) {
-    super();
-    this.deferred = new Deferred();
+  public changeUrl$: Subject<string>;
+
+  constructor() {
+    this.subject = new ReplaySubject<string>(1);
+    this.changeUrl$ = new Subject<string>();
   }
 
   public callback = (url: string) => {
     /* EMPTY ON PURPOSE */
-  };
+  }
 
-  public open(loginUrl: string, parameter = 'access_token'): Promise<any> {
+  public open(loginUrl: string, parameter = 'access_token'): Observable<any> {
     this.changeUrl(loginUrl);
-    return this.deferred.promise;
+    return this.subject.asObservable();
   }
 
   public close(): void {
-    // Do nothing
+    // do nothing
   }
 
   public changeUrl(url: string): void {
-    this.emit('changeurl', url);
+    this.changeUrl$.next(url);
 
     if (url) {
       this.callback(url);

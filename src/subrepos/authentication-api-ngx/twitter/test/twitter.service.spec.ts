@@ -1,47 +1,46 @@
-import { Http } from '@angular/http';
-import { Component, Injector } from '@angular/core';
-import { TestBed, inject, async } from '@angular/core/testing';
-import { BaseRequestOptions, ResponseOptions, XHRBackend, Response, RequestMethod } from '@angular/http';
-import { MockBackend, MockConnection } from '@angular/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Subject } from 'rxjs/Subject';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { take, filter } from 'rxjs/operators';
 
 import { OauthWindowService } from '../../oauth-window';
 import { WindowModule, WindowService } from '../../window';
 import { TwitterService } from '../twitter.service';
 import { AuthService } from '../../auth';
 import { Reducer as authReducer } from '../../store';
-import { AUTH_CONFIG_TOKEN, defaultAuthenticationApiConfig, AuthenticationApiModule } from '../../lib';
+import { AUTH_CONFIG_TOKEN, defaultAuthenticationApiConfig } from '../../lib';
 import { ApiModule } from '../../api';
 import { OauthWindowMockService } from '../../oauth-window/test/oauth-window.service.mock';
 import { LocalStorage } from '../../storage/local-storage.service';
 
-import 'rxjs/add/operator/elementAt';
-import 'rxjs/add/operator/take';
-
 describe('TwitterService', () => {
-  let apiUrl = 'http://api';
-  let webserverUrl = 'http://webserver';
+  const apiUrl = 'http://api';
+  const webserverUrl = 'http://webserver';
 
-  let config = { ...defaultAuthenticationApiConfig };
+  let httpTestingController: HttpTestingController;
+
+  const config = { ...defaultAuthenticationApiConfig };
   config.webserverUrl = webserverUrl;
   config.apiUrl = apiUrl;
   config.twitter = true;
 
-  let redirectUrl = `${config.webserverUrl}/twitter/success.html`;
+  const redirectUrl = `${config.webserverUrl}/twitter/success.html`;
 
-  let successUrl: string = redirectUrl + '?oauth_token=token&oauth_token_secret=secret';
-  let errorUrl: string = redirectUrl + '?error=invalid_token';
+  const successUrl: string = redirectUrl + '?oauth_token=token&oauth_token_secret=secret';
+  const errorUrl: string = redirectUrl + '?error=invalid_token';
   let currentRedirectUrl: string = successUrl;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot(authReducer), EffectsModule.forRoot([]), WindowModule, ApiModule],
+      imports: [
+        StoreModule.forRoot(authReducer),
+        EffectsModule.forRoot([]),
+        WindowModule,
+        ApiModule,
+        HttpClientTestingModule
+      ],
       providers: [
-        BaseRequestOptions,
-        MockBackend,
         AuthService,
         LocalStorage,
         {
@@ -52,105 +51,39 @@ describe('TwitterService', () => {
           provide: OauthWindowService,
           useClass: OauthWindowMockService
         },
-        TwitterService,
-        {
-          deps: [MockBackend, BaseRequestOptions],
-          provide: Http,
-          useFactory: (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          }
-        }
+        TwitterService
       ]
     });
 
-    let oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
-    let storage: LocalStorage = TestBed.get(LocalStorage);
+    const oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
+    const storage: LocalStorage = TestBed.get(LocalStorage);
     storage.clear();
 
     oauthWindow.callback = url => {
-      let windowService: WindowService = TestBed.get(WindowService);
+      const windowService: WindowService = TestBed.get(WindowService);
 
       windowService.nativeWindow.twitterOauthCallback(currentRedirectUrl);
     };
+
+    httpTestingController = TestBed.get(HttpTestingController);
   });
 
   afterEach(() => {
-    let storage: LocalStorage = TestBed.get(LocalStorage);
+    const storage: LocalStorage = TestBed.get(LocalStorage);
     currentRedirectUrl = successUrl;
     storage.clear();
+    httpTestingController.verify();
   });
 
   it('should login', done => {
-    let backend: MockBackend = TestBed.get(MockBackend);
-    let twitter: TwitterService = TestBed.get(TwitterService);
-    let oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
-
-    let connections: Subject<MockConnection> = backend.connections;
-
-    connections.elementAt(0).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toBe(`${apiUrl}/auth/twitter/oauth/request_token`);
-      expect(connection.request.method).toEqual(RequestMethod.Post);
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: 'oauth_token=token&oauth_token_secret=secret'
-          })
-        )
-      );
-    });
-
-    connections.elementAt(1).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toBe(`${apiUrl}/auth/twitter/oauth/access_token`);
-      expect(connection.request.method).toEqual(RequestMethod.Post);
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: 'oauth_token=token2&oauth_token_secret=secret2'
-          })
-        )
-      );
-    });
-
-    connections.elementAt(2).subscribe((connection: MockConnection) => {
-      let body = connection.request.json();
-
-      expect(body.oauth_token).toEqual('token2');
-      expect(body.oauth_token_secret).toEqual('secret2');
-      expect(connection.request.url).toEqual(`${apiUrl}/auth/twitter/token`);
-      expect(connection.request.method).toEqual(RequestMethod.Post);
-
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: {
-              token: 'token'
-            }
-          })
-        )
-      );
-    });
-
-    connections.elementAt(3).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toEqual(`${apiUrl}/user/me`);
-      expect(connection.request.method).toEqual(RequestMethod.Get);
-
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: {
-              id: '1',
-              provider: 'twitter',
-              email: 'test@test.com'
-            }
-          })
-        )
-      );
-    });
+    const twitter: TwitterService = TestBed.get(TwitterService);
+    const oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
 
     twitter
       .connect()
-      .then(auth => {
-        let user = auth.user;
+      .pipe(take(1))
+      .subscribe(auth => {
+        const user = auth.user;
 
         expect(user).not.toBeNull();
 
@@ -160,91 +93,58 @@ describe('TwitterService', () => {
         }
 
         done();
-      })
-      .catch(err => done.fail(err));
+      }, done);
+
+    const req = httpTestingController.expectOne(`${apiUrl}/auth/twitter/oauth/request_token`);
+    expect(req.request.method).toEqual('POST');
+    req.flush('oauth_token=token&oauth_token_secret=secret');
+
+    const req2 = httpTestingController.expectOne(`${apiUrl}/auth/twitter/oauth/access_token`);
+    expect(req2.request.method).toEqual('POST');
+    req2.flush('oauth_token=token2&oauth_token_secret=secret2');
+
+    const req3 = httpTestingController.expectOne(`${apiUrl}/auth/twitter/token`);
+    expect(req3.request.method).toEqual('POST');
+    expect(req3.request.body.oauth_token).toEqual('token2');
+    expect(req3.request.body.oauth_token_secret).toEqual('secret2');
+
+    req3.flush({
+      token: 'token'
+    });
+
+    const req4 = httpTestingController.expectOne(`${apiUrl}/user/me`);
+    expect(req4.request.method).toEqual('GET');
+
+    req4.flush({
+      id: '1',
+      provider: 'twitter',
+      email: 'test@test.com'
+    });
   });
 
   it('should login with cordova', done => {
-    let backend: MockBackend = TestBed.get(MockBackend);
-    let twitter: TwitterService = TestBed.get(TwitterService);
-    let oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
-
-    let connections: Subject<MockConnection> = backend.connections;
+    const twitter: TwitterService = TestBed.get(TwitterService);
+    const oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
 
     oauthWindow.callback = url => {
       /* EMPTY ON PURPOSE */
     };
 
-    connections.elementAt(0).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toBe(`${apiUrl}/auth/twitter/oauth/request_token`);
-      expect(connection.request.method).toEqual(RequestMethod.Post);
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: 'oauth_token=token&oauth_token_secret=secret'
-          })
-        )
-      );
-    });
-
-    connections.elementAt(1).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toEqual(`${apiUrl}/auth/twitter/oauth/access_token`);
-      expect(connection.request.method).toEqual(RequestMethod.Post);
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: 'oauth_token=token2&oauth_token_secret=secret2'
-          })
-        )
-      );
-    });
-
-    connections.elementAt(2).subscribe((connection: MockConnection) => {
-      let body = connection.request.json();
-
-      expect(body.oauth_token).toEqual('token2');
-      expect(body.oauth_token_secret).toEqual('secret2');
-      expect(connection.request.url).toEqual(`${apiUrl}/auth/twitter/token`);
-      expect(connection.request.method).toEqual(RequestMethod.Post);
-
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: {
-              token: 'token'
-            }
-          })
-        )
-      );
-    });
-
-    connections.elementAt(3).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toEqual(`${apiUrl}/user/me`);
-      expect(connection.request.method).toEqual(RequestMethod.Get);
-
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: {
-              id: '1',
-              provider: 'twitter',
-              email: 'test@test.com'
-            }
-          })
-        )
-      );
-    });
-
-    oauthWindow.on('changeurl', url => {
-      if (url) {
-        oauthWindow.deferred.resolve(currentRedirectUrl);
-      }
-    });
+    oauthWindow
+      .changeUrl$
+      .pipe(
+        filter(url => !!url),
+        take(1)
+      )
+      .subscribe(url => {
+        oauthWindow.subject.next(currentRedirectUrl);
+      });
 
     twitter
       .connect()
-      .then(auth => {
-        let user = auth.user;
+      .pipe(take(1))
+      .subscribe(auth => {
+        const user = auth.user;
 
         expect(user).not.toBeNull();
 
@@ -254,94 +154,95 @@ describe('TwitterService', () => {
         }
 
         done();
-      })
-      .catch(err => done.fail(err));
+      }, done);
+
+    const req = httpTestingController.expectOne(`${apiUrl}/auth/twitter/oauth/request_token`);
+    expect(req.request.method).toEqual('POST');
+    req.flush('oauth_token=token&oauth_token_secret=secret');
+
+    const req2 = httpTestingController.expectOne(`${apiUrl}/auth/twitter/oauth/access_token`);
+    expect(req2.request.method).toEqual('POST');
+    req2.flush('oauth_token=token2&oauth_token_secret=secret2');
+
+    const req3 = httpTestingController.expectOne(`${apiUrl}/auth/twitter/token`);
+    expect(req3.request.method).toEqual('POST');
+    expect(req3.request.body.oauth_token).toEqual('token2');
+    expect(req3.request.body.oauth_token_secret).toEqual('secret2');
+
+    req3.flush({
+      token: 'token'
+    });
+
+    const req4 = httpTestingController.expectOne(`${apiUrl}/user/me`);
+    expect(req4.request.method).toEqual('GET');
+
+    req4.flush({
+      id: '1',
+      provider: 'twitter',
+      email: 'test@test.com'
+    });
   });
 
   it('should reject login without oauth_token response', done => {
-    let backend: MockBackend = TestBed.get(MockBackend);
-    let twitter: TwitterService = TestBed.get(TwitterService);
-    let oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
+    const twitter: TwitterService = TestBed.get(TwitterService);
+    const oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
 
-    let connections: Subject<MockConnection> = backend.connections;
-
-    let spy: jasmine.Spy = spyOn(oauthWindow, 'close');
-
-    connections.elementAt(0).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toEqual(`${apiUrl}/auth/twitter/oauth/request_token`);
-      expect(connection.request.method).toEqual(RequestMethod.Post);
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: 'error'
-          })
-        )
-      );
-    });
+    const spy: jasmine.Spy = spyOn(oauthWindow, 'close');
 
     twitter
       .connect()
-      .then(user => {
-        done.fail(new Error('Not failed'));
-      })
-      .catch((err: Error) => {
+      .pipe(take(1))
+      .subscribe(user => {
+        done(new Error('Not failed'));
+      }, (err: Error) => {
         expect(spy.calls.count()).toEqual(1);
         expect(err.message).toEqual('Oauth request token was not received');
         done();
       });
+
+    const req = httpTestingController.expectOne(`${apiUrl}/auth/twitter/oauth/request_token`);
+    expect(req.request.method).toEqual('POST');
+    req.flush('error');
   });
 
   it('should reject the promise on error url', done => {
-    let backend: MockBackend = TestBed.get(MockBackend);
-    let twitter: TwitterService = TestBed.get(TwitterService);
-    let oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
-
-    let connections: Subject<MockConnection> = backend.connections;
+    const twitter: TwitterService = TestBed.get(TwitterService);
 
     currentRedirectUrl = errorUrl;
 
-    connections.elementAt(0).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toEqual(`${apiUrl}/auth/twitter/oauth/request_token`);
-      expect(connection.request.method).toEqual(RequestMethod.Post);
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: 'oauth_token=token&oauth_token_secret=secret'
-          })
-        )
-      );
-    });
+    twitter
+      .connect()
+      .pipe(take(1))
+      .subscribe(() => {
+        done(new Error('Not failed'));
+      }, err => {
+        expect(err.error).toEqual('Not authorized');
+        done();
+      });
 
-    twitter.connect().catch(err => {
-      expect(err.error).toEqual('Not authorized');
-      done();
-    });
+    const req = httpTestingController.expectOne(`${apiUrl}/auth/twitter/oauth/request_token`);
+    expect(req.request.method).toEqual('POST');
+    req.flush('oauth_token=token&oauth_token_secret=secret');
   });
 
-  it('should reject the promise on invalid url', done => {
-    let backend: MockBackend = TestBed.get(MockBackend);
-    let twitter: TwitterService = TestBed.get(TwitterService);
-    let oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
-
-    let connections: Subject<MockConnection> = backend.connections;
+  it('should throw error on invalid url', done => {
+    const twitter: TwitterService = TestBed.get(TwitterService);
+    const oauthWindow: OauthWindowMockService = TestBed.get(OauthWindowService);
 
     currentRedirectUrl = redirectUrl;
 
-    connections.elementAt(0).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toEqual(`${apiUrl}/auth/twitter/oauth/request_token`);
-      expect(connection.request.method).toEqual(RequestMethod.Post);
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({
-            body: 'oauth_token=token&oauth_token_secret=secret'
-          })
-        )
-      );
-    });
+    twitter
+      .connect()
+      .pipe(take(1))
+      .subscribe(() => {
+        done(new Error('Not failed'));
+      }, err => {
+        expect(err.error).toEqual('Not authorized');
+        done();
+      });
 
-    twitter.connect().catch(err => {
-      expect(err.error).toEqual('Not authorized');
-      done();
-    });
+    const req = httpTestingController.expectOne(`${apiUrl}/auth/twitter/oauth/request_token`);
+    expect(req.request.method).toEqual('POST');
+    req.flush('oauth_token=token&oauth_token_secret=secret');
   });
 });

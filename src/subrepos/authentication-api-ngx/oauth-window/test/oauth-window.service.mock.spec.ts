@@ -1,16 +1,15 @@
-import { WindowService } from '../../window';
+import { Observable } from 'rxjs';
 import { OauthWindowMockService } from './oauth-window.service.mock';
 
 describe('OauthWindowMockService', () => {
   let service: OauthWindowMockService;
 
   beforeEach(() => {
-    let windowService: WindowService = new WindowService();
-    service = new OauthWindowMockService(windowService);
+    service = new OauthWindowMockService();
   });
 
-  it('should return a promise when opened', () => {
-    expect(service.open('http://test.com', 'access_token') instanceof Promise).toBeTruthy();
+  it('should return an observable when opened', () => {
+    expect(service.open('http://test.com', 'access_token') instanceof Observable).toBeTruthy();
   });
 
   it('should change url', done => {

@@ -2,7 +2,7 @@ import { Deferred } from '../';
 
 describe('Deffered', () => {
   it('should resolved after resolve', done => {
-    let deferred: Deferred = new Deferred();
+    const deferred: Deferred = new Deferred();
     expect(deferred.promise instanceof Promise).toBeTruthy();
 
     deferred.promise
@@ -16,7 +16,7 @@ describe('Deffered', () => {
   });
 
   it('should rejeceted after reject', done => {
-    let deferred: Deferred = new Deferred();
+    const deferred: Deferred = new Deferred();
 
     deferred.promise
       .then(() => {

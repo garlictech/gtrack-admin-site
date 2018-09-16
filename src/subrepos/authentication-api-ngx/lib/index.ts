@@ -1,8 +1,8 @@
-import { NgModule, ModuleWithProviders, InjectionToken, APP_INITIALIZER } from '@angular/core';
+import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { IAuthenticationApiConfig, AUTH_CONFIG_TOKEN } from './config';
+import { AUTH_CONFIG_TOKEN } from './config';
 import { AuthService } from '../auth';
 
 import { IAuth, Effects } from '../store';
@@ -20,10 +20,9 @@ export function initializerFactory(auth: AuthService, store: Store<any>) {
   return function() {
     log.data('[AuthenticationApiModule:app init] Retrieving authentication info with stored token...');
     auth.authenticated
-      .then((authData: IAuth) => {
+      .subscribe((authData: IAuth) => {
         store.dispatch(new Actions.LoginSuccess(authData));
-      })
-      .catch(err => {
+      }, err => {
         log.info('Authentication lib init: not authenticated');
       });
   };

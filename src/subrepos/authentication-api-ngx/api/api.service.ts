@@ -1,50 +1,54 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Http, Headers, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { LocalStorage } from '../storage/local-storage.service';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 import * as Actions from '../store/actions';
 
 @Injectable()
 export class ApiService {
-  constructor(private _http: Http, private _localStorage: LocalStorage, private _store: Store<any>) {}
+  constructor(private _http: HttpClient, private _localStorage: LocalStorage, private _store: Store<any>) {}
 
-  get(url: string): Observable<Response> {
+  get<T = any>(url: string): Observable<T> {
     const headers = this.getAuthorizationHeaders();
 
     return this._http
-      .get(url, {
+      .get<T>(url, {
         headers: headers
       })
-      .catch(err => this.handleError(err));
+      .pipe(
+        catchError(err => this.handleError(err))
+      );
   }
 
-  post(url: string, data: any): Observable<Response> {
+  post<T = any>(url: string, data: any): Observable<T> {
     const headers = this.getAuthorizationHeaders();
 
     return this._http
-      .post(url, data, {
+      .post<T>(url, data, {
         headers: headers
       })
-      .catch(err => this.handleError(err));
+      .pipe(
+        catchError(err => this.handleError(err))
+      );
   }
 
-  private getAuthorizationHeaders(): Headers {
+  private getAuthorizationHeaders(): HttpHeaders {
     const token = this._localStorage.getItem('token');
-    const headers = new Headers();
-
-    headers.append('Authorization', 'JWT ' + token);
+    const headers = new HttpHeaders({
+      Authorization: `JWT ${token}`
+    });
 
     return headers;
   }
 
-  private handleError(err: Response | Error): Observable<Response> {
-    if (err instanceof Response) {
-      if (err.status === 401) {
-        this._store.dispatch(new Actions.Unauthorized());
-      }
+  private handleError(err: HttpErrorResponse) {
+    if (!(err.error instanceof ErrorEvent) && err.status === 401) {
+      this._store.dispatch(new Actions.Unauthorized());
     }
 
-    return Observable.throw(err);
+    return throwError(err);
   }
 }
