@@ -17,7 +17,6 @@ import _cloneDeep from 'lodash-es/cloneDeep';
 export class GpxInputComponent {
   @Input() callback: any;
   @ViewChild('gpxInput') gpxInput: ElementRef;
-  public gpxRoute: IRoute;
 
   constructor(
     private _router: Router,
@@ -42,7 +41,7 @@ export class GpxInputComponent {
         this._hikeProgramService.gpxRoute = {
           route: _route,
           bounds: this._routeService.getBounds(_route)
-        }
+        };
 
         this._router.navigate(['/admin/hike/new']);
       });
