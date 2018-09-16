@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DescriptionComponent as BaseComponent } from 'subrepos/gtrack-common-ngx/app/localize';
 
 @Component({
