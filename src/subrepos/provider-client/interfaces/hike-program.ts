@@ -1,4 +1,3 @@
-import { IPoi } from './poi';
 import { IProviderInput } from './provider';
 import { ILocalizedItem, ITextualDescription } from './common';
 import { IPublishable } from './state';

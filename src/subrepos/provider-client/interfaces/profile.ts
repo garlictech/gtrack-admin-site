@@ -1,4 +1,3 @@
-import { IProviderInput } from './provider';
 import { EAuthRoles } from './roles';
 
 export interface ICommonProfileSettings {
@@ -30,5 +29,3 @@ export interface ICommonProfileData<PROFILE> {
   firstRegistrationDate?: string;
   profile: PROFILE;
 }
-
-export interface IProfileDelete extends IProviderInput {}

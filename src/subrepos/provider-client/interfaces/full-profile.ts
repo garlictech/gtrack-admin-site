@@ -1,9 +1,10 @@
-import { IUserData, IPublicUserProfile } from './user';
+import { IUserData } from './user';
+import { IPublicCommonProfile } from './profile';
 
 export interface IFullUserData {
   user?: IUserData;
 }
 
 export interface IPublicProfile {
-  user?: IPublicUserProfile;
+  user?: IPublicCommonProfile;
 }
