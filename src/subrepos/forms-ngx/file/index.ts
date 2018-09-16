@@ -1,9 +1,9 @@
+import { takeUntil, map } from 'rxjs/operators';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
 import { AbstractValueAccessor } from '../abstract-value-accessor';
 import { IUploadOptions } from '../field';
-import { Observable } from 'rxjs';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-form-file',
@@ -24,8 +24,8 @@ export class FileComponent extends AbstractValueAccessor implements OnInit, OnDe
   }
 
   ngOnInit() {
-    this.uploaded$ = this.uploadOptions.fileUri$.map(uri => !!uri);
-    this.uploadOptions.fileUri$.takeUntil(this._destroy$).subscribe(uri => (this.value = uri));
+    this.uploaded$ = this.uploadOptions.fileUri$.pipe(map(uri => !!uri));
+    this.uploadOptions.fileUri$.pipe(takeUntil(this._destroy$)).subscribe(uri => (this.value = uri));
   }
 
   ngOnDestroy() {

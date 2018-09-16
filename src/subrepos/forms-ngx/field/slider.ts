@@ -1,5 +1,4 @@
 import { Field, IField } from './field';
-import { Validators, ValidatorFn } from '@angular/forms';
 
 type _OnChangeType = () => void;
 
@@ -14,7 +13,7 @@ export class SliderField extends Field<number> {
   min: number;
   max: number;
 
-  private onChange: _OnChangeType | undefined;
+  protected onChange: _OnChangeType | undefined;
 
   constructor(options: ISliderField) {
     super(options);

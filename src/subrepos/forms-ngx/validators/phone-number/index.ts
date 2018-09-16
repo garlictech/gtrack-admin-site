@@ -1,4 +1,4 @@
-import { Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { PhoneNumberUtil, PhoneNumber } from 'google-libphonenumber';
 
 function ValidatePhoneNumber(): ValidatorFn {

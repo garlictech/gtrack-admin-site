@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import * as _ from 'lodash';
 
-import { log, DebugLog } from '../log';
+import { DebugLog } from '../log';
 import { IGroupField } from '../field';
 
 @Component({

@@ -12,7 +12,7 @@ export class CheckboxField extends Field<boolean> {
   controlType = 'checkbox';
   disableOnTrue?: boolean;
   disabled?: boolean;
-  private onChange: _OnChangeType | undefined;
+  protected onChange: _OnChangeType | undefined;
 
   constructor(options: ICheckboxField) {
     super(options);

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 
 import { ISectionField } from '../field';

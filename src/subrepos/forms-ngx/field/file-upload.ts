@@ -1,5 +1,5 @@
 import { Field, IField } from './field';
-import { Validators, ValidatorFn } from '@angular/forms';
+import { ValidatorFn } from '@angular/forms';
 
 export interface IFileUpload extends IField<File> {
   fileId?: string;

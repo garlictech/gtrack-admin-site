@@ -1,8 +1,9 @@
+import { map, filter } from 'rxjs/operators';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 
 import * as _ from 'lodash';
 
@@ -21,20 +22,20 @@ export class DynamicFormFieldComponent implements OnInit {
   @Input()
   submit: () => void;
 
-  public remoteError$: Observable<string> = Observable.empty();
+  public remoteError$: Observable<string> = EMPTY;
 
-  constructor(private _translate: TranslateService, private _store: Store<any>) {
-    /* EMPTY */
-  }
+  constructor(private _translate: TranslateService, private _store: Store<any>) {}
 
   ngOnInit() {
     if (this.field.remoteErrorStatePath) {
       const path = <string>_.get(this.field, 'remoteErrorStatePath');
 
       this.remoteError$ = this._store
-        .select(state => _.get(state, `${path}`))
-        .filter(err => this.field.remoteErrorStateFilter.indexOf(err) === -1)
-        .map(label => (label ? this._translate.instant(`form.errors.${label}`) : null));
+        .pipe(
+          select(state => _.get(state, `${path}`)),
+          filter(err => this.field.remoteErrorStateFilter.indexOf(err) === -1),
+          map(label => (label ? this._translate.instant(`form.errors.${label}`) : null))
+        );
     }
   }
 

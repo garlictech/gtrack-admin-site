@@ -1,12 +1,13 @@
-import { Store } from '@ngrx/store';
+import { map, takeUntil, switchMap, filter } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import { Component, Input, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { FormGroup, FormArray } from '@angular/forms';
+import { FormArray } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import * as _ from 'lodash';
 
 import { log } from '../log';
 
-import { Field, IFormDescriptor } from '../field';
+import { IFormDescriptor } from '../field';
 import { FieldControlService, IFormInstance } from '../field-control-service';
 
 @Component({
@@ -32,14 +33,16 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
 
     if (this.formDataPath$) {
       this.formDataPath$
-        .filter(formDataPath => !!formDataPath)
-        .switchMap(formDataPath => this._store.select(state => _.get(state, formDataPath)))
-        .takeUntil(this._componentDestroyed$)
-        .filter(formData => !!formData)
-        .map(formData => {
-          const fieldKeys = Object.keys(this.formDescriptor.fields);
-          return _.pick(formData, fieldKeys);
-        })
+        .pipe(
+          filter(formDataPath => !!formDataPath),
+          switchMap(formDataPath => this._store.pipe(select(state => _.get(state, formDataPath)))),
+          takeUntil(this._componentDestroyed$),
+          filter(formData => !!formData),
+          map(formData => {
+            const fieldKeys = Object.keys(this.formDescriptor.fields);
+            return _.pick(formData, fieldKeys);
+          })
+        )
         .subscribe(formData => {
           this.formInstance = this._fcs.toFormGroup(this.formDescriptor.fields, formData);
           this.formInstance.form.patchValue(formData);

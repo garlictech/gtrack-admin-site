@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import * as _ from 'lodash';
-
-import { Field } from '../field';
 
 export interface IFormInstance {
   form: FormGroup;
