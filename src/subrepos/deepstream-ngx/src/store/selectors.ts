@@ -1,9 +1,10 @@
+import { filter,  map } from 'rxjs/operators';
 import { Injectable, Inject } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector, Store } from '@ngrx/store';
+import { createSelector, createFeatureSelector, MemoizedSelector, Store, select } from '@ngrx/store';
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
 import { IDeepstreamState, EDeepstreamState } from './state';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
+import { combineLatest } from 'rxjs';
 
 export interface ISelectorUserData {
   userId: string | undefined;
@@ -61,10 +62,15 @@ export class Selectors {
 
     this.isOpenUser = createSelector(selectFeature, state => _.get(state, 'auth.id') === 'open');
 
-    this.getPermissionRecord = Observable.combineLatest(
-      this._store.select(this._externals.selectors.getUserRole),
-      this._store.select(this.permissions).filter(permissions => !!permissions),
-      (role, permissions) => _.get(permissions, role) || {}
+    this.getPermissionRecord = combineLatest(
+      this._store.pipe(select(this._externals.selectors.getUserRole)),
+      this._store.pipe(
+        select(this.permissions),
+        filter(permissions => !!permissions)
+      )
+    )
+    .pipe(
+      map((role, permissions) => _.get(permissions, role) || {})
     );
   }
 }
