@@ -7,9 +7,17 @@ import {
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 import { hikeEditPoiActions } from '../actions';
 
+/*
 import _omit from 'lodash-es/omit';
 import _merge from 'lodash-es/merge';
 import _cloneDeep from 'lodash-es/cloneDeep';
+*/
+
+import {
+  omit as _omit,
+  merge as _merge,
+  cloneDeep as _cloneDeep
+} from 'lodash';
 
 /**
  * Google

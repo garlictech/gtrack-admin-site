@@ -11,7 +11,6 @@ import * as _ from 'lodash';
 describe('HikeEditPoi reducers', () => {
   let initialState: IHikeEditPoiState;
   let pois: IExternalPoi[];
-  let ids: string[];
   let entities: any;
 
   beforeEach(() => {
@@ -109,8 +108,8 @@ describe('HikeEditPoi reducers', () => {
     });
   });
 
-  describe('PatchGooglePois action', () => {
-    it('should patch google pois', () => {
+  describe('SetGooglePoisInGtrackDb action', () => {
+    it('should set google pois inGtrackDb', () => {
       const action = new hikeEditPoiActions.SetGooglePoisInGtrackDb(
         pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
       );
@@ -123,6 +122,23 @@ describe('HikeEditPoi reducers', () => {
 
       expect(state.googlePois.entities['1'].elevation).toEqual(100);
       expect(state.googlePois.entities['2'].elevation).toEqual(100);
+    });
+  });
+
+  describe('SetGooglePoisInCollector action', () => {
+    it('should set google pois inCollector', () => {
+      const action = new hikeEditPoiActions.SetGooglePoisInCollector(
+        pois.map(p => p.inCollector = parseInt(p.id) % 2 === 0).map(p => _.pick(p, ['id', 'inCollector']))
+      );
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        googlePois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.googlePois.entities['1'].inCollector).toEqual(false);
+      expect(state.googlePois.entities['2'].inCollector).toEqual(true);
     });
   });
 
@@ -178,8 +194,8 @@ describe('HikeEditPoi reducers', () => {
     });
   });
 
-  describe('PatchOsmAmenityPois action', () => {
-    it('should patch osmAmenity pois', () => {
+  describe('SetOsmAmenityPoisInGtrackDb action', () => {
+    it('should set osmAmenity pois inGtrackDb', () => {
       const action = new hikeEditPoiActions.SetOsmAmenityPoisInGtrackDb(
         pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
       );
@@ -192,6 +208,23 @@ describe('HikeEditPoi reducers', () => {
 
       expect(state.osmAmenityPois.entities['1'].elevation).toEqual(100);
       expect(state.osmAmenityPois.entities['2'].elevation).toEqual(100);
+    });
+  });
+
+  describe('SetOsmAmenityPoisInCollector action', () => {
+    it('should set osmAmenity pois inCollector', () => {
+      const action = new hikeEditPoiActions.SetOsmAmenityPoisInCollector(
+        pois.map(p => p.inCollector = parseInt(p.id) % 2 === 0).map(p => _.pick(p, ['id', 'inCollector']))
+      );
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        osmAmenityPois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.osmAmenityPois.entities['1'].inCollector).toEqual(false);
+      expect(state.osmAmenityPois.entities['2'].inCollector).toEqual(true);
     });
   });
 
@@ -247,8 +280,8 @@ describe('HikeEditPoi reducers', () => {
     });
   });
 
-  describe('PatchOsmNaturalPois action', () => {
-    it('should patch osmNatural pois', () => {
+  describe('SetOsmNaturalPoisInGtrackDb action', () => {
+    it('should set osmNatural pois inGtrackDb', () => {
       const action = new hikeEditPoiActions.SetOsmNaturalPoisInGtrackDb(
         pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
       );
@@ -261,6 +294,23 @@ describe('HikeEditPoi reducers', () => {
 
       expect(state.osmNaturalPois.entities['1'].elevation).toEqual(100);
       expect(state.osmNaturalPois.entities['2'].elevation).toEqual(100);
+    });
+  });
+
+  describe('SetOsmNaturalPoisInCollector action', () => {
+    it('should set osmNatural pois inCollector', () => {
+      const action = new hikeEditPoiActions.SetOsmNaturalPoisInCollector(
+        pois.map(p => p.inCollector = parseInt(p.id) % 2 === 0).map(p => _.pick(p, ['id', 'inCollector']))
+      );
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        osmNaturalPois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.osmNaturalPois.entities['1'].inCollector).toEqual(false);
+      expect(state.osmNaturalPois.entities['2'].inCollector).toEqual(true);
     });
   });
 
@@ -316,8 +366,8 @@ describe('HikeEditPoi reducers', () => {
     });
   });
 
-  describe('PatchOsmRoutePois action', () => {
-    it('should patch osmNRoute pois', () => {
+  describe('SetOsmRoutePoisInGtrackDb action', () => {
+    it('should set osmRoute pois inGtrackDb', () => {
       const action = new hikeEditPoiActions.SetOsmRoutePoisInGtrackDb(
         pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
       );
@@ -330,6 +380,23 @@ describe('HikeEditPoi reducers', () => {
 
       expect(state.osmRoutePois.entities['1'].elevation).toEqual(100);
       expect(state.osmRoutePois.entities['2'].elevation).toEqual(100);
+    });
+  });
+
+  describe('SetOsmRoutePoisInCollector action', () => {
+    it('should set osmRoute pois inCollector', () => {
+      const action = new hikeEditPoiActions.SetOsmRoutePoisInCollector(
+        pois.map(p => p.inCollector = parseInt(p.id) % 2 === 0).map(p => _.pick(p, ['id', 'inCollector']))
+      );
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        osmRoutePois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.osmRoutePois.entities['1'].inCollector).toEqual(false);
+      expect(state.osmRoutePois.entities['2'].inCollector).toEqual(true);
     });
   });
 
@@ -385,8 +452,8 @@ describe('HikeEditPoi reducers', () => {
     });
   });
 
-  describe('PatchWikipediaPois action', () => {
-    it('should patch wikipedia pois', () => {
+  describe('SetWikipediaPoisInGtrackDb action', () => {
+    it('should patch wikipedia pois inGtrackDb', () => {
       const action = new hikeEditPoiActions.SetWikipediaPoisInGtrackDb(
         pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
       );
@@ -399,6 +466,23 @@ describe('HikeEditPoi reducers', () => {
 
       expect(state.wikipediaPois.entities['1'].elevation).toEqual(100);
       expect(state.wikipediaPois.entities['2'].elevation).toEqual(100);
+    });
+  });
+
+  describe('SetWikipediaPoisInCollector action', () => {
+    it('should set wikipedia pois inCollector', () => {
+      const action = new hikeEditPoiActions.SetWikipediaPoisInCollector(
+        pois.map(p => p.inCollector = parseInt(p.id) % 2 === 0).map(p => _.pick(p, ['id', 'inCollector']))
+      );
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        wikipediaPois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.wikipediaPois.entities['1'].inCollector).toEqual(false);
+      expect(state.wikipediaPois.entities['2'].inCollector).toEqual(true);
     });
   });
 

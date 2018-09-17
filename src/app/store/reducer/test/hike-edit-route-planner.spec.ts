@@ -5,7 +5,7 @@ import { IHikeEditRoutePlannerState } from '../../index';
 
 import * as _ from 'lodash';
 
-describe('RouteInfoData reducers', () => {
+fdescribe('RoutePlanner reducers', () => {
   let initialState: IHikeEditRoutePlannerState;
   let segmentData: ISegment;
 
@@ -34,6 +34,24 @@ describe('RouteInfoData reducers', () => {
       const state = hikeEditRoutePlannerReducer(initialState, action);
 
       expect(state).toEqual(initialState);
+    });
+  });
+
+  describe('RoutingStart action', () => {
+    it('should start routing', () => {
+      const action = new hikeEditRoutePlannerActions.RoutingStart();
+      const state = hikeEditRoutePlannerReducer(initialState, action);
+
+      expect(state.routing).toEqual(true);
+    });
+  });
+
+  describe('RoutingFinished action', () => {
+    it('should finish routing', () => {
+      const action = new hikeEditRoutePlannerActions.RoutingFinished();
+      const state = hikeEditRoutePlannerReducer(initialState, action);
+
+      expect(state.routing).toEqual(false);
     });
   });
 
