@@ -1,4 +1,4 @@
-import { Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 /* tslint:disable no-var-requires */
 const passwordValidator = require('password-validator');
 /* tslint:enable no-var-requires */

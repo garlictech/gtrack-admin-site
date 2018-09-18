@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
-import * as _ from 'lodash';
 
-import { log, DebugLog } from '../log';
+import _forEach from 'lodash-es/forEach';
+
+import { DebugLog } from '../log';
 import { IGroupField } from '../field';
 
 @Component({
@@ -18,7 +19,7 @@ export class DynamicFormGroupComponent implements OnInit {
   public formFields: any[] = [];
 
   ngOnInit() {
-    _.forEach(this.fields.embeddedForm, (field: any, key) => {
+    _forEach(this.fields.embeddedForm, (field: any, key) => {
       this.formFields.push({ ...field, key: key });
     });
   }
@@ -27,7 +28,7 @@ export class DynamicFormGroupComponent implements OnInit {
   addItem() {
     const group: any = {};
 
-    _.forEach(this.fields.embeddedForm, (field: any, key) => {
+    _forEach(this.fields.embeddedForm, (field: any, key) => {
       group[key] = new FormControl(field.defaultValue, field.validators);
     });
 

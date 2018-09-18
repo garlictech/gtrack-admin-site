@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormArray, FormControl } from '@angular/forms';
-import * as _ from 'lodash';
+import { FormGroup } from '@angular/forms';
+
+import _forEach from 'lodash-es/forEach';
 
 import { ISectionField } from '../field';
 
@@ -17,7 +18,7 @@ export class DynamicFormSectionComponent implements OnInit {
   public formFields: any[] = [];
 
   ngOnInit() {
-    _.forEach(this.fields.embeddedForm, (field: any, key) => {
+    _forEach(this.fields.embeddedForm, (field: any, key) => {
       this.formFields.push({ ...field, key: key });
     });
   }
