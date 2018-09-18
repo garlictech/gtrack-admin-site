@@ -126,13 +126,11 @@ describe('Google', () => {
       /* EMPTY ON PURPOSE */
     };
 
-    oauthWindow.changeUrl$
-      .pipe(take(1))
-      .subscribe(url => {
-        if (url) {
-          oauthWindow.subject.next(currentRedirectUrl);
-        }
-      });
+    oauthWindow.changeUrl$.pipe(take(1)).subscribe(url => {
+      if (url) {
+        oauthWindow.subject.next(currentRedirectUrl);
+      }
+    });
 
     google
       .connect()
@@ -177,12 +175,15 @@ describe('Google', () => {
     google
       .connect()
       .pipe(take(1))
-      .subscribe(() => {
-        done(new Error('Not failed'));
-      }, err => {
-        expect(err.error).toEqual('Not authorized');
-        done();
-      });
+      .subscribe(
+        () => {
+          done(new Error('Not failed'));
+        },
+        err => {
+          expect(err.error).toEqual('Not authorized');
+          done();
+        }
+      );
   });
 
   it('should reject the promise without access_token', done => {
@@ -194,12 +195,15 @@ describe('Google', () => {
     google
       .connect()
       .pipe(take(1))
-      .subscribe(() => {
-        done(new Error('Not failed'));
-      }, err => {
-        expect(err.error).toEqual('Not authorized');
-        done();
-      });
+      .subscribe(
+        () => {
+          done(new Error('Not failed'));
+        },
+        err => {
+          expect(err.error).toEqual('Not authorized');
+          done();
+        }
+      );
   });
 
   it('should work without permissions', done => {
@@ -211,21 +215,21 @@ describe('Google', () => {
       /* EMPTY ON PURPOSE */
     };
 
-    oauthWindow
-      .changeUrl$
-      .pipe(take(1))
-      .subscribe(url => {
-        expect(url.indexOf('scope')).toEqual(-1);
-        config.google.permissions = 'email';
-        done();
-      });
+    oauthWindow.changeUrl$.pipe(take(1)).subscribe(url => {
+      expect(url.indexOf('scope')).toEqual(-1);
+      config.google.permissions = 'email';
+      done();
+    });
 
     google
       .connect()
       .pipe(take(1))
-      .subscribe(() => {}, err => {
-        config.google.permissions = 'email';
-        done(err);
-      });
+      .subscribe(
+        () => {},
+        err => {
+          config.google.permissions = 'email';
+          done(err);
+        }
+      );
   });
 });

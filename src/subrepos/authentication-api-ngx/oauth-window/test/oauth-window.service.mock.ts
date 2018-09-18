@@ -14,7 +14,7 @@ export class OauthWindowMockService {
 
   public callback = (url: string) => {
     /* EMPTY ON PURPOSE */
-  }
+  };
 
   public open(loginUrl: string, parameter = 'access_token'): Observable<any> {
     this.changeUrl(loginUrl);
