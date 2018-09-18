@@ -1,5 +1,6 @@
 import { IRoute, IRouteBounds, IRouteStored } from '../../../../../provider-client';
-import * as _ from 'lodash';
+
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 export class Route implements IRoute {
   public id: string;
@@ -15,7 +16,7 @@ export class Route implements IRoute {
   }
 
   constructor(data: IRouteStored) {
-    const converted = _.cloneDeep(data);
+    const converted = _cloneDeep(data);
     Object.assign(this, converted);
   }
 }

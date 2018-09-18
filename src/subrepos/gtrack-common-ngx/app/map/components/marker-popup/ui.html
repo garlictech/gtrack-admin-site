@@ -6,6 +6,7 @@
       <p>Elevation: {{ data.poi.elevation | distance }}</p>
       <p>From origo: {{ data.stop.distanceFromOrigo | distance }}</p>
       <gtcn-icon width="24" [poi]="data.poi"></gtcn-icon>
+      <button class="button" [routerLink]="['poi', data.poi.id]">More</button>
     </div>
   </div>
 </div>

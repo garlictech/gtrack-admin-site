@@ -1,10 +1,7 @@
-import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { APP_BASE_HREF } from '@angular/common';
-import { Store, StoreModule, combineReducers } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { IRouteStored } from 'subrepos/provider-client';
 import { Subject } from 'rxjs/Subject';
-import * as _ from 'lodash';
 
 import { routeReducer } from '../reducer';
 import { IRouteState } from '../state';
@@ -55,7 +52,7 @@ describe('Route selectors', () => {
   describe('getRouteIds', () => {
     it('should return all route ids', () => {
       let result;
-      let routeSelectors: RouteSelectors = TestBed.get(RouteSelectors);
+      const routeSelectors: RouteSelectors = TestBed.get(RouteSelectors);
 
       store
         .select(routeSelectors.getRouteIds)
@@ -75,7 +72,7 @@ describe('Route selectors', () => {
   describe('getAllRoutes', () => {
     it('should return all routes', () => {
       let result;
-      let routeSelectors: RouteSelectors = TestBed.get(RouteSelectors);
+      const routeSelectors: RouteSelectors = TestBed.get(RouteSelectors);
 
       store
         .select(routeSelectors.getAllRoutes)
@@ -95,7 +92,7 @@ describe('Route selectors', () => {
   describe('getRoute', () => {
     it('should return route by id', () => {
       let result;
-      let routeSelectors: RouteSelectors = TestBed.get(RouteSelectors);
+      const routeSelectors: RouteSelectors = TestBed.get(RouteSelectors);
 
       store
         .select(routeSelectors.getRoute(ids[0]))

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IPoi, IHikeProgramStored, EObjectState } from '../../../../../provider-client';
+import { IHikeProgramStored, EObjectState } from '../../../../../provider-client';
 
 export enum HikeProgramActionTypes {
   LOAD_HIKE_PROGRAM = '[HikeProgram] Load hikeProgram',

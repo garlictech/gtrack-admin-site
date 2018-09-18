@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Actions, IAuth } from '../../../../authentication-api-ngx';
+import { Actions } from '../../../../authentication-api-ngx';
 
 export const TERMS_ACCEPTED = '[Authentication] Terms accepted';
 export const LOGIN_REFUSED = '[Authentication] Login refused as term is not accepted';

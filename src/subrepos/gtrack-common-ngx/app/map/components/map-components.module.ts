@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { MapModule } from '../map.module';
 import { IconComponent } from './icon';
@@ -20,7 +21,8 @@ const COMPONENTS = [LeafletComponent, IconComponent, MarkerPopupComponent];
     LocalizeModule,
     // PrimeNG
     ButtonModule,
-    SharedModule
+    SharedModule,
+    RouterModule
   ],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],

@@ -1,5 +1,4 @@
 import { IPoi, IPoiStored, EObjectState } from 'subrepos/provider-client';
-import * as uuid from 'uuid/v4';
 
 import { poiReducer, poiReducerInitialState, poiContextReducerInitialState } from '../reducer';
 import * as actions from '../actions';

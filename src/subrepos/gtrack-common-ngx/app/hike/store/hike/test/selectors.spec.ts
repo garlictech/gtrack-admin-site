@@ -70,7 +70,7 @@ describe('HikeProgram selectors', () => {
   describe('getHikeIds', () => {
     it('should return all hike program ids', () => {
       let result;
-      let hikeSelectors: HikeSelectors = TestBed.get(HikeSelectors);
+      const hikeSelectors: HikeSelectors = TestBed.get(HikeSelectors);
 
       store
         .select(hikeSelectors.getHikeIds)
@@ -87,7 +87,7 @@ describe('HikeProgram selectors', () => {
   describe('getAllHikes', () => {
     it('should return all hike program', () => {
       let result;
-      let hikeSelectors: HikeSelectors = TestBed.get(HikeSelectors);
+      const hikeSelectors: HikeSelectors = TestBed.get(HikeSelectors);
 
       store
         .select(hikeSelectors.getAllHikes)

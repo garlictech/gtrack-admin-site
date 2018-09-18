@@ -4,13 +4,11 @@ import { StoreModule } from '@ngrx/store';
 
 import { EObjectMarkContext } from 'subrepos/provider-client';
 
-import * as _ from 'lodash';
 
 import { hot, cold } from 'jest-marbles';
 
 import * as actions from '../actions';
 import { ObjectMarkEffects } from '../effects';
-import {} from '../selectors';
 import { ObjectMarkService } from '../../services';
 
 import { Observable } from 'rxjs';

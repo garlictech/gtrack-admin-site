@@ -37,7 +37,7 @@ describe('Poi actions', () => {
 
   describe('LoadPoi action', () => {
     it('should create an action', () => {
-      let action = new actions.LoadPoi(id);
+      const action = new actions.LoadPoi(id);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.LOAD_POI,
@@ -48,7 +48,7 @@ describe('Poi actions', () => {
 
   describe('PoiLoaded action', () => {
     it('should create an action', () => {
-      let action = new actions.PoiLoaded(id, poi);
+      const action = new actions.PoiLoaded(id, poi);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.POI_LOADED,
@@ -60,7 +60,7 @@ describe('Poi actions', () => {
 
   describe('LoadPois action', () => {
     it('should create an action', () => {
-      let action = new actions.LoadPois([id]);
+      const action = new actions.LoadPois([id]);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.LOAD_POIS,
@@ -71,7 +71,7 @@ describe('Poi actions', () => {
 
   describe('AllPoiLoaded action', () => {
     it('should create an action', () => {
-      let action = new actions.AllPoiLoaded([id], [poi]);
+      const action = new actions.AllPoiLoaded([id], [poi]);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.ALL_POI_LOADED,
@@ -83,7 +83,7 @@ describe('Poi actions', () => {
 
   describe('SavePoi action', () => {
     it('should create an action', () => {
-      let action = new actions.SavePoi(poiData);
+      const action = new actions.SavePoi(poiData);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.SAVE_POI,
@@ -94,7 +94,7 @@ describe('Poi actions', () => {
 
   describe('PoiSaved action', () => {
     it('should create an action', () => {
-      let action = new actions.PoiSaved(id);
+      const action = new actions.PoiSaved(id);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.POI_SAVED,
@@ -105,7 +105,7 @@ describe('Poi actions', () => {
 
   describe('PoiModified action', () => {
     it('should create an action', () => {
-      let action = new actions.PoiModified(id);
+      const action = new actions.PoiModified(id);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.POI_MODIFIED,
@@ -116,7 +116,7 @@ describe('Poi actions', () => {
 
   describe('UpdatePoiState action', () => {
     it('should create an action', () => {
-      let action = new actions.UpdatePoiState(id, EObjectState.published);
+      const action = new actions.UpdatePoiState(id, EObjectState.published);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.UPDATE_POI_STATE,
@@ -128,7 +128,7 @@ describe('Poi actions', () => {
 
   describe('DeletePoi action', () => {
     it('should create an action', () => {
-      let action = new actions.DeletePoi(id);
+      const action = new actions.DeletePoi(id);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.DELETE_POI,
@@ -139,7 +139,7 @@ describe('Poi actions', () => {
 
   describe('PoiDeleted action', () => {
     it('should create an action', () => {
-      let action = new actions.PoiDeleted(id);
+      const action = new actions.PoiDeleted(id);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.POI_DELETED,
@@ -150,7 +150,7 @@ describe('Poi actions', () => {
 
   describe('MergePoi action', () => {
     it('should create an action', () => {
-      let action = new actions.MergePoi([poiFixtures[0].id, poiFixtures[1].id], poiFixtures[0]);
+      const action = new actions.MergePoi([poiFixtures[0].id, poiFixtures[1].id], poiFixtures[0]);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.MERGE_POI,
@@ -162,8 +162,8 @@ describe('Poi actions', () => {
 
   describe('PoiMergedSuccessfully action', () => {
     it('should create an action', () => {
-      let newId = uuid();
-      let action = new actions.PoiMergedSuccessfully(newId, [poiFixtures[0].id, poiFixtures[1].id]);
+      const newId = uuid();
+      const action = new actions.PoiMergedSuccessfully(newId, [poiFixtures[0].id, poiFixtures[1].id]);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.POI_MERGED_SUCCESSFULLY,
@@ -175,8 +175,8 @@ describe('Poi actions', () => {
 
   describe('PoiMergeFailed action', () => {
     it('should create an action', () => {
-      let error = 'error';
-      let action = new actions.PoiMergeFailed(error);
+      const error = 'error';
+      const action = new actions.PoiMergeFailed(error);
 
       expect({ ...action }).toEqual({
         type: actions.PoiActionTypes.POI_MERGE_FAILED,

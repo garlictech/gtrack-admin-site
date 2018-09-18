@@ -10,4 +10,6 @@ export * from './search-filters';
 export * from './search-results-map';
 export * from './download-gpx-button';
 export * from './bookmark';
+export * from './hike-list-map';
+export * from './poi-map';
 export * from './hike-components.module';

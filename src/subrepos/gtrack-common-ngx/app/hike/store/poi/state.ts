@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { IPoi, IPoiStored } from '../../../../../provider-client';
+import { IPoiStored } from '../../../../../provider-client';
 
 export const poiAdapter = createEntityAdapter<IPoiStored>();
 export interface IPoiEntityState extends EntityState<IPoiStored> {}

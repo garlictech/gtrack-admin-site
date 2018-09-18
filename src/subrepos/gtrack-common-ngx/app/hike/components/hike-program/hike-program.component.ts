@@ -1,7 +1,11 @@
-import { Store } from '@ngrx/store';
+import { of as observableOf, Observable } from 'rxjs';
+
+import { filter } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
-import * as _ from 'lodash';
-import { Observable } from 'rxjs';
+
+import _isEmpty from 'lodash-es/isEmpty';
+
 import { Dictionary } from '@ngrx/entity/src/models';
 
 import { IPoi, IHikeProgram, IHikeProgramStop } from '../../../../../provider-client';
@@ -34,13 +38,14 @@ export class HikeProgramComponent implements OnInit {
   ngOnInit() {
     const hikePois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
 
-    const start = this.hikeProgram.stops.find(stop => stop.poiId === 'endpoint-first');
-    const finish = this.hikeProgram.stops.find(stop => stop.poiId === 'endpoint-last');
-
     if (hikePois.length > 0) {
-      this.pois$ = this._store.select(this._poiSelectors.getPoiEntities(hikePois)).filter(pois => !_.isEmpty(pois));
+      this.pois$ = this._store
+        .pipe(
+          select(this._poiSelectors.getPoiEntities(hikePois)),
+          filter(pois => !_isEmpty(pois))
+        );
     } else {
-      this.pois$ = Observable.of({});
+      this.pois$ = observableOf({});
     }
 
     this._store.dispatch(new poiActions.LoadPois(hikePois));

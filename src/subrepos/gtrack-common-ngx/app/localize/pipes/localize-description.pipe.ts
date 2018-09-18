@@ -1,13 +1,10 @@
 import { Pipe, PipeTransform, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ILocalizedItem, ITextualDescription } from '../../../../provider-client';
-import { Observable } from 'rxjs';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { DescriptionLanguageListService } from '../services';
 
-import * as _ from 'lodash';
-
-import 'rxjs/add/operator/take';
+import _merge from 'lodash-es/merge';
 
 @Pipe({
   name: 'localizeDescription',
@@ -15,7 +12,6 @@ import 'rxjs/add/operator/take';
 })
 export class LocalizeDescriptionPipe implements PipeTransform, OnDestroy {
   private _valueChange: Subscription;
-  private _language = 'en_US';
   private _value: ITextualDescription;
 
   constructor(private _ref: ChangeDetectorRef, private _descriptionLanguageList: DescriptionLanguageListService) {}
@@ -43,7 +39,7 @@ export class LocalizeDescriptionPipe implements PipeTransform, OnDestroy {
       summary: ''
     };
 
-    const merged: ITextualDescription = _.merge({}, defaults, transformed);
+    const merged: ITextualDescription = _merge({}, defaults, transformed);
 
     this._value = merged;
     this._ref.markForCheck();

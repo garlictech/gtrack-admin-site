@@ -47,7 +47,7 @@ describe('Route actions', () => {
 
   describe('Load route action', () => {
     it('should create an action', () => {
-      let action = new actions.LoadRoute(id);
+      const action = new actions.LoadRoute(id);
 
       expect({ ...action }).toEqual({
         type: actions.RouteActionTypes.LOAD_ROUTE,
@@ -58,7 +58,7 @@ describe('Route actions', () => {
 
   describe('RouteLoaded action', () => {
     it('should create an action', () => {
-      let action = new actions.RouteLoaded(id, route);
+      const action = new actions.RouteLoaded(id, route);
 
       expect({ ...action }).toEqual({
         type: actions.RouteActionTypes.ROUTE_LOADED,
@@ -70,7 +70,7 @@ describe('Route actions', () => {
 
   describe('LoadRouteFailed action', () => {
     it('should create an action', () => {
-      let action = new actions.LoadRouteFailed(id);
+      const action = new actions.LoadRouteFailed(id);
 
       expect({ ...action }).toEqual({
         type: actions.RouteActionTypes.LOAD_ROUTE_FAILED,
@@ -81,7 +81,7 @@ describe('Route actions', () => {
 
   describe('SaveRoute action', () => {
     it('should create an action', () => {
-      let action = new actions.SaveRoute(route);
+      const action = new actions.SaveRoute(route);
 
       expect({ ...action }).toEqual({
         type: actions.RouteActionTypes.SAVE_ROUTE,
@@ -92,7 +92,7 @@ describe('Route actions', () => {
 
   describe('RouteSaved action', () => {
     it('should create an action', () => {
-      let action = new actions.RouteSaved(id);
+      const action = new actions.RouteSaved(id);
 
       expect({ ...action }).toEqual({
         type: actions.RouteActionTypes.ROUTE_SAVED,
@@ -103,7 +103,7 @@ describe('Route actions', () => {
 
   describe('RouteModified action', () => {
     it('should create an action', () => {
-      let action = new actions.RouteModified(id);
+      const action = new actions.RouteModified(id);
 
       expect({ ...action }).toEqual({
         type: actions.RouteActionTypes.ROUTE_MODIFIED,
@@ -114,7 +114,7 @@ describe('Route actions', () => {
 
   describe('UpdateRouteState action', () => {
     it('should create an action', () => {
-      let action = new actions.UpdateRouteState(id, EObjectState.published);
+      const action = new actions.UpdateRouteState(id, EObjectState.published);
 
       expect({ ...action }).toEqual({
         type: actions.RouteActionTypes.UPDATE_ROUTE_STATE,

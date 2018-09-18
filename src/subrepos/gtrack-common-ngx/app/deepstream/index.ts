@@ -1,5 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
 import { createSelector } from '@ngrx/store';
 
 import { IExternalDeepstreamDependencies, EXTERNAL_DEEPSTREAM_DEPENDENCIES } from '../../../deepstream-ngx';
@@ -7,7 +7,7 @@ import { IExternalDeepstreamDependencies, EXTERNAL_DEEPSTREAM_DEPENDENCIES } fro
 import { environment } from 'environments/environment';
 import { selectRole, selectUser } from '../authentication/store/selectors';
 
-export const userIdSelector = createSelector(selectUser, state => _.get(state, 'id'));
+export const userIdSelector = createSelector(selectUser, state => _get(state, 'id'));
 
 export function externalDeepstreamDependencies(): IExternalDeepstreamDependencies {
   return {

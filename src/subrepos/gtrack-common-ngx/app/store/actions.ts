@@ -1,5 +1,4 @@
 import {
-  BackgroundGeolocationActionTypes,
   Actions as BackgroundGeolocationActions
 } from '../shared/services/background-geolocation-service';
 

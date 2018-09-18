@@ -1,11 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Params } from '@angular/router';
 
 import * as fromRouter from '@ngrx/router-store';
 
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-import * as _ from 'lodash';
+import { createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
 export interface IRouterState {
   url: string;

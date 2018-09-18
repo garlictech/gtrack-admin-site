@@ -1,8 +1,11 @@
-import { Store } from '@ngrx/store';
+import { filter } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import { Component, Input } from '@angular/core';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { Observable } from 'rxjs';
-import * as _ from 'lodash';
+
+import _isEmpty from 'lodash-es/isEmpty';
+
 import { faArrowRight, faSortUp, faSortDown, faClock, faTrophy } from '@fortawesome/free-solid-svg-icons';
 
 import { IPoi } from '../../../../../provider-client';
@@ -33,7 +36,11 @@ export class CheckpointsComponent {
         .filter(checkpoint => !/^endpoint/.test(checkpoint.id))
         .map(checkpoint => checkpoint.id);
 
-      this.pois$ = this._store.select(this._poiSelectors.getPoiEntities(poiIds)).filter(pois => !_.isEmpty(pois));
+      this.pois$ = this._store
+        .pipe(
+          select(this._poiSelectors.getPoiEntities(poiIds)),
+          filter(pois => !_isEmpty(pois))
+        );
 
       this._store.dispatch(new poiActions.LoadPois(poiIds));
     }

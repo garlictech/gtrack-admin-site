@@ -1,4 +1,5 @@
-import { Store } from '@ngrx/store';
+import { map, filter, takeUntil } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 
 import {
   Component,
@@ -13,11 +14,31 @@ import {
   SimpleChanges
 } from '@angular/core';
 
-import * as d3 from 'd3';
-import * as _ from 'lodash';
-
 import { State } from 'app/store';
 import { Subject } from 'rxjs';
+
+import {
+  select as d3Select,
+  mouse as d3Mouse,
+  event as d3Event,
+  Selection,
+  BaseType
+} from 'd3-selection';
+
+import {
+  bisector as d3Bisector
+} from 'd3-array';
+
+import {
+  axisLeft as d3AxisLeft,
+  axisRight as d3AxisRight,
+  axisTop as d3AxisTop,
+  axisBottom as d3AxisBottom
+} from 'd3-axis';
+
+import {
+  interpolateNumber as d3InterpolateNumber
+} from 'd3-interpolate';
 
 import { DistancePipe, UnitsService } from '../../../shared';
 import { IElevationData, ElevationService } from '../../services/elevation';
@@ -71,10 +92,10 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   };
 
   public route: Route | null;
-  public marker: d3.Selection<d3.BaseType, {}, null, undefined>;
-  public elevationText: d3.Selection<d3.BaseType, {}, null, undefined>;
+  public marker: Selection<BaseType, {}, null, undefined>;
+  public elevationText: Selection<BaseType, {}, null, undefined>;
 
-  protected vis: d3.Selection<d3.BaseType, {}, null, undefined>;
+  protected vis: Selection<BaseType, {}, null, undefined>;
   protected _elevationData: IElevationData | null = null;
   protected markerOn = false;
   protected distance: DistancePipe;
@@ -129,8 +150,10 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     this._store
-      .select(this._routeSelectors.getRouteContext(routeId))
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._routeSelectors.getRouteContext(routeId)),
+        takeUntil(this._destroy$)
+      )
       .subscribe(context => {
         if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
           this._store.dispatch(new routeActions.LoadRoute(routeId));
@@ -138,14 +161,16 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       });
 
     this._store
-      .select(this._routeSelectors.getRoute(routeId))
-      .takeUntil(this._destroy$)
-      .filter(route => typeof route !== 'undefined')
-      .map(route => {
-        if (route) {
-          return new Route(route);
-        }
-      })
+      .pipe(
+        select(this._routeSelectors.getRoute(routeId)),
+        takeUntil(this._destroy$),
+        filter(route => typeof route !== 'undefined'),
+        map(route => {
+          if (route) {
+            return new Route(route);
+          }
+        })
+      )
       .subscribe(route => {
         if (!route) {
           throw new Error(`Route ${routeId} is unknown`);
@@ -154,8 +179,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         this.route = route;
 
         if (!this.vis) {
-          this.vis = d3
-            .select(this.mainDiv.nativeElement)
+          this.vis = d3Select(this.mainDiv.nativeElement)
             .append('svg')
             .attr('viewBox', `0, 0, ${this.width}, ${this.height}`);
         }
@@ -200,7 +224,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
         this.vis.on('mousemove', () => {
           if (!this.markerOn) {
-            const mouse = d3.mouse(d3.event.currentTarget);
+            const mouse = d3Mouse(d3Event.currentTarget);
             const pos = this._eventToPosition(mouse[0]);
 
             if (pos) {
@@ -210,7 +234,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         });
 
         this.vis.on('click', () => {
-          const mouse = d3.mouse(d3.event.currentTarget);
+          const mouse = d3Mouse(d3Event.currentTarget);
           const pos = this._eventToPosition(mouse[0]);
           this.elevationLineClick.emit(pos);
         });
@@ -231,7 +255,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
       const distance = this._geospatial.distanceOnLine(coordinates[0], position, this.route.route.features[0]) / 1000;
 
-      const bisect = d3.bisector((d: [number, number]) => {
+      const bisect = d3Bisector((d: [number, number]) => {
         return d[0];
       }).right;
 
@@ -242,7 +266,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       const endData = lineData[index];
 
       if (startData && endData) {
-        const interpolate = d3.interpolateNumber(startData[1], endData[1]);
+        const interpolate = d3InterpolateNumber(startData[1], endData[1]);
         const range = endData[0] - startData[0];
         const valueY = interpolate((x % range) / range);
 
@@ -274,7 +298,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     if (this._elevationData !== null) {
       const lineData = this._elevationData.lineData;
       const xRange = this._elevationData.xRange;
-      const bisect = d3.bisector((d: [number, number]) => {
+      const bisect = d3Bisector((d: [number, number]) => {
         return d[0];
       }).right;
 
@@ -289,7 +313,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
   private _addYAxis() {
     // The vertical axis
-    const yAxisVertical = d3.axisLeft(this._elevationData.yRange).tickSize(5);
+    const yAxisVertical = d3AxisLeft(this._elevationData.yRange).tickSize(5);
 
     this.vis
       .append('svg:g')
@@ -299,7 +323,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
     // The grid lines
     const lineWidth = this.width - this.margins.left - this.margins.right;
-    const yAxisLines = d3.axisRight(this._elevationData.yRange).tickSize(lineWidth);
+    const yAxisLines = d3AxisRight(this._elevationData.yRange).tickSize(lineWidth);
 
     function customYAxis(g) {
       g.call(yAxisLines);
@@ -320,7 +344,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
   private _addXAxis() {
     // The vertical axis
-    const xAxisHorizontal = d3.axisBottom(this._elevationData.xRange).tickSize(5);
+    const xAxisHorizontal = d3AxisBottom(this._elevationData.xRange).tickSize(5);
 
     this.vis
       .append('svg:g')
@@ -331,7 +355,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     // The grid lines
     const lineHeight = this.height - this.margins.top - this.margins.bottom;
 
-    const xAxisLines = d3.axisTop(this._elevationData.xRange).tickSize(lineHeight);
+    const xAxisLines = d3AxisTop(this._elevationData.xRange).tickSize(lineHeight);
 
     function customXAxis(g) {
       g.call(xAxisLines);

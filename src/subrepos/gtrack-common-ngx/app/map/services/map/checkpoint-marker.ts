@@ -1,8 +1,8 @@
 import * as L from 'leaflet';
-import * as _ from 'lodash';
+
+import _each from 'lodash-es/each';
 
 import { Checkpoint } from '../../../hike/services/checkpoint';
-import { Poi } from '../../../hike/services/poi';
 import { IconService } from '../icon';
 import { IHikeProgramStop } from '../../../../../provider-client';
 
@@ -25,7 +25,7 @@ export class CheckpointMarker {
   }
 
   public removeCheckpointMarkers() {
-    _.each(this.markers, marker => this.map.removeLayer(marker));
+    _each(this.markers, marker => this.map.removeLayer(marker));
     this.markers = {};
   }
 

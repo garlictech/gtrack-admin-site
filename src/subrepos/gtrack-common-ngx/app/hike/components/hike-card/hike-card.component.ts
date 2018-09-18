@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { IHikeProgram, IBackgroundImageData } from '../../../../../provider-client';
-import * as _ from 'lodash';
+import { IHikeProgram } from '../../../../../provider-client';
+
+import _get from 'lodash-es/get';
 
 @Component({
   selector: 'gtcn-hike-card',
@@ -16,7 +17,7 @@ export class HikeCardComponent {
     if (this.hikeProgram && this.hikeProgram.backgroundImages instanceof Array) {
       const imageUrls = this.hikeProgram.backgroundImages;
 
-      urls = imageUrls.map(image => _.get(image, 'card.url', ''));
+      urls = imageUrls.map(image => _get(image, 'card.url', ''));
     }
 
     return urls;
@@ -29,7 +30,7 @@ export class HikeCardComponent {
       const imageUrls = this.hikeProgram.backgroundImages;
       const firstImage = imageUrls[0];
 
-      url = _.get(firstImage, 'card.url', '');
+      url = _get(firstImage, 'card.url', '');
     }
 
     return url;

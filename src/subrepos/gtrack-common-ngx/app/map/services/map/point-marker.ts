@@ -5,7 +5,8 @@ import { IPoi, IHikeProgramStop } from '../../../../../provider-client';
 
 import { DescriptionLanguageListService } from '../../../localize';
 
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 export class PointMarker {
   public markers: MapMarker[] = [];
@@ -48,7 +49,7 @@ export class PointMarker {
         },
         map: this.map,
         data: {
-          poi: _.cloneDeep(poi),
+          poi: _cloneDeep(poi),
           stop: poiStop
         }
       };
@@ -57,7 +58,7 @@ export class PointMarker {
         poi.lat,
         poi.lon,
         poi.types,
-        _.get(description, 'title', ''),
+        _get(description, 'title', ''),
         popupData
       );
       this.markers.push(marker);

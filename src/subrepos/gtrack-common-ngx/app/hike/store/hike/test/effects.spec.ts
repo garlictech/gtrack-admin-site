@@ -1,12 +1,13 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Actions, Effect, EffectsModule } from '@ngrx/effects';
+import { Actions, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { IHikeProgramStored, IHikeProgram, EObjectState } from 'subrepos/provider-client';
+import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
-import * as _ from 'lodash';
+import _zipObject from 'lodash-es/zipObject';
+
 import * as uuid from 'uuid/v1';
 
 import { hot, cold } from 'jest-marbles';
@@ -15,10 +16,10 @@ import * as hikeProgramActions from '../actions';
 import { HikeEffects } from '../effects';
 import { HikeProgramService } from '../../../services/hike-program';
 import { DeepstreamModule } from '../../../../deepstream';
-import { CheckpointService, Checkpoint } from '../../../services/checkpoint';
+import { CheckpointService } from '../../../services/checkpoint';
 
 import { Observable } from 'rxjs';
-import { hikePrograms as hikeProgramFixtures, hikeProgramsStored } from './fixtures';
+import { hikeProgramsStored } from './fixtures';
 
 export class TestActions extends Actions {
   constructor() {
@@ -52,7 +53,7 @@ describe('HikeProgram effects', () => {
   beforeEach(() => {
     checkpointService = new CheckpointService();
     ids = hikeProgramsStored.map(hikeProgram => hikeProgram.id);
-    hikeProgramsMap = _.zipObject(ids, hikeProgramsStored);
+    hikeProgramsMap = _zipObject(ids, hikeProgramsStored);
     newId = uuid();
     hikePrograms = [...hikeProgramsStored];
 

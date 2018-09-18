@@ -1,10 +1,10 @@
+import { switchMapTo, filter } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { createSelector } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
-import { log, DebugLog } from 'app/log';
+import { DebugLog } from 'app/log';
 import { State } from 'app/store';
 
 import { AuthenticationSelectors } from '../../store';
@@ -18,8 +18,10 @@ export class NotAuthGuard implements CanActivate {
   @DebugLog
   canActivate(): Observable<boolean> {
     return this._store
-      .select(this._selectors.loggingIn)
-      .filter(loggingIn => !loggingIn)
-      .switchMapTo(this._store.select(this._selectors.loggedOut));
+      .pipe(
+        select(this._selectors.loggingIn),
+        filter(loggingIn => !loggingIn),
+        switchMapTo(this._store.pipe(select(this._selectors.loggedOut)))
+      );
   }
 }
