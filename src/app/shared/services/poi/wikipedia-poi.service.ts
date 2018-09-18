@@ -8,8 +8,9 @@ import { LanguageService } from '../language.service';
 import { HikeProgramService } from '../hike/hike-program.service';
 import { MessageService } from 'primeng/api';
 
-import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
+import _filter from 'lodash-es/filter';
+import _chunk from 'lodash-es/chunk';
 
 @Injectable()
 export class WikipediaPoiService {
@@ -79,7 +80,7 @@ export class WikipediaPoiService {
     const promises: Promise<IWikipediaPoi[]>[] = [];
 
     for (const lng of langs) {
-      const langPois = _.filter(pois, p => p.wikipedia.lng === lng);
+      const langPois = _filter(pois, p => p.wikipedia.lng === lng);
 
       promises.push(this._getPageExtracts(langPois, lng));
       promises.push(this._getPageImages(langPois, lng));
@@ -101,7 +102,7 @@ export class WikipediaPoiService {
         return '';
       }
     });
-    const _chunks = _.chunk(_poiIds, 20);
+    const _chunks = _chunk(_poiIds, 20);
 
     return Observable
       .interval(100)
@@ -146,7 +147,7 @@ export class WikipediaPoiService {
         return '';
       }
     });
-    const _chunks = _.chunk(_poiIds, 20);
+    const _chunks = _chunk(_poiIds, 20);
 
     return Observable
       .interval(100)

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { TextboxField, ITextboxField } from './textbox';
 
 export class PasswordField extends TextboxField {

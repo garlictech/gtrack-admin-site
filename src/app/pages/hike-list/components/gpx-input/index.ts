@@ -6,7 +6,8 @@ import { RouteService } from 'subrepos/gtrack-common-ngx';
 import { IRoute } from 'subrepos/provider-client';
 
 import * as toGeoJSON from '@mapbox/togeojson';
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 @Component({
   selector: 'app-gpx-input',
@@ -16,7 +17,6 @@ import * as _ from 'lodash';
 export class GpxInputComponent {
   @Input() callback: any;
   @ViewChild('gpxInput') gpxInput: ElementRef;
-  public gpxRoute: IRoute;
 
   constructor(
     private _router: Router,
@@ -65,7 +65,7 @@ export class GpxInputComponent {
    * Fix MultiLineString if needed (convert to single LineString)
    */
   private _checkAndFixMultiLineString(route) {
-    const _geometry = _.get(route, 'features[0].geometry');
+    const _geometry = _get(route, 'features[0].geometry');
     let _lineString: number[][] = [];
 
     if (_geometry && _geometry.type === 'MultiLineString') {
@@ -81,7 +81,7 @@ export class GpxInputComponent {
       }
 
       _geometry.type = 'LineString';
-      _geometry.coordinates = _.cloneDeep(_lineString);
+      _geometry.coordinates = _cloneDeep(_lineString);
     }
   }
 }

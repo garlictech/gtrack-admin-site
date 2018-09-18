@@ -12,7 +12,9 @@ import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
 } from '../../../../store/selectors';
 
-import * as _ from 'lodash';
+import _map from 'lodash-es/map';
+import _difference from 'lodash-es/difference';
+import _intersection from 'lodash-es/intersection';
 
 @Component({
   selector: 'app-hike-edit-pois-hike',
@@ -58,7 +60,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       .debounceTime(200)
       .takeUntil(this._destroy$)
       .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
-        const missingPoiIds = _.difference(inHikePoiIds, _.intersection(inHikePoiIds, inStorePoiIds)).filter(id => id !== 'endpoint');
+        const missingPoiIds = _difference(inHikePoiIds, _intersection(inHikePoiIds, inStorePoiIds)).filter(id => id !== 'endpoint');
 
         // Get only the not-loaded pois
         if (missingPoiIds && missingPoiIds.length > 0) {
@@ -83,9 +85,9 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
           .take(1)
           .map(([pois, path]: [IPoiStored[], any]) => {
             const organizedPois = this._poiEditorService.organizePois(pois, path);
-            const poiIds = _.map(pois, 'id');
-            const organizedPoiIds = _.map(organizedPois, 'id');
-            const removablePoiIds = _.difference(poiIds, _.intersection(poiIds, organizedPoiIds));
+            const poiIds = _map(pois, 'id');
+            const organizedPoiIds = _map(organizedPois, 'id');
+            const removablePoiIds = _difference(poiIds, _intersection(poiIds, organizedPoiIds))
 
             if (removablePoiIds.length > 0) {
               this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(removablePoiIds));

@@ -73,7 +73,7 @@ export class OauthWindowService {
     if (this._loginWindow) {
       if (typeof this._loginWindow.executeScript === 'function') {
         this._loginWindow.executeScript({
-          code: "window.location.href='" + url + "';"
+          code: 'window.location.href=\'' + url + '\';'
         });
       } else {
         this._loginWindow.location.href = url;

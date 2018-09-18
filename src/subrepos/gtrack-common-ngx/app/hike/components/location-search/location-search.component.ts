@@ -101,6 +101,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
         }
       });
 
+<<<<<<< HEAD
     const location$ = this._store.pipe(
       select(selectCurrentLocation),
       takeUntil(this._destroy$),
@@ -120,6 +121,28 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
         return distance(point1, point2) <= 0.1;
       })
     );
+=======
+    const location$ = this._store
+      .pipe(
+        select(selectCurrentLocation),
+        takeUntil(this._destroy$),
+        filter((location: IGeoPosition) => !!_.get(location, 'coords.latitude') && !!_.get(location, 'coords.latitude')),
+        map((location: IGeoPosition) => <GeoJSON.Position>[location.coords.longitude, location.coords.latitude]),
+        distinctUntilChanged((position1, position2) => {
+          const point1: turfCoord = {
+            type: 'Point',
+            coordinates: [position1[0], position1[1]]
+          };
+
+          const point2: turfCoord = {
+            type: 'Point',
+            coordinates: [position2[0], position2[1]]
+          };
+
+          return distance(point1, point2) <= 0.1;
+        })
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     this._locate$
       .pipe(

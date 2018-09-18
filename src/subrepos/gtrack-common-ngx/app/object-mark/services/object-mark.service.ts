@@ -21,6 +21,7 @@ export class ObjectMarkService {
 
   @DebugLog
   public loadContext(context: EObjectMarkContext) {
+<<<<<<< HEAD
     return this._store.pipe(
       select(this._authSelectors.user),
       filter(user => !!user && !!user.roles),
@@ -30,6 +31,18 @@ export class ObjectMarkService {
       ),
       tap(result => log.data('Context result: ', result))
     );
+=======
+    return this._store
+      .pipe(
+        select(this._authSelectors.user),
+        filter(user => !!user && !!user.roles),
+        tap(user => log.data('Get record: ', `private_user_profile/${user.id}`, `markedObjects.${context}`)),
+        switchMap(user =>
+          this._deepstream.getRecord<any[]>(`private_user_profile/${user.id}`).get(`markedObjects.${context}`)
+        ),
+        tap(result => log.data('Context result: ', result))
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   @DebugLog

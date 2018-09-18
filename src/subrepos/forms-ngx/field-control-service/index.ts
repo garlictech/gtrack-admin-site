@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, FormArray } from '@angular/forms';
+<<<<<<< HEAD
 
 import _forEach from 'lodash-es/forEach';
 import _map from 'lodash-es/map';
 
+=======
+import * as _ from 'lodash';
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 export interface IFormInstance {
   form: FormGroup;
   fields: any[];

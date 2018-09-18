@@ -1,7 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { IHikeProgram } from '../../../../../provider-client';
+<<<<<<< HEAD
 
 import _get from 'lodash-es/get';
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 @Component({
   selector: 'gtrack-hike-card',

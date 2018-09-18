@@ -32,7 +32,13 @@ export class HikeProgramService {
         table: 'hike_programs',
         query: []
       })
+<<<<<<< HEAD
       .pipe(take(1));
+=======
+      .pipe(
+        take(1)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   public save(hikeProgram: IHikeProgram) {
@@ -42,7 +48,14 @@ export class HikeProgramService {
       data = hikeProgram.toObject();
     }
 
+<<<<<<< HEAD
     return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data).pipe(take(1));
+=======
+    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data)
+      .pipe(
+        take(1)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   public updateState(id: string, state: EObjectState) {
@@ -52,7 +65,13 @@ export class HikeProgramService {
         table: 'hike_programs',
         state: state
       })
+<<<<<<< HEAD
       .pipe(take(1));
+=======
+      .pipe(
+        take(1)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   public delete(id: string) {
@@ -61,6 +80,12 @@ export class HikeProgramService {
         id: id,
         table: 'hike_programs'
       })
+<<<<<<< HEAD
       .pipe(take(1));
+=======
+      .pipe(
+        take(1)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 }

@@ -14,7 +14,11 @@ import { take, map, takeUntil, filter, tap, delay } from 'rxjs/operators';
 
 import { DebugLog, log } from 'app/log';
 
+<<<<<<< HEAD
 import _get from 'lodash-es/get';
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 @Component({
   selector: 'gtrack-bookmark',
@@ -34,6 +38,7 @@ export class BookmarkComponent implements OnDestroy, OnInit {
     protected _authSelectors: AuthenticationSelectors.Selectors,
     protected _store: Store<State>
   ) {
+<<<<<<< HEAD
     this.loggedIn$ = this._store.pipe(
       select(this._authSelectors.loggedIn),
       takeUntil(this._destroy$)
@@ -67,11 +72,51 @@ export class BookmarkComponent implements OnDestroy, OnInit {
         map(data => data[1]),
         filter(context => _get(context, 'saved', false)),
         delay(50) // TODO: remove this
+=======
+    this.loggedIn$ = this._store
+      .pipe(
+        select(this._authSelectors.loggedIn),
+        takeUntil(this._destroy$)
+      );
+
+    combineLatest(
+      this.loggedIn$,
+      this._store.pipe(
+        select(this._objectMarkSelectors.getObjectMarkContext(EObjectMarkContext.bookmarkedHike))
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
       )
-      .subscribe(() => {
-        log.data('Dispatch load context (because of mark)');
+    )
+    .pipe(
+      filter(data => (data[0] === true)),
+      take(1),
+      map(data => data[1])
+    )
+    .subscribe(context => {
+      log.data('Current context: ', context);
+
+      if (!context || (!context.loaded && !context.loading)) {
+        log.data('Dispatch load context');
         this._store.dispatch(new actions.LoadContext(EObjectMarkContext.bookmarkedHike));
-      });
+      }
+    });
+
+    combineLatest(
+      this.loggedIn$,
+      this._store.pipe(
+        select(this._objectMarkSelectors.getObjectMarkContext(EObjectMarkContext.bookmarkedHike))
+      )
+    )
+    .pipe(
+      takeUntil(this._destroy$),
+      filter(data => (data[0] === true)),
+      map(data => data[1]),
+      filter(context => _.get(context, 'saved', false)),
+      delay(50) // TODO: remove this
+    )
+    .subscribe(() => {
+      log.data('Dispatch load context (because of mark)');
+      this._store.dispatch(new actions.LoadContext(EObjectMarkContext.bookmarkedHike));
+    });
   }
 
   @DebugLog
@@ -81,6 +126,7 @@ export class BookmarkComponent implements OnDestroy, OnInit {
 
     combineLatest(
       this.loggedIn$,
+<<<<<<< HEAD
       this._store.pipe(
         select(this._objectMarkSelectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, this.hikeProgramId))
       )
@@ -94,17 +140,42 @@ export class BookmarkComponent implements OnDestroy, OnInit {
       .subscribe(state => {
         log.data('Current state before bookmark', state);
         const mark = !state;
+=======
+      this._store
+        .pipe(
+          select(this._objectMarkSelectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, this.hikeProgramId))
+        )
+    )
+    .pipe(
+      take(1),
+      tap(data => console.log(data)),
+      filter(data => (data[0] === true)),
+      map(data => data[1]),
+    )
+    .subscribe(state => {
+      log.data('Current state before bookmark', state);
+      const mark = !state;
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
-        this._store.dispatch(new actions.MarkObject(EObjectMarkContext.bookmarkedHike, this.hikeProgramId, mark));
-      });
+      this._store.dispatch(new actions.MarkObject(EObjectMarkContext.bookmarkedHike, this.hikeProgramId, mark));
+    });
   }
 
   ngOnInit() {
+<<<<<<< HEAD
     this.state$ = this._store.pipe(
       select(this._objectMarkSelectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, this.hikeProgramId)),
       takeUntil(this._destroy$),
       tap(marked => log.data('Current state: ', marked))
     );
+=======
+    this.state$ = this._store
+      .pipe(
+        select(this._objectMarkSelectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, this.hikeProgramId)),
+        takeUntil(this._destroy$),
+        tap(marked => log.data('Current state: ', marked))
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   ngOnDestroy() {

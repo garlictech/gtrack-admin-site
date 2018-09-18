@@ -3,9 +3,13 @@ import { of as observableOf, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
+<<<<<<< HEAD
 
 import _isEmpty from 'lodash-es/isEmpty';
 
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { Dictionary } from '@ngrx/entity/src/models';
 
 import { IPoi, IHikeProgram, IHikeProgramStop } from '../../../../../provider-client';
@@ -39,10 +43,18 @@ export class HikeProgramComponent implements OnInit {
     const hikePois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
 
     if (hikePois.length > 0) {
+<<<<<<< HEAD
       this.pois$ = this._store.pipe(
         select(this._poiSelectors.getPoiEntities(hikePois)),
         filter(pois => !_isEmpty(pois))
       );
+=======
+      this.pois$ = this._store
+        .pipe(
+          select(this._poiSelectors.getPoiEntities(hikePois)),
+          filter(pois => !_.isEmpty(pois))
+        );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
     } else {
       this.pois$ = observableOf({});
     }

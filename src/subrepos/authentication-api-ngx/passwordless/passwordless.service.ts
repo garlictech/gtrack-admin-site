@@ -52,8 +52,13 @@ export class PasswordlessService {
   public callback(passwordlessToken: string, uid: string, roles?: string[]): Observable<IAuth> {
     return this.http
       .post<{
+<<<<<<< HEAD
         token: string;
         refreshToken: string;
+=======
+        token: string,
+        refreshToken: string
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
       }>(this.tokenUrl, {
         token: passwordlessToken,
         uid: uid.replace(/%40/, '@'),

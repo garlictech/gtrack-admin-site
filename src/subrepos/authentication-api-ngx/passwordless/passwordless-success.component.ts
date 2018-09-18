@@ -19,8 +19,16 @@ export class PasswordlessSuccessComponent implements OnInit {
   constructor(private store: Store<any>, private route: ActivatedRoute) {}
 
   ngOnInit() {
+<<<<<<< HEAD
     this.route.queryParams.pipe(filter(params => params && params.roles)).subscribe((params: SuccessParams) => {
       this.store.dispatch(new Actions.MagicLinkLogin(params.token, params.uid, params.roles.split(',')));
     });
+=======
+    this.route.queryParams
+      .pipe(filter(params => params && params.roles))
+      .subscribe((params: SuccessParams) => {
+        this.store.dispatch(new Actions.MagicLinkLogin(params.token, params.uid, params.roles.split(',')));
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 }

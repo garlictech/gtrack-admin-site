@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import { mergeMap, switchMap, take } from 'rxjs/operators';
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
+=======
+import { mergeMap,  switchMap, take } from 'rxjs/operators';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable ,  throwError, of } from 'rxjs';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 import { AuthService } from '../auth';
 import { OauthWindowService } from '../oauth-window/oauth-window.service';
@@ -38,6 +45,7 @@ export class TwitterService extends AuthProviderBase {
       data = this._parseQueryString(queryString);
 
       this.http
+<<<<<<< HEAD
         .post(
           accessTokenUrl,
           {
@@ -50,6 +58,16 @@ export class TwitterService extends AuthProviderBase {
             responseType: 'text'
           }
         )
+=======
+        .post(accessTokenUrl, {
+          /* jshint camelcase: false */
+          oauth_token: data.oauth_token,
+          oauth_verifier: data.oauth_verifier,
+          /* jshint camelcase: true */
+        }, {
+          responseType: 'text'
+        })
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
         .subscribe(response => {
           const body = response.replace(/"(.*)"/, '$1');
           data = this._parseQueryString(body);
@@ -77,6 +95,7 @@ export class TwitterService extends AuthProviderBase {
    */
   @DebugLog
   public connect(roles?: string[]): Observable<IAuth> {
+<<<<<<< HEAD
     return this.login().pipe(
       switchMap(response => {
         /* jshint camelcase: false */
@@ -87,6 +106,19 @@ export class TwitterService extends AuthProviderBase {
         return this.restApiLogin(oauthToken, oauthSecret, roles);
       })
     );
+=======
+    return this.login()
+      .pipe(
+        switchMap(response => {
+          /* jshint camelcase: false */
+          const oauthToken = response.oauth_token;
+          const oauthSecret = response.oauth_token_secret;
+          /* jshint camelcase: true */
+
+          return this.restApiLogin(oauthToken, oauthSecret, roles);
+        })
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   @DebugLog
@@ -95,7 +127,11 @@ export class TwitterService extends AuthProviderBase {
 
     return this.http
       .post<{
+<<<<<<< HEAD
         token: string;
+=======
+        token: string
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
       }>(tokenUrl, {
         token: token,
         uid: uid
@@ -119,6 +155,7 @@ export class TwitterService extends AuthProviderBase {
     const requestTokenProxy = `${this.authConfig.apiUrl}/auth/twitter/oauth/request_token`;
 
     // Avoid pop-up block
+<<<<<<< HEAD
     this.oauthWindow.open('', 'oauth_verifier').subscribe(
       url => {
         this.oauthCallback(url);
@@ -141,6 +178,25 @@ export class TwitterService extends AuthProviderBase {
           responseType: 'text'
         }
       )
+=======
+    this.oauthWindow
+      .open('', 'oauth_verifier')
+      .subscribe(url => {
+        this.oauthCallback(url);
+
+        return this._subject.asObservable();
+      }, err => {
+        this._subject.error(err);
+        this._subject.complete();
+      });
+
+    this.http
+      .post(requestTokenProxy, {
+        redirectUri: redirectUri
+      }, {
+        responseType: 'text'
+      })
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
       .pipe(
         mergeMap(response => {
           const queryString: string = response.replace(/"(.*)"/, '$1');
@@ -202,8 +258,13 @@ export class TwitterService extends AuthProviderBase {
 
     return this.http
       .post<{
+<<<<<<< HEAD
         token: string;
         refreshToken: string;
+=======
+        token: string,
+        refreshToken: string
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
       }>(url, body)
       .pipe(
         switchMap(data => {

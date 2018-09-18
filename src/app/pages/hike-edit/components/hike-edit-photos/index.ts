@@ -9,7 +9,8 @@ import {
 import { RoutePlannerService, PoiEditorService, AdminMap, AdminMapService } from '../../../../shared/services';
 import { IBackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
-import * as _ from 'lodash';
+
+import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-hike-edit-photos',
@@ -19,6 +20,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   @Input() backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
   @Input() backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
   @Input() clickActions: any;
+  @Input() showMarkerColumn: boolean;
   @Input() distanceFrom: number[] = null;
   public gTrackPoiPhotos$: Observable<IBackgroundImageData[]>;
   public googlePhotos$: Observable<IBackgroundImageData[]>;
@@ -78,7 +80,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     this.bgImages$
       .takeUntil(this._destroy$)
       .subscribe(images => {
-        this.slideShowUrls =  _.map(images, 'original.url');
+        this.slideShowUrls =  _map(images, 'original.url');
       });
 
     // Route info from the store (for disabling GET buttons)

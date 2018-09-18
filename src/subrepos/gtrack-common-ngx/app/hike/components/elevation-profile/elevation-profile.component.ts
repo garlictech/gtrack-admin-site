@@ -14,6 +14,11 @@ import {
   SimpleChanges
 } from '@angular/core';
 
+<<<<<<< HEAD
+=======
+import * as d3 from 'd3';
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { State } from 'app/store';
 import { Subject } from 'rxjs';
 

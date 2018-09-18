@@ -7,8 +7,12 @@ import { poiContextStateAdapter } from './state';
 import { IPoi, IPoiStored } from '../../../../../provider-client';
 import { Dictionary } from '@ngrx/entity/src/models';
 
+<<<<<<< HEAD
 import _get from 'lodash-es/get';
 import _pickBy from 'lodash-es/pickBy';
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 @Injectable()
 export class PoiSelectors {

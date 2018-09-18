@@ -3,9 +3,13 @@ import { take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { Component, OnInit, Input } from '@angular/core';
 import * as togpx from 'togpx';
+<<<<<<< HEAD
 
 import _get from 'lodash-es/get';
 import _cloneDeep from 'lodash-es/cloneDeep';
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 import { HikeProgram } from '../../services/hike-program/hike-program';
 import { RouteSelectors } from '../../store/route/selectors';
@@ -15,7 +19,11 @@ import * as RouteActions from '../../store/route/actions';
 import * as PoiActions from '../../store/poi/actions';
 
 @Component({
+<<<<<<< HEAD
   selector: 'gtrack-download-gpx',
+=======
+  selector: 'gtcn-download-gpx',
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   template: ''
 })
 export class DownloadGpxButtonComponent implements OnInit {
@@ -72,6 +80,7 @@ export class DownloadGpxButtonComponent implements OnInit {
       this._store.pipe(select(this._routeSelectors.getRoute(this.hikeProgram.routeId))),
       this._store.pipe(select(this._poiSelectors.getPois(poiIds)))
     )
+<<<<<<< HEAD
       .pipe(take(1))
       .subscribe(results => {
         const route = results[0];
@@ -109,6 +118,47 @@ export class DownloadGpxButtonComponent implements OnInit {
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
+=======
+    .pipe(
+      take(1)
+    )
+    .subscribe(results => {
+      const route = results[0];
+      const pois = results[1];
+      const locale = 'en_US'; // TODO: Use the locale settings
+
+      const geojson = _.cloneDeep(route.route);
+      const points: GeoJSON.Feature<GeoJSON.Point>[] = pois.map(poi => ({
+        type: 'Feature' as 'Feature',
+        geometry: {
+          type: 'Point' as 'Point',
+          coordinates: [poi.lon, poi.lat]
+        },
+        properties: {
+          title: _.get(poi.description, `${locale}.title`, '')
+        }
+      }));
+
+      geojson.features = [
+        ...[geojson.features[0]], // Route line
+        ...points
+      ];
+
+      const xml = togpx(geojson);
+      const file = new Blob([xml], {
+        type: 'text/xml'
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
       });
+      const url = URL.createObjectURL(file);
+
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `${this.hikeProgram.id}.gpx`;
+
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
   }
 }

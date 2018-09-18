@@ -17,10 +17,19 @@ export class NotAuthGuard implements CanActivate {
 
   @DebugLog
   canActivate(): Observable<boolean> {
+<<<<<<< HEAD
     return this._store.pipe(
       select(this._selectors.loggingIn),
       filter(loggingIn => !loggingIn),
       switchMapTo(this._store.pipe(select(this._selectors.loggedOut)))
     );
+=======
+    return this._store
+      .pipe(
+        select(this._selectors.loggingIn),
+        filter(loggingIn => !loggingIn),
+        switchMapTo(this._store.pipe(select(this._selectors.loggedOut)))
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 }

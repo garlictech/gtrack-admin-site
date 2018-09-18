@@ -1,7 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+<<<<<<< HEAD
 
 import _forEach from 'lodash-es/forEach';
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 import { ISectionField } from '../field';
 

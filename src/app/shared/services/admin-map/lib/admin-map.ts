@@ -6,8 +6,8 @@ import { Map, IconService, MapMarkerService, DescriptionLanguageListService, Mar
 
 import * as L from 'leaflet';
 import 'leaflet.fullscreen';
-import buffer from '@turf/buffer';
-import * as _ from 'lodash';
+import turfBuffer from '@turf/buffer';
+import _assign from 'lodash-es/assign';
 
 export class AdminMap extends Map {
   public markersGroup: L.LayerGroup;
@@ -24,6 +24,15 @@ export class AdminMap extends Map {
     protected _markerPopup: MarkerPopupService
   ) {
     super(id, map, iconService, mapMarkerService, _store, _descriptionLanguageList, _markerPopup);
+
+    (<any>L.control).fullscreen({
+      position: 'topleft', // change the position of the button can be topleft, topright, bottomright or bottomleft, defaut topleft
+      title: 'Show me the fullscreen !', // change the title of the button, default Full Screen
+      titleCancel: 'Exit fullscreen mode', // change the title of the button when fullscreen is on, default Exit Full Screen
+      content: null, // change the content of the button, can be HTML, default null
+      forceSeparateButton: true, // force seperate button to detach from zoom buttons, default false
+      forcePseudoFullscreen: true, // force use of pseudo full screen even if full screen API is available, default false
+    }).addTo(this.map);
   }
 
   /**
@@ -36,10 +45,10 @@ export class AdminMap extends Map {
       .take(1)
       .map(path => {
         if (typeof path !== 'undefined') {
-          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(path, 50, { units: 'meters' });
+          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 50, { units: 'meters' });
 
           if (typeof _buffer !== 'undefined') {
-            _buffer = _.assign(_buffer, {
+            _buffer = _assign(_buffer, {
               properties: {
                 name: 'buffer polygon',
                 draw_type: 'small_buffer'

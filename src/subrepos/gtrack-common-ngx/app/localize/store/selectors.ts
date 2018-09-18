@@ -1,7 +1,11 @@
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Store, createFeatureSelector, createSelector, select } from '@ngrx/store';
+<<<<<<< HEAD
 import _get from 'lodash-es/get';
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { Observable } from 'rxjs';
 
 import { ILocalizationState } from 'subrepos/localize-ngx';
@@ -30,6 +34,7 @@ export class LocalizeSelectors {
   }
 
   getLanguageSettings(): Observable<ILocalizationState> {
+<<<<<<< HEAD
     return this._store.pipe(
       select(selectFeature),
       map(state => ({
@@ -37,5 +42,15 @@ export class LocalizeSelectors {
         descriptionLanguageList: _get(state, 'descriptionLanguageList', [])
       }))
     );
+=======
+    return this._store
+      .pipe(
+        select(selectFeature),
+        map(state => ({
+          actualLanguage: _.get(state, 'language', 'en_US'),
+          descriptionLanguageList: _.get(state, 'descriptionLanguageList', [])
+        }))
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 }

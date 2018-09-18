@@ -2,6 +2,10 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Store, StoreModule } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
@@ -45,6 +49,7 @@ describe('ApiService', () => {
     const api: ApiService = TestBed.get(ApiService);
     const url = 'http://localhost/user/me';
 
+<<<<<<< HEAD
     api.get(url).subscribe(
       () => {
         done();
@@ -53,6 +58,15 @@ describe('ApiService', () => {
         done(err);
       }
     );
+=======
+    api
+      .get(url)
+      .subscribe(() => {
+        done();
+      }, err => {
+        done(err);
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -69,6 +83,7 @@ describe('ApiService', () => {
       .post(url, {
         test: 5
       })
+<<<<<<< HEAD
       .subscribe(
         () => {
           done();
@@ -77,6 +92,14 @@ describe('ApiService', () => {
           done(err);
         }
       );
+=======
+      .subscribe(() => {
+        done();
+      }, err => {
+        done(err);
+      });
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
@@ -98,9 +121,17 @@ describe('ApiService', () => {
       }
     });
 
+<<<<<<< HEAD
     api.get(url).subscribe((response: Response) => {
       done.fail(new Error('Not failed'));
     });
+=======
+    api
+      .get(url)
+      .subscribe((response: Response) => {
+        done.fail(new Error('Not failed'));
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -126,6 +157,7 @@ describe('ApiService', () => {
       .post(url, {
         test: 1
       })
+<<<<<<< HEAD
       .subscribe(
         () => {
           done(new Error('Not failed'));
@@ -136,6 +168,15 @@ describe('ApiService', () => {
           done();
         }
       );
+=======
+      .subscribe(() => {
+        done(new Error('Not failed'));
+      }, (err: HttpErrorResponse) => {
+        expect(err.status).toEqual(404);
+        expect(err.statusText).toEqual('Not found');
+        done();
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
@@ -161,6 +202,7 @@ describe('ApiService', () => {
       .post(url, {
         test: 1
       })
+<<<<<<< HEAD
       .subscribe(
         () => {
           done(new Error('Not failed'));
@@ -173,5 +215,18 @@ describe('ApiService', () => {
     const req = httpTestingController.expectOne(url);
 
     req.error(new ErrorEvent('Network error'));
+=======
+      .subscribe(() => {
+        done(new Error('Not failed'));
+      }, (err: ErrorEvent) => {
+        done();
+      });
+
+    const req = httpTestingController.expectOne(url);
+
+    req.error(
+      new ErrorEvent('Network error')
+    );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 });

@@ -55,5 +55,5 @@ export class MarkerPopupService {
       }, 150);
     }
     /* tslint:enable:no-string-literal */
-  };
+  }
 }

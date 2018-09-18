@@ -1,4 +1,5 @@
 :host {
+<<<<<<< HEAD
     .angular-leaflet-map {
         width: 100%;
         height: 400px;
@@ -7,3 +8,14 @@
         position: relative;
     }
 }
+=======
+  .angular-leaflet-map {
+    width: 100%;
+    height: 400px;
+  }
+
+  gtcn-leaflet {
+    position: relative;
+  }
+}
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661

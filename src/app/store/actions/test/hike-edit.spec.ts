@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import * as HikeEditActions from '../hike-edit';
 
 describe('HikeList actions', () => {

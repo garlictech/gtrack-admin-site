@@ -1,8 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 
+<<<<<<< HEAD
 import _forEach from 'lodash-es/forEach';
 
+=======
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { DebugLog } from '../log';
 import { IGroupField } from '../field';
 

@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 
+<<<<<<< HEAD
 import _get from 'lodash-es/get';
 
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
+=======
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { Selectors as DeepstreamSelectors } from '../../../../deepstream-ngx';
 
 import { User, IAuthenticationState as IJwtAuthState, IAuth } from '../../../../authentication-api-ngx';

@@ -18,9 +18,15 @@ import { LocalStorage } from '../../storage/local-storage.service';
 describe('Google', () => {
   const apiUrl = 'http://api';
   const webserverUrl = 'http://webserver';
+<<<<<<< HEAD
 
   let httpTestingController: HttpTestingController;
 
+=======
+
+  let httpTestingController: HttpTestingController;
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   const googleConfig: IGoogleConfig = {
     appId: 'testapp',
     permissions: 'email'
@@ -126,11 +132,21 @@ describe('Google', () => {
       /* EMPTY ON PURPOSE */
     };
 
+<<<<<<< HEAD
     oauthWindow.changeUrl$.pipe(take(1)).subscribe(url => {
       if (url) {
         oauthWindow.subject.next(currentRedirectUrl);
       }
     });
+=======
+    oauthWindow.changeUrl$
+      .pipe(take(1))
+      .subscribe(url => {
+        if (url) {
+          oauthWindow.subject.next(currentRedirectUrl);
+        }
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     google
       .connect()
@@ -175,6 +191,7 @@ describe('Google', () => {
     google
       .connect()
       .pipe(take(1))
+<<<<<<< HEAD
       .subscribe(
         () => {
           done(new Error('Not failed'));
@@ -184,6 +201,14 @@ describe('Google', () => {
           done();
         }
       );
+=======
+      .subscribe(() => {
+        done(new Error('Not failed'));
+      }, err => {
+        expect(err.error).toEqual('Not authorized');
+        done();
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 
   it('should reject the promise without access_token', done => {
@@ -195,6 +220,7 @@ describe('Google', () => {
     google
       .connect()
       .pipe(take(1))
+<<<<<<< HEAD
       .subscribe(
         () => {
           done(new Error('Not failed'));
@@ -204,6 +230,14 @@ describe('Google', () => {
           done();
         }
       );
+=======
+      .subscribe(() => {
+        done(new Error('Not failed'));
+      }, err => {
+        expect(err.error).toEqual('Not authorized');
+        done();
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 
   it('should work without permissions', done => {
@@ -215,15 +249,27 @@ describe('Google', () => {
       /* EMPTY ON PURPOSE */
     };
 
+<<<<<<< HEAD
     oauthWindow.changeUrl$.pipe(take(1)).subscribe(url => {
       expect(url.indexOf('scope')).toEqual(-1);
       config.google.permissions = 'email';
       done();
     });
+=======
+    oauthWindow
+      .changeUrl$
+      .pipe(take(1))
+      .subscribe(url => {
+        expect(url.indexOf('scope')).toEqual(-1);
+        config.google.permissions = 'email';
+        done();
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     google
       .connect()
       .pipe(take(1))
+<<<<<<< HEAD
       .subscribe(
         () => {},
         err => {
@@ -231,5 +277,11 @@ describe('Google', () => {
           done(err);
         }
       );
+=======
+      .subscribe(() => {}, err => {
+        config.google.permissions = 'email';
+        done(err);
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 });

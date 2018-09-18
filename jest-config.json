@@ -18,15 +18,12 @@
             "statements": 0
         }
     },
-    "coverageReporters": [
-        "json",
-        "lcov",
-        "text",
-        "html"
-    ],
-    "coveragePathIgnorePatterns": [
-        "/node_modules/",
-        "/\\.(e2e|spec)\\.ts$/",
-        "/test/"
+    "coverageReporters": ["json", "lcov", "text", "html"],
+    "coveragePathIgnorePatterns": ["/node_modules/", "/\\.(e2e|spec)\\.ts$/", "/test/"],
+    "transform": {
+        "^.+\\.(j|t)s?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "transformIgnorePatterns": [
+        "<rootDir>/node_modules/(?!lodash-es/.*)"
     ]
 }

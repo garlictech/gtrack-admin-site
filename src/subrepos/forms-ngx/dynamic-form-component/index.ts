@@ -37,12 +37,20 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
       this.formDataPath$
         .pipe(
           filter(formDataPath => !!formDataPath),
+<<<<<<< HEAD
           switchMap(formDataPath => this._store.pipe(select(state => _get(state, formDataPath)))),
+=======
+          switchMap(formDataPath => this._store.pipe(select(state => _.get(state, formDataPath)))),
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
           takeUntil(this._componentDestroyed$),
           filter(formData => !!formData),
           map(formData => {
             const fieldKeys = Object.keys(this.formDescriptor.fields);
+<<<<<<< HEAD
             return _pick(formData, fieldKeys);
+=======
+            return _.pick(formData, fieldKeys);
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
           })
         )
         .subscribe(formData => {

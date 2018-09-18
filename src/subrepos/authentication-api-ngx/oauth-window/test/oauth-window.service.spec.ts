@@ -1,7 +1,18 @@
 import { OauthWindowService } from '../oauth-window.service';
 import { Emitter } from '../../emitter';
 
+<<<<<<< HEAD
 import { take, elementAt, map, filter, catchError, switchMap } from 'rxjs/operators';
+=======
+import {
+  take,
+  elementAt,
+  map,
+  filter,
+  catchError,
+  switchMap
+} from 'rxjs/operators';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 import { ReplaySubject } from 'rxjs';
 
@@ -111,6 +122,7 @@ describe('OauthWindow', () => {
 
     const url = 'http://test.com';
 
+<<<<<<< HEAD
     windows$.pipe(take(1)).subscribe((win: MockWindow) => {
       expect(win.location.href).toEqual(url);
       done();
@@ -118,6 +130,21 @@ describe('OauthWindow', () => {
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
     oauthWindow.open(url).pipe(catchError(err => done(err)));
+=======
+    windows$
+      .pipe(take(1))
+      .subscribe((win: MockWindow) => {
+        expect(win.location.href).toEqual(url);
+        done();
+      });
+
+    const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
+    oauthWindow
+      .open(url)
+      .pipe(
+        catchError(err => done(err))
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 
   it('should close previous window', done => {
@@ -133,6 +160,7 @@ describe('OauthWindow', () => {
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
+<<<<<<< HEAD
     oauthWindow.open(url).subscribe(
       () => {
         done(new Error('Not failed'));
@@ -152,6 +180,29 @@ describe('OauthWindow', () => {
     );
 
     oauthWindow.open(url).subscribe();
+=======
+    oauthWindow
+      .open(url)
+      .subscribe(() => {
+        done(new Error('Not failed'));
+      }, err => {
+        expect(err.message).toEqual('OAuth window reopened');
+
+        combineLatest(
+          windows$.pipe(elementAt(0)),
+          windows$.pipe(elementAt(1))
+        )
+        .pipe(take(1))
+        .subscribe(windows => {
+          expect(windows[0].closed).toBe(true);
+          expect(windows[1].closed).toBe(false);
+
+          done();
+        });
+      });
+
+      oauthWindow.open(url).subscribe();
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 
   it('should change URL of opened window', done => {
@@ -200,7 +251,11 @@ describe('OauthWindow', () => {
     oauthWindow.close();
   });
 
+<<<<<<< HEAD
   it("should get URL from cordova's loadStartHandler event", done => {
+=======
+  it('should get URL from cordova\'s loadStartHandler event', done => {
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
     const windowService = {
       get nativeWindow() {
         return mockWindowCordova;
@@ -222,7 +277,11 @@ describe('OauthWindow', () => {
     oauthWindow.changeUrl('http://test.com?access_token=5');
   });
 
+<<<<<<< HEAD
   it("should get URL from cordova's loadStartHandler event when error happened", done => {
+=======
+  it('should get URL from cordova\'s loadStartHandler event when error happened', done => {
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
     const windowService = {
       get nativeWindow() {
         return mockWindowCordova;
@@ -233,34 +292,63 @@ describe('OauthWindow', () => {
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
+<<<<<<< HEAD
     oauthWindow.open(url, 'access_token').subscribe(responseUrl => {
       expect(responseUrl).toEqual('http://test.com?error=error');
       done();
     }, done);
+=======
+    oauthWindow
+      .open(url, 'access_token')
+      .subscribe(responseUrl => {
+        expect(responseUrl).toEqual('http://test.com?error=error');
+        done();
+      }, done);
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     oauthWindow.changeUrl('http://test.com?error=error');
   });
 
+<<<<<<< HEAD
   it("should not get URL from cordova's loadStartHandler when URL doesn't contain the parameter or exit", done => {
+=======
+  it('should not get URL from cordova\'s loadStartHandler when URL doesn\'t contain the parameter or exit', done => {
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
     const windowService = {
       get nativeWindow() {
         return mockWindowCordova;
       }
     };
 
+<<<<<<< HEAD
     windows$.pipe(elementAt(0)).subscribe((win: MockWindow) => {
       win.on('loadstart', () => {
         setTimeout(() => done(), 400);
+=======
+    windows$
+      .pipe(elementAt(0))
+      .subscribe((win: MockWindow) => {
+        win.on('loadstart', () => {
+          setTimeout(() => done(), 400);
+        });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
       });
-    });
 
     const url = 'http://test.com';
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
+<<<<<<< HEAD
     oauthWindow.open(url, 'access_token').subscribe(responseUrl => {
       done(new Error('URL returned'));
     }, done);
+=======
+    oauthWindow
+      .open(url, 'access_token')
+      .subscribe(responseUrl => {
+        done(new Error('URL returned'));
+      }, done);
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     oauthWindow.changeUrl('http://test2.com');
   });
@@ -276,20 +364,36 @@ describe('OauthWindow', () => {
 
     const url = 'http://test.com';
 
+<<<<<<< HEAD
     windows$.pipe(take(1)).subscribe((win: MockWindowCordova) => {
       expect(win.location.href).toEqual(url);
       cordovaWindow = win;
+=======
+    windows$
+      .pipe(take(1))
+      .subscribe((win: MockWindowCordova) => {
+        expect(win.location.href).toEqual(url);
+        cordovaWindow = win;
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
-      cordovaWindow.close();
-    });
+        cordovaWindow.close();
+      });
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
+<<<<<<< HEAD
     oauthWindow.open(url).subscribe(
       () => {
         done(new Error('Not failed'));
       },
       (err: Error) => {
+=======
+    oauthWindow
+      .open(url)
+      .subscribe(() => {
+        done(new Error('Not failed'));
+      }, (err: Error) => {
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
         expect(err.message).toBe('User cancelled');
         done();
       }
@@ -306,6 +410,7 @@ describe('OauthWindow', () => {
     const url = 'http://test.com';
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
+<<<<<<< HEAD
     windows$.pipe(take(1)).subscribe((win: MockWindow) => {
       expect(win.location.href).toEqual(url);
 
@@ -334,5 +439,35 @@ describe('OauthWindow', () => {
           }
         }
       );
+=======
+    windows$
+      .pipe(take(1))
+      .subscribe((win: MockWindow) => {
+        expect(win.location.href).toEqual(url);
+
+        win.on('exit', () => {
+          done();
+        });
+
+        // wait for OauthWindow to have the window istance
+        interval(200)
+          .pipe(
+            map(() => oauthWindow.isOpened()),
+            filter(opened => opened === true),
+            take(1)
+          )
+          .subscribe(() => oauthWindow.close());
+      });
+
+    oauthWindow
+      .open(url)
+      .pipe(take(1))
+      .subscribe(() => {
+      }, err => {
+        if (err.message !== 'User cancelled') {
+          done.fail(err);
+        }
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 });

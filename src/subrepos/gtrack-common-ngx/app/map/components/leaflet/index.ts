@@ -10,7 +10,11 @@ export interface Center {
 }
 
 @Component({
+<<<<<<< HEAD
   selector: 'gtrack-leaflet',
+=======
+  selector: 'gtcn-leaflet',
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   template: `
     <div #map class="angular-leaflet-map"><ng-content></ng-content></div>
   `,

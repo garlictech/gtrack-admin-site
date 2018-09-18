@@ -4,12 +4,22 @@ import { Observable } from 'rxjs';
 import { IPoi, IPoiStored, IPoiSaveResponse, EObjectState } from '../../../../../provider-client';
 
 import { DeepstreamService } from '../../../../../deepstream-ngx';
+<<<<<<< HEAD
 
 import _cloneDeep from 'lodash-es/cloneDeep';
 
 @Injectable()
 export class PoiService {
   constructor(private _deepstream: DeepstreamService) {}
+=======
+import * as _ from 'lodash';
+
+@Injectable()
+export class PoiService {
+  constructor(
+    private _deepstream: DeepstreamService
+  ) {}
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
   public get(id: string): Observable<IPoiStored> {
     return this._deepstream
@@ -18,7 +28,11 @@ export class PoiService {
       .pipe(
         take(1),
         map(data => {
+<<<<<<< HEAD
           return _cloneDeep(data);
+=======
+          return _.cloneDeep(data);
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
         })
       );
   }
@@ -34,7 +48,13 @@ export class PoiService {
         table: 'pois',
         state: state
       })
+<<<<<<< HEAD
       .pipe(take(1));
+=======
+      .pipe(
+        take(1)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   public delete(id: string) {
@@ -43,7 +63,13 @@ export class PoiService {
         id: id,
         table: 'pois'
       })
+<<<<<<< HEAD
       .pipe(take(1));
+=======
+      .pipe(
+        take(1)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   public merge(ids: string[], newData: IPoi) {
@@ -52,6 +78,12 @@ export class PoiService {
         ids: ids,
         newData: newData
       })
+<<<<<<< HEAD
       .pipe(take(1));
+=======
+      .pipe(
+        take(1)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 }

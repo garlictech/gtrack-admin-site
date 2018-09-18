@@ -1,9 +1,6 @@
-import { Action } from '@ngrx/store';
-import {
-  initialMapState, hikeEditMapReducer
-} from '../hike-edit-map';
+import { initialMapState, hikeEditMapReducer } from '../hike-edit-map';
 import { IHikeEditMapState } from '../../state/hike-edit-map';
-import { hikeEditMapActions, adminMapActions } from '../../actions';
+import { adminMapActions } from '../../actions';
 
 import * as _ from 'lodash';
 

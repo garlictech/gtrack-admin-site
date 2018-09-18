@@ -36,10 +36,18 @@ export class CheckpointsComponent {
         .filter(checkpoint => !/^endpoint/.test(checkpoint.id))
         .map(checkpoint => checkpoint.id);
 
+<<<<<<< HEAD
       this.pois$ = this._store.pipe(
         select(this._poiSelectors.getPoiEntities(poiIds)),
         filter(pois => !_isEmpty(pois))
       );
+=======
+      this.pois$ = this._store
+        .pipe(
+          select(this._poiSelectors.getPoiEntities(poiIds)),
+          filter(pois => !_.isEmpty(pois))
+        );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
       this._store.dispatch(new poiActions.LoadPois(poiIds));
     }

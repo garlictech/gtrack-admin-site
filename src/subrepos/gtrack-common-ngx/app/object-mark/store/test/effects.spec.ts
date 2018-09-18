@@ -4,6 +4,10 @@ import { StoreModule } from '@ngrx/store';
 
 import { EObjectMarkContext } from 'subrepos/provider-client';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { hot, cold } from 'jest-marbles';
 
 import * as actions from '../actions';

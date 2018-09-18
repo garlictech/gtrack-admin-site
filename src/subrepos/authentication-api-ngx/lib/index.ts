@@ -19,11 +19,18 @@ import { AuthModule } from '../auth';
 export function initializerFactory(auth: AuthService, store: Store<any>) {
   return function() {
     log.data('[AuthenticationApiModule:app init] Retrieving authentication info with stored token...');
+<<<<<<< HEAD
     auth.authenticated.subscribe(
       (authData: IAuth) => {
         store.dispatch(new Actions.LoginSuccess(authData));
       },
       err => {
+=======
+    auth.authenticated
+      .subscribe((authData: IAuth) => {
+        store.dispatch(new Actions.LoginSuccess(authData));
+      }, err => {
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
         log.info('Authentication lib init: not authenticated');
       }
     );

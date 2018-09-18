@@ -1,6 +1,10 @@
 import { combineLatest as observableCombineLatest, Observable, throwError, of as observableOf } from 'rxjs';
 
+<<<<<<< HEAD
 import { catchError, map, switchMap } from 'rxjs/operators';
+=======
+import { catchError,  map, switchMap } from 'rxjs/operators';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
@@ -46,6 +50,7 @@ export class AuthService {
     this.config = { ...this.authConfig.verify };
     this.redirectUri = new URL(`${this.authConfig.webserverUrl}${this.config.redirectSlug}`);
 
+<<<<<<< HEAD
     return (this.authenticated = this.api.get<User>(`${this.authConfig.apiUrl}/user/me`).pipe(
       switchMap(response => {
         const user = response;
@@ -66,6 +71,30 @@ export class AuthService {
         return auth;
       })
     ));
+=======
+    return (this.authenticated = this.api
+      .get<User>(`${this.authConfig.apiUrl}/user/me`)
+      .pipe(
+        switchMap(response => {
+          const user = response;
+
+          // let afObs = this.afAuth ? this._getFirebaseData() : Observable.of({ firebaseToken: null, firebaseUser: null });
+
+          const afObs = observableOf({ firebaseToken: null, firebaseUser: null });
+
+          return observableCombineLatest(observableOf({ token, refreshToken, user }), afObs);
+        }),
+        map(values => {
+          const auth: IAuth = {
+            token: values[0].token,
+            refreshToken: values[0].refreshToken,
+            user: values[0].user
+          };
+
+          return auth;
+        })
+      ));
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   @DebugLog
@@ -91,7 +120,11 @@ export class AuthService {
 
     return this.http
       .get<{
+<<<<<<< HEAD
         token: string;
+=======
+        token: string
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
       }>(`${this.authConfig.apiUrl}/auth/token`, {
         params: {
           refreshToken: refreshToken
@@ -114,21 +147,37 @@ export class AuthService {
       return observableOf(undefined);
     }
 
+<<<<<<< HEAD
     return this.http.delete(`${this.authConfig.apiUrl}/auth/token/${refreshToken}`).pipe(map(() => undefined));
+=======
+    return this.http.delete(`${this.authConfig.apiUrl}/auth/token/${refreshToken}`)
+      .pipe(
+        map(() => undefined)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   @DebugLog
   logout(): Observable<void> {
     this.storage.removeItem('token');
 
+<<<<<<< HEAD
     return this.destroyRefreshToken().pipe(
       map(() => this.storage.removeItem('refreshToken')),
       map(() => undefined)
     );
+=======
+    return this.destroyRefreshToken()
+      .pipe(
+        map(() => this.storage.removeItem('refreshToken')),
+        map(() => undefined)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   @DebugLog
   getFirebaseToken(): Observable<Object | null> {
+<<<<<<< HEAD
     return this.api.get(`${this.authConfig.apiUrl}/auth/firebase/token`).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status === 404) {
@@ -138,6 +187,19 @@ export class AuthService {
         return throwError(err);
       })
     );
+=======
+    return this.api
+      .get(`${this.authConfig.apiUrl}/auth/firebase/token`)
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 404) {
+            return observableOf(null);
+          }
+
+          return throwError(err);
+        })
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   /**
@@ -146,10 +208,18 @@ export class AuthService {
   public requestVerifyToken(email: string): Observable<any> {
     const tokenRequestUrl = `${this.authConfig.apiUrl}/auth/verify/request`;
 
+<<<<<<< HEAD
     return this.api.post(tokenRequestUrl, {
       email: email,
       redirectUri: this.redirectUri.toString()
     });
+=======
+    return this.api
+      .post(tokenRequestUrl, {
+        email: email,
+        redirectUri: this.redirectUri.toString()
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   /**
@@ -160,7 +230,11 @@ export class AuthService {
 
     return this.api
       .post<{
+<<<<<<< HEAD
         token: string;
+=======
+        token: string
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
       }>(verifyUrl, {
         token: token,
         uid: uid

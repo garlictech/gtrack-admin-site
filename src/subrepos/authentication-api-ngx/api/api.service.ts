@@ -18,7 +18,13 @@ export class ApiService {
       .get<T>(url, {
         headers: headers
       })
+<<<<<<< HEAD
       .pipe(catchError(err => this.handleError(err)));
+=======
+      .pipe(
+        catchError(err => this.handleError(err))
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   post<T = any>(url: string, data: any): Observable<T> {
@@ -28,7 +34,13 @@ export class ApiService {
       .post<T>(url, data, {
         headers: headers
       })
+<<<<<<< HEAD
       .pipe(catchError(err => this.handleError(err)));
+=======
+      .pipe(
+        catchError(err => this.handleError(err))
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   private getAuthorizationHeaders(): HttpHeaders {

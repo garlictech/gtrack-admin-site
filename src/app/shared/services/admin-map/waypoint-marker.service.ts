@@ -12,9 +12,10 @@ import { environment } from 'environments/environment';
 import { ElevationService, IconService } from 'subrepos/gtrack-common-ngx';
 
 import * as L from 'leaflet';
-import * as _ from 'lodash';
+import _map from 'lodash-es/map';
+import _chunk from 'lodash-es/chunk';
 import { point as turfPoint, lineString as turfLineString } from '@turf/helpers';
-import nearestPointOnLine from '@turf/nearest-point-on-line';
+import turfNearestPointOnLine from '@turf/nearest-point-on-line';
 
 @Injectable()
 export class WaypointMarkerService {
@@ -136,8 +137,8 @@ export class WaypointMarkerService {
       locale: 'en',
       key: environment.graphhopper.apiKey,
       points_encoded: false
-    };
-    const _urlParamsStr = _.map(_urlParams, (v, k) => `${k}=${v}`);
+    }
+    const _urlParamsStr = _map(_urlParams, (v, k) => `${k}=${v}`);
     const request = `https://graphhopper.com/api/1/route?point=${p1.lat},${p1.lng}&point=${p2.lat},${p2.lng}&${_urlParamsStr.join('&')}`;
 
     // Get basic poi list
@@ -156,7 +157,7 @@ export class WaypointMarkerService {
     // 2,500 free requests per day
     // 512 locations per request.
     // 50 requests per second
-    const _chunks: any[][] = _.chunk(_coordsArr, 500);
+    let _chunks: any[][] = _chunk(_coordsArr, 500);
 
     return Observable
       .interval(100)
@@ -196,9 +197,9 @@ export class WaypointMarkerService {
    */
   private _moveLastWaypointToRoute(coords) {
     for (let i = this._markers.length - 2; i < this._markers.length; i++) {
-      const line = turfLineString(coords);
-      const pt = turfPoint([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
-      const snapped = nearestPointOnLine(line, pt);
+      let line = turfLineString(coords);
+      let pt = turfPoint([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
+      let snapped = turfNearestPointOnLine(line, pt);
 
       this._markers[i].setLatLng(new L.LatLng(
         (<any>snapped.geometry).coordinates[0],

@@ -7,6 +7,10 @@ import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
 import { Observable } from 'rxjs';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { hot, cold } from 'jest-marbles';
 
 import { IRouteStored, IRoute, EObjectState } from 'subrepos/provider-client';

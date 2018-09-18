@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import { EPoiTypes } from '../../../../subrepos/provider-client';
 
 import * as HikeEditPoiActions from '../hike-edit-poi';

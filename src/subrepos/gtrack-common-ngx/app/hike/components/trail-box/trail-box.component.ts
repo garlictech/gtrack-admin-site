@@ -16,9 +16,13 @@ import {
 import { faCrosshairs, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Store, select } from '@ngrx/store';
+<<<<<<< HEAD
 
 import _isEmpty from 'lodash-es/isEmpty';
 import _flatten from 'lodash-es/flatten';
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 import bbox from '@turf/bbox';
 import bboxPolygon from '@turf/bbox-polygon';
@@ -43,7 +47,11 @@ import { Observable, Subject } from 'rxjs';
 import { IPoi } from '../../../../../provider-client';
 
 @Component({
+<<<<<<< HEAD
   selector: 'gtrack-trail-box',
+=======
+  selector: 'gtcn-trail-box',
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   template: ''
 })
 export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
@@ -119,6 +127,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
     const route = this.hikeProgram.routeId;
 
     this.pois$ = this._store.pipe(select(this._poiSelectors.getPois(pois)));
+<<<<<<< HEAD
     this.route$ = this._store.pipe(
       select(this._routeSelectors.getRoute(route)),
       rxjsMap(data => {
@@ -135,6 +144,29 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
         this._store.dispatch(new routeActions.LoadRoute(route));
       }
     });
+=======
+    this.route$ = this._store
+      .pipe(
+        select(this._routeSelectors.getRoute(route)),
+        rxjsMap(data => {
+          if (data) {
+            return new Route(data);
+          }
+        })
+      );
+
+    this._store.dispatch(new poiActions.LoadPois(pois));
+
+    this._store
+      .pipe(
+        select(this._routeSelectors.getRouteContext(route))
+      )
+      .subscribe(context => {
+        if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
+          this._store.dispatch(new routeActions.LoadRoute(route));
+        }
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -216,7 +248,11 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
     this.pois$
       .pipe(
+<<<<<<< HEAD
         filter(pois => !_isEmpty(pois)),
+=======
+        filter(pois => !_.isEmpty(pois)),
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
         take(1)
       )
       .subscribe(pois => {

@@ -1,11 +1,19 @@
+<<<<<<< HEAD
 import { filter, map } from 'rxjs/operators';
+=======
+import { filter,  map } from 'rxjs/operators';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { Injectable, Inject } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector, Store, select } from '@ngrx/store';
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
 import { IDeepstreamState, EDeepstreamState } from './state';
+<<<<<<< HEAD
 
 import _get from 'lodash-es/get';
 
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { combineLatest } from 'rxjs';
 
 export interface ISelectorUserData {
@@ -70,6 +78,13 @@ export class Selectors {
         select(this.permissions),
         filter(permissions => !!permissions)
       )
+<<<<<<< HEAD
     ).pipe(map((role, permissions) => _get(permissions, role) || {}));
+=======
+    )
+    .pipe(
+      map((role, permissions) => _.get(permissions, role) || {})
+    );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 }

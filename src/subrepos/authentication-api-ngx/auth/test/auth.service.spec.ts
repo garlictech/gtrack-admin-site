@@ -11,6 +11,10 @@ import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
 import { Reducer as authReducer, domain } from '../../store';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 import { take } from 'rxjs/operators';
 
 describe('AuthService', () => {
@@ -23,10 +27,17 @@ describe('AuthService', () => {
   };
 
   let httpTestingController: HttpTestingController;
+<<<<<<< HEAD
 
   const apiUrl = 'http://localhost/api';
   const webserverUrl = 'http://localhost/web';
 
+=======
+
+  const apiUrl = 'http://localhost/api';
+  const webserverUrl = 'http://localhost/web';
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   const authConfig = { ...defaultAuthenticationApiConfig };
 
   authConfig.apiUrl = apiUrl;

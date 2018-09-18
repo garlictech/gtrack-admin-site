@@ -9,7 +9,12 @@ import { PoiEditorService, PoiMergeService } from '../../../../shared/services';
 import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
-import * as _ from 'lodash';
+import _map from 'lodash-es/map';
+import _keys from 'lodash-es/keys';
+import _set from 'lodash-es/set';
+import _filter from 'lodash-es/filter';
+import _cloneDeep from 'lodash-es/cloneDeep';
+
 import * as uuid from 'uuid/v1';
 
 @Component({
@@ -83,7 +88,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
           .take(1)
           .subscribe((collectedPois: any[]) => {
             const _checkedCollectorPois: any[] = this._poiEditorService.handleGTrackPois(collectedPois, gTrackPois);
-            const _removablePoiIds = _.map(_checkedCollectorPois.filter(p => p.inGtrackDb), 'id');
+            const _removablePoiIds = _map(_checkedCollectorPois.filter(p => p.inGtrackDb), 'id');
             if (_removablePoiIds.length > 0) {
               this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(_removablePoiIds));
             }
@@ -97,7 +102,6 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .filter(poisCount => poisCount > 0)
       .switchMap((poisCount) => this.saveablePoisCount$.takeUntil(this._destroy$))
       .filter(poisCount => poisCount === 0)
-      .take(1)
       .subscribe(() => {
         this._store.dispatch(new hikeEditPoiActions.SetSaving('collector', false));
       });
@@ -168,12 +172,12 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
           .take(1)
           .subscribe(pois => {
             this.mergeProperties = this._poiMergeService.collectFlatKeyValues(pois);
-            this.mergedPoiIds = _.map(pois, 'id');
+            this.mergedPoiIds = _map(pois, 'id');
             this.mergedPoiData = this._poiMergeService.createGTrackPoiFromUniqueValues(this.mergeProperties.unique);
 
             this._store.dispatch(new hikeEditPoiActions.ResetPoiMergeSelection());
 
-            if (_.keys(this.mergeProperties.conflicts).length > 0) {
+            if (_keys(this.mergeProperties.conflicts).length > 0) {
               this.displayMergeModal = true;
             } else {
               this._saveMergedPoiData();
@@ -196,7 +200,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
     delete this.mergedPoiData.coords;
 
     for (const key in mergedData) {
-      _.set(this.mergedPoiData, key, mergedData[key]);
+      _set(this.mergedPoiData, key, mergedData[key]);
     }
 
     this.displayMergeModal = false;
@@ -225,7 +229,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
     this.pois$
       .take(1)
       .subscribe((pois: IExternalPoi[]) => {
-        const _externalPoisToSave = _.filter(pois, (poi: IExternalPoi) => {
+        const _externalPoisToSave = _filter(pois, (poi: IExternalPoi) => {
           return (!!(poi.selected && !poi.inGtrackDb));
         });
 
@@ -247,13 +251,13 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
     this.selectedPois$
       .take(1)
       .subscribe((selectedPois: any[]) => {
-        const _removablePoiIds = _.map(selectedPois, 'id');
+        const _removablePoiIds = _map(selectedPois, 'id');
         this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(_removablePoiIds));
       });
   }
 
   public openPoiModal = (poi) => {
-    this.modalPoi = _.cloneDeep(poi);
+    this.modalPoi = _cloneDeep(poi);
     this.displayPoiModal = true;
   }
 }

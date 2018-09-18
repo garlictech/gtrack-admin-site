@@ -5,7 +5,7 @@ import { IOsmPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
 
 @Injectable()
 export class OsmPoiService {
@@ -48,8 +48,8 @@ export class OsmPoiService {
         const _res: IOsmPoi[] = [];
 
         if (response.elements) {
-          for (const _point of response.elements) {
-            const type = _.get(_point.tags, typeParam);
+          for (let _point of response.elements) {
+            let type = _get(_point.tags, typeParam);
 
             if (_point.lat && this._checkPoiTags(_point, type)) {
               _res.push({

@@ -11,6 +11,7 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
   @Input() images$: Observable<IBackgroundImageData[]>;
   @Input() backgroundOriginalUrls$: Observable<string[]>;
   @Input() clickActions: any;
+  @Input() showMarkerColumn: boolean;
   @Input() distanceFrom: number[] = null;
   public imageSelections: {[id: string]: boolean} = {};
   public imageMarkerSelections: {[id: string]: boolean} = {};

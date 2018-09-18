@@ -19,7 +19,7 @@
       label="Get new"
       styleClass="ui-button-primary"
       (onClick)="getPois()"
-      [disabled]="(segments$ | async)?.length < 1 || (searchContext$ | async)?.working"
+      [disabled]="(segments$ | async)?.length < 1 || (searchContext$ | async)?.working || !(isPlanning$ | async)"
     ></p-button>
   </div>
 

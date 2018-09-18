@@ -8,8 +8,12 @@ import {
 } from '../../../../../provider-client';
 
 import { CheckpointSequence, CheckpointService } from '../checkpoint';
+<<<<<<< HEAD
 
 import _cloneDeep from 'lodash-es/cloneDeep';
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 export class HikeProgram implements IHikeProgramStored {
   public id: string;
@@ -28,6 +32,7 @@ export class HikeProgram implements IHikeProgramStored {
   public backgroundImages?: IBackgroundImageData[];
   public offlineMap?: string;
   public isRoundTrip: boolean;
+  public feature: boolean;
   public timestamp: number;
   public feature: boolean;
   public stops: IHikeProgramStop[];

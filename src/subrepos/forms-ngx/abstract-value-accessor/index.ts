@@ -3,6 +3,10 @@ import { Input } from '@angular/core';
 import { DebugLog } from '../log';
 
 export abstract class AbstractValueAccessor implements ControlValueAccessor {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   get value(): any {
     return this._value;
   }
@@ -32,10 +36,10 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor {
 
   onChange = _ => {
     /* EMPTY */
-  };
+  }
   onTouched = () => {
     /* EMPTY */
-  };
+  }
   registerOnChange(fn: (_: any) => void): void {
     this.onChange = fn;
   }

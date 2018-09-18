@@ -21,9 +21,15 @@ import 'rxjs/add/operator/take';
 describe('Facebook', () => {
   const apiUrl = 'http://localhost/api';
   const webserverUrl = 'http://localhost/web';
+<<<<<<< HEAD
 
   let httpTestingController: HttpTestingController;
 
+=======
+
+  let httpTestingController: HttpTestingController;
+
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   const facebookConfig: IFacebookConfig = {
     appId: 'testapp',
     version: '2.8',
@@ -107,6 +113,7 @@ describe('Facebook', () => {
         done();
       }, done);
 
+<<<<<<< HEAD
     const req = httpTestingController.expectOne(`${apiUrl}/auth/facebook/token`);
 
     expect(req.request.method).toEqual('POST');
@@ -123,6 +130,24 @@ describe('Facebook', () => {
       id: '1',
       email: 'test@test.com'
     });
+=======
+      const req = httpTestingController.expectOne(`${apiUrl}/auth/facebook/token`);
+
+      expect(req.request.method).toEqual('POST');
+      expect(req.request.body.access_token).toEqual('access_token');
+
+      req.flush({
+        token: 'token'
+      });
+
+      const req2 = httpTestingController.expectOne(`${apiUrl}/user/me`);
+      expect(req2.request.method).toEqual('GET');
+
+      req2.flush({
+        id: '1',
+        email: 'test@test.com'
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 
   it('should login with cordova', done => {
@@ -133,11 +158,21 @@ describe('Facebook', () => {
       /* EMPTY ON PURPOSE */
     };
 
+<<<<<<< HEAD
     oauthWindow.changeUrl$.pipe(take(1)).subscribe(url => {
       if (url) {
         oauthWindow.subject.next(currentRedirectUrl);
       }
     });
+=======
+    oauthWindow.changeUrl$
+      .pipe(take(1))
+      .subscribe(url => {
+        if (url) {
+          oauthWindow.subject.next(currentRedirectUrl);
+        }
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     facebook
       .connect()
@@ -155,6 +190,7 @@ describe('Facebook', () => {
         done();
       }, done);
 
+<<<<<<< HEAD
     const req = httpTestingController.expectOne(`${apiUrl}/auth/facebook/token`);
 
     expect(req.request.method).toEqual('POST');
@@ -172,6 +208,25 @@ describe('Facebook', () => {
       id: '1',
       email: 'test@test.com'
     });
+=======
+      const req = httpTestingController.expectOne(`${apiUrl}/auth/facebook/token`);
+
+      expect(req.request.method).toEqual('POST');
+      expect(req.request.body.access_token).toEqual('access_token');
+
+      req.flush({
+        token: 'token'
+      });
+
+      const req2 = httpTestingController.expectOne(`${apiUrl}/user/me`);
+
+      expect(req2.request.method).toEqual('GET');
+
+      req2.flush({
+        id: '1',
+        email: 'test@test.com'
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 
   it('should reject the promise on error url', done => {
@@ -182,6 +237,7 @@ describe('Facebook', () => {
     facebook
       .connect()
       .pipe(take(1))
+<<<<<<< HEAD
       .subscribe(
         () => {
           done(new Error('Not failed'));
@@ -191,6 +247,14 @@ describe('Facebook', () => {
           done();
         }
       );
+=======
+      .subscribe(() => {
+        done(new Error('Not failed'));
+      }, err => {
+        expect(err.error).toEqual('Not authorized');
+        done();
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 
   it('should reject the promise without access_token', done => {
@@ -201,6 +265,7 @@ describe('Facebook', () => {
     facebook
       .connect()
       .pipe(take(1))
+<<<<<<< HEAD
       .subscribe(
         () => {
           done(new Error('Not failed'));
@@ -210,6 +275,14 @@ describe('Facebook', () => {
           done();
         }
       );
+=======
+      .subscribe(() => {
+        done(new Error('Not failed'));
+      }, err => {
+        expect(err.error).toEqual('Not authorized');
+        done();
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 
   it('should work without permissions', done => {
@@ -221,15 +294,26 @@ describe('Facebook', () => {
       /* EMPTY ON PURPOSE */
     };
 
+<<<<<<< HEAD
     oauthWindow.changeUrl$.pipe(take(1)).subscribe(url => {
       expect(url.indexOf('scope')).toEqual(-1);
       config.facebook.permissions = 'profile';
       done();
     });
+=======
+    oauthWindow.changeUrl$
+      .pipe(take(1))
+      .subscribe(url => {
+        expect(url.indexOf('scope')).toEqual(-1);
+        config.facebook.permissions = 'profile';
+        done();
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
     facebook
       .connect()
       .pipe(take(1))
+<<<<<<< HEAD
       .subscribe(
         () => {},
         err => {
@@ -237,5 +321,11 @@ describe('Facebook', () => {
           done(err);
         }
       );
+=======
+      .subscribe(() => {}, err => {
+        config.facebook.permissions = 'profile';
+        done(err);
+      });
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   });
 });

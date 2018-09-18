@@ -4,7 +4,11 @@ import { Subscription } from 'rxjs';
 
 import { DescriptionLanguageListService } from '../services';
 
+<<<<<<< HEAD
 import _merge from 'lodash-es/merge';
+=======
+import * as _ from 'lodash';
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
 
 @Pipe({
   name: 'localizeDescription',

@@ -30,7 +30,13 @@ export class RouteService {
     return this._deepstream
       .getRecord<IRouteStored>(`routes/${id}`)
       .get()
+<<<<<<< HEAD
       .pipe(take(1));
+=======
+      .pipe(
+        take(1)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   public create(route: IRoute) {
@@ -44,7 +50,13 @@ export class RouteService {
         table: 'routes',
         state: state
       })
+<<<<<<< HEAD
       .pipe(take(1));
+=======
+      .pipe(
+       take(1)
+      );
+>>>>>>> 812629b4063c7346ab03802170a17ea5c904c661
   }
 
   public getBounds(track: GeoJSON.FeatureCollection<any>): IBounds {
