@@ -101,26 +101,25 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
         }
       });
 
-    const location$ = this._store
-      .pipe(
-        select(selectCurrentLocation),
-        takeUntil(this._destroy$),
-        filter((location: IGeoPosition) => !!_get(location, 'coords.latitude') && !!_get(location, 'coords.latitude')),
-        map((location: IGeoPosition) => <GeoJSON.Position>[location.coords.longitude, location.coords.latitude]),
-        distinctUntilChanged((position1, position2) => {
-          const point1: turfCoord = {
-            type: 'Point',
-            coordinates: [position1[0], position1[1]]
-          };
+    const location$ = this._store.pipe(
+      select(selectCurrentLocation),
+      takeUntil(this._destroy$),
+      filter((location: IGeoPosition) => !!_get(location, 'coords.latitude') && !!_get(location, 'coords.latitude')),
+      map((location: IGeoPosition) => <GeoJSON.Position>[location.coords.longitude, location.coords.latitude]),
+      distinctUntilChanged((position1, position2) => {
+        const point1: turfCoord = {
+          type: 'Point',
+          coordinates: [position1[0], position1[1]]
+        };
 
-          const point2: turfCoord = {
-            type: 'Point',
-            coordinates: [position2[0], position2[1]]
-          };
+        const point2: turfCoord = {
+          type: 'Point',
+          coordinates: [position2[0], position2[1]]
+        };
 
-          return distance(point1, point2) <= 0.1;
-        })
-      );
+        return distance(point1, point2) <= 0.1;
+      })
+    );
 
     this._locate$
       .pipe(

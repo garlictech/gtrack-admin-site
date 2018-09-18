@@ -30,13 +30,12 @@ export class LocalizeSelectors {
   }
 
   getLanguageSettings(): Observable<ILocalizationState> {
-    return this._store
-      .pipe(
-        select(selectFeature),
-        map(state => ({
-          actualLanguage: _get(state, 'language', 'en_US'),
-          descriptionLanguageList: _get(state, 'descriptionLanguageList', [])
-        }))
-      );
+    return this._store.pipe(
+      select(selectFeature),
+      map(state => ({
+        actualLanguage: _get(state, 'language', 'en_US'),
+        descriptionLanguageList: _get(state, 'descriptionLanguageList', [])
+      }))
+    );
   }
 }

@@ -21,16 +21,15 @@ export class ObjectMarkService {
 
   @DebugLog
   public loadContext(context: EObjectMarkContext) {
-    return this._store
-      .pipe(
-        select(this._authSelectors.user),
-        filter(user => !!user && !!user.roles),
-        tap(user => log.data('Get record: ', `private_user_profile/${user.id}`, `markedObjects.${context}`)),
-        switchMap(user =>
-          this._deepstream.getRecord<any[]>(`private_user_profile/${user.id}`).get(`markedObjects.${context}`)
-        ),
-        tap(result => log.data('Context result: ', result))
-      );
+    return this._store.pipe(
+      select(this._authSelectors.user),
+      filter(user => !!user && !!user.roles),
+      tap(user => log.data('Get record: ', `private_user_profile/${user.id}`, `markedObjects.${context}`)),
+      switchMap(user =>
+        this._deepstream.getRecord<any[]>(`private_user_profile/${user.id}`).get(`markedObjects.${context}`)
+      ),
+      tap(result => log.data('Context result: ', result))
+    );
   }
 
   @DebugLog

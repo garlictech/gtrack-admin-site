@@ -23,10 +23,13 @@ export class SearchResultsMapComponent extends HikeListMapComponent {
     const northEast = new L.LatLng(envelope[1][0], envelope[1][1]);
     const box = new L.LatLngBounds(southWest, northEast);
 
-    const circle = new L.Circle({
-      lat: this.circle.lat,
-      lng: this.circle.lng
-    }, this.circle.radius);
+    const circle = new L.Circle(
+      {
+        lat: this.circle.lat,
+        lng: this.circle.lng
+      },
+      this.circle.radius
+    );
 
     circle.addTo(map.leafletMap);
 

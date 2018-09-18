@@ -2,11 +2,7 @@ import { Component, AfterViewInit, ViewChild, Input } from '@angular/core';
 
 import { take } from 'rxjs/operators';
 
-import {
-  LeafletComponent,
-  MapMarkerService,
-  Center
-} from '../../../map';
+import { LeafletComponent, MapMarkerService, Center } from '../../../map';
 
 import { Poi } from '../../services/poi';
 import { DescriptionLanguageListService } from '../../../localize';
@@ -50,9 +46,7 @@ export class PoiMapComponent implements AfterViewInit {
   ngAfterViewInit() {
     this._descriptionLanguageList
       .getLocalizedDescription(this.poi.description)
-      .pipe(
-        take(1)
-      )
+      .pipe(take(1))
       .subscribe(description => {
         const marker = this._mapMarker.create(this.poi.lat, this.poi.lon, this.poi.types, description.title);
 

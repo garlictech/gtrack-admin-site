@@ -39,11 +39,10 @@ export class HikeProgramComponent implements OnInit {
     const hikePois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
 
     if (hikePois.length > 0) {
-      this.pois$ = this._store
-        .pipe(
-          select(this._poiSelectors.getPoiEntities(hikePois)),
-          filter(pois => !_isEmpty(pois))
-        );
+      this.pois$ = this._store.pipe(
+        select(this._poiSelectors.getPoiEntities(hikePois)),
+        filter(pois => !_isEmpty(pois))
+      );
     } else {
       this.pois$ = observableOf({});
     }

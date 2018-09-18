@@ -17,17 +17,9 @@ import {
 import { State } from 'app/store';
 import { Subject } from 'rxjs';
 
-import {
-  select as d3Select,
-  mouse as d3Mouse,
-  event as d3Event,
-  Selection,
-  BaseType
-} from 'd3-selection';
+import { select as d3Select, mouse as d3Mouse, event as d3Event, Selection, BaseType } from 'd3-selection';
 
-import {
-  bisector as d3Bisector
-} from 'd3-array';
+import { bisector as d3Bisector } from 'd3-array';
 
 import {
   axisLeft as d3AxisLeft,
@@ -36,9 +28,7 @@ import {
   axisBottom as d3AxisBottom
 } from 'd3-axis';
 
-import {
-  interpolateNumber as d3InterpolateNumber
-} from 'd3-interpolate';
+import { interpolateNumber as d3InterpolateNumber } from 'd3-interpolate';
 
 import { DistancePipe, UnitsService } from '../../../shared';
 import { IElevationData, ElevationService } from '../../services/elevation';

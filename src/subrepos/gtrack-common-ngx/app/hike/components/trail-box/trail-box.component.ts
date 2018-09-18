@@ -119,27 +119,22 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
     const route = this.hikeProgram.routeId;
 
     this.pois$ = this._store.pipe(select(this._poiSelectors.getPois(pois)));
-    this.route$ = this._store
-      .pipe(
-        select(this._routeSelectors.getRoute(route)),
-        rxjsMap(data => {
-          if (data) {
-            return new Route(data);
-          }
-        })
-      );
+    this.route$ = this._store.pipe(
+      select(this._routeSelectors.getRoute(route)),
+      rxjsMap(data => {
+        if (data) {
+          return new Route(data);
+        }
+      })
+    );
 
     this._store.dispatch(new poiActions.LoadPois(pois));
 
-    this._store
-      .pipe(
-        select(this._routeSelectors.getRouteContext(route))
-      )
-      .subscribe(context => {
-        if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
-          this._store.dispatch(new routeActions.LoadRoute(route));
-        }
-      });
+    this._store.pipe(select(this._routeSelectors.getRouteContext(route))).subscribe(context => {
+      if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
+        this._store.dispatch(new routeActions.LoadRoute(route));
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

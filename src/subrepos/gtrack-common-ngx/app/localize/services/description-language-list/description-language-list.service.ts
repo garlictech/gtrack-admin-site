@@ -1,4 +1,4 @@
-import { of as observableOf,  Observable } from 'rxjs';
+import { of as observableOf, Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -22,30 +22,29 @@ export class DescriptionLanguageListService {
       });
     }
 
-    return this._selectors.getLanguageSettings()
-      .pipe(
-        map(settings => {
-          const list = [
-            // ...settings.descriptionLanguageList,
-            settings.actualLanguage
-          ];
+    return this._selectors.getLanguageSettings().pipe(
+      map(settings => {
+        const list = [
+          // ...settings.descriptionLanguageList,
+          settings.actualLanguage
+        ];
 
-          const firstLanguage = Object.keys(item)[0];
+        const firstLanguage = Object.keys(item)[0];
 
-          if (firstLanguage) {
-            list.push(firstLanguage);
-          }
+        if (firstLanguage) {
+          list.push(firstLanguage);
+        }
 
-          list.push(this._fallbackLanguage);
+        list.push(this._fallbackLanguage);
 
-          const preferredLanguage = list.find(language => typeof item[language] !== 'undefined');
+        const preferredLanguage = list.find(language => typeof item[language] !== 'undefined');
 
-          const preferredItem = _get(item, preferredLanguage, {
-            title: ''
-          });
+        const preferredItem = _get(item, preferredLanguage, {
+          title: ''
+        });
 
-          return preferredItem;
-        })
+        return preferredItem;
+      })
     );
   }
 }

@@ -2,13 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ScaleLinear as D3ScaleLinear, scaleLinear as d3ScaleLinear } from 'd3-scale';
 
-import {
-  Area as D3Area,
-  Line as D3Line,
-  line as d3Line,
-  area as d3Area,
-  curveBasis as d3CurveBasis
-} from 'd3-shape';
+import { Area as D3Area, Line as D3Line, line as d3Line, area as d3Area, curveBasis as d3CurveBasis } from 'd3-shape';
 
 import { min as d3min, max as d3max } from 'd3-array';
 

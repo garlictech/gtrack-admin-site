@@ -1,4 +1,10 @@
-import { IPoi, EPoiTypes, ILocalizedItem, ITextualDescription, IBackgroundImageData } from '../../../../../provider-client';
+import {
+  IPoi,
+  EPoiTypes,
+  ILocalizedItem,
+  ITextualDescription,
+  IBackgroundImageData
+} from '../../../../../provider-client';
 
 import _cloneDeep from 'lodash-es/cloneDeep';
 

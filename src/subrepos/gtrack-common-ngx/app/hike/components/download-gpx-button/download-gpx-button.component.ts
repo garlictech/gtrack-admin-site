@@ -72,45 +72,43 @@ export class DownloadGpxButtonComponent implements OnInit {
       this._store.pipe(select(this._routeSelectors.getRoute(this.hikeProgram.routeId))),
       this._store.pipe(select(this._poiSelectors.getPois(poiIds)))
     )
-    .pipe(
-      take(1)
-    )
-    .subscribe(results => {
-      const route = results[0];
-      const pois = results[1];
-      const locale = 'en_US'; // TODO: Use the locale settings
+      .pipe(take(1))
+      .subscribe(results => {
+        const route = results[0];
+        const pois = results[1];
+        const locale = 'en_US'; // TODO: Use the locale settings
 
-      const geojson = _cloneDeep(route.route);
-      const points: GeoJSON.Feature<GeoJSON.Point>[] = pois.map(poi => ({
-        type: 'Feature' as 'Feature',
-        geometry: {
-          type: 'Point' as 'Point',
-          coordinates: [poi.lon, poi.lat]
-        },
-        properties: {
-          title: _get(poi.description, `${locale}.title`, '')
-        }
-      }));
+        const geojson = _cloneDeep(route.route);
+        const points: GeoJSON.Feature<GeoJSON.Point>[] = pois.map(poi => ({
+          type: 'Feature' as 'Feature',
+          geometry: {
+            type: 'Point' as 'Point',
+            coordinates: [poi.lon, poi.lat]
+          },
+          properties: {
+            title: _get(poi.description, `${locale}.title`, '')
+          }
+        }));
 
-      geojson.features = [
-        ...[geojson.features[0]], // Route line
-        ...points
-      ];
+        geojson.features = [
+          ...[geojson.features[0]], // Route line
+          ...points
+        ];
 
-      const xml = togpx(geojson);
-      const file = new Blob([xml], {
-        type: 'text/xml'
+        const xml = togpx(geojson);
+        const file = new Blob([xml], {
+          type: 'text/xml'
+        });
+        const url = URL.createObjectURL(file);
+
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `${this.hikeProgram.id}.gpx`;
+
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
       });
-      const url = URL.createObjectURL(file);
-
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = `${this.hikeProgram.id}.gpx`;
-
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
   }
 }
