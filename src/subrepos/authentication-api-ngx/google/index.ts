@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { GoogleService } from './google.service';
 import { WindowModule } from '../window';
 import { AuthModule } from '../auth';
 import { OauthWindowModule } from '../oauth-window';
 
 @NgModule({
-  imports: [OauthWindowModule, WindowModule, HttpModule, AuthModule],
+  imports: [OauthWindowModule, WindowModule, HttpClientModule, AuthModule],
   providers: [GoogleService]
 })
 export class GoogleModule {}

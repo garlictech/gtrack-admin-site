@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ApiService } from './api.service';
 import { StorageModule } from '../storage';
 
 @NgModule({
-  imports: [HttpModule, StorageModule],
+  imports: [HttpClientModule, StorageModule],
   providers: [ApiService]
 })
 export class ApiModule {}

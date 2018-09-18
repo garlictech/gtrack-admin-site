@@ -1,5 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
 
 import { OauthWindowService } from '../oauth-window';
 import { AuthService } from '../auth';
@@ -19,7 +21,7 @@ export class GoogleService extends AuthProviderBase {
     auth: AuthService,
     oauthWindow: OauthWindowService,
     private windowService: WindowService,
-    http: Http
+    http: HttpClient
   ) {
     super(oauthWindow, http, auth);
     this._init();
@@ -29,7 +31,7 @@ export class GoogleService extends AuthProviderBase {
    * Do the complete google authentication process
    */
   @DebugLog
-  public connect(roles?: string[]): Promise<IAuth> {
+  public connect(roles?: string[]): Observable<IAuth> {
     return this._connect(
       `${this.googleApiUrl}?client_id=${this.config.appId}`,
       `${this.authConfig.webserverUrl}/google/success.html`,
@@ -48,7 +50,7 @@ export class GoogleService extends AuthProviderBase {
 
     window.googleOauthCallback = (url: string) => {
       this.oauthWindow.close();
-      this._oauthCallback(url);
+      this.oauthCallback(url);
     };
   }
 }
