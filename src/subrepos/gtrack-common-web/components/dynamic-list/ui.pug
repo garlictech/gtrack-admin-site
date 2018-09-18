@@ -1,0 +1,5 @@
+div([ngClass]="containerClassList()")
+  app-busy-indicator([containerClass]="['fs-18']", [hidden]="!(isLoading$ | async)" text="{{ 'Loading' | translate }}")
+
+  div(*ngFor="let item of items$ | async", [ngClass]="itemClassList()", (click)="handleClick(item)")
+    ng-container(*ngTemplateOutlet="itemTemplate; context: { $implicit: item }")

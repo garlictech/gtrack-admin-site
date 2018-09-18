@@ -1,0 +1,17 @@
+<div class="card" *ngIf="hikeProgram">
+  <gtrack-slideshow [imageUrls]="images"></gtrack-slideshow>
+  <div class="card-body d-flex flex-column justify-content-start">
+    <div class="card-meta card-row d-flex justify-content-end">
+      <gtrack-hike-info [hikeProgram]="hikeProgram"></gtrack-hike-info>
+      <gtrack-bookmark [hikeProgramId]="hikeProgram.id"></gtrack-bookmark>
+    </div>
+
+    <div class="card-center card-row d-flex flex-column justify-content-center">
+      <h2 class="card-title">{{ (hikeProgram.description | localizeDescription).title }}</h2>
+      <h6 class="card-subtitle mb2"><i class="ion-ios-location"></i> {{ hikeProgram.location }}</h6>
+    </div>
+
+    <div class="card-row"></div>
+
+  </div>
+</div>
