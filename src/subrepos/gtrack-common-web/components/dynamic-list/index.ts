@@ -1,8 +1,9 @@
+import { map, startWith } from 'rxjs/operators';
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'dynamic-list',
+  selector: 'gtrack-dynamic-list',
   templateUrl: './ui.pug',
   styleUrls: ['./style.scss']
 })
@@ -29,7 +30,11 @@ export class DynamicListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading$ = this.items$.startWith(true).map(result => !(result instanceof Array && result));
+    this.isLoading$ = this.items$
+      .pipe(
+        startWith(true),
+        map(result => !(result instanceof Array && result))
+      );
   }
 
   handleClick(item: any): void {

@@ -1,7 +1,6 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { environment } from 'environments/environment';
 
 import { DeepstreamModule as CommonDeepstreamModule } from 'subrepos/deepstream-ngx';
 

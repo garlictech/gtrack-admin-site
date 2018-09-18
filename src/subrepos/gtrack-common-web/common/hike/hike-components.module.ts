@@ -17,13 +17,16 @@ import { HikeDataItemComponent } from './hike-data-item';
 import { HikeInfoComponent } from './hike-info';
 import { HikeProgramComponent } from './hike-program';
 import { HikeProgramPageComponent } from './hike-program-page';
+import { PoiPageComponent } from './poi-page';
 import { HikeMapComponent } from './hike-map';
 import { BookmarkComponent } from './bookmark';
 
 import { LocationSearchComponent } from './location-search';
 import { SearchFiltersComponent } from './search-filters';
 import { SearchResultsMapComponent } from './search-results-map';
+import { HikeListMapComponent } from './hike-list-map';
 import { TrailBoxComponent } from './trail-box';
+import { PoiMapComponent } from './poi-map';
 import { MapComponentsModule, LocalizeModule, SharedModule } from '../../../gtrack-common-ngx';
 import { FormModule } from '../../forms';
 
@@ -40,10 +43,13 @@ const COMPONENTS = [
   LocationSearchComponent,
   SearchFiltersComponent,
   SearchResultsMapComponent,
+  HikeListMapComponent,
   DownloadGpxButtonComponent,
   HikeProgramPageComponent,
+  PoiPageComponent,
   HikeMapComponent,
-  BookmarkComponent
+  BookmarkComponent,
+  PoiMapComponent
 ];
 
 @NgModule({

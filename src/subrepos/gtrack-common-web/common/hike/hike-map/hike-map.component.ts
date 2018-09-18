@@ -4,7 +4,7 @@ import { HikeProgram } from 'subrepos/gtrack-common-ngx';
 import { TrailBoxComponent } from '../trail-box';
 import { ElevationProfileComponent } from '../elevation-profile';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { log, DebugLog } from 'app/log';
 
 @Component({

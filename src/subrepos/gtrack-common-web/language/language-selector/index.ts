@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { pipe } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 import { LanguageService, LanguageSelectorComponent as LanguageSelectorComponentBase } from 'subrepos/localize-ngx';
 
@@ -30,8 +29,10 @@ export class LanguageSelectorComponent extends LanguageSelectorComponentBase imp
     });
 
     this._store
-      .select(currentLanguage)
-      .pipe(take(1))
+      .pipe(
+        select(currentLanguage),
+        take(1)
+      )
       .subscribe(selected => {
         const theLanguage = this.allLanguages.find(lang => lang.value.id === selected);
         this.selectedLanguage = theLanguage && theLanguage.value;
