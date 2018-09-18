@@ -44,7 +44,6 @@ import 'core-js/es7/reflect';
 import 'core-js/client/shim';
 import 'zone.js/dist/zone'; // Included with Angular CLI.
 import 'rxjs-compat';
-import { Stream } from 'stream';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 (window as any).global = window;

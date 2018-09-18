@@ -43,7 +43,7 @@ import { Observable, Subject } from 'rxjs';
 import { IPoi } from '../../../../../provider-client';
 
 @Component({
-  selector: 'gtcn-trail-box',
+  selector: 'gtrack-trail-box',
   template: ''
 })
 export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {

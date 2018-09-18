@@ -6,7 +6,7 @@ export interface IWikipediaPoiInfo {
   lng?: string;
   url?: string;
   extract?: string;
-  photos?: IBackgroundImageData[]
+  photos?: IBackgroundImageData[];
 }
 
 export interface IWikipediaPoi extends IExternalPoi {

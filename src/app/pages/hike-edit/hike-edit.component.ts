@@ -145,8 +145,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe(error => {
         if (error) {
-          let msg: string[] = [];
-          for (let idx in error) {
+          const msg: string[] = [];
+          for (const idx in error) {
             msg.push(`${idx}: ${error[idx]}`);
           }
 
@@ -225,7 +225,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       this._store.select(this._editedHikeProgramSelectors.getRouteId).take(1)
     ).subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
       if (routePlannerState && routeId) {
-        let _route: IRoute = {
+        const _route: IRoute = {
           id: routeId,
           bounds: (<any>routePlannerState.route).bounds,
           route: _.pick(routePlannerState.route, ['type', 'features'])

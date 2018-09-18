@@ -20,7 +20,7 @@ import distance from '@turf/distance';
 import { Coord as turfCoord } from '@turf/helpers';
 
 @Component({
-  selector: 'gtcn-location-search',
+  selector: 'gtrack-location-search',
   template: ''
 })
 export class LocationSearchComponent implements OnInit, OnDestroy {

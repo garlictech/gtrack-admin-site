@@ -1,5 +1,5 @@
 // Core
-import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HikeProgramService } from '../../../../shared/services';
 import { RouteService } from 'subrepos/gtrack-common-ngx';
@@ -41,7 +41,7 @@ export class GpxInputComponent {
         this._hikeProgramService.gpxRoute = {
           route: _route,
           bounds: this._routeService.getBounds(_route)
-        }
+        };
 
         this._router.navigate(['/admin/hike/new']);
       });
@@ -53,10 +53,10 @@ export class GpxInputComponent {
       const _reader: FileReader = new FileReader();
       _reader.onloadend = (e) => {
         resolve(_reader.result);
-      }
+      };
       _reader.onerror = (e) => {
         reject();
-      }
+      };
       _reader.readAsText(file);
     });
   }
@@ -69,7 +69,7 @@ export class GpxInputComponent {
     let _lineString: number[][] = [];
 
     if (_geometry && _geometry.type === 'MultiLineString') {
-      for (let i in _geometry.coordinates) {
+      for (const i in _geometry.coordinates) {
         const coords = _geometry.coordinates[i];
 
         if (<any>i === 0) {

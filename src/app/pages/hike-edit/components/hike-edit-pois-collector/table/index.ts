@@ -15,7 +15,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
   @Input() pois$: Observable<any[]>;
   @Input() onRouteCheck: boolean;
   @Input() openPoiModal: any;
-  public mergeSelections: {[id: string]: boolean} = {}
+  public mergeSelections: {[id: string]: boolean} = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(

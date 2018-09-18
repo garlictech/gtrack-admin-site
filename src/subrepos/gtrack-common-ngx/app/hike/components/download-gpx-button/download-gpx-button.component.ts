@@ -15,7 +15,7 @@ import * as RouteActions from '../../store/route/actions';
 import * as PoiActions from '../../store/poi/actions';
 
 @Component({
-  selector: 'gtcn-download-gpx',
+  selector: 'gtrack-download-gpx',
   template: ''
 })
 export class DownloadGpxButtonComponent implements OnInit {

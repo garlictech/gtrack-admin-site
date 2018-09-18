@@ -73,7 +73,7 @@ export class HikeProgramService {
         score: 0,
         time: 0
       }
-    }
+    };
   }
 
   /**
@@ -92,9 +92,9 @@ export class HikeProgramService {
           uphill: this._elevationService.calculateUphill((<any>_segmentPath).geometry.coordinates),
           downhill: this._elevationService.calculateDownhill((<any>_segmentPath).geometry.coordinates),
           distance: _segmentDistance
-        }
+        };
         stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, stop.segment.uphill),
-        stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill)
+        stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill);
 
         // Save coords for the next segment - DEPRECATED LOGIC
         _segmentStartPoint = [stop.lon, stop.lat];

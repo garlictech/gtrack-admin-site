@@ -100,7 +100,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   }
 
   public getMapillaryPhotos() {
-    let _bounds = this._routePlannerService.getSearchBounds();
+    const _bounds = this._routePlannerService.getSearchBounds();
 
     if (_bounds) {
       // Get pois for the current domain

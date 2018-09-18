@@ -14,7 +14,7 @@ import * as poiActions from '../../store/poi/actions';
 import { IconService } from '../../../map/services/icon';
 
 @Component({
-  selector: 'gtcn-hike-program',
+  selector: 'gtrack-hike-program',
   template: ''
 })
 export class HikeProgramComponent implements OnInit {

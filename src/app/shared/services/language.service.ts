@@ -12,7 +12,7 @@ export const DESCRIPTION_LANGUAGES: ILngObject[] = [
   { locale: 'de_DE', short: 'de', name: 'German' },
   { locale: 'fr_FR', short: 'fr', name: 'French' },
   { locale: 'it_IT', short: 'it', name: 'Italian' }
-]
+];
 
 @Injectable()
 export class LanguageService {

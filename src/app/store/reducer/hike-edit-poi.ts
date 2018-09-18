@@ -62,7 +62,7 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * OSM Amenity
@@ -117,7 +117,7 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * OSM Natural
@@ -172,7 +172,7 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * OSM Route
@@ -227,7 +227,7 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * Wikipedia
@@ -282,7 +282,7 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * Poi collector
@@ -328,7 +328,7 @@ const poiCollectorReducer: ActionReducer<IPoiCollectorEntityState> = (
     default:
       return state;
   }
-}
+};
 
 /**
  * Context
@@ -602,7 +602,7 @@ export const gTrackPoiMergeReducer: ActionReducer<IGTrackPoiMergeState> = (
       return state;
 
   }
-}
+};
 
 const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
   wikipediaPois: wikipediaPoiReducer,

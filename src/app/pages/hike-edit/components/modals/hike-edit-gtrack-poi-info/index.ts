@@ -52,7 +52,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     this.clickActions = {
       add: (image) => this._store.dispatch(new editedGTrackPoiActions.AddPoiBackgroundImage(image)),
       remove: (url) => this._store.dispatch(new editedGTrackPoiActions.RemovePoiBackgroundImage(url))
-    }
+    };
 
     this.poiLoaded$ = this._store
       .select(this._editedGTrackPoiSelectors.getData)
@@ -79,8 +79,8 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe(error => {
         if (error) {
-          let msg: string[] = [];
-          for (let idx in error) {
+          const msg: string[] = [];
+          for (const idx in error) {
             msg.push(`${idx}: ${error[idx]}`);
           }
 
@@ -127,7 +127,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
 
   public submitDescription = (langKey: string, data: any) => {
     this._store.dispatch(new editedGTrackPoiActions.AddNewTranslatedPoiDescription(langKey, data));
-  };
+  }
 
   public deleteDescription = lang => {
     this._confirmationService.confirm({
@@ -136,5 +136,5 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
         this._store.dispatch(new editedGTrackPoiActions.DeleteTranslatedPoiDescription(lang));
       }
     });
-  };
+  }
 }

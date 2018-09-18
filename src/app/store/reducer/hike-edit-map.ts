@@ -25,4 +25,4 @@ export const hikeEditMapReducer: ActionReducer<IHikeEditMapState> = (
       return state;
 
   }
-}
+};

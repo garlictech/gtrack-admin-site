@@ -11,7 +11,7 @@ import * as filterActions from '../../../search-filters/store/actions';
 import { SearchFiltersSelectors } from '../../../search-filters/store';
 
 @Component({
-  selector: 'gtcn-search-filters',
+  selector: 'gtrack-search-filters',
   template: ''
 })
 export class SearchFiltersComponent implements OnInit, OnDestroy {

@@ -60,7 +60,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         this._map = this._adminMapService.getMapById(mapId);
         return this._store
           .select(this._editedHikeProgramSelectors.getRouteId)
-          .takeUntil(this._destroy$)
+          .takeUntil(this._destroy$);
       })
       .takeUntil(this._destroy$)
       .switchMap((routeId: string) => {

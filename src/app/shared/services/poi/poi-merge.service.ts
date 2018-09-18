@@ -8,7 +8,7 @@ export class PoiMergeService {
 
   public collectFlatKeyValues(pois) {
     // Collect properties
-    const flatProperties: IComparedProperty = {}
+    const flatProperties: IComparedProperty = {};
     let commonTypes: string[] = [];
     let objectTypes: string[] = [];
 
@@ -40,9 +40,9 @@ export class PoiMergeService {
         objectTypes: objectTypes
       },
       conflicts: {}
-    }
+    };
 
-    for (let prop in flatProperties) {
+    for (const prop in flatProperties) {
       if (flatProperties[prop].length > 1) {
         filteredProperties.conflicts[prop] = flatProperties[prop];
       } else if (flatProperties[prop].length === 1) {
@@ -54,7 +54,7 @@ export class PoiMergeService {
   }
 
   public createGTrackPoiFromUniqueValues(flatProperties: IComparedProperty) {
-    let poiData = {};
+    const poiData = {};
 
     for (const key in flatProperties) {
       _.set(poiData, key, flatProperties[key]);

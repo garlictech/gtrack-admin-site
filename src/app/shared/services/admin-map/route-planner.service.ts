@@ -56,22 +56,22 @@ export class RoutePlannerService {
    * This is an initial loading method, the segment based route drawing will replace it.
    */
   public addRouteToTheStore(route) {
-    let _geoJSON = _.cloneDeep(route);
+    const _geoJSON = _.cloneDeep(route);
 
     this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_geoJSON));
   }
 
   public addRouteSegment(coordinates, updown) {
-    let _segment: ISegment = {
+    const _segment: ISegment = {
       distance: length(turfLineString(coordinates), { units: 'kilometers' }) * 1000, // summary.totalDistance, // in meters
       uphill: updown.uphill,
       downhill: updown.downhill,
       coordinates: coordinates
-    }
+    };
 
     // Now, things according to the game rules
     _segment.time = this._gameRuleService.segmentTime(_segment.distance, _segment.uphill),
-    _segment.score = this._gameRuleService.score(_segment.distance, _segment.uphill)
+    _segment.score = this._gameRuleService.score(_segment.distance, _segment.uphill);
 
     // Add segment to store
     this._store.dispatch(new hikeEditRoutePlannerActions.PushSegment(_segment));
@@ -85,10 +85,10 @@ export class RoutePlannerService {
    * Segment subscription submethod
    */
   private _calculateTotal(segments) {
-    let total = {};
+    const total = {};
 
-    for (let segment of segments) {
-      for (let key in segment) {
+    for (const segment of segments) {
+      for (const key in segment) {
         if (!total[key]) {
           total[key] = 0;
         }
@@ -103,12 +103,12 @@ export class RoutePlannerService {
    * Create track from geoJson
    */
   private _createGeoJsonFromSegments(segments) {
-    let _geoJSON: any = _.cloneDeep(initialRouteDataState);
+    const _geoJSON: any = _.cloneDeep(initialRouteDataState);
 
-    for (let i in segments) {
+    for (const i in segments) {
       // Add segment coords to LineString
       const _segment = segments[i];
-      for (let p of _segment.coordinates) {
+      for (const p of _segment.coordinates) {
         _geoJSON.features[0].geometry.coordinates.push([p[1], p[0], p[2]]);
       }
 
@@ -165,10 +165,10 @@ export class RoutePlannerService {
       .take(1)
       .subscribe((path) => {
         // declare as 'any' for avoid d3.geoBounds error
-        let _buffer: any = buffer(path, 1000, { units: 'meters' });
+        const _buffer: any = buffer(path, 1000, { units: 'meters' });
 
         if (typeof _buffer !== 'undefined') {
-          let _geoBounds = d3.geoBounds(rewind(_buffer, true));
+          const _geoBounds = d3.geoBounds(rewind(_buffer, true));
 
           _bounds = {
             SouthWest: {
@@ -204,7 +204,7 @@ export class RoutePlannerService {
       { color: '#722ad6', opacity: 1,     weight: 3 }
     ];
 
-    for (let num of [0, 1, 2]) {
+    for (const num of [0, 1, 2]) {
       this._savedRouteOnMap.addLayer(L.geoJSON(geoJSON, {
         style: <any>styles[num]
       }));
@@ -241,7 +241,7 @@ export class RoutePlannerService {
         { color: '#F60000', opacity: 1,     weight: 3 }
       ];
 
-      for (let num of [0, 1, 2]) {
+      for (const num of [0, 1, 2]) {
         this._routePlanOnMap.addLayer(L.geoJSON(geoJSON, {
           style: <any>styles[num]
         }));

@@ -127,7 +127,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
             // this._createCheckpoint(e.latlng);
           }
         }
-      })
+      });
 
     /* WARNING: CAUSES BROWSER LAG!!
     // Turn on scrollWheelZoom after the first interaction (click/drag)
@@ -148,7 +148,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       .take(1)
       .subscribe((position: IGeoPosition) => {
         if (position && position.coords) {
-          const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude)
+          const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
           this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
         }
       });

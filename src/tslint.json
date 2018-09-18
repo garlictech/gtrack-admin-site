@@ -1,17 +1,15 @@
 {
-  "extends": "../tslint.json",
-  "rules": {
-    "directive-selector": [
-      true,
-      "attribute",
-      ["app", "gtrack"],
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      ["app", "gtrack"],
-      "kebab-case"
-    ]
-  }
+    "extends": "../tslint.json",
+    "rules": {
+        "directive-selector": [
+            true,
+            "attribute", ["app", "gtrack", "garlictech"],
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element", ["app", "gtrack", "garlictech"],
+            "kebab-case"
+        ]
+    }
 }

@@ -61,7 +61,7 @@ export class PoiEditorService {
   ) {}
 
   public getDbObj(poi: IExternalPoi) {
-    let _poiData = {};
+    const _poiData = {};
     _.defaultsDeep(
       _poiData,
       _.pick(poi, ['elevation', 'lat', 'lon', 'objectType', 'description', 'types'])
@@ -178,14 +178,14 @@ export class PoiEditorService {
     path: GeoJSON.Feature<GeoJSON.LineString>,
     isGTrackPoi: Boolean = false
   ) {
-    let _pois: any[] = [];
+    const _pois: any[] = [];
 
     if (pois && pois.length > 0 && path) {
       const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(path, 50, {units: 'meters'});
       const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>buffer(path, 1000, {units: 'meters'});
 
-      for (let p of _.cloneDeep(pois)) {
-        let _point = turfPoint([p.lon, p.lat]);
+      for (const p of _.cloneDeep(pois)) {
+        const _point = turfPoint([p.lon, p.lat]);
 
         if (typeof _smallBuffer !== 'undefined') {
           p.onRoute = booleanPointInPolygon(_point, _smallBuffer);
@@ -219,7 +219,7 @@ export class PoiEditorService {
       .take(1)
       .subscribe((hikePoiIds: string[]) => {
         if (pois) {
-          let _gTrackPois = _.cloneDeep(pois);
+          const _gTrackPois = _.cloneDeep(pois);
           _gTrackPois.map((_gTrackPoi: IGTrackPoi) => {
             _gTrackPoi.inHike = _.includes(hikePoiIds, _gTrackPoi.id);
           });
@@ -244,8 +244,8 @@ export class PoiEditorService {
    * organizePois submethod
    */
   private _handleTypes(poi: IExternalPoi) {
-    let _types: string[] = [];
-    let _replaceTypesKeys = _.keys(this._replaceTypes);
+    const _types: string[] = [];
+    const _replaceTypesKeys = _.keys(this._replaceTypes);
 
     _.forEach(poi.types, t => {
       if (_replaceTypesKeys.indexOf(t) >= 0) {
@@ -266,9 +266,9 @@ export class PoiEditorService {
    * Set the selected flag on the service pois based on on/off route state
    */
   public assignOnOffRoutePois(pois: IExternalPoi[]) {
-    let _pois = _.sortBy(_.cloneDeep(pois), (p: IExternalPoi) => p.distFromRoute);
-    let _onRoutePois = this._getOnroutePois(_pois);
-    let _offRoutePois = this._getOffroutePois(_pois);
+    const _pois = _.sortBy(_.cloneDeep(pois), (p: IExternalPoi) => p.distFromRoute);
+    const _onRoutePois = this._getOnroutePois(_pois);
+    const _offRoutePois = this._getOffroutePois(_pois);
     _.forEach(_onRoutePois, p => ((<any>p).selected = true));
     _.forEach(_offRoutePois, p => ((<any>p).selected = false));
 
@@ -283,9 +283,9 @@ export class PoiEditorService {
     // 2,500 free requests per day
     // 512 locations per request.
     // 50 requests per second
-    let _pois = _.cloneDeep(pois);
-    let _poisWithoutElevation = _.filter(_pois, (p: IExternalPoi) => !p.elevation);
-    let _chunks: IExternalPoi[][] = _.chunk(_poisWithoutElevation, 500);
+    const _pois = _.cloneDeep(pois);
+    const _poisWithoutElevation = _.filter(_pois, (p: IExternalPoi) => !p.elevation);
+    const _chunks: IExternalPoi[][] = _.chunk(_poisWithoutElevation, 500);
 
     if (_chunks.length > 0) {
       return Observable.interval(100)
@@ -297,7 +297,7 @@ export class PoiEditorService {
           return this._elevationService.getData(_coordinates).then(data => {
             // Update elevation only if we got all data
             if (data.length === _chunk.length) {
-              for (let i in _chunk) {
+              for (const i in _chunk) {
                 _chunk[i].elevation = data[i][2];
               }
             }
@@ -338,9 +338,9 @@ export class PoiEditorService {
   }
 
   public getGTrackPois(map) {
-    let _bounds = this._routePlannerService.getSearchBounds();
-    let _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);
-    let _centerCoord = _geo!.center!.geometry!.coordinates;
+    const _bounds = this._routePlannerService.getSearchBounds();
+    const _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);
+    const _centerCoord = _geo!.center!.geometry!.coordinates;
 
     if (_centerCoord) {
       this._store.dispatch(
@@ -362,9 +362,9 @@ export class PoiEditorService {
    * Update inGtrackDb property on the given poi
    */
   public handleGTrackPois(pois: IGooglePoi[] | IWikipediaPoi[] | IOsmPoi[], gTrackPois: IGTrackPoi[]) {
-    let _pois = _.cloneDeep(pois);
+    const _pois = _.cloneDeep(pois);
 
-    for (let poi of _pois) {
+    for (const poi of _pois) {
       const _found = _.find(gTrackPois, (gTrackPoi: IGTrackPoi) => {
         let _idCheck = false;
 
@@ -399,9 +399,9 @@ export class PoiEditorService {
    * Update inCollector property on the given poi
    */
   public handleInCollectorPois(pois: IGooglePoi[] | IWikipediaPoi[] | IOsmPoi[], collectedPois: any[]) {
-    let _pois = _.cloneDeep(pois);
+    const _pois = _.cloneDeep(pois);
 
-    for (let poi of _pois) {
+    for (const poi of _pois) {
       const _found = _.find(collectedPois, (collectedPoi: any) => collectedPoi.id === poi.id);
 
       if (_found) {
@@ -442,7 +442,7 @@ export class PoiEditorService {
             pois
               .map(p => _.assign(p, { markerType: 'hike' }))
               .filter(p => {
-                let _onRouteCheck = p.onRoute ? hikePoiContext.showOnrouteMarkers : hikePoiContext.showOffrouteMarkers;
+                const _onRouteCheck = p.onRoute ? hikePoiContext.showOnrouteMarkers : hikePoiContext.showOffrouteMarkers;
                 return !p.inHike && _onRouteCheck;
               })
           );
@@ -479,7 +479,7 @@ export class PoiEditorService {
             pois
               .map(p => _.assign(p, { markerType: 'gTrack' }))
               .filter(p => {
-                let _onRouteCheck = p.onRoute
+                const _onRouteCheck = p.onRoute
                   ? gTrackPoiContext.showOnrouteMarkers
                   : gTrackPoiContext.showOffrouteMarkers;
                 return !p.inHike && _onRouteCheck;
@@ -564,7 +564,7 @@ export class PoiEditorService {
         map.leafletMap.addLayer(map.markersGroup);
 
         // Register marker to spiderfier
-        for (let _marker of _markers) {
+        for (const _marker of _markers) {
           map.overlappingMarkerSpiderfier.addMarker(_marker.marker);
         }
 
@@ -589,7 +589,7 @@ export class PoiEditorService {
     ).map(([poiContext, pois]: [IExternalPoiListContextItemState, IExternalPoi[]]) => {
       if (poiContext.showOnrouteMarkers || poiContext.showOffrouteMarkers) {
         return pois.filter(p => {
-          let _onRouteCheck = p.onRoute ? poiContext.showOnrouteMarkers : poiContext.showOffrouteMarkers;
+          const _onRouteCheck = p.onRoute ? poiContext.showOnrouteMarkers : poiContext.showOffrouteMarkers;
           return !p.inGtrackDb && _onRouteCheck;
         });
       } else {
@@ -604,7 +604,7 @@ export class PoiEditorService {
   private _generatePoiMarkers(pois, map: AdminMap) {
     const _markers: AdminMapMarker[] = [];
 
-    for (let poi of pois) {
+    for (const poi of pois) {
       const popupData: IMarkerPopupData = {
         popupComponentName: 'AdminMarkerPopupComponent',
         markerClickCallback: this._markerPopupService.onUserMarkerClick,
@@ -614,7 +614,7 @@ export class PoiEditorService {
         },
         map: map.leafletMap,
         data: _.cloneDeep(poi),
-      }
+      };
 
       const _marker = new AdminMapMarker(
         poi.lat,
@@ -639,7 +639,7 @@ export class PoiEditorService {
       .select(this._hikeEditImageSelectors.getImageMarkerUrls)
       .take(1)
       .subscribe((images: IBackgroundImageData[]) => {
-        for (let image of images) {
+        for (const image of images) {
           const popupData: IMarkerPopupData = {
             popupComponentName: 'ImageMarkerPopupComponent',
             markerClickCallback: this._markerPopupService.onUserMarkerClick,
@@ -649,7 +649,7 @@ export class PoiEditorService {
             },
             map: map.leafletMap,
             data: _.cloneDeep(image),
-          }
+          };
 
           const _marker = new AdminMapMarker(
             image.lat,

@@ -4,7 +4,7 @@ import { IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 import _get from 'lodash-es/get';
 
 @Component({
-  selector: 'gtcn-marker-popup',
+  selector: 'gtrack-marker-popup',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })

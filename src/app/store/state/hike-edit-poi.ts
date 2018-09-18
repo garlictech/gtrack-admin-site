@@ -1,12 +1,12 @@
 import { EntityState } from '@ngrx/entity';
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 
-export interface IWikipediaPoiEntityState extends EntityState<IWikipediaPoi> {};
-export interface IGooglePoiEntityState extends EntityState<IGooglePoi> {};
-export interface IOsmAmenityPoiEntityState extends EntityState<IOsmPoi> {};
-export interface IOsmNaturalPoiEntityState extends EntityState<IOsmPoi> {};
-export interface IOsmRoutePoiEntityState extends EntityState<IOsmPoi> {};
-export interface IPoiCollectorEntityState extends EntityState<any> {};
+export interface IWikipediaPoiEntityState extends EntityState<IWikipediaPoi> {}
+export interface IGooglePoiEntityState extends EntityState<IGooglePoi> {}
+export interface IOsmAmenityPoiEntityState extends EntityState<IOsmPoi> {}
+export interface IOsmNaturalPoiEntityState extends EntityState<IOsmPoi> {}
+export interface IOsmRoutePoiEntityState extends EntityState<IOsmPoi> {}
+export interface IPoiCollectorEntityState extends EntityState<any> {}
 
 export interface IExternalPoiListContextItemState {
   loading: boolean;
@@ -28,7 +28,7 @@ export interface IExternalPoiListContextState {
 }
 
 export interface IGTrackPoiMergeState {
-  selections: string[]
+  selections: string[];
 }
 
 // State

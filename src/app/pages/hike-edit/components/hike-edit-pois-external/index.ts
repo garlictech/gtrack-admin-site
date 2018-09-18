@@ -13,7 +13,7 @@ import { State } from '../../../../store';
 import { hikeEditPoiActions } from '../../../../store/actions';
 import {
   HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors
-} from '../../../../store/selectors'
+} from '../../../../store/selectors';
 
 import * as _ from 'lodash';
 
@@ -318,7 +318,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
    * Get pois for the current subdomain
    */
   public getPois() {
-    let _bounds = this._routePlannerService.getSearchBounds();
+    const _bounds = this._routePlannerService.getSearchBounds();
 
     if (_bounds) {
       // Get pois for the current domain

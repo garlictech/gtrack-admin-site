@@ -55,7 +55,7 @@ export class GooglePoiService {
         // DOC: https://developers.google.com/places/web-service/search
 
         const _res: IGooglePoi[] = [];
-        for (let _point of data.results) {
+        for (const _point of data.results) {
           const _pointData: IGooglePoi = {
             id: uuid(),
             lat: _point.geometry.location.lat,
@@ -83,7 +83,7 @@ export class GooglePoiService {
           _res.push(_pointData);
         }
 
-        let result: any = {
+        const result: any = {
           data: _res
         };
 
@@ -94,7 +94,7 @@ export class GooglePoiService {
         }
         return result;
       });
-  };
+  }
 
   private _batchGet(getter, params) {
     return getter(params).then(result => {
@@ -119,7 +119,7 @@ export class GooglePoiService {
     return Observable.interval(500)
       .take(pois.length)
       .flatMap(idx => {
-        let _googleData = pois[idx]!.google!;
+        const _googleData = pois[idx]!.google!;
 
         if (_googleData.id) {
           const request = `${PLACE_API_URL}/details/json?placeid=${_googleData.id}&key=${
@@ -150,7 +150,7 @@ export class GooglePoiService {
                     _placePhotos = _.take(_placePhotos, environment.googlePhotoLimit);
                   }
 
-                  for (let _photo of _placePhotos) {
+                  for (const _photo of _placePhotos) {
                     const _photoInfo: IBackgroundImageData = {
                       title: _photo.html_attributions[0] || '',
                       lat: pois[idx].lat,

@@ -25,7 +25,7 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
   state = initialEditedGTrackPoiState,
   action: editedGTrackPoiActions.AllEditedGTrackPoiActions
 ): IEditedGTrackPoiState => {
-  let newState = _.cloneDeep(state);
+  const newState = _.cloneDeep(state);
 
   switch (action.type) {
     case editedGTrackPoiActions.ADD_NEW_TRANSLATED_POI_DESCRIPTION: {
@@ -72,7 +72,7 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
       newState.data.backgroundImages = [
         ...(<any>state.data.backgroundImages || []),
         action.imageData
-      ]
+      ];
 
       return newState;
     }
@@ -86,4 +86,4 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
     default:
       return state;
   }
-}
+};
