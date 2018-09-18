@@ -1,4 +1,4 @@
-import { filter,  map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { Injectable, Inject } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector, Store, select } from '@ngrx/store';
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, IExternalDeepstreamDependencies } from '../lib/externals';
@@ -70,9 +70,6 @@ export class Selectors {
         select(this.permissions),
         filter(permissions => !!permissions)
       )
-    )
-    .pipe(
-      map((role, permissions) => _get(permissions, role) || {})
-    );
+    ).pipe(map((role, permissions) => _get(permissions, role) || {}));
   }
 }

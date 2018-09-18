@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/garlictech/deepstream-ngx.git
 	branch = master
-	commit = 07c5e03ceaf38ad30bb94f0fb099cd6694c6364f
-	parent = 92e8cb2e3c977c1ef5a3d33a2442c16ce1f28c21
+	commit = 2d052440720fca8489659a8e22f69e9bdd9c19b4
+	parent = 0e7df74b9708bc890dbda08d9f110ad08ffa743a
 	method = merge
 	cmdver = 0.4.0
