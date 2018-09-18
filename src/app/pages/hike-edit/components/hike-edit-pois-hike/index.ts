@@ -87,7 +87,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
             const organizedPois = this._poiEditorService.organizePois(pois, path);
             const poiIds = _map(pois, 'id');
             const organizedPoiIds = _map(organizedPois, 'id');
-            const removablePoiIds = _difference(poiIds, _intersection(poiIds, organizedPoiIds))
+            const removablePoiIds = _difference(poiIds, _intersection(poiIds, organizedPoiIds));
 
             if (removablePoiIds.length > 0) {
               this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(removablePoiIds));

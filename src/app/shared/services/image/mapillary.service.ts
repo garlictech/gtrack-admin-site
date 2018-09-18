@@ -46,7 +46,7 @@ export class MapillaryService {
                 width: 320
               },
               additionalData: _cloneDeep(_feature.properties)
-            }
+            };
 
             _images.push(_image);
           }

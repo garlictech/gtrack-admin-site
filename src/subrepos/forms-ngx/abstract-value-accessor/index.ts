@@ -32,10 +32,10 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor {
 
   onChange = _ => {
     /* EMPTY */
-  };
+  }
   onTouched = () => {
     /* EMPTY */
-  };
+  }
   registerOnChange(fn: (_: any) => void): void {
     this.onChange = fn;
   }

@@ -56,13 +56,13 @@ export class RoutePlannerService {
    * This is an initial loading method, the segment based route drawing will replace it.
    */
   public addRouteToTheStore(route) {
-    let _geoJSON = _cloneDeep(route);
+    const _geoJSON = _cloneDeep(route);
 
     this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_geoJSON));
   }
 
   public addRouteSegment(coordinates, updown) {
-    let _segment: ISegment = {
+    const _segment: ISegment = {
       distance: turfLength(turfLineString(coordinates), { units: 'kilometers' }) * 1000, // summary.totalDistance, // in meters
       uphill: updown.uphill,
       downhill: updown.downhill,
@@ -103,7 +103,7 @@ export class RoutePlannerService {
    * Create track from geoJson
    */
   private _createGeoJsonFromSegments(segments) {
-    let _geoJSON: any = _cloneDeep(initialRouteDataState);
+    const _geoJSON: any = _cloneDeep(initialRouteDataState);
 
     for (const i in segments) {
       // Add segment coords to LineString
@@ -165,10 +165,10 @@ export class RoutePlannerService {
       .take(1)
       .subscribe((path) => {
         // declare as 'any' for avoid d3.geoBounds error
-        let _buffer: any = turfBuffer(path, 1000, { units: 'meters' });
+        const _buffer: any = turfBuffer(path, 1000, { units: 'meters' });
 
         if (typeof _buffer !== 'undefined') {
-          let _geoBounds = d3GeoBounds(rewind(_buffer, true));
+          const _geoBounds = d3GeoBounds(rewind(_buffer, true));
 
           _bounds = {
             SouthWest: {

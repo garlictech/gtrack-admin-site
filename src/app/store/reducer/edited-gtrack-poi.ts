@@ -27,7 +27,7 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
   state = initialEditedGTrackPoiState,
   action: editedGTrackPoiActions.AllEditedGTrackPoiActions
 ): IEditedGTrackPoiState => {
-  let newState = _cloneDeep(state);
+  const newState = _cloneDeep(state);
 
   switch (action.type) {
     case editedGTrackPoiActions.ADD_NEW_TRANSLATED_POI_DESCRIPTION: {

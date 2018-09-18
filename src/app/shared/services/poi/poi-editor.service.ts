@@ -75,7 +75,7 @@ export class PoiEditorService {
   ) {}
 
   public getDbObj(poi: IExternalPoi) {
-    let _poiData = {};
+    const _poiData = {};
     _defaultsDeep(
       _poiData,
       _pick(poi, ['elevation', 'lat', 'lon', 'objectType', 'description', 'types'])
@@ -198,8 +198,8 @@ export class PoiEditorService {
       const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 50, {units: 'meters'});
       const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 1000, {units: 'meters'});
 
-      for (let p of _cloneDeep(pois)) {
-        let _point = turfPoint([p.lon, p.lat]);
+      for (const p of _cloneDeep(pois)) {
+        const _point = turfPoint([p.lon, p.lat]);
 
         if (typeof _smallBuffer !== 'undefined') {
           p.onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
@@ -233,7 +233,7 @@ export class PoiEditorService {
       .take(1)
       .subscribe((hikePoiIds: string[]) => {
         if (pois) {
-          let _gTrackPois = _cloneDeep(pois);
+          const _gTrackPois = _cloneDeep(pois);
           _gTrackPois.map((_gTrackPoi: IGTrackPoi) => {
             _gTrackPoi.inHike = _includes(hikePoiIds, _gTrackPoi.id);
           });
@@ -258,8 +258,8 @@ export class PoiEditorService {
    * organizePois submethod
    */
   private _handleTypes(poi: IExternalPoi) {
-    let _types: string[] = [];
-    let _replaceTypesKeys = _keys(this._replaceTypes);
+    const _types: string[] = [];
+    const _replaceTypesKeys = _keys(this._replaceTypes);
 
     _forEach(poi.types, t => {
       if (_replaceTypesKeys.indexOf(t) >= 0) {
@@ -280,9 +280,9 @@ export class PoiEditorService {
    * Set the selected flag on the service pois based on on/off route state
    */
   public assignOnOffRoutePois(pois: IExternalPoi[]) {
-    let _pois = _sortBy(_cloneDeep(pois), (p: IExternalPoi) => p.distFromRoute);
-    let _onRoutePois = this._getOnroutePois(_pois);
-    let _offRoutePois = this._getOffroutePois(_pois);
+    const _pois = _sortBy(_cloneDeep(pois), (p: IExternalPoi) => p.distFromRoute);
+    const _onRoutePois = this._getOnroutePois(_pois);
+    const _offRoutePois = this._getOffroutePois(_pois);
     _forEach(_onRoutePois, p => ((<any>p).selected = true));
     _forEach(_offRoutePois, p => ((<any>p).selected = false));
 
@@ -297,9 +297,9 @@ export class PoiEditorService {
     // 2,500 free requests per day
     // 512 locations per request.
     // 50 requests per second
-    let _pois = _cloneDeep(pois);
-    let _poisWithoutElevation = _filter(_pois, (p: IExternalPoi) => !p.elevation);
-    let _chunks: IExternalPoi[][] = _chunk(_poisWithoutElevation, 500);
+    const _pois = _cloneDeep(pois);
+    const _poisWithoutElevation = _filter(_pois, (p: IExternalPoi) => !p.elevation);
+    const _chunks: IExternalPoi[][] = _chunk(_poisWithoutElevation, 500);
 
     if (_chunks.length > 0) {
       return Observable.interval(100)
@@ -311,7 +311,7 @@ export class PoiEditorService {
           return this._elevationService.getData(_coordinates).then(data => {
             // Update elevation only if we got all data
             if (data.length === _chunkedPois.length) {
-              for (let i in _chunkedPois) {
+              for (const i in _chunkedPois) {
                 _chunkedPois[i].elevation = data[i][2];
               }
             }
@@ -376,9 +376,9 @@ export class PoiEditorService {
    * Update inGtrackDb property on the given poi
    */
   public handleGTrackPois(pois: IGooglePoi[] | IWikipediaPoi[] | IOsmPoi[], gTrackPois: IGTrackPoi[]) {
-    let _pois = _cloneDeep(pois);
+    const _pois = _cloneDeep(pois);
 
-    for (let poi of _pois) {
+    for (const poi of _pois) {
       const _found = _find(gTrackPois, (gTrackPoi: IGTrackPoi) => {
         let _idCheck = false;
 
@@ -413,9 +413,9 @@ export class PoiEditorService {
    * Update inCollector property on the given poi
    */
   public handleInCollectorPois(pois: IGooglePoi[] | IWikipediaPoi[] | IOsmPoi[], collectedPois: any[]) {
-    let _pois = _cloneDeep(pois);
+    const _pois = _cloneDeep(pois);
 
-    for (let poi of _pois) {
+    for (const poi of _pois) {
       const _found = _find(collectedPois, (collectedPoi: any) => collectedPoi.id === poi.id);
 
       if (_found) {
@@ -628,7 +628,7 @@ export class PoiEditorService {
         },
         map: map.leafletMap,
         data: _cloneDeep(poi),
-      }
+      };
 
       const _marker = new AdminMapMarker(
         poi.lat,
@@ -663,7 +663,7 @@ export class PoiEditorService {
             },
             map: map.leafletMap,
             data: _cloneDeep(image),
-          }
+          };
 
           const _marker = new AdminMapMarker(
             image.lat,

@@ -299,6 +299,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .take(1)
       .subscribe((hikeProgramData: IHikeProgramStored) => {
         this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true));
-      })
+      });
   }
 }

@@ -137,7 +137,7 @@ export class WaypointMarkerService {
       locale: 'en',
       key: environment.graphhopper.apiKey,
       points_encoded: false
-    }
+    };
     const _urlParamsStr = _map(_urlParams, (v, k) => `${k}=${v}`);
     const request = `https://graphhopper.com/api/1/route?point=${p1.lat},${p1.lng}&point=${p2.lat},${p2.lng}&${_urlParamsStr.join('&')}`;
 
@@ -157,7 +157,7 @@ export class WaypointMarkerService {
     // 2,500 free requests per day
     // 512 locations per request.
     // 50 requests per second
-    let _chunks: any[][] = _chunk(_coordsArr, 500);
+    const _chunks: any[][] = _chunk(_coordsArr, 500);
 
     return Observable
       .interval(100)
@@ -197,9 +197,9 @@ export class WaypointMarkerService {
    */
   private _moveLastWaypointToRoute(coords) {
     for (let i = this._markers.length - 2; i < this._markers.length; i++) {
-      let line = turfLineString(coords);
-      let pt = turfPoint([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
-      let snapped = turfNearestPointOnLine(line, pt);
+      const line = turfLineString(coords);
+      const pt = turfPoint([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
+      const snapped = turfNearestPointOnLine(line, pt);
 
       this._markers[i].setLatLng(new L.LatLng(
         (<any>snapped.geometry).coordinates[0],

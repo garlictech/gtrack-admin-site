@@ -3,7 +3,6 @@ import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HikeProgramService } from '../../../../shared/services';
 import { RouteService } from 'subrepos/gtrack-common-ngx';
-import { IRoute } from 'subrepos/provider-client';
 
 import * as toGeoJSON from '@mapbox/togeojson';
 import _get from 'lodash-es/get';

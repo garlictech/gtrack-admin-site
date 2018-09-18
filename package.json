@@ -73,8 +73,7 @@
         "prettier": "npm run npm prettier",
         "cypress": "cypress open",
         "cypress:all": "cypress run",
-        "bundle-report": "docker/cmd-ports.sh npm run bundle-report",
-        "postinstall": "node ./ng-add-pug-loader.js"
+        "bundle-report": "docker/cmd-ports.sh npm run bundle-report"
     },
     "dependencies": {
         "@angular/animations": "^6.0.0",
