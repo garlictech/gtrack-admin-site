@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/garlictech/localize-ngx.git
+	branch = master
+	commit = 1841c396c361e9463ac8d3ca46f5e3ac51ae6e14
+	parent = 1db1821777d966ed3f1ca006dce2ed52ba6662a9
+	method = merge
+	cmdver = 0.4.0

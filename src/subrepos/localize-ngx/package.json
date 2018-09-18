@@ -1,0 +1,22 @@
+{
+    "name": "localize-ngx",
+    "description": "ngx localization library",
+    "main": "src/index.ts",
+    "version": "0.0.0-local",
+    "files": ["src"],
+    "license": "SEE LICENSE IN license.txt",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pioneer-wst/localize-ngx.git"
+    },
+    "contributors": ["Zsolt R. Molnar <zsolt@zsoltmolnar.hu> (http://www.zsoltmolnar.hu)"],
+    "engines": {
+        "npm": ">=3.0.0",
+        "node": ">=5.0.0"
+    },
+    "scripts": {},
+    "peerDependencies": {
+        "@ngx-translate/core": "^9.0.1",
+        "@ngx-translate/http-loader": "^2.0.0"
+    }
+}
