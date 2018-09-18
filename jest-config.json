@@ -1,6 +1,7 @@
 {
     "preset": "jest-preset-angular",
     "setupTestFrameworkScriptFile": "./src/jest.ts",
+    "browser": true,
     "cacheDirectory": "./artifacts/cache",
     "moduleDirectories": ["node_modules", "src"],
     "moduleNameMapper": {
@@ -17,6 +18,15 @@
             "statements": 0
         }
     },
-    "coverageReporters": ["json", "lcov", "text", "html"],
-    "coveragePathIgnorePatterns": ["/node_modules/", "/\\.(e2e|spec)\\.ts$/", "/test/"]
+    "coverageReporters": [
+        "json",
+        "lcov",
+        "text",
+        "html"
+    ],
+    "coveragePathIgnorePatterns": [
+        "/node_modules/",
+        "/\\.(e2e|spec)\\.ts$/",
+        "/test/"
+    ]
 }
