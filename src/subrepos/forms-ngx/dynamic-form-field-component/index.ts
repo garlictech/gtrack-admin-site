@@ -31,12 +31,11 @@ export class DynamicFormFieldComponent implements OnInit {
     if (this.field.remoteErrorStatePath) {
       const path = <string>_get(this.field, 'remoteErrorStatePath');
 
-      this.remoteError$ = this._store
-        .pipe(
-          select(state => _get(state, `${path}`)),
-          filter(err => this.field.remoteErrorStateFilter.indexOf(err) === -1),
-          map(label => (label ? this._translate.instant(`form.errors.${label}`) : null))
-        );
+      this.remoteError$ = this._store.pipe(
+        select(state => _get(state, `${path}`)),
+        filter(err => this.field.remoteErrorStateFilter.indexOf(err) === -1),
+        map(label => (label ? this._translate.instant(`form.errors.${label}`) : null))
+      );
     }
   }
 
