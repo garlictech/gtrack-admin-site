@@ -14,7 +14,7 @@ import { Checkpoint } from '../../services/checkpoint';
 import { PoiSelectors } from '../../store/poi';
 
 @Component({
-  selector: 'gtrack-checkpoints',
+  selector: 'gtrack-common-checkpoints',
   template: ''
 })
 export class CheckpointsComponent {

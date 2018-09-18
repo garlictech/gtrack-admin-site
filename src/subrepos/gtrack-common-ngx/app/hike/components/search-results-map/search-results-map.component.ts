@@ -4,7 +4,7 @@ import { HikeListMapComponent } from '../hike-list-map';
 import * as L from 'leaflet';
 
 @Component({
-  selector: 'gtrack-search-results-map',
+  selector: 'gtrack-common-search-results-map',
   template: ''
 })
 export class SearchResultsMapComponent extends HikeListMapComponent {

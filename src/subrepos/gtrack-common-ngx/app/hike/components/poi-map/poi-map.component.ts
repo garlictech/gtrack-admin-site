@@ -8,7 +8,7 @@ import { Poi } from '../../services/poi';
 import { DescriptionLanguageListService } from '../../../localize';
 
 @Component({
-  selector: 'gtrack-poi-map',
+  selector: 'gtrack-common-poi-map',
   template: ''
 })
 export class PoiMapComponent implements AfterViewInit {

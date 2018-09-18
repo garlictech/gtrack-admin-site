@@ -17,7 +17,7 @@ import { Route } from '../../services/route';
 import { LeafletComponent, Center, MapMarkerService } from '../../../map';
 
 @Component({
-  selector: 'gtrack-hike-list-map',
+  selector: 'gtrack-common-hike-list-map',
   template: ''
 })
 export class HikeListMapComponent implements AfterViewInit, OnInit, OnDestroy {

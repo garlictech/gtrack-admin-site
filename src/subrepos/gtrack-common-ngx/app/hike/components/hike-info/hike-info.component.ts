@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { IHikeProgram } from '../../../../../provider-client';
 import { faArrowRight, faSortUp, faSortDown, faClock, faTrophy } from '@fortawesome/free-solid-svg-icons';
 @Component({
-  selector: 'gtrack-hike-info',
+  selector: 'gtrack-common-hike-info',
   template: ''
 })
 export class HikeInfoComponent {

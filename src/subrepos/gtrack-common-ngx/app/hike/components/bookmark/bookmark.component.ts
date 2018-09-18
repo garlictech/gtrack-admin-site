@@ -17,7 +17,7 @@ import { DebugLog, log } from 'app/log';
 import _get from 'lodash-es/get';
 
 @Component({
-  selector: 'gtrack-bookmark',
+  selector: 'gtrack-common-bookmark',
   template: ''
 })
 export class BookmarkComponent implements OnDestroy, OnInit {

@@ -4,7 +4,7 @@ import { IHikeProgram } from '../../../../../provider-client';
 import _get from 'lodash-es/get';
 
 @Component({
-  selector: 'gtrack-hike-card',
+  selector: 'gtrack-common-hike-card',
   template: ''
 })
 export class HikeCardComponent {
