@@ -20,7 +20,7 @@ export class AuthProviderBase {
   public restApiLogin(accessToken: string, url: string, roles?: string[]): Observable<IAuth> {
     const body: any = {
       /* jshint camelcase: false */
-      access_token: accessToken,
+      access_token: accessToken
       /* jshint camelcase: true */
     };
 
@@ -32,8 +32,8 @@ export class AuthProviderBase {
 
     return this.http
       .post<{
-        token: string,
-        refreshToken: string
+        token: string;
+        refreshToken: string;
       }>(url, body)
       .pipe(
         switchMap(data => {
@@ -56,17 +56,16 @@ export class AuthProviderBase {
     permissions: string,
     roles?: string[]
   ): Observable<IAuth> {
-    return this._login(loginUrl, redirectUri, permissions)
-      .pipe(
-        take(1),
-        switchMap(response => {
-          /* jshint camelcase: false */
-          const accessToken = response.access_token;
-          /* jshint camelcase: true */
+    return this._login(loginUrl, redirectUri, permissions).pipe(
+      take(1),
+      switchMap(response => {
+        /* jshint camelcase: false */
+        const accessToken = response.access_token;
+        /* jshint camelcase: true */
 
-          return this.restApiLogin(accessToken, tokenUrl, roles);
-        })
-      );
+        return this.restApiLogin(accessToken, tokenUrl, roles);
+      })
+    );
   }
 
   @DebugLog

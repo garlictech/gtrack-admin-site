@@ -16,7 +16,9 @@ import {
 import { faCrosshairs, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Store, select } from '@ngrx/store';
-import * as _ from 'lodash';
+
+import _isEmpty from 'lodash-es/isEmpty';
+import _flatten from 'lodash-es/flatten';
 
 import bbox from '@turf/bbox';
 import bboxPolygon from '@turf/bbox-polygon';
@@ -41,7 +43,7 @@ import { Observable, Subject } from 'rxjs';
 import { IPoi } from '../../../../../provider-client';
 
 @Component({
-  selector: 'gtcn-trail-box',
+  selector: 'gtrack-common-trail-box',
   template: ''
 })
 export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
@@ -117,27 +119,22 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
     const route = this.hikeProgram.routeId;
 
     this.pois$ = this._store.pipe(select(this._poiSelectors.getPois(pois)));
-    this.route$ = this._store
-      .pipe(
-        select(this._routeSelectors.getRoute(route)),
-        rxjsMap(data => {
-          if (data) {
-            return new Route(data);
-          }
-        })
-      );
+    this.route$ = this._store.pipe(
+      select(this._routeSelectors.getRoute(route)),
+      rxjsMap(data => {
+        if (data) {
+          return new Route(data);
+        }
+      })
+    );
 
     this._store.dispatch(new poiActions.LoadPois(pois));
 
-    this._store
-      .pipe(
-        select(this._routeSelectors.getRouteContext(route))
-      )
-      .subscribe(context => {
-        if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
-          this._store.dispatch(new routeActions.LoadRoute(route));
-        }
-      });
+    this._store.pipe(select(this._routeSelectors.getRouteContext(route))).subscribe(context => {
+      if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
+        this._store.dispatch(new routeActions.LoadRoute(route));
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -219,7 +216,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
     this.pois$
       .pipe(
-        filter(pois => !_.isEmpty(pois)),
+        filter(pois => !_isEmpty(pois)),
         take(1)
       )
       .subscribe(pois => {
@@ -279,7 +276,7 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
   }
 
   clearGeoJson() {
-    _.flatten(this._geoJsons).forEach(geojson => geojson.clearLayers());
+    _flatten(this._geoJsons).forEach(geojson => geojson.clearLayers());
     this._geoJsons = [];
   }
 

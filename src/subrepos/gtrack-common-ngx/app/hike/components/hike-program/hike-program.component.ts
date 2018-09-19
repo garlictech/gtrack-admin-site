@@ -3,7 +3,9 @@ import { of as observableOf, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
-import * as _ from 'lodash';
+
+import _isEmpty from 'lodash-es/isEmpty';
+
 import { Dictionary } from '@ngrx/entity/src/models';
 
 import { IPoi, IHikeProgram, IHikeProgramStop } from '../../../../../provider-client';
@@ -12,7 +14,7 @@ import * as poiActions from '../../store/poi/actions';
 import { IconService } from '../../../map/services/icon';
 
 @Component({
-  selector: 'gtcn-hike-program',
+  selector: 'gtrack-common-hike-program',
   template: ''
 })
 export class HikeProgramComponent implements OnInit {
@@ -37,11 +39,10 @@ export class HikeProgramComponent implements OnInit {
     const hikePois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
 
     if (hikePois.length > 0) {
-      this.pois$ = this._store
-        .pipe(
-          select(this._poiSelectors.getPoiEntities(hikePois)),
-          filter(pois => !_.isEmpty(pois))
-        );
+      this.pois$ = this._store.pipe(
+        select(this._poiSelectors.getPoiEntities(hikePois)),
+        filter(pois => !_isEmpty(pois))
+      );
     } else {
       this.pois$ = observableOf({});
     }

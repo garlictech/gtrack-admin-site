@@ -76,7 +76,7 @@ export class WaypointMarkerService {
       const _waypoint = {
         latLng: latlng,
         name: this._markers.length + 1
-      }
+      };
       this._markers.push(this._createMarker(_waypoint));
 
       if (this._markers.length > 1) {
@@ -119,7 +119,7 @@ export class WaypointMarkerService {
       iconSize: [25, 41],
       iconAnchor: [13, 41],
       className: 'routing-control-marker'
-    })
+    });
   }
 
   public _refreshEndpointMarkerIcons() {
@@ -137,7 +137,7 @@ export class WaypointMarkerService {
       locale: 'en',
       key: environment.graphhopper.apiKey,
       points_encoded: false
-    }
+    };
     const _urlParamsStr = _map(_urlParams, (v, k) => `${k}=${v}`);
     const request = `https://graphhopper.com/api/1/route?point=${p1.lat},${p1.lng}&point=${p2.lat},${p2.lng}&${_urlParamsStr.join('&')}`;
 
@@ -151,13 +151,13 @@ export class WaypointMarkerService {
 
   private _calculateCoordsElevation(routeData: any) {
     // GraphHopper format fix
-    let _coordsArr = routeData.paths[0].points.coordinates.map(coord => [coord[1], coord[0]]);
+    const _coordsArr = routeData.paths[0].points.coordinates.map(coord => [coord[1], coord[0]]);
 
     // Google Elevation Service
     // 2,500 free requests per day
     // 512 locations per request.
     // 50 requests per second
-    let _chunks: any[][] = _chunk(_coordsArr, 500);
+    const _chunks: any[][] = _chunk(_coordsArr, 500);
 
     return Observable
       .interval(100)
@@ -168,7 +168,7 @@ export class WaypointMarkerService {
         return this._elevationService.getData(_chunkCoords).then((data) => {
           // Update elevation only if we got all data
           if (data.length === _chunkCoords.length) {
-            for (let i in _chunkCoords) {
+            for (const i in _chunkCoords) {
               _chunkCoords[i][2] = data[i][2];
             }
           }
@@ -197,9 +197,9 @@ export class WaypointMarkerService {
    */
   private _moveLastWaypointToRoute(coords) {
     for (let i = this._markers.length - 2; i < this._markers.length; i++) {
-      let line = turfLineString(coords);
-      let pt = turfPoint([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
-      let snapped = turfNearestPointOnLine(line, pt);
+      const line = turfLineString(coords);
+      const pt = turfPoint([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
+      const snapped = turfNearestPointOnLine(line, pt);
 
       this._markers[i].setLatLng(new L.LatLng(
         (<any>snapped.geometry).coordinates[0],

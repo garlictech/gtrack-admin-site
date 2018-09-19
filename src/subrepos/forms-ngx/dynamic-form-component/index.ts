@@ -3,7 +3,9 @@ import { Store, select } from '@ngrx/store';
 import { Component, Input, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import * as _ from 'lodash';
+
+import _get from 'lodash-es/get';
+import _pick from 'lodash-es/pick';
 
 import { log } from '../log';
 
@@ -35,12 +37,12 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
       this.formDataPath$
         .pipe(
           filter(formDataPath => !!formDataPath),
-          switchMap(formDataPath => this._store.pipe(select(state => _.get(state, formDataPath)))),
+          switchMap(formDataPath => this._store.pipe(select(state => _get(state, formDataPath)))),
           takeUntil(this._componentDestroyed$),
           filter(formData => !!formData),
           map(formData => {
             const fieldKeys = Object.keys(this.formDescriptor.fields);
-            return _.pick(formData, fieldKeys);
+            return _pick(formData, fieldKeys);
           })
         )
         .subscribe(formData => {

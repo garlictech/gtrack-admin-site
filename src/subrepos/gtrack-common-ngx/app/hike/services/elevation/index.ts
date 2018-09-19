@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import * as d3 from 'd3';
-import { ScaleLinear } from 'd3';
+
+import { ScaleLinear as D3ScaleLinear, scaleLinear as d3ScaleLinear } from 'd3-scale';
+
+import { Area as D3Area, Line as D3Line, line as d3Line, area as d3Area, curveBasis as d3CurveBasis } from 'd3-shape';
+
+import { min as d3min, max as d3max } from 'd3-array';
+
 import distance from '@turf/distance';
 
 import { GoogleMapsService, UnitsService } from '../../../shared';
@@ -9,11 +14,11 @@ import { Route } from '../route';
 export interface IElevationData {
   highestElevation: number;
   lowestElevation: number;
-  xRange: d3.ScaleLinear<number, number>;
-  yRange: d3.ScaleLinear<number, number>;
+  xRange: D3ScaleLinear<number, number>;
+  yRange: D3ScaleLinear<number, number>;
   lineData: [number, number][];
-  lineFunc: d3.Line<[number, number]>;
-  areaFunc: d3.Area<[number, number]>;
+  lineFunc: D3Line<[number, number]>;
+  areaFunc: D3Area<[number, number]>;
 }
 
 export interface IElevationMargin {
@@ -111,20 +116,19 @@ export class ElevationService {
       }
     });
 
-    const xRangeMin = d3.min(lineData, d => d[0]);
-    const xRangeMax = d3.max(lineData, d => d[0]);
-    const yRangeMin = d3.min(lineData, d => d[1]);
-    const yRangeMax = d3.max(lineData, d => d[1]);
+    const xRangeMin = d3min(lineData, d => d[0]);
+    const xRangeMax = d3max(lineData, d => d[0]);
+    const yRangeMin = d3min(lineData, d => d[1]);
+    const yRangeMax = d3max(lineData, d => d[1]);
 
-    let xRange: ScaleLinear<number, number>;
-    let yRange: ScaleLinear<number, number>;
+    let xRange: D3ScaleLinear<number, number>;
+    let yRange: D3ScaleLinear<number, number>;
 
     if (typeof xRangeMin === 'undefined' || typeof xRangeMax === 'undefined') {
       return null;
     }
 
-    xRange = d3
-      .scaleLinear()
+    xRange = d3ScaleLinear()
       .range([margins.left, width - margins.right])
       .domain([xRangeMin, xRangeMax]);
 
@@ -141,8 +145,7 @@ export class ElevationService {
     const compressionConstant = this.unitsService.convertDistance(400, true).value;
     const compressionParameter = Math.max((compressionConstant - (yRangeMax - yRangeMin)) / 2, 0);
 
-    yRange = d3
-      .scaleLinear()
+    yRange = d3ScaleLinear()
       .range([height - margins.top, margins.bottom])
       .domain([yRangeMin - yGridUnit - compressionParameter, yRangeMax + yGridUnit + compressionParameter]);
 
@@ -152,17 +155,15 @@ export class ElevationService {
       xRange: xRange,
       yRange: yRange,
       lineData: lineData,
-      lineFunc: d3
-        .line()
+      lineFunc: d3Line()
         .x(d => xRange(d[0]))
         .y(d => yRange(d[1]))
-        .curve(d3.curveBasis),
-      areaFunc: d3
-        .area()
+        .curve(d3CurveBasis),
+      areaFunc: d3Area()
         .x(d => xRange(d[0]))
         .y0(height - margins.bottom)
         .y1(d => yRange(d[1]))
-        .curve(d3.curveBasis)
+        .curve(d3CurveBasis)
     };
   }
 

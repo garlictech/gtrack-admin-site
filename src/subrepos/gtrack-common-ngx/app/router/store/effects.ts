@@ -10,32 +10,28 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class Effects {
   @Effect({ dispatch: false })
-  navigateGo$: Observable<Action> = this.actions$
-    .pipe(
-      ofType(RouterActions.GO),
-      tap((action: RouterActions.Go) => this.router.navigate(action.path, action.extras))
-    );
+  navigateGo$: Observable<Action> = this.actions$.pipe(
+    ofType(RouterActions.GO),
+    tap((action: RouterActions.Go) => this.router.navigate(action.path, action.extras))
+  );
 
   @Effect({ dispatch: false })
-  navigateReplace$: Observable<Action> = this.actions$
-    .pipe(
-      ofType(RouterActions.REPLACE),
-      tap((action: RouterActions.Replace) => this.router.navigate(action.path, action.extras))
-    );
+  navigateReplace$: Observable<Action> = this.actions$.pipe(
+    ofType(RouterActions.REPLACE),
+    tap((action: RouterActions.Replace) => this.router.navigate(action.path, action.extras))
+  );
 
   @Effect({ dispatch: false })
-  navigateBack$ = this.actions$
-    .pipe(
-      ofType(RouterActions.BACK),
-      tap(() => this.location.back())
-    );
+  navigateBack$ = this.actions$.pipe(
+    ofType(RouterActions.BACK),
+    tap(() => this.location.back())
+  );
 
   @Effect({ dispatch: false })
-  navigateForward$ = this.actions$
-    .pipe(
-      ofType(RouterActions.FORWARD),
-      tap(() => this.location.forward())
-    );
+  navigateForward$ = this.actions$.pipe(
+    ofType(RouterActions.FORWARD),
+    tap(() => this.location.forward())
+  );
 
   constructor(private actions$: Actions, private router: Router, private location: Location) {}
 }

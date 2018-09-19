@@ -107,22 +107,22 @@ describe('Facebook', () => {
         done();
       }, done);
 
-      const req = httpTestingController.expectOne(`${apiUrl}/auth/facebook/token`);
+    const req = httpTestingController.expectOne(`${apiUrl}/auth/facebook/token`);
 
-      expect(req.request.method).toEqual('POST');
-      expect(req.request.body.access_token).toEqual('access_token');
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.body.access_token).toEqual('access_token');
 
-      req.flush({
-        token: 'token'
-      });
+    req.flush({
+      token: 'token'
+    });
 
-      const req2 = httpTestingController.expectOne(`${apiUrl}/user/me`);
-      expect(req2.request.method).toEqual('GET');
+    const req2 = httpTestingController.expectOne(`${apiUrl}/user/me`);
+    expect(req2.request.method).toEqual('GET');
 
-      req2.flush({
-        id: '1',
-        email: 'test@test.com'
-      });
+    req2.flush({
+      id: '1',
+      email: 'test@test.com'
+    });
   });
 
   it('should login with cordova', done => {
@@ -133,13 +133,11 @@ describe('Facebook', () => {
       /* EMPTY ON PURPOSE */
     };
 
-    oauthWindow.changeUrl$
-      .pipe(take(1))
-      .subscribe(url => {
-        if (url) {
-          oauthWindow.subject.next(currentRedirectUrl);
-        }
-      });
+    oauthWindow.changeUrl$.pipe(take(1)).subscribe(url => {
+      if (url) {
+        oauthWindow.subject.next(currentRedirectUrl);
+      }
+    });
 
     facebook
       .connect()
@@ -157,23 +155,23 @@ describe('Facebook', () => {
         done();
       }, done);
 
-      const req = httpTestingController.expectOne(`${apiUrl}/auth/facebook/token`);
+    const req = httpTestingController.expectOne(`${apiUrl}/auth/facebook/token`);
 
-      expect(req.request.method).toEqual('POST');
-      expect(req.request.body.access_token).toEqual('access_token');
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.body.access_token).toEqual('access_token');
 
-      req.flush({
-        token: 'token'
-      });
+    req.flush({
+      token: 'token'
+    });
 
-      const req2 = httpTestingController.expectOne(`${apiUrl}/user/me`);
+    const req2 = httpTestingController.expectOne(`${apiUrl}/user/me`);
 
-      expect(req2.request.method).toEqual('GET');
+    expect(req2.request.method).toEqual('GET');
 
-      req2.flush({
-        id: '1',
-        email: 'test@test.com'
-      });
+    req2.flush({
+      id: '1',
+      email: 'test@test.com'
+    });
   });
 
   it('should reject the promise on error url', done => {
@@ -184,12 +182,15 @@ describe('Facebook', () => {
     facebook
       .connect()
       .pipe(take(1))
-      .subscribe(() => {
-        done(new Error('Not failed'));
-      }, err => {
-        expect(err.error).toEqual('Not authorized');
-        done();
-      });
+      .subscribe(
+        () => {
+          done(new Error('Not failed'));
+        },
+        err => {
+          expect(err.error).toEqual('Not authorized');
+          done();
+        }
+      );
   });
 
   it('should reject the promise without access_token', done => {
@@ -200,12 +201,15 @@ describe('Facebook', () => {
     facebook
       .connect()
       .pipe(take(1))
-      .subscribe(() => {
-        done(new Error('Not failed'));
-      }, err => {
-        expect(err.error).toEqual('Not authorized');
-        done();
-      });
+      .subscribe(
+        () => {
+          done(new Error('Not failed'));
+        },
+        err => {
+          expect(err.error).toEqual('Not authorized');
+          done();
+        }
+      );
   });
 
   it('should work without permissions', done => {
@@ -217,20 +221,21 @@ describe('Facebook', () => {
       /* EMPTY ON PURPOSE */
     };
 
-    oauthWindow.changeUrl$
-      .pipe(take(1))
-      .subscribe(url => {
-        expect(url.indexOf('scope')).toEqual(-1);
-        config.facebook.permissions = 'profile';
-        done();
-      });
+    oauthWindow.changeUrl$.pipe(take(1)).subscribe(url => {
+      expect(url.indexOf('scope')).toEqual(-1);
+      config.facebook.permissions = 'profile';
+      done();
+    });
 
     facebook
       .connect()
       .pipe(take(1))
-      .subscribe(() => {}, err => {
-        config.facebook.permissions = 'profile';
-        done(err);
-      });
+      .subscribe(
+        () => {},
+        err => {
+          config.facebook.permissions = 'profile';
+          done(err);
+        }
+      );
   });
 });

@@ -17,7 +17,7 @@ const COMPONENTS = [
   TableSpinnerComponent,
   AdminMarkerPopupComponent,
   ImageMarkerPopupComponent
-]
+];
 @NgModule({
   imports: [
     CommonModule,

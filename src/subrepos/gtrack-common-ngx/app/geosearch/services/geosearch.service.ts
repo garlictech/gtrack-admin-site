@@ -1,4 +1,4 @@
-import { timer as observableTimer, combineLatest as observableCombineLatest,  Observable } from 'rxjs';
+import { timer as observableTimer, combineLatest as observableCombineLatest, Observable } from 'rxjs';
 
 import { take, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -18,13 +18,11 @@ export class GeoSearchService {
       this._deepstream.callRpc<GeospatialSearchResponse>('open.geo.query.includedInBox', {
         payload: query
       }),
-      observableTimer(500)
-        .pipe(
-          take(1),
-          map(() => '')
-        )
-    )
-    .pipe(map(results => results[0]));
+      observableTimer(500).pipe(
+        take(1),
+        map(() => '')
+      )
+    ).pipe(map(results => results[0]));
   }
 
   public searchCircle(query: IGeospatialCircleSearchPayload): Observable<string[]> {
@@ -32,12 +30,10 @@ export class GeoSearchService {
       this._deepstream.callRpc<GeospatialSearchResponse>('open.geo.query.includedInCircle', {
         payload: query
       }),
-      observableTimer(500)
-        .pipe(
-          take(1),
-          map(() => '')
-        )
-    )
-    .pipe(map(results => results[0]));
+      observableTimer(500).pipe(
+        take(1),
+        map(() => '')
+      )
+    ).pipe(map(results => results[0]));
   }
 }

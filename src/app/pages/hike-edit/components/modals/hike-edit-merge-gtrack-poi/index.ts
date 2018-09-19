@@ -17,7 +17,7 @@ export class HikeEditMergeGTrackPoiComponent implements OnInit {
 
   ngOnInit() {
     // Create form
-    let _controls = {};
+    const _controls = {};
     _forEach(this.conflicts, (values: any, key: string) => {
       _controls[key] = new FormControl(values[0]);
     });

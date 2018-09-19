@@ -11,7 +11,7 @@ import { DescriptionLanguageListService } from '../../services';
 import { LocalizeSelectors } from '../../store';
 import { Observable } from 'rxjs';
 
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
 
 describe('LocalizeDescriptionPipe', () => {
   class FakeChangeDetectorRef extends ChangeDetectorRef {
@@ -71,7 +71,7 @@ describe('LocalizeDescriptionPipe', () => {
     const service: DescriptionLanguageListService = TestBed.get(DescriptionLanguageListService);
 
     spy = spyOn(service, 'getLocalizedDescription').and.callFake((item: ILocalizedItem<ITextualDescription>) => {
-      const localized = _.get(item, state.language, '');
+      const localized = _get(item, state.language, '');
 
       return Observable.of(localized);
     });

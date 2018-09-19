@@ -30,10 +30,10 @@ export class OsmRoutePoiService {
       .post('https://overpass-api.de/api/interpreter', request)
       .toPromise()
       .then((response: any) => {
-        let _res: IOsmPoi[] = [];
+        const _res: IOsmPoi[] = [];
 
         if (response.elements) {
-          for (let _point of response.elements) {
+          for (const _point of response.elements) {
             if (_point.tags && _point.lat) {
               // let _type = _point.tags[poiType];
 

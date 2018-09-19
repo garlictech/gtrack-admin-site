@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { DescriptionLanguageListService } from '../services';
 
-import * as _ from 'lodash';
+import _merge from 'lodash-es/merge';
 
 @Pipe({
   name: 'localizeDescription',
@@ -39,7 +39,7 @@ export class LocalizeDescriptionPipe implements PipeTransform, OnDestroy {
       summary: ''
     };
 
-    const merged: ITextualDescription = _.merge({}, defaults, transformed);
+    const merged: ITextualDescription = _merge({}, defaults, transformed);
 
     this._value = merged;
     this._ref.markForCheck();

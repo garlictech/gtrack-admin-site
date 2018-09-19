@@ -96,7 +96,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
 
   public submitDescription = (langKey: string, data: any) => {
     this._store.dispatch(new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription(langKey, data));
-  };
+  }
 
   public deleteDescription = lang => {
     this._confirmationService.confirm({
@@ -105,5 +105,5 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
         this._store.dispatch(new editedHikeProgramActions.DeleteTranslatedHikeProgramDescription(lang));
       }
     });
-  };
+  }
 }

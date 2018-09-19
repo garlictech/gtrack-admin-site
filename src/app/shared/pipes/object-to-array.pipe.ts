@@ -3,11 +3,11 @@ import { PipeTransform, Pipe } from '@angular/core';
 @Pipe({name: 'obj2arr'})
 export class ObjectToArrayPipe implements PipeTransform {
   transform(obj: Object): any {
-    let keys: any[] = [];
+    const keys: any[] = [];
 
     if (typeof obj === 'object' && Object.keys(obj).length) {
-      for (let key in obj) {
-        let item = {
+      for (const key in obj) {
+        const item = {
           key: key,
           value: obj[key]
         };

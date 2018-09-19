@@ -237,7 +237,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
           .interval(50)
           .take(pois.length)
           .subscribe(idx => {
-            let _poiData = this._poiEditorService.getDbObj(_externalPoisToSave[idx]);
+            const _poiData = this._poiEditorService.getDbObj(_externalPoisToSave[idx]);
 
             this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
           });

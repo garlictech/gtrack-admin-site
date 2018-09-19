@@ -104,7 +104,7 @@ export class AdminMarkerPopupComponent implements OnInit {
   }
 
   private _addToGTrackPoi = () => {
-    let _poiData = this._poiEditorService.getDbObj(this.data);
+    const _poiData = this._poiEditorService.getDbObj(this.data);
     this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
 
     this.closePopup();

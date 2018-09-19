@@ -6,5 +6,4 @@ import { PoiMapComponent as BaseComponent } from 'subrepos/gtrack-common-ngx';
   templateUrl: './poi-map.component.html',
   styleUrls: ['./poi-map.component.scss']
 })
-export class PoiMapComponent extends BaseComponent {
-}
+export class PoiMapComponent extends BaseComponent {}

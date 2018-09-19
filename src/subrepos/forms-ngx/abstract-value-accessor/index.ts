@@ -3,7 +3,6 @@ import { Input } from '@angular/core';
 import { DebugLog } from '../log';
 
 export abstract class AbstractValueAccessor implements ControlValueAccessor {
-
   get value(): any {
     return this._value;
   }

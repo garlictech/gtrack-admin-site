@@ -30,11 +30,10 @@ export class DynamicListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading$ = this.items$
-      .pipe(
-        startWith(true),
-        map(result => !(result instanceof Array && result))
-      );
+    this.isLoading$ = this.items$.pipe(
+      startWith(true),
+      map(result => !(result instanceof Array && result))
+    );
   }
 
   handleClick(item: any): void {

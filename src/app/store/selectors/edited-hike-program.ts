@@ -97,7 +97,7 @@ export class EditedHikeProgramSelectors {
           return data.filter(item => poiIds.indexOf((<any>item).id) !== -1);
         }
       }
-    )
+    );
   }
 
   public getHikePoisCount<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
@@ -109,7 +109,7 @@ export class EditedHikeProgramSelectors {
           return data.filter(item => poiIds.indexOf((<any>item).id) !== -1).length;
         }
       }
-    )
+    );
   }
 
   public getStopsWithPoiNames<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
@@ -119,7 +119,7 @@ export class EditedHikeProgramSelectors {
       (pois, stops) => {
         const _stops = _cloneDeep(stops);
 
-        for (let stop of _stops) {
+        for (const stop of _stops) {
           const stopPoi = pois.find(p => p.id === stop.poiId);
 
           if (stopPoi) {
@@ -129,7 +129,7 @@ export class EditedHikeProgramSelectors {
 
         return _stops;
       }
-    )
+    );
   }
 
   public getBackgroundOriginalUrls() {

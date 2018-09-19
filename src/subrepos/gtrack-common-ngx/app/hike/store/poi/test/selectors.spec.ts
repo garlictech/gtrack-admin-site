@@ -2,7 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { IPoiStored } from 'subrepos/provider-client';
 import { Subject } from 'rxjs/Subject';
-import * as _ from 'lodash';
+
+import _get from 'lodash-es/get';
+import _values from 'lodash-es/values';
+import _keys from 'lodash-es/keys';
+import _zipObject from 'lodash-es/zipObject';
 
 import { poiReducer } from '../reducer';
 import { IPoiState } from '../state';
@@ -98,8 +102,8 @@ describe('Poi selectors', () => {
       expect(result).toEqual({});
 
       store.dispatch(new actions.AllPoiLoaded(ids, pois));
-      expect(_.values(result)).toEqual(pois);
-      expect(_.keys(result)).toEqual(ids);
+      expect(_values(result)).toEqual(pois);
+      expect(_keys(result)).toEqual(ids);
     });
   });
 
@@ -167,7 +171,7 @@ describe('Poi selectors', () => {
       expect(result).toEqual({});
 
       store.dispatch(new actions.AllPoiLoaded(ids, pois));
-      expect(result).toEqual(_.zipObject(ids, pois));
+      expect(result).toEqual(_zipObject(ids, pois));
     });
   });
 });

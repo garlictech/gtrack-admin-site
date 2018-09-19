@@ -4,7 +4,7 @@ import { HikeListMapComponent } from '../hike-list-map';
 import * as L from 'leaflet';
 
 @Component({
-  selector: 'gtcn-search-results-map',
+  selector: 'gtrack-common-search-results-map',
   template: ''
 })
 export class SearchResultsMapComponent extends HikeListMapComponent {
@@ -23,10 +23,13 @@ export class SearchResultsMapComponent extends HikeListMapComponent {
     const northEast = new L.LatLng(envelope[1][0], envelope[1][1]);
     const box = new L.LatLngBounds(southWest, northEast);
 
-    const circle = new L.Circle({
-      lat: this.circle.lat,
-      lng: this.circle.lng
-    }, this.circle.radius);
+    const circle = new L.Circle(
+      {
+        lat: this.circle.lat,
+        lng: this.circle.lng
+      },
+      this.circle.radius
+    );
 
     circle.addTo(map.leafletMap);
 

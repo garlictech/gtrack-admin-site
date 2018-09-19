@@ -7,7 +7,8 @@ import { poiContextStateAdapter } from './state';
 import { IPoi, IPoiStored } from '../../../../../provider-client';
 import { Dictionary } from '@ngrx/entity/src/models';
 
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
+import _pickBy from 'lodash-es/pickBy';
 
 @Injectable()
 export class PoiSelectors {
@@ -52,7 +53,7 @@ export class PoiSelectors {
       let photos = [];
 
       pois.forEach(poi => {
-        photos = photos.concat(_.get(poi, 'additionalData.photos', []));
+        photos = photos.concat(_get(poi, 'additionalData.photos', []));
       });
 
       return photos;
@@ -91,7 +92,7 @@ export class PoiSelectors {
 
   public getPoiEntities(contexts: string[]) {
     return createSelector(this.getAllPoiEntities, pois =>
-      _.pickBy(pois, poi => {
+      _pickBy(pois, poi => {
         if (poi.id) {
           return contexts.indexOf(poi.id) !== -1;
         } else {

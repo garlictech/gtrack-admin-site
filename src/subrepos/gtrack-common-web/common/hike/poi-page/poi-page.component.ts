@@ -1,7 +1,7 @@
 import { Component, Input, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { Poi } from 'subrepos/gtrack-common-ngx';
 
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
 
 @Component({
   selector: 'gtrack-poi-page',
@@ -20,7 +20,7 @@ export class PoiPageComponent {
     if (this.poi && this.poi.backgroundImages instanceof Array) {
       const imageUrls = this.poi.backgroundImages;
 
-      urls = imageUrls.map(image => _.get(image, 'original.url', ''));
+      urls = imageUrls.map(image => _get(image, 'original.url', ''));
     }
 
     return urls;

@@ -14,12 +14,13 @@ import * as searchFilterActions from '../../../search-filters/store/actions';
 
 import * as BackgroundGeolocationActions from '../../../shared/services/background-geolocation-service/store/actions';
 
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
+
 import distance from '@turf/distance';
 import { Coord as turfCoord } from '@turf/helpers';
 
 @Component({
-  selector: 'gtcn-location-search',
+  selector: 'gtrack-common-location-search',
   template: ''
 })
 export class LocationSearchComponent implements OnInit, OnDestroy {
@@ -100,26 +101,25 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
         }
       });
 
-    const location$ = this._store
-      .pipe(
-        select(selectCurrentLocation),
-        takeUntil(this._destroy$),
-        filter((location: IGeoPosition) => !!_.get(location, 'coords.latitude') && !!_.get(location, 'coords.latitude')),
-        map((location: IGeoPosition) => <GeoJSON.Position>[location.coords.longitude, location.coords.latitude]),
-        distinctUntilChanged((position1, position2) => {
-          const point1: turfCoord = {
-            type: 'Point',
-            coordinates: [position1[0], position1[1]]
-          };
+    const location$ = this._store.pipe(
+      select(selectCurrentLocation),
+      takeUntil(this._destroy$),
+      filter((location: IGeoPosition) => !!_get(location, 'coords.latitude') && !!_get(location, 'coords.latitude')),
+      map((location: IGeoPosition) => <GeoJSON.Position>[location.coords.longitude, location.coords.latitude]),
+      distinctUntilChanged((position1, position2) => {
+        const point1: turfCoord = {
+          type: 'Point',
+          coordinates: [position1[0], position1[1]]
+        };
 
-          const point2: turfCoord = {
-            type: 'Point',
-            coordinates: [position2[0], position2[1]]
-          };
+        const point2: turfCoord = {
+          type: 'Point',
+          coordinates: [position2[0], position2[1]]
+        };
 
-          return distance(point1, point2) <= 0.1;
-        })
-      );
+        return distance(point1, point2) <= 0.1;
+      })
+    );
 
     this._locate$
       .pipe(

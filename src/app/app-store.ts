@@ -1,6 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { distinctUntilChanged } from 'rxjs/operators';
 
 export interface State {
     // define your state here
