@@ -12,6 +12,7 @@ export interface IExternalPoiListContextItemState {
   loading: boolean;
   loaded: boolean;
   saving: boolean;
+  processing: boolean;
   showOnrouteMarkers?: boolean;
   showOffrouteMarkers?: boolean;
 }

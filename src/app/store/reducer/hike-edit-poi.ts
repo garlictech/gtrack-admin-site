@@ -580,7 +580,6 @@ export const initialGTrackPoiMergeState = {
   selections: []
 };
 
- // export function hikeEditRoutePlannerReducer(
 export const gTrackPoiMergeReducer: ActionReducer<IGTrackPoiMergeState> = (
   state = initialGTrackPoiMergeState,
   action: hikeEditPoiActions.AllHikeEditPoiActions

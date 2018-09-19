@@ -8,6 +8,11 @@ import { IExternalPoi } from '../../../shared/interfaces';
 
 import * as _ from 'lodash';
 
+import {
+  pois as poiFixtures,
+  entities as entityFixtures
+} from './fixtures';
+
 describe('HikeEditPoi reducers', () => {
   let initialState: IHikeEditPoiState;
   let pois: IExternalPoi[];
@@ -25,45 +30,8 @@ describe('HikeEditPoi reducers', () => {
       gTrackPoiMerge: initialGTrackPoiMergeState
     };
 
-    pois = [
-      {
-        id: '1',
-        selected: false,
-        elevation: 0,
-        lat: 0,
-        lon: 0,
-        objectType: EPoiTypes.google,
-        types: [],
-        description: {
-          'en_US': {
-            title: 'Title #1',
-            summary: 'Summary #1',
-            fullDescription: 'Description #1'
-          }
-        }
-      },
-      {
-        id: '2',
-        selected: false,
-        elevation: 0,
-        lat: 0,
-        lon: 0,
-        objectType: EPoiTypes.google,
-        types: [],
-        description: {
-          'en_US': {
-            title: 'Title #2',
-            summary: 'Summary #2',
-            fullDescription: 'Description #2'
-          }
-        }
-      }
-    ];
-
-    entities = {
-      '1': pois[0],
-      '2': pois[1]
-    };
+    pois = _.cloneDeep(poiFixtures);
+    entities = _.cloneDeep(entityFixtures);
   });
 
   describe('undefined action', () => {
@@ -84,13 +52,44 @@ describe('HikeEditPoi reducers', () => {
     });
   });
 
+  describe('ResetPoiMergeSelection action', () => {
+    it('should reset merge selection', () => {
+      const action = new hikeEditPoiActions.ResetPoiMergeSelection();
+      const state = hikeEditPoiReducer(initialState, action);
+
+      expect(state.gTrackPoiMerge).toEqual(initialState.gTrackPoiMerge);
+    });
+  });
+
   describe('GetGooglePois action', () => {
     it('should get google pois', () => {
       const action = new hikeEditPoiActions.GetGooglePois(null, 'fakeMapId');
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.googlePois.ids).toEqual([]);
-      expect(state.contexts.google.loading).toEqual(true);
+      expect(state.contexts.google.loading).toBeTruthy();
+    });
+  });
+
+  describe('AddGTrackPoiToMergeSelection action', () => {
+    it('should add gTrack poi to merge selection', () => {
+      const action = new hikeEditPoiActions.AddGTrackPoiToMergeSelection(['1']);
+      const state = hikeEditPoiReducer(initialState, action);
+
+      expect(state.gTrackPoiMerge.selections).toEqual(['1']);
+    });
+  });
+
+  describe('RemoveGTrackPoiFromMergeSelection action', () => {
+    it('should remove gTrack poi to merge selection', () => {
+      const action = new hikeEditPoiActions.RemoveGTrackPoiFromMergeSelection(['1']);
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        gTrackPoiMerge: {
+          selections: ['1', '2']
+        }
+      }), action);
+
+      expect(state.gTrackPoiMerge.selections).toEqual(['2']);
     });
   });
 
@@ -128,6 +127,7 @@ describe('HikeEditPoi reducers', () => {
   describe('SetGooglePoisInCollector action', () => {
     it('should set google pois inCollector', () => {
       const action = new hikeEditPoiActions.SetGooglePoisInCollector(
+        // Make some "random" values
         pois.map(p => p.inCollector = parseInt(p.id) % 2 === 0).map(p => _.pick(p, ['id', 'inCollector']))
       );
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
@@ -137,8 +137,8 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.googlePois.entities['1'].inCollector).toEqual(false);
-      expect(state.googlePois.entities['2'].inCollector).toEqual(true);
+      expect(state.googlePois.entities['1'].inCollector).toBeFalsy();
+      expect(state.googlePois.entities['2'].inCollector).toBeTruthy();
     });
   });
 
@@ -152,7 +152,7 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.googlePois.entities['1'].selected).toEqual(true);
+      expect(state.googlePois.entities['1'].selected).toBeTruthy();
     });
 
     it('should set google poi selected to false', () => {
@@ -166,7 +166,7 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.googlePois.entities['1'].selected).toEqual(false);
+      expect(state.googlePois.entities['1'].selected).toBeFalsy();
     });
   });
 
@@ -176,7 +176,7 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmAmenityPois.ids).toEqual([]);
-      expect(state.contexts.osmAmenity.loading).toEqual(true);
+      expect(state.contexts.osmAmenity.loading).toBeTruthy();
     });
   });
 
@@ -214,6 +214,7 @@ describe('HikeEditPoi reducers', () => {
   describe('SetOsmAmenityPoisInCollector action', () => {
     it('should set osmAmenity pois inCollector', () => {
       const action = new hikeEditPoiActions.SetOsmAmenityPoisInCollector(
+        // Make some "random" values
         pois.map(p => p.inCollector = parseInt(p.id) % 2 === 0).map(p => _.pick(p, ['id', 'inCollector']))
       );
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
@@ -223,8 +224,8 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.osmAmenityPois.entities['1'].inCollector).toEqual(false);
-      expect(state.osmAmenityPois.entities['2'].inCollector).toEqual(true);
+      expect(state.osmAmenityPois.entities['1'].inCollector).toBeFalsy();
+      expect(state.osmAmenityPois.entities['2'].inCollector).toBeTruthy();
     });
   });
 
@@ -238,7 +239,7 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.osmAmenityPois.entities['1'].selected).toEqual(true);
+      expect(state.osmAmenityPois.entities['1'].selected).toBeTruthy();
     });
 
     it('should set osmAmenity poi selected to false', () => {
@@ -252,7 +253,7 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.osmAmenityPois.entities['1'].selected).toEqual(false);
+      expect(state.osmAmenityPois.entities['1'].selected).toBeFalsy();
     });
   });
 
@@ -262,7 +263,7 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmNaturalPois.ids).toEqual([]);
-      expect(state.contexts.osmNatural.loading).toEqual(true);
+      expect(state.contexts.osmNatural.loading).toBeTruthy();
     });
   });
 
@@ -300,6 +301,7 @@ describe('HikeEditPoi reducers', () => {
   describe('SetOsmNaturalPoisInCollector action', () => {
     it('should set osmNatural pois inCollector', () => {
       const action = new hikeEditPoiActions.SetOsmNaturalPoisInCollector(
+        // Make some "random" values
         pois.map(p => p.inCollector = parseInt(p.id) % 2 === 0).map(p => _.pick(p, ['id', 'inCollector']))
       );
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
@@ -309,8 +311,8 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.osmNaturalPois.entities['1'].inCollector).toEqual(false);
-      expect(state.osmNaturalPois.entities['2'].inCollector).toEqual(true);
+      expect(state.osmNaturalPois.entities['1'].inCollector).toBeFalsy();
+      expect(state.osmNaturalPois.entities['2'].inCollector).toBeTruthy();
     });
   });
 
@@ -324,7 +326,7 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.osmNaturalPois.entities['1'].selected).toEqual(true);
+      expect(state.osmNaturalPois.entities['1'].selected).toBeTruthy();
     });
 
     it('should set osmNatural poi selected to false', () => {
@@ -338,7 +340,7 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.osmNaturalPois.entities['1'].selected).toEqual(false);
+      expect(state.osmNaturalPois.entities['1'].selected).toBeFalsy();
     });
   });
 
@@ -348,7 +350,7 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.osmRoutePois.ids).toEqual([]);
-      expect(state.contexts.osmRoute.loading).toEqual(true);
+      expect(state.contexts.osmRoute.loading).toBeTruthy();
     });
   });
 
@@ -386,6 +388,7 @@ describe('HikeEditPoi reducers', () => {
   describe('SetOsmRoutePoisInCollector action', () => {
     it('should set osmRoute pois inCollector', () => {
       const action = new hikeEditPoiActions.SetOsmRoutePoisInCollector(
+        // Make some "random" values
         pois.map(p => p.inCollector = parseInt(p.id) % 2 === 0).map(p => _.pick(p, ['id', 'inCollector']))
       );
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
@@ -395,8 +398,8 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.osmRoutePois.entities['1'].inCollector).toEqual(false);
-      expect(state.osmRoutePois.entities['2'].inCollector).toEqual(true);
+      expect(state.osmRoutePois.entities['1'].inCollector).toBeFalsy();
+      expect(state.osmRoutePois.entities['2'].inCollector).toBeTruthy();
     });
   });
 
@@ -410,7 +413,7 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.osmRoutePois.entities['1'].selected).toEqual(true);
+      expect(state.osmRoutePois.entities['1'].selected).toBeTruthy();
     });
 
     it('should set osmRoute poi selected to false', () => {
@@ -424,7 +427,7 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.osmRoutePois.entities['1'].selected).toEqual(false);
+      expect(state.osmRoutePois.entities['1'].selected).toBeFalsy();
     });
   });
 
@@ -434,7 +437,7 @@ describe('HikeEditPoi reducers', () => {
       const state = hikeEditPoiReducer(initialState, action);
 
       expect(state.wikipediaPois.ids).toEqual([]);
-      expect(state.contexts.wikipedia.loading).toEqual(true);
+      expect(state.contexts.wikipedia.loading).toBeTruthy();
     });
   });
 
@@ -453,7 +456,7 @@ describe('HikeEditPoi reducers', () => {
   });
 
   describe('SetWikipediaPoisInGtrackDb action', () => {
-    it('should patch wikipedia pois inGtrackDb', () => {
+    it('should set wikipedia pois inGtrackDb', () => {
       const action = new hikeEditPoiActions.SetWikipediaPoisInGtrackDb(
         pois.map(p => p.elevation = 100).map(p => _.pick(p, ['id', 'elevation']))
       );
@@ -472,6 +475,7 @@ describe('HikeEditPoi reducers', () => {
   describe('SetWikipediaPoisInCollector action', () => {
     it('should set wikipedia pois inCollector', () => {
       const action = new hikeEditPoiActions.SetWikipediaPoisInCollector(
+        // Make some "random" values
         pois.map(p => p.inCollector = parseInt(p.id) % 2 === 0).map(p => _.pick(p, ['id', 'inCollector']))
       );
       const state = hikeEditPoiReducer(_.merge({}, initialState, {
@@ -481,8 +485,8 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.wikipediaPois.entities['1'].inCollector).toEqual(false);
-      expect(state.wikipediaPois.entities['2'].inCollector).toEqual(true);
+      expect(state.wikipediaPois.entities['1'].inCollector).toBeFalsy();
+      expect(state.wikipediaPois.entities['2'].inCollector).toBeTruthy();
     });
   });
 
@@ -496,7 +500,7 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.wikipediaPois.entities['1'].selected).toEqual(true);
+      expect(state.wikipediaPois.entities['1'].selected).toBeTruthy();
     });
 
     it('should set wikipedia poi selected to false', () => {
@@ -510,7 +514,7 @@ describe('HikeEditPoi reducers', () => {
         }
       }), action);
 
-      expect(state.wikipediaPois.entities['1'].selected).toEqual(false);
+      expect(state.wikipediaPois.entities['1'].selected).toBeFalsy();
     });
   });
 
@@ -521,35 +525,35 @@ describe('HikeEditPoi reducers', () => {
       const action = new hikeEditPoiActions.ToggleOnrouteMarkers(EPoiTypes.google);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.google.showOnrouteMarkers).toEqual(false);
+      expect(state.contexts.google.showOnrouteMarkers).toBeFalsy();
     });
 
     it('should toggle osmAmenity onroute markers', () => {
       const action = new hikeEditPoiActions.ToggleOnrouteMarkers(EPoiTypes.osmAmenity);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.osmAmenity.showOnrouteMarkers).toEqual(false);
+      expect(state.contexts.osmAmenity.showOnrouteMarkers).toBeFalsy();
     });
 
     it('should toggle osmNatural onroute markers', () => {
       const action = new hikeEditPoiActions.ToggleOnrouteMarkers(EPoiTypes.osmNatural);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.osmNatural.showOnrouteMarkers).toEqual(false);
+      expect(state.contexts.osmNatural.showOnrouteMarkers).toBeFalsy();
     });
 
     it('should toggle osmRoute onroute markers', () => {
       const action = new hikeEditPoiActions.ToggleOnrouteMarkers(EPoiTypes.osmRoute);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.osmRoute.showOnrouteMarkers).toEqual(false);
+      expect(state.contexts.osmRoute.showOnrouteMarkers).toBeFalsy();
     });
 
     it('should toggle wikipedia onroute markers', () => {
       const action = new hikeEditPoiActions.ToggleOnrouteMarkers(EPoiTypes.wikipedia);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.wikipedia.showOnrouteMarkers).toEqual(false);
+      expect(state.contexts.wikipedia.showOnrouteMarkers).toBeFalsy();
     });
   });
 
@@ -560,35 +564,35 @@ describe('HikeEditPoi reducers', () => {
       const action = new hikeEditPoiActions.ToggleOffrouteMarkers(EPoiTypes.google);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.google.showOffrouteMarkers).toEqual(true);
+      expect(state.contexts.google.showOffrouteMarkers).toBeTruthy();
     });
 
     it('should toggle osmAmenity offroute markers', () => {
       const action = new hikeEditPoiActions.ToggleOffrouteMarkers(EPoiTypes.osmAmenity);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.osmAmenity.showOffrouteMarkers).toEqual(true);
+      expect(state.contexts.osmAmenity.showOffrouteMarkers).toBeTruthy();
     });
 
     it('should toggle osmNatural offroute markers', () => {
       const action = new hikeEditPoiActions.ToggleOffrouteMarkers(EPoiTypes.osmNatural);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.osmNatural.showOffrouteMarkers).toEqual(true);
+      expect(state.contexts.osmNatural.showOffrouteMarkers).toBeTruthy();
     });
 
     it('should toggle osmRoute offroute markers', () => {
       const action = new hikeEditPoiActions.ToggleOffrouteMarkers(EPoiTypes.osmRoute);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.osmRoute.showOffrouteMarkers).toEqual(true);
+      expect(state.contexts.osmRoute.showOffrouteMarkers).toBeTruthy();
     });
 
     it('should toggle wikipedia offroute markers', () => {
       const action = new hikeEditPoiActions.ToggleOffrouteMarkers(EPoiTypes.wikipedia);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.wikipedia.showOffrouteMarkers).toEqual(true);
+      expect(state.contexts.wikipedia.showOffrouteMarkers).toBeTruthy();
     });
   });
 
@@ -597,7 +601,7 @@ describe('HikeEditPoi reducers', () => {
       const action = new hikeEditPoiActions.SetSaving(EPoiTypes.wikipedia, true);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.wikipedia.saving).toEqual(true);
+      expect(state.contexts.wikipedia.saving).toBeTruthy();
     });
   });
 
@@ -606,8 +610,73 @@ describe('HikeEditPoi reducers', () => {
       const action = new hikeEditPoiActions.SetLoading(EPoiTypes.wikipedia);
       const state = hikeEditPoiReducer(initialState, action);
 
-      expect(state.contexts.wikipedia.loading).toEqual(true);
-      expect(state.contexts.wikipedia.loaded).toEqual(false);
+      expect(state.contexts.wikipedia.loading).toBeTruthy();
+      expect(state.contexts.wikipedia.loaded).toBeFalsy();
+    });
+  });
+
+  describe('SetProcessing action', () => {
+    it('should set processing pois', () => {
+      const action = new hikeEditPoiActions.SetProcessing(EPoiTypes.wikipedia, true);
+      const state = hikeEditPoiReducer(initialState, action);
+
+      expect(state.contexts.wikipedia.processing).toBeTruthy();
+    });
+  });
+
+  describe('AddPoisToCollector action', () => {
+    it('should add pois to collector', () => {
+      const action = new hikeEditPoiActions.AddPoisToCollector(pois);
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        wikipediaPois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.collectorPois.ids).toEqual(['1', '2'])
+    });
+  });
+
+  describe('RemovePoisFromCollector action', () => {
+    it('should remove pois to collector', () => {
+      const action = new hikeEditPoiActions.RemovePoisFromCollector(['1']);
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        collectorPois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.collectorPois.ids).toEqual(['2'])
+    });
+  });
+
+  describe('SetCollectorPoiSelected action', () => {
+    it('should set collector poi selected to true', () => {
+      const action = new hikeEditPoiActions.SetCollectorPoiSelected(['1']);
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        collectorPois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.collectorPois.entities['1'].selected).toBeTruthy();
+    });
+
+    it('should set collector poi selected to false', () => {
+      const action = new hikeEditPoiActions.SetCollectorPoiSelected(['1']);
+      entities['1'].selected = true;
+      entities['2'].selected = true;
+      const state = hikeEditPoiReducer(_.merge({}, initialState, {
+        collectorPois: {
+          ids: ['1', '2'],
+          entities: entities
+        }
+      }), action);
+
+      expect(state.collectorPois.entities['1'].selected).toBeFalsy();
     });
   });
 });
