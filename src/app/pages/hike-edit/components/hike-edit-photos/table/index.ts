@@ -13,8 +13,8 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
   @Input() clickActions: any;
   @Input() showMarkerColumn: boolean;
   @Input() distanceFrom: number[] = null;
-  public imageSelections: {[id: string]: boolean} = {}
-  public imageMarkerSelections: {[id: string]: boolean} = {}
+  public imageSelections: {[id: string]: boolean} = {};
+  public imageMarkerSelections: {[id: string]: boolean} = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   ngOnInit() {

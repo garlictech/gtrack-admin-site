@@ -23,7 +23,7 @@ export class MapillaryService {
         const _images: IBackgroundImageDataStored[] = [];
 
         if (_features) {
-          for (let _feature of _features) {
+          for (const _feature of _features) {
             const _image: IBackgroundImageDataStored = {
               id: uuid(),
               title: 'untitled',
@@ -46,7 +46,7 @@ export class MapillaryService {
                 width: 320
               },
               additionalData: _cloneDeep(_feature.properties)
-            }
+            };
 
             _images.push(_image);
           }

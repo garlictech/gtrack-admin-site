@@ -32,7 +32,7 @@ const mapillaryImageReducer: ActionReducer<IMapillaryImageEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * Context

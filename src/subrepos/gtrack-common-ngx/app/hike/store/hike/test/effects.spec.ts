@@ -6,7 +6,8 @@ import { StoreModule } from '@ngrx/store';
 import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
-import * as _ from 'lodash';
+import _zipObject from 'lodash-es/zipObject';
+
 import * as uuid from 'uuid/v1';
 
 import { hot, cold } from 'jest-marbles';
@@ -52,7 +53,7 @@ describe('HikeProgram effects', () => {
   beforeEach(() => {
     checkpointService = new CheckpointService();
     ids = hikeProgramsStored.map(hikeProgram => hikeProgram.id);
-    hikeProgramsMap = _.zipObject(ids, hikeProgramsStored);
+    hikeProgramsMap = _zipObject(ids, hikeProgramsStored);
     newId = uuid();
     hikePrograms = [...hikeProgramsStored];
 

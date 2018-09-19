@@ -37,7 +37,7 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
   state = initialEditedHikeProgramState,
   action: editedHikeProgramActions.AllEditedHikeProgramActions
 ): IEditedHikeProgramState => {
-  let newState = _cloneDeep(state);
+  const newState = _cloneDeep(state);
   switch (action.type) {
     case editedHikeProgramActions.RESET_HIKE_PROGRAM: {
       return initialEditedHikeProgramState;
@@ -85,23 +85,23 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
 
     case editedHikeProgramActions.ADD_STOP: {
       newState.dirty = true;
-      newState.data.stops = _union(state.data.stops, [action.stop])
+      newState.data.stops = _union(state.data.stops, [action.stop]);
       return newState;
     }
 
     case editedHikeProgramActions.SET_STOPS: {
-      newState.data.stops = _cloneDeep(action.stops)
+      newState.data.stops = _cloneDeep(action.stops);
       return newState;
     }
 
     case editedHikeProgramActions.SET_CHECKPOINTS: {
-      newState.data.checkpoints = _cloneDeep(action.checkpoints)
+      newState.data.checkpoints = _cloneDeep(action.checkpoints);
       return newState;
     }
 
     case editedHikeProgramActions.REMOVE_STOP_BY_POI_ID: {
       newState.dirty = true;
-      newState.data.stops = newState.data.stops.filter(s => action.poiIds.indexOf(s.poiId) < 0)
+      newState.data.stops = newState.data.stops.filter(s => action.poiIds.indexOf(s.poiId) < 0);
       return newState;
     }
 
@@ -110,7 +110,7 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
       newState.data.backgroundImages = [
         ...<any>state.data.backgroundImages,
         action.imageData
-      ]
+      ];
 
       return newState;
     }
@@ -124,4 +124,4 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
     default:
       return state;
   }
-}
+};

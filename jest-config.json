@@ -1,6 +1,7 @@
 {
     "preset": "jest-preset-angular",
     "setupTestFrameworkScriptFile": "./src/jest.ts",
+    "browser": true,
     "cacheDirectory": "./artifacts/cache",
     "moduleDirectories": ["node_modules", "src"],
     "moduleNameMapper": {

@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-import * as _ from 'lodash';
+
+import _get from 'lodash-es/get';
 
 import { ISearchFilters } from '../interfaces';
 import { IExternalSearchFiltersDependencies, EXTERNAL_SEARCH_FILTERS_DEPENDENCIES } from '../externals';
@@ -19,6 +20,6 @@ export class SearchFiltersSelectors {
   }
 
   public getFilter(name: keyof ISearchFilters): MemoizedSelector<object, any> {
-    return createSelector(this.getFilters, (filters: ISearchFilters) => _.get(filters, name));
+    return createSelector(this.getFilters, (filters: ISearchFilters) => _get(filters, name));
   }
 }

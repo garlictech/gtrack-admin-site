@@ -32,9 +32,7 @@ export class HikeProgramService {
         table: 'hike_programs',
         query: []
       })
-      .pipe(
-        take(1)
-      );
+      .pipe(take(1));
   }
 
   public save(hikeProgram: IHikeProgram) {
@@ -44,10 +42,7 @@ export class HikeProgramService {
       data = hikeProgram.toObject();
     }
 
-    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data)
-      .pipe(
-        take(1)
-      );
+    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data).pipe(take(1));
   }
 
   public updateState(id: string, state: EObjectState) {
@@ -57,9 +52,7 @@ export class HikeProgramService {
         table: 'hike_programs',
         state: state
       })
-      .pipe(
-        take(1)
-      );
+      .pipe(take(1));
   }
 
   public delete(id: string) {
@@ -68,8 +61,6 @@ export class HikeProgramService {
         id: id,
         table: 'hike_programs'
       })
-      .pipe(
-        take(1)
-      );
+      .pipe(take(1));
   }
 }

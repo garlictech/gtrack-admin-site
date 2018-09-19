@@ -89,14 +89,14 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       .switchMap(([poiCount, stopsCount]: [number, number]) => {
         return this._store
           .select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois',  this._poiSelectors.getAllPois))
-          .take(1)
+          .take(1);
       })
       .switchMap((pois: IPoiStored[]) => {
         return this._store
           .select(this._hikeEditRoutePlannerSelectors.getPath)
           .take(1)
           .switchMap((path: any) => Observable.of(this._poiEditorService.organizePois(pois, path)))
-          .switchMap((organizedPois: IPoiStored[]) => Observable.of(this._poiEditorService.handleHikeInclusion(organizedPois)))
+          .switchMap((organizedPois: IPoiStored[]) => Observable.of(this._poiEditorService.handleHikeInclusion(organizedPois)));
         });
 
     this.pois$

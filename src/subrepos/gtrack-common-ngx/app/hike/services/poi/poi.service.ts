@@ -4,13 +4,12 @@ import { Observable } from 'rxjs';
 import { IPoi, IPoiStored, IPoiSaveResponse, EObjectState } from '../../../../../provider-client';
 
 import { DeepstreamService } from '../../../../../deepstream-ngx';
-import * as _ from 'lodash';
+
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 @Injectable()
 export class PoiService {
-  constructor(
-    private _deepstream: DeepstreamService
-  ) {}
+  constructor(private _deepstream: DeepstreamService) {}
 
   public get(id: string): Observable<IPoiStored> {
     return this._deepstream
@@ -19,7 +18,7 @@ export class PoiService {
       .pipe(
         take(1),
         map(data => {
-          return _.cloneDeep(data);
+          return _cloneDeep(data);
         })
       );
   }
@@ -35,9 +34,7 @@ export class PoiService {
         table: 'pois',
         state: state
       })
-      .pipe(
-        take(1)
-      );
+      .pipe(take(1));
   }
 
   public delete(id: string) {
@@ -46,9 +43,7 @@ export class PoiService {
         id: id,
         table: 'pois'
       })
-      .pipe(
-        take(1)
-      );
+      .pipe(take(1));
   }
 
   public merge(ids: string[], newData: IPoi) {
@@ -57,8 +52,6 @@ export class PoiService {
         ids: ids,
         newData: newData
       })
-      .pipe(
-        take(1)
-      );
+      .pipe(take(1));
   }
 }

@@ -3,7 +3,7 @@ import { IconService } from '../../services/icon';
 import { Poi } from '../../../hike/services/poi';
 
 @Component({
-  selector: 'gtcn-icon',
+  selector: 'gtrack-icon',
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss']
 })

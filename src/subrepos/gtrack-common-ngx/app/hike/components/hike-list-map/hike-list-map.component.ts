@@ -1,11 +1,12 @@
-import { map as rxjsMap,  takeUntil } from 'rxjs/operators';
+import { map as rxjsMap, takeUntil } from 'rxjs/operators';
 import { Component, Input, ViewChild, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 
 import { Store, select } from '@ngrx/store';
 
 import * as L from 'leaflet';
-import { Observable ,  Subject } from 'rxjs';
-import * as _ from 'lodash';
+import { Observable, Subject } from 'rxjs';
+
+import _flatten from 'lodash-es/flatten';
 
 import { HikeProgram } from '../../services/hike-program';
 import { GeometryService } from '../../services/geometry';
@@ -16,7 +17,7 @@ import { Route } from '../../services/route';
 import { LeafletComponent, Center, MapMarkerService } from '../../../map';
 
 @Component({
-  selector: 'gtcn-hike-list-map',
+  selector: 'gtrack-common-hike-list-map',
   template: ''
 })
 export class HikeListMapComponent implements AfterViewInit, OnInit, OnDestroy {
@@ -58,110 +59,91 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.hikePrograms$
-      .pipe(
-        takeUntil(this._destroy$)
-      )
-      .subscribe(hikePrograms => {
-        const routes = hikePrograms.map(hikeProgram => hikeProgram.routeId);
+    this.hikePrograms$.pipe(takeUntil(this._destroy$)).subscribe(hikePrograms => {
+      const routes = hikePrograms.map(hikeProgram => hikeProgram.routeId);
 
-        this.routes$ = this._store
-          .pipe(
-            select(this._routeSelectors.getRoutes(routes)),
-            rxjsMap(data => {
-              if (data) {
-                return data
-                  .map(routeData => {
-                    if (routeData) {
-                      return new Route(routeData);
-                    }
-                  })
-                  .filter(route => {
-                    return (typeof route !== 'undefined');
-                  });
-              }
-            })
-          );
+      this.routes$ = this._store.pipe(
+        select(this._routeSelectors.getRoutes(routes)),
+        rxjsMap(data => {
+          if (data) {
+            return data
+              .map(routeData => {
+                if (routeData) {
+                  return new Route(routeData);
+                }
+              })
+              .filter(route => {
+                return typeof route !== 'undefined';
+              });
+          }
+        })
+      );
 
-        this._store
-          .pipe(
-            select(this._routeSelectors.getRouteContexts(routes))
-          )
-          .subscribe(contexts => {
-            for (const route of routes) {
-              const routeContext = contexts.find(context => (context.id === route));
+      this._store.pipe(select(this._routeSelectors.getRouteContexts(routes))).subscribe(contexts => {
+        for (const route of routes) {
+          const routeContext = contexts.find(context => context.id === route);
 
-              if (typeof routeContext === 'undefined' || (routeContext.loaded !== true && routeContext.loading !== true)) {
-                this._store.dispatch(new routeActions.LoadRoute(route));
-              }
-            }
-          });
+          if (typeof routeContext === 'undefined' || (routeContext.loaded !== true && routeContext.loading !== true)) {
+            this._store.dispatch(new routeActions.LoadRoute(route));
+          }
+        }
       });
+    });
   }
 
   protected _centerMap() {
     const map = this.map.map;
 
-    this.hikePrograms$
-      .pipe(
-        takeUntil(this._destroy$)
-      )
-      .subscribe(hikePrograms => {
-        const points: GeoJSON.Position[] = hikePrograms.map(hikeProgram => [
-          hikeProgram.stops[0].lon,
-          hikeProgram.stops[0].lat
-        ]);
+    this.hikePrograms$.pipe(takeUntil(this._destroy$)).subscribe(hikePrograms => {
+      const points: GeoJSON.Position[] = hikePrograms.map(hikeProgram => [
+        hikeProgram.stops[0].lon,
+        hikeProgram.stops[0].lat
+      ]);
 
-        const envelope = this._geometry.doEnvelope(points);
-        const southWest = new L.LatLng(envelope[0][0], envelope[0][1]);
-        const northEast = new L.LatLng(envelope[1][0], envelope[1][1]);
-        const box = new L.LatLngBounds(southWest, northEast);
+      const envelope = this._geometry.doEnvelope(points);
+      const southWest = new L.LatLng(envelope[0][0], envelope[0][1]);
+      const northEast = new L.LatLng(envelope[1][0], envelope[1][1]);
+      const box = new L.LatLngBounds(southWest, northEast);
 
-        map.fitBox(box);
-      });
+      map.fitBox(box);
+    });
   }
 
   protected _addHikesToTheMap() {
     const map = this.map.map;
 
-    this.hikePrograms$
-      .pipe(
-        takeUntil(this._destroy$)
-      )
-      .subscribe(hikePrograms => {
-        const markers: GeoJSON.Position[] = [];
+    this.hikePrograms$.pipe(takeUntil(this._destroy$)).subscribe(hikePrograms => {
+      const markers: GeoJSON.Position[] = [];
 
-        for (const hikeProgram of hikePrograms) {
-          const marker = this._mapMarker.create(hikeProgram.stops[0].lat, hikeProgram.stops[0].lon, ['hiking'], hikeProgram.title);
-          markers.push([
-            hikeProgram.stops[0].lon,
-            hikeProgram.stops[0].lat
-          ]);
+      for (const hikeProgram of hikePrograms) {
+        const marker = this._mapMarker.create(
+          hikeProgram.stops[0].lat,
+          hikeProgram.stops[0].lon,
+          ['hiking'],
+          hikeProgram.title
+        );
+        markers.push([hikeProgram.stops[0].lon, hikeProgram.stops[0].lat]);
 
-          marker.addToMap(this.map.leafletMap);
+        marker.addToMap(this.map.leafletMap);
+      }
+    });
+
+    this.routes$.pipe(takeUntil(this._destroy$)).subscribe((routes: Route[]) => {
+      this.routes = routes;
+      this.clearGeoJson();
+
+      for (const route of routes) {
+        for (let i = 0; i <= 2; i++) {
+          const feature = Object.assign({}, route.geojson.features[0]);
+
+          feature.properties = {
+            draw_type: `route_${i}`
+          };
+
+          this.addGeoJson(feature, map.leafletMap);
         }
-      });
-
-    this.routes$
-      .pipe(
-        takeUntil(this._destroy$)
-      )
-      .subscribe((routes: Route[]) => {
-        this.routes = routes;
-        this.clearGeoJson();
-
-        for (const route of routes) {
-          for (let i = 0; i <= 2; i++) {
-            const feature = Object.assign({}, route.geojson.features[0]);
-
-            feature.properties = {
-              draw_type: `route_${i}`
-            };
-
-            this.addGeoJson(feature, map.leafletMap);
-          }
-        }
-      });
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -195,7 +177,7 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   clearGeoJson() {
-    _.flatten(this._geoJsons).forEach(geojson => geojson.clearLayers());
+    _flatten(this._geoJsons).forEach(geojson => geojson.clearLayers());
     this._geoJsons = [];
   }
 

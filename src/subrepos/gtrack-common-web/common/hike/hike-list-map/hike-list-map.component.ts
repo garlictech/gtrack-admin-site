@@ -7,6 +7,4 @@ import { HikeListMapComponent as BaseComponent } from 'subrepos/gtrack-common-ng
   templateUrl: './hike-list-map.component.html',
   styleUrls: ['./hike-list-map.component.scss']
 })
-export class HikeListMapComponent extends BaseComponent {
-
-}
+export class HikeListMapComponent extends BaseComponent {}

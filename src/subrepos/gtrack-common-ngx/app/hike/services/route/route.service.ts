@@ -1,6 +1,8 @@
 import { take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import * as d3 from 'd3';
+
+import { geoBounds as d3GeoBounds } from 'd3-geo';
+
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 import { IRoute, IRouteStored, IRouteSaveResponse, EObjectState } from 'subrepos/provider-client';
 import { Observable } from 'rxjs';
@@ -28,9 +30,7 @@ export class RouteService {
     return this._deepstream
       .getRecord<IRouteStored>(`routes/${id}`)
       .get()
-      .pipe(
-        take(1)
-      );
+      .pipe(take(1));
   }
 
   public create(route: IRoute) {
@@ -44,13 +44,11 @@ export class RouteService {
         table: 'routes',
         state: state
       })
-      .pipe(
-       take(1)
-      );
+      .pipe(take(1));
   }
 
   public getBounds(track: GeoJSON.FeatureCollection<any>): IBounds {
-    const d3Bounds = d3.geoBounds(track.features[0]);
+    const d3Bounds = d3GeoBounds(track.features[0]);
     const padding = 0.003; // about 330m
 
     return {

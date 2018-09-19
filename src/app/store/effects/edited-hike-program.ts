@@ -53,10 +53,10 @@ export class EditedHikeProgramEffects {
               score: 0,
               time: 0
             }
-          }
+          };
 
           return new editedHikeProgramActions.AddStop(stop);
-        })
+        });
     });
 
   @Effect()

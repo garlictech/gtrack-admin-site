@@ -130,8 +130,7 @@ describe('TwitterService', () => {
       /* EMPTY ON PURPOSE */
     };
 
-    oauthWindow
-      .changeUrl$
+    oauthWindow.changeUrl$
       .pipe(
         filter(url => !!url),
         take(1)
@@ -192,13 +191,16 @@ describe('TwitterService', () => {
     twitter
       .connect()
       .pipe(take(1))
-      .subscribe(user => {
-        done(new Error('Not failed'));
-      }, (err: Error) => {
-        expect(spy.calls.count()).toEqual(1);
-        expect(err.message).toEqual('Oauth request token was not received');
-        done();
-      });
+      .subscribe(
+        user => {
+          done(new Error('Not failed'));
+        },
+        (err: Error) => {
+          expect(spy.calls.count()).toEqual(1);
+          expect(err.message).toEqual('Oauth request token was not received');
+          done();
+        }
+      );
 
     const req = httpTestingController.expectOne(`${apiUrl}/auth/twitter/oauth/request_token`);
     expect(req.request.method).toEqual('POST');
@@ -213,12 +215,15 @@ describe('TwitterService', () => {
     twitter
       .connect()
       .pipe(take(1))
-      .subscribe(() => {
-        done(new Error('Not failed'));
-      }, err => {
-        expect(err.error).toEqual('Not authorized');
-        done();
-      });
+      .subscribe(
+        () => {
+          done(new Error('Not failed'));
+        },
+        err => {
+          expect(err.error).toEqual('Not authorized');
+          done();
+        }
+      );
 
     const req = httpTestingController.expectOne(`${apiUrl}/auth/twitter/oauth/request_token`);
     expect(req.request.method).toEqual('POST');
@@ -234,12 +239,15 @@ describe('TwitterService', () => {
     twitter
       .connect()
       .pipe(take(1))
-      .subscribe(() => {
-        done(new Error('Not failed'));
-      }, err => {
-        expect(err.error).toEqual('Not authorized');
-        done();
-      });
+      .subscribe(
+        () => {
+          done(new Error('Not failed'));
+        },
+        err => {
+          expect(err.error).toEqual('Not authorized');
+          done();
+        }
+      );
 
     const req = httpTestingController.expectOne(`${apiUrl}/auth/twitter/oauth/request_token`);
     expect(req.request.method).toEqual('POST');

@@ -1,14 +1,7 @@
 import { OauthWindowService } from '../oauth-window.service';
 import { Emitter } from '../../emitter';
 
-import {
-  take,
-  elementAt,
-  map,
-  filter,
-  catchError,
-  switchMap
-} from 'rxjs/operators';
+import { take, elementAt, map, filter, catchError, switchMap } from 'rxjs/operators';
 
 import { ReplaySubject } from 'rxjs';
 
@@ -118,19 +111,13 @@ describe('OauthWindow', () => {
 
     const url = 'http://test.com';
 
-    windows$
-      .pipe(take(1))
-      .subscribe((win: MockWindow) => {
-        expect(win.location.href).toEqual(url);
-        done();
-      });
+    windows$.pipe(take(1)).subscribe((win: MockWindow) => {
+      expect(win.location.href).toEqual(url);
+      done();
+    });
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
-    oauthWindow
-      .open(url)
-      .pipe(
-        catchError(err => done(err))
-      );
+    oauthWindow.open(url).pipe(catchError(err => done(err)));
   });
 
   it('should close previous window', done => {
@@ -146,27 +133,25 @@ describe('OauthWindow', () => {
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
-    oauthWindow
-      .open(url)
-      .subscribe(() => {
+    oauthWindow.open(url).subscribe(
+      () => {
         done(new Error('Not failed'));
-      }, err => {
+      },
+      err => {
         expect(err.message).toEqual('OAuth window reopened');
 
-        combineLatest(
-          windows$.pipe(elementAt(0)),
-          windows$.pipe(elementAt(1))
-        )
-        .pipe(take(1))
-        .subscribe(windows => {
-          expect(windows[0].closed).toBe(true);
-          expect(windows[1].closed).toBe(false);
+        combineLatest(windows$.pipe(elementAt(0)), windows$.pipe(elementAt(1)))
+          .pipe(take(1))
+          .subscribe(windows => {
+            expect(windows[0].closed).toBe(true);
+            expect(windows[1].closed).toBe(false);
 
-          done();
-        });
-      });
+            done();
+          });
+      }
+    );
 
-      oauthWindow.open(url).subscribe();
+    oauthWindow.open(url).subscribe();
   });
 
   it('should change URL of opened window', done => {
@@ -215,7 +200,7 @@ describe('OauthWindow', () => {
     oauthWindow.close();
   });
 
-  it('should get URL from cordova\'s loadStartHandler event', done => {
+  it("should get URL from cordova's loadStartHandler event", done => {
     const windowService = {
       get nativeWindow() {
         return mockWindowCordova;
@@ -237,7 +222,7 @@ describe('OauthWindow', () => {
     oauthWindow.changeUrl('http://test.com?access_token=5');
   });
 
-  it('should get URL from cordova\'s loadStartHandler event when error happened', done => {
+  it("should get URL from cordova's loadStartHandler event when error happened", done => {
     const windowService = {
       get nativeWindow() {
         return mockWindowCordova;
@@ -248,40 +233,34 @@ describe('OauthWindow', () => {
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
-    oauthWindow
-      .open(url, 'access_token')
-      .subscribe(responseUrl => {
-        expect(responseUrl).toEqual('http://test.com?error=error');
-        done();
-      }, done);
+    oauthWindow.open(url, 'access_token').subscribe(responseUrl => {
+      expect(responseUrl).toEqual('http://test.com?error=error');
+      done();
+    }, done);
 
     oauthWindow.changeUrl('http://test.com?error=error');
   });
 
-  it('should not get URL from cordova\'s loadStartHandler when URL doesn\'t contain the parameter or exit', done => {
+  it("should not get URL from cordova's loadStartHandler when URL doesn't contain the parameter or exit", done => {
     const windowService = {
       get nativeWindow() {
         return mockWindowCordova;
       }
     };
 
-    windows$
-      .pipe(elementAt(0))
-      .subscribe((win: MockWindow) => {
-        win.on('loadstart', () => {
-          setTimeout(() => done(), 400);
-        });
+    windows$.pipe(elementAt(0)).subscribe((win: MockWindow) => {
+      win.on('loadstart', () => {
+        setTimeout(() => done(), 400);
       });
+    });
 
     const url = 'http://test.com';
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
-    oauthWindow
-      .open(url, 'access_token')
-      .subscribe(responseUrl => {
-        done(new Error('URL returned'));
-      }, done);
+    oauthWindow.open(url, 'access_token').subscribe(responseUrl => {
+      done(new Error('URL returned'));
+    }, done);
 
     oauthWindow.changeUrl('http://test2.com');
   });
@@ -297,25 +276,24 @@ describe('OauthWindow', () => {
 
     const url = 'http://test.com';
 
-    windows$
-      .pipe(take(1))
-      .subscribe((win: MockWindowCordova) => {
-        expect(win.location.href).toEqual(url);
-        cordovaWindow = win;
+    windows$.pipe(take(1)).subscribe((win: MockWindowCordova) => {
+      expect(win.location.href).toEqual(url);
+      cordovaWindow = win;
 
-        cordovaWindow.close();
-      });
+      cordovaWindow.close();
+    });
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
-    oauthWindow
-      .open(url)
-      .subscribe(() => {
+    oauthWindow.open(url).subscribe(
+      () => {
         done(new Error('Not failed'));
-      }, (err: Error) => {
+      },
+      (err: Error) => {
         expect(err.message).toBe('User cancelled');
         done();
-      });
+      }
+    );
   });
 
   it('shoud close the window', done => {
@@ -328,33 +306,33 @@ describe('OauthWindow', () => {
     const url = 'http://test.com';
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
 
-    windows$
-      .pipe(take(1))
-      .subscribe((win: MockWindow) => {
-        expect(win.location.href).toEqual(url);
+    windows$.pipe(take(1)).subscribe((win: MockWindow) => {
+      expect(win.location.href).toEqual(url);
 
-        win.on('exit', () => {
-          done();
-        });
-
-        // wait for OauthWindow to have the window istance
-        interval(200)
-          .pipe(
-            map(() => oauthWindow.isOpened()),
-            filter(opened => opened === true),
-            take(1)
-          )
-          .subscribe(() => oauthWindow.close());
+      win.on('exit', () => {
+        done();
       });
+
+      // wait for OauthWindow to have the window istance
+      interval(200)
+        .pipe(
+          map(() => oauthWindow.isOpened()),
+          filter(opened => opened === true),
+          take(1)
+        )
+        .subscribe(() => oauthWindow.close());
+    });
 
     oauthWindow
       .open(url)
       .pipe(take(1))
-      .subscribe(() => {
-      }, err => {
-        if (err.message !== 'User cancelled') {
-          done.fail(err);
+      .subscribe(
+        () => {},
+        err => {
+          if (err.message !== 'User cancelled') {
+            done.fail(err);
+          }
         }
-      });
+      );
   });
 });

@@ -1,17 +1,8 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { PhoneNumberUtil, PhoneNumber } from 'google-libphonenumber';
+import { ValidatorFn, Validators } from '@angular/forms';
+import { PhoneValidators } from 'ngx-phone-validators';
 
 function ValidatePhoneNumber(): ValidatorFn {
-  const phoneUtil = PhoneNumberUtil.getInstance();
-
-  return (control: AbstractControl) => {
-    try {
-      const phoneNumber: PhoneNumber = phoneUtil.parse(control.value || '', 'HU');
-      return !phoneUtil.isValidNumber(phoneNumber) ? { phoneNumber: { value: control.value } } : null;
-    } catch (err) {
-      return { phoneNumber: { value: control.value } };
-    }
-  };
+  return Validators.compose([PhoneValidators.isPhoneNumber('HU')]);
 }
 
 export const phoneNumberValidators = [ValidatePhoneNumber()];

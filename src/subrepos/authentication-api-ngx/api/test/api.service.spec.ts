@@ -3,7 +3,6 @@ import { Store, StoreModule } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 
-
 import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
 import { ApiService } from '../api.service';
@@ -46,13 +45,14 @@ describe('ApiService', () => {
     const api: ApiService = TestBed.get(ApiService);
     const url = 'http://localhost/user/me';
 
-    api
-      .get(url)
-      .subscribe(() => {
+    api.get(url).subscribe(
+      () => {
         done();
-      }, err => {
+      },
+      err => {
         done(err);
-      });
+      }
+    );
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -69,12 +69,14 @@ describe('ApiService', () => {
       .post(url, {
         test: 5
       })
-      .subscribe(() => {
-        done();
-      }, err => {
-        done(err);
-      });
-
+      .subscribe(
+        () => {
+          done();
+        },
+        err => {
+          done(err);
+        }
+      );
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
@@ -96,11 +98,9 @@ describe('ApiService', () => {
       }
     });
 
-    api
-      .get(url)
-      .subscribe((response: Response) => {
-        done.fail(new Error('Not failed'));
-      });
+    api.get(url).subscribe((response: Response) => {
+      done.fail(new Error('Not failed'));
+    });
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -126,13 +126,16 @@ describe('ApiService', () => {
       .post(url, {
         test: 1
       })
-      .subscribe(() => {
-        done(new Error('Not failed'));
-      }, (err: HttpErrorResponse) => {
-        expect(err.status).toEqual(404);
-        expect(err.statusText).toEqual('Not found');
-        done();
-      });
+      .subscribe(
+        () => {
+          done(new Error('Not failed'));
+        },
+        (err: HttpErrorResponse) => {
+          expect(err.status).toEqual(404);
+          expect(err.statusText).toEqual('Not found');
+          done();
+        }
+      );
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
@@ -158,16 +161,17 @@ describe('ApiService', () => {
       .post(url, {
         test: 1
       })
-      .subscribe(() => {
-        done(new Error('Not failed'));
-      }, (err: ErrorEvent) => {
-        done();
-      });
+      .subscribe(
+        () => {
+          done(new Error('Not failed'));
+        },
+        (err: ErrorEvent) => {
+          done();
+        }
+      );
 
     const req = httpTestingController.expectOne(url);
 
-    req.error(
-      new ErrorEvent('Network error')
-    );
+    req.error(new ErrorEvent('Network error'));
   });
 });

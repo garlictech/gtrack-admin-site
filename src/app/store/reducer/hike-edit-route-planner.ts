@@ -84,4 +84,4 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
       return state;
 
   }
-}
+};

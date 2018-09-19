@@ -2,7 +2,9 @@ import { Inject, Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity/src/models';
 
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
+import _find from 'lodash-es/find';
+import _isEqual from 'lodash-es/isEqual';
 
 import {
   objectMarkAdapter,
@@ -46,13 +48,13 @@ export class ObjectMarkSelectors {
     return createSelector(this.getAllObjectMarks, objectMarks => {
       const mark = objectMarks.find(objectMark => objectMark.id === context);
 
-      return _.get(mark, 'markedObjects', []);
+      return _get(mark, 'markedObjects', []);
     });
   }
 
   public getObjectMarkObject(context: EObjectMarkContext, objectToFind: any) {
     return createSelector(this.getObjectMarks(context), objects => {
-      return _.find(objects, val => _.isEqual(val, objectToFind));
+      return _find(objects, val => _isEqual(val, objectToFind));
     });
   }
 

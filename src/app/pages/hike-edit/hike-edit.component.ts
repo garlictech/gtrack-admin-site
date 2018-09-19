@@ -146,8 +146,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .takeUntil(this._destroy$)
       .subscribe(error => {
         if (error) {
-          let msg: string[] = [];
-          for (let idx in error) {
+          const msg: string[] = [];
+          for (const idx in error) {
             msg.push(`${idx}: ${error[idx]}`);
           }
 
@@ -226,7 +226,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       this._store.select(this._editedHikeProgramSelectors.getRouteId).take(1)
     ).subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
       if (routePlannerState && routeId) {
-        let _route: IRoute = {
+        const _route: IRoute = {
           id: routeId,
           bounds: (<any>routePlannerState.route).bounds,
           route: _pick(routePlannerState.route, ['type', 'features'])
@@ -299,6 +299,6 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       .take(1)
       .subscribe((hikeProgramData: IHikeProgramStored) => {
         this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true));
-      })
+      });
   }
 }

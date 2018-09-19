@@ -8,7 +8,8 @@ import {
 } from '../../../../../provider-client';
 
 import { CheckpointSequence, CheckpointService } from '../checkpoint';
-import * as _ from 'lodash';
+
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 export class HikeProgram implements IHikeProgramStored {
   public id: string;
@@ -27,8 +28,8 @@ export class HikeProgram implements IHikeProgramStored {
   public backgroundImages?: IBackgroundImageData[];
   public offlineMap?: string;
   public isRoundTrip: boolean;
-  public feature: boolean;
   public timestamp: number;
+  public feature: boolean;
   public stops: IHikeProgramStop[];
   public checkpoints: CheckpointSequence;
   public state: EObjectState;
@@ -36,7 +37,7 @@ export class HikeProgram implements IHikeProgramStored {
   private locale = 'en_US';
 
   constructor(data: IHikeProgramStored, private _checkpointService: CheckpointService) {
-    const converted = _.cloneDeep(data);
+    const converted = _cloneDeep(data);
     Object.assign(this, converted);
 
     this._handleStartFinish();

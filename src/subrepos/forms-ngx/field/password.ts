@@ -1,4 +1,3 @@
-
 import { TextboxField, ITextboxField } from './textbox';
 
 export class PasswordField extends TextboxField {

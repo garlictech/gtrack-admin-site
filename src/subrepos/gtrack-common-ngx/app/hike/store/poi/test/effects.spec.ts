@@ -6,7 +6,8 @@ import { StoreModule } from '@ngrx/store';
 import { IPoiStored, IPoi } from 'subrepos/provider-client';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
-import * as _ from 'lodash';
+import _zipObject from 'lodash-es/zipObject';
+
 import * as uuid from 'uuid/v4';
 
 import { hot, cold } from 'jest-marbles';
@@ -53,7 +54,7 @@ describe('Poi effects', () => {
 
   beforeEach(() => {
     ids = poisStored.map(poi => poi.id);
-    poisMap = _.zipObject(ids, poisStored);
+    poisMap = _zipObject(ids, poisStored);
     pois = poisStored.map(data => data);
     newId = uuid();
 

@@ -11,7 +11,6 @@ import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
 import { Reducer as authReducer, domain } from '../../store';
 
-
 import { take } from 'rxjs/operators';
 
 describe('AuthService', () => {

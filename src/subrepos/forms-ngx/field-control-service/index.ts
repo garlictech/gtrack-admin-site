@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, FormArray } from '@angular/forms';
-import * as _ from 'lodash';
+
+import _forEach from 'lodash-es/forEach';
+import _map from 'lodash-es/map';
 
 export interface IFormInstance {
   form: FormGroup;
@@ -12,9 +14,9 @@ export class FieldControlService {
   toFormGroup(fields: any, data: any): IFormInstance {
     const group: any = {};
     const formFields: any[] = [];
-    _.forEach(fields, (field: any, key) => {
+    _forEach(fields, (field: any, key) => {
       if (field.controlType === 'group') {
-        const embeddedForm: IFormInstance[] = _.map(data[key], arrayValue =>
+        const embeddedForm: IFormInstance[] = _map(data[key], arrayValue =>
           this.toFormGroup(field.embeddedForm, arrayValue)
         );
         group[key] = new FormArray(embeddedForm.map(form => form.form));

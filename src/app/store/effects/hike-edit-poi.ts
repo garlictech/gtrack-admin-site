@@ -30,10 +30,10 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_WIKIPEDIA_POIS)
     .map((action: hikeEditPoiActions.GetWikipediaPois) => action.bounds)
     .switchMap(bounds => {
-      let boundsArr: any[] = [];
+      const boundsArr: any[] = [];
       this._routeService.splitBounds(bounds, 10000, boundsArr);
 
-      let langs: string[] = this._hikeProgramService.getDescriptionLaguages();
+      const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
 
       const _promises: Promise<IWikipediaPoi[]>[] = [];
 
@@ -60,7 +60,7 @@ export class HikeEditPoiEffects {
     .ofType(hikeEditPoiActions.GET_GOOGLE_POIS)
     .map((action: hikeEditPoiActions.GetGooglePois) => action.bounds)
     .switchMap(bounds => {
-      let langs: string[] = this._hikeProgramService.getDescriptionLaguages();
+      const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
 
       const _promises: Promise<any>[] = [];
 
