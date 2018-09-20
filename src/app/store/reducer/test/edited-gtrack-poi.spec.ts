@@ -68,6 +68,29 @@ describe('Edited GTrackPoi reducers', () => {
       });
       expect(state.dirty).toBeTruthy();
     });
+
+    it('should not delete non-existing translated poi description', () => {
+      const action = new editedGTrackPoiActions.DeleteTranslatedPoiDescription('de_DE');
+      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
+        data: {
+          description: {
+            hu_HU: {
+              title: 'fakeTitle'
+            }
+          }
+        }
+      }), action);
+
+      expect(state.data.description).toEqual({
+        en_US: {
+          title: 'A new poi'
+        },
+        hu_HU: {
+          title: 'fakeTitle'
+        }
+      });
+      expect(state.dirty).toBeTruthy();
+    });
   });
 
   describe('SavePoi action', () => {
@@ -120,6 +143,56 @@ describe('Edited GTrackPoi reducers', () => {
 
       expect(state.dirty).toBeTruthy();
       expect(state.data.backgroundImages).toEqual([images[0]]);
+    });
+
+    it('should add poi background image when data.backgroundImages still does not exists', () => {
+      const action = new editedGTrackPoiActions.AddPoiBackgroundImage(images[0]);
+      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
+        data: {
+          backgroundImages: null
+        }
+      }), action);
+
+      expect(state.dirty).toBeTruthy();
+      expect(state.data.backgroundImages).toEqual([images[0]]);
+    });
+  });
+
+  describe('RemovePoiBackgroundImage action', () => {
+    it('should remove poi background images', () => {
+      const action = new editedGTrackPoiActions.RemovePoiBackgroundImage('fakeOriginalUrl');
+      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
+        data: {
+          backgroundImages: [images[0]]
+        }
+      }), action);
+
+      expect(state.dirty).toBeTruthy();
+      expect(state.data.backgroundImages).toEqual([]);
+    });
+
+    it('should not remove non-existing poi background images', () => {
+      const action = new editedGTrackPoiActions.RemovePoiBackgroundImage('nonExistingOriginalUrl');
+      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
+        data: {
+          backgroundImages: [images[0]]
+        }
+      }), action);
+
+      expect(state.dirty).toBeTruthy();
+      expect(state.data.backgroundImages).toEqual([images[0]]);
+    });
+
+    it('should remove poi background images when data.backgroundImages still does not exists', () => {
+      const action = new editedGTrackPoiActions.RemovePoiBackgroundImage('nonExistingOriginalUrl');
+      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
+        data: {
+          backgroundImages: null
+        }
+      }), action);
+
+      expect(state.dirty).toBeTruthy();
+      expect(state.data.backgroundImages).toEqual([]);
     });
   });
 });

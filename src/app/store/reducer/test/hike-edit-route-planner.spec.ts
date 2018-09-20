@@ -75,13 +75,22 @@ fdescribe('RoutePlanner reducers', () => {
   });
 
   describe('PopSegment action', () => {
-    it('should push segment', () => {
+    it('should pop segment', () => {
       const action = new hikeEditRoutePlannerActions.PopSegment();
       const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
         segments: [segmentData, segmentData]
       }), action);
 
       expect(state.segments).toEqual([segmentData]);
+    });
+
+    it('should pop segment from a single segment array', () => {
+      const action = new hikeEditRoutePlannerActions.PopSegment();
+      const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
+        segments: [segmentData]
+      }), action);
+
+      expect(state.segments).toEqual([]);
     });
   });
 

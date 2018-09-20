@@ -67,7 +67,7 @@ export function imageMarkerReducer(
     case hikeEditImageActions.REMOVE_IMAGE_MARKER: {
       return {
         ...state,
-        images: (<any>state.images).filter(url => url !== action.image)
+        images: (<any>state.images).filter(img => img !== action.image)
       };
     }
 

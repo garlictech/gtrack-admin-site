@@ -94,14 +94,14 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
       return newState;
     }
 
-    case editedHikeProgramActions.SET_CHECKPOINTS: {
-      newState.data.checkpoints = _cloneDeep(action.checkpoints);
-      return newState;
-    }
-
     case editedHikeProgramActions.REMOVE_STOP_BY_POI_ID: {
       newState.dirty = true;
       newState.data.stops = newState.data.stops.filter(s => action.poiIds.indexOf(s.poiId) < 0);
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_CHECKPOINTS: {
+      newState.data.checkpoints = _cloneDeep(action.checkpoints);
       return newState;
     }
 

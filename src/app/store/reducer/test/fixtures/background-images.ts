@@ -1,6 +1,7 @@
-import { IBackgroundImageData, EPoiImageTypes } from '../../../../../subrepos/provider-client';
+import { IBackgroundImageData, EPoiImageTypes, IBackgroundImageDataStored } from '../../../../../subrepos/provider-client';
+import * as _ from 'lodash';
 
-export const bgImages: IBackgroundImageData[] = [{
+const bgImageData = {
   title: 'fakeImageTitle',
   lat: 0,
   lon: 0,
@@ -25,4 +26,11 @@ export const bgImages: IBackgroundImageData[] = [{
     photoReference: 'fakeReference',
   },
   additionalData: ''
-}];
+};
+
+const bgImageDataStored = _.merge({}, bgImageData, {
+  id: '1'
+});
+
+export const bgImages: IBackgroundImageData[] = [bgImageData];
+export const bgImagesStored: IBackgroundImageDataStored[] = [bgImageDataStored];
