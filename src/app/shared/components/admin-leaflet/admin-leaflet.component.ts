@@ -11,7 +11,7 @@ export class AdminLeafletComponent extends LeafletComponent {
   public map: AdminMap;
 
   constructor(
-    private _adminMapService: AdminMapService
+    _adminMapService: AdminMapService
   ) {
     super(_adminMapService);
   }

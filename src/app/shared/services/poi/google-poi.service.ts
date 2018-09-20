@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { environment } from 'environments/environment';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import {
@@ -41,9 +41,11 @@ export class GooglePoiService {
   }
 
   private _getOnePage = params => {
-    let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo!.center!.geometry!.coordinates![1]},${
-      params.geo!.center!.geometry!.coordinates![0]
-    }&radius=${params.geo!.radius!}&key=${defaultSharedConfig.googleMaps.key}`;
+    // tslint:disable:max-line-length
+    let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${
+      params.geo.center.geometry.coordinates[0]
+    }&radius=${params.geo.radius}&key=${defaultSharedConfig.googleMaps.key}`;
+    // tslint:enable:max-line-length
 
     if (params.pageToken) {
       request += `&pagetoken=${params.pageToken}`;
@@ -120,7 +122,7 @@ export class GooglePoiService {
     return Observable.interval(500)
       .take(pois.length)
       .flatMap(idx => {
-        const _googleData = pois[idx]!.google!;
+        const _googleData = pois[idx].google;
 
         if (_googleData.id) {
           const request = `${PLACE_API_URL}/details/json?placeid=${_googleData.id}&key=${
@@ -141,7 +143,7 @@ export class GooglePoiService {
                 _googleData.international_phone_number = data.result.international_phone_number;
 
                 if (data.result.opening_hours) {
-                  _googleData.opening_hours = data.result!.opening_hours;
+                  _googleData.opening_hours = data.result.opening_hours;
                 }
 
                 const _photos: IBackgroundImageData[] = [];
@@ -193,7 +195,7 @@ export class GooglePoiService {
 
           return Observable.of(promise);
         } else {
-          return Observable.empty();
+          return EMPTY;
         }
       })
       .combineAll()

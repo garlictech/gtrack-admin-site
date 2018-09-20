@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { take, switchMap, filter } from 'rxjs/operators';
+import { take, switchMap, filter, map as rxMap } from 'rxjs/operators';
 import {
   GeometryService,
   ElevationService,
@@ -305,7 +305,8 @@ export class PoiEditorService {
     const _chunks: IExternalPoi[][] = _chunk(_poisWithoutElevation, 500);
 
     if (_chunks.length > 0) {
-      return Observable.interval(100)
+      return Observable
+        .interval(100)
         .take(_chunks.length)
         .map(counter => {
           const _chunkedPois: IExternalPoi[] = _chunks[counter];
@@ -633,7 +634,7 @@ export class PoiEditorService {
       )
     )
     .pipe(
-      map(([poiContext, pois]: [IExternalPoiListContextItemState, IExternalPoi[]]) => {
+      rxMap(([poiContext, pois]: [IExternalPoiListContextItemState, IExternalPoi[]]) => {
         if (poiContext.showOnrouteMarkers || poiContext.showOffrouteMarkers) {
           return pois.filter(p => {
             const _onRouteCheck = p.onRoute ? poiContext.showOnrouteMarkers : poiContext.showOffrouteMarkers;

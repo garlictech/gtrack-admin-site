@@ -13,7 +13,9 @@ export class MapillaryService {
   constructor(private _http: HttpClient) {}
 
   public get(bounds) {
+    // tslint:disable:max-line-length
     const request = `https://a.mapillary.com/v3/images?client_id=${environment.mapillary.clientID}&bbox=${bounds.SouthWest.lon},${bounds.SouthWest.lat},${bounds.NorthEast.lon},${bounds.NorthEast.lat}`;
+    // tslint:enable:max-line-length
 
     return this._http
       .get(request)

@@ -17,14 +17,18 @@ export class PoiMergeService {
     let objectTypes: string[] = [];
 
     for (const poi of pois) {
-      const flatPoi = flatten(_omit(poi, ['id', 'lat', 'lon', 'elevation', 'published', 'positions', 'types', 'state', 'timestamp', 'objectType']));
+      const flatPoi = flatten(_omit(poi, [
+        'id', 'lat', 'lon', 'elevation', 'published', 'positions', 'types', 'state', 'timestamp', 'objectType'
+      ]));
       flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}]`;
 
       for (const key in flatPoi) {
-        if (!flatProperties[key]) {
-          flatProperties[key] = [];
+        if (flatPoi[key]) {
+          if (!flatProperties[key]) {
+            flatProperties[key] = [];
+          }
+          flatProperties[key].push(flatPoi[key]);
         }
-        flatProperties[key].push(flatPoi[key]);
       }
 
       commonTypes = commonTypes.concat(poi.types.filter(t => ['unknown', 'undefined'].indexOf(t) < 0));
@@ -33,8 +37,10 @@ export class PoiMergeService {
 
     // Remove duplicated values and empty objects
     for (const key in flatProperties) {
-      flatProperties[key] = flatProperties[key].filter(item => !(_isObject(item) && Object.keys(item).length === 0));
-      flatProperties[key] = _uniq(flatProperties[key]);
+      if (flatProperties[key]) {
+        flatProperties[key] = flatProperties[key].filter(item => !(_isObject(item) && Object.keys(item).length === 0));
+        flatProperties[key] = _uniq(flatProperties[key]);
+      }
     }
 
     // Separate
@@ -61,7 +67,9 @@ export class PoiMergeService {
     const poiData = {};
 
     for (const key in flatProperties) {
-      _set(poiData, key, flatProperties[key]);
+      if (flatProperties[key]) {
+        _set(poiData, key, flatProperties[key]);
+      }
     }
 
     return poiData;

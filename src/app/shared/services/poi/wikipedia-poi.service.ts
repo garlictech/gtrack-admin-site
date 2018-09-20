@@ -24,7 +24,9 @@ export class WikipediaPoiService {
   public get(bounds, lng = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
     const gsLimit = 500;
-    const request = `https://${lng}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo!.radius!}&gscoord=${geo!.center!.geometry!.coordinates![1]}%7C${geo!.center!.geometry!.coordinates![0]}&format=json&gslimit=${gsLimit}&origin=*`;
+    // tslint:disable:max-line-length
+    const request = `https://${lng}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo.radius}&gscoord=${geo.center.geometry.coordinates[1]}%7C${geo.center.geometry.coordinates[0]}&format=json&gslimit=${gsLimit}&origin=*`;
+    // tslint:enable:max-line-length
 
     // Get basic poi list
     return this._http.get(request)
@@ -109,19 +111,23 @@ export class WikipediaPoiService {
       .take(_chunks.length)
       .map(counter => {
         const _ids = _chunks[counter];
+        // tslint:disable:max-line-length
         const request = `https://${lng}.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&exlimit=max&pageids=${_ids.join('|')}&origin=*`;
+        // tslint:enable:max-line-length
 
         return this._http.get(request)
           .toPromise()
           .then((data: any) => {
             for (const idx in data.query.pages) {
-              const _exData = data.query.pages[idx];
+              if (data.query.pages[idx]) {
+                const _exData = data.query.pages[idx];
 
-              if (_exData.extract) {
-                const _targetPoi = _pois.find(p => p.wikipedia!.pageid === _exData.pageid);
+                if (_exData.extract) {
+                  const _targetPoi = _pois.find(p => p.wikipedia.pageid === _exData.pageid);
 
-                if (_targetPoi && _targetPoi.wikipedia) {
-                  _targetPoi.wikipedia.extract = _exData.extract;
+                  if (_targetPoi && _targetPoi.wikipedia) {
+                    _targetPoi.wikipedia.extract = _exData.extract;
+                  }
                 }
               }
             }
@@ -154,37 +160,41 @@ export class WikipediaPoiService {
       .take(_chunks.length)
       .map(counter => {
         const _ids = _chunks[counter];
+        // tslint:disable:max-line-length
         const request = `https://${lng}.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&piprop=original|name|thumbnail&pageids=${_ids.join('|')}&origin=*`;
+        // tslint:enable:max-line-length
 
         return this._http.get(request)
           .toPromise()
           .then((imageData: any) => {
             for (const idx in imageData.query.pages) {
-              const _imgData = imageData.query.pages[idx];
+              if (imageData.query.pages[idx]) {
+                const _imgData = imageData.query.pages[idx];
 
-              if (_imgData.original) {
-                // Rename properties
-                _imgData.original.url = _imgData.original.source;
-                _imgData.thumbnail.url = _imgData.thumbnail.source;
-                delete _imgData.original.source;
-                delete _imgData.thumbnail.source;
+                if (_imgData.original) {
+                  // Rename properties
+                  _imgData.original.url = _imgData.original.source;
+                  _imgData.thumbnail.url = _imgData.thumbnail.source;
+                  delete _imgData.original.source;
+                  delete _imgData.thumbnail.source;
 
-                const _imageInfo: IBackgroundImageData = {
-                  title: _imgData.title,
-                  lat: _pois.find((p: IWikipediaPoi) => p.wikipedia.pageid === _imgData.pageid).lat,
-                  lon: _pois.find((p: IWikipediaPoi) => p.wikipedia.pageid === _imgData.pageid).lon,
-                  original: _imgData.original,
-                  card: _imgData.original,
-                  thumbnail: _imgData.thumbnail,
-                  source: {
-                    type: EPoiImageTypes.wikipedia,
-                    poiObjectId: _imgData.pageid
+                  const _imageInfo: IBackgroundImageData = {
+                    title: _imgData.title,
+                    lat: _pois.find((p: IWikipediaPoi) => p.wikipedia.pageid === _imgData.pageid).lat,
+                    lon: _pois.find((p: IWikipediaPoi) => p.wikipedia.pageid === _imgData.pageid).lon,
+                    original: _imgData.original,
+                    card: _imgData.original,
+                    thumbnail: _imgData.thumbnail,
+                    source: {
+                      type: EPoiImageTypes.wikipedia,
+                      poiObjectId: _imgData.pageid
+                    }
+                  };
+                  const _targetPoi = _pois.find(p => p.wikipedia.pageid === _imgData.pageid);
+
+                  if (_targetPoi && _targetPoi.wikipedia) {
+                    _targetPoi.wikipedia.photos = [_imageInfo];
                   }
-                };
-                const _targetPoi = _pois.find(p => p.wikipedia!.pageid === _imgData.pageid);
-
-                if (_targetPoi && _targetPoi.wikipedia) {
-                  _targetPoi.wikipedia.photos = [_imageInfo];
                 }
               }
             }

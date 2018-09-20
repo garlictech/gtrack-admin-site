@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
+import { switchMap, filter } from 'rxjs/operators';
 
 @Injectable()
 export class AuthEffects {
@@ -14,31 +15,37 @@ export class AuthEffects {
   // Auth guard route forbidden
   @Effect()
   routeForbidden$: Observable<any> = this._actions$
-    .ofType(AuthActions.ROUTE_FORBIDDEN)
-    .switchMap(data => {
-      this._router.navigate(['/login']);
+    .pipe(
+      ofType(AuthActions.ROUTE_FORBIDDEN),
+      switchMap(data => {
+        this._router.navigate(['/login']);
 
-      return Observable.empty();
-    });
+        return EMPTY;
+      })
+    );
 
   // Login
   @Effect()
   loginSuccess$: Observable<any> = this._actions$
-    .ofType(AuthActions.LOGIN_SUCCESS)
-    .filter(() => this._router.url === '/login')
-    .switchMap(data => {
-      this._router.navigate(['/']);
+    .pipe(
+      ofType(AuthActions.LOGIN_SUCCESS),
+      filter(() => this._router.url === '/login'),
+      switchMap(data => {
+        this._router.navigate(['/']);
 
-      return Observable.empty();
-    });
+        return EMPTY;
+      })
+    );
 
   // Logout
   @Effect()
   logoutSuccess$: Observable<any> = this._actions$
-    .ofType(AuthActions.LOGOUT_SUCCESS)
-    .switchMap(data => {
-      this._router.navigate(['/login']);
+    .pipe(
+      ofType(AuthActions.LOGOUT_SUCCESS),
+      switchMap(data => {
+        this._router.navigate(['/login']);
 
-      return Observable.empty();
-    });
+        return EMPTY;
+      })
+    );
 }

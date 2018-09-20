@@ -69,13 +69,15 @@ export class GpxInputComponent {
 
     if (_geometry && _geometry.type === 'MultiLineString') {
       for (const i in _geometry.coordinates) {
-        const coords = _geometry.coordinates[i];
+        if (_geometry.coordinates[i]) {
+          const coords = _geometry.coordinates[i];
 
-        if (<any>i === 0) {
-          _lineString = _lineString.concat(coords);
-        } else {
-          // Drop the 1st coord, it's same as the prev last coord...
-          _lineString = _lineString.concat(coords.slice(1));
+          if (<any>i === 0) {
+            _lineString = _lineString.concat(coords);
+          } else {
+            // Drop the 1st coord, it's same as the prev last coord...
+            _lineString = _lineString.concat(coords.slice(1));
+          }
         }
       }
 

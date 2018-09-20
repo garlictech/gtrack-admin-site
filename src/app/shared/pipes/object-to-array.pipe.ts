@@ -7,11 +7,13 @@ export class ObjectToArrayPipe implements PipeTransform {
 
     if (typeof obj === 'object' && Object.keys(obj).length) {
       for (const key in obj) {
-        const item = {
-          key: key,
-          value: obj[key]
-        };
-        keys.push(item);
+        if (obj[key]) {
+          const item = {
+            key: key,
+            value: obj[key]
+          };
+          keys.push(item);
+        }
       }
     }
 

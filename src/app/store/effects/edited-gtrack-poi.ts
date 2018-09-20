@@ -39,7 +39,7 @@ export class EditedGTrackPoiEffects {
             map((poi) => new editedGTrackPoiActions.PoiSaveSuccess(poi.id))
           )
           .catch(error => {
-            log.er('Effect: Poi save error: ', error);
+            log.error('Effect: Poi save error: ', error);
             return Observable.of(new editedGTrackPoiActions.PoiSaveFailed(error));
           });
       })

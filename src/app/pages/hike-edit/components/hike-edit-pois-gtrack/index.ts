@@ -193,7 +193,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
    * Get pois for the current subdomain
    */
   public getPois() {
-    this._poiEditorService.getGTrackPois(this._map);
+    this._poiEditorService.getGTrackPois();
   }
 
   /**

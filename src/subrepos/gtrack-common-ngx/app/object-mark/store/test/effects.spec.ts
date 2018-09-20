@@ -10,12 +10,12 @@ import * as actions from '../actions';
 import { ObjectMarkEffects } from '../effects';
 import { ObjectMarkService } from '../../services';
 
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { of } from 'rxjs';
 
 export class TestActions extends Actions {
   constructor() {
-    super(Observable.empty());
+    super(EMPTY);
   }
 
   set stream(source: Observable<any>) {

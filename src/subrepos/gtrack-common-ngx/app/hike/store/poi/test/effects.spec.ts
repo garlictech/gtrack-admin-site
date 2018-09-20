@@ -17,7 +17,7 @@ import { PoiEffects } from '../effects';
 import { PoiService } from '../../../services/poi';
 import { DeepstreamModule } from '../../../../deepstream';
 
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { pois as poiFixtures, poisStored } from './fixtures';
 
 import { GeometryService } from '../../../services/geometry';
@@ -26,7 +26,7 @@ import { EObjectState } from '../../../../../../provider-client';
 
 export class TestActions extends Actions {
   constructor() {
-    super(Observable.empty());
+    super(EMPTY);
   }
 
   set stream(source: Observable<any>) {

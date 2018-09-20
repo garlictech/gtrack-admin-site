@@ -81,7 +81,7 @@ export class EditedHikeProgramEffects {
             map(() => new editedHikeProgramActions.HikeProgramSaveSuccess())
           )
           .catch(error => {
-            log.er('Effect: Hike program save error: ', error);
+            log.error('Effect: Hike program save error: ', error);
             return Observable.of(new editedHikeProgramActions.HikeProgramSaveFailed(error));
           });
       })

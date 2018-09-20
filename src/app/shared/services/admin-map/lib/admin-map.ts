@@ -1,7 +1,7 @@
 import { Store, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { Observable } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import { take, map as rxMap } from 'rxjs/operators';
 import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
 import { Map, IconService, MapMarkerService, DescriptionLanguageListService, MarkerPopupService } from 'subrepos/gtrack-common-ngx/app';
 
@@ -45,7 +45,7 @@ export class AdminMap extends Map {
       .pipe(
         select(this._hikeEditRoutePlannerSelectors.getPath),
         take(1),
-        map(path => {
+        rxMap(path => {
           if (typeof path !== 'undefined') {
             let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 50, { units: 'meters' });
 

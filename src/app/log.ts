@@ -7,7 +7,7 @@ export function DebugLog(target: Object, key: string, descriptor: TypedPropertyD
   return {
     value: function(...args: any[]) {
       const result = descriptor.value.apply(this, args);
-      log.d(`Call: ${target.constructor.name}.${key}`, { arguments: args });
+      log.data(`Call: ${target.constructor.name}.${key}`, { arguments: args });
       return result;
     }
   };

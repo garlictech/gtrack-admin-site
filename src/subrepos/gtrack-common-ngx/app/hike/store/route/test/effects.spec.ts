@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import * as uuid from 'uuid/v4';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 
 import { hot, cold } from 'jest-marbles';
 
@@ -19,7 +19,7 @@ import { GeometryService } from '../../../services/geometry';
 
 class TestActions extends Actions {
   constructor() {
-    super(Observable.empty());
+    super(EMPTY);
   }
 
   set stream(source: Observable<any>) {

@@ -3,7 +3,7 @@ import { Actions, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 
 import * as uuid from 'uuid/v1';
 
@@ -17,7 +17,7 @@ import { DeepstreamModule } from '../../../deepstream';
 
 export class TestActions extends Actions {
   constructor() {
-    super(Observable.empty());
+    super(EMPTY);
   }
 
   set stream(source: Observable<any>) {

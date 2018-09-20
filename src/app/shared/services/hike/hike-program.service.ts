@@ -7,7 +7,7 @@ import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../..
 import { IHikeProgramStop, IRoute } from 'subrepos/provider-client';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 import {
-  ElevationService, GameRuleService, Route, RouteService, CheckpointService
+  ElevationService, GameRuleService, Route, CheckpointService
 } from 'subrepos/gtrack-common-ngx';
 
 import _get from 'lodash-es/get';
@@ -27,7 +27,6 @@ export class HikeProgramService {
     private _geospatialService: GeospatialService,
     private _elevationService: ElevationService,
     private _gameRuleService: GameRuleService,
-    private _routeService: RouteService,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _checkpointService: CheckpointService

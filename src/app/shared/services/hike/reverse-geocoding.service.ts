@@ -10,7 +10,7 @@ export class ReverseGeocodingService {
   public get(coordinates) {
     return this._googleMapsService.map
       .then(() => {
-        const _map = new google.maps.Map(document.getElementById('fakeMap'));
+        // TODO: removable? const _map = new google.maps.Map(document.getElementById('fakeMap'));
         const _point = new google.maps.LatLng(coordinates.lat, coordinates.lon);
         const _geocoder = new google.maps.Geocoder();
 
