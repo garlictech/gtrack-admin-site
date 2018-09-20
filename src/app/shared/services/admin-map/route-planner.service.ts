@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import { filter, take } from 'rxjs/operators';
 import { State } from '../../../store';
 import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { GameRuleService, ISegment, RouteService } from 'subrepos/gtrack-common-ngx';
@@ -31,15 +32,17 @@ export class RoutePlannerService {
     private _adminMapService: AdminMapService,
   ) {
     this._store
-      .select(this._hikeEditMapSelectors.getMapId)
-      .filter(id => id !== '')
+      .pipe(
+        select(this._hikeEditMapSelectors.getMapId),
+        filter(id => id !== '')
+      )
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
     // Update totals on each segment update
     this._store
-      .select(this._hikeEditRoutePlannerSelectors.getSegments)
+      .pipe(select(this._hikeEditRoutePlannerSelectors.getSegments))
       .subscribe((segments: ISegment[]) => {
         // Update total for route info
         this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
@@ -89,10 +92,12 @@ export class RoutePlannerService {
 
     for (const segment of segments) {
       for (const key in segment) {
-        if (!total[key]) {
-          total[key] = 0;
+        if (segment[key]) {
+          if (!total[key]) {
+            total[key] = 0;
+          }
+          total[key] += segment[key];
         }
-        total[key] += segment[key];
       }
     }
 
@@ -106,14 +111,16 @@ export class RoutePlannerService {
     const _geoJSON: any = _cloneDeep(initialRouteDataState);
 
     for (const i in segments) {
-      // Add segment coords to LineString
-      const _segment = segments[i];
-      for (const p of _segment.coordinates) {
-        _geoJSON.features[0].geometry.coordinates.push([p[1], p[0], p[2]]);
-      }
+      if (segments[i]) {
+        // Add segment coords to LineString
+        const _segment = segments[i];
+        for (const p of _segment.coordinates) {
+          _geoJSON.features[0].geometry.coordinates.push([p[1], p[0], p[2]]);
+        }
 
-      // Add the segment start point
-      _geoJSON.features.push(<any>(this._createRoutePoint(_segment.coordinates[0], i + 1)));
+        // Add the segment start point
+        _geoJSON.features.push(<any>(this._createRoutePoint(_segment.coordinates[0], i + 1)));
+      }
     }
 
     // Add the last route point: the last point of the last segment
@@ -161,8 +168,10 @@ export class RoutePlannerService {
     let _bounds;
 
     this._store
-      .select(this._hikeEditRoutePlannerSelectors.getPath)
-      .take(1)
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getPath),
+        take(1)
+      )
       .subscribe((path) => {
         // declare as 'any' for avoid d3.geoBounds error
         const _buffer: any = turfBuffer(path, 1000, { units: 'meters' });
@@ -217,8 +226,10 @@ export class RoutePlannerService {
    */
   public refreshRouteOnMap() {
     this._store
-      .select(this._hikeEditRoutePlannerSelectors.getPath)
-      .take(1)
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getPath),
+        take(1)
+      )
       .subscribe((path: any) => {
         this.drawRouteLineGeoJSON(path);
       });

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { HikeEditMapSelectors } from '../../../store/selectors';
 import { AdminMapService } from './admin-map.service';
 import { RoutePlannerService } from './route-planner.service';
@@ -32,8 +33,10 @@ export class WaypointMarkerService {
     private _http: HttpClient,
   ) {
     this._store
-      .select(this._hikeEditMapSelectors.getMapId)
-      .filter(id => id !== '')
+      .pipe(
+        select(this._hikeEditMapSelectors.getMapId),
+        filter(id => id !== '')
+      )
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
@@ -72,18 +75,20 @@ export class WaypointMarkerService {
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
 
     for (const idx in latlngs) {
-      const latlng = latlngs[idx];
-      const _waypoint = {
-        latLng: latlng,
-        name: this._markers.length + 1
-      };
-      this._markers.push(this._createMarker(_waypoint));
+      if (latlngs[idx]) {
+        const latlng = latlngs[idx];
+        const _waypoint = {
+          latLng: latlng,
+          name: this._markers.length + 1
+        };
+        this._markers.push(this._createMarker(_waypoint));
 
-      if (this._markers.length > 1) {
-        await this._getRouteFromApi(
-          this._markers[this._markers.length - 2].getLatLng(),
-          this._markers[this._markers.length - 1].getLatLng()
-        );
+        if (this._markers.length > 1) {
+          await this._getRouteFromApi(
+            this._markers[this._markers.length - 2].getLatLng(),
+            this._markers[this._markers.length - 1].getLatLng()
+          );
+        }
       }
     }
 
@@ -169,7 +174,9 @@ export class WaypointMarkerService {
           // Update elevation only if we got all data
           if (data.length === _chunkCoords.length) {
             for (const i in _chunkCoords) {
-              _chunkCoords[i][2] = data[i][2];
+              if (_chunkCoords[i]) {
+                _chunkCoords[i][2] = data[i][2];
+              }
             }
           }
           return Observable.of(counter);

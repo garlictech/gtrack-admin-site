@@ -88,7 +88,7 @@ export class EditedHikeProgramSelectors {
     );
   }
 
-  public getHikePois<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
+  public getHikePois(getAllSelector: ((state: object) => IPoiStored[])) {
     return createSelector(
       getAllSelector,
       this.getPoiIds,
@@ -100,7 +100,7 @@ export class EditedHikeProgramSelectors {
     );
   }
 
-  public getHikePoisCount<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
+  public getHikePoisCount(getAllSelector: ((state: object) => IPoiStored[])) {
     return createSelector(
       getAllSelector,
       this.getPoiIds,
@@ -112,7 +112,7 @@ export class EditedHikeProgramSelectors {
     );
   }
 
-  public getStopsWithPoiNames<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
+  public getStopsWithPoiNames(getAllSelector: ((state: object) => IPoiStored[])) {
     return createSelector(
       getAllSelector,
       this.getStops,

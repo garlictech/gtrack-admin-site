@@ -3,7 +3,8 @@ import {
   AdminMap, AdminMapService, WaypointMarkerService, RoutePlannerService
 } from '../../../../shared/services/admin-map';
 import { Observable, Subject } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { takeUntil, filter, switchMap, take } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import {
   State, IHikeEditRoutePlannerState, IHikeEditRoutePlannerTotalState
 } from '../../../../store';
@@ -50,26 +51,34 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.routeInfoData$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getRoutePlanner)
-      .takeUntil(this._destroy$);
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
+        takeUntil(this._destroy$)
+      );
 
     this._store
-      .select(this._hikeEditMapSelectors.getMapId)
-      .filter(id => id !== '')
-      .takeUntil(this._destroy$)
-      .switchMap((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
-        return this._store
-          .select(this._editedHikeProgramSelectors.getRouteId)
-          .takeUntil(this._destroy$);
-      })
-      .takeUntil(this._destroy$)
-      .switchMap((routeId: string) => {
-        return this._store
-          .select(this._routeSelectors.getRouteContext(routeId))
-          .takeUntil(this._destroy$);
-      })
-      .filter(routeContext => !!routeContext)
+      .pipe(
+        select(this._hikeEditMapSelectors.getMapId),
+        filter(id => id !== ''),
+        takeUntil(this._destroy$),
+        switchMap((mapId: string) => {
+          this._map = this._adminMapService.getMapById(mapId);
+          return this._store
+            .pipe(
+              select(this._editedHikeProgramSelectors.getRouteId),
+              takeUntil(this._destroy$)
+            );
+        }),
+        takeUntil(this._destroy$),
+        switchMap((routeId: string) => {
+          return this._store
+            .pipe(
+              select(this._routeSelectors.getRouteContext(routeId)),
+              takeUntil(this._destroy$)
+            );
+        }),
+        filter(routeContext => !!routeContext)
+      )
       .subscribe((routeContext: IRouteContextState) => {
         // Route saved
         if (routeContext.saved) {
@@ -83,9 +92,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         // Route loaded
         } else if (routeContext.loaded) {
           this._store
-            .select(this._routeSelectors.getRoute((<IRouteContextState>routeContext).id))
-            .filter((route: IRouteStored) => !!route)
-            .take(1)
+            .pipe(
+              select(this._routeSelectors.getRoute((<IRouteContextState>routeContext).id)),
+              filter((route: IRouteStored) => !!route),
+              take(1)
+            )
             .subscribe((route: IRouteStored) => {
               // Draw an independent path to the map
               this._routePlannerService.drawRouteLineGeoJSON(route.route.features[0]);
@@ -98,11 +109,13 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       });
 
     this.route$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getRoute)
-      .takeUntil(this._destroy$);
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getRoute),
+        takeUntil(this._destroy$)
+      );
 
     this.route$
-      .takeUntil(this._destroy$)
+      .pipe(takeUntil(this._destroy$))
       .subscribe((route: any) => {
         // Clear location
         if (route.features.length === 1) {
@@ -113,7 +126,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         }
 
         this.isPlanning$
-          .take(1)
+          .pipe(take(1))
           .subscribe((isPlanning: boolean) => {
             if (isPlanning) {
               this._refreshIcons(route);
@@ -122,8 +135,10 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       });
 
     this._store
-      .select(this._hikeEditRoutePlannerSelectors.getTotal)
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getTotal),
+        takeUntil(this._destroy$)
+      )
       .subscribe((total: IHikeEditRoutePlannerTotalState) => {
         const fields = _pick(total, ['distance', 'uphill', 'downhill', 'time', 'score']);
         if (_values(fields).length > 0) {
@@ -139,9 +154,14 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
   public retrievePlan() {
     this._store
-      .select(this._editedHikeProgramSelectors.getRouteId)
-      .switchMap((routeId: string) => this._store.select(this._routeSelectors.getRoute(routeId)).take(1))
-      .take(1)
+      .pipe(
+        select(this._editedHikeProgramSelectors.getRouteId),
+        switchMap((routeId: string) => this._store.pipe(
+          select(this._routeSelectors.getRoute(routeId)),
+          take(1)
+        )),
+        take(1)
+      )
       .subscribe((storedRoute: any) => {
         this._waypointMarkerService.reset();
 

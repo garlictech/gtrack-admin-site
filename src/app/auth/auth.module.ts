@@ -4,7 +4,8 @@ import { LoginComponent } from './components/login';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
 import { DeepstreamActions } from 'subrepos/gtrack-common-ngx/app/deepstream';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import { filter, switchMapTo } from 'rxjs/operators';
 import { State } from '../store';
 
 import { ButtonModule, CardModule } from 'primeng/primeng';
@@ -33,9 +34,11 @@ export class AuthModule {
 
   private _init() {
     this._store
-      .select(this._authSelectors.jwtLoggingIn)
-      .filter(loggingIn => !loggingIn)
-      .switchMapTo(this._store.select(this._authSelectors.token))
+      .pipe(
+        select(this._authSelectors.jwtLoggingIn),
+        filter(loggingIn => !loggingIn),
+        switchMapTo(this._store.pipe(select(this._authSelectors.token)))
+      )
       .subscribe(token =>
         this._store.dispatch(new DeepstreamActions.DeepstreamLogin(token))
       );

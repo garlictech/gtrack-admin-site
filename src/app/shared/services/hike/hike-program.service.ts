@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { editedHikeProgramActions } from '../../../store/actions';
 import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../../store/selectors';
@@ -16,6 +16,7 @@ import _orderBy from 'lodash-es/orderBy';
 import turfLength from '@turf/length';
 import { select as d3Select } from 'd3-selection';
 import * as geojson2svg from 'geojson2svg';
+import { take } from 'rxjs/operators';
 
 @Injectable()
 export class HikeProgramService {
@@ -38,10 +39,16 @@ export class HikeProgramService {
   public updateHikeProgramStops() {
     Observable
       .combineLatest(
-        this._store.select(this._editedHikeProgramSelectors.getStops).take(1),
-        this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
+        this._store.pipe(
+          select(this._editedHikeProgramSelectors.getStops),
+          take(1)
+        ),
+        this._store.pipe(
+          select(this._hikeEditRoutePlannerSelectors.getPath),
+          take(1)
+        )
       )
-      .take(1)
+      .pipe(take(1))
       .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
         const poiStops = _cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
 
@@ -113,8 +120,10 @@ export class HikeProgramService {
   public getDescriptionLaguages() {
     let langs: string[] = [];
     this._store
-      .select(this._editedHikeProgramSelectors.getDescriptionLangs)
-      .take(1)
+      .pipe(
+        select(this._editedHikeProgramSelectors.getDescriptionLangs),
+        take(1)
+      )
       .subscribe((langKeys: string[]) => {
         langs = langKeys.map(key => key.substr(0, 2));
       });
@@ -179,8 +188,9 @@ export class HikeProgramService {
 
       const _svgString = _converter.convert(_route.path);
       const _p = -5; // padding; viewBox: [x, y, w, h]
+      // tslint:disable:max-line-length
       return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="${_p} ${_p} ${_iconWidth - 2 * _p} ${_iconHeight - 2 * _p}">${_svgString}</svg>`;
-
+      // tslint:enable:max-line-length
     } else {
       return '';
     }

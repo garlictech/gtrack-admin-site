@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { editedHikeProgramActions, hikeEditPoiActions, commonPoiActions } from '../../../store/actions';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { PoiEditorService } from '../../services';
 
@@ -35,8 +36,10 @@ export class AdminMarkerPopupComponent implements OnInit {
 
   ngOnInit() {
     this.isPlanning$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getIsPlanning)
-      .take(1);
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+        take(1)
+      );
 
     switch (this.data.markerType) {
       case 'hike':

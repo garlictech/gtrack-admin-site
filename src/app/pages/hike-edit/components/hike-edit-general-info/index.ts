@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Store, MemoizedSelector } from '@ngrx/store';
+import { Store, MemoizedSelector, select } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { State } from '../../../../store';
 import { editedHikeProgramActions } from '../../../../store/actions';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
@@ -37,19 +38,25 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
 
     // Selectors
     this.isRoundTrip$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip)
-      .takeUntil(this._destroy$);
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip),
+        takeUntil(this._destroy$)
+      );
 
     this.hikeProgramData$ = this._store
-      .select(this._editedHikeProgramSelectors.getData)
-      .takeUntil(this._destroy$);
+      .pipe(
+        select(this._editedHikeProgramSelectors.getData),
+        takeUntil(this._destroy$)
+      );
 
     this.remoteError$ = this._store
-      .select(this._editedHikeProgramSelectors.getError)
-      .takeUntil(this._destroy$);
+      .pipe(
+        select(this._editedHikeProgramSelectors.getError),
+        takeUntil(this._destroy$)
+      );
 
     this.isRoundTrip$
-      .takeUntil(this._destroy$)
+      .pipe(takeUntil(this._destroy$))
       .subscribe((isRoundTrip: boolean) => {
         this._store.dispatch(
           new editedHikeProgramActions.AddHikeProgramDetails(

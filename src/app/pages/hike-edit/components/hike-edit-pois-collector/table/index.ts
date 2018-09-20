@@ -1,9 +1,10 @@
 // Core
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../../../store';
 import { hikeEditPoiActions } from '../../../../../store/actions';
 import { Observable, Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { HikeEditPoiSelectors } from '../../../../../store/selectors';
 
 import _map from 'lodash-es/map';
@@ -26,9 +27,11 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._store
-      .select(this._hikeEditPoiSelectors.getMergeSelections)
-      .debounceTime(200)
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._hikeEditPoiSelectors.getMergeSelections),
+        debounceTime(200),
+        takeUntil(this._destroy$)
+      )
       .subscribe((selections: string[]) => {
         this.mergeSelections = {};
         selections.map(id => {

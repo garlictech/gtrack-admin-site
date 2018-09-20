@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
+import { takeUntil, map } from 'rxjs/operators';
 import { State } from '../../store';
 import { commonHikeActions } from '../../store/actions';
 import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
@@ -39,9 +40,11 @@ export class HikeListComponent implements OnInit, OnDestroy {
     ];
 
     this.hikeList$ = this._store
-      .select(this._hikeSelectors.getActiveHikes())
-      .takeUntil(this._destroy$)
-      .map((hikes) => _orderBy(hikes, ['timestamp'], ['desc']));
+      .pipe(
+        select(this._hikeSelectors.getActiveHikes()),
+        takeUntil(this._destroy$),
+        map((hikes) => _orderBy(hikes, ['timestamp'], ['desc']))
+      );
 
     this._store.dispatch(new commonHikeActions.LoadHikePrograms());
   }
