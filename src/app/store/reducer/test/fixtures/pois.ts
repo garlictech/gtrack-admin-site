@@ -4,6 +4,8 @@ export const pois = [
   {
     id: '1',
     selected: false,
+    inGtrackDb: false,
+    inCollector: false,
     elevation: 0,
     lat: 0,
     lon: 0,
@@ -15,11 +17,20 @@ export const pois = [
         summary: 'Summary #1',
         fullDescription: 'Description #1'
       }
+    },
+    google: {
+      photos: [{
+        original: {
+          url: 'fakeGoogleUrl1'
+        }
+      }]
     }
   },
   {
     id: '2',
     selected: false,
+    inGtrackDb: false,
+    inCollector: false,
     elevation: 0,
     lat: 0,
     lon: 0,
@@ -31,6 +42,17 @@ export const pois = [
         summary: 'Summary #2',
         fullDescription: 'Description #2'
       }
+    },
+    google: {
+      photos: [{
+        original: {
+          url: 'fakeGoogleUrl2'
+        }
+      }, {
+        original: {
+          url: 'fakeGoogleUrl3'
+        }
+      }]
     }
   }
 ];

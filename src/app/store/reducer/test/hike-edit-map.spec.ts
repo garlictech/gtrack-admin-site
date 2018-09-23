@@ -34,10 +34,11 @@ describe('HikeEditMap reducers', () => {
 
   describe('RegisterMap action', () => {
     it('should register map', () => {
-      const action = new adminMapActions.RegisterMap({ mapId: 'fakeId' });
+      const mapId = 'fakeId';
+      const action = new adminMapActions.RegisterMap(mapId);
       const state = hikeEditMapReducer(initialState, action);
 
-      expect(state.mapId).toEqual('fakeId');
+      expect(state.mapId).toEqual(mapId);
     });
   });
 

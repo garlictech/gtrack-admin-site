@@ -113,8 +113,7 @@ describe('HikeEditPoi reducers', () => {
 
     describe('SetGooglePoisInGtrackDb action', () => {
       it('should set google pois inGtrackDb', () => {
-        entities['1'].inGtrackDb = true;
-        entities['2'].inGtrackDb = false;
+        pois[0].inGtrackDb = true;
 
         const action = new hikeEditPoiActions.SetGooglePoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
@@ -133,8 +132,7 @@ describe('HikeEditPoi reducers', () => {
 
     describe('SetGooglePoisInCollector action', () => {
       it('should set google pois inCollector', () => {
-        entities['1'].inCollector = false;
-        entities['2'].inCollector = true;
+        pois[1].inCollector = true;
 
         const action = new hikeEditPoiActions.SetGooglePoisInCollector(
           pois.map(p => _.pick(p, ['id', 'inCollector']))
@@ -208,8 +206,7 @@ describe('HikeEditPoi reducers', () => {
 
     describe('SetOsmAmenityPoisInGtrackDb action', () => {
       it('should set osmAmenity pois inGtrackDb', () => {
-        entities['1'].inGtrackDb = true;
-        entities['2'].inGtrackDb = false;
+        pois[0].inGtrackDb = true;
 
         const action = new hikeEditPoiActions.SetOsmAmenityPoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
@@ -228,8 +225,7 @@ describe('HikeEditPoi reducers', () => {
 
     describe('SetOsmAmenityPoisInCollector action', () => {
       it('should set osmAmenity pois inCollector', () => {
-        entities['1'].inCollector = false;
-        entities['2'].inCollector = true;
+        pois[1].inCollector = true;
 
         const action = new hikeEditPoiActions.SetOsmAmenityPoisInCollector(
           pois.map(p => _.pick(p, ['id', 'inCollector']))
@@ -303,8 +299,7 @@ describe('HikeEditPoi reducers', () => {
 
     describe('SetOsmNaturalPoisInGtrackDb action', () => {
       it('should set osmNatural pois inGtrackDb', () => {
-        entities['1'].inGtrackDb = true;
-        entities['2'].inGtrackDb = false;
+        pois[0].inGtrackDb = true;
 
         const action = new hikeEditPoiActions.SetOsmNaturalPoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
@@ -323,8 +318,7 @@ describe('HikeEditPoi reducers', () => {
 
     describe('SetOsmNaturalPoisInCollector action', () => {
       it('should set osmNatural pois inCollector', () => {
-        entities['1'].inCollector = false;
-        entities['2'].inCollector = true;
+        pois[1].inCollector = true;
 
         const action = new hikeEditPoiActions.SetOsmNaturalPoisInCollector(
           pois.map(p => _.pick(p, ['id', 'inCollector']))
@@ -398,8 +392,7 @@ describe('HikeEditPoi reducers', () => {
 
     describe('SetOsmRoutePoisInGtrackDb action', () => {
       it('should set osmRoute pois inGtrackDb', () => {
-        entities['1'].inGtrackDb = true;
-        entities['2'].inGtrackDb = false;
+        pois[0].inGtrackDb = true;
 
         const action = new hikeEditPoiActions.SetOsmRoutePoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
@@ -418,8 +411,7 @@ describe('HikeEditPoi reducers', () => {
 
     describe('SetOsmRoutePoisInCollector action', () => {
       it('should set osmRoute pois inCollector', () => {
-        entities['1'].inCollector = false;
-        entities['2'].inCollector = true;
+        pois[1].inCollector = true;
 
         const action = new hikeEditPoiActions.SetOsmRoutePoisInCollector(
           pois.map(p => _.pick(p, ['id', 'inCollector']))
@@ -493,8 +485,7 @@ describe('HikeEditPoi reducers', () => {
 
     describe('SetWikipediaPoisInGtrackDb action', () => {
       it('should set wikipedia pois inGtrackDb', () => {
-        entities['1'].inGtrackDb = true;
-        entities['2'].inGtrackDb = false;
+        pois[0].inGtrackDb = true;
 
         const action = new hikeEditPoiActions.SetWikipediaPoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
@@ -513,8 +504,7 @@ describe('HikeEditPoi reducers', () => {
 
     describe('SetWikipediaPoisInCollector action', () => {
       it('should set wikipedia pois inCollector', () => {
-        entities['1'].inCollector = false;
-        entities['2'].inCollector = true;
+        pois[1].inCollector = true;
 
         const action = new hikeEditPoiActions.SetWikipediaPoisInCollector(
           pois.map(p => _.pick(p, ['id', 'inCollector']))

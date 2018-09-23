@@ -84,7 +84,7 @@ export class EditedHikeProgramSelectors {
     );
 
     this.getError = createSelector(this._featureSelector,
-      (state: IEditedHikeProgramState) => _get(state, 'failed.data')
+      (state: IEditedHikeProgramState) => _get(state, 'failed')
     );
   }
 
@@ -134,7 +134,7 @@ export class EditedHikeProgramSelectors {
 
   public getBackgroundOriginalUrls() {
     return createSelector(this._featureSelector, (state: IEditedHikeProgramState) => {
-      return _uniq((<IBackgroundImageData[]>state.data.backgroundImages || []).map((img: IBackgroundImageData) => img.original.url));
+      return _uniq((<IBackgroundImageData[]>state.data.backgroundImages).map((img: IBackgroundImageData) => img.original.url));
     });
   }
 }
