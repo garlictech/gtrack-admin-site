@@ -2,7 +2,7 @@ import { map, take, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs-compat/Observable';
+import { Observable } from 'rxjs';
 
 import { HikeProgramService } from '../../services/hike-program';
 import * as LocalActions from './actions';

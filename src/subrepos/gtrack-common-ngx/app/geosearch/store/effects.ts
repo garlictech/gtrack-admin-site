@@ -2,7 +2,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs-compat/Observable';
+import { Observable } from 'rxjs';
 
 import { GeoSearchService } from '../services/geosearch.service';
 import * as LocalActions from './actions';
