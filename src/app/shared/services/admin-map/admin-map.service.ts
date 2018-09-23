@@ -40,9 +40,7 @@ export class AdminMapService extends MapService {
     this._maps[_id] = _map;
 
     this._store.dispatch(
-      new adminMapActions.RegisterMap({
-        mapId: _id
-      })
+      new adminMapActions.RegisterMap(_id)
     );
 
     return _map;

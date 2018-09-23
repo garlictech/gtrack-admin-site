@@ -11,14 +11,6 @@ import _omit from 'lodash-es/omit';
 import _merge from 'lodash-es/merge';
 import _cloneDeep from 'lodash-es/cloneDeep';
 
-/*
-import {
-  omit as _omit,
-  merge as _merge,
-  cloneDeep as _cloneDeep
-} from 'lodash';
-
-*/
 /**
  * Google
  */
@@ -344,7 +336,7 @@ const poiCollectorReducer: ActionReducer<IPoiCollectorEntityState> = (
  * Context
  */
 
-const initialContextItemState = {
+export const initialContextItemState = {
   loading: false,
   loaded: false,
   saving: false,

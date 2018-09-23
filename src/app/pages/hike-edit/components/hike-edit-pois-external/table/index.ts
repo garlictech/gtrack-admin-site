@@ -2,6 +2,7 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { State } from '../../../../../store';
 import { hikeEditPoiActions } from '../../../../../store/actions';
 import { EPoiTypes } from 'subrepos/provider-client';
@@ -44,7 +45,7 @@ export class HikeEditPoisExternalTableComponent {
 
   public invertSelection() {
     this.pois$
-      .take(1)
+      .pipe(take(1))
       .subscribe(pois => {
         const clickablePois = pois.filter(p => {
           return !!p.onRoute === this.onRouteCheck && !p.inCollector && !p.inGtrackDb;

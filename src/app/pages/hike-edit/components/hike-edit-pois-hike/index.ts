@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import { filter, takeUntil, debounceTime, switchMap, take, map } from 'rxjs/operators';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored } from 'subrepos/provider-client';
@@ -55,29 +55,28 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       });
 
     // Get pois by id
-    Observable
-      .combineLatest(
-        this._store.pipe(
-          select(this._editedHikeProgramSelectors.getPoiIds),
-          takeUntil(this._destroy$)
-        ),
-        this._store.pipe(
-          select(this._poiSelectors.getPoiIds),
-          takeUntil(this._destroy$)
-        )
-      )
-      .pipe(
-        debounceTime(200),
+    combineLatest(
+      this._store.pipe(
+        select(this._editedHikeProgramSelectors.getPoiIds),
+        takeUntil(this._destroy$)
+      ),
+      this._store.pipe(
+        select(this._poiSelectors.getPoiIds),
         takeUntil(this._destroy$)
       )
-      .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
-        const missingPoiIds = _difference(inHikePoiIds, _intersection(inHikePoiIds, inStorePoiIds)).filter(id => id !== 'endpoint');
+    )
+    .pipe(
+      debounceTime(200),
+      takeUntil(this._destroy$)
+    )
+    .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
+      const missingPoiIds = _difference(inHikePoiIds, _intersection(inHikePoiIds, inStorePoiIds)).filter(id => id !== 'endpoint');
 
-        // Get only the not-loaded pois
-        if (missingPoiIds && missingPoiIds.length > 0) {
-          this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
-        }
-      });
+      // Get only the not-loaded pois
+      if (missingPoiIds && missingPoiIds.length > 0) {
+        this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
+      }
+    });
 
     // Poi list
     this.pois$ = this._store
@@ -91,33 +90,32 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         )),
         filter((routing: boolean) => !routing),
         switchMap(() => {
-          return Observable
-            .combineLatest(
-              this._store.pipe(
-                select(this._editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
-                take(1)
-              ),
-              this._store.pipe(
-                select(this._hikeEditRoutePlannerSelectors.getPath),
-                take(1)
-              )
+          return combineLatest(
+            this._store.pipe(
+              select(this._editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
+              take(1)
+            ),
+            this._store.pipe(
+              select(this._hikeEditRoutePlannerSelectors.getPath),
+              take(1)
             )
-            .pipe(
-              filter(([pois, path]: [IPoiStored[], any]) => path && path.geometry.coordinates.length > 0),
-              take(1),
-              map(([pois, path]: [IPoiStored[], any]) => {
-                const organizedPois = this._poiEditorService.organizePois(pois, path);
-                const poiIds = _map(pois, 'id');
-                const organizedPoiIds = _map(organizedPois, 'id');
-                const removablePoiIds = _difference(poiIds, _intersection(poiIds, organizedPoiIds));
+          )
+          .pipe(
+            filter(([pois, path]: [IPoiStored[], any]) => path && path.geometry.coordinates.length > 0),
+            take(1),
+            map(([pois, path]: [IPoiStored[], any]) => {
+              const organizedPois = this._poiEditorService.organizePois(pois, path);
+              const poiIds = _map(pois, 'id');
+              const organizedPoiIds = _map(organizedPois, 'id');
+              const removablePoiIds = _difference(poiIds, _intersection(poiIds, organizedPoiIds));
 
-                if (removablePoiIds.length > 0) {
-                  this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(removablePoiIds));
-                }
+              if (removablePoiIds.length > 0) {
+                this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(removablePoiIds));
+              }
 
-                return organizedPois;
-              })
-            );
+              return organizedPois;
+            })
+          );
         })
       );
 

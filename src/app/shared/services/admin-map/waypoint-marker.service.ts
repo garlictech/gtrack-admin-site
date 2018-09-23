@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { hikeEditRoutePlannerActions } from '../../../store/actions';
-import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { of, interval } from 'rxjs';
+import { filter, take, flatMap, combineAll } from 'rxjs/operators';
 import { HikeEditMapSelectors } from '../../../store/selectors';
 import { AdminMapService } from './admin-map.service';
 import { RoutePlannerService } from './route-planner.service';
@@ -164,25 +164,26 @@ export class WaypointMarkerService {
     // 50 requests per second
     const _chunks: any[][] = _chunk(_coordsArr, 500);
 
-    return Observable
-      .interval(100)
-      .take(_chunks.length)
-      .flatMap(counter => {
-        const _chunkCoords: any[] = _chunks[counter];
+    return interval(100)
+      .pipe(
+        take(_chunks.length),
+        flatMap(counter => {
+          const _chunkCoords: any[] = _chunks[counter];
 
-        return this._elevationService.getData(_chunkCoords).then((data) => {
-          // Update elevation only if we got all data
-          if (data.length === _chunkCoords.length) {
-            for (const i in _chunkCoords) {
-              if (_chunkCoords[i]) {
-                _chunkCoords[i][2] = data[i][2];
+          return this._elevationService.getData(_chunkCoords).then((data) => {
+            // Update elevation only if we got all data
+            if (data.length === _chunkCoords.length) {
+              for (const i in _chunkCoords) {
+                if (_chunkCoords[i]) {
+                  _chunkCoords[i][2] = data[i][2];
+                }
               }
             }
-          }
-          return Observable.of(counter);
-        });
-      })
-      .combineAll()
+            return of(counter);
+          });
+        }),
+        combineAll()
+      )
       .toPromise()
       .then(() => {
         const upDown = {

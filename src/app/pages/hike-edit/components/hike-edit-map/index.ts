@@ -152,7 +152,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     $event.stopPropagation();
 
     this.currentLocation$
-      .take(1)
+      .pipe(take(1))
       .subscribe((position: IGeoPosition) => {
         if (position && position.coords) {
           const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);

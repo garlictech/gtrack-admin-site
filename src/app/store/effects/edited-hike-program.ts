@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, switchMap, take, catchError } from 'rxjs/operators';
 import { HikeProgramService, GeospatialService } from 'subrepos/gtrack-common-ngx';
 import { State } from '..';
 import { editedHikeProgramActions } from '../actions';
@@ -78,12 +78,12 @@ export class EditedHikeProgramEffects {
           .save(<IHikeProgram>hikeProgramData)
           .pipe(
             take(1),
-            map(() => new editedHikeProgramActions.HikeProgramSaveSuccess())
-          )
-          .catch(error => {
-            log.error('Effect: Hike program save error: ', error);
-            return Observable.of(new editedHikeProgramActions.HikeProgramSaveFailed(error));
-          });
+            map(() => new editedHikeProgramActions.HikeProgramSaveSuccess()),
+            catchError(error => {
+              log.error('Effect: Hike program save error: ', error);
+              return of(new editedHikeProgramActions.HikeProgramSaveFailed(error));
+            })
+          );
       })
     );
 }

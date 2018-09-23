@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { editedHikeProgramActions } from '../../../store/actions';
@@ -36,27 +36,26 @@ export class HikeProgramService {
    * Update stop segments and start/end points
    */
   public updateHikeProgramStops() {
-    Observable
-      .combineLatest(
-        this._store.pipe(
-          select(this._editedHikeProgramSelectors.getStops),
-          take(1)
-        ),
-        this._store.pipe(
-          select(this._hikeEditRoutePlannerSelectors.getPath),
-          take(1)
-        )
+    combineLatest(
+      this._store.pipe(
+        select(this._editedHikeProgramSelectors.getStops),
+        take(1)
+      ),
+      this._store.pipe(
+        select(this._hikeEditRoutePlannerSelectors.getPath),
+        take(1)
       )
-      .pipe(take(1))
-      .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
-        const poiStops = _cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
+    )
+    .pipe(take(1))
+    .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
+      const poiStops = _cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
 
-        if (path.geometry.coordinates.length > 0) {
-          poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
-          poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
-        }
-        this._updateStopsSegment(_orderBy(poiStops, ['distanceFromOrigo']), path);
-      });
+      if (path.geometry.coordinates.length > 0) {
+        poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
+        poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
+      }
+      this._updateStopsSegment(_orderBy(poiStops, ['distanceFromOrigo']), path);
+    });
   }
 
   /**

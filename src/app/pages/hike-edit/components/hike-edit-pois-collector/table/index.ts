@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { State } from '../../../../../store';
 import { hikeEditPoiActions } from '../../../../../store/actions';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil, take } from 'rxjs/operators';
 import { HikeEditPoiSelectors } from '../../../../../store/selectors';
 
 import _map from 'lodash-es/map';
@@ -72,7 +72,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
 
   public invertMerge() {
     this.pois$
-      .take(1)
+      .pipe(take(1))
       .subscribe(pois => {
         const clickablePois = pois.filter(p => {
           return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
@@ -84,7 +84,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
 
   public invertSelection() {
     this.pois$
-      .take(1)
+      .pipe(take(1))
       .subscribe(pois => {
         const clickablePois = pois.filter(p => {
           return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;

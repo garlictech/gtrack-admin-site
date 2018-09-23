@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import { takeUntil, filter, switchMap, take, skipWhile } from 'rxjs/operators';
 import { Store, MemoizedSelector, createSelector, select } from '@ngrx/store';
 import { State, IHikeEditRoutePlannerState } from '../../store';
@@ -253,7 +253,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this._store.dispatch(new editedHikeProgramActions.SaveHikeProgram());
 
     // Save route
-    Observable.combineLatest(
+    combineLatest(
       this._store.pipe(
         select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
         take(1)
@@ -262,7 +262,8 @@ export class HikeEditComponent implements OnInit, OnDestroy {
         select(this._editedHikeProgramSelectors.getRouteId),
         take(1)
       )
-    ).subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
+    )
+    .subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
       if (routePlannerState && routeId) {
         const _route: IRoute = {
           id: routeId,

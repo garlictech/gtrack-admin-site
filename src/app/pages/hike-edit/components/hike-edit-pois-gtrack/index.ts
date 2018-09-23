@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of, combineLatest } from 'rxjs';
 import { takeUntil, filter, debounceTime, switchMap, take } from 'rxjs/operators';
 import {
   PoiSelectors, GeoSearchSelectors, IGeoSearchContextState, IGeoSearchResponseItem
@@ -58,67 +58,65 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       });
 
     // Get pois by id from geoSearch result
-    Observable
-      .combineLatest(
-        this._store.pipe(
-          select(this._geoSearchSelectors.getGeoSearch('gTrackPois')),
-          takeUntil(this._destroy$)
-        ),
-        this._store.pipe(
-          select(this._poiSelectors.getPoiIds),
-          takeUntil(this._destroy$)
-        )
-      )
-      .pipe(
-        debounceTime(200),
+    combineLatest(
+      this._store.pipe(
+        select(this._geoSearchSelectors.getGeoSearch('gTrackPois')),
+        takeUntil(this._destroy$)
+      ),
+      this._store.pipe(
+        select(this._poiSelectors.getPoiIds),
         takeUntil(this._destroy$)
       )
-      .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
-        if (searchData) {
-          const missingPoiIds = _difference((<any>searchData).results, _intersection((<any>searchData).results, inStorePoiIds));
+    )
+    .pipe(
+      debounceTime(200),
+      takeUntil(this._destroy$)
+    )
+    .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
+      if (searchData) {
+        const missingPoiIds = _difference((<any>searchData).results, _intersection((<any>searchData).results, inStorePoiIds));
 
-          // Get only the not-loaded pois
-          if (missingPoiIds && missingPoiIds.length > 0) {
-            this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
-          }
+        // Get only the not-loaded pois
+        if (missingPoiIds && missingPoiIds.length > 0) {
+          this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
         }
-      });
+      }
+    });
 
     // Poi list based on geoSearch results
     // dirty flag will change on add/remove gTrackPoi to/from the hike
-    this.pois$ = Observable
-      .combineLatest(
-        this._store
+    this.pois$ = combineLatest(
+      this._store
+        .pipe(
+          select(this._poiSelectors.getAllPoisCount()),
+          takeUntil(this._destroy$)
+        ),
+      this._store
+        .pipe(
+          select(this._editedHikeProgramSelectors.getStopsCount),
+          takeUntil(this._destroy$)
+        )
+    )
+    .pipe(
+      filter(([poiCount, stopsCount]: [number, number]) => poiCount > 0),
+      debounceTime(200),
+      switchMap(([poiCount, stopsCount]: [number, number]) => {
+        return this._store
           .pipe(
-            select(this._poiSelectors.getAllPoisCount()),
-            takeUntil(this._destroy$)
-          ),
-        this._store
+            select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois',  this._poiSelectors.getAllPois)),
+            take(1)
+          );
+      }),
+      switchMap((pois: IPoiStored[]) => {
+        return this._store
           .pipe(
-            select(this._editedHikeProgramSelectors.getStopsCount),
-            takeUntil(this._destroy$)
-          )
-      )
-      .pipe(
-        filter(([poiCount, stopsCount]: [number, number]) => poiCount > 0),
-        debounceTime(200),
-        switchMap(([poiCount, stopsCount]: [number, number]) => {
-          return this._store
-            .pipe(
-              select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois',  this._poiSelectors.getAllPois)),
-              take(1)
-            );
-        }),
-        switchMap((pois: IPoiStored[]) => {
-          return this._store
-            .pipe(
-              select(this._hikeEditRoutePlannerSelectors.getPath),
-              take(1),
-              switchMap((path: any) => Observable.of(this._poiEditorService.organizePois(pois, path))),
-              switchMap((organizedPois: IPoiStored[]) => Observable.of(this._poiEditorService.handleHikeInclusion(organizedPois)))
-            );
-          })
-      );
+            select(this._hikeEditRoutePlannerSelectors.getPath),
+            take(1),
+            switchMap((path: any) => of(this._poiEditorService.organizePois(pois, path))),
+            switchMap((organizedPois: IPoiStored[]) => of(this._poiEditorService.handleHikeInclusion(organizedPois)))
+          );
+        })
+    );
 
     this.pois$
       .pipe(

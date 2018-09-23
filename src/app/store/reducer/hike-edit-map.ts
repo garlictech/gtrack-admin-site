@@ -18,7 +18,7 @@ export const hikeEditMapReducer: ActionReducer<IHikeEditMapState> = (
     case adminMapActions.REGISTER_MAP:
       return {
         ...state,
-        mapId: action.payload.mapId
+        mapId: action.mapId
       };
 
     default:

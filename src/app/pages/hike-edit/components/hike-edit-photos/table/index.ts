@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { IBackgroundImageData } from 'subrepos/provider-client';
 
 @Component({
@@ -19,7 +20,7 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.backgroundOriginalUrls$
-      .takeUntil(this._destroy$)
+      .pipe(takeUntil(this._destroy$))
       .subscribe((backgroundOriginalUrls: string[]) => {
         this.imageSelections = {};
         backgroundOriginalUrls.map(url => {

@@ -1,7 +1,7 @@
 
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of, combineLatest } from 'rxjs';
 import { filter, takeUntil, switchMap, take, map, debounceTime } from 'rxjs/operators';
 import { AdminMap, AdminMapService, RoutePlannerService } from '../../../../shared/services/admin-map';
 import { PoiEditorService } from '../../../../shared/services';
@@ -89,7 +89,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         switchMap(() => {
           this._store.dispatch(new hikeEditPoiActions.SetProcessing(this.poiType.subdomain, true));
 
-          return Observable.combineLatest(
+          return combineLatest(
             this._getSubdomainSelector(this.poiType.subdomain).take(1),
             this._store.pipe(
               select(this._hikeEditRoutePlannerSelectors.getPath),
@@ -98,7 +98,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           );
         }),
         filter(([pois, path]: [IExternalPoi[], any]) => pois && pois.length > 0),
-        switchMap(([pois, path]: [IExternalPoi[], any]) => Observable.of(this._poiEditorService.organizePois(pois, path))),
+        switchMap(([pois, path]: [IExternalPoi[], any]) => of(this._poiEditorService.organizePois(pois, path))),
         switchMap((pois: IExternalPoi[]) => this._poiEditorService.assignOnOffRoutePois(pois)),
         switchMap((pois: IExternalPoi[]) => this._poiEditorService.handleElevation(pois)),
         switchMap((pois: IExternalPoi[]) => this._poiEditorService.handlePoiDetails(pois, this.poiType.subdomain)),

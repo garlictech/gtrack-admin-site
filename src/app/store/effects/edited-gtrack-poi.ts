@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { switchMap, take, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap, take, map, catchError } from 'rxjs/operators';
 import { PoiService } from 'subrepos/gtrack-common-ngx';
 import { State } from '..';
 import { editedGTrackPoiActions } from '../actions';
@@ -36,12 +36,12 @@ export class EditedGTrackPoiEffects {
           .create(<IPoi>poiData)
           .pipe(
             take(1),
-            map((poi) => new editedGTrackPoiActions.PoiSaveSuccess(poi.id))
-          )
-          .catch(error => {
-            log.error('Effect: Poi save error: ', error);
-            return Observable.of(new editedGTrackPoiActions.PoiSaveFailed(error));
-          });
+            map((poi) => new editedGTrackPoiActions.PoiSaveSuccess(poi.id)),
+            catchError(error => {
+              log.error('Effect: Poi save error: ', error);
+              return of(new editedGTrackPoiActions.PoiSaveFailed(error));
+            })
+          );
       })
     );
 }

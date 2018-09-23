@@ -8,7 +8,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of} from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 
@@ -69,10 +69,14 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   }
 
   ngAfterViewInit() {
-    this.selectableLanguages$ = this.languageKeys$.takeUntil(this._destroy$).map(usedKeys =>
-      DESCRIPTION_LANGUAGES.filter(lang => usedKeys.indexOf(lang.locale) === -1).map(lang => {
-        return { label: lang.name, value: lang.locale };
-      })
+    this.selectableLanguages$ = this.languageKeys$.pipe(
+      takeUntil(this._destroy$),
+      map(usedKeys =>
+        DESCRIPTION_LANGUAGES
+          .filter(lang => usedKeys.indexOf(lang.locale) === -1).map(lang => {
+            return { label: lang.name, value: lang.locale };
+          })
+      )
     );
 
     this._changeDetectorRef.detectChanges();
@@ -109,7 +113,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   }
 
   private _getLanguageFormDataPath(languageKey: string) {
-    return Observable.of(`${this.storeDataPath}.${languageKey}`);
+    return of(`${this.storeDataPath}.${languageKey}`);
   }
 
   public addTranslation() {

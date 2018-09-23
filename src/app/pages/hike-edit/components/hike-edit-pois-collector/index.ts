@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { hikeEditPoiActions, commonPoiActions } from '../../../../store/actions';
 import { IExternalPoi, IFilteredProperties, IGTrackPoi } from '../../../../shared/interfaces';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, interval, combineLatest } from 'rxjs';
 import { filter, takeUntil, debounceTime, take, switchMap } from 'rxjs/operators';
 import { HikeEditPoiSelectors, HikeEditMapSelectors } from '../../../../store/selectors';
 import { PoiEditorService, PoiMergeService } from '../../../../shared/services';
@@ -116,7 +116,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this._destroy$),
         filter(poisCount => poisCount > 0),
-        switchMap((poisCount) => this.saveablePoisCount$.takeUntil(this._destroy$)),
+        switchMap((poisCount) => this.saveablePoisCount$.pipe(takeUntil(this._destroy$))),
         filter(poisCount => poisCount === 0)
       )
       .subscribe(() => {
@@ -190,25 +190,24 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
         take(1)
       )
       .subscribe((selections: string[]) => {
-        Observable
-          .combineLatest(...selections.map(poiId => this._store.pipe(
-            select(this._hikeEditPoiSelectors.getCollectorPoi(poiId)),
-            take(1)
-          )))
-          .take(1)
-          .subscribe(pois => {
-            this.mergeProperties = this._poiMergeService.collectFlatKeyValues(pois);
-            this.mergedPoiIds = _map(pois, 'id');
-            this.mergedPoiData = this._poiMergeService.createGTrackPoiFromUniqueValues(this.mergeProperties.unique);
+        combineLatest(...selections.map(poiId => this._store.pipe(
+          select(this._hikeEditPoiSelectors.getCollectorPoi(poiId)),
+          take(1)
+        )))
+        .pipe(take(1))
+        .subscribe(pois => {
+          this.mergeProperties = this._poiMergeService.collectFlatKeyValues(pois);
+          this.mergedPoiIds = _map(pois, 'id');
+          this.mergedPoiData = this._poiMergeService.createGTrackPoiFromUniqueValues(this.mergeProperties.unique);
 
-            this._store.dispatch(new hikeEditPoiActions.ResetPoiMergeSelection());
+          this._store.dispatch(new hikeEditPoiActions.ResetPoiMergeSelection());
 
-            if (_keys(this.mergeProperties.conflicts).length > 0) {
-              this.displayMergeModal = true;
-            } else {
-              this._saveMergedPoiData();
-            }
-          });
+          if (_keys(this.mergeProperties.conflicts).length > 0) {
+            this.displayMergeModal = true;
+          } else {
+            this._saveMergedPoiData();
+          }
+        });
       });
   }
 
@@ -261,9 +260,8 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
           return (!!(poi.selected && !poi.inGtrackDb));
         });
 
-        return Observable
-          .interval(50)
-          .take(pois.length)
+        return interval(50)
+          .pipe(take(pois.length))
           .subscribe(idx => {
             const _poiData = this._poiEditorService.getDbObj(_externalPoisToSave[idx]);
 

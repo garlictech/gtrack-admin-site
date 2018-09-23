@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store, MemoizedSelector, select } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { State } from '../../../../store';
 import { editedHikeProgramActions } from '../../../../store/actions';
@@ -19,7 +19,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
   public hikeProgramData$: Observable<IHikeProgramStored>;
   public isRoundTrip$: Observable<boolean>;
   public remoteError$: Observable<any>;
-  public formDataPath$ = Observable.of('editedHikeProgram.data');
+  public formDataPath$ = of('editedHikeProgram.data');
   public generalInfoFormDescriptor: IFormDescriptor;
   public storeDataPath: string;
   public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
