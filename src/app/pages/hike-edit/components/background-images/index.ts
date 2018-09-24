@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
+
 import { IBackgroundImageData } from 'subrepos/provider-client';
-import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'app-background-images',
@@ -8,12 +9,12 @@ import { ConfirmationService } from 'primeng/primeng';
   styleUrls: ['./style.scss']
 })
 export class BackgroundImagesComponent {
-  @Input() bgImages$: IBackgroundImageData[];
-  @Input() clickActions: any;
+  @Input()
+  bgImages$: IBackgroundImageData[];
+  @Input()
+  clickActions: any;
 
-  constructor(
-    private _confirmationService: ConfirmationService
-  ) {}
+  constructor(private _confirmationService: ConfirmationService) {}
 
   public deleteImage(url: string) {
     this._confirmationService.confirm({

@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store, MemoizedSelector, select } from '@ngrx/store';
+import { ConfirmationService } from 'primeng/api';
 import { Observable, Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
 import { State } from '../../../../store';
 import { editedHikeProgramActions } from '../../../../store/actions';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
-import { ConfirmationService } from 'primeng/primeng';
 import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
 import { IFormDescriptor, SliderField } from 'subrepos/gtrack-common-web/forms';
 
@@ -37,36 +38,31 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
     this._initDescriptionFormConfig();
 
     // Selectors
-    this.isRoundTrip$ = this._store
-      .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip),
-        takeUntil(this._destroy$)
-      );
+    this.isRoundTrip$ = this._store.pipe(
+      select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip),
+      takeUntil(this._destroy$)
+    );
 
-    this.hikeProgramData$ = this._store
-      .pipe(
-        select(this._editedHikeProgramSelectors.getData),
-        takeUntil(this._destroy$)
-      );
+    this.hikeProgramData$ = this._store.pipe(
+      select(this._editedHikeProgramSelectors.getData),
+      takeUntil(this._destroy$)
+    );
 
-    this.remoteError$ = this._store
-      .pipe(
-        select(this._editedHikeProgramSelectors.getError),
-        takeUntil(this._destroy$)
-      );
+    this.remoteError$ = this._store.pipe(
+      select(this._editedHikeProgramSelectors.getError),
+      takeUntil(this._destroy$)
+    );
 
-    this.isRoundTrip$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((isRoundTrip: boolean) => {
-        this._store.dispatch(
-          new editedHikeProgramActions.AddHikeProgramDetails(
-            {
-              isRoundTrip: isRoundTrip
-            },
-            false
-          )
-        );
-      });
+    this.isRoundTrip$.pipe(takeUntil(this._destroy$)).subscribe((isRoundTrip: boolean) => {
+      this._store.dispatch(
+        new editedHikeProgramActions.AddHikeProgramDetails(
+          {
+            isRoundTrip: isRoundTrip
+          },
+          false
+        )
+      );
+    });
   }
 
   ngAfterViewInit() {

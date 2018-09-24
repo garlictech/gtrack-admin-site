@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { ScrollPanel } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng/api';
+import { ScrollPanel } from 'primeng/scrollpanel';
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
-import { ConfirmationService } from 'primeng/primeng';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 
 @Component({
@@ -11,15 +11,15 @@ import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
   styles: ['.layout-sidebar { z-index: 10000; }']
 })
 export class MenuComponent implements OnInit, AfterViewInit {
-  @ViewChild('scrollPanel') layoutMenuScrollerViewChild: ScrollPanel;
-  @Input() sidebarActive: boolean;
-  @Input() onMenuButtonClick: any;
+  @ViewChild('scrollPanel')
+  layoutMenuScrollerViewChild: ScrollPanel;
+  @Input()
+  sidebarActive: boolean;
+  @Input()
+  onMenuButtonClick: any;
   public pages: any[];
 
-  constructor(
-    private _store: Store<State>,
-    private _confirmationService: ConfirmationService
-  ) {}
+  constructor(private _store: Store<State>, private _confirmationService: ConfirmationService) {}
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -28,10 +28,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.pages = [
-      { label: 'Hikes', routerLink: ['/admin/hikes'] },
-      { label: 'Logout', command: this.logout },
-    ];
+    this.pages = [{ label: 'Hikes', routerLink: ['/admin/hikes'] }, { label: 'Logout', command: this.logout }];
   }
 
   public logout = () => {

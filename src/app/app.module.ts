@@ -11,7 +11,7 @@ import { APP_IMPORTS } from './app.imports';
 import { APP_PROVIDERS } from './app.providers';
 
 import { AppRoutingModule } from './app-routing.module';
-import { ConfirmDialogModule } from 'primeng/primeng';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [AppComponent, APP_DECLARATIONS],

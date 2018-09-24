@@ -1,20 +1,24 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import {
-  AdminMap, AdminMapService, WaypointMarkerService, RoutePlannerService
+  AdminMap,
+  AdminMapService,
+  WaypointMarkerService,
+  RoutePlannerService
 } from '../../../../shared/services/admin-map';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, filter, switchMap, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import {
-  State, IHikeEditRoutePlannerState, IHikeEditRoutePlannerTotalState
-} from '../../../../store';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { State, IHikeEditRoutePlannerState, IHikeEditRoutePlannerTotalState } from '../../../../store';
 import { editedHikeProgramActions, hikeEditPoiActions } from '../../../../store/actions';
 import { hikeEditRoutePlannerActions } from '../../../../store/actions';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
-import { HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
+import {
+  HikeEditMapSelectors,
+  HikeEditRoutePlannerSelectors,
+  EditedHikeProgramSelectors
+} from '../../../../store/selectors';
 import { ReverseGeocodingService, HikeProgramService, PoiEditorService } from '../../../../shared/services';
-import { ConfirmationService } from 'primeng/primeng';
-import { MessageService } from 'primeng/api';
 import { IRouteStored } from 'subrepos/provider-client';
 
 import _pick from 'lodash-es/pick';
@@ -26,7 +30,8 @@ import * as L from 'leaflet';
   templateUrl: './ui.html'
 })
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
-  @Input() isPlanning$: Observable<boolean>;
+  @Input()
+  isPlanning$: Observable<boolean>;
   public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   public route$: Observable<any>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -48,13 +53,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _messageService: MessageService
   ) {}
 
-  ngOnInit() {
-
-    this.routeInfoData$ = this._store
-      .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
-        takeUntil(this._destroy$)
-      );
+  ngOnInit() {
+    this.routeInfoData$ = this._store.pipe(
+      select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
+      takeUntil(this._destroy$)
+    );
 
     this._store
       .pipe(
@@ -63,23 +66,21 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$),
         switchMap((mapId: string) => {
           this._map = this._adminMapService.getMapById(mapId);
-          return this._store
-            .pipe(
-              select(this._editedHikeProgramSelectors.getRouteId),
-              takeUntil(this._destroy$)
-            );
+          return this._store.pipe(
+            select(this._editedHikeProgramSelectors.getRouteId),
+            takeUntil(this._destroy$)
+          );
         }),
         takeUntil(this._destroy$),
         switchMap((routeId: string) => {
-          return this._store
-            .pipe(
-              select(this._routeSelectors.getRouteContext(routeId)),
-              takeUntil(this._destroy$)
-            );
+          return this._store.pipe(
+            select(this._routeSelectors.getRouteContext(routeId)),
+            takeUntil(this._destroy$)
+          );
         }),
         filter(routeContext => !!routeContext)
       )
-      .subscribe((routeContext: IRouteContextState) => {
+      .subscribe((routeContext: IRouteContextState) => {
         // Route saved
         if (routeContext.saved) {
           this._messageService.add({
@@ -89,7 +90,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
           });
 
           this._routePlannerService.refreshRouteOnMap();
-        // Route loaded
+          // Route loaded
         } else if (routeContext.loaded) {
           this._store
             .pipe(
@@ -97,7 +98,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
               filter((route: IRouteStored) => !!route),
               take(1)
             )
-            .subscribe((route: IRouteStored) => {
+            .subscribe((route: IRouteStored) => {
               // Draw an independent path to the map
               this._routePlannerService.drawRouteLineGeoJSON(route.route.features[0]);
               this._map.fitBounds(route);
@@ -108,31 +109,26 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.route$ = this._store
-      .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getRoute),
-        takeUntil(this._destroy$)
-      );
+    this.route$ = this._store.pipe(
+      select(this._hikeEditRoutePlannerSelectors.getRoute),
+      takeUntil(this._destroy$)
+    );
 
-    this.route$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((route: any) => {
-        // Clear location
-        if (route.features.length === 1) {
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
+    this.route$.pipe(takeUntil(this._destroy$)).subscribe((route: any) => {
+      // Clear location
+      if (route.features.length === 1) {
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
         // 1st segment added (line + 2 points)
-        } else if (route.features.length === 3) {
-          this._updateLocation(route.features[1].geometry.coordinates);
-        }
+      } else if (route.features.length === 3) {
+        this._updateLocation(route.features[1].geometry.coordinates);
+      }
 
-        this.isPlanning$
-          .pipe(take(1))
-          .subscribe((isPlanning: boolean) => {
-            if (isPlanning) {
-              this._refreshIcons(route);
-            }
-          });
+      this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
+        if (isPlanning) {
+          this._refreshIcons(route);
+        }
       });
+    });
 
     this._store
       .pipe(
@@ -156,10 +152,12 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._editedHikeProgramSelectors.getRouteId),
-        switchMap((routeId: string) => this._store.pipe(
-          select(this._routeSelectors.getRoute(routeId)),
-          take(1)
-        )),
+        switchMap((routeId: string) =>
+          this._store.pipe(
+            select(this._routeSelectors.getRoute(routeId)),
+            take(1)
+          )
+        ),
         take(1)
       )
       .subscribe((storedRoute: any) => {
@@ -205,25 +203,32 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         lat: coords[1],
         lon: coords[0]
       })
-      .then((location: string) => {
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: location }, false));
-      }, err => {
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
-      }
-    );
+      .then(
+        (location: string) => {
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: location }, false));
+        },
+        err => {
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
+        }
+      );
   }
 
   private _refreshIcons(route) {
-    const _route =  new Route({
+    const _route = new Route({
       id: '',
       timestamp: 0,
       bounds: route.bounds,
       route: _pick(route, ['type', 'features'])
     });
 
-    this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({
-      elevationIcon: this._hikeProgramService.createElevationIcon(_route),
-      routeIcon: this._hikeProgramService.createRouteIcon(_route)
-    }, false));
+    this._store.dispatch(
+      new editedHikeProgramActions.AddHikeProgramDetails(
+        {
+          elevationIcon: this._hikeProgramService.createElevationIcon(_route),
+          routeIcon: this._hikeProgramService.createRouteIcon(_route)
+        },
+        false
+      )
+    );
   }
 }
