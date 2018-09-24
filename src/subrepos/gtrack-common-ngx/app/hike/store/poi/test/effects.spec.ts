@@ -1,12 +1,13 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Actions, Effect, EffectsModule } from '@ngrx/effects';
+import { Actions, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { IPoiStored, IPoi } from 'subrepos/provider-client';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
-import * as _ from 'lodash';
+import _zipObject from 'lodash-es/zipObject';
+
 import * as uuid from 'uuid/v4';
 
 import { hot, cold } from 'jest-marbles';
@@ -16,7 +17,7 @@ import { PoiEffects } from '../effects';
 import { PoiService } from '../../../services/poi';
 import { DeepstreamModule } from '../../../../deepstream';
 
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { pois as poiFixtures, poisStored } from './fixtures';
 
 import { GeometryService } from '../../../services/geometry';
@@ -25,7 +26,7 @@ import { EObjectState } from '../../../../../../provider-client';
 
 export class TestActions extends Actions {
   constructor() {
-    super(Observable.empty());
+    super(EMPTY);
   }
 
   set stream(source: Observable<any>) {
@@ -53,7 +54,7 @@ describe('Poi effects', () => {
 
   beforeEach(() => {
     ids = poisStored.map(poi => poi.id);
-    poisMap = _.zipObject(ids, poisStored);
+    poisMap = _zipObject(ids, poisStored);
     pois = poisStored.map(data => data);
     newId = uuid();
 

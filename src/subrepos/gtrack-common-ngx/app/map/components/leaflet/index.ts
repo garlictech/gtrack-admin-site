@@ -10,7 +10,7 @@ export interface Center {
 }
 
 @Component({
-  selector: 'gc-leaflet',
+  selector: 'gtrack-leaflet',
   template: `
     <div #map class="angular-leaflet-map"><ng-content></ng-content></div>
   `,

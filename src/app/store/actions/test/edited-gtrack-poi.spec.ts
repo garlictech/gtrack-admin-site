@@ -1,5 +1,4 @@
-import { TestBed } from '@angular/core/testing';
-import { IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
+import { IBackgroundImageData, EPoiImageTypes } from '../../../../subrepos/provider-client';
 import * as EditedGTrackPoiActions from '../edited-gtrack-poi';
 
 import {
@@ -91,6 +90,8 @@ describe('EditedGTrackPoi actions', () => {
   it('should create AddBackgroundImage action', () => {
     const imageData: IBackgroundImageData = {
       title: 'title',
+      lat: 0,
+      lon: 0,
       original: {
         url: '...',
         width: 100,

@@ -4,7 +4,7 @@ import { MenuComponent } from '../menu';
 import { MenuItem } from 'primeng/primeng';
 
 @Component({
-  selector: '[app-submenu]',
+  selector: 'app-submenu',
   template: `
     <ng-template ngFor let-child let-i="index" [ngForOf]="(root ? item : item.items)">
         <li [ngClass]="{'active-menuitem': isActive(i)}" [class]="child.badgeStyleClass">
@@ -18,7 +18,7 @@ import { MenuItem } from 'primeng/primeng';
                 <span class="menuitem-text">{{child.label}}</span>
                 <i class="fa fa-chevron-down layout-submenu-toggler" *ngIf="child.items"></i>
             </a>
-            <ul app-submenu [item]="child" *ngIf="child.items" [@children]="isActive(i) ? 'visible' : 'hidden'"></ul>
+            <ul><app-submenu [item]="child" *ngIf="child.items" [@children]="isActive(i) ? 'visible' : 'hidden'"></app-submenu></ul>
         </li>
     </ng-template>
   `,

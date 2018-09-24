@@ -1,4 +1,4 @@
-import { Log, Level } from 'ng2-logger';
+import { Log } from 'ng2-logger';
 
 export const log = Log.create('@garlictech/localize-ngx');
 log.color = 'black';

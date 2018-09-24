@@ -1,11 +1,9 @@
 import { ITextareaField, TextareaField } from './textarea';
 
-export interface IRichTextEditorField extends ITextareaField {}
-
-export class RichTextEditorField extends TextareaField implements IRichTextEditorField {
+export class RichTextEditorField extends TextareaField implements ITextareaField {
   controlType = 'richtext';
 
-  constructor(options: IRichTextEditorField) {
+  constructor(options: ITextareaField) {
     super(options);
   }
 }

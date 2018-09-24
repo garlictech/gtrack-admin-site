@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { editedHikeProgramActions, hikeEditPoiActions, commonPoiActions } from '../../../store/actions';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { PoiEditorService } from '../../services';
-import * as _ from 'lodash';
+
+import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-marker-popup',
@@ -34,21 +36,23 @@ export class AdminMarkerPopupComponent implements OnInit {
 
   ngOnInit() {
     this.isPlanning$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getIsPlanning)
-      .take(1);
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+        take(1)
+      );
 
     switch (this.data.markerType) {
       case 'hike':
         this.btnTitle = 'Remove from hike';
         this.btnClick = this._removeFromHike;
         this.btnClass = 'warning';
-        this.images = _.map(this.data.backgroundImages, 'card.url') || [];
+        this.images = _map(this.data.backgroundImages, 'card.url') || [];
         break;
       case 'gTrack':
         this.btnTitle = 'Add to hike';
         this.btnClick = this._addToHike;
         this.btnClass = 'success';
-        this.images = _.map(this.data.backgroundImages, 'card.url') || [];
+        this.images = _map(this.data.backgroundImages, 'card.url') || [];
         break;
       case 'collector':
         this.btnTitle = 'Remove from collector';
@@ -70,11 +74,11 @@ export class AdminMarkerPopupComponent implements OnInit {
 
   private _getBgImagesUrls() {
     if (this.data.google && this.data.google.photos && this.data.google.photos.length > 0) {
-      return _.map(this.data.google.photos, 'card.url');
+      return _map(this.data.google.photos, 'card.url');
     }
 
     if (this.data.wikipedia && this.data.wikipedia.photos && this.data.wikipedia.photos.length > 0) {
-      return _.map(this.data.wikipedia.photos, 'original.url');
+      return _map(this.data.wikipedia.photos, 'original.url');
     }
   }
 
@@ -103,7 +107,7 @@ export class AdminMarkerPopupComponent implements OnInit {
   }
 
   private _addToGTrackPoi = () => {
-    let _poiData = this._poiEditorService.getDbObj(this.data);
+    const _poiData = this._poiEditorService.getDbObj(this.data);
     this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
 
     this.closePopup();

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { Observable } from 'rxjs';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this._title.setTitle('gTrack Login');
 
-    this.loggingIn$ = this._store.select(this._authSelectors.loggingIn);
+    this.loggingIn$ = this._store.pipe(select(this._authSelectors.loggingIn));
   }
 
   public login() {

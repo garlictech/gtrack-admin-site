@@ -6,7 +6,7 @@ import {
 } from '../reducer';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 
-import * as _ from 'lodash';
+import _uniqBy from 'lodash-es/uniqBy';
 
 @Injectable()
 export class HikeEditPoiSelectors {
@@ -19,7 +19,7 @@ export class HikeEditPoiSelectors {
   public getAllCollectorPois: (state: object) => any[];
   public getMergeSelections: (state: object) => string[];
   public getMergeSelectionsCount: (state: object) => number;
-  private _allPoiSelectorMap = {}
+  private _allPoiSelectorMap = {};
 
   constructor() {
     this._featureSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
@@ -65,7 +65,7 @@ export class HikeEditPoiSelectors {
       'osmRoute': this.getAllOsmRoutePois,
       'wikipedia': this.getAllWikipediaPois,
       'collector': this.getAllCollectorPois
-    }
+    };
 
     this.getMergeSelections = createSelector(this._featureSelector,
       (state: IHikeEditPoiState) => state.gTrackPoiMerge.selections
@@ -105,7 +105,7 @@ export class HikeEditPoiSelectors {
         .map(photoArray => {
           _photos = _photos.concat(photoArray);
         });
-      return _.uniqBy(_photos, 'original.url');
+      return _uniqBy(_photos, 'original.url');
     });
   }
 
@@ -115,9 +115,9 @@ export class HikeEditPoiSelectors {
 
   public getHikeEditPoiContextSelector(subdomain) {
     return createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.contexts[subdomain]);
-  };
+  }
 
   public getHikeEditPoiContextPropertySelector(subdomain, property) {
     return createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.contexts[subdomain][property]);
-  };
+  }
 }

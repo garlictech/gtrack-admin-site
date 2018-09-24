@@ -15,7 +15,7 @@ describe('ObjectMark selectors', () => {
   let store: Store<IObjectMarkState>;
   let destroy$: Subject<boolean>;
 
-  let contexts = ['foo1', 'foo2'];
+  const contexts = ['foo1', 'foo2'];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -49,7 +49,7 @@ describe('ObjectMark selectors', () => {
   describe('getObjectMarks', () => {
     it('should return the object marks', () => {
       let result;
-      let selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
+      const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
         .select(selectors.getObjectMarks(EObjectMarkContext.bookmarkedHike))
@@ -67,7 +67,7 @@ describe('ObjectMark selectors', () => {
   describe('getObjectMarkObject', () => {
     it('should return the object mark object', () => {
       let result;
-      let selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
+      const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
         .select(selectors.getObjectMarkObject(EObjectMarkContext.bookmarkedHike, contexts[0]))
@@ -83,7 +83,7 @@ describe('ObjectMark selectors', () => {
 
     it('should return undefined when not found', () => {
       let result;
-      let selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
+      const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
         .select(selectors.getObjectMarkObject(EObjectMarkContext.bookmarkedHike, 'notfound'))
@@ -101,7 +101,7 @@ describe('ObjectMark selectors', () => {
   describe('isObjectMarked', () => {
     it('should return true when marked', () => {
       let result;
-      let selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
+      const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
         .select(selectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, contexts[0]))
@@ -117,7 +117,7 @@ describe('ObjectMark selectors', () => {
 
     it('should return false when not found', () => {
       let result;
-      let selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
+      const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
         .select(selectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, 'notfound'))
@@ -135,7 +135,7 @@ describe('ObjectMark selectors', () => {
   describe('getObjectMarkContext', () => {
     it('should return the context', () => {
       let result;
-      let selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
+      const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
         .select(selectors.getObjectMarkContext(EObjectMarkContext.bookmarkedHike))

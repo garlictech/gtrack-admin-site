@@ -1,5 +1,6 @@
+import { takeUntil, debounceTime, filter } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 
@@ -10,7 +11,7 @@ import * as filterActions from '../../../search-filters/store/actions';
 import { SearchFiltersSelectors } from '../../../search-filters/store';
 
 @Component({
-  selector: 'gtcn-search-filters',
+  selector: 'gtrack-common-search-filters',
   template: ''
 })
 export class SearchFiltersComponent implements OnInit, OnDestroy {
@@ -72,14 +73,18 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     };
 
     this.filterForm.valueChanges
-      .debounceTime(300)
-      .takeUntil(this._destroy$)
+      .pipe(
+        debounceTime(300),
+        takeUntil(this._destroy$)
+      )
       .subscribe(value => this.onChanges(value));
 
     this._store
-      .select(this._searchFiltersSelectors.getFilters)
-      .takeUntil(this._destroy$)
-      .filter(filters => !!filters)
+      .pipe(
+        select(this._searchFiltersSelectors.getFilters),
+        takeUntil(this._destroy$),
+        filter(filters => !!filters)
+      )
       .subscribe(filters => {
         this.filterForm.setValue(
           {

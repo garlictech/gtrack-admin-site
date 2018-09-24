@@ -5,7 +5,7 @@
         <th>Thumbnail</th>
         <th>Title</th>
         <th>Background</th>
-        <th>Marker</th>
+        <th *ngIf="showMarkerColumn">Marker</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-image>
@@ -24,7 +24,7 @@
             (onChange)="toggleBackgroundImage(image)"
           ></p-checkbox>
         </td>
-        <td class="text-center">
+        <td class="text-center" *ngIf="showMarkerColumn">
           <p-checkbox
             binary="true"
             [(ngModel)]="imageMarkerSelections[image.original.url]"

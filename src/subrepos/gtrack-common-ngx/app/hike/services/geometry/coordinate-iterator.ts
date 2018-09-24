@@ -1,4 +1,7 @@
-import * as _ from 'lodash';
+import _isEqual from 'lodash-es/isEqual';
+import _first from 'lodash-es/first';
+import _last from 'lodash-es/last';
+import _round from 'lodash-es/round';
 
 export class CoordinateIterator {
   protected index = 0;
@@ -51,14 +54,14 @@ export class CoordinateIterator {
   protected isLoop(): boolean {
     let isLoop = false;
     const round = (numbers: number[]): number[] => {
-      return numbers.map((n: number) => _.round(n, 6));
+      return numbers.map((n: number) => _round(n, 6));
     };
 
-    const first = _.first(this.coordinates);
-    const last = _.last(this.coordinates);
+    const first = _first(this.coordinates);
+    const last = _last(this.coordinates);
 
     if (first && last) {
-      isLoop = _.isEqual(round(first), round(last));
+      isLoop = _isEqual(round(first), round(last));
     }
 
     return isLoop;

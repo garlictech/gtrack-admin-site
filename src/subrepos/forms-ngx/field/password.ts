@@ -1,7 +1,4 @@
-import { Validators, ValidatorFn } from '@angular/forms';
-
 import { TextboxField, ITextboxField } from './textbox';
-import { IField } from './field';
 
 export class PasswordField extends TextboxField {
   controlType = 'textbox';

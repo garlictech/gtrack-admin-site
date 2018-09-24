@@ -7,7 +7,9 @@ import {
 import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 import { hikeEditPoiActions } from '../actions';
 
-import * as _ from 'lodash';
+import _omit from 'lodash-es/omit';
+import _merge from 'lodash-es/merge';
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 /**
  * Google
@@ -34,7 +36,7 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
       return googlePoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
-          changes: _.omit(poi, ['id'])
+          changes: _omit(poi, ['id'])
         };
       }), state);
     }
@@ -43,7 +45,7 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
       return googlePoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
-          changes: _.omit(poi, ['id'])
+          changes: _omit(poi, ['id'])
         };
       }), state);
     }
@@ -62,7 +64,7 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * OSM Amenity
@@ -89,7 +91,7 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
       return osmAmenityPoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
-          changes: _.omit(poi, ['id'])
+          changes: _omit(poi, ['id'])
         };
       }), state);
     }
@@ -98,7 +100,7 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
       return osmAmenityPoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
-          changes: _.omit(poi, ['id'])
+          changes: _omit(poi, ['id'])
         };
       }), state);
     }
@@ -117,7 +119,7 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * OSM Natural
@@ -144,7 +146,7 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
       return osmNaturalPoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
-          changes: _.omit(poi, ['id'])
+          changes: _omit(poi, ['id'])
         };
       }), state);
     }
@@ -153,7 +155,7 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
       return osmNaturalPoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
-          changes: _.omit(poi, ['id'])
+          changes: _omit(poi, ['id'])
         };
       }), state);
     }
@@ -172,7 +174,7 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * OSM Route
@@ -199,7 +201,7 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
       return osmRoutePoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
-          changes: _.omit(poi, ['id'])
+          changes: _omit(poi, ['id'])
         };
       }), state);
     }
@@ -208,7 +210,7 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
       return osmRoutePoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
-          changes: _.omit(poi, ['id'])
+          changes: _omit(poi, ['id'])
         };
       }), state);
     }
@@ -227,7 +229,7 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * Wikipedia
@@ -254,7 +256,7 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
       return wikipediaPoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
-          changes: _.omit(poi, ['id'])
+          changes: _omit(poi, ['id'])
         };
       }), state);
     }
@@ -263,7 +265,7 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
       return wikipediaPoiAdapter.updateMany(action.properties.map(poi => {
         return {
           id: poi.id,
-          changes: _.omit(poi, ['id'])
+          changes: _omit(poi, ['id'])
         };
       }), state);
     }
@@ -282,7 +284,7 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * Poi collector
@@ -328,13 +330,13 @@ const poiCollectorReducer: ActionReducer<IPoiCollectorEntityState> = (
     default:
       return state;
   }
-}
+};
 
 /**
  * Context
  */
 
-const initialContextItemState = {
+export const initialContextItemState = {
   loading: false,
   loaded: false,
   saving: false,
@@ -344,18 +346,18 @@ const initialContextItemState = {
 };
 
 export const externalPoiInitialContextState: IExternalPoiListContextState = {
-  google: _.cloneDeep(initialContextItemState),
-  osmAmenity: _.cloneDeep(initialContextItemState),
-  osmNatural: _.cloneDeep(initialContextItemState),
-  osmRoute: _.cloneDeep(initialContextItemState),
-  wikipedia: _.cloneDeep(initialContextItemState),
-  collector: _.merge(_.cloneDeep(initialContextItemState), {
+  google: _cloneDeep(initialContextItemState),
+  osmAmenity: _cloneDeep(initialContextItemState),
+  osmNatural: _cloneDeep(initialContextItemState),
+  osmRoute: _cloneDeep(initialContextItemState),
+  wikipedia: _cloneDeep(initialContextItemState),
+  collector: _merge(_cloneDeep(initialContextItemState), {
     showOffrouteMarkers: true
   }),
-  gTrack: _.merge(_.cloneDeep(initialContextItemState), {
+  gTrack: _merge(_cloneDeep(initialContextItemState), {
     showOnrouteMarkers: false,
   }),
-  hike: _.merge(_.cloneDeep(initialContextItemState), {
+  hike: _merge(_cloneDeep(initialContextItemState), {
     showOffrouteMarkers: true
   })
 };
@@ -570,7 +572,6 @@ export const initialGTrackPoiMergeState = {
   selections: []
 };
 
- // export function hikeEditRoutePlannerReducer(
 export const gTrackPoiMergeReducer: ActionReducer<IGTrackPoiMergeState> = (
   state = initialGTrackPoiMergeState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
@@ -602,7 +603,7 @@ export const gTrackPoiMergeReducer: ActionReducer<IGTrackPoiMergeState> = (
       return state;
 
   }
-}
+};
 
 const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
   wikipediaPois: wikipediaPoiReducer,

@@ -5,8 +5,6 @@ import {
   Actions
 } from '../../shared/services/background-geolocation-service';
 
-import * as actions from '../../shared/services/background-geolocation-service/store/actions';
-
 export interface IBackgroundGeolocationState {
   currentLocation: IGeoPosition | null;
   tracking: boolean;

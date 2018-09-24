@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
 
 @Component({
-  selector: 'gc-marker-popup',
+  selector: 'gtrack-marker-popup',
   templateUrl: './ui.html',
   styleUrls: ['./style.scss']
 })
@@ -25,7 +25,7 @@ export class MarkerPopupComponent {
       const imageUrls = this.data.poi.backgroundImages;
       const firstImage = imageUrls[0];
 
-      url = _.get(firstImage, 'card.url', '');
+      url = _get(firstImage, 'card.url', '');
     }
 
     return url;

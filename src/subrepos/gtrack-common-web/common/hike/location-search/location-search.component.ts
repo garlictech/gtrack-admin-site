@@ -1,5 +1,4 @@
-import { Store } from '@ngrx/store';
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { LocationSearchComponent as BaseComponent } from 'subrepos/gtrack-common-ngx';
 

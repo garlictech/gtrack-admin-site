@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, combineReducers } from '@ngrx/store';
-import { routerReducer, StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
+import { Store, StoreModule } from '@ngrx/store';
 
 import { Subject } from 'rxjs/Subject';
 
@@ -56,7 +54,7 @@ describe('GeoSearch selectors', () => {
   describe('getGeoSearchContexts', () => {
     it('should return all geoSearch ids', () => {
       let result;
-      let geoSearchSelectors: GeoSearchSelectors = TestBed.get(GeoSearchSelectors);
+      const geoSearchSelectors: GeoSearchSelectors = TestBed.get(GeoSearchSelectors);
 
       store
         .select(geoSearchSelectors.getGeoSearchContexts)
@@ -75,7 +73,7 @@ describe('GeoSearch selectors', () => {
   describe('getAllGeoSearches', () => {
     it('should return all geoSearches', () => {
       let result;
-      let geoSearchSelectors: GeoSearchSelectors = TestBed.get(GeoSearchSelectors);
+      const geoSearchSelectors: GeoSearchSelectors = TestBed.get(GeoSearchSelectors);
 
       store
         .select(geoSearchSelectors.getAllGeoSearches)
@@ -94,7 +92,7 @@ describe('GeoSearch selectors', () => {
   describe('getGeoSearch', () => {
     it('should return a geoSearch by id', () => {
       let result;
-      let geoSearchSelectors: GeoSearchSelectors = TestBed.get(GeoSearchSelectors);
+      const geoSearchSelectors: GeoSearchSelectors = TestBed.get(GeoSearchSelectors);
 
       store
         .select(geoSearchSelectors.getGeoSearch(contexts[0]))

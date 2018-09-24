@@ -1,8 +1,8 @@
 import { ActionReducer } from '@ngrx/store';
-import { ISearchFilterState } from './state';
+import { ISearchFilters } from '../interfaces';
 import { AllSearchFiltersAction, SearchFilterActionTypes } from './actions';
 
-export const initialState: ISearchFilterState = {
+export const initialState: ISearchFilters = {
   radius: 50000,
   difficulty: [0, 10],
   length: [0, 50000],
@@ -11,10 +11,10 @@ export const initialState: ISearchFilterState = {
   center: [19.040235, 47.497912]
 };
 
-export const searchFiltersReducer: ActionReducer<ISearchFilterState> = (
-  state: ISearchFilterState = initialState,
+export const searchFiltersReducer: ActionReducer<ISearchFilters> = (
+  state: ISearchFilters = initialState,
   action: AllSearchFiltersAction
-): ISearchFilterState => {
+): ISearchFilters => {
   switch (action.type) {
     case SearchFilterActionTypes.CHANGE_FILTERS:
       return {

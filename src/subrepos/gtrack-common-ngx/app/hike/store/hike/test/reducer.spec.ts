@@ -4,7 +4,6 @@ import * as uuid from 'uuid/v1';
 import { hikeReducer, hikeReducerInitialState, hikeContextReducerInitialState } from '../reducer';
 import * as actions from '../actions';
 import { IHikeState } from '../state';
-import { CheckpointService } from '../../../services/checkpoint';
 
 describe('HikeProgramReducer', () => {
   let id: string;

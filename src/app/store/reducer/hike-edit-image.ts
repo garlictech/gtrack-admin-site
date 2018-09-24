@@ -3,8 +3,9 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { IBackgroundImageDataStored } from '../../shared/interfaces';
 import { IMapillaryImageEntityState, IImageListContextState, IHikeEditImageState } from '../index';
 import { hikeEditImageActions } from '../actions';
-import * as _ from 'lodash';
 import { IImageMarkerState } from '../state';
+
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 /**
  * Mapillary
@@ -31,7 +32,7 @@ const mapillaryImageReducer: ActionReducer<IMapillaryImageEntityState> = (
       return state;
 
   }
-}
+};
 
 /**
  * Context
@@ -66,7 +67,7 @@ export function imageMarkerReducer(
     case hikeEditImageActions.REMOVE_IMAGE_MARKER: {
       return {
         ...state,
-        images: (<any>state.images).filter(url => url !== action.image)
+        images: (<any>state.images).filter(img => img !== action.image)
       };
     }
 
@@ -87,7 +88,7 @@ const initialContextItemState = {
 };
 
 export const imageListInitialContextState: IImageListContextState = {
-  mapillary: _.cloneDeep(initialContextItemState)
+  mapillary: _cloneDeep(initialContextItemState)
 };
 
 export function imageListContextReducer(

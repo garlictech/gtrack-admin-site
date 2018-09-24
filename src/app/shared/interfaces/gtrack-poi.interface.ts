@@ -13,6 +13,6 @@ export interface IComparedProperty {
 }
 
 export interface IFilteredProperties {
-  unique?: IComparedProperty,
-  conflicts?: IComparedProperty
+  unique?: IComparedProperty;
+  conflicts?: IComparedProperty;
 }

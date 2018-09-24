@@ -1,9 +1,11 @@
+import { of as observableOf, Observable } from 'rxjs';
+
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ILocalizedItem, ITextualDescription } from '../../../../../provider-client';
 import { LocalizeSelectors } from '../../store/selectors';
 
-import { Observable } from 'rxjs';
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
 
 @Injectable()
 export class DescriptionLanguageListService {
@@ -15,32 +17,34 @@ export class DescriptionLanguageListService {
     item: ILocalizedItem<ITextualDescription> | undefined
   ): Observable<ITextualDescription> {
     if (!item) {
-      return Observable.of({
+      return observableOf({
         title: ''
       });
     }
 
-    return this._selectors.getLanguageSettings().map(settings => {
-      const list = [
-        // ...settings.descriptionLanguageList,
-        settings.actualLanguage
-      ];
+    return this._selectors.getLanguageSettings().pipe(
+      map(settings => {
+        const list = [
+          // ...settings.descriptionLanguageList,
+          settings.actualLanguage
+        ];
 
-      const firstLanguage = Object.keys(item)[0];
+        const firstLanguage = Object.keys(item)[0];
 
-      if (firstLanguage) {
-        list.push(firstLanguage);
-      }
+        if (firstLanguage) {
+          list.push(firstLanguage);
+        }
 
-      list.push(this._fallbackLanguage);
+        list.push(this._fallbackLanguage);
 
-      const preferredLanguage = list.find(language => typeof item[language] !== 'undefined');
+        const preferredLanguage = list.find(language => typeof item[language] !== 'undefined');
 
-      const preferredItem = _.get(item, preferredLanguage, {
-        title: ''
-      });
+        const preferredItem = _get(item, preferredLanguage, {
+          title: ''
+        });
 
-      return preferredItem;
-    });
+        return preferredItem;
+      })
+    );
   }
 }

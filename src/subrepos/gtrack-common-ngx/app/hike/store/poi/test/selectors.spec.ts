@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { APP_BASE_HREF } from '@angular/common';
-import { Store, StoreModule, combineReducers } from '@ngrx/store';
-import { IPoi, IPoiStored } from 'subrepos/provider-client';
+import { Store, StoreModule } from '@ngrx/store';
+import { IPoiStored } from 'subrepos/provider-client';
 import { Subject } from 'rxjs/Subject';
-import * as _ from 'lodash';
+
+import _get from 'lodash-es/get';
+import _values from 'lodash-es/values';
+import _keys from 'lodash-es/keys';
+import _zipObject from 'lodash-es/zipObject';
 
 import { poiReducer } from '../reducer';
 import { IPoiState } from '../state';
@@ -56,7 +58,7 @@ describe('Poi selectors', () => {
   describe('getPoiIds', () => {
     it('should return all poi ids', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getPoiIds)
@@ -73,7 +75,7 @@ describe('Poi selectors', () => {
   describe('getAllPois', () => {
     it('should return all pois', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getAllPois)
@@ -90,7 +92,7 @@ describe('Poi selectors', () => {
   describe('getAllPoiEntities', () => {
     it('should return all pois with ids', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getAllPoiEntities)
@@ -100,15 +102,15 @@ describe('Poi selectors', () => {
       expect(result).toEqual({});
 
       store.dispatch(new actions.AllPoiLoaded(ids, pois));
-      expect(_.values(result)).toEqual(pois);
-      expect(_.keys(result)).toEqual(ids);
+      expect(_values(result)).toEqual(pois);
+      expect(_keys(result)).toEqual(ids);
     });
   });
 
   describe('getPoi', () => {
     it('should return poi by id', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getPoi(ids[0]))
@@ -125,7 +127,7 @@ describe('Poi selectors', () => {
   describe('getAllPoisCount', () => {
     it('should return pois count', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getAllPois)
@@ -142,7 +144,7 @@ describe('Poi selectors', () => {
   describe('getPois', () => {
     it('should return pois by id', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getPois(ids))
@@ -159,7 +161,7 @@ describe('Poi selectors', () => {
   describe('getPoiEntities', () => {
     it('should return pois as entities by id', () => {
       let result;
-      let poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
+      const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
         .select(poiSelectors.getPoiEntities(ids))
@@ -169,7 +171,7 @@ describe('Poi selectors', () => {
       expect(result).toEqual({});
 
       store.dispatch(new actions.AllPoiLoaded(ids, pois));
-      expect(result).toEqual(_.zipObject(ids, pois));
+      expect(result).toEqual(_zipObject(ids, pois));
     });
   });
 });

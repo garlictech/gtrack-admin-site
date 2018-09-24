@@ -1,6 +1,8 @@
-import { Injectable, Optional, Inject } from '@angular/core';
-import { Http, Response, URLSearchParams } from '@angular/http';
-// import { AngularFireAuth } from 'angularfire2/auth';
+import { combineLatest as observableCombineLatest, Observable, throwError, of as observableOf } from 'rxjs';
+
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { LocalStorage } from '../storage/local-storage.service';
@@ -11,12 +13,9 @@ import { AUTH_CONFIG_TOKEN, IAuthenticationApiConfig } from '../lib/config';
 import { ApiService } from '../api';
 import { DebugLog } from '../log';
 
-import 'rxjs/add/operator/toPromise';
-import { Observable } from 'rxjs';
-
 @Injectable()
 export class AuthService {
-  authenticated: Promise<IAuth>;
+  authenticated: Observable<IAuth>;
 
   private redirectUri: URL;
 
@@ -28,14 +27,14 @@ export class AuthService {
     private api: ApiService,
     private storage: LocalStorage,
     @Inject(AUTH_CONFIG_TOKEN) private authConfig: IAuthenticationApiConfig,
-    private http: Http,
+    private http: HttpClient,
     private store: Store<any>
   ) {
     this.authenticated = this.initFromLocalStore();
   }
 
   @DebugLog
-  init(token: string, refreshToken?: string | null): Promise<IAuth> {
+  init(token: string, refreshToken?: string | null): Observable<IAuth> {
     this.storage.setItem('token', token);
 
     if (refreshToken) {
@@ -47,18 +46,17 @@ export class AuthService {
     this.config = { ...this.authConfig.verify };
     this.redirectUri = new URL(`${this.authConfig.webserverUrl}${this.config.redirectSlug}`);
 
-    return (this.authenticated = this.api
-      .get(`${this.authConfig.apiUrl}/user/me`)
-      .switchMap(response => {
-        const user = <User>response.json();
+    return (this.authenticated = this.api.get<User>(`${this.authConfig.apiUrl}/user/me`).pipe(
+      switchMap(response => {
+        const user = response;
 
         // let afObs = this.afAuth ? this._getFirebaseData() : Observable.of({ firebaseToken: null, firebaseUser: null });
 
-        const afObs = Observable.of({ firebaseToken: null, firebaseUser: null });
+        const afObs = observableOf({ firebaseToken: null, firebaseUser: null });
 
-        return Observable.combineLatest(Observable.of({ token, refreshToken, user }), afObs);
-      })
-      .map(values => {
+        return observableCombineLatest(observableOf({ token, refreshToken, user }), afObs);
+      }),
+      map(values => {
         const auth: IAuth = {
           token: values[0].token,
           refreshToken: values[0].refreshToken,
@@ -67,7 +65,7 @@ export class AuthService {
 
         return auth;
       })
-      .toPromise());
+    ));
   }
 
   @DebugLog
@@ -79,100 +77,100 @@ export class AuthService {
       return this.init(token, refreshToken);
     } else {
       this.store.dispatch(new Actions.LoginSuccess(null));
-      return Promise.reject({});
+      return throwError({});
     }
   }
 
   @DebugLog
-  refreshToken(): Promise<IAuth> {
+  refreshToken(): Observable<IAuth> {
     const refreshToken = this.storage.getItem('refreshToken');
 
     if (!refreshToken) {
-      return Promise.reject(new Error('Missing refresh token'));
+      return throwError(new Error('Missing refresh token'));
     }
-
-    const params = new URLSearchParams();
-    params.set('refreshToken', refreshToken);
 
     return this.http
-      .get(`${this.authConfig.apiUrl}/auth/token`, {
-        search: params
+      .get<{
+        token: string;
+      }>(`${this.authConfig.apiUrl}/auth/token`, {
+        params: {
+          refreshToken: refreshToken
+        }
       })
-      .toPromise()
-      .then((response: Response) => {
-        const body = response.json();
-        const token = body.token;
+      .pipe(
+        switchMap(body => {
+          const token = body.token;
 
-        return this.init(token);
-      });
+          return this.init(token);
+        })
+      );
   }
 
   @DebugLog
-  destroyRefreshToken(): Promise<Response | void> {
+  destroyRefreshToken(): Observable<void> {
     const refreshToken = this.storage.getItem('refreshToken');
 
     if (!refreshToken) {
-      return Promise.resolve();
+      return observableOf(undefined);
     }
 
-    return this.http.delete(`${this.authConfig.apiUrl}/auth/token/${refreshToken}`).toPromise();
+    return this.http.delete(`${this.authConfig.apiUrl}/auth/token/${refreshToken}`).pipe(map(() => undefined));
   }
 
   @DebugLog
-  logout(): Promise<any> {
+  logout(): Observable<void> {
     this.storage.removeItem('token');
 
-    return this.destroyRefreshToken()
-      .then(() => this.storage.removeItem('refreshToken'))
-      .then(() => Promise.resolve());
-    // .then(() => (this.afAuth ? this.afAuth.auth.signOut() : Promise.resolve()));
+    return this.destroyRefreshToken().pipe(
+      map(() => this.storage.removeItem('refreshToken')),
+      map(() => undefined)
+    );
   }
 
   @DebugLog
-  getFirebaseToken(): Promise<Response | null> {
-    return this.api
-      .get(`${this.authConfig.apiUrl}/auth/firebase/token`)
-      .toPromise()
-      .catch((err: Error | Response) => {
-        if (err instanceof Response && err.status === 404) {
-          return Promise.resolve(null);
+  getFirebaseToken(): Observable<Object | null> {
+    return this.api.get(`${this.authConfig.apiUrl}/auth/firebase/token`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (err.status === 404) {
+          return observableOf(null);
         }
 
-        return Promise.reject(err);
-      });
+        return throwError(err);
+      })
+    );
   }
 
   /**
    * Request new verify token
    */
-  public requestVerifyToken(email: string): Promise<any> {
+  public requestVerifyToken(email: string): Observable<any> {
     const tokenRequestUrl = `${this.authConfig.apiUrl}/auth/verify/request`;
 
-    return this.api
-      .post(tokenRequestUrl, {
-        email: email,
-        redirectUri: this.redirectUri.toString()
-      })
-      .toPromise();
+    return this.api.post(tokenRequestUrl, {
+      email: email,
+      redirectUri: this.redirectUri.toString()
+    });
   }
 
   /**
    * Verify user by token
    */
-  public verify(token: string, uid: string): Promise<IAuth> {
+  public verify(token: string, uid: string): Observable<IAuth> {
     const verifyUrl = `${this.authConfig.apiUrl}/auth/verify`;
 
     return this.api
-      .post(verifyUrl, {
+      .post<{
+        token: string;
+      }>(verifyUrl, {
         token: token,
         uid: uid
       })
-      .toPromise()
-      .then((response: Response) => {
-        const body = response.json();
-        const responseToken = body.token;
+      .pipe(
+        switchMap(body => {
+          const responseToken = body.token;
 
-        return this.init(responseToken);
-      });
+          return this.init(responseToken);
+        })
+      );
   }
 }

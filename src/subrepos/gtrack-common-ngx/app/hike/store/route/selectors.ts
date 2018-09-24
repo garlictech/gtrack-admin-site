@@ -1,11 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-import * as _ from 'lodash';
-import 'rxjs/add/operator/takeUntil';
 
 import { routeAdapter, routeContextStateAdapter, IRouteState, IRouteContextState } from './state';
 import { EXTERNAL_ROUTE_DEPENDENCIES, IExternalRouteDependencies } from '../../externals';
-import { Dictionary } from '@ngrx/entity/src/models';
 import { IRouteStored } from '../../../../../provider-client';
 
 @Injectable()
@@ -15,8 +12,6 @@ export class RouteSelectors {
   public getAllRoutes: (state: object) => IRouteStored[];
   public getAllContexts: (state: object) => IRouteContextState[];
 
-  private _selectContextEntities: (state: object) => Dictionary<IRouteContextState>;
-  private _selectRouteEntities: (state: object) => Dictionary<IRouteStored>;
   private _externals: IExternalRouteDependencies;
 
   constructor(@Inject(EXTERNAL_ROUTE_DEPENDENCIES) externals) {
@@ -32,8 +27,6 @@ export class RouteSelectors {
     this.getRouteIds = selectors.selectIds;
     this.getAllRoutes = selectors.selectAll;
     this.getAllContexts = contextSelectors.selectAll;
-    this._selectRouteEntities = selectors.selectEntities;
-    this._selectContextEntities = contextSelectors.selectEntities;
   }
 
   public getRoute(context: string) {

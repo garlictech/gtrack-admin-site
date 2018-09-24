@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { Observable, Subject, combineLatest } from 'rxjs';
+import { filter, takeUntil, debounceTime, switchMap, take, map } from 'rxjs/operators';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored } from 'subrepos/provider-client';
 import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
@@ -12,7 +13,9 @@ import {
   HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
 } from '../../../../store/selectors';
 
-import * as _ from 'lodash';
+import _map from 'lodash-es/map';
+import _difference from 'lodash-es/difference';
+import _intersection from 'lodash-es/intersection';
 
 @Component({
   selector: 'app-hike-edit-pois-hike',
@@ -42,77 +45,104 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._store
-      .select(this._hikeEditMapSelectors.getMapId)
-      .filter(id => id !== '')
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._hikeEditMapSelectors.getMapId),
+        filter(id => id !== ''),
+        takeUntil(this._destroy$)
+      )
       .subscribe((mapId: string) => {
         this._map = this._adminMapService.getMapById(mapId);
       });
 
     // Get pois by id
-    Observable
-      .combineLatest(
-        this._store.select(this._editedHikeProgramSelectors.getPoiIds).takeUntil(this._destroy$),
-        this._store.select(this._poiSelectors.getPoiIds).takeUntil(this._destroy$)
+    combineLatest(
+      this._store.pipe(
+        select(this._editedHikeProgramSelectors.getPoiIds),
+        takeUntil(this._destroy$)
+      ),
+      this._store.pipe(
+        select(this._poiSelectors.getPoiIds),
+        takeUntil(this._destroy$)
       )
-      .debounceTime(200)
-      .takeUntil(this._destroy$)
-      .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
-        const missingPoiIds = _.difference(inHikePoiIds, _.intersection(inHikePoiIds, inStorePoiIds)).filter(id => id !== 'endpoint');
+    )
+    .pipe(
+      debounceTime(200),
+      takeUntil(this._destroy$)
+    )
+    .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
+      const missingPoiIds = _difference(inHikePoiIds, _intersection(inHikePoiIds, inStorePoiIds)).filter(id => id !== 'endpoint');
 
-        // Get only the not-loaded pois
-        if (missingPoiIds && missingPoiIds.length > 0) {
-          this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
-        }
-      });
+      // Get only the not-loaded pois
+      if (missingPoiIds && missingPoiIds.length > 0) {
+        this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
+      }
+    });
 
     // Poi list
     this.pois$ = this._store
-      .select(this._editedHikeProgramSelectors.getHikePoisCount<IPoiStored>(this._poiSelectors.getAllPois))
-      .debounceTime(200)
-      .takeUntil(this._destroy$)
-      .switchMap(() => this._store.select(this._hikeEditRoutePlannerSelectors.getIsRouting).take(1))
-      .filter((routing: boolean) => !routing)
-      .switchMap(() => {
-        return Observable
-          .combineLatest(
-            this._store.select(this._editedHikeProgramSelectors.getHikePois<IPoiStored>(this._poiSelectors.getAllPois)).take(1),
-            this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
+      .pipe(
+        select(this._editedHikeProgramSelectors.getHikePoisCount(this._poiSelectors.getAllPois)),
+        debounceTime(200),
+        takeUntil(this._destroy$),
+        switchMap(() => this._store.pipe(
+          select(this._hikeEditRoutePlannerSelectors.getIsRouting),
+          take(1)
+        )),
+        filter((routing: boolean) => !routing),
+        switchMap(() => {
+          return combineLatest(
+            this._store.pipe(
+              select(this._editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
+              take(1)
+            ),
+            this._store.pipe(
+              select(this._hikeEditRoutePlannerSelectors.getPath),
+              take(1)
+            )
           )
-          .filter(([pois, path]: [IPoiStored[], any]) => path && path.geometry.coordinates.length > 0)
-          .take(1)
-          .map(([pois, path]: [IPoiStored[], any]) => {
-            const organizedPois = this._poiEditorService.organizePois(pois, path);
-            const poiIds = _.map(pois, 'id');
-            const organizedPoiIds = _.map(organizedPois, 'id');
-            const removablePoiIds = _.difference(poiIds, _.intersection(poiIds, organizedPoiIds))
+          .pipe(
+            filter(([pois, path]: [IPoiStored[], any]) => path && path.geometry.coordinates.length > 0),
+            take(1),
+            map(([pois, path]: [IPoiStored[], any]) => {
+              const organizedPois = this._poiEditorService.organizePois(pois, path);
+              const poiIds = _map(pois, 'id');
+              const organizedPoiIds = _map(organizedPois, 'id');
+              const removablePoiIds = _difference(poiIds, _intersection(poiIds, organizedPoiIds));
 
-            if (removablePoiIds.length > 0) {
-              this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(removablePoiIds));
-            }
+              if (removablePoiIds.length > 0) {
+                this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(removablePoiIds));
+              }
 
-            return organizedPois;
-          });
-      });
+              return organizedPois;
+            })
+          );
+        })
+      );
 
     this.pois$
-      .debounceTime(200)
-      .takeUntil(this._destroy$)
+      .pipe(
+        debounceTime(200),
+        takeUntil(this._destroy$)
+      )
       .subscribe(() => {
         // Refresh markers
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
 
     this._store
-      .select(this._editedHikeProgramSelectors.getStopsCount)
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._editedHikeProgramSelectors.getStopsCount),
+        takeUntil(this._destroy$)
+      )
       .subscribe(() => {
         this._hikeProgramService.updateHikeProgramStops();
       });
 
     this._store
-      .select(this._hikeEditRoutePlannerSelectors.getPathLength)
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getPathLength),
+        takeUntil(this._destroy$)
+      )
       .subscribe(() => {
         this._hikeProgramService.updateHikeProgramStops();
       });
@@ -122,13 +152,15 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     //
 
     this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOnrouteMarkers'))
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOnrouteMarkers')),
+        takeUntil(this._destroy$)
+      )
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
 
         this.isPlanning$
-          .take(1)
+          .pipe(take(1))
           .subscribe((isPlanning: boolean) => {
             if (isPlanning) {
               this._poiEditorService.refreshPoiMarkers(this._map);
@@ -137,13 +169,15 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       });
 
     this._store
-      .select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers'))
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers')),
+        takeUntil(this._destroy$)
+      )
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
 
         this.isPlanning$
-          .take(1)
+          .pipe(take(1))
           .subscribe((isPlanning: boolean) => {
             if (isPlanning) {
               this._poiEditorService.refreshPoiMarkers(this._map);

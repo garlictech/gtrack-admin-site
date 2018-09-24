@@ -5,16 +5,11 @@ import {
   Input,
   ViewChildren,
   ViewEncapsulation,
-  ViewContainerRef,
   ElementRef,
   QueryList
 } from '@angular/core';
+
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-
-import { trigger, state, style, animate, transition, AnimationEvent } from '@angular/animations';
-
-import { timer } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'gtrack-slideshow',

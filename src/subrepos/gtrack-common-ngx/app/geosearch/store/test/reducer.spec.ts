@@ -2,7 +2,7 @@ import * as uuid from 'uuid/v1';
 
 import { geoSearchReducer, geoSearchReducerInitialState, geoSearchContextReducerInitialState } from '../reducer';
 import * as actions from '../actions';
-import { IGeoSearchState, IGeoSearchContextState } from '../state';
+import { IGeoSearchState } from '../state';
 
 describe('GeoSearchReducer', () => {
   let initialState: IGeoSearchState;

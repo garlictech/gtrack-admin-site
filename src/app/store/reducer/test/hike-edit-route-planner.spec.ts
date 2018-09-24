@@ -1,11 +1,11 @@
 import { ISegment } from '../../../../subrepos/gtrack-common-ngx';
 import { hikeEditRoutePlannerReducer, initialRouteInfoDataState } from '../hike-edit-route-planner';
 import { hikeEditRoutePlannerActions } from '../../actions';
-import { IHikeEditRoutePlannerState } from '../..';
+import { IHikeEditRoutePlannerState } from '../../index';
 
 import * as _ from 'lodash';
 
-describe('RouteInfoData reducers', () => {
+fdescribe('RoutePlanner reducers', () => {
   let initialState: IHikeEditRoutePlannerState;
   let segmentData: ISegment;
 
@@ -37,6 +37,24 @@ describe('RouteInfoData reducers', () => {
     });
   });
 
+  describe('RoutingStart action', () => {
+    it('should start routing', () => {
+      const action = new hikeEditRoutePlannerActions.RoutingStart();
+      const state = hikeEditRoutePlannerReducer(initialState, action);
+
+      expect(state.routing).toEqual(true);
+    });
+  });
+
+  describe('RoutingFinished action', () => {
+    it('should finish routing', () => {
+      const action = new hikeEditRoutePlannerActions.RoutingFinished();
+      const state = hikeEditRoutePlannerReducer(initialState, action);
+
+      expect(state.routing).toEqual(false);
+    });
+  });
+
   describe('AddRoute action', () => {
     it('should set route', () => {
       const routeData: any = {};
@@ -57,13 +75,22 @@ describe('RouteInfoData reducers', () => {
   });
 
   describe('PopSegment action', () => {
-    it('should push segment', () => {
+    it('should pop segment', () => {
       const action = new hikeEditRoutePlannerActions.PopSegment();
       const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
         segments: [segmentData, segmentData]
       }), action);
 
       expect(state.segments).toEqual([segmentData]);
+    });
+
+    it('should pop segment from a single segment array', () => {
+      const action = new hikeEditRoutePlannerActions.PopSegment();
+      const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
+        segments: [segmentData]
+      }), action);
+
+      expect(state.segments).toEqual([]);
     });
   });
 

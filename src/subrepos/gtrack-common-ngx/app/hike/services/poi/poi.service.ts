@@ -1,33 +1,26 @@
-import { Injectable, Inject } from '@angular/core';
+import { take, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-
-import { IPoi, IPoiStored, IPoiInput, IPoiSaveResponse, EObjectState } from '../../../../../provider-client';
+import { IPoi, IPoiStored, IPoiSaveResponse, EObjectState } from '../../../../../provider-client';
 
 import { DeepstreamService } from '../../../../../deepstream-ngx';
 
-import * as _ from 'lodash';
-
-import 'rxjs/add/operator/take';
-import { CenterRadius, GeometryService } from '../geometry';
-import { GeoSearchService } from '../../../geosearch';
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 @Injectable()
 export class PoiService {
-  constructor(
-    private _deepstream: DeepstreamService,
-    private _geometryService: GeometryService,
-    private _geoSearchService: GeoSearchService
-  ) {}
+  constructor(private _deepstream: DeepstreamService) {}
 
   public get(id: string): Observable<IPoiStored> {
     return this._deepstream
       .getRecord<IPoiStored>(`pois/${id}`)
       .get()
-      .take(1)
-      .map(data => {
-        return _.cloneDeep(data);
-      });
+      .pipe(
+        take(1),
+        map(data => {
+          return _cloneDeep(data);
+        })
+      );
   }
 
   public create(poi: IPoi) {
@@ -41,7 +34,7 @@ export class PoiService {
         table: 'pois',
         state: state
       })
-      .take(1);
+      .pipe(take(1));
   }
 
   public delete(id: string) {
@@ -50,7 +43,7 @@ export class PoiService {
         id: id,
         table: 'pois'
       })
-      .take(1);
+      .pipe(take(1));
   }
 
   public merge(ids: string[], newData: IPoi) {
@@ -59,6 +52,6 @@ export class PoiService {
         ids: ids,
         newData: newData
       })
-      .take(1);
+      .pipe(take(1));
   }
 }

@@ -5,9 +5,9 @@ import { IGeospatialBoxSearchPayload, IGeospatialCircleSearchPayload } from 'sub
 describe('GeoSearch actions', () => {
   describe('SearchInBox action', () => {
     it('should create an action', () => {
-      let context = uuid();
+      const context = uuid();
 
-      let query: IGeospatialBoxSearchPayload = {
+      const query: IGeospatialBoxSearchPayload = {
         table: 'test',
         box: {
           type: 'Polygon',
@@ -15,7 +15,7 @@ describe('GeoSearch actions', () => {
         }
       };
 
-      let action = new actions.SearchInBox(query, context);
+      const action = new actions.SearchInBox(query, context);
       expect(action.type).toEqual(actions.GeoSearchActionTypes.SEARCH_IN_BOX);
       expect(action.context).toEqual(context);
       expect(action.query).toEqual(query);
@@ -24,9 +24,9 @@ describe('GeoSearch actions', () => {
 
   describe('SearchInCircle action', () => {
     it('should create an action', () => {
-      let context = uuid();
+      const context = uuid();
 
-      let query: IGeospatialCircleSearchPayload = {
+      const query: IGeospatialCircleSearchPayload = {
         table: 'test',
         circle: {
           center: [19.41, 47.13],
@@ -34,7 +34,7 @@ describe('GeoSearch actions', () => {
         }
       };
 
-      let action = new actions.SearchInCircle(query, context);
+      const action = new actions.SearchInCircle(query, context);
       expect(action.type).toEqual(actions.GeoSearchActionTypes.SEARCH_IN_CIRCLE);
       expect(action.context).toEqual(context);
       expect(action.query).toEqual(query);
@@ -43,9 +43,9 @@ describe('GeoSearch actions', () => {
 
   describe('GeospatialSearchComplete action', () => {
     it('should create an action', () => {
-      let ids = [uuid()];
-      let context = uuid();
-      let action = new actions.GeoSearchComplete(ids, context);
+      const ids = [uuid()];
+      const context = uuid();
+      const action = new actions.GeoSearchComplete(ids, context);
 
       expect(action.type).toEqual(actions.GeoSearchActionTypes.GEOSEARCH_COMPLETE);
       expect(action.results).toEqual(ids);

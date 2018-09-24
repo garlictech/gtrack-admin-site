@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 
 @Component({
@@ -22,7 +23,9 @@ export class ImageMarkerPopupComponent implements OnInit {
 
   ngOnInit() {
     this.isPlanning$ = this._store
-      .select(this._hikeEditRoutePlannerSelectors.getIsPlanning)
-      .take(1);
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+        take(1)
+      );
   }
 }

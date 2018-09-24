@@ -1,5 +1,4 @@
 import { Field, IField } from './field';
-import { Validators, ValidatorFn } from '@angular/forms';
 
 type _OnChangeType = () => void;
 
@@ -9,7 +8,7 @@ export interface ISwitchField extends IField<boolean> {
 
 export class SwitchField extends Field<boolean> {
   controlType = 'switch';
-  private onChange: _OnChangeType | undefined;
+  protected onChange: _OnChangeType | undefined;
 
   constructor(options: ISwitchField) {
     super(options);

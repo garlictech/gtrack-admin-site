@@ -3,18 +3,6 @@ import { Input } from '@angular/core';
 import { DebugLog } from '../log';
 
 export abstract class AbstractValueAccessor implements ControlValueAccessor {
-  @Input()
-  change;
-
-  @DebugLog
-  doChange() {
-    if (this.change) {
-      this.change();
-    }
-  }
-
-  _value: any = '';
-
   get value(): any {
     return this._value;
   }
@@ -25,6 +13,17 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor {
       this.onChange(v);
     }
   }
+  @Input()
+  change;
+
+  _value: any = '';
+
+  @DebugLog
+  doChange() {
+    if (this.change) {
+      this.change();
+    }
+  }
 
   writeValue(value: any) {
     this._value = value;
@@ -33,10 +32,10 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor {
 
   onChange = _ => {
     /* EMPTY */
-  };
+  }
   onTouched = () => {
     /* EMPTY */
-  };
+  }
   registerOnChange(fn: (_: any) => void): void {
     this.onChange = fn;
   }

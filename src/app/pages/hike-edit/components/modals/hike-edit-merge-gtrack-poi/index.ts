@@ -2,7 +2,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IComparedProperty } from '../../../../../shared/interfaces';
 import { FormGroup, FormControl } from '@angular/forms';
-import * as _ from 'lodash';
+
+import _forEach from 'lodash-es/forEach';
 
 @Component({
   selector: 'app-hike-edit-merge-gtrack-poi-info',
@@ -16,8 +17,8 @@ export class HikeEditMergeGTrackPoiComponent implements OnInit {
 
   ngOnInit() {
     // Create form
-    let _controls = {};
-    _.forEach(this.conflicts, (values: any, key: string) => {
+    const _controls = {};
+    _forEach(this.conflicts, (values: any, key: string) => {
       _controls[key] = new FormControl(values[0]);
     });
 

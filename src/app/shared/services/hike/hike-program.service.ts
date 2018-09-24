@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { combineLatest } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { editedHikeProgramActions } from '../../../store/actions';
 import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { IHikeProgramStop, IRoute } from 'subrepos/provider-client';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 import {
-  ElevationService, GameRuleService, Route, RouteService, CheckpointService
+  ElevationService, GameRuleService, Route, CheckpointService
 } from 'subrepos/gtrack-common-ngx';
 
-import * as _ from 'lodash';
-import length from '@turf/length';
-import * as d3 from 'd3';
+import _get from 'lodash-es/get';
+import _cloneDeep from 'lodash-es/cloneDeep';
+import _orderBy from 'lodash-es/orderBy';
+import turfLength from '@turf/length';
+import { select as d3Select } from 'd3-selection';
 import * as geojson2svg from 'geojson2svg';
+import { take } from 'rxjs/operators';
 
 @Injectable()
 export class HikeProgramService {
@@ -24,7 +27,6 @@ export class HikeProgramService {
     private _geospatialService: GeospatialService,
     private _elevationService: ElevationService,
     private _gameRuleService: GameRuleService,
-    private _routeService: RouteService,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _checkpointService: CheckpointService
@@ -34,21 +36,26 @@ export class HikeProgramService {
    * Update stop segments and start/end points
    */
   public updateHikeProgramStops() {
-    Observable
-      .combineLatest(
-        this._store.select(this._editedHikeProgramSelectors.getStops).take(1),
-        this._store.select(this._hikeEditRoutePlannerSelectors.getPath).take(1)
+    combineLatest(
+      this._store.pipe(
+        select(this._editedHikeProgramSelectors.getStops),
+        take(1)
+      ),
+      this._store.pipe(
+        select(this._hikeEditRoutePlannerSelectors.getPath),
+        take(1)
       )
-      .take(1)
-      .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
-        const poiStops = _.cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
+    )
+    .pipe(take(1))
+    .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
+      const poiStops = _cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
 
-        if (path.geometry.coordinates.length > 0) {
-          poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
-          poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
-        }
-        this._updateStopsSegment(_.orderBy(poiStops, ['distanceFromOrigo']), path);
-      });
+      if (path.geometry.coordinates.length > 0) {
+        poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
+        poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
+      }
+      this._updateStopsSegment(_orderBy(poiStops, ['distanceFromOrigo']), path);
+    });
   }
 
   /**
@@ -73,28 +80,28 @@ export class HikeProgramService {
         score: 0,
         time: 0
       }
-    }
+    };
   }
 
   /**
    * Update stops' segment info
    */
   private _updateStopsSegment(stops: IHikeProgramStop[], path: any) {
-    if (_.get(path, 'geometry.coordinates', []).length > 0) {
+    if (_get(path, 'geometry.coordinates', []).length > 0) {
       let _segmentStartPoint =  path.geometry.coordinates[0];
 
       for (const stop of stops) {
         const _segmentEndPoint = [stop.lon, stop.lat];
         const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
-        const _segmentDistance = 1000 * length(_segmentPath, { units: 'kilometers' });
+        const _segmentDistance = 1000 * turfLength(_segmentPath, { units: 'kilometers' });
 
         stop.segment = {
           uphill: this._elevationService.calculateUphill((<any>_segmentPath).geometry.coordinates),
           downhill: this._elevationService.calculateDownhill((<any>_segmentPath).geometry.coordinates),
           distance: _segmentDistance
-        }
+        };
         stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, stop.segment.uphill),
-        stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill)
+        stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill);
 
         // Save coords for the next segment - DEPRECATED LOGIC
         _segmentStartPoint = [stop.lon, stop.lat];
@@ -111,8 +118,10 @@ export class HikeProgramService {
   public getDescriptionLaguages() {
     let langs: string[] = [];
     this._store
-      .select(this._editedHikeProgramSelectors.getDescriptionLangs)
-      .take(1)
+      .pipe(
+        select(this._editedHikeProgramSelectors.getDescriptionLangs),
+        take(1)
+      )
       .subscribe((langKeys: string[]) => {
         langs = langKeys.map(key => key.substr(0, 2));
       });
@@ -133,7 +142,7 @@ export class HikeProgramService {
     if (_elevationData) {
       const _div: HTMLDivElement = document.createElement('div');
 
-      d3.select(_div)
+      d3Select(_div)
         .append('svg')
         .attr('xmlns', 'http://www.w3.org/2000/svg')
         .attr('version', '1.1')
@@ -177,8 +186,9 @@ export class HikeProgramService {
 
       const _svgString = _converter.convert(_route.path);
       const _p = -5; // padding; viewBox: [x, y, w, h]
+      // tslint:disable:max-line-length
       return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="${_p} ${_p} ${_iconWidth - 2 * _p} ${_iconHeight - 2 * _p}">${_svgString}</svg>`;
-
+      // tslint:enable:max-line-length
     } else {
       return '';
     }

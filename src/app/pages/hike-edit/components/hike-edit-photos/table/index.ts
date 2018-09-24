@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { IBackgroundImageData } from 'subrepos/provider-client';
 
 @Component({
@@ -11,14 +12,15 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
   @Input() images$: Observable<IBackgroundImageData[]>;
   @Input() backgroundOriginalUrls$: Observable<string[]>;
   @Input() clickActions: any;
+  @Input() showMarkerColumn: boolean;
   @Input() distanceFrom: number[] = null;
-  public imageSelections: {[id: string]: boolean} = {}
-  public imageMarkerSelections: {[id: string]: boolean} = {}
+  public imageSelections: {[id: string]: boolean} = {};
+  public imageMarkerSelections: {[id: string]: boolean} = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   ngOnInit() {
     this.backgroundOriginalUrls$
-      .takeUntil(this._destroy$)
+      .pipe(takeUntil(this._destroy$))
       .subscribe((backgroundOriginalUrls: string[]) => {
         this.imageSelections = {};
         backgroundOriginalUrls.map(url => {

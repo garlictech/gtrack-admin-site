@@ -1,28 +1,14 @@
+import { timer as observableTimer, Subscription, Observable, merge, throwError } from 'rxjs';
 import { Injectable, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs';
 import { log, DebugLog } from 'app/log';
 import { State } from 'app/store';
 
-import { merge, throwError } from 'rxjs';
+import _every from 'lodash-es/every';
+import _partial from 'lodash-es/partial';
+import _has from 'lodash-es/has';
 
-import * as _ from 'lodash';
-
-import {
-  take,
-  takeUntil,
-  map,
-  filter,
-  switchMap,
-  mergeMap,
-  retry,
-  retryWhen,
-  delay,
-  tap,
-  catchError
-} from 'rxjs/operators';
+import { take, takeUntil, map, filter, mergeMap, retry, retryWhen, delay, tap, catchError } from 'rxjs/operators';
 
 import * as Actions from './store/actions';
 import { BACKGROUND_GEOLOCATION_CONFIG_TOKEN, IBackgroundGeolocationServiceConfig } from './config';
@@ -45,7 +31,7 @@ export class BackgroundGeolocationService {
     log.data('Determining current location starts in browser mode');
     this.end();
 
-    const geolocation$ = Observable.timer(0, 60000).pipe(
+    const geolocation$ = observableTimer(0, 60000).pipe(
       mergeMap(() => {
         log.data('Getting current location...');
         return this._watchPosition();
@@ -77,10 +63,9 @@ export class BackgroundGeolocationService {
       take(1),
       // Emit the value once if geolocation$ not emits
       takeUntil(geolocation$),
-      map(result => result.json()),
       tap(body => log.data('GeoIP result: ', body)),
       // Filter out responses without the required params
-      filter(body => _.every(['latitude', 'longitude', 'accuracy'], _.partial(_.has, body))),
+      filter(body => _every(['latitude', 'longitude', 'accuracy'], _partial(_has, body))),
       map(body => {
         return {
           coords: {

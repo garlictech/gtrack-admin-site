@@ -5,7 +5,10 @@ import {
   ILocalizedItem, ITextualDescription, IHikeProgramStored, IPoiStored, IHikeProgramStop, EObjectState, IBackgroundImageData
 } from 'subrepos/provider-client';
 
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
+import _keys from 'lodash-es/keys';
+import _uniq from 'lodash-es/uniq';
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 @Injectable()
 export class EditedHikeProgramSelectors {
@@ -57,19 +60,19 @@ export class EditedHikeProgramSelectors {
     );
 
     this.getDescriptions = createSelector(this._featureSelector,
-      (state: IEditedHikeProgramState) => _.get(state, 'data.description')
+      (state: IEditedHikeProgramState) => _get(state, 'data.description')
     );
 
     this.getDescriptionLangs = createSelector(this._featureSelector,
-      (state: IEditedHikeProgramState) => _.keys(_.get(state, 'data.description'))
+      (state: IEditedHikeProgramState) => _keys(_get(state, 'data.description'))
     );
 
     this.getState = createSelector(this._featureSelector,
-      (state: IEditedHikeProgramState) => _.get(state, 'data.state')
+      (state: IEditedHikeProgramState) => _get(state, 'data.state')
     );
 
     this.getBackgroundImages = createSelector(this._featureSelector,
-      (state: IEditedHikeProgramState) => _.get(state, 'data.backgroundImages')
+      (state: IEditedHikeProgramState) => _get(state, 'data.backgroundImages')
     );
 
     this.getDirty = createSelector(this._featureSelector,
@@ -81,11 +84,11 @@ export class EditedHikeProgramSelectors {
     );
 
     this.getError = createSelector(this._featureSelector,
-      (state: IEditedHikeProgramState) => _.get(state, 'failed.data')
+      (state: IEditedHikeProgramState) => _get(state, 'failed')
     );
   }
 
-  public getHikePois<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
+  public getHikePois(getAllSelector: ((state: object) => IPoiStored[])) {
     return createSelector(
       getAllSelector,
       this.getPoiIds,
@@ -94,10 +97,10 @@ export class EditedHikeProgramSelectors {
           return data.filter(item => poiIds.indexOf((<any>item).id) !== -1);
         }
       }
-    )
+    );
   }
 
-  public getHikePoisCount<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
+  public getHikePoisCount(getAllSelector: ((state: object) => IPoiStored[])) {
     return createSelector(
       getAllSelector,
       this.getPoiIds,
@@ -106,17 +109,17 @@ export class EditedHikeProgramSelectors {
           return data.filter(item => poiIds.indexOf((<any>item).id) !== -1).length;
         }
       }
-    )
+    );
   }
 
-  public getStopsWithPoiNames<IPoi>(getAllSelector: ((state: object) => IPoiStored[])) {
+  public getStopsWithPoiNames(getAllSelector: ((state: object) => IPoiStored[])) {
     return createSelector(
       getAllSelector,
       this.getStops,
       (pois, stops) => {
-        const _stops = _.cloneDeep(stops);
+        const _stops = _cloneDeep(stops);
 
-        for (let stop of _stops) {
+        for (const stop of _stops) {
           const stopPoi = pois.find(p => p.id === stop.poiId);
 
           if (stopPoi) {
@@ -126,12 +129,12 @@ export class EditedHikeProgramSelectors {
 
         return _stops;
       }
-    )
+    );
   }
 
   public getBackgroundOriginalUrls() {
     return createSelector(this._featureSelector, (state: IEditedHikeProgramState) => {
-      return _.uniq((<IBackgroundImageData[]>state.data.backgroundImages || []).map((img: IBackgroundImageData) => img.original.url));
+      return _uniq((<IBackgroundImageData[]>state.data.backgroundImages).map((img: IBackgroundImageData) => img.original.url));
     });
   }
 }

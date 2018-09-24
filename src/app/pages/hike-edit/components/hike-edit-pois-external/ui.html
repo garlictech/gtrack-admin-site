@@ -25,7 +25,7 @@
       label="Get new"
       styleClass="ui-button-primary ml-5"
       (onClick)="getPois()"
-      [disabled]="(segments$ | async)?.length < 1 || (searchContext$ | async)?.working || (loading$ | async) || (processing$ | async) || (saving$ | async)"
+      [disabled]="(segments$ | async)?.length < 1 || (searchContext$ | async)?.working || (loading$ | async) || (processing$ | async) || (saving$ | async) || !(isPlanning$ | async)"
     ></p-button>
   </div>
 

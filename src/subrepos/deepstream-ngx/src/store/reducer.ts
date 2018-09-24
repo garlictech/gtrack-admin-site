@@ -1,4 +1,4 @@
-import { ActionReducer, combineReducers } from '@ngrx/store';
+import { ActionReducer } from '@ngrx/store';
 
 import { IDeepstreamState, initialState, EDeepstreamState } from './state';
 import * as Actions from './actions';

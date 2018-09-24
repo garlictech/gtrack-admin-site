@@ -35,9 +35,9 @@ export class HikeEditImageSelectors {
 
   public getHikeEditImageContextSelector(subdomain) {
     return createSelector(this._featureSelector, (state: IHikeEditImageState) => state.contexts[subdomain]);
-  };
+  }
 
   public getHikeEditImageContextPropertySelector(subdomain, property) {
     return createSelector(this._featureSelector, (state: IHikeEditImageState) => state.contexts[subdomain][property]);
-  };
+  }
 }

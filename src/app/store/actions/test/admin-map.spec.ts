@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import * as AdminMapActions from '../admin-map';
 
 describe('AdminMap actions', () => {
@@ -8,13 +7,13 @@ describe('AdminMap actions', () => {
   });
 
   it('should create RegisterMap action', () => {
-    const payload = { mapId: 'fakeMapId' };
-    const action = new AdminMapActions.RegisterMap(payload);
+    const mapId = 'fakeMapId';
+    const action = new AdminMapActions.RegisterMap(mapId);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: AdminMapActions.REGISTER_MAP,
-      payload
+      mapId
     });
   });
 

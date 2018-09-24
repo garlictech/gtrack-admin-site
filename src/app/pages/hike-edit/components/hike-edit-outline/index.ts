@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { takeUntil } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { EditedHikeProgramSelectors } from '../../../../store/selectors';
-import { IHikeProgramStop, IPoiStored } from 'subrepos/provider-client';
+import { IHikeProgramStop } from 'subrepos/provider-client';
 import { PoiSelectors, IconService } from 'subrepos/gtrack-common-ngx';
 
 @Component({
@@ -29,8 +30,10 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.stops$ = this._store
-      .select(this._editedHikeProgramSelectors.getStopsWithPoiNames<IPoiStored>(this._poiSelectors.getAllPois))
-      .takeUntil(this._destroy$);
+      .pipe(
+        select(this._editedHikeProgramSelectors.getStopsWithPoiNames(this._poiSelectors.getAllPois)),
+        takeUntil(this._destroy$)
+      );
   }
 
   ngOnDestroy() {

@@ -1,11 +1,13 @@
 // Core
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../../../store';
 import { hikeEditPoiActions } from '../../../../../store/actions';
 import { Observable, Subject } from 'rxjs';
+import { debounceTime, takeUntil, take } from 'rxjs/operators';
 import { HikeEditPoiSelectors } from '../../../../../store/selectors';
-import * as _ from 'lodash';
+
+import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-hike-edit-pois-collector-table',
@@ -15,7 +17,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
   @Input() pois$: Observable<any[]>;
   @Input() onRouteCheck: boolean;
   @Input() openPoiModal: any;
-  public mergeSelections: {[id: string]: boolean} = {}
+  public mergeSelections: {[id: string]: boolean} = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -25,9 +27,11 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._store
-      .select(this._hikeEditPoiSelectors.getMergeSelections)
-      .debounceTime(200)
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._hikeEditPoiSelectors.getMergeSelections),
+        debounceTime(200),
+        takeUntil(this._destroy$)
+      )
       .subscribe((selections: string[]) => {
         this.mergeSelections = {};
         selections.map(id => {
@@ -68,25 +72,25 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
 
   public invertMerge() {
     this.pois$
-      .take(1)
+      .pipe(take(1))
       .subscribe(pois => {
         const clickablePois = pois.filter(p => {
           return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
         });
 
-        this.toggleMergeSelection(_.map(clickablePois, 'id'));
+        this.toggleMergeSelection(_map(clickablePois, 'id'));
       });
   }
 
   public invertSelection() {
     this.pois$
-      .take(1)
+      .pipe(take(1))
       .subscribe(pois => {
         const clickablePois = pois.filter(p => {
           return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
         });
 
-        this.handlePoiSelection(_.map(clickablePois, 'id'));
+        this.handlePoiSelection(_map(clickablePois, 'id'));
       });
   }
 }

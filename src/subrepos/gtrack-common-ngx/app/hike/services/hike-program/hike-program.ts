@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs';
-
 import {
   IHikeProgramStored,
   ILocalizedItem,
@@ -10,8 +8,8 @@ import {
 } from '../../../../../provider-client';
 
 import { CheckpointSequence, CheckpointService } from '../checkpoint';
-import { Poi } from '../poi';
-import * as _ from 'lodash';
+
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 export class HikeProgram implements IHikeProgramStored {
   public id: string;
@@ -31,15 +29,15 @@ export class HikeProgram implements IHikeProgramStored {
   public offlineMap?: string;
   public isRoundTrip: boolean;
   public timestamp: number;
+  public feature: boolean;
   public stops: IHikeProgramStop[];
   public checkpoints: CheckpointSequence;
   public state: EObjectState;
-  private observable: Observable<HikeProgram>;
 
   private locale = 'en_US';
 
   constructor(data: IHikeProgramStored, private _checkpointService: CheckpointService) {
-    const converted = _.cloneDeep(data);
+    const converted = _cloneDeep(data);
     Object.assign(this, converted);
 
     this._handleStartFinish();
@@ -103,7 +101,8 @@ export class HikeProgram implements IHikeProgramStored {
       timestamp: this.timestamp,
       stops: this.stops,
       checkpoints: this.checkpoints,
-      state: this.state
+      state: this.state,
+      feature: this.feature
     };
 
     return data;

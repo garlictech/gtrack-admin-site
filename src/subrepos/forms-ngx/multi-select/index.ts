@@ -1,4 +1,4 @@
-import { Component, Input, Provider } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AbstractValueAccessor } from '../abstract-value-accessor';
 
 @Component({

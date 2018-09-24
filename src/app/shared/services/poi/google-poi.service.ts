@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { EMPTY, of, interval } from 'rxjs';
+import { take, flatMap, combineAll } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
 import {
@@ -13,7 +14,8 @@ import { IGooglePoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
-import * as _ from 'lodash';
+import _map from 'lodash-es/map';
+import _take from 'lodash-es/take';
 
 const PURE_PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
 const PLACE_API_URL = `https://cors-anywhere.herokuapp.com/${PURE_PLACE_API_URL}`;
@@ -40,9 +42,11 @@ export class GooglePoiService {
   }
 
   private _getOnePage = params => {
-    let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo!.center!.geometry!.coordinates![1]},${
-      params.geo!.center!.geometry!.coordinates![0]
-    }&radius=${params.geo!.radius!}&key=${defaultSharedConfig.googleMaps.key}`;
+    // tslint:disable:max-line-length
+    let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${
+      params.geo.center.geometry.coordinates[0]
+    }&radius=${params.geo.radius}&key=${defaultSharedConfig.googleMaps.key}`;
+    // tslint:enable:max-line-length
 
     if (params.pageToken) {
       request += `&pagetoken=${params.pageToken}`;
@@ -55,7 +59,7 @@ export class GooglePoiService {
         // DOC: https://developers.google.com/places/web-service/search
 
         const _res: IGooglePoi[] = [];
-        for (let _point of data.results) {
+        for (const _point of data.results) {
           const _pointData: IGooglePoi = {
             id: uuid(),
             lat: _point.geometry.location.lat,
@@ -76,14 +80,14 @@ export class GooglePoiService {
             selected: false
           };
 
-          _pointData.types = _.map(_point.types, obj => {
+          _pointData.types = _map(_point.types, obj => {
             return obj === 'locality' ? 'city' : obj;
           });
 
           _res.push(_pointData);
         }
 
-        let result: any = {
+        const result: any = {
           data: _res
         };
 
@@ -94,7 +98,7 @@ export class GooglePoiService {
         }
         return result;
       });
-  };
+  }
 
   private _batchGet(getter, params) {
     return getter(params).then(result => {
@@ -116,86 +120,88 @@ export class GooglePoiService {
     const thumbnailWidth = 320;
     const cardWidth = 640;
 
-    return Observable.interval(500)
-      .take(pois.length)
-      .flatMap(idx => {
-        let _googleData = pois[idx]!.google!;
+    return interval(500)
+      .pipe(
+        take(pois.length),
+        flatMap(idx => {
+          const _googleData = pois[idx].google;
 
-        if (_googleData.id) {
-          const request = `${PLACE_API_URL}/details/json?placeid=${_googleData.id}&key=${
-            defaultSharedConfig.googleMaps.key
-          }`;
+          if (_googleData.id) {
+            const request = `${PLACE_API_URL}/details/json?placeid=${_googleData.id}&key=${
+              defaultSharedConfig.googleMaps.key
+            }`;
 
-          const promise = this._http
-            .get(request)
-            .toPromise()
-            .then((data: any) => {
-              if (data.status !== google.maps.places.PlacesServiceStatus.OK) {
-                console.log('ERROR', status);
-                return;
-              }
-
-              if (data.status === google.maps.places.PlacesServiceStatus.OK) {
-                _googleData.formatted_address = data.result.formatted_address;
-                _googleData.international_phone_number = data.result.international_phone_number;
-
-                if (data.result.opening_hours) {
-                  _googleData.opening_hours = data.result!.opening_hours;
+            const promise = this._http
+              .get(request)
+              .toPromise()
+              .then((data: any) => {
+                if (data.status !== google.maps.places.PlacesServiceStatus.OK) {
+                  console.log('ERROR', status);
+                  return;
                 }
 
-                const _photos: IBackgroundImageData[] = [];
-                if (data.result.photos) {
-                  let _placePhotos = data.result.photos;
-                  if (environment.googlePhotoLimit) {
-                    _placePhotos = _.take(_placePhotos, environment.googlePhotoLimit);
+                if (data.status === google.maps.places.PlacesServiceStatus.OK) {
+                  _googleData.formatted_address = data.result.formatted_address;
+                  _googleData.international_phone_number = data.result.international_phone_number;
+
+                  if (data.result.opening_hours) {
+                    _googleData.opening_hours = data.result.opening_hours;
                   }
 
-                  for (let _photo of _placePhotos) {
-                    const _photoInfo: IBackgroundImageData = {
-                      title: _photo.html_attributions[0] || '',
-                      lat: pois[idx].lat,
-                      lon: pois[idx].lon,
-                      original: {
-                        url: `${PURE_PLACE_API_URL}/photo?maxwidth=${_photo.width}&photoreference=${
-                          _photo.photo_reference
-                        }&key=${defaultSharedConfig.googleMaps.key}`,
-                        width: _photo.width,
-                        height: _photo.height
-                      },
-                      card: {
-                        url: `${PURE_PLACE_API_URL}/photo?maxwidth=${cardWidth}&photoreference=${
-                          _photo.photo_reference
-                        }&key=${defaultSharedConfig.googleMaps.key}`,
-                        width: cardWidth,
-                        height: Math.round((cardWidth * _photo.height) / _photo.width)
-                      },
-                      thumbnail: {
-                        url: `${PURE_PLACE_API_URL}/photo?maxwidth=${thumbnailWidth}&photoreference=${
-                          _photo.photo_reference
-                        }&key=${defaultSharedConfig.googleMaps.key}`,
-                        width: thumbnailWidth,
-                        height: Math.round((thumbnailWidth * _photo.height) / _photo.width)
-                      },
-                      source: {
-                        type: EPoiImageTypes.google,
-                        poiObjectId: _googleData.id,
-                        photoReference: _photo.photo_reference
-                      }
-                    };
-                    _photos.push(_photoInfo);
-                  }
+                  const _photos: IBackgroundImageData[] = [];
+                  if (data.result.photos) {
+                    let _placePhotos = data.result.photos;
+                    if (environment.googlePhotoLimit) {
+                      _placePhotos = _take(_placePhotos, environment.googlePhotoLimit);
+                    }
 
-                  _googleData.photos = _photos;
+                    for (const _photo of _placePhotos) {
+                      const _photoInfo: IBackgroundImageData = {
+                        title: _photo.html_attributions[0] || '',
+                        lat: pois[idx].lat,
+                        lon: pois[idx].lon,
+                        original: {
+                          url: `${PURE_PLACE_API_URL}/photo?maxwidth=${_photo.width}&photoreference=${
+                            _photo.photo_reference
+                          }&key=${defaultSharedConfig.googleMaps.key}`,
+                          width: _photo.width,
+                          height: _photo.height
+                        },
+                        card: {
+                          url: `${PURE_PLACE_API_URL}/photo?maxwidth=${cardWidth}&photoreference=${
+                            _photo.photo_reference
+                          }&key=${defaultSharedConfig.googleMaps.key}`,
+                          width: cardWidth,
+                          height: Math.round((cardWidth * _photo.height) / _photo.width)
+                        },
+                        thumbnail: {
+                          url: `${PURE_PLACE_API_URL}/photo?maxwidth=${thumbnailWidth}&photoreference=${
+                            _photo.photo_reference
+                          }&key=${defaultSharedConfig.googleMaps.key}`,
+                          width: thumbnailWidth,
+                          height: Math.round((thumbnailWidth * _photo.height) / _photo.width)
+                        },
+                        source: {
+                          type: EPoiImageTypes.google,
+                          poiObjectId: _googleData.id,
+                          photoReference: _photo.photo_reference
+                        }
+                      };
+                      _photos.push(_photoInfo);
+                    }
+
+                    _googleData.photos = _photos;
+                  }
                 }
-              }
-            });
+              });
 
-          return Observable.of(promise);
-        } else {
-          return Observable.empty();
-        }
-      })
-      .combineAll()
+            return of(promise);
+          } else {
+            return EMPTY;
+          }
+        }),
+        combineAll()
+      )
       .toPromise()
       .then(() => {
         return pois;

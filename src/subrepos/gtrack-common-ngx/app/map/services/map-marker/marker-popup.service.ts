@@ -1,7 +1,8 @@
 import { Injectable, ComponentFactoryResolver, ComponentRef, Type, Injector, ApplicationRef } from '@angular/core';
 import { IMarkerPopupData } from '../../../../../provider-client';
 import * as L from 'leaflet';
-import * as _ from 'lodash';
+
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 @Injectable()
 export class MarkerPopupService {
@@ -27,7 +28,7 @@ export class MarkerPopupService {
       this._compRef = compFactory.create(this._injector);
 
       // Pass params to the loaded component
-      this._compRef.instance.data = _.cloneDeep(popupData.data);
+      this._compRef.instance.data = _cloneDeep(popupData.data);
       this._compRef.instance.closePopup = () => {
         this._compRef.destroy();
         popupData.closeCallback();
@@ -54,5 +55,5 @@ export class MarkerPopupService {
       }, 150);
     }
     /* tslint:enable:no-string-literal */
-  };
+  }
 }

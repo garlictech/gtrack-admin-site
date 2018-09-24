@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-import * as _ from 'lodash';
+
+import _pickBy from 'lodash-es/pickBy';
 
 import { hikeAdapter, hikeContextStateAdapter, IHikeState, IHikeContextState } from './state';
 import { EXTERNAL_HIKE_DEPENDENCIES, IExternalHikeDependencies } from '../../externals';
 import { Dictionary } from '@ngrx/entity/src/models';
-import { IHikeProgram, IHikeProgramStored, EObjectState } from '../../../../../provider-client';
+import { IHikeProgramStored, EObjectState } from '../../../../../provider-client';
 
 import { GeoSearchSelectors } from '../../../geosearch';
 import { SearchFiltersSelectors } from '../../../search-filters';
@@ -68,7 +69,7 @@ export class HikeSelectors {
 
   public getHikeContextEntities(ids: string[]) {
     return createSelector(this.getAllContextEntities, contexts =>
-      _.pickBy(contexts, context => {
+      _pickBy(contexts, context => {
         if (context.id) {
           return ids.indexOf(context.id) !== -1;
         } else {

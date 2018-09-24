@@ -1,10 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth';
 import { IAuth } from '../store';
 import { DebugLog } from '../log';
 import { AUTH_CONFIG_TOKEN, IAuthenticationApiConfig, IMagiclinkConfig } from '../lib/config';
+
+import { switchMap } from 'rxjs/operators';
 
 interface RequestTokenParams {
   user: string;
@@ -23,13 +25,13 @@ export class PasswordlessService {
   constructor(
     private auth: AuthService,
     @Inject(AUTH_CONFIG_TOKEN) private authConfig: IAuthenticationApiConfig,
-    private http: Http
+    private http: HttpClient
   ) {
     this._init();
   }
 
   @DebugLog
-  public requestToken(email: string, language?: string, roles?: string[]): Observable<Response> {
+  public requestToken(email: string, language?: string, roles?: string[]): Observable<Object> {
     const params: RequestTokenParams = {
       user: email,
       redirectUri: this.redirectUri.toString()
@@ -47,21 +49,24 @@ export class PasswordlessService {
   }
 
   @DebugLog
-  public callback(passwordlessToken: string, uid: string, roles?: string[]): Promise<IAuth> {
+  public callback(passwordlessToken: string, uid: string, roles?: string[]): Observable<IAuth> {
     return this.http
-      .post(this.tokenUrl, {
+      .post<{
+        token: string;
+        refreshToken: string;
+      }>(this.tokenUrl, {
         token: passwordlessToken,
         uid: uid.replace(/%40/, '@'),
         roles: roles
       })
-      .toPromise()
-      .then(response => {
-        const body = response.json();
-        const token = body.token;
-        const refreshToken = body.refreshToken;
+      .pipe(
+        switchMap(body => {
+          const token = body.token;
+          const refreshToken = body.refreshToken;
 
-        return this.auth.init(token, refreshToken);
-      });
+          return this.auth.init(token, refreshToken);
+        })
+      );
   }
 
   @DebugLog

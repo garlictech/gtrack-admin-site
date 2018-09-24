@@ -1,11 +1,9 @@
 import { ITextareaField, TextareaField } from './textarea';
 
-export interface IMarkdownField extends ITextareaField {}
-
-export class MarkdownField extends TextareaField implements IMarkdownField {
+export class MarkdownField extends TextareaField implements ITextareaField {
   controlType = 'markdown';
 
-  constructor(options: IMarkdownField) {
+  constructor(options: ITextareaField) {
     super(options);
   }
 }

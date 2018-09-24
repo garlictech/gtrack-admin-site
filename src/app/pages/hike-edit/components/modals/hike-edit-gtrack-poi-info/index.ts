@@ -1,6 +1,7 @@
 import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Store, MemoizedSelector } from '@ngrx/store';
+import { takeUntil, map, filter, switchMap, take } from 'rxjs/operators';
+import { Store, MemoizedSelector, select } from '@ngrx/store';
 import { State } from '../../../../../store';
 import { commonPoiActions, editedGTrackPoiActions } from '../../../../../store/actions';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
@@ -52,36 +53,53 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     this.clickActions = {
       add: (image) => this._store.dispatch(new editedGTrackPoiActions.AddPoiBackgroundImage(image)),
       remove: (url) => this._store.dispatch(new editedGTrackPoiActions.RemovePoiBackgroundImage(url))
-    }
+    };
 
     this.poiLoaded$ = this._store
-      .select(this._editedGTrackPoiSelectors.getData)
-      .takeUntil(this._destroy$)
-      .map(data => !!data);
+      .pipe(
+        select(this._editedGTrackPoiSelectors.getData),
+        takeUntil(this._destroy$),
+        map(data => !!data)
+      );
 
     this._store
-      .select(this._editedGTrackPoiSelectors.getData)
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._editedGTrackPoiSelectors.getData),
+        takeUntil(this._destroy$)
+      )
       .subscribe((gTrackPoi: IPoiStored) => {
         this.gTrackPoi = gTrackPoi;
       });
 
-    this.isDirty$ = this._store.select(this._editedGTrackPoiSelectors.getDirty).takeUntil(this._destroy$);
+    this.isDirty$ = this._store.pipe(
+      select(this._editedGTrackPoiSelectors.getDirty),
+      takeUntil(this._destroy$)
+    );
 
     // Handling save success
     this._store
-      .select(this._editedGTrackPoiSelectors.getWorking)
-      .takeUntil(this._destroy$)
-      .filter(working => working !== null)
-      .switchMap(() => this._store.select(this._editedGTrackPoiSelectors.getWorking).takeUntil(this._destroy$))
-      .filter(working => working === null)
-      .switchMap(() => this._store.select(this._editedGTrackPoiSelectors.getError).take(1))
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._editedGTrackPoiSelectors.getWorking),
+        takeUntil(this._destroy$),
+        filter(working => working !== null),
+        switchMap(() => this._store.pipe(
+          select(this._editedGTrackPoiSelectors.getWorking),
+          takeUntil(this._destroy$)
+        )),
+        filter(working => working === null),
+        switchMap(() => this._store.pipe(
+          select(this._editedGTrackPoiSelectors.getError),
+          take(1)
+        )),
+        takeUntil(this._destroy$)
+      )
       .subscribe(error => {
         if (error) {
-          let msg: string[] = [];
-          for (let idx in error) {
-            msg.push(`${idx}: ${error[idx]}`);
+          const msg: string[] = [];
+          for (const idx in error) {
+            if (error[idx]) {
+              msg.push(`${idx}: ${error[idx]}`);
+            }
           }
 
           this._messageService.add({
@@ -100,8 +118,10 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
       });
 
     this._store
-      .select(this._poiSelectors.getPoi(<string>this.poiId))
-      .take(1)
+      .pipe(
+        select(this._poiSelectors.getPoi(<string>this.poiId)),
+        take(1)
+      )
       .subscribe((poi: IPoiStored) => this._store.dispatch(new editedGTrackPoiActions.LoadPoi(poi)));
   }
 
@@ -127,7 +147,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
 
   public submitDescription = (langKey: string, data: any) => {
     this._store.dispatch(new editedGTrackPoiActions.AddNewTranslatedPoiDescription(langKey, data));
-  };
+  }
 
   public deleteDescription = lang => {
     this._confirmationService.confirm({
@@ -136,5 +156,5 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
         this._store.dispatch(new editedGTrackPoiActions.DeleteTranslatedPoiDescription(lang));
       }
     });
-  };
+  }
 }

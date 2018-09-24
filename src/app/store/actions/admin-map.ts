@@ -5,9 +5,7 @@ export const RESET_MAP = '[AdminMap] Reset Map';
 
 export class RegisterMap implements Action {
   readonly type = REGISTER_MAP;
-  constructor(public payload: {
-    mapId: string
-  }) {}
+  constructor(public mapId: string) {}
 }
 
 export class ResetMap implements Action {

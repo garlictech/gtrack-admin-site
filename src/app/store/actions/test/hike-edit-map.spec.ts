@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import * as HikeEditMapActions from '../hike-edit-map';
 
 describe('HikeEditMap actions', () => {

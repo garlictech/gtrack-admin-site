@@ -1,16 +1,11 @@
-import { AuthService } from '../auth.service';
 import { AuthGuard } from '../auth-guard.service';
-import { Http } from '@angular/http';
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
-import { MockBackend, MockConnection } from '@angular/http/testing';
-import { Subject } from 'rxjs/Subject';
 import { StoreModule, Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { Observable } from 'rxjs';
 import { AUTH_CONFIG_TOKEN, defaultAuthenticationApiConfig, AuthenticationApiModule } from '../../lib';
 
-import { IAuthenticationState, Reducer as authReducer, domain } from '../../store';
+import { Reducer as authReducer, domain } from '../../store';
 import * as Actions from '../../store/actions';
 
 describe('AuthGuard', () => {
@@ -22,13 +17,13 @@ describe('AuthGuard', () => {
     }
   }
 
-  let reducer = {};
+  const reducer = {};
   reducer[domain] = authReducer;
 
-  let apiUrl = 'http://localhost/api';
-  let webserverUrl = 'http://localhost/api';
+  const apiUrl = 'http://localhost/api';
+  const webserverUrl = 'http://localhost/api';
 
-  let authConfig = { ...defaultAuthenticationApiConfig };
+  const authConfig = { ...defaultAuthenticationApiConfig };
 
   authConfig.apiUrl = apiUrl;
   authConfig.webserverUrl = webserverUrl;
@@ -51,8 +46,8 @@ describe('AuthGuard', () => {
   });
 
   it('should return false if user is not logged in', done => {
-    let guard: AuthGuard = TestBed.get(AuthGuard);
-    let router: MockRouterService = TestBed.get(Router);
+    const guard: AuthGuard = TestBed.get(AuthGuard);
+    const router: MockRouterService = TestBed.get(Router);
 
     guard.canActivate().subscribe((canActivate: boolean) => {
       expect(canActivate).toEqual(false);
@@ -61,10 +56,10 @@ describe('AuthGuard', () => {
   });
 
   it('should dispatch ROUTE_FORBIDDEN action if user is not logged in', done => {
-    let store: Store<any> = TestBed.get(Store);
-    let guard: AuthGuard = TestBed.get(AuthGuard);
-    let router: MockRouterService = TestBed.get(Router);
-    let action = new Actions.RouteForbidden();
+    const store: Store<any> = TestBed.get(Store);
+    const guard: AuthGuard = TestBed.get(AuthGuard);
+    const router: MockRouterService = TestBed.get(Router);
+    const action = new Actions.RouteForbidden();
 
     spyOn(store, 'dispatch').and.callThrough();
 

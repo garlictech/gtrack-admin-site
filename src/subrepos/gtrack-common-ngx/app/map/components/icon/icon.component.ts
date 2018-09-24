@@ -1,16 +1,14 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IconService } from '../../services/icon';
 import { Poi } from '../../../hike/services/poi';
 
 @Component({
-  selector: 'gtcn-icon',
+  selector: 'gtrack-icon',
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss']
 })
 export class IconComponent {
   public urls: string[] = [];
-
-  private _poi: Poi;
 
   @Input()
   public width = 32;
@@ -18,7 +16,6 @@ export class IconComponent {
   @Input()
   public set poi(poi: Poi) {
     if (poi && poi.types instanceof Array) {
-      this._poi = poi;
       this.urls = this.iconService.urls(poi.types);
     }
   }

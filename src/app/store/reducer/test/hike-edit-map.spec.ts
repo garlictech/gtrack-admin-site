@@ -1,9 +1,6 @@
-import { Action } from '@ngrx/store';
-import {
-  initialMapState, hikeEditMapReducer
-} from '../hike-edit-map';
+import { initialMapState, hikeEditMapReducer } from '../hike-edit-map';
 import { IHikeEditMapState } from '../../state/hike-edit-map';
-import { hikeEditMapActions, adminMapActions } from '../../actions';
+import { adminMapActions } from '../../actions';
 
 import * as _ from 'lodash';
 
@@ -37,10 +34,11 @@ describe('HikeEditMap reducers', () => {
 
   describe('RegisterMap action', () => {
     it('should register map', () => {
-      const action = new adminMapActions.RegisterMap({ mapId: 'fakeId' });
+      const mapId = 'fakeId';
+      const action = new adminMapActions.RegisterMap(mapId);
       const state = hikeEditMapReducer(initialState, action);
 
-      expect(state.mapId).toEqual('fakeId');
+      expect(state.mapId).toEqual(mapId);
     });
   });
 

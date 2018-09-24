@@ -10,14 +10,14 @@ export class ReverseGeocodingService {
   public get(coordinates) {
     return this._googleMapsService.map
       .then(() => {
-        const _map = new google.maps.Map(document.getElementById('fakeMap'));
+        // TODO: removable? const _map = new google.maps.Map(document.getElementById('fakeMap'));
         const _point = new google.maps.LatLng(coordinates.lat, coordinates.lon);
         const _geocoder = new google.maps.Geocoder();
 
         return new Promise((resolve, reject) => {
           _geocoder.geocode({location: _point}, (results, error) => {
             if (results) {
-              resolve(this._parseResults(results))
+              resolve(this._parseResults(results));
             } else {
               reject(error);
             }
@@ -27,11 +27,11 @@ export class ReverseGeocodingService {
   }
 
   private _parseResults(results: google.maps.GeocoderResult[]) {
-    let _parts: any = {};
+    const _parts: any = {};
 
-    for (let res of results) {
-      for (let component of res.address_components) {
-        for (let type of ['locality', 'country', 'administrative_area_level_1']) {
+    for (const res of results) {
+      for (const component of res.address_components) {
+        for (const type of ['locality', 'country', 'administrative_area_level_1']) {
           if (component.types.indexOf(type) >= 0) {
             _parts[type] = component.long_name;
           }
@@ -55,7 +55,7 @@ export class ReverseGeocodingService {
     */
 
     if (_parts.country) {
-      _ret += `, ${_parts.country}`
+      _ret += `, ${_parts.country}`;
     }
 
     return _ret;

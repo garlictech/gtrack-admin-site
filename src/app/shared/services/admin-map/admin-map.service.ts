@@ -4,7 +4,9 @@ import { adminMapActions } from '../../../store/actions';
 import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { Injectable } from '@angular/core';
 import { AdminMap } from './lib/admin-map';
-import { IconService, MapMarkerService, MapService, MarkerPopupService, DescriptionLanguageListService } from 'subrepos/gtrack-common-ngx/app';
+import {
+  IconService, MapMarkerService, MapService, MarkerPopupService, DescriptionLanguageListService
+} from 'subrepos/gtrack-common-ngx/app';
 
 import * as uuid from 'uuid/v1';
 
@@ -38,9 +40,7 @@ export class AdminMapService extends MapService {
     this._maps[_id] = _map;
 
     this._store.dispatch(
-      new adminMapActions.RegisterMap({
-        mapId: _id
-      })
+      new adminMapActions.RegisterMap(_id)
     );
 
     return _map;

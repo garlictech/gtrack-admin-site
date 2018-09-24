@@ -1,12 +1,12 @@
 // Core
-import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HikeProgramService } from '../../../../shared/services';
 import { RouteService } from 'subrepos/gtrack-common-ngx';
-import { IRoute } from 'subrepos/provider-client';
 
 import * as toGeoJSON from '@mapbox/togeojson';
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 @Component({
   selector: 'app-gpx-input',
@@ -16,7 +16,6 @@ import * as _ from 'lodash';
 export class GpxInputComponent {
   @Input() callback: any;
   @ViewChild('gpxInput') gpxInput: ElementRef;
-  public gpxRoute: IRoute;
 
   constructor(
     private _router: Router,
@@ -41,7 +40,7 @@ export class GpxInputComponent {
         this._hikeProgramService.gpxRoute = {
           route: _route,
           bounds: this._routeService.getBounds(_route)
-        }
+        };
 
         this._router.navigate(['/admin/hike/new']);
       });
@@ -53,10 +52,10 @@ export class GpxInputComponent {
       const _reader: FileReader = new FileReader();
       _reader.onloadend = (e) => {
         resolve(_reader.result);
-      }
+      };
       _reader.onerror = (e) => {
         reject();
-      }
+      };
       _reader.readAsText(file);
     });
   }
@@ -65,23 +64,25 @@ export class GpxInputComponent {
    * Fix MultiLineString if needed (convert to single LineString)
    */
   private _checkAndFixMultiLineString(route) {
-    const _geometry = _.get(route, 'features[0].geometry');
+    const _geometry = _get(route, 'features[0].geometry');
     let _lineString: number[][] = [];
 
     if (_geometry && _geometry.type === 'MultiLineString') {
-      for (let i in _geometry.coordinates) {
-        const coords = _geometry.coordinates[i];
+      for (const i in _geometry.coordinates) {
+        if (_geometry.coordinates[i]) {
+          const coords = _geometry.coordinates[i];
 
-        if (<any>i === 0) {
-          _lineString = _lineString.concat(coords);
-        } else {
-          // Drop the 1st coord, it's same as the prev last coord...
-          _lineString = _lineString.concat(coords.slice(1));
+          if (<any>i === 0) {
+            _lineString = _lineString.concat(coords);
+          } else {
+            // Drop the 1st coord, it's same as the prev last coord...
+            _lineString = _lineString.concat(coords.slice(1));
+          }
         }
       }
 
       _geometry.type = 'LineString';
-      _geometry.coordinates = _.cloneDeep(_lineString);
+      _geometry.coordinates = _cloneDeep(_lineString);
     }
   }
 }

@@ -5,7 +5,7 @@ import { IOsmPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
 
 @Injectable()
 export class OsmPoiService {
@@ -45,11 +45,11 @@ export class OsmPoiService {
       .post('https://overpass-api.de/api/interpreter', request)
       .toPromise()
       .then((response: any) => {
-        let _res: IOsmPoi[] = [];
+        const _res: IOsmPoi[] = [];
 
         if (response.elements) {
-          for (let _point of response.elements) {
-            let type = _.get(_point.tags, typeParam);
+          for (const _point of response.elements) {
+            const type = _get(_point.tags, typeParam);
 
             if (_point.lat && this._checkPoiTags(_point, type)) {
               _res.push({

@@ -3,7 +3,6 @@ import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
 import { IAllHikeContextState, hikeContextStateAdapter, IHikeEntityState, IHikeState, hikeAdapter } from './state';
 
 import { HikeProgramActionTypes, AllHikeActions } from './actions';
-import { AllHikeProgramsLoaded } from '../../../..';
 
 export const hikeContextReducerInitialState = hikeContextStateAdapter.getInitialState();
 export const hikeReducerInitialState = hikeAdapter.getInitialState();

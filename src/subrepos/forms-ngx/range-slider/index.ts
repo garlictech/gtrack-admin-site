@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { AbstractValueAccessor } from '../abstract-value-accessor';
+import { Component } from '@angular/core';
 import { SliderComponent } from '../slider';
 
 @Component({

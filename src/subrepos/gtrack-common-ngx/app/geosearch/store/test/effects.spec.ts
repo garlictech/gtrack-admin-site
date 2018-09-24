@@ -1,11 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { Actions, Effect, EffectsModule } from '@ngrx/effects';
+import { Actions, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 
-import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
 
 import { hot, cold } from 'jest-marbles';
@@ -18,7 +17,7 @@ import { DeepstreamModule } from '../../../deepstream';
 
 export class TestActions extends Actions {
   constructor() {
-    super(Observable.empty());
+    super(EMPTY);
   }
 
   set stream(source: Observable<any>) {

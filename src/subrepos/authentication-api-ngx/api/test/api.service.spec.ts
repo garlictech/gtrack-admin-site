@@ -1,11 +1,7 @@
-import { Http } from '@angular/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { Component, Injector } from '@angular/core';
-import { TestBed, inject, async } from '@angular/core/testing';
-import { BaseRequestOptions, ResponseOptions, XHRBackend, Response, RequestMethod } from '@angular/http';
-import { MockBackend, MockConnection } from '@angular/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Subject, Observable } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
@@ -14,90 +10,87 @@ import { Reducer, IAuthenticationState, Actions } from '../../store';
 
 import 'rxjs/add/operator/take';
 
-class MockError extends Response implements Error {
-  name: any;
-  message: any;
-}
-
 describe('ApiService', () => {
-  let token = 'test-token';
+  const token = 'test-token';
+  let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
           authentication: Reducer
-        })
+        }),
+        HttpClientTestingModule
       ],
       providers: [
         ApiService,
-        BaseRequestOptions,
-        MockBackend,
         {
           provide: LocalStorage,
           useClass: MockStorageService
-        },
-        {
-          deps: [MockBackend, BaseRequestOptions],
-          provide: Http,
-          useFactory: (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          }
         }
       ]
     });
 
-    let localStorage: LocalStorage = TestBed.get(LocalStorage);
+    const localStorage: LocalStorage = TestBed.get(LocalStorage);
 
     localStorage.setItem('token', token);
+    httpTestingController = TestBed.get(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpTestingController.verify();
   });
 
   it('should add Authorization headers to GET', done => {
-    let backend: MockBackend = TestBed.get(MockBackend);
-    let api: ApiService = TestBed.get(ApiService);
-    let url = 'http://localhost/user/me';
+    const api: ApiService = TestBed.get(ApiService);
+    const url = 'http://localhost/user/me';
 
-    backend.connections.take(1).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toEqual(url);
-      expect(connection.request.method).toEqual(RequestMethod.Get);
-      expect(connection.request.headers.get('Authorization')).toEqual('JWT ' + token);
-      done();
-    });
+    api.get(url).subscribe(
+      () => {
+        done();
+      },
+      err => {
+        done(err);
+      }
+    );
 
-    api.get(url).catch(err => {
-      done.fail(err);
-      return Observable.of();
-    });
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    expect(req.request.headers.get('Authorization')).toEqual(`JWT ${token}`);
+
+    req.flush({});
   });
 
   it('should add Authorization headers to POST', done => {
-    let backend: MockBackend = TestBed.get(MockBackend);
-    let api: ApiService = TestBed.get(ApiService);
-    let url = 'http://localhost/user/me';
-
-    backend.connections.take(1).subscribe((connection: MockConnection) => {
-      expect(connection.request.url).toEqual(url);
-      expect(connection.request.method).toEqual(RequestMethod.Post);
-      expect(connection.request.headers.get('Authorization')).toEqual('JWT ' + token);
-      done();
-    });
+    const api: ApiService = TestBed.get(ApiService);
+    const url = 'http://localhost/user/me';
 
     api
       .post(url, {
         test: 5
       })
-      .catch(err => {
-        done.fail(err);
-        return Observable.of();
-      });
+      .subscribe(
+        () => {
+          done();
+        },
+        err => {
+          done(err);
+        }
+      );
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.body.test).toEqual(5);
+    expect(req.request.headers.get('Authorization')).toEqual(`JWT ${token}`);
+
+    req.flush({});
   });
 
   it('should dispatch unauthorized action on 401 response', done => {
-    let backend: MockBackend = TestBed.get(MockBackend);
-    let api: ApiService = TestBed.get(ApiService);
-    let url = 'http://localhost/user/me';
+    const api: ApiService = TestBed.get(ApiService);
+    const url = 'http://localhost/user/me';
 
-    let store: Store<IAuthenticationState> = TestBed.get(Store);
+    const store: Store<IAuthenticationState> = TestBed.get(Store);
 
     spyOn(store, 'dispatch').and.callFake(action => {
       if (action instanceof Actions.Unauthorized) {
@@ -105,50 +98,27 @@ describe('ApiService', () => {
       }
     });
 
-    backend.connections.take(1).subscribe((connection: MockConnection) => {
-      connection.mockError(
-        new MockError(
-          new ResponseOptions({
-            body: 'Unauthorized',
-            status: 401,
-            statusText: 'Unauthorized'
-          })
-        )
-      );
+    api.get(url).subscribe((response: Response) => {
+      done.fail(new Error('Not failed'));
     });
 
-    api
-      .get(url)
-      .toPromise()
-      .then((response: Response) => {
-        done.fail(new Error('Not failed'));
-      })
-      .catch((err: MockError) => {
-        // Prevent Unhandled Promise rejection errors
-      });
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+
+    req.flush('Unauthorized', {
+      status: 401,
+      statusText: 'Unauthorized'
+    });
   });
 
   it('should not emit unauthorized when response code is not 401', done => {
-    let backend: MockBackend = TestBed.get(MockBackend);
-    let api: ApiService = TestBed.get(ApiService);
-    let url = 'http://localhost/user/me';
-    let store: Store<IAuthenticationState> = TestBed.get(Store);
-
-    backend.connections.take(1).subscribe((connection: MockConnection) => {
-      connection.mockError(
-        new MockError(
-          new ResponseOptions({
-            body: 'Not found',
-            status: 404,
-            statusText: 'Not found'
-          })
-        )
-      );
-    });
+    const api: ApiService = TestBed.get(ApiService);
+    const url = 'http://localhost/user/me';
+    const store: Store<IAuthenticationState> = TestBed.get(Store);
 
     spyOn(store, 'dispatch').and.callFake(action => {
       if (action instanceof Actions.Unauthorized) {
-        done.fail(new Error('Unauthorized emitted'));
+        done(new Error('Unauthorized emitted'));
       }
     });
 
@@ -156,41 +126,52 @@ describe('ApiService', () => {
       .post(url, {
         test: 1
       })
-      .toPromise()
-      .then((response: Response) => {
-        done.fail(new Error('Not failed'));
-      })
-      .catch((err: MockError) => {
-        done();
-      });
+      .subscribe(
+        () => {
+          done(new Error('Not failed'));
+        },
+        (err: HttpErrorResponse) => {
+          expect(err.status).toEqual(404);
+          expect(err.statusText).toEqual('Not found');
+          done();
+        }
+      );
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+
+    req.flush('Not found', {
+      status: 404,
+      statusText: 'Not found'
+    });
   });
 
   it('should not emit unauthorized when request failed', done => {
-    let backend: MockBackend = TestBed.get(MockBackend);
-    let api: ApiService = TestBed.get(ApiService);
-    let url = 'http://localhost/user/me';
-    let store: Store<IAuthenticationState> = TestBed.get(Store);
+    const api: ApiService = TestBed.get(ApiService);
+    const url = 'http://localhost/user/me';
+    const store: Store<IAuthenticationState> = TestBed.get(Store);
 
     spyOn(store, 'dispatch').and.callFake(action => {
       if (action instanceof Actions.Unauthorized) {
-        done.fail(new Error('Unauthorized emitted'));
+        done(new Error('Unauthorized emitted'));
       }
-    });
-
-    backend.connections.take(1).subscribe((connection: MockConnection) => {
-      connection.mockError(new Error('Destination host is unreachable'));
     });
 
     api
       .post(url, {
         test: 1
       })
-      .toPromise()
-      .then((response: Response) => {
-        done.fail(new Error('Not failed'));
-      })
-      .catch(err => {
-        done();
-      });
+      .subscribe(
+        () => {
+          done(new Error('Not failed'));
+        },
+        (err: ErrorEvent) => {
+          done();
+        }
+      );
+
+    const req = httpTestingController.expectOne(url);
+
+    req.error(new ErrorEvent('Network error'));
   });
 });

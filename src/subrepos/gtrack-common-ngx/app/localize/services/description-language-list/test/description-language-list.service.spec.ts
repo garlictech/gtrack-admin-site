@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { Store } from '@ngrx/store';
 
 import { LocalizeSelectors } from '../../../store';
 import { DescriptionLanguageListService } from '../';
@@ -62,8 +61,8 @@ describe('DescriptionLanguageListService', () => {
   });
 
   xit('should return the first matching language', async () => {
-    let service: DescriptionLanguageListService = TestBed.get(DescriptionLanguageListService);
-    let transformed = await service.getLocalizedDescription(item).toPromise();
+    const service: DescriptionLanguageListService = TestBed.get(DescriptionLanguageListService);
+    const transformed = await service.getLocalizedDescription(item).toPromise();
 
     expect(transformed.title).toEqual(item.hu_HU.title);
   });
@@ -71,8 +70,8 @@ describe('DescriptionLanguageListService', () => {
   it('should fallback to the interface language when no matching language found', async () => {
     delete item.hu_HU;
 
-    let service: DescriptionLanguageListService = TestBed.get(DescriptionLanguageListService);
-    let transformed = await service.getLocalizedDescription(item).toPromise();
+    const service: DescriptionLanguageListService = TestBed.get(DescriptionLanguageListService);
+    const transformed = await service.getLocalizedDescription(item).toPromise();
 
     expect(transformed.title).toEqual(item.en_US.title);
   });
@@ -81,8 +80,8 @@ describe('DescriptionLanguageListService', () => {
     state.descriptionLanguageList = [];
     state.actualLanguage = 'ru_RU';
 
-    let service: DescriptionLanguageListService = TestBed.get(DescriptionLanguageListService);
-    let transformed = await service.getLocalizedDescription(item).toPromise();
+    const service: DescriptionLanguageListService = TestBed.get(DescriptionLanguageListService);
+    const transformed = await service.getLocalizedDescription(item).toPromise();
 
     expect(transformed.title).toEqual(item.de_DE.title);
   });
@@ -94,8 +93,8 @@ describe('DescriptionLanguageListService', () => {
       en_US: item.en_US
     };
 
-    let service: DescriptionLanguageListService = TestBed.get(DescriptionLanguageListService);
-    let transformed = await service.getLocalizedDescription(item).toPromise();
+    const service: DescriptionLanguageListService = TestBed.get(DescriptionLanguageListService);
+    const transformed = await service.getLocalizedDescription(item).toPromise();
 
     expect(transformed.title).toEqual(item.en_US.title);
   });

@@ -1,7 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-import { Dictionary } from '@ngrx/entity/src/models';
-import * as _ from 'lodash';
 
 import {
   geoSearchAdapter,
@@ -23,9 +21,6 @@ export class GeoSearchSelectors {
   public getGeoSearchContexts: (state: object) => string[] | number[];
   public getAllGeoSearches: (state: object) => IGeoSearchResponseItem[];
   public getAllContexts: (state: object) => IGeoSearchContextState[];
-
-  private _selectContextEntities: (state: object) => Dictionary<IGeoSearchContextState>;
-  private _selectGeoSearchEntities: (state: object) => Dictionary<IGeoSearchResponseItem>;
   private _externals: IExternalGeoSearchDependencies;
 
   constructor(@Inject(EXTERNAL_GEO_SEARCH_DEPENDENCIES) externals) {
@@ -41,8 +36,6 @@ export class GeoSearchSelectors {
     this.getGeoSearchContexts = selectors.selectIds;
     this.getAllGeoSearches = selectors.selectAll;
     this.getAllContexts = contextSelectors.selectAll;
-    this._selectGeoSearchEntities = selectors.selectEntities;
-    this._selectContextEntities = contextSelectors.selectEntities;
   }
 
   public getGeoSearch(context: string) {

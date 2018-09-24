@@ -1,7 +1,8 @@
+import { map, take, takeUntil, filter, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Component, NgZone, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Subject, never } from 'rxjs';
+import { Subject, NEVER } from 'rxjs';
 
 import { GoogleMapsService } from '../../../shared';
 import * as geoSearchActions from '../../../geosearch/store/actions';
@@ -13,12 +14,13 @@ import * as searchFilterActions from '../../../search-filters/store/actions';
 
 import * as BackgroundGeolocationActions from '../../../shared/services/background-geolocation-service/store/actions';
 
-import * as _ from 'lodash';
+import _get from 'lodash-es/get';
+
 import distance from '@turf/distance';
 import { Coord as turfCoord } from '@turf/helpers';
 
 @Component({
-  selector: 'gtcn-location-search',
+  selector: 'gtrack-common-location-search',
   template: ''
 })
 export class LocationSearchComponent implements OnInit, OnDestroy {
@@ -89,38 +91,43 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     }
 
     this._store
-      .select(selectTracking)
-      .take(1)
+      .pipe(
+        select(selectTracking),
+        take(1)
+      )
       .subscribe(tracking => {
         if (tracking === false) {
           this._store.dispatch(new BackgroundGeolocationActions.StartTracking());
         }
       });
 
-    const location$ = this._store
-      .select(selectCurrentLocation)
-      .takeUntil(this._destroy$)
-      .filter((location: IGeoPosition) => !!_.get(location, 'coords.latitude') && !!_.get(location, 'coords.latitude'))
-      .map((location: IGeoPosition) => <GeoJSON.Position>[location.coords.longitude, location.coords.latitude])
-      .distinctUntilChanged((position1, position2) => {
-        let point1: turfCoord = {
+    const location$ = this._store.pipe(
+      select(selectCurrentLocation),
+      takeUntil(this._destroy$),
+      filter((location: IGeoPosition) => !!_get(location, 'coords.latitude') && !!_get(location, 'coords.latitude')),
+      map((location: IGeoPosition) => <GeoJSON.Position>[location.coords.longitude, location.coords.latitude]),
+      distinctUntilChanged((position1, position2) => {
+        const point1: turfCoord = {
           type: 'Point',
           coordinates: [position1[0], position1[1]]
         };
 
-        let point2: turfCoord = {
+        const point2: turfCoord = {
           type: 'Point',
           coordinates: [position2[0], position2[1]]
         };
 
         return distance(point1, point2) <= 0.1;
-      });
+      })
+    );
 
     this._locate$
-      .takeUntil(this._destroy$)
-      .switchMap(locate => {
-        return locate ? location$.take(1) : never();
-      })
+      .pipe(
+        takeUntil(this._destroy$),
+        switchMap(locate => {
+          return locate ? location$.pipe(take(1)) : NEVER;
+        })
+      )
       .subscribe((coords: number[]) => {
         this._address = 'my-location';
         this._location = coords;
@@ -130,9 +137,11 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     this._locate$.next(true);
 
     this._store
-      .select(this._searchFiltersSelectors.getFilter('radius'))
-      .takeUntil(this._destroy$)
-      .filter(radius => !!radius && this._radius !== radius)
+      .pipe(
+        select(this._searchFiltersSelectors.getFilter('radius')),
+        takeUntil(this._destroy$),
+        filter(radius => !!radius && this._radius !== radius)
+      )
       .subscribe(radius => {
         this._radius = radius;
         this._search();

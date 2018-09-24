@@ -11,7 +11,7 @@ import { LanguageService } from '../../language-service';
 describe('LanguageSelectorComponent', () => {
   let component: LanguageSelectorComponent;
   let fixture: ComponentFixture<LanguageSelectorComponent>;
-  let language = [{ id: 'en_US', name: 'English' }];
+  const language = [{ id: 'en_US', name: 'English' }];
 
   class MockLanguageService {
     getSupportedLanguages() {

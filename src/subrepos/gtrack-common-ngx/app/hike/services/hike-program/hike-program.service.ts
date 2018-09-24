@@ -1,10 +1,7 @@
+import { filter, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-
 import { HikeProgram } from './hike-program';
 
 import {
@@ -14,18 +11,19 @@ import {
   EObjectState
 } from '../../../../../provider-client';
 import { DeepstreamService } from '../../../../../deepstream-ngx';
-import { CheckpointService } from '../checkpoint';
 
 @Injectable()
 export class HikeProgramService {
-  constructor(private _deepstream: DeepstreamService, private _checkpointService: CheckpointService) {}
+  constructor(private _deepstream: DeepstreamService) {}
 
   get(id: string): Observable<IHikeProgramStored | null> {
     return this._deepstream
       .getRecord<IHikeProgramStored>(`hike_programs/${id}`)
       .get()
-      .filter(data => data.stops instanceof Array)
-      .take(1);
+      .pipe(
+        filter(data => data.stops instanceof Array),
+        take(1)
+      );
   }
 
   query(): Observable<IHikeProgramStored[]> {
@@ -34,7 +32,7 @@ export class HikeProgramService {
         table: 'hike_programs',
         query: []
       })
-      .take(1);
+      .pipe(take(1));
   }
 
   public save(hikeProgram: IHikeProgram) {
@@ -44,7 +42,7 @@ export class HikeProgramService {
       data = hikeProgram.toObject();
     }
 
-    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data).take(1);
+    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data).pipe(take(1));
   }
 
   public updateState(id: string, state: EObjectState) {
@@ -54,7 +52,7 @@ export class HikeProgramService {
         table: 'hike_programs',
         state: state
       })
-      .take(1);
+      .pipe(take(1));
   }
 
   public delete(id: string) {
@@ -63,6 +61,6 @@ export class HikeProgramService {
         id: id,
         table: 'hike_programs'
       })
-      .take(1);
+      .pipe(take(1));
   }
 }

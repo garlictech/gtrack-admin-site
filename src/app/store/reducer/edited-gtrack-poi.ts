@@ -2,7 +2,9 @@ import { ActionReducer } from '@ngrx/store';
 import { IEditedGTrackPoiState } from '../state';
 import { editedGTrackPoiActions } from '../actions';
 import { EObjectState } from 'subrepos/provider-client';
-import * as _ from 'lodash';
+
+import _cloneDeep from 'lodash-es/cloneDeep';
+import _omit from 'lodash-es/omit';
 
 export const initialEditedGTrackPoiState: IEditedGTrackPoiState = {
   data: {
@@ -25,7 +27,7 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
   state = initialEditedGTrackPoiState,
   action: editedGTrackPoiActions.AllEditedGTrackPoiActions
 ): IEditedGTrackPoiState => {
-  let newState = _.cloneDeep(state);
+  const newState = _cloneDeep(state);
 
   switch (action.type) {
     case editedGTrackPoiActions.ADD_NEW_TRANSLATED_POI_DESCRIPTION: {
@@ -35,7 +37,7 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
     }
 
     case editedGTrackPoiActions.DELETE_TRANSLATED_POI_DESCRIPTION: {
-      newState.data.description = _.omit(newState.data.description, action.languageKey);
+      newState.data.description = _omit(newState.data.description, action.languageKey);
       newState.dirty = true;
       return newState;
     }
@@ -72,18 +74,19 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
       newState.data.backgroundImages = [
         ...(<any>state.data.backgroundImages || []),
         action.imageData
-      ]
+      ];
 
       return newState;
     }
 
     case editedGTrackPoiActions.REMOVE_POI_BACKGROUND_IMAGE: {
       newState.dirty = true;
-      newState.data.backgroundImages = (<any>newState.data.backgroundImages || []).filter(img => img.original.url !== action.origUrl);
+      newState.data.backgroundImages = (<any>newState.data.backgroundImages || [])
+        .filter(img => img.original.url !== action.origUrl);
       return newState;
     }
 
     default:
       return state;
   }
-}
+};

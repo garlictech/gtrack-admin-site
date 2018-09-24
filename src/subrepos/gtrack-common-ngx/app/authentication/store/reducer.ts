@@ -1,6 +1,5 @@
 import { ActionReducer, combineReducers } from '@ngrx/store';
 
-import { IAuthenticationState, IJwtAuthState } from './state';
 import * as Actions from './actions';
 import { Reducer as jwtReducer } from '../../../../authentication-api-ngx';
 

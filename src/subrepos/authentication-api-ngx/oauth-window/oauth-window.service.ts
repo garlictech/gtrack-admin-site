@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Deferred } from '../deferred';
 import { WindowService } from '../window';
 
 import { LoginError, LoginErrorCodes } from '../errors/login-error';
 
+import { Subject, Observable } from 'rxjs';
+
 @Injectable()
 export class OauthWindowService {
-  private _deferred: Deferred = new Deferred();
+  private _subject = new Subject<string>();
   private _startTime: number;
   private _loginWindow: any;
   private _window: any;
@@ -29,7 +30,7 @@ export class OauthWindowService {
   /**
    * Open new login pop-up
    */
-  public open(loginUrl: string, parameter = 'access_token'): Promise<any> {
+  public open(loginUrl: string, parameter = 'access_token'): Observable<string> {
     this._startTime = new Date().getTime();
 
     if (this._loginWindow && this._loginWindow.closed !== true) {
@@ -41,10 +42,11 @@ export class OauthWindowService {
       const err = new LoginError('OAuth window reopened');
       err.code = LoginErrorCodes.REOPENED;
 
-      this._deferred.reject(err);
+      this._subject.error(err);
+      this._subject.complete();
     }
 
-    this._deferred = new Deferred();
+    this._subject = new Subject<string>();
 
     this._loginWindow = this._window.open(loginUrl, '_blank', 'location=no');
 
@@ -61,7 +63,7 @@ export class OauthWindowService {
       this.loginWindowExitHandler();
     });
 
-    return this._deferred.promise;
+    return this._subject.asObservable();
   }
 
   /**
@@ -71,7 +73,7 @@ export class OauthWindowService {
     if (this._loginWindow) {
       if (typeof this._loginWindow.executeScript === 'function') {
         this._loginWindow.executeScript({
-          code: "window.location.href='" + url + "';"
+          code: 'window.location.href=\'' + url + '\';'
         });
       } else {
         this._loginWindow.location.href = url;
@@ -120,7 +122,8 @@ export class OauthWindowService {
       };
 
       setTimeout(fv, timeout > 0 ? timeout : 0);
-      this._deferred.resolve(url);
+      this._subject.next(url);
+      this._subject.complete();
     }
   }
 
@@ -138,6 +141,7 @@ export class OauthWindowService {
     const err = new LoginError('User cancelled');
     err.code = LoginErrorCodes.USER_CANCELLED;
 
-    this._deferred.reject(err);
+    this._subject.error(err);
+    this._subject.complete();
   }
 }

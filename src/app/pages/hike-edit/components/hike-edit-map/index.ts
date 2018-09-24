@@ -1,7 +1,8 @@
 
 import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit, ElementRef, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { takeUntil, take } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { adminMapActions, commonBackgroundGeolocationActions } from '../../../../store/actions';
 import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
@@ -75,8 +76,10 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Update buffer on each segment update
     this._store
-      .select(this._hikeEditRoutePlannerSelectors.getSegments)
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getSegments),
+        takeUntil(this._destroy$)
+      )
       .subscribe(() => {
         // Refresh buffer on segment change, if needed
         setTimeout(() => {
@@ -88,8 +91,10 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     this._store
-      .select(this._hikeEditRoutePlannerSelectors.getIsPlanning)
-      .takeUntil(this._destroy$)
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+        takeUntil(this._destroy$)
+      )
       .subscribe((planning: boolean) => {
         this.allowPlanning = planning;
       });
@@ -97,8 +102,10 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     this._store.dispatch(new commonBackgroundGeolocationActions.StartTracking());
 
     this.currentLocation$ = this._store
-      .select(selectCurrentLocation)
-      .takeUntil(this._destroy$);
+      .pipe(
+        select(selectCurrentLocation),
+        takeUntil(this._destroy$)
+      );
 
     this._initLocationSearchInput();
   }
@@ -127,7 +134,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
             // this._createCheckpoint(e.latlng);
           }
         }
-      })
+      });
 
     /* WARNING: CAUSES BROWSER LAG!!
     // Turn on scrollWheelZoom after the first interaction (click/drag)
@@ -145,10 +152,10 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     $event.stopPropagation();
 
     this.currentLocation$
-      .take(1)
+      .pipe(take(1))
       .subscribe((position: IGeoPosition) => {
         if (position && position.coords) {
-          const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude)
+          const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
           this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
         }
       });
@@ -158,8 +165,10 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     $event.stopPropagation();
 
     this._store
-      .select(this._hikeEditRoutePlannerSelectors.getRoute)
-      .take(1)
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getRoute),
+        take(1)
+      )
       .subscribe((route) => {
         this.mapComponent.map.fitBounds(route);
       });
@@ -180,7 +189,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   private _addBuffer() {
     this.mapComponent.map
       .getBuffer()
-      .take(1)
+      .pipe(take(1))
       .subscribe((buffer) => {
         if (buffer) {
           this._bufferOnMap = this.mapComponent.map.addGeoJSON(buffer);

@@ -1,8 +1,6 @@
 import * as uuid from 'uuid/v4';
 import { IHikeProgram, IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import * as actions from '../actions';
-import { HikeProgram } from '../../../services/hike-program';
-import { CheckpointService } from '../../../services/checkpoint';
 
 describe('Hike actions', () => {
   let id;
@@ -44,7 +42,7 @@ describe('Hike actions', () => {
 
   describe('LoadHikeProgram action', () => {
     it('should create an action', () => {
-      let action = new actions.LoadHikeProgram(id);
+      const action = new actions.LoadHikeProgram(id);
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.LOAD_HIKE_PROGRAM,
@@ -55,7 +53,7 @@ describe('Hike actions', () => {
 
   describe('LoadHikeProgramFailed action', () => {
     it('should create an action', () => {
-      let action = new actions.LoadHikeProgramFailed(id);
+      const action = new actions.LoadHikeProgramFailed(id);
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.LOAD_HIKE_PROGRAM_FAILED,
@@ -66,7 +64,7 @@ describe('Hike actions', () => {
 
   describe('HikeProgramLoaded action', () => {
     it('should create an action', () => {
-      let action = new actions.HikeProgramLoaded(id, hikeProgramStoredData);
+      const action = new actions.HikeProgramLoaded(id, hikeProgramStoredData);
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.HIKE_PROGRAM_LOADED,
@@ -78,7 +76,7 @@ describe('Hike actions', () => {
 
   describe('LoadHikePrograms action', () => {
     it('should create an action', () => {
-      let action = new actions.LoadHikePrograms();
+      const action = new actions.LoadHikePrograms();
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.LOAD_HIKE_PROGRAMS
@@ -88,7 +86,7 @@ describe('Hike actions', () => {
 
   describe('AllHikeProgramsLoaded action', () => {
     it('should create an action', () => {
-      let action = new actions.AllHikeProgramsLoaded([id], [hikeProgramStoredData]);
+      const action = new actions.AllHikeProgramsLoaded([id], [hikeProgramStoredData]);
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.ALL_HIKE_PROGRAMS_LOADED,
@@ -100,7 +98,7 @@ describe('Hike actions', () => {
 
   describe('UpdateHikeProgramState action', () => {
     it('should create an action', () => {
-      let action = new actions.UpdateHikeProgramState(id, EObjectState.published);
+      const action = new actions.UpdateHikeProgramState(id, EObjectState.published);
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.UPDATE_HIKE_PROGRAM_STATE,
@@ -112,7 +110,7 @@ describe('Hike actions', () => {
 
   describe('DeleteHikeProgram action', () => {
     it('should create an action', () => {
-      let action = new actions.DeleteHikeProgram(id);
+      const action = new actions.DeleteHikeProgram(id);
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.DELETE_HIKE_PROGRAM,
@@ -123,7 +121,7 @@ describe('Hike actions', () => {
 
   describe('HikeProgramDeleted action', () => {
     it('should create an action', () => {
-      let action = new actions.HikeProgramDeleted(id);
+      const action = new actions.HikeProgramDeleted(id);
 
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.HIKE_PROGRAM_DELETED,
