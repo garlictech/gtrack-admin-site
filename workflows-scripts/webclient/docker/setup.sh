@@ -16,5 +16,10 @@ echo "Updating tsconfig.json..."
 export DOCKER_CMD="cat tsconfig.json"
 ${DOCKER_RUN_CMD} > tsconfig.json
 
+echo "Updating jest-config.json..."
+export DOCKER_CMD="cat jest-config.json"
+${DOCKER_RUN_CMD} > jest-config.json
+
 echo "Adding ng packages..."
-ng add ng-cli-pug-loader && rm -f ng-add-pug-loader.js
+rm -f ng-add-pug-loader.js
+ng add ng-cli-pug-loader
