@@ -7,6 +7,6 @@
 	remote = https://github.com/garlictech/workflows-scripts.git
 	branch = master
 	commit = d06083f83bbf0406c566169b2007858ec2c202cc
-	parent = 0767e8d7f11ea98ed5db7a9d50c68d03e94dc66c
+	parent = 3f9cc05bd324d6f251718ca501bd99aba8428c27
 	cmdver = 0.3.1
 	method = merge
