@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/garlictech/gtrack-common-ngx.git
 	branch = master
-	commit = 678779b508edf0788896b21430b10c4293495b69
-	parent = 2c3cd33868dd85ce3942849404c27f87a2204bdd
+	commit = 22f1300f1b457a566e4bcd9df7d2143be34eb0be
+	parent = 430f8dffd6b25b695ebc80831ee25a0415c50510
 	method = merge
 	cmdver = 0.3.1
