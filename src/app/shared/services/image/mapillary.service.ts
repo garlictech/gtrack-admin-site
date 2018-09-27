@@ -7,10 +7,13 @@ import _get from 'lodash-es/get';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import { IBackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
 import { EPoiImageTypes } from 'subrepos/provider-client';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class MapillaryService {
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient
+  ) {}
 
   public get(bounds) {
     // tslint:disable:max-line-length
@@ -19,8 +22,7 @@ export class MapillaryService {
 
     return this._http
       .get(request)
-      .toPromise()
-      .then((response: any) => {
+      .switchMap((response: any) => {
         const _features = _get(response, 'features');
         const _images: IBackgroundImageDataStored[] = [];
 
@@ -54,7 +56,7 @@ export class MapillaryService {
           }
         }
 
-        return _images;
+        return Observable.of(_images);
       });
   }
 }

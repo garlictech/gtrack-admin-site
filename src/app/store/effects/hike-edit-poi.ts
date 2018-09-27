@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
+import { map, switchMap, combineLatest } from 'rxjs/operators';
 import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../actions';
 import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService, HikeProgramService } from '../../shared/services';
 import { IWikipediaPoi, IOsmPoi, IGooglePoi } from '../../shared/interfaces';
@@ -32,26 +32,28 @@ export class HikeEditPoiEffects {
       ofType(hikeEditPoiActions.GET_WIKIPEDIA_POIS),
       map((action: hikeEditPoiActions.GetWikipediaPois) => action.bounds),
       switchMap(bounds => {
+        console.log('bounds', bounds);
         const boundsArr: any[] = [];
         this._routeService.splitBounds(bounds, 10000, boundsArr);
 
         const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
 
-        const _promises: Promise<IWikipediaPoi[]>[] = [];
+        const _observables: Observable<IWikipediaPoi[]>[] = [];
 
         for (const lang of langs) {
           for (const _bounds of boundsArr) {
-            _promises.push(this._wikipediaPoiService.get(_bounds, lang));
+            _observables.push(this._wikipediaPoiService.get(_bounds, lang));
           }
         }
 
-        return Promise.all(_promises).then(poisArr => {
-          let pois: IWikipediaPoi[] = [];
-          poisArr.map((poiArr: IWikipediaPoi[]) => {
-            pois = _concat(pois, poiArr);
+        return forkJoin(_observables)
+          .map(poisArr => {
+            let pois: IWikipediaPoi[] = [];
+            poisArr.map((poiArr: IWikipediaPoi[]) => {
+              pois = _concat(pois, poiArr);
+            });
+            return new hikeEditPoiActions.SetWikipediaPois(_uniqBy(pois, 'wikipedia.pageid'));
           });
-          return new hikeEditPoiActions.SetWikipediaPois(_uniqBy(pois, 'wikipedia.pageid'));
-        });
       })
     );
 
@@ -66,20 +68,20 @@ export class HikeEditPoiEffects {
       switchMap(bounds => {
         const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
 
-        const _promises: Promise<any>[] = [];
+        const _observables: Observable<IGooglePoi[]>[] = [];
 
         for (const lang of langs) {
-          _promises.push(this._googlePoiService.get(bounds, lang));
+          _observables.push(this._googlePoiService.get(bounds, lang));
         }
 
-        return Promise.all(_promises).then(poisArr => {
-          let pois: IGooglePoi[] = [];
-          poisArr.map((poiArr: IGooglePoi[]) => {
-            pois = _concat(pois, poiArr);
+        return forkJoin(_observables)
+          .map(poisArr => {
+            let pois: IGooglePoi[] = [];
+            poisArr.map((poiArr: IGooglePoi[]) => {
+              pois = _concat(pois, poiArr);
+            });
+            return new hikeEditPoiActions.SetGooglePois(pois);
           });
-
-          return new hikeEditPoiActions.SetGooglePois(pois);
-        });
       })
     );
 
@@ -92,9 +94,11 @@ export class HikeEditPoiEffects {
       ofType(hikeEditPoiActions.GET_OSM_NATURAL_POIS),
       map((action: hikeEditPoiActions.GetOsmNaturalPois) => action.bounds),
       switchMap(bounds => {
-        return this._osmPoiService.get(bounds, 'natural').then((pois: IOsmPoi[]) => {
-          return new hikeEditPoiActions.SetOsmNaturalPois(pois);
-        });
+        return this._osmPoiService
+          .get(bounds, 'natural')
+          .map((pois: IOsmPoi[]) => {
+            return new hikeEditPoiActions.SetOsmNaturalPois(pois);
+          });
       })
     );
 
@@ -107,9 +111,11 @@ export class HikeEditPoiEffects {
       ofType(hikeEditPoiActions.GET_OSM_AMENITY_POIS),
       map((action: hikeEditPoiActions.GetOsmAmenityPois) => action.bounds),
       switchMap(bounds => {
-        return this._osmPoiService.get(bounds, 'amenity').then((pois: IOsmPoi[]) => {
-          return new hikeEditPoiActions.SetOsmAmenityPois(pois);
-        });
+        return this._osmPoiService
+          .get(bounds, 'amenity')
+          .map((pois: IOsmPoi[]) => {
+            return new hikeEditPoiActions.SetOsmAmenityPois(pois);
+          });
       })
     );
 
@@ -122,9 +128,11 @@ export class HikeEditPoiEffects {
       ofType(hikeEditPoiActions.GET_OSM_ROUTE_POIS),
       map((action: hikeEditPoiActions.GetOsmRoutePois) => action.bounds),
       switchMap(bounds => {
-        return this._osmRoutePoiService.get(bounds).then((pois: IOsmPoi[]) => {
-          return new hikeEditPoiActions.SetOsmRoutePois(pois);
-        });
+        return this._osmRoutePoiService
+          .get(bounds)
+          .map((pois: IOsmPoi[]) => {
+            return new hikeEditPoiActions.SetOsmRoutePois(pois);
+          });
       })
     );
 

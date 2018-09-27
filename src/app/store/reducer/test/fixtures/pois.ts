@@ -24,6 +24,9 @@ export const pois = [
           url: 'fakeGoogleUrl1'
         }
       }]
+    },
+    wikipedia: {
+      pageid: 'fakeWikipediaPageId1'
     }
   },
   {
@@ -53,6 +56,9 @@ export const pois = [
           url: 'fakeGoogleUrl3'
         }
       }]
+    },
+    wikipedia: {
+      pageid: 'fakeWikipediaPageId2'
     }
   }
 ];

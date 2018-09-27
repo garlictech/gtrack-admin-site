@@ -2,12 +2,13 @@ import { IEditedGTrackPoiState } from '../../state';
 import { initialEditedGTrackPoiState, editedGTrackPoiReducer } from '../edited-gtrack-poi';
 import { editedGTrackPoiActions } from '../../actions';
 import { IExternalPoi } from '../../../shared/interfaces';
-import { IBackgroundImageData } from '../../../../subrepos/provider-client';
+import { IBackgroundImageData, IPoiStored, EObjectState } from '../../../../subrepos/provider-client';
 
 import * as _ from 'lodash';
 
 import {
   pois as poiFixtures,
+  pois as poiStoredFixtures,
   bgImages as bgImageFixtures
 } from './fixtures';
 
@@ -126,7 +127,13 @@ describe('Edited GTrackPoi reducers', () => {
 
   describe('PoiSaveFailed action', () => {
     it('should handle loading pois', () => {
-      const action = new editedGTrackPoiActions.LoadPoi(pois[0]);
+      const action = new editedGTrackPoiActions.LoadPoi(_.merge(
+        pois[0],
+        {
+          timestamp: 0,
+          state: EObjectState.published
+        }
+      ));
       const state = editedGTrackPoiReducer(initialState, action);
 
       expect(state.working).toBeNull();
