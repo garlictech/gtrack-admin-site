@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, forkJoin } from 'rxjs';
-import { map, switchMap, combineLatest } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../actions';
 import { OsmPoiService, OsmRoutePoiService, WikipediaPoiService, GooglePoiService, HikeProgramService } from '../../shared/services';
 import { IWikipediaPoi, IOsmPoi, IGooglePoi } from '../../shared/interfaces';
