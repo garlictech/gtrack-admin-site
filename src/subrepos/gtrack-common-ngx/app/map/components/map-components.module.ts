@@ -10,7 +10,7 @@ import { LocalizeModule } from '../../localize';
 import { SharedModule } from '../../shared';
 
 // PrimeNG
-import { ButtonModule } from 'primeng/primeng';
+import { ButtonModule } from 'primeng/button';
 
 const COMPONENTS = [LeafletComponent, IconComponent, MarkerPopupComponent];
 
