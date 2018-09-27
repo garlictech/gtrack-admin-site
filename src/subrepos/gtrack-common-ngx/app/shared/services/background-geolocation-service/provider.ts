@@ -36,7 +36,6 @@ export class BackgroundGeolocationService {
       return true;
     }
 
-
     log.data('Determining current location starts in browser mode');
     this.end();
 
