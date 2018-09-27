@@ -5,6 +5,7 @@ import { IOsmPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class OsmRoutePoiService {
@@ -28,8 +29,7 @@ export class OsmRoutePoiService {
 
     return this._http
       .post('https://overpass-api.de/api/interpreter', request)
-      .toPromise()
-      .then((response: any) => {
+      .switchMap((response: any) => {
         const _res: IOsmPoi[] = [];
 
         if (response.elements) {
@@ -60,7 +60,7 @@ export class OsmRoutePoiService {
           }
         }
 
-        return _res;
+        return Observable.of(_res);
       });
   }
 }

@@ -6,6 +6,7 @@ import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
 import _get from 'lodash-es/get';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class OsmPoiService {
@@ -43,8 +44,7 @@ export class OsmPoiService {
 
     return this._http
       .post('https://overpass-api.de/api/interpreter', request)
-      .toPromise()
-      .then((response: any) => {
+      .switchMap((response: any) => {
         const _res: IOsmPoi[] = [];
 
         if (response.elements) {
@@ -75,7 +75,7 @@ export class OsmPoiService {
           }
         }
 
-        return _res;
+        return Observable.of(_res);
       });
   }
 
