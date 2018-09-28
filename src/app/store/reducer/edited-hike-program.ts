@@ -1,7 +1,7 @@
 import { ActionReducer } from '@ngrx/store';
 import { IEditedHikeProgramState } from '../state';
 import { editedHikeProgramActions } from '../actions';
-import { EObjectState } from 'subrepos/provider-client';
+import { EObjectState, ETextualDescriptionType } from 'subrepos/provider-client';
 
 import _omit from 'lodash-es/omit';
 import _assign from 'lodash-es/assign';
@@ -22,7 +22,14 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
     difficulty: 1,
     backgroundImages: [],
     routeId: '',
-    description: { en_US: { title: 'A new hike', fullDescription: '', summary: '' } },
+    description: {
+      en_US: {
+        title: 'A new hike',
+        fullDescription: '',
+        summary: '',
+        type: ETextualDescriptionType.markdown
+      }
+    },
     stops: [],
     checkpoints: null,
     timestamp: 0,

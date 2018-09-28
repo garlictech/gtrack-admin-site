@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { IEditedGTrackPoiState } from '../../state';
 import { editedGTrackPoiReducer, initialEditedGTrackPoiState } from '../../reducer/edited-gtrack-poi';
 import { editedGTrackPoiActions } from '../../actions';
-import { IBackgroundImageData } from '../../../../subrepos/provider-client';
+import { IBackgroundImageData, ETextualDescriptionType } from '../../../../subrepos/provider-client';
 
 import {
   bgImages as bgImageFixtures
@@ -56,7 +56,10 @@ describe('Edited GTrackPoi selectors', () => {
         .subscribe(res => (result = res));
 
       expect(result).toEqual({
-        en_US: { title: 'A new poi' }
+        en_US: {
+          title: 'A new poi',
+          type: ETextualDescriptionType.markdown
+        }
       });
 
       store.dispatch(new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
@@ -64,7 +67,10 @@ describe('Edited GTrackPoi selectors', () => {
       }));
 
       expect(result).toEqual({
-        en_US: { title: 'A new poi' },
+        en_US: {
+          title: 'A new poi',
+          type: ETextualDescriptionType.markdown
+        },
         hu_HU: { title: 'A new translation' },
       });
     });

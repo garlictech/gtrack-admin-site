@@ -6,12 +6,13 @@ import { takeUntil } from 'rxjs/operators';
 import { IEditedHikeProgramState } from '../../state';
 import { editedHikeProgramReducer, initialEditedHikeProgramState } from '../../reducer/edited-hike-program';
 import { editedHikeProgramActions, commonPoiActions } from '../../actions';
-import { IBackgroundImageData, EObjectState } from '../../../../subrepos/provider-client';
+import { IBackgroundImageData, EObjectState, IHikeProgramStop } from '../../../../subrepos/provider-client';
 import { PoiSelectors, EXTERNAL_POI_DEPENDENCIES, poiReducer } from '../../../../subrepos/gtrack-common-ngx';
 
 import {
   pois as poiFixtures,
-  bgImages as bgImageFixtures
+  bgImages as bgImageFixtures,
+  stops as stopsFixtures
 } from '../../reducer/test/fixtures';
 
 import * as _ from 'lodash';
@@ -22,11 +23,13 @@ describe('Edited HikeProgram selectors', () => {
   let destroy$: Subject<boolean>;
   let images: IBackgroundImageData[];
   let pois: IExternalPoi[];
+  let stops: IHikeProgramStop[];
   let ids: string[];
 
   beforeEach(() => {
     images = _.cloneDeep(bgImageFixtures);
     pois = _.cloneDeep(poiFixtures);
+    stops = _.cloneDeep(stopsFixtures);
     ids = pois.map(poi => poi.id);
     destroy$ = new Subject<boolean>();
 
@@ -147,19 +150,9 @@ describe('Edited HikeProgram selectors', () => {
 
       expect(result).toEqual([]);
 
-      store.dispatch(new editedHikeProgramActions.SetStops([
-        {
-          poiId: 'fakeId1'
-        },
-        {
-          poiId: 'fakeId2'
-        },
-        {
-          prop: 'noFakeId'
-        }
-      ]));
+      store.dispatch(new editedHikeProgramActions.SetStops(stops));
 
-      expect(result).toEqual(['fakeId1', 'fakeId2']);
+      expect(result).toEqual(['1', '2']);
     });
   });
 
@@ -167,13 +160,6 @@ describe('Edited HikeProgram selectors', () => {
     it('should return editedGTrackPoi stops', () => {
       let result;
       const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
-      const stops = [
-        {
-          poiId: 'fakeId1'
-        }, {
-          poiId: 'fakeId2'
-        }
-      ];
 
       store
         .pipe(
@@ -194,13 +180,6 @@ describe('Edited HikeProgram selectors', () => {
     it('should return editedGTrackPoi stops count', () => {
       let result;
       const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
-      const stops = [
-        {
-          poiId: 'fakeId1'
-        }, {
-          poiId: 'fakeId2'
-        }
-      ];
 
       store
         .pipe(
@@ -368,7 +347,10 @@ describe('Edited HikeProgram selectors', () => {
       const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
-      store.dispatch(new commonPoiActions.PoiLoaded(ids[0], pois[0]));
+      store.dispatch(new commonPoiActions.PoiLoaded(ids[0], _.merge(pois[0], {
+        timestamp: 0,
+        state: EObjectState.published
+      })));
 
       store
         .select(editedHikeProgramSelectors.getHikePois(poiSelectors.getAllPois))
@@ -377,11 +359,7 @@ describe('Edited HikeProgram selectors', () => {
 
       expect(result).toEqual([]);
 
-      store.dispatch(new editedHikeProgramActions.SetStops([
-        {
-          poiId: pois[0].id
-        }
-      ]));
+      store.dispatch(new editedHikeProgramActions.SetStops(stops));
 
       expect(result).toEqual([pois[0]]);
     });
@@ -393,7 +371,10 @@ describe('Edited HikeProgram selectors', () => {
       const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
-      store.dispatch(new commonPoiActions.PoiLoaded(ids[0], pois[0]));
+      store.dispatch(new commonPoiActions.PoiLoaded(ids[0], _.merge(pois[0], {
+        timestamp: 0,
+        state: EObjectState.published
+      })));
 
       store
         .select(editedHikeProgramSelectors.getHikePoisCount(poiSelectors.getAllPois))
@@ -402,11 +383,7 @@ describe('Edited HikeProgram selectors', () => {
 
       expect(result).toEqual(0);
 
-      store.dispatch(new editedHikeProgramActions.SetStops([
-        {
-          poiId: pois[0].id
-        }
-      ]));
+      store.dispatch(new editedHikeProgramActions.SetStops(stops));
 
       expect(result).toEqual(1);
     });
@@ -418,7 +395,11 @@ describe('Edited HikeProgram selectors', () => {
       const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
-      store.dispatch(new commonPoiActions.PoiLoaded(ids[0], pois[0]));
+      // Load 1 poi
+      store.dispatch(new commonPoiActions.PoiLoaded(ids[0], _.merge(pois[0], {
+        timestamp: 0,
+        state: EObjectState.published
+      })));
 
       store
         .select(editedHikeProgramSelectors.getStopsWithPoiNames(poiSelectors.getAllPois))
@@ -427,16 +408,12 @@ describe('Edited HikeProgram selectors', () => {
 
       expect(result).toEqual([]);
 
-      store.dispatch(new editedHikeProgramActions.SetStops([
-        {
-          poiId: pois[0].id
-        }
-      ]));
+      store.dispatch(new editedHikeProgramActions.SetStops(stops));
 
-      expect(result).toEqual([{
-        poiId: pois[0].id,
+      // Return with 2 stops, only the 1st contains poi description!
+      expect(result).toEqual([_.merge(stops[0], {
         description: pois[0].description
-      }]);
+      }), stops[1]]);
     });
   });
 

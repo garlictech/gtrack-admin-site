@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EPoiTypes } from 'subrepos/provider-client';
+import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
 import { IOsmPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
@@ -62,7 +62,8 @@ export class OsmPoiService {
                   [LanguageService.shortToLocale(lng)]: {
                     title: _point.tags.name || LanguageService.pascalize(type) || 'unknown',
                     summary: '',
-                    fullDescription: ''
+                    fullDescription: '',
+                    type: ETextualDescriptionType.markdown
                   }
                 },
                 objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,

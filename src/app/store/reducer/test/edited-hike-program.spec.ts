@@ -1,21 +1,25 @@
 import { IEditedHikeProgramState } from '../../state';
 import { initialEditedHikeProgramState, editedHikeProgramReducer } from '../edited-hike-program';
-import { IBackgroundImageData } from '../../../../subrepos/provider-client';
+import { IBackgroundImageData, IHikeProgramStop, ETextualDescriptionType } from '../../../../subrepos/provider-client';
 import { editedHikeProgramActions } from '../../actions';
 
 import * as _ from 'lodash';
 
 import {
-  bgImages as bgImageFixtures
+  bgImages as bgImageFixtures,
+  stops as stopsFixtures
 } from './fixtures';
+import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 
 describe('Edited HikeProgram reducers', () => {
   let initialState: IEditedHikeProgramState;
   let images: IBackgroundImageData[];
+  let stops: IHikeProgramStop[];
 
   beforeEach(() => {
     initialState = _.cloneDeep(initialEditedHikeProgramState);
     images = _.cloneDeep(bgImageFixtures);
+    stops = _.cloneDeep(stopsFixtures);
   });
 
   describe('undefined action', () => {
@@ -45,7 +49,8 @@ describe('Edited HikeProgram reducers', () => {
         en_US: {
           title: 'A new hike',
           fullDescription: '',
-          summary: ''
+          summary: '',
+          type: ETextualDescriptionType.markdown
         },
         hu_HU: {
           title: 'fakeTitle'
@@ -92,7 +97,8 @@ describe('Edited HikeProgram reducers', () => {
         en_US: {
           title: 'A new hike',
           fullDescription: '',
-          summary: ''
+          summary: '',
+          type: ETextualDescriptionType.markdown
         },
         hu_HU: {
           title: 'fakeTitle'
@@ -163,9 +169,7 @@ describe('Edited HikeProgram reducers', () => {
 
   describe('AddStop action', () => {
     it('should add stop to hikeProgram', () => {
-      const stopData = {
-        poiId: 'fakeStopId'
-      };
+      const stopData = stops[0];
       const action = new editedHikeProgramActions.AddStop(stopData);
       const state = editedHikeProgramReducer(initialState, action);
 
@@ -176,11 +180,7 @@ describe('Edited HikeProgram reducers', () => {
 
   describe('SetStops action', () => {
     it('should set stops to hikeProgram', () => {
-      const stopsData = [{
-        poiId: 'fakeStopId1'
-      }, {
-        poiId: 'fakeStopId2'
-      }];
+      const stopsData = stops;
       const action = new editedHikeProgramActions.SetStops(stopsData);
       const state = editedHikeProgramReducer(initialState, action);
 
@@ -190,36 +190,24 @@ describe('Edited HikeProgram reducers', () => {
 
   describe('RemoveStopByPoiId action', () => {
     it('should remove stops from hikeProgram by poi ID', () => {
-      const action = new editedHikeProgramActions.RemoveStopByPoiId(['fakeStopId1', 'fakeStopId2']);
+      const action = new editedHikeProgramActions.RemoveStopByPoiId(['1']);
       const state = editedHikeProgramReducer(_.merge({}, initialState, {
         data: {
-          stops: [{
-            poiId: 'fakeStopId1'
-          }, {
-            poiId: 'fakeStopId2'
-          }, {
-            poiId: 'fakeStopId3'
-          }]
+          stops: stops
         }
       }), action);
 
-      expect(state.data.stops).toEqual([{
-        poiId: 'fakeStopId3'
-      }]);
+      expect(state.data.stops).toEqual([stops[1]]);
     });
   });
 
   describe('SetCheckpoints action', () => {
     it('should set checkpoints to hikeProgram', () => {
-      const checkPointsData = [{
-        poiId: 'fakeCheckpointId1'
-      }, {
-        poiId: 'fakeCheckpointId2'
-      }];
-      const action = new editedHikeProgramActions.SetCheckpoints(checkPointsData);
+      const checkpointSequence = new CheckpointSequence([]);
+      const action = new editedHikeProgramActions.SetCheckpoints(checkpointSequence);
       const state = editedHikeProgramReducer(initialState, action);
 
-      expect(state.data.checkpoints).toEqual(checkPointsData);
+      expect(state.data.checkpoints).toEqual(checkpointSequence);
     });
   });
 

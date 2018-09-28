@@ -1,4 +1,4 @@
-import { EPoiTypes } from '../../../../../subrepos/provider-client';
+import { EPoiTypes, ETextualDescriptionType } from '../../../../../subrepos/provider-client';
 
 export const pois = [
   {
@@ -15,7 +15,8 @@ export const pois = [
       'en_US': {
         title: 'Title #1',
         summary: 'Summary #1',
-        fullDescription: 'Description #1'
+        fullDescription: 'Description #1',
+        type: ETextualDescriptionType.markdown
       }
     },
     google: {
@@ -43,7 +44,8 @@ export const pois = [
       'en_US': {
         title: 'Title #2',
         summary: 'Summary #2',
-        fullDescription: 'Description #2'
+        fullDescription: 'Description #2',
+        type: ETextualDescriptionType.markdown
       }
     },
     google: {

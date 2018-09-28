@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { EMPTY, of, interval, Observable } from 'rxjs';
 import { take, flatMap, combineAll } from 'rxjs/operators';
 import { environment } from 'environments/environment';
-import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
+import { EPoiTypes, IBackgroundImageData, EPoiImageTypes, ETextualDescriptionType } from 'subrepos/provider-client';
 import {
   GeometryService,
   CenterRadius,
@@ -73,7 +73,8 @@ export class GooglePoiService {
               [LanguageService.shortToLocale(params.lng)]: {
                 title: _point.name || LanguageService.pascalize(_point.types[0]) || 'unknown',
                 summary: '',
-                fullDescription: ''
+                fullDescription: '',
+                type: ETextualDescriptionType.markdown
               }
             },
             types: _point.types || [],

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of, interval, Observable } from 'rxjs';
 import { take, map, combineAll } from 'rxjs/operators';
-import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
+import { EPoiTypes, IBackgroundImageData, EPoiImageTypes, ETextualDescriptionType } from 'subrepos/provider-client';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx';
 import { IWikipediaPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
@@ -50,6 +50,7 @@ export class WikipediaPoiService {
                   title: _point.title,
                   summary: '',
                   fullDescription: '',
+                  type: ETextualDescriptionType.markdown
                 }
               },
               wikipedia: {},

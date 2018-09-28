@@ -1,5 +1,5 @@
 
-import { IHikeProgram } from 'subrepos/provider-client';
+import { IHikeProgram, ETextualDescriptionType } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 
 export const hikePrograms: IHikeProgram[] = [
@@ -21,7 +21,8 @@ export const hikePrograms: IHikeProgram[] = [
       en_US: {
         fullDescription: 'Test hike',
         title: 'Test hike',
-        summary: 'Test hike'
+        summary: 'Test hike',
+        type: ETextualDescriptionType.markdown
       }
     },
     stops: []
@@ -44,7 +45,8 @@ export const hikePrograms: IHikeProgram[] = [
       en_US: {
         fullDescription: 'Test hike 2',
         title: 'Test hike 2',
-        summary: 'Test hike 2'
+        summary: 'Test hike 2',
+        type: ETextualDescriptionType.markdown
       }
     },
     stops: []

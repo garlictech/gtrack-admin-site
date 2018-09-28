@@ -2,7 +2,7 @@ import { IEditedGTrackPoiState } from '../../state';
 import { initialEditedGTrackPoiState, editedGTrackPoiReducer } from '../edited-gtrack-poi';
 import { editedGTrackPoiActions } from '../../actions';
 import { IExternalPoi } from '../../../shared/interfaces';
-import { IBackgroundImageData, IPoiStored, EObjectState } from '../../../../subrepos/provider-client';
+import { IBackgroundImageData, IPoiStored, EObjectState, ETextualDescriptionType } from '../../../../subrepos/provider-client';
 
 import * as _ from 'lodash';
 
@@ -34,12 +34,15 @@ describe('Edited GTrackPoi reducers', () => {
 
   describe('AddNewTranslatedPoiDescription action', () => {
     it('should add new translated poi description', () => {
-      const action = new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', { title: 'fakeTitle' });
+      const action = new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
+        title: 'fakeTitle'
+      });
       const state = editedGTrackPoiReducer(initialState, action);
 
       expect(state.data.description).toEqual({
         en_US: {
-          title: 'A new poi'
+          title: 'A new poi',
+          type: ETextualDescriptionType.markdown
         },
         hu_HU: {
           title: 'fakeTitle'
@@ -84,7 +87,8 @@ describe('Edited GTrackPoi reducers', () => {
 
       expect(state.data.description).toEqual({
         en_US: {
-          title: 'A new poi'
+          title: 'A new poi',
+          type: ETextualDescriptionType.markdown
         },
         hu_HU: {
           title: 'fakeTitle'
