@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of, interval } from 'rxjs';
+import { of, interval, Observable } from 'rxjs';
 import { take, map, combineAll } from 'rxjs/operators';
-import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
+import { EPoiTypes, IBackgroundImageData, EPoiImageTypes, ETextualDescriptionType } from 'subrepos/provider-client';
 import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx';
 import { IWikipediaPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
@@ -30,9 +30,10 @@ export class WikipediaPoiService {
     // tslint:enable:max-line-length
 
     // Get basic poi list
-    return this._http.get(request)
-      .toPromise()
-      .then((data: any) => {
+    return this._http
+      .get(request)
+      // .toPromise()
+      .switchMap((data: any) => {
         const _pois: IWikipediaPoi[] = [];
 
         if (data.query) {
@@ -49,6 +50,7 @@ export class WikipediaPoiService {
                   title: _point.title,
                   summary: '',
                   fullDescription: '',
+                  type: ETextualDescriptionType.markdown
                 }
               },
               wikipedia: {},
@@ -62,7 +64,7 @@ export class WikipediaPoiService {
             _pois.push(_poi);
           }
 
-          return _pois;
+          return Observable.of(_pois);
         } else {
           if (data.error) {
             this._messageService.add({
@@ -73,7 +75,7 @@ export class WikipediaPoiService {
             });
 
           }
-          return _pois;
+          return Observable.of(_pois);
         }
       });
   }

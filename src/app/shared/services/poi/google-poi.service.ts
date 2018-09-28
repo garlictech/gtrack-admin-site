@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EMPTY, of, interval } from 'rxjs';
+import { EMPTY, of, interval, Observable } from 'rxjs';
 import { take, flatMap, combineAll } from 'rxjs/operators';
 import { environment } from 'environments/environment';
-import { EPoiTypes, IBackgroundImageData, EPoiImageTypes } from 'subrepos/provider-client';
+import { EPoiTypes, IBackgroundImageData, EPoiImageTypes, ETextualDescriptionType } from 'subrepos/provider-client';
 import {
   GeometryService,
   CenterRadius,
@@ -20,6 +20,8 @@ import _take from 'lodash-es/take';
 const PURE_PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
 const PLACE_API_URL = `https://cors-anywhere.herokuapp.com/${PURE_PLACE_API_URL}`;
 
+declare const google;
+
 @Injectable()
 export class GooglePoiService {
   constructor(
@@ -30,7 +32,7 @@ export class GooglePoiService {
   public get(bounds, lng = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
 
-    return new Promise((resolve) => {
+    const promise: Promise<IGooglePoi[]> = new Promise((resolve) => {
       this._batchGet(this._getOnePage, {
         geo: geo,
         lng: lng,
@@ -39,6 +41,8 @@ export class GooglePoiService {
         resolve(_res);
       });
     });
+
+    return Observable.fromPromise(promise);
   }
 
   private _getOnePage = params => {
@@ -69,7 +73,8 @@ export class GooglePoiService {
               [LanguageService.shortToLocale(params.lng)]: {
                 title: _point.name || LanguageService.pascalize(_point.types[0]) || 'unknown',
                 summary: '',
-                fullDescription: ''
+                fullDescription: '',
+                type: ETextualDescriptionType.markdown
               }
             },
             types: _point.types || [],

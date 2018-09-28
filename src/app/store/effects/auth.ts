@@ -29,7 +29,9 @@ export class AuthEffects {
   loginSuccess$: Observable<any> = this._actions$
     .pipe(
       ofType(AuthActions.LOGIN_SUCCESS),
-      filter(() => this._router.url === '/login'),
+      filter(() => {
+        return this._router.url === '/login';
+      }),
       switchMap(data => {
         this._router.navigate(['/']);
 

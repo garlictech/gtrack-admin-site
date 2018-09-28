@@ -19,7 +19,7 @@ interface RequestTokenParams {
 export class PasswordlessService {
   private requestUrl: string;
   private tokenUrl: string;
-  private redirectUri: URL;
+  private redirectUri: string;
   private config: IMagiclinkConfig;
 
   constructor(
@@ -34,7 +34,7 @@ export class PasswordlessService {
   public requestToken(email: string, language?: string, roles?: string[]): Observable<Object> {
     const params: RequestTokenParams = {
       user: email,
-      redirectUri: this.redirectUri.toString()
+      redirectUri: this.redirectUri
     };
 
     if (language) {
@@ -74,7 +74,7 @@ export class PasswordlessService {
     this.config = { ...this.authConfig.magiclink };
     this.requestUrl = `${this.authConfig.apiUrl}/auth/passwordless/token/request`;
     this.tokenUrl = `${this.authConfig.apiUrl}/auth/passwordless/token`;
-    this.redirectUri = new URL(`${this._redirectServerUrl}${this.config.redirectSlug}`);
+    this.redirectUri = `${this._redirectServerUrl}${this.config.redirectSlug}`;
   }
 
   private get _redirectServerUrl(): string | undefined {

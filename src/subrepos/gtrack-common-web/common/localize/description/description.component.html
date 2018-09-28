@@ -3,8 +3,12 @@
         <h1>{{ localizedDescription.title }}</h1>
     </div>
 
-    <!-- <p *ngIf="localizedDescription.summary" [gtrackSanitizeHtml]='localizedDescription.summary'></p>
-  <p *ngIf="localizedDescription.fullDescription" [gtrackSanitizeHtml]='localizedDescription.fullDescription'></p> -->
-    <ngx-md *ngIf="localizedDescription.summary" [data]='localizedDescription.summary'></ngx-md>
-    <ngx-md *ngIf="localizedDescription.fullDescription" [data]='localizedDescription.fullDescription'></ngx-md>
+    <div *ngIf="localizedDescription.type === ETextualDescriptionType.html">
+        <p *ngIf="localizedDescription.summary" [gtrackSanitizeHtml]='localizedDescription.summary'></p>
+        <p *ngIf="localizedDescription.fullDescription" [gtrackSanitizeHtml]='localizedDescription.fullDescription'></p>
+    </div>
+    <div *ngIf="localizedDescription.type === ETextualDescriptionType.markdown">
+        <ngx-md *ngIf="localizedDescription.summary" [data]='localizedDescription.summary'></ngx-md>
+        <ngx-md *ngIf="localizedDescription.fullDescription" [data]='localizedDescription.fullDescription'></ngx-md>
+    </div>
 </ng-container>

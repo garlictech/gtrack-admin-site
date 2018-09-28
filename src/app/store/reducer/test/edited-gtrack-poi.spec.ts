@@ -2,12 +2,13 @@ import { IEditedGTrackPoiState } from '../../state';
 import { initialEditedGTrackPoiState, editedGTrackPoiReducer } from '../edited-gtrack-poi';
 import { editedGTrackPoiActions } from '../../actions';
 import { IExternalPoi } from '../../../shared/interfaces';
-import { IBackgroundImageData } from '../../../../subrepos/provider-client';
+import { IBackgroundImageData, IPoiStored, EObjectState, ETextualDescriptionType } from '../../../../subrepos/provider-client';
 
 import * as _ from 'lodash';
 
 import {
   pois as poiFixtures,
+  pois as poiStoredFixtures,
   bgImages as bgImageFixtures
 } from './fixtures';
 
@@ -33,12 +34,15 @@ describe('Edited GTrackPoi reducers', () => {
 
   describe('AddNewTranslatedPoiDescription action', () => {
     it('should add new translated poi description', () => {
-      const action = new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', { title: 'fakeTitle' });
+      const action = new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
+        title: 'fakeTitle'
+      });
       const state = editedGTrackPoiReducer(initialState, action);
 
       expect(state.data.description).toEqual({
         en_US: {
-          title: 'A new poi'
+          title: 'A new poi',
+          type: ETextualDescriptionType.markdown
         },
         hu_HU: {
           title: 'fakeTitle'
@@ -83,7 +87,8 @@ describe('Edited GTrackPoi reducers', () => {
 
       expect(state.data.description).toEqual({
         en_US: {
-          title: 'A new poi'
+          title: 'A new poi',
+          type: ETextualDescriptionType.markdown
         },
         hu_HU: {
           title: 'fakeTitle'
@@ -126,7 +131,13 @@ describe('Edited GTrackPoi reducers', () => {
 
   describe('PoiSaveFailed action', () => {
     it('should handle loading pois', () => {
-      const action = new editedGTrackPoiActions.LoadPoi(pois[0]);
+      const action = new editedGTrackPoiActions.LoadPoi(_.merge(
+        pois[0],
+        {
+          timestamp: 0,
+          state: EObjectState.published
+        }
+      ));
       const state = editedGTrackPoiReducer(initialState, action);
 
       expect(state.working).toBeNull();

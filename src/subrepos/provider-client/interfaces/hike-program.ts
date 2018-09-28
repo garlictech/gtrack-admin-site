@@ -38,7 +38,7 @@ export interface IBackgroundImageData {
   additionalData?: any;
 }
 
-export interface IBackgroundImageDataStored {
+export interface IBackgroundImageDataStored extends IBackgroundImageData {
   id: string;
 }
 
