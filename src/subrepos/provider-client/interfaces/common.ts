@@ -1,5 +1,6 @@
 export enum ETextualDescriptionType {
-  markdown = 'markdown'
+  markdown = 'markdown',
+  html = 'html'
 }
 
 export interface ITextualDescription {
