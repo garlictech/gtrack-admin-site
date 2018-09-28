@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AccordionModule, DropdownModule, ButtonModule } from 'primeng/primeng';
+import { AccordionModule } from 'primeng/accordion';
+import { DropdownModule } from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormModule } from 'subrepos/gtrack-common-web/forms';
 import { LocalizedDescriptionComponent } from './localized-description';
@@ -31,15 +34,8 @@ const COMPONENTS = [
     AccordionModule,
     ButtonModule
   ],
-  declarations: [
-    ...COMPONENTS
-  ],
-  exports: [
-    ...COMPONENTS
-  ],
-  entryComponents: [
-    AdminMarkerPopupComponent,
-    ImageMarkerPopupComponent
-  ]
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
+  entryComponents: [AdminMarkerPopupComponent, ImageMarkerPopupComponent]
 })
 export class SharedComponentsModule {}

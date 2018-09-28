@@ -1,18 +1,17 @@
-
 import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit, ElementRef, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
+import { SelectItem } from 'primeng/api';
+
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 import { State } from '../../../../store';
 import { adminMapActions, commonBackgroundGeolocationActions } from '../../../../store/actions';
 import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
-import {
-  Center, selectCurrentLocation, IGeoPosition, GoogleMapsService
-} from 'subrepos/gtrack-common-ngx';
+import { Center, selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
 import { WaypointMarkerService } from '../../../../shared/services/admin-map';
-import { SelectItem } from 'primeng/primeng';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import * as L from 'leaflet';
 import { LeafletMouseEvent } from 'leaflet';
@@ -23,18 +22,23 @@ const CENTER = <Center>{
   zoom: 12
 };
 
-const LAYERS = [{
-  name: 'street',
-  url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-}, {
-  name: 'topo',
-  url: 'https://opentopomap.org/{z}/{x}/{y}.png'
-}];
+const LAYERS = [
+  {
+    name: 'street',
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+  },
+  {
+    name: 'topo',
+    url: 'https://opentopomap.org/{z}/{x}/{y}.png'
+  }
+];
 
-const OVERLAYS = [{
-  name: 'trails',
-  url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
-}];
+const OVERLAYS = [
+  {
+    name: 'trails',
+    url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
+  }
+];
 
 @Component({
   selector: 'app-hike-edit-map',
@@ -52,7 +56,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public overlays = OVERLAYS;
   public mode = 'routing';
   public allowPlanning: boolean;
-  public currentLocation$: Observable<IGeoPosition | null>;
+  public currentLocation$: Observable<IGeoPosition | null>;
   public clickModes: SelectItem[] = [];
   public locationSearchResult: google.maps.places.PlaceResult;
   public faSearch = faSearch;
@@ -69,10 +73,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.clickModes = [
-      { label: 'Routing mode', value: 'routing' },
-      { label: 'Checkpoint mode', value: 'checkpoint' }
-    ];
+    this.clickModes = [{ label: 'Routing mode', value: 'routing' }, { label: 'Checkpoint mode', value: 'checkpoint' }];
 
     // Update buffer on each segment update
     this._store
@@ -80,7 +81,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
         select(this._hikeEditRoutePlannerSelectors.getSegments),
         takeUntil(this._destroy$)
       )
-      .subscribe(() => {
+      .subscribe(() => {
         // Refresh buffer on segment change, if needed
         setTimeout(() => {
           if (this._bufferShown) {
@@ -95,22 +96,21 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
         select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
         takeUntil(this._destroy$)
       )
-      .subscribe((planning: boolean) => {
+      .subscribe((planning: boolean) => {
         this.allowPlanning = planning;
       });
 
     this._store.dispatch(new commonBackgroundGeolocationActions.StartTracking());
 
-    this.currentLocation$ = this._store
-      .pipe(
-        select(selectCurrentLocation),
-        takeUntil(this._destroy$)
-      );
+    this.currentLocation$ = this._store.pipe(
+      select(selectCurrentLocation),
+      takeUntil(this._destroy$)
+    );
 
     this._initLocationSearchInput();
   }
 
-  ngOnDestroy( ) {
+  ngOnDestroy() {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
 
@@ -151,14 +151,12 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
 
-    this.currentLocation$
-      .pipe(take(1))
-      .subscribe((position: IGeoPosition) => {
-        if (position && position.coords) {
-          const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
-          this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
-        }
-      });
+    this.currentLocation$.pipe(take(1)).subscribe((position: IGeoPosition) => {
+      if (position && position.coords) {
+        const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
+        this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
+      }
+    });
   }
 
   public resetMap($event: Event) {
@@ -169,7 +167,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
         select(this._hikeEditRoutePlannerSelectors.getRoute),
         take(1)
       )
-      .subscribe((route) => {
+      .subscribe(route => {
         this.mapComponent.map.fitBounds(route);
       });
   }
@@ -190,7 +188,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     this.mapComponent.map
       .getBuffer()
       .pipe(take(1))
-      .subscribe((buffer) => {
+      .subscribe(buffer => {
         if (buffer) {
           this._bufferOnMap = this.mapComponent.map.addGeoJSON(buffer);
         }
@@ -203,28 +201,26 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private _initLocationSearchInput() {
+  private _initLocationSearchInput() {
     this._searchInput = this._searchElementRef.nativeElement;
 
-    this._googleMapsService
-      .autocomplete(this._searchInput)
-      .then(autocomplete => {
-        autocomplete.addListener('place_changed', () => {
-          this._ngZone.run(() => {
-            this.locationSearchResult = autocomplete.getPlace();
-          });
+    this._googleMapsService.autocomplete(this._searchInput).then(autocomplete => {
+      autocomplete.addListener('place_changed', () => {
+        this._ngZone.run(() => {
+          this.locationSearchResult = autocomplete.getPlace();
         });
       });
+    });
   }
 
-  public goToLocation($event) {
+  public goToLocation($event) {
     $event.stopPropagation();
 
-    if (this.locationSearchResult) {
-      this.mapComponent.map.leafletMap.setView([
-        this.locationSearchResult.geometry.location.lat(),
-        this.locationSearchResult.geometry.location.lng()
-      ], 13);
+    if (this.locationSearchResult) {
+      this.mapComponent.map.leafletMap.setView(
+        [this.locationSearchResult.geometry.location.lat(), this.locationSearchResult.geometry.location.lng()],
+        13
+      );
     }
   }
 }

@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+
 import { MenuComponent } from '../menu';
-import { MenuItem } from 'primeng/primeng';
 
 @Component({
   selector: 'app-submenu',
@@ -36,27 +37,22 @@ import { MenuItem } from 'primeng/primeng';
           height: '0px'
         })
       ),
-      transition(
-        'visible => hidden',
-        animate('600ms cubic-bezier(0.86, 0, 0.07, 1)')
-      ),
-      transition(
-        'hidden => visible',
-        animate('600ms cubic-bezier(0.86, 0, 0.07, 1)')
-      )
+      transition('visible => hidden', animate('600ms cubic-bezier(0.86, 0, 0.07, 1)')),
+      transition('hidden => visible', animate('600ms cubic-bezier(0.86, 0, 0.07, 1)'))
     ])
   ]
 })
 export class SubMenuComponent {
-  @Input() item: MenuItem;
-  @Input() root: boolean;
-  @Input() onMenuButtonClick: any;
+  @Input()
+  item: MenuItem;
+  @Input()
+  root: boolean;
+  @Input()
+  onMenuButtonClick: any;
 
   private _activeIndex: number;
 
-  constructor(
-    public appMenu: MenuComponent
-  ) {}
+  constructor(public appMenu: MenuComponent) {}
 
   public itemClick(event: Event, item: MenuItem, index: number) {
     // avoid processing disabled items

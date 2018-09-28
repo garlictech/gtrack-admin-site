@@ -1,4 +1,4 @@
-FROM garlictech2/workflows-angular:v8.1.0
+FROM garlictech2/workflows-angular:v8.2.0
 
 ENV NO_UPDATE_NOTIFIER 1
 
@@ -13,7 +13,6 @@ COPY src/subrepos/provider-client/package.json /app/src/subrepos/provider-client
 COPY src/subrepos/localize-ngx/package.json /app/src/subrepos/localize-ngx
 COPY src/subrepos/forms-ngx/package.json /app/src/subrepos/forms-ngx
 COPY package.json /app/package.project.json
-COPY jest-config.json /app/
 
 RUN scripts/install_dependencies
 

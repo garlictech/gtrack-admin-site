@@ -1,5 +1,5 @@
 import { TransferState } from '@angular/platform-browser';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService } from 'primeng/api';
 
 import { CONFIG as LANGUAGE_CONFIG } from 'subrepos/localize-ngx';
 

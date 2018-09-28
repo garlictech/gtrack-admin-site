@@ -1,15 +1,20 @@
 import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, map, filter, switchMap, take } from 'rxjs/operators';
+import { MessageService, ConfirmationService } from 'primeng/api';
+
 import { Store, MemoizedSelector, select } from '@ngrx/store';
 import { State } from '../../../../../store';
 import { commonPoiActions, editedGTrackPoiActions } from '../../../../../store/actions';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
-import { IPoiStored, ILocalizedItem, ITextualDescription, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
+import {
+  IPoiStored,
+  ILocalizedItem,
+  ITextualDescription,
+  EObjectState,
+  IBackgroundImageData
+} from 'subrepos/provider-client';
 import { EditedGTrackPoiSelectors } from '../../../../../store/selectors';
-
-import { MessageService } from 'primeng/api';
-import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'app-hike-edit-gtrack-poi-info',
@@ -18,8 +23,10 @@ import { ConfirmationService } from 'primeng/primeng';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
-  @Input() poiId: string;
-  @Input() closeModal: any;
+  @Input()
+  poiId: string;
+  @Input()
+  closeModal: any;
 
   public storeDataPath: string;
   public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
@@ -51,16 +58,15 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     this.backgroundImageSelector = this._editedGTrackPoiSelectors.getBackgroundImages;
     this.backgroundImageUrlSelector = this._editedGTrackPoiSelectors.getBackgroundOriginalUrls();
     this.clickActions = {
-      add: (image) => this._store.dispatch(new editedGTrackPoiActions.AddPoiBackgroundImage(image)),
-      remove: (url) => this._store.dispatch(new editedGTrackPoiActions.RemovePoiBackgroundImage(url))
+      add: image => this._store.dispatch(new editedGTrackPoiActions.AddPoiBackgroundImage(image)),
+      remove: url => this._store.dispatch(new editedGTrackPoiActions.RemovePoiBackgroundImage(url))
     };
 
-    this.poiLoaded$ = this._store
-      .pipe(
-        select(this._editedGTrackPoiSelectors.getData),
-        takeUntil(this._destroy$),
-        map(data => !!data)
-      );
+    this.poiLoaded$ = this._store.pipe(
+      select(this._editedGTrackPoiSelectors.getData),
+      takeUntil(this._destroy$),
+      map(data => !!data)
+    );
 
     this._store
       .pipe(
@@ -82,15 +88,19 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
         select(this._editedGTrackPoiSelectors.getWorking),
         takeUntil(this._destroy$),
         filter(working => working !== null),
-        switchMap(() => this._store.pipe(
-          select(this._editedGTrackPoiSelectors.getWorking),
-          takeUntil(this._destroy$)
-        )),
+        switchMap(() =>
+          this._store.pipe(
+            select(this._editedGTrackPoiSelectors.getWorking),
+            takeUntil(this._destroy$)
+          )
+        ),
         filter(working => working === null),
-        switchMap(() => this._store.pipe(
-          select(this._editedGTrackPoiSelectors.getError),
-          take(1)
-        )),
+        switchMap(() =>
+          this._store.pipe(
+            select(this._editedGTrackPoiSelectors.getError),
+            take(1)
+          )
+        ),
         takeUntil(this._destroy$)
       )
       .subscribe(error => {

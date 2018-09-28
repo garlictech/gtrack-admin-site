@@ -7,7 +7,7 @@ import { State } from '../../store';
 import { commonHikeActions } from '../../store/actions';
 import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
 import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
-import { SelectItem, ConfirmationService } from 'primeng/primeng';
+import { SelectItem, ConfirmationService } from 'primeng/api';
 
 import _orderBy from 'lodash-es/orderBy';
 
@@ -39,17 +39,16 @@ export class HikeListComponent implements OnInit, OnDestroy {
       { label: 'Archived', value: 'archived' }
     ];
 
-    this.hikeList$ = this._store
-      .pipe(
-        select(this._hikeSelectors.getActiveHikes()),
-        takeUntil(this._destroy$),
-        map((hikes) => _orderBy(hikes, ['timestamp'], ['desc']))
-      );
+    this.hikeList$ = this._store.pipe(
+      select(this._hikeSelectors.getActiveHikes()),
+      takeUntil(this._destroy$),
+      map(hikes => _orderBy(hikes, ['timestamp'], ['desc']))
+    );
 
     this._store.dispatch(new commonHikeActions.LoadHikePrograms());
   }
 
-  ngOnDestroy( ) {
+  ngOnDestroy() {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
   }

@@ -5,14 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LocalizeModule } from 'subrepos/gtrack-common-ngx';
 // PrimeNG
-import {
-  ButtonModule,
-  CardModule,
-  SelectButtonModule,
-  AccordionModule,
-  CheckboxModule,
-  DialogModule
-} from 'primeng/primeng';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { AccordionModule } from 'primeng/accordion';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
+
 import { TableModule } from 'primeng/table';
 
 // Components

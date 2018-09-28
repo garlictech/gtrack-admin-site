@@ -1,6 +1,0 @@
-.langselinfo
-  p-dropdown([options]="allLanguages", [(ngModel)]="selectedLanguage", (onChange)="setLanguage($event.value.id)")
-    ng-template(let-language, pTemplate="item")
-      .row
-        img(src='{{language.value.flagImg}}')
-        .label {{language.label}}
