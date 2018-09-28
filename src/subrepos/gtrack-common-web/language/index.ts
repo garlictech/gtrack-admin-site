@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DropdownModule } from 'primeng/primeng';
+import { DropdownModule } from 'primeng/dropdown';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { LocalizeModule } from 'subrepos/localize-ngx';

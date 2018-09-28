@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConfirmDialogModule } from 'primeng/primeng';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { LanguageModule } from '../language';
