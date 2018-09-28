@@ -1,0 +1,10 @@
+p-calendar(
+  yearNavigator="true",
+  yearRange="{{(minDate ? (minDate | date:'y') : 1800)}}:{{(maxDate ? (maxDate | date:'y') : currentYear)}}",
+  showIcon='true',
+  readonlyInput="true",
+  [(ngModel)]="value",
+  [defaultDate]="defaultDate",
+  [minDate]="minDate",
+  [maxDate]="maxDate",
+  [placeholder]='placeholder')

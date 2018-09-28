@@ -1,0 +1,6 @@
+.radio-button-groups-wrapper(*ngFor="let item of options")
+  p-radioButton.radio-button-group-wrapper(
+    [value]="item.value",
+    [label]="item.label | translate",
+    [(ngModel)]="value"
+  )
