@@ -184,8 +184,6 @@
         "codelyzer": "~4.2.1",
         "cucumber": "^4.2.1",
         "deep-freeze": "^0.0.1",
-        "jasmine-core": "^2.99.1",
-        "jasmine-marbles": "^0.4.0",
         "jest": "^23.1.0",
         "jest-marbles": "^1.2.0",
         "jest-preset-angular": "^5.2.2",
