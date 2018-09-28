@@ -1,0 +1,15 @@
+dist/
+docker/
+node_modules/
+reports/
+src/
+.setup.sh
+.vscode/
+artifacts
+node_modules
+angular.json
+docker
+docs
+src
+secrets.tgz
+e2e
