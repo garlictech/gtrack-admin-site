@@ -32,7 +32,6 @@ export class HikeEditPoiEffects {
       ofType(hikeEditPoiActions.GET_WIKIPEDIA_POIS),
       map((action: hikeEditPoiActions.GetWikipediaPois) => action.bounds),
       switchMap(bounds => {
-        console.log('bounds', bounds);
         const boundsArr: any[] = [];
         this._routeService.splitBounds(bounds, 10000, boundsArr);
 
