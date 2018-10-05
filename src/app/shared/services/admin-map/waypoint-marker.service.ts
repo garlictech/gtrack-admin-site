@@ -131,8 +131,10 @@ export class WaypointMarkerService {
     for (let i = 1; i < this._markers.length - 1; i++) {
       this._markers[i].setIcon(this._getSingleMarkerIcon(i + 1));
     }
-    this._markers[0].setIcon(this._iconService.getLeafletIcon(['start'], 'default'));
-    this._markers[this._markers.length - 1].setIcon(this._iconService.getLeafletIcon(['finish'], 'default'));
+    if (this._markers.length > 0) {
+      this._markers[0].setIcon(this._iconService.getLeafletIcon(['start'], 'default'));
+      this._markers[this._markers.length - 1].setIcon(this._iconService.getLeafletIcon(['finish'], 'default'));
+    }
   }
 
   private _getRouteFromApi(p1, p2) {
