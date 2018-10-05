@@ -49,6 +49,7 @@ export class CheckpointMarker {
     const marker = new L.Marker([stop.lat, stop.lon], {
       icon: this.getIcon(stop),
       opacity: this.opacity,
+      zIndexOffset: 1500,
       title: checkpoint.name
     });
 

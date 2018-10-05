@@ -10,7 +10,7 @@ import _zipObject from 'lodash-es/zipObject';
 
 import * as uuid from 'uuid/v1';
 
-import { hot, cold } from 'jest-marbles';
+import { hot, cold, Scheduler } from 'jest-marbles';
 
 import * as hikeProgramActions from '../actions';
 import { HikeEffects } from '../effects';
@@ -18,7 +18,7 @@ import { HikeProgramService } from '../../../services/hike-program';
 import { DeepstreamModule } from '../../../../deepstream';
 import { CheckpointService } from '../../../services/checkpoint';
 
-import { Observable, EMPTY } from 'rxjs';
+import { Observable, EMPTY, of } from 'rxjs';
 import { hikeProgramsStored } from './fixtures';
 
 export class TestActions extends Actions {
@@ -84,16 +84,16 @@ describe('HikeProgram effects', () => {
     effects = TestBed.get(HikeEffects);
     checkpointService = TestBed.get(CheckpointService);
 
-    spyOn(hikeProgramService, 'get').and.callFake(id => Observable.of(hikeProgramsMap[id]));
-    spyOn(hikeProgramService, 'query').and.returnValue(Observable.of(hikePrograms));
+    spyOn(hikeProgramService, 'get').and.callFake(id => of(hikeProgramsMap[id]));
+    spyOn(hikeProgramService, 'query').and.returnValue(of(hikePrograms));
     spyOn(hikeProgramService, 'save').and.returnValue(
-      Observable.of({
+      of({
         id: newId
       })
     );
 
     spyOn(hikeProgramService, 'updateState').and.returnValue(
-      Observable.of({
+      of({
         success: true
       })
     );
@@ -108,6 +108,10 @@ describe('HikeProgram effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadHike$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(hikeProgramService.get).toHaveBeenCalledWith(ids[0]);
     });
   });
 
@@ -120,6 +124,10 @@ describe('HikeProgram effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadHikes$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(hikeProgramService.query).toHaveBeenCalled();
     });
   });
 
@@ -132,6 +140,10 @@ describe('HikeProgram effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.updateState$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(hikeProgramService.updateState).toHaveBeenCalledWith(ids[0], EObjectState.published);
     });
   });
 

@@ -10,14 +10,14 @@ import _zipObject from 'lodash-es/zipObject';
 
 import * as uuid from 'uuid/v4';
 
-import { hot, cold } from 'jest-marbles';
+import { hot, cold, Scheduler } from 'jest-marbles';
 
 import * as poiActions from '../actions';
 import { PoiEffects } from '../effects';
 import { PoiService } from '../../../services/poi';
 import { DeepstreamModule } from '../../../../deepstream';
 
-import { Observable, EMPTY } from 'rxjs';
+import { Observable, EMPTY, of } from 'rxjs';
 import { pois as poiFixtures, poisStored } from './fixtures';
 
 import { GeometryService } from '../../../services/geometry';
@@ -43,7 +43,7 @@ describe('Poi effects', () => {
     [key: string]: IPoiStored;
   };
 
-  let pois: IPoi[];
+  let pois: IPoiStored[];
 
   let actions$: TestActions;
   let service: PoiService;
@@ -63,10 +63,7 @@ describe('Poi effects', () => {
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
         HttpClientTestingModule,
-        DeepstreamModule.forRoot({
-          storeDomain: 'deepstream',
-          deepstreamConnectionString: ''
-        })
+        DeepstreamModule.forRoot()
       ],
       providers: [
         PoiService,
@@ -88,14 +85,14 @@ describe('Poi effects', () => {
     service = TestBed.get(PoiService);
     effects = TestBed.get(PoiEffects);
 
-    spyOn(service, 'get').and.callFake(id => Observable.of(poisMap[id]));
+    spyOn(service, 'get').and.callFake(id => of(poisMap[id]));
     spyOn(service, 'create').and.returnValue(
-      Observable.of({
+      of({
         id: newId
       })
     );
     spyOn(service, 'updateState').and.returnValue(
-      Observable.of({
+      of({
         success: true
       })
     );
@@ -110,6 +107,10 @@ describe('Poi effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadPoi$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(service.get).toHaveBeenCalledWith(ids[0]);
     });
   });
 
@@ -122,6 +123,12 @@ describe('Poi effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadPois$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      for (const id of ids) {
+        expect(service.get).toHaveBeenCalledWith(id);
+      }
     });
   });
 
@@ -134,6 +141,10 @@ describe('Poi effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.savePoi$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(service.create).toHaveBeenCalledWith(poiFixtures[0]);
     });
   });
 
@@ -146,6 +157,10 @@ describe('Poi effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.updateState$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(service.updateState).toHaveBeenCalledWith(poiFixtures[0].id, EObjectState.published);
     });
   });
 });
