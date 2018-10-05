@@ -17,5 +17,5 @@ export function getActions() {
 
 export const mockRouter = {
   navigate: jasmine.createSpy('navigate'),
-  url: ''
+  url: '/login'
 };
