@@ -38,5 +38,9 @@ export const iconmap = {
   post_box: require('./icons/post_box.png'),
   bank: require('./icons/bank.png'),
   waste_basket: require('./icons/waste_basket.png'),
-  fuel: require('./icons/fuel.png')
+  fuel: require('./icons/fuel.png'),
+  pharmacy: require('./icons/pharmacy.png'),
+  cafe: require('./icons/cafe.png'),
+  toilet: require('./icons/toilet.png'),
+  cave_entrance: require('./icons/cave_entrance.png')
 };
