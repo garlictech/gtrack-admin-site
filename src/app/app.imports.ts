@@ -13,7 +13,9 @@ import {
   IHikeModuleConfig,
   BackgroundGeolocationModule,
   HikeModule,
-  SearchFiltersModule
+  SearchFiltersModule,
+  IObjectMarkModuleConfig,
+  ObjectMarkModule
 } from 'subrepos/gtrack-common-ngx';
 
 import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
@@ -48,6 +50,10 @@ const hikeModuleConfig: IHikeModuleConfig = {
     poi: 'poi',
     route: 'route'
   }
+};
+
+const objectMarkConfig: IObjectMarkModuleConfig = {
+  storeDomain: 'objectMarks'
 };
 
 const authConfig = {
@@ -94,6 +100,7 @@ export const APP_IMPORTS = [
     EditedGTrackPoiEffects,
     HikeEditImageEffects
   ]),
+  ObjectMarkModule.forRoot(objectMarkConfig),
   GtrackCommonWebModule,
   ToastModule
 ];

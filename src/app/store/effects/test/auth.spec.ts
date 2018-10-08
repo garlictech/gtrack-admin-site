@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { RouterModule, Router } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
-import { hot, cold } from 'jest-marbles';
+import { hot, cold, Scheduler } from 'jest-marbles';
 import { AuthEffects } from '../auth';
 import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
@@ -56,14 +56,14 @@ describe('Auth effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.routeForbidden$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
     });
   });
 
   describe('loginSuccess$', () => {
-    TestBed.overrideProvider(Router, { useValue: _.merge(mockRouter, {
-      url: '/login'
-    }) });
-
     it('should return empty observable from LoginSuccess', () => {
       const action = new AuthActions.LoginSuccess(null);
       const expected = cold('');
@@ -71,6 +71,10 @@ describe('Auth effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.loginSuccess$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
     });
   });
 
@@ -82,6 +86,10 @@ describe('Auth effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.logoutSuccess$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
     });
   });
 });

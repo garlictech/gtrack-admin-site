@@ -120,8 +120,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
         // Get gTrack pois for checking inGtrackDb
         if (pois.length > 0) {
-          // gTrack poi will call marker refresher!
           this._poiEditorService.getGTrackPois();
+          this._poiEditorService.refreshPoiMarkers(this._map);
         // We have to refresh markers w/ empty poi list, too.
         } else {
           this._poiEditorService.refreshPoiMarkers(this._map);

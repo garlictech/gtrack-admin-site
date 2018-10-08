@@ -3,11 +3,11 @@ import { Actions, EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
-import { Observable, EMPTY } from 'rxjs';
+import { Observable, EMPTY, of } from 'rxjs';
 
 import * as uuid from 'uuid/v1';
 
-import { hot, cold } from 'jest-marbles';
+import { hot, cold, Scheduler } from 'jest-marbles';
 
 import { GeoSearchEffects } from '../effects';
 import * as geoSearchActions from '../actions';
@@ -40,10 +40,7 @@ describe('GeoSearch effects', () => {
       imports: [
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
-        DeepstreamModule.forRoot({
-          storeDomain: 'deepstream',
-          deepstreamConnectionString: ''
-        })
+        DeepstreamModule.forRoot()
       ],
       providers: [
         GeoSearchService,
@@ -65,8 +62,8 @@ describe('GeoSearch effects', () => {
     geoSearchService = TestBed.get(GeoSearchService);
     effects = TestBed.get(GeoSearchEffects);
 
-    spyOn(geoSearchService, 'searchBox').and.returnValue(Observable.of(results));
-    spyOn(geoSearchService, 'searchCircle').and.returnValue(Observable.of(results));
+    spyOn(geoSearchService, 'searchBox').and.returnValue(of(results));
+    spyOn(geoSearchService, 'searchCircle').and.returnValue(of(results));
   });
 
   describe('searchInBox$', () => {
@@ -89,6 +86,16 @@ describe('GeoSearch effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.searchInBox$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(geoSearchService.searchBox).toHaveBeenCalledWith(        {
+        table: 'test',
+        box: {
+          type: 'Polygon',
+          coordinates: [[]]
+        }
+      });
     });
   });
 
@@ -112,6 +119,18 @@ describe('GeoSearch effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.searchInCircle$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(geoSearchService.searchCircle).toHaveBeenCalledWith(
+        {
+          table: 'test',
+          circle: {
+            radius: 500,
+            center: []
+          }
+        }
+      );
     });
   });
 });

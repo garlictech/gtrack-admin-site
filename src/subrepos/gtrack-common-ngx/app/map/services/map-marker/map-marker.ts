@@ -1,3 +1,5 @@
+import { point as turfPoint } from '@turf/helpers';
+
 import { IconService } from '../icon';
 import { IMarkerPopupData } from '../../../../../provider-client/interfaces';
 
@@ -17,7 +19,8 @@ export class MapMarker {
   ) {
     this.marker = new L.Marker([lat, lon], {
       icon: iconService.getLeafletIcon(types),
-      title: title
+      title: title,
+      zIndexOffset: 1500
     });
 
     this.marker.on('click', e => {
@@ -41,6 +44,10 @@ export class MapMarker {
 
   public addToMap(map: L.Map): void {
     this.marker.addTo(map);
+
+    this.marker.on('click', (e: L.LeafletMouseEvent) => {
+      map.fire('gcmarkerclick', e);
+    });
   }
 
   public removeFromMap(map: L.Map): void {

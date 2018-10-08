@@ -4,7 +4,7 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = https://github.com/garlictech/forms-ngx.git
+	remote = git@github.com:garlictech/forms-ngx.git
 	branch = master
 	commit = 9134858a8913d87e9efdafa5f924065afd236f74
 	parent = 940f864e29962dfb834229042a74117d6f676013

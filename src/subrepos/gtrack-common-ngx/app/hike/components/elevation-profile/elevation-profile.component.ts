@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 
 import { State } from 'app/store';
-import { Subject } from 'rxjs';
+import { Subject, ReplaySubject } from 'rxjs';
 
 import { select as d3Select, mouse as d3Mouse, event as d3Event, Selection, BaseType } from 'd3-selection';
 
@@ -28,15 +28,26 @@ import {
   axisBottom as d3AxisBottom
 } from 'd3-axis';
 
+import { line as d3Line } from 'd3-shape';
+
 import { interpolateNumber as d3InterpolateNumber } from 'd3-interpolate';
+
+import _get from 'lodash-es/get';
 
 import { DistancePipe, UnitsService } from '../../../shared';
 import { IElevationData, ElevationService } from '../../services/elevation';
 import { Route, RouteService } from '../../services/route';
 import { RouteSelectors } from '../../store/route/selectors';
+import { PoiSelectors } from '../../store/poi/selectors';
+
 import * as routeActions from '../../store/route/actions';
+import * as poiActions from '../../store/poi/actions';
+
 import { HikeProgram } from '../../services/hike-program';
 import { GeospatialService } from '../../../shared/services/geospatial';
+import { IconService } from '../../../map/services/icon';
+
+import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 
 @Component({
   selector: 'gtrack-common-elevation-profile',
@@ -71,17 +82,19 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   public width = 450;
 
   @Input()
-  public height = 200;
+  public height = 220;
 
   @Input()
   public margins = {
-    top: 20,
+    top: 40,
     right: 20,
     bottom: 20,
     left: 50
   };
 
   public route: Route | null;
+  public activePoi: IPoiStored | null;
+  public activeStop: IHikeProgramStop | null;
   public marker: Selection<BaseType, {}, null, undefined>;
   public elevationText: Selection<BaseType, {}, null, undefined>;
 
@@ -91,13 +104,19 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   protected distance: DistancePipe;
 
   private _destroy$ = new Subject<boolean>();
+  private _hikeProgramChanged$ = new Subject<boolean>();
+  private _hikeProgram: HikeProgram | undefined;
+
+  private _pois$ = new ReplaySubject<IPoiStored[]>(1);
 
   constructor(
     private _elevationService: ElevationService,
     private _routeService: RouteService,
     private _store: Store<State>,
     private _routeSelectors: RouteSelectors,
+    private _poiSelectors: PoiSelectors,
     private _geospatial: GeospatialService,
+    private _icon: IconService,
     unitsService: UnitsService
   ) {
     this.distance = new DistancePipe(unitsService);
@@ -127,9 +146,41 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   public set hikeProgram(hikeProgram: HikeProgram) {
     if (hikeProgram) {
+      this._hikeProgram = hikeProgram;
       this.routeId = hikeProgram.routeId;
+
+      const poiIds = hikeProgram.stops
+        .map(stop => stop.poiId)
+        .filter(poiId => !poiId.match(/endpoint/));
+
+      this._hikeProgramChanged$.next(true);
+
+      this._store
+        .pipe(
+          select(this._poiSelectors.getPoiContextEntities(poiIds)),
+          takeUntil(this._destroy$),
+          takeUntil(this._hikeProgramChanged$)
+        )
+        .subscribe(contexts => {
+          for (const poiId of poiIds) {
+            const context = contexts[poiId];
+
+            if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
+              this._store.dispatch(new poiActions.LoadPoi(poiId));
+            }
+          }
+        });
+
+      this._store
+        .pipe(
+          select(this._poiSelectors.getPois(poiIds)),
+          takeUntil(this._destroy$),
+          takeUntil(this._hikeProgramChanged$)
+        )
+        .subscribe(pois => this._pois$.next(pois));
     } else {
       this.routeId = null;
+      this._hikeProgram = null;
     }
   }
 
@@ -184,10 +235,12 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         this._addXAxis();
         this._addYAxis();
         this._addLineGraph();
+        this._addPoiIcons();
 
         this.marker = this.vis
           .append('circle')
           .attr('r', 4)
+          .attr('transform', `translate(0, ${this.margins.top - 20})`)
           .style('fill', '#FFFFFF')
           .style('display', 'none')
           .style('pointer-events', 'none')
@@ -205,8 +258,8 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         this.elevationText = this.vis
           .append('text')
           .attr('class', 'elevation-label')
-          .attr('x', 70)
-          .attr('y', this.margins.top);
+          .attr('x', 5)
+          .attr('y', this.margins.top - 5);
 
         this.vis.on('mouseover', () => this.elevationLineOver.emit());
 
@@ -308,7 +361,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     this.vis
       .append('svg:g')
       .attr('class', 'axis-line')
-      .attr('transform', `translate(${this.margins.left}, 0)`)
+      .attr('transform', `translate(${this.margins.left}, ${this.margins.top - 20})`)
       .call(yAxisVertical);
 
     // The grid lines
@@ -328,7 +381,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     this.vis
       .append('svg:g')
       .attr('class', 'axis-grid')
-      .attr('transform', `translate(${this.margins.left}, 0)`)
+      .attr('transform', `translate(${this.margins.left}, ${this.margins.top - 20})`)
       .call(customYAxis);
   }
 
@@ -373,6 +426,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         .attr('d', line)
         .attr('stroke', 'black')
         .attr('stroke-width', 1)
+        .attr('transform', `translate(0, ${this.margins.top - 20})`)
         .attr('fill', 'none');
     }
   }
@@ -403,6 +457,69 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     this.vis
       .append('svg:path')
       .attr('d', area)
+      .attr('transform', `translate(0, ${this.margins.top - 20})`)
       .attr('fill', 'url(#areaGradient)');
+  }
+
+  private _addPoiIcons() {
+    this._pois$
+      .pipe(
+        takeUntil(this._destroy$)
+      )
+      .subscribe(pois => {
+        this.vis.selectAll('image.poi-icon').remove();
+        this.vis.selectAll('.poi-line').remove();
+
+        for (const poi of pois) {
+          const coordinates = this.route.path.coordinates;
+          const xRange = this._elevationData.xRange;
+          const yRange = this._elevationData.yRange;
+          const bisect = d3Bisector((d: [number, number]) => {
+            return d[0];
+          }).right;
+
+          const stop = this._hikeProgram.stops.find(hikeStop => hikeStop.poiId === poi.id);
+
+          const distance = this._geospatial.distanceOnLine(coordinates[0], [poi.lon, poi.lat], this.route.route.features[0]) / 1000;
+          const type = _get(poi, 'types[0]', 'unknown');
+
+          const lineData = this._elevationData.lineData;
+
+          const x = distance;
+
+          const index = bisect(lineData, x);
+          const startData = lineData[index - 1];
+          const endData = lineData[index];
+
+          const interpolate = d3InterpolateNumber(startData[1], endData[1]);
+          const range = endData[0] - startData[0];
+          const valueY = interpolate((x % range) / range);
+
+          this.vis
+            .append('svg:image')
+            .attr('class', 'poi-icon')
+            .attr('x', xRange(distance) - 10)
+            .attr('y', this.margins.top - 24)
+            .attr('width', 21)
+            .attr('height', 24)
+            .attr('href', this._icon.url(type))
+            .style('cursor', 'pointer')
+            .on('click', () => {
+              this.activePoi = poi;
+              this.activeStop = stop;
+            });
+
+          this.vis
+            .append('svg:line')
+            .attr('class', 'poi-line')
+            .style('stroke', 'black')
+            .style('stroke-width', '0.5px')
+            .attr('x1', xRange(distance))
+            .attr('x2', xRange(distance))
+            .attr('y1', this.margins.top)
+            // .attr('y2', yRange(valueY) + this.margins.top - 23);
+            .attr('y2', this.height - this.margins.bottom);
+        }
+      });
   }
 }

@@ -5,14 +5,13 @@ import { RouterModule } from '@angular/router';
 import { MapModule } from '../map.module';
 import { IconComponent } from './icon';
 import { LeafletComponent } from './leaflet';
-import { MarkerPopupComponent } from './marker-popup';
 import { LocalizeModule } from '../../localize';
 import { SharedModule } from '../../shared';
 
 // PrimeNG
 import { ButtonModule } from 'primeng/button';
 
-const COMPONENTS = [LeafletComponent, IconComponent, MarkerPopupComponent];
+const COMPONENTS = [LeafletComponent, IconComponent];
 
 @NgModule({
   imports: [
@@ -25,7 +24,6 @@ const COMPONENTS = [LeafletComponent, IconComponent, MarkerPopupComponent];
     RouterModule
   ],
   declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
-  entryComponents: [MarkerPopupComponent]
+  exports: [...COMPONENTS]
 })
 export class MapComponentsModule {}

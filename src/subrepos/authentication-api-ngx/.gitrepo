@@ -4,7 +4,7 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = https://github.com/garlictech/authentication-api-ngx.git
+	remote = git@github.com:garlictech/authentication-api-ngx.git
 	branch = master
 	commit = 27b047611964db3b8eb3b707ffd7220934c950fe
 	parent = b4b003b93b1345be38512e0583c21d786d3d458b

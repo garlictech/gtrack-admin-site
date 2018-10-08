@@ -16,11 +16,11 @@ describe('ObjectToArrayPipe', () => {
   });
 
   it('providing an object returns array', () => {
-    let inputObj = {
+    const inputObj = {
         key1: 'value1',
         key2: 'value2'
     };
-    let resArr = [{
+    const resArr = [{
         key: 'key1',
         value: 'value1'
     }, {

@@ -7,6 +7,7 @@ import _omit from 'lodash-es/omit';
 import _assign from 'lodash-es/assign';
 import _union from 'lodash-es/union';
 import _cloneDeep from 'lodash-es/cloneDeep';
+import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 
 export const initialEditedHikeProgramState: IEditedHikeProgramState = {
   data: {
@@ -31,7 +32,7 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
       }
     },
     stops: [],
-    checkpoints: null,
+    checkpoints: new CheckpointSequence([]),
     timestamp: 0,
     state: EObjectState.draft
   },
