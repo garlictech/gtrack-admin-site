@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, of, combineLatest } from 'rxjs';
+import { filter, takeUntil, switchMap } from 'rxjs/operators';
 import { Store, MemoizedSelector, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { hikeEditImageActions } from '../../../../store/actions';
@@ -59,11 +59,24 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
       });
 
     // Photo sources getAllPoiPhotos
-    this.gTrackPoiPhotos$ = this._store
+    this.gTrackPoiPhotos$ = combineLatest(
+      this._store
+        .pipe(
+          select(this._poiSelectors.getAllPoiPhotos()),
+          takeUntil(this._destroy$)
+        ),
+      this._store
+        .pipe(
+          select(this._hikeEditRoutePlannerSelectors.getPath),
+          takeUntil(this._destroy$)
+        )
+      )
       .pipe(
-        select(this._poiSelectors.getAllPoiPhotos()),
-        takeUntil(this._destroy$)
+        switchMap(([photos, path]: [IBackgroundImageData[], any]) => {
+          return of(this._poiEditorService.organizePoiPhotos(photos, path));
+        })
       );
+
     this.googlePhotos$ = this._store
       .pipe(
         select(this._hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.google)),

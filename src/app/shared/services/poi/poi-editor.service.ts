@@ -226,6 +226,29 @@ export class PoiEditorService {
   }
 
   /**
+   * Filter poi photos based on their distance from the path
+   */
+  public organizePoiPhotos(photos: IBackgroundImageData[], path: GeoJSON.Feature<GeoJSON.LineString>) {
+    const _photos: any[] = [];
+
+    if (photos && photos.length > 0 && path) {
+      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 1000, {units: 'meters'});
+
+      for (const _photo of _cloneDeep(photos)) {
+        const _point = turfPoint([_photo.lon, _photo.lat]);
+
+        if (typeof _bigBuffer !== 'undefined') {
+          if (turfBooleanPointInPolygon(_point, _bigBuffer)) {
+            _photos.push(_photo);
+          }
+        }
+      }
+    }
+
+    return _photos;
+  }
+
+  /**
    * HikeEditPoi effect submethod - for gTrack pois
    */
   public handleHikeInclusion(pois: IGTrackPoi[]) {
@@ -255,9 +278,6 @@ export class PoiEditorService {
    * Update gTrackPois DistanceFromOrigo value
    */
   public getGTrackPoiDistanceFromOrigo(pois: IGTrackPoi[], path: GeoJSON.Feature<GeoJSON.LineString>) {
-    console.log('POIS', pois);
-    console.log('PATH', path);
-
     if (pois.length > 0 && path && path.geometry && path.geometry.coordinates.length > 0) {
       for (const poi of pois) {
         poi.distFromOrigo =  this._geospatialService.distanceOnLine(
