@@ -4,7 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { Observable } from 'rxjs';
-import { hot, cold } from 'jest-marbles';
+import { hot, cold, Scheduler } from 'jest-marbles';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule } from '../../../../subrepos/gtrack-common-ngx';
 import { TestActions, getActions, mockRouter } from './helpers';
@@ -65,13 +65,17 @@ describe('HikeEditImageEffects effects', () => {
     it('should return images observable from getMapillaryImages', () => {
       spyOn(mapillaryService, 'get').and.returnValue(Observable.of(bgImages));
 
-      const action = new hikeEditImageActions.GetMapillaryImages(null);
+      const action = new hikeEditImageActions.GetMapillaryImages('fakeBounds');
       const completion = new hikeEditImageActions.SetMapillaryImages(bgImages);
       const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.getMapillaryImages$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(mapillaryService.get).toBeCalledWith('fakeBounds');
     });
   });
 });

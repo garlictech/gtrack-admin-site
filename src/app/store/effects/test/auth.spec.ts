@@ -3,7 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { RouterModule, Router } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
-import { hot, cold, Scheduler } from 'jest-marbles';
+import { hot, cold } from 'jest-marbles';
+import { routingActions } from 'app/store/actions';
 import { AuthEffects } from '../auth';
 import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
@@ -51,45 +52,36 @@ describe('Auth effects', () => {
   describe('routeForbidden$', () => {
     it('should return empty observable from RouteForbidden', () => {
       const action = new AuthActions.RouteForbidden();
-      const expected = cold('');
+      const completion = new routingActions.Go(['/login']);
+      const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.routeForbidden$).toBeObservable(expected);
-
-      Scheduler.get().flush();
-
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
     });
   });
 
   describe('loginSuccess$', () => {
     it('should return empty observable from LoginSuccess', () => {
       const action = new AuthActions.LoginSuccess(null);
-      const expected = cold('');
+      const completion = new routingActions.Go(['/']);
+      const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.loginSuccess$).toBeObservable(expected);
-
-      Scheduler.get().flush();
-
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
     });
   });
 
   describe('logoutSuccess$', () => {
     it('should return empty observable from LogoutSuccess', () => {
       const action = new AuthActions.LogoutSuccess();
-      const expected = cold('');
+      const completion = new routingActions.Go(['/login']);
+      const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.logoutSuccess$).toBeObservable(expected);
-
-      Scheduler.get().flush();
-
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
     });
   });
 });

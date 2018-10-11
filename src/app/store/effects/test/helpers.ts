@@ -1,6 +1,10 @@
 import { Observable, EMPTY } from 'rxjs';
 import { Actions } from '@ngrx/effects';
 
+import {
+  pois as poiFixtures
+} from '../../reducer/test/fixtures';
+
 export class TestActions extends Actions {
   constructor() {
     super(EMPTY);
@@ -16,6 +20,5 @@ export function getActions() {
 }
 
 export const mockRouter = {
-  navigate: jasmine.createSpy('navigate'),
   url: '/login'
 };

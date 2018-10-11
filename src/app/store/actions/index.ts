@@ -59,6 +59,10 @@ import * as commonGeoSearchActions from 'subrepos/gtrack-common-ngx/app/geosearc
 export type CommonGeoSearchAction = commonGeoSearchActions.AllGeoSearchActions;
 export { commonGeoSearchActions };
 
+import * as routingActions from 'subrepos/gtrack-common-ngx/app/router/store/actions';
+export type RoutingAction = routingActions.AllActions;
+export { routingActions };
+
 // tslint:disable:max-line-length
 import * as commonBackgroundGeolocationActions from 'subrepos/gtrack-common-ngx/app/shared/services/background-geolocation-service/store/actions';
 // tslint:enable:max-line-length

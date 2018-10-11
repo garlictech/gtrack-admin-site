@@ -36,7 +36,6 @@ export class HikeEditPoiEffects {
         this._routeService.splitBounds(bounds, 10000, boundsArr);
 
         const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
-
         const _observables: Observable<IWikipediaPoi[]>[] = [];
 
         for (const lang of langs) {
@@ -66,7 +65,6 @@ export class HikeEditPoiEffects {
       map((action: hikeEditPoiActions.GetGooglePois) => action.bounds),
       switchMap(bounds => {
         const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
-
         const _observables: Observable<IGooglePoi[]>[] = [];
 
         for (const lang of langs) {
