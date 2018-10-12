@@ -31,7 +31,7 @@ export interface IPoi {
   elevation: number;
   lat: number;
   lon: number;
-  objectType?: EPoiTypes;
+  objectType?: EPoiTypes[];
   types: string[];
   description: ILocalizedItem<ITextualDescription>;
   backgroundImages?: IBackgroundImageData[];
