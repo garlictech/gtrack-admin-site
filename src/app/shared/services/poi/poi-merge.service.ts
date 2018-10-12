@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { IComparedProperty, IFilteredProperties } from '../../interfaces';
 
 import * as flatten from 'flat';
-import _omit from 'lodash-es/pick';
+import _pick from 'lodash-es/pick';
+import _omit from 'lodash-es/omit';
 import _uniq from 'lodash-es/uniq';
 import _set from 'lodash-es/set';
 import _isObject from 'lodash-es/isObject';
@@ -17,10 +18,13 @@ export class PoiMergeService {
     let objectTypes: string[] = [];
 
     for (const poi of pois) {
-      const flatPoi = flatten(_omit(poi, [
-        'id', 'lat', 'lon', 'elevation', 'published', 'positions', 'types', 'state', 'timestamp', 'objectType'
+      let flatPoi = flatten(_pick(poi, [
+        'lat', 'lon', 'elevation', 'published', 'positions', 'state', 'timestamp', 'google', 'wikipedia'
       ]));
-      flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}]`;
+      flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}, ${poi.distFromRoute}]`;
+
+      // Remove
+      flatPoi = _omit(flatPoi, ['lat', 'lon', 'elevation']);
 
       for (const key in flatPoi) {
         if (flatPoi[key]) {
@@ -47,7 +51,7 @@ export class PoiMergeService {
     const filteredProperties: IFilteredProperties = {
       unique: {
         types: _uniq(commonTypes),
-        objectTypes: objectTypes
+        objectType: objectTypes
       },
       conflicts: {}
     };

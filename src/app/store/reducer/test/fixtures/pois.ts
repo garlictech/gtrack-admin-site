@@ -9,7 +9,7 @@ export const pois = [
     elevation: 0,
     lat: 0,
     lon: 0,
-    objectType: EPoiTypes.google,
+    objectType: [EPoiTypes.google],
     types: [],
     description: {
       'en_US': {
@@ -38,7 +38,7 @@ export const pois = [
     elevation: 0,
     lat: 0,
     lon: 0,
-    objectType: EPoiTypes.google,
+    objectType: [EPoiTypes.google],
     types: [],
     description: {
       'en_US': {

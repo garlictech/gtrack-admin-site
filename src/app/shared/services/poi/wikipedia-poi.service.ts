@@ -44,7 +44,7 @@ export class WikipediaPoiService {
               lon: _point.lon,
               elevation: 0,
               types: ['sight'],
-              objectType: EPoiTypes.wikipedia,
+              objectType: [EPoiTypes.wikipedia],
               description: {
                 [LanguageService.shortToLocale(lng)]: {
                   title: _point.title,

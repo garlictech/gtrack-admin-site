@@ -66,7 +66,7 @@ export class OsmPoiService {
                     type: ETextualDescriptionType.markdown
                   }
                 },
-                objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,
+                objectType: typeParam === 'amenity' ? [EPoiTypes.osmAmenity] : [EPoiTypes.osmNatural],
                 osm: {
                   id: _point.id
                 },

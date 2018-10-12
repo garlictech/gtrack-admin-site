@@ -43,6 +43,7 @@ import _find from 'lodash-es/find';
 import _assign from 'lodash-es/assign';
 import _map from 'lodash-es/map';
 import _sortBy from 'lodash-es/sortBy';
+import _intersection from 'lodash-es/intersection';
 
 import turfBuffer from '@turf/buffer';
 import { point as turfPoint } from '@turf/helpers';
@@ -431,21 +432,30 @@ export class PoiEditorService {
       const _found = _find(gTrackPois, (gTrackPoi: IGTrackPoi) => {
         let _idCheck = false;
 
-        if (gTrackPoi.objectType === poi.objectType) {
-          if ((<any>gTrackPoi).objectType.substring(0, 3) === 'osm') {
-            _idCheck = gTrackPoi.objectId.osm === (<IOsmPoi>poi).osm.id;
-          } else if (gTrackPoi.objectType === EPoiTypes.google) {
-            _idCheck = gTrackPoi.objectId.google === (<IGooglePoi>poi).google.id;
-          } else if (gTrackPoi.objectType === EPoiTypes.wikipedia) {
-            _idCheck =
-              gTrackPoi.objectId.wikipedia[(<IWikipediaPoi>poi).wikipedia.lng] ===
-              (<IWikipediaPoi>poi).wikipedia.pageid;
-          }
+        const _commonObjectTypes = _intersection(
+          Array.isArray(gTrackPoi.objectType) ? gTrackPoi.objectType : [gTrackPoi.objectType],
+          Array.isArray(poi.objectType) ? poi.objectType : [poi.objectType]
+        );
 
-          return _idCheck;
-        } else {
-          return false;
+        if (_commonObjectTypes.length > 0) {
+          for (const objectType of _commonObjectTypes) {
+            if (objectType.substring(0, 3) === 'osm') {
+              _idCheck = gTrackPoi.objectId.osm === (<IOsmPoi>poi).osm.id ? true : _idCheck;
+            } else if (objectType === EPoiTypes.google) {
+              _idCheck = gTrackPoi.objectId.google === (<IGooglePoi>poi).google.id ? true : _idCheck;
+            } else if (objectType === EPoiTypes.wikipedia) {
+              _idCheck =
+                gTrackPoi.objectId.wikipedia[(<IWikipediaPoi>poi).wikipedia.lng] ===
+                (<IWikipediaPoi>poi).wikipedia.pageid ? true : _idCheck;
+            }
+
+            if (_idCheck) {
+              break;
+            }
+          }
         }
+
+        return _idCheck;
       });
 
       if (_found) {

@@ -190,10 +190,12 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
         take(1)
       )
       .subscribe((selections: string[]) => {
-        combineLatest(...selections.map(poiId => this._store.pipe(
-          select(this._hikeEditPoiSelectors.getCollectorPoi(poiId)),
-          take(1)
-        )))
+        combineLatest(...selections.map(poiId => this._store
+          .pipe(
+            select(this._hikeEditPoiSelectors.getCollectorPoi(poiId)),
+            take(1)
+          )
+        ))
         .pipe(take(1))
         .subscribe(pois => {
           this.mergeProperties = this._poiMergeService.collectFlatKeyValues(pois);
@@ -219,10 +221,13 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
 
     this.mergedPoiData.lat = parseFloat(_coordsArr[0]);
     this.mergedPoiData.lon = parseFloat(_coordsArr[1]);
-    if (_coordsArr[2]) {
+    if (typeof _coordsArr[2] !== 'undefined') {
       this.mergedPoiData.elevation = parseFloat(_coordsArr[2]);
     }
-    delete this.mergedPoiData.coords;
+    if (typeof _coordsArr[3] !== 'undefined') {
+      this.mergedPoiData.distFromRoute = parseFloat(_coordsArr[3]);
+    }
+    delete mergedData.coords;
 
     for (const key in mergedData) {
       if (mergedData[key]) {
@@ -240,8 +245,6 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
    */
   private _saveMergedPoiData() {
     this.mergedPoiData.id = uuid();
-    this.mergedPoiData.objectType = this.mergedPoiData.objectTypes.join(', ');
-    delete this.mergedPoiData.objectTypes;
 
     this._store.dispatch(new hikeEditPoiActions.AddPoisToCollector([this.mergedPoiData]));
     this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(this.mergedPoiIds));
