@@ -227,6 +227,9 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
     if (typeof _coordsArr[3] !== 'undefined') {
       this.mergedPoiData.distFromRoute = parseFloat(_coordsArr[3]);
     }
+    if (typeof _coordsArr[4] !== 'undefined') {
+      this.mergedPoiData.onRoute = _coordsArr[4];
+    }
     delete mergedData.coords;
 
     for (const key in mergedData) {
@@ -264,11 +267,13 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
         });
 
         return interval(50)
-          .pipe(take(pois.length))
+          .pipe(take(_externalPoisToSave.length))
           .subscribe(idx => {
-            const _poiData = this._poiEditorService.getDbObj(_externalPoisToSave[idx]);
+            if (_externalPoisToSave[idx]) {
+              const _poiData = this._poiEditorService.getDbObj(_externalPoisToSave[idx]);
 
-            this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
+              this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
+            }
           });
       });
   }

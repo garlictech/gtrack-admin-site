@@ -19,9 +19,9 @@ export class PoiMergeService {
 
     for (const poi of pois) {
       let flatPoi = flatten(_pick(poi, [
-        'lat', 'lon', 'elevation', 'published', 'positions', 'state', 'timestamp', 'google', 'wikipedia'
+        'lat', 'lon', 'elevation', 'published', 'positions', 'state', 'timestamp', 'google', 'wikipedia', 'osm'
       ]));
-      flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}, ${poi.distFromRoute}]`;
+      flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}, ${poi.distFromRoute},  ${poi.onRoute}]`;
 
       // Remove
       flatPoi = _omit(flatPoi, ['lat', 'lon', 'elevation']);
