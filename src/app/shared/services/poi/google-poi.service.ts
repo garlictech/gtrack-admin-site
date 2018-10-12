@@ -78,7 +78,7 @@ export class GooglePoiService {
               }
             },
             types: _point.types || [],
-            objectType: [EPoiTypes.google],
+            objectTypes: [EPoiTypes.google],
             google: {
               id: _point.place_id
             },

@@ -82,19 +82,19 @@ export class PoiEditorService {
     const _poiData = {};
     _defaultsDeep(
       _poiData,
-      _pick(poi, ['elevation', 'lat', 'lon', 'objectType', 'description', 'types'])
+      _pick(poi, ['id', 'lat', 'lon', 'elevation', 'objectTypes', 'description', 'types'])
     );
 
-    if (poi.objectType.indexOf(EPoiTypes.google) >= 0) {
+    if (poi.objectTypes.indexOf(EPoiTypes.google) >= 0) {
       this._getGoogleDbObj(_poiData, <IGooglePoi>poi);
     }
-    if (poi.objectType.indexOf(EPoiTypes.wikipedia) >= 0) {
+    if (poi.objectTypes.indexOf(EPoiTypes.wikipedia) >= 0) {
       this._getWikipediaDbObj(_poiData, <IWikipediaPoi>poi);
     }
     if (
-      poi.objectType.indexOf(EPoiTypes.osmAmenity) >= 0 ||
-      poi.objectType.indexOf(EPoiTypes.osmNatural) >= 0 ||
-      poi.objectType.indexOf(EPoiTypes.osmRoute) >= 0
+      poi.objectTypes.indexOf(EPoiTypes.osmAmenity) >= 0 ||
+      poi.objectTypes.indexOf(EPoiTypes.osmNatural) >= 0 ||
+      poi.objectTypes.indexOf(EPoiTypes.osmRoute) >= 0
     ) {
       this._getOsmDbObj(_poiData, <IOsmPoi>poi);
     }
@@ -433,8 +433,8 @@ export class PoiEditorService {
         let _idCheck = false;
 
         const _commonObjectTypes = _intersection(
-          Array.isArray(gTrackPoi.objectType) ? gTrackPoi.objectType : [gTrackPoi.objectType],
-          Array.isArray(poi.objectType) ? poi.objectType : [poi.objectType]
+          Array.isArray(gTrackPoi.objectTypes) ? gTrackPoi.objectTypes : [gTrackPoi.objectTypes],
+          Array.isArray(poi.objectTypes) ? poi.objectTypes : [poi.objectTypes]
         );
 
         if (_commonObjectTypes.length > 0) {

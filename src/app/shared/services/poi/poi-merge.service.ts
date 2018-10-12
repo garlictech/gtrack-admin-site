@@ -19,7 +19,8 @@ export class PoiMergeService {
 
     for (const poi of pois) {
       let flatPoi = flatten(_pick(poi, [
-        'lat', 'lon', 'elevation', 'published', 'positions', 'state', 'timestamp', 'google', 'wikipedia', 'osm'
+        'lat', 'lon', 'elevation', 'published', 'positions', 'state',
+        'description', 'timestamp', 'google', 'wikipedia', 'osm'
       ]));
       flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}, ${poi.distFromRoute},  ${poi.onRoute}]`;
 
@@ -36,7 +37,7 @@ export class PoiMergeService {
       }
 
       commonTypes = commonTypes.concat(poi.types.filter(t => ['unknown', 'undefined'].indexOf(t) < 0));
-      objectTypes = _uniq(objectTypes.concat(poi.objectType));
+      objectTypes = _uniq(objectTypes.concat(poi.objectTypes));
     }
 
     // Remove duplicated values and empty objects
@@ -51,7 +52,7 @@ export class PoiMergeService {
     const filteredProperties: IFilteredProperties = {
       unique: {
         types: _uniq(commonTypes),
-        objectType: objectTypes
+        objectTypes: objectTypes
       },
       conflicts: {}
     };
