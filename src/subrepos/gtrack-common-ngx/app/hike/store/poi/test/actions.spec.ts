@@ -6,7 +6,6 @@ import * as actions from '../actions';
 
 describe('Poi actions', () => {
   let id;
-  let poiDataStored: IPoiStored;
   let poiData: IPoi;
   let poi: IPoiStored;
 
