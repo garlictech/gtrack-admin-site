@@ -13,7 +13,7 @@ export class Poi implements IPoi {
   public elevation: number;
   public lat: number;
   public lon: number;
-  public objectType: EPoiTypes[];
+  public objectTypes: EPoiTypes[];
   public types: string[] = [];
   public description: ILocalizedItem<ITextualDescription>;
   public tags: string[] = [];
