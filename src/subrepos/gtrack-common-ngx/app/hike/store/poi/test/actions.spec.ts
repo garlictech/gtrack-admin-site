@@ -18,7 +18,7 @@ describe('Poi actions', () => {
       lat: 42.25,
       lon: 19.32,
       elevation: 240,
-      objectType: EPoiTypes.google,
+      objectType: [EPoiTypes.google],
       types: [],
       description: {
         en_US: {
