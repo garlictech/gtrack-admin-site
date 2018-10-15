@@ -13,7 +13,16 @@
     <ng-template pTemplate="body" let-stop let-rowIndex="rowIndex">
       <tr>
         <td>{{rowIndex + 1}}.</td>
-        <td *ngIf="rowIndex > 0 && rowIndex < (stops.length - 1)" [innerHTML]="(stop.description | localizeDescription).title"></td>
+        <td *ngIf="rowIndex > 0 && rowIndex < (stops.length - 1)">
+          {{(stop.description | localizeDescription).title}}
+
+          <p-button
+            label="START HERE"
+            styleClass="ui-button-success ml-20"
+            class="ui-button-success"
+            (onClick)="startHere()"
+          ></p-button>
+        </td>
         <td *ngIf="rowIndex === 0" class="icon"><img title="Start" [src]="startIcon" /></td>
         <td *ngIf="rowIndex === (stops.length - 1)" class="icon" ><img title="Finish" [src]="finishIcon" /></td>
         <td>{{stop.distanceFromOrigo | distance}}</td>

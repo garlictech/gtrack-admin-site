@@ -40,4 +40,8 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy {
     this._destroy$.next(true);
     this._destroy$.unsubscribe();
   }
+
+  public startHere() {
+    console.log('start here');
+  }
 }
