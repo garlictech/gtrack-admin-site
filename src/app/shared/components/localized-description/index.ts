@@ -100,16 +100,19 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
       fields: {
         title: new TextboxField({
           label: 'form.title',
-          required: true
+          required: true,
+          submitOnChange: true
         }),
         summary: new MarkdownField({
           label: 'form.summary',
           required: false,
-          rows: 2
+          rows: 2,
+          submitOnChange: true
         }),
         fullDescription: new MarkdownField({
           label: 'form.description',
-          required: false
+          required: false,
+          submitOnChange: true
         })
       }
     };
@@ -126,6 +129,8 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
         fullDescription: '',
         summary: ''
       });
+
+      this.selectedLanguage = null;
     }
   }
 

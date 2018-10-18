@@ -10,6 +10,7 @@
     styleClass="ui-button-success ml-10"
     icon="pi pi-plus"
     (onClick)="addTranslation()"
+    [disabled]="!selectedLanguage"
     title="Add translation"
   ></p-button>
 </div>
