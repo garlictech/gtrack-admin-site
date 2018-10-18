@@ -14,7 +14,6 @@
 </div>
 
 <div class="ui-g mt-30" *ngIf="(hikeProgramData$ | async) as hikeProgramData">
-
   <div class="ui-g-2 ui-g-nopad">
     <strong>RoundTrip:</strong>
     <span [ngClass]="{'text-success': (isRoundTrip$ | async)}">

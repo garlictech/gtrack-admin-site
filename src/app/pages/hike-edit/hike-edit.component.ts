@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, combineLatest } from 'rxjs';
-import { takeUntil, filter, switchMap, take, skipWhile } from 'rxjs/operators';
+import { takeUntil, filter, switchMap, take, skipWhile, delay } from 'rxjs/operators';
 import { Store, MemoizedSelector, createSelector, select } from '@ngrx/store';
 import { State, IHikeEditRoutePlannerState } from '../../store';
 import {
@@ -38,7 +38,7 @@ import _pick from 'lodash-es/pick';
   templateUrl: './hike-edit.component.html',
   styleUrls: ['./hike-edit.component.scss']
 })
-export class HikeEditComponent implements OnInit, OnDestroy {
+export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   public hikeProgramState$: Observable<EObjectState>;
   public hikeProgramData$: Observable<IHikeProgramStored>;
   public allowSave$: Observable<boolean>;
@@ -55,6 +55,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private _store: Store<State>,
+    private _changeDetectorRef: ChangeDetectorRef,
     private _activatedRoute: ActivatedRoute,
     private _adminMapService: AdminMapService,
     private _waypointMarkerService: WaypointMarkerService,
@@ -78,6 +79,7 @@ export class HikeEditComponent implements OnInit, OnDestroy {
     this.hikeProgramData$ = this._store
       .pipe(
         select(this._editedHikeProgramSelectors.getData),
+        delay(0),
         takeUntil(this._destroy$)
       );
 
@@ -241,6 +243,10 @@ export class HikeEditComponent implements OnInit, OnDestroy {
       addMarker: url => this._store.dispatch(new hikeEditImageActions.AddImageMarker(url)),
       removeMarker: url => this._store.dispatch(new hikeEditImageActions.RemoveImageMarker(url)),
     };
+  }
+
+  ngAfterViewInit() {
+    this._changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy() {

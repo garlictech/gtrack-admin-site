@@ -45,7 +45,10 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   public languageFormDataPaths: ILanguageKeyObject = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private _store: Store<State>, private _changeDetectorRef: ChangeDetectorRef) {}
+  constructor(
+    private _store: Store<State>,
+    private _changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.languageKeys$ = this._store

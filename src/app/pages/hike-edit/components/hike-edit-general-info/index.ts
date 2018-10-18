@@ -69,6 +69,11 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
     this._changeDetectorRef.detectChanges();
   }
 
+  ngOnDestroy() {
+    this._destroy$.next(true);
+    this._destroy$.unsubscribe();
+  }
+
   private _initDescriptionFormConfig() {
     this.descriptionSelector = this._editedHikeProgramSelectors.getDescriptions;
     this.storeDataPath = `${this._editedHikeProgramSelectors.dataPath}.description`;
@@ -90,11 +95,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
         })
       }
     };
-  }
-
-  ngOnDestroy() {
-    this._destroy$.next(true);
-    this._destroy$.unsubscribe();
   }
 
   public submitDescription = (langKey: string, data: any) => {
