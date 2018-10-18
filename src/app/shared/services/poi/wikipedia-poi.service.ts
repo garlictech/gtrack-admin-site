@@ -80,6 +80,9 @@ export class WikipediaPoiService {
       });
   }
 
+  /**
+   * handlePoiDetails() submethod
+   */
   public getPoiDetails(pois: IWikipediaPoi[]) {
     const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
     const promises: Promise<IWikipediaPoi[]>[] = [];

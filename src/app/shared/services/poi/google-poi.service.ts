@@ -29,13 +29,13 @@ export class GooglePoiService {
     private _geometryService: GeometryService
   ) {}
 
-  public get(bounds, lng = 'en') {
+  public get(bounds, langs = ['en']) {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
 
     const promise: Promise<IGooglePoi[]> = new Promise((resolve) => {
       this._batchGet(this._getOnePage, {
         geo: geo,
-        lng: lng,
+        langs: langs,
         results: []
       }).then(_res => {
         resolve(_res);
@@ -45,7 +45,7 @@ export class GooglePoiService {
     return Observable.fromPromise(promise);
   }
 
-  private _getOnePage = params => {
+  private _getOnePage = (params) => {
     // tslint:disable:max-line-length
     let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${
       params.geo.center.geometry.coordinates[0]
@@ -70,7 +70,7 @@ export class GooglePoiService {
             lon: _point.geometry.location.lng,
             elevation: 0,
             description: {
-              [LanguageService.shortToLocale(params.lng)]: {
+              [LanguageService.shortToLocale(params.langs[0] || 'en')]: {
                 title: _point.name || LanguageService.pascalize(_point.types[0]) || 'unknown',
                 summary: '',
                 fullDescription: '',
@@ -119,7 +119,7 @@ export class GooglePoiService {
   }
 
   /**
-   * get() submethod
+   * handlePoiDetails() submethod
    */
   public getPoiDetails(pois: IGooglePoi[]) {
     const thumbnailWidth = 320;

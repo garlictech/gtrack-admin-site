@@ -65,20 +65,10 @@ export class HikeEditPoiEffects {
       map((action: hikeEditPoiActions.GetGooglePois) => action.bounds),
       switchMap(bounds => {
         const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
-        const _observables: Observable<IGooglePoi[]>[] = [];
 
-        for (const lang of langs) {
-          _observables.push(this._googlePoiService.get(bounds, lang));
-        }
-
-        return forkJoin(_observables)
-          .map(poisArr => {
-            let pois: IGooglePoi[] = [];
-            poisArr.map((poiArr: IGooglePoi[]) => {
-              pois = _concat(pois, poiArr);
-            });
-            return new hikeEditPoiActions.SetGooglePois(pois);
-          });
+        return this._googlePoiService
+          .get(bounds, langs)
+          .map((pois: IGooglePoi[]) => new hikeEditPoiActions.SetGooglePois(pois));
       })
     );
 
