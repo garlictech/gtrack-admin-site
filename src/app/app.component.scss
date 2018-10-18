@@ -14,3 +14,8 @@
     max-height: 90%;
   }
 }
+
+:host ::ng-deep p-confirmdialog {
+  z-index: 20000000 !important;
+  position: relative;
+}
