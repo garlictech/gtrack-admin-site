@@ -90,7 +90,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._poiSelectors.getAllPois),
-        debounceTime(200),
+        debounceTime(250),
         filter((gTrackPois: IGTrackPoi[]) => gTrackPois.length > 0),
         takeUntil(this._destroy$)
       )

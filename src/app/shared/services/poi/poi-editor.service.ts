@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { of, interval, combineLatest } from 'rxjs';
-import { take, switchMap, filter, map as rxMap, combineAll } from 'rxjs/operators';
+import { take, switchMap, filter, map as rxMap, combineAll, debounceTime } from 'rxjs/operators';
 import {
   GeometryService,
   ElevationService,
@@ -194,7 +194,7 @@ export class PoiEditorService {
   public organizePois(
     pois: IExternalPoi[] | IGTrackPoi[],
     path: GeoJSON.Feature<GeoJSON.LineString>,
-    isGTrackPoi: Boolean = false
+    forceAdd: boolean = false
   ) {
     const _pois: any[] = [];
 
@@ -205,17 +205,14 @@ export class PoiEditorService {
       for (const p of _cloneDeep(pois)) {
         const _point = turfPoint([p.lon, p.lat]);
 
-        if (typeof _smallBuffer !== 'undefined') {
-          p.onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
-        }
-
         if (typeof _bigBuffer !== 'undefined') {
-          if (turfBooleanPointInPolygon(_point, _bigBuffer)) {
+          if (turfBooleanPointInPolygon(_point, _bigBuffer) || forceAdd) {
+            if (typeof _smallBuffer !== 'undefined') {
+              p.onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
+            }
             p.distFromRoute = this._geometryService.distanceFromRoute(_point.geometry.coordinates, path);
 
-            if (!isGTrackPoi) {
-              this._handleTypes(<IExternalPoi>p);
-            }
+            this._handleTypes(<IExternalPoi>p);
 
             _pois.push(p);
           }
@@ -510,6 +507,7 @@ export class PoiEditorService {
         )
       )
       .pipe(
+        debounceTime(250),
         filter(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IPoiStored[], any]) => {
           return (
             (pois && pois.length > 0 && path && (<any>hikePoiContext).showOnrouteMarkers) ||
@@ -550,6 +548,7 @@ export class PoiEditorService {
         )
       )
       .pipe(
+        debounceTime(250),
         filter(([gTrackPoiContext, pois, path]: [IExternalPoiListContextItemState, IGTrackPoi[] | undefined, any]) => {
           return (
             (pois && pois.length > 0 && path && (<any>gTrackPoiContext).showOnrouteMarkers) ||

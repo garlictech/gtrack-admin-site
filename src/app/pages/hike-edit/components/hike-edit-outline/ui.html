@@ -13,18 +13,30 @@
     <ng-template pTemplate="body" let-stop let-rowIndex="rowIndex">
       <tr>
         <td>{{rowIndex + 1}}.</td>
-        <td *ngIf="rowIndex > 0 && rowIndex < (stops.length - 1)">
+        <td *ngIf="stop.poiId !== 'endpoint'" class="icon">
+          <img title="Start" [src]="startIcon" *ngIf="rowIndex === 0" />
+          <img title="Finish" [src]="finishIcon" *ngIf="rowIndex === (stops.length - 1)" />
           {{(stop.description | localizeDescription).title}}
 
-          <p-button
-            label="START HERE"
-            styleClass="ui-button-success ml-20"
-            class="ui-button-success"
-            (onClick)="startHere()"
-          ></p-button>
+          <span *ngIf="rowIndex === 1 && stops[0].poiId === 'endpoint'" class="ml-10">
+            <span *ngIf="(isPlanning$ | async)">
+              [<a (click)="startHere($event, stop)">start here</a>]
+            </span>
+          </span>
+
+          <span
+            *ngIf="rowIndex > 1 && rowIndex === (stops.length - 2) && stops[stops.length - 1].poiId === 'endpoint'" class="ml-10"
+          >
+            <span *ngIf="(isPlanning$ | async)">
+              [<a (click)="endHere($event, stop)">end here</a>]
+            </span>
+          </span>
         </td>
-        <td *ngIf="rowIndex === 0" class="icon"><img title="Start" [src]="startIcon" /></td>
-        <td *ngIf="rowIndex === (stops.length - 1)" class="icon" ><img title="Finish" [src]="finishIcon" /></td>
+
+        <td *ngIf="rowIndex === 0 && stop.poiId === 'endpoint'" class="icon"><img title="Start" [src]="startIcon" /></td>
+
+        <td *ngIf="rowIndex === (stops.length - 1) && stop.poiId === 'endpoint'" class="icon" ><img title="Finish" [src]="finishIcon" /></td>
+
         <td>{{stop.distanceFromOrigo | distance}}</td>
         <td>{{stop.segment.distance | distance}}</td>
       </tr>

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subject, of, combineLatest } from 'rxjs';
-import { filter, takeUntil, switchMap } from 'rxjs/operators';
+import { filter, takeUntil, switchMap, debounceTime } from 'rxjs/operators';
 import { Store, MemoizedSelector, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { hikeEditImageActions } from '../../../../store/actions';
@@ -72,6 +72,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
         )
       )
       .pipe(
+        debounceTime(250),
         switchMap(([photos, path]: [IBackgroundImageData[], any]) => {
           return of(this._poiEditorService.organizePoiPhotos(photos, path));
         })

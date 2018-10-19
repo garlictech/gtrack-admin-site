@@ -66,7 +66,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       )
     )
     .pipe(
-      debounceTime(200),
+      debounceTime(250),
       takeUntil(this._destroy$)
     )
     .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
@@ -82,38 +82,47 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     this.pois$ = this._store
       .pipe(
         select(this._editedHikeProgramSelectors.getHikePoisCount(this._poiSelectors.getAllPois)),
-        debounceTime(200),
-        takeUntil(this._destroy$),
-        switchMap(() => this._store.pipe(
-          select(this._hikeEditRoutePlannerSelectors.getIsRouting),
-          take(1)
-        )),
-        filter((routing: boolean) => !routing),
+        debounceTime(250),
+        // takeUntil(this._destroy$),
+        // switchMap(() => this._store.pipe(
+        //   select(this._hikeEditRoutePlannerSelectors.getIsRouting),
+        //   take(1)
+        // )),
+        // filter((routing: boolean) => !routing),
         switchMap(() => {
           return combineLatest(
             this._store.pipe(
               select(this._editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
-              take(1)
+              takeUntil(this._destroy$)
             ),
             this._store.pipe(
               select(this._hikeEditRoutePlannerSelectors.getPath),
-              take(1)
+              takeUntil(this._destroy$)
             )
           )
           .pipe(
+            debounceTime(250),
             filter(([pois, path]: [IPoiStored[], any]) => path && path.geometry.coordinates.length > 0),
-            take(1),
+            takeUntil(this._destroy$),
             map(([pois, path]: [IPoiStored[], any]) => {
-              const organizedPois = this._poiEditorService.organizePois(pois, path);
-              const poiIds = _map(pois, 'id');
-              const organizedPoiIds = _map(organizedPois, 'id');
-              const removablePoiIds = _difference(poiIds, _intersection(poiIds, organizedPoiIds));
+              let _routing;
+              this._store
+                .pipe(
+                  select(this._hikeEditRoutePlannerSelectors.getIsRouting),
+                  take(1)
+                )
+                .subscribe((routing: boolean) => _routing = routing);
 
-              if (removablePoiIds.length > 0) {
-                this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(removablePoiIds));
+              const _organizedPois = this._poiEditorService.organizePois(pois, path, _routing);
+              const _poiIds = _map(pois, 'id');
+              const _organizedPoiIds = _map(_organizedPois, 'id');
+              const _removablePoiIds = _difference(_poiIds, _intersection(_poiIds, _organizedPoiIds));
+
+              if (_removablePoiIds.length > 0) {
+                this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(_removablePoiIds));
               }
 
-              return organizedPois;
+              return _organizedPois;
             })
           );
         })
@@ -121,7 +130,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
     this.pois$
       .pipe(
-        debounceTime(200),
+        debounceTime(250),
         takeUntil(this._destroy$)
       )
       .subscribe(() => {
@@ -132,6 +141,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._editedHikeProgramSelectors.getStopsCount),
+        debounceTime(250),
         takeUntil(this._destroy$)
       )
       .subscribe(() => {
@@ -141,6 +151,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._hikeEditRoutePlannerSelectors.getPathLength),
+        debounceTime(250),
         takeUntil(this._destroy$)
       )
       .subscribe(() => {
