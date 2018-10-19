@@ -142,7 +142,7 @@ describe('HikeEditPoiEffects effects', () => {
       spyOn(googlePoiService, 'get').and.returnValue(Observable.of(pois));
 
       const action = new hikeEditPoiActions.GetGooglePois(mockBounds, 'fakeMapId');
-      const completion = new hikeEditPoiActions.SetGooglePois([...pois, ...pois]); // 2 langs!
+      const completion = new hikeEditPoiActions.SetGooglePois([...pois]);
       const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
