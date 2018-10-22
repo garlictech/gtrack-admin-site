@@ -1,10 +1,19 @@
-{
+// Don't use this file as jest config, use the app-level config file in src. That file must import this one and re-export
+// it with or without modifications.
+// That file contains the workflow level global settigns, so if you overwrite this one, the workflow test runs may
+// return different result.
+
+module.exports = {
+    "rootDir": "../",
     "preset": "jest-preset-angular",
+    "verbose": true,
+    "bail": true,
     "setupTestFrameworkScriptFile": "./src/jest.ts",
     "browser": true,
     "globals": {
         "ts-jest": {
-            "tsConfigFile": "src/tsconfig.spec.json"
+            "tsConfigFile": "src/tsconfig.spec.json",
+            "ignoreCoverageForDecorators": true
         },
         "__TRANSFORM_HTML__": true
     },
@@ -26,15 +35,23 @@
     "coverageDirectory": "<rootDir>/artifacts/reports/coverage",
     "coverageThreshold": {
         "global": {
-            "branches": 0,
-            "functions": 0,
-            "lines": 0,
-            "statements": 0
+            "statements": 73.74,
+            "branches": 58.39,
+            "functions": 33.89,
+            "lines": 71.14
         }
     },
     "coverageReporters": ["json", "lcov", "text", "html"],
-    "coveragePathIgnorePatterns": ["/node_modules/", "/\\.(e2e|spec)\\.ts$/", "/test/"],
+    "coveragePathIgnorePatterns": [
+        "/node_modules/",
+        "/\\.(e2e|spec)\\.ts$/",
+        "/test/",
+        "src/jest-global-mocks.ts",
+        "src/jest.ts",
+        "log.ts"
+    ],
     "transformIgnorePatterns": [
         "node_modules/(?!@ngrx|@ionic-native|@ionic|lodash-es)"
-    ]
+    ],
+    testPathIgnorePatterns: ["/node_modules/", "/dist/", ".git"]
 }
