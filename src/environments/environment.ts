@@ -16,13 +16,26 @@ export class Environment implements IEnvironment {
 
   raven = 'no-raven-in-dev';
 
-  graphhopper = { apiKey: '111444bf-7c37-499b-b87c-b324d7406715' };
+  graphhopper = {
+    apiKey: '111444bf-7c37-499b-b87c-b324d7406715'
+  };
 
-  mapillary = { clientID: 'bWxkcHdGR0dyRVJPNU1wRklzVHZoZzo5YmE0YzlmNzQ1NmY0ZWFh' };
+  mapillary = {
+    clientID: 'bWxkcHdGR0dyRVJPNU1wRklzVHZoZzo5YmE0YzlmNzQ1NmY0ZWFh'
+  };
+
+  flickr = {
+    // dd9a8ad609e489e39d1ba521525e1dd5 is for petrot81 user!!!
+    apiKey: 'dd9a8ad609e489e39d1ba521525e1dd5',
+    secret: '287dc1495420c9a3'
+  }
 
   googlePhotoLimit = 2;
 
-  awsConfig = { s3: 'to-be-configured', policyGenerator: this.lambdaEndpoint + '/generate-s3-policy' };
+  awsConfig = {
+    s3: 'to-be-configured',
+    policyGenerator: this.lambdaEndpoint + '/generate-s3-policy'
+  };
 }
 
 export const environment = new Environment();

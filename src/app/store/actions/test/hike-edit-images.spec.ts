@@ -9,6 +9,8 @@ describe('HikeEditMap actions', () => {
     expect(HikeEditImageActions.RESET_IMAGE_STATE).toEqual('[HikeEditImage] Reset images');
     expect(HikeEditImageActions.GET_MAPILLARY_IMAGES).toEqual('[HikeEditImage] Get Mapillary images');
     expect(HikeEditImageActions.SET_MAPILLARY_IMAGES).toEqual('[HikeEditImage] Set Mapillary images');
+    expect(HikeEditImageActions.GET_FLICKR_IMAGES).toEqual('[HikeEditImage] Get Flickr images');
+    expect(HikeEditImageActions.SET_FLICKR_IMAGES).toEqual('[HikeEditImage] Set Flickr images');
  });
 
   it('should create ResetImageState action', () => {
@@ -22,12 +24,14 @@ describe('HikeEditMap actions', () => {
 
   it('should create GetMapillaryImages action', () => {
     const bounds = 'fakeBounds';
-    const action = new HikeEditImageActions.GetMapillaryImages(bounds);
+    const path = 'fakePath';
+    const action = new HikeEditImageActions.GetMapillaryImages(bounds, path);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditImageActions.GET_MAPILLARY_IMAGES,
-      bounds: bounds
+      bounds: bounds,
+      path: path
     });
   });
 
@@ -37,6 +41,29 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditImageActions.SET_MAPILLARY_IMAGES,
+      images: []
+    });
+  });
+
+  it('should create GetFlickrImages action', () => {
+    const bounds = 'fakeBounds';
+    const path = 'fakePath';
+    const action = new HikeEditImageActions.GetFlickrImages(bounds, path);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditImageActions.GET_FLICKR_IMAGES,
+      bounds: bounds,
+      path: path
+    });
+  });
+
+  it('should create SetFlickrImages action', () => {
+    const action = new HikeEditImageActions.SetFlickrImages([]);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditImageActions.SET_FLICKR_IMAGES,
       images: []
     });
   });

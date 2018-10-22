@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subject, of, combineLatest } from 'rxjs';
-import { filter, takeUntil, switchMap, debounceTime } from 'rxjs/operators';
+import { filter, takeUntil, switchMap, debounceTime, take } from 'rxjs/operators';
 import { Store, MemoizedSelector, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { hikeEditImageActions } from '../../../../store/actions';
@@ -27,8 +27,10 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   public googlePhotos$: Observable<IBackgroundImageData[]>;
   public wikipediaPhotos$: Observable<IBackgroundImageData[]>;
   public mapillaryImages$: Observable<IBackgroundImageData[]>;
+  public flickrImages$: Observable<IBackgroundImageData[]>;
   public routePath$: Observable<any>;
   public mapillaryLoading$: Observable<boolean>;
+  public flickrLoading$: Observable<boolean>;
   public bgImages$: Observable<IBackgroundImageData[]>;
   public backgroundOriginalUrls$: Observable<string[]>;
   public slideShowUrls: string[];
@@ -93,6 +95,11 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
         select(this._hikeEditImageSelectors.getAllMapillaryImages),
         takeUntil(this._destroy$)
       );
+    this.flickrImages$ = this._store
+      .pipe(
+        select(this._hikeEditImageSelectors.getAllFlickrImages),
+        takeUntil(this._destroy$)
+      );
 
     // Store path
     this.bgImages$ = this._store
@@ -117,6 +124,9 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     this.mapillaryLoading$ = this._store.pipe(
       select(this._hikeEditImageSelectors.getHikeEditImageContextPropertySelector('mapillary', 'loading'))
     );
+    this.flickrLoading$ = this._store.pipe(
+      select(this._hikeEditImageSelectors.getHikeEditImageContextPropertySelector('flickr', 'loading'))
+    );
 
     // Refresh markers
     this._store
@@ -138,8 +148,23 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     const _bounds = this._routePlannerService.getSearchBounds();
 
     if (_bounds) {
-      // Get pois for the current domain
-      this._store.dispatch(new hikeEditImageActions.GetMapillaryImages(_bounds));
+      this.routePath$
+        .pipe(take(1))
+        .subscribe(path => {
+          this._store.dispatch(new hikeEditImageActions.GetMapillaryImages(_bounds, path));
+        });
+    }
+  }
+
+  public getFlickrPhotos() {
+    const _bounds = this._routePlannerService.getSearchBounds();
+
+    if (_bounds) {
+      this.routePath$
+        .pipe(take(1))
+        .subscribe(path => {
+          this._store.dispatch(new hikeEditImageActions.GetFlickrImages(_bounds, path));
+        });
     }
   }
 }

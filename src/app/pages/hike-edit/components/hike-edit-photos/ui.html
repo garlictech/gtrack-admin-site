@@ -36,6 +36,29 @@
     ></app-hike-edit-photos-table>
   </p-accordionTab>
 
+  <p-accordionTab header="Flickr ({{((flickrImages$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
+    <div class="mb-20">
+      <p-button
+        label="Get new"
+        styleClass="ui-button-primary"
+        (onClick)="getFlickrPhotos()"
+        [disabled]="(routePath$ | async)?.geometry.coordinates.length < 1 || (flickrLoading$ | async)"
+      ></p-button>
+    </div>
+
+    <app-table-spinner *ngIf="(flickrLoading$ | async) as flickrLoading; else flickrTable"></app-table-spinner>
+
+    <ng-template #flickrTable>
+      <app-hike-edit-photos-table
+        [images$]="flickrImages$"
+        [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+        [clickActions]="clickActions"
+        [distanceFrom]="distanceFrom"
+        [showMarkerColumn]="showMarkerColumn"
+      ></app-hike-edit-photos-table>
+    </ng-template>
+  </p-accordionTab>
+
   <p-accordionTab header="Mapillary ({{((mapillaryImages$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
     <div class="mb-20">
       <p-button
