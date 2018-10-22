@@ -53,25 +53,33 @@ export class HikeProgramService {
     .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
       const poiStops = _cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
 
-      for (const stop of poiStops) {
-        this._updateStopDistanceFromOrigo(stop, path);
-      }
-
-      if (path.geometry.coordinates.length > 0) {
-        if (poiStops[0].distanceFromOrigo > 10) {
-          poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
+      if (poiStops.length > 0) {
+        for (const stop of poiStops) {
+          this._updateStopDistanceFromOrigo(stop, path);
         }
 
-        const distanceFromFinish = Math.round(1000 * turfDistance(
-          turfPoint([_last(poiStops).lon, _last(poiStops).lat]),
-          turfPoint([_last(path.geometry.coordinates)[0], _last(path.geometry.coordinates)[1]]),
-          {units: 'kilometers'}
-        ));
+        if (path.geometry.coordinates.length > 0) {
+          if (poiStops[0].distanceFromOrigo > 10) {
+            poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
+          }
 
-        if (distanceFromFinish > 10) {
+          const distanceFromFinish = Math.round(1000 * turfDistance(
+            turfPoint([_last(poiStops).lon, _last(poiStops).lat]),
+            turfPoint([_last(path.geometry.coordinates)[0], _last(path.geometry.coordinates)[1]]),
+            {units: 'kilometers'}
+          ));
+
+          if (distanceFromFinish > 10) {
+            poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
+          }
+        }
+      } else {
+        if (path.geometry.coordinates.length > 0) {
+          poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
           poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
         }
       }
+
       this._updateStopsSegment(_orderBy(poiStops, ['distanceFromOrigo']), path);
     });
   }

@@ -3,6 +3,7 @@ import { IBackgroundImageDataStored } from '../../shared/interfaces/mapillary-im
 import { IBackgroundImageData } from 'subrepos/provider-client';
 
 export interface IMapillaryImageEntityState extends EntityState<IBackgroundImageDataStored> {}
+export interface IFlickrImageEntityState extends EntityState<IBackgroundImageDataStored> {}
 
 export interface IImageListContextItemState {
   loading: boolean;
@@ -16,11 +17,13 @@ export interface IImageMarkerState {
 
 export interface IImageListContextState {
   mapillary: IImageListContextItemState;
+  flickr: IImageListContextItemState;
 }
 
 // State
 export interface IHikeEditImageState {
   mapillaryImages: IMapillaryImageEntityState;
+  flickrImages: IFlickrImageEntityState;
   imageMarkerUrls: IImageMarkerState;
   contexts: IImageListContextState;
 }

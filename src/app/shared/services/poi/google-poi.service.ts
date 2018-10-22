@@ -45,6 +45,19 @@ export class GooglePoiService {
     return Observable.fromPromise(promise);
   }
 
+  private _batchGet(getter, params) {
+    return getter(params).then(result => {
+      params.results = params.results.concat(result.data);
+
+      if (!result.nextParams) {
+        return params.results;
+      } else {
+        params.pageToken = result.nextParams.pageToken;
+        return this._batchGet(getter, params);
+      }
+    });
+  }
+
   private _getOnePage = (params) => {
     // tslint:disable:max-line-length
     let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${
@@ -103,19 +116,6 @@ export class GooglePoiService {
         }
         return result;
       });
-  }
-
-  private _batchGet(getter, params) {
-    return getter(params).then(result => {
-      params.results = params.results.concat(result.data);
-
-      if (!result.nextParams) {
-        return params.results;
-      } else {
-        params.pageToken = result.nextParams.pageToken;
-        return this._batchGet(getter, params);
-      }
-    });
   }
 
   /**

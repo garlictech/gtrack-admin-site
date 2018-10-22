@@ -8,7 +8,7 @@ import { hot, cold, Scheduler } from 'jest-marbles';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule } from '../../../../subrepos/gtrack-common-ngx';
 import { TestActions, getActions, mockRouter } from './helpers';
-import { MapillaryService } from '../../../shared/services';
+import { MapillaryService, FlickrService, PoiEditorService } from '../../../shared/services';
 import { hikeEditImageActions } from '../../actions';
 import { IBackgroundImageDataStored } from 'subrepos/provider-client';
 import { HikeEditImageEffects } from '../hike-edit-image';
@@ -23,6 +23,7 @@ describe('HikeEditImageEffects effects', () => {
   let actions$: TestActions;
   let effects: HikeEditImageEffects;
   let mapillaryService: MapillaryService;
+  let flickrService: FlickrService;
   let bgImages: IBackgroundImageDataStored[];
 
   beforeEach(() => {
@@ -41,6 +42,8 @@ describe('HikeEditImageEffects effects', () => {
       providers: [
         HikeEditImageEffects,
         MapillaryService,
+        FlickrService,
+        PoiEditorService,
         {
           provide: Actions,
           useFactory: getActions
@@ -52,6 +55,12 @@ describe('HikeEditImageEffects effects', () => {
         {
           provide: Router,
           useValue: mockRouter
+        },
+        {
+          provide: PoiEditorService,
+          useValue: {
+            organizePoiPhotos: () => []
+          }
         }
       ]
     });
@@ -59,13 +68,14 @@ describe('HikeEditImageEffects effects', () => {
     actions$ = TestBed.get(Actions);
     effects = TestBed.get(HikeEditImageEffects);
     mapillaryService = TestBed.get(MapillaryService);
+    flickrService = TestBed.get(FlickrService);
   });
 
   describe('getMapillaryImages$', () => {
     it('should return images observable from getMapillaryImages', () => {
       spyOn(mapillaryService, 'get').and.returnValue(Observable.of(bgImages));
 
-      const action = new hikeEditImageActions.GetMapillaryImages('fakeBounds');
+      const action = new hikeEditImageActions.GetMapillaryImages('fakeBounds', 'fakePath');
       const completion = new hikeEditImageActions.SetMapillaryImages(bgImages);
       const expected = cold('-b', { b: completion });
 
@@ -75,7 +85,25 @@ describe('HikeEditImageEffects effects', () => {
 
       Scheduler.get().flush();
 
-      expect(mapillaryService.get).toBeCalledWith('fakeBounds');
+      expect(mapillaryService.get).toBeCalledWith('fakeBounds', 'fakePath');
+    });
+  });
+
+  describe('GetFlickrImages$', () => {
+    it('should return images observable from getFlickrImages', () => {
+      spyOn(flickrService, 'get').and.returnValue(Observable.of(bgImages));
+
+      const action = new hikeEditImageActions.GetFlickrImages('fakeBounds', 'fakePath');
+      const completion = new hikeEditImageActions.SetFlickrImages(bgImages);
+      const expected = cold('-b', { b: completion });
+
+      actions$.stream = hot('-a', { a: action });
+
+      expect(effects.getFlickrImages$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(flickrService.get).toBeCalledWith('fakeBounds', 'fakePath');
     });
   });
 });
