@@ -200,7 +200,7 @@ describe('OauthWindow', () => {
     oauthWindow.close();
   });
 
-  it("should get URL from cordova's loadStartHandler event", done => {
+  it('should get URL from cordova\'s loadStartHandler event', done => {
     const windowService = {
       get nativeWindow() {
         return mockWindowCordova;
@@ -222,7 +222,7 @@ describe('OauthWindow', () => {
     oauthWindow.changeUrl('http://test.com?access_token=5');
   });
 
-  it("should get URL from cordova's loadStartHandler event when error happened", done => {
+  it('should get URL from cordova\'s loadStartHandler event when error happened', done => {
     const windowService = {
       get nativeWindow() {
         return mockWindowCordova;
@@ -241,7 +241,7 @@ describe('OauthWindow', () => {
     oauthWindow.changeUrl('http://test.com?error=error');
   });
 
-  it("should not get URL from cordova's loadStartHandler when URL doesn't contain the parameter or exit", done => {
+  it('should not get URL from cordova\'s loadStartHandler when URL doesn\'t contain the parameter or exit', done => {
     const windowService = {
       get nativeWindow() {
         return mockWindowCordova;
