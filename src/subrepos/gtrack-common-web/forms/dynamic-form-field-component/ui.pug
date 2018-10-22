@@ -36,6 +36,15 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
       [placeholder]="sanitizedPlaceholder | translate"
     )
 
+    textarea.field.textarea(
+      pInputTextarea
+      *ngSwitchCase="'emoji'",
+      [formControlName]="field.key",
+      [id]="field.key",
+      [rows]="field.rows",
+      [placeholder]="sanitizedPlaceholder | translate"
+    )
+
     div.field-text(*ngSwitchCase="'text'") {{ field.textKey | translate }}
     div.field-html(*ngSwitchCase="'html'", [innerHtml]="field.content")
 
@@ -63,6 +72,7 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
     gtrack-form-multi-select.field(
       *ngSwitchCase="'multi-select'",
       [options]="field.selectOptions",
+      [defaultLabel]="field.defaultLabel | translate",
       [formControlName]="field.key",
       [id]="field.key",
       [change]="getOnChange()"
@@ -74,6 +84,14 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
       [id]="field.key",
       [minDate]="field.minDate",
       [maxDate]="field.maxDate",
+      [defaultDate]="field.defaultDate",
+      [placeholder]="sanitizedPlaceholder | translate"
+    )
+
+    gtrack-form-time-picker.field(
+      *ngSwitchCase="'time'",
+      [formControlName]="field.key",
+      [id]="field.key",
       [defaultDate]="field.defaultDate",
       [placeholder]="sanitizedPlaceholder | translate"
     )
