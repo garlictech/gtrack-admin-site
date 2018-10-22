@@ -1,10 +1,11 @@
 <ng-container *ngIf="(pois$ | async) as pois">
-  <p-table [value]="pois">
+  <p-table [value]="pois | orderBy : ['distFromOrigo'] : ['asc']">
     <ng-template pTemplate="header">
       <tr>
         <th>Icon</th>
         <th>Title</th>
         <th>Distance from route</th>
+        <th>Distance from origo</th>
         <th>Types</th>
         <th>Origin</th>
         <th>Elevation</th>
@@ -18,6 +19,7 @@
         </td>
         <td [ngClass]="{'text-danger': !poi.inHike}" [innerHTML]="(poi?.description | localizeDescription).title"></td>
         <td>{{poi.distFromRoute | distance : true}}</td>
+        <td>{{poi.distFromOrigo | distance : true}}</td>
         <td>{{poi.types.join(', ')}}</td>
         <td>{{poi.objectType}}</td>
         <td>{{poi.elevation | distance}}</td>

@@ -4,7 +4,7 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = https://github.com/garlictech/deepstream-ngx.git
+	remote = git@github.com:garlictech/deepstream-ngx.git
 	branch = master
 	commit = 2d052440720fca8489659a8e22f69e9bdd9c19b4
 	parent = 51152de911ec911dd79abb39b247ebb8fb40a770

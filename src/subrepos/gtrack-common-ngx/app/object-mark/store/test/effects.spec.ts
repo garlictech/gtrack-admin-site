@@ -4,7 +4,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { EObjectMarkContext } from 'subrepos/provider-client';
 
-import { hot, cold } from 'jest-marbles';
+import { hot, cold, Scheduler } from 'jest-marbles';
 
 import * as actions from '../actions';
 import { ObjectMarkEffects } from '../effects';
@@ -33,6 +33,9 @@ describe('ObjectMark effects', () => {
 
   let testObjectMarks: any[];
 
+  let loadContext: jasmine.Spy;
+  let mark: jasmine.Spy;
+
   beforeEach(() => {
     testObjectMarks = [
       {
@@ -43,8 +46,8 @@ describe('ObjectMark effects', () => {
       }
     ];
 
-    const loadContext = jasmine.createSpy('loadContext').and.returnValue(of(testObjectMarks));
-    const mark = jasmine.createSpy('mark').and.returnValue(of({ success: true }));
+    loadContext = jasmine.createSpy('loadContext').and.returnValue(of(testObjectMarks));
+    mark = jasmine.createSpy('mark').and.returnValue(of({ success: true }));
 
     const fakeService = {
       loadContext,
@@ -79,6 +82,10 @@ describe('ObjectMark effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadContext$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(loadContext).toHaveBeenCalledWith(EObjectMarkContext.bookmarkedHike);
     });
   });
 
@@ -104,6 +111,10 @@ describe('ObjectMark effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.markObject$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(mark).toHaveBeenCalledWith(EObjectMarkContext.bookmarkedHike, {id: 'test3'}, true);
     });
   });
 });

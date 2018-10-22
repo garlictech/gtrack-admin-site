@@ -1,5 +1,6 @@
 import { timer as observableTimer, Subscription, Observable, merge, throwError } from 'rxjs';
-import { Injectable, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { log, DebugLog } from 'app/log';
 import { State } from 'app/store';
@@ -21,13 +22,20 @@ export class BackgroundGeolocationService {
   constructor(
     protected _store: Store<State>,
     @Inject(BACKGROUND_GEOLOCATION_CONFIG_TOKEN) protected _config: IBackgroundGeolocationServiceConfig,
-    private _geoip: GeoIpService
+    private _geoip: GeoIpService,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) {
-    /* EMPTY */
   }
 
   @DebugLog
   public start() {
+    const isBrowser = isPlatformBrowser(this._platformId);
+
+    if (isBrowser !== true) {
+      log.warn('BackgroundGeolocationService is not available in server mode.');
+      return true;
+    }
+
     log.data('Determining current location starts in browser mode');
     this.end();
 

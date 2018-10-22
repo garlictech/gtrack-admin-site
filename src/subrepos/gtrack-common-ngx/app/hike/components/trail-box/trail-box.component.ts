@@ -82,7 +82,10 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
   public elevationLineOut = new EventEmitter<void>();
 
   @Output()
-  public elevationLineClick = new EventEmitter<GeoJSON.Position>();
+  public elevationLineClick = new EventEmitter<{
+    position: GeoJSON.Position,
+    forced?: boolean
+  }>();
 
   @Input()
   public elevationMarkerPosition: GeoJSON.Position = [0, 0];
@@ -202,8 +205,20 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
           if (booleanPointInPolygon(point, rectangle)) {
             const line = turfLineString(feature.geometry.coordinates);
             const nearest = nearestPointOnLine(line, point);
-            this.elevationLineClick.emit([nearest.geometry.coordinates[0], nearest.geometry.coordinates[1]]);
+            this.elevationLineClick.emit({
+              position: [nearest.geometry.coordinates[0], nearest.geometry.coordinates[1]]
+            });
           }
+        });
+
+        this.map.leafletMap.on('gcmarkerclick', (e: L.LeafletMouseEvent) => {
+          const point = turfPoint([e.latlng.lng, e.latlng.lat]);
+          const line = turfLineString(feature.geometry.coordinates);
+          const nearest = nearestPointOnLine(line, point);
+          this.elevationLineClick.emit({
+            position: [nearest.geometry.coordinates[0], nearest.geometry.coordinates[1]],
+            forced: true
+          });
         });
 
         this.map.leafletMap.on('mouseout', () => {

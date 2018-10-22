@@ -5,9 +5,9 @@ import { StoreModule } from '@ngrx/store';
 import * as uuid from 'uuid/v4';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
-import { Observable, EMPTY } from 'rxjs';
+import { Observable, EMPTY, of } from 'rxjs';
 
-import { hot, cold } from 'jest-marbles';
+import { hot, cold, Scheduler } from 'jest-marbles';
 
 import { IRouteStored, IRoute, EObjectState } from 'subrepos/provider-client';
 import { RouteService } from '../../../services/route';
@@ -106,15 +106,15 @@ describe('Route effects', () => {
     routeService = TestBed.get(RouteService);
     effects = TestBed.get(RouteEffects);
 
-    spyOn(routeService, 'get').and.callFake(_id => Observable.of(route));
+    spyOn(routeService, 'get').and.callFake(_id => of(route));
     spyOn(routeService, 'create').and.returnValue(
-      Observable.of({
+      of({
         id: newId
       })
     );
 
     spyOn(routeService, 'updateState').and.returnValue(
-      Observable.of({
+      of({
         success: true
       })
     );
@@ -129,6 +129,10 @@ describe('Route effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.loadRoute$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(routeService.get).toHaveBeenCalledWith(id);
     });
   });
 
@@ -141,6 +145,10 @@ describe('Route effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.saveRoute$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(routeService.create).toHaveBeenCalledWith(routeData);
     });
   });
 
@@ -153,6 +161,10 @@ describe('Route effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.updateState$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(routeService.updateState).toHaveBeenCalledWith(routeData.id, EObjectState.published);
     });
   });
 });

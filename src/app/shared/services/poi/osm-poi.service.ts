@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EPoiTypes } from 'subrepos/provider-client';
+import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
 import { IOsmPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 import * as uuid from 'uuid/v1';
 import _get from 'lodash-es/get';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class OsmPoiService {
@@ -43,8 +44,7 @@ export class OsmPoiService {
 
     return this._http
       .post('https://overpass-api.de/api/interpreter', request)
-      .toPromise()
-      .then((response: any) => {
+      .switchMap((response: any) => {
         const _res: IOsmPoi[] = [];
 
         if (response.elements) {
@@ -62,7 +62,8 @@ export class OsmPoiService {
                   [LanguageService.shortToLocale(lng)]: {
                     title: _point.tags.name || LanguageService.pascalize(type) || 'unknown',
                     summary: '',
-                    fullDescription: ''
+                    fullDescription: '',
+                    type: ETextualDescriptionType.markdown
                   }
                 },
                 objectType: typeParam === 'amenity' ? EPoiTypes.osmAmenity : EPoiTypes.osmNatural,
@@ -75,7 +76,7 @@ export class OsmPoiService {
           }
         }
 
-        return _res;
+        return Observable.of(_res);
       });
   }
 

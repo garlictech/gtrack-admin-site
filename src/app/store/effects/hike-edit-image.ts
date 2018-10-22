@@ -15,17 +15,19 @@ export class HikeEditImageEffects {
   ) {}
 
   /**
-   * Get pois from WikiPedia api
+   * Get images from Mapillary api
    */
   @Effect()
-  getWikipediaPois$: Observable<Action> = this._actions$
+  getMapillaryImages$: Observable<Action> = this._actions$
     .pipe(
       ofType(hikeEditImageActions.GET_MAPILLARY_IMAGES),
       map((action: hikeEditImageActions.GetMapillaryImages) => action.bounds),
       switchMap(bounds => {
-        return this._mapillaryService.get(bounds).then((images: IBackgroundImageDataStored[]) =>  {
-          return new hikeEditImageActions.SetMapillaryImages(images);
-        });
+        return this._mapillaryService
+          .get(bounds)
+          .map((images: IBackgroundImageDataStored[]) =>  {
+            return new hikeEditImageActions.SetMapillaryImages(images);
+          });
       })
     );
 }

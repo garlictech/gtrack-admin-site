@@ -1,13 +1,7 @@
-import { Component } from '@angular/core';
 import { IPoi, IHikeProgramStop } from 'subrepos/provider-client';
 
 import _get from 'lodash-es/get';
 
-@Component({
-  selector: 'gtrack-marker-popup',
-  templateUrl: './ui.html',
-  styleUrls: ['./style.scss']
-})
 export class MarkerPopupComponent {
   public static componentName = 'MarkerPopupComponent';
 

@@ -1,7 +1,7 @@
 import { ActionReducer } from '@ngrx/store';
 import { IEditedGTrackPoiState } from '../state';
 import { editedGTrackPoiActions } from '../actions';
-import { EObjectState } from 'subrepos/provider-client';
+import { EObjectState, ETextualDescriptionType } from 'subrepos/provider-client';
 
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _omit from 'lodash-es/omit';
@@ -13,7 +13,12 @@ export const initialEditedGTrackPoiState: IEditedGTrackPoiState = {
     elevation: 0,
     lat: 0,
     lon: 0,
-    description: { en_US: { title: 'A new poi' } },
+    description: {
+      en_US: {
+        title: 'A new poi',
+        type: ETextualDescriptionType.markdown
+      }
+    },
     backgroundImages: [],
     types: [],
     state: EObjectState.draft

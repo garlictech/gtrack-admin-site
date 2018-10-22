@@ -112,8 +112,14 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
           .pipe(
             select(this._hikeEditRoutePlannerSelectors.getPath),
             take(1),
-            switchMap((path: any) => of(this._poiEditorService.organizePois(pois, path))),
-            switchMap((organizedPois: IPoiStored[]) => of(this._poiEditorService.handleHikeInclusion(organizedPois)))
+            switchMap((path: any) => of([path, this._poiEditorService.organizePois(pois, path)])),
+            switchMap(([path, organizedPois]: [any, IGTrackPoi[]]) => {
+
+              return of([path, this._poiEditorService.handleHikeInclusion(organizedPois)]);
+            }),
+            switchMap(([path, organizedPois]: [any, IGTrackPoi[]]) => {
+              return of(this._poiEditorService.getGTrackPoiDistanceFromOrigo(organizedPois, path));
+            })
           );
         })
     );

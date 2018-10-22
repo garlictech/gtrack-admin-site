@@ -20,7 +20,7 @@ export class AdminMarkerPopupComponent implements OnInit {
   public data: any;
   public closePopup: any;
 
-  public images: string[];
+  public images: string[] = [];
   public btnTitle: string;
   public btn2Title: string;
   public btnClass: string;
@@ -46,13 +46,13 @@ export class AdminMarkerPopupComponent implements OnInit {
         this.btnTitle = 'Remove from hike';
         this.btnClick = this._removeFromHike;
         this.btnClass = 'warning';
-        this.images = _map(this.data.backgroundImages, 'card.url') || [];
+        this.images = _map(this.data.backgroundImages || [], 'card.url');
         break;
       case 'gTrack':
         this.btnTitle = 'Add to hike';
         this.btnClick = this._addToHike;
         this.btnClass = 'success';
-        this.images = _map(this.data.backgroundImages, 'card.url') || [];
+        this.images = _map(this.data.backgroundImages || [], 'card.url');
         break;
       case 'collector':
         this.btnTitle = 'Remove from collector';

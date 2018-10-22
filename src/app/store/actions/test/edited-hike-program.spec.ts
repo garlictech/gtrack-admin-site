@@ -88,7 +88,7 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create Prepare then add stop action', () => {
-    const poi: IGTrackPoi = {};
+    const poi: IGTrackPoi = null;
     const action = new EditedHikeProgramActions.PrepareThenAddStop(poi);
 
     expect(action).toBeDefined();
@@ -120,7 +120,7 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create SetCheckpoints action', () => {
-    const checkpoints = [];
+    const checkpoints = null;
     const action = new EditedHikeProgramActions.SetCheckpoints(checkpoints);
 
     expect(action).toBeDefined();

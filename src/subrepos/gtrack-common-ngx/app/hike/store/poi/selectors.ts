@@ -78,6 +78,18 @@ export class PoiSelectors {
     );
   }
 
+  public getPoiContextEntities(ids: string[]) {
+    return createSelector(this.getAllContextEntities, contexts =>
+      _pickBy(contexts, context => {
+        if (context.id) {
+          return ids.indexOf(context.id) !== -1;
+        } else {
+          return false;
+        }
+      })
+    );
+  }
+
   public getPois(contexts: string[]) {
     return createSelector(this.getAllPois, pois =>
       pois.filter(poi => {

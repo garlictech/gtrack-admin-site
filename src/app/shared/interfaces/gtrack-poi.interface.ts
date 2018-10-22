@@ -3,6 +3,7 @@ import { IPoiStored } from 'subrepos/provider-client';
 export interface IGTrackPoi extends IPoiStored {
   inHike?: boolean | undefined;
   distFromRoute?: number | undefined;
+  distFromOrigo?: number | undefined;
   onRoute?: boolean | undefined;
 }
 

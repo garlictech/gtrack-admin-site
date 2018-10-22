@@ -8,7 +8,8 @@ import {
   IconService,
   CenterRadius,
   GeoSearchSelectors,
-  PoiSelectors
+  PoiSelectors,
+  GeospatialService
 } from 'subrepos/gtrack-common-ngx';
 import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
 import { State, IExternalPoiListContextItemState } from '../../../store';
@@ -61,6 +62,7 @@ export class PoiEditorService {
   constructor(
     private _store: Store<State>,
     private _geometryService: GeometryService,
+    private _geospatialService: GeospatialService,
     private _routePlannerService: RoutePlannerService,
     private _elevationService: ElevationService,
     private _iconService: IconService,
@@ -247,6 +249,26 @@ export class PoiEditorService {
       });
 
     return _pois;
+  }
+
+  /**
+   * Update gTrackPois DistanceFromOrigo value
+   */
+  public getGTrackPoiDistanceFromOrigo(pois: IGTrackPoi[], path: GeoJSON.Feature<GeoJSON.LineString>) {
+    console.log('POIS', pois);
+    console.log('PATH', path);
+
+    if (pois.length > 0 && path && path.geometry && path.geometry.coordinates.length > 0) {
+      for (const poi of pois) {
+        poi.distFromOrigo =  this._geospatialService.distanceOnLine(
+          path.geometry.coordinates[0],
+          [poi.lon, poi.lat],
+          path
+        );
+      }
+    }
+
+    return pois;
   }
 
   private _getOnroutePois(pois: IExternalPoi[]) {
