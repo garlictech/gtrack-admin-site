@@ -86,7 +86,7 @@ describe('DescriptionLanguageListService', () => {
     expect(transformed.title).toEqual(item.de_DE.title);
   });
 
-  it("should fallback to en_US when we can't find anything", async () => {
+  it('should fallback to en_US when we can\'t find anything', async () => {
     state.actualLanguage = 'ru_RU';
 
     item = {

@@ -12,3 +12,4 @@ export * from './search-filters';
 export * from './module';
 export * from './localize';
 export * from './object-mark';
+export * from './astronomy';
