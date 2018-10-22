@@ -46,6 +46,7 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
   action: editedHikeProgramActions.AllEditedHikeProgramActions
 ): IEditedHikeProgramState => {
   const newState = _cloneDeep(state);
+
   switch (action.type) {
     case editedHikeProgramActions.RESET_HIKE_PROGRAM: {
       return initialEditedHikeProgramState;

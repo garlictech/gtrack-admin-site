@@ -15,7 +15,11 @@
         <td>
           <app-poi-icons [poi]="poi"></app-poi-icons>
         </td>
-        <td [ngClass]="{'text-danger': !poi.inGtrackDb}" [innerHTML]="(poi?.description | localizeDescription).title"></td>
+        <td [ngClass]="{'text-danger': !poi.inGtrackDb}">
+          {{(poi?.description | localizeDescription).title}}
+          {{poi?.wikipedia ? '[' + poi.wikipedia.lng + ']' : ''}}
+          {{poi?.lng}}
+        </td>
         <td>{{poi.distFromRoute | distance : true}}</td>
         <td>{{poi.types.join(', ')}}</td>
         <td>

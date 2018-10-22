@@ -27,7 +27,8 @@ import {
   ReverseGeocodingService,
   LanguageService,
   HikeProgramService,
-  MapillaryService
+  MapillaryService,
+  FlickrService
 } from './shared/services';
 
 import { REDUCER_TOKEN, getReducers } from './store';
@@ -51,6 +52,7 @@ export const APP_PROVIDERS = [
   GooglePoiService,
   LanguageService,
   HikeProgramService,
+  FlickrService,
   MapillaryService,
   EditedGTrackPoiSelectors,
   EditedHikeProgramSelectors,

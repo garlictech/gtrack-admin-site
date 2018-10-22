@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { of, interval, combineLatest } from 'rxjs';
-import { take, switchMap, filter, map as rxMap, combineAll } from 'rxjs/operators';
+import { take, switchMap, filter, map as rxMap, combineAll, debounceTime } from 'rxjs/operators';
 import {
   GeometryService,
   ElevationService,
@@ -43,6 +43,7 @@ import _find from 'lodash-es/find';
 import _assign from 'lodash-es/assign';
 import _map from 'lodash-es/map';
 import _sortBy from 'lodash-es/sortBy';
+import _intersection from 'lodash-es/intersection';
 
 import turfBuffer from '@turf/buffer';
 import { point as turfPoint } from '@turf/helpers';
@@ -81,19 +82,19 @@ export class PoiEditorService {
     const _poiData = {};
     _defaultsDeep(
       _poiData,
-      _pick(poi, ['elevation', 'lat', 'lon', 'objectType', 'description', 'types'])
+      _pick(poi, ['id', 'lat', 'lon', 'elevation', 'objectTypes', 'description', 'types'])
     );
 
-    if (poi.objectType.indexOf(EPoiTypes.google) >= 0) {
+    if (poi.objectTypes.indexOf(EPoiTypes.google) >= 0) {
       this._getGoogleDbObj(_poiData, <IGooglePoi>poi);
     }
-    if (poi.objectType.indexOf(EPoiTypes.wikipedia) >= 0) {
+    if (poi.objectTypes.indexOf(EPoiTypes.wikipedia) >= 0) {
       this._getWikipediaDbObj(_poiData, <IWikipediaPoi>poi);
     }
     if (
-      poi.objectType.indexOf(EPoiTypes.osmAmenity) >= 0 ||
-      poi.objectType.indexOf(EPoiTypes.osmNatural) >= 0 ||
-      poi.objectType.indexOf(EPoiTypes.osmRoute) >= 0
+      poi.objectTypes.indexOf(EPoiTypes.osmAmenity) >= 0 ||
+      poi.objectTypes.indexOf(EPoiTypes.osmNatural) >= 0 ||
+      poi.objectTypes.indexOf(EPoiTypes.osmRoute) >= 0
     ) {
       this._getOsmDbObj(_poiData, <IOsmPoi>poi);
     }
@@ -193,7 +194,7 @@ export class PoiEditorService {
   public organizePois(
     pois: IExternalPoi[] | IGTrackPoi[],
     path: GeoJSON.Feature<GeoJSON.LineString>,
-    isGTrackPoi: Boolean = false
+    forceAdd: boolean = false
   ) {
     const _pois: any[] = [];
 
@@ -204,17 +205,14 @@ export class PoiEditorService {
       for (const p of _cloneDeep(pois)) {
         const _point = turfPoint([p.lon, p.lat]);
 
-        if (typeof _smallBuffer !== 'undefined') {
-          p.onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
-        }
-
         if (typeof _bigBuffer !== 'undefined') {
-          if (turfBooleanPointInPolygon(_point, _bigBuffer)) {
+          if (turfBooleanPointInPolygon(_point, _bigBuffer) || forceAdd) {
+            if (typeof _smallBuffer !== 'undefined') {
+              p.onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
+            }
             p.distFromRoute = this._geometryService.distanceFromRoute(_point.geometry.coordinates, path);
 
-            if (!isGTrackPoi) {
-              this._handleTypes(<IExternalPoi>p);
-            }
+            this._handleTypes(<IExternalPoi>p);
 
             _pois.push(p);
           }
@@ -223,6 +221,29 @@ export class PoiEditorService {
     }
 
     return _pois;
+  }
+
+  /**
+   * Filter poi photos based on their distance from the path
+   */
+  public organizePoiPhotos(photos: IBackgroundImageData[], path: GeoJSON.Feature<GeoJSON.LineString>) {
+    const _photos: any[] = [];
+
+    if (photos && photos.length > 0 && path) {
+      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 1000, {units: 'meters'});
+
+      for (const _photo of _cloneDeep(photos)) {
+        const _point = turfPoint([_photo.lon, _photo.lat]);
+
+        if (typeof _bigBuffer !== 'undefined') {
+          if (turfBooleanPointInPolygon(_point, _bigBuffer)) {
+            _photos.push(_photo);
+          }
+        }
+      }
+    }
+
+    return _photos;
   }
 
   /**
@@ -255,9 +276,6 @@ export class PoiEditorService {
    * Update gTrackPois DistanceFromOrigo value
    */
   public getGTrackPoiDistanceFromOrigo(pois: IGTrackPoi[], path: GeoJSON.Feature<GeoJSON.LineString>) {
-    console.log('POIS', pois);
-    console.log('PATH', path);
-
     if (pois.length > 0 && path && path.geometry && path.geometry.coordinates.length > 0) {
       for (const poi of pois) {
         poi.distFromOrigo =  this._geospatialService.distanceOnLine(
@@ -411,21 +429,30 @@ export class PoiEditorService {
       const _found = _find(gTrackPois, (gTrackPoi: IGTrackPoi) => {
         let _idCheck = false;
 
-        if (gTrackPoi.objectType === poi.objectType) {
-          if ((<any>gTrackPoi).objectType.substring(0, 3) === 'osm') {
-            _idCheck = gTrackPoi.objectId.osm === (<IOsmPoi>poi).osm.id;
-          } else if (gTrackPoi.objectType === EPoiTypes.google) {
-            _idCheck = gTrackPoi.objectId.google === (<IGooglePoi>poi).google.id;
-          } else if (gTrackPoi.objectType === EPoiTypes.wikipedia) {
-            _idCheck =
-              gTrackPoi.objectId.wikipedia[(<IWikipediaPoi>poi).wikipedia.lng] ===
-              (<IWikipediaPoi>poi).wikipedia.pageid;
-          }
+        const _commonObjectTypes = _intersection(
+          Array.isArray(gTrackPoi.objectTypes) ? gTrackPoi.objectTypes : [gTrackPoi.objectTypes],
+          Array.isArray(poi.objectTypes) ? poi.objectTypes : [poi.objectTypes]
+        );
 
-          return _idCheck;
-        } else {
-          return false;
+        if (_commonObjectTypes.length > 0) {
+          for (const objectType of _commonObjectTypes) {
+            if (objectType.substring(0, 3) === 'osm') {
+              _idCheck = gTrackPoi.objectId.osm === (<IOsmPoi>poi).osm.id ? true : _idCheck;
+            } else if (objectType === EPoiTypes.google) {
+              _idCheck = gTrackPoi.objectId.google === (<IGooglePoi>poi).google.id ? true : _idCheck;
+            } else if (objectType === EPoiTypes.wikipedia) {
+              _idCheck =
+                gTrackPoi.objectId.wikipedia[(<IWikipediaPoi>poi).wikipedia.lng] ===
+                (<IWikipediaPoi>poi).wikipedia.pageid ? true : _idCheck;
+            }
+
+            if (_idCheck) {
+              break;
+            }
+          }
         }
+
+        return _idCheck;
       });
 
       if (_found) {
@@ -480,6 +507,7 @@ export class PoiEditorService {
         )
       )
       .pipe(
+        debounceTime(250),
         filter(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IPoiStored[], any]) => {
           return (
             (pois && pois.length > 0 && path && (<any>hikePoiContext).showOnrouteMarkers) ||
@@ -520,6 +548,7 @@ export class PoiEditorService {
         )
       )
       .pipe(
+        debounceTime(250),
         filter(([gTrackPoiContext, pois, path]: [IExternalPoiListContextItemState, IGTrackPoi[] | undefined, any]) => {
           return (
             (pois && pois.length > 0 && path && (<any>gTrackPoiContext).showOnrouteMarkers) ||

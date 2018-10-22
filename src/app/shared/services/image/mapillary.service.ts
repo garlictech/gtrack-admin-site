@@ -8,14 +8,16 @@ import _cloneDeep from 'lodash-es/cloneDeep';
 import { IBackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
 import { EPoiImageTypes } from 'subrepos/provider-client';
 import { Observable } from 'rxjs';
+import { PoiEditorService } from '../poi';
 
 @Injectable()
 export class MapillaryService {
   constructor(
-    private _http: HttpClient
+    private _http: HttpClient,
+    private _poiEditorService: PoiEditorService
   ) {}
 
-  public get(bounds) {
+  public get(bounds, path) {
     // tslint:disable:max-line-length
     const request = `https://a.mapillary.com/v3/images?client_id=${environment.mapillary.clientID}&bbox=${bounds.SouthWest.lon},${bounds.SouthWest.lat},${bounds.NorthEast.lon},${bounds.NorthEast.lat}`;
     // tslint:enable:max-line-length
@@ -24,7 +26,7 @@ export class MapillaryService {
       .get(request)
       .switchMap((response: any) => {
         const _features = _get(response, 'features');
-        const _images: IBackgroundImageDataStored[] = [];
+        let _images: IBackgroundImageDataStored[] = [];
 
         if (_features) {
           for (const _feature of _features) {
@@ -56,7 +58,7 @@ export class MapillaryService {
           }
         }
 
-        return Observable.of(_images);
+        return Observable.of(this._poiEditorService.organizePoiPhotos(_images, path));
       });
   }
 }

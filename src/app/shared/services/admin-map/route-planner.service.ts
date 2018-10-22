@@ -65,6 +65,20 @@ export class RoutePlannerService {
   }
 
   public addRouteSegment(coordinates, updown) {
+    const _segment: ISegment = this.createRouteSegment(coordinates, updown);
+
+    // Add segment to store
+    this._store.dispatch(new hikeEditRoutePlannerActions.PushSegment(_segment));
+  }
+
+  public updateRouteSegment(segmentIdx, coordinates, updown) {
+    const _segment: ISegment = this.createRouteSegment(coordinates, updown);
+
+    // Update segment
+    this._store.dispatch(new hikeEditRoutePlannerActions.UpdateSegment(segmentIdx, _segment));
+  }
+
+  public createRouteSegment(coordinates, updown) {
     const _segment: ISegment = {
       distance: turfLength(turfLineString(coordinates), { units: 'kilometers' }) * 1000, // summary.totalDistance, // in meters
       uphill: updown.uphill,
@@ -76,8 +90,7 @@ export class RoutePlannerService {
     _segment.time = this._gameRuleService.segmentTime(_segment.distance, _segment.uphill),
     _segment.score = this._gameRuleService.score(_segment.distance, _segment.uphill);
 
-    // Add segment to store
-    this._store.dispatch(new hikeEditRoutePlannerActions.PushSegment(_segment));
+    return _segment;
   }
 
   public removeLastSegment() {

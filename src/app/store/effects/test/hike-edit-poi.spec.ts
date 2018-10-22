@@ -5,9 +5,9 @@ import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { IExternalPoi } from '../../../shared/interfaces';
-import { hot, cold } from 'jest-marbles';
+import { hot, cold, Scheduler } from 'jest-marbles';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
-import { DeepstreamModule, RouteService, GeometryService } from '../../../../subrepos/gtrack-common-ngx';
+import { DeepstreamModule, RouteService } from '../../../../subrepos/gtrack-common-ngx';
 import { TestActions, getActions, mockRouter } from './helpers';
 import { HikeProgramService, WikipediaPoiService, OsmPoiService, GooglePoiService, OsmRoutePoiService } from '../../../shared/services';
 import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../../actions';
@@ -22,7 +22,17 @@ import {
 describe('HikeEditPoiEffects effects', () => {
   let actions$: TestActions;
   let effects: HikeEditPoiEffects;
+  let routeService: RouteService;
+  let hikeProgramService: HikeProgramService;
+  let wikipediaPoiService: WikipediaPoiService;
+  let googlePoiService: GooglePoiService;
+  let osmPoiService: OsmPoiService;
+  let osmRoutePoiService: OsmRoutePoiService;
   let pois: IExternalPoi[];
+  const mockBounds = {
+    SouthWest: { lat: 0, lon: 0 },
+    NorthEast: { lat: 1, lon: 1 }
+  };
 
   beforeEach(() => {
     pois = _.cloneDeep(poiFixtures);
@@ -62,7 +72,7 @@ describe('HikeEditPoiEffects effects', () => {
         {
           provide: RouteService,
           useValue: {
-            splitBounds: (bounds, maxRadius, boundsArr) => {
+            splitBounds: (bounds, maxRadius, boundsArr) => {
               boundsArr.push(bounds);
             }
           }
@@ -70,25 +80,25 @@ describe('HikeEditPoiEffects effects', () => {
         {
           provide: WikipediaPoiService,
           useValue: {
-            get: () => Observable.of(pois)
+            get: () => {}
           }
         },
         {
           provide: OsmPoiService,
           useValue: {
-            get: () => Observable.of(pois)
+            get: () => {}
           }
         },
         {
           provide: OsmRoutePoiService,
           useValue: {
-            get: () => Observable.of(pois)
+            get: () => {}
           }
         },
         {
           provide: GooglePoiService,
           useValue: {
-            get: () => Observable.of(pois)
+            get: () => {}
           }
         }
       ]
@@ -96,65 +106,107 @@ describe('HikeEditPoiEffects effects', () => {
 
     actions$ = TestBed.get(Actions);
     effects = TestBed.get(HikeEditPoiEffects);
+    routeService = TestBed.get(RouteService);
+    hikeProgramService = TestBed.get(HikeProgramService);
+    wikipediaPoiService = TestBed.get(WikipediaPoiService);
+    googlePoiService = TestBed.get(GooglePoiService);
+    osmPoiService = TestBed.get(OsmPoiService);
+    osmRoutePoiService = TestBed.get(OsmRoutePoiService);
   });
 
   describe('getWikipediaPois$', () => {
     it('should return pois observable from getWikipediaPois', () => {
-      const action = new hikeEditPoiActions.GetWikipediaPois(['fakeBounds'], 'fakeMapId');
+      spyOn(routeService, 'splitBounds').and.callThrough();
+      spyOn(hikeProgramService, 'getDescriptionLaguages').and.callThrough();
+      spyOn(wikipediaPoiService, 'get').and.returnValue(Observable.of(pois));
+
+      const action = new hikeEditPoiActions.GetWikipediaPois(mockBounds, 'fakeMapId');
       const completion = new hikeEditPoiActions.SetWikipediaPois(pois);
       const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.getWikipediaPois$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(routeService.splitBounds).toHaveBeenCalled();
+      expect(hikeProgramService.getDescriptionLaguages).toHaveBeenCalled();
+      expect(wikipediaPoiService.get).toHaveBeenCalled();
     });
   });
 
   describe('getGooglePois$', () => {
     it('should return pois observable from GetGooglePois', () => {
-      const action = new hikeEditPoiActions.GetGooglePois(['fakeBounds'], 'fakeMapId');
-      const completion = new hikeEditPoiActions.SetGooglePois([...pois, ...pois]); // 2 langs!
+      spyOn(hikeProgramService, 'getDescriptionLaguages').and.callThrough();
+      spyOn(googlePoiService, 'get').and.returnValue(Observable.of(pois));
+
+      const action = new hikeEditPoiActions.GetGooglePois(mockBounds, 'fakeMapId');
+      const completion = new hikeEditPoiActions.SetGooglePois([...pois]);
       const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.getGooglePois$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(hikeProgramService.getDescriptionLaguages).toHaveBeenCalled();
+      expect(googlePoiService.get).toHaveBeenCalled();
     });
   });
 
   describe('getOsmNaturalPois$', () => {
     it('should return pois observable from GetOsmNaturalPois', () => {
-      const action = new hikeEditPoiActions.GetOsmNaturalPois(['fakeBounds'], 'fakeMapId');
+      spyOn(osmPoiService, 'get').and.returnValue(Observable.of(pois));
+
+      const action = new hikeEditPoiActions.GetOsmNaturalPois(mockBounds, 'fakeMapId');
       const completion = new hikeEditPoiActions.SetOsmNaturalPois(pois);
       const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.getOsmNaturalPois$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(osmPoiService.get).toHaveBeenCalled();
     });
   });
 
   describe('getOsmAmenityPois$', () => {
     it('should return pois observable from GetOsmAmenityPois', () => {
-      const action = new hikeEditPoiActions.GetOsmAmenityPois(['fakeBounds'], 'fakeMapId');
+      spyOn(osmPoiService, 'get').and.returnValue(Observable.of(pois));
+
+      const action = new hikeEditPoiActions.GetOsmAmenityPois(mockBounds, 'fakeMapId');
       const completion = new hikeEditPoiActions.SetOsmAmenityPois(pois);
       const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.getOsmAmenityPois$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(osmPoiService.get).toHaveBeenCalled();
     });
   });
 
   describe('getOsmRoutePois$', () => {
     it('should return pois observable from GetOsmRoutePois', () => {
-      const action = new hikeEditPoiActions.GetOsmRoutePois(['fakeBounds'], 'fakeMapId');
+      spyOn(osmRoutePoiService, 'get').and.returnValue(Observable.of(pois));
+
+      const action = new hikeEditPoiActions.GetOsmRoutePois(mockBounds, 'fakeMapId');
       const completion = new hikeEditPoiActions.SetOsmRoutePois(pois);
       const expected = cold('-b', { b: completion });
 
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.getOsmRoutePois$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(osmRoutePoiService.get).toHaveBeenCalled();
     });
   });
 

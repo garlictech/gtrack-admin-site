@@ -18,6 +18,11 @@ import _chunk from 'lodash-es/chunk';
 import { point as turfPoint, lineString as turfLineString } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
 
+export interface IRoutePlanResult {
+  coordsArr: any,
+  upDown: any
+}
+
 @Injectable()
 export class WaypointMarkerService {
   private _map: AdminMap;
@@ -54,7 +59,40 @@ export class WaypointMarkerService {
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
   }
 
-  public deleteLast() {
+  public removeSegments(idx, count) {
+    for (let i = idx; i <= idx + count; i++) {
+      const marker = this._markers[i];
+      if (this._map.leafletMap.hasLayer(marker)) {
+        this._map.leafletMap.removeLayer(marker);
+      }
+    }
+    this._markers.splice(idx, count + 1);
+    this._store.dispatch(new hikeEditRoutePlannerActions.RemoveSegments(idx, count));
+  }
+
+  public insertNewStartPoint(latlng: L.LatLng) {
+    const _waypoint = {
+      latLng: latlng,
+      name: 1
+    };
+    this._markers.unshift(this._createMarker(_waypoint));
+
+    this._updateMarkerNumbers();
+    this._refreshEndpointMarkerIcons();
+  }
+
+  public insertNewEndPoint(latlng: L.LatLng) {
+    const _waypoint = {
+      latLng: latlng,
+      name: 1
+    };
+    this._markers.push(this._createMarker(_waypoint));
+
+    this._updateMarkerNumbers();
+    this._refreshEndpointMarkerIcons();
+  }
+
+  public removeLast() {
     // Remove last marker
     if (this._markers.length > 0) {
       this._map.leafletMap.removeLayer(this._markers.pop());
@@ -76,18 +114,20 @@ export class WaypointMarkerService {
 
     for (const idx in latlngs) {
       if (latlngs[idx]) {
-        const latlng = latlngs[idx];
         const _waypoint = {
-          latLng: latlng,
+          latLng: latlngs[idx],
           name: this._markers.length + 1
         };
         this._markers.push(this._createMarker(_waypoint));
 
         if (this._markers.length > 1) {
-          await this._getRouteFromApi(
+          await this.getRouteFromApi(
             this._markers[this._markers.length - 2].getLatLng(),
             this._markers[this._markers.length - 1].getLatLng()
-          );
+          ).then((data: IRoutePlanResult) => {
+            this._routePlannerService.addRouteSegment(data.coordsArr, data.upDown);
+            this._moveLastWaypointToRoute(data.coordsArr);
+          })
         }
       }
     }
@@ -118,6 +158,12 @@ export class WaypointMarkerService {
     return _marker;
   }
 
+  private _updateMarkerNumbers() {
+    for (const idx in this._markers) {
+      this._markers[idx].setIcon(this._getSingleMarkerIcon(parseInt(idx, 10) + 1));
+    }
+  }
+
   private _getSingleMarkerIcon(title) {
     return L.divIcon({
       html: `<span>${title}</span>`,
@@ -133,11 +179,14 @@ export class WaypointMarkerService {
     }
     if (this._markers.length > 0) {
       this._markers[0].setIcon(this._iconService.getLeafletIcon(['start'], 'default'));
+      this._markers[0].setZIndexOffset(10000);
+
       this._markers[this._markers.length - 1].setIcon(this._iconService.getLeafletIcon(['finish'], 'default'));
+      this._markers[this._markers.length - 1].setZIndexOffset(10000);
     }
   }
 
-  private _getRouteFromApi(p1, p2) {
+  public getRouteFromApi(p1, p2) {
     const _urlParams = {
       vehicle: 'hike',
       instructions: false,
@@ -193,9 +242,10 @@ export class WaypointMarkerService {
           downhill: this._elevationService.calculateDownhill(_coordsArr)
         };
 
-        this._routePlannerService.addRouteSegment(_coordsArr, upDown);
-
-        this._moveLastWaypointToRoute(_coordsArr);
+        return {
+          coordsArr: _coordsArr,
+          upDown: upDown
+        }
       }).catch(() => {
         this._store.dispatch(new hikeEditRoutePlannerActions.RoutingError());
         this._map.leafletMap.spin(false);

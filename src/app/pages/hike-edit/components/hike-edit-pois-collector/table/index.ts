@@ -29,7 +29,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._hikeEditPoiSelectors.getMergeSelections),
-        debounceTime(200),
+        debounceTime(250),
         takeUntil(this._destroy$)
       )
       .subscribe((selections: string[]) => {

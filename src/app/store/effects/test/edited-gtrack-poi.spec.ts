@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { Observable } from 'rxjs';
-import { hot, cold } from 'jest-marbles';
+import { hot, cold, Scheduler } from 'jest-marbles';
 import { EditedGTrackPoiEffects } from '../edited-gtrack-poi';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, PoiService } from '../../../../subrepos/gtrack-common-ngx';
@@ -81,6 +81,11 @@ describe('EditedGTrackPoiEffects effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.save$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(editedGTrackPoiSelectors.getData).toBeCalled();
+      expect(poiService.create).toBeCalledWith(pois[0]);
     });
 
     it('should return error observable from SavePoi failure', () => {
@@ -95,6 +100,11 @@ describe('EditedGTrackPoiEffects effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.save$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(editedGTrackPoiSelectors.getData).toBeCalled();
+      expect(poiService.create).toBeCalledWith(pois[0]);
     });
   });
 });

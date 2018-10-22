@@ -11,9 +11,12 @@ import {
 } from 'subrepos/gtrack-common-ngx';
 
 import _get from 'lodash-es/get';
+import _last from 'lodash-es/last';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _orderBy from 'lodash-es/orderBy';
+import { point as turfPoint } from '@turf/helpers';
 import turfLength from '@turf/length';
+import turfDistance from '@turf/distance';
 import { select as d3Select } from 'd3-selection';
 import * as geojson2svg from 'geojson2svg';
 import { take } from 'rxjs/operators';
@@ -50,12 +53,45 @@ export class HikeProgramService {
     .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
       const poiStops = _cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
 
-      if (path.geometry.coordinates.length > 0) {
-        poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
-        poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
+      if (poiStops.length > 0) {
+        for (const stop of poiStops) {
+          this._updateStopDistanceFromOrigo(stop, path);
+        }
+
+        if (path.geometry.coordinates.length > 0) {
+          if (poiStops[0].distanceFromOrigo > 10) {
+            poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
+          }
+
+          const distanceFromFinish = Math.round(1000 * turfDistance(
+            turfPoint([_last(poiStops).lon, _last(poiStops).lat]),
+            turfPoint([_last(path.geometry.coordinates)[0], _last(path.geometry.coordinates)[1]]),
+            {units: 'kilometers'}
+          ));
+
+          if (distanceFromFinish > 10) {
+            poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
+          }
+        }
+      } else {
+        if (path.geometry.coordinates.length > 0) {
+          poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
+          poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
+        }
       }
+
       this._updateStopsSegment(_orderBy(poiStops, ['distanceFromOrigo']), path);
     });
+  }
+
+  private _updateStopDistanceFromOrigo(stop, path) {
+    if (path.geometry.coordinates.length > 1) {
+      stop.distanceFromOrigo = this._geospatialService.distanceOnLine(
+        path.geometry.coordinates[0],
+        [stop.lon, stop.lat],
+        path
+      );
+    }
   }
 
   /**

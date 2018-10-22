@@ -51,7 +51,7 @@ export class OsmRoutePoiService {
                     type: ETextualDescriptionType.markdown
                   }
                 },
-                objectType: EPoiTypes.osmRoute,
+                objectTypes: [EPoiTypes.osmRoute],
                 osm: {
                   id: _point.id
                 },
