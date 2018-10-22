@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 import { Router } from '@angular/router';
-import { Observable, EMPTY } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { switchMap, filter } from 'rxjs/operators';
+import { routingActions } from '../actions';
 
 @Injectable()
 export class AuthEffects {
@@ -18,9 +19,7 @@ export class AuthEffects {
     .pipe(
       ofType(AuthActions.ROUTE_FORBIDDEN),
       switchMap(data => {
-        this._router.navigate(['/login']);
-
-        return EMPTY;
+        return of(new routingActions.Go(['/login']));
       })
     );
 
@@ -32,10 +31,8 @@ export class AuthEffects {
       filter(() => {
         return this._router.url === '/login';
       }),
-      switchMap(data => {
-        this._router.navigate(['/']);
-
-        return EMPTY;
+      switchMap(() => {
+        return of(new routingActions.Go(['/']));
       })
     );
 
@@ -44,10 +41,8 @@ export class AuthEffects {
   logoutSuccess$: Observable<any> = this._actions$
     .pipe(
       ofType(AuthActions.LOGOUT_SUCCESS),
-      switchMap(data => {
-        this._router.navigate(['/login']);
-
-        return EMPTY;
+      switchMap(() => {
+        return of(new routingActions.Go(['/login']));
       })
     );
 }

@@ -3,7 +3,7 @@ import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { IBackgroundImageDataStored } from '../../shared/interfaces';
 import { IMapillaryImageEntityState, IImageListContextState, IHikeEditImageState } from '../index';
 import { hikeEditImageActions } from '../actions';
-import { IImageMarkerState } from '../state';
+import { IImageMarkerState, IFlickrImageEntityState } from '../state';
 
 import _cloneDeep from 'lodash-es/cloneDeep';
 
@@ -26,6 +26,33 @@ const mapillaryImageReducer: ActionReducer<IMapillaryImageEntityState> = (
 
     case hikeEditImageActions.SET_MAPILLARY_IMAGES: {
       return mapillaryImageAdapter.addAll(action.images, state);
+    }
+
+    default:
+      return state;
+
+  }
+};
+
+/**
+ * Flickr
+ */
+
+export const flickrImageAdapter: EntityAdapter<IBackgroundImageDataStored> = createEntityAdapter<IBackgroundImageDataStored>();
+export const flickrImageInitialState = flickrImageAdapter.getInitialState();
+
+const flickrImageReducer: ActionReducer<IFlickrImageEntityState> = (
+  state: IFlickrImageEntityState = flickrImageInitialState,
+  action: hikeEditImageActions.AllHikeEditImageActions
+): IFlickrImageEntityState => {
+  switch (action.type) {
+
+    case hikeEditImageActions.RESET_IMAGE_STATE: {
+      return flickrImageInitialState;
+    }
+
+    case hikeEditImageActions.SET_FLICKR_IMAGES: {
+      return flickrImageAdapter.addAll(action.images, state);
     }
 
     default:
@@ -67,7 +94,7 @@ export function imageMarkerReducer(
     case hikeEditImageActions.REMOVE_IMAGE_MARKER: {
       return {
         ...state,
-        images: (<any>state.images).filter(img => img !== action.image)
+        images: (<any>state.images).filter(img => img.original.url !== action.image.original.url)
       };
     }
 
@@ -88,7 +115,8 @@ const initialContextItemState = {
 };
 
 export const imageListInitialContextState: IImageListContextState = {
-  mapillary: _cloneDeep(initialContextItemState)
+  mapillary: _cloneDeep(initialContextItemState),
+  flickr: _cloneDeep(initialContextItemState)
 };
 
 export function imageListContextReducer(
@@ -125,6 +153,31 @@ export function imageListContextReducer(
       };
     }
 
+    /**
+     * Flickr
+     */
+    case hikeEditImageActions.GET_FLICKR_IMAGES: {
+      return {
+        ...state,
+        flickr: {
+          ...state.flickr,
+          loading: true,
+          loaded: false
+        }
+      };
+    }
+
+    case hikeEditImageActions.SET_FLICKR_IMAGES: {
+      return {
+        ...state,
+        flickr: {
+          ...state.flickr,
+          loading: false,
+          loaded: true
+        }
+      };
+    }
+
     default:
       return state;
 
@@ -133,6 +186,7 @@ export function imageListContextReducer(
 
 const reducerMap: ActionReducerMap<IHikeEditImageState> = {
   mapillaryImages: mapillaryImageReducer,
+  flickrImages: flickrImageReducer,
   imageMarkerUrls: imageMarkerReducer,
   contexts: imageListContextReducer
 };

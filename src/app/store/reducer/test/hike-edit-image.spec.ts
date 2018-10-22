@@ -20,6 +20,7 @@ describe('HikeEditImage reducers', () => {
   beforeEach(() => {
     initialState = {
       mapillaryImages: mapillaryImageInitialState,
+      flickrImages: mapillaryImageInitialState,
       imageMarkerUrls: initialImageMarkerState,
       contexts: imageListInitialContextState
     };
@@ -68,29 +69,29 @@ describe('HikeEditImage reducers', () => {
 
   describe('AddImageMarker action', () => {
     it('should add image marker', () => {
-      const action = new hikeEditImageActions.AddImageMarker(images[0].original.url);
+      const action = new hikeEditImageActions.AddImageMarker(imagesStored[0]);
       const state = hikeEditImageReducer(initialState, action);
 
-      expect(state.imageMarkerUrls.images).toEqual([images[0].original.url]);
+      expect(state.imageMarkerUrls.images).toEqual([imagesStored[0]]);
     });
   });
 
   describe('RemoveImageMarker action', () => {
     it('should remove image marker', () => {
-      const action = new hikeEditImageActions.RemoveImageMarker('url1');
+      const action = new hikeEditImageActions.RemoveImageMarker(imagesStored[0]);
       const state = hikeEditImageReducer(_.merge({}, initialState, {
         imageMarkerUrls: {
-          images: ['url1', 'url2']
+          images: [imagesStored[0]]
         }
       }), action);
 
-      expect(state.imageMarkerUrls.images).toEqual(['url2']);
+      expect(state.imageMarkerUrls.images).toEqual([]);
     });
   });
 
   describe('GetMapillaryImages action', () => {
     it('should get mapillary images', () => {
-      const action = new hikeEditImageActions.GetMapillaryImages(null);
+      const action = new hikeEditImageActions.GetMapillaryImages('fakeBounds', 'fakePath');
       const state = hikeEditImageReducer(initialState, action);
 
       expect(state.contexts.mapillary.loading).toBeTruthy();
@@ -105,6 +106,26 @@ describe('HikeEditImage reducers', () => {
 
       expect(state.contexts.mapillary.loading).toBeFalsy();
       expect(state.contexts.mapillary.loaded).toBeTruthy();
+    });
+  });
+
+  describe('GetFlickrImages action', () => {
+    it('should get flickr images', () => {
+      const action = new hikeEditImageActions.GetFlickrImages('fakeBounds', 'fakePath');
+      const state = hikeEditImageReducer(initialState, action);
+
+      expect(state.contexts.flickr.loading).toBeTruthy();
+      expect(state.contexts.flickr.loaded).toBeFalsy();
+    });
+  });
+
+  describe('SetFlickrImages action', () => {
+    it('should set flickr images', () => {
+      const action = new hikeEditImageActions.SetFlickrImages([]);
+      const state = hikeEditImageReducer(initialState, action);
+
+      expect(state.contexts.flickr.loading).toBeFalsy();
+      expect(state.contexts.flickr.loaded).toBeTruthy();
     });
   });
 });

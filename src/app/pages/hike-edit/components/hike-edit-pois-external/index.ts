@@ -134,7 +134,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._poiSelectors.getAllPois),
-        debounceTime(200),
+        debounceTime(250),
         filter((gTrackPois: IGTrackPoi[]) => gTrackPois.length > 0),
         takeUntil(this._destroy$)
       )
@@ -163,7 +163,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._hikeEditPoiSelectors.getAllCollectorPois),
-        debounceTime(200),
+        debounceTime(250),
         takeUntil(this._destroy$)
       )
       .subscribe((collectedPois: any[]) => {
@@ -277,7 +277,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
     return _pois$.pipe(
       takeUntil(this._destroy$),
-      debounceTime(200)
+      debounceTime(250)
     );
   }
 

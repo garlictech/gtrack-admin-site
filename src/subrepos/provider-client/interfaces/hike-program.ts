@@ -18,7 +18,8 @@ export interface IPoiImageInfo {
 export enum EPoiImageTypes {
   google = 'google',
   wikipedia = 'wikipedia',
-  mapillary = 'mapillary'
+  mapillary = 'mapillary',
+  flickr = 'flickr'
 }
 
 export interface IPoiImageSource {

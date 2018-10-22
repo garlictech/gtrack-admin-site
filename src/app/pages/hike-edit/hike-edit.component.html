@@ -1,7 +1,7 @@
 <app-table-spinner *ngIf="(working$ | async) as working; else pageContent"></app-table-spinner>
 
 <p-dialog
-  header="{{((hikeProgramData$ | async).description | localizeDescription).title}}"
+  [header]="((hikeProgramData$ | async)?.description | localizeDescription).title"
   [(visible)]="displayPreview"
   [modal]="true"
   [closable]="true"
@@ -15,108 +15,107 @@
 </p-dialog>
 
 <ng-template #pageContent>
-    <div class="ui-g">
-      <div class="ui-g-12" *ngIf="(hikeProgramState$ | async) as hikeProgramState">
-        <div class="f-left">
-          <p-checkbox
-            label="Feature"
-            binary="true"
-            [ngModel]="(hikeProgramData$ | async).feature"
-            (onChange)="handleHikeProgramFeature()"
-          ></p-checkbox>
-        </div>
-        <div class="f-right">
-          <p-button
-            label="Preview"
-            styleClass="ui-button-warning mr-20"
-            (onClick)="openPreview()"
-          ></p-button>
+  <div class="ui-g">
+    <div class="ui-g-12" *ngIf="(hikeProgramState$ | async) as hikeProgramState">
+      <div class="f-left">
+        <p-checkbox
+          label="Feature"
+          binary="true"
+          [ngModel]="(hikeProgramData$ | async)?.feature"
+          (onChange)="handleHikeProgramFeature()"
+        ></p-checkbox>
+      </div>
+      <div class="f-right">
+        <p-button
+          label="Preview"
+          styleClass="ui-button-warning mr-20"
+          (onClick)="openPreview()"
+        ></p-button>
 
-          <p-button
-            label="Publish"
-            styleClass="ui-button-success"
-            (onClick)="updateHikeState(EObjectState.published)"
-            title="Publish hike"
-            *ngIf="paramsId && hikeProgramState === EObjectState.draft"
-          ></p-button>
+        <p-button
+          label="Publish"
+          styleClass="ui-button-success"
+          (onClick)="updateHikeState(EObjectState.published)"
+          title="Publish hike"
+          *ngIf="paramsId && hikeProgramState === EObjectState.draft"
+        ></p-button>
 
-          <p-button
-            label="Draft"
-            styleClass="ui-button-secondary"
-            (onClick)="updateHikeState(EObjectState.draft)"
-            title="Move to draft"
-            *ngIf="paramsId && hikeProgramState === EObjectState.archived"
-          ></p-button>
+        <p-button
+          label="Draft"
+          styleClass="ui-button-secondary"
+          (onClick)="updateHikeState(EObjectState.draft)"
+          title="Move to draft"
+          *ngIf="paramsId && hikeProgramState === EObjectState.archived"
+        ></p-button>
 
-          <p-button
-            label="Archive"
-            styleClass="ui-button-danger"
-            (onClick)="updateHikeState(EObjectState.archived)"
-            title="Archive hike"
-            *ngIf="paramsId && hikeProgramState === EObjectState.published"
-          ></p-button>
+        <p-button
+          label="Archive"
+          styleClass="ui-button-danger"
+          (onClick)="updateHikeState(EObjectState.archived)"
+          title="Archive hike"
+          *ngIf="paramsId && hikeProgramState === EObjectState.published"
+        ></p-button>
 
-          <p-button
-            label="Save hike"
-            styleClass="ui-button-success ml-5"
-            (onClick)="saveHike()"
-            [disabled]="!(allowSave$ | async)"
-          ></p-button>
-        </div>
+        <p-button
+          label="Save hike"
+          styleClass="ui-button-success ml-5"
+          (onClick)="saveHike()"
+          [disabled]="!(allowSave$ | async)"
+        ></p-button>
       </div>
     </div>
+  </div>
 
-    <div class="ui-g">
-      <div class="ui-g-12">
-        <p-card title="General info">
-          <app-hike-edit-general-info></app-hike-edit-general-info>
-        </p-card>
-      </div>
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-card title="General info">
+        <app-hike-edit-general-info></app-hike-edit-general-info>
+      </p-card>
     </div>
+  </div>
 
-    <div class="ui-g">
-      <div class="ui-g-12">
-        <p-card title="Map">
-          <app-hike-edit-map></app-hike-edit-map>
-        </p-card>
-      </div>
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-card title="Map">
+        <app-hike-edit-map></app-hike-edit-map>
+      </p-card>
     </div>
+  </div>
 
-    <div class="ui-g">
-      <div class="ui-g-12">
-        <p-card title="Hike outline">
-          <app-hike-edit-outline></app-hike-edit-outline>
-        </p-card>
-      </div>
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-card title="Hike outline">
+        <app-hike-edit-outline [isPlanning$]="isPlanning$"></app-hike-edit-outline>
+      </p-card>
     </div>
+  </div>
 
-    <div class="ui-g">
-      <div class="ui-g-12">
-        <p-card title="Route planning">
-          <app-hike-edit-route-planner [isPlanning$]="isPlanning$"></app-hike-edit-route-planner>
-        </p-card>
-      </div>
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-card title="Route planning">
+        <app-hike-edit-route-planner [isPlanning$]="isPlanning$"></app-hike-edit-route-planner>
+      </p-card>
     </div>
+  </div>
 
-    <div class="ui-g">
-      <div class="ui-g-12">
-        <p-card title="Pois">
-          <app-hike-edit-pois [isPlanning$]="isPlanning$"></app-hike-edit-pois>
-        </p-card>
-      </div>
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-card title="Pois">
+        <app-hike-edit-pois [isPlanning$]="isPlanning$"></app-hike-edit-pois>
+      </p-card>
     </div>
+  </div>
 
-    <div class="ui-g">
-      <div class="ui-g-12">
-        <p-card title="Photos">
-          <app-hike-edit-photos
-            [backgroundImageSelector]="backgroundImageSelector"
-            [backgroundImageUrlSelector]="backgroundImageUrlSelector"
-            [clickActions]="clickActions"
-            [showMarkerColumn]="true"
-          ></app-hike-edit-photos>
-        </p-card>
-      </div>
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-card title="Photos">
+        <app-hike-edit-photos
+          [backgroundImageSelector]="backgroundImageSelector"
+          [backgroundImageUrlSelector]="backgroundImageUrlSelector"
+          [clickActions]="clickActions"
+          [showMarkerColumn]="true"
+        ></app-hike-edit-photos>
+      </p-card>
     </div>
-
+  </div>
 </ng-template>

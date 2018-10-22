@@ -63,6 +63,25 @@ describe('HikeEditImage selectors', () => {
     });
   });
 
+  describe('getAllFlickrImages', () => {
+    it('should return flickr image', () => {
+      let result;
+      const hikeEditImageSelectors: HikeEditImageSelectors = TestBed.get(HikeEditImageSelectors);
+
+      store
+        .pipe(
+          select(hikeEditImageSelectors.getAllFlickrImages),
+          takeUntil(destroy$)
+        )
+        .subscribe(res => (result = res));
+
+      expect(result).toEqual([]);
+
+      store.dispatch(new hikeEditImageActions.SetFlickrImages([imagesStored[0]]));
+      expect(result).toEqual([imagesStored[0]]);
+    });
+  });
+
   describe('getImageMarkerUrls', () => {
     it('should return image marker urls', () => {
       let result;
@@ -77,8 +96,8 @@ describe('HikeEditImage selectors', () => {
 
       expect(result).toEqual([]);
 
-      store.dispatch(new hikeEditImageActions.AddImageMarker('fakeUrl'));
-      expect(result).toEqual(['fakeUrl']);
+      store.dispatch(new hikeEditImageActions.AddImageMarker(imagesStored[0]));
+      expect(result).toEqual([imagesStored[0]]);
     });
   });
 
@@ -96,7 +115,7 @@ describe('HikeEditImage selectors', () => {
 
       expect(result).toEqual(imageListInitialContextState.mapillary);
 
-      store.dispatch(new hikeEditImageActions.GetMapillaryImages(null));
+      store.dispatch(new hikeEditImageActions.GetMapillaryImages('fakeBounds', 'fakePath'));
       expect(result).toEqual(_.merge({}, imageListInitialContextState.mapillary, {
         loading: true
       }));
@@ -117,7 +136,7 @@ describe('HikeEditImage selectors', () => {
 
       expect(result).toBeFalsy();
 
-      store.dispatch(new hikeEditImageActions.GetMapillaryImages(null));
+      store.dispatch(new hikeEditImageActions.GetMapillaryImages('fakeBounds', 'fakePath'));
       expect(result).toBeTruthy();
     });
   });

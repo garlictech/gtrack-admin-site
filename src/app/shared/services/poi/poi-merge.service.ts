@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { IComparedProperty, IFilteredProperties } from '../../interfaces';
 
 import * as flatten from 'flat';
-import _omit from 'lodash-es/pick';
+import _pick from 'lodash-es/pick';
+import _omit from 'lodash-es/omit';
 import _uniq from 'lodash-es/uniq';
 import _set from 'lodash-es/set';
 import _isObject from 'lodash-es/isObject';
@@ -17,10 +18,14 @@ export class PoiMergeService {
     let objectTypes: string[] = [];
 
     for (const poi of pois) {
-      const flatPoi = flatten(_omit(poi, [
-        'id', 'lat', 'lon', 'elevation', 'published', 'positions', 'types', 'state', 'timestamp', 'objectType'
+      let flatPoi = flatten(_pick(poi, [
+        'lat', 'lon', 'elevation', 'published', 'positions', 'state',
+        'description', 'timestamp', 'google', 'wikipedia', 'osm'
       ]));
-      flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}]`;
+      flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}, ${poi.distFromRoute},  ${poi.onRoute}]`;
+
+      // Remove
+      flatPoi = _omit(flatPoi, ['lat', 'lon', 'elevation']);
 
       for (const key in flatPoi) {
         if (flatPoi[key]) {
@@ -32,7 +37,7 @@ export class PoiMergeService {
       }
 
       commonTypes = commonTypes.concat(poi.types.filter(t => ['unknown', 'undefined'].indexOf(t) < 0));
-      objectTypes = _uniq(objectTypes.concat(poi.objectType));
+      objectTypes = _uniq(objectTypes.concat(poi.objectTypes));
     }
 
     // Remove duplicated values and empty objects

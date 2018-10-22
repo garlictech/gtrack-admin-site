@@ -7,7 +7,7 @@ export const pois: IPoi[] = [
     lat: 42.25,
     lon: 19.32,
     elevation: 150,
-    objectType: EPoiTypes.google,
+    objectTypes: [EPoiTypes.google],
     types: ['stop'],
     description: {
       en_US: {
@@ -20,7 +20,7 @@ export const pois: IPoi[] = [
     lat: 44.55,
     lon: -19.44,
     elevation: 252.1,
-    objectType: EPoiTypes.osmAmenity,
+    objectTypes: [EPoiTypes.osmAmenity],
     types: ['atm'],
     description: {
       en_US: {

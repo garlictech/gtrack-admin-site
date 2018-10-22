@@ -3,9 +3,9 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store, select } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, take, catchError } from 'rxjs/operators';
-import { HikeProgramService, GeospatialService } from 'subrepos/gtrack-common-ngx';
+import { HikeProgramService, GeospatialService, RouteActionTypes } from 'subrepos/gtrack-common-ngx';
 import { State } from '..';
-import { editedHikeProgramActions } from '../actions';
+import { editedHikeProgramActions, commonRouteActions } from '../actions';
 import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
 import { log } from '../../log';
 import { EditedHikeProgramSelectors } from '../selectors/edited-hike-program';
@@ -85,5 +85,15 @@ export class EditedHikeProgramEffects {
             })
           );
       })
+    );
+
+  /**
+   * Load route after save
+   */
+  @Effect()
+  loadSavedRoute$: Observable<Action> = this._actions$
+    .pipe(
+      ofType<commonRouteActions.RouteSaved>(RouteActionTypes.ROUTE_SAVED),
+      map(action => new commonRouteActions.LoadRoute(action.context))
     );
 }

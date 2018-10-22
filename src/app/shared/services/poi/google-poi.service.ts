@@ -29,13 +29,13 @@ export class GooglePoiService {
     private _geometryService: GeometryService
   ) {}
 
-  public get(bounds, lng = 'en') {
+  public get(bounds, langs = ['en']) {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
 
     const promise: Promise<IGooglePoi[]> = new Promise((resolve) => {
       this._batchGet(this._getOnePage, {
         geo: geo,
-        lng: lng,
+        langs: langs,
         results: []
       }).then(_res => {
         resolve(_res);
@@ -45,7 +45,20 @@ export class GooglePoiService {
     return Observable.fromPromise(promise);
   }
 
-  private _getOnePage = params => {
+  private _batchGet(getter, params) {
+    return getter(params).then(result => {
+      params.results = params.results.concat(result.data);
+
+      if (!result.nextParams) {
+        return params.results;
+      } else {
+        params.pageToken = result.nextParams.pageToken;
+        return this._batchGet(getter, params);
+      }
+    });
+  }
+
+  private _getOnePage = (params) => {
     // tslint:disable:max-line-length
     let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${
       params.geo.center.geometry.coordinates[0]
@@ -70,7 +83,7 @@ export class GooglePoiService {
             lon: _point.geometry.location.lng,
             elevation: 0,
             description: {
-              [LanguageService.shortToLocale(params.lng)]: {
+              [LanguageService.shortToLocale(params.langs[0] || 'en')]: {
                 title: _point.name || LanguageService.pascalize(_point.types[0]) || 'unknown',
                 summary: '',
                 fullDescription: '',
@@ -78,7 +91,7 @@ export class GooglePoiService {
               }
             },
             types: _point.types || [],
-            objectType: EPoiTypes.google,
+            objectTypes: [EPoiTypes.google],
             google: {
               id: _point.place_id
             },
@@ -105,21 +118,8 @@ export class GooglePoiService {
       });
   }
 
-  private _batchGet(getter, params) {
-    return getter(params).then(result => {
-      params.results = params.results.concat(result.data);
-
-      if (!result.nextParams) {
-        return params.results;
-      } else {
-        params.pageToken = result.nextParams.pageToken;
-        return this._batchGet(getter, params);
-      }
-    });
-  }
-
   /**
-   * get() submethod
+   * handlePoiDetails() submethod
    */
   public getPoiDetails(pois: IGooglePoi[]) {
     const thumbnailWidth = 320;

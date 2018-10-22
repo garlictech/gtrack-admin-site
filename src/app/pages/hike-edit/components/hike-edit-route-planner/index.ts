@@ -6,7 +6,7 @@ import {
   RoutePlannerService
 } from '../../../../shared/services/admin-map';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, filter, switchMap, take } from 'rxjs/operators';
+import { takeUntil, filter, switchMap, take, debounceTime } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { State, IHikeEditRoutePlannerState, IHikeEditRoutePlannerTotalState } from '../../../../store';
@@ -30,8 +30,7 @@ import * as L from 'leaflet';
   templateUrl: './ui.html'
 })
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
-  @Input()
-  isPlanning$: Observable<boolean>;
+  @Input() isPlanning$: Observable<boolean>;
   public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   public route$: Observable<any>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -54,10 +53,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.routeInfoData$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
-      takeUntil(this._destroy$)
-    );
+    this.routeInfoData$ = this._store
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
+        takeUntil(this._destroy$)
+      );
 
     this._store
       .pipe(
@@ -109,26 +109,35 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.route$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getRoute),
-      takeUntil(this._destroy$)
-    );
+    this.route$ = this._store
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getRoute),
+        takeUntil(this._destroy$)
+      );
 
-    this.route$.pipe(takeUntil(this._destroy$)).subscribe((route: any) => {
-      // Clear location
-      if (route.features.length === 1) {
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
-        // 1st segment added (line + 2 points)
-      } else if (route.features.length === 3) {
-        this._updateLocation(route.features[1].geometry.coordinates);
-      }
-
-      this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
-        if (isPlanning) {
-          this._refreshIcons(route);
+    this.route$
+      .pipe(
+        debounceTime(250),
+        takeUntil(this._destroy$)
+      )
+      .subscribe((route: any) => {
+        // Clear location
+        if (route.features.length === 1) {
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
+          // 1st segment added (line + 2 points)
+        } else if (route.features.length === 3) {
+          this._updateLocation(route.features[1].geometry.coordinates);
         }
+
+        this.isPlanning$
+          .pipe(take(1))
+          .subscribe((isPlanning: boolean) => {
+            if (isPlanning) {
+              this._hikeProgramService.updateHikeProgramStops();
+              this._refreshIcons(route);
+            }
+          });
       });
-    });
 
     this._store
       .pipe(
@@ -179,7 +188,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   }
 
   public removeLast() {
-    this._waypointMarkerService.deleteLast();
+    this._waypointMarkerService.removeLast();
   }
 
   public closeCircle() {

@@ -5,7 +5,7 @@ export interface IExternalPoi extends IPoi {
   elevation: number;
   lat: number;
   lon: number;
-  objectType?: EPoiTypes;
+  objectTypes?: EPoiTypes[];
   types: string[];
   description: ILocalizedItem<ITextualDescription>;
   selected?: boolean | undefined;

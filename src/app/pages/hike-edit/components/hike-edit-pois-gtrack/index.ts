@@ -69,7 +69,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       )
     )
     .pipe(
-      debounceTime(200),
+      debounceTime(250),
       takeUntil(this._destroy$)
     )
     .subscribe(([searchData, inStorePoiIds]: [IGeoSearchResponseItem, string[]]) => {
@@ -99,22 +99,22 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     )
     .pipe(
       filter(([poiCount, stopsCount]: [number, number]) => poiCount > 0),
-      debounceTime(200),
+      debounceTime(250),
       switchMap(([poiCount, stopsCount]: [number, number]) => {
         return this._store
           .pipe(
             select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois',  this._poiSelectors.getAllPois)),
-            take(1)
+            takeUntil(this._destroy$)
           );
       }),
       switchMap((pois: IPoiStored[]) => {
         return this._store
           .pipe(
             select(this._hikeEditRoutePlannerSelectors.getPath),
-            take(1),
+            debounceTime(250),
+            takeUntil(this._destroy$),
             switchMap((path: any) => of([path, this._poiEditorService.organizePois(pois, path)])),
             switchMap(([path, organizedPois]: [any, IGTrackPoi[]]) => {
-
               return of([path, this._poiEditorService.handleHikeInclusion(organizedPois)]);
             }),
             switchMap(([path, organizedPois]: [any, IGTrackPoi[]]) => {
@@ -126,7 +126,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     this.pois$
       .pipe(
-        debounceTime(200),
+        debounceTime(250),
         takeUntil(this._destroy$)
       )
       .subscribe((pois: IGTrackPoi[]) => {

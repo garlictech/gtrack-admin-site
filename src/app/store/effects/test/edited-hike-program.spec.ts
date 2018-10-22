@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { Observable } from 'rxjs';
-import { hot, cold } from 'jest-marbles';
+import { hot, cold, Scheduler } from 'jest-marbles';
 import { EditedHikeProgramEffects } from '../edited-hike-program';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, HikeProgramService, GeospatialService } from '../../../../subrepos/gtrack-common-ngx';
@@ -110,6 +110,11 @@ describe('EditedHikeProgramEffects effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.prepareThenAddStop$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(hikeEditRoutePlannerSelectors.getPath).toBeCalled();
+      expect(geospatialService.distanceOnLine).toBeCalled();
     });
   });
 
@@ -126,6 +131,11 @@ describe('EditedHikeProgramEffects effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.save$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(editedHikeProgramSelectors.getData).toBeCalled();
+      expect(hikeProgramService.save).toBeCalled();
     });
 
     it('should return error observable from SaveHikeProgram failure', () => {
@@ -140,6 +150,11 @@ describe('EditedHikeProgramEffects effects', () => {
       actions$.stream = hot('-a', { a: action });
 
       expect(effects.save$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(editedHikeProgramSelectors.getData).toBeCalled();
+      expect(hikeProgramService.save).toBeCalled();
     });
   });
 });

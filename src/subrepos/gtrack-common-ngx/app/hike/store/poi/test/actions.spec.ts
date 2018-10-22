@@ -6,7 +6,6 @@ import * as actions from '../actions';
 
 describe('Poi actions', () => {
   let id;
-  let poiDataStored: IPoiStored;
   let poiData: IPoi;
   let poi: IPoiStored;
 
@@ -18,7 +17,7 @@ describe('Poi actions', () => {
       lat: 42.25,
       lon: 19.32,
       elevation: 240,
-      objectType: EPoiTypes.google,
+      objectTypes: [EPoiTypes.google],
       types: [],
       description: {
         en_US: {

@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 fdescribe('RoutePlanner reducers', () => {
   let initialState: IHikeEditRoutePlannerState;
   let segmentData: ISegment;
+  let segmentData2: ISegment;
 
   beforeEach(() => {
     initialState = initialRouteInfoDataState;
@@ -15,6 +16,12 @@ fdescribe('RoutePlanner reducers', () => {
       distance: 0,
       uphill: 0,
       downhill: 0,
+      coordinates: [[]]
+    };
+    segmentData2 = {
+      distance: 2,
+      uphill: 2,
+      downhill: 2,
       coordinates: [[]]
     };
   });
@@ -71,6 +78,28 @@ fdescribe('RoutePlanner reducers', () => {
       const state = hikeEditRoutePlannerReducer(initialState, action);
 
       expect(state.segments).toEqual([segmentData]);
+    });
+  });
+
+  describe('UpdateSegment action', () => {
+    it('should update segment', () => {
+      const action = new hikeEditRoutePlannerActions.UpdateSegment(0, segmentData2);
+      const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
+        segments: [segmentData, segmentData2]
+      }), action);
+
+      expect(state.segments).toEqual([segmentData2, segmentData2]);
+    });
+  });
+
+  describe('UpdateSegment action', () => {
+    it('should update segment', () => {
+      const action = new hikeEditRoutePlannerActions.RemoveSegments(0, 1);
+      const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
+        segments: [segmentData, segmentData2]
+      }), action);
+
+      expect(state.segments).toEqual([segmentData2]);
     });
   });
 

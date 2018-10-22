@@ -2,6 +2,8 @@ import { ActionReducer } from '@ngrx/store';
 import { IHikeEditRoutePlannerState } from '../state';
 import { hikeEditRoutePlannerActions } from '../actions';
 
+import _cloneDeep from 'lodash-es/cloneDeep';
+
 export const initialRouteDataState: GeoJSON.FeatureCollection<any> = {
   type: 'FeatureCollection',
   features: [{
@@ -30,6 +32,8 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
   state = initialRouteInfoDataState,
   action: hikeEditRoutePlannerActions.AllHikeEditRoutePlannerActions
 ): IHikeEditRoutePlannerState => {
+  const newState = _cloneDeep(state);
+
   switch (action.type) {
 
     case hikeEditRoutePlannerActions.RESET_ROUTE_PLANNING_STATE:
@@ -61,6 +65,14 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
           action.segment
         ]
       };
+
+    case hikeEditRoutePlannerActions.UPDATE_SEGMENT:
+      newState.segments.splice(action.index, 1, action.segment);
+      return newState;
+
+    case hikeEditRoutePlannerActions.REMOVE_SEGMENTS:
+      newState.segments.splice(action.idx, action.count);
+      return newState;
 
     case hikeEditRoutePlannerActions.POP_SEGMENT:
       return {

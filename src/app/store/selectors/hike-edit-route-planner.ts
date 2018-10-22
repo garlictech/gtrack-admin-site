@@ -59,7 +59,7 @@ export class HikeEditRoutePlannerSelectors {
             {units: 'kilometers'}
           ));
 
-          return _dist <= 5;
+          return _dist <= 10;
         } else {
           return false;
         }

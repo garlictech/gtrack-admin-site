@@ -44,7 +44,7 @@ export class WikipediaPoiService {
               lon: _point.lon,
               elevation: 0,
               types: ['sight'],
-              objectType: EPoiTypes.wikipedia,
+              objectTypes: [EPoiTypes.wikipedia],
               description: {
                 [LanguageService.shortToLocale(lng)]: {
                   title: _point.title,
@@ -80,6 +80,9 @@ export class WikipediaPoiService {
       });
   }
 
+  /**
+   * handlePoiDetails() submethod
+   */
   public getPoiDetails(pois: IWikipediaPoi[]) {
     const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
     const promises: Promise<IWikipediaPoi[]>[] = [];
