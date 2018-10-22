@@ -63,6 +63,25 @@ describe('HikeEditImage selectors', () => {
     });
   });
 
+  describe('getAllFlickrImages', () => {
+    it('should return flickr image', () => {
+      let result;
+      const hikeEditImageSelectors: HikeEditImageSelectors = TestBed.get(HikeEditImageSelectors);
+
+      store
+        .pipe(
+          select(hikeEditImageSelectors.getAllFlickrImages),
+          takeUntil(destroy$)
+        )
+        .subscribe(res => (result = res));
+
+      expect(result).toEqual([]);
+
+      store.dispatch(new hikeEditImageActions.SetFlickrImages([imagesStored[0]]));
+      expect(result).toEqual([imagesStored[0]]);
+    });
+  });
+
   describe('getImageMarkerUrls', () => {
     it('should return image marker urls', () => {
       let result;
