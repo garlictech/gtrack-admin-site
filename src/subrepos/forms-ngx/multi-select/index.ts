@@ -9,6 +9,7 @@ export class MultiSelectComponent extends AbstractValueAccessor {
   @Input()
   options;
 
+  @Input()
   defaultLabel: string;
 
   constructor() {

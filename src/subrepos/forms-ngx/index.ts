@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { DatePickerComponent } from './date-picker';
+import { TimePickerComponent } from './time-picker';
 import { MultiSelectComponent } from './multi-select';
 import { RadioSelectComponent } from './radio-select';
 import { DropdownSelectComponent } from './dropdown-select';
@@ -25,6 +26,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   declarations: [
     DatePickerComponent,
+    TimePickerComponent,
     MultiSelectComponent,
     RadioSelectComponent,
     DynamicFormComponent,
@@ -49,6 +51,7 @@ export * from './field';
 
 export {
   DatePickerComponent,
+  TimePickerComponent,
   MultiSelectComponent,
   RadioSelectComponent,
   DropdownSelectComponent,

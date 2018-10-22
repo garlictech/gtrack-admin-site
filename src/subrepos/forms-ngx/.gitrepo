@@ -6,7 +6,7 @@
 [subrepo]
 	remote = git@github.com:garlictech/forms-ngx.git
 	branch = master
-	commit = 9134858a8913d87e9efdafa5f924065afd236f74
-	parent = 940f864e29962dfb834229042a74117d6f676013
+	commit = 83daa985f26c56e16340b01cbd9badb3accb0ba8
+	parent = ae8542671837aac606dca7561497b2f7b5b77258
 	method = merge
 	cmdver = 0.3.1

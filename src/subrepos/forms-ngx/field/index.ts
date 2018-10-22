@@ -8,6 +8,7 @@ export * from './select';
 export * from './textarea';
 export * from './textbox';
 export * from './date-picker';
+export * from './time-picker';
 export * from './multi-select';
 export * from './group';
 export * from './section';
@@ -40,7 +41,7 @@ export interface ISubmit {
 
 export interface IFormDescriptor {
   fields: any;
-  submit: ISubmit;
+  submit?: ISubmit;
   storePath?: string;
   titleLabel?: string;
 }
