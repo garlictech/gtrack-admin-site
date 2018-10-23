@@ -13,15 +13,7 @@ import { HikeComponentsModule } from '../hike/hike-components.module';
 const COMPONENTS = [MarkerPopupComponent];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    LocalizeModule,
-    SharedModule,
-    BaseModule,
-    DialogModule,
-    HikeComponentsModule
-  ],
+  imports: [CommonModule, RouterModule, LocalizeModule, SharedModule, BaseModule, DialogModule, HikeComponentsModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
   entryComponents: [MarkerPopupComponent]

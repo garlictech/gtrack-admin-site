@@ -61,10 +61,7 @@ export class HikeMapComponent {
   }
 
   @DebugLog
-  onElevationLineClickMap(data: {
-    position: GeoJSON.Position,
-    forced?: boolean
-  }) {
+  onElevationLineClickMap(data: { position: GeoJSON.Position; forced?: boolean }) {
     const locked = this._elevationMarkerLocked;
 
     log.data('Locked', locked);

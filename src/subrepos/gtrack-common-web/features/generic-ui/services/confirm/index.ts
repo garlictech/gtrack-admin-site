@@ -6,10 +6,7 @@ import { from, of } from 'rxjs';
 
 @Injectable()
 export class ConfirmService {
-  constructor(
-    private _confirmationService: ConfirmationService,
-    private _translate: TranslateService
-  ) {
+  constructor(private _confirmationService: ConfirmationService, private _translate: TranslateService) {
     /* EMPTY */
   }
 

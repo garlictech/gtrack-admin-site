@@ -11,10 +11,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
-import {
-  GENERIC_UI_PLATFORM_SERVICE,
-  GenericUiModule as CommonGenericUiModule
-} from '@common.features/generic-ui';
+import { GENERIC_UI_PLATFORM_SERVICE, GenericUiModule as CommonGenericUiModule } from '@common.features/generic-ui';
 import { MessageService } from 'primeng/api';
 import { NgModule } from '@angular/core';
 import { TableModule } from 'primeng/table';

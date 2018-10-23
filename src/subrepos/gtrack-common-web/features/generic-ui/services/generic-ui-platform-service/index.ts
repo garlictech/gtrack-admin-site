@@ -7,11 +7,7 @@ import { IGenericUiPlatformService, IToast } from '@common.features/generic-ui';
 
 @Injectable()
 export class GenericUiPlatformService implements IGenericUiPlatformService {
-  constructor(
-    private _alert: AlertService,
-    private _confirm: ConfirmService,
-    private messageService: MessageService
-  ) {
+  constructor(private _alert: AlertService, private _confirm: ConfirmService, private messageService: MessageService) {
     /* EMPTY */
   }
 

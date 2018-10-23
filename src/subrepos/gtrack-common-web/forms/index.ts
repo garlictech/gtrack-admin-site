@@ -35,6 +35,7 @@ import { FileComponent } from './file';
 import { EmojiInputComponent } from './emoji-input';
 import { MarkdownComponent } from './markdown';
 import { RichTextEditorComponent } from './rich-text-editor';
+import { GenericUiModule } from '../features/generic-ui';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { RichTextEditorComponent } from './rich-text-editor';
     NativeFormModule,
     FontAwesomeModule,
     NgxMdModule,
-    EditorModule
+    EditorModule,
+    GenericUiModule
   ],
   declarations: [
     DatePickerComponent,

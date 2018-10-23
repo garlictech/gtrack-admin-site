@@ -14,11 +14,7 @@ describe('AlertService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        AlertService,
-        { provide: TranslateService, useClass: MockTranslateService },
-        ConfirmationService
-      ]
+      providers: [AlertService, { provide: TranslateService, useClass: MockTranslateService }, ConfirmationService]
     });
     service = TestBed.get(AlertService);
   });

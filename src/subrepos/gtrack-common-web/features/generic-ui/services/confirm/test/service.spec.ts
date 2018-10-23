@@ -14,11 +14,7 @@ describe('ConfirmService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        ConfirmService,
-        { provide: TranslateService, useClass: MockTranslateService },
-        ConfirmationService
-      ]
+      providers: [ConfirmService, { provide: TranslateService, useClass: MockTranslateService }, ConfirmationService]
     });
     service = TestBed.get(ConfirmService);
   });
