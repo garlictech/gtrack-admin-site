@@ -135,8 +135,7 @@ export class DeepstreamService {
       }),
       timeout(callTimeout),
       retryWhen(errors =>
-        errors
-        .pipe(
+        errors.pipe(
           tap(err => log.error(err)),
           tap(() => log.data('Retry')),
           scan((count, err) => {
