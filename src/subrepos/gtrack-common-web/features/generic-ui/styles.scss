@@ -1,14 +1,14 @@
 /* Big Spinner */
 
-$pcolor2: #5243aa;
+$spinnerColor: #5243aa;
 .spinner {
     z-index: 9999;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    background: rgba($white, 0.6);
-    color: $pcolor2;
+    background: rgba(white, 0.6);
+    color: $spinnerColor;
     display: flex;
     flex-direction: column;
     justify-content: center;

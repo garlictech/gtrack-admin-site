@@ -18,7 +18,6 @@ import {
 import { MessageService } from 'primeng/api';
 import { NgModule } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -28,7 +27,6 @@ import { TranslateModule } from '@ngx-translate/core';
     FontAwesomeModule,
     ConfirmDialogModule,
     TableModule,
-    ToastModule,
     TranslateModule,
     CommonGenericUiModule
   ],

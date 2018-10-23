@@ -37,6 +37,7 @@
         "@types/googlemaps": "3.26.8",
         "@types/leaflet": "^1.0.3",
         "@types/spin.js": "^2.3.0",
+        "angular-svg-icon": "^6.0.0",
         "d3": "^4.12.0",
         "google-maps": "^3.2.1",
         "leaflet": "^1.0.3",
@@ -46,8 +47,9 @@
         "moment": "^2.18.1",
         "promise-polyfill": "^6.0.2",
         "spin.js": "^2.3.2",
-        "jest-marbles": "^1.2.0",
-        "raven-js": "^3.26.2"
+        "jest-marbles": "^2.0.0",
+        "raven-js": "^3.26.2",
+        "suncalc": "^1.8.0"
     },
     "devDependencies": {}
 }

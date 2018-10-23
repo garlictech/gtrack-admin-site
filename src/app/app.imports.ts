@@ -33,7 +33,7 @@ import { HikeListModule } from './pages/hike-list';
 import { metaReducers, REDUCER_TOKEN } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
-
+import { ToastModule } from 'primeng/toast';
 const sharedConfig = {
   ...defaultSharedConfig
 };
@@ -100,5 +100,6 @@ export const APP_IMPORTS = [
   ]),
   ObjectMarkModule.forRoot(objectMarkConfig),
   GtrackCommonWebModule,
-  GenericUiModule
+  GenericUiModule,
+  ToastModule
 ];

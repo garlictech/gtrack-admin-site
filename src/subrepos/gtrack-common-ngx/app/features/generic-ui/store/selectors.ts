@@ -2,13 +2,13 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import { IState, featureName } from './state';
 
-const uiFeature = createFeatureSelector<IState>(featureName);
+export const selectFeature = createFeatureSelector<IState>(featureName);
 
 export const selectProgressSpinnerOn = createSelector(
-  uiFeature,
+  selectFeature,
   (state: IState) => state.progressSpinnerOn
 );
 export const selectProgressSpinnerText = createSelector(
-  uiFeature,
+  selectFeature,
   (state: IState) => state.progressSpinnerText
 );

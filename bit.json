@@ -1,7 +1,7 @@
 {
     "env": {},
     "dependencies": {
-        "molnarzs.gtrack/generic-ui/common": "0.0.2"
+        "molnarzs.gtrack/generic-ui/common": "0.0.3"
     },
     "componentsDefaultDirectory": "components/{namespace}/{name}",
     "packageManager": "npm",
