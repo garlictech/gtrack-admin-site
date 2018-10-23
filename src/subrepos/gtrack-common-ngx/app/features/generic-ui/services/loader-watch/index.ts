@@ -14,9 +14,7 @@ export class LoaderWatchService {
       select(selector),
       tap(working =>
         this._store.dispatch(
-          working
-            ? new fromGenericUiActions.ShowProgressSpinner(text)
-            : new fromGenericUiActions.HideProgressSpinner()
+          working ? new fromGenericUiActions.ShowProgressSpinner(text) : new fromGenericUiActions.HideProgressSpinner()
         )
       )
     );

@@ -2,10 +2,7 @@ import * as _ from 'lodash';
 
 import { IState } from '../state';
 
-export const createFeatureState = ({
-  progressSpinnerOn = true,
-  progressSpinnerText = 'foobar'
-} = {}): IState => ({
+export const createFeatureState = ({ progressSpinnerOn = true, progressSpinnerText = 'foobar' } = {}): IState => ({
   progressSpinnerOn,
   progressSpinnerText
 });

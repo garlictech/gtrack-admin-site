@@ -7,22 +7,12 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AstronomyService } from './services';
 import { SunriseComponent, MoonphaseIconComponent } from './components';
 
-const DECLARATIONS = [
-  SunriseComponent,
-  MoonphaseIconComponent
-];
+const DECLARATIONS = [SunriseComponent, MoonphaseIconComponent];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    TranslateModule,
-    AngularSvgIconModule
-  ],
+  imports: [CommonModule, HttpClientModule, TranslateModule, AngularSvgIconModule],
   exports: DECLARATIONS,
   declarations: DECLARATIONS,
-  providers: [
-    AstronomyService
-  ],
+  providers: [AstronomyService]
 })
-export class AstronomyModule { }
+export class AstronomyModule {}

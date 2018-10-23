@@ -25,9 +25,7 @@ export class MoonphaseIconComponent implements OnInit {
     WaningCrescent: 'wi-moon-waning-crescent-1'
   };
 
-  constructor(
-    private _astronomy: AstronomyService
-  ) { }
+  constructor(private _astronomy: AstronomyService) {}
 
   ngOnInit() {
     const icon = this._icons[this.phase];

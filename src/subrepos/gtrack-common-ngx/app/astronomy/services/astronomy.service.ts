@@ -15,7 +15,6 @@ export enum EMoonPhases {
 
 @Injectable()
 export class AstronomyService {
-
   public getSunTimes(position: GeoJSON.Position, date = new Date()) {
     const times = getTimes(date, position[1], position[0]);
 
@@ -30,7 +29,7 @@ export class AstronomyService {
 
   public getMoonIconName(date = new Date()) {
     const phase = this.getMoonPhase();
-    const icon  = _kebabCase(phase);
+    const icon = _kebabCase(phase);
 
     return icon;
   }

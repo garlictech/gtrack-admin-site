@@ -114,7 +114,7 @@ describe('ObjectMark effects', () => {
 
       Scheduler.get().flush();
 
-      expect(mark).toHaveBeenCalledWith(EObjectMarkContext.bookmarkedHike, {id: 'test3'}, true);
+      expect(mark).toHaveBeenCalledWith(EObjectMarkContext.bookmarkedHike, { id: 'test3' }, true);
     });
   });
 });

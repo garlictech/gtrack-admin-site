@@ -8,7 +8,6 @@ import { AstronomyService } from '../../services/astronomy.service';
   templateUrl: './sunrise.component.html'
 })
 export class SunriseComponent implements OnInit {
-
   @Input()
   public position: GeoJSON.Position;
 
@@ -16,14 +15,12 @@ export class SunriseComponent implements OnInit {
   public day: Date;
 
   public astronomyData: {
-    sun: GetTimesResult,
-    moon: GetMoonTimes,
-    moonPhase: string
+    sun: GetTimesResult;
+    moon: GetMoonTimes;
+    moonPhase: string;
   };
 
-  constructor(
-    private _astronomy: AstronomyService
-  ) { }
+  constructor(private _astronomy: AstronomyService) {}
 
   ngOnInit() {
     this.astronomyData = {

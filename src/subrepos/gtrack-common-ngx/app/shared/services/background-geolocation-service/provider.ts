@@ -24,8 +24,7 @@ export class BackgroundGeolocationService {
     @Inject(BACKGROUND_GEOLOCATION_CONFIG_TOKEN) protected _config: IBackgroundGeolocationServiceConfig,
     private _geoip: GeoIpService,
     @Inject(PLATFORM_ID) private _platformId: Object
-  ) {
-  }
+  ) {}
 
   @DebugLog
   public start() {

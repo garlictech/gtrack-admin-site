@@ -80,6 +80,4 @@ export interface IGenericUiPlatformService {
   displayToast(toast: IToast);
 }
 
-export const GENERIC_UI_PLATFORM_SERVICE = new InjectionToken<IGenericUiPlatformService>(
-  'Generic UI platform service'
-);
+export const GENERIC_UI_PLATFORM_SERVICE = new InjectionToken<IGenericUiPlatformService>('Generic UI platform service');

@@ -38,11 +38,11 @@ export class HikeProgramComponent implements OnInit, OnChanges {
   public startDate: Date;
 
   public timeline: {
-    time: Date,
+    time: Date;
     events: {
-      icon: string,
-      title: string
-    }[]
+      icon: string;
+      title: string;
+    }[];
   }[];
 
   constructor(
@@ -70,10 +70,7 @@ export class HikeProgramComponent implements OnInit, OnChanges {
   public generateTimeline() {
     const times = this.hikeProgram.stops.map((stop, i) => this.getSegmentStartTime(i));
 
-    const startPosition: GeoJSON.Position = [
-      this.hikeProgram.stops[0].lon,
-      this.hikeProgram.stops[0].lat
-    ];
+    const startPosition: GeoJSON.Position = [this.hikeProgram.stops[0].lon, this.hikeProgram.stops[0].lat];
 
     const sunrise = this._astronomy.getSunTimes(startPosition, this.startDate);
     const events = 'dawn sunrise sunset dusk'.split(' ');
@@ -89,7 +86,7 @@ export class HikeProgramComponent implements OnInit, OnChanges {
       return times.findIndex((time, i) => {
         const nextTime = times[i + 1];
 
-        return ((typeof nextTime !== 'undefined') && (nextTime.getTime() >= sunrise[event].getTime()));
+        return typeof nextTime !== 'undefined' && nextTime.getTime() >= sunrise[event].getTime();
       });
     });
 
@@ -106,16 +103,20 @@ export class HikeProgramComponent implements OnInit, OnChanges {
 
       const time = this.getSegmentStartTime(i);
 
-      let stopEvents = [{
-        icon: 'assets/icons/weather/wi-day-sunny.svg',
-        title: 'astronomy.day'
-      }];
+      let stopEvents = [
+        {
+          icon: 'assets/icons/weather/wi-day-sunny.svg',
+          title: 'astronomy.day'
+        }
+      ];
 
       if (time.getTime() < sunrise.sunrise.getTime()) {
-        stopEvents = [({
-          icon: 'assets/icons/weather/wi-stars.svg',
-          title: 'astronomy.night'
-        })];
+        stopEvents = [
+          {
+            icon: 'assets/icons/weather/wi-stars.svg',
+            title: 'astronomy.night'
+          }
+        ];
       }
 
       const stopWithEvents = {
@@ -170,13 +171,10 @@ export class HikeProgramComponent implements OnInit, OnChanges {
   }
 
   public getSegmentStartTime(segmentIndex: number) {
-    const time = this.hikeProgram
-      .stops
-      .filter((stop, i) => (i <= segmentIndex))
+    const time = this.hikeProgram.stops
+      .filter((stop, i) => i <= segmentIndex)
       .map(stop => stop.segment)
-      .reduce((previous, segment) =>
-        previous + this._gameRule.segmentTime(segment.distance, segment.uphill)
-      , 0);
+      .reduce((previous, segment) => previous + this._gameRule.segmentTime(segment.distance, segment.uphill), 0);
 
     const arrive = new Date(this.startDate.getTime());
 

@@ -5,11 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
-import {
-  IGenericUiPlatformService,
-  GENERIC_UI_PLATFORM_SERVICE,
-  EToastSeverity
-} from '../interfaces';
+import { IGenericUiPlatformService, GENERIC_UI_PLATFORM_SERVICE, EToastSeverity } from '../interfaces';
 
 import * as fromActions from './actions';
 
@@ -42,9 +38,7 @@ export class Effects {
       this._ps.displayToast({
         severity: action.notification.severity || EToastSeverity.Success,
         summary: this._translate.instant(action.notification.summary),
-        detail: action.notification.detail
-          ? this._translate.instant(action.notification.detail)
-          : null
+        detail: action.notification.detail ? this._translate.instant(action.notification.detail) : null
       })
     )
   );
