@@ -3,8 +3,8 @@ let globalConf = require('../jest-config')
 globalConf.coverageThreshold = {
     "global": {
         "statements": 67.31,
-        "branches": 50.46,
-        "functions": 51.31,
+        "branches": 50.34,
+        "functions": 51.19,
         "lines": 65.92
     }
 }
