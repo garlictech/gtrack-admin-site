@@ -1,4 +1,8 @@
-import { IBackgroundImageData, EPoiImageTypes, IBackgroundImageDataStored } from '../../../../../subrepos/provider-client';
+import {
+  IBackgroundImageData,
+  EPoiImageTypes,
+  IBackgroundImageDataStored
+} from '../../../../../subrepos/provider-client';
 import * as _ from 'lodash';
 
 const bgImageData = {
@@ -23,7 +27,7 @@ const bgImageData = {
   source: {
     type: EPoiImageTypes.google,
     poiObjectId: 'fakeGoogleObjectId',
-    photoReference: 'fakeReference',
+    photoReference: 'fakeReference'
   },
   additionalData: ''
 };

@@ -5,10 +5,7 @@ import { editedHikeProgramActions } from '../../actions';
 
 import * as _ from 'lodash';
 
-import {
-  bgImages as bgImageFixtures,
-  stops as stopsFixtures
-} from './fixtures';
+import { bgImages as bgImageFixtures, stops as stopsFixtures } from './fixtures';
 import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 
 describe('Edited HikeProgram reducers', () => {
@@ -42,7 +39,9 @@ describe('Edited HikeProgram reducers', () => {
 
   describe('AddNewTranslatedHikeProgramDescription action', () => {
     it('should add new translated hikeProgram description', () => {
-      const action = new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', { title: 'fakeTitle' });
+      const action = new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
+        title: 'fakeTitle'
+      });
       const state = editedHikeProgramReducer(initialState, action);
 
       expect(state.data.description).toEqual({
@@ -63,15 +62,18 @@ describe('Edited HikeProgram reducers', () => {
   describe('DeleteTranslatedHikeProgramDescription action', () => {
     it('should delete translated hikeProgram description', () => {
       const action = new editedHikeProgramActions.DeleteTranslatedHikeProgramDescription('en_US');
-      const state = editedHikeProgramReducer(_.merge({}, initialState, {
-        data: {
-          description: {
-            hu_HU: {
-              title: 'fakeTitle'
+      const state = editedHikeProgramReducer(
+        _.merge({}, initialState, {
+          data: {
+            description: {
+              hu_HU: {
+                title: 'fakeTitle'
+              }
             }
           }
-        }
-      }), action);
+        }),
+        action
+      );
 
       expect(state.data.description).toEqual({
         hu_HU: {
@@ -83,15 +85,18 @@ describe('Edited HikeProgram reducers', () => {
 
     it('should not delete non-existing translated hike description', () => {
       const action = new editedHikeProgramActions.DeleteTranslatedHikeProgramDescription('de_DE');
-      const state = editedHikeProgramReducer(_.merge({}, initialState, {
-        data: {
-          description: {
-            hu_HU: {
-              title: 'fakeTitle'
+      const state = editedHikeProgramReducer(
+        _.merge({}, initialState, {
+          data: {
+            description: {
+              hu_HU: {
+                title: 'fakeTitle'
+              }
             }
           }
-        }
-      }), action);
+        }),
+        action
+      );
 
       expect(state.data.description).toEqual({
         en_US: {
@@ -143,7 +148,7 @@ describe('Edited HikeProgram reducers', () => {
     it('should add hikeProgram details and set to dirty', () => {
       const details = {
         distance: 100,
-        time: 20,
+        time: 20
       };
       const action = new editedHikeProgramActions.AddHikeProgramDetails(details, true);
       const state = editedHikeProgramReducer(initialState, action);
@@ -156,7 +161,7 @@ describe('Edited HikeProgram reducers', () => {
     it('should add hikeProgram details and set to not dirty', () => {
       const details = {
         uphill: 100,
-        downhill: 20,
+        downhill: 20
       };
       const action = new editedHikeProgramActions.AddHikeProgramDetails(details, false);
       const state = editedHikeProgramReducer(initialState, action);
@@ -191,11 +196,14 @@ describe('Edited HikeProgram reducers', () => {
   describe('RemoveStopByPoiId action', () => {
     it('should remove stops from hikeProgram by poi ID', () => {
       const action = new editedHikeProgramActions.RemoveStopByPoiId(['1']);
-      const state = editedHikeProgramReducer(_.merge({}, initialState, {
-        data: {
-          stops: stops
-        }
-      }), action);
+      const state = editedHikeProgramReducer(
+        _.merge({}, initialState, {
+          data: {
+            stops: stops
+          }
+        }),
+        action
+      );
 
       expect(state.data.stops).toEqual([stops[1]]);
     });
@@ -224,11 +232,14 @@ describe('Edited HikeProgram reducers', () => {
   describe('RemoveHikeProgramBackgroundImage action', () => {
     it('should remove hikeProgram background images', () => {
       const action = new editedHikeProgramActions.RemoveHikeProgramBackgroundImage('fakeOriginalUrl');
-      const state = editedHikeProgramReducer(_.merge({}, initialState, {
-        data: {
-          backgroundImages: [images[0]]
-        }
-      }), action);
+      const state = editedHikeProgramReducer(
+        _.merge({}, initialState, {
+          data: {
+            backgroundImages: [images[0]]
+          }
+        }),
+        action
+      );
 
       expect(state.dirty).toBeTruthy();
       expect(state.data.backgroundImages).toEqual([]);
@@ -236,11 +247,14 @@ describe('Edited HikeProgram reducers', () => {
 
     it('should not remove non-existing hikeProgram background images', () => {
       const action = new editedHikeProgramActions.RemoveHikeProgramBackgroundImage('nonExistingOriginalUrl');
-      const state = editedHikeProgramReducer(_.merge({}, initialState, {
-        data: {
-          backgroundImages: [images[0]]
-        }
-      }), action);
+      const state = editedHikeProgramReducer(
+        _.merge({}, initialState, {
+          data: {
+            backgroundImages: [images[0]]
+          }
+        }),
+        action
+      );
 
       expect(state.dirty).toBeTruthy();
       expect(state.data.backgroundImages).toEqual([images[0]]);

@@ -29,7 +29,7 @@ export class RoutePlannerService {
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
-    private _adminMapService: AdminMapService,
+    private _adminMapService: AdminMapService
   ) {
     this._store
       .pipe(
@@ -41,17 +41,15 @@ export class RoutePlannerService {
       });
 
     // Update totals on each segment update
-    this._store
-      .pipe(select(this._hikeEditRoutePlannerSelectors.getSegments))
-      .subscribe((segments: ISegment[]) => {
-        // Update total for route info
-        this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
+    this._store.pipe(select(this._hikeEditRoutePlannerSelectors.getSegments)).subscribe((segments: ISegment[]) => {
+      // Update total for route info
+      this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
 
-        // Refresh route data and draw to map
-        const _route = this._createGeoJsonFromSegments(segments);
-        this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_route));
-        this.drawRoutePlanGeoJSON(_route.features[0]);
-      });
+      // Refresh route data and draw to map
+      const _route = this._createGeoJsonFromSegments(segments);
+      this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_route));
+      this.drawRoutePlanGeoJSON(_route.features[0]);
+    });
   }
 
   /**
@@ -87,8 +85,8 @@ export class RoutePlannerService {
     };
 
     // Now, things according to the game rules
-    _segment.time = this._gameRuleService.segmentTime(_segment.distance, _segment.uphill),
-    _segment.score = this._gameRuleService.score(_segment.distance, _segment.uphill);
+    (_segment.time = this._gameRuleService.segmentTime(_segment.distance, _segment.uphill)),
+      (_segment.score = this._gameRuleService.score(_segment.distance, _segment.uphill));
 
     return _segment;
   }
@@ -132,13 +130,15 @@ export class RoutePlannerService {
         }
 
         // Add the segment start point
-        _geoJSON.features.push(<any>(this._createRoutePoint(_segment.coordinates[0], i + 1)));
+        _geoJSON.features.push(<any>this._createRoutePoint(_segment.coordinates[0], i + 1));
       }
     }
 
     // Add the last route point: the last point of the last segment
     if (segments.length > 0) {
-      _geoJSON.features.push(<any>(this._createRoutePoint(this._getLastPointOfLastSegment(segments), segments.length + 1)));
+      _geoJSON.features.push(<any>(
+        this._createRoutePoint(this._getLastPointOfLastSegment(segments), segments.length + 1)
+      ));
     }
 
     if (segments.length > 0) {
@@ -185,7 +185,7 @@ export class RoutePlannerService {
         select(this._hikeEditRoutePlannerSelectors.getPath),
         take(1)
       )
-      .subscribe((path) => {
+      .subscribe(path => {
         // declare as 'any' for avoid d3.geoBounds error
         const _buffer: any = turfBuffer(path, 1000, { units: 'meters' });
 
@@ -221,15 +221,17 @@ export class RoutePlannerService {
 
     this._savedRouteOnMap = new L.FeatureGroup();
     const styles = [
-      { color: 'black',   opacity: 0.15,  weight: 12 },
-      { color: 'white',   opacity: 0.8,   weight: 8 },
-      { color: '#722ad6', opacity: 1,     weight: 3 }
+      { color: 'black', opacity: 0.15, weight: 12 },
+      { color: 'white', opacity: 0.8, weight: 8 },
+      { color: '#722ad6', opacity: 1, weight: 3 }
     ];
 
     for (const num of [0, 1, 2]) {
-      this._savedRouteOnMap.addLayer(L.geoJSON(geoJSON, {
-        style: <any>styles[num]
-      }));
+      this._savedRouteOnMap.addLayer(
+        L.geoJSON(geoJSON, {
+          style: <any>styles[num]
+        })
+      );
     }
     this._savedRouteOnMap.addTo(this._map.leafletMap);
   }
@@ -237,13 +239,13 @@ export class RoutePlannerService {
   /**
    * Refresh route path after save
    */
-  public refreshRouteOnMap() {
+  public refreshRouteOnMap() {
     this._store
       .pipe(
         select(this._hikeEditRoutePlannerSelectors.getPath),
         take(1)
       )
-      .subscribe((path: any) => {
+      .subscribe((path: any) => {
         this.drawRouteLineGeoJSON(path);
       });
   }
@@ -260,15 +262,17 @@ export class RoutePlannerService {
 
       this._routePlanOnMap = new L.FeatureGroup();
       const styles = [
-        { color: 'black',   opacity: 0.15,  weight: 12 },
-        { color: 'white',   opacity: 0.8,   weight: 8 },
-        { color: '#F60000', opacity: 1,     weight: 3 }
+        { color: 'black', opacity: 0.15, weight: 12 },
+        { color: 'white', opacity: 0.8, weight: 8 },
+        { color: '#F60000', opacity: 1, weight: 3 }
       ];
 
       for (const num of [0, 1, 2]) {
-        this._routePlanOnMap.addLayer(L.geoJSON(geoJSON, {
-          style: <any>styles[num]
-        }));
+        this._routePlanOnMap.addLayer(
+          L.geoJSON(geoJSON, {
+            style: <any>styles[num]
+          })
+        );
       }
       this._routePlanOnMap.addTo(this._map.leafletMap);
     }

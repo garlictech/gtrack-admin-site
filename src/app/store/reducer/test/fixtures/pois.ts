@@ -12,7 +12,7 @@ export const pois = [
     objectTypes: [EPoiTypes.google],
     types: [],
     description: {
-      'en_US': {
+      en_US: {
         title: 'Title #1',
         summary: 'Summary #1',
         fullDescription: 'Description #1',
@@ -20,11 +20,13 @@ export const pois = [
       }
     },
     google: {
-      photos: [{
-        original: {
-          url: 'fakeGoogleUrl1'
+      photos: [
+        {
+          original: {
+            url: 'fakeGoogleUrl1'
+          }
         }
-      }]
+      ]
     },
     wikipedia: {
       pageid: 'fakeWikipediaPageId1'
@@ -41,7 +43,7 @@ export const pois = [
     objectTypes: [EPoiTypes.google],
     types: [],
     description: {
-      'en_US': {
+      en_US: {
         title: 'Title #2',
         summary: 'Summary #2',
         fullDescription: 'Description #2',
@@ -49,15 +51,18 @@ export const pois = [
       }
     },
     google: {
-      photos: [{
-        original: {
-          url: 'fakeGoogleUrl2'
+      photos: [
+        {
+          original: {
+            url: 'fakeGoogleUrl2'
+          }
+        },
+        {
+          original: {
+            url: 'fakeGoogleUrl3'
+          }
         }
-      }, {
-        original: {
-          url: 'fakeGoogleUrl3'
-        }
-      }]
+      ]
     },
     wikipedia: {
       pageid: 'fakeWikipediaPageId2'

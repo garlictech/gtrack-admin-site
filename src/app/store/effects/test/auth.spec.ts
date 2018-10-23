@@ -21,9 +21,7 @@ describe('Auth effects', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({}),
-        EffectsModule.forRoot([
-          AuthEffects
-        ]),
+        EffectsModule.forRoot([AuthEffects]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot(),
         RouterModule.forRoot([])

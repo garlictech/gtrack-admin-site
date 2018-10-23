@@ -10,9 +10,7 @@ import { LeafletComponent } from 'subrepos/gtrack-common-ngx/app';
 export class AdminLeafletComponent extends LeafletComponent {
   public map: AdminMap;
 
-  constructor(
-    _adminMapService: AdminMapService
-  ) {
+  constructor(_adminMapService: AdminMapService) {
     super(_adminMapService);
   }
 }

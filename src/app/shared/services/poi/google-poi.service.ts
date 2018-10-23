@@ -4,11 +4,7 @@ import { EMPTY, of, interval, Observable } from 'rxjs';
 import { take, flatMap, combineAll } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { EPoiTypes, IBackgroundImageData, EPoiImageTypes, ETextualDescriptionType } from 'subrepos/provider-client';
-import {
-  GeometryService,
-  CenterRadius,
-  defaultSharedConfig
-} from 'subrepos/gtrack-common-ngx';
+import { GeometryService, CenterRadius, defaultSharedConfig } from 'subrepos/gtrack-common-ngx';
 
 import { IGooglePoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
@@ -24,15 +20,12 @@ declare const google;
 
 @Injectable()
 export class GooglePoiService {
-  constructor(
-    private _http: HttpClient,
-    private _geometryService: GeometryService
-  ) {}
+  constructor(private _http: HttpClient, private _geometryService: GeometryService) {}
 
   public get(bounds, langs = ['en']) {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
 
-    const promise: Promise<IGooglePoi[]> = new Promise((resolve) => {
+    const promise: Promise<IGooglePoi[]> = new Promise(resolve => {
       this._batchGet(this._getOnePage, {
         geo: geo,
         langs: langs,
@@ -58,7 +51,7 @@ export class GooglePoiService {
     });
   }
 
-  private _getOnePage = (params) => {
+  private _getOnePage = params => {
     // tslint:disable:max-line-length
     let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${
       params.geo.center.geometry.coordinates[0]

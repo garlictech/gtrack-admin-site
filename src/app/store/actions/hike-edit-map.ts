@@ -6,5 +6,4 @@ export class ResetMapState implements Action {
   readonly type = RESET_MAP_STATE;
 }
 
-export type AllHikeEditMapActions =
-  | ResetMapState;
+export type AllHikeEditMapActions = ResetMapState;

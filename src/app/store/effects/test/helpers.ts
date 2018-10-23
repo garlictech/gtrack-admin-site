@@ -1,9 +1,7 @@
 import { Observable, EMPTY } from 'rxjs';
 import { Actions } from '@ngrx/effects';
 
-import {
-  pois as poiFixtures
-} from '../../reducer/test/fixtures';
+import { pois as poiFixtures } from '../../reducer/test/fixtures';
 
 export class TestActions extends Actions {
   constructor() {

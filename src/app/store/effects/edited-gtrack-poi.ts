@@ -22,26 +22,25 @@ export class EditedGTrackPoiEffects {
   ) {}
 
   @Effect()
-  save$: Observable<Action> = this._actions$
-    .pipe(
-      ofType(editedGTrackPoiActions.SAVE_POI),
-      switchMap(() => this._store.pipe(
+  save$: Observable<Action> = this._actions$.pipe(
+    ofType(editedGTrackPoiActions.SAVE_POI),
+    switchMap(() =>
+      this._store.pipe(
         select(this._editedGTrackPoiSelectors.getData),
-        take(1))
-      ),
-      switchMap((data: IPoiStored) => {
-        const poiData = _omit(data, ['timestamp']);
+        take(1)
+      )
+    ),
+    switchMap((data: IPoiStored) => {
+      const poiData = _omit(data, ['timestamp']);
 
-        return this._poiService
-          .create(<IPoi>poiData)
-          .pipe(
-            take(1),
-            map((poi) => new editedGTrackPoiActions.PoiSaveSuccess(poi.id)),
-            catchError(error => {
-              log.error('Effect: Poi save error: ', error);
-              return of(new editedGTrackPoiActions.PoiSaveFailed(error));
-            })
-          );
-      })
-    );
+      return this._poiService.create(<IPoi>poiData).pipe(
+        take(1),
+        map(poi => new editedGTrackPoiActions.PoiSaveSuccess(poi.id)),
+        catchError(error => {
+          log.error('Effect: Poi save error: ', error);
+          return of(new editedGTrackPoiActions.PoiSaveFailed(error));
+        })
+      );
+    })
+  );
 }

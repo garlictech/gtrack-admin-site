@@ -25,10 +25,7 @@ export class ResetHikeProgram implements Action {
 export class AddNewTranslatedHikeProgramDescription implements Action {
   readonly type = ADD_NEW_TRANSLATED_HIKE_DESCRIPTION;
 
-  constructor(
-    public languageKey: string,
-    public content: ITextualDescription
-  ) {}
+  constructor(public languageKey: string, public content: ITextualDescription) {}
 }
 
 export class DeleteTranslatedHikeProgramDescription implements Action {

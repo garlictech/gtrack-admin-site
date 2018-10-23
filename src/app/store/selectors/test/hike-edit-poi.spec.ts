@@ -7,11 +7,9 @@ import { hikeEditPoiReducer, initialContextItemState } from '../../reducer';
 import { IHikeEditPoiState } from '../../state';
 import { hikeEditPoiActions } from '../../actions';
 
-import {
-  pois as poiFixtures
-} from '../../reducer/test/fixtures';
+import { pois as poiFixtures } from '../../reducer/test/fixtures';
 
-import * as _ from 'lodash';
+import * as _ from 'lodash';
 import { EPoiTypes } from '../../../../subrepos/provider-client';
 
 describe('HikeEditPoi selectors', () => {
@@ -29,9 +27,7 @@ describe('HikeEditPoi selectors', () => {
           hikeEditPoi: hikeEditPoiReducer
         })
       ],
-      providers: [
-        HikeEditPoiSelectors
-      ]
+      providers: [HikeEditPoiSelectors]
     });
 
     store = TestBed.get(Store);
@@ -211,10 +207,12 @@ describe('HikeEditPoi selectors', () => {
 
       store.dispatch(new hikeEditPoiActions.SetWikipediaPois([pois[0]]));
       store.dispatch(new hikeEditPoiActions.SetWikipediaPoiSelected([pois[0].id]));
-      store.dispatch(new hikeEditPoiActions.SetWikipediaPoisInGtrackDb({
-        id: pois[0].id,
-        inGtrackDb: false
-      }));
+      store.dispatch(
+        new hikeEditPoiActions.SetWikipediaPoisInGtrackDb({
+          id: pois[0].id,
+          inGtrackDb: false
+        })
+      );
       expect(result).toEqual(1);
     });
   });

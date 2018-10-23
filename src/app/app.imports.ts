@@ -6,10 +6,7 @@ import {
   HikeEditImageEffects,
   HikeEditPoiEffects
 } from './store/effects';
-import {
-  AuthenticationApiModule,
-  defaultAuthenticationApiConfig
-} from 'subrepos/authentication-api-ngx';
+import { AuthenticationApiModule, defaultAuthenticationApiConfig } from 'subrepos/authentication-api-ngx';
 import { AuthModule } from './auth';
 import {
   BackgroundGeolocationModule,

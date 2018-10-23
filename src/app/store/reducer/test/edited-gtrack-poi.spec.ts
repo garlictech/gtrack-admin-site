@@ -2,15 +2,16 @@ import { IEditedGTrackPoiState } from '../../state';
 import { initialEditedGTrackPoiState, editedGTrackPoiReducer } from '../edited-gtrack-poi';
 import { editedGTrackPoiActions } from '../../actions';
 import { IExternalPoi } from '../../../shared/interfaces';
-import { IBackgroundImageData, IPoiStored, EObjectState, ETextualDescriptionType } from '../../../../subrepos/provider-client';
+import {
+  IBackgroundImageData,
+  IPoiStored,
+  EObjectState,
+  ETextualDescriptionType
+} from '../../../../subrepos/provider-client';
 
 import * as _ from 'lodash';
 
-import {
-  pois as poiFixtures,
-  pois as poiStoredFixtures,
-  bgImages as bgImageFixtures
-} from './fixtures';
+import { pois as poiFixtures, pois as poiStoredFixtures, bgImages as bgImageFixtures } from './fixtures';
 
 describe('Edited GTrackPoi reducers', () => {
   let initialState: IEditedGTrackPoiState;
@@ -55,15 +56,18 @@ describe('Edited GTrackPoi reducers', () => {
   describe('DeleteTranslatedPoiDescription action', () => {
     it('should delete translated poi description', () => {
       const action = new editedGTrackPoiActions.DeleteTranslatedPoiDescription('en_US');
-      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
-        data: {
-          description: {
-            hu_HU: {
-              title: 'fakeTitle'
+      const state = editedGTrackPoiReducer(
+        _.merge({}, initialState, {
+          data: {
+            description: {
+              hu_HU: {
+                title: 'fakeTitle'
+              }
             }
           }
-        }
-      }), action);
+        }),
+        action
+      );
 
       expect(state.data.description).toEqual({
         hu_HU: {
@@ -75,15 +79,18 @@ describe('Edited GTrackPoi reducers', () => {
 
     it('should not delete non-existing translated poi description', () => {
       const action = new editedGTrackPoiActions.DeleteTranslatedPoiDescription('de_DE');
-      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
-        data: {
-          description: {
-            hu_HU: {
-              title: 'fakeTitle'
+      const state = editedGTrackPoiReducer(
+        _.merge({}, initialState, {
+          data: {
+            description: {
+              hu_HU: {
+                title: 'fakeTitle'
+              }
             }
           }
-        }
-      }), action);
+        }),
+        action
+      );
 
       expect(state.data.description).toEqual({
         en_US: {
@@ -131,13 +138,12 @@ describe('Edited GTrackPoi reducers', () => {
 
   describe('PoiSaveFailed action', () => {
     it('should handle loading pois', () => {
-      const action = new editedGTrackPoiActions.LoadPoi(_.merge(
-        pois[0],
-        {
+      const action = new editedGTrackPoiActions.LoadPoi(
+        _.merge(pois[0], {
           timestamp: 0,
           state: EObjectState.published
-        }
-      ));
+        })
+      );
       const state = editedGTrackPoiReducer(initialState, action);
 
       expect(state.working).toBeNull();
@@ -158,11 +164,14 @@ describe('Edited GTrackPoi reducers', () => {
 
     it('should add poi background image when data.backgroundImages still does not exists', () => {
       const action = new editedGTrackPoiActions.AddPoiBackgroundImage(images[0]);
-      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
-        data: {
-          backgroundImages: null
-        }
-      }), action);
+      const state = editedGTrackPoiReducer(
+        _.merge({}, initialState, {
+          data: {
+            backgroundImages: null
+          }
+        }),
+        action
+      );
 
       expect(state.dirty).toBeTruthy();
       expect(state.data.backgroundImages).toEqual([images[0]]);
@@ -172,11 +181,14 @@ describe('Edited GTrackPoi reducers', () => {
   describe('RemovePoiBackgroundImage action', () => {
     it('should remove poi background images', () => {
       const action = new editedGTrackPoiActions.RemovePoiBackgroundImage('fakeOriginalUrl');
-      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
-        data: {
-          backgroundImages: [images[0]]
-        }
-      }), action);
+      const state = editedGTrackPoiReducer(
+        _.merge({}, initialState, {
+          data: {
+            backgroundImages: [images[0]]
+          }
+        }),
+        action
+      );
 
       expect(state.dirty).toBeTruthy();
       expect(state.data.backgroundImages).toEqual([]);
@@ -184,11 +196,14 @@ describe('Edited GTrackPoi reducers', () => {
 
     it('should not remove non-existing poi background images', () => {
       const action = new editedGTrackPoiActions.RemovePoiBackgroundImage('nonExistingOriginalUrl');
-      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
-        data: {
-          backgroundImages: [images[0]]
-        }
-      }), action);
+      const state = editedGTrackPoiReducer(
+        _.merge({}, initialState, {
+          data: {
+            backgroundImages: [images[0]]
+          }
+        }),
+        action
+      );
 
       expect(state.dirty).toBeTruthy();
       expect(state.data.backgroundImages).toEqual([images[0]]);
@@ -196,11 +211,14 @@ describe('Edited GTrackPoi reducers', () => {
 
     it('should remove poi background images when data.backgroundImages still does not exists', () => {
       const action = new editedGTrackPoiActions.RemovePoiBackgroundImage('nonExistingOriginalUrl');
-      const state = editedGTrackPoiReducer(_.merge({}, initialState, {
-        data: {
-          backgroundImages: null
-        }
-      }), action);
+      const state = editedGTrackPoiReducer(
+        _.merge({}, initialState, {
+          data: {
+            backgroundImages: null
+          }
+        }),
+        action
+      );
 
       expect(state.dirty).toBeTruthy();
       expect(state.data.backgroundImages).toEqual([]);

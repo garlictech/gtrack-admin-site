@@ -9,11 +9,7 @@ import { editedHikeProgramActions, commonPoiActions } from '../../actions';
 import { IBackgroundImageData, EObjectState, IHikeProgramStop } from '../../../../subrepos/provider-client';
 import { PoiSelectors, EXTERNAL_POI_DEPENDENCIES, poiReducer } from '../../../../subrepos/gtrack-common-ngx';
 
-import {
-  pois as poiFixtures,
-  bgImages as bgImageFixtures,
-  stops as stopsFixtures
-} from '../../reducer/test/fixtures';
+import { pois as poiFixtures, bgImages as bgImageFixtures, stops as stopsFixtures } from '../../reducer/test/fixtures';
 
 import * as _ from 'lodash';
 import { IExternalPoi } from '../../../shared/interfaces';
@@ -37,7 +33,7 @@ describe('Edited HikeProgram selectors', () => {
       imports: [
         StoreModule.forRoot({
           editedHikeProgram: editedHikeProgramReducer,
-          pois: poiReducer,
+          pois: poiReducer
         })
       ],
       providers: [
@@ -75,20 +71,21 @@ describe('Edited HikeProgram selectors', () => {
 
       expect(result).toEqual(initialEditedHikeProgramState.data);
 
-      store.dispatch(new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
-        title: 'A new translation'
-      }));
+      store.dispatch(
+        new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
+          title: 'A new translation'
+        })
+      );
 
-      expect(result).toEqual(_.merge({},
-          initialEditedHikeProgramState.data,
-          {
-            description: {
-              hu_HU: {
-                title: 'A new translation'
-              }
+      expect(result).toEqual(
+        _.merge({}, initialEditedHikeProgramState.data, {
+          description: {
+            hu_HU: {
+              title: 'A new translation'
             }
           }
-      ));
+        })
+      );
     });
   });
 
@@ -106,9 +103,14 @@ describe('Edited HikeProgram selectors', () => {
 
       expect(result).toEqual('');
 
-      store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({
-        id: 'fakeId'
-      }, true));
+      store.dispatch(
+        new editedHikeProgramActions.AddHikeProgramDetails(
+          {
+            id: 'fakeId'
+          },
+          true
+        )
+      );
 
       expect(result).toEqual('fakeId');
     });
@@ -128,9 +130,14 @@ describe('Edited HikeProgram selectors', () => {
 
       expect(result).toEqual('');
 
-      store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({
-        routeId: 'fakeId'
-      }, true));
+      store.dispatch(
+        new editedHikeProgramActions.AddHikeProgramDetails(
+          {
+            routeId: 'fakeId'
+          },
+          true
+        )
+      );
 
       expect(result).toEqual('fakeId');
     });
@@ -210,18 +217,19 @@ describe('Edited HikeProgram selectors', () => {
 
       expect(result).toEqual(initialEditedHikeProgramState.data.description);
 
-      store.dispatch(new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
-        title: 'A new translation'
-      }));
+      store.dispatch(
+        new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
+          title: 'A new translation'
+        })
+      );
 
-      expect(result).toEqual(_.merge({},
-          initialEditedHikeProgramState.data.description,
-          {
-            hu_HU: {
-              title: 'A new translation'
-            }
+      expect(result).toEqual(
+        _.merge({}, initialEditedHikeProgramState.data.description, {
+          hu_HU: {
+            title: 'A new translation'
           }
-      ));
+        })
+      );
     });
   });
 
@@ -239,9 +247,11 @@ describe('Edited HikeProgram selectors', () => {
 
       expect(result).toEqual(['en_US']);
 
-      store.dispatch(new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
-        title: 'A new translation'
-      }));
+      store.dispatch(
+        new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
+          title: 'A new translation'
+        })
+      );
 
       expect(result).toEqual(['en_US', 'hu_HU']);
     });
@@ -296,9 +306,11 @@ describe('Edited HikeProgram selectors', () => {
 
       expect(result).toBeFalsy();
 
-      store.dispatch(new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
-        title: 'A new translation'
-      }));
+      store.dispatch(
+        new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
+          title: 'A new translation'
+        })
+      );
       expect(result).toBeTruthy();
     });
   });
@@ -347,10 +359,15 @@ describe('Edited HikeProgram selectors', () => {
       const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
-      store.dispatch(new commonPoiActions.PoiLoaded(ids[0], _.merge(pois[0], {
-        timestamp: 0,
-        state: EObjectState.published
-      })));
+      store.dispatch(
+        new commonPoiActions.PoiLoaded(
+          ids[0],
+          _.merge(pois[0], {
+            timestamp: 0,
+            state: EObjectState.published
+          })
+        )
+      );
 
       store
         .select(editedHikeProgramSelectors.getHikePois(poiSelectors.getAllPois))
@@ -371,10 +388,15 @@ describe('Edited HikeProgram selectors', () => {
       const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
-      store.dispatch(new commonPoiActions.PoiLoaded(ids[0], _.merge(pois[0], {
-        timestamp: 0,
-        state: EObjectState.published
-      })));
+      store.dispatch(
+        new commonPoiActions.PoiLoaded(
+          ids[0],
+          _.merge(pois[0], {
+            timestamp: 0,
+            state: EObjectState.published
+          })
+        )
+      );
 
       store
         .select(editedHikeProgramSelectors.getHikePoisCount(poiSelectors.getAllPois))
@@ -396,10 +418,15 @@ describe('Edited HikeProgram selectors', () => {
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       // Load 1 poi
-      store.dispatch(new commonPoiActions.PoiLoaded(ids[0], _.merge(pois[0], {
-        timestamp: 0,
-        state: EObjectState.published
-      })));
+      store.dispatch(
+        new commonPoiActions.PoiLoaded(
+          ids[0],
+          _.merge(pois[0], {
+            timestamp: 0,
+            state: EObjectState.published
+          })
+        )
+      );
 
       store
         .select(editedHikeProgramSelectors.getStopsWithPoiNames(poiSelectors.getAllPois))
@@ -411,9 +438,12 @@ describe('Edited HikeProgram selectors', () => {
       store.dispatch(new editedHikeProgramActions.SetStops(stops));
 
       // Return with 2 stops, only the 1st contains poi description!
-      expect(result).toEqual([_.merge(stops[0], {
-        description: pois[0].description
-      }), stops[1]]);
+      expect(result).toEqual([
+        _.merge(stops[0], {
+          description: pois[0].description
+        }),
+        stops[1]
+      ]);
     });
   });
 

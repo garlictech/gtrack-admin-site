@@ -13,10 +13,7 @@ export const REMOVE_POI_BACKGROUND_IMAGE = '[Gtrack Poi Edit] Remove background 
 export class AddNewTranslatedPoiDescription implements Action {
   readonly type = ADD_NEW_TRANSLATED_POI_DESCRIPTION;
 
-  constructor(
-    public languageKey: string,
-    public content: ITextualDescription
-  ) {}
+  constructor(public languageKey: string, public content: ITextualDescription) {}
 }
 
 export class DeleteTranslatedPoiDescription implements Action {

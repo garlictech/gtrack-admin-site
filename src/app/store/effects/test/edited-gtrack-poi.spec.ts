@@ -15,9 +15,7 @@ import { IExternalPoi } from '../../../shared/interfaces';
 
 import * as _ from 'lodash';
 
-import {
-  pois as poiFixtures
-} from '../../reducer/test/fixtures';
+import { pois as poiFixtures } from '../../reducer/test/fixtures';
 
 describe('EditedGTrackPoiEffects effects', () => {
   let actions$: TestActions;
@@ -32,9 +30,7 @@ describe('EditedGTrackPoiEffects effects', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({}),
-        EffectsModule.forRoot([
-          EditedGTrackPoiEffects
-        ]),
+        EffectsModule.forRoot([EditedGTrackPoiEffects]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot(),
         RouterModule.forRoot([])
@@ -89,9 +85,7 @@ describe('EditedGTrackPoiEffects effects', () => {
     });
 
     it('should return error observable from SavePoi failure', () => {
-      spyOn(poiService, 'create').and.returnValue(
-        Observable.throwError('error')
-      );
+      spyOn(poiService, 'create').and.returnValue(Observable.throwError('error'));
 
       const action = new editedGTrackPoiActions.SavePoi();
       const completion = new editedGTrackPoiActions.PoiSaveFailed('error');

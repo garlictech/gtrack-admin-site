@@ -1,7 +1,14 @@
 import { EPoiTypes } from '../../../../subrepos/provider-client';
 import {
-  hikeEditPoiReducer, wikipediaPoiInitialState, googlePoiInitialState, osmAmenityPoiInitialState,
-  osmNaturalPoiInitialState, osmRoutePoiInitialState, externalPoiInitialContextState, initialGTrackPoiMergeState, poiCollectorInitialState
+  hikeEditPoiReducer,
+  wikipediaPoiInitialState,
+  googlePoiInitialState,
+  osmAmenityPoiInitialState,
+  osmNaturalPoiInitialState,
+  osmRoutePoiInitialState,
+  externalPoiInitialContextState,
+  initialGTrackPoiMergeState,
+  poiCollectorInitialState
 } from '../hike-edit-poi';
 import { IHikeEditPoiState } from '../../index';
 import { hikeEditPoiActions } from '../../actions';
@@ -9,10 +16,7 @@ import { IExternalPoi } from '../../../shared/interfaces';
 
 import * as _ from 'lodash';
 
-import {
-  pois as poiFixtures,
-  entities as entityFixtures
-} from './fixtures';
+import { pois as poiFixtures, entities as entityFixtures } from './fixtures';
 
 describe('HikeEditPoi reducers', () => {
   let initialState: IHikeEditPoiState;
@@ -75,11 +79,14 @@ describe('HikeEditPoi reducers', () => {
     describe('RemoveGTrackPoiFromMergeSelection action', () => {
       it('should remove gTrack poi to merge selection', () => {
         const action = new hikeEditPoiActions.RemoveGTrackPoiFromMergeSelection(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          gTrackPoiMerge: {
-            selections: ['1', '2']
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            gTrackPoiMerge: {
+              selections: ['1', '2']
+            }
+          }),
+          action
+        );
 
         expect(state.gTrackPoiMerge.selections).toEqual(['2']);
       });
@@ -115,15 +122,16 @@ describe('HikeEditPoi reducers', () => {
       it('should set google pois inGtrackDb', () => {
         pois[0].inGtrackDb = true;
 
-        const action = new hikeEditPoiActions.SetGooglePoisInGtrackDb(
-          pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
+        const action = new hikeEditPoiActions.SetGooglePoisInGtrackDb(pois.map(p => _.pick(p, ['id', 'inGtrackDb'])));
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            googlePois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
         );
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          googlePois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
 
         expect(state.googlePois.entities['1'].inGtrackDb).toBeTruthy();
         expect(state.googlePois.entities['2'].inGtrackDb).toBeFalsy();
@@ -134,15 +142,16 @@ describe('HikeEditPoi reducers', () => {
       it('should set google pois inCollector', () => {
         pois[1].inCollector = true;
 
-        const action = new hikeEditPoiActions.SetGooglePoisInCollector(
-          pois.map(p => _.pick(p, ['id', 'inCollector']))
+        const action = new hikeEditPoiActions.SetGooglePoisInCollector(pois.map(p => _.pick(p, ['id', 'inCollector'])));
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            googlePois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
         );
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          googlePois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
 
         expect(state.googlePois.entities['1'].inCollector).toBeFalsy();
         expect(state.googlePois.entities['2'].inCollector).toBeTruthy();
@@ -152,12 +161,15 @@ describe('HikeEditPoi reducers', () => {
     describe('SetGooglePoiSelected action', () => {
       it('should set google poi selected to true', () => {
         const action = new hikeEditPoiActions.SetGooglePoiSelected(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          googlePois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            googlePois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.googlePois.entities['1'].selected).toBeTruthy();
       });
@@ -167,12 +179,15 @@ describe('HikeEditPoi reducers', () => {
         entities['2'].selected = true;
 
         const action = new hikeEditPoiActions.SetGooglePoiSelected(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          googlePois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            googlePois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.googlePois.entities['1'].selected).toBeFalsy();
       });
@@ -211,12 +226,15 @@ describe('HikeEditPoi reducers', () => {
         const action = new hikeEditPoiActions.SetOsmAmenityPoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
         );
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmAmenityPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmAmenityPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmAmenityPois.entities['1'].inGtrackDb).toBeTruthy();
         expect(state.osmAmenityPois.entities['2'].inGtrackDb).toBeFalsy();
@@ -230,12 +248,15 @@ describe('HikeEditPoi reducers', () => {
         const action = new hikeEditPoiActions.SetOsmAmenityPoisInCollector(
           pois.map(p => _.pick(p, ['id', 'inCollector']))
         );
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmAmenityPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmAmenityPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmAmenityPois.entities['1'].inCollector).toBeFalsy();
         expect(state.osmAmenityPois.entities['2'].inCollector).toBeTruthy();
@@ -245,12 +266,15 @@ describe('HikeEditPoi reducers', () => {
     describe('SetOsmAmenityPoiSelected action', () => {
       it('should set osmAmenity poi selected to true', () => {
         const action = new hikeEditPoiActions.SetOsmAmenityPoiSelected(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmAmenityPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmAmenityPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmAmenityPois.entities['1'].selected).toBeTruthy();
       });
@@ -260,12 +284,15 @@ describe('HikeEditPoi reducers', () => {
         entities['2'].selected = true;
 
         const action = new hikeEditPoiActions.SetOsmAmenityPoiSelected(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmAmenityPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmAmenityPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmAmenityPois.entities['1'].selected).toBeFalsy();
       });
@@ -304,12 +331,15 @@ describe('HikeEditPoi reducers', () => {
         const action = new hikeEditPoiActions.SetOsmNaturalPoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
         );
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmNaturalPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmNaturalPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmNaturalPois.entities['1'].inGtrackDb).toBeTruthy();
         expect(state.osmNaturalPois.entities['2'].inGtrackDb).toBeFalsy();
@@ -323,12 +353,15 @@ describe('HikeEditPoi reducers', () => {
         const action = new hikeEditPoiActions.SetOsmNaturalPoisInCollector(
           pois.map(p => _.pick(p, ['id', 'inCollector']))
         );
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmNaturalPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmNaturalPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmNaturalPois.entities['1'].inCollector).toBeFalsy();
         expect(state.osmNaturalPois.entities['2'].inCollector).toBeTruthy();
@@ -338,12 +371,15 @@ describe('HikeEditPoi reducers', () => {
     describe('SetOsmNaturalPoiSelected action', () => {
       it('should set osmNatural poi selected to true', () => {
         const action = new hikeEditPoiActions.SetOsmNaturalPoiSelected(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmNaturalPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmNaturalPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmNaturalPois.entities['1'].selected).toBeTruthy();
       });
@@ -353,12 +389,15 @@ describe('HikeEditPoi reducers', () => {
         entities['2'].selected = true;
 
         const action = new hikeEditPoiActions.SetOsmNaturalPoiSelected(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmNaturalPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmNaturalPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmNaturalPois.entities['1'].selected).toBeFalsy();
       });
@@ -394,15 +433,16 @@ describe('HikeEditPoi reducers', () => {
       it('should set osmRoute pois inGtrackDb', () => {
         pois[0].inGtrackDb = true;
 
-        const action = new hikeEditPoiActions.SetOsmRoutePoisInGtrackDb(
-          pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
+        const action = new hikeEditPoiActions.SetOsmRoutePoisInGtrackDb(pois.map(p => _.pick(p, ['id', 'inGtrackDb'])));
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmRoutePois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
         );
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmRoutePois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
 
         expect(state.osmRoutePois.entities['1'].inGtrackDb).toBeTruthy();
         expect(state.osmRoutePois.entities['2'].inGtrackDb).toBeFalsy();
@@ -416,12 +456,15 @@ describe('HikeEditPoi reducers', () => {
         const action = new hikeEditPoiActions.SetOsmRoutePoisInCollector(
           pois.map(p => _.pick(p, ['id', 'inCollector']))
         );
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmRoutePois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmRoutePois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmRoutePois.entities['1'].inCollector).toBeFalsy();
         expect(state.osmRoutePois.entities['2'].inCollector).toBeTruthy();
@@ -431,12 +474,15 @@ describe('HikeEditPoi reducers', () => {
     describe('SetOsmRoutePoiSelected action', () => {
       it('should set osmRoute poi selected to true', () => {
         const action = new hikeEditPoiActions.SetOsmRoutePoiSelected(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmRoutePois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmRoutePois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmRoutePois.entities['1'].selected).toBeTruthy();
       });
@@ -446,12 +492,15 @@ describe('HikeEditPoi reducers', () => {
         entities['2'].selected = true;
 
         const action = new hikeEditPoiActions.SetOsmRoutePoiSelected(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          osmRoutePois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            osmRoutePois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.osmRoutePois.entities['1'].selected).toBeFalsy();
       });
@@ -490,12 +539,15 @@ describe('HikeEditPoi reducers', () => {
         const action = new hikeEditPoiActions.SetWikipediaPoisInGtrackDb(
           pois.map(p => _.pick(p, ['id', 'inGtrackDb']))
         );
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          wikipediaPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            wikipediaPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.wikipediaPois.entities['1'].inGtrackDb).toBeTruthy();
         expect(state.wikipediaPois.entities['2'].inGtrackDb).toBeFalsy();
@@ -509,12 +561,15 @@ describe('HikeEditPoi reducers', () => {
         const action = new hikeEditPoiActions.SetWikipediaPoisInCollector(
           pois.map(p => _.pick(p, ['id', 'inCollector']))
         );
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          wikipediaPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            wikipediaPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.wikipediaPois.entities['1'].inCollector).toBeFalsy();
         expect(state.wikipediaPois.entities['2'].inCollector).toBeTruthy();
@@ -524,12 +579,15 @@ describe('HikeEditPoi reducers', () => {
     describe('SetWikipediaPoiSelected action', () => {
       it('should set wikipedia poi selected to true', () => {
         const action = new hikeEditPoiActions.SetWikipediaPoiSelected(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          wikipediaPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            wikipediaPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.wikipediaPois.entities['1'].selected).toBeTruthy();
       });
@@ -538,12 +596,15 @@ describe('HikeEditPoi reducers', () => {
         const action = new hikeEditPoiActions.SetWikipediaPoiSelected(['1']);
         entities['1'].selected = true;
         entities['2'].selected = true;
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          wikipediaPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            wikipediaPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.wikipediaPois.entities['1'].selected).toBeFalsy();
       });
@@ -664,12 +725,15 @@ describe('HikeEditPoi reducers', () => {
     describe('AddPoisToCollector action', () => {
       it('should add pois to collector', () => {
         const action = new hikeEditPoiActions.AddPoisToCollector(pois);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          wikipediaPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            wikipediaPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.collectorPois.ids).toEqual(['1', '2']);
       });
@@ -678,12 +742,15 @@ describe('HikeEditPoi reducers', () => {
     describe('RemovePoisFromCollector action', () => {
       it('should remove pois to collector', () => {
         const action = new hikeEditPoiActions.RemovePoisFromCollector(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          collectorPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            collectorPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.collectorPois.ids).toEqual(['2']);
       });
@@ -692,12 +759,15 @@ describe('HikeEditPoi reducers', () => {
     describe('SetCollectorPoiSelected action', () => {
       it('should set collector poi selected to true', () => {
         const action = new hikeEditPoiActions.SetCollectorPoiSelected(['1']);
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          collectorPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            collectorPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.collectorPois.entities['1'].selected).toBeTruthy();
       });
@@ -706,12 +776,15 @@ describe('HikeEditPoi reducers', () => {
         const action = new hikeEditPoiActions.SetCollectorPoiSelected(['1']);
         entities['1'].selected = true;
         entities['2'].selected = true;
-        const state = hikeEditPoiReducer(_.merge({}, initialState, {
-          collectorPois: {
-            ids: ['1', '2'],
-            entities: entities
-          }
-        }), action);
+        const state = hikeEditPoiReducer(
+          _.merge({}, initialState, {
+            collectorPois: {
+              ids: ['1', '2'],
+              entities: entities
+            }
+          }),
+          action
+        );
 
         expect(state.collectorPois.entities['1'].selected).toBeFalsy();
       });

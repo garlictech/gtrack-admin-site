@@ -23,12 +23,12 @@ export class ResetImageState implements Action {
 
 export class GetMapillaryImages implements Action {
   readonly type = GET_MAPILLARY_IMAGES;
-  constructor(public bounds: any, public path: any) {}
+  constructor(public bounds: any, public path: any) {}
 }
 
 export class SetMapillaryImages implements Action {
   readonly type = SET_MAPILLARY_IMAGES;
-  constructor(public images: IBackgroundImageDataStored[]) {}
+  constructor(public images: IBackgroundImageDataStored[]) {}
 }
 
 /**
@@ -37,12 +37,12 @@ export class SetMapillaryImages implements Action {
 
 export class GetFlickrImages implements Action {
   readonly type = GET_FLICKR_IMAGES;
-  constructor(public bounds: any, public path: any) {}
+  constructor(public bounds: any, public path: any) {}
 }
 
 export class SetFlickrImages implements Action {
   readonly type = SET_FLICKR_IMAGES;
-  constructor(public images: IBackgroundImageDataStored[]) {}
+  constructor(public images: IBackgroundImageDataStored[]) {}
 }
 
 /**

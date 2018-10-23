@@ -12,13 +12,10 @@ import { PoiEditorService } from '../poi';
 
 @Injectable()
 export class FlickrService {
-  constructor(
-    private _http: HttpClient,
-    private _poiEditorService: PoiEditorService
-  ) {}
+  constructor(private _http: HttpClient, private _poiEditorService: PoiEditorService) {}
 
   public get(bounds, path) {
-    const promise: Promise<IBackgroundImageDataStored[]> = new Promise((resolve) => {
+    const promise: Promise<IBackgroundImageDataStored[]> = new Promise(resolve => {
       this._batchGet(this._getOnePage, {
         bounds: bounds,
         path: path,
@@ -47,10 +44,16 @@ export class FlickrService {
     });
   }
 
-  private _getOnePage = (params) => {
+  private _getOnePage = params => {
     console.log('bounds', params.bounds);
     // tslint:disable:max-line-length
-    const request = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${environment.flickr.apiKey}&bbox=${params.bounds.SouthWest.lon},${params.bounds.SouthWest.lat},${params.bounds.NorthEast.lon},${params.bounds.NorthEast.lat}&page=${params.page}&privacy_filter=1&content_type=1&extras=geo,description,license,url_n,url_z,url_o,url_k,url_h&format=json&nojsoncallback=1`;
+    const request = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
+      environment.flickr.apiKey
+    }&bbox=${params.bounds.SouthWest.lon},${params.bounds.SouthWest.lat},${params.bounds.NorthEast.lon},${
+      params.bounds.NorthEast.lat
+    }&page=${
+      params.page
+    }&privacy_filter=1&content_type=1&extras=geo,description,license,url_n,url_z,url_o,url_k,url_h&format=json&nojsoncallback=1`;
     // tslint:enable:max-line-length
 
     return this._http

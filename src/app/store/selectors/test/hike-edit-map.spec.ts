@@ -20,9 +20,7 @@ describe('HikeEditMap selectors', () => {
           hikeEditMap: hikeEditMapReducer
         })
       ],
-      providers: [
-        HikeEditMapSelectors
-      ]
+      providers: [HikeEditMapSelectors]
     });
 
     store = TestBed.get(Store);

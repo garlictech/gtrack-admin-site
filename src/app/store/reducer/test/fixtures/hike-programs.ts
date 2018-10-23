@@ -1,4 +1,3 @@
-
 import { IHikeProgram, ETextualDescriptionType } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 

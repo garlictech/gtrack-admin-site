@@ -10,7 +10,10 @@ import { IGTrackPoi } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
 import { hikeEditPoiActions, commonPoiActions, editedHikeProgramActions } from '../../../../store/actions';
 import {
-  HikeEditPoiSelectors, HikeEditMapSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors
+  HikeEditPoiSelectors,
+  HikeEditMapSelectors,
+  HikeEditRoutePlannerSelectors,
+  EditedHikeProgramSelectors
 } from '../../../../store/selectors';
 
 import _map from 'lodash-es/map';
@@ -22,7 +25,8 @@ import _intersection from 'lodash-es/intersection';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
-  @Input() isPlanning$: Observable<boolean>;
+  @Input()
+  isPlanning$: Observable<boolean>;
   public pois$: Observable<IGTrackPoi[]>;
   public showOnrouteMarkers = true;
   public showOffrouteMarkers = true;
@@ -65,68 +69,68 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$)
       )
     )
-    .pipe(
-      debounceTime(250),
-      takeUntil(this._destroy$)
-    )
-    .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
-      const missingPoiIds = _difference(inHikePoiIds, _intersection(inHikePoiIds, inStorePoiIds)).filter(id => id !== 'endpoint');
+      .pipe(
+        debounceTime(250),
+        takeUntil(this._destroy$)
+      )
+      .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
+        const missingPoiIds = _difference(inHikePoiIds, _intersection(inHikePoiIds, inStorePoiIds)).filter(
+          id => id !== 'endpoint'
+        );
 
-      // Get only the not-loaded pois
-      if (missingPoiIds && missingPoiIds.length > 0) {
-        this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
-      }
-    });
+        // Get only the not-loaded pois
+        if (missingPoiIds && missingPoiIds.length > 0) {
+          this._store.dispatch(new commonPoiActions.LoadPois(missingPoiIds));
+        }
+      });
 
     // Poi list
-    this.pois$ = this._store
-      .pipe(
-        select(this._editedHikeProgramSelectors.getHikePoisCount(this._poiSelectors.getAllPois)),
-        debounceTime(250),
-        // takeUntil(this._destroy$),
-        // switchMap(() => this._store.pipe(
-        //   select(this._hikeEditRoutePlannerSelectors.getIsRouting),
-        //   take(1)
-        // )),
-        // filter((routing: boolean) => !routing),
-        switchMap(() => {
-          return combineLatest(
-            this._store.pipe(
-              select(this._editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
-              takeUntil(this._destroy$)
-            ),
-            this._store.pipe(
-              select(this._hikeEditRoutePlannerSelectors.getPath),
-              takeUntil(this._destroy$)
-            )
+    this.pois$ = this._store.pipe(
+      select(this._editedHikeProgramSelectors.getHikePoisCount(this._poiSelectors.getAllPois)),
+      debounceTime(250),
+      // takeUntil(this._destroy$),
+      // switchMap(() => this._store.pipe(
+      //   select(this._hikeEditRoutePlannerSelectors.getIsRouting),
+      //   take(1)
+      // )),
+      // filter((routing: boolean) => !routing),
+      switchMap(() => {
+        return combineLatest(
+          this._store.pipe(
+            select(this._editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
+            takeUntil(this._destroy$)
+          ),
+          this._store.pipe(
+            select(this._hikeEditRoutePlannerSelectors.getPath),
+            takeUntil(this._destroy$)
           )
-          .pipe(
-            debounceTime(250),
-            filter(([pois, path]: [IPoiStored[], any]) => path && path.geometry.coordinates.length > 0),
-            takeUntil(this._destroy$),
-            map(([pois, path]: [IPoiStored[], any]) => {
-              let _routing;
-              this._store
-                .pipe(
-                  select(this._hikeEditRoutePlannerSelectors.getIsRouting),
-                  take(1)
-                )
-                .subscribe((routing: boolean) => _routing = routing);
+        ).pipe(
+          debounceTime(250),
+          filter(([pois, path]: [IPoiStored[], any]) => path && path.geometry.coordinates.length > 0),
+          takeUntil(this._destroy$),
+          map(([pois, path]: [IPoiStored[], any]) => {
+            let _routing;
+            this._store
+              .pipe(
+                select(this._hikeEditRoutePlannerSelectors.getIsRouting),
+                take(1)
+              )
+              .subscribe((routing: boolean) => (_routing = routing));
 
-              const _organizedPois = this._poiEditorService.organizePois(pois, path, _routing);
-              const _poiIds = _map(pois, 'id');
-              const _organizedPoiIds = _map(_organizedPois, 'id');
-              const _removablePoiIds = _difference(_poiIds, _intersection(_poiIds, _organizedPoiIds));
+            const _organizedPois = this._poiEditorService.organizePois(pois, path, _routing);
+            const _poiIds = _map(pois, 'id');
+            const _organizedPoiIds = _map(_organizedPois, 'id');
+            const _removablePoiIds = _difference(_poiIds, _intersection(_poiIds, _organizedPoiIds));
 
-              if (_removablePoiIds.length > 0) {
-                this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(_removablePoiIds));
-              }
+            if (_removablePoiIds.length > 0) {
+              this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId(_removablePoiIds));
+            }
 
-              return _organizedPois;
-            })
-          );
-        })
-      );
+            return _organizedPois;
+          })
+        );
+      })
+    );
 
     this.pois$
       .pipe(
@@ -167,16 +171,14 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOnrouteMarkers')),
         takeUntil(this._destroy$)
       )
-      .subscribe((value: boolean) => {
+      .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
 
-        this.isPlanning$
-          .pipe(take(1))
-          .subscribe((isPlanning: boolean) => {
-            if (isPlanning) {
-              this._poiEditorService.refreshPoiMarkers(this._map);
-            }
-          });
+        this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
+          if (isPlanning) {
+            this._poiEditorService.refreshPoiMarkers(this._map);
+          }
+        });
       });
 
     this._store
@@ -184,16 +186,14 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers')),
         takeUntil(this._destroy$)
       )
-      .subscribe((value: boolean) => {
+      .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
 
-        this.isPlanning$
-          .pipe(take(1))
-          .subscribe((isPlanning: boolean) => {
-            if (isPlanning) {
-              this._poiEditorService.refreshPoiMarkers(this._map);
-            }
-          });
+        this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
+          if (isPlanning) {
+            this._poiEditorService.refreshPoiMarkers(this._map);
+          }
+        });
       });
   }
 
@@ -216,12 +216,12 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('hike'));
   }
 
-  public openGTrackPoiModal = (poi: IGTrackPoi) => {
+  public openGTrackPoiModal = (poi: IGTrackPoi) => {
     this.modalPoi = poi;
     this.displayGTrackPoiModal = true;
   }
 
-  public closeModal = () => {
+  public closeModal = () => {
     delete this.modalPoi;
     this.displayGTrackPoiModal = false;
   }

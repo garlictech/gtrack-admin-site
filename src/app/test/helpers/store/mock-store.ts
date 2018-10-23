@@ -9,9 +9,9 @@ export class MockStore<T> extends BehaviorSubject<T> {
 
   dispatch = (action: Action): void => {
     //
-  }
+  };
 
   select = <P, R>(pathOrMapFn: any, ...paths: string[]): Observable<R> => {
     return map.call(this, pathOrMapFn);
-  }
+  };
 }

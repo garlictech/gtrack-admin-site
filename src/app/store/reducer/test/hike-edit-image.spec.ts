@@ -1,16 +1,16 @@
 import { IHikeEditImageState } from '../../state';
 import {
-  mapillaryImageInitialState, initialImageMarkerState, imageListInitialContextState, hikeEditImageReducer
+  mapillaryImageInitialState,
+  initialImageMarkerState,
+  imageListInitialContextState,
+  hikeEditImageReducer
 } from '../hike-edit-image';
 import { hikeEditImageActions } from '../../actions';
 import { IBackgroundImageData, IBackgroundImageDataStored } from '../../../../subrepos/provider-client';
 
 import * as _ from 'lodash';
 
-import {
-  bgImages as bgImageFixtures,
-  bgImagesStored as bgImageStoredFixtures,
-} from './fixtures';
+import { bgImages as bgImageFixtures, bgImagesStored as bgImageStoredFixtures } from './fixtures';
 
 describe('HikeEditImage reducers', () => {
   let initialState: IHikeEditImageState;
@@ -79,11 +79,14 @@ describe('HikeEditImage reducers', () => {
   describe('RemoveImageMarker action', () => {
     it('should remove image marker', () => {
       const action = new hikeEditImageActions.RemoveImageMarker(imagesStored[0]);
-      const state = hikeEditImageReducer(_.merge({}, initialState, {
-        imageMarkerUrls: {
-          images: [imagesStored[0]]
-        }
-      }), action);
+      const state = hikeEditImageReducer(
+        _.merge({}, initialState, {
+          imageMarkerUrls: {
+            images: [imagesStored[0]]
+          }
+        }),
+        action
+      );
 
       expect(state.imageMarkerUrls.images).toEqual([]);
     });

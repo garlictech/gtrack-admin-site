@@ -11,8 +11,6 @@ export class HikeEditMapSelectors {
   constructor() {
     this._featureSelector = createFeatureSelector<IHikeEditMapState>('hikeEditMap');
 
-    this.getMapId = createSelector(this._featureSelector,
-      (state: IHikeEditMapState) => state.mapId
-    );
+    this.getMapId = createSelector(this._featureSelector, (state: IHikeEditMapState) => state.mapId);
   }
 }

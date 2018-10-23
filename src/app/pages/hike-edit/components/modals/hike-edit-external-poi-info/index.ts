@@ -5,5 +5,6 @@ import { Component, Input } from '@angular/core';
   templateUrl: './ui.html'
 })
 export class HikeEditExternalPoiInfoComponent {
-  @Input() poi: any;
+  @Input()
+  poi: any;
 }

@@ -16,16 +16,12 @@ export class ImageMarkerPopupComponent implements OnInit {
   public data: any;
   public closePopup: any;
 
-  constructor(
-    private _store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors
-  ) {}
+  constructor(private _store: Store<State>, private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors) {}
 
   ngOnInit() {
-    this.isPlanning$ = this._store
-      .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
-        take(1)
-      );
+    this.isPlanning$ = this._store.pipe(
+      select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+      take(1)
+    );
   }
 }

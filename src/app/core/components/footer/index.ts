@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
         <span>&copy; {{currentDate | date: 'yyyy'}} <a href="http://www.gtracksport.com">GTrack</a></span>
       </span>
     </div>
-  `,
+  `
   // styles: ['.layout-footer { z-index: 100; }']
 })
 export class FooterComponent implements OnInit {

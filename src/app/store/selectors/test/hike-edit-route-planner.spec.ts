@@ -7,12 +7,9 @@ import { IHikeEditRoutePlannerState } from '../../state';
 import { hikeEditRoutePlannerReducer, initialRouteInfoDataState } from '../../reducer';
 import { hikeEditRoutePlannerActions } from '../../actions';
 
-import {
-  route as routeFixtures,
-  segments as segmentFixtures
-} from '../../reducer/test/fixtures';
+import { route as routeFixtures, segments as segmentFixtures } from '../../reducer/test/fixtures';
 
-import * as _ from 'lodash';
+import * as _ from 'lodash';
 
 describe('HikeEditRoutePlanner selectors', () => {
   let store: Store<IHikeEditRoutePlannerState>;
@@ -31,9 +28,7 @@ describe('HikeEditRoutePlanner selectors', () => {
           hikeEditRoutePlanner: hikeEditRoutePlannerReducer
         })
       ],
-      providers: [
-        HikeEditRoutePlannerSelectors
-      ]
+      providers: [HikeEditRoutePlannerSelectors]
     });
 
     store = TestBed.get(Store);
@@ -60,7 +55,7 @@ describe('HikeEditRoutePlanner selectors', () => {
       expect(result).toEqual(initialRouteInfoDataState);
 
       store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
-      expect(result).toEqual(_.merge({}, initialRouteInfoDataState, { routing: true }));
+      expect(result).toEqual(_.merge({}, initialRouteInfoDataState, { routing: true }));
     });
   });
 
@@ -229,7 +224,7 @@ describe('HikeEditRoutePlanner selectors', () => {
         )
         .subscribe(res => (result = res));
 
-        expect(result).toBeFalsy();
+      expect(result).toBeFalsy();
 
       store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
       expect(result).toBeTruthy();

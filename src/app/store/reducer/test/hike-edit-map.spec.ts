@@ -12,10 +12,7 @@ describe('HikeEditMap reducers', () => {
   beforeEach(() => {
     initialState = _.cloneDeep(initialMapState);
 
-    markers = [
-      { id: '1', lat: 0, lon: 0, title: 'Marker #1' },
-      { id: '2', lat: 0, lon: 0, title: 'Marker #2' }
-    ];
+    markers = [{ id: '1', lat: 0, lon: 0, title: 'Marker #1' }, { id: '2', lat: 0, lon: 0, title: 'Marker #2' }];
 
     entities = {
       '1': markers[0],

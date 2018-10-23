@@ -12,6 +12,4 @@ export class ResetMap implements Action {
   readonly type = RESET_MAP;
 }
 
-export type AllAdminMapActions =
-  | RegisterMap
-  | ResetMap;
+export type AllAdminMapActions = RegisterMap | ResetMap;
