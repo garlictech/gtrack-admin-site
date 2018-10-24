@@ -1,5 +1,38 @@
 {
   "projects": {
-    "staging": "gtrack-admin-zlnhf"
+    "staging": "gtrack-admin-zlnhf",
+    "docs": "gtrack-admin-staging-docs",
+    "coverage": "gtrack-admin-staging-coverage",
+    "e2e": "gtrack-admin-staging-e2e"
+  },
+  "targets": {
+    "gtrack-admin-zlnhf": {
+      "hosting": {
+        "staging": [
+          "gtrack-admin-zlnhf"
+        ]
+      }
+    },
+    "gtrack-admin-staging-docs": {
+      "hosting": {
+        "docs": [
+          "gtrack-admin-staging-docs"
+        ]
+      }
+    },
+    "gtrack-admin-staging-coverage": {
+      "hosting": {
+        "coverage": [
+          "gtrack-admin-staging-coverage"
+        ]
+      }
+    },
+    "gtrack-admin-staging-e2e": {
+      "hosting": {
+        "e2e": [
+          "gtrack-admin-staging-e2e"
+        ]
+      }
+    }
   }
 }
