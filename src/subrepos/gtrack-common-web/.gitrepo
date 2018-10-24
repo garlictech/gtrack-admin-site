@@ -7,6 +7,6 @@
 	remote = git@github.com:garlictech/gtrack-common-web.git
 	branch = master
 	commit = acf5aa9b443b35fdaf434d80126b00e68c7f147e
-	parent = 9932c7bb04def09059ae8cd35dcf37962e61a8ff
+	parent = 3a752bc060aed83358d672f1aa09777981786bf3
 	method = merge
 	cmdver = 0.3.1
