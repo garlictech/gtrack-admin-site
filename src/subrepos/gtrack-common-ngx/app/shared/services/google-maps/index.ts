@@ -11,10 +11,7 @@ export class GoogleMapsService {
   public map: Promise<google.maps.Map>;
   private _config: IGoogleMapsConfig;
 
-  constructor(
-    @Inject(SHARED_CONFIG_TOKEN) commonConfig: ISharedConfig,
-    @Inject(PLATFORM_ID) platformId: Object
-  ) {
+  constructor(@Inject(SHARED_CONFIG_TOKEN) commonConfig: ISharedConfig, @Inject(PLATFORM_ID) platformId: Object) {
     const isBrowser = isPlatformBrowser(platformId);
     this._config = commonConfig.googleMaps;
 

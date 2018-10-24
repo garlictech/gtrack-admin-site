@@ -10,18 +10,28 @@ import _isObject from 'lodash-es/isObject';
 
 @Injectable()
 export class PoiMergeService {
-
-  public collectFlatKeyValues(pois) {
+  public collectFlatKeyValues(pois) {
     // Collect properties
     const flatProperties: IComparedProperty = {};
     let commonTypes: string[] = [];
     let objectTypes: string[] = [];
 
     for (const poi of pois) {
-      let flatPoi = flatten(_pick(poi, [
-        'lat', 'lon', 'elevation', 'published', 'positions', 'state',
-        'description', 'timestamp', 'google', 'wikipedia', 'osm'
-      ]));
+      let flatPoi = flatten(
+        _pick(poi, [
+          'lat',
+          'lon',
+          'elevation',
+          'published',
+          'positions',
+          'state',
+          'description',
+          'timestamp',
+          'google',
+          'wikipedia',
+          'osm'
+        ])
+      );
       flatPoi.coords = `[${poi.lat}, ${poi.lon}, ${poi.elevation}, ${poi.distFromRoute},  ${poi.onRoute}]`;
 
       // Remove

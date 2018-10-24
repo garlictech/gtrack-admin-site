@@ -1,41 +1,36 @@
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import _get from 'lodash-es/get';
-
-import { environment } from 'environments/environment';
-
 import {
-  DeepstreamModule,
-  SharedModule,
-  GeoSearchModule,
-  defaultSharedConfig,
-  IHikeModuleConfig,
-  BackgroundGeolocationModule,
-  HikeModule,
-  SearchFiltersModule,
-  IObjectMarkModuleConfig,
-  ObjectMarkModule
-} from 'subrepos/gtrack-common-ngx';
-
-import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
-import { defaultAuthenticationApiConfig, AuthenticationApiModule } from 'subrepos/authentication-api-ngx';
-
-import { REDUCER_TOKEN, metaReducers } from './store';
-
-import { CoreLayoutModule } from './core';
-import { AuthModule } from './auth';
-import { HikeListModule } from './pages/hike-list';
-import { HikeEditModule } from './pages/hike-edit';
-import {
-  HikeEditImageEffects,
+  AuthEffects,
   EditedGTrackPoiEffects,
   EditedHikeProgramEffects,
-  HikeEditPoiEffects,
-  AuthEffects
+  HikeEditImageEffects,
+  HikeEditPoiEffects
 } from './store/effects';
+import { AuthenticationApiModule, defaultAuthenticationApiConfig } from 'subrepos/authentication-api-ngx';
+import { AuthModule } from './auth';
+import {
+  BackgroundGeolocationModule,
+  DeepstreamModule,
+  defaultSharedConfig,
+  GeoSearchModule,
+  HikeModule,
+  IHikeModuleConfig,
+  IObjectMarkModuleConfig,
+  ObjectMarkModule,
+  SearchFiltersModule,
+  SharedModule
+} from 'subrepos/gtrack-common-ngx';
+import { CoreLayoutModule } from './core';
+import { EffectsModule } from '@ngrx/effects';
+import { environment } from 'environments/environment';
+import { GenericUiModule } from '@web.features/generic-ui';
+import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
+import { HikeEditModule } from './pages/hike-edit';
+import { HikeListModule } from './pages/hike-list';
+import { metaReducers, REDUCER_TOKEN } from './store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from '@ngrx/store';
 import { ToastModule } from 'primeng/toast';
-
 const sharedConfig = {
   ...defaultSharedConfig
 };
@@ -102,5 +97,6 @@ export const APP_IMPORTS = [
   ]),
   ObjectMarkModule.forRoot(objectMarkConfig),
   GtrackCommonWebModule,
+  GenericUiModule,
   ToastModule
 ];

@@ -31,7 +31,7 @@ export const initialEditedGTrackPoiState: IEditedGTrackPoiState = {
 export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
   state = initialEditedGTrackPoiState,
   action: editedGTrackPoiActions.AllEditedGTrackPoiActions
-): IEditedGTrackPoiState => {
+): IEditedGTrackPoiState => {
   const newState = _cloneDeep(state);
 
   switch (action.type) {
@@ -76,18 +76,16 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
 
     case editedGTrackPoiActions.ADD_POI_BACKGROUND_IMAGE: {
       newState.dirty = true;
-      newState.data.backgroundImages = [
-        ...(<any>state.data.backgroundImages || []),
-        action.imageData
-      ];
+      newState.data.backgroundImages = [...(<any>state.data.backgroundImages || []), action.imageData];
 
       return newState;
     }
 
     case editedGTrackPoiActions.REMOVE_POI_BACKGROUND_IMAGE: {
       newState.dirty = true;
-      newState.data.backgroundImages = (<any>newState.data.backgroundImages || [])
-        .filter(img => img.original.url !== action.origUrl);
+      newState.data.backgroundImages = (<any>newState.data.backgroundImages || []).filter(
+        img => img.original.url !== action.origUrl
+      );
       return newState;
     }
 

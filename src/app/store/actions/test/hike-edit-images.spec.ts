@@ -1,8 +1,6 @@
 import * as HikeEditImageActions from '../hike-edit-image';
 
-import {
-  bgImages as bgImageFixtures
-} from '../../reducer/test/fixtures';
+import { bgImages as bgImageFixtures } from '../../reducer/test/fixtures';
 
 describe('HikeEditMap actions', () => {
   it('should have action names defined', () => {
@@ -11,7 +9,7 @@ describe('HikeEditMap actions', () => {
     expect(HikeEditImageActions.SET_MAPILLARY_IMAGES).toEqual('[HikeEditImage] Set Mapillary images');
     expect(HikeEditImageActions.GET_FLICKR_IMAGES).toEqual('[HikeEditImage] Get Flickr images');
     expect(HikeEditImageActions.SET_FLICKR_IMAGES).toEqual('[HikeEditImage] Set Flickr images');
- });
+  });
 
   it('should create ResetImageState action', () => {
     const action = new HikeEditImageActions.ResetImageState();

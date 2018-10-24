@@ -1,0 +1,17 @@
+{
+    "env": {},
+    "dependencies": {
+        "molnarzs.gtrack/generic-ui/common": "0.0.3"
+    },
+    "componentsDefaultDirectory": "components/{namespace}/{name}",
+    "packageManager": "npm",
+    "resolveModules": {
+        "modulesDirectories": [
+            "src"
+        ],
+        "aliases": {
+            "@common.features": "src/subrepos/gtrack-common-ngx/app/features",
+            "@web.features": "src/subrepos/gtrack-common-web/features"
+        }
+    }
+}

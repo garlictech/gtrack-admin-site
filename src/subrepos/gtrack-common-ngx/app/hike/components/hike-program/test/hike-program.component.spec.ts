@@ -4,6 +4,9 @@ import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
+import { GameRuleService } from '../../../services/game-rule';
+import { AstronomyService } from '../../../../astronomy';
+
 import { IHikeProgramStored, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
 import { PoiSelectors, poiReducer } from '../../../store/poi';
 import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
@@ -47,7 +50,9 @@ describe('HikeProgramComponent', () => {
             storeDomain: 'poi'
           }
         },
-        IconService
+        IconService,
+        GameRuleService,
+        AstronomyService
       ],
       imports: [
         StoreModule.forRoot({

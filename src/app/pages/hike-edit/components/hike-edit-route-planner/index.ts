@@ -30,7 +30,8 @@ import * as L from 'leaflet';
   templateUrl: './ui.html'
 })
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
-  @Input() isPlanning$: Observable<boolean>;
+  @Input()
+  isPlanning$: Observable<boolean>;
   public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   public route$: Observable<any>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -53,11 +54,10 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.routeInfoData$ = this._store
-      .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
-        takeUntil(this._destroy$)
-      );
+    this.routeInfoData$ = this._store.pipe(
+      select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
+      takeUntil(this._destroy$)
+    );
 
     this._store
       .pipe(
@@ -109,11 +109,10 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.route$ = this._store
-      .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getRoute),
-        takeUntil(this._destroy$)
-      );
+    this.route$ = this._store.pipe(
+      select(this._hikeEditRoutePlannerSelectors.getRoute),
+      takeUntil(this._destroy$)
+    );
 
     this.route$
       .pipe(
@@ -129,14 +128,12 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
           this._updateLocation(route.features[1].geometry.coordinates);
         }
 
-        this.isPlanning$
-          .pipe(take(1))
-          .subscribe((isPlanning: boolean) => {
-            if (isPlanning) {
-              this._hikeProgramService.updateHikeProgramStops();
-              this._refreshIcons(route);
-            }
-          });
+        this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
+          if (isPlanning) {
+            this._hikeProgramService.updateHikeProgramStops();
+            this._refreshIcons(route);
+          }
+        });
       });
 
     this._store

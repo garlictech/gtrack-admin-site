@@ -2,13 +2,7 @@ export const route = {
   features: [
     {
       geometry: {
-        coordinates: [
-          [0, 0],
-          [1, 1],
-          [2, 2],
-          [3, 3],
-          [4, 4]
-        ],
+        coordinates: [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4]],
         type: 'LineString'
       },
       properties: {
@@ -18,9 +12,7 @@ export const route = {
     },
     {
       geometry: {
-        coordinates: [
-          [0, 0]
-        ],
+        coordinates: [[0, 0]],
         type: 'Point'
       },
       properties: {
@@ -30,9 +22,7 @@ export const route = {
     },
     {
       geometry: {
-        coordinates: [
-          [1, 1]
-        ],
+        coordinates: [[1, 1]],
         type: 'Point'
       },
       properties: {
@@ -42,9 +32,7 @@ export const route = {
     },
     {
       geometry: {
-        coordinates: [
-          [2, 2]
-        ],
+        coordinates: [[2, 2]],
         type: 'Point'
       },
       properties: {
@@ -54,9 +42,7 @@ export const route = {
     },
     {
       geometry: {
-        coordinates: [
-          [3, 3]
-        ],
+        coordinates: [[3, 3]],
         type: 'Point'
       },
       properties: {
@@ -66,9 +52,7 @@ export const route = {
     },
     {
       geometry: {
-        coordinates: [
-          [4, 4]
-        ],
+        coordinates: [[4, 4]],
         type: 'Point'
       },
       properties: {
@@ -87,10 +71,7 @@ export const segments = [
     downhill: 483,
     time: 274,
     score: 344,
-    coords: [
-      [0, 0],
-      [1, 1],
-    ]
+    coords: [[0, 0], [1, 1]]
   },
   {
     distance: 27649,
@@ -98,9 +79,6 @@ export const segments = [
     downhill: 183,
     time: 270,
     score: 102,
-    coords: [
-      [10, 0],
-      [11, 1],
-    ]
+    coords: [[10, 0], [11, 1]]
   }
 ];

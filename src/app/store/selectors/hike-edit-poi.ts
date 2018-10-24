@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 import { IHikeEditPoiState } from '../state/hike-edit-poi';
 import {
-  wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter
+  wikipediaPoiAdapter,
+  googlePoiAdapter,
+  osmAmenityPoiAdapter,
+  osmNaturalPoiAdapter,
+  osmRoutePoiAdapter
 } from '../reducer';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 
@@ -28,50 +32,52 @@ export class HikeEditPoiSelectors {
     // Poi entity lists
     //
 
-    const googlePoiSelector = createSelector(
-      this._featureSelector, (state: IHikeEditPoiState) => state.googlePois
-    );
+    const googlePoiSelector = createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.googlePois);
     this.getAllGooglePois = googlePoiAdapter.getSelectors(googlePoiSelector).selectAll;
 
     const osmAmenityPoiSelector = createSelector(
-      this._featureSelector, (state: IHikeEditPoiState) => state.osmAmenityPois
+      this._featureSelector,
+      (state: IHikeEditPoiState) => state.osmAmenityPois
     );
     this.getAllOsmAmenityPois = osmAmenityPoiAdapter.getSelectors(osmAmenityPoiSelector).selectAll;
 
     const osmNaturalPoiSelector = createSelector(
-      this._featureSelector, (state: IHikeEditPoiState) => state.osmNaturalPois
+      this._featureSelector,
+      (state: IHikeEditPoiState) => state.osmNaturalPois
     );
     this.getAllOsmNaturalPois = osmNaturalPoiAdapter.getSelectors(osmNaturalPoiSelector).selectAll;
 
-    const osmRoutePoiSelector = createSelector(
-      this._featureSelector, (state: IHikeEditPoiState) => state.osmRoutePois
-    );
+    const osmRoutePoiSelector = createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.osmRoutePois);
     this.getAllOsmRoutePois = osmRoutePoiAdapter.getSelectors(osmRoutePoiSelector).selectAll;
 
     const wikipediaPoiSelector = createSelector(
-      this._featureSelector, (state: IHikeEditPoiState) => state.wikipediaPois
+      this._featureSelector,
+      (state: IHikeEditPoiState) => state.wikipediaPois
     );
     this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
 
     const collectedPoiSelector = createSelector(
-      this._featureSelector, (state: IHikeEditPoiState) => state.collectorPois
+      this._featureSelector,
+      (state: IHikeEditPoiState) => state.collectorPois
     );
     this.getAllCollectorPois = wikipediaPoiAdapter.getSelectors(collectedPoiSelector).selectAll;
 
     this._allPoiSelectorMap = {
-      'google': this.getAllGooglePois,
-      'osmAmenity': this.getAllOsmAmenityPois,
-      'osmNatural': this.getAllOsmNaturalPois,
-      'osmRoute': this.getAllOsmRoutePois,
-      'wikipedia': this.getAllWikipediaPois,
-      'collector': this.getAllCollectorPois
+      google: this.getAllGooglePois,
+      osmAmenity: this.getAllOsmAmenityPois,
+      osmNatural: this.getAllOsmNaturalPois,
+      osmRoute: this.getAllOsmRoutePois,
+      wikipedia: this.getAllWikipediaPois,
+      collector: this.getAllCollectorPois
     };
 
-    this.getMergeSelections = createSelector(this._featureSelector,
+    this.getMergeSelections = createSelector(
+      this._featureSelector,
       (state: IHikeEditPoiState) => state.gTrackPoiMerge.selections
     );
 
-    this.getMergeSelectionsCount = createSelector(this._featureSelector,
+    this.getMergeSelectionsCount = createSelector(
+      this._featureSelector,
       (state: IHikeEditPoiState) => state.gTrackPoiMerge.selections.length
     );
   }

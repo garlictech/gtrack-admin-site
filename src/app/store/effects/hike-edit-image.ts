@@ -19,33 +19,27 @@ export class HikeEditImageEffects {
    * Get images from Mapillary api
    */
   @Effect()
-  getMapillaryImages$: Observable<Action> = this._actions$
-    .pipe(
-      ofType(hikeEditImageActions.GET_MAPILLARY_IMAGES),
-      map((action: hikeEditImageActions.GetMapillaryImages) => action),
-      switchMap(action => {
-        return this._mapillaryService
-          .get(action.bounds, action.path)
-          .map((images: IBackgroundImageDataStored[]) =>  {
-            return new hikeEditImageActions.SetMapillaryImages(images);
-          });
-      })
-    );
+  getMapillaryImages$: Observable<Action> = this._actions$.pipe(
+    ofType(hikeEditImageActions.GET_MAPILLARY_IMAGES),
+    map((action: hikeEditImageActions.GetMapillaryImages) => action),
+    switchMap(action => {
+      return this._mapillaryService.get(action.bounds, action.path).map((images: IBackgroundImageDataStored[]) => {
+        return new hikeEditImageActions.SetMapillaryImages(images);
+      });
+    })
+  );
 
   /**
    * Get images from Flickr api
    */
   @Effect()
-  getFlickrImages$: Observable<Action> = this._actions$
-    .pipe(
-      ofType(hikeEditImageActions.GET_FLICKR_IMAGES),
-      map((action: hikeEditImageActions.GetFlickrImages) => action),
-      switchMap(action => {
-        return this._flickrService
-          .get(action.bounds, action.path)
-          .map((images: IBackgroundImageDataStored[]) =>  {
-            return new hikeEditImageActions.SetFlickrImages(images);
-          });
-      })
-    );
+  getFlickrImages$: Observable<Action> = this._actions$.pipe(
+    ofType(hikeEditImageActions.GET_FLICKR_IMAGES),
+    map((action: hikeEditImageActions.GetFlickrImages) => action),
+    switchMap(action => {
+      return this._flickrService.get(action.bounds, action.path).map((images: IBackgroundImageDataStored[]) => {
+        return new hikeEditImageActions.SetFlickrImages(images);
+      });
+    })
+  );
 }

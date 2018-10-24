@@ -17,16 +17,19 @@ describe('ObjectToArrayPipe', () => {
 
   it('providing an object returns array', () => {
     const inputObj = {
-        key1: 'value1',
-        key2: 'value2'
+      key1: 'value1',
+      key2: 'value2'
     };
-    const resArr = [{
+    const resArr = [
+      {
         key: 'key1',
         value: 'value1'
-    }, {
+      },
+      {
         key: 'key2',
         value: 'value2'
-    }];
+      }
+    ];
     expect(pipe.transform(inputObj)).toEqual(resArr);
   });
 });

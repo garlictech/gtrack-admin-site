@@ -78,3 +78,4 @@ firebase-debug.log
 .setup.sh
 reports
 artifacts
+.firebase

@@ -9,9 +9,8 @@ export const initialMapState: IHikeEditMapState = {
 export const hikeEditMapReducer: ActionReducer<IHikeEditMapState> = (
   state = initialMapState,
   action: adminMapActions.AllAdminMapActions
-): IHikeEditMapState => {
+): IHikeEditMapState => {
   switch (action.type) {
-
     case adminMapActions.RESET_MAP:
       return initialMapState;
 
@@ -23,6 +22,5 @@ export const hikeEditMapReducer: ActionReducer<IHikeEditMapState> = (
 
     default:
       return state;
-
   }
 };

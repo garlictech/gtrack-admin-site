@@ -9,15 +9,19 @@ import { hot, cold, Scheduler } from 'jest-marbles';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, RouteService } from '../../../../subrepos/gtrack-common-ngx';
 import { TestActions, getActions, mockRouter } from './helpers';
-import { HikeProgramService, WikipediaPoiService, OsmPoiService, GooglePoiService, OsmRoutePoiService } from '../../../shared/services';
+import {
+  HikeProgramService,
+  WikipediaPoiService,
+  OsmPoiService,
+  GooglePoiService,
+  OsmRoutePoiService
+} from '../../../shared/services';
 import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../../actions';
 import { HikeEditPoiEffects } from '../hike-edit-poi';
 
 import * as _ from 'lodash';
 
-import {
-  pois as poiFixtures
-} from '../../reducer/test/fixtures';
+import { pois as poiFixtures } from '../../reducer/test/fixtures';
 
 describe('HikeEditPoiEffects effects', () => {
   let actions$: TestActions;
@@ -40,9 +44,7 @@ describe('HikeEditPoiEffects effects', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({}),
-        EffectsModule.forRoot([
-          HikeEditPoiEffects
-        ]),
+        EffectsModule.forRoot([HikeEditPoiEffects]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot(),
         RouterModule.forRoot([])
@@ -80,25 +82,25 @@ describe('HikeEditPoiEffects effects', () => {
         {
           provide: WikipediaPoiService,
           useValue: {
-            get: () => {}
+            get: () => {}
           }
         },
         {
           provide: OsmPoiService,
           useValue: {
-            get: () => {}
+            get: () => {}
           }
         },
         {
           provide: OsmRoutePoiService,
           useValue: {
-            get: () => {}
+            get: () => {}
           }
         },
         {
           provide: GooglePoiService,
           useValue: {
-            get: () => {}
+            get: () => {}
           }
         }
       ]

@@ -14,14 +14,16 @@ import _map from 'lodash-es/map';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisExternalTableComponent {
-  @Input() pois$: Observable<any[]>;
-  @Input() subdomain: string;
-  @Input() onRouteCheck: boolean;
-  @Input() openPoiModal: any;
+  @Input()
+  pois$: Observable<any[]>;
+  @Input()
+  subdomain: string;
+  @Input()
+  onRouteCheck: boolean;
+  @Input()
+  openPoiModal: any;
 
-  constructor(
-    private _store: Store<State>
-  ) {}
+  constructor(private _store: Store<State>) {}
 
   public handlePoiSelection(poiIds: string[]) {
     switch (this.subdomain) {
@@ -44,14 +46,12 @@ export class HikeEditPoisExternalTableComponent {
   }
 
   public invertSelection() {
-    this.pois$
-      .pipe(take(1))
-      .subscribe(pois => {
-        const clickablePois = pois.filter(p => {
-          return !!p.onRoute === this.onRouteCheck && !p.inCollector && !p.inGtrackDb;
-        });
-
-        this.handlePoiSelection(_map(clickablePois, 'id'));
+    this.pois$.pipe(take(1)).subscribe(pois => {
+      const clickablePois = pois.filter(p => {
+        return !!p.onRoute === this.onRouteCheck && !p.inCollector && !p.inGtrackDb;
       });
+
+      this.handlePoiSelection(_map(clickablePois, 'id'));
+    });
   }
 }

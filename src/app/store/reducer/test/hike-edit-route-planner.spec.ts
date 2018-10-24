@@ -84,9 +84,12 @@ fdescribe('RoutePlanner reducers', () => {
   describe('UpdateSegment action', () => {
     it('should update segment', () => {
       const action = new hikeEditRoutePlannerActions.UpdateSegment(0, segmentData2);
-      const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
-        segments: [segmentData, segmentData2]
-      }), action);
+      const state = hikeEditRoutePlannerReducer(
+        _.merge({}, initialState, {
+          segments: [segmentData, segmentData2]
+        }),
+        action
+      );
 
       expect(state.segments).toEqual([segmentData2, segmentData2]);
     });
@@ -95,9 +98,12 @@ fdescribe('RoutePlanner reducers', () => {
   describe('UpdateSegment action', () => {
     it('should update segment', () => {
       const action = new hikeEditRoutePlannerActions.RemoveSegments(0, 1);
-      const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
-        segments: [segmentData, segmentData2]
-      }), action);
+      const state = hikeEditRoutePlannerReducer(
+        _.merge({}, initialState, {
+          segments: [segmentData, segmentData2]
+        }),
+        action
+      );
 
       expect(state.segments).toEqual([segmentData2]);
     });
@@ -106,18 +112,24 @@ fdescribe('RoutePlanner reducers', () => {
   describe('PopSegment action', () => {
     it('should pop segment', () => {
       const action = new hikeEditRoutePlannerActions.PopSegment();
-      const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
-        segments: [segmentData, segmentData]
-      }), action);
+      const state = hikeEditRoutePlannerReducer(
+        _.merge({}, initialState, {
+          segments: [segmentData, segmentData]
+        }),
+        action
+      );
 
       expect(state.segments).toEqual([segmentData]);
     });
 
     it('should pop segment from a single segment array', () => {
       const action = new hikeEditRoutePlannerActions.PopSegment();
-      const state = hikeEditRoutePlannerReducer(_.merge({}, initialState, {
-        segments: [segmentData]
-      }), action);
+      const state = hikeEditRoutePlannerReducer(
+        _.merge({}, initialState, {
+          segments: [segmentData]
+        }),
+        action
+      );
 
       expect(state.segments).toEqual([]);
     });

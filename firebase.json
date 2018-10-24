@@ -2,11 +2,36 @@
     "database": {
         "rules": "firebase.database.rules.json"
     },
-    "hosting": {
-        "public": "artifacts/dist/browser",
-        "rewrites": [{
-            "source": "**",
-            "destination": "/index.html"
-        }]
-    }
+    "hosting": [{
+            "target": "staging",
+            "public": "artifacts/dist/browser",
+            "rewrites": [{
+                "source": "**",
+                "destination": "/index.html"
+            }]
+        }, {
+            "target": "docs",
+            "public": "artifacts/docs",
+            "rewrites": [{
+                "source": "**",
+                "destination": "/index.html"
+            }]
+        },
+        {
+            "target": "coverage",
+            "public": "artifacts/reports/coverage",
+            "rewrites": [{
+                "source": "**",
+                "destination": "/index.html"
+            }]
+        },
+        {
+            "target": "e2e",
+            "public": "artifacts/reports/e2e",
+            "rewrites": [{
+                "source": "**",
+                "destination": "/index.html"
+            }]
+        }
+    ]
 }

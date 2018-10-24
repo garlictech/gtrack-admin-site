@@ -9,24 +9,27 @@ import { IBackgroundImageData } from 'subrepos/provider-client';
   styleUrls: ['./style.scss']
 })
 export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
-  @Input() images$: Observable<IBackgroundImageData[]>;
-  @Input() backgroundOriginalUrls$: Observable<string[]>;
-  @Input() clickActions: any;
-  @Input() showMarkerColumn: boolean;
-  @Input() distanceFrom: number[] = null;
-  public imageSelections: {[id: string]: boolean} = {};
-  public imageMarkerSelections: {[id: string]: boolean} = {};
+  @Input()
+  images$: Observable<IBackgroundImageData[]>;
+  @Input()
+  backgroundOriginalUrls$: Observable<string[]>;
+  @Input()
+  clickActions: any;
+  @Input()
+  showMarkerColumn: boolean;
+  @Input()
+  distanceFrom: number[] = null;
+  public imageSelections: { [id: string]: boolean } = {};
+  public imageMarkerSelections: { [id: string]: boolean } = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   ngOnInit() {
-    this.backgroundOriginalUrls$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((backgroundOriginalUrls: string[]) => {
-        this.imageSelections = {};
-        backgroundOriginalUrls.map(url => {
-          this.imageSelections[url] = true;
-        });
+    this.backgroundOriginalUrls$.pipe(takeUntil(this._destroy$)).subscribe((backgroundOriginalUrls: string[]) => {
+      this.imageSelections = {};
+      backgroundOriginalUrls.map(url => {
+        this.imageSelections[url] = true;
       });
+    });
   }
 
   ngOnDestroy() {
@@ -34,7 +37,7 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
     this._destroy$.unsubscribe();
   }
 
-  public toggleBackgroundImage(image: IBackgroundImageData) {
+  public toggleBackgroundImage(image: IBackgroundImageData) {
     if (!this.imageSelections[image.original.url]) {
       this.clickActions.remove(image.original.url);
     } else {
@@ -42,7 +45,7 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  public toggleImageMarker(image: IBackgroundImageData) {
+  public toggleImageMarker(image: IBackgroundImageData) {
     if (!this.imageMarkerSelections[image.original.url]) {
       this.clickActions.removeMarker(image);
     } else {

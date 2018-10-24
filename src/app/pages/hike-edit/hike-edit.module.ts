@@ -107,9 +107,6 @@ const COMPONENTS = [
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS],
   entryComponents: [...COMPONENTS],
-  providers: [
-    GeospatialService,
-    PoiMergeService
-  ]
+  providers: [GeospatialService, PoiMergeService]
 })
 export class HikeEditModule {}

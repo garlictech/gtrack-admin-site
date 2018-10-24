@@ -7,6 +7,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./style.scss']
 })
 export class TopBarComponent {
-  @Input() onMenuButtonClick: any;
+  @Input()
+  onMenuButtonClick: any;
   public faBars = faBars;
 }

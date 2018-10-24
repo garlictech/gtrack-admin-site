@@ -1,9 +1,19 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  AfterViewInit,
+  Input
+} from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, take, delay } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../../../store';
-import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
+import {
+  EditedHikeProgramSelectors,
+  HikeEditRoutePlannerSelectors
+} from '../../../../store/selectors';
 import { IHikeProgramStop } from 'subrepos/provider-client';
 import { PoiSelectors, IconService, ISegment } from 'subrepos/gtrack-common-ngx';
 
@@ -17,7 +27,7 @@ import { IRoutePlanResult } from 'app/shared/services/admin-map/waypoint-marker.
 
 interface INearestSegmentData {
   nearestIdx: number;
-  segments: ISegment[]
+  segments: ISegment[];
 }
 
 @Component({
@@ -26,7 +36,8 @@ interface INearestSegmentData {
   styleUrls: ['./style.scss']
 })
 export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewInit {
-  @Input() isPlanning$: Observable<boolean>;
+  @Input()
+  isPlanning$: Observable<boolean>;
   public stops$: Observable<IHikeProgramStop[]>;
   public startIcon: string;
   public finishIcon: string;
@@ -46,13 +57,12 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
     this.finishIcon = this._iconService.url('finish');
   }
 
-  ngOnInit() {
-    this.stops$ = this._store
-      .pipe(
-        select(this._editedHikeProgramSelectors.getStopsWithPoiNames(this._poiSelectors.getAllPois)),
-        delay(0),
-        takeUntil(this._destroy$)
-      );
+  ngOnInit() {
+    this.stops$ = this._store.pipe(
+      select(this._editedHikeProgramSelectors.getStopsWithPoiNames(this._poiSelectors.getAllPois)),
+      delay(0),
+      takeUntil(this._destroy$)
+    );
   }
 
   ngAfterViewInit() {
@@ -67,63 +77,78 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
   public startHere(event, stop: IHikeProgramStop) {
     event.preventDefault();
 
-    this.getNearestSegmentToPoint(stop)
-      .then((sData: INearestSegmentData) => {
-        // Plan new route between the snapped point and the segment endpoint
-        this._waypointMarkerService.getRouteFromApi(
+    this.getNearestSegmentToPoint(stop).then((sData: INearestSegmentData) => {
+      // Plan new route between the snapped point and the segment endpoint
+      this._waypointMarkerService
+        .getRouteFromApi(
           L.latLng(stop.lat, stop.lon),
-          L.latLng(_last(sData.segments[sData.nearestIdx].coordinates)[0], _last(sData.segments[sData.nearestIdx].coordinates)[1])
-        ).then((data: IRoutePlanResult) => {
+          L.latLng(
+            _last(sData.segments[sData.nearestIdx].coordinates)[0],
+            _last(sData.segments[sData.nearestIdx].coordinates)[1]
+          )
+        )
+        .then((data: IRoutePlanResult) => {
           this._waypointMarkerService.removeSegments(0, sData.nearestIdx);
           this._waypointMarkerService.insertNewStartPoint(L.latLng(stop.lat, stop.lon));
           this._routePlannerService.updateRouteSegment(0, data.coordsArr, data.upDown);
         });
-      });
+    });
   }
 
   public endHere(event, stop: IHikeProgramStop) {
     event.preventDefault();
 
-    this.getNearestSegmentToPoint(stop)
-      .then((sData: INearestSegmentData) => {
-        // Plan new route between the snapped point and the segment endpoint
-        this._waypointMarkerService.getRouteFromApi(
-          L.latLng(_first(sData.segments[sData.nearestIdx].coordinates)[0], _first(sData.segments[sData.nearestIdx].coordinates)[1]),
+    this.getNearestSegmentToPoint(stop).then((sData: INearestSegmentData) => {
+      // Plan new route between the snapped point and the segment endpoint
+      this._waypointMarkerService
+        .getRouteFromApi(
+          L.latLng(
+            _first(sData.segments[sData.nearestIdx].coordinates)[0],
+            _first(sData.segments[sData.nearestIdx].coordinates)[1]
+          ),
           L.latLng(stop.lat, stop.lon)
-        ).then((data: IRoutePlanResult) => {
-          this._waypointMarkerService.removeSegments(sData.nearestIdx, sData.segments.length - sData.nearestIdx + 1);
+        )
+        .then((data: IRoutePlanResult) => {
+          this._waypointMarkerService.removeSegments(
+            sData.nearestIdx,
+            sData.segments.length - sData.nearestIdx + 1
+          );
           this._waypointMarkerService.insertNewEndPoint(L.latLng(stop.lat, stop.lon));
-          this._routePlannerService.updateRouteSegment(sData.nearestIdx, data.coordsArr, data.upDown);
+          this._routePlannerService.updateRouteSegment(
+            sData.nearestIdx,
+            data.coordsArr,
+            data.upDown
+          );
         });
-      });
+    });
   }
 
-  private getNearestSegmentToPoint(stop: IHikeProgramStop) {
-    return new Promise((resolve) => {
+  private getNearestSegmentToPoint(stop: IHikeProgramStop) {
+    return new Promise(resolve => {
       this._store
         .pipe(
           select(this._hikeEditRoutePlannerSelectors.getSegments),
           take(1)
         )
-        .subscribe((segments: ISegment[]) => {
+        .subscribe((segments: ISegment[]) => {
           const stopPoint = turfPoint([stop.lat, stop.lon]);
           const snappedPoints = [];
 
           // Snap the point to all segments
-          for (let idx in segments) {
-            const segmentLine = turfLineString(segments[idx].coordinates);
+          for (const segment of segments) {
+            const segmentLine = turfLineString(segment.coordinates);
             const snappedPointToSegment = turfNearestPointOnLine(segmentLine, stopPoint);
             snappedPoints.push(snappedPointToSegment);
           }
 
           // Find the nearest segment
-          const distances = snappedPoints.map(p => p.properties.dist);
+          const distances = snappedPoints.map(p => p.properties.dist);
           const nearestIdx = distances.indexOf(Math.min(...distances));
 
           resolve({
             nearestIdx: nearestIdx,
             segments: segments
-          })
+          });
         });
     });
   }

@@ -35,24 +35,23 @@ export class AdminMarkerPopupComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isPlanning$ = this._store
-      .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
-        take(1)
-      );
+    this.isPlanning$ = this._store.pipe(
+      select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+      take(1)
+    );
 
     switch (this.data.markerType) {
       case 'hike':
         this.btnTitle = 'Remove from hike';
         this.btnClick = this._removeFromHike;
         this.btnClass = 'warning';
-        this.images = _map(this.data.backgroundImages || [], 'card.url');
+        this.images = _map(this.data.backgroundImages || [], 'card.url');
         break;
       case 'gTrack':
         this.btnTitle = 'Add to hike';
         this.btnClick = this._addToHike;
         this.btnClass = 'success';
-        this.images = _map(this.data.backgroundImages || [], 'card.url');
+        this.images = _map(this.data.backgroundImages || [], 'card.url');
         break;
       case 'collector':
         this.btnTitle = 'Remove from collector';
@@ -73,40 +72,40 @@ export class AdminMarkerPopupComponent implements OnInit {
   }
 
   private _getBgImagesUrls() {
-    if (this.data.google && this.data.google.photos && this.data.google.photos.length > 0) {
+    if (this.data.google && this.data.google.photos && this.data.google.photos.length > 0) {
       return _map(this.data.google.photos, 'card.url');
     }
 
-    if (this.data.wikipedia && this.data.wikipedia.photos && this.data.wikipedia.photos.length > 0) {
+    if (this.data.wikipedia && this.data.wikipedia.photos && this.data.wikipedia.photos.length > 0) {
       return _map(this.data.wikipedia.photos, 'original.url');
     }
   }
 
-  private _removeFromHike = () => {
+  private _removeFromHike = () => {
     this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId([this.data.id]));
 
     this.closePopup();
   }
 
-  private _addToHike = () => {
+  private _addToHike = () => {
     this._store.dispatch(new editedHikeProgramActions.PrepareThenAddStop(this.data));
 
     this.closePopup();
   }
 
-  private _removeFromCollector = () => {
+  private _removeFromCollector = () => {
     this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector([this.data.id]));
 
     this.closePopup();
   }
 
-  private _addToCollector = () => {
+  private _addToCollector = () => {
     this._store.dispatch(new hikeEditPoiActions.AddPoisToCollector([this.data]));
 
     this.closePopup();
   }
 
-  private _addToGTrackPoi = () => {
+  private _addToGTrackPoi = () => {
     const _poiData = this._poiEditorService.getDbObj(this.data);
     this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
 

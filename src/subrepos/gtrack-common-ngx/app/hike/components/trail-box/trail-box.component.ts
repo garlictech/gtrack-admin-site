@@ -83,8 +83,8 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
   @Output()
   public elevationLineClick = new EventEmitter<{
-    position: GeoJSON.Position,
-    forced?: boolean
+    position: GeoJSON.Position;
+    forced?: boolean;
   }>();
 
   @Input()

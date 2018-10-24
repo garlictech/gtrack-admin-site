@@ -1,26 +1,34 @@
 <div *ngIf="hikeProgram" class="hike-body">
 
-    <gtrack-bookmark [hikeProgramId]="hikeProgram.id"></gtrack-bookmark>
+  <gtrack-bookmark [hikeProgramId]="hikeProgram.id"></gtrack-bookmark>
 
-    <gtrack-description [description]="hikeProgram.description"></gtrack-description>
+  <gtrack-description [description]="hikeProgram.description"></gtrack-description>
 
-    <div class="mb-10">
-      <gtrack-download-gpx [hikeProgram]="hikeProgram"></gtrack-download-gpx>
-    </div>
-
-    <gtrack-hike-map [hikeProgram]="hikeProgram"></gtrack-hike-map>
-
-    <gtrack-hike-data-item [hikeProgram]="hikeProgram"></gtrack-hike-data-item>
-
-    <div class="tim-title">
-      <h2>Hike Outline</h2>
-    </div>
-
-    <gtrack-hike-program [hikeProgram]="hikeProgram"></gtrack-hike-program>
-
-    <div class="tim-title">
-      <h2>Checkpoints</h2>
-    </div>
-
-    <gtrack-checkpoints [checkpoints]="hikeProgram.checkpoints.checkpoints"></gtrack-checkpoints>
+  <div *ngIf="images && images.length > 0" class="slides">
+    <gtrack-slideshow [controls]="true" [imageUrls]="images"></gtrack-slideshow>
   </div>
+
+  <div class="mb-10">
+    <gtrack-download-gpx [hikeProgram]="hikeProgram"></gtrack-download-gpx>
+  </div>
+
+  <gtrack-hike-map [hikeProgram]="hikeProgram"></gtrack-hike-map>
+
+  <gtrack-hike-data-item [hikeProgram]="hikeProgram"></gtrack-hike-data-item>
+
+  <div class="tim-title">
+    <h2>Hike Outline</h2>
+  </div>
+
+  <div class="mb-20">
+    <gtrack-sunrise [position]="[hikeProgram.stops[0].lon, hikeProgram.stops[0].lat]"></gtrack-sunrise>
+  </div>
+
+  <gtrack-hike-program [hikeProgram]="hikeProgram"></gtrack-hike-program>
+
+  <!-- <div class="tim-title">
+    <h2>Checkpoints</h2>
+  </div>
+
+  <gtrack-checkpoints [checkpoints]="hikeProgram.checkpoints.checkpoints"></gtrack-checkpoints>-->
+</div>

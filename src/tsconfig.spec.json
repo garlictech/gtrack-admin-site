@@ -1,14 +1,10 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
-    "module": "commonjs",
-    "target": "es5",
     "allowJs": true,
-    "types": [
-      "jest",
-      "node"
-    ]
+    "module": "commonjs",
+    "target": "es5"
   },
   "include": [
     "**/*.spec.ts",

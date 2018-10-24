@@ -14,13 +14,15 @@ import _cloneDeep from 'lodash-es/cloneDeep';
   styles: ['input[type=file] { display: none; }']
 })
 export class GpxInputComponent {
-  @Input() callback: any;
-  @ViewChild('gpxInput') gpxInput: ElementRef;
+  @Input()
+  callback: any;
+  @ViewChild('gpxInput')
+  gpxInput: ElementRef;
 
   constructor(
     private _router: Router,
     private _hikeProgramService: HikeProgramService,
-    private _routeService: RouteService,
+    private _routeService: RouteService
   ) {}
 
   public openGPX() {
@@ -50,10 +52,10 @@ export class GpxInputComponent {
   private _loadFile(file) {
     return new Promise((resolve, reject) => {
       const _reader: FileReader = new FileReader();
-      _reader.onloadend = (e) => {
+      _reader.onloadend = e => {
         resolve(_reader.result);
       };
-      _reader.onerror = (e) => {
+      _reader.onerror = e => {
         reject();
       };
       _reader.readAsText(file);

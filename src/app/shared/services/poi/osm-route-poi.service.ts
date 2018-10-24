@@ -27,41 +27,39 @@ export class OsmRoutePoiService {
         <print e="" from="_" geometry="skeleton" limit="" mode="body" n="" order="id" s="" w=""/>
       </osm-script>`;
 
-    return this._http
-      .post('https://overpass-api.de/api/interpreter', request)
-      .switchMap((response: any) => {
-        const _res: IOsmPoi[] = [];
+    return this._http.post('https://overpass-api.de/api/interpreter', request).switchMap((response: any) => {
+      const _res: IOsmPoi[] = [];
 
-        if (response.elements) {
-          for (const _point of response.elements) {
-            if (_point.tags && _point.lat) {
-              // let _type = _point.tags[poiType];
+      if (response.elements) {
+        for (const _point of response.elements) {
+          if (_point.tags && _point.lat) {
+            // let _type = _point.tags[poiType];
 
-              _res.push({
-                id: uuid(),
-                lat: _point.lat,
-                lon: _point.lon,
-                elevation: _point.tags.ele,
-                types: [],
-                description: {
-                  [LanguageService.shortToLocale(lng)]: {
-                    title: _point.tags.name || 'unknown',
-                    summary: '',
-                    fullDescription: '',
-                    type: ETextualDescriptionType.markdown
-                  }
-                },
-                objectTypes: [EPoiTypes.osmRoute],
-                osm: {
-                  id: _point.id
-                },
-                selected: false
-              });
-            }
+            _res.push({
+              id: uuid(),
+              lat: _point.lat,
+              lon: _point.lon,
+              elevation: _point.tags.ele,
+              types: [],
+              description: {
+                [LanguageService.shortToLocale(lng)]: {
+                  title: _point.tags.name || 'unknown',
+                  summary: '',
+                  fullDescription: '',
+                  type: ETextualDescriptionType.markdown
+                }
+              },
+              objectTypes: [EPoiTypes.osmRoute],
+              osm: {
+                id: _point.id
+              },
+              selected: false
+            });
           }
         }
+      }
 
-        return Observable.of(_res);
-      });
+      return Observable.of(_res);
+    });
   }
 }

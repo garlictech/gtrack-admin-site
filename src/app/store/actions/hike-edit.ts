@@ -6,5 +6,4 @@ export class CollectHikeData implements Action {
   readonly type = COLLECT_HIKE_DATA;
 }
 
-export type AllHikeEditActions =
-  | CollectHikeData;
+export type AllHikeEditActions = CollectHikeData;

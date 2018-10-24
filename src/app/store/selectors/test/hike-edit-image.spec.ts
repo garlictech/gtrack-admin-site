@@ -9,9 +9,7 @@ import { EPoiImageTypes } from '../../../../subrepos/provider-client';
 import { hikeEditImageReducer, imageListInitialContextState } from '../../reducer/hike-edit-image';
 import { IBackgroundImageDataStored } from '../../../shared/interfaces';
 
-import {
-  bgImagesStored as bgImageStoredFixtures
-} from '../../reducer/test/fixtures';
+import { bgImagesStored as bgImageStoredFixtures } from '../../reducer/test/fixtures';
 
 import * as _ from 'lodash';
 
@@ -30,9 +28,7 @@ describe('HikeEditImage selectors', () => {
           hikeEditImage: hikeEditImageReducer
         })
       ],
-      providers: [
-        HikeEditImageSelectors
-      ]
+      providers: [HikeEditImageSelectors]
     });
 
     store = TestBed.get(Store);
@@ -116,9 +112,11 @@ describe('HikeEditImage selectors', () => {
       expect(result).toEqual(imageListInitialContextState.mapillary);
 
       store.dispatch(new hikeEditImageActions.GetMapillaryImages('fakeBounds', 'fakePath'));
-      expect(result).toEqual(_.merge({}, imageListInitialContextState.mapillary, {
-        loading: true
-      }));
+      expect(result).toEqual(
+        _.merge({}, imageListInitialContextState.mapillary, {
+          loading: true
+        })
+      );
     });
   });
 

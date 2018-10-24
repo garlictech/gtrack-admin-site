@@ -15,14 +15,12 @@ import {
 
 import { FormModule } from './forms';
 import { LanguageModule } from './language';
-import { GenericComponentsModule } from './components';
 
 @NgModule({
   imports: [
     CommonModule,
     FormModule,
     LanguageModule,
-    GenericComponentsModule,
     StoreRouterConnectingModule,
     CommonDeepstreamModule,
     GtrackCommonModule,
@@ -33,6 +31,6 @@ import { GenericComponentsModule } from './components';
     CommonAuthenticationModule
   ],
   declarations: [],
-  exports: [GenericComponentsModule, LanguageModule]
+  exports: [LanguageModule]
 })
 export class GtrackCommonWebModule {}

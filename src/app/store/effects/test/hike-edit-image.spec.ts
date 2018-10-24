@@ -15,9 +15,7 @@ import { HikeEditImageEffects } from '../hike-edit-image';
 
 import * as _ from 'lodash';
 
-import {
-  bgImagesStored as bgImageStoredFixtures
-} from '../../reducer/test/fixtures';
+import { bgImagesStored as bgImageStoredFixtures } from '../../reducer/test/fixtures';
 
 describe('HikeEditImageEffects effects', () => {
   let actions$: TestActions;
@@ -32,9 +30,7 @@ describe('HikeEditImageEffects effects', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({}),
-        EffectsModule.forRoot([
-          HikeEditImageEffects
-        ]),
+        EffectsModule.forRoot([HikeEditImageEffects]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot(),
         RouterModule.forRoot([])
@@ -59,7 +55,7 @@ describe('HikeEditImageEffects effects', () => {
         {
           provide: PoiEditorService,
           useValue: {
-            organizePoiPhotos: () => []
+            organizePoiPhotos: () => []
           }
         }
       ]

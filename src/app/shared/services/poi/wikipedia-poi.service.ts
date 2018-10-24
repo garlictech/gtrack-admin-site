@@ -19,65 +19,70 @@ export class WikipediaPoiService {
     private _http: HttpClient,
     private _geometryService: GeometryService,
     private _messageService: MessageService,
-    private _hikeProgramService: HikeProgramService,
+    private _hikeProgramService: HikeProgramService
   ) {}
 
-  public get(bounds, lng = 'en') {
+  public get(bounds, lng = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
     const gsLimit = 500;
     // tslint:disable:max-line-length
-    const request = `https://${lng}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo.radius}&gscoord=${geo.center.geometry.coordinates[1]}%7C${geo.center.geometry.coordinates[0]}&format=json&gslimit=${gsLimit}&origin=*`;
+    const request = `https://${lng}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${
+      geo.radius
+    }&gscoord=${geo.center.geometry.coordinates[1]}%7C${
+      geo.center.geometry.coordinates[0]
+    }&format=json&gslimit=${gsLimit}&origin=*`;
     // tslint:enable:max-line-length
 
     // Get basic poi list
-    return this._http
-      .get(request)
-      // .toPromise()
-      .switchMap((data: any) => {
-        const _pois: IWikipediaPoi[] = [];
+    return (
+      this._http
+        .get(request)
+        // .toPromise()
+        .switchMap((data: any) => {
+          const _pois: IWikipediaPoi[] = [];
 
-        if (data.query) {
-          for (const _point of data.query.geosearch) {
-            const _poi: IWikipediaPoi = {
-              id: uuid(),
-              lat: _point.lat,
-              lon: _point.lon,
-              elevation: 0,
-              types: ['sight'],
-              objectTypes: [EPoiTypes.wikipedia],
-              description: {
-                [LanguageService.shortToLocale(lng)]: {
-                  title: _point.title,
-                  summary: '',
-                  fullDescription: '',
-                  type: ETextualDescriptionType.markdown
-                }
-              },
-              wikipedia: {},
-              selected: false
-            };
-            _poi.wikipedia = {
-              pageid: _point.pageid,
-              url: `https://${lng}.wikipedia.org/?curid=${_point.pageid}`,
-              lng: lng
-            };
-            _pois.push(_poi);
+          if (data.query) {
+            for (const _point of data.query.geosearch) {
+              const _poi: IWikipediaPoi = {
+                id: uuid(),
+                lat: _point.lat,
+                lon: _point.lon,
+                elevation: 0,
+                types: ['sight'],
+                objectTypes: [EPoiTypes.wikipedia],
+                description: {
+                  [LanguageService.shortToLocale(lng)]: {
+                    title: _point.title,
+                    summary: '',
+                    fullDescription: '',
+                    type: ETextualDescriptionType.markdown
+                  }
+                },
+                wikipedia: {},
+                selected: false
+              };
+              _poi.wikipedia = {
+                pageid: _point.pageid,
+                url: `https://${lng}.wikipedia.org/?curid=${_point.pageid}`,
+                lng: lng
+              };
+              _pois.push(_poi);
+            }
+
+            return Observable.of(_pois);
+          } else {
+            if (data.error) {
+              this._messageService.add({
+                severity: 'error',
+                summary: 'Error!',
+                detail: data.error.info || 'Unknown error.',
+                life: 8000
+              });
+            }
+            return Observable.of(_pois);
           }
-
-          return Observable.of(_pois);
-        } else {
-          if (data.error) {
-            this._messageService.add({
-              severity: 'error',
-              summary: 'Error!',
-              detail: data.error.info || 'Unknown error.',
-              life: 8000
-            });
-
-          }
-          return Observable.of(_pois);
-        }
-      });
+        })
+    );
   }
 
   /**
@@ -88,7 +93,7 @@ export class WikipediaPoiService {
     const promises: Promise<IWikipediaPoi[]>[] = [];
 
     for (const lng of langs) {
-      const langPois = _filter(pois, p => p.wikipedia.lng === lng);
+      const langPois = _filter(pois, p => p.wikipedia.lng === lng);
 
       promises.push(this._getPageExtracts(langPois, lng));
       promises.push(this._getPageImages(langPois, lng));
@@ -104,7 +109,7 @@ export class WikipediaPoiService {
    */
   private _getPageExtracts(_pois: IWikipediaPoi[], lng) {
     const _poiIds = _pois.map((p: IWikipediaPoi) => {
-      if (p.wikipedia && p.wikipedia.pageid) {
+      if (p.wikipedia && p.wikipedia.pageid) {
         return p.wikipedia.pageid;
       } else {
         return '';
@@ -118,10 +123,13 @@ export class WikipediaPoiService {
         map(counter => {
           const _ids = _chunks[counter];
           // tslint:disable:max-line-length
-          const request = `https://${lng}.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&exlimit=max&pageids=${_ids.join('|')}&origin=*`;
+          const request = `https://${lng}.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&exlimit=max&pageids=${_ids.join(
+            '|'
+          )}&origin=*`;
           // tslint:enable:max-line-length
 
-          return this._http.get(request)
+          return this._http
+            .get(request)
             .toPromise()
             .then((data: any) => {
               for (const idx in data.query.pages) {
@@ -154,7 +162,7 @@ export class WikipediaPoiService {
    */
   private _getPageImages(_pois: IWikipediaPoi[], lng) {
     const _poiIds = _pois.map((p: IWikipediaPoi) => {
-      if (p.wikipedia && p.wikipedia.pageid) {
+      if (p.wikipedia && p.wikipedia.pageid) {
         return p.wikipedia.pageid;
       } else {
         return '';
@@ -168,10 +176,13 @@ export class WikipediaPoiService {
         map(counter => {
           const _ids = _chunks[counter];
           // tslint:disable:max-line-length
-          const request = `https://${lng}.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&piprop=original|name|thumbnail&pageids=${_ids.join('|')}&origin=*`;
+          const request = `https://${lng}.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&piprop=original|name|thumbnail&pageids=${_ids.join(
+            '|'
+          )}&origin=*`;
           // tslint:enable:max-line-length
 
-          return this._http.get(request)
+          return this._http
+            .get(request)
             .toPromise()
             .then((imageData: any) => {
               for (const idx in imageData.query.pages) {

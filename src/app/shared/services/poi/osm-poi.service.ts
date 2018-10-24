@@ -10,9 +10,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class OsmPoiService {
-  constructor(
-    private _http: HttpClient
-  ) {}
+  constructor(private _http: HttpClient) {}
 
   public get(bounds, typeParam, lng = 'en') {
     const request = `
@@ -42,42 +40,40 @@ export class OsmPoiService {
         <print e="" from="_" geometry="skeleton" limit="" mode="skeleton" n="" order="quadtile" s="" w=""/>
       </osm-script>`;
 
-    return this._http
-      .post('https://overpass-api.de/api/interpreter', request)
-      .switchMap((response: any) => {
-        const _res: IOsmPoi[] = [];
+    return this._http.post('https://overpass-api.de/api/interpreter', request).switchMap((response: any) => {
+      const _res: IOsmPoi[] = [];
 
-        if (response.elements) {
-          for (const _point of response.elements) {
-            const type = _get(_point.tags, typeParam);
+      if (response.elements) {
+        for (const _point of response.elements) {
+          const type = _get(_point.tags, typeParam);
 
-            if (_point.lat && this._checkPoiTags(_point, type)) {
-              _res.push({
-                id: uuid(),
-                lat: _point.lat,
-                lon: _point.lon,
-                elevation: _point.tags.ele,
-                types: [type],
-                description: {
-                  [LanguageService.shortToLocale(lng)]: {
-                    title: _point.tags.name || LanguageService.pascalize(type) || 'unknown',
-                    summary: '',
-                    fullDescription: '',
-                    type: ETextualDescriptionType.markdown
-                  }
-                },
-                objectTypes: typeParam === 'amenity' ? [EPoiTypes.osmAmenity] : [EPoiTypes.osmNatural],
-                osm: {
-                  id: _point.id
-                },
-                selected: false
-              });
-            }
+          if (_point.lat && this._checkPoiTags(_point, type)) {
+            _res.push({
+              id: uuid(),
+              lat: _point.lat,
+              lon: _point.lon,
+              elevation: _point.tags.ele,
+              types: [type],
+              description: {
+                [LanguageService.shortToLocale(lng)]: {
+                  title: _point.tags.name || LanguageService.pascalize(type) || 'unknown',
+                  summary: '',
+                  fullDescription: '',
+                  type: ETextualDescriptionType.markdown
+                }
+              },
+              objectTypes: typeParam === 'amenity' ? [EPoiTypes.osmAmenity] : [EPoiTypes.osmNatural],
+              osm: {
+                id: _point.id
+              },
+              selected: false
+            });
           }
         }
+      }
 
-        return Observable.of(_res);
-      });
+      return Observable.of(_res);
+    });
   }
 
   private _checkPoiTags(_point, type) {

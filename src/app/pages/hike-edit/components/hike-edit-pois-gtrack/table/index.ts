@@ -10,13 +10,14 @@ import { IGTrackPoi } from '../../../../../shared/interfaces';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisGTrackTableComponent {
-  @Input() pois$: IGTrackPoi[];
-  @Input() onRouteCheck: boolean;
-  @Input() openGTrackPoiModal: any;
+  @Input()
+  pois$: IGTrackPoi[];
+  @Input()
+  onRouteCheck: boolean;
+  @Input()
+  openGTrackPoiModal: any;
 
-  constructor(
-    private _store: Store<State>
-  ) {}
+  constructor(private _store: Store<State>) {}
 
   public addPoi($event, poi: IGTrackPoi) {
     $event.stopPropagation();

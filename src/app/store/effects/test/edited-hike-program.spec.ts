@@ -16,10 +16,7 @@ import { IExternalPoi } from '../../../shared/interfaces';
 
 import * as _ from 'lodash';
 
-import {
-  pois as poiFixtures,
-  hikePrograms as hikeProgramFixtures
-} from '../../reducer/test/fixtures';
+import { pois as poiFixtures, hikePrograms as hikeProgramFixtures } from '../../reducer/test/fixtures';
 
 describe('EditedHikeProgramEffects effects', () => {
   let actions$: TestActions;
@@ -38,9 +35,7 @@ describe('EditedHikeProgramEffects effects', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({}),
-        EffectsModule.forRoot([
-          EditedHikeProgramEffects
-        ]),
+        EffectsModule.forRoot([EditedHikeProgramEffects]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot(),
         RouterModule.forRoot([])
@@ -120,9 +115,11 @@ describe('EditedHikeProgramEffects effects', () => {
 
   describe('save$', () => {
     it('should return hikeProgramId observable from SaveHikeProgram success', () => {
-      spyOn(hikeProgramService, 'save').and.returnValue(Observable.of({
-        id: hikePrograms[0].id
-      }));
+      spyOn(hikeProgramService, 'save').and.returnValue(
+        Observable.of({
+          id: hikePrograms[0].id
+        })
+      );
 
       const action = new editedHikeProgramActions.SaveHikeProgram();
       const completion = new editedHikeProgramActions.HikeProgramSaveSuccess();
@@ -139,9 +136,7 @@ describe('EditedHikeProgramEffects effects', () => {
     });
 
     it('should return error observable from SaveHikeProgram failure', () => {
-      spyOn(hikeProgramService, 'save').and.returnValue(
-        Observable.throwError('error')
-      );
+      spyOn(hikeProgramService, 'save').and.returnValue(Observable.throwError('error'));
 
       const action = new editedHikeProgramActions.SaveHikeProgram();
       const completion = new editedHikeProgramActions.HikeProgramSaveFailed('error');

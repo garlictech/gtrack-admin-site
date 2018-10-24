@@ -18,9 +18,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormModule as NativeFormModule } from '../../forms-ngx';
 
 import { LanguageModule } from '../language';
-import { GenericComponentsModule } from '../components';
 
 import { DatePickerComponent } from './date-picker';
+import { TimePickerComponent } from './time-picker';
 import { MultiSelectComponent } from './multi-select';
 import { RadioSelectComponent } from './radio-select';
 import { DropdownSelectComponent } from './dropdown-select';
@@ -35,6 +35,7 @@ import { FileComponent } from './file';
 import { EmojiInputComponent } from './emoji-input';
 import { MarkdownComponent } from './markdown';
 import { RichTextEditorComponent } from './rich-text-editor';
+import { GenericUiModule } from '../features/generic-ui';
 
 @NgModule({
   imports: [
@@ -52,12 +53,13 @@ import { RichTextEditorComponent } from './rich-text-editor';
     LanguageModule,
     NativeFormModule,
     FontAwesomeModule,
-    GenericComponentsModule,
     NgxMdModule,
-    EditorModule
+    EditorModule,
+    GenericUiModule
   ],
   declarations: [
     DatePickerComponent,
+    TimePickerComponent,
     MultiSelectComponent,
     RadioSelectComponent,
     DynamicFormComponent,

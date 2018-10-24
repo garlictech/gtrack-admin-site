@@ -37,7 +37,8 @@ export class LanguageService {
     let actualLanguage: string | null = localStorage.getItem('actualLanguage');
 
     if (!actualLanguage) {
-      const browserLang = this._translate.getBrowserCultureLang().replace(/-/, '_') || 'en_US';
+      const browserCultureLang = this._translate.getBrowserCultureLang() || '';
+      const browserLang = browserCultureLang.replace(/-/, '_') || 'en_US';
       log.data(`Detected browser language: ${browserLang}`);
       actualLanguage =
         this._config.supportedLanguages.indexOf(browserLang) > -1 ? browserLang : this._config.defaultLanguage;

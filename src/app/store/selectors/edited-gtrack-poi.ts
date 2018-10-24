@@ -22,37 +22,33 @@ export class EditedGTrackPoiSelectors {
   constructor() {
     this._featureSelector = createFeatureSelector<IEditedGTrackPoiState>('editedGtrackPoi');
 
-    this.getDescriptions = createSelector(this._featureSelector,
-      (state: IEditedGTrackPoiState) => _get(state, 'data.description')
+    this.getDescriptions = createSelector(this._featureSelector, (state: IEditedGTrackPoiState) =>
+      _get(state, 'data.description')
     );
 
-    this.getDirty = createSelector(this._featureSelector,
-      (state: IEditedGTrackPoiState) => state.dirty
+    this.getDirty = createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => state.dirty);
+
+    this.getBackgroundImages = createSelector(this._featureSelector, (state: IEditedGTrackPoiState) =>
+      _get(state, 'data.backgroundImages')
     );
 
-    this.getBackgroundImages = createSelector(this._featureSelector,
-      (state: IEditedGTrackPoiState) => _get(state, 'data.backgroundImages')
-    );
+    this.getWorking = createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => state.working);
 
-    this.getWorking = createSelector(this._featureSelector,
-      (state: IEditedGTrackPoiState) => state.working
-    );
+    this.getData = createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => state.data);
 
-    this.getData = createSelector(this._featureSelector,
-      (state: IEditedGTrackPoiState) => state.data
-    );
-
-    this.getError = createSelector(this._featureSelector,
-      (state: IEditedGTrackPoiState) => _get(state, 'failed')
-    );
+    this.getError = createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => _get(state, 'failed'));
   }
 
   public getBackgroundOriginalUrls() {
     return createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => {
       if (state.data && state.data.backgroundImages) {
-        return _uniq((<IBackgroundImageData[]>state.data.backgroundImages || []).map((img: IBackgroundImageData) => img.original.url));
+        return _uniq(
+          (<IBackgroundImageData[]>state.data.backgroundImages || []).map(
+            (img: IBackgroundImageData) => img.original.url
+          )
+        );
       } else {
-        return [];
+        return [];
       }
     });
   }

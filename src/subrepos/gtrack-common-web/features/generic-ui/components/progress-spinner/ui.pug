@@ -1,0 +1,4 @@
+div.spinner.fixed(*ngIf="showSpinner$ | async")
+  div
+    fa-icon([icon]="faSpinner", [spin]="true")
+  .text {{spinnerText$ | async | translate}}

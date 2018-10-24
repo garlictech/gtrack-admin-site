@@ -5,8 +5,12 @@ import { IGTrackPoi } from '../../../shared/interfaces';
 describe('EditedHikeProgram actions', () => {
   it('should have action names defined', () => {
     expect(EditedHikeProgramActions.RESET_HIKE_PROGRAM).toEqual('[HikeProgram] Reset');
-    expect(EditedHikeProgramActions.ADD_NEW_TRANSLATED_HIKE_DESCRIPTION).toEqual('[HikeProgram] Add new translated hike description');
-    expect(EditedHikeProgramActions.DELETE_TRANSLATED_HIKE_DESCRIPTION).toEqual('[HikeProgram] Delete translated hike description');
+    expect(EditedHikeProgramActions.ADD_NEW_TRANSLATED_HIKE_DESCRIPTION).toEqual(
+      '[HikeProgram] Add new translated hike description'
+    );
+    expect(EditedHikeProgramActions.DELETE_TRANSLATED_HIKE_DESCRIPTION).toEqual(
+      '[HikeProgram] Delete translated hike description'
+    );
     expect(EditedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS).toEqual('[HikeProgram] Add some details');
     expect(EditedHikeProgramActions.PREPARE_THEN_ADD_STOP).toEqual('[HikeProgram] Prepare then add stop');
     expect(EditedHikeProgramActions.ADD_STOP).toEqual('[HikeProgram] Add stop');
@@ -17,7 +21,9 @@ describe('EditedHikeProgram actions', () => {
     expect(EditedHikeProgramActions.HIKE_PROGRAM_SAVE_SUCCESS).toEqual('[HikeProgram] Hike program saved successfully');
     expect(EditedHikeProgramActions.HIKE_PROGRAM_SAVE_FAILED).toEqual('[HikeProgram] Hike program save failure');
     expect(EditedHikeProgramActions.ADD_HIKE_PROGRAM_BACKGROUND_IMAGE).toEqual('[HikeProgram] Add background image');
-    expect(EditedHikeProgramActions.REMOVE_HIKE_PROGRAM_BACKGROUND_IMAGE).toEqual('[HikeProgram] Remove background image');
+    expect(EditedHikeProgramActions.REMOVE_HIKE_PROGRAM_BACKGROUND_IMAGE).toEqual(
+      '[HikeProgram] Remove background image'
+    );
   });
 
   it('should create ResetHikeProgram action', () => {
@@ -61,7 +67,7 @@ describe('EditedHikeProgram actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.ADD_HIKE_PROGRAM_DETAILS,
-      details: { distance: 10 },
+      details: { distance: 10 },
       setDirty: true
     });
   });
@@ -99,17 +105,19 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create SetStops action', () => {
-    const stops = [{
-      distanceFromOrigo: 0,
-      poiId: 'fakePoiId',
-      lat: 0,
-      lon: 0,
-      segment: {
-        uphill: 0,
-        downhill: 0,
-        distance: 0
+    const stops = [
+      {
+        distanceFromOrigo: 0,
+        poiId: 'fakePoiId',
+        lat: 0,
+        lon: 0,
+        segment: {
+          uphill: 0,
+          downhill: 0,
+          distance: 0
+        }
       }
-    }];
+    ];
     const action = new EditedHikeProgramActions.SetStops(stops);
 
     expect(action).toBeDefined();

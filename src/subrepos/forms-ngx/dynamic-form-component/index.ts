@@ -59,7 +59,11 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  onSubmit() {
+  onSubmit(e?: Event) {
+    if (e) {
+      e.preventDefault();
+    }
+
     if (this.formInstance.form.valid) {
       log.data('Submitting form...');
 

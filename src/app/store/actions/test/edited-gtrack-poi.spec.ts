@@ -1,14 +1,16 @@
 import { IBackgroundImageData, EPoiImageTypes } from '../../../../subrepos/provider-client';
 import * as EditedGTrackPoiActions from '../edited-gtrack-poi';
 
-import {
-  poisStored as poiFixtures
-} from '../../../../subrepos/gtrack-common-ngx/app/hike/store/poi/test/fixtures';
+import { poisStored as poiFixtures } from '../../../../subrepos/gtrack-common-ngx/app/hike/store/poi/test/fixtures';
 
 describe('EditedGTrackPoi actions', () => {
   it('should have action names defined', () => {
-    expect(EditedGTrackPoiActions.ADD_NEW_TRANSLATED_POI_DESCRIPTION).toEqual('[Gtrack Poi Edit] Add new translated poi description');
-    expect(EditedGTrackPoiActions.DELETE_TRANSLATED_POI_DESCRIPTION).toEqual('[Gtrack Poi Edit] Delete translated poi description');
+    expect(EditedGTrackPoiActions.ADD_NEW_TRANSLATED_POI_DESCRIPTION).toEqual(
+      '[Gtrack Poi Edit] Add new translated poi description'
+    );
+    expect(EditedGTrackPoiActions.DELETE_TRANSLATED_POI_DESCRIPTION).toEqual(
+      '[Gtrack Poi Edit] Delete translated poi description'
+    );
     expect(EditedGTrackPoiActions.LOAD_POI).toEqual('[Gtrack Poi Edit] Load poi to the editor space');
     expect(EditedGTrackPoiActions.SAVE_POI).toEqual('[Gtrack Poi Edit] Save poi');
     expect(EditedGTrackPoiActions.POI_SAVE_SUCCESS).toEqual('[Gtrack Poi Edit] Poi saved successfully');

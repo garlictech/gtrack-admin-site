@@ -8,9 +8,7 @@ import { editedGTrackPoiReducer, initialEditedGTrackPoiState } from '../../reduc
 import { editedGTrackPoiActions } from '../../actions';
 import { IBackgroundImageData, ETextualDescriptionType } from '../../../../subrepos/provider-client';
 
-import {
-  bgImages as bgImageFixtures
-} from '../../reducer/test/fixtures';
+import { bgImages as bgImageFixtures } from '../../reducer/test/fixtures';
 
 import * as _ from 'lodash';
 
@@ -29,9 +27,7 @@ describe('Edited GTrackPoi selectors', () => {
           editedGtrackPoi: editedGTrackPoiReducer
         })
       ],
-      providers: [
-        EditedGTrackPoiSelectors
-      ]
+      providers: [EditedGTrackPoiSelectors]
     });
 
     store = TestBed.get(Store);
@@ -62,16 +58,18 @@ describe('Edited GTrackPoi selectors', () => {
         }
       });
 
-      store.dispatch(new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
-        title: 'A new translation'
-      }));
+      store.dispatch(
+        new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
+          title: 'A new translation'
+        })
+      );
 
       expect(result).toEqual({
         en_US: {
           title: 'A new poi',
           type: ETextualDescriptionType.markdown
         },
-        hu_HU: { title: 'A new translation' },
+        hu_HU: { title: 'A new translation' }
       });
     });
   });
@@ -90,9 +88,11 @@ describe('Edited GTrackPoi selectors', () => {
 
       expect(result).toBeFalsy();
 
-      store.dispatch(new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
-        title: 'A new translation'
-      }));
+      store.dispatch(
+        new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
+          title: 'A new translation'
+        })
+      );
       expect(result).toBeTruthy();
     });
   });
@@ -149,20 +149,21 @@ describe('Edited GTrackPoi selectors', () => {
 
       expect(result).toEqual(initialEditedGTrackPoiState.data);
 
-      store.dispatch(new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
-        title: 'A new translation'
-      }));
+      store.dispatch(
+        new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
+          title: 'A new translation'
+        })
+      );
 
-      expect(result).toEqual(_.merge({},
-          initialEditedGTrackPoiState.data,
-          {
-            description: {
-              hu_HU: {
-                title: 'A new translation'
-              }
+      expect(result).toEqual(
+        _.merge({}, initialEditedGTrackPoiState.data, {
+          description: {
+            hu_HU: {
+              title: 'A new translation'
             }
           }
-      ));
+        })
+      );
     });
   });
 

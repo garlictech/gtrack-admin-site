@@ -37,11 +37,7 @@ describe('GeoSearch effects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({}),
-        EffectsModule.forRoot([]),
-        DeepstreamModule.forRoot()
-      ],
+      imports: [StoreModule.forRoot({}), EffectsModule.forRoot([]), DeepstreamModule.forRoot()],
       providers: [
         GeoSearchService,
         GeoSearchEffects,
@@ -89,7 +85,7 @@ describe('GeoSearch effects', () => {
 
       Scheduler.get().flush();
 
-      expect(geoSearchService.searchBox).toHaveBeenCalledWith(        {
+      expect(geoSearchService.searchBox).toHaveBeenCalledWith({
         table: 'test',
         box: {
           type: 'Polygon',
@@ -122,15 +118,13 @@ describe('GeoSearch effects', () => {
 
       Scheduler.get().flush();
 
-      expect(geoSearchService.searchCircle).toHaveBeenCalledWith(
-        {
-          table: 'test',
-          circle: {
-            radius: 500,
-            center: []
-          }
+      expect(geoSearchService.searchCircle).toHaveBeenCalledWith({
+        table: 'test',
+        circle: {
+          radius: 500,
+          center: []
         }
-      );
+      });
     });
   });
 });

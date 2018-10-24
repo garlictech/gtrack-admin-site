@@ -5,7 +5,7 @@ import _orderBy from 'lodash-es/orderBy';
   name: 'orderBy'
 })
 export class OrderByPipe implements PipeTransform {
-  transform(array: any[], orderFields: string[], directions: string[]): string[] {
+  transform(array: any[], orderFields: string[], directions: (boolean | 'asc' | 'desc')[]): string[] {
     return _orderBy(array, orderFields, directions);
   }
 }

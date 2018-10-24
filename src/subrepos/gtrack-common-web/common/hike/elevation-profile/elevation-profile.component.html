@@ -1,1 +1,15 @@
 <div #elevationProfile></div>
+
+<ng-container *ngIf="activePoi">
+  <p-dialog [header]="(activePoi.description | localizeDescription).title || 'Unknown'" [(visible)]="activePoi" [width]="400">
+      <gtrack-description [description]="activePoi.description"></gtrack-description>
+
+      <div>
+          <gtrack-icon [poi]="activePoi"></gtrack-icon>
+      </div>
+      <strong>{{ activePoi.lat }}, {{ activePoi.lon }}</strong>
+      <p>Distance from start: {{ activeStop.distanceFromOrigo | distance }}</p>
+      <p>Elevation: {{ activePoi.elevation | distance }}</p>
+      <p-galleria *ngIf="activePoi.backgroundImages" [images]="activePoi.backgroundImages | poiImagesToGallery" panelWidth="340" panelHeight="313" [showCaption]="false"></p-galleria>
+  </p-dialog>
+</ng-container>

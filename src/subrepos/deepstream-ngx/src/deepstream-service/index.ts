@@ -1,6 +1,22 @@
-import { finalize, switchMap, take, filter, refCount, multicast, catchError } from 'rxjs/operators';
+import {
+  finalize,
+  switchMap,
+  take,
+  filter,
+  refCount,
+  multicast,
+  catchError,
+  retryWhen,
+  timeout,
+  delay,
+  tap,
+  concat,
+  scan
+} from 'rxjs/operators';
+
 import { Injectable, Inject } from '@angular/core';
-import { Observable, Subject, Observer } from 'rxjs';
+import { Observable, Subject, Observer, throwError } from 'rxjs';
+
 import { Store, select } from '@ngrx/store';
 import { Client as DeepstreamClient, Record, Query, Rpc, List } from '@garlictech/deepstream-rxjs';
 import { EAuthRoles } from '../../../provider-client';
@@ -100,7 +116,7 @@ export class DeepstreamService {
     return new List<T>(this.dsClient, id);
   }
 
-  callRpc<T = any>(name: string, data: any): Observable<T> {
+  callRpc<T = any>(name: string, data: any, callTimeout = 3000, delayTime = 1000, retry = 3): Observable<T> {
     const rpc = new Rpc(this.dsClient);
     const userSelector = this._store.pipe(
       select(this._selectors.userData),
@@ -116,7 +132,22 @@ export class DeepstreamService {
         };
 
         return rpc.make(name, sentData);
-      })
+      }),
+      timeout(callTimeout),
+      retryWhen(errors =>
+        errors.pipe(
+          tap(err => log.error(err)),
+          tap(() => log.data('Retry')),
+          scan((count, err) => {
+            if (count >= retry) {
+              throw err;
+            }
+
+            return count + 1;
+          }, 1),
+          delay(delayTime)
+        )
+      )
     );
   }
 

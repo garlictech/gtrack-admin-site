@@ -5,7 +5,10 @@ import { Store, MemoizedSelector, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { hikeEditImageActions } from '../../../../store/actions';
 import {
-  HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors, HikeEditMapSelectors
+  HikeEditPoiSelectors,
+  HikeEditRoutePlannerSelectors,
+  HikeEditImageSelectors,
+  HikeEditMapSelectors
 } from '../../../../store/selectors';
 import { RoutePlannerService, PoiEditorService, AdminMap, AdminMapService } from '../../../../shared/services';
 import { IBackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
@@ -18,11 +21,16 @@ import _map from 'lodash-es/map';
   templateUrl: './ui.html'
 })
 export class HikeEditPhotosComponent implements OnInit, OnDestroy {
-  @Input() backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
-  @Input() backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
-  @Input() clickActions: any;
-  @Input() showMarkerColumn: boolean;
-  @Input() distanceFrom: number[] = null;
+  @Input()
+  backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
+  @Input()
+  backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
+  @Input()
+  clickActions: any;
+  @Input()
+  showMarkerColumn: boolean;
+  @Input()
+  distanceFrom: number[] = null;
   public gTrackPoiPhotos$: Observable<IBackgroundImageData[]>;
   public googlePhotos$: Observable<IBackgroundImageData[]>;
   public wikipediaPhotos$: Observable<IBackgroundImageData[]>;
@@ -46,10 +54,10 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     private _hikeEditImageSelectors: HikeEditImageSelectors,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _poiEditorService: PoiEditorService,
-    private _adminMapService: AdminMapService,
+    private _adminMapService: AdminMapService
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {
     this._store
       .pipe(
         select(this._hikeEditMapSelectors.getMapId),
@@ -62,62 +70,51 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
 
     // Photo sources getAllPoiPhotos
     this.gTrackPoiPhotos$ = combineLatest(
-      this._store
-        .pipe(
-          select(this._poiSelectors.getAllPoiPhotos()),
-          takeUntil(this._destroy$)
-        ),
-      this._store
-        .pipe(
-          select(this._hikeEditRoutePlannerSelectors.getPath),
-          takeUntil(this._destroy$)
-        )
+      this._store.pipe(
+        select(this._poiSelectors.getAllPoiPhotos()),
+        takeUntil(this._destroy$)
+      ),
+      this._store.pipe(
+        select(this._hikeEditRoutePlannerSelectors.getPath),
+        takeUntil(this._destroy$)
       )
-      .pipe(
-        debounceTime(250),
-        switchMap(([photos, path]: [IBackgroundImageData[], any]) => {
-          return of(this._poiEditorService.organizePoiPhotos(photos, path));
-        })
-      );
+    ).pipe(
+      debounceTime(250),
+      switchMap(([photos, path]: [IBackgroundImageData[], any]) => {
+        return of(this._poiEditorService.organizePoiPhotos(photos, path));
+      })
+    );
 
-    this.googlePhotos$ = this._store
-      .pipe(
-        select(this._hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.google)),
-        takeUntil(this._destroy$)
-      );
-    this.wikipediaPhotos$ = this._store
-      .pipe(
-        select(this._hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.wikipedia)),
-        takeUntil(this._destroy$)
-      );
-    this.mapillaryImages$ = this._store
-      .pipe(
-        select(this._hikeEditImageSelectors.getAllMapillaryImages),
-        takeUntil(this._destroy$)
-      );
-    this.flickrImages$ = this._store
-      .pipe(
-        select(this._hikeEditImageSelectors.getAllFlickrImages),
-        takeUntil(this._destroy$)
-      );
+    this.googlePhotos$ = this._store.pipe(
+      select(this._hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.google)),
+      takeUntil(this._destroy$)
+    );
+    this.wikipediaPhotos$ = this._store.pipe(
+      select(this._hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.wikipedia)),
+      takeUntil(this._destroy$)
+    );
+    this.mapillaryImages$ = this._store.pipe(
+      select(this._hikeEditImageSelectors.getAllMapillaryImages),
+      takeUntil(this._destroy$)
+    );
+    this.flickrImages$ = this._store.pipe(
+      select(this._hikeEditImageSelectors.getAllFlickrImages),
+      takeUntil(this._destroy$)
+    );
 
     // Store path
-    this.bgImages$ = this._store
-      .pipe(
-        select(this.backgroundImageSelector),
-        takeUntil(this._destroy$)
-      );
-    this.backgroundOriginalUrls$ = this._store
-      .pipe(
-        select(this.backgroundImageUrlSelector),
-        takeUntil(this._destroy$)
-      );
+    this.bgImages$ = this._store.pipe(
+      select(this.backgroundImageSelector),
+      takeUntil(this._destroy$)
+    );
+    this.backgroundOriginalUrls$ = this._store.pipe(
+      select(this.backgroundImageUrlSelector),
+      takeUntil(this._destroy$)
+    );
 
-    this.bgImages$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe(images => {
-        this.slideShowUrls =  _map(images, 'original.url');
-      });
+    this.bgImages$.pipe(takeUntil(this._destroy$)).subscribe(images => {
+      this.slideShowUrls = _map(images, 'original.url');
+    });
 
     // Route info from the store (for disabling GET buttons)
     this.routePath$ = this._store.pipe(select(this._hikeEditRoutePlannerSelectors.getPath));
@@ -134,7 +131,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
         select(this._hikeEditImageSelectors.getImageMarkerUrls),
         takeUntil(this._destroy$)
       )
-      .subscribe(images => {
+      .subscribe(images => {
         this._poiEditorService.refreshPoiMarkers(this._map);
       });
   }
@@ -148,11 +145,9 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     const _bounds = this._routePlannerService.getSearchBounds();
 
     if (_bounds) {
-      this.routePath$
-        .pipe(take(1))
-        .subscribe(path => {
-          this._store.dispatch(new hikeEditImageActions.GetMapillaryImages(_bounds, path));
-        });
+      this.routePath$.pipe(take(1)).subscribe(path => {
+        this._store.dispatch(new hikeEditImageActions.GetMapillaryImages(_bounds, path));
+      });
     }
   }
 
@@ -160,11 +155,9 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     const _bounds = this._routePlannerService.getSearchBounds();
 
     if (_bounds) {
-      this.routePath$
-        .pipe(take(1))
-        .subscribe(path => {
-          this._store.dispatch(new hikeEditImageActions.GetFlickrImages(_bounds, path));
-        });
+      this.routePath$.pipe(take(1)).subscribe(path => {
+        this._store.dispatch(new hikeEditImageActions.GetFlickrImages(_bounds, path));
+      });
     }
   }
 }

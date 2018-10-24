@@ -5,7 +5,7 @@ import { Observable, Subject, combineLatest } from 'rxjs';
 import { takeUntil, filter, switchMap, take, skipWhile, delay } from 'rxjs/operators';
 import { Store, MemoizedSelector, createSelector, select } from '@ngrx/store';
 import { State, IHikeEditRoutePlannerState } from '../../store';
-import {
+import {
   commonRouteActions,
   commonHikeActions,
   hikeEditMapActions,
@@ -15,17 +15,8 @@ import {
 } from '../../store/actions';
 import { hikeEditRoutePlannerActions } from '../../store/actions';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from '../../store/selectors';
-import {
-  WaypointMarkerService,
-  RoutePlannerService,
-  AdminMapService
-} from '../../shared/services/admin-map';
-import {
-  IHikeProgramStored,
-  IRoute,
-  EObjectState,
-  IBackgroundImageData
-} from 'subrepos/provider-client';
+import { WaypointMarkerService, RoutePlannerService, AdminMapService } from '../../shared/services/admin-map';
+import { IHikeProgramStored, IRoute, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
 import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
 import { HikeProgramService } from '../../shared/services';
 import { MessageService } from 'primeng/api';
@@ -71,17 +62,15 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.working$ = this._store
-      .pipe(
-        select(this._editedHikeProgramSelectors.getWorking),
-        takeUntil(this._destroy$)
-      );
-    this.hikeProgramData$ = this._store
-      .pipe(
-        select(this._editedHikeProgramSelectors.getData),
-        delay(0),
-        takeUntil(this._destroy$)
-      );
+    this.working$ = this._store.pipe(
+      select(this._editedHikeProgramSelectors.getWorking),
+      takeUntil(this._destroy$)
+    );
+    this.hikeProgramData$ = this._store.pipe(
+      select(this._editedHikeProgramSelectors.getData),
+      delay(0),
+      takeUntil(this._destroy$)
+    );
 
     this._waypointMarkerService.reset();
 
@@ -90,65 +79,61 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
     this._store.dispatch(new editedHikeProgramActions.ResetHikeProgram());
 
-    this._activatedRoute.params
-      .pipe(takeUntil(this._destroy$))
-      .subscribe(params => {
-        // Edit existing hike
-        if (params && params.id) {
-          this.paramsId = params.id;
+    this._activatedRoute.params.pipe(takeUntil(this._destroy$)).subscribe(params => {
+      // Edit existing hike
+      if (params && params.id) {
+        this.paramsId = params.id;
 
-          // Set page title
-          this._title.setTitle('Edit hike');
+        // Set page title
+        this._title.setTitle('Edit hike');
 
-          // Set hike id and load hikeProgram data
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this.paramsId }, false));
-          this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
+        // Set hike id and load hikeProgram data
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this.paramsId }, false));
+        this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
 
-          // Disable planning
-          this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(false));
-          // Create new hike
-        } else {
-          // Set page title
-          this._title.setTitle('New hike');
+        // Disable planning
+        this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(false));
+        // Create new hike
+      } else {
+        // Set page title
+        this._title.setTitle('New hike');
 
-          // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
-          this._hikeId = uuid();
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this._hikeId }, false));
-          // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
+        // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
+        this._hikeId = uuid();
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this._hikeId }, false));
+        // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
 
-          // Generate initial route id and load the empty route (for save toaster handling)
-          const _routeId = uuid();
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ routeId: _routeId }, false));
-          // Update the routes's dirty flag
-          this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
+        // Generate initial route id and load the empty route (for save toaster handling)
+        const _routeId = uuid();
+        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ routeId: _routeId }, false));
+        // Update the routes's dirty flag
+        this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
 
-          // Create initial language block
-          this._store.dispatch(
-            new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('en_US', {
-              title: `Test hike #${new Date().getTime()}`,
-              fullDescription: 'desc',
-              summary: 'summary'
-            })
-          );
+        // Create initial language block
+        this._store.dispatch(
+          new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('en_US', {
+            title: `Test hike #${new Date().getTime()}`,
+            fullDescription: 'desc',
+            summary: 'summary'
+          })
+        );
 
-          // Draw an independent path to the map
-          if (typeof this._hikeProgramService.gpxRoute !== 'undefined') {
-            this._parseGpxRoute();
-          }
+        // Draw an independent path to the map
+        if (typeof this._hikeProgramService.gpxRoute !== 'undefined') {
+          this._parseGpxRoute();
         }
-      });
+      }
+    });
 
-    this.allowSave$ = this._store
-      .pipe(
-        select(this._editedHikeProgramSelectors.getDirty),
-        takeUntil(this._destroy$)
-      );
+    this.allowSave$ = this._store.pipe(
+      select(this._editedHikeProgramSelectors.getDirty),
+      takeUntil(this._destroy$)
+    );
 
-    this.isPlanning$ = this._store
-      .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
-        takeUntil(this._destroy$)
-      );
+    this.isPlanning$ = this._store.pipe(
+      select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+      takeUntil(this._destroy$)
+    );
 
     // Handling save success
     this._store
@@ -156,14 +141,18 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         select(this._editedHikeProgramSelectors.getWorking),
         takeUntil(this._destroy$),
         filter(working => working !== null),
-        switchMap(() => this._store.pipe(
-          select(this._editedHikeProgramSelectors.getWorking),
-          takeUntil(this._destroy$))
+        switchMap(() =>
+          this._store.pipe(
+            select(this._editedHikeProgramSelectors.getWorking),
+            takeUntil(this._destroy$)
+          )
         ),
         filter(working => working === null),
-        switchMap(() => this._store.pipe(
-          select(this._editedHikeProgramSelectors.getError),
-          take(1))
+        switchMap(() =>
+          this._store.pipe(
+            select(this._editedHikeProgramSelectors.getError),
+            take(1)
+          )
         ),
         takeUntil(this._destroy$)
       )
@@ -199,11 +188,10 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
 
-    this.hikeProgramState$ = this._store.
-      pipe(
-        select(this._editedHikeProgramSelectors.getState),
-        takeUntil(this._destroy$)
-      );
+    this.hikeProgramState$ = this._store.pipe(
+      select(this._editedHikeProgramSelectors.getState),
+      takeUntil(this._destroy$)
+    );
 
     // Handling hike context changes
     this._store
@@ -211,10 +199,12 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         select(this._editedHikeProgramSelectors.getHikeId),
         takeUntil(this._destroy$),
         filter(hikeId => hikeId !== ''),
-        switchMap((hikeId: string) => this._store.pipe(
-          select(this._hikeSelectors.getHikeContext(hikeId)),
-          takeUntil(this._destroy$)
-        )),
+        switchMap((hikeId: string) =>
+          this._store.pipe(
+            select(this._hikeSelectors.getHikeContext(hikeId)),
+            takeUntil(this._destroy$)
+          )
+        ),
         filter(hikeContext => !!hikeContext)
       )
       .subscribe((hikeContext: IHikeContextState) => {
@@ -241,7 +231,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       add: image => this._store.dispatch(new editedHikeProgramActions.AddHikeProgramBackgroundImage(image)),
       remove: url => this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(url)),
       addMarker: url => this._store.dispatch(new hikeEditImageActions.AddImageMarker(url)),
-      removeMarker: url => this._store.dispatch(new hikeEditImageActions.RemoveImageMarker(url)),
+      removeMarker: url => this._store.dispatch(new hikeEditImageActions.RemoveImageMarker(url))
     };
   }
 
@@ -268,8 +258,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         select(this._editedHikeProgramSelectors.getRouteId),
         take(1)
       )
-    )
-    .subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
+    ).subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
       if (routePlannerState && routeId) {
         const _route: IRoute = {
           id: routeId,
@@ -320,10 +309,12 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         .pipe(
           skipWhile((hikeState: EObjectState) => hikeState !== EObjectState.published),
           take(1),
-          switchMap(() => this._store.pipe(
-            select(selector),
-            take(1)
-          ))
+          switchMap(() =>
+            this._store.pipe(
+              select(selector),
+              take(1)
+            )
+          )
         )
         .subscribe(data => {
           const stops = data.stops;
@@ -347,10 +338,10 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public handleHikeProgramFeature() {
-    this.hikeProgramData$
-      .pipe(take(1))
-      .subscribe((hikeProgramData: IHikeProgramStored) => {
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true));
-      });
+    this.hikeProgramData$.pipe(take(1)).subscribe((hikeProgramData: IHikeProgramStored) => {
+      this._store.dispatch(
+        new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true)
+      );
+    });
   }
 }

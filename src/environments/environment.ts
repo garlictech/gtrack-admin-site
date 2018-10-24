@@ -28,7 +28,7 @@ export class Environment implements IEnvironment {
     // dd9a8ad609e489e39d1ba521525e1dd5 is for petrot81 user!!!
     apiKey: 'dd9a8ad609e489e39d1ba521525e1dd5',
     secret: '287dc1495420c9a3'
-  }
+  };
 
   googlePhotoLimit = 2;
 

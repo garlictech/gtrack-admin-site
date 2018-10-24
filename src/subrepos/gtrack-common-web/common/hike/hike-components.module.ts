@@ -6,8 +6,10 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { GalleriaModule } from 'primeng/galleria';
 import { TranslateModule } from '@ngx-translate/core';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { HikeComponentsModule as BaseModule } from '../../../gtrack-common-ngx/app/hike/components';
+import { AstronomyModule } from 'subrepos/gtrack-common-ngx';
 
 import { CheckpointsComponent } from './checkpoints';
 import { DownloadGpxButtonComponent } from './download-gpx-button';
@@ -66,7 +68,9 @@ const COMPONENTS = [
     TranslateModule,
     ReactiveFormsModule,
     WebLocalizeModule,
-    FormModule
+    FormModule,
+    AstronomyModule,
+    AngularSvgIconModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS]

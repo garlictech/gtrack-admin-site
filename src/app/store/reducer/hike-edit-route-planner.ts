@@ -6,16 +6,18 @@ import _cloneDeep from 'lodash-es/cloneDeep';
 
 export const initialRouteDataState: GeoJSON.FeatureCollection<any> = {
   type: 'FeatureCollection',
-  features: [{
-    type: 'Feature',
-    geometry: {
-      type: 'LineString',
-      coordinates: []
-    },
-    properties: {
-      name: 'Tour track'
+  features: [
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: []
+      },
+      properties: {
+        name: 'Tour track'
+      }
     }
-  }]
+  ]
 };
 
 export const initialRouteInfoDataState: IHikeEditRoutePlannerState = {
@@ -35,7 +37,6 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
   const newState = _cloneDeep(state);
 
   switch (action.type) {
-
     case hikeEditRoutePlannerActions.RESET_ROUTE_PLANNING_STATE:
       return initialRouteInfoDataState;
 
@@ -60,10 +61,7 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
     case hikeEditRoutePlannerActions.PUSH_SEGMENT:
       return {
         ...state,
-        segments: [
-          ...state.segments,
-          action.segment
-        ]
+        segments: [...state.segments, action.segment]
       };
 
     case hikeEditRoutePlannerActions.UPDATE_SEGMENT:
@@ -94,6 +92,5 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
 
     default:
       return state;
-
   }
 };

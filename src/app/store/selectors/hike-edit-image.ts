@@ -19,18 +19,21 @@ export class HikeEditImageSelectors {
     //
 
     const mapillaryImageSelector = createSelector(
-      this._featureSelector, (state: IHikeEditImageState) => state.mapillaryImages
+      this._featureSelector,
+      (state: IHikeEditImageState) => state.mapillaryImages
     );
     this.getAllMapillaryImages = mapillaryImageAdapter.getSelectors(mapillaryImageSelector).selectAll;
 
     const flickrImageSelector = createSelector(
-      this._featureSelector, (state: IHikeEditImageState) => state.flickrImages
+      this._featureSelector,
+      (state: IHikeEditImageState) => state.flickrImages
     );
     this.getAllFlickrImages = flickrImageAdapter.getSelectors(flickrImageSelector).selectAll;
 
     // Images markers
 
-    this.getImageMarkerUrls = createSelector(this._featureSelector,
+    this.getImageMarkerUrls = createSelector(
+      this._featureSelector,
       (state: IHikeEditImageState) => state.imageMarkerUrls.images
     );
   }

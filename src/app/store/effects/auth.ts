@@ -8,41 +8,35 @@ import { routingActions } from '../actions';
 
 @Injectable()
 export class AuthEffects {
-  constructor(
-    private _actions$: Actions,
-    private _router: Router
-  ) {}
+  constructor(private _actions$: Actions, private _router: Router) {}
 
   // Auth guard route forbidden
   @Effect()
-  routeForbidden$: Observable<any> = this._actions$
-    .pipe(
-      ofType(AuthActions.ROUTE_FORBIDDEN),
-      switchMap(data => {
-        return of(new routingActions.Go(['/login']));
-      })
-    );
+  routeForbidden$: Observable<any> = this._actions$.pipe(
+    ofType(AuthActions.ROUTE_FORBIDDEN),
+    switchMap(data => {
+      return of(new routingActions.Go(['/login']));
+    })
+  );
 
   // Login
   @Effect()
-  loginSuccess$: Observable<any> = this._actions$
-    .pipe(
-      ofType(AuthActions.LOGIN_SUCCESS),
-      filter(() => {
-        return this._router.url === '/login';
-      }),
-      switchMap(() => {
-        return of(new routingActions.Go(['/']));
-      })
-    );
+  loginSuccess$: Observable<any> = this._actions$.pipe(
+    ofType(AuthActions.LOGIN_SUCCESS),
+    filter(() => {
+      return this._router.url === '/login';
+    }),
+    switchMap(() => {
+      return of(new routingActions.Go(['/']));
+    })
+  );
 
   // Logout
   @Effect()
-  logoutSuccess$: Observable<any> = this._actions$
-    .pipe(
-      ofType(AuthActions.LOGOUT_SUCCESS),
-      switchMap(() => {
-        return of(new routingActions.Go(['/login']));
-      })
-    );
+  logoutSuccess$: Observable<any> = this._actions$.pipe(
+    ofType(AuthActions.LOGOUT_SUCCESS),
+    switchMap(() => {
+      return of(new routingActions.Go(['/login']));
+    })
+  );
 }

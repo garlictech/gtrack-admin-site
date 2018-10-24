@@ -2,10 +2,7 @@ import { EAuthRoles } from './roles';
 
 export interface ICommonProfileSettings {
   messageSound: boolean;
-  startTime?: {
-    hour?: number,
-    minute?: number
-  };
+  startTime?: Date;
   speed?: number;
 }
 
