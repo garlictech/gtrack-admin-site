@@ -229,11 +229,14 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     // Attributes for Photos component
     this.backgroundImageSelector = this._editedHikeProgramSelectors.getBackgroundImages;
     this.backgroundImageUrlSelector = this._editedHikeProgramSelectors.getBackgroundOriginalUrls();
+
     this.clickActions = {
       add: image => this._store.dispatch(new editedHikeProgramActions.AddHikeProgramBackgroundImage(image)),
       remove: url => this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(url)),
-      addMarker: url => this._store.dispatch(new hikeEditImageActions.AddImageMarker(url)),
-      removeMarker: url => this._store.dispatch(new hikeEditImageActions.RemoveImageMarker(url))
+      addMarker: image => this._store.dispatch(new hikeEditImageActions.AddImageMarker(image)),
+      addMarkers: images => this._store.dispatch(new hikeEditImageActions.AddImageMarkers(images)),
+      removeMarker: image => this._store.dispatch(new hikeEditImageActions.RemoveImageMarker(image)),
+      removeMarkers: images => this._store.dispatch(new hikeEditImageActions.RemoveImageMarkers(images))
     };
   }
 

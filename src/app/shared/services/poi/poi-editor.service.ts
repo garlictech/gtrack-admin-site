@@ -710,7 +710,7 @@ export class PoiEditorService {
 
     this._store
       .pipe(
-        select(this._hikeEditImageSelectors.getImageMarkerUrls),
+        select(this._hikeEditImageSelectors.getImageMarkerImages),
         take(1)
       )
       .subscribe((images: IBackgroundImageData[]) => {

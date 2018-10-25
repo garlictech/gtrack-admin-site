@@ -21,7 +21,7 @@ describe('HikeEditImage reducers', () => {
     initialState = {
       mapillaryImages: mapillaryImageInitialState,
       flickrImages: mapillaryImageInitialState,
-      imageMarkerUrls: initialImageMarkerState,
+      imageMarkerImages: initialImageMarkerState,
       contexts: imageListInitialContextState
     };
 
@@ -44,7 +44,7 @@ describe('HikeEditImage reducers', () => {
       const state = hikeEditImageReducer(initialState, action);
 
       expect(state.mapillaryImages).toEqual(mapillaryImageInitialState);
-      expect(state.imageMarkerUrls).toEqual(initialImageMarkerState);
+      expect(state.imageMarkerImages).toEqual(initialImageMarkerState);
       expect(state.contexts).toEqual(imageListInitialContextState);
     });
   });
@@ -72,7 +72,7 @@ describe('HikeEditImage reducers', () => {
       const action = new hikeEditImageActions.AddImageMarker(imagesStored[0]);
       const state = hikeEditImageReducer(initialState, action);
 
-      expect(state.imageMarkerUrls.images).toEqual([imagesStored[0]]);
+      expect(state.imageMarkerImages.images).toEqual([imagesStored[0]]);
     });
   });
 
@@ -81,14 +81,14 @@ describe('HikeEditImage reducers', () => {
       const action = new hikeEditImageActions.RemoveImageMarker(imagesStored[0]);
       const state = hikeEditImageReducer(
         _.merge({}, initialState, {
-          imageMarkerUrls: {
+          imageMarkerImages: {
             images: [imagesStored[0]]
           }
         }),
         action
       );
 
-      expect(state.imageMarkerUrls.images).toEqual([]);
+      expect(state.imageMarkerImages.images).toEqual([]);
     });
   });
 
