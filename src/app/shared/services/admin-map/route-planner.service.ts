@@ -16,6 +16,7 @@ import turfBuffer from '@turf/buffer';
 import { lineString as turfLineString } from '@turf/helpers';
 import turfLength from '@turf/length';
 import { geoBounds as d3GeoBounds } from 'd3-geo';
+import { BIG_BUFFER_SIZE } from 'app/config';
 
 @Injectable()
 export class RoutePlannerService {
@@ -187,7 +188,7 @@ export class RoutePlannerService {
       )
       .subscribe(path => {
         // declare as 'any' for avoid d3.geoBounds error
-        const _buffer: any = turfBuffer(path, 1000, { units: 'meters' });
+        const _buffer: any = turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
 
         if (typeof _buffer !== 'undefined') {
           const _geoBounds = d3GeoBounds(rewind(_buffer, true));

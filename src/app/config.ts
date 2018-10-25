@@ -6,3 +6,6 @@ export const config: IConfig = {
     supportedLanguages: ['en_US']
   }
 };
+
+export const SMALL_BUFFER_SIZE = 50;
+export const BIG_BUFFER_SIZE = 1000;

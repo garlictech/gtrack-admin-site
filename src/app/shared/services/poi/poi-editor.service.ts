@@ -48,6 +48,7 @@ import _intersection from 'lodash-es/intersection';
 import turfBuffer from '@turf/buffer';
 import { point as turfPoint } from '@turf/helpers';
 import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
+import { SMALL_BUFFER_SIZE, BIG_BUFFER_SIZE } from 'app/config';
 
 declare const OverlappingMarkerSpiderfier;
 
@@ -196,8 +197,8 @@ export class PoiEditorService {
     const _pois: any[] = [];
 
     if (pois && pois.length > 0 && path) {
-      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 50, { units: 'meters' });
-      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 1000, { units: 'meters' });
+      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, SMALL_BUFFER_SIZE, { units: 'meters' });
+      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
 
       for (const p of _cloneDeep(pois)) {
         const _point = turfPoint([p.lon, p.lat]);
@@ -227,7 +228,7 @@ export class PoiEditorService {
     const _photos: any[] = [];
 
     if (photos && photos.length > 0 && path) {
-      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 1000, { units: 'meters' });
+      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
 
       for (const _photo of _cloneDeep(photos)) {
         const _point = turfPoint([_photo.lon, _photo.lat]);
