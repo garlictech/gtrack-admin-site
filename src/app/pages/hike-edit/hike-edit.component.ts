@@ -17,10 +17,11 @@ import { hikeEditRoutePlannerActions } from '../../store/actions';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from '../../store/selectors';
 import { WaypointMarkerService, RoutePlannerService, AdminMapService } from '../../shared/services/admin-map';
 import { IHikeProgramStored, IRoute, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
-import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
+import { HikeSelectors, IHikeContextState, RouteSelectors } from 'subrepos/gtrack-common-ngx';
 import { HikeProgramService } from '../../shared/services';
 import { MessageService } from 'primeng/api';
 
+import * as L from 'leaflet';
 import * as uuid from 'uuid/v1';
 import _pick from 'lodash-es/pick';
 
@@ -56,6 +57,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
+    private _routeSelectors: RouteSelectors,
     private _messageService: MessageService,
     private _router: Router,
     private _title: Title
@@ -343,5 +345,35 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true)
       );
     });
+  }
+
+  public retrievePlan() {
+    this._store
+      .pipe(
+        select(this._editedHikeProgramSelectors.getRouteId),
+        switchMap((routeId: string) =>
+          this._store.pipe(
+            select(this._routeSelectors.getRoute(routeId)),
+            take(1)
+          )
+        ),
+        take(1)
+      )
+      .subscribe((storedRoute: any) => {
+        this._waypointMarkerService.reset();
+
+        const _coords: L.LatLng[] = [];
+
+        for (const feature of storedRoute.route.features) {
+          if (feature.geometry.type === 'Point') {
+            _coords.push(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
+          }
+        }
+
+        this._waypointMarkerService.addWaypoints(_coords);
+
+        // Enable planning
+        this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(true));
+      });
   }
 }

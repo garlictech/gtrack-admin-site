@@ -27,6 +27,13 @@
       </div>
       <div class="f-right">
         <p-button
+          label="Retrieve plan"
+          styleClass="ui-button-primary mr-20"
+          *ngIf="!(isPlanning$ | async)"
+          (onClick)="retrievePlan()"
+        ></p-button>
+
+        <p-button
           label="Preview"
           styleClass="ui-button-warning mr-20"
           (onClick)="openPreview()"
@@ -34,7 +41,7 @@
 
         <p-button
           label="Publish"
-          styleClass="ui-button-success"
+          styleClass="ui-button-success mr-20"
           (onClick)="updateHikeState(EObjectState.published)"
           title="Publish hike"
           *ngIf="paramsId && hikeProgramState === EObjectState.draft"
@@ -42,7 +49,7 @@
 
         <p-button
           label="Draft"
-          styleClass="ui-button-secondary"
+          styleClass="ui-button-secondary mr-20"
           (onClick)="updateHikeState(EObjectState.draft)"
           title="Move to draft"
           *ngIf="paramsId && hikeProgramState === EObjectState.archived"
@@ -50,7 +57,7 @@
 
         <p-button
           label="Archive"
-          styleClass="ui-button-danger"
+          styleClass="ui-button-danger mr-20"
           (onClick)="updateHikeState(EObjectState.archived)"
           title="Archive hike"
           *ngIf="paramsId && hikeProgramState === EObjectState.published"
@@ -58,7 +65,7 @@
 
         <p-button
           label="Save hike"
-          styleClass="ui-button-success ml-5"
+          styleClass="ui-button-success"
           (onClick)="saveHike()"
           [disabled]="!(allowSave$ | async)"
         ></p-button>
