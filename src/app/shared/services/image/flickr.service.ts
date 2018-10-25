@@ -33,8 +33,6 @@ export class FlickrService {
     return getter(params).then(result => {
       params.results = params.results.concat(result.data);
 
-      console.log('RESULT', result);
-
       if (!result.nextParams) {
         return params.results;
       } else {
@@ -45,7 +43,6 @@ export class FlickrService {
   }
 
   private _getOnePage = params => {
-    console.log('bounds', params.bounds);
     // tslint:disable:max-line-length
     const request = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
       environment.flickr.apiKey
@@ -60,8 +57,6 @@ export class FlickrService {
       .get(request)
       .toPromise()
       .then((data: any) => {
-        console.log('FLICKR resp', data);
-
         const _images: IBackgroundImageDataStored[] = [];
         const _photos = _get(data, 'photos.photo', null);
 

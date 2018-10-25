@@ -134,7 +134,6 @@ export class GooglePoiService {
               .toPromise()
               .then((data: any) => {
                 if (data.status !== google.maps.places.PlacesServiceStatus.OK) {
-                  console.log('ERROR', status);
                   return;
                 }
 
