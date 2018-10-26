@@ -61,22 +61,13 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .pipe(
         select(this._hikeEditMapSelectors.getMapId),
         filter(id => id !== ''),
-        takeUntil(this._destroy$),
         switchMap((mapId: string) => {
           this._map = this._adminMapService.getMapById(mapId);
-          return this._store.pipe(
-            select(this._editedHikeProgramSelectors.getRouteId),
-            takeUntil(this._destroy$)
-          );
+          return this._store.pipe(select(this._editedHikeProgramSelectors.getRouteId));
         }),
-        takeUntil(this._destroy$),
-        switchMap((routeId: string) => {
-          return this._store.pipe(
-            select(this._routeSelectors.getRouteContext(routeId)),
-            takeUntil(this._destroy$)
-          );
-        }),
-        filter(routeContext => !!routeContext)
+        switchMap((routeId: string) => this._store.pipe(select(this._routeSelectors.getRouteContext(routeId)))),
+        filter(routeContext => !!routeContext),
+        takeUntil(this._destroy$)
       )
       .subscribe((routeContext: IRouteContextState) => {
         // Route saved
