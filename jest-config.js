@@ -35,10 +35,10 @@ module.exports = {
     "coverageDirectory": "<rootDir>/artifacts/reports/coverage",
     "coverageThreshold": {
         "global": {
-            "statements": 73.74,
-            "branches": 58.39,
-            "functions": 33.89,
-            "lines": 71.14
+            "statements": 100,
+            "branches": 100,
+            "functions": 100,
+            "lines": 100
         }
     },
     "coverageReporters": ["json", "lcov", "text", "html"],
