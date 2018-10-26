@@ -76,9 +76,34 @@ describe('HikeEditImage reducers', () => {
     });
   });
 
+  describe('AddImageMarkers action', () => {
+    it('should add image markers', () => {
+      const action = new hikeEditImageActions.AddImageMarkers([imagesStored[0]]);
+      const state = hikeEditImageReducer(initialState, action);
+
+      expect(state.imageMarkerImages.images).toEqual([imagesStored[0]]);
+    });
+  });
+
   describe('RemoveImageMarker action', () => {
     it('should remove image marker', () => {
       const action = new hikeEditImageActions.RemoveImageMarker(imagesStored[0]);
+      const state = hikeEditImageReducer(
+        _.merge({}, initialState, {
+          imageMarkerImages: {
+            images: [imagesStored[0]]
+          }
+        }),
+        action
+      );
+
+      expect(state.imageMarkerImages.images).toEqual([]);
+    });
+  });
+
+  describe('RemoveImageMarkers action', () => {
+    it('should remove image marker', () => {
+      const action = new hikeEditImageActions.RemoveImageMarkers([imagesStored[0]]);
       const state = hikeEditImageReducer(
         _.merge({}, initialState, {
           imageMarkerImages: {
