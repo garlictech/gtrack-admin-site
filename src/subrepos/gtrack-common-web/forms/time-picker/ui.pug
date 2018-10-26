@@ -1,9 +1,8 @@
 p-calendar(
-  [timeOnly]="true"
+  timeOnly="true"
   showIcon='true',
   [(ngModel)]="value",
+  (ngModelChange)="doChange($event)",
   [defaultDate]="defaultDate",
-  [minDate]="minDate",
-  [maxDate]="maxDate",
-  [hourFormat]="24"
+  hourFormat="24",
   [placeholder]='placeholder')

@@ -14,3 +14,4 @@ export * from './poi-map';
 export * from './trail-box';
 export * from './hike-map';
 export * from './hike-components.module';
+export * from './hike-day';

@@ -3,5 +3,5 @@ p-multiSelect.field(
   [(ngModel)]="value",
   [style]="{'width': '100%'}",
   [defaultLabel]="defaultLabel",
-  (onChange)="doChange()"
+  (onChange)="doChange($event)"
 )
