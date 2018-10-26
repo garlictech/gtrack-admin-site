@@ -81,12 +81,6 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
     this._validateForm(this.formInstance.form);
   }
 
-  getOnSubmit() {
-    return function() {
-      this.onSubmit();
-    }.bind(this);
-  }
-
   ngOnDestroy() {
     this._componentDestroyed$.next(true);
     this._componentDestroyed$.complete();

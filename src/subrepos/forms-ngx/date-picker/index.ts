@@ -14,6 +14,8 @@ export class DatePickerComponent extends AbstractValueAccessor {
   defaultDate;
   @Input()
   placeholder;
+  @Input()
+  showTime = false;
 
   constructor() {
     super();
