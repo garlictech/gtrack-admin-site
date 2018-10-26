@@ -63,10 +63,6 @@ e2e/src/supervisord.log
 /.awcache
 .webpack.json
 
-# Doc #
-/docs/
-docs
-
 # IDE #
 .idea/
 *.swp
