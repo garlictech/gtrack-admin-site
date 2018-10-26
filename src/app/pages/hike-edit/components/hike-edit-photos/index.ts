@@ -137,7 +137,8 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._hikeEditImageSelectors.getImageMarkerImages),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe(() => {
         this._poiEditorService.refreshPoiMarkers(this._map);

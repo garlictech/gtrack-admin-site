@@ -127,7 +127,8 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'showOnrouteMarkers')),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
@@ -141,7 +142,8 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'showOffrouteMarkers')),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;

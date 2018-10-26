@@ -113,7 +113,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
             })
           );
         }),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((pois: IExternalPoi[]) => {
         // Refresh poi list on the store
@@ -225,7 +226,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         select(
           this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers')
         ),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
@@ -244,7 +246,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
             'showOffrouteMarkers'
           )
         ),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
