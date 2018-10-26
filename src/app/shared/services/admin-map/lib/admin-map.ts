@@ -12,6 +12,7 @@ import {
 } from 'subrepos/gtrack-common-ngx/app';
 
 import * as L from 'leaflet';
+import 'overlapping-marker-spiderfier-leaflet';
 import 'leaflet.fullscreen';
 import turfBuffer from '@turf/buffer';
 import _assign from 'lodash-es/assign';
@@ -21,6 +22,13 @@ export enum EBufferSize {
   SMALL = 'small',
   BIG = 'big'
 }
+export enum EAdminMarkerType {
+  WAYPOINT = 'waypoint',
+  POI = 'poi',
+  IMAGE = 'image'
+}
+
+declare const OverlappingMarkerSpiderfier;
 
 export class AdminMap extends Map {
   public markersGroup: L.LayerGroup;
@@ -48,6 +56,10 @@ export class AdminMap extends Map {
         forcePseudoFullscreen: true // force use of pseudo full screen even if full screen API is available, default false
       })
       .addTo(this.map);
+
+    this.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(this.map, {
+      keepSpiderfied: true
+    });
   }
 
   /**
@@ -126,6 +138,16 @@ export class AdminMap extends Map {
   public removeGeoJSON(geojson) {
     if (geojson) {
       this.map.removeLayer(geojson);
+    }
+  }
+
+  public refreshSpiderfierMarkers(markers: L.Marker[], type: EAdminMarkerType) {
+    for (const marker of this.overlappingMarkerSpiderfier.markers.filter(m => m.options.type === type)) {
+      this.overlappingMarkerSpiderfier.removeMarker(marker);
+    }
+
+    for (const marker of markers) {
+      this.overlappingMarkerSpiderfier.addMarker(marker);
     }
   }
 }

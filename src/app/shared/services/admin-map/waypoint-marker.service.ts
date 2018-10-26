@@ -7,7 +7,7 @@ import { filter, take, flatMap, combineAll } from 'rxjs/operators';
 import { HikeEditMapSelectors } from '../../../store/selectors';
 import { AdminMapService } from './admin-map.service';
 import { RoutePlannerService } from './route-planner.service';
-import { AdminMap } from './lib/admin-map';
+import { AdminMap, EAdminMarkerType } from './lib/admin-map';
 import { HttpClient } from '../../../../../node_modules/@angular/common/http';
 import { environment } from 'environments/environment';
 import { ElevationService, IconService } from 'subrepos/gtrack-common-ngx';
@@ -140,12 +140,18 @@ export class WaypointMarkerService {
 
   private _createMarker(_waypoint) {
     const _icon = this._getSingleMarkerIcon(_waypoint.name);
-    const _marker = L.marker(_waypoint.latLng, {
+    const _marker = <any>L.marker(_waypoint.latLng, {
       opacity: 1,
       draggable: false, // Maybe later...
       icon: _icon,
       alt: (_waypoint.name - 1).toString() // orderID
     });
+    _marker.options.type = EAdminMarkerType.WAYPOINT;
+
+    // Kill routing event on marker click
+    /*_marker.on('click', (e: any) => {
+      e.originalEvent.preventDefault();
+    });*/
 
     /* // Maybe later...
     _marker.on('dragend', function (e) {
@@ -186,6 +192,7 @@ export class WaypointMarkerService {
       );
       this._markers[this._markers.length - 1].setZIndexOffset(10000);
     }
+    this._map.refreshSpiderfierMarkers(this._markers, EAdminMarkerType.WAYPOINT);
   }
 
   public getRouteFromApi(p1, p2) {

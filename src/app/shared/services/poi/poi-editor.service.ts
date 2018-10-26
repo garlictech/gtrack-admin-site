@@ -28,7 +28,6 @@ import { IMarkerPopupData, IBackgroundImageData } from 'subrepos/provider-client
 import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker/marker-popup.service';
 
 import * as L from 'leaflet';
-import 'overlapping-marker-spiderfier-leaflet';
 import _defaultsDeep from 'lodash-es/defaultsDeep';
 import _pick from 'lodash-es/pick';
 import _merge from 'lodash-es/merge';
@@ -49,8 +48,7 @@ import turfBuffer from '@turf/buffer';
 import { point as turfPoint } from '@turf/helpers';
 import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import { SMALL_BUFFER_SIZE, BIG_BUFFER_SIZE } from 'app/config';
-
-declare const OverlappingMarkerSpiderfier;
+import { EAdminMarkerType } from '../admin-map/lib/admin-map';
 
 @Injectable()
 export class PoiEditorService {
@@ -622,11 +620,6 @@ export class PoiEditorService {
       const _markers = _poiMarkers.concat(_imageMarkers);
 
       // Add markers to the map
-
-      map.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(map.leafletMap, {
-        keepSpiderfied: true
-      });
-
       if (map.leafletMap.hasLayer(map.markersGroup)) {
         map.leafletMap.removeLayer(map.markersGroup);
       }
@@ -637,9 +630,7 @@ export class PoiEditorService {
         map.leafletMap.addLayer(map.markersGroup);
 
         // Register marker to spiderfier
-        for (const _marker of _markers) {
-          map.overlappingMarkerSpiderfier.addMarker(_marker.marker);
-        }
+        map.refreshSpiderfierMarkers(_markers.map(m => m.marker), EAdminMarkerType.POI);
 
         // Currently unused
         // map.overlappingMarkerSpiderfier.addListener('click', function(marker) {
@@ -698,6 +689,7 @@ export class PoiEditorService {
       };
 
       const _marker = new AdminMapMarker(poi.lat, poi.lon, poi.types || [], '', this._iconService, poi.id, popupData);
+      (<any>_marker).marker.options.type = EAdminMarkerType.POI;
 
       _markers.push(_marker);
     }
@@ -735,6 +727,7 @@ export class PoiEditorService {
             image.original.url,
             popupData
           );
+          (<any>_marker).marker.options.type = EAdminMarkerType.IMAGE;
           _markers.push(_marker);
         }
       });
