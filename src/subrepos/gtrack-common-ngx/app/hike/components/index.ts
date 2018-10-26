@@ -12,4 +12,5 @@ export * from './download-gpx-button';
 export * from './bookmark';
 export * from './hike-list-map';
 export * from './poi-map';
+export * from './hike-day';
 export * from './hike-components.module';
