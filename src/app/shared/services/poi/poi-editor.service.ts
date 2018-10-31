@@ -700,37 +700,47 @@ export class PoiEditorService {
   private _generateImageMarkers(map: AdminMap) {
     const _markers: AdminMapMarker[] = [];
 
-    this._store
-      .pipe(
+    combineLatest(
+      this._store.pipe(
+        select(this._editedHikeProgramSelectors.getBackgroundOriginalUrls()),
+        take(1)
+      ),
+      this._store.pipe(
         select(this._hikeEditImageSelectors.getImageMarkerImages),
         take(1)
       )
-      .subscribe((images: IBackgroundImageData[]) => {
-        for (const image of images) {
-          const popupData: IMarkerPopupData = {
-            popupComponentName: 'ImageMarkerPopupComponent',
-            markerClickCallback: this._markerPopupService.onUserMarkerClick,
-            closeCallback: () => {
-              map.leafletMap.closePopup();
-              this.refreshPoiMarkers(map);
-            },
-            map: map.leafletMap,
-            data: _cloneDeep(image)
-          };
+    )
+    .subscribe(([bgImageUrls, markerImages]: [string[], IBackgroundImageData[]]) => {
+      for (const image of markerImages) {
+        const popupData: IMarkerPopupData = {
+          popupComponentName: 'ImageMarkerPopupComponent',
+          markerClickCallback: this._markerPopupService.onUserMarkerClick,
+          closeCallback: () => {
+            map.leafletMap.closePopup();
+            this.refreshPoiMarkers(map);
+          },
+          map: map.leafletMap,
+          data: _cloneDeep(image)
+        };
 
-          const _marker = new AdminMapMarker(
-            image.lat,
-            image.lon,
-            ['photo'],
-            '',
-            this._iconService,
-            image.original.url,
-            popupData
-          );
-          (<any>_marker).marker.options.type = EAdminMarkerType.IMAGE;
-          _markers.push(_marker);
+        const _marker = new AdminMapMarker(
+          image.lat,
+          image.lon,
+          ['photo'],
+          '',
+          this._iconService,
+          image.original.url,
+          popupData
+        );
+        (<any>_marker).marker.options.type = EAdminMarkerType.IMAGE;
+
+        if (bgImageUrls.includes(image.original.url)) {
+          _marker.toggleHighlight();
         }
-      });
+
+        _markers.push(_marker);
+      }
+    });
 
     return _markers;
   }
