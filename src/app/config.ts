@@ -7,5 +7,5 @@ export const config: IConfig = {
   }
 };
 
-export const SMALL_BUFFER_SIZE = 50;
+export const SMALL_BUFFER_SIZE = 100;
 export const BIG_BUFFER_SIZE = 1000;
