@@ -23,10 +23,16 @@ export interface IRoutePlanResult {
   upDown: any;
 }
 
+interface IWaypoint {
+  latLng: L.LatLng;
+  idx: number;
+}
+
 @Injectable()
 export class WaypointMarkerService {
   private _map: AdminMap;
   private _markers: L.Marker[] = [];
+  private _dragging = false;
 
   constructor(
     private _store: Store<State>,
@@ -71,9 +77,9 @@ export class WaypointMarkerService {
   }
 
   public insertNewStartPoint(latlng: L.LatLng) {
-    const _waypoint = {
+    const _waypoint: IWaypoint = {
       latLng: latlng,
-      name: 1
+      idx: 0
     };
     this._markers.unshift(this._createMarker(_waypoint));
 
@@ -82,9 +88,9 @@ export class WaypointMarkerService {
   }
 
   public insertNewEndPoint(latlng: L.LatLng) {
-    const _waypoint = {
+    const _waypoint: IWaypoint = {
       latLng: latlng,
-      name: 1
+      idx: this._markers.length
     };
     this._markers.push(this._createMarker(_waypoint));
 
@@ -109,14 +115,18 @@ export class WaypointMarkerService {
   }
 
   public async addWaypoints(latlngs: L.LatLng[]) {
+    if (this._dragging) {
+      return;
+    }
+
     this._map.leafletMap.spin(true);
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
 
     for (const idx in latlngs) {
       if (latlngs[idx]) {
-        const _waypoint = {
+        const _waypoint: IWaypoint = {
           latLng: latlngs[idx],
-          name: this._markers.length + 1
+          idx: parseInt(idx, 0) + this._markers.length
         };
         this._markers.push(this._createMarker(_waypoint));
 
@@ -138,26 +148,25 @@ export class WaypointMarkerService {
     this._map.leafletMap.spin(false);
   }
 
-  private _createMarker(_waypoint) {
-    const _icon = this._getSingleMarkerIcon(_waypoint.name);
+  private _createMarker(_waypoint: IWaypoint) {
+    const _icon = this._getSingleMarkerIcon((_waypoint.idx + 1).toString());
     const _marker = <any>L.marker(_waypoint.latLng, {
       opacity: 1,
-      draggable: false, // Maybe later...
+      draggable: true,
       icon: _icon,
-      alt: (_waypoint.name - 1).toString() // orderID
+      alt: (_waypoint.idx).toString() // orderID
     });
     _marker.options.type = EAdminMarkerType.WAYPOINT;
+    _marker.options.idx = _waypoint.idx;
 
-    // Kill routing event on marker click
-    /*_marker.on('click', (e: any) => {
-      e.originalEvent.preventDefault();
-    });*/
-
-    /* // Maybe later...
-    _marker.on('dragend', function (e) {
-      console.log('marker drag end event', e);
+    _marker.on('click', (e) => e.originalEvent.preventDefault());
+    _marker.on('dragstart', _ => this._dragging = true);
+    _marker.on('dragend', (e) => {
+      this._dragging = false;
+      if (this._markers.length > 1) {
+        this._refreshSegmentsAfterDrag(e.target.options.idx);
+      }
     });
-    */
 
     _marker.addTo(this._map.leafletMap);
 
@@ -180,8 +189,9 @@ export class WaypointMarkerService {
   }
 
   public _refreshEndpointMarkerIcons() {
-    for (let i = 1; i < this._markers.length - 1; i++) {
+    for (let i = 0; i < this._markers.length; i++) {
       this._markers[i].setIcon(this._getSingleMarkerIcon(i + 1));
+      (<any>this._markers[i]).options.idx = i;
     }
     if (this._markers.length > 0) {
       this._markers[0].setIcon(this._iconService.getLeafletIcon(['start'], 'default'));
@@ -278,5 +288,35 @@ export class WaypointMarkerService {
         new L.LatLng((<any>snapped.geometry).coordinates[0], (<any>snapped.geometry).coordinates[1])
       );
     }
+  }
+
+  private _refreshSegmentsAfterDrag(markerIdx: number) {
+    // Update the first segment
+    if (markerIdx === 0) {
+      const start = this._markers[0].getLatLng();
+      const end = this._markers[1].getLatLng();
+      this._getRouteAndUpdateSegment(start, end, 0);
+    // Update the last segment
+    } else if (markerIdx === this._markers.length - 1) {
+      const lastIdx = this._markers.length - 1;
+      const start = this._markers[lastIdx - 1].getLatLng();
+      const end = this._markers[lastIdx].getLatLng();
+      this._getRouteAndUpdateSegment(start, end, lastIdx - 1);
+    // Update segment pairs
+    } else {
+      const start1 = this._markers[markerIdx - 1].getLatLng();
+      const end1 = this._markers[markerIdx].getLatLng();
+      this._getRouteAndUpdateSegment(start1, end1, markerIdx - 1);
+
+      const start2 = this._markers[markerIdx].getLatLng();
+      const end2 = this._markers[markerIdx + 1].getLatLng();
+      this._getRouteAndUpdateSegment(start2, end2, markerIdx);
+    }
+  }
+
+  private _getRouteAndUpdateSegment(start: L.LatLng, end: L.LatLng, segmentIdx: number) {
+    this.getRouteFromApi(start, end).then((data: IRoutePlanResult) => {
+      this._routePlannerService.updateRouteSegment(segmentIdx, data.coordsArr, data.upDown);
+    });
   }
 }

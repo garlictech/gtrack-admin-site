@@ -77,7 +77,7 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
   public startHere(event, stop: IHikeProgramStop) {
     event.preventDefault();
 
-    this.getNearestSegmentToPoint(stop).then((sData: INearestSegmentData) => {
+    this._getNearestSegmentToPoint(stop).then((sData: INearestSegmentData) => {
       // Plan new route between the snapped point and the segment endpoint
       this._waypointMarkerService
         .getRouteFromApi(
@@ -98,7 +98,7 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
   public endHere(event, stop: IHikeProgramStop) {
     event.preventDefault();
 
-    this.getNearestSegmentToPoint(stop).then((sData: INearestSegmentData) => {
+    this._getNearestSegmentToPoint(stop).then((sData: INearestSegmentData) => {
       // Plan new route between the snapped point and the segment endpoint
       this._waypointMarkerService
         .getRouteFromApi(
@@ -123,7 +123,7 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
     });
   }
 
-  private getNearestSegmentToPoint(stop: IHikeProgramStop) {
+  private _getNearestSegmentToPoint(stop: IHikeProgramStop) {
     return new Promise(resolve => {
       this._store
         .pipe(
