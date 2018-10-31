@@ -20,7 +20,7 @@
           <td [ngClass]="{'text-danger': !poi.selected}" [innerHTML]="(poi?.description | localizeDescription).title"></td>
           <td>{{poi.distFromRoute | distance : true}}</td>
           <td>{{poi.types.join(', ')}}</td>
-          <td>{{poi.objectTypes.join(', ')}}</td>
+          <td>{{poi.objectTypes?.join(', ')}}</td>
           <td>
             <app-special-poi-data [poi]="poi" [openPoiModal]="openPoiModal"></app-special-poi-data>
           </td>
