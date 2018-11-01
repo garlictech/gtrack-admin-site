@@ -631,14 +631,6 @@ export class PoiEditorService {
 
         // Register marker to spiderfier
         map.refreshSpiderfierMarkers(_markers.map(m => m.marker), EAdminMarkerType.POI);
-
-        // Currently unused
-        // map.overlappingMarkerSpiderfier.addListener('click', function(marker) {
-        //   console.log('spiderify clic');
-        // });
-        // map.overlappingMarkerSpiderfier.addListener('spiderfy', function(marker) {
-        //   console.log('spiderify spiderfy');
-        // });
       }
     }
   }

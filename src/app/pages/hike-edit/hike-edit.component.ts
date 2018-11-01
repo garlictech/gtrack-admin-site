@@ -246,7 +246,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   public saveHike() {

@@ -87,7 +87,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   private _getLanguageFormDescriptor(languageKey: string) {

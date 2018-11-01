@@ -71,7 +71,7 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   public startHere(event, stop: IHikeProgramStop) {

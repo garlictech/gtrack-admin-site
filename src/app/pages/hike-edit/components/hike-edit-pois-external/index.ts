@@ -261,7 +261,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   private _getSubdomainSelector(subdomain: string) {

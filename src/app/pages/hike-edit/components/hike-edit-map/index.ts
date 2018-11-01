@@ -112,7 +112,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
 
     this._store.dispatch(new commonBackgroundGeolocationActions.EndTracking());
     this._store.dispatch(new adminMapActions.ResetMap());
