@@ -23,10 +23,8 @@ import { EditedGTrackPoiSelectors } from '../../../../../store/selectors';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
-  @Input()
-  poiId: string;
-  @Input()
-  closeModal: any;
+  @Input() poiId: string;
+  @Input() closeModal: any;
 
   public storeDataPath: string;
   public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;

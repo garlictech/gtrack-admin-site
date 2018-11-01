@@ -11,16 +11,12 @@ import _keys from 'lodash-es/keys';
   styleUrls: ['./style.scss']
 })
 export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
-  @Input()
-  images$: Observable<IBackgroundImageData[]>;
-  @Input()
-  backgroundOriginalUrls$: Observable<string[]>;
-  @Input()
-  clickActions: any;
-  @Input()
-  showMarkerColumn: boolean;
-  @Input()
-  distanceFrom: number[] = null;
+  @Input() images$: Observable<IBackgroundImageData[]>;
+  @Input() backgroundOriginalUrls$: Observable<string[]>;
+  @Input() clickActions: any;
+  @Input() showMarkerColumn: boolean;
+  @Input() onRouteCheck: boolean;
+  @Input() distanceFrom: number[] = null; // Used in gTrackPoi bgImages!
   public imageSelections: { [id: string]: boolean } = {};
   public imageMarkerSelections: { [id: string]: boolean } = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();

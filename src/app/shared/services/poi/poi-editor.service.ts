@@ -226,6 +226,7 @@ export class PoiEditorService {
     const _photos: any[] = [];
 
     if (photos && photos.length > 0 && path) {
+      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, SMALL_BUFFER_SIZE, { units: 'meters' });
       const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
 
       for (const _photo of _cloneDeep(photos)) {
@@ -233,6 +234,9 @@ export class PoiEditorService {
 
         if (typeof _bigBuffer !== 'undefined') {
           if (turfBooleanPointInPolygon(_point, _bigBuffer)) {
+            if (typeof _smallBuffer !== 'undefined') {
+              (<any>_photo).onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
+            }
             _photos.push(_photo);
           }
         }

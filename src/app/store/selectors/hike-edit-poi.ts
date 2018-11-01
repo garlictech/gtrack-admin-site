@@ -11,6 +11,7 @@ import {
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 
 import _uniqBy from 'lodash-es/uniqBy';
+import _cloneDeep from 'lodash-es/cloneDeep';
 
 @Injectable()
 export class HikeEditPoiSelectors {
@@ -107,7 +108,11 @@ export class HikeEditPoiSelectors {
       let _photos = [];
       pois
         .filter(p => p[subdomain].photos && !p.inGtrackDb)
-        .map(p => p[subdomain].photos)
+        .map(p => {
+          const domainPhotos = _cloneDeep(p[subdomain].photos);
+          domainPhotos.map(photo => photo.onRoute = p.onRoute);
+          return domainPhotos;
+        })
         .map(photoArray => {
           _photos = _photos.concat(photoArray);
         });

@@ -27,10 +27,8 @@ import _cloneDeep from 'lodash-es/cloneDeep';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
-  @Input()
-  poiType: IExternalPoiType;
-  @Input()
-  isPlanning$: Observable<boolean>;
+  @Input() poiType: IExternalPoiType;
+  @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
   public segments$: Observable<any>;
   public selectedPoisCount$: Observable<number>;

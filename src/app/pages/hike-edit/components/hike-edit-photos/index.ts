@@ -21,16 +21,11 @@ import _map from 'lodash-es/map';
   templateUrl: './ui.html'
 })
 export class HikeEditPhotosComponent implements OnInit, OnDestroy {
-  @Input()
-  backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
-  @Input()
-  backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
-  @Input()
-  clickActions: any;
-  @Input()
-  showMarkerColumn: boolean;
-  @Input()
-  distanceFrom: number[] = null;
+  @Input() backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
+  @Input() backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
+  @Input() clickActions: any;
+  @Input() showMarkerColumn: boolean;
+  @Input() distanceFrom: number[] = null;
   public gTrackPoiPhotos$: Observable<IBackgroundImageData[]>;
   public googlePhotos$: Observable<IBackgroundImageData[]>;
   public wikipediaPhotos$: Observable<IBackgroundImageData[]>;
