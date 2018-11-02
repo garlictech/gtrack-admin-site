@@ -60,6 +60,7 @@
         "lint:fix": "npm run npm lint:fix",
         "unittest": "npm run npm unittest",
         "unittest:watch": "npm run npm unittest:watch",
+        "test": "jest --config ./src/jest-config.js",
         "e2e": "docker/e2etest.sh",
         "e2e:full": "docker/e2etest.sh full",
         "e2e:prod": "docker/e2etest.sh prod",
