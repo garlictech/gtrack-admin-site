@@ -3,22 +3,14 @@ import { Store, select } from '@ngrx/store';
 import { of, interval, combineLatest } from 'rxjs';
 import { take, switchMap, filter, map as rxMap, combineAll, debounceTime } from 'rxjs/operators';
 import {
-  GeometryService,
-  ElevationService,
-  IconService,
-  CenterRadius,
-  GeoSearchSelectors,
-  PoiSelectors,
-  GeospatialService
+  GeometryService, ElevationService, IconService, CenterRadius, GeoSearchSelectors,
+  PoiSelectors, GeospatialService
 } from 'subrepos/gtrack-common-ngx';
 import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
 import { State, IExternalPoiListContextItemState } from '../../../store';
 import { commonGeoSearchActions } from '../../../store/actions';
 import {
-  HikeEditPoiSelectors,
-  HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors,
-  HikeEditImageSelectors
+  HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditImageSelectors
 } from '../../../store/selectors';
 import { AdminMap, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../interfaces';

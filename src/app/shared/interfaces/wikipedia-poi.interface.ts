@@ -2,7 +2,7 @@ import { IExternalPoi } from './external-poi.interface';
 import { IBackgroundImageData } from 'subrepos/provider-client';
 
 export interface IWikipediaPoiInfo {
-  pageid?: string;
+  pageid?: number;
   lng?: string;
   url?: string;
   extract?: string;

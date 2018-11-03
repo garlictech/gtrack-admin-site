@@ -150,7 +150,7 @@ export class HikeProgramService {
   /**
    * Get current languages from descriptions
    */
-  public getDescriptionLaguages() {
+  public getDescriptionLanguages() {
     let langs: string[] = [];
     this._store
       .pipe(

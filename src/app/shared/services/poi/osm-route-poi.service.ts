@@ -1,3 +1,9 @@
+/*
+
+//
+// *********************** UNUSED ***********************
+//
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
@@ -63,3 +69,4 @@ export class OsmRoutePoiService {
     });
   }
 }
+*/
