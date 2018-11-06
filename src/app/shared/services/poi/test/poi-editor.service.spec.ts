@@ -2,20 +2,20 @@ import { TestBed } from '@angular/core/testing';
 import { PoiEditorService } from '../poi-editor.service';
 import { GOOGLE_POIS } from './fixtures/google-pois';
 import { StoreModule } from '@ngrx/store';
-import { hikeEditPoiReducer, editedHikeProgramReducer } from 'app/store/reducer';
+import { hikeEditPoiReducer, editedHikeProgramReducer } from '../../../../../app/store/reducer';
 import {
   GeometryService, GeospatialService, ElevationService, IconService, GeoSearchSelectors,
   PoiSelectors, MarkerPopupService, EXTERNAL_GEO_SEARCH_DEPENDENCIES, EXTERNAL_POI_DEPENDENCIES, HikeProgramService
-} from 'subrepos/gtrack-common-ngx';
+} from '../../../../../subrepos/gtrack-common-ngx';
 import { RoutePlannerService } from '../../admin-map';
 import {
   EditedHikeProgramSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors
-} from 'app/store/selectors';
+} from '../../../../../app/store/selectors';
 import { GooglePoiService } from '../google-poi.service';
 import { WikipediaPoiService } from '../wikipedia-poi.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MessageService } from 'primeng/api';
-import { ETextualDescriptionType, EPoiTypes } from 'subrepos/provider-client';
+import { ETextualDescriptionType, EPoiTypes } from '../../../../../subrepos/provider-client';
 import { WIKIPEDIA_POIS } from './fixtures/wikipedia-pois';
 import { OSM_AMENITY_POIS } from './fixtures/osm-amenity-pois';
 import { OSM_NATURAL_POIS } from './fixtures/osm-natural-pois';

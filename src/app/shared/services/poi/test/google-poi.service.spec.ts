@@ -4,7 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { GeometryService, defaultSharedConfig } from '../../../../../subrepos/gtrack-common-ngx';
 import { GOOGLE_POI_RESPONSE, GOOGLE_POIS, DETAILED_GOOGLE_POI } from './fixtures/google-pois';
 import { HttpRequest } from '@angular/common/http';
-import { EPoiImageTypes } from 'subrepos/provider-client';
+import { EPoiImageTypes } from '../../../../../subrepos/provider-client';
 
 import * as _ from 'lodash';
 
@@ -67,7 +67,7 @@ describe('GooglePoiService', () => {
       .expectOne((req: HttpRequest<any>) => req.url === request && req.method === 'GET')
       .flush(GOOGLE_POI_RESPONSE);
 
-    expect(geoSpy).toBeCalledWith(BOUNDS);
+    expect(geoSpy).toHaveBeenCalledWith(BOUNDS);
 
     httpMock.verify();
   });

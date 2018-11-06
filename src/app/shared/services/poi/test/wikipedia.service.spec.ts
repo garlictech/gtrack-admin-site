@@ -3,10 +3,10 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HttpRequest } from '@angular/common/http';
 import { WikipediaPoiService } from '../wikipedia-poi.service';
 import { WIKIPEDIA_RESPONSE, WIKIPEDIA_POIS, WIKIPEDIA_POI_EXTRACT, WIKIPEDIA_POI_IMAGE } from './fixtures/wikipedia-pois';
-import { GeometryService } from 'subrepos/gtrack-common-ngx';
+import { GeometryService } from '../../../../../subrepos/gtrack-common-ngx';
 import { MessageService } from 'primeng/api';
 import { HikeProgramService } from '../../hike';
-import { EPoiTypes } from 'subrepos/provider-client';
+import { EPoiTypes } from '../../../../../subrepos/provider-client';
 import * as _ from 'lodash';
 
 describe('WikipediaPoiService', () => {

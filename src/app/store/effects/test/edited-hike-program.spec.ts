@@ -9,7 +9,7 @@ import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, HikeProgramService, GeospatialService } from '../../../../subrepos/gtrack-common-ngx';
 import { RouterModule, Router } from '@angular/router';
 import { TestActions, getActions, mockRouter } from './helpers';
-import { editedHikeProgramActions } from '../../actions';
+import { editedHikeProgramActions, commonRouteActions } from '../../actions';
 import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../selectors';
 import { IHikeProgram, EObjectState } from 'subrepos/provider-client';
 import { IExternalPoi } from '../../../shared/interfaces';
@@ -150,6 +150,21 @@ describe('EditedHikeProgramEffects effects', () => {
 
       expect(editedHikeProgramSelectors.getData).toBeCalled();
       expect(hikeProgramService.save).toBeCalled();
+    });
+  });
+
+  describe('loadSavedRoute$', () => {
+    it('should return context observable from RouteSaved success', () => {
+      spyOn(hikeProgramService, 'save').and.returnValue(Observable.throwError('error'));
+
+      const context = 'routeId';
+      const action = new commonRouteActions.RouteSaved(context);
+      const completion = new commonRouteActions.LoadRoute(context);
+      const expected = cold('-b', { b: completion });
+
+      actions$.stream = hot('-a', { a: action });
+
+      expect(effects.loadSavedRoute$).toBeObservable(expected);
     });
   });
 });
