@@ -61,6 +61,7 @@
         "unittest": "npm run npm unittest",
         "unittest:watch": "npm run npm unittest:watch",
         "test": "jest --config ./src/jest-config.js",
+        "testc": "jest --config ./src/jest-config.js --coverage",
         "e2e": "docker/e2etest.sh",
         "e2e:full": "docker/e2etest.sh full",
         "e2e:prod": "docker/e2etest.sh prod",
