@@ -65,8 +65,12 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
     this.images$
       .pipe(take(1))
       .subscribe((images: IBackgroundImageData[]) => {
-        const _imagesToAdd = images.filter(i => !_imageSelection.includes(i.original.url));
-        const _imagesToRemove = images.filter(i => _imageSelection.includes(i.original.url));
+        const _imagesToAdd = images.filter(i => {
+          return !_imageSelection.includes(i.original.url) && (<any>i).onRoute === this.onRouteCheck;
+        });
+        const _imagesToRemove = images.filter(i => {
+          return _imageSelection.includes(i.original.url) && (<any>i).onRoute === this.onRouteCheck;
+        });
 
         _imagesToAdd.map(i => this.imageMarkerSelections[i.original.url] = true);
         _imagesToRemove.map(i => this.imageMarkerSelections[i.original.url] = false);
