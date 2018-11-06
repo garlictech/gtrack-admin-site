@@ -14,6 +14,7 @@ import { ElevationService, IconService } from 'subrepos/gtrack-common-ngx';
 
 import * as L from 'leaflet';
 import _map from 'lodash-es/map';
+import _get from 'lodash-es/get';
 import _chunk from 'lodash-es/chunk';
 import { point as turfPoint, lineString as turfLineString } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
@@ -23,7 +24,7 @@ export interface IRoutePlanResult {
   upDown: any;
 }
 
-interface IWaypoint {
+export interface IWaypoint {
   latLng: L.LatLng;
   idx: number;
 }
@@ -68,7 +69,7 @@ export class WaypointMarkerService {
   public removeSegments(idx, count) {
     for (let i = idx; i <= idx + count; i++) {
       const marker = this._markers[i];
-      if (this._map.leafletMap.hasLayer(marker)) {
+      if (this._map && this._map.leafletMap.hasLayer(marker)) {
         this._map.leafletMap.removeLayer(marker);
       }
     }
@@ -119,7 +120,9 @@ export class WaypointMarkerService {
       return;
     }
 
-    this._map.leafletMap.spin(true);
+    if (_get(this, '_map.leafletMap')) {
+      this._map.leafletMap.spin(true);
+    }
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
 
     for (const idx in latlngs) {
@@ -145,7 +148,10 @@ export class WaypointMarkerService {
     this._refreshEndpointMarkerIcons();
 
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingFinished());
-    this._map.leafletMap.spin(false);
+
+    if (_get(this, '_map.leafletMap')) {
+      this._map.leafletMap.spin(false);
+    }
   }
 
   private _createMarker(_waypoint: IWaypoint) {
@@ -168,7 +174,9 @@ export class WaypointMarkerService {
       }
     });
 
-    _marker.addTo(this._map.leafletMap);
+    if (_get(this, '_map.leafletMap')) {
+      _marker.addTo(this._map.leafletMap);
+    }
 
     return _marker;
   }
@@ -193,6 +201,7 @@ export class WaypointMarkerService {
       this._markers[i].setIcon(this._getSingleMarkerIcon(i + 1));
       (<any>this._markers[i]).options.idx = i;
     }
+
     if (this._markers.length > 0) {
       this._markers[0].setIcon(this._iconService.getLeafletIcon(['start'], 'default'));
       this._markers[0].setZIndexOffset(10000);
@@ -202,7 +211,10 @@ export class WaypointMarkerService {
       );
       this._markers[this._markers.length - 1].setZIndexOffset(10000);
     }
-    this._map.refreshSpiderfierMarkers(this._markers, EAdminMarkerType.WAYPOINT);
+
+    if (this._map) {
+      this._map.refreshSpiderfierMarkers(this._markers, EAdminMarkerType.WAYPOINT);
+    }
   }
 
   public getRouteFromApi(p1, p2) {

@@ -21,7 +21,7 @@ export class AdminMapService extends MapService {
   constructor(
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
-    store: Store<State>,
+    protected store: Store<State>,
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     protected _descriptionLanguageList: DescriptionLanguageListService,
     protected _markerPopup: MarkerPopupService
@@ -36,14 +36,14 @@ export class AdminMapService extends MapService {
       leafletMap,
       this.iconService,
       this.mapMarkerService,
-      this._store,
+      this.store,
       this._hikeEditRoutePlannerSelectors,
       this._descriptionLanguageList,
       this._markerPopup
     );
     this._maps[_id] = _map;
 
-    this._store.dispatch(new adminMapActions.RegisterMap(_id));
+    this.store.dispatch(new adminMapActions.RegisterMap(_id));
 
     return _map;
   }

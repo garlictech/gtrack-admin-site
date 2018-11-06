@@ -12,6 +12,7 @@ import { AdminMapService } from './admin-map.service';
 import * as L from 'leaflet';
 import * as rewind from 'geojson-rewind';
 import _cloneDeep from 'lodash-es/cloneDeep';
+import _omit from 'lodash-es/omit';
 import turfBuffer from '@turf/buffer';
 import { lineString as turfLineString } from '@turf/helpers';
 import turfLength from '@turf/length';
@@ -42,15 +43,19 @@ export class RoutePlannerService {
       });
 
     // Update totals on each segment update
-    this._store.pipe(select(this._hikeEditRoutePlannerSelectors.getSegments)).subscribe((segments: ISegment[]) => {
-      // Update total for route info
-      this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
+    this._store
+      .pipe(
+        select(this._hikeEditRoutePlannerSelectors.getSegments)
+      )
+      .subscribe((segments: ISegment[]) => {
+        // Update total for route info
+        this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
 
-      // Refresh route data and draw to map
-      const _route = this._createGeoJsonFromSegments(segments);
-      this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_route));
-      this.drawRoutePlanGeoJSON(_route.features[0]);
-    });
+        // Refresh route data and draw to map
+        const _route = this._createGeoJsonFromSegments(segments);
+        this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_route));
+        this.drawRoutePlanGeoJSON(_route.features[0]);
+      });
   }
 
   /**
@@ -103,7 +108,7 @@ export class RoutePlannerService {
     const total = {};
 
     for (const segment of segments) {
-      for (const key in segment) {
+      for (const key in _omit(segment, 'coordinates')) {
         if (segment[key]) {
           if (!total[key]) {
             total[key] = 0;
