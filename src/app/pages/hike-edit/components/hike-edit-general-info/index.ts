@@ -71,7 +71,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   private _initDescriptionFormConfig() {

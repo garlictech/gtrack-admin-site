@@ -24,6 +24,6 @@ export interface IImageListContextState {
 export interface IHikeEditImageState {
   mapillaryImages: IMapillaryImageEntityState;
   flickrImages: IFlickrImageEntityState;
-  imageMarkerUrls: IImageMarkerState;
+  imageMarkerImages: IImageMarkerState;
   contexts: IImageListContextState;
 }

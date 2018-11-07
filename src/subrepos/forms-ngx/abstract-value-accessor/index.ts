@@ -1,5 +1,5 @@
 import { ControlValueAccessor } from '@angular/forms';
-import { Input } from '@angular/core';
+import { Input, Output, EventEmitter } from '@angular/core';
 import { DebugLog } from '../log';
 
 export abstract class AbstractValueAccessor implements ControlValueAccessor {
@@ -13,16 +13,15 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor {
       this.onChange(v);
     }
   }
-  @Input()
-  change;
+
+  @Output()
+  change = new EventEmitter<any>();
 
   _value: any = '';
 
   @DebugLog
-  doChange() {
-    if (this.change) {
-      this.change();
-    }
+  doChange(data: any) {
+    this.change.emit(data);
   }
 
   writeValue(value: any) {

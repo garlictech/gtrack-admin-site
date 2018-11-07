@@ -113,13 +113,7 @@ export class EditedHikeProgramSelectors {
 
   public getBackgroundOriginalUrls() {
     return createSelector(this._featureSelector, (state: IEditedHikeProgramState) => {
-      if (state.data && state.data.backgroundImages) {
-        return _uniq(
-          (<IBackgroundImageData[]>state.data.backgroundImages).map((img: IBackgroundImageData) => img.original.url)
-        );
-      } else {
-        return [];
-      }
+      return _uniq((<IBackgroundImageData[]>_get(state, 'data.backgroundImages', [])).map(img => img.original.url));
     });
   }
 }

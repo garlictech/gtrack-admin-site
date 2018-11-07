@@ -22,9 +22,8 @@ export class Environment implements IEnvironment {
   };
 
   flickr = {
-    // dd9a8ad609e489e39d1ba521525e1dd5 is for petrot81 user!!!
-    apiKey: 'dd9a8ad609e489e39d1ba521525e1dd5',
-    secret: '287dc1495420c9a3'
+    apiKey: '0191c7b116e215758a6c2450bf8a4c46',
+    secret: 'c420ea95cde9cfb9'
   };
 
   googlePhotoLimit = 0; // no limit

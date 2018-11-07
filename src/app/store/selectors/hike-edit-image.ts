@@ -9,7 +9,7 @@ export class HikeEditImageSelectors {
   private _featureSelector: MemoizedSelector<object, IHikeEditImageState>;
   public getAllMapillaryImages: (state: object) => IBackgroundImageData[];
   public getAllFlickrImages: (state: object) => IBackgroundImageData[];
-  public getImageMarkerUrls: MemoizedSelector<object, IBackgroundImageData[]>;
+  public getImageMarkerImages: MemoizedSelector<object, IBackgroundImageData[]>;
 
   constructor() {
     this._featureSelector = createFeatureSelector<IHikeEditImageState>('hikeEditImage');
@@ -32,9 +32,9 @@ export class HikeEditImageSelectors {
 
     // Images markers
 
-    this.getImageMarkerUrls = createSelector(
+    this.getImageMarkerImages = createSelector(
       this._featureSelector,
-      (state: IHikeEditImageState) => state.imageMarkerUrls.images
+      (state: IHikeEditImageState) => state.imageMarkerImages.images
     );
   }
 

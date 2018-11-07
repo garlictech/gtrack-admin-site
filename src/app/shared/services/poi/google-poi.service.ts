@@ -13,14 +13,15 @@ import * as uuid from 'uuid/v1';
 import _map from 'lodash-es/map';
 import _take from 'lodash-es/take';
 
-const PURE_PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
-const PLACE_API_URL = `https://cors-anywhere.herokuapp.com/${PURE_PLACE_API_URL}`;
-
-declare const google;
+export const PURE_PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
+export const PLACE_API_URL = `https://cors-anywhere.herokuapp.com/${PURE_PLACE_API_URL}`;
 
 @Injectable()
 export class GooglePoiService {
-  constructor(private _http: HttpClient, private _geometryService: GeometryService) {}
+  constructor(
+    private _http: HttpClient,
+    private _geometryService: GeometryService
+  ) {}
 
   public get(bounds, langs = ['en']) {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
@@ -133,14 +134,16 @@ export class GooglePoiService {
               .get(request)
               .toPromise()
               .then((data: any) => {
-                if (data.status !== google.maps.places.PlacesServiceStatus.OK) {
-                  console.log('ERROR', status);
+                if (data.status !== 'OK') {
                   return;
                 }
 
-                if (data.status === google.maps.places.PlacesServiceStatus.OK) {
+                if (data.status === 'OK') {
                   _googleData.formatted_address = data.result.formatted_address;
-                  _googleData.international_phone_number = data.result.international_phone_number;
+
+                  if (data.result.international_phone_number) {
+                    _googleData.international_phone_number = data.result.international_phone_number;
+                  }
 
                   if (data.result.opening_hours) {
                     _googleData.opening_hours = data.result.opening_hours;

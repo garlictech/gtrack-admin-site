@@ -1,9 +1,10 @@
 import { map, filter } from 'rxjs/operators';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import _get from 'lodash-es/get';
 import _keys from 'lodash-es/keys';
@@ -14,18 +15,31 @@ import { Field } from '../field';
   selector: 'app-form-field',
   template: ''
 })
-export class DynamicFormFieldComponent implements OnInit {
+export class DynamicFormFieldComponent implements OnInit, OnDestroy {
   @Input()
   form: FormGroup;
 
   @Input()
   field: Field<any>;
-  @Input()
-  submit: () => void;
+
+  @Output()
+  submit = new EventEmitter<any>();
 
   public remoteError$: Observable<string> = EMPTY;
 
-  constructor(private _translate: TranslateService, private _store: Store<any>) {}
+  private _change$ = new Subject<any>();
+  private _destroy$ = new Subject<boolean>();
+
+  constructor(private _translate: TranslateService, private _store: Store<any>) {
+    this
+      ._change$
+      .pipe(
+        takeUntil(this._destroy$),
+        distinctUntilChanged(),
+        debounceTime(500)
+      )
+      .subscribe(() => this._handleChange());
+  }
 
   ngOnInit() {
     if (this.field.remoteErrorStatePath) {
@@ -39,12 +53,19 @@ export class DynamicFormFieldComponent implements OnInit {
     }
   }
 
-  getOnChange() {
-    return function() {
-      if (this.field.submitOnChange) {
-        this.submit();
-      }
-    }.bind(this);
+  ngOnDestroy() {
+    this._destroy$.next(true);
+    this._destroy$.complete();
+  }
+
+  protected _handleChange() {
+    if (this.field.submitOnChange) {
+      this.submit.emit();
+    }
+  }
+
+  onChange(data: any) {
+    this._change$.next(data);
   }
 
   get labelParams() {

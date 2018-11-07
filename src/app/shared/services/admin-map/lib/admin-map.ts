@@ -12,9 +12,23 @@ import {
 } from 'subrepos/gtrack-common-ngx/app';
 
 import * as L from 'leaflet';
+import 'overlapping-marker-spiderfier-leaflet';
 import 'leaflet.fullscreen';
 import turfBuffer from '@turf/buffer';
 import _assign from 'lodash-es/assign';
+import { SMALL_BUFFER_SIZE, BIG_BUFFER_SIZE } from 'app/config';
+
+export enum EBufferSize {
+  SMALL = 'small',
+  BIG = 'big'
+}
+export enum EAdminMarkerType {
+  WAYPOINT = 'waypoint',
+  POI = 'poi',
+  IMAGE = 'image'
+}
+
+declare const OverlappingMarkerSpiderfier;
 
 export class AdminMap extends Map {
   public markersGroup: L.LayerGroup;
@@ -42,25 +56,32 @@ export class AdminMap extends Map {
         forcePseudoFullscreen: true // force use of pseudo full screen even if full screen API is available, default false
       })
       .addTo(this.map);
+
+    this.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(this.map, {
+      keepSpiderfied: true
+    });
   }
 
   /**
    * Get buffer geoJSON
    */
-  public getBuffer(): Observable<GeoJSON.Feature<GeoJSON.Polygon> | undefined> {
+  public getBuffer(size: EBufferSize): Observable<GeoJSON.Feature<GeoJSON.Polygon> | undefined> {
     // Update totals on each segment update
     return this._store.pipe(
       select(this._hikeEditRoutePlannerSelectors.getPath),
       take(1),
       rxMap(path => {
         if (typeof path !== 'undefined') {
-          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 50, { units: 'meters' });
+          const _size = size === EBufferSize.SMALL ? SMALL_BUFFER_SIZE : BIG_BUFFER_SIZE;
+          const _draw_type = size === EBufferSize.SMALL ? 'small_buffer' : 'big_buffer';
+
+          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, _size, { units: 'meters' });
 
           if (typeof _buffer !== 'undefined') {
             _buffer = _assign(_buffer, {
               properties: {
                 name: 'buffer polygon',
-                draw_type: 'small_buffer'
+                draw_type: _draw_type
               }
             });
           }
@@ -92,7 +113,9 @@ export class AdminMap extends Map {
   private _getGeoJsonStyle(feature) {
     switch (feature.properties.draw_type) {
       case 'small_buffer':
-        return { color: '#000044', weight: 6, fillColor: '#000077' };
+        return { color: '#000044', weight: 1, fillColor: '#000077' };
+      case 'big_buffer':
+        return { color: '#000044', weight: 1, fillColor: '#000077' };
     }
   }
 
@@ -115,6 +138,16 @@ export class AdminMap extends Map {
   public removeGeoJSON(geojson) {
     if (geojson) {
       this.map.removeLayer(geojson);
+    }
+  }
+
+  public refreshSpiderfierMarkers(markers: L.Marker[], type: EAdminMarkerType) {
+    for (const marker of this.overlappingMarkerSpiderfier.markers.filter(m => m.options.type === type)) {
+      this.overlappingMarkerSpiderfier.removeMarker(marker);
+    }
+
+    for (const marker of markers) {
+      this.overlappingMarkerSpiderfier.addMarker(marker);
     }
   }
 }

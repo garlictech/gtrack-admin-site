@@ -6,7 +6,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../actions';
 import {
   OsmPoiService,
-  OsmRoutePoiService,
+  // OsmRoutePoiService,
   WikipediaPoiService,
   GooglePoiService,
   HikeProgramService
@@ -24,7 +24,7 @@ export class HikeEditPoiEffects {
     private _routeService: RouteService,
     private _wikipediaPoiService: WikipediaPoiService,
     private _osmPoiService: OsmPoiService,
-    private _osmRoutePoiService: OsmRoutePoiService,
+    // private _osmRoutePoiService: OsmRoutePoiService,
     private _googlePoiService: GooglePoiService,
     private _hikeProgramService: HikeProgramService
   ) {}
@@ -40,7 +40,7 @@ export class HikeEditPoiEffects {
       const boundsArr: any[] = [];
       this._routeService.splitBounds(bounds, 10000, boundsArr);
 
-      const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
+      const langs: string[] = this._hikeProgramService.getDescriptionLanguages();
       const _observables: Observable<IWikipediaPoi[]>[] = [];
 
       for (const lang of langs) {
@@ -67,7 +67,7 @@ export class HikeEditPoiEffects {
     ofType(hikeEditPoiActions.GET_GOOGLE_POIS),
     map((action: hikeEditPoiActions.GetGooglePois) => action.bounds),
     switchMap(bounds => {
-      const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
+      const langs: string[] = this._hikeProgramService.getDescriptionLanguages();
 
       return this._googlePoiService
         .get(bounds, langs)
@@ -106,6 +106,7 @@ export class HikeEditPoiEffects {
   /**
    * Get pois from OSM api
    */
+  /*
   @Effect()
   getOsmRoutePois$: Observable<Action> = this._actions$.pipe(
     ofType(hikeEditPoiActions.GET_OSM_ROUTE_POIS),
@@ -116,6 +117,7 @@ export class HikeEditPoiEffects {
       });
     })
   );
+  */
 
   /**
    * Load gTrackPoi after save from servicePoi

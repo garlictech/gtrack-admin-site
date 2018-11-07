@@ -1,3 +1,12 @@
 <div class="slideshow-container">
-  <gtrack-slideshow [imageUrls]="[data.original.url]"></gtrack-slideshow>
+  <gtrack-slideshow [imageUrls]="[data.card.url]"></gtrack-slideshow>
+</div>
+
+<div *ngIf="(isPlanning$ | async)">
+  <p-button
+    class="mt-10"
+    label="{{isBackground ? 'Remove background' : 'Add background'}}"
+    styleClass="ui-button-{{btnClass}}"
+    (onClick)="toggleBackgroundImage()"
+  ></p-button>
 </div>

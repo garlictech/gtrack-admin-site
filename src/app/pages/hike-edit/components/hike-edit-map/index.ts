@@ -11,7 +11,7 @@ import { adminMapActions, commonBackgroundGeolocationActions } from '../../../..
 import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
 import { Center, selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
-import { WaypointMarkerService } from '../../../../shared/services/admin-map';
+import { WaypointMarkerService, EBufferSize } from '../../../../shared/services/admin-map';
 
 import * as L from 'leaflet';
 import { LeafletMouseEvent } from 'leaflet';
@@ -22,23 +22,18 @@ const CENTER = <Center>{
   zoom: 12
 };
 
-const LAYERS = [
-  {
-    name: 'street',
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-  },
-  {
-    name: 'topo',
-    url: 'https://opentopomap.org/{z}/{x}/{y}.png'
-  }
-];
+const LAYERS = [{
+  name: 'street',
+  url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+}, {
+  name: 'topo',
+  url: 'https://opentopomap.org/{z}/{x}/{y}.png'
+}];
 
-const OVERLAYS = [
-  {
-    name: 'trails',
-    url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
-  }
-];
+const OVERLAYS = [{
+  name: 'trails',
+  url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
+}];
 
 @Component({
   selector: 'app-hike-edit-map',
@@ -60,8 +55,9 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   public clickModes: SelectItem[] = [];
   public locationSearchResult: google.maps.places.PlaceResult;
   public faSearch = faSearch;
-  private _bufferShown = false;
-  private _bufferOnMap: L.GeoJSON;
+  public EBufferSize = EBufferSize;
+  private _bufferShown = {};
+  private _bufferOnMap = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -82,11 +78,15 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this._destroy$)
       )
       .subscribe(() => {
-        // Refresh buffer on segment change, if needed
+        // Refresh buffers on segment change, if needed
         setTimeout(() => {
-          if (this._bufferShown) {
-            this._removeBuffer();
-            this._addBuffer();
+          if (this._bufferShown[EBufferSize.SMALL]) {
+            this._removeBuffer(EBufferSize.SMALL);
+            this._addBuffer(EBufferSize.SMALL);
+          }
+          if (this._bufferShown[EBufferSize.BIG]) {
+            this._removeBuffer(EBufferSize.BIG);
+            this._addBuffer(EBufferSize.BIG);
           }
         });
       });
@@ -112,7 +112,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
 
     this._store.dispatch(new commonBackgroundGeolocationActions.EndTracking());
     this._store.dispatch(new adminMapActions.ResetMap());
@@ -172,32 +172,32 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
 
-  public buffer($event: Event) {
+  public toggleBuffer($event: Event, size: EBufferSize) {
     $event.stopPropagation();
 
-    this._bufferShown = !this._bufferShown;
+    this._bufferShown[size] = !this._bufferShown[size];
 
-    if (this._bufferShown) {
-      this._addBuffer();
+    if (this._bufferShown[size]) {
+      this._addBuffer(size);
     } else {
-      this._removeBuffer();
+      this._removeBuffer(size);
     }
   }
 
-  private _addBuffer() {
+  private _addBuffer(size: EBufferSize) {
     this.mapComponent.map
-      .getBuffer()
+      .getBuffer(size)
       .pipe(take(1))
       .subscribe(buffer => {
         if (buffer) {
-          this._bufferOnMap = this.mapComponent.map.addGeoJSON(buffer);
+          this._bufferOnMap[size] = this.mapComponent.map.addGeoJSON(buffer);
         }
       });
   }
 
-  private _removeBuffer() {
-    if (this._bufferOnMap) {
-      this.mapComponent.map.removeGeoJSON(this._bufferOnMap);
+  private _removeBuffer(size: EBufferSize) {
+    if (this._bufferOnMap[size]) {
+      this.mapComponent.map.removeGeoJSON(this._bufferOnMap[size]);
     }
   }
 

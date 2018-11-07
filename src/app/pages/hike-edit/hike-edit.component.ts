@@ -17,10 +17,11 @@ import { hikeEditRoutePlannerActions } from '../../store/actions';
 import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from '../../store/selectors';
 import { WaypointMarkerService, RoutePlannerService, AdminMapService } from '../../shared/services/admin-map';
 import { IHikeProgramStored, IRoute, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
-import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
+import { HikeSelectors, IHikeContextState, RouteSelectors } from 'subrepos/gtrack-common-ngx';
 import { HikeProgramService } from '../../shared/services';
 import { MessageService } from 'primeng/api';
 
+import * as L from 'leaflet';
 import * as uuid from 'uuid/v1';
 import _pick from 'lodash-es/pick';
 
@@ -56,6 +57,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
+    private _routeSelectors: RouteSelectors,
     private _messageService: MessageService,
     private _router: Router,
     private _title: Title
@@ -227,11 +229,14 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     // Attributes for Photos component
     this.backgroundImageSelector = this._editedHikeProgramSelectors.getBackgroundImages;
     this.backgroundImageUrlSelector = this._editedHikeProgramSelectors.getBackgroundOriginalUrls();
+
     this.clickActions = {
       add: image => this._store.dispatch(new editedHikeProgramActions.AddHikeProgramBackgroundImage(image)),
       remove: url => this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(url)),
-      addMarker: url => this._store.dispatch(new hikeEditImageActions.AddImageMarker(url)),
-      removeMarker: url => this._store.dispatch(new hikeEditImageActions.RemoveImageMarker(url))
+      addMarker: image => this._store.dispatch(new hikeEditImageActions.AddImageMarker(image)),
+      addMarkers: images => this._store.dispatch(new hikeEditImageActions.AddImageMarkers(images)),
+      removeMarker: image => this._store.dispatch(new hikeEditImageActions.RemoveImageMarker(image)),
+      removeMarkers: images => this._store.dispatch(new hikeEditImageActions.RemoveImageMarkers(images))
     };
   }
 
@@ -241,7 +246,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   public saveHike() {
@@ -343,5 +348,35 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true)
       );
     });
+  }
+
+  public retrievePlan() {
+    this._store
+      .pipe(
+        select(this._editedHikeProgramSelectors.getRouteId),
+        switchMap((routeId: string) =>
+          this._store.pipe(
+            select(this._routeSelectors.getRoute(routeId)),
+            take(1)
+          )
+        ),
+        take(1)
+      )
+      .subscribe((storedRoute: any) => {
+        this._waypointMarkerService.reset();
+
+        const _coords: L.LatLng[] = [];
+
+        for (const feature of storedRoute.route.features) {
+          if (feature.geometry.type === 'Point') {
+            _coords.push(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
+          }
+        }
+
+        this._waypointMarkerService.addWaypoints(_coords);
+
+        // Enable planning
+        this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(true));
+      });
   }
 }

@@ -11,7 +11,9 @@ export const GET_FLICKR_IMAGES = '[HikeEditImage] Get Flickr images';
 export const SET_FLICKR_IMAGES = '[HikeEditImage] Set Flickr images';
 
 export const ADD_IMAGE_MARKER = '[HikeEditImage] Add image marker';
+export const ADD_IMAGE_MARKERS = '[HikeEditImage] Add image markers';
 export const REMOVE_IMAGE_MARKER = '[HikeEditImage] Remove image marker';
+export const REMOVE_IMAGE_MARKERS = '[HikeEditImage] Remove image markers';
 
 export class ResetImageState implements Action {
   readonly type = RESET_IMAGE_STATE;
@@ -54,9 +56,19 @@ export class AddImageMarker implements Action {
   constructor(public image: IBackgroundImageData) {}
 }
 
+export class AddImageMarkers implements Action {
+  readonly type = ADD_IMAGE_MARKERS;
+  constructor(public images: IBackgroundImageData[]) {}
+}
+
 export class RemoveImageMarker implements Action {
   readonly type = REMOVE_IMAGE_MARKER;
   constructor(public image: IBackgroundImageData) {}
+}
+
+export class RemoveImageMarkers implements Action {
+  readonly type = REMOVE_IMAGE_MARKERS;
+  constructor(public images: IBackgroundImageData[]) {}
 }
 
 export type AllHikeEditImageActions =
@@ -69,4 +81,6 @@ export type AllHikeEditImageActions =
   | SetFlickrImages
   // Image markers
   | AddImageMarker
-  | RemoveImageMarker;
+  | AddImageMarkers
+  | RemoveImageMarker
+  | RemoveImageMarkers;

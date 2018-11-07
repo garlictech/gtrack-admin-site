@@ -78,14 +78,14 @@ describe('HikeEditImage selectors', () => {
     });
   });
 
-  describe('getImageMarkerUrls', () => {
+  describe('getImageMarkerImages', () => {
     it('should return image marker urls', () => {
       let result;
       const hikeEditImageSelectors: HikeEditImageSelectors = TestBed.get(HikeEditImageSelectors);
 
       store
         .pipe(
-          select(hikeEditImageSelectors.getImageMarkerUrls),
+          select(hikeEditImageSelectors.getImageMarkerImages),
           takeUntil(destroy$)
         )
         .subscribe(res => (result = res));

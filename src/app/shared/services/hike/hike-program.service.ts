@@ -57,7 +57,7 @@ export class HikeProgramService {
           }
 
           if (path.geometry.coordinates.length > 0) {
-            if (poiStops[0].distanceFromOrigo > 10) {
+            if (poiStops[0].distanceFromOrigo > 25) {
               poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
             }
 
@@ -70,7 +70,8 @@ export class HikeProgramService {
                 )
             );
 
-            if (distanceFromFinish > 10) {
+            console.log('distanceFromFinish ', distanceFromFinish);
+            if (distanceFromFinish > 25) {
               poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
             }
           }
@@ -149,7 +150,7 @@ export class HikeProgramService {
   /**
    * Get current languages from descriptions
    */
-  public getDescriptionLaguages() {
+  public getDescriptionLanguages() {
     let langs: string[] = [];
     this._store
       .pipe(

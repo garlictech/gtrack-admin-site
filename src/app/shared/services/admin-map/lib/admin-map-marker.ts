@@ -15,6 +15,7 @@ export class AdminMapMarker extends MapMarker {
     popupData: IMarkerPopupData
   ) {
     super(lat, lon, types, title, iconService, popupData);
+
     this.poiId = poiId;
   }
 }

@@ -27,10 +27,8 @@ import _cloneDeep from 'lodash-es/cloneDeep';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
-  @Input()
-  poiType: IExternalPoiType;
-  @Input()
-  isPlanning$: Observable<boolean>;
+  @Input() poiType: IExternalPoiType;
+  @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
   public segments$: Observable<any>;
   public selectedPoisCount$: Observable<number>;
@@ -113,7 +111,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
             })
           );
         }),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((pois: IExternalPoi[]) => {
         // Refresh poi list on the store
@@ -225,7 +224,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         select(
           this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers')
         ),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
@@ -244,7 +244,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
             'showOffrouteMarkers'
           )
         ),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
@@ -258,7 +259,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   private _getSubdomainSelector(subdomain: string) {

@@ -18,7 +18,9 @@ export const reducer: ActionReducerMap<IState> = {
 };
 
 export function logger(_reducer: ActionReducer<any>): any {
-  return storeLogger()(_reducer);
+  return storeLogger({
+    collapsed: true
+  })(_reducer);
 }
 
 export function logout(_reducer) {

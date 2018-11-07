@@ -1,2 +1,2 @@
-p-slider([(ngModel)]="value", (onChange)="doChange()", [min]='min', [max]='max')
+p-slider([(ngModel)]="value", (ngModelChange)="doChange($event)", [min]='min', [max]='max')
 div {{value}}

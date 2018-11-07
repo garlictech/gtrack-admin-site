@@ -14,14 +14,10 @@ import _map from 'lodash-es/map';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisExternalTableComponent {
-  @Input()
-  pois$: Observable<any[]>;
-  @Input()
-  subdomain: string;
-  @Input()
-  onRouteCheck: boolean;
-  @Input()
-  openPoiModal: any;
+  @Input() pois$: Observable<any[]>;
+  @Input() subdomain: string;
+  @Input() onRouteCheck: boolean;
+  @Input() openPoiModal: any;
 
   constructor(private _store: Store<State>) {}
 

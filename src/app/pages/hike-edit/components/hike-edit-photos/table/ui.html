@@ -5,11 +5,11 @@
         <th>Thumbnail</th>
         <th>Title</th>
         <th>Background</th>
-        <th *ngIf="showMarkerColumn">Marker</th>
+        <th *ngIf="showMarkerColumn" (click)="invertMarkerSelection()" class="cursor-pointer">[Marker]</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-image>
-      <tr>
+      <tr *ngIf="!!image.onRoute === onRouteCheck">
         <td>
           <a href="{{image.original.url}}" target="_blank">
             <img *ngIf="image.source.type === 'wikipedia'" class="thumbs" src="{{image.original.url}}">

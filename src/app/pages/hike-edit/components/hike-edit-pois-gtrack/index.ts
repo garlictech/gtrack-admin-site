@@ -131,8 +131,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     this.pois$
       .pipe(
-        debounceTime(250),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((pois: IGTrackPoi[]) => {
         // Refresh markers
@@ -161,7 +161,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOnrouteMarkers')),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
@@ -175,7 +176,8 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers')),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
@@ -189,7 +191,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   /**

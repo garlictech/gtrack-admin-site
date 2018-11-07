@@ -11,7 +11,6 @@ import { Store, select } from '@ngrx/store';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { State, IHikeEditRoutePlannerState, IHikeEditRoutePlannerTotalState } from '../../../../store';
 import { editedHikeProgramActions, hikeEditPoiActions } from '../../../../store/actions';
-import { hikeEditRoutePlannerActions } from '../../../../store/actions';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
 import {
   HikeEditMapSelectors,
@@ -23,7 +22,6 @@ import { IRouteStored } from 'subrepos/provider-client';
 
 import _pick from 'lodash-es/pick';
 import _values from 'lodash-es/values';
-import * as L from 'leaflet';
 
 @Component({
   selector: 'app-hike-edit-route-planner',
@@ -63,22 +61,13 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .pipe(
         select(this._hikeEditMapSelectors.getMapId),
         filter(id => id !== ''),
-        takeUntil(this._destroy$),
         switchMap((mapId: string) => {
           this._map = this._adminMapService.getMapById(mapId);
-          return this._store.pipe(
-            select(this._editedHikeProgramSelectors.getRouteId),
-            takeUntil(this._destroy$)
-          );
+          return this._store.pipe(select(this._editedHikeProgramSelectors.getRouteId));
         }),
-        takeUntil(this._destroy$),
-        switchMap((routeId: string) => {
-          return this._store.pipe(
-            select(this._routeSelectors.getRouteContext(routeId)),
-            takeUntil(this._destroy$)
-          );
-        }),
-        filter(routeContext => !!routeContext)
+        switchMap((routeId: string) => this._store.pipe(select(this._routeSelectors.getRouteContext(routeId)))),
+        filter(routeContext => !!routeContext),
+        takeUntil(this._destroy$)
       )
       .subscribe((routeContext: IRouteContextState) => {
         // Route saved
@@ -151,37 +140,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
-  }
-
-  public retrievePlan() {
-    this._store
-      .pipe(
-        select(this._editedHikeProgramSelectors.getRouteId),
-        switchMap((routeId: string) =>
-          this._store.pipe(
-            select(this._routeSelectors.getRoute(routeId)),
-            take(1)
-          )
-        ),
-        take(1)
-      )
-      .subscribe((storedRoute: any) => {
-        this._waypointMarkerService.reset();
-
-        const _coords: L.LatLng[] = [];
-
-        for (const feature of storedRoute.route.features) {
-          if (feature.geometry.type === 'Point') {
-            _coords.push(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
-          }
-        }
-
-        this._waypointMarkerService.addWaypoints(_coords);
-
-        // Enable planning
-        this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(true));
-      });
+    this._destroy$.complete();
   }
 
   public removeLast() {

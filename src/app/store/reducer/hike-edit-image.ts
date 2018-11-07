@@ -87,10 +87,24 @@ export function imageMarkerReducer(
       };
     }
 
+    case hikeEditImageActions.ADD_IMAGE_MARKERS: {
+      return {
+        ...state,
+        images: [...(<any>state.images), ...action.images]
+      };
+    }
+
     case hikeEditImageActions.REMOVE_IMAGE_MARKER: {
       return {
         ...state,
         images: (<any>state.images).filter(img => img.original.url !== action.image.original.url)
+      };
+    }
+
+    case hikeEditImageActions.REMOVE_IMAGE_MARKERS: {
+      return {
+        ...state,
+        images: (<any>state.images).filter(img => !(action.images.map(i => i.original.url).includes(img.original.url)))
       };
     }
 
@@ -180,7 +194,7 @@ export function imageListContextReducer(
 const reducerMap: ActionReducerMap<IHikeEditImageState> = {
   mapillaryImages: mapillaryImageReducer,
   flickrImages: flickrImageReducer,
-  imageMarkerUrls: imageMarkerReducer,
+  imageMarkerImages: imageMarkerReducer,
   contexts: imageListContextReducer
 };
 

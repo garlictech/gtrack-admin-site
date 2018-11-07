@@ -41,10 +41,17 @@
   ></p-button>
 
   <p-button
-    label="Buffer"
+    label="Small buffer"
     type="button"
     styleClass="ui-button-primary mr-5"
-    (onClick)="buffer($event)"
+    (onClick)="toggleBuffer($event, EBufferSize.SMALL)"
+  ></p-button>
+
+  <p-button
+    label="Big buffer"
+    type="button"
+    styleClass="ui-button-primary mr-5"
+    (onClick)="toggleBuffer($event, EBufferSize.BIG)"
   ></p-button>
 
   <p-selectButton styleClass="mr-10" [options]="clickModes" [(ngModel)]="mode"></p-selectButton>

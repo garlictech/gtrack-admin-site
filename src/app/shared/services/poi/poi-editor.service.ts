@@ -3,22 +3,14 @@ import { Store, select } from '@ngrx/store';
 import { of, interval, combineLatest } from 'rxjs';
 import { take, switchMap, filter, map as rxMap, combineAll, debounceTime } from 'rxjs/operators';
 import {
-  GeometryService,
-  ElevationService,
-  IconService,
-  CenterRadius,
-  GeoSearchSelectors,
-  PoiSelectors,
-  GeospatialService
+  GeometryService, ElevationService, IconService, CenterRadius, GeoSearchSelectors,
+  PoiSelectors, GeospatialService
 } from 'subrepos/gtrack-common-ngx';
 import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
 import { State, IExternalPoiListContextItemState } from '../../../store';
 import { commonGeoSearchActions } from '../../../store/actions';
 import {
-  HikeEditPoiSelectors,
-  HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors,
-  HikeEditImageSelectors
+  HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditImageSelectors
 } from '../../../store/selectors';
 import { AdminMap, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../interfaces';
@@ -28,7 +20,6 @@ import { IMarkerPopupData, IBackgroundImageData } from 'subrepos/provider-client
 import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker/marker-popup.service';
 
 import * as L from 'leaflet';
-import 'overlapping-marker-spiderfier-leaflet';
 import _defaultsDeep from 'lodash-es/defaultsDeep';
 import _pick from 'lodash-es/pick';
 import _merge from 'lodash-es/merge';
@@ -48,8 +39,8 @@ import _intersection from 'lodash-es/intersection';
 import turfBuffer from '@turf/buffer';
 import { point as turfPoint } from '@turf/helpers';
 import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
-
-declare const OverlappingMarkerSpiderfier;
+import { SMALL_BUFFER_SIZE, BIG_BUFFER_SIZE } from 'app/config';
+import { EAdminMarkerType } from '../admin-map/lib/admin-map';
 
 @Injectable()
 export class PoiEditorService {
@@ -196,8 +187,8 @@ export class PoiEditorService {
     const _pois: any[] = [];
 
     if (pois && pois.length > 0 && path) {
-      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 50, { units: 'meters' });
-      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 1000, { units: 'meters' });
+      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, SMALL_BUFFER_SIZE, { units: 'meters' });
+      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
 
       for (const p of _cloneDeep(pois)) {
         const _point = turfPoint([p.lon, p.lat]);
@@ -227,13 +218,17 @@ export class PoiEditorService {
     const _photos: any[] = [];
 
     if (photos && photos.length > 0 && path) {
-      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, 1000, { units: 'meters' });
+      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, SMALL_BUFFER_SIZE, { units: 'meters' });
+      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
 
       for (const _photo of _cloneDeep(photos)) {
         const _point = turfPoint([_photo.lon, _photo.lat]);
 
         if (typeof _bigBuffer !== 'undefined') {
           if (turfBooleanPointInPolygon(_point, _bigBuffer)) {
+            if (typeof _smallBuffer !== 'undefined') {
+              (<any>_photo).onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
+            }
             _photos.push(_photo);
           }
         }
@@ -621,11 +616,6 @@ export class PoiEditorService {
       const _markers = _poiMarkers.concat(_imageMarkers);
 
       // Add markers to the map
-
-      map.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(map.leafletMap, {
-        keepSpiderfied: true
-      });
-
       if (map.leafletMap.hasLayer(map.markersGroup)) {
         map.leafletMap.removeLayer(map.markersGroup);
       }
@@ -636,17 +626,7 @@ export class PoiEditorService {
         map.leafletMap.addLayer(map.markersGroup);
 
         // Register marker to spiderfier
-        for (const _marker of _markers) {
-          map.overlappingMarkerSpiderfier.addMarker(_marker.marker);
-        }
-
-        // Currently unused
-        // map.overlappingMarkerSpiderfier.addListener('click', function(marker) {
-        //   console.log('spiderify clic');
-        // });
-        // map.overlappingMarkerSpiderfier.addListener('spiderfy', function(marker) {
-        //   console.log('spiderify spiderfy');
-        // });
+        map.refreshSpiderfierMarkers(_markers.map(m => m.marker), EAdminMarkerType.POI);
       }
     }
   }
@@ -697,6 +677,7 @@ export class PoiEditorService {
       };
 
       const _marker = new AdminMapMarker(poi.lat, poi.lon, poi.types || [], '', this._iconService, poi.id, popupData);
+      (<any>_marker).marker.options.type = EAdminMarkerType.POI;
 
       _markers.push(_marker);
     }
@@ -707,36 +688,47 @@ export class PoiEditorService {
   private _generateImageMarkers(map: AdminMap) {
     const _markers: AdminMapMarker[] = [];
 
-    this._store
-      .pipe(
-        select(this._hikeEditImageSelectors.getImageMarkerUrls),
+    combineLatest(
+      this._store.pipe(
+        select(this._editedHikeProgramSelectors.getBackgroundOriginalUrls()),
+        take(1)
+      ),
+      this._store.pipe(
+        select(this._hikeEditImageSelectors.getImageMarkerImages),
         take(1)
       )
-      .subscribe((images: IBackgroundImageData[]) => {
-        for (const image of images) {
-          const popupData: IMarkerPopupData = {
-            popupComponentName: 'ImageMarkerPopupComponent',
-            markerClickCallback: this._markerPopupService.onUserMarkerClick,
-            closeCallback: () => {
-              map.leafletMap.closePopup();
-              this.refreshPoiMarkers(map);
-            },
-            map: map.leafletMap,
-            data: _cloneDeep(image)
-          };
+    )
+    .subscribe(([bgImageUrls, markerImages]: [string[], IBackgroundImageData[]]) => {
+      for (const image of markerImages) {
+        const popupData: IMarkerPopupData = {
+          popupComponentName: 'ImageMarkerPopupComponent',
+          markerClickCallback: this._markerPopupService.onUserMarkerClick,
+          closeCallback: () => {
+            map.leafletMap.closePopup();
+            this.refreshPoiMarkers(map);
+          },
+          map: map.leafletMap,
+          data: _cloneDeep(image)
+        };
 
-          const _marker = new AdminMapMarker(
-            image.lat,
-            image.lon,
-            ['photo'],
-            '',
-            this._iconService,
-            image.original.url,
-            popupData
-          );
-          _markers.push(_marker);
+        const _marker = new AdminMapMarker(
+          image.lat,
+          image.lon,
+          ['photo'],
+          '',
+          this._iconService,
+          image.original.url,
+          popupData
+        );
+        (<any>_marker).marker.options.type = EAdminMarkerType.IMAGE;
+
+        if (bgImageUrls.includes(image.original.url)) {
+          _marker.toggleHighlight();
         }
-      });
+
+        _markers.push(_marker);
+      }
+    });
 
     return _markers;
   }

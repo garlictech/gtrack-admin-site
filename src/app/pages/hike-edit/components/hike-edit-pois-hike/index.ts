@@ -134,8 +134,8 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
     this.pois$
       .pipe(
-        debounceTime(250),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe(() => {
         // Refresh markers
@@ -145,8 +145,8 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._editedHikeProgramSelectors.getStopsCount),
-        debounceTime(250),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe(() => {
         this._hikeProgramService.updateHikeProgramStops();
@@ -155,8 +155,8 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._hikeEditRoutePlannerSelectors.getPathLength),
-        debounceTime(250),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe(() => {
         this._hikeProgramService.updateHikeProgramStops();
@@ -184,7 +184,8 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers')),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
@@ -199,7 +200,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   /**
