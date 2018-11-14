@@ -272,9 +272,11 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
   addGeoJson(geojson: any, map: L.Map) {
     const styles = [
-      { color: 'black', opacity: 0.15, weight: 9 },
-      { color: 'white', opacity: 0.8, weight: 6 },
-      { color: 'red', opacity: 1, weight: 2 }
+      { color: 'black', opacity: 0.1, weight: 20 },
+      { color: 'black', opacity: 0.2, weight: 16 },
+      { color: 'black', opacity: 0.3, weight: 12 },
+      { color: 'white', opacity: 1, weight: 9 },
+      { color: 'red', opacity: 1, weight: 4 }
     ];
 
     const responses = styles.map((style, i) =>

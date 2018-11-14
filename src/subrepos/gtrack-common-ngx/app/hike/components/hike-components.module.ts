@@ -29,6 +29,7 @@ import { SearchFiltersModule } from '../../search-filters/search-filters.module'
 import { SearchResultsMapComponent } from './search-results-map';
 import { HikeListMapComponent } from './hike-list-map';
 import { PoiMapComponent } from './poi-map';
+import { HikeDayComponent } from './hike-day';
 
 import { LocalizeModule } from '../../localize';
 import { ObjectMarkModule } from '../../object-mark';
@@ -47,7 +48,8 @@ const COMPONENTS = [
   DownloadGpxButtonComponent,
   BookmarkComponent,
   HikeListMapComponent,
-  PoiMapComponent
+  PoiMapComponent,
+  HikeDayComponent
 ];
 
 @NgModule({

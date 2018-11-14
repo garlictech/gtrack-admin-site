@@ -35,7 +35,11 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     minutes: 0
   };
 
+  @Input()
   public startDate: Date;
+
+  @Input()
+  public speed = 4;
 
   public timeline: {
     time: Date;
@@ -54,11 +58,6 @@ export class HikeProgramComponent implements OnInit, OnChanges {
   ) {
     this.startIcon = icon.url('start');
     this.finishIcon = icon.url('finish');
-
-    this.startDate = new Date();
-
-    this.startDate.setHours(this.startTime.hours);
-    this.startDate.setMinutes(this.startTime.minutes);
   }
 
   public displayStop(stop) {
@@ -68,6 +67,10 @@ export class HikeProgramComponent implements OnInit, OnChanges {
   }
 
   public generateTimeline() {
+    if (!this.startDate) {
+      return;
+    }
+
     const times = this.hikeProgram.stops.map((stop, i) => this.getSegmentStartTime(i));
 
     const startPosition: GeoJSON.Position = [this.hikeProgram.stops[0].lon, this.hikeProgram.stops[0].lat];
@@ -84,7 +87,7 @@ export class HikeProgramComponent implements OnInit, OnChanges {
 
     const positions = events.map(event => {
       return times.findIndex((time, i) => {
-        const nextTime = times[i + 1];
+        const nextTime = times[i];
 
         return typeof nextTime !== 'undefined' && nextTime.getTime() >= sunrise[event].getTime();
       });
@@ -125,20 +128,24 @@ export class HikeProgramComponent implements OnInit, OnChanges {
         events: stopEvents
       };
 
-      const fakeStops = eventIndexes.map(eventIndex => {
-        const event = events[eventIndex];
-        const next = this.hikeProgram.stops[i + 1];
+      let fakeStops = [];
 
-        return {
-          eventOnly: true,
-          arrive: sunrise[event],
-          title: `astronomy.${event}`,
-          segment: next.segment,
-          eventIcon: icons[event]
-        };
-      });
+      if (i > 0) {
+        fakeStops = eventIndexes.map(eventIndex => {
+          const event = events[eventIndex];
+          const next = this.hikeProgram.stops[i + 1];
 
-      return [...array, stopWithEvents, ...fakeStops];
+          return {
+            eventOnly: true,
+            arrive: sunrise[event],
+            title: `astronomy.${event}`,
+            segment: next.segment,
+            eventIcon: icons[event]
+          };
+        });
+      }
+
+      return [...array, ...fakeStops, stopWithEvents];
     }, []);
   }
 
@@ -150,6 +157,10 @@ export class HikeProgramComponent implements OnInit, OnChanges {
         this.stops = [...this.hikeProgram.stops];
         this.generateTimeline();
       }
+    }
+
+    if (changes.startDate || changes.speed) {
+      this.generateTimeline();
     }
   }
 
@@ -172,9 +183,9 @@ export class HikeProgramComponent implements OnInit, OnChanges {
 
   public getSegmentStartTime(segmentIndex: number) {
     const time = this.hikeProgram.stops
-      .filter((stop, i) => i <= segmentIndex)
+      .filter((stop, i) => i < segmentIndex)
       .map(stop => stop.segment)
-      .reduce((previous, segment) => previous + this._gameRule.segmentTime(segment.distance, segment.uphill), 0);
+      .reduce((previous, segment) => previous + this._gameRule.segmentTime(segment.distance, segment.uphill, this.speed), 0);
 
     const arrive = new Date(this.startDate.getTime());
 
