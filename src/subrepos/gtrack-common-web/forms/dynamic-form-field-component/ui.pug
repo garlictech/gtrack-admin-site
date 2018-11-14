@@ -66,7 +66,7 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
           [options]="field.selectOptions",
           [formControlName]="field.key",
           [id]="field.key",
-          [change]="getOnChange()"
+          (change)="onChange($event)"
         )
 
     gtrack-form-multi-select.field(
@@ -75,17 +75,19 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
       [defaultLabel]="field.defaultLabel | translate",
       [formControlName]="field.key",
       [id]="field.key",
-      [change]="getOnChange()"
+      (change)="onChange($event)"
     )
 
     gtrack-form-date-picker.field(
       *ngSwitchCase="'date'",
       [formControlName]="field.key",
       [id]="field.key",
+      [showTime]="field.showTime",
       [minDate]="field.minDate",
       [maxDate]="field.maxDate",
       [defaultDate]="field.defaultDate",
-      [placeholder]="sanitizedPlaceholder | translate"
+      [placeholder]="sanitizedPlaceholder | translate",
+      (change)="onChange($event)"
     )
 
     gtrack-form-time-picker.field(
@@ -93,7 +95,8 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
       [formControlName]="field.key",
       [id]="field.key",
       [defaultDate]="field.defaultDate",
-      [placeholder]="sanitizedPlaceholder | translate"
+      [placeholder]="sanitizedPlaceholder | translate",
+      (change)="onChange($event)"
     )
 
     ng-container(*ngSwitchCase="'group'")
@@ -112,14 +115,14 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
       gtrack-form-switch.field(
         [id]="field.key",
         [formControlName]="field.key",
-        [change]="getOnChange()"
+        (change)="onChange($event)"
       )
 
     ng-container(*ngSwitchCase="'slider'")
       gtrack-form-slider.field(
         [id]="field.key",
         [formControlName]="field.key",
-        [change]="getOnChange()",
+        (change)="onChange($event)",
         [min]="field.min",
         [max]="field.max"
       )
@@ -128,7 +131,7 @@ div(*ngIf="!field.hidden", [formGroup]="form", [ngClass]="containerClasses")
       gtrack-form-range-slider.field(
         [id]="field.key",
         [formControlName]="field.key",
-        [change]="getOnChange()",
+        (change)="onChange($event)",
         [min]="field.min",
         [max]="field.max"
       )

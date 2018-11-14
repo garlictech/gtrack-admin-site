@@ -22,6 +22,7 @@ import { HikeProgramPageComponent } from './hike-program-page';
 import { PoiPageComponent } from './poi-page';
 import { HikeMapComponent } from './hike-map';
 import { BookmarkComponent } from './bookmark';
+import { HikeDayComponent } from './hike-day';
 
 import { LocationSearchComponent } from './location-search';
 import { SearchFiltersComponent } from './search-filters';
@@ -51,7 +52,8 @@ const COMPONENTS = [
   PoiPageComponent,
   HikeMapComponent,
   BookmarkComponent,
-  PoiMapComponent
+  PoiMapComponent,
+  HikeDayComponent
 ];
 
 @NgModule({

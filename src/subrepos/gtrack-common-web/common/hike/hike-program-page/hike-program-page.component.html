@@ -12,7 +12,7 @@
     <gtrack-download-gpx [hikeProgram]="hikeProgram"></gtrack-download-gpx>
   </div>
 
-  <gtrack-hike-map [hikeProgram]="hikeProgram"></gtrack-hike-map>
+  <gtrack-hike-map [speed]="speed$ | async" [startDate]="startDate$ | async" [hikeProgram]="hikeProgram"></gtrack-hike-map>
 
   <gtrack-hike-data-item [hikeProgram]="hikeProgram"></gtrack-hike-data-item>
 
@@ -21,10 +21,12 @@
   </div>
 
   <div class="mb-20">
-    <gtrack-sunrise [position]="[hikeProgram.stops[0].lon, hikeProgram.stops[0].lat]"></gtrack-sunrise>
+    <gtrack-sunrise [day]="startDate$ | async" [position]="[hikeProgram.stops[0].lon, hikeProgram.stops[0].lat]"></gtrack-sunrise>
   </div>
 
-  <gtrack-hike-program [hikeProgram]="hikeProgram"></gtrack-hike-program>
+  <gtrack-hike-day></gtrack-hike-day>
+
+  <gtrack-hike-program [speed]="speed$ | async" [startDate]="startDate$ | async" [hikeProgram]="hikeProgram"></gtrack-hike-program>
 
   <!-- <div class="tim-title">
     <h2>Checkpoints</h2>
