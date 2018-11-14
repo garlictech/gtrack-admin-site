@@ -138,8 +138,13 @@ export class DeepstreamService {
         errors.pipe(
           tap(err => log.error(err)),
           tap(() => log.data('Retry')),
-          scan((count, err) => {
+          scan<any, number>((count, err) => {
             if (count >= retry) {
+              throw err;
+            }
+
+            // We should not retry provider validation errors
+            if (typeof err.errorMsg !== 'undefined' && err.errorMsg !== 'INTERNAL_SERVER_ERROR') {
               throw err;
             }
 
