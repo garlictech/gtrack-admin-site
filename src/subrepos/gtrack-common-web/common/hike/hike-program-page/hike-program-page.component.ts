@@ -1,5 +1,10 @@
-import { Component, Input, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ViewEncapsulation, OnInit } from '@angular/core';
 import { HikeProgram } from 'subrepos/gtrack-common-ngx';
+import { getHikeStartDate, getHikeSpeed } from '@common.features/settings/store/selectors';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import { State } from 'app/store';
 
 import _get from 'lodash-es/get';
 
@@ -10,9 +15,12 @@ import _get from 'lodash-es/get';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class HikeProgramPageComponent {
+export class HikeProgramPageComponent implements OnInit {
   @Input()
   public hikeProgram: HikeProgram;
+
+  public startDate$: Observable<Date>;
+  public speed$: Observable<number>;
 
   public get images() {
     let urls: string[] = [];
@@ -24,5 +32,23 @@ export class HikeProgramPageComponent {
     }
 
     return urls;
+  }
+
+  constructor(
+    private _store: Store<State>
+  ) {
+
+  }
+
+  ngOnInit() {
+    this.startDate$ = this._store
+      .pipe(
+        select(getHikeStartDate)
+      );
+
+    this.speed$ = this._store
+      .pipe(
+        select(getHikeSpeed)
+      );
   }
 }
