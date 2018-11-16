@@ -26,8 +26,8 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   @Input() poiId: string;
   @Input() closeModal: any;
 
-  public storeDataPath: string;
   public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
+  public descriptionLangSelector: any;
 
   public poiLoaded$: Observable<boolean>;
   public isDirty$: Observable<boolean>;
@@ -50,7 +50,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.descriptionSelector = this._editedGTrackPoiSelectors.getDescriptions;
-    this.storeDataPath = `${this._editedGTrackPoiSelectors.dataPath}.description`;
+    this.descriptionLangSelector = this._editedGTrackPoiSelectors.getDescriptionByLang;
 
     // Attributes for Photos component
     this.backgroundImageSelector = this._editedGTrackPoiSelectors.getBackgroundImages;

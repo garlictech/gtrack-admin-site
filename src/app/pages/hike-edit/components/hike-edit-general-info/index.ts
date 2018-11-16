@@ -22,8 +22,8 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
   public remoteError$: Observable<any>;
   public formDataPath$ = of('editedHikeProgram.data');
   public generalInfoFormDescriptor: IFormDescriptor;
-  public storeDataPath: string;
   public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
+  public descriptionLangSelector: any;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -76,9 +76,10 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
 
   private _initDescriptionFormConfig() {
     this.descriptionSelector = this._editedHikeProgramSelectors.getDescriptions;
-    this.storeDataPath = `${this._editedHikeProgramSelectors.dataPath}.description`;
+    this.descriptionLangSelector = this._editedHikeProgramSelectors.getDescriptionByLang;
 
     this.generalInfoFormDescriptor = {
+      formDataSelector: this._editedHikeProgramSelectors.getData,
       submit: {
         translatableLabel: 'form.submit',
         classList: ['btn', 'btn-sm', 'btn-fill', 'btn-success'],

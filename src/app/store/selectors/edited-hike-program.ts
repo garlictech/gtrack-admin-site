@@ -33,9 +33,6 @@ export class EditedHikeProgramSelectors {
   public getData: MemoizedSelector<object, IHikeProgramStored>;
   public getError: MemoizedSelector<object, any>;
 
-  public dataPath = 'editedHikeProgram.data';
-  public remiteErrorDataPath = 'editedHikeProgram.failed.data';
-
   constructor() {
     this._featureSelector = createFeatureSelector<IEditedHikeProgramState>('editedHikeProgram');
 
@@ -73,10 +70,12 @@ export class EditedHikeProgramSelectors {
     );
 
     this.getDirty = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => state.dirty);
-
     this.getWorking = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => state.working);
-
     this.getError = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => _get(state, 'failed'));
+  }
+
+  public getDescriptionByLang = (lang: string) => {
+    return createSelector(this._featureSelector, (state: IEditedHikeProgramState) => _get(state, `data.description.${lang}`));
   }
 
   public getHikePois(getAllSelector: ((state: object) => IPoiStored[])) {

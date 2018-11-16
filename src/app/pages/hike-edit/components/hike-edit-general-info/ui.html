@@ -1,16 +1,13 @@
 <app-localized-description
   [descriptionSelector]="descriptionSelector"
-  [storeDataPath]="storeDataPath"
+  [descriptionLangSelector]="descriptionLangSelector"
   [submitFv]="submitDescription"
   [deleteFv]="deleteDescription"
   [type]="'hike'"
 ></app-localized-description>
 
 <div class="mt-20">
-  <gtrack-form
-    [formDescriptor]="generalInfoFormDescriptor"
-    [formDataPath$]="formDataPath$"
-  ></gtrack-form>
+  <gtrack-form [formDescriptor]="generalInfoFormDescriptor"></gtrack-form>
 </div>
 
 <div class="ui-g mt-30" *ngIf="(hikeProgramData$ | async) as hikeProgramData">

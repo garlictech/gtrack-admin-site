@@ -70,7 +70,6 @@ export class HikeProgramService {
                 )
             );
 
-            console.log('distanceFromFinish ', distanceFromFinish);
             if (distanceFromFinish > 25) {
               poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
             }
