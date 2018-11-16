@@ -8,8 +8,6 @@ import { MapModule, MapComponentsModule } from './map';
 import { HikeComponentsModule, HikeModule, PoiSelectors } from './hike';
 import { RouterModule } from './router';
 
-// console.log('ENVIRONMENT: ', environment);
-
 if (environment.production) {
   Raven.config(environment.raven).install();
 }

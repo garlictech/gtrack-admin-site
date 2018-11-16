@@ -1,15 +1,13 @@
-import { map, filter } from 'rxjs/operators';
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Store, select } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
-import { EMPTY, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-
 import _get from 'lodash-es/get';
 import _keys from 'lodash-es/keys';
-
-import { Field } from '../field';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { EMPTY, Observable, Subject } from 'rxjs';
+import { Field, IFormDescriptor } from '../field';
+import { filter, map, pluck } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-form-field',
@@ -22,6 +20,9 @@ export class DynamicFormFieldComponent implements OnInit, OnDestroy {
   @Input()
   field: Field<any>;
 
+  @Input()
+  formDescriptor: IFormDescriptor;
+
   @Output()
   submit = new EventEmitter<any>();
 
@@ -31,25 +32,46 @@ export class DynamicFormFieldComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject<boolean>();
 
   constructor(private _translate: TranslateService, private _store: Store<any>) {
-    this
-      ._change$
+    /* EMPTY */
+  }
+
+  ngOnInit() {
+    this._change$
       .pipe(
         takeUntil(this._destroy$),
         distinctUntilChanged(),
         debounceTime(500)
       )
       .subscribe(() => this._handleChange());
-  }
 
-  ngOnInit() {
-    if (this.field.remoteErrorStatePath) {
-      const path = <string>_get(this.field, 'remoteErrorStatePath');
-
+    if (this.field.remoteErrorStateSelector) {
       this.remoteError$ = this._store.pipe(
-        select(state => _get(state, `${path}`)),
+        select(this.field.remoteErrorStateSelector),
         filter(err => this.field.remoteErrorStateFilter.indexOf(err) === -1),
         map(label => (label ? this._translate.instant(`form.errors.${label}`) : null))
       );
+    } else if (this.formDescriptor.remoteErrorStateSelector) {
+      this.remoteError$ = this._store.pipe(
+        select(this.formDescriptor.remoteErrorStateSelector),
+        filter(error => !!error),
+        pluck(this.field.key),
+        filter((err: string) => this.field.remoteErrorStateFilter.indexOf(err) === -1),
+        map(label => (label ? this._translate.instant(`form.errors.${label}`) : null))
+      );
+    }
+
+    if (this.field.formDataSelector) {
+      this._store
+        .pipe(
+          select(this.field.formDataSelector),
+          takeUntil(this._destroy$),
+          filter(fieldData => !!fieldData)
+        )
+        .subscribe(fieldData => {
+          const val: Object = {};
+          val[this.field.key] = fieldData;
+          this.form.patchValue(val);
+        });
     }
   }
 
@@ -58,14 +80,16 @@ export class DynamicFormFieldComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  protected _handleChange() {
-    if (this.field.submitOnChange) {
-      this.submit.emit();
-    }
-  }
-
   onChange(data: any) {
     this._change$.next(data);
+  }
+
+  getOnChange() {
+    return function() {
+      if (this.field.submitOnChange) {
+        this.formDescriptor.submit();
+      }
+    }.bind(this);
   }
 
   get labelParams() {
@@ -114,6 +138,12 @@ export class DynamicFormFieldComponent implements OnInit, OnDestroy {
     const fieldObj = this._fieldObj();
     const errorKey = _keys(fieldObj.errors)[0];
     return errorKey ? this._translate.instant(`form.errors.${errorKey}`) : null;
+  }
+
+  protected _handleChange() {
+    if (this.field.submitOnChange) {
+      this.submit.emit();
+    }
   }
 
   private _fieldObj(): any {

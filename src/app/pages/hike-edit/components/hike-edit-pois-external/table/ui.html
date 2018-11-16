@@ -21,7 +21,7 @@
           {{poi?.lng}}
         </td>
         <td>{{poi.distFromRoute | distance : true}}</td>
-        <td>{{poi.types.join(', ')}}</td>
+        <td>{{poi.types?.join(', ')}}</td>
         <td>
           <app-special-poi-data [poi]="poi" [openPoiModal]="openPoiModal"></app-special-poi-data>
         </td>

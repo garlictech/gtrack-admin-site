@@ -1,6 +1,7 @@
-import { FormGroup } from '@angular/forms';
 import { Field, IFieldBase } from './field';
+import { FormGroup } from '@angular/forms';
 import { IFormInstance } from '../field-control-service';
+import { Selector } from '@ngrx/store';
 export { Field, IFieldBase };
 
 export { EmailField } from './email';
@@ -39,9 +40,10 @@ export interface ISubmit {
   resetOnSubmit?: boolean;
 }
 
-export interface IFormDescriptor {
+export interface IFormDescriptor<T = any> {
   fields: any;
-  submit?: ISubmit;
-  storePath?: string;
+  submit: ISubmit;
+  formDataSelector?: Selector<any, T>;
+  remoteErrorStateSelector?: Selector<any, any>;
   titleLabel?: string;
 }

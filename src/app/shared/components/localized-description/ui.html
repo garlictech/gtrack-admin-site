@@ -17,10 +17,7 @@
 
 <p-accordion>
   <p-accordionTab *ngFor="let lng of (languageKeys$ | async)" [header]="getLangName(lng)">
-    <gtrack-form
-      [formDescriptor]="languageFormDescriptors[lng]"
-      [formDataPath$]="languageFormDataPaths[lng]"
-    ></gtrack-form>
+    <gtrack-form [formDescriptor]="languageFormDescriptors[lng]"></gtrack-form>
 
     <p-button
       class="trash"

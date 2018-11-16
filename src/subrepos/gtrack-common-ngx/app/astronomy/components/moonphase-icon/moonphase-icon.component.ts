@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import _kebabCase from 'lodash-es/kebabCase';
 
 import { EMoonPhases, AstronomyService } from '../../services';
@@ -8,7 +8,7 @@ import { EMoonPhases, AstronomyService } from '../../services';
   templateUrl: './moonphase-icon.component.html',
   styleUrls: ['./moonphase-icon.component.scss']
 })
-export class MoonphaseIconComponent implements OnInit {
+export class MoonphaseIconComponent implements OnInit, OnChanges {
   @Input()
   public phase: string;
 
@@ -28,6 +28,12 @@ export class MoonphaseIconComponent implements OnInit {
   constructor(private _astronomy: AstronomyService) {}
 
   ngOnInit() {
+    const icon = this._icons[this.phase];
+
+    this.icon = `assets/icons/weather/${icon}.svg`;
+  }
+
+  ngOnChanges() {
     const icon = this._icons[this.phase];
 
     this.icon = `assets/icons/weather/${icon}.svg`;

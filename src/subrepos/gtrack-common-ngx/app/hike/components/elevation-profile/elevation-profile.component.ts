@@ -1,5 +1,9 @@
 import { map, filter, takeUntil } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
+import * as moment from 'moment';
+
+import lineSliceAlong from '@turf/line-slice-along';
+import { lineString as turfLineString } from '@turf/helpers';
 
 import {
   Component,
@@ -14,10 +18,19 @@ import {
   SimpleChanges
 } from '@angular/core';
 
+import { DescriptionLanguageListService } from '../../../localize';
+
 import { State } from 'app/store';
 import { Subject, ReplaySubject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
-import { select as d3Select, mouse as d3Mouse, event as d3Event, Selection, BaseType } from 'd3-selection';
+import {
+  select as d3Select,
+  mouse as d3Mouse,
+  event as d3Event,
+  Selection,
+  BaseType
+} from 'd3-selection';
 
 import { bisector as d3Bisector } from 'd3-array';
 
@@ -33,6 +46,7 @@ import { line as d3Line } from 'd3-shape';
 import { interpolateNumber as d3InterpolateNumber } from 'd3-interpolate';
 
 import _get from 'lodash-es/get';
+import _range from 'lodash-es/range';
 
 import { DistancePipe, UnitsService } from '../../../shared';
 import { IElevationData, ElevationService } from '../../services/elevation';
@@ -46,8 +60,10 @@ import * as poiActions from '../../store/poi/actions';
 import { HikeProgram } from '../../services/hike-program';
 import { GeospatialService } from '../../../shared/services/geospatial';
 import { IconService } from '../../../map/services/icon';
+import { AstronomyService } from '../../../astronomy';
 
 import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
+import { GameRuleService } from '../../services/game-rule';
 
 @Component({
   selector: 'gtrack-common-elevation-profile',
@@ -85,6 +101,12 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   public height = 220;
 
   @Input()
+  public startDate = new Date();
+
+  @Input()
+  public speed = 4; // km/h
+
+  @Input()
   public margins = {
     top: 40,
     right: 20,
@@ -117,6 +139,9 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     private _poiSelectors: PoiSelectors,
     private _geospatial: GeospatialService,
     private _icon: IconService,
+    private _gameRule: GameRuleService,
+    private _descriptionLanguageList: DescriptionLanguageListService,
+    private _astronomy: AstronomyService,
     unitsService: UnitsService
   ) {
     this.distance = new DistancePipe(unitsService);
@@ -141,6 +166,11 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     if (typeof changes.elevationMarkerPosition !== 'undefined') {
       this.moveHandlerToCoordinate(changes.elevationMarkerPosition.currentValue);
     }
+
+    if (this.route && (changes.startDate || changes.speed)) {
+      this._removeTimeAxis();
+      this._addTimeAxis();
+    }
   }
 
   @Input()
@@ -149,7 +179,9 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       this._hikeProgram = hikeProgram;
       this.routeId = hikeProgram.routeId;
 
-      const poiIds = hikeProgram.stops.map(stop => stop.poiId).filter(poiId => !poiId.match(/endpoint/));
+      const poiIds = hikeProgram.stops
+        .map(stop => stop.poiId)
+        .filter(poiId => !poiId.match(/endpoint/));
 
       this._hikeProgramChanged$.next(true);
 
@@ -163,7 +195,10 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
           for (const poiId of poiIds) {
             const context = contexts[poiId];
 
-            if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
+            if (
+              typeof context === 'undefined' ||
+              (context.loaded !== true && context.loading !== true)
+            ) {
               this._store.dispatch(new poiActions.LoadPoi(poiId));
             }
           }
@@ -194,7 +229,10 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         takeUntil(this._destroy$)
       )
       .subscribe(context => {
-        if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
+        if (
+          typeof context === 'undefined' ||
+          (context.loaded !== true && context.loading !== true)
+        ) {
           this._store.dispatch(new routeActions.LoadRoute(routeId));
         }
       });
@@ -220,10 +258,15 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         if (!this.vis) {
           this.vis = d3Select(this.mainDiv.nativeElement)
             .append('svg')
-            .attr('viewBox', `0, 0, ${this.width}, ${this.height}`);
+            .attr('viewBox', `0, 0, ${this.width}, ${this.height + 40}`);
         }
 
-        this._elevationData = this._elevationService.getd3ElevationData(route, this.width, this.height, this.margins);
+        this._elevationData = this._elevationService.getd3ElevationData(
+          route,
+          this.width,
+          this.height,
+          this.margins
+        );
 
         if (this._elevationData === null) {
           return;
@@ -232,6 +275,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         this._addFilledArea();
         this._addXAxis();
         this._addYAxis();
+        this._addTimeAxis();
         this._addLineGraph();
         this._addPoiIcons();
 
@@ -294,7 +338,9 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       const yRange = this._elevationData.yRange;
       const coordinates = this.route.path.coordinates;
 
-      const distance = this._geospatial.distanceOnLine(coordinates[0], position, this.route.route.features[0]) / 1000;
+      const distance =
+        this._geospatial.distanceOnLine(coordinates[0], position, this.route.route.features[0]) /
+        1000;
 
       const bisect = d3Bisector((d: [number, number]) => {
         return d[0];
@@ -333,20 +379,26 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  protected _xToPosition(x: number): GeoJSON.Position {
+    const lineData = this._elevationData.lineData;
+    const bisect = d3Bisector((d: [number, number]) => {
+      return d[0];
+    }).right;
+
+    const index = bisect(lineData, x);
+
+   return this._routeService.getTrackPoint(this.route, index);
+  }
+
   protected _eventToPosition(eventX: number): GeoJSON.Position | null {
     let trackPoint: GeoJSON.Position = null;
 
     if (this._elevationData !== null) {
-      const lineData = this._elevationData.lineData;
       const xRange = this._elevationData.xRange;
-      const bisect = d3Bisector((d: [number, number]) => {
-        return d[0];
-      }).right;
 
       const x = xRange.invert(eventX);
-      const index = bisect(lineData, x);
 
-      trackPoint = this._routeService.getTrackPoint(this.route, index);
+      trackPoint = this._xToPosition(x);
     }
 
     return trackPoint;
@@ -385,7 +437,9 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
   private _addXAxis() {
     // The vertical axis
-    const xAxisHorizontal = d3AxisBottom(this._elevationData.xRange).tickSize(5);
+    const xAxisHorizontal = d3AxisBottom(this._elevationData.xRange)
+      .tickSize(5)
+      .tickFormat(d => `${d} km`);
 
     this.vis
       .append('svg:g')
@@ -413,6 +467,71 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       .attr('class', 'axis-line')
       .attr('transform', `translate(0, ${this.height - this.margins.bottom})`)
       .call(customXAxis);
+  }
+
+  private _addTimeAxis() {
+    // The vertical axis
+    const xAxisHorizontal = d3AxisBottom(this._elevationData.xRange)
+      .tickSize(0)
+      .tickFormat(domainValue => {
+        const value = domainValue.valueOf(); // km
+        const time = this._getTimeForDistance(value);
+
+        return moment(time).format('HH:mm');
+      });
+
+    const group = this.vis
+      .append('svg:g')
+      .attr('id', 'time-axis')
+      .attr('class', 'axis-line axis-line-time')
+      .attr('transform', `translate(0, ${this.height - this.margins.bottom + 17})`)
+      .call(xAxisHorizontal);
+
+    group
+      .selectAll('.tick')
+      .append('image')
+      .attr('xlink:href', (d: number) => {
+        const time = this._getTimeForDistance(d);
+        const pos = this._xToPosition(d);
+
+        if (!pos) {
+          return '';
+        }
+
+        const suntimes = this._astronomy.getSunTimes(pos, time);
+        let icon = '/assets/icons/weather/wi-day-sunny.svg';
+
+        if (time.getTime() < suntimes.sunrise.getTime()) {
+          icon = '/assets/icons/weather/wi-stars.svg';
+        }
+
+        return icon;
+      })
+      .attr('width', 10)
+      .attr('height', 10)
+      .attr('transform', 'translate(-5, 10)');
+  }
+
+  private _removeTimeAxis() {
+    this.vis.select('#time-axis').remove();
+  }
+
+  private _getTimeForDistance(distance: number) {
+    let time = 0;
+
+    if (distance > 0) {
+      const route = turfLineString(this.route.geojson.features[0].geometry.coordinates);
+      const line = lineSliceAlong(route, 0, distance);
+      const uphill = this._elevationService.calculateUphill(line.geometry.coordinates);
+
+      time = this._gameRule.segmentTime(distance * 1000, uphill, this.speed);
+    }
+
+    const arrive = new Date(this.startDate.getTime());
+
+    arrive.setMinutes(arrive.getMinutes() + time);
+
+    return arrive;
   }
 
   private _addLineGraph() {
@@ -475,7 +594,11 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         const stop = this._hikeProgram.stops.find(hikeStop => hikeStop.poiId === poi.id);
 
         const distance =
-          this._geospatial.distanceOnLine(coordinates[0], [poi.lon, poi.lat], this.route.route.features[0]) / 1000;
+          this._geospatial.distanceOnLine(
+            coordinates[0],
+            [poi.lon, poi.lat],
+            this.route.route.features[0]
+          ) / 1000;
         const type = _get(poi, 'types[0]', 'unknown');
 
         const lineData = this._elevationData.lineData;
@@ -490,7 +613,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         const range = endData[0] - startData[0];
         const valueY = interpolate((x % range) / range);
 
-        this.vis
+        const poiImage = this.vis
           .append('svg:image')
           .attr('class', 'poi-icon')
           .attr('x', xRange(distance) - 10)
@@ -502,6 +625,13 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
           .on('click', () => {
             this.activePoi = poi;
             this.activeStop = stop;
+          });
+
+        this._descriptionLanguageList
+          .getLocalizedDescription(poi.description)
+          .pipe(take(1))
+          .subscribe(description => {
+            poiImage.append('svg:title').text(description.title);
           });
 
         this.vis

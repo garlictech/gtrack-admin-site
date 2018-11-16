@@ -16,6 +16,12 @@ export class HikeMapComponent {
   @Input()
   public hikeProgram: HikeProgram;
 
+  @Input()
+  public startDate: Date;
+
+  @Input()
+  public speed: number;
+
   @ViewChild('trailBox')
   public trailbox: TrailBoxComponent;
 

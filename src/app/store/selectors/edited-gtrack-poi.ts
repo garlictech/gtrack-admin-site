@@ -17,8 +17,6 @@ export class EditedGTrackPoiSelectors {
   public getData: MemoizedSelector<object, IPoiStored>;
   public getError: MemoizedSelector<object, any>;
 
-  public dataPath = 'editedGtrackPoi.data';
-
   constructor() {
     this._featureSelector = createFeatureSelector<IEditedGTrackPoiState>('editedGtrackPoi');
 
@@ -33,10 +31,12 @@ export class EditedGTrackPoiSelectors {
     );
 
     this.getWorking = createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => state.working);
-
     this.getData = createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => state.data);
-
     this.getError = createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => _get(state, 'failed'));
+  }
+
+  public getDescriptionByLang = (lang: string) => {
+    return createSelector(this._featureSelector, (state: IEditedGTrackPoiState) => _get(state, `data.description.${lang}`));
   }
 
   public getBackgroundOriginalUrls() {
