@@ -6,8 +6,12 @@ import { Store } from '@ngrx/store';
 import { DatePickerField, SliderField } from 'subrepos/forms-ngx';
 import { IFormDescriptor } from 'subrepos/forms-ngx';
 
-import * as actions from '@common.features/settings/store/actions';
-import * as fromSelectors from '@common.features/settings/store/selectors';
+<<<<<<< Updated upstream
+import * as actions from 'app/settings/store/actions';
+import * as fromSelectors from 'app/settings/store/selectors';
+=======
+import * as actions from '@common.features//settings/store/actions';
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'gtrack-common-hike-day',

@@ -15,8 +15,6 @@ import { PoiSelectors } from '../../store/poi';
 import * as poiActions from '../../store/poi/actions';
 import { IconService } from '../../../map/services/icon';
 
-import { getHikeStartDate } from 'app/settings/store/selectors';
-
 @Component({
   selector: 'gtrack-common-hike-program',
   template: ''
@@ -37,9 +35,11 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     minutes: 0
   };
 
+  @Input()
   public startDate: Date;
 
-  public startDate$: Observable<Date>;
+  @Input()
+  public speed = 4;
 
   public timeline: {
     time: Date;
@@ -158,6 +158,10 @@ export class HikeProgramComponent implements OnInit, OnChanges {
         this.generateTimeline();
       }
     }
+
+    if (changes.startDate || changes.speed) {
+      this.generateTimeline();
+    }
   }
 
   ngOnInit() {
@@ -174,22 +178,14 @@ export class HikeProgramComponent implements OnInit, OnChanges {
 
     this._store.dispatch(new poiActions.LoadPois(hikePois));
     this.stops = [...this.hikeProgram.stops];
-
-    this._store
-      .pipe(
-        select(getHikeStartDate)
-      )
-      .subscribe(date => {
-        this.startDate = new Date(date.getTime());
-        this.generateTimeline();
-      });
+    this.generateTimeline();
   }
 
   public getSegmentStartTime(segmentIndex: number) {
     const time = this.hikeProgram.stops
       .filter((stop, i) => i < segmentIndex)
       .map(stop => stop.segment)
-      .reduce((previous, segment) => previous + this._gameRule.segmentTime(segment.distance, segment.uphill), 0);
+      .reduce((previous, segment) => previous + this._gameRule.segmentTime(segment.distance, segment.uphill, this.speed), 0);
 
     const arrive = new Date(this.startDate.getTime());
 

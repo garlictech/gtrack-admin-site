@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { GetTimesResult, GetMoonTimes } from 'suncalc';
 
 import { AstronomyService } from '../../services/astronomy.service';
@@ -7,7 +7,7 @@ import { AstronomyService } from '../../services/astronomy.service';
   selector: 'gtrack-sunrise',
   templateUrl: './sunrise.component.html'
 })
-export class SunriseComponent implements OnInit {
+export class SunriseComponent implements OnInit, OnChanges {
   @Input()
   public position: GeoJSON.Position;
 
@@ -23,6 +23,14 @@ export class SunriseComponent implements OnInit {
   constructor(private _astronomy: AstronomyService) {}
 
   ngOnInit() {
+    this.astronomyData = {
+      sun: this._astronomy.getSunTimes(this.position, this.day),
+      moon: this._astronomy.getMoonTimes(this.position, this.day),
+      moonPhase: this._astronomy.getMoonPhase(this.day)
+    };
+  }
+
+  ngOnChanges() {
     this.astronomyData = {
       sun: this._astronomy.getSunTimes(this.position, this.day),
       moon: this._astronomy.getMoonTimes(this.position, this.day),

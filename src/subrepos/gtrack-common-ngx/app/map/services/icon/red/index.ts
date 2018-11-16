@@ -42,5 +42,6 @@ export const iconmap = {
   pharmacy: require('./icons/pharmacy.png'),
   cafe: require('./icons/cafe.png'),
   toilets: require('./icons/toilets.png'),
-  cave_entrance: require('./icons/cave_entrance.png')
+  cave_entrance: require('./icons/cave_entrance.png'),
+  sunsetland: require('./icons/sunsetland.png')
 };

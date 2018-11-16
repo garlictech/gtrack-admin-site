@@ -70,7 +70,7 @@ export class LeafletComponent implements OnInit {
     this.leafletMap.setView([this.center.lat, this.center.lng], this.center.zoom);
 
     this.layers.forEach((layer, index) => {
-      const tileLayer = L.tileLayer(layer.url, layer);
+      const tileLayer = L.tileLayer(layer.url);
 
       if (index === 0) {
         tileLayer.addTo(this.leafletMap);
@@ -80,7 +80,7 @@ export class LeafletComponent implements OnInit {
     });
 
     this.overlays.forEach(layer => {
-      const tileLayer = L.tileLayer(layer.url, layer);
+      const tileLayer = L.tileLayer(layer.url);
 
       if (this.activeOverlays.indexOf(layer.name) !== -1) {
         tileLayer.addTo(this.leafletMap);

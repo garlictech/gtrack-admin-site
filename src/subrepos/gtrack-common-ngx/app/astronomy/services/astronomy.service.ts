@@ -36,7 +36,11 @@ export class AstronomyService {
 
   public getMoonPhase(date = new Date()) {
     const illumination = getMoonIllumination(date);
-    const value = Math.round(illumination.phase * 8);
+    let value = Math.round(illumination.phase * 8);
+
+    if (value === 8) {
+      value = 7;
+    }
 
     return EMoonPhases[value];
   }
