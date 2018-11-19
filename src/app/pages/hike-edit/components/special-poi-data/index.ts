@@ -7,8 +7,6 @@ import { IGooglePoi, IOsmPoi, IWikipediaPoi } from '../../../../shared/interface
   templateUrl: 'ui.html'
 })
 export class SpecialPoiDataComponent {
-  @Input()
-  poi: IGooglePoi | IOsmPoi | IWikipediaPoi;
-  @Input()
-  openPoiModal: any;
+  @Input() poi: IGooglePoi | IOsmPoi | IWikipediaPoi;
+  @Input() openPoiModal: any;
 }

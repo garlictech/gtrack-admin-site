@@ -1,11 +1,5 @@
 import {
-  Component,
-  Input,
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  OnInit,
-  OnDestroy
+  Component, Input, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy
 } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject, of } from 'rxjs';

@@ -5,7 +5,8 @@ import { State } from '../../../store';
 import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { GameRuleService, ISegment, RouteService } from 'subrepos/gtrack-common-ngx';
 import { initialRouteDataState } from '../../../store/reducer';
-import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from '../../../store/selectors';
+import * as hikeEditMapSelectors from '../../../store/selectors/hike-edit-map';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 import { AdminMap } from './lib/admin-map';
 import { AdminMapService } from './admin-map.service';
 
@@ -27,15 +28,13 @@ export class RoutePlannerService {
 
   constructor(
     private _store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
     private _adminMapService: AdminMapService
   ) {
     this._store
       .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
+        select(hikeEditMapSelectors.getMapId),
         filter(id => id !== '')
       )
       .subscribe((mapId: string) => {
@@ -45,7 +44,7 @@ export class RoutePlannerService {
     // Update totals on each segment update
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getSegments)
+        select(hikeEditRoutePlannerSelectors.getSegments)
       )
       .subscribe((segments: ISegment[]) => {
         // Update total for route info
@@ -188,7 +187,7 @@ export class RoutePlannerService {
 
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getPath),
+        select(hikeEditRoutePlannerSelectors.getPath),
         take(1)
       )
       .subscribe(path => {
@@ -248,7 +247,7 @@ export class RoutePlannerService {
   public refreshRouteOnMap() {
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getPath),
+        select(hikeEditRoutePlannerSelectors.getPath),
         take(1)
       )
       .subscribe((path: any) => {

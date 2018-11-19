@@ -3,15 +3,15 @@ import { AdminMapService } from '../admin-map.service';
 import {
   IconService, MapMarkerService, DescriptionLanguageListService, MarkerPopupService
 } from '../../../../../subrepos/gtrack-common-ngx';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 
-import * as _ from 'lodash';
-import * as L from 'leaflet';
-
-import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
 import { StoreModule, Store } from '@ngrx/store';
 import { hikeEditMapReducer } from 'app/store/reducer';
 import { State } from 'app/store';
 import { adminMapActions } from 'app/store/actions';
+
+import * as _ from 'lodash';
+import * as L from 'leaflet';
 
 describe('AdminMapService', () => {
   let adminMapService: AdminMapService;
@@ -38,10 +38,6 @@ describe('AdminMapService', () => {
         },
         {
           provide: MapMarkerService,
-          useValue: {}
-        },
-        {
-          provide: HikeEditRoutePlannerSelectors,
           useValue: {}
         },
         {

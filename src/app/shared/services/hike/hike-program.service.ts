@@ -3,7 +3,8 @@ import { combineLatest } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { editedHikeProgramActions } from '../../../store/actions';
-import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../../store/selectors';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
+import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
 import { IHikeProgramStop, IRoute } from 'subrepos/provider-client';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 import { ElevationService, GameRuleService, Route, CheckpointService } from 'subrepos/gtrack-common-ngx';
@@ -28,8 +29,6 @@ export class HikeProgramService {
     private _geospatialService: GeospatialService,
     private _elevationService: ElevationService,
     private _gameRuleService: GameRuleService,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _checkpointService: CheckpointService
   ) {}
 
@@ -39,11 +38,11 @@ export class HikeProgramService {
   public updateHikeProgramStops() {
     combineLatest(
       this._store.pipe(
-        select(this._editedHikeProgramSelectors.getStops),
+        select(editedHikeProgramSelectors.getStops),
         take(1)
       ),
       this._store.pipe(
-        select(this._hikeEditRoutePlannerSelectors.getPath),
+        select(hikeEditRoutePlannerSelectors.getPath),
         take(1)
       )
     )
@@ -153,7 +152,7 @@ export class HikeProgramService {
     let langs: string[] = [];
     this._store
       .pipe(
-        select(this._editedHikeProgramSelectors.getDescriptionLangs),
+        select(editedHikeProgramSelectors.getDescriptionLangs),
         take(1)
       )
       .subscribe((langKeys: string[]) => {

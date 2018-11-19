@@ -1,7 +1,6 @@
 import { Store } from '@ngrx/store';
 import { State } from '../../../store';
 import { adminMapActions } from '../../../store/actions';
-import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
 import { Injectable } from '@angular/core';
 import { AdminMap } from './lib/admin-map';
 import {
@@ -11,6 +10,7 @@ import {
   MarkerPopupService,
   DescriptionLanguageListService
 } from 'subrepos/gtrack-common-ngx/app';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 
 import * as uuid from 'uuid/v1';
 
@@ -22,7 +22,6 @@ export class AdminMapService extends MapService {
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
     protected store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     protected _descriptionLanguageList: DescriptionLanguageListService,
     protected _markerPopup: MarkerPopupService
   ) {
@@ -37,7 +36,6 @@ export class AdminMapService extends MapService {
       this.iconService,
       this.mapMarkerService,
       this.store,
-      this._hikeEditRoutePlannerSelectors,
       this._descriptionLanguageList,
       this._markerPopup
     );

@@ -14,7 +14,9 @@ import {
   hikeEditImageActions
 } from '../../store/actions';
 import { hikeEditRoutePlannerActions } from '../../store/actions';
-import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from '../../store/selectors';
+import * as hikeEditMapSelectors from '../../store/selectors/hike-edit-map';
+import * as hikeEditRoutePlannerSelectors from '../../store/selectors/hike-edit-route-planner';
+import * as editedHikeProgramSelectors from '../../store/selectors/edited-hike-program';
 import { WaypointMarkerService, RoutePlannerService, AdminMapService } from '../../shared/services/admin-map';
 import { IHikeProgramStored, IRoute, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
 import { HikeSelectors, IHikeContextState, RouteSelectors } from 'subrepos/gtrack-common-ngx';
@@ -54,9 +56,6 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     private _routePlannerService: RoutePlannerService,
     private _hikeProgramService: HikeProgramService,
     private _hikeSelectors: HikeSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _routeSelectors: RouteSelectors,
     private _messageService: MessageService,
     private _router: Router,
@@ -65,11 +64,11 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.working$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getWorking),
+      select(editedHikeProgramSelectors.getWorking),
       takeUntil(this._destroy$)
     );
     this.hikeProgramData$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getData),
+      select(editedHikeProgramSelectors.getData),
       delay(0),
       takeUntil(this._destroy$)
     );
@@ -128,37 +127,37 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.allowSave$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getDirty),
+      select(editedHikeProgramSelectors.getDirty),
       takeUntil(this._destroy$)
     );
 
     this.isPlanning$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+      select(hikeEditRoutePlannerSelectors.getIsPlanning),
       takeUntil(this._destroy$)
     );
 
     // Handling save success
     this._store
       .pipe(
-        select(this._editedHikeProgramSelectors.getWorking),
+        select(editedHikeProgramSelectors.getWorking),
         takeUntil(this._destroy$),
         filter(working => working !== null),
         switchMap(() =>
           this._store.pipe(
-            select(this._editedHikeProgramSelectors.getWorking),
+            select(editedHikeProgramSelectors.getWorking),
             takeUntil(this._destroy$)
           )
         ),
         filter(working => working === null),
         switchMap(() =>
           this._store.pipe(
-            select(this._editedHikeProgramSelectors.getError),
+            select(editedHikeProgramSelectors.getError),
             take(1)
           )
         ),
         takeUntil(this._destroy$)
       )
-      .subscribe(error => {
+      .subscribe((error: any) => {
         if (error) {
           const msg: string[] = [];
           for (const idx in error) {
@@ -191,14 +190,14 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     this.hikeProgramState$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getState),
+      select(editedHikeProgramSelectors.getState),
       takeUntil(this._destroy$)
     );
 
     // Handling hike context changes
     this._store
       .pipe(
-        select(this._editedHikeProgramSelectors.getHikeId),
+        select(editedHikeProgramSelectors.getHikeId),
         takeUntil(this._destroy$),
         filter(hikeId => hikeId !== ''),
         switchMap((hikeId: string) =>
@@ -227,8 +226,8 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     // Attributes for Photos component
-    this.backgroundImageSelector = this._editedHikeProgramSelectors.getBackgroundImages;
-    this.backgroundImageUrlSelector = this._editedHikeProgramSelectors.getBackgroundOriginalUrls();
+    this.backgroundImageSelector = editedHikeProgramSelectors.getBackgroundImages;
+    this.backgroundImageUrlSelector = editedHikeProgramSelectors.getBackgroundOriginalUrls();
 
     this.clickActions = {
       add: image => this._store.dispatch(new editedHikeProgramActions.AddHikeProgramBackgroundImage(image)),
@@ -256,11 +255,11 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     // Save route
     combineLatest(
       this._store.pipe(
-        select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
+        select(hikeEditRoutePlannerSelectors.getRoutePlanner),
         take(1)
       ),
       this._store.pipe(
-        select(this._editedHikeProgramSelectors.getRouteId),
+        select(editedHikeProgramSelectors.getRouteId),
         take(1)
       )
     ).subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
@@ -278,7 +277,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   private _parseGpxRoute() {
     this._store
       .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
+        select(hikeEditMapSelectors.getMapId),
         filter(id => id !== ''),
         take(1)
       )
@@ -301,8 +300,8 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (hikeProgramState === EObjectState.published) {
       const selector = createSelector(
-        this._editedHikeProgramSelectors.getStops,
-        this._editedHikeProgramSelectors.getRouteId,
+        editedHikeProgramSelectors.getStops,
+        editedHikeProgramSelectors.getRouteId,
         (stops, routeId) => ({
           stops,
           routeId
@@ -353,7 +352,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   public retrievePlan() {
     this._store
       .pipe(
-        select(this._editedHikeProgramSelectors.getRouteId),
+        select(editedHikeProgramSelectors.getRouteId),
         switchMap((routeId: string) =>
           this._store.pipe(
             select(this._routeSelectors.getRoute(routeId)),

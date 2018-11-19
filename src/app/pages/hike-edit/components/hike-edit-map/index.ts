@@ -3,15 +3,13 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { SelectItem } from 'primeng/api';
-
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
 import { State } from '../../../../store';
 import { adminMapActions, commonBackgroundGeolocationActions } from '../../../../store/actions';
-import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
 import { Center, selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
 import { WaypointMarkerService, EBufferSize } from '../../../../shared/services/admin-map';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 
 import * as L from 'leaflet';
 import { LeafletMouseEvent } from 'leaflet';
@@ -63,7 +61,6 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private _store: Store<State>,
     private _waypointMarkerService: WaypointMarkerService,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _googleMapsService: GoogleMapsService,
     private _ngZone: NgZone
   ) {}
@@ -74,7 +71,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     // Update buffer on each segment update
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getSegments),
+        select(hikeEditRoutePlannerSelectors.getSegments),
         takeUntil(this._destroy$)
       )
       .subscribe(() => {
@@ -93,7 +90,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+        select(hikeEditRoutePlannerSelectors.getIsPlanning),
         takeUntil(this._destroy$)
       )
       .subscribe((planning: boolean) => {
@@ -164,10 +161,10 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getRoute),
+        select(hikeEditRoutePlannerSelectors.getRoute),
         take(1)
       )
-      .subscribe(route => {
+      .subscribe((route: any) => {
         this.mapComponent.map.fitBounds(route);
       });
   }

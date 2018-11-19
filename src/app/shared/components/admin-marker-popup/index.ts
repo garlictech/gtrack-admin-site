@@ -4,7 +4,7 @@ import { State } from '../../../store';
 import { editedHikeProgramActions, hikeEditPoiActions, commonPoiActions } from '../../../store/actions';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { HikeEditRoutePlannerSelectors } from '../../../store/selectors';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 import { PoiEditorService } from '../../services';
 
 import _map from 'lodash-es/map';
@@ -30,13 +30,12 @@ export class AdminMarkerPopupComponent implements OnInit {
 
   constructor(
     private _store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _poiEditorService: PoiEditorService
   ) {}
 
   ngOnInit() {
     this.isPlanning$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+      select(hikeEditRoutePlannerSelectors.getIsPlanning),
       take(1)
     );
 

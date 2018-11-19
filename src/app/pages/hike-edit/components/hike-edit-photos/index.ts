@@ -4,12 +4,11 @@ import { filter, takeUntil, switchMap, debounceTime, take } from 'rxjs/operators
 import { Store, MemoizedSelector, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { hikeEditImageActions } from '../../../../store/actions';
-import {
-  HikeEditPoiSelectors,
-  HikeEditRoutePlannerSelectors,
-  HikeEditImageSelectors,
-  HikeEditMapSelectors
-} from '../../../../store/selectors';
+import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
+import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
+import * as hikeEditImageSelectors from '../../../../store/selectors/hike-edit-image';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
+
 import { RoutePlannerService, PoiEditorService, AdminMap, AdminMapService } from '../../../../shared/services';
 import { IBackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
@@ -44,10 +43,6 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _routePlannerService: RoutePlannerService,
     private _poiSelectors: PoiSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
-    private _hikeEditImageSelectors: HikeEditImageSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _poiEditorService: PoiEditorService,
     private _adminMapService: AdminMapService
   ) {}
@@ -55,7 +50,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._store
       .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
+        select(hikeEditMapSelectors.getMapId),
         filter(id => id !== ''),
         takeUntil(this._destroy$)
       )
@@ -70,7 +65,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$)
       ),
       this._store.pipe(
-        select(this._hikeEditRoutePlannerSelectors.getPath),
+        select(hikeEditRoutePlannerSelectors.getPath),
         takeUntil(this._destroy$)
       )
     ).pipe(
@@ -81,22 +76,22 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     );
 
     this.googlePhotos$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.google)),
+      select(hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.google)),
       takeUntil(this._destroy$),
       debounceTime(250)
     );
     this.wikipediaPhotos$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.wikipedia)),
+      select(hikeEditPoiSelectors.getPoiPhotos(EPoiTypes.wikipedia)),
       takeUntil(this._destroy$),
       debounceTime(250)
     );
     this.mapillaryImages$ = this._store.pipe(
-      select(this._hikeEditImageSelectors.getAllMapillaryImages),
+      select(hikeEditImageSelectors.getAllMapillaryImages),
       takeUntil(this._destroy$),
       debounceTime(250)
     );
     this.flickrImages$ = this._store.pipe(
-      select(this._hikeEditImageSelectors.getAllFlickrImages),
+      select(hikeEditImageSelectors.getAllFlickrImages),
       takeUntil(this._destroy$),
       debounceTime(250)
     );
@@ -120,18 +115,18 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
       });
 
     // Route info from the store (for disabling GET buttons)
-    this.routePath$ = this._store.pipe(select(this._hikeEditRoutePlannerSelectors.getPath));
+    this.routePath$ = this._store.pipe(select(hikeEditRoutePlannerSelectors.getPath));
     this.mapillaryLoading$ = this._store.pipe(
-      select(this._hikeEditImageSelectors.getHikeEditImageContextPropertySelector('mapillary', 'loading'))
+      select(hikeEditImageSelectors.getHikeEditImageContextPropertySelector('mapillary', 'loading'))
     );
     this.flickrLoading$ = this._store.pipe(
-      select(this._hikeEditImageSelectors.getHikeEditImageContextPropertySelector('flickr', 'loading'))
+      select(hikeEditImageSelectors.getHikeEditImageContextPropertySelector('flickr', 'loading'))
     );
 
     // Refresh markers
     this._store
       .pipe(
-        select(this._hikeEditImageSelectors.getImageMarkerImages),
+        select(hikeEditImageSelectors.getImageMarkerImages),
         takeUntil(this._destroy$),
         debounceTime(250)
       )

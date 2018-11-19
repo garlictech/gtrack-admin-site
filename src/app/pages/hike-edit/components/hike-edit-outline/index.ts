@@ -10,13 +10,11 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil, take, delay } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../../../store';
-import {
-  EditedHikeProgramSelectors,
-  HikeEditRoutePlannerSelectors
-} from '../../../../store/selectors';
+
 import { IHikeProgramStop } from 'subrepos/provider-client';
 import { PoiSelectors, IconService, ISegment } from 'subrepos/gtrack-common-ngx';
-
+import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 import * as L from 'leaflet';
 import _first from 'lodash-es/first';
 import _last from 'lodash-es/last';
@@ -46,8 +44,6 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
   constructor(
     private _store: Store<State>,
     private _changeDetectorRef: ChangeDetectorRef,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _waypointMarkerService: WaypointMarkerService,
     private _routePlannerService: RoutePlannerService,
     private _poiSelectors: PoiSelectors,
@@ -59,7 +55,7 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngOnInit() {
     this.stops$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getStopsWithPoiNames(this._poiSelectors.getAllPois)),
+      select(editedHikeProgramSelectors.getStopsWithPoiNames(this._poiSelectors.getAllPois)),
       delay(0),
       takeUntil(this._destroy$)
     );
@@ -127,7 +123,7 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
     return new Promise(resolve => {
       this._store
         .pipe(
-          select(this._hikeEditRoutePlannerSelectors.getSegments),
+          select(hikeEditRoutePlannerSelectors.getSegments),
           take(1)
         )
         .subscribe((segments: ISegment[]) => {

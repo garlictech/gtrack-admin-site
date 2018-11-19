@@ -3,8 +3,8 @@ import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { Observable, of, Subject } from 'rxjs';
 import { take, takeUntil, switchMap } from 'rxjs/operators';
-import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../store/selectors';
-import { subscribeOn } from 'rxjs-compat/operator/subscribeOn';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
+import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
 import { editedHikeProgramActions } from 'app/store/actions';
 
 @Component({
@@ -21,21 +21,19 @@ export class ImageMarkerPopupComponent implements OnInit, OnDestroy {
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private _store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
+    private _store: Store<State>
   ) {}
 
   ngOnInit() {
     this.isPlanning$ = this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+        select(hikeEditRoutePlannerSelectors.getIsPlanning),
         take(1)
       );
 
     this._store
       .pipe(
-        select(this._editedHikeProgramSelectors.getBackgroundOriginalUrls()),
+        select(editedHikeProgramSelectors.getBackgroundOriginalUrls()),
         switchMap((bgImageUrls: string[]) => {
           return of(bgImageUrls.includes(this.data.original.url));
         }),

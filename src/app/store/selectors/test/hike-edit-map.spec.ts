@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { HikeEditMapSelectors } from '../hike-edit-map';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IHikeEditMapState } from '../../state';
 import { adminMapActions } from '../../actions';
 import { hikeEditMapReducer } from '../../reducer';
+import * as hikeEditMapSelectors from '../../selectors/hike-edit-map';
 
 describe('HikeEditMap selectors', () => {
   let store: Store<IHikeEditMapState>;
@@ -19,8 +19,7 @@ describe('HikeEditMap selectors', () => {
         StoreModule.forRoot({
           hikeEditMap: hikeEditMapReducer
         })
-      ],
-      providers: [HikeEditMapSelectors]
+      ]
     });
 
     store = TestBed.get(Store);
@@ -35,7 +34,6 @@ describe('HikeEditMap selectors', () => {
   describe('getMapId', () => {
     it('should return admin map id', () => {
       let result;
-      const hikeEditMapSelectors: HikeEditMapSelectors = TestBed.get(HikeEditMapSelectors);
 
       store
         .pipe(

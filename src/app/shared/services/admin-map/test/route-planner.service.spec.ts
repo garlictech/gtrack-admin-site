@@ -4,13 +4,14 @@ import {
   RouteService, GameRuleService
 } from '../../../../../subrepos/gtrack-common-ngx';
 import { EMPTY } from 'rxjs';
-import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from '../../../../store/selectors';
+import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 import { StoreModule, Store } from '@ngrx/store';
-import { hikeEditMapReducer } from 'app/store/reducer';
-import { State } from 'app/store';
+import { hikeEditMapReducer } from '../../../../store/reducer';
+import { State } from '../../../../store';
 import { RoutePlannerService } from '../route-planner.service';
 import { MOCK_SEGMENTS, MOCK_SEGMENT_TOTAL, MOCK_SEGMENT_GEOJSON } from './fixtures/segments';
-import { hikeEditRoutePlannerActions } from 'app/store/actions';
+import { hikeEditRoutePlannerActions } from '../../../../store/actions';
 
 import * as _ from 'lodash';
 
@@ -34,6 +35,7 @@ describe('RoutePlannerService', () => {
             pipe: jest.fn(() => EMPTY)
           }
         },
+        /* TODO
         {
           provide: HikeEditRoutePlannerSelectors,
           useValue: {
@@ -45,7 +47,7 @@ describe('RoutePlannerService', () => {
           useValue: {
             getMapId: jest.fn(() => 'fakeMapId')
           }
-        },
+        },*/
         {
           provide: GameRuleService,
           useValue: {

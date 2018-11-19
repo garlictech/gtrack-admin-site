@@ -1,9 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import {
-  AdminMap,
-  AdminMapService,
-  WaypointMarkerService,
-  RoutePlannerService
+  AdminMap, AdminMapService, WaypointMarkerService, RoutePlannerService
 } from '../../../../shared/services/admin-map';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, filter, switchMap, take, debounceTime } from 'rxjs/operators';
@@ -12,11 +9,9 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { State, IHikeEditRoutePlannerState, IHikeEditRoutePlannerTotalState } from '../../../../store';
 import { editedHikeProgramActions, hikeEditPoiActions } from '../../../../store/actions';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
-import {
-  HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors
-} from '../../../../store/selectors';
+import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
+import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
 import { ReverseGeocodingService, HikeProgramService, PoiEditorService } from '../../../../shared/services';
 import { IRouteStored } from 'subrepos/provider-client';
 
@@ -28,8 +23,7 @@ import _values from 'lodash-es/values';
   templateUrl: './ui.html'
 })
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
-  @Input()
-  isPlanning$: Observable<boolean>;
+  @Input() isPlanning$: Observable<boolean>;
   public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
   public route$: Observable<any>;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
@@ -39,9 +33,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private _adminMapService: AdminMapService,
     private _waypointMarkerService: WaypointMarkerService,
     private _routePlannerService: RoutePlannerService,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _routeSelectors: RouteSelectors,
     private _hikeProgramService: HikeProgramService,
     private _store: Store<State>,
@@ -53,17 +44,17 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routeInfoData$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
+      select(hikeEditRoutePlannerSelectors.getRoutePlanner),
       takeUntil(this._destroy$)
     );
 
     this._store
       .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
+        select(hikeEditMapSelectors.getMapId),
         filter(id => id !== ''),
         switchMap((mapId: string) => {
           this._map = this._adminMapService.getMapById(mapId);
-          return this._store.pipe(select(this._editedHikeProgramSelectors.getRouteId));
+          return this._store.pipe(select(editedHikeProgramSelectors.getRouteId));
         }),
         switchMap((routeId: string) => this._store.pipe(select(this._routeSelectors.getRouteContext(routeId)))),
         filter(routeContext => !!routeContext),
@@ -99,7 +90,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       });
 
     this.route$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getRoute),
+      select(hikeEditRoutePlannerSelectors.getRoute),
       takeUntil(this._destroy$)
     );
 
@@ -127,7 +118,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
 
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getTotal),
+        select(hikeEditRoutePlannerSelectors.getTotal),
         takeUntil(this._destroy$)
       )
       .subscribe((total: IHikeEditRoutePlannerTotalState) => {

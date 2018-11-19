@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { HikeEditRoutePlannerSelectors } from '../hike-edit-route-planner';
+import * as hikeEditRoutePlannerSelectors from '../../selectors/hike-edit-route-planner';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IHikeEditRoutePlannerState } from '../../state';
@@ -27,8 +27,7 @@ describe('HikeEditRoutePlanner selectors', () => {
         StoreModule.forRoot({
           hikeEditRoutePlanner: hikeEditRoutePlannerReducer
         })
-      ],
-      providers: [HikeEditRoutePlannerSelectors]
+      ]
     });
 
     store = TestBed.get(Store);
@@ -43,7 +42,6 @@ describe('HikeEditRoutePlanner selectors', () => {
   describe('getMapId', () => {
     it('should return route planner', () => {
       let result;
-      const hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
 
       store
         .pipe(
@@ -62,7 +60,6 @@ describe('HikeEditRoutePlanner selectors', () => {
   describe('getRoute', () => {
     it('should return route', () => {
       let result;
-      const hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
 
       store
         .pipe(
@@ -81,7 +78,6 @@ describe('HikeEditRoutePlanner selectors', () => {
   describe('getPath', () => {
     it('should return route path', () => {
       let result;
-      const hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
 
       store
         .pipe(
@@ -100,7 +96,6 @@ describe('HikeEditRoutePlanner selectors', () => {
   describe('getPathLength', () => {
     it('should return route path length', () => {
       let result;
-      const hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
 
       store
         .pipe(
@@ -119,7 +114,6 @@ describe('HikeEditRoutePlanner selectors', () => {
   describe('getSegments', () => {
     it('should return route path length', () => {
       let result;
-      const hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
 
       store
         .pipe(
@@ -138,7 +132,6 @@ describe('HikeEditRoutePlanner selectors', () => {
   describe('getTotal', () => {
     it('should return route total', () => {
       let result;
-      const hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
       const total = _.pick(segments[0], ['distance', 'uphill', 'downhill', 'time', 'score']);
 
       store
@@ -158,7 +151,6 @@ describe('HikeEditRoutePlanner selectors', () => {
   describe('getIsRoundTrip', () => {
     it('should return route is not roundtrip', () => {
       let result;
-      const hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
 
       store
         .pipe(
@@ -175,7 +167,6 @@ describe('HikeEditRoutePlanner selectors', () => {
 
     it('should return route is roundtrip', () => {
       let result;
-      const hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
 
       store
         .pipe(
@@ -196,7 +187,6 @@ describe('HikeEditRoutePlanner selectors', () => {
   describe('getIsPlanning', () => {
     it('should return route is planning', () => {
       let result;
-      const hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
 
       store
         .pipe(
@@ -215,7 +205,6 @@ describe('HikeEditRoutePlanner selectors', () => {
   describe('getIsRouting', () => {
     it('should return route is routing', () => {
       let result;
-      const hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
 
       store
         .pipe(

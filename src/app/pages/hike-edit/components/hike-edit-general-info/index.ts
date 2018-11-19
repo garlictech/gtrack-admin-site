@@ -7,7 +7,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { State } from '../../../../store';
 import { editedHikeProgramActions } from '../../../../store/actions';
-import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors } from '../../../../store/selectors';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
+import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
 import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
 import { IFormDescriptor, SliderField } from 'subrepos/gtrack-common-web/forms';
 
@@ -28,8 +29,6 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
 
   constructor(
     private _store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
     private _confirmationService: ConfirmationService,
     private _changeDetectorRef: ChangeDetectorRef
   ) {}
@@ -39,17 +38,17 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
 
     // Selectors
     this.isRoundTrip$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getIsRoundTrip),
+      select(hikeEditRoutePlannerSelectors.getIsRoundTrip),
       takeUntil(this._destroy$)
     );
 
     this.hikeProgramData$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getData),
+      select(editedHikeProgramSelectors.getData),
       takeUntil(this._destroy$)
     );
 
     this.remoteError$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getError),
+      select(editedHikeProgramSelectors.getError),
       takeUntil(this._destroy$)
     );
 
@@ -75,11 +74,11 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
   }
 
   private _initDescriptionFormConfig() {
-    this.descriptionSelector = this._editedHikeProgramSelectors.getDescriptions;
-    this.descriptionLangSelector = this._editedHikeProgramSelectors.getDescriptionByLang;
+    this.descriptionSelector = editedHikeProgramSelectors.getDescriptions;
+    this.descriptionLangSelector = editedHikeProgramSelectors.getDescriptionByLang;
 
     this.generalInfoFormDescriptor = {
-      formDataSelector: this._editedHikeProgramSelectors.getData,
+      formDataSelector: editedHikeProgramSelectors.getData,
       submit: {
         translatableLabel: 'form.submit',
         classList: ['btn', 'btn-sm', 'btn-fill', 'btn-success'],

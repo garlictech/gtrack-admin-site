@@ -9,12 +9,10 @@ import { PoiEditorService, HikeProgramService } from '../../../../shared/service
 import { IGTrackPoi } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
 import { hikeEditPoiActions, commonPoiActions, editedHikeProgramActions } from '../../../../store/actions';
-import {
-  HikeEditPoiSelectors,
-  HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors
-} from '../../../../store/selectors';
+import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
+import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
+import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 
 import _map from 'lodash-es/map';
 import _difference from 'lodash-es/difference';
@@ -25,8 +23,7 @@ import _intersection from 'lodash-es/intersection';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
-  @Input()
-  isPlanning$: Observable<boolean>;
+  @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<IGTrackPoi[]>;
   public showOnrouteMarkers = true;
   public showOffrouteMarkers = true;
@@ -39,10 +36,6 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _poiEditorService: PoiEditorService,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _hikeProgramService: HikeProgramService,
     private _poiSelectors: PoiSelectors
   ) {}
@@ -50,7 +43,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._store
       .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
+        select(hikeEditMapSelectors.getMapId),
         filter(id => id !== ''),
         takeUntil(this._destroy$)
       )
@@ -61,7 +54,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
     // Get pois by id
     combineLatest(
       this._store.pipe(
-        select(this._editedHikeProgramSelectors.getPoiIds),
+        select(editedHikeProgramSelectors.getPoiIds),
         takeUntil(this._destroy$)
       ),
       this._store.pipe(
@@ -86,22 +79,22 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
     // Poi list
     this.pois$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getHikePoisCount(this._poiSelectors.getAllPois)),
+      select(editedHikeProgramSelectors.getHikePoisCount(this._poiSelectors.getAllPois)),
       debounceTime(250),
       // takeUntil(this._destroy$),
       // switchMap(() => this._store.pipe(
-      //   select(this._hikeEditRoutePlannerSelectors.getIsRouting),
+      //   select(hikeEditRoutePlannerSelectors.getIsRouting),
       //   take(1)
       // )),
       // filter((routing: boolean) => !routing),
       switchMap(() => {
         return combineLatest(
           this._store.pipe(
-            select(this._editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
+            select(editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
             takeUntil(this._destroy$)
           ),
           this._store.pipe(
-            select(this._hikeEditRoutePlannerSelectors.getPath),
+            select(hikeEditRoutePlannerSelectors.getPath),
             takeUntil(this._destroy$)
           )
         ).pipe(
@@ -112,7 +105,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
             let _routing;
             this._store
               .pipe(
-                select(this._hikeEditRoutePlannerSelectors.getIsRouting),
+                select(hikeEditRoutePlannerSelectors.getIsRouting),
                 take(1)
               )
               .subscribe((routing: boolean) => (_routing = routing));
@@ -144,7 +137,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
     this._store
       .pipe(
-        select(this._editedHikeProgramSelectors.getStopsCount),
+        select(editedHikeProgramSelectors.getStopsCount),
         takeUntil(this._destroy$),
         debounceTime(250)
       )
@@ -154,7 +147,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getPathLength),
+        select(hikeEditRoutePlannerSelectors.getPathLength),
         takeUntil(this._destroy$),
         debounceTime(250)
       )
@@ -168,7 +161,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOnrouteMarkers')),
+        select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOnrouteMarkers')),
         takeUntil(this._destroy$)
       )
       .subscribe((value: boolean) => {
@@ -183,7 +176,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers')),
+        select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('hike', 'showOffrouteMarkers')),
         takeUntil(this._destroy$),
         debounceTime(250)
       )
