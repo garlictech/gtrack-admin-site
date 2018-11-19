@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { EditedGTrackPoiSelectors } from '../edited-gtrack-poi';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IEditedGTrackPoiState } from '../../state';
 import { editedGTrackPoiReducer, initialEditedGTrackPoiState } from '../../reducer/edited-gtrack-poi';
+import * as editedGTrackPoiSelectors from '../../selectors/edited-gtrack-poi';
 import { editedGTrackPoiActions } from '../../actions';
 import { IBackgroundImageData, ETextualDescriptionType } from '../../../../subrepos/provider-client';
 
@@ -26,8 +26,7 @@ describe('Edited GTrackPoi selectors', () => {
         StoreModule.forRoot({
           editedGtrackPoi: editedGTrackPoiReducer
         })
-      ],
-      providers: [EditedGTrackPoiSelectors]
+      ]
     });
 
     store = TestBed.get(Store);
@@ -42,7 +41,6 @@ describe('Edited GTrackPoi selectors', () => {
   describe('getDescriptions', () => {
     it('should return editedGTrackPoi descriptions', () => {
       let result;
-      const editedGTrackPoiSelectors: EditedGTrackPoiSelectors = TestBed.get(EditedGTrackPoiSelectors);
 
       store
         .pipe(
@@ -77,7 +75,6 @@ describe('Edited GTrackPoi selectors', () => {
   describe('getDirty', () => {
     it('should return editedGTrackPoi dirty value', () => {
       let result;
-      const editedGTrackPoiSelectors: EditedGTrackPoiSelectors = TestBed.get(EditedGTrackPoiSelectors);
 
       store
         .pipe(
@@ -100,7 +97,6 @@ describe('Edited GTrackPoi selectors', () => {
   describe('getBackgroundImages', () => {
     it('should return editedGTrackPoi background images', () => {
       let result;
-      const editedGTrackPoiSelectors: EditedGTrackPoiSelectors = TestBed.get(EditedGTrackPoiSelectors);
 
       store
         .pipe(
@@ -119,7 +115,6 @@ describe('Edited GTrackPoi selectors', () => {
   describe('getBackgroundOriginalUrls', () => {
     it('should return editedGTrackPoi background original urls', () => {
       let result;
-      const editedGTrackPoiSelectors: EditedGTrackPoiSelectors = TestBed.get(EditedGTrackPoiSelectors);
 
       store
         .pipe(
@@ -138,7 +133,6 @@ describe('Edited GTrackPoi selectors', () => {
   describe('getData', () => {
     it('should return editedGTrackPoi data', () => {
       let result;
-      const editedGTrackPoiSelectors: EditedGTrackPoiSelectors = TestBed.get(EditedGTrackPoiSelectors);
 
       store
         .pipe(
@@ -170,7 +164,6 @@ describe('Edited GTrackPoi selectors', () => {
   describe('getWorking', () => {
     it('should return editedGTrackPoi working value', () => {
       let result;
-      const editedGTrackPoiSelectors: EditedGTrackPoiSelectors = TestBed.get(EditedGTrackPoiSelectors);
 
       store
         .pipe(
@@ -189,7 +182,6 @@ describe('Edited GTrackPoi selectors', () => {
   describe('getError', () => {
     it('should return editedGTrackPoi error value', () => {
       let result;
-      const editedGTrackPoiSelectors: EditedGTrackPoiSelectors = TestBed.get(EditedGTrackPoiSelectors);
 
       store
         .pipe(

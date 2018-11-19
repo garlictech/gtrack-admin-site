@@ -7,15 +7,6 @@ import { RoutePlannerService } from './shared/services/admin-map';
 import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
 import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker/marker-popup.service';
 
-import {
-  EditedGTrackPoiSelectors,
-  EditedHikeProgramSelectors,
-  HikeEditPoiSelectors,
-  HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors,
-  HikeEditImageSelectors
-} from './store/selectors';
-
 // Services
 import {
   AdminMapService,
@@ -54,12 +45,6 @@ export const APP_PROVIDERS = [
   HikeProgramService,
   FlickrService,
   MapillaryService,
-  EditedGTrackPoiSelectors,
-  EditedHikeProgramSelectors,
-  HikeEditPoiSelectors,
-  HikeEditImageSelectors,
-  HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors,
   ConfirmationService,
   MarkerPopupService,
   MessageService

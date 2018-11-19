@@ -5,7 +5,7 @@ import { State } from '../../../../../store';
 import { hikeEditPoiActions } from '../../../../../store/actions';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, takeUntil, take } from 'rxjs/operators';
-import { HikeEditPoiSelectors } from '../../../../../store/selectors';
+import * as hikeEditPoiSelectors from '../../../../../store/selectors/hike-edit-poi';
 
 import _map from 'lodash-es/map';
 
@@ -14,21 +14,20 @@ import _map from 'lodash-es/map';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
-  @Input()
-  pois$: Observable<any[]>;
-  @Input()
-  onRouteCheck: boolean;
-  @Input()
-  openPoiModal: any;
+  @Input() pois$: Observable<any[]>;
+  @Input() onRouteCheck: boolean;
+  @Input() openPoiModal: any;
   public mergeSelections: { [id: string]: boolean } = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private _store: Store<State>, private _hikeEditPoiSelectors: HikeEditPoiSelectors) {}
+  constructor(
+    private _store: Store<State>
+  ) {}
 
   ngOnInit() {
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getMergeSelections),
+        select(hikeEditPoiSelectors.getMergeSelections),
         debounceTime(250),
         takeUntil(this._destroy$)
       )

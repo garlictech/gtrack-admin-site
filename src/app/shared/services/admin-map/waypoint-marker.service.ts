@@ -4,14 +4,13 @@ import { State } from '../../../store';
 import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { of, interval } from 'rxjs';
 import { filter, take, flatMap, combineAll } from 'rxjs/operators';
-import { HikeEditMapSelectors } from '../../../store/selectors';
 import { AdminMapService } from './admin-map.service';
 import { RoutePlannerService } from './route-planner.service';
 import { AdminMap, EAdminMarkerType } from './lib/admin-map';
 import { HttpClient } from '../../../../../node_modules/@angular/common/http';
 import { environment } from 'environments/environment';
 import { ElevationService, IconService } from 'subrepos/gtrack-common-ngx';
-
+import * as hikeEditMapSelectors from '../../../store/selectors/hike-edit-map';
 import * as L from 'leaflet';
 import _map from 'lodash-es/map';
 import _get from 'lodash-es/get';
@@ -40,13 +39,12 @@ export class WaypointMarkerService {
     private _adminMapService: AdminMapService,
     private _routePlannerService: RoutePlannerService,
     private _elevationService: ElevationService,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _iconService: IconService,
     private _http: HttpClient
   ) {
     this._store
       .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
+        select(hikeEditMapSelectors.getMapId),
         filter(id => id !== '')
       )
       .subscribe((mapId: string) => {

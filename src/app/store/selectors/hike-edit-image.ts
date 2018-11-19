@@ -1,52 +1,27 @@
-import { Injectable } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { IHikeEditImageState } from '../state/hike-edit-image';
 import { mapillaryImageAdapter, flickrImageAdapter } from '../reducer';
-import { IBackgroundImageData } from 'subrepos/provider-client';
 
-@Injectable()
-export class HikeEditImageSelectors {
-  private _featureSelector: MemoizedSelector<object, IHikeEditImageState>;
-  public getAllMapillaryImages: (state: object) => IBackgroundImageData[];
-  public getAllFlickrImages: (state: object) => IBackgroundImageData[];
-  public getImageMarkerImages: MemoizedSelector<object, IBackgroundImageData[]>;
+const featureSelector = createFeatureSelector<IHikeEditImageState>('hikeEditImage');
 
-  constructor() {
-    this._featureSelector = createFeatureSelector<IHikeEditImageState>('hikeEditImage');
+const mapillaryImageSelector = createSelector(featureSelector, (state: IHikeEditImageState) =>
+  state.mapillaryImages
+);
+export const getAllMapillaryImages = mapillaryImageAdapter.getSelectors(mapillaryImageSelector).selectAll;
 
-    //
-    // Image entity lists
-    //
+const flickrImageSelector = createSelector(featureSelector, (state: IHikeEditImageState) =>
+  state.flickrImages
+);
+export const getAllFlickrImages = flickrImageAdapter.getSelectors(flickrImageSelector).selectAll;
 
-    const mapillaryImageSelector = createSelector(
-      this._featureSelector,
-      (state: IHikeEditImageState) => state.mapillaryImages
-    );
-    this.getAllMapillaryImages = mapillaryImageAdapter.getSelectors(mapillaryImageSelector).selectAll;
+export const getImageMarkerImages = createSelector(featureSelector, (state: IHikeEditImageState) =>
+  state.imageMarkerImages.images
+);
 
-    const flickrImageSelector = createSelector(
-      this._featureSelector,
-      (state: IHikeEditImageState) => state.flickrImages
-    );
-    this.getAllFlickrImages = flickrImageAdapter.getSelectors(flickrImageSelector).selectAll;
+export const getHikeEditImageContextSelector = (subdomain) => {
+  return createSelector(featureSelector, (state: IHikeEditImageState) => state.contexts[subdomain]);
+};
 
-    // Images markers
-
-    this.getImageMarkerImages = createSelector(
-      this._featureSelector,
-      (state: IHikeEditImageState) => state.imageMarkerImages.images
-    );
-  }
-
-  //
-  // Context
-  //
-
-  public getHikeEditImageContextSelector(subdomain) {
-    return createSelector(this._featureSelector, (state: IHikeEditImageState) => state.contexts[subdomain]);
-  }
-
-  public getHikeEditImageContextPropertySelector(subdomain, property) {
-    return createSelector(this._featureSelector, (state: IHikeEditImageState) => state.contexts[subdomain][property]);
-  }
-}
+export const getHikeEditImageContextPropertySelector = (subdomain, property) => {
+  return createSelector(featureSelector, (state: IHikeEditImageState) => state.contexts[subdomain][property]);
+};

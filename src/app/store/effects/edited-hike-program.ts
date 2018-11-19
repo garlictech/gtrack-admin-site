@@ -8,8 +8,8 @@ import { State } from '..';
 import { editedHikeProgramActions, commonRouteActions } from '../actions';
 import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
 import { log } from '../../log';
-import { EditedHikeProgramSelectors } from '../selectors/edited-hike-program';
-import { HikeEditRoutePlannerSelectors } from '../selectors';
+import * as hikeEditRoutePlannerSelectors from '../selectors/hike-edit-route-planner';
+import * as editedHikeProgramSelectors from '../selectors/edited-hike-program';
 
 import _omit from 'lodash-es/omit';
 
@@ -18,8 +18,6 @@ export class EditedHikeProgramEffects {
   constructor(
     private _actions$: Actions,
     private _hikeProgramService: HikeProgramService,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geospatialService: GeospatialService,
     private _store: Store<State>
   ) {}
@@ -33,7 +31,7 @@ export class EditedHikeProgramEffects {
     map((action: editedHikeProgramActions.PrepareThenAddStop) => action.poi),
     switchMap(poi => {
       return this._store.pipe(
-        select(this._hikeEditRoutePlannerSelectors.getPath),
+        select(hikeEditRoutePlannerSelectors.getPath),
         take(1),
         map(path => {
           const stop = {
@@ -66,7 +64,7 @@ export class EditedHikeProgramEffects {
     ofType(editedHikeProgramActions.SAVE_HIKE_PROGRAM),
     switchMap(() =>
       this._store.pipe(
-        select(this._editedHikeProgramSelectors.getData),
+        select(editedHikeProgramSelectors.getData),
         take(1)
       )
     ),

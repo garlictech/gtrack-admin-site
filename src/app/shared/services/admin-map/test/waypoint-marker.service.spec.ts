@@ -3,15 +3,15 @@ import { AdminMapService } from '../admin-map.service';
 import {
   ElevationService, IconService
 } from '../../../../../subrepos/gtrack-common-ngx';
-import { HikeEditMapSelectors } from '../../../../store/selectors';
 import { StoreModule, Store } from '@ngrx/store';
-import { hikeEditMapReducer } from 'app/store/reducer';
+import { hikeEditMapReducer } from '../../../../store/reducer';
 import { RoutePlannerService } from '../route-planner.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { WaypointMarkerService, IWaypoint } from '../waypoint-marker.service';
 import { EMPTY } from 'rxjs';
-import { State } from 'app/store';
-import { hikeEditRoutePlannerActions } from 'app/store/actions';
+import { State } from '../../../../store';
+import { hikeEditRoutePlannerActions } from '../../../../store/actions';
+import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
 
 import * as _ from 'lodash';
 import * as L from 'leaflet';
@@ -51,10 +51,6 @@ describe('WaypointMarkerService', () => {
         },
         {
           provide: ElevationService,
-          useValue: {}
-        },
-        {
-          provide: HikeEditMapSelectors,
           useValue: {}
         },
         {

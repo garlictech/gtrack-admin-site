@@ -9,9 +9,10 @@ import {
 import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
 import { State, IExternalPoiListContextItemState } from '../../../store';
 import { commonGeoSearchActions } from '../../../store/actions';
-import {
-  HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditImageSelectors
-} from '../../../store/selectors';
+import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
+import * as hikeEditPoiSelectors from '../../../store/selectors/hike-edit-poi';
+import * as hikeEditImageSelectors from '../../../store/selectors/hike-edit-image';
 import { AdminMap, AdminMapMarker, RoutePlannerService } from '../admin-map';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../interfaces';
 import { GooglePoiService } from './google-poi.service';
@@ -58,15 +59,11 @@ export class PoiEditorService {
     private _routePlannerService: RoutePlannerService,
     private _elevationService: ElevationService,
     private _iconService: IconService,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _poiSelectors: PoiSelectors,
     private _googlePoiService: GooglePoiService,
     private _wikipediaPoiService: WikipediaPoiService,
-    private _markerPopupService: MarkerPopupService,
-    private _hikeEditImageSelectors: HikeEditImageSelectors
+    private _markerPopupService: MarkerPopupService
   ) {}
 
   public getDbObj(poi: IExternalPoi) {
@@ -246,7 +243,7 @@ export class PoiEditorService {
 
     this._store
       .pipe(
-        select(this._editedHikeProgramSelectors.getPoiIds),
+        select(editedHikeProgramSelectors.getPoiIds),
         take(1)
       )
       .subscribe((hikePoiIds: string[]) => {
@@ -483,15 +480,15 @@ export class PoiEditorService {
 
       combineLatest(
         this._store.pipe(
-          select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('hike')),
+          select(hikeEditPoiSelectors.getHikeEditPoiContextSelector('hike')),
           take(1)
         ),
         this._store.pipe(
-          select(this._editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
+          select(editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
           take(1)
         ),
         this._store.pipe(
-          select(this._hikeEditRoutePlannerSelectors.getPath),
+          select(hikeEditRoutePlannerSelectors.getPath),
           take(1)
         )
       )
@@ -522,7 +519,7 @@ export class PoiEditorService {
 
       combineLatest(
         this._store.pipe(
-          select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector('gTrack')),
+          select(hikeEditPoiSelectors.getHikeEditPoiContextSelector('gTrack')),
           take(1)
         ),
         this._store.pipe(
@@ -530,7 +527,7 @@ export class PoiEditorService {
           take(1)
         ),
         this._store.pipe(
-          select(this._hikeEditRoutePlannerSelectors.getPath),
+          select(hikeEditRoutePlannerSelectors.getPath),
           take(1)
         )
       )
@@ -568,40 +565,40 @@ export class PoiEditorService {
       // Service pois
       //
 
-      this._getVisibleServicePois('collector', this._hikeEditPoiSelectors.getAllCollectorPois).subscribe(
+      this._getVisibleServicePois('collector', hikeEditPoiSelectors.getAllCollectorPois).subscribe(
         (pois: any[]) => {
           _pois = _pois.concat(pois.map(p => _assign(_cloneDeep(p), { markerType: 'collector' })));
         }
       );
-      this._getVisibleServicePois(EPoiTypes.google, this._hikeEditPoiSelectors.getAllGooglePois).subscribe(
+      this._getVisibleServicePois(EPoiTypes.google, hikeEditPoiSelectors.getAllGooglePois).subscribe(
         (pois: IExternalPoi[]) => {
           _pois = _pois.concat(
             pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.google })).filter(p => !p.inCollector)
           );
         }
       );
-      this._getVisibleServicePois(EPoiTypes.osmAmenity, this._hikeEditPoiSelectors.getAllOsmAmenityPois).subscribe(
+      this._getVisibleServicePois(EPoiTypes.osmAmenity, hikeEditPoiSelectors.getAllOsmAmenityPois).subscribe(
         (pois: IExternalPoi[]) => {
           _pois = _pois.concat(
             pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.osmAmenity })).filter(p => !p.inCollector)
           );
         }
       );
-      this._getVisibleServicePois(EPoiTypes.osmNatural, this._hikeEditPoiSelectors.getAllOsmNaturalPois).subscribe(
+      this._getVisibleServicePois(EPoiTypes.osmNatural, hikeEditPoiSelectors.getAllOsmNaturalPois).subscribe(
         (pois: IExternalPoi[]) => {
           _pois = _pois.concat(
             pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.osmNatural })).filter(p => !p.inCollector)
           );
         }
       );
-      this._getVisibleServicePois(EPoiTypes.osmRoute, this._hikeEditPoiSelectors.getAllOsmRoutePois).subscribe(
+      this._getVisibleServicePois(EPoiTypes.osmRoute, hikeEditPoiSelectors.getAllOsmRoutePois).subscribe(
         (pois: IExternalPoi[]) => {
           _pois = _pois.concat(
             pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.osmRoute })).filter(p => !p.inCollector)
           );
         }
       );
-      this._getVisibleServicePois(EPoiTypes.wikipedia, this._hikeEditPoiSelectors.getAllWikipediaPois).subscribe(
+      this._getVisibleServicePois(EPoiTypes.wikipedia, hikeEditPoiSelectors.getAllWikipediaPois).subscribe(
         (pois: IExternalPoi[]) => {
           _pois = _pois.concat(
             pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.wikipedia })).filter(p => !p.inCollector)
@@ -637,7 +634,7 @@ export class PoiEditorService {
   private _getVisibleServicePois(subdomain, poiSelector) {
     return combineLatest(
       this._store.pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextSelector(subdomain)),
+        select(hikeEditPoiSelectors.getHikeEditPoiContextSelector(subdomain)),
         take(1)
       ),
       this._store.pipe(
@@ -690,11 +687,11 @@ export class PoiEditorService {
 
     combineLatest(
       this._store.pipe(
-        select(this._editedHikeProgramSelectors.getBackgroundOriginalUrls()),
+        select(editedHikeProgramSelectors.getBackgroundOriginalUrls()),
         take(1)
       ),
       this._store.pipe(
-        select(this._hikeEditImageSelectors.getImageMarkerImages),
+        select(hikeEditImageSelectors.getImageMarkerImages),
         take(1)
       )
     )

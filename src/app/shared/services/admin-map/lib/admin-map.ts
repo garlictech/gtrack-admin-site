@@ -2,7 +2,7 @@ import { Store, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { Observable } from 'rxjs';
 import { take, map as rxMap } from 'rxjs/operators';
-import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 import {
   Map,
   IconService,
@@ -40,7 +40,6 @@ export class AdminMap extends Map {
     protected iconService: IconService,
     protected mapMarkerService: MapMarkerService,
     private _store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     protected _descriptionLanguageList: DescriptionLanguageListService,
     protected _markerPopup: MarkerPopupService
   ) {
@@ -68,7 +67,7 @@ export class AdminMap extends Map {
   public getBuffer(size: EBufferSize): Observable<GeoJSON.Feature<GeoJSON.Polygon> | undefined> {
     // Update totals on each segment update
     return this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getPath),
+      select(hikeEditRoutePlannerSelectors.getPath),
       take(1),
       rxMap(path => {
         if (typeof path !== 'undefined') {

@@ -5,12 +5,13 @@ import { StoreModule } from '@ngrx/store';
 import { hikeEditPoiReducer, editedHikeProgramReducer } from '../../../../../app/store/reducer';
 import {
   GeometryService, GeospatialService, ElevationService, IconService, GeoSearchSelectors,
-  PoiSelectors, MarkerPopupService, EXTERNAL_GEO_SEARCH_DEPENDENCIES, EXTERNAL_POI_DEPENDENCIES, HikeProgramService
+  PoiSelectors, MarkerPopupService, EXTERNAL_GEO_SEARCH_DEPENDENCIES, EXTERNAL_POI_DEPENDENCIES
 } from '../../../../../subrepos/gtrack-common-ngx';
 import { RoutePlannerService } from '../../admin-map';
-import {
-  EditedHikeProgramSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors, HikeEditImageSelectors
-} from '../../../../../app/store/selectors';
+import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
+import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
+import * as hikeEditImageSelectors from '../../../../store/selectors/hike-edit-image';
 import { GooglePoiService } from '../google-poi.service';
 import { WikipediaPoiService } from '../wikipedia-poi.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -27,15 +28,11 @@ describe('PoiEditorService', () => {
   let routePlannerService: RoutePlannerService;
   let elevationService: ElevationService;
   let iconService: IconService;
-  let editedHikeProgramSelectors: EditedHikeProgramSelectors;
-  let hikeEditPoiSelectors: HikeEditPoiSelectors;
-  let hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors;
   let geoSearchSelectors: GeoSearchSelectors;
   let poiSelectors: PoiSelectors;
   let googlePoiService: GooglePoiService;
   let wikipediaPoiService: WikipediaPoiService;
   let markerPopupService: MarkerPopupService;
-  let hikeEditImageSelectors: HikeEditImageSelectors;
   let messageService: MessageService;
 
   beforeEach(() => {
@@ -50,13 +47,9 @@ describe('PoiEditorService', () => {
       providers: [
         PoiEditorService,
         IconService,
-        EditedHikeProgramSelectors,
-        HikeEditPoiSelectors,
-        HikeEditRoutePlannerSelectors,
         GeoSearchSelectors,
         PoiSelectors,
         MarkerPopupService,
-        HikeEditImageSelectors,
         {
           provide: GeometryService,
           useValue: {
@@ -121,15 +114,11 @@ describe('PoiEditorService', () => {
     routePlannerService = TestBed.get(RoutePlannerService);
     elevationService = TestBed.get(ElevationService);
     iconService = TestBed.get(IconService);
-    editedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
-    hikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
-    hikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
     geoSearchSelectors = TestBed.get(GeoSearchSelectors);
     poiSelectors = TestBed.get(PoiSelectors);
     googlePoiService = TestBed.get(GooglePoiService);
     wikipediaPoiService = TestBed.get(WikipediaPoiService);
     markerPopupService = TestBed.get(MarkerPopupService);
-    hikeEditImageSelectors = TestBed.get(HikeEditImageSelectors);
     messageService = TestBed.get(MessageService);
   });
 

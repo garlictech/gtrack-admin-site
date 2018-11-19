@@ -14,12 +14,10 @@ import { PoiEditorService } from '../../../../shared/services';
 import { IGTrackPoi } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
 import { hikeEditPoiActions, commonPoiActions } from '../../../../store/actions';
-import {
-  HikeEditPoiSelectors,
-  HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors
-} from '../../../../store/selectors';
+import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
+import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
+import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
 
 import _difference from 'lodash-es/difference';
 import _intersection from 'lodash-es/intersection';
@@ -29,8 +27,7 @@ import _intersection from 'lodash-es/intersection';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
-  @Input()
-  isPlanning$: Observable<boolean>;
+  @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<IGTrackPoi[]>;
   public segments$: Observable<any>;
   public searchContext$: Observable<IGeoSearchContextState | undefined>;
@@ -45,10 +42,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _poiEditorService: PoiEditorService,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _poiSelectors: PoiSelectors
   ) {}
@@ -56,7 +49,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._store
       .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
+        select(hikeEditMapSelectors.getMapId),
         takeUntil(this._destroy$),
         filter(id => id !== '')
       )
@@ -101,7 +94,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$)
       ),
       this._store.pipe(
-        select(this._editedHikeProgramSelectors.getStopsCount),
+        select(editedHikeProgramSelectors.getStopsCount),
         takeUntil(this._destroy$)
       )
     ).pipe(
@@ -115,7 +108,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       }),
       switchMap((pois: IPoiStored[]) => {
         return this._store.pipe(
-          select(this._hikeEditRoutePlannerSelectors.getPath),
+          select(hikeEditRoutePlannerSelectors.getPath),
           debounceTime(250),
           takeUntil(this._destroy$),
           switchMap((path: any) => of([path, this._poiEditorService.organizePois(pois, path)])),
@@ -141,7 +134,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     // Route info from the store (for disabling GET buttons)
     this.segments$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getSegments),
+      select(hikeEditRoutePlannerSelectors.getSegments),
       takeUntil(this._destroy$)
     );
 
@@ -160,7 +153,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOnrouteMarkers')),
+        select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOnrouteMarkers')),
         takeUntil(this._destroy$),
         debounceTime(250)
       )
@@ -175,7 +168,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers')),
+        select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers')),
         takeUntil(this._destroy$),
         debounceTime(250)
       )

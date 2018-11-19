@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { HikeEditImageSelectors } from '../hike-edit-image';
+import * as hikeEditImageSelectors from '../../selectors/hike-edit-image';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IHikeEditImageState } from '../../state';
@@ -27,8 +27,7 @@ describe('HikeEditImage selectors', () => {
         StoreModule.forRoot({
           hikeEditImage: hikeEditImageReducer
         })
-      ],
-      providers: [HikeEditImageSelectors]
+      ]
     });
 
     store = TestBed.get(Store);
@@ -43,7 +42,6 @@ describe('HikeEditImage selectors', () => {
   describe('getAllMapillaryImages', () => {
     it('should return mapillary image', () => {
       let result;
-      const hikeEditImageSelectors: HikeEditImageSelectors = TestBed.get(HikeEditImageSelectors);
 
       store
         .pipe(
@@ -62,7 +60,6 @@ describe('HikeEditImage selectors', () => {
   describe('getAllFlickrImages', () => {
     it('should return flickr image', () => {
       let result;
-      const hikeEditImageSelectors: HikeEditImageSelectors = TestBed.get(HikeEditImageSelectors);
 
       store
         .pipe(
@@ -81,7 +78,6 @@ describe('HikeEditImage selectors', () => {
   describe('getImageMarkerImages', () => {
     it('should return image marker urls', () => {
       let result;
-      const hikeEditImageSelectors: HikeEditImageSelectors = TestBed.get(HikeEditImageSelectors);
 
       store
         .pipe(
@@ -100,7 +96,6 @@ describe('HikeEditImage selectors', () => {
   describe('getHikeEditImageContextSelector', () => {
     it('should return mapillary image contexts', () => {
       let result;
-      const hikeEditImageSelectors: HikeEditImageSelectors = TestBed.get(HikeEditImageSelectors);
 
       store
         .pipe(
@@ -123,7 +118,6 @@ describe('HikeEditImage selectors', () => {
   describe('getHikeEditImageContextPropertySelector', () => {
     it('should return mapillary image context property', () => {
       let result;
-      const hikeEditImageSelectors: HikeEditImageSelectors = TestBed.get(HikeEditImageSelectors);
 
       store
         .pipe(

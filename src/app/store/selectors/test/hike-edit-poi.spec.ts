@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { HikeEditPoiSelectors } from '../hike-edit-poi';
+import * as hikeEditPoiSelectors from '../../selectors/hike-edit-poi';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { hikeEditPoiReducer, initialContextItemState } from '../../reducer';
@@ -26,8 +26,7 @@ describe('HikeEditPoi selectors', () => {
         StoreModule.forRoot({
           hikeEditPoi: hikeEditPoiReducer
         })
-      ],
-      providers: [HikeEditPoiSelectors]
+      ]
     });
 
     store = TestBed.get(Store);
@@ -42,7 +41,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getAllGooglePois', () => {
     it('should return all google poi', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -61,7 +59,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getAllOsmAmenityPois', () => {
     it('should return all osmAmenity poi', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -80,7 +77,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getAllOsmNaturalPois', () => {
     it('should return all osmNatural poi', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -99,7 +95,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getAllOsmRoutePois', () => {
     it('should return all osmRoute poi', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -118,7 +113,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getAllWikipediaPois', () => {
     it('should return all wikipedia poi', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -137,7 +131,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getAllCollectorPois', () => {
     it('should return all collector poi', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -156,7 +149,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getMergeSelections', () => {
     it('should return merge selections', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -175,7 +167,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getMergeSelectionsCount', () => {
     it('should return merge selections count', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -194,7 +185,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getSaveablePoisCount', () => {
     it('should return merge selections count', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -220,7 +210,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getSelectedCollectorPois', () => {
     it('should return selected collector pois', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -240,7 +229,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getCollectorPoi', () => {
     it('should return collector poi', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -259,7 +247,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getCollectorPoisCount', () => {
     it('should return collector pois count', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -278,7 +265,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getPoiPhotos', () => {
     it('should return poi photos', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -297,7 +283,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getHikeEditPoiContextSelector', () => {
     it('should return poi context', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(
@@ -316,7 +301,6 @@ describe('HikeEditPoi selectors', () => {
   describe('getHikeEditPoiContextPropertySelector', () => {
     it('should return poi context property', () => {
       let result;
-      const hikeEditPoiSelectors: HikeEditPoiSelectors = TestBed.get(HikeEditPoiSelectors);
 
       store
         .pipe(

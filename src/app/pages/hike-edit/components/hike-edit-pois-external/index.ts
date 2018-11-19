@@ -7,16 +7,13 @@ import { PoiEditorService } from '../../../../shared/services';
 import { PoiSelectors, IGeoSearchContextState, GeoSearchSelectors } from 'subrepos/gtrack-common-ngx';
 import { EPoiTypes } from 'subrepos/provider-client';
 import {
-  IExternalPoiType,
-  IExternalPoi,
-  IWikipediaPoi,
-  IGooglePoi,
-  IOsmPoi,
-  IGTrackPoi
+  IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi
 } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
 import { hikeEditPoiActions } from '../../../../store/actions';
-import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
+import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
+import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 
 import _pick from 'lodash-es/pick';
 import _filter from 'lodash-es/filter';
@@ -47,18 +44,15 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _routePlannerService: RoutePlannerService,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _poiSelectors: PoiSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _poiEditorService: PoiEditorService
   ) {}
 
   ngOnInit() {
     this._store
       .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
+        select(hikeEditMapSelectors.getMapId),
         filter(id => id !== ''),
         takeUntil(this._destroy$)
       )
@@ -71,19 +65,19 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
     // Route info from the store (for disabling GET buttons)
     this.segments$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getSegments),
+      select(hikeEditRoutePlannerSelectors.getSegments),
       takeUntil(this._destroy$)
     );
 
     this.selectedPoisCount$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getSaveablePoisCount(this.poiType.subdomain)),
+      select(hikeEditPoiSelectors.getSaveablePoisCount(this.poiType.subdomain)),
       takeUntil(this._destroy$)
     );
 
     // Update poi properties after poi list loaded
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'loaded')),
+        select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'loaded')),
         takeUntil(this._destroy$),
         filter(loaded => !!loaded),
         switchMap(() => {
@@ -92,7 +86,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           return combineLatest(
             this._getSubdomainSelector(this.poiType.subdomain).take(1),
             this._store.pipe(
-              select(this._hikeEditRoutePlannerSelectors.getPath),
+              select(hikeEditRoutePlannerSelectors.getPath),
               take(1)
             )
           );
@@ -142,7 +136,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         // Saving in progress?
         this._store
           .pipe(
-            select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving')),
+            select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving')),
             take(1)
           )
           .subscribe((saving: boolean) => {
@@ -162,7 +156,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     // Update inCollector properties after collected poi list has been refreshed
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getAllCollectorPois),
+        select(hikeEditPoiSelectors.getAllCollectorPois),
         debounceTime(250),
         takeUntil(this._destroy$)
       )
@@ -170,7 +164,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         // Saving in progress?
         this._store
           .pipe(
-            select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving')),
+            select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving')),
             take(1)
           )
           .subscribe((saving: boolean) => {
@@ -196,17 +190,17 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     //
 
     this.loading$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'loading')),
+      select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'loading')),
       takeUntil(this._destroy$)
     );
 
     this.processing$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'processing')),
+      select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'processing')),
       takeUntil(this._destroy$)
     );
 
     this.saving$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'saving')),
+      select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'saving')),
       takeUntil(this._destroy$)
     );
 
@@ -222,7 +216,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(
-          this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers')
+          hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers')
         ),
         takeUntil(this._destroy$),
         debounceTime(250)
@@ -239,7 +233,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(
-          this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(
+          hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(
             this.poiType.subdomain,
             'showOffrouteMarkers'
           )
@@ -267,19 +261,19 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
     switch (subdomain) {
       case EPoiTypes.google:
-        _pois$ = this._store.pipe(select(this._hikeEditPoiSelectors.getAllGooglePois));
+        _pois$ = this._store.pipe(select(hikeEditPoiSelectors.getAllGooglePois));
         break;
       case EPoiTypes.wikipedia:
-        _pois$ = this._store.pipe(select(this._hikeEditPoiSelectors.getAllWikipediaPois));
+        _pois$ = this._store.pipe(select(hikeEditPoiSelectors.getAllWikipediaPois));
         break;
       case EPoiTypes.osmAmenity:
-        _pois$ = this._store.pipe(select(this._hikeEditPoiSelectors.getAllOsmAmenityPois));
+        _pois$ = this._store.pipe(select(hikeEditPoiSelectors.getAllOsmAmenityPois));
         break;
       case EPoiTypes.osmNatural:
-        _pois$ = this._store.pipe(select(this._hikeEditPoiSelectors.getAllOsmNaturalPois));
+        _pois$ = this._store.pipe(select(hikeEditPoiSelectors.getAllOsmNaturalPois));
         break;
       case EPoiTypes.osmRoute:
-        _pois$ = this._store.pipe(select(this._hikeEditPoiSelectors.getAllOsmRoutePois));
+        _pois$ = this._store.pipe(select(hikeEditPoiSelectors.getAllOsmRoutePois));
         break;
     }
 
