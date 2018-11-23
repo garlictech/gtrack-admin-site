@@ -4,8 +4,7 @@ import { LeafletComponent } from 'subrepos/gtrack-common-ngx/app';
 
 @Component({
   selector: 'app-admin-leaflet',
-  styleUrls: ['./admin-leaflet.component.scss'],
-  template: '<div #map class="angular-leaflet-map"><ng-content></ng-content></div>'
+  template: '<div #map class="angular-leaflet-map" style="height: 300px; width: 100%"><ng-content></ng-content></div>'
 })
 export class AdminLeafletComponent extends LeafletComponent {
   public map: AdminMap;

@@ -16,10 +16,10 @@ export const mapillaryImageAdapter: EntityAdapter<IBackgroundImageDataStored> = 
 >();
 export const mapillaryImageInitialState = mapillaryImageAdapter.getInitialState();
 
-const mapillaryImageReducer: ActionReducer<IMapillaryImageEntityState> = (
+export function mapillaryImageReducer(
   state: IMapillaryImageEntityState = mapillaryImageInitialState,
   action: hikeEditImageActions.AllHikeEditImageActions
-): IMapillaryImageEntityState => {
+): IMapillaryImageEntityState {
   switch (action.type) {
     case hikeEditImageActions.RESET_IMAGE_STATE: {
       return mapillaryImageInitialState;
@@ -32,7 +32,7 @@ const mapillaryImageReducer: ActionReducer<IMapillaryImageEntityState> = (
     default:
       return state;
   }
-};
+}
 
 /**
  * Flickr
@@ -43,10 +43,10 @@ export const flickrImageAdapter: EntityAdapter<IBackgroundImageDataStored> = cre
 >();
 export const flickrImageInitialState = flickrImageAdapter.getInitialState();
 
-const flickrImageReducer: ActionReducer<IFlickrImageEntityState> = (
+export function flickrImageReducer (
   state: IFlickrImageEntityState = flickrImageInitialState,
   action: hikeEditImageActions.AllHikeEditImageActions
-): IFlickrImageEntityState => {
+): IFlickrImageEntityState {
   switch (action.type) {
     case hikeEditImageActions.RESET_IMAGE_STATE: {
       return flickrImageInitialState;
@@ -59,7 +59,7 @@ const flickrImageReducer: ActionReducer<IFlickrImageEntityState> = (
     default:
       return state;
   }
-};
+}
 
 /**
  * Context

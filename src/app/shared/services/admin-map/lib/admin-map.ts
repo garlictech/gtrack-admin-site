@@ -1,8 +1,5 @@
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { State } from '../../../../store';
-import { Observable } from 'rxjs';
-import { take, map as rxMap } from 'rxjs/operators';
-import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 import {
   Map,
   IconService,
@@ -14,19 +11,9 @@ import {
 import * as L from 'leaflet';
 import 'overlapping-marker-spiderfier-leaflet';
 import 'leaflet.fullscreen';
-import turfBuffer from '@turf/buffer';
 import _assign from 'lodash-es/assign';
-import { SMALL_BUFFER_SIZE, BIG_BUFFER_SIZE } from 'app/config';
-
-export enum EBufferSize {
-  SMALL = 'small',
-  BIG = 'big'
-}
-export enum EAdminMarkerType {
-  WAYPOINT = 'waypoint',
-  POI = 'poi',
-  IMAGE = 'image'
-}
+import { EAdminMarkerType } from '../admin-map.service';
+import { GeoJsonObject } from 'geojson';
 
 declare const OverlappingMarkerSpiderfier;
 
@@ -62,44 +49,12 @@ export class AdminMap extends Map {
   }
 
   /**
-   * Get buffer geoJSON
+   * Add geoJSON layer to map
    */
-  public getBuffer(size: EBufferSize): Observable<GeoJSON.Feature<GeoJSON.Polygon> | undefined> {
-    // Update totals on each segment update
-    return this._store.pipe(
-      select(hikeEditRoutePlannerSelectors.getPath),
-      take(1),
-      rxMap(path => {
-        if (typeof path !== 'undefined') {
-          const _size = size === EBufferSize.SMALL ? SMALL_BUFFER_SIZE : BIG_BUFFER_SIZE;
-          const _draw_type = size === EBufferSize.SMALL ? 'small_buffer' : 'big_buffer';
-
-          let _buffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, _size, { units: 'meters' });
-
-          if (typeof _buffer !== 'undefined') {
-            _buffer = _assign(_buffer, {
-              properties: {
-                name: 'buffer polygon',
-                draw_type: _draw_type
-              }
-            });
-          }
-
-          return _buffer;
-        } else {
-          return;
-        }
-      })
-    );
-  }
-
-  /**
-   * Add geoJSON to map
-   */
-  public addGeoJSON(geoJson): L.GeoJSON {
+  public addGeoJSON(geoJson: GeoJsonObject): L.GeoJSON {
     const _geoJSON = L.geoJSON(geoJson, {
       style: <any>this._getGeoJsonStyle(geoJson),
-      onEachFeature: this._propagateClick
+      // onEachFeature: this._propagateClick // ??
     });
     _geoJSON.addTo(this.leafletMap);
 
@@ -121,8 +76,10 @@ export class AdminMap extends Map {
   /**
    * addGeoJSON submethod
    */
-  private _propagateClick(feature, layer) {
+  private _propagateClick = (feature, layer) => {
     layer.on('click', event => {
+      // L.DomEvent.stopPropagation(event);
+
       this.map.fireEvent('click', {
         latlng: event.latlng,
         layerPoint: this.map.latLngToLayerPoint(event.latlng),

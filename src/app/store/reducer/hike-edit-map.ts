@@ -1,15 +1,15 @@
+import { ActionReducer } from '@ngrx/store';
 import { IHikeEditMapState } from '../state';
 import { adminMapActions } from '../actions';
-import { ActionReducer } from '@ngrx/store';
 
 export const initialMapState: IHikeEditMapState = {
   mapId: ''
 };
 
-export const hikeEditMapReducer: ActionReducer<IHikeEditMapState> = (
+export function hikeEditMapReducer(
   state = initialMapState,
   action: adminMapActions.AllAdminMapActions
-): IHikeEditMapState => {
+): IHikeEditMapState {
   switch (action.type) {
     case adminMapActions.RESET_MAP:
       return initialMapState;
@@ -23,4 +23,4 @@ export const hikeEditMapReducer: ActionReducer<IHikeEditMapState> = (
     default:
       return state;
   }
-};
+}

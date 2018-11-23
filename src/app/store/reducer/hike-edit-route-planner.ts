@@ -30,10 +30,10 @@ export const initialRouteInfoDataState: IHikeEditRoutePlannerState = {
 };
 
 // export function hikeEditRoutePlannerReducer(
-export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerState> = (
+export function hikeEditRoutePlannerReducer(
   state = initialRouteInfoDataState,
   action: hikeEditRoutePlannerActions.AllHikeEditRoutePlannerActions
-): IHikeEditRoutePlannerState => {
+): IHikeEditRoutePlannerState {
   const newState = _cloneDeep(state);
 
   switch (action.type) {
@@ -93,4 +93,4 @@ export const hikeEditRoutePlannerReducer: ActionReducer<IHikeEditRoutePlannerSta
     default:
       return state;
   }
-};
+}

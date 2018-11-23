@@ -41,10 +41,10 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
   failed: null
 };
 
-export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = (
+export function editedHikeProgramReducer(
   state = initialEditedHikeProgramState,
   action: editedHikeProgramActions.AllEditedHikeProgramActions
-): IEditedHikeProgramState => {
+): IEditedHikeProgramState {
   const newState = _cloneDeep(state);
 
   switch (action.type) {
@@ -132,4 +132,4 @@ export const editedHikeProgramReducer: ActionReducer<IEditedHikeProgramState> = 
     default:
       return state;
   }
-};
+}

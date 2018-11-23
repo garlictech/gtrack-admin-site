@@ -279,6 +279,29 @@ export class RoutePlannerService {
           })
         );
       }
+
+      /* TODO így
+      addGeoJson(geojson: any, map: L.Map) {
+    const styles = [
+      { color: 'black', opacity: 0.1, weight: 8 },
+      { color: 'white', opacity: 0.8, weight: 6 },
+      { color: 'red', opacity: 1, weight: 2 }
+    ];
+
+    const responses = styles.map(style => {
+      const response = L.geoJSON(geojson, {
+        style: () => style
+      });
+
+      response.addTo(map);
+
+      return response;
+    });
+
+    this._geoJsons.push(responses);
+  }
+
+      */
       this._routePlanOnMap.addTo(this._map.leafletMap);
     }
   }

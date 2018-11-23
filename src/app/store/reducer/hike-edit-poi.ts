@@ -25,10 +25,10 @@ import _cloneDeep from 'lodash-es/cloneDeep';
 export const googlePoiAdapter: EntityAdapter<IGooglePoi> = createEntityAdapter<IGooglePoi>();
 export const googlePoiInitialState = googlePoiAdapter.getInitialState();
 
-const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
+export function googlePoiReducer(
   state: IGooglePoiEntityState = googlePoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IGooglePoiEntityState => {
+): IGooglePoiEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
       return googlePoiInitialState;
@@ -78,7 +78,7 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
     default:
       return state;
   }
-};
+}
 
 /**
  * OSM Amenity
@@ -87,10 +87,10 @@ const googlePoiReducer: ActionReducer<IGooglePoiEntityState> = (
 export const osmAmenityPoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
 export const osmAmenityPoiInitialState = osmAmenityPoiAdapter.getInitialState();
 
-const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
+export function osmAmenityPoiReducer(
   state: IOsmAmenityPoiEntityState = osmAmenityPoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IOsmAmenityPoiEntityState => {
+): IOsmAmenityPoiEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
       return osmAmenityPoiInitialState;
@@ -140,7 +140,7 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
     default:
       return state;
   }
-};
+}
 
 /**
  * OSM Natural
@@ -149,10 +149,10 @@ const osmAmenityPoiReducer: ActionReducer<IOsmAmenityPoiEntityState> = (
 export const osmNaturalPoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
 export const osmNaturalPoiInitialState = osmNaturalPoiAdapter.getInitialState();
 
-const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
+export function osmNaturalPoiReducer(
   state: IOsmNaturalPoiEntityState = osmNaturalPoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IOsmNaturalPoiEntityState => {
+): IOsmNaturalPoiEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
       return osmNaturalPoiInitialState;
@@ -202,7 +202,7 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
     default:
       return state;
   }
-};
+}
 
 /**
  * OSM Route
@@ -211,10 +211,10 @@ const osmNaturalPoiReducer: ActionReducer<IOsmNaturalPoiEntityState> = (
 export const osmRoutePoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
 export const osmRoutePoiInitialState = osmRoutePoiAdapter.getInitialState();
 
-const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
+export function osmRoutePoiReducer(
   state: IOsmRoutePoiEntityState = osmRoutePoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IOsmRoutePoiEntityState => {
+): IOsmRoutePoiEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
       return osmRoutePoiInitialState;
@@ -264,7 +264,7 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
     default:
       return state;
   }
-};
+}
 
 /**
  * Wikipedia
@@ -273,10 +273,10 @@ const osmRoutePoiReducer: ActionReducer<IOsmRoutePoiEntityState> = (
 export const wikipediaPoiAdapter: EntityAdapter<IWikipediaPoi> = createEntityAdapter<IWikipediaPoi>();
 export const wikipediaPoiInitialState = wikipediaPoiAdapter.getInitialState();
 
-const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
+export function wikipediaPoiReducer(
   state: IWikipediaPoiEntityState = wikipediaPoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IWikipediaPoiEntityState => {
+): IWikipediaPoiEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
       return wikipediaPoiInitialState;
@@ -326,7 +326,7 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
     default:
       return state;
   }
-};
+}
 
 /**
  * Poi collector
@@ -335,10 +335,10 @@ const wikipediaPoiReducer: ActionReducer<IWikipediaPoiEntityState> = (
 export const poiCollectorAdapter: EntityAdapter<any> = createEntityAdapter<any>();
 export const poiCollectorInitialState = poiCollectorAdapter.getInitialState();
 
-const poiCollectorReducer: ActionReducer<IPoiCollectorEntityState> = (
+export function poiCollectorReducer(
   state: IPoiCollectorEntityState = poiCollectorInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IPoiCollectorEntityState => {
+): IPoiCollectorEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
       return poiCollectorInitialState;
@@ -368,7 +368,7 @@ const poiCollectorReducer: ActionReducer<IPoiCollectorEntityState> = (
     default:
       return state;
   }
-};
+}
 
 /**
  * Context
@@ -608,10 +608,10 @@ export const initialGTrackPoiMergeState = {
   selections: []
 };
 
-export const gTrackPoiMergeReducer: ActionReducer<IGTrackPoiMergeState> = (
+export function gTrackPoiMergeReducer(
   state = initialGTrackPoiMergeState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IGTrackPoiMergeState => {
+): IGTrackPoiMergeState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE:
       return initialGTrackPoiMergeState;
@@ -634,7 +634,7 @@ export const gTrackPoiMergeReducer: ActionReducer<IGTrackPoiMergeState> = (
     default:
       return state;
   }
-};
+}
 
 const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
   wikipediaPois: wikipediaPoiReducer,

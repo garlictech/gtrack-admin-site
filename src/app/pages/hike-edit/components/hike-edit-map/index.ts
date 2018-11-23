@@ -8,11 +8,13 @@ import { State } from '../../../../store';
 import { adminMapActions, commonBackgroundGeolocationActions } from '../../../../store/actions';
 import { Center, selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
 import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
-import { WaypointMarkerService, EBufferSize } from '../../../../shared/services/admin-map';
+import { LeafletMapComponent } from '@common.features/leaflet-map/components/leaflet-map';
+import { WaypointMarkerService, EBufferSize, AdminMapService } from '../../../../shared/services/admin-map';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
+import { ILeafletMapConfig } from '@common.features/leaflet-map/interfaces';
 
 import * as L from 'leaflet';
-import { LeafletMouseEvent } from 'leaflet';
+import { GeoJsonObject } from 'geojson';
 
 const CENTER = <Center>{
   lat: 47.689714,
@@ -39,14 +41,14 @@ const OVERLAYS = [{
   styleUrls: ['./style.scss']
 })
 export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('adminmap')
-  public mapComponent: AdminLeafletComponent;
-  @ViewChild('search')
-  private _searchElementRef: ElementRef;
+  @ViewChild('adminmap') public mapComponent: AdminLeafletComponent;
+  @ViewChild('newAdminMap') public newAdminMap: LeafletMapComponent;
+  @ViewChild('search') private _searchElementRef: ElementRef;
   private _searchInput: HTMLInputElement;
   public center: Center = CENTER;
   public layers = LAYERS;
   public overlays = OVERLAYS;
+  public mapConfig: ILeafletMapConfig;
   public mode = 'routing';
   public allowPlanning: boolean;
   public currentLocation$: Observable<IGeoPosition | null>;
@@ -61,12 +63,17 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private _store: Store<State>,
     private _waypointMarkerService: WaypointMarkerService,
+    private _adminMapService: AdminMapService,
     private _googleMapsService: GoogleMapsService,
     private _ngZone: NgZone
   ) {}
 
   ngOnInit() {
     this.clickModes = [{ label: 'Routing mode', value: 'routing' }, { label: 'Checkpoint mode', value: 'checkpoint' }];
+
+    this.mapConfig = {
+      fullScreenControl: true
+    };
 
     // Update buffer on each segment update
     this._store
@@ -117,43 +124,53 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     // Disable wheel zoom
-    this.mapComponent.leafletMap.scrollWheelZoom.disable();
+    this.mapComponent.leafletMap.scrollWheelZoom.disable(); // TODO remove line
+    this.newAdminMap.leafletMap.scrollWheelZoom.disable();
 
-    // Setup map events
+    // TODO remove event listener block
     this.mapComponent.leafletMap
       // Add markers by click
-      .on('click', (e: LeafletMouseEvent) => {
+      .on('click', (e: L.LeafletMouseEvent) => {
         if (this.allowPlanning) {
           if (this.mode === 'routing') {
             this._waypointMarkerService.addWaypoints([e.latlng]);
           } else {
-            // console.log('todo _createCheckpoint');
             // this._createCheckpoint(e.latlng);
           }
         }
       });
+  }
 
-    /* WARNING: CAUSES BROWSER LAG!!
-    // Turn on scrollWheelZoom after the first interaction (click/drag)
-    .on('mouseup', () => {
-      this.mapComponent.leafletMap.scrollWheelZoom.enable();
-    })
-    // Turn off scrollWheelZoom on mouse out
-    .on('mouseout', () => {
-      this.mapComponent.leafletMap.scrollWheelZoom.disable();
-    });
-    */
+  public onMapClick(e: L.LeafletMouseEvent) {
+    if (this.allowPlanning) {
+      if (this.mode === 'routing') {
+        this._waypointMarkerService.addWaypoints([e.latlng]);
+      } else {
+        // this._createCheckpoint(e.latlng);
+      }
+    }
+  }
+
+  public onMapMouseUp(e: L.LeafletMouseEvent) {
+    // this.newAdminMap.leafletMap.scrollWheelZoom.enable();
+  }
+
+  public onMapMouseOut(e: L.LeafletMouseEvent) {
+    // this.newAdminMap.leafletMap.scrollWheelZoom.disable();
   }
 
   public toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
 
-    this.currentLocation$.pipe(take(1)).subscribe((position: IGeoPosition) => {
-      if (position && position.coords) {
-        const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
-        this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
-      }
-    });
+    this.currentLocation$
+      .pipe(take(1))
+      .subscribe((position: IGeoPosition) => {
+        if (position && position.coords) {
+          const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
+          this.mapComponent.map.currentPositionMarker.goToPosition(latLng); // TODO remove line
+          this.newAdminMap.currentPositionMarker.goToPosition(latLng);
+        }
+      });
   }
 
   public resetMap($event: Event) {
@@ -165,7 +182,17 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
         take(1)
       )
       .subscribe((route: any) => {
-        this.mapComponent.map.fitBounds(route);
+        this.mapComponent.map.fitBounds(route); // TODO remove line
+
+        const bounds: L.LatLngBoundsExpression = [[
+          route.bounds.NorthEast.lat,
+          route.bounds.NorthEast.lon
+        ], [
+          route.bounds.SouthWest.lat,
+          route.bounds.SouthWest.lon
+        ]];
+
+        this.newAdminMap.fitBounds(bounds);
       });
   }
 
@@ -182,12 +209,14 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private _addBuffer(size: EBufferSize) {
-    this.mapComponent.map
+    this._adminMapService
       .getBuffer(size)
       .pipe(take(1))
-      .subscribe(buffer => {
+      .subscribe((buffer: GeoJsonObject) => {
         if (buffer) {
           this._bufferOnMap[size] = this.mapComponent.map.addGeoJSON(buffer);
+
+          // const geoJsonLayer = this._adminMapService.
         }
       });
   }

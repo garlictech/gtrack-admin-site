@@ -22,6 +22,24 @@
     </app-admin-leaflet>
 </div>
 
+<br><br> <!-- TODO remove BR -->
+<div class="map-container">
+    <gtrack-leaflet-map
+      #newAdminMap
+      [layers]="layers"
+      [overlays]="overlays"
+      [center]="center"
+      [config]="mapConfig"
+      (mapClick)="onMapClick($event)"
+      (mapMouseUp)="onMapMouseUp($event)"
+      (mapMouseOut)="onMapMouseOut($event)"
+    ></gtrack-leaflet-map>
+    <!--
+      (mapMouseMove)="onMapMouseMove($event)"
+      (mapMouseDown)="onMapMouseDown($event)"
+    -->
+</div>
+
 <div class="mt-20">
   <p-button
     type="button"

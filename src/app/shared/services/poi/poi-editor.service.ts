@@ -13,7 +13,7 @@ import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hik
 import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 import * as hikeEditPoiSelectors from '../../../store/selectors/hike-edit-poi';
 import * as hikeEditImageSelectors from '../../../store/selectors/hike-edit-image';
-import { AdminMap, AdminMapMarker, RoutePlannerService } from '../admin-map';
+import { AdminMap, AdminMapMarker, RoutePlannerService, EAdminMarkerType } from '../admin-map';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../interfaces';
 import { GooglePoiService } from './google-poi.service';
 import { WikipediaPoiService } from './wikipedia-poi.service';
@@ -41,7 +41,6 @@ import turfBuffer from '@turf/buffer';
 import { point as turfPoint } from '@turf/helpers';
 import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import { SMALL_BUFFER_SIZE, BIG_BUFFER_SIZE } from 'app/config';
-import { EAdminMarkerType } from '../admin-map/lib/admin-map';
 
 @Injectable()
 export class PoiEditorService {
