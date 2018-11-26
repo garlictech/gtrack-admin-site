@@ -1,23 +1,34 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
-  ICenter, ILayerDef, ILeafletTileLayerDef, ILeafletEventEmitterMap, ILeafletMapConfig
+  ICenter, ILayerDef, ILeafletTileLayerDef, ILeafletEventEmitterMap, ILeafletMapConfig, EMarkerType
 } from '@common.features/leaflet-map/interfaces';
 import { CurrentPositionMarker } from '@common.features/leaflet-map/services/lib/current-position-marker';
 
 import * as L from 'leaflet';
 import 'leaflet.fullscreen';
+import 'overlapping-marker-spiderfier-leaflet';
 import { GeoJsonObject } from 'geojson';
+import { Store } from '@ngrx/store';
+import { leafletMapActions } from '../store';
+
+declare const OverlappingMarkerSpiderfier;
 
 @Injectable()
 export class LeafletMapService {
   public leafletMap: L.Map;
+  public overlappingMarkerSpiderfier: any;
 
   public baseLayers: ILeafletTileLayerDef = {};
   public overlayLayers: ILeafletTileLayerDef = {};
 
   protected _currentPositionMarker: CurrentPositionMarker;
 
+  constructor(
+    private _store: Store<any>,
+  ) {}
+
   public createMap(
+    id: string,
     nativeMapElement: any,
     center: ICenter,
     layers: ILayerDef[],
@@ -27,6 +38,10 @@ export class LeafletMapService {
   ) {
     this.leafletMap = new L.Map(nativeMapElement);
     this.leafletMap.setView([center.lat, center.lng], center.zoom);
+
+    //
+    // Layers
+    //
 
     layers.forEach((layer: ILayerDef, index: number) => {
       const tileLayer = L.tileLayer(layer.url);
@@ -50,6 +65,7 @@ export class LeafletMapService {
 
     L.control.layers(this.baseLayers, this.overlayLayers).addTo(this.leafletMap);
 
+    // Fullscreen control
     if (mapConfig.fullScreenControl) {
       (<any>L.control).fullscreen({
         forceSeparateButton: true,
@@ -57,11 +73,22 @@ export class LeafletMapService {
       })
       .addTo(this.leafletMap);
     }
+
+    // Spiderfier
+    if (mapConfig.spiderfier) {
+      this.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(this.leafletMap, {
+        keepSpiderfied: true
+      });
+    }
+
+    // Later we can use this id to access multiple maps
+    // Now we use only for checking map availability
+    this._store.dispatch(new leafletMapActions.RegisterMap(id));
   }
 
-  public registerEventEmitters(eventEmitters: ILeafletEventEmitterMap) {
+  public registerEventEmitters(eventEmitters: ILeafletEventEmitterMap): void {
     for (const key in eventEmitters) {
-      if (eventEmitters[key]) {
+      if (eventEmitters[key] && eventEmitters[key].observers.length > 0) {
         this.leafletMap.on(key, (e: L.LeafletMouseEvent) => {
           eventEmitters[key].emit(e);
         });
@@ -69,7 +96,11 @@ export class LeafletMapService {
     }
   }
 
-  public fitBounds(box: L.LatLngBoundsExpression) {
+  public spin(doSpin: boolean) {
+    this.leafletMap.spin(doSpin);
+  }
+
+  public fitBounds(box: L.LatLngBoundsExpression): L.Map {
     this.leafletMap.invalidateSize();
 
     return this.leafletMap.fitBounds(box, {
@@ -85,16 +116,72 @@ export class LeafletMapService {
     return this._currentPositionMarker;
   }
 
-  /**
-   * Add geoJSON layer to map
-   */
-  public addGeoJSON(geoJson: GeoJsonObject, geoJsonStyle: any): L.GeoJSON {
-    const _geoJSON = L.geoJSON(geoJson, {
-      style: geoJsonStyle //  <any>this._getGeoJsonStyle(geoJson),
-      // onEachFeature: this._propagateClick // ??
+  public addGeoJSONObject(geoJson: GeoJsonObject, geoJsonStyle: any): L.GeoJSON {
+    const geoJSON = L.geoJSON(geoJson, {
+      style: geoJsonStyle,
+      // onEachFeature: this._propagateClick // ??? legacy from old code
     });
-    _geoJSON.addTo(this.leafletMap);
 
-    return _geoJSON;
+    return <L.GeoJSON>this.addLayer(geoJSON);
+  }
+
+  /*
+  private _propagateClick = (feature, layer) => {
+    layer.on('click', event => {
+      // L.DomEvent.stopPropagation(event);
+
+      this.leafletMap.fireEvent('click', {
+        latlng: event.latlng,
+        layerPoint: this.leafletMap.latLngToLayerPoint(event.latlng),
+        containerPoint: this.leafletMap.latLngToContainerPoint(event.latlng)
+      });
+    });
+  }
+  */
+
+  public createFeatureGroupFromGeoJSONObject(geoJson: GeoJsonObject, geoJsonStyles: any[]): L.FeatureGroup {
+    const featureGroup = L.featureGroup();
+
+    geoJsonStyles.map(geoJsonStyle => {
+      const geoJSON = L.geoJSON(geoJson, {
+        style: geoJsonStyle
+      });
+
+      geoJSON.addTo(featureGroup);
+    });
+
+    return featureGroup;
+  }
+
+  public addLayer(layer: L.Layer): L.Layer {
+    console.log('ADD LAYER');
+    if (!this.leafletMap.hasLayer(layer)) {
+      layer.addTo(this.leafletMap);
+    }
+
+    return layer;
+  }
+
+  public removeLayer(layer: L.Layer) {
+    if (layer && this.leafletMap.hasLayer(layer)) {
+      this.leafletMap.removeLayer(layer);
+    }
+  }
+
+  public createMarkersGroup(markers: L.Marker[] | any[]): L.LayerGroup {
+    return L.layerGroup(markers);
+  }
+
+  public refreshSpiderfierMarkers(markers: L.Marker[], type: EMarkerType) {
+    if (typeof this.overlappingMarkerSpiderfier !== 'undefined') {
+      for (const marker of this.overlappingMarkerSpiderfier.markers.filter(m => m.options.type === type)) {
+        this.overlappingMarkerSpiderfier.removeMarker(marker);
+      }
+
+      for (const marker of markers) {
+        (<any>marker).options.type = type; // For safety's sake
+        this.overlappingMarkerSpiderfier.addMarker(marker);
+      }
+    }
   }
 }

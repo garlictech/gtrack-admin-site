@@ -7,7 +7,6 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { State } from '../../../../store';
 import { adminMapActions, commonBackgroundGeolocationActions } from '../../../../store/actions';
 import { Center, selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
-import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
 import { LeafletMapComponent } from '@common.features/leaflet-map/components/leaflet-map';
 import { WaypointMarkerService, EBufferSize, AdminMapService } from '../../../../shared/services/admin-map';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
@@ -15,6 +14,8 @@ import { ILeafletMapConfig } from '@common.features/leaflet-map/interfaces';
 
 import * as L from 'leaflet';
 import { GeoJsonObject } from 'geojson';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+import { GEOJSON_STYLES } from '@common.features/leaflet-map/constants/geojson-styles';
 
 const CENTER = <Center>{
   lat: 47.689714,
@@ -41,8 +42,7 @@ const OVERLAYS = [{
   styleUrls: ['./style.scss']
 })
 export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('adminmap') public mapComponent: AdminLeafletComponent;
-  @ViewChild('newAdminMap') public newAdminMap: LeafletMapComponent;
+  @ViewChild('adminMap') public adminMap: LeafletMapComponent;
   @ViewChild('search') private _searchElementRef: ElementRef;
   private _searchInput: HTMLInputElement;
   public center: Center = CENTER;
@@ -65,14 +65,16 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     private _waypointMarkerService: WaypointMarkerService,
     private _adminMapService: AdminMapService,
     private _googleMapsService: GoogleMapsService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private _leafletMapService: LeafletMapService
   ) {}
 
   ngOnInit() {
     this.clickModes = [{ label: 'Routing mode', value: 'routing' }, { label: 'Checkpoint mode', value: 'checkpoint' }];
 
     this.mapConfig = {
-      fullScreenControl: true
+      fullScreenControl: true,
+      spiderfier: true
     };
 
     // Update buffer on each segment update
@@ -124,21 +126,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     // Disable wheel zoom
-    this.mapComponent.leafletMap.scrollWheelZoom.disable(); // TODO remove line
-    this.newAdminMap.leafletMap.scrollWheelZoom.disable();
-
-    // TODO remove event listener block
-    this.mapComponent.leafletMap
-      // Add markers by click
-      .on('click', (e: L.LeafletMouseEvent) => {
-        if (this.allowPlanning) {
-          if (this.mode === 'routing') {
-            this._waypointMarkerService.addWaypoints([e.latlng]);
-          } else {
-            // this._createCheckpoint(e.latlng);
-          }
-        }
-      });
+    this.adminMap.leafletMap.scrollWheelZoom.disable();
   }
 
   public onMapClick(e: L.LeafletMouseEvent) {
@@ -167,8 +155,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((position: IGeoPosition) => {
         if (position && position.coords) {
           const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
-          this.mapComponent.map.currentPositionMarker.goToPosition(latLng); // TODO remove line
-          this.newAdminMap.currentPositionMarker.goToPosition(latLng);
+          this.adminMap.currentPositionMarker.goToPosition(latLng);
         }
       });
   }
@@ -182,8 +169,6 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
         take(1)
       )
       .subscribe((route: any) => {
-        this.mapComponent.map.fitBounds(route); // TODO remove line
-
         const bounds: L.LatLngBoundsExpression = [[
           route.bounds.NorthEast.lat,
           route.bounds.NorthEast.lon
@@ -192,7 +177,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
           route.bounds.SouthWest.lon
         ]];
 
-        this.newAdminMap.fitBounds(bounds);
+        this._leafletMapService.fitBounds(bounds);
       });
   }
 
@@ -214,16 +199,15 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(take(1))
       .subscribe((buffer: GeoJsonObject) => {
         if (buffer) {
-          this._bufferOnMap[size] = this.mapComponent.map.addGeoJSON(buffer);
-
-          // const geoJsonLayer = this._adminMapService.
+          const style = size === EBufferSize.SMALL ? GEOJSON_STYLES.smallBuffer : GEOJSON_STYLES.bigBuffer;
+          this._bufferOnMap[size] = this._leafletMapService.addGeoJSONObject(buffer, style);
         }
       });
   }
 
   private _removeBuffer(size: EBufferSize) {
     if (this._bufferOnMap[size]) {
-      this.mapComponent.map.removeGeoJSON(this._bufferOnMap[size]);
+      this._leafletMapService.removeLayer(this._bufferOnMap[size]);
     }
   }
 
@@ -243,7 +227,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     $event.stopPropagation();
 
     if (this.locationSearchResult) {
-      this.mapComponent.map.leafletMap.setView(
+      this._leafletMapService.leafletMap.setView(
         [this.locationSearchResult.geometry.location.lat(), this.locationSearchResult.geometry.location.lng()],
         13
       );

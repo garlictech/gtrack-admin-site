@@ -9,12 +9,11 @@ import {
   IGeoSearchResponseItem
 } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored } from 'subrepos/provider-client';
-import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
+import { AdminMapService } from '../../../../shared/services/admin-map';
 import { PoiEditorService } from '../../../../shared/services';
 import { IGTrackPoi } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
 import { hikeEditPoiActions, commonPoiActions } from '../../../../store/actions';
-import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
 import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
@@ -35,7 +34,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public showOffrouteMarkers = true;
   public displayGTrackPoiModal = false;
   public modalPoi: IGTrackPoi;
-  private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -47,16 +45,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._store
-      .pipe(
-        select(hikeEditMapSelectors.getMapId),
-        takeUntil(this._destroy$),
-        filter(id => id !== '')
-      )
-      .subscribe((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
-      });
-
     // Get pois by id from geoSearch result
     combineLatest(
       this._store.pipe(
@@ -129,7 +117,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       )
       .subscribe((pois: IGTrackPoi[]) => {
         // Refresh markers
-        this._poiEditorService.refreshPoiMarkers(this._map);
+        this._poiEditorService.refreshPoiMarkers();
       });
 
     // Route info from the store (for disabling GET buttons)
@@ -161,7 +149,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         this.showOnrouteMarkers = value;
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });
@@ -176,7 +164,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         this.showOffrouteMarkers = value;
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });

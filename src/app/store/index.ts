@@ -9,7 +9,6 @@ import { reducer as commonReducers, metaReducers } from 'subrepos/gtrack-common-
 import { hikeEditRoutePlannerReducer } from './reducer/hike-edit-route-planner';
 import { hikeEditPoiReducer } from './reducer/hike-edit-poi';
 import { hikeEditImageReducer } from './reducer/hike-edit-image';
-import { hikeEditMapReducer } from './reducer/hike-edit-map';
 import { editedHikeProgramReducer } from './reducer/edited-hike-program';
 import { editedGTrackPoiReducer } from './reducer/edited-gtrack-poi';
 
@@ -26,7 +25,6 @@ export const reducer: ActionReducerMap<State> = {
   hikeEditRoutePlanner: hikeEditRoutePlannerReducer,
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditImage: hikeEditImageReducer,
-  hikeEditMap: hikeEditMapReducer,
   editedHikeProgram: editedHikeProgramReducer,
   editedGtrackPoi: editedGTrackPoiReducer
 };

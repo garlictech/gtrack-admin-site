@@ -18,23 +18,18 @@
 </div>
 
 <div class="map-container">
-    <app-admin-leaflet #adminmap [id]="'hike-map'" [layers]="layers" [overlays]="overlays" [center]="center">
-    </app-admin-leaflet>
-</div>
-
-<br><br> <!-- TODO remove BR -->
-<div class="map-container">
     <gtrack-leaflet-map
-      #newAdminMap
+      #adminMap
+      [id]="'hikeMap'"
       [layers]="layers"
       [overlays]="overlays"
       [center]="center"
       [config]="mapConfig"
       (mapClick)="onMapClick($event)"
-      (mapMouseUp)="onMapMouseUp($event)"
-      (mapMouseOut)="onMapMouseOut($event)"
     ></gtrack-leaflet-map>
     <!--
+      (mapMouseUp)="onMapMouseUp($event)"
+      (mapMouseOut)="onMapMouseOut($event)"
       (mapMouseMove)="onMapMouseMove($event)"
       (mapMouseDown)="onMapMouseDown($event)"
     -->

@@ -11,14 +11,12 @@ import * as L from 'leaflet';
 @Component({
   selector: 'gtrack-leaflet-map',
   styleUrls: ['./style.scss'],
-  templateUrl: './ui.html',
-  providers: [
-    LeafletMapService
-  ]
+  templateUrl: './ui.html'
 })
 export class LeafletMapComponent implements OnInit {
   @ViewChild('map') private _map: ElementRef;
 
+  @Input() id: string;
   @Input() center: ICenter;
   @Input() layers: ILayerDef[] = DEFAULT_LAYERS;
   @Input() overlays: ILayerDef[] = DEFAULT_OVERLAY_LAYERS;
@@ -38,7 +36,7 @@ export class LeafletMapComponent implements OnInit {
 
   ngOnInit() {
     this._leafletMapService.createMap(
-      this._map.nativeElement, this.center, this.layers, this.overlays, this.activeOverlays, this.config
+      this.id, this._map.nativeElement, this.center, this.layers, this.overlays, this.activeOverlays, this.config
     );
 
     this._leafletMapService.registerEventEmitters({
@@ -57,9 +55,5 @@ export class LeafletMapComponent implements OnInit {
 
   public get currentPositionMarker(): CurrentPositionMarker {
     return this._leafletMapService.getCurrentPositionMarker();
-  }
-
-  public fitBounds(bounds: L.LatLngBoundsExpression) {
-    return this._leafletMapService.fitBounds(bounds);
   }
 }

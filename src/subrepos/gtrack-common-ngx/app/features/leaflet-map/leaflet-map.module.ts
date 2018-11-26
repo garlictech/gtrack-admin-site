@@ -4,6 +4,7 @@ import { StoreModule } from '@ngrx/store';
 import { featureName } from './store/state';
 import { reducer } from './store/reducer';
 import { LeafletMapComponent } from './components/leaflet-map';
+import { LeafletMapService } from './services/leaflet-map.service';
 
 @NgModule({
   imports: [
@@ -15,6 +16,9 @@ import { LeafletMapComponent } from './components/leaflet-map';
   ],
   exports: [
     LeafletMapComponent
+  ],
+  providers: [
+    LeafletMapService
   ]
 })
 export class LeafletMapModule {}

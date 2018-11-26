@@ -1,15 +1,14 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subject, of, combineLatest } from 'rxjs';
-import { filter, takeUntil, switchMap, debounceTime, take } from 'rxjs/operators';
+import { takeUntil, switchMap, debounceTime, take } from 'rxjs/operators';
 import { Store, MemoizedSelector, select } from '@ngrx/store';
 import { State } from '../../../../store';
 import { hikeEditImageActions } from '../../../../store/actions';
-import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
 import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
 import * as hikeEditImageSelectors from '../../../../store/selectors/hike-edit-image';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 
-import { RoutePlannerService, PoiEditorService, AdminMap, AdminMapService } from '../../../../shared/services';
+import { RoutePlannerService, PoiEditorService, AdminMapService } from '../../../../shared/services';
 import { IBackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
@@ -36,7 +35,6 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   public bgImages$: Observable<IBackgroundImageData[]>;
   public backgroundOriginalUrls$: Observable<string[]>;
   public slideShowUrls: string[];
-  private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -48,16 +46,6 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._store
-      .pipe(
-        select(hikeEditMapSelectors.getMapId),
-        filter(id => id !== ''),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
-      });
-
     // Photo sources getAllPoiPhotos
     this.gTrackPoiPhotos$ = combineLatest(
       this._store.pipe(
@@ -131,7 +119,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
         debounceTime(250)
       )
       .subscribe(() => {
-        this._poiEditorService.refreshPoiMarkers(this._map);
+        this._poiEditorService.refreshPoiMarkers();
       });
   }
 

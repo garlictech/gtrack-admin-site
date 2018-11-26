@@ -4,14 +4,12 @@ import {
   RouteService, GameRuleService
 } from '../../../../../subrepos/gtrack-common-ngx';
 import { EMPTY } from 'rxjs';
-import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
-import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 import { StoreModule, Store } from '@ngrx/store';
-import { hikeEditMapReducer } from '../../../../store/reducer';
 import { State } from '../../../../store';
 import { RoutePlannerService } from '../route-planner.service';
 import { MOCK_SEGMENTS, MOCK_SEGMENT_TOTAL, MOCK_SEGMENT_GEOJSON } from './fixtures/segments';
 import { hikeEditRoutePlannerActions } from '../../../../store/actions';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 
 import * as _ from 'lodash';
 
@@ -23,11 +21,12 @@ describe('RoutePlannerService', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          hikeEditMap: hikeEditMapReducer
+
         })
       ],
       providers: [
         RoutePlannerService,
+        LeafletMapService,
         {
           provide: Store,
           useValue: {

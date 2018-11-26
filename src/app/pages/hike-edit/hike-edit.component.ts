@@ -8,16 +8,14 @@ import { State, IHikeEditRoutePlannerState } from '../../store';
 import {
   commonRouteActions,
   commonHikeActions,
-  hikeEditMapActions,
   editedHikeProgramActions,
   commonPoiActions,
   hikeEditImageActions
 } from '../../store/actions';
 import { hikeEditRoutePlannerActions } from '../../store/actions';
-import * as hikeEditMapSelectors from '../../store/selectors/hike-edit-map';
 import * as hikeEditRoutePlannerSelectors from '../../store/selectors/hike-edit-route-planner';
 import * as editedHikeProgramSelectors from '../../store/selectors/edited-hike-program';
-import { WaypointMarkerService, RoutePlannerService, AdminMapService } from '../../shared/services/admin-map';
+import { WaypointMarkerService, RoutePlannerService } from '../../shared/services/admin-map';
 import { IHikeProgramStored, IRoute, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
 import { HikeSelectors, IHikeContextState, RouteSelectors } from 'subrepos/gtrack-common-ngx';
 import { HikeProgramService } from '../../shared/services';
@@ -26,6 +24,8 @@ import { MessageService } from 'primeng/api';
 import * as L from 'leaflet';
 import * as uuid from 'uuid/v1';
 import _pick from 'lodash-es/pick';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+import { leafletMapActions } from '@common.features/leaflet-map/store';
 
 @Component({
   selector: 'app-hike-edit',
@@ -51,7 +51,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     private _store: Store<State>,
     private _changeDetectorRef: ChangeDetectorRef,
     private _activatedRoute: ActivatedRoute,
-    private _adminMapService: AdminMapService,
+    private _leafletMapService: LeafletMapService,
     private _waypointMarkerService: WaypointMarkerService,
     private _routePlannerService: RoutePlannerService,
     private _hikeProgramService: HikeProgramService,
@@ -75,7 +75,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this._waypointMarkerService.reset();
 
-    this._store.dispatch(new hikeEditMapActions.ResetMapState());
+    this._store.dispatch(new leafletMapActions.ResetMap());
     this._store.dispatch(new hikeEditImageActions.ResetImageState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
     this._store.dispatch(new editedHikeProgramActions.ResetHikeProgram());
@@ -275,24 +275,22 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private _parseGpxRoute() {
-    this._store
-      .pipe(
-        select(hikeEditMapSelectors.getMapId),
-        filter(id => id !== ''),
-        take(1)
-      )
-      .subscribe((mapId: string) => {
-        const _map = this._adminMapService.getMapById(mapId);
+    this._routePlannerService.drawRouteLineGeoJSON(this._hikeProgramService.gpxRoute.route.features[0]);
 
-        this._routePlannerService.drawRouteLineGeoJSON(this._hikeProgramService.gpxRoute.route.features[0]);
+    // Load path to routePlanner state - necessary for drawing pois
+    this._routePlannerService.addRouteToTheStore(this._hikeProgramService.gpxRoute.route);
 
-        // Load path to routePlanner state - necessary for drawing pois
-        this._routePlannerService.addRouteToTheStore(this._hikeProgramService.gpxRoute.route);
+    const bounds: L.LatLngBoundsExpression = [[
+      this._hikeProgramService.gpxRoute.bounds.NorthEast.lat,
+      this._hikeProgramService.gpxRoute.bounds.NorthEast.lon
+    ], [
+      this._hikeProgramService.gpxRoute.bounds.SouthWest.lat,
+      this._hikeProgramService.gpxRoute.bounds.SouthWest.lon
+    ]];
 
-        _map.fitBounds(this._hikeProgramService.gpxRoute);
+    this._leafletMapService.fitBounds(bounds);
 
-        delete this._hikeProgramService.gpxRoute;
-      });
+    delete this._hikeProgramService.gpxRoute;
   }
 
   public updateHikeState(hikeProgramState: EObjectState) {
