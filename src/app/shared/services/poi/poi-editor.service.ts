@@ -43,6 +43,7 @@ import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import { SMALL_BUFFER_SIZE, BIG_BUFFER_SIZE } from 'app/config';
 import { EMarkerType } from '@common.features/leaflet-map/interfaces';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
 
 @Injectable()
 export class PoiEditorService {
@@ -60,7 +61,7 @@ export class PoiEditorService {
     private _geospatialService: GeospatialService,
     private _routePlannerService: RoutePlannerService,
     private _elevationService: ElevationService,
-    private _iconService: IconService,
+    private _iconService: LeafletIconService,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _poiSelectors: PoiSelectors,
     private _googlePoiService: GooglePoiService,
