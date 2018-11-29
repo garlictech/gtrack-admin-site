@@ -16,7 +16,7 @@ import * as L from 'leaflet';
 export class LeafletMapComponent implements OnInit {
   @ViewChild('map') private _map: ElementRef;
 
-  @Input() id: string;
+  @Input() id = 'leafletMap';
   @Input() center: ICenter;
   @Input() layers: ILayerDef[] = DEFAULT_LAYERS;
   @Input() overlays: ILayerDef[] = DEFAULT_OVERLAY_LAYERS;

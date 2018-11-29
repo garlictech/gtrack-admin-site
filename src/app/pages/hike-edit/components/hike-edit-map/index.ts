@@ -6,24 +6,24 @@ import { SelectItem } from 'primeng/api';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { State } from '../../../../store';
 import { adminMapActions, commonBackgroundGeolocationActions } from '../../../../store/actions';
-import { Center, selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
+import { selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
 import { LeafletMapComponent } from '@common.features/leaflet-map/components/leaflet-map';
 import { WaypointMarkerService, EBufferSize, AdminMapService } from '../../../../shared/services/admin-map';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
-import { ILeafletMapConfig } from '@common.features/leaflet-map/interfaces';
+import { ILeafletMapConfig, ICenter, ILayerDef } from '@common.features/leaflet-map/interfaces';
 
 import * as L from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 import { GEOJSON_STYLES } from '@common.features/leaflet-map/constants/geojson-styles';
 
-const CENTER = <Center>{
+const CENTER = <ICenter>{
   lat: 47.689714,
   lng: 18.904206,
   zoom: 12
 };
 
-const LAYERS = [{
+const LAYERS: ILayerDef[] = [{
   name: 'street',
   url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 }, {
@@ -31,7 +31,7 @@ const LAYERS = [{
   url: 'https://opentopomap.org/{z}/{x}/{y}.png'
 }];
 
-const OVERLAYS = [{
+const OVERLAYS: ILayerDef[]  = [{
   name: 'trails',
   url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
 }];
@@ -45,9 +45,9 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('adminMap') public adminMap: LeafletMapComponent;
   @ViewChild('search') private _searchElementRef: ElementRef;
   private _searchInput: HTMLInputElement;
-  public center: Center = CENTER;
-  public layers = LAYERS;
-  public overlays = OVERLAYS;
+  public center: ICenter = CENTER;
+  public layers: ILayerDef[] = LAYERS;
+  public overlays: ILayerDef[] = OVERLAYS;
   public mapConfig: ILeafletMapConfig;
   public mode = 'routing';
   public allowPlanning: boolean;
@@ -73,8 +73,13 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     this.clickModes = [{ label: 'Routing mode', value: 'routing' }, { label: 'Checkpoint mode', value: 'checkpoint' }];
 
     this.mapConfig = {
-      fullScreenControl: true,
-      spiderfier: true
+      fullScreenControl: {
+        forceSeparateButton: true,
+        forcePseudoFullscreen: true
+      },
+      spiderfier: {
+        keepSpiderfied: true
+      }
     };
 
     // Update buffer on each segment update
@@ -140,11 +145,11 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onMapMouseUp(e: L.LeafletMouseEvent) {
-    // this.newAdminMap.leafletMap.scrollWheelZoom.enable();
+    // this.adminMap.leafletMap.scrollWheelZoom.enable();
   }
 
   public onMapMouseOut(e: L.LeafletMouseEvent) {
-    // this.newAdminMap.leafletMap.scrollWheelZoom.disable();
+    // this.adminMap.leafletMap.scrollWheelZoom.disable();
   }
 
   public toggleCurrentPositionMarker($event: Event) {
