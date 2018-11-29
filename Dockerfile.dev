@@ -1,4 +1,4 @@
-FROM garlictech2/workflows-angular:v10.1.0
+FROM garlictech2/workflows-angular:v11.0.6
 
 ENV NO_UPDATE_NOTIFIER 1
 
