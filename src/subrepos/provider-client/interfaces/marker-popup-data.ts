@@ -1,3 +1,4 @@
+// TODO - removable, the new leaflet feature module contains the new interface
 export interface IMarkerPopupData {
   popupComponentName: string;
   markerClickCallback: any;
