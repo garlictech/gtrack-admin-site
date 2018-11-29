@@ -1,6 +1,5 @@
 import * as L from 'leaflet';
 import 'leaflet-usermarker';
-import 'leaflet-spin';
 
 export class CurrentPositionMarker {
   private marker: L.UserMarker | null = null;
@@ -26,6 +25,5 @@ export class CurrentPositionMarker {
 
     this.marker.setLatLng(pos);
     this.map.setView(pos, this.map.getZoom());
-    this.map.spin(false);
   }
 }

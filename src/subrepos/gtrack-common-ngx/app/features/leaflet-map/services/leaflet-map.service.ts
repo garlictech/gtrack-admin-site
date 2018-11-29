@@ -96,10 +96,6 @@ export class LeafletMapService {
     }
   }
 
-  public spin(doSpin: boolean) {
-    this.leafletMap.spin(doSpin);
-  }
-
   public fitBounds(box: L.LatLngBoundsExpression): L.Map {
     this.leafletMap.invalidateSize();
 

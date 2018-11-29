@@ -110,7 +110,7 @@ export class WaypointMarkerService {
       return;
     }
 
-    this._leafletMapService.spin(true);
+    // this._leafletMapService.spin(true);
 
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
 
@@ -138,7 +138,7 @@ export class WaypointMarkerService {
 
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingFinished());
 
-    this._leafletMapService.spin(false);
+    // this._leafletMapService.spin(false);
   }
 
   private _createMarker(_waypoint: IWaypoint) {
@@ -268,7 +268,7 @@ export class WaypointMarkerService {
       })
       .catch(() => {
         this._store.dispatch(new hikeEditRoutePlannerActions.RoutingError());
-        this._leafletMapService.spin(false);
+        // this._leafletMapService.spin(false);
       });
   }
 
