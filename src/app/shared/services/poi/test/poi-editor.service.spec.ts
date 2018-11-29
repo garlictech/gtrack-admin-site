@@ -17,6 +17,7 @@ import { WIKIPEDIA_POIS } from './fixtures/wikipedia-pois';
 import { OSM_AMENITY_POIS } from './fixtures/osm-amenity-pois';
 import { OSM_NATURAL_POIS } from './fixtures/osm-natural-pois';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
 
 describe('PoiEditorService', () => {
   let poiEditorService: PoiEditorService;
@@ -102,6 +103,10 @@ describe('PoiEditorService', () => {
           useValue: {
             getPoiDetails: () => {}
           }
+        },
+        {
+          provide: LeafletIconService,
+          useValue: {}
         }
       ]
     });
