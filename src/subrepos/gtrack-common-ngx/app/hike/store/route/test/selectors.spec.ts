@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store, StoreModule, select } from '@ngrx/store';
 import { IRouteStored } from 'subrepos/provider-client';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { routeReducer } from '../reducer';
 import { IRouteState } from '../state';
@@ -55,8 +56,10 @@ describe('Route selectors', () => {
       const routeSelectors: RouteSelectors = TestBed.get(RouteSelectors);
 
       store
-        .select(routeSelectors.getRouteIds)
-        .takeUntil(destroy$)
+        .pipe(
+          select(routeSelectors.getRouteIds),
+          takeUntil(destroy$)
+        )
         .subscribe(_ids => (result = _ids));
 
       expect(result).toEqual([]);
@@ -75,8 +78,10 @@ describe('Route selectors', () => {
       const routeSelectors: RouteSelectors = TestBed.get(RouteSelectors);
 
       store
-        .select(routeSelectors.getAllRoutes)
-        .takeUntil(destroy$)
+        .pipe(
+          select(routeSelectors.getAllRoutes),
+          takeUntil(destroy$)
+        )
         .subscribe(_routes => (result = _routes));
 
       expect(result).toEqual([]);
@@ -95,8 +100,10 @@ describe('Route selectors', () => {
       const routeSelectors: RouteSelectors = TestBed.get(RouteSelectors);
 
       store
-        .select(routeSelectors.getRoute(ids[0]))
-        .takeUntil(destroy$)
+        .pipe(
+          select(routeSelectors.getRoute(ids[0])),
+          takeUntil(destroy$)
+        )
         .subscribe(route => (result = route));
 
       expect(result).toEqual(undefined);

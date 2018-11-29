@@ -18,6 +18,7 @@ describe('Hike actions', () => {
       time: 20,
       score: 20,
       location: 'Budapest',
+      feature: false,
       difficulty: 5,
       routeIcon: '',
       elevationIcon: '',

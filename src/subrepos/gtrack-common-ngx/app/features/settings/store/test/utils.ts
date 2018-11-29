@@ -62,14 +62,14 @@ export const initialAuthState: IAuthenticationState = {
       lastLogin: date,
       modifiedAt: date,
       roles: ['user'],
-      verified: true      
+      verified: true
     },
     token: 'testtoken'
   },
   loggingIn: false,
   failed: null,
   emailSent: false
-}
+};
 
 export const initialState: ISettingsState  = {
   privateProfile: initialPrivateProfileState,
@@ -89,9 +89,9 @@ export const createFeatureState = (changes: Partial<ISettingsState> = {}): ISett
 export interface TestState {
   authentication: {
     jwtAuth: IAuthenticationState
-  },
-  'features.settings': ISettingsState
-};
+  };
+  'features.settings': ISettingsState;
+}
 
 export const createState = (stateParams?: Partial<ISettingsState>): TestState => ({
   authentication: {

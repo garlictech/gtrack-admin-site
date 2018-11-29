@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Actions, EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
@@ -21,20 +22,6 @@ import { CheckpointService } from '../../../services/checkpoint';
 import { Observable, EMPTY, of } from 'rxjs';
 import { hikeProgramsStored } from './fixtures';
 
-export class TestActions extends Actions {
-  constructor() {
-    super(EMPTY);
-  }
-
-  set stream(source: Observable<any>) {
-    this.source = source;
-  }
-}
-
-export function getActions() {
-  return new TestActions();
-}
-
 describe('HikeProgram effects', () => {
   let hikeProgramsMap: {
     [key: string]: IHikeProgramStored;
@@ -42,7 +29,7 @@ describe('HikeProgram effects', () => {
 
   let hikePrograms: IHikeProgramStored[];
 
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let hikeProgramService: HikeProgramService;
   let checkpointService: CheckpointService;
   let effects: HikeEffects;
@@ -67,10 +54,7 @@ describe('HikeProgram effects', () => {
       providers: [
         HikeProgramService,
         HikeEffects,
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions$),
         {
           provide: DeepstreamService,
           useValue: {}
@@ -79,7 +63,6 @@ describe('HikeProgram effects', () => {
       ]
     });
 
-    actions$ = TestBed.get(Actions);
     hikeProgramService = TestBed.get(HikeProgramService);
     effects = TestBed.get(HikeEffects);
     checkpointService = TestBed.get(CheckpointService);
@@ -105,7 +88,7 @@ describe('HikeProgram effects', () => {
       const completion = new hikeProgramActions.HikeProgramLoaded(ids[0], hikePrograms[0]);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.loadHike$).toBeObservable(expected);
 
@@ -121,7 +104,7 @@ describe('HikeProgram effects', () => {
       const completion = new hikeProgramActions.AllHikeProgramsLoaded(ids, hikePrograms);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.loadHikes$).toBeObservable(expected);
 
@@ -137,7 +120,7 @@ describe('HikeProgram effects', () => {
       const completion = new hikeProgramActions.LoadHikeProgram(ids[0]);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.updateState$).toBeObservable(expected);
 
@@ -146,18 +129,4 @@ describe('HikeProgram effects', () => {
       expect(hikeProgramService.updateState).toHaveBeenCalledWith(ids[0], EObjectState.published);
     });
   });
-
-  /*
-  describe('saveHike$', () => {
-    it('should return the id of the saved HikeProgram from HikeProgramSaved', () => {
-      const action = new hikeProgramActions.SaveHikeProgram(hikeProgramsStored[0]);
-      const completion = new hikeProgramActions.HikeProgramSaved(newId);
-      const expected = cold('-b', {b: completion});
-
-      actions$.stream = hot('-a', {a: action});
-
-      expect(effects.saveHike$).toBeObservable(expected);
-    });
-  });
-  */
 });

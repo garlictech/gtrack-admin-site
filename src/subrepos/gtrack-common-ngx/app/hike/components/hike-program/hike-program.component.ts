@@ -1,9 +1,11 @@
 import { of as observableOf, Observable } from 'rxjs';
 
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { Component, Input, OnInit, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { Dictionary } from '@ngrx/entity/src/models';
+
+import _get from 'lodash-es/get';
 
 import { GameRuleService } from '../../services/game-rule';
 import { AstronomyService } from '../../../astronomy';
@@ -14,6 +16,7 @@ import { IPoi, IHikeProgram, IHikeProgramStop } from '../../../../../provider-cl
 import { PoiSelectors } from '../../store/poi';
 import * as poiActions from '../../store/poi/actions';
 import { IconService } from '../../../map/services/icon';
+import { IWeatherEntity } from '@common.features/weather/store';
 
 @Component({
   selector: 'gtrack-common-hike-program',
@@ -22,6 +25,9 @@ import { IconService } from '../../../map/services/icon';
 export class HikeProgramComponent implements OnInit, OnChanges {
   @Input()
   public hikeProgram: IHikeProgram;
+
+  @Input()
+  public weather: IWeatherEntity;
 
   public stops: IHikeProgramStop[];
 
@@ -66,6 +72,24 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     }
   }
 
+  public getWeather(date: Date) {
+    const time = date.getTime();
+
+    if (!this.weather) {
+      return;
+    }
+
+    return this.weather.list.find((item, i) => {
+      const wtime = item.dt * 1000;
+      const next = wtime + (3 * 60 * 60 * 1000); // 3 hours
+      if (wtime <= time && time <= next) {
+        return true;
+      }
+
+      return false;
+    });
+  }
+
   public generateTimeline() {
     if (!this.startDate) {
       return;
@@ -105,6 +129,7 @@ export class HikeProgramComponent implements OnInit, OnChanges {
         .filter(index => index !== -1);
 
       const time = this.getSegmentStartTime(i);
+      const weather = this.getWeather(time);
 
       let stopEvents = [
         {
@@ -125,23 +150,39 @@ export class HikeProgramComponent implements OnInit, OnChanges {
       const stopWithEvents = {
         ...stop,
         arrive: time,
-        events: stopEvents
+        events: stopEvents,
+        weather: []
       };
+
+      if (weather && weather.weather) {
+        stopWithEvents.weather = weather.weather;
+      }
 
       let fakeStops = [];
 
       if (i > 0) {
         fakeStops = eventIndexes.map(eventIndex => {
           const event = events[eventIndex];
-          const next = this.hikeProgram.stops[i + 1];
+          const next = this.hikeProgram.stops[i + 1] || {
+            segment: {}
+          };
 
-          return {
+          const sunriseWeather = this.getWeather(sunrise[event]);
+
+          const fakeStop = {
             eventOnly: true,
             arrive: sunrise[event],
             title: `astronomy.${event}`,
             segment: next.segment,
-            eventIcon: icons[event]
+            eventIcon: icons[event],
+            weather: []
           };
+
+          if (sunriseWeather && sunriseWeather.weather) {
+            fakeStop.weather = sunriseWeather.weather;
+          }
+
+          return fakeStop;
         });
       }
 
@@ -159,7 +200,7 @@ export class HikeProgramComponent implements OnInit, OnChanges {
       }
     }
 
-    if (changes.startDate || changes.speed) {
+    if (changes.startDate || changes.speed || changes.weather) {
       this.generateTimeline();
     }
   }
@@ -176,7 +217,27 @@ export class HikeProgramComponent implements OnInit, OnChanges {
       this.pois$ = observableOf({});
     }
 
-    this._store.dispatch(new poiActions.LoadPois(hikePois));
+    this._store
+      .pipe(
+        select(this._poiSelectors.getPoiContextEntities(hikePois)),
+        take(1)
+      )
+      .subscribe(contexts => {
+        const notLoaded = hikePois
+          .filter(id => !/^endpoint/.test(id))
+          .filter(id => {
+            const context = contexts[id];
+            const loaded = _get(context, 'loaded', false);
+            const loading = _get(context, 'loading', false);
+
+            return !loaded && !loading;
+          });
+
+        if (notLoaded.length > 0) {
+          this._store.dispatch(new poiActions.LoadPois(notLoaded));
+        }
+      });
+
     this.stops = [...this.hikeProgram.stops];
     this.generateTimeline();
   }

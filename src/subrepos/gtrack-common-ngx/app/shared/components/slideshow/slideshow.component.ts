@@ -6,10 +6,14 @@ import {
   ViewChildren,
   ViewEncapsulation,
   ElementRef,
-  QueryList
+  QueryList,
+  ChangeDetectorRef,
+  ViewChild
 } from '@angular/core';
 
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+
+import { DebugLog } from 'app/log';
 
 @Component({
   selector: 'gtrack-slideshow',
@@ -26,6 +30,12 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
   @Input()
   public controls = false;
 
+  @Input()
+  public fullscreenGallery = false;
+
+  private _gallery: any;
+  private _thumbGallery: any;
+
   public icons = {
     left: faChevronLeft,
     right: faChevronRight
@@ -41,13 +51,16 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
   @ViewChildren('slide')
   public slides: QueryList<ElementRef>;
 
+  @ViewChild('slideshow')
+  public slideshow: ElementRef;
+
+  @ViewChild('thumbnails')
+  public thumbnails: ElementRef;
+
   private _availableAnimations = ['down-left', 'down-right', 'down', 'left', 'right', 'up-left', 'up-right', 'up'];
 
-  private _getRandomAnimation() {
-    const max = this._availableAnimations.length;
-    const randomIndex = Math.floor(Math.random() * max);
+  constructor(private _changeDetectorRef: ChangeDetectorRef) {
 
-    return this._availableAnimations[randomIndex];
   }
 
   ngOnInit() {
@@ -57,58 +70,60 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
           url: url,
           animation: this._getRandomAnimation()
         }))
-        .reverse();
+        .filter(url => !!url);
     }
 
-    this.currentIndex = this.imageUrls.length - 1;
+    this.currentIndex = 0;
   }
 
-  public next() {
-    const image = this.images.splice(-1, 1);
-
-    if (!image[0]) {
-      return;
-    }
-
-    image[0].animation = this._getRandomAnimation();
-
-    this.images.unshift(image[0]);
-  }
-
-  public onNext(e: Event) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.animate = false;
-    this.next();
-  }
-
+  @DebugLog
   public onPrev(e: Event) {
     e.preventDefault();
-    e.stopPropagation();
+    const slides = this.slides.toArray();
+    let prev = this.currentIndex - 1;
 
-    const image = this.images.splice(0, 1);
-
-    this.animate = false;
-
-    if (!image[0]) {
-      return;
+    if (prev < 0) {
+      prev = slides.length - 1;
     }
 
-    image[0].animation = this._getRandomAnimation();
+    const prevSlide = slides[prev];
 
-    this.images.push(image[0]);
+    prevSlide.nativeElement.click();
+  }
+
+  @DebugLog
+  public onNext(e: Event) {
+    e.preventDefault();
+    const slides = this.slides.toArray();
+    let next = this.currentIndex + 1;
+
+    if (next > slides.length - 1) {
+      next = 0;
+    }
+
+    const nextSlide = slides[next];
+
+    nextSlide.nativeElement.click();
+  }
+
+  public getZIndex(i: number) {
+    if (i - this.currentIndex >= 0) {
+      return (this.images.length - i + this.currentIndex) * 10;
+    }
+
+    return (this.currentIndex - i) * 10;
   }
 
   public animationEnd(elem: ElementRef) {
     const transitionEnd = () => {
       const slides = this.slides.toArray();
-      const last = slides[slides.length - 1];
+      const last = slides[this.currentIndex];
 
       elem.nativeElement.removeEventListener('transitionend', transitionEnd);
 
       // We need this only if this is the last item
       if (last.nativeElement === elem.nativeElement) {
-        this.next();
+        this._next();
         elem.nativeElement.style.opacity = 1;
       }
     };
@@ -121,7 +136,7 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
     const slides = this.slides.toArray();
 
     if (slides && slides.length > 0) {
-      const last = slides[slides.length - 1];
+      const last = slides[this.currentIndex];
 
       const animationEnd = () => {
         this.animationEnd(last);
@@ -133,10 +148,42 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    if (this.fullscreenGallery) {
+      if (this.slideshow) {
+        this._gallery = lightGallery(this.slideshow.nativeElement, {
+          exThumbImage: 'data-exthumbimage'
+        });
+      }
+
+      if (this.thumbnails) {
+        this._thumbGallery = lightGallery(this.thumbnails.nativeElement, {
+          exThumbImage: 'data-exthumbimage'
+        });
+      }
+    }
+
     this.addAnimationEnd();
 
     this.slides.changes.subscribe(() => {
       this.addAnimationEnd();
     });
+  }
+
+  private _getRandomAnimation() {
+    const max = this._availableAnimations.length;
+    const randomIndex = Math.floor(Math.random() * max);
+
+    return this._availableAnimations[randomIndex];
+  }
+
+  private _next() {
+    this.currentIndex++;
+
+    if (this.currentIndex > this.slides.length - 1) {
+      this.currentIndex = 0;
+    }
+
+    this.addAnimationEnd();
+    this._changeDetectorRef.markForCheck();
   }
 }

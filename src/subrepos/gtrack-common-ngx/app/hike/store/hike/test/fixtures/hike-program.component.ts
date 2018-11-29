@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'hike-page',
+  selector: 'gtrack-hike-page',
   template: ''
 })
 export class HikeProgramComponent {}

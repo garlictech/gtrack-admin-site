@@ -46,20 +46,23 @@ export class DownloadGpxButtonComponent implements OnInit {
 
     this._store
       .pipe(
-        select(this._poiSelectors.getPoiContexts(poiIds)),
+        select(this._poiSelectors.getPoiContextEntities(poiIds)),
         take(1)
       )
       .subscribe(contexts => {
-        const notLoaded = contexts
-          .filter(context => {
+        const notLoaded = poiIds
+          .filter(id => !/^endpoint/.test(id))
+          .filter(id => {
+            const context = contexts[id];
             const loaded = _get(context, 'loaded', false);
             const loading = _get(context, 'loading', false);
 
             return !loaded && !loading;
-          })
-          .map(context => context.id);
+          });
 
-        this._store.dispatch(new PoiActions.LoadPois(notLoaded));
+        if (notLoaded.length > 0) {
+          this._store.dispatch(new PoiActions.LoadPois(notLoaded));
+        }
       });
   }
 

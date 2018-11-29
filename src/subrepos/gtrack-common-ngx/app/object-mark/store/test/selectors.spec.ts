@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
 import { EObjectMarkContext } from 'subrepos/provider-client';
-import { Subject } from 'rxjs/Subject';
-import { takeUntil } from 'rxjs/operators/takeUntil';
+import { Store, StoreModule, select } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { objectMarkReducer } from '../reducer';
 import { IObjectMarkState } from '../state';
@@ -52,8 +52,10 @@ describe('ObjectMark selectors', () => {
       const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
-        .select(selectors.getObjectMarks(EObjectMarkContext.bookmarkedHike))
-        .pipe(takeUntil(destroy$))
+        .pipe(
+          select(selectors.getObjectMarks(EObjectMarkContext.bookmarkedHike)),
+          takeUntil(destroy$)
+        )
         .subscribe(_data => (result = _data));
 
       expect(result).toEqual([]);
@@ -70,8 +72,10 @@ describe('ObjectMark selectors', () => {
       const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
-        .select(selectors.getObjectMarkObject(EObjectMarkContext.bookmarkedHike, contexts[0]))
-        .pipe(takeUntil(destroy$))
+        .pipe(
+          select(selectors.getObjectMarkObject(EObjectMarkContext.bookmarkedHike, contexts[0])),
+          takeUntil(destroy$)
+        )
         .subscribe(_data => (result = _data));
 
       expect(result).toEqual(undefined);
@@ -86,8 +90,10 @@ describe('ObjectMark selectors', () => {
       const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
-        .select(selectors.getObjectMarkObject(EObjectMarkContext.bookmarkedHike, 'notfound'))
-        .pipe(takeUntil(destroy$))
+        .pipe(
+          select(selectors.getObjectMarkObject(EObjectMarkContext.bookmarkedHike, 'notfound')),
+          takeUntil(destroy$)
+        )
         .subscribe(_data => (result = _data));
 
       expect(result).toEqual(undefined);
@@ -104,8 +110,10 @@ describe('ObjectMark selectors', () => {
       const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
-        .select(selectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, contexts[0]))
-        .pipe(takeUntil(destroy$))
+        .pipe(
+          select(selectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, contexts[0])),
+          takeUntil(destroy$)
+        )
         .subscribe(_data => (result = _data));
 
       expect(result).toEqual(false);
@@ -120,8 +128,10 @@ describe('ObjectMark selectors', () => {
       const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
-        .select(selectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, 'notfound'))
-        .pipe(takeUntil(destroy$))
+        .pipe(
+          select(selectors.isObjectMarked(EObjectMarkContext.bookmarkedHike, 'notfound')),
+          takeUntil(destroy$)
+        )
         .subscribe(_data => (result = _data));
 
       expect(result).toEqual(false);
@@ -138,8 +148,10 @@ describe('ObjectMark selectors', () => {
       const selectors: ObjectMarkSelectors = TestBed.get(ObjectMarkSelectors);
 
       store
-        .select(selectors.getObjectMarkContext(EObjectMarkContext.bookmarkedHike))
-        .pipe(takeUntil(destroy$))
+        .pipe(
+          select(selectors.getObjectMarkContext(EObjectMarkContext.bookmarkedHike)),
+          takeUntil(destroy$)
+        )
         .subscribe(_data => (result = _data));
 
       expect(result).toEqual(undefined);
