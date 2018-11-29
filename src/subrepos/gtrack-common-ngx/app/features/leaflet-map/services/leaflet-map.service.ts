@@ -66,19 +66,14 @@ export class LeafletMapService {
     L.control.layers(this.baseLayers, this.overlayLayers).addTo(this.leafletMap);
 
     // Fullscreen control
-    if (mapConfig.fullScreenControl) {
-      (<any>L.control).fullscreen({
-        forceSeparateButton: true,
-        forcePseudoFullscreen: true
-      })
+    if (typeof mapConfig.fullScreenControl !== 'undefined') {
+      (<any>L.control).fullscreen(mapConfig.fullScreenControl)
       .addTo(this.leafletMap);
     }
 
     // Spiderfier
-    if (mapConfig.spiderfier) {
-      this.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(this.leafletMap, {
-        keepSpiderfied: true
-      });
+    if (typeof mapConfig.spiderfier !== 'undefined') {
+      this.overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(this.leafletMap, mapConfig.spiderfier);
     }
 
     // Later we can use this id to access multiple maps

@@ -1,4 +1,4 @@
 export interface ILeafletMapConfig {
-  spiderfier?: boolean;
-  fullScreenControl?: boolean;
+  spiderfier?: any;
+  fullScreenControl?: any;
 }
