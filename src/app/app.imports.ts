@@ -31,6 +31,7 @@ import { metaReducers, REDUCER_TOKEN } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { ToastModule } from 'primeng/toast';
+import { LeafletMapModule } from '@common.features/leaflet-map/leaflet-map.module';
 const sharedConfig = {
   ...defaultSharedConfig
 };
@@ -98,5 +99,6 @@ export const APP_IMPORTS = [
   ObjectMarkModule.forRoot(objectMarkConfig),
   GtrackCommonWebModule,
   GenericUiModule,
+  LeafletMapModule,
   ToastModule
 ];

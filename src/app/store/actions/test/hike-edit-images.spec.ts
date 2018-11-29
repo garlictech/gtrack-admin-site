@@ -77,6 +77,17 @@ describe('HikeEditMap actions', () => {
     });
   });
 
+  it('should create AddImageMarkers action', () => {
+    const bgImage = bgImageFixtures[0];
+    const action = new HikeEditImageActions.AddImageMarkers([bgImage]);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditImageActions.ADD_IMAGE_MARKERS,
+      images: [bgImage]
+    });
+  });
+
   it('should create RemoveImageMarker action', () => {
     const bgImage = bgImageFixtures[0];
     const action = new HikeEditImageActions.RemoveImageMarker(bgImage);
@@ -85,6 +96,17 @@ describe('HikeEditMap actions', () => {
     expect({ ...action }).toEqual({
       type: HikeEditImageActions.REMOVE_IMAGE_MARKER,
       image: bgImage
+    });
+  });
+
+  it('should create RemoveImageMarkers action', () => {
+    const bgImage = bgImageFixtures[0];
+    const action = new HikeEditImageActions.RemoveImageMarkers([bgImage]);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: HikeEditImageActions.REMOVE_IMAGE_MARKERS,
+      images: [bgImage]
     });
   });
 });

@@ -6,8 +6,7 @@
 module.exports = {
     "rootDir": "../",
     "preset": "jest-preset-angular",
-    "verbose": true,
-    "bail": true,
+
     "setupTestFrameworkScriptFile": "./src/jest.ts",
     "browser": true,
     "globals": {
@@ -53,5 +52,5 @@ module.exports = {
     "transformIgnorePatterns": [
         "node_modules/(?!@ngrx|@ionic-native|@ionic|lodash-es)"
     ],
-    testPathIgnorePatterns: ["/node_modules/", "/dist/", ".git"]
+    "testPathIgnorePatterns": ["/node_modules/", "/dist/", "/.git/"]
 }

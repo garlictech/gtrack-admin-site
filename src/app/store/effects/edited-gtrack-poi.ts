@@ -9,7 +9,7 @@ import { editedGTrackPoiActions } from '../actions';
 import { IPoiStored, IPoi } from 'subrepos/provider-client';
 import { log } from '../../log';
 
-import { EditedGTrackPoiSelectors } from '../selectors';
+import * as editedGTrackPoiSelectors from '../selectors/edited-gtrack-poi';
 import _omit from 'lodash-es/omit';
 
 @Injectable()
@@ -17,7 +17,6 @@ export class EditedGTrackPoiEffects {
   constructor(
     private _actions$: Actions,
     private _poiService: PoiService,
-    private _editedGTrackPoiSelectors: EditedGTrackPoiSelectors,
     private _store: Store<State>
   ) {}
 
@@ -26,7 +25,7 @@ export class EditedGTrackPoiEffects {
     ofType(editedGTrackPoiActions.SAVE_POI),
     switchMap(() =>
       this._store.pipe(
-        select(this._editedGTrackPoiSelectors.getData),
+        select(editedGTrackPoiSelectors.getData),
         take(1)
       )
     ),

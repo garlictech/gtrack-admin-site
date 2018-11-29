@@ -3,7 +3,8 @@ import { combineLatest } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { editedHikeProgramActions } from '../../../store/actions';
-import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../../store/selectors';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
+import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
 import { IHikeProgramStop, IRoute } from 'subrepos/provider-client';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 import { ElevationService, GameRuleService, Route, CheckpointService } from 'subrepos/gtrack-common-ngx';
@@ -28,8 +29,6 @@ export class HikeProgramService {
     private _geospatialService: GeospatialService,
     private _elevationService: ElevationService,
     private _gameRuleService: GameRuleService,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _checkpointService: CheckpointService
   ) {}
 
@@ -39,11 +38,11 @@ export class HikeProgramService {
   public updateHikeProgramStops() {
     combineLatest(
       this._store.pipe(
-        select(this._editedHikeProgramSelectors.getStops),
+        select(editedHikeProgramSelectors.getStops),
         take(1)
       ),
       this._store.pipe(
-        select(this._hikeEditRoutePlannerSelectors.getPath),
+        select(hikeEditRoutePlannerSelectors.getPath),
         take(1)
       )
     )
@@ -57,7 +56,7 @@ export class HikeProgramService {
           }
 
           if (path.geometry.coordinates.length > 0) {
-            if (poiStops[0].distanceFromOrigo > 10) {
+            if (poiStops[0].distanceFromOrigo > 25) {
               poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
             }
 
@@ -70,7 +69,7 @@ export class HikeProgramService {
                 )
             );
 
-            if (distanceFromFinish > 10) {
+            if (distanceFromFinish > 25) {
               poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
             }
           }
@@ -149,11 +148,11 @@ export class HikeProgramService {
   /**
    * Get current languages from descriptions
    */
-  public getDescriptionLaguages() {
+  public getDescriptionLanguages() {
     let langs: string[] = [];
     this._store
       .pipe(
-        select(this._editedHikeProgramSelectors.getDescriptionLangs),
+        select(editedHikeProgramSelectors.getDescriptionLangs),
         take(1)
       )
       .subscribe((langKeys: string[]) => {

@@ -9,17 +9,14 @@ import {
   IGeoSearchResponseItem
 } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored } from 'subrepos/provider-client';
-import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
+import { AdminMapService } from '../../../../shared/services/admin-map';
 import { PoiEditorService } from '../../../../shared/services';
 import { IGTrackPoi } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
 import { hikeEditPoiActions, commonPoiActions } from '../../../../store/actions';
-import {
-  HikeEditPoiSelectors,
-  HikeEditMapSelectors,
-  HikeEditRoutePlannerSelectors,
-  EditedHikeProgramSelectors
-} from '../../../../store/selectors';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
+import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
+import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
 
 import _difference from 'lodash-es/difference';
 import _intersection from 'lodash-es/intersection';
@@ -29,8 +26,7 @@ import _intersection from 'lodash-es/intersection';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
-  @Input()
-  isPlanning$: Observable<boolean>;
+  @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<IGTrackPoi[]>;
   public segments$: Observable<any>;
   public searchContext$: Observable<IGeoSearchContextState | undefined>;
@@ -38,32 +34,17 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
   public showOffrouteMarkers = true;
   public displayGTrackPoiModal = false;
   public modalPoi: IGTrackPoi;
-  private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _poiEditorService: PoiEditorService,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _poiSelectors: PoiSelectors
   ) {}
 
   ngOnInit() {
-    this._store
-      .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
-        takeUntil(this._destroy$),
-        filter(id => id !== '')
-      )
-      .subscribe((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
-      });
-
     // Get pois by id from geoSearch result
     combineLatest(
       this._store.pipe(
@@ -101,7 +82,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$)
       ),
       this._store.pipe(
-        select(this._editedHikeProgramSelectors.getStopsCount),
+        select(editedHikeProgramSelectors.getStopsCount),
         takeUntil(this._destroy$)
       )
     ).pipe(
@@ -115,7 +96,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
       }),
       switchMap((pois: IPoiStored[]) => {
         return this._store.pipe(
-          select(this._hikeEditRoutePlannerSelectors.getPath),
+          select(hikeEditRoutePlannerSelectors.getPath),
           debounceTime(250),
           takeUntil(this._destroy$),
           switchMap((path: any) => of([path, this._poiEditorService.organizePois(pois, path)])),
@@ -131,17 +112,17 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     this.pois$
       .pipe(
-        debounceTime(250),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((pois: IGTrackPoi[]) => {
         // Refresh markers
-        this._poiEditorService.refreshPoiMarkers(this._map);
+        this._poiEditorService.refreshPoiMarkers();
       });
 
     // Route info from the store (for disabling GET buttons)
     this.segments$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getSegments),
+      select(hikeEditRoutePlannerSelectors.getSegments),
       takeUntil(this._destroy$)
     );
 
@@ -160,28 +141,30 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOnrouteMarkers')),
-        takeUntil(this._destroy$)
+        select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOnrouteMarkers')),
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });
 
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers')),
-        takeUntil(this._destroy$)
+        select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('gTrack', 'showOffrouteMarkers')),
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });
@@ -189,7 +172,7 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   /**

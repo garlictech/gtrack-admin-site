@@ -9,11 +9,11 @@ import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, HikeProgramService, GeospatialService } from '../../../../subrepos/gtrack-common-ngx';
 import { RouterModule, Router } from '@angular/router';
 import { TestActions, getActions, mockRouter } from './helpers';
-import { editedHikeProgramActions } from '../../actions';
-import { EditedHikeProgramSelectors, HikeEditRoutePlannerSelectors } from '../../selectors';
+import { editedHikeProgramActions, commonRouteActions } from '../../actions';
 import { IHikeProgram, EObjectState } from 'subrepos/provider-client';
 import { IExternalPoi } from '../../../shared/interfaces';
-
+import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 import * as _ from 'lodash';
 
 import { pois as poiFixtures, hikePrograms as hikeProgramFixtures } from '../../reducer/test/fixtures';
@@ -23,8 +23,6 @@ describe('EditedHikeProgramEffects effects', () => {
   let effects: EditedHikeProgramEffects;
   let hikeProgramService: HikeProgramService;
   let geospatialService: GeospatialService;
-  let editedHikeProgramSelectors: EditedHikeProgramSelectors;
-  let hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors;
   let pois: IExternalPoi[];
   let hikePrograms: IHikeProgram[];
 
@@ -43,8 +41,6 @@ describe('EditedHikeProgramEffects effects', () => {
       providers: [
         EditedHikeProgramEffects,
         HikeProgramService,
-        EditedHikeProgramSelectors,
-        HikeEditRoutePlannerSelectors,
         GeospatialService,
         {
           provide: Actions,
@@ -64,8 +60,6 @@ describe('EditedHikeProgramEffects effects', () => {
     actions$ = TestBed.get(Actions);
     effects = TestBed.get(EditedHikeProgramEffects);
     hikeProgramService = TestBed.get(HikeProgramService);
-    editedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
-    hikeEditRoutePlannerSelectors = TestBed.get(HikeEditRoutePlannerSelectors);
     geospatialService = TestBed.get(GeospatialService);
 
     spyOn(editedHikeProgramSelectors, 'getData').and.returnValue(hikePrograms[0]);
@@ -150,6 +144,21 @@ describe('EditedHikeProgramEffects effects', () => {
 
       expect(editedHikeProgramSelectors.getData).toBeCalled();
       expect(hikeProgramService.save).toBeCalled();
+    });
+  });
+
+  describe('loadSavedRoute$', () => {
+    it('should return context observable from RouteSaved success', () => {
+      spyOn(hikeProgramService, 'save').and.returnValue(Observable.throwError('error'));
+
+      const context = 'routeId';
+      const action = new commonRouteActions.RouteSaved(context);
+      const completion = new commonRouteActions.LoadRoute(context);
+      const expected = cold('-b', { b: completion });
+
+      actions$.stream = hot('-a', { a: action });
+
+      expect(effects.loadSavedRoute$).toBeObservable(expected);
     });
   });
 });

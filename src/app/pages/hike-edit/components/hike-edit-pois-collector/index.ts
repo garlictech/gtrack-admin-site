@@ -5,9 +5,9 @@ import { hikeEditPoiActions, commonPoiActions } from '../../../../store/actions'
 import { IExternalPoi, IFilteredProperties, IGTrackPoi } from '../../../../shared/interfaces';
 import { Subject, Observable, interval, combineLatest } from 'rxjs';
 import { filter, takeUntil, debounceTime, take, switchMap } from 'rxjs/operators';
-import { HikeEditPoiSelectors, HikeEditMapSelectors } from '../../../../store/selectors';
 import { PoiEditorService, PoiMergeService } from '../../../../shared/services';
-import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
+import { AdminMapService } from '../../../../shared/services/admin-map';
+import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import _map from 'lodash-es/map';
@@ -23,8 +23,7 @@ import * as uuid from 'uuid/v1';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
-  @Input()
-  isPlanning$: Observable<boolean>;
+  @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<any[]>;
   public selectedPois$: Observable<any[]>;
   public saveablePoisCount$: Observable<number>;
@@ -38,13 +37,10 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   public mergedPoiIds: string[] = [];
   public mergedPoiData: any;
   public displayMergeModal = false;
-  private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _poiSelectors: PoiSelectors,
     private _poiEditorService: PoiEditorService,
     private _poiMergeService: PoiMergeService,
@@ -52,34 +48,24 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._store
-      .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
-        filter(id => id !== ''),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
-      });
-
     // Poi list from store
     this.pois$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getAllCollectorPois),
+      select(hikeEditPoiSelectors.getAllCollectorPois),
       takeUntil(this._destroy$)
     );
 
     this.selectedPois$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getSelectedCollectorPois()),
+      select(hikeEditPoiSelectors.getSelectedCollectorPois()),
       takeUntil(this._destroy$)
     );
 
     this.saving$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving')),
+      select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving')),
       takeUntil(this._destroy$)
     );
 
     this.mergeSelectionCount$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getMergeSelectionsCount),
+      select(hikeEditPoiSelectors.getMergeSelectionsCount),
       takeUntil(this._destroy$)
     );
 
@@ -94,7 +80,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .subscribe((gTrackPois: IGTrackPoi[]) => {
         this._store
           .pipe(
-            select(this._hikeEditPoiSelectors.getAllCollectorPois),
+            select(hikeEditPoiSelectors.getAllCollectorPois),
             filter((collectedPois: any[]) => collectedPois.length > 0),
             take(1)
           )
@@ -108,7 +94,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       });
 
     // Turn off saving after a not empty list becames empty
-    this.saveablePoisCount$ = this._store.pipe(select(this._hikeEditPoiSelectors.getSaveablePoisCount('collector')));
+    this.saveablePoisCount$ = this._store.pipe(select(hikeEditPoiSelectors.getSaveablePoisCount('collector')));
     this.saveablePoisCount$
       .pipe(
         takeUntil(this._destroy$),
@@ -126,29 +112,31 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
 
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'showOnrouteMarkers')),
-        takeUntil(this._destroy$)
+        select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'showOnrouteMarkers')),
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });
 
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'showOffrouteMarkers')),
-        takeUntil(this._destroy$)
+        select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'showOffrouteMarkers')),
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
 
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });
@@ -156,7 +144,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   /**
@@ -179,14 +167,14 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   public mergePois() {
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getMergeSelections),
+        select(hikeEditPoiSelectors.getMergeSelections),
         take(1)
       )
       .subscribe((selections: string[]) => {
         combineLatest(
           ...selections.map(poiId =>
             this._store.pipe(
-              select(this._hikeEditPoiSelectors.getCollectorPoi(poiId)),
+              select(hikeEditPoiSelectors.getCollectorPoi(poiId)),
               take(1)
             )
           )

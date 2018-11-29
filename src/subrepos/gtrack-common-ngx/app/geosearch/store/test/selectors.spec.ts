@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store, StoreModule, select } from '@ngrx/store';
 
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { geoSearchReducer } from '../reducer';
 import { IGeoSearchState } from '../state';
@@ -57,8 +58,10 @@ describe('GeoSearch selectors', () => {
       const geoSearchSelectors: GeoSearchSelectors = TestBed.get(GeoSearchSelectors);
 
       store
-        .select(geoSearchSelectors.getGeoSearchContexts)
-        .takeUntil(destroy$)
+        .pipe(
+          select(geoSearchSelectors.getGeoSearchContexts),
+          takeUntil(destroy$)
+        )
         .subscribe(_contexts => (result = _contexts));
 
       expect(result).toEqual([]);
@@ -76,8 +79,10 @@ describe('GeoSearch selectors', () => {
       const geoSearchSelectors: GeoSearchSelectors = TestBed.get(GeoSearchSelectors);
 
       store
-        .select(geoSearchSelectors.getAllGeoSearches)
-        .takeUntil(destroy$)
+        .pipe(
+          select(geoSearchSelectors.getAllGeoSearches),
+          takeUntil(destroy$)
+        )
         .subscribe(geoSearches => (result = geoSearches));
 
       expect(result).toEqual([]);
@@ -95,8 +100,10 @@ describe('GeoSearch selectors', () => {
       const geoSearchSelectors: GeoSearchSelectors = TestBed.get(GeoSearchSelectors);
 
       store
-        .select(geoSearchSelectors.getGeoSearch(contexts[0]))
-        .takeUntil(destroy$)
+        .pipe(
+          select(geoSearchSelectors.getGeoSearch(contexts[0])),
+          takeUntil(destroy$)
+        )
         .subscribe(geoSearch => (result = geoSearch));
 
       expect(result).toEqual(undefined);

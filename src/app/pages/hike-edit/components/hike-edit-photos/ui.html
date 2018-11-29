@@ -7,33 +7,78 @@
 
 <p-accordion [multiple]="true">
   <p-accordionTab header="gTrackPoi ({{((gTrackPoiPhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
-    <app-hike-edit-photos-table
-      [images$]="gTrackPoiPhotos$"
-      [backgroundOriginalUrls$]="backgroundOriginalUrls$"
-      [clickActions]="clickActions"
-      [distanceFrom]="distanceFrom"
-      [showMarkerColumn]="showMarkerColumn"
-    ></app-hike-edit-photos-table>
+    <p-accordion [multiple]="true">
+      <p-accordionTab header="On route images">
+        <app-hike-edit-photos-table
+          [images$]="gTrackPoiPhotos$"
+          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+          [clickActions]="clickActions"
+          [distanceFrom]="distanceFrom"
+          [onRouteCheck]="true"
+          [showMarkerColumn]="showMarkerColumn"
+        ></app-hike-edit-photos-table>
+      </p-accordionTab>
+      <p-accordionTab header="Off route images">
+        <app-hike-edit-photos-table
+          [images$]="gTrackPoiPhotos$"
+          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+          [clickActions]="clickActions"
+          [distanceFrom]="distanceFrom"
+          [onRouteCheck]="false"
+          [showMarkerColumn]="showMarkerColumn"
+        ></app-hike-edit-photos-table>
+      </p-accordionTab>
+    </p-accordion>
   </p-accordionTab>
 
   <p-accordionTab header="Google ({{((googlePhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
-    <app-hike-edit-photos-table
-      [images$]="googlePhotos$"
-      [backgroundOriginalUrls$]="backgroundOriginalUrls$"
-      [clickActions]="clickActions"
-      [distanceFrom]="distanceFrom"
-      [showMarkerColumn]="showMarkerColumn"
-    ></app-hike-edit-photos-table>
+    <p-accordion [multiple]="true">
+      <p-accordionTab header="On route images">
+        <app-hike-edit-photos-table
+          [images$]="googlePhotos$"
+          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+          [clickActions]="clickActions"
+          [distanceFrom]="distanceFrom"
+          [onRouteCheck]="true"
+          [showMarkerColumn]="showMarkerColumn"
+        ></app-hike-edit-photos-table>
+      </p-accordionTab>
+      <p-accordionTab header="Off route images">
+        <app-hike-edit-photos-table
+          [images$]="googlePhotos$"
+          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+          [clickActions]="clickActions"
+          [distanceFrom]="distanceFrom"
+          [onRouteCheck]="false"
+          [showMarkerColumn]="showMarkerColumn"
+        ></app-hike-edit-photos-table>
+      </p-accordionTab>
+    </p-accordion>
   </p-accordionTab>
 
   <p-accordionTab header="Wikipedia ({{((wikipediaPhotos$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
-    <app-hike-edit-photos-table
-      [images$]="wikipediaPhotos$"
-      [backgroundOriginalUrls$]="backgroundOriginalUrls$"
-      [clickActions]="clickActions"
-      [distanceFrom]="distanceFrom"
-      [showMarkerColumn]="showMarkerColumn"
-    ></app-hike-edit-photos-table>
+    <p-accordion [multiple]="true">
+      <p-accordionTab header="On route images">
+        <app-hike-edit-photos-table
+          [images$]="wikipediaPhotos$"
+          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+          [clickActions]="clickActions"
+          [distanceFrom]="distanceFrom"
+          [onRouteCheck]="true"
+          [showMarkerColumn]="showMarkerColumn"
+        ></app-hike-edit-photos-table>
+      </p-accordionTab>
+      <p-accordionTab header="Off route images">
+        <app-hike-edit-photos-table
+          [images$]="wikipediaPhotos$"
+          [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+          [clickActions]="clickActions"
+          [distanceFrom]="distanceFrom"
+          [onRouteCheck]="false"
+          [showMarkerColumn]="showMarkerColumn"
+        ></app-hike-edit-photos-table>
+      </p-accordionTab>
+    </p-accordion>
   </p-accordionTab>
 
   <p-accordionTab header="Flickr ({{((flickrImages$ | async) | poiImagesWithinCircle : distanceFrom).length}})">
@@ -49,13 +94,28 @@
     <app-table-spinner *ngIf="(flickrLoading$ | async) as flickrLoading; else flickrTable"></app-table-spinner>
 
     <ng-template #flickrTable>
-      <app-hike-edit-photos-table
-        [images$]="flickrImages$"
-        [backgroundOriginalUrls$]="backgroundOriginalUrls$"
-        [clickActions]="clickActions"
-        [distanceFrom]="distanceFrom"
-        [showMarkerColumn]="showMarkerColumn"
-      ></app-hike-edit-photos-table>
+      <p-accordion [multiple]="true">
+        <p-accordionTab header="On route images">
+          <app-hike-edit-photos-table
+            [images$]="flickrImages$"
+            [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+            [clickActions]="clickActions"
+            [distanceFrom]="distanceFrom"
+            [onRouteCheck]="true"
+            [showMarkerColumn]="showMarkerColumn"
+          ></app-hike-edit-photos-table>
+        </p-accordionTab>
+        <p-accordionTab header="Off route images">
+          <app-hike-edit-photos-table
+            [images$]="flickrImages$"
+            [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+            [clickActions]="clickActions"
+            [distanceFrom]="distanceFrom"
+            [onRouteCheck]="false"
+            [showMarkerColumn]="showMarkerColumn"
+          ></app-hike-edit-photos-table>
+        </p-accordionTab>
+      </p-accordion>
     </ng-template>
   </p-accordionTab>
 
@@ -72,13 +132,28 @@
     <app-table-spinner *ngIf="(mapillaryLoading$ | async) as mapillaryLoading; else mapillaryTable"></app-table-spinner>
 
     <ng-template #mapillaryTable>
-      <app-hike-edit-photos-table
-        [images$]="mapillaryImages$"
-        [backgroundOriginalUrls$]="backgroundOriginalUrls$"
-        [clickActions]="clickActions"
-        [distanceFrom]="distanceFrom"
-        [showMarkerColumn]="showMarkerColumn"
-      ></app-hike-edit-photos-table>
+      <p-accordion [multiple]="true">
+        <p-accordionTab header="On route images">
+          <app-hike-edit-photos-table
+            [images$]="mapillaryImages$"
+            [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+            [clickActions]="clickActions"
+            [distanceFrom]="distanceFrom"
+            [onRouteCheck]="true"
+            [showMarkerColumn]="showMarkerColumn"
+          ></app-hike-edit-photos-table>
+        </p-accordionTab>
+        <p-accordionTab header="Off route images">
+          <app-hike-edit-photos-table
+            [images$]="mapillaryImages$"
+            [backgroundOriginalUrls$]="backgroundOriginalUrls$"
+            [clickActions]="clickActions"
+            [distanceFrom]="distanceFrom"
+            [onRouteCheck]="false"
+            [showMarkerColumn]="showMarkerColumn"
+          ></app-hike-edit-photos-table>
+        </p-accordionTab>
+      </p-accordion>
     </ng-template>
   </p-accordionTab>
 </p-accordion>

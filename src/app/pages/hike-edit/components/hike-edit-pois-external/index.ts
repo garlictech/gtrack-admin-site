@@ -2,21 +2,17 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject, of, combineLatest } from 'rxjs';
 import { filter, takeUntil, switchMap, take, map, debounceTime } from 'rxjs/operators';
-import { AdminMap, AdminMapService, RoutePlannerService } from '../../../../shared/services/admin-map';
+import { AdminMapService, RoutePlannerService } from '../../../../shared/services/admin-map';
 import { PoiEditorService } from '../../../../shared/services';
 import { PoiSelectors, IGeoSearchContextState, GeoSearchSelectors } from 'subrepos/gtrack-common-ngx';
 import { EPoiTypes } from 'subrepos/provider-client';
 import {
-  IExternalPoiType,
-  IExternalPoi,
-  IWikipediaPoi,
-  IGooglePoi,
-  IOsmPoi,
-  IGTrackPoi
+  IExternalPoiType, IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi
 } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
 import { hikeEditPoiActions } from '../../../../store/actions';
-import { HikeEditMapSelectors, HikeEditPoiSelectors, HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
+import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 
 import _pick from 'lodash-es/pick';
 import _filter from 'lodash-es/filter';
@@ -27,10 +23,8 @@ import _cloneDeep from 'lodash-es/cloneDeep';
   templateUrl: './ui.html'
 })
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
-  @Input()
-  poiType: IExternalPoiType;
-  @Input()
-  isPlanning$: Observable<boolean>;
+  @Input() poiType: IExternalPoiType;
+  @Input() isPlanning$: Observable<boolean>;
   public pois$: Observable<IWikipediaPoi[] | IGooglePoi[] | IOsmPoi[]>;
   public segments$: Observable<any>;
   public selectedPoisCount$: Observable<number>;
@@ -42,50 +36,36 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   public showOffrouteMarkers = true;
   public modalPoi: IWikipediaPoi | IGooglePoi | IOsmPoi;
   public displayPoiModal = false;
-  private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
     private _adminMapService: AdminMapService,
     private _routePlannerService: RoutePlannerService,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _hikeEditPoiSelectors: HikeEditPoiSelectors,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _poiSelectors: PoiSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
     private _poiEditorService: PoiEditorService
   ) {}
 
   ngOnInit() {
-    this._store
-      .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
-        filter(id => id !== ''),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
-      });
-
     // Poi list from store
     this.pois$ = this._getSubdomainSelector(this.poiType.subdomain);
 
     // Route info from the store (for disabling GET buttons)
     this.segments$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getSegments),
+      select(hikeEditRoutePlannerSelectors.getSegments),
       takeUntil(this._destroy$)
     );
 
     this.selectedPoisCount$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getSaveablePoisCount(this.poiType.subdomain)),
+      select(hikeEditPoiSelectors.getSaveablePoisCount(this.poiType.subdomain)),
       takeUntil(this._destroy$)
     );
 
     // Update poi properties after poi list loaded
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'loaded')),
+        select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'loaded')),
         takeUntil(this._destroy$),
         filter(loaded => !!loaded),
         switchMap(() => {
@@ -94,7 +74,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
           return combineLatest(
             this._getSubdomainSelector(this.poiType.subdomain).take(1),
             this._store.pipe(
-              select(this._hikeEditRoutePlannerSelectors.getPath),
+              select(hikeEditRoutePlannerSelectors.getPath),
               take(1)
             )
           );
@@ -113,7 +93,8 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
             })
           );
         }),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((pois: IExternalPoi[]) => {
         // Refresh poi list on the store
@@ -122,10 +103,10 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         // Get gTrack pois for checking inGtrackDb
         if (pois.length > 0) {
           this._poiEditorService.getGTrackPois();
-          this._poiEditorService.refreshPoiMarkers(this._map);
+          this._poiEditorService.refreshPoiMarkers();
           // We have to refresh markers w/ empty poi list, too.
         } else {
-          this._poiEditorService.refreshPoiMarkers(this._map);
+          this._poiEditorService.refreshPoiMarkers();
         }
 
         this._store.dispatch(new hikeEditPoiActions.SetProcessing(this.poiType.subdomain, false));
@@ -143,7 +124,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         // Saving in progress?
         this._store
           .pipe(
-            select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving')),
+            select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving')),
             take(1)
           )
           .subscribe((saving: boolean) => {
@@ -163,7 +144,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     // Update inCollector properties after collected poi list has been refreshed
     this._store
       .pipe(
-        select(this._hikeEditPoiSelectors.getAllCollectorPois),
+        select(hikeEditPoiSelectors.getAllCollectorPois),
         debounceTime(250),
         takeUntil(this._destroy$)
       )
@@ -171,7 +152,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         // Saving in progress?
         this._store
           .pipe(
-            select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving')),
+            select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector('collector', 'saving')),
             take(1)
           )
           .subscribe((saving: boolean) => {
@@ -186,7 +167,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
                     this._poiEditorService.handleInCollectorPois(externalPois, collectedPois)
                   );
 
-                  this._poiEditorService.refreshPoiMarkers(this._map);
+                  this._poiEditorService.refreshPoiMarkers();
                 });
             }
           });
@@ -197,17 +178,17 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     //
 
     this.loading$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'loading')),
+      select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'loading')),
       takeUntil(this._destroy$)
     );
 
     this.processing$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'processing')),
+      select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'processing')),
       takeUntil(this._destroy$)
     );
 
     this.saving$ = this._store.pipe(
-      select(this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'saving')),
+      select(hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'saving')),
       takeUntil(this._destroy$)
     );
 
@@ -223,15 +204,16 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(
-          this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers')
+          hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(this.poiType.subdomain, 'showOnrouteMarkers')
         ),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOnrouteMarkers = value;
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });
@@ -239,18 +221,19 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
     this._store
       .pipe(
         select(
-          this._hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(
+          hikeEditPoiSelectors.getHikeEditPoiContextPropertySelector(
             this.poiType.subdomain,
             'showOffrouteMarkers'
           )
         ),
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
+        debounceTime(250)
       )
       .subscribe((value: boolean) => {
         this.showOffrouteMarkers = value;
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });
@@ -258,7 +241,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   private _getSubdomainSelector(subdomain: string) {
@@ -266,19 +249,19 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
     switch (subdomain) {
       case EPoiTypes.google:
-        _pois$ = this._store.pipe(select(this._hikeEditPoiSelectors.getAllGooglePois));
+        _pois$ = this._store.pipe(select(hikeEditPoiSelectors.getAllGooglePois));
         break;
       case EPoiTypes.wikipedia:
-        _pois$ = this._store.pipe(select(this._hikeEditPoiSelectors.getAllWikipediaPois));
+        _pois$ = this._store.pipe(select(hikeEditPoiSelectors.getAllWikipediaPois));
         break;
       case EPoiTypes.osmAmenity:
-        _pois$ = this._store.pipe(select(this._hikeEditPoiSelectors.getAllOsmAmenityPois));
+        _pois$ = this._store.pipe(select(hikeEditPoiSelectors.getAllOsmAmenityPois));
         break;
       case EPoiTypes.osmNatural:
-        _pois$ = this._store.pipe(select(this._hikeEditPoiSelectors.getAllOsmNaturalPois));
+        _pois$ = this._store.pipe(select(hikeEditPoiSelectors.getAllOsmNaturalPois));
         break;
       case EPoiTypes.osmRoute:
-        _pois$ = this._store.pipe(select(this._hikeEditPoiSelectors.getAllOsmRoutePois));
+        _pois$ = this._store.pipe(select(hikeEditPoiSelectors.getAllOsmRoutePois));
         break;
     }
 
@@ -376,7 +359,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
     if (_bounds) {
       // Get pois for the current domain
-      this._store.dispatch(new hikeEditPoiActions[this.poiType.getAction](_bounds, this._map.id));
+      this._store.dispatch(new hikeEditPoiActions[this.poiType.getAction](_bounds));
     }
   }
 

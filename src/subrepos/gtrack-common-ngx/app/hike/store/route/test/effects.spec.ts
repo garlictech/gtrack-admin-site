@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Actions, EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 import * as uuid from 'uuid/v4';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
@@ -17,24 +18,10 @@ import { DeepstreamModule } from '../../../../deepstream';
 import { UnitsService } from '../../../../shared';
 import { GeometryService } from '../../../services/geometry';
 
-class TestActions extends Actions {
-  constructor() {
-    super(EMPTY);
-  }
-
-  set stream(source: Observable<any>) {
-    this.source = source;
-  }
-}
-
-export function getActions() {
-  return new TestActions();
-}
-
 describe('Route effects', () => {
   let routeData: IRoute;
   let route: IRouteStored;
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let routeService: RouteService;
   let effects: RouteEffects;
 
@@ -91,10 +78,7 @@ describe('Route effects', () => {
         RouteEffects,
         GeometryService,
         UnitsService,
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions$),
         {
           provide: DeepstreamService,
           useValue: {}
@@ -102,7 +86,6 @@ describe('Route effects', () => {
       ]
     });
 
-    actions$ = TestBed.get(Actions);
     routeService = TestBed.get(RouteService);
     effects = TestBed.get(RouteEffects);
 
@@ -126,7 +109,7 @@ describe('Route effects', () => {
       const completion = new routeActions.RouteLoaded(id, route);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.loadRoute$).toBeObservable(expected);
 
@@ -142,7 +125,7 @@ describe('Route effects', () => {
       const completion = new routeActions.RouteSaved(newId);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.saveRoute$).toBeObservable(expected);
 
@@ -158,7 +141,7 @@ describe('Route effects', () => {
       const completion = new routeActions.LoadRoute(routeData.id);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.updateState$).toBeObservable(expected);
 

@@ -1,11 +1,5 @@
 import {
-  Component,
-  Input,
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  OnInit,
-  OnDestroy
+  Component, Input, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy
 } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject, of } from 'rxjs';
@@ -29,16 +23,11 @@ interface ILanguageKeyObject {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnDestroy {
-  @Input()
-  descriptionSelector: any;
-  @Input()
-  submitFv: (langKey: string, data) => void;
-  @Input()
-  deleteFv: (langKey: string) => void;
-  @Input()
-  storeDataPath?: string;
-  @Input()
-  type?: string;
+  @Input() descriptionSelector: any;
+  @Input() descriptionLangSelector: any;
+  @Input() submitFv: (langKey: string, data) => void;
+  @Input() deleteFv: (langKey: string) => void;
+  @Input() type?: string;
 
   public descriptions$: Observable<ILocalizedItem<ITextualDescription>>;
   public languageKeys$: Observable<string[]>;
@@ -47,7 +36,6 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   public langs = DESCRIPTION_LANGUAGES;
   public selectedLanguage;
   public languageFormDescriptors: ILanguageKeyObject = {};
-  public languageFormDataPaths: ILanguageKeyObject = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private _store: Store<State>, private _changeDetectorRef: ChangeDetectorRef) {}
@@ -60,11 +48,9 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
         const langKeys = Object.keys(desc || {});
 
         this.languageFormDescriptors = {};
-        this.languageFormDataPaths = {};
 
         for (const key of langKeys) {
           this.languageFormDescriptors[key] = this._getLanguageFormDescriptor(key);
-          this.languageFormDataPaths[key] = this._getLanguageFormDataPath(key);
         }
 
         return langKeys;
@@ -87,11 +73,12 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   private _getLanguageFormDescriptor(languageKey: string) {
     return {
+      formDataSelector: this.descriptionLangSelector(languageKey),
       submit: {
         translatableLabel: 'form.submit',
         classList: ['btn', 'btn-sm', 'btn-fill', 'btn-success'],
@@ -116,10 +103,6 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
         })
       }
     };
-  }
-
-  private _getLanguageFormDataPath(languageKey: string) {
-    return of(`${this.storeDataPath}.${languageKey}`);
   }
 
   public addTranslation() {

@@ -9,13 +9,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormModule } from 'subrepos/gtrack-common-web/forms';
 import { LocalizedDescriptionComponent } from './localized-description';
 import { TableSpinnerComponent } from './table-spinner';
-import { AdminLeafletComponent } from './admin-leaflet';
 import { AdminMarkerPopupComponent } from './admin-marker-popup';
 import { LocalizeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
 import { ImageMarkerPopupComponent } from './image-marker-popup';
 
 const COMPONENTS = [
-  AdminLeafletComponent,
   LocalizedDescriptionComponent,
   TableSpinnerComponent,
   AdminMarkerPopupComponent,

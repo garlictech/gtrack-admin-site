@@ -8,21 +8,24 @@ import { State, IHikeEditRoutePlannerState } from '../../store';
 import {
   commonRouteActions,
   commonHikeActions,
-  hikeEditMapActions,
   editedHikeProgramActions,
   commonPoiActions,
   hikeEditImageActions
 } from '../../store/actions';
 import { hikeEditRoutePlannerActions } from '../../store/actions';
-import { HikeEditRoutePlannerSelectors, EditedHikeProgramSelectors, HikeEditMapSelectors } from '../../store/selectors';
-import { WaypointMarkerService, RoutePlannerService, AdminMapService } from '../../shared/services/admin-map';
+import * as hikeEditRoutePlannerSelectors from '../../store/selectors/hike-edit-route-planner';
+import * as editedHikeProgramSelectors from '../../store/selectors/edited-hike-program';
+import { WaypointMarkerService, RoutePlannerService } from '../../shared/services/admin-map';
 import { IHikeProgramStored, IRoute, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
-import { HikeSelectors, IHikeContextState } from 'subrepos/gtrack-common-ngx';
+import { HikeSelectors, IHikeContextState, RouteSelectors } from 'subrepos/gtrack-common-ngx';
 import { HikeProgramService } from '../../shared/services';
 import { MessageService } from 'primeng/api';
 
+import * as L from 'leaflet';
 import * as uuid from 'uuid/v1';
 import _pick from 'lodash-es/pick';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+import { leafletMapActions } from '@common.features/leaflet-map/store';
 
 @Component({
   selector: 'app-hike-edit',
@@ -48,14 +51,12 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     private _store: Store<State>,
     private _changeDetectorRef: ChangeDetectorRef,
     private _activatedRoute: ActivatedRoute,
-    private _adminMapService: AdminMapService,
+    private _leafletMapService: LeafletMapService,
     private _waypointMarkerService: WaypointMarkerService,
     private _routePlannerService: RoutePlannerService,
     private _hikeProgramService: HikeProgramService,
     private _hikeSelectors: HikeSelectors,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
-    private _editedHikeProgramSelectors: EditedHikeProgramSelectors,
+    private _routeSelectors: RouteSelectors,
     private _messageService: MessageService,
     private _router: Router,
     private _title: Title
@@ -63,18 +64,18 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.working$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getWorking),
+      select(editedHikeProgramSelectors.getWorking),
       takeUntil(this._destroy$)
     );
     this.hikeProgramData$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getData),
+      select(editedHikeProgramSelectors.getData),
       delay(0),
       takeUntil(this._destroy$)
     );
 
     this._waypointMarkerService.reset();
 
-    this._store.dispatch(new hikeEditMapActions.ResetMapState());
+    this._store.dispatch(new leafletMapActions.ResetMap());
     this._store.dispatch(new hikeEditImageActions.ResetImageState());
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
     this._store.dispatch(new editedHikeProgramActions.ResetHikeProgram());
@@ -126,37 +127,37 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.allowSave$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getDirty),
+      select(editedHikeProgramSelectors.getDirty),
       takeUntil(this._destroy$)
     );
 
     this.isPlanning$ = this._store.pipe(
-      select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+      select(hikeEditRoutePlannerSelectors.getIsPlanning),
       takeUntil(this._destroy$)
     );
 
     // Handling save success
     this._store
       .pipe(
-        select(this._editedHikeProgramSelectors.getWorking),
+        select(editedHikeProgramSelectors.getWorking),
         takeUntil(this._destroy$),
         filter(working => working !== null),
         switchMap(() =>
           this._store.pipe(
-            select(this._editedHikeProgramSelectors.getWorking),
+            select(editedHikeProgramSelectors.getWorking),
             takeUntil(this._destroy$)
           )
         ),
         filter(working => working === null),
         switchMap(() =>
           this._store.pipe(
-            select(this._editedHikeProgramSelectors.getError),
+            select(editedHikeProgramSelectors.getError),
             take(1)
           )
         ),
         takeUntil(this._destroy$)
       )
-      .subscribe(error => {
+      .subscribe((error: any) => {
         if (error) {
           const msg: string[] = [];
           for (const idx in error) {
@@ -189,14 +190,14 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     this.hikeProgramState$ = this._store.pipe(
-      select(this._editedHikeProgramSelectors.getState),
+      select(editedHikeProgramSelectors.getState),
       takeUntil(this._destroy$)
     );
 
     // Handling hike context changes
     this._store
       .pipe(
-        select(this._editedHikeProgramSelectors.getHikeId),
+        select(editedHikeProgramSelectors.getHikeId),
         takeUntil(this._destroy$),
         filter(hikeId => hikeId !== ''),
         switchMap((hikeId: string) =>
@@ -225,13 +226,16 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     // Attributes for Photos component
-    this.backgroundImageSelector = this._editedHikeProgramSelectors.getBackgroundImages;
-    this.backgroundImageUrlSelector = this._editedHikeProgramSelectors.getBackgroundOriginalUrls();
+    this.backgroundImageSelector = editedHikeProgramSelectors.getBackgroundImages;
+    this.backgroundImageUrlSelector = editedHikeProgramSelectors.getBackgroundOriginalUrls();
+
     this.clickActions = {
       add: image => this._store.dispatch(new editedHikeProgramActions.AddHikeProgramBackgroundImage(image)),
       remove: url => this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(url)),
-      addMarker: url => this._store.dispatch(new hikeEditImageActions.AddImageMarker(url)),
-      removeMarker: url => this._store.dispatch(new hikeEditImageActions.RemoveImageMarker(url))
+      addMarker: image => this._store.dispatch(new hikeEditImageActions.AddImageMarker(image)),
+      addMarkers: images => this._store.dispatch(new hikeEditImageActions.AddImageMarkers(images)),
+      removeMarker: image => this._store.dispatch(new hikeEditImageActions.RemoveImageMarker(image)),
+      removeMarkers: images => this._store.dispatch(new hikeEditImageActions.RemoveImageMarkers(images))
     };
   }
 
@@ -241,7 +245,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
   }
 
   public saveHike() {
@@ -251,11 +255,11 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     // Save route
     combineLatest(
       this._store.pipe(
-        select(this._hikeEditRoutePlannerSelectors.getRoutePlanner),
+        select(hikeEditRoutePlannerSelectors.getRoutePlanner),
         take(1)
       ),
       this._store.pipe(
-        select(this._editedHikeProgramSelectors.getRouteId),
+        select(editedHikeProgramSelectors.getRouteId),
         take(1)
       )
     ).subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
@@ -271,24 +275,22 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private _parseGpxRoute() {
-    this._store
-      .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
-        filter(id => id !== ''),
-        take(1)
-      )
-      .subscribe((mapId: string) => {
-        const _map = this._adminMapService.getMapById(mapId);
+    this._routePlannerService.drawRouteLineGeoJSON(this._hikeProgramService.gpxRoute.route.features[0]);
 
-        this._routePlannerService.drawRouteLineGeoJSON(this._hikeProgramService.gpxRoute.route.features[0]);
+    // Load path to routePlanner state - necessary for drawing pois
+    this._routePlannerService.addRouteToTheStore(this._hikeProgramService.gpxRoute.route);
 
-        // Load path to routePlanner state - necessary for drawing pois
-        this._routePlannerService.addRouteToTheStore(this._hikeProgramService.gpxRoute.route);
+    const bounds: L.LatLngBoundsExpression = [[
+      this._hikeProgramService.gpxRoute.bounds.NorthEast.lat,
+      this._hikeProgramService.gpxRoute.bounds.NorthEast.lon
+    ], [
+      this._hikeProgramService.gpxRoute.bounds.SouthWest.lat,
+      this._hikeProgramService.gpxRoute.bounds.SouthWest.lon
+    ]];
 
-        _map.fitBounds(this._hikeProgramService.gpxRoute);
+    this._leafletMapService.fitBounds(bounds);
 
-        delete this._hikeProgramService.gpxRoute;
-      });
+    delete this._hikeProgramService.gpxRoute;
   }
 
   public updateHikeState(hikeProgramState: EObjectState) {
@@ -296,8 +298,8 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (hikeProgramState === EObjectState.published) {
       const selector = createSelector(
-        this._editedHikeProgramSelectors.getStops,
-        this._editedHikeProgramSelectors.getRouteId,
+        editedHikeProgramSelectors.getStops,
+        editedHikeProgramSelectors.getRouteId,
         (stops, routeId) => ({
           stops,
           routeId
@@ -343,5 +345,35 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true)
       );
     });
+  }
+
+  public retrievePlan() {
+    this._store
+      .pipe(
+        select(editedHikeProgramSelectors.getRouteId),
+        switchMap((routeId: string) =>
+          this._store.pipe(
+            select(this._routeSelectors.getRoute(routeId)),
+            take(1)
+          )
+        ),
+        take(1)
+      )
+      .subscribe((storedRoute: any) => {
+        this._waypointMarkerService.reset();
+
+        const _coords: L.LatLng[] = [];
+
+        for (const feature of storedRoute.route.features) {
+          if (feature.geometry.type === 'Point') {
+            _coords.push(L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]));
+          }
+        }
+
+        this._waypointMarkerService.addWaypoints(_coords);
+
+        // Enable planning
+        this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(true));
+      });
   }
 }

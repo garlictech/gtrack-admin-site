@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LocalizeModule } from 'subrepos/gtrack-common-ngx';
+import { LeafletMapModule } from '@common.features/leaflet-map/leaflet-map.module';
 // PrimeNG
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -94,6 +95,7 @@ const COMPONENTS = [
     SharedComponentsModule,
     FontAwesomeModule,
     LocalizeModule,
+    LeafletMapModule,
     // PrimeNG
     ButtonModule,
     CardModule,

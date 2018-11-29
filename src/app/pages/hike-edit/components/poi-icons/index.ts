@@ -10,8 +10,7 @@ import _uniq from 'lodash-es/uniq';
   template: '<img *ngFor="let url of urls" [src]="url">'
 })
 export class PoiIconsComponent implements OnInit {
-  @Input()
-  poi: IExternalPoi;
+  @Input() poi: IExternalPoi;
   public urls: string[] = [];
 
   constructor(private _iconService: IconService) {}

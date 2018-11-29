@@ -1,129 +1,91 @@
-import { Injectable } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { IHikeEditPoiState } from '../state/hike-edit-poi';
 import {
-  wikipediaPoiAdapter,
-  googlePoiAdapter,
-  osmAmenityPoiAdapter,
-  osmNaturalPoiAdapter,
-  osmRoutePoiAdapter
+  wikipediaPoiAdapter, googlePoiAdapter, osmAmenityPoiAdapter, osmNaturalPoiAdapter, osmRoutePoiAdapter
 } from '../reducer';
-import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
+import { IExternalPoi } from '../../shared/interfaces';
 
 import _uniqBy from 'lodash-es/uniqBy';
+import _cloneDeep from 'lodash-es/cloneDeep';
 
-@Injectable()
-export class HikeEditPoiSelectors {
-  private _featureSelector: MemoizedSelector<object, IHikeEditPoiState>;
-  public getAllWikipediaPois: (state: object) => IWikipediaPoi[];
-  public getAllGooglePois: (state: object) => IGooglePoi[];
-  public getAllOsmAmenityPois: (state: object) => IOsmPoi[];
-  public getAllOsmNaturalPois: (state: object) => IOsmPoi[];
-  public getAllOsmRoutePois: (state: object) => IOsmPoi[];
-  public getAllCollectorPois: (state: object) => any[];
-  public getMergeSelections: (state: object) => string[];
-  public getMergeSelectionsCount: (state: object) => number;
-  private _allPoiSelectorMap = {};
+const featureSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
 
-  constructor() {
-    this._featureSelector = createFeatureSelector<IHikeEditPoiState>('hikeEditPoi');
+const googlePoiSelector = createSelector(featureSelector, (state: IHikeEditPoiState) => state.googlePois);
+export const getAllGooglePois = googlePoiAdapter.getSelectors(googlePoiSelector).selectAll;
 
-    //
-    // Poi entity lists
-    //
+const osmAmenityPoiSelector = createSelector(featureSelector, (state: IHikeEditPoiState) => state.osmAmenityPois);
+export const getAllOsmAmenityPois = osmAmenityPoiAdapter.getSelectors(osmAmenityPoiSelector).selectAll;
 
-    const googlePoiSelector = createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.googlePois);
-    this.getAllGooglePois = googlePoiAdapter.getSelectors(googlePoiSelector).selectAll;
+const osmNaturalPoiSelector = createSelector(featureSelector, (state: IHikeEditPoiState) => state.osmNaturalPois);
+export const getAllOsmNaturalPois = osmNaturalPoiAdapter.getSelectors(osmNaturalPoiSelector).selectAll;
 
-    const osmAmenityPoiSelector = createSelector(
-      this._featureSelector,
-      (state: IHikeEditPoiState) => state.osmAmenityPois
-    );
-    this.getAllOsmAmenityPois = osmAmenityPoiAdapter.getSelectors(osmAmenityPoiSelector).selectAll;
+const osmRoutePoiSelector = createSelector(featureSelector, (state: IHikeEditPoiState) => state.osmRoutePois);
+export const getAllOsmRoutePois = osmRoutePoiAdapter.getSelectors(osmRoutePoiSelector).selectAll;
 
-    const osmNaturalPoiSelector = createSelector(
-      this._featureSelector,
-      (state: IHikeEditPoiState) => state.osmNaturalPois
-    );
-    this.getAllOsmNaturalPois = osmNaturalPoiAdapter.getSelectors(osmNaturalPoiSelector).selectAll;
+const wikipediaPoiSelector = createSelector(featureSelector, (state: IHikeEditPoiState) => state.wikipediaPois);
+export const getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
 
-    const osmRoutePoiSelector = createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.osmRoutePois);
-    this.getAllOsmRoutePois = osmRoutePoiAdapter.getSelectors(osmRoutePoiSelector).selectAll;
+const collectedPoiSelector = createSelector(featureSelector, (state: IHikeEditPoiState) => state.collectorPois);
+export const getAllCollectorPois = wikipediaPoiAdapter.getSelectors(collectedPoiSelector).selectAll;
 
-    const wikipediaPoiSelector = createSelector(
-      this._featureSelector,
-      (state: IHikeEditPoiState) => state.wikipediaPois
-    );
-    this.getAllWikipediaPois = wikipediaPoiAdapter.getSelectors(wikipediaPoiSelector).selectAll;
+const _allPoiSelectorMap = {
+  google: getAllGooglePois,
+  osmAmenity: getAllOsmAmenityPois,
+  osmNatural: getAllOsmNaturalPois,
+  osmRoute: getAllOsmRoutePois,
+  wikipedia: getAllWikipediaPois,
+  collector: getAllCollectorPois
+};
 
-    const collectedPoiSelector = createSelector(
-      this._featureSelector,
-      (state: IHikeEditPoiState) => state.collectorPois
-    );
-    this.getAllCollectorPois = wikipediaPoiAdapter.getSelectors(collectedPoiSelector).selectAll;
+export const getMergeSelections = createSelector(featureSelector, (state: IHikeEditPoiState) =>
+  state.gTrackPoiMerge.selections
+);
 
-    this._allPoiSelectorMap = {
-      google: this.getAllGooglePois,
-      osmAmenity: this.getAllOsmAmenityPois,
-      osmNatural: this.getAllOsmNaturalPois,
-      osmRoute: this.getAllOsmRoutePois,
-      wikipedia: this.getAllWikipediaPois,
-      collector: this.getAllCollectorPois
-    };
+export const getMergeSelectionsCount = createSelector(featureSelector, (state: IHikeEditPoiState) =>
+  state.gTrackPoiMerge.selections.length
+);
 
-    this.getMergeSelections = createSelector(
-      this._featureSelector,
-      (state: IHikeEditPoiState) => state.gTrackPoiMerge.selections
-    );
+export const getSaveablePoisCount = (subdomain) => {
+  return createSelector(_allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) =>
+    pois.filter(p => p.selected && !p.inGtrackDb).length
+  );
+};
 
-    this.getMergeSelectionsCount = createSelector(
-      this._featureSelector,
-      (state: IHikeEditPoiState) => state.gTrackPoiMerge.selections.length
-    );
-  }
+export const getSelectedCollectorPois = () => {
+  return createSelector(getAllCollectorPois, (pois: any[]) =>
+    pois.filter(p => p.selected)
+  );
+};
 
-  public getSaveablePoisCount(subdomain) {
-    return createSelector(this._allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
-      return pois.filter(p => p.selected && !p.inGtrackDb).length;
-    });
-  }
+export const getCollectorPoi = (poiId: string) => {
+  return createSelector(getAllCollectorPois, (pois: any[]) => pois.find(poi => poi.id === poiId));
+};
 
-  public getSelectedCollectorPois() {
-    return createSelector(this.getAllCollectorPois, (pois: any[]) => {
-      return pois.filter(p => p.selected);
-    });
-  }
+export const getCollectorPoisCount = () => {
+  return createSelector(getAllCollectorPois, (pois: any[]) => pois.length);
+};
 
-  public getCollectorPoi(poiId: string) {
-    return createSelector(this.getAllCollectorPois, (pois: any[]) => pois.find(poi => poi.id === poiId));
-  }
+export const getPoiPhotos = (subdomain) => {
+  return createSelector(_allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
+    let _photos = [];
+    pois
+      .filter(p => p[subdomain].photos && !p.inGtrackDb)
+      .map(p => {
+        const domainPhotos = _cloneDeep(p[subdomain].photos);
+        domainPhotos.map(photo => photo.onRoute = p.onRoute);
+        return domainPhotos;
+      })
+      .map(photoArray => {
+        _photos = _photos.concat(photoArray);
+      });
+    return _uniqBy(_photos, 'original.url');
+  });
+};
 
-  public getCollectorPoisCount() {
-    return createSelector(this.getAllCollectorPois, (pois: any[]) => pois.length);
-  }
+export const getHikeEditPoiContextSelector = (subdomain) => {
+  return createSelector(featureSelector, (state: IHikeEditPoiState) => state.contexts[subdomain]);
+};
 
-  public getPoiPhotos(subdomain) {
-    return createSelector(this._allPoiSelectorMap[subdomain], (pois: IExternalPoi[]) => {
-      let _photos = [];
-      pois
-        .filter(p => p[subdomain].photos && !p.inGtrackDb)
-        .map(p => p[subdomain].photos)
-        .map(photoArray => {
-          _photos = _photos.concat(photoArray);
-        });
-      return _uniqBy(_photos, 'original.url');
-    });
-  }
-
-  //
-  // Context
-  //
-
-  public getHikeEditPoiContextSelector(subdomain) {
-    return createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.contexts[subdomain]);
-  }
-
-  public getHikeEditPoiContextPropertySelector(subdomain, property) {
-    return createSelector(this._featureSelector, (state: IHikeEditPoiState) => state.contexts[subdomain][property]);
-  }
-}
+export const getHikeEditPoiContextPropertySelector = (subdomain, property) => {
+  return createSelector(featureSelector, (state: IHikeEditPoiState) => state.contexts[subdomain][property]);
+};

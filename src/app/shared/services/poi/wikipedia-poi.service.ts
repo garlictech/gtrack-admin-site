@@ -12,6 +12,7 @@ import { MessageService } from 'primeng/api';
 import * as uuid from 'uuid/v1';
 import _filter from 'lodash-es/filter';
 import _chunk from 'lodash-es/chunk';
+import _get from 'lodash-es/get';
 
 @Injectable()
 export class WikipediaPoiService {
@@ -89,7 +90,7 @@ export class WikipediaPoiService {
    * handlePoiDetails() submethod
    */
   public getPoiDetails(pois: IWikipediaPoi[]) {
-    const langs: string[] = this._hikeProgramService.getDescriptionLaguages();
+    const langs: string[] = this._hikeProgramService.getDescriptionLanguages();
     const promises: Promise<IWikipediaPoi[]>[] = [];
 
     for (const lng of langs) {
@@ -108,13 +109,7 @@ export class WikipediaPoiService {
    * get submethod - load wikipedia lead sections
    */
   private _getPageExtracts(_pois: IWikipediaPoi[], lng) {
-    const _poiIds = _pois.map((p: IWikipediaPoi) => {
-      if (p.wikipedia && p.wikipedia.pageid) {
-        return p.wikipedia.pageid;
-      } else {
-        return '';
-      }
-    });
+    const _poiIds = _pois.map((p: IWikipediaPoi) => _get(p, 'wikipedia.pageid', ''));
     const _chunks = _chunk(_poiIds, 20);
 
     return interval(100)
@@ -161,13 +156,7 @@ export class WikipediaPoiService {
    * get submethod - load wikipedia page images
    */
   private _getPageImages(_pois: IWikipediaPoi[], lng) {
-    const _poiIds = _pois.map((p: IWikipediaPoi) => {
-      if (p.wikipedia && p.wikipedia.pageid) {
-        return p.wikipedia.pageid;
-      } else {
-        return '';
-      }
-    });
+    const _poiIds = _pois.map((p: IWikipediaPoi) => _get(p, 'wikipedia.pageid', ''));
     const _chunks = _chunk(_poiIds, 20);
 
     return interval(100)

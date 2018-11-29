@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store, StoreModule, select } from '@ngrx/store';
 import { IPoiStored } from 'subrepos/provider-client';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import _get from 'lodash-es/get';
 import _values from 'lodash-es/values';
@@ -61,8 +62,10 @@ describe('Poi selectors', () => {
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
-        .select(poiSelectors.getPoiIds)
-        .takeUntil(destroy$)
+        .pipe(
+          select(poiSelectors.getPoiIds),
+          takeUntil(destroy$)
+        )
         .subscribe(_ids => (result = _ids));
 
       expect(result).toEqual([]);
@@ -78,8 +81,10 @@ describe('Poi selectors', () => {
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
-        .select(poiSelectors.getAllPois)
-        .takeUntil(destroy$)
+        .pipe(
+          select(poiSelectors.getAllPois),
+          takeUntil(destroy$)
+        )
         .subscribe(_pois => (result = _pois));
 
       expect(result).toEqual([]);
@@ -95,8 +100,10 @@ describe('Poi selectors', () => {
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
-        .select(poiSelectors.getAllPoiEntities)
-        .takeUntil(destroy$)
+        .pipe(
+          select(poiSelectors.getAllPoiEntities),
+          takeUntil(destroy$)
+        )
         .subscribe(_pois => (result = _pois));
 
       expect(result).toEqual({});
@@ -113,8 +120,10 @@ describe('Poi selectors', () => {
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
-        .select(poiSelectors.getPoi(ids[0]))
-        .takeUntil(destroy$)
+        .pipe(
+          select(poiSelectors.getPoi(ids[0])),
+          takeUntil(destroy$)
+        )
         .subscribe(poi => (result = poi));
 
       expect(result).toEqual(undefined);
@@ -130,8 +139,10 @@ describe('Poi selectors', () => {
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
-        .select(poiSelectors.getAllPois)
-        .takeUntil(destroy$)
+        .pipe(
+          select(poiSelectors.getAllPois),
+          takeUntil(destroy$)
+        )
         .subscribe(_pois => (result = _pois.length));
 
       expect(result).toEqual(0);
@@ -147,8 +158,10 @@ describe('Poi selectors', () => {
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
-        .select(poiSelectors.getPois(ids))
-        .takeUntil(destroy$)
+        .pipe(
+          select(poiSelectors.getPois(ids)),
+          takeUntil(destroy$)
+        )
         .subscribe(_pois => (result = _pois));
 
       expect(result).toEqual([]);
@@ -164,8 +177,10 @@ describe('Poi selectors', () => {
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store
-        .select(poiSelectors.getPoiEntities(ids))
-        .takeUntil(destroy$)
+        .pipe(
+          select(poiSelectors.getPoiEntities(ids)),
+          takeUntil(destroy$)
+        )
         .subscribe(_pois => (result = _pois));
 
       expect(result).toEqual({});

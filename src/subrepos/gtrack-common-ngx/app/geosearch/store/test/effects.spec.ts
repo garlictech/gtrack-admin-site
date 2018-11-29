@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Actions, EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
@@ -15,22 +16,8 @@ import { GeoSearchService } from '../../services';
 
 import { DeepstreamModule } from '../../../deepstream';
 
-export class TestActions extends Actions {
-  constructor() {
-    super(EMPTY);
-  }
-
-  set stream(source: Observable<any>) {
-    this.source = source;
-  }
-}
-
-export function getActions() {
-  return new TestActions();
-}
-
 describe('GeoSearch effects', () => {
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let geoSearchService: GeoSearchService;
   let effects: GeoSearchEffects;
   let results: string[];
@@ -41,10 +28,7 @@ describe('GeoSearch effects', () => {
       providers: [
         GeoSearchService,
         GeoSearchEffects,
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions$),
         {
           provide: DeepstreamService,
           useValue: {}
@@ -53,8 +37,6 @@ describe('GeoSearch effects', () => {
     });
 
     results = [uuid(), uuid()];
-
-    actions$ = TestBed.get(Actions);
     geoSearchService = TestBed.get(GeoSearchService);
     effects = TestBed.get(GeoSearchEffects);
 
@@ -79,7 +61,7 @@ describe('GeoSearch effects', () => {
       const completion = new geoSearchActions.GeoSearchComplete(results, context);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.searchInBox$).toBeObservable(expected);
 
@@ -112,7 +94,7 @@ describe('GeoSearch effects', () => {
       const completion = new geoSearchActions.GeoSearchComplete(results, context);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.searchInCircle$).toBeObservable(expected);
 

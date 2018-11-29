@@ -18,8 +18,21 @@
 </div>
 
 <div class="map-container">
-    <app-admin-leaflet #adminmap [id]="'hike-map'" [layers]="layers" [overlays]="overlays" [center]="center">
-    </app-admin-leaflet>
+    <gtrack-leaflet-map
+      #adminMap
+      [id]="'hikeMap'"
+      [layers]="layers"
+      [overlays]="overlays"
+      [center]="center"
+      [config]="mapConfig"
+      (mapClick)="onMapClick($event)"
+    ></gtrack-leaflet-map>
+    <!--
+      (mapMouseUp)="onMapMouseUp($event)"
+      (mapMouseOut)="onMapMouseOut($event)"
+      (mapMouseMove)="onMapMouseMove($event)"
+      (mapMouseDown)="onMapMouseDown($event)"
+    -->
 </div>
 
 <div class="mt-20">
@@ -41,10 +54,17 @@
   ></p-button>
 
   <p-button
-    label="Buffer"
+    label="Small buffer"
     type="button"
     styleClass="ui-button-primary mr-5"
-    (onClick)="buffer($event)"
+    (onClick)="toggleBuffer($event, EBufferSize.SMALL)"
+  ></p-button>
+
+  <p-button
+    label="Big buffer"
+    type="button"
+    styleClass="ui-button-primary mr-5"
+    (onClick)="toggleBuffer($event, EBufferSize.BIG)"
   ></p-button>
 
   <p-selectButton styleClass="mr-10" [options]="clickModes" [(ngModel)]="mode"></p-selectButton>

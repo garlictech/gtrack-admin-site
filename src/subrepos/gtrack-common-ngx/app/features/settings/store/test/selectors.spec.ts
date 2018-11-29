@@ -27,7 +27,7 @@ describe('Settings selectors', () => {
   beforeEach(() => {
     const initialState = createState();
 
-    let reducers: any = {};
+    const reducers: any = {};
     reducers[featureName] = reducer;
     reducers.authentication = authenticationReducer;
 

@@ -14,7 +14,7 @@ import {
   WikipediaPoiService,
   OsmPoiService,
   GooglePoiService,
-  OsmRoutePoiService
+  // OsmRoutePoiService
 } from '../../../shared/services';
 import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../../actions';
 import { HikeEditPoiEffects } from '../hike-edit-poi';
@@ -31,7 +31,7 @@ describe('HikeEditPoiEffects effects', () => {
   let wikipediaPoiService: WikipediaPoiService;
   let googlePoiService: GooglePoiService;
   let osmPoiService: OsmPoiService;
-  let osmRoutePoiService: OsmRoutePoiService;
+  // let osmRoutePoiService: OsmRoutePoiService;
   let pois: IExternalPoi[];
   const mockBounds = {
     SouthWest: { lat: 0, lon: 0 },
@@ -68,7 +68,7 @@ describe('HikeEditPoiEffects effects', () => {
         {
           provide: HikeProgramService,
           useValue: {
-            getDescriptionLaguages: () => ['en', 'hu']
+            getDescriptionLanguages: () => ['en', 'hu']
           }
         },
         {
@@ -91,12 +91,12 @@ describe('HikeEditPoiEffects effects', () => {
             get: () => {}
           }
         },
-        {
+        /*{
           provide: OsmRoutePoiService,
           useValue: {
             get: () => {}
           }
-        },
+        },*/
         {
           provide: GooglePoiService,
           useValue: {
@@ -113,13 +113,13 @@ describe('HikeEditPoiEffects effects', () => {
     wikipediaPoiService = TestBed.get(WikipediaPoiService);
     googlePoiService = TestBed.get(GooglePoiService);
     osmPoiService = TestBed.get(OsmPoiService);
-    osmRoutePoiService = TestBed.get(OsmRoutePoiService);
+    // osmRoutePoiService = TestBed.get(OsmRoutePoiService);
   });
 
   describe('getWikipediaPois$', () => {
     it('should return pois observable from getWikipediaPois', () => {
       spyOn(routeService, 'splitBounds').and.callThrough();
-      spyOn(hikeProgramService, 'getDescriptionLaguages').and.callThrough();
+      spyOn(hikeProgramService, 'getDescriptionLanguages').and.callThrough();
       spyOn(wikipediaPoiService, 'get').and.returnValue(Observable.of(pois));
 
       const action = new hikeEditPoiActions.GetWikipediaPois(mockBounds, 'fakeMapId');
@@ -133,14 +133,14 @@ describe('HikeEditPoiEffects effects', () => {
       Scheduler.get().flush();
 
       expect(routeService.splitBounds).toHaveBeenCalled();
-      expect(hikeProgramService.getDescriptionLaguages).toHaveBeenCalled();
+      expect(hikeProgramService.getDescriptionLanguages).toHaveBeenCalled();
       expect(wikipediaPoiService.get).toHaveBeenCalled();
     });
   });
 
   describe('getGooglePois$', () => {
     it('should return pois observable from GetGooglePois', () => {
-      spyOn(hikeProgramService, 'getDescriptionLaguages').and.callThrough();
+      spyOn(hikeProgramService, 'getDescriptionLanguages').and.callThrough();
       spyOn(googlePoiService, 'get').and.returnValue(Observable.of(pois));
 
       const action = new hikeEditPoiActions.GetGooglePois(mockBounds, 'fakeMapId');
@@ -153,7 +153,7 @@ describe('HikeEditPoiEffects effects', () => {
 
       Scheduler.get().flush();
 
-      expect(hikeProgramService.getDescriptionLaguages).toHaveBeenCalled();
+      expect(hikeProgramService.getDescriptionLanguages).toHaveBeenCalled();
       expect(googlePoiService.get).toHaveBeenCalled();
     });
   });
@@ -194,6 +194,7 @@ describe('HikeEditPoiEffects effects', () => {
     });
   });
 
+  /*
   describe('getOsmRoutePois$', () => {
     it('should return pois observable from GetOsmRoutePois', () => {
       spyOn(osmRoutePoiService, 'get').and.returnValue(Observable.of(pois));
@@ -211,6 +212,7 @@ describe('HikeEditPoiEffects effects', () => {
       expect(osmRoutePoiService.get).toHaveBeenCalled();
     });
   });
+  */
 
   describe('loadSavedPoi$', () => {
     it('should return poiId observable from PoiSaved', () => {

@@ -1,5 +1,3 @@
-import { point as turfPoint } from '@turf/helpers';
-
 import { IconService } from '../icon';
 import { IMarkerPopupData } from '../../../../../provider-client/interfaces';
 

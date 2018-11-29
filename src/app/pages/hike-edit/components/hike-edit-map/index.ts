@@ -3,42 +3,38 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { SelectItem } from 'primeng/api';
-
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
 import { State } from '../../../../store';
 import { adminMapActions, commonBackgroundGeolocationActions } from '../../../../store/actions';
-import { HikeEditRoutePlannerSelectors } from '../../../../store/selectors';
-import { Center, selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
-import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
-import { WaypointMarkerService } from '../../../../shared/services/admin-map';
+import { selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
+import { LeafletMapComponent } from '@common.features/leaflet-map/components/leaflet-map';
+import { WaypointMarkerService, EBufferSize, AdminMapService } from '../../../../shared/services/admin-map';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
+import { ILeafletMapConfig, ICenter, ILayerDef } from '@common.features/leaflet-map/interfaces';
 
 import * as L from 'leaflet';
-import { LeafletMouseEvent } from 'leaflet';
+import { GeoJsonObject } from 'geojson';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+import { GEOJSON_STYLES } from '@common.features/leaflet-map/constants/geojson-styles';
 
-const CENTER = <Center>{
+const CENTER = <ICenter>{
   lat: 47.689714,
   lng: 18.904206,
   zoom: 12
 };
 
-const LAYERS = [
-  {
-    name: 'street',
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-  },
-  {
-    name: 'topo',
-    url: 'https://opentopomap.org/{z}/{x}/{y}.png'
-  }
-];
+const LAYERS: ILayerDef[] = [{
+  name: 'street',
+  url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+}, {
+  name: 'topo',
+  url: 'https://opentopomap.org/{z}/{x}/{y}.png'
+}];
 
-const OVERLAYS = [
-  {
-    name: 'trails',
-    url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
-  }
-];
+const OVERLAYS: ILayerDef[]  = [{
+  name: 'trails',
+  url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
+}];
 
 @Component({
   selector: 'app-hike-edit-map',
@@ -46,54 +42,69 @@ const OVERLAYS = [
   styleUrls: ['./style.scss']
 })
 export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('adminmap')
-  public mapComponent: AdminLeafletComponent;
-  @ViewChild('search')
-  private _searchElementRef: ElementRef;
+  @ViewChild('adminMap') public adminMap: LeafletMapComponent;
+  @ViewChild('search') private _searchElementRef: ElementRef;
   private _searchInput: HTMLInputElement;
-  public center: Center = CENTER;
-  public layers = LAYERS;
-  public overlays = OVERLAYS;
+  public center: ICenter = CENTER;
+  public layers: ILayerDef[] = LAYERS;
+  public overlays: ILayerDef[] = OVERLAYS;
+  public mapConfig: ILeafletMapConfig;
   public mode = 'routing';
   public allowPlanning: boolean;
   public currentLocation$: Observable<IGeoPosition | null>;
   public clickModes: SelectItem[] = [];
   public locationSearchResult: google.maps.places.PlaceResult;
   public faSearch = faSearch;
-  private _bufferShown = false;
-  private _bufferOnMap: L.GeoJSON;
+  public EBufferSize = EBufferSize;
+  private _bufferShown = {};
+  private _bufferOnMap = {};
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _store: Store<State>,
     private _waypointMarkerService: WaypointMarkerService,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
+    private _adminMapService: AdminMapService,
     private _googleMapsService: GoogleMapsService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private _leafletMapService: LeafletMapService
   ) {}
 
   ngOnInit() {
     this.clickModes = [{ label: 'Routing mode', value: 'routing' }, { label: 'Checkpoint mode', value: 'checkpoint' }];
 
+    this.mapConfig = {
+      fullScreenControl: {
+        forceSeparateButton: true,
+        forcePseudoFullscreen: true
+      },
+      spiderfier: {
+        keepSpiderfied: true
+      }
+    };
+
     // Update buffer on each segment update
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getSegments),
+        select(hikeEditRoutePlannerSelectors.getSegments),
         takeUntil(this._destroy$)
       )
       .subscribe(() => {
-        // Refresh buffer on segment change, if needed
+        // Refresh buffers on segment change, if needed
         setTimeout(() => {
-          if (this._bufferShown) {
-            this._removeBuffer();
-            this._addBuffer();
+          if (this._bufferShown[EBufferSize.SMALL]) {
+            this._removeBuffer(EBufferSize.SMALL);
+            this._addBuffer(EBufferSize.SMALL);
+          }
+          if (this._bufferShown[EBufferSize.BIG]) {
+            this._removeBuffer(EBufferSize.BIG);
+            this._addBuffer(EBufferSize.BIG);
           }
         });
       });
 
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getIsPlanning),
+        select(hikeEditRoutePlannerSelectors.getIsPlanning),
         takeUntil(this._destroy$)
       )
       .subscribe((planning: boolean) => {
@@ -112,7 +123,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
 
     this._store.dispatch(new commonBackgroundGeolocationActions.EndTracking());
     this._store.dispatch(new adminMapActions.ResetMap());
@@ -120,43 +131,38 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     // Disable wheel zoom
-    this.mapComponent.leafletMap.scrollWheelZoom.disable();
+    this.adminMap.leafletMap.scrollWheelZoom.disable();
+  }
 
-    // Setup map events
-    this.mapComponent.leafletMap
-      // Add markers by click
-      .on('click', (e: LeafletMouseEvent) => {
-        if (this.allowPlanning) {
-          if (this.mode === 'routing') {
-            this._waypointMarkerService.addWaypoints([e.latlng]);
-          } else {
-            // console.log('todo _createCheckpoint');
-            // this._createCheckpoint(e.latlng);
-          }
-        }
-      });
+  public onMapClick(e: L.LeafletMouseEvent) {
+    if (this.allowPlanning) {
+      if (this.mode === 'routing') {
+        this._waypointMarkerService.addWaypoints([e.latlng]);
+      } else {
+        // this._createCheckpoint(e.latlng);
+      }
+    }
+  }
 
-    /* WARNING: CAUSES BROWSER LAG!!
-    // Turn on scrollWheelZoom after the first interaction (click/drag)
-    .on('mouseup', () => {
-      this.mapComponent.leafletMap.scrollWheelZoom.enable();
-    })
-    // Turn off scrollWheelZoom on mouse out
-    .on('mouseout', () => {
-      this.mapComponent.leafletMap.scrollWheelZoom.disable();
-    });
-    */
+  public onMapMouseUp(e: L.LeafletMouseEvent) {
+    // this.adminMap.leafletMap.scrollWheelZoom.enable();
+  }
+
+  public onMapMouseOut(e: L.LeafletMouseEvent) {
+    // this.adminMap.leafletMap.scrollWheelZoom.disable();
   }
 
   public toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
 
-    this.currentLocation$.pipe(take(1)).subscribe((position: IGeoPosition) => {
-      if (position && position.coords) {
-        const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
-        this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
-      }
-    });
+    this.currentLocation$
+      .pipe(take(1))
+      .subscribe((position: IGeoPosition) => {
+        if (position && position.coords) {
+          const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
+          this.adminMap.currentPositionMarker.goToPosition(latLng);
+        }
+      });
   }
 
   public resetMap($event: Event) {
@@ -164,40 +170,49 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getRoute),
+        select(hikeEditRoutePlannerSelectors.getRoute),
         take(1)
       )
-      .subscribe(route => {
-        this.mapComponent.map.fitBounds(route);
+      .subscribe((route: any) => {
+        const bounds: L.LatLngBoundsExpression = [[
+          route.bounds.NorthEast.lat,
+          route.bounds.NorthEast.lon
+        ], [
+          route.bounds.SouthWest.lat,
+          route.bounds.SouthWest.lon
+        ]];
+
+        this._leafletMapService.fitBounds(bounds);
       });
   }
 
-  public buffer($event: Event) {
+  public toggleBuffer($event: Event, size: EBufferSize) {
     $event.stopPropagation();
 
-    this._bufferShown = !this._bufferShown;
+    this._bufferShown[size] = !this._bufferShown[size];
 
-    if (this._bufferShown) {
-      this._addBuffer();
+    if (this._bufferShown[size]) {
+      this._addBuffer(size);
     } else {
-      this._removeBuffer();
+      this._removeBuffer(size);
     }
   }
 
-  private _addBuffer() {
-    this.mapComponent.map
-      .getBuffer()
+  private _addBuffer(size: EBufferSize) {
+    this._adminMapService
+      .getBuffer(size)
       .pipe(take(1))
-      .subscribe(buffer => {
+      .subscribe((buffer: GeoJsonObject) => {
         if (buffer) {
-          this._bufferOnMap = this.mapComponent.map.addGeoJSON(buffer);
+          const style = size === EBufferSize.SMALL ? GEOJSON_STYLES.smallBuffer : GEOJSON_STYLES.bigBuffer;
+          this._bufferOnMap[size] = this._leafletMapService.addGeoJSONObject(buffer, style);
         }
       });
   }
 
-  private _removeBuffer() {
-    if (this._bufferOnMap) {
-      this.mapComponent.map.removeGeoJSON(this._bufferOnMap);
+  private _removeBuffer(size: EBufferSize) {
+    if (this._bufferOnMap[size]) {
+      this._leafletMapService.removeLayer(this._bufferOnMap[size]);
     }
   }
 
@@ -217,7 +232,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     $event.stopPropagation();
 
     if (this.locationSearchResult) {
-      this.mapComponent.map.leafletMap.setView(
+      this._leafletMapService.leafletMap.setView(
         [this.locationSearchResult.geometry.location.lat(), this.locationSearchResult.geometry.location.lng()],
         13
       );

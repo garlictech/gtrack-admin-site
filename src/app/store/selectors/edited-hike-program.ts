@@ -1,125 +1,77 @@
-import { Injectable } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { IEditedHikeProgramState } from '../state/edited-hike-program';
-import {
-  ILocalizedItem,
-  ITextualDescription,
-  IHikeProgramStored,
-  IPoiStored,
-  IHikeProgramStop,
-  EObjectState,
-  IBackgroundImageData
-} from 'subrepos/provider-client';
+import { IPoiStored, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
 
 import _get from 'lodash-es/get';
 import _keys from 'lodash-es/keys';
 import _uniq from 'lodash-es/uniq';
 import _cloneDeep from 'lodash-es/cloneDeep';
 
-@Injectable()
-export class EditedHikeProgramSelectors {
-  private _featureSelector: MemoizedSelector<object, IEditedHikeProgramState>;
-  public getDescriptions: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
-  public getDescriptionLangs: MemoizedSelector<object, string[]>;
-  public getHikeId: MemoizedSelector<object, string>;
-  public getRouteId: MemoizedSelector<object, string>;
-  public getPoiIds: MemoizedSelector<object, string[]>;
-  public getStops: MemoizedSelector<object, IHikeProgramStop[]>;
-  public getStopsCount: MemoizedSelector<object, number>;
-  public getState: MemoizedSelector<object, EObjectState>;
-  public getBackgroundImages: MemoizedSelector<object, IBackgroundImageData[]>;
-  public getDirty: MemoizedSelector<object, boolean>;
-  public getWorking: MemoizedSelector<object, string | null>;
-  public getData: MemoizedSelector<object, IHikeProgramStored>;
-  public getError: MemoizedSelector<object, any>;
+const featureSelector = createFeatureSelector<IEditedHikeProgramState>('editedHikeProgram');
+export const getData = createSelector(featureSelector, (state: IEditedHikeProgramState) => state.data);
+export const getHikeId = createSelector(featureSelector, (state: IEditedHikeProgramState) => state.data.id);
+export const getRouteId = createSelector(featureSelector, (state: IEditedHikeProgramState) => state.data.routeId);
+export const getPoiIds = createSelector(featureSelector, (state: IEditedHikeProgramState) => {
+  return state.data.stops.map((stop: IHikeProgramStop) => stop.poiId).filter(poiId => !!poiId);
+});
+export const getStops = createSelector(featureSelector, (state: IEditedHikeProgramState) => state.data.stops);
+export const getStopsCount = createSelector(
+  featureSelector, (state: IEditedHikeProgramState) => state.data.stops.length
+);
+export const getDescriptions = createSelector(featureSelector, (state: IEditedHikeProgramState) =>
+  _get(state, 'data.description')
+);
+export const getDescriptionLangs = createSelector(featureSelector, (state: IEditedHikeProgramState) =>
+  _keys(_get(state, 'data.description'))
+);
+export const getState = createSelector(featureSelector, (state: IEditedHikeProgramState) =>
+  _get(state, 'data.state')
+);
+export const getBackgroundImages = createSelector(featureSelector, (state: IEditedHikeProgramState) =>
+  _get(state, 'data.backgroundImages')
+);
+export const getDirty = createSelector(featureSelector, (state: IEditedHikeProgramState) => state.dirty);
+export const getWorking = createSelector(featureSelector, (state: IEditedHikeProgramState) => state.working);
+export const getError = createSelector(featureSelector, (state: IEditedHikeProgramState) => _get(state, 'failed'));
 
-  public dataPath = 'editedHikeProgram.data';
-  public remiteErrorDataPath = 'editedHikeProgram.failed.data';
+export const getDescriptionByLang = (lang: string) => {
+  return createSelector(featureSelector, (state: IEditedHikeProgramState) => _get(state, `data.description.${lang}`));
+};
 
-  constructor() {
-    this._featureSelector = createFeatureSelector<IEditedHikeProgramState>('editedHikeProgram');
+export const getHikePois = (getAllSelector: ((state: object) => IPoiStored[])) => {
+  return createSelector(getAllSelector, getPoiIds, (data, poiIds) => {
+    if (typeof poiIds !== 'undefined') {
+      return data.filter(item => poiIds.indexOf((<any>item).id) !== -1);
+    }
+  });
+};
 
-    this.getData = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => state.data);
+export const getHikePoisCount = (getAllSelector: ((state: object) => IPoiStored[])) => {
+  return createSelector(getAllSelector, getPoiIds, (data, poiIds) => {
+    if (typeof poiIds !== 'undefined') {
+      return data.filter(item => poiIds.indexOf((<any>item).id) !== -1).length;
+    }
+  });
+};
 
-    this.getHikeId = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => state.data.id);
+export const getStopsWithPoiNames = (getAllSelector: ((state: object) => IPoiStored[])) => {
+  return createSelector(getAllSelector, getStops, (pois, stops) => {
+    const _stops = _cloneDeep(stops);
 
-    this.getRouteId = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => state.data.routeId);
+    for (const stop of _stops) {
+      const stopPoi = pois.find(p => p.id === stop.poiId);
 
-    this.getPoiIds = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => {
-      return state.data.stops.map((stop: IHikeProgramStop) => stop.poiId).filter(poiId => !!poiId);
-    });
-
-    this.getStops = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => state.data.stops);
-
-    this.getStopsCount = createSelector(
-      this._featureSelector,
-      (state: IEditedHikeProgramState) => state.data.stops.length
-    );
-
-    this.getDescriptions = createSelector(this._featureSelector, (state: IEditedHikeProgramState) =>
-      _get(state, 'data.description')
-    );
-
-    this.getDescriptionLangs = createSelector(this._featureSelector, (state: IEditedHikeProgramState) =>
-      _keys(_get(state, 'data.description'))
-    );
-
-    this.getState = createSelector(this._featureSelector, (state: IEditedHikeProgramState) =>
-      _get(state, 'data.state')
-    );
-
-    this.getBackgroundImages = createSelector(this._featureSelector, (state: IEditedHikeProgramState) =>
-      _get(state, 'data.backgroundImages')
-    );
-
-    this.getDirty = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => state.dirty);
-
-    this.getWorking = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => state.working);
-
-    this.getError = createSelector(this._featureSelector, (state: IEditedHikeProgramState) => _get(state, 'failed'));
-  }
-
-  public getHikePois(getAllSelector: ((state: object) => IPoiStored[])) {
-    return createSelector(getAllSelector, this.getPoiIds, (data, poiIds) => {
-      if (typeof poiIds !== 'undefined') {
-        return data.filter(item => poiIds.indexOf((<any>item).id) !== -1);
+      if (stopPoi) {
+        (<any>stop).description = stopPoi.description;
       }
-    });
-  }
+    }
 
-  public getHikePoisCount(getAllSelector: ((state: object) => IPoiStored[])) {
-    return createSelector(getAllSelector, this.getPoiIds, (data, poiIds) => {
-      if (typeof poiIds !== 'undefined') {
-        return data.filter(item => poiIds.indexOf((<any>item).id) !== -1).length;
-      }
-    });
-  }
+    return _stops;
+  });
+};
 
-  public getStopsWithPoiNames(getAllSelector: ((state: object) => IPoiStored[])) {
-    return createSelector(getAllSelector, this.getStops, (pois, stops) => {
-      const _stops = _cloneDeep(stops);
-
-      for (const stop of _stops) {
-        const stopPoi = pois.find(p => p.id === stop.poiId);
-
-        if (stopPoi) {
-          (<any>stop).description = stopPoi.description;
-        }
-      }
-
-      return _stops;
-    });
-  }
-
-  public getBackgroundOriginalUrls() {
-    return createSelector(this._featureSelector, (state: IEditedHikeProgramState) => {
-      if (state.data && state.data.backgroundImages) {
-        return _uniq(
-          (<IBackgroundImageData[]>state.data.backgroundImages).map((img: IBackgroundImageData) => img.original.url)
-        );
-      } else {
-        return [];
-      }
-    });
-  }
-}
+export const getBackgroundOriginalUrls = () => {
+  return createSelector(featureSelector, (state: IEditedHikeProgramState) => {
+    return _uniq((<IBackgroundImageData[]>_get(state, 'data.backgroundImages', [])).map(img => img.original.url));
+  });
+};

@@ -13,6 +13,8 @@ import {
   SimpleChanges
 } from '@angular/core';
 
+import _get from 'lodash-es/get';
+
 import { faCrosshairs, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Store, select } from '@ngrx/store';
@@ -93,6 +95,9 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
   @Input()
   public elevationMarkerVisible = false;
 
+  @Input()
+  public elevationMarkerLocked = false;
+
   @ViewChild('map')
   public map: LeafletComponent;
 
@@ -131,7 +136,26 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
       })
     );
 
-    this._store.dispatch(new poiActions.LoadPois(pois));
+    this._store
+      .pipe(
+        select(this._poiSelectors.getPoiContextEntities(pois)),
+        take(1)
+      )
+      .subscribe(contexts => {
+        const notLoaded = pois
+          .filter(id => !/^endpoint/.test(id))
+          .filter(id => {
+            const context = contexts[id];
+            const loaded = _get(context, 'loaded', false);
+            const loading = _get(context, 'loading', false);
+
+            return !loaded && !loading;
+          });
+
+        if (notLoaded.length > 0) {
+          this._store.dispatch(new poiActions.LoadPois(notLoaded));
+        }
+      });
 
     this._store.pipe(select(this._routeSelectors.getRouteContext(route))).subscribe(context => {
       if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
@@ -148,6 +172,16 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
 
     if (typeof changes.elevationMarkerPosition !== 'undefined') {
       this._moveElavationPointMarker(changes.elevationMarkerPosition.currentValue);
+    }
+
+    if (typeof changes.elevationMarkerLocked !== 'undefined' && this.map.leafletMap) {
+      const locked = changes.elevationMarkerLocked.currentValue;
+
+      if (locked === true) {
+        this.map.leafletMap.setView([this.elevationMarkerPosition[1], this.elevationMarkerPosition[0]], this.center.zoom);
+      } else {
+        this.resetMap();
+      }
     }
   }
 
@@ -303,8 +337,11 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
     map.currentPositionMarker.goToCurrentPosition();
   }
 
-  resetMap(e: Event) {
-    e.preventDefault();
+  resetMap(e?: Event) {
+    if (e) {
+      e.preventDefault();
+    }
+
     const map = this.map.map;
 
     if (this.route) {

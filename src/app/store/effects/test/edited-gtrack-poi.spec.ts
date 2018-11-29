@@ -10,8 +10,8 @@ import { DeepstreamModule, PoiService } from '../../../../subrepos/gtrack-common
 import { RouterModule, Router } from '@angular/router';
 import { TestActions, getActions, mockRouter } from './helpers';
 import { editedGTrackPoiActions } from '../../actions';
-import { EditedGTrackPoiSelectors } from '../../selectors';
 import { IExternalPoi } from '../../../shared/interfaces';
+import * as editedGTrackPoiSelectors from '../../../store/selectors/edited-gtrack-poi';
 
 import * as _ from 'lodash';
 
@@ -21,7 +21,6 @@ describe('EditedGTrackPoiEffects effects', () => {
   let actions$: TestActions;
   let effects: EditedGTrackPoiEffects;
   let poiService: PoiService;
-  let editedGTrackPoiSelectors: EditedGTrackPoiSelectors;
   let pois: IExternalPoi[];
 
   beforeEach(() => {
@@ -38,7 +37,6 @@ describe('EditedGTrackPoiEffects effects', () => {
       providers: [
         EditedGTrackPoiEffects,
         PoiService,
-        EditedGTrackPoiSelectors,
         {
           provide: Actions,
           useFactory: getActions
@@ -57,7 +55,6 @@ describe('EditedGTrackPoiEffects effects', () => {
     actions$ = TestBed.get(Actions);
     effects = TestBed.get(EditedGTrackPoiEffects);
     poiService = TestBed.get(PoiService);
-    editedGTrackPoiSelectors = TestBed.get(EditedGTrackPoiSelectors);
 
     spyOn(editedGTrackPoiSelectors, 'getData').and.returnValue(pois[0]);
   });

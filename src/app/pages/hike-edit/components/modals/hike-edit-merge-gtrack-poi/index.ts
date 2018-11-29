@@ -10,10 +10,8 @@ import _forEach from 'lodash-es/forEach';
   styleUrls: ['./style.scss']
 })
 export class HikeEditMergeGTrackPoiComponent implements OnInit {
-  @Input()
-  conflicts: IComparedProperty;
-  @Input()
-  saveCallback: any;
+  @Input() conflicts: IComparedProperty;
+  @Input() saveCallback: any;
   public mergeForm: FormGroup;
 
   ngOnInit() {

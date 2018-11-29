@@ -1,5 +1,4 @@
 export * from './admin-map';
-export * from './hike-edit-map';
 export * from './hike-edit-poi';
 export * from './hike-edit-image';
 export * from './hike-edit-route-planner';
@@ -22,10 +21,6 @@ export { editedHikeProgramActions };
 import * as hikeEditActions from './hike-edit';
 export type HikeEditAction = hikeEditActions.AllHikeEditActions;
 export { hikeEditActions };
-
-import * as hikeEditMapActions from './hike-edit-map';
-export type HikeEditMapAction = hikeEditMapActions.AllHikeEditMapActions;
-export { hikeEditMapActions };
 
 import * as hikeEditPoiActions from './hike-edit-poi';
 export type HikeEditPoiAction = hikeEditPoiActions.AllHikeEditPoiActions;

@@ -1,55 +1,49 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { filter, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { State } from '../../../store';
 import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { GameRuleService, ISegment, RouteService } from 'subrepos/gtrack-common-ngx';
 import { initialRouteDataState } from '../../../store/reducer';
-import { HikeEditRoutePlannerSelectors, HikeEditMapSelectors } from '../../../store/selectors';
-import { AdminMap } from './lib/admin-map';
-import { AdminMapService } from './admin-map.service';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 
 import * as L from 'leaflet';
 import * as rewind from 'geojson-rewind';
 import _cloneDeep from 'lodash-es/cloneDeep';
+import _omit from 'lodash-es/omit';
 import turfBuffer from '@turf/buffer';
 import { lineString as turfLineString } from '@turf/helpers';
 import turfLength from '@turf/length';
 import { geoBounds as d3GeoBounds } from 'd3-geo';
+import { BIG_BUFFER_SIZE } from 'app/config';
+import { GEOJSON_STYLES } from '@common.features/leaflet-map/constants/geojson-styles';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 
 @Injectable()
 export class RoutePlannerService {
-  private _map: AdminMap;
   private _savedRouteOnMap: L.FeatureGroup;
   private _routePlanOnMap: L.FeatureGroup;
 
   constructor(
     private _store: Store<State>,
-    private _hikeEditRoutePlannerSelectors: HikeEditRoutePlannerSelectors,
-    private _hikeEditMapSelectors: HikeEditMapSelectors,
     private _gameRuleService: GameRuleService,
     private _routeService: RouteService,
-    private _adminMapService: AdminMapService
+    private _leafletMapService: LeafletMapService
   ) {
+    // Update totals on each segment update
     this._store
       .pipe(
-        select(this._hikeEditMapSelectors.getMapId),
-        filter(id => id !== '')
+        select(hikeEditRoutePlannerSelectors.getSegments)
       )
-      .subscribe((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
+      .subscribe((segments: ISegment[]) => {
+        // Update total for route info
+        this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
+
+        // Refresh route data and draw to map
+        const _route = this._createGeoJsonFromSegments(segments);
+        this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_route));
+        this.drawRoutePlanGeoJSON(_route.features[0]);
       });
-
-    // Update totals on each segment update
-    this._store.pipe(select(this._hikeEditRoutePlannerSelectors.getSegments)).subscribe((segments: ISegment[]) => {
-      // Update total for route info
-      this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
-
-      // Refresh route data and draw to map
-      const _route = this._createGeoJsonFromSegments(segments);
-      this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_route));
-      this.drawRoutePlanGeoJSON(_route.features[0]);
-    });
   }
 
   /**
@@ -102,7 +96,7 @@ export class RoutePlannerService {
     const total = {};
 
     for (const segment of segments) {
-      for (const key in segment) {
+      for (const key in _omit(segment, 'coordinates')) {
         if (segment[key]) {
           if (!total[key]) {
             total[key] = 0;
@@ -182,12 +176,12 @@ export class RoutePlannerService {
 
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getPath),
+        select(hikeEditRoutePlannerSelectors.getPath),
         take(1)
       )
       .subscribe(path => {
         // declare as 'any' for avoid d3.geoBounds error
-        const _buffer: any = turfBuffer(path, 1000, { units: 'meters' });
+        const _buffer: any = turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
 
         if (typeof _buffer !== 'undefined') {
           const _geoBounds = d3GeoBounds(rewind(_buffer, true));
@@ -214,26 +208,15 @@ export class RoutePlannerService {
    * Create multi-line group from a LineString
    */
   public drawRouteLineGeoJSON(geoJSON) {
+    console.log('drawRouteLineGeoJSON');
     if (this._savedRouteOnMap) {
-      this._map.removeGeoJSON(this._savedRouteOnMap);
+      this._leafletMapService.removeLayer(this._savedRouteOnMap);
       delete this._savedRouteOnMap;
     }
 
-    this._savedRouteOnMap = new L.FeatureGroup();
-    const styles = [
-      { color: 'black', opacity: 0.15, weight: 12 },
-      { color: 'white', opacity: 0.8, weight: 8 },
-      { color: '#722ad6', opacity: 1, weight: 3 }
-    ];
-
-    for (const num of [0, 1, 2]) {
-      this._savedRouteOnMap.addLayer(
-        L.geoJSON(geoJSON, {
-          style: <any>styles[num]
-        })
-      );
-    }
-    this._savedRouteOnMap.addTo(this._map.leafletMap);
+    this._savedRouteOnMap = <L.FeatureGroup<any>>this._leafletMapService.addLayer(
+      this._leafletMapService.createFeatureGroupFromGeoJSONObject(geoJSON, GEOJSON_STYLES.routeMultiline)
+    );
   }
 
   /**
@@ -242,7 +225,7 @@ export class RoutePlannerService {
   public refreshRouteOnMap() {
     this._store
       .pipe(
-        select(this._hikeEditRoutePlannerSelectors.getPath),
+        select(hikeEditRoutePlannerSelectors.getPath),
         take(1)
       )
       .subscribe((path: any) => {
@@ -254,27 +237,15 @@ export class RoutePlannerService {
    * Create multi-line group from a LineString
    */
   public drawRoutePlanGeoJSON(geoJSON) {
-    if (this._map) {
+    if (this._leafletMapService.leafletMap) {
       if (this._routePlanOnMap) {
-        this._map.removeGeoJSON(this._routePlanOnMap);
+        this._leafletMapService.removeLayer(this._routePlanOnMap);
         delete this._routePlanOnMap;
       }
 
-      this._routePlanOnMap = new L.FeatureGroup();
-      const styles = [
-        { color: 'black', opacity: 0.15, weight: 12 },
-        { color: 'white', opacity: 0.8, weight: 8 },
-        { color: '#F60000', opacity: 1, weight: 3 }
-      ];
-
-      for (const num of [0, 1, 2]) {
-        this._routePlanOnMap.addLayer(
-          L.geoJSON(geoJSON, {
-            style: <any>styles[num]
-          })
-        );
-      }
-      this._routePlanOnMap.addTo(this._map.leafletMap);
+      this._routePlanOnMap = <L.FeatureGroup<any>>this._leafletMapService.addLayer(
+        this._leafletMapService.createFeatureGroupFromGeoJSONObject(geoJSON, GEOJSON_STYLES.routePlanMultiline)
+      );
     }
   }
 }

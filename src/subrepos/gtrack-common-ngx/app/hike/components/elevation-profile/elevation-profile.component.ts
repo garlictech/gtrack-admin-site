@@ -5,6 +5,8 @@ import * as moment from 'moment';
 import lineSliceAlong from '@turf/line-slice-along';
 import { lineString as turfLineString } from '@turf/helpers';
 
+import { IWeatherEntity } from '@common.features/weather/store';
+
 import {
   Component,
   Input,
@@ -107,6 +109,9 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   public speed = 4; // km/h
 
   @Input()
+  public weather: IWeatherEntity;
+
+  @Input()
   public margins = {
     top: 40,
     right: 20,
@@ -167,7 +172,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       this.moveHandlerToCoordinate(changes.elevationMarkerPosition.currentValue);
     }
 
-    if (this.route && (changes.startDate || changes.speed)) {
+    if (this.route && (changes.startDate || changes.speed || changes.weather)) {
       this._removeTimeAxis();
       this._addTimeAxis();
     }
@@ -258,7 +263,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         if (!this.vis) {
           this.vis = d3Select(this.mainDiv.nativeElement)
             .append('svg')
-            .attr('viewBox', `0, 0, ${this.width}, ${this.height + 40}`);
+            .attr('viewBox', `0, 0, ${this.width}, ${this.height + 60}`);
         }
 
         this._elevationData = this._elevationService.getd3ElevationData(
@@ -377,6 +382,24 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         this.marker.style('display', 'none');
       }
     }
+  }
+
+  public getWeather(date: Date) {
+    const time = date.getTime();
+
+    if (!this.weather) {
+      return;
+    }
+
+    return this.weather.list.find((item, i) => {
+      const wtime = item.dt * 1000;
+      const next = wtime + (3 * 60 * 60 * 1000); // 3 hours
+      if (wtime <= time && time <= next) {
+        return true;
+      }
+
+      return false;
+    });
   }
 
   protected _xToPosition(x: number): GeoJSON.Position {
@@ -510,6 +533,30 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       .attr('width', 10)
       .attr('height', 10)
       .attr('transform', 'translate(-5, 10)');
+
+    group
+      .selectAll('.tick')
+      .append('image')
+      .attr('xlink:href', (d: number) => {
+        const time = this._getTimeForDistance(d);
+        const pos = this._xToPosition(d);
+
+        if (!pos) {
+          return '';
+        }
+
+        const weather = this.getWeather(time);
+        let icon = '';
+
+        if (weather && weather.weather && weather.weather[0]) {
+          icon = `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
+        }
+
+        return icon;
+      })
+      .attr('width', 20)
+      .attr('height', 20)
+      .attr('transform', 'translate(-10, 20)');
   }
 
   private _removeTimeAxis() {

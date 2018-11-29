@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { EditedHikeProgramSelectors } from '../edited-hike-program';
+import * as editedHikeProgramSelectors from '../../selectors/edited-hike-program';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IEditedHikeProgramState } from '../../state';
@@ -37,7 +37,6 @@ describe('Edited HikeProgram selectors', () => {
         })
       ],
       providers: [
-        EditedHikeProgramSelectors,
         PoiSelectors,
         {
           provide: EXTERNAL_POI_DEPENDENCIES,
@@ -60,7 +59,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getData', () => {
     it('should return editedHikeProgram data', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -92,7 +90,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getHikeId', () => {
     it('should return editedGTrackPoi hikeId', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -119,7 +116,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getRouteId', () => {
     it('should return editedGTrackPoi routeId', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -146,7 +142,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getPoiIds', () => {
     it('should return editedGTrackPoi poiIds', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -166,7 +161,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getStops', () => {
     it('should return editedGTrackPoi stops', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -186,7 +180,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getStopsCount', () => {
     it('should return editedGTrackPoi stops count', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -206,7 +199,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getDescriptions', () => {
     it('should return editedHikeProgram descriptions', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -236,7 +228,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getDescriptionLangs', () => {
     it('should return editedHikeProgram descriptions', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -260,7 +251,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getRouteId', () => {
     it('should return editedHikeProgram routeId', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -276,7 +266,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getBackgroundImages', () => {
     it('should return editedHikeProgram background images', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -295,7 +284,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getDirty', () => {
     it('should return editedHikeProgram dirty value', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -318,7 +306,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getWorking', () => {
     it('should return editedHikeProgram working value', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -337,7 +324,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getError', () => {
     it('should return editedHikeProgram error value', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(
@@ -356,7 +342,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getHikePois', () => {
     it('should return editedHikeProgram pois', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store.dispatch(
@@ -385,7 +370,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getHikePoisCount', () => {
     it('should return editedHikeProgram pois count', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       store.dispatch(
@@ -414,7 +398,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getStopsWithPoiNames', () => {
     it('should return stops with poi names', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
       const poiSelectors: PoiSelectors = TestBed.get(PoiSelectors);
 
       // Load 1 poi
@@ -450,7 +433,6 @@ describe('Edited HikeProgram selectors', () => {
   describe('getBackgroundOriginalUrls', () => {
     it('should return editedHikeProgram background original urls', () => {
       let result;
-      const editedHikeProgramSelectors: EditedHikeProgramSelectors = TestBed.get(EditedHikeProgramSelectors);
 
       store
         .pipe(

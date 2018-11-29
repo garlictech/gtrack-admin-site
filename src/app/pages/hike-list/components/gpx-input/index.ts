@@ -14,10 +14,8 @@ import _cloneDeep from 'lodash-es/cloneDeep';
   styles: ['input[type=file] { display: none; }']
 })
 export class GpxInputComponent {
-  @Input()
-  callback: any;
-  @ViewChild('gpxInput')
-  gpxInput: ElementRef;
+  @Input() callback: any;
+  @ViewChild('gpxInput') gpxInput: ElementRef;
 
   constructor(
     private _router: Router,

@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 import { MapModule, MapComponentsModule } from './map';
 import { HikeComponentsModule, HikeModule, PoiSelectors } from './hike';
 import { RouterModule } from './router';
+import { LeafletMapModule } from '@common.features/leaflet-map/leaflet-map.module';
 
 if (environment.production) {
   Raven.config(environment.raven).install();

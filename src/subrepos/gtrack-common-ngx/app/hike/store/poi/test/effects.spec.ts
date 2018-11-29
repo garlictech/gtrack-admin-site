@@ -1,9 +1,10 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Actions, EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { IPoiStored, IPoi } from 'subrepos/provider-client';
+import { IPoiStored } from 'subrepos/provider-client';
 import { DeepstreamService } from 'subrepos/deepstream-ngx';
 
 import _zipObject from 'lodash-es/zipObject';
@@ -24,20 +25,6 @@ import { GeometryService } from '../../../services/geometry';
 import { GeoSearchService } from '../../../../geosearch';
 import { EObjectState } from '../../../../../../provider-client';
 
-export class TestActions extends Actions {
-  constructor() {
-    super(EMPTY);
-  }
-
-  set stream(source: Observable<any>) {
-    this.source = source;
-  }
-}
-
-export function getActions() {
-  return new TestActions();
-}
-
 describe('Poi effects', () => {
   let poisMap: {
     [key: string]: IPoiStored;
@@ -45,7 +32,7 @@ describe('Poi effects', () => {
 
   let pois: IPoiStored[];
 
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let service: PoiService;
   let effects: PoiEffects;
 
@@ -70,10 +57,7 @@ describe('Poi effects', () => {
         PoiEffects,
         GeometryService,
         GeoSearchService,
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions$),
         {
           provide: DeepstreamService,
           useValue: {}
@@ -81,7 +65,6 @@ describe('Poi effects', () => {
       ]
     });
 
-    actions$ = TestBed.get(Actions);
     service = TestBed.get(PoiService);
     effects = TestBed.get(PoiEffects);
 
@@ -104,7 +87,7 @@ describe('Poi effects', () => {
       const completion = new poiActions.PoiLoaded(ids[0], pois[0]);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.loadPoi$).toBeObservable(expected);
 
@@ -120,7 +103,7 @@ describe('Poi effects', () => {
       const completion = new poiActions.AllPoiLoaded(ids, pois);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.loadPois$).toBeObservable(expected);
 
@@ -138,7 +121,7 @@ describe('Poi effects', () => {
       const completion = new poiActions.PoiSaved(newId);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.savePoi$).toBeObservable(expected);
 
@@ -154,7 +137,7 @@ describe('Poi effects', () => {
       const completion = new poiActions.LoadPoi(poiFixtures[0].id);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.updateState$).toBeObservable(expected);
 
