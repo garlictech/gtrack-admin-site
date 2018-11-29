@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'poi-page',
+  selector: 'gtrack-poi-page',
   template: ''
 })
 export class PoiComponent {}

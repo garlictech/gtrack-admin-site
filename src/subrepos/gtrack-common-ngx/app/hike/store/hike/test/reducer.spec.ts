@@ -26,6 +26,7 @@ describe('HikeProgramReducer', () => {
       downhill: 1,
       time: 20,
       score: 20,
+      feature: false,
       location: 'Budapest',
       difficulty: 6,
       routeIcon: '',

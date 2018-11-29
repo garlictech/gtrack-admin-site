@@ -6,8 +6,7 @@ import { IExternalPoi, IFilteredProperties, IGTrackPoi } from '../../../../share
 import { Subject, Observable, interval, combineLatest } from 'rxjs';
 import { filter, takeUntil, debounceTime, take, switchMap } from 'rxjs/operators';
 import { PoiEditorService, PoiMergeService } from '../../../../shared/services';
-import { AdminMap, AdminMapService } from '../../../../shared/services/admin-map';
-import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
+import { AdminMapService } from '../../../../shared/services/admin-map';
 import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
@@ -38,7 +37,6 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   public mergedPoiIds: string[] = [];
   public mergedPoiData: any;
   public displayMergeModal = false;
-  private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -50,16 +48,6 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._store
-      .pipe(
-        select(hikeEditMapSelectors.getMapId),
-        filter(id => id !== ''),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
-      });
-
     // Poi list from store
     this.pois$ = this._store.pipe(
       select(hikeEditPoiSelectors.getAllCollectorPois),
@@ -132,7 +120,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
         this.showOnrouteMarkers = value;
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });
@@ -148,7 +136,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
 
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });

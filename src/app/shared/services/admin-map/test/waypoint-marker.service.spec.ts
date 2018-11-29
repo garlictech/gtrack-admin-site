@@ -4,14 +4,13 @@ import {
   ElevationService, IconService
 } from '../../../../../subrepos/gtrack-common-ngx';
 import { StoreModule, Store } from '@ngrx/store';
-import { hikeEditMapReducer } from '../../../../store/reducer';
 import { RoutePlannerService } from '../route-planner.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { WaypointMarkerService, IWaypoint } from '../waypoint-marker.service';
 import { EMPTY } from 'rxjs';
 import { State } from '../../../../store';
 import { hikeEditRoutePlannerActions } from '../../../../store/actions';
-import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 
 import * as _ from 'lodash';
 import * as L from 'leaflet';
@@ -26,7 +25,7 @@ describe('WaypointMarkerService', () => {
       imports: [
         HttpClientTestingModule,
         StoreModule.forRoot({
-          hikeEditMap: hikeEditMapReducer
+
         })
       ],
       providers: [
@@ -56,6 +55,12 @@ describe('WaypointMarkerService', () => {
         {
           provide: IconService,
           useValue: {}
+        },
+        {
+          provide: LeafletMapService,
+          useValue: {
+            spin: jest.fn(),
+          }
         }
       ]
     });

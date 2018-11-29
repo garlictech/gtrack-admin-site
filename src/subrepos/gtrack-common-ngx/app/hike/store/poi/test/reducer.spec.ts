@@ -10,7 +10,6 @@ describe('PoiReducer', () => {
   let id: string;
   let initialState: IPoiState;
   let poiData: IPoi;
-  let poiStored: IPoiStored;
   let poi: IPoiStored;
 
   beforeEach(() => {

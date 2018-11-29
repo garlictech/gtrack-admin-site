@@ -1,6 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { GalleriaModule } from 'primeng/galleria';
+import { LightboxModule } from 'primeng/lightbox';
 
 import { UnitsService } from './services/units';
 import { GoogleMapsService } from './services/google-maps';
@@ -24,7 +26,7 @@ const DECLARATIONS = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, GalleriaModule, LightboxModule],
   declarations: [...DECLARATIONS],
   providers: [UnitsService, GoogleMapsService, GeospatialService, GeoIpService],
   exports: [...DECLARATIONS]

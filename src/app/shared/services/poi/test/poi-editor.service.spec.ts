@@ -8,10 +8,6 @@ import {
   PoiSelectors, MarkerPopupService, EXTERNAL_GEO_SEARCH_DEPENDENCIES, EXTERNAL_POI_DEPENDENCIES
 } from '../../../../../subrepos/gtrack-common-ngx';
 import { RoutePlannerService } from '../../admin-map';
-import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
-import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
-import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
-import * as hikeEditImageSelectors from '../../../../store/selectors/hike-edit-image';
 import { GooglePoiService } from '../google-poi.service';
 import { WikipediaPoiService } from '../wikipedia-poi.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -20,6 +16,8 @@ import { ETextualDescriptionType, EPoiTypes } from '../../../../../subrepos/prov
 import { WIKIPEDIA_POIS } from './fixtures/wikipedia-pois';
 import { OSM_AMENITY_POIS } from './fixtures/osm-amenity-pois';
 import { OSM_NATURAL_POIS } from './fixtures/osm-natural-pois';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
 
 describe('PoiEditorService', () => {
   let poiEditorService: PoiEditorService;
@@ -49,6 +47,7 @@ describe('PoiEditorService', () => {
         IconService,
         GeoSearchSelectors,
         PoiSelectors,
+        LeafletMapService,
         MarkerPopupService,
         {
           provide: GeometryService,
@@ -104,6 +103,10 @@ describe('PoiEditorService', () => {
           useValue: {
             getPoiDetails: () => {}
           }
+        },
+        {
+          provide: LeafletIconService,
+          useValue: {}
         }
       ]
     });

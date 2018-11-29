@@ -1,9 +1,10 @@
 
 import { TestBed } from '@angular/core/testing';
 import { hot, cold, Scheduler } from 'jest-marbles';
-import { Actions, EffectsModule } from '@ngrx/effects';
+import { Actions } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
-import { Observable, EMPTY, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { SettingsService } from '../../services';
 import * as actions from '../actions';
@@ -11,19 +12,9 @@ import { Effects as SettingsEffects } from '../effects';
 import { EProfileGroup } from '../../interfaces';
 import { EAuthRoles } from 'subrepos/provider-client';
 
-class TestActions extends Actions {
-  constructor() {
-    super(EMPTY);
-  }
-
-  set stream(source: Observable<any>) {
-    this.source = source;
-  }
-}
-
 describe('Settings effects', () => {
   let service: SettingsService;
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let effects: SettingsEffects;
 
   const privateProfile = {
@@ -37,15 +28,11 @@ describe('Settings effects', () => {
     }
   };
 
-  const publicProfile ={
+  const publicProfile = {
     user: {
       userName: 'test'
     }
   };
-
-  function getActions() {
-    return new TestActions();
-  }
 
   function getService() {
     return {
@@ -65,17 +52,12 @@ describe('Settings effects', () => {
           provide: SettingsService,
           useFactory: getService
         },
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions$),
         SettingsEffects
       ]
     });
 
-    actions$ = TestBed.get(Actions);
     effects = TestBed.get(SettingsEffects);
-
     service = TestBed.get(SettingsService);
   });
 
@@ -85,7 +67,7 @@ describe('Settings effects', () => {
       const completion = new actions.SettingsFetchSuccess(privateProfile);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.profileFetchStart$).toBeObservable(expected);
       Scheduler.get().flush();
@@ -101,7 +83,7 @@ describe('Settings effects', () => {
       const completion = new actions.SettingsSaveSuccess(EProfileGroup.basic);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.settingsSave$).toBeObservable(expected);
       Scheduler.get().flush();
@@ -118,7 +100,7 @@ describe('Settings effects', () => {
 
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.publicProfileFetchStart$).toBeObservable(expected);
       Scheduler.get().flush();

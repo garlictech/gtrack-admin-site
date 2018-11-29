@@ -1,17 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
-import { Subject } from 'rxjs/Subject';
+import { Store, StoreModule, select } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import * as actions from '../actions';
 import { searchFiltersReducer, initialState } from '../reducer';
-import { ISearchFilterState } from '../state';
+import { ISearchFilters } from '../../interfaces';
 import { SearchFiltersSelectors } from '../selectors';
 import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES } from '../../externals';
 
 import 'rxjs/add/operator/takeUntil';
 
 describe('SearchFilters selectors', () => {
-  let store: Store<ISearchFilterState>;
+  let store: Store<ISearchFilters>;
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
@@ -48,8 +49,10 @@ describe('SearchFilters selectors', () => {
       const selectors: SearchFiltersSelectors = TestBed.get(SearchFiltersSelectors);
 
       store
-        .select(selectors.getFilters)
-        .takeUntil(destroy$)
+        .pipe(
+          select(selectors.getFilters),
+          takeUntil(destroy$)
+        )
         .subscribe(filters => (results = filters));
 
       store.dispatch(
@@ -71,8 +74,10 @@ describe('SearchFilters selectors', () => {
       const selectors: SearchFiltersSelectors = TestBed.get(SearchFiltersSelectors);
 
       store
-        .select(selectors.getFilter('radius'))
-        .takeUntil(destroy$)
+        .pipe(
+          select(selectors.getFilter('radius')),
+          takeUntil(destroy$)
+        )
         .subscribe(filter => (result = filter));
 
       store.dispatch(

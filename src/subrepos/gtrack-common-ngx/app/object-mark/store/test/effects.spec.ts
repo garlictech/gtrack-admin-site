@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Actions, EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { EObjectMarkContext } from 'subrepos/provider-client';
@@ -13,22 +14,8 @@ import { ObjectMarkService } from '../../services';
 import { Observable, EMPTY } from 'rxjs';
 import { of } from 'rxjs';
 
-export class TestActions extends Actions {
-  constructor() {
-    super(EMPTY);
-  }
-
-  set stream(source: Observable<any>) {
-    this.source = source;
-  }
-}
-
-export function getActions() {
-  return new TestActions();
-}
-
 describe('ObjectMark effects', () => {
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let effects: ObjectMarkEffects;
 
   let testObjectMarks: any[];
@@ -62,14 +49,10 @@ describe('ObjectMark effects', () => {
           useValue: fakeService
         },
         ObjectMarkEffects,
-        {
-          provide: Actions,
-          useFactory: getActions
-        }
+        provideMockActions(() => actions$)
       ]
     });
 
-    actions$ = TestBed.get(Actions);
     effects = TestBed.get(ObjectMarkEffects);
   });
 
@@ -79,7 +62,7 @@ describe('ObjectMark effects', () => {
       const completion = new actions.ContextLoaded(EObjectMarkContext.bookmarkedHike, testObjectMarks);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.loadContext$).toBeObservable(expected);
 
@@ -108,7 +91,7 @@ describe('ObjectMark effects', () => {
       );
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.markObject$).toBeObservable(expected);
 

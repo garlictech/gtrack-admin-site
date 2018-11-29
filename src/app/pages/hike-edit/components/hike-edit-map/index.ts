@@ -6,21 +6,24 @@ import { SelectItem } from 'primeng/api';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { State } from '../../../../store';
 import { adminMapActions, commonBackgroundGeolocationActions } from '../../../../store/actions';
-import { Center, selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
-import { AdminLeafletComponent } from '../../../../shared/components/admin-leaflet';
-import { WaypointMarkerService, EBufferSize } from '../../../../shared/services/admin-map';
+import { selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
+import { LeafletMapComponent } from '@common.features/leaflet-map/components/leaflet-map';
+import { WaypointMarkerService, EBufferSize, AdminMapService } from '../../../../shared/services/admin-map';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
+import { ILeafletMapConfig, ICenter, ILayerDef } from '@common.features/leaflet-map/interfaces';
 
 import * as L from 'leaflet';
-import { LeafletMouseEvent } from 'leaflet';
+import { GeoJsonObject } from 'geojson';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+import { GEOJSON_STYLES } from '@common.features/leaflet-map/constants/geojson-styles';
 
-const CENTER = <Center>{
+const CENTER = <ICenter>{
   lat: 47.689714,
   lng: 18.904206,
   zoom: 12
 };
 
-const LAYERS = [{
+const LAYERS: ILayerDef[] = [{
   name: 'street',
   url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 }, {
@@ -28,7 +31,7 @@ const LAYERS = [{
   url: 'https://opentopomap.org/{z}/{x}/{y}.png'
 }];
 
-const OVERLAYS = [{
+const OVERLAYS: ILayerDef[]  = [{
   name: 'trails',
   url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
 }];
@@ -39,14 +42,13 @@ const OVERLAYS = [{
   styleUrls: ['./style.scss']
 })
 export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('adminmap')
-  public mapComponent: AdminLeafletComponent;
-  @ViewChild('search')
-  private _searchElementRef: ElementRef;
+  @ViewChild('adminMap') public adminMap: LeafletMapComponent;
+  @ViewChild('search') private _searchElementRef: ElementRef;
   private _searchInput: HTMLInputElement;
-  public center: Center = CENTER;
-  public layers = LAYERS;
-  public overlays = OVERLAYS;
+  public center: ICenter = CENTER;
+  public layers: ILayerDef[] = LAYERS;
+  public overlays: ILayerDef[] = OVERLAYS;
+  public mapConfig: ILeafletMapConfig;
   public mode = 'routing';
   public allowPlanning: boolean;
   public currentLocation$: Observable<IGeoPosition | null>;
@@ -61,12 +63,24 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private _store: Store<State>,
     private _waypointMarkerService: WaypointMarkerService,
+    private _adminMapService: AdminMapService,
     private _googleMapsService: GoogleMapsService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private _leafletMapService: LeafletMapService
   ) {}
 
   ngOnInit() {
     this.clickModes = [{ label: 'Routing mode', value: 'routing' }, { label: 'Checkpoint mode', value: 'checkpoint' }];
+
+    this.mapConfig = {
+      fullScreenControl: {
+        forceSeparateButton: true,
+        forcePseudoFullscreen: true
+      },
+      spiderfier: {
+        keepSpiderfied: true
+      }
+    };
 
     // Update buffer on each segment update
     this._store
@@ -117,43 +131,38 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     // Disable wheel zoom
-    this.mapComponent.leafletMap.scrollWheelZoom.disable();
+    this.adminMap.leafletMap.scrollWheelZoom.disable();
+  }
 
-    // Setup map events
-    this.mapComponent.leafletMap
-      // Add markers by click
-      .on('click', (e: LeafletMouseEvent) => {
-        if (this.allowPlanning) {
-          if (this.mode === 'routing') {
-            this._waypointMarkerService.addWaypoints([e.latlng]);
-          } else {
-            // console.log('todo _createCheckpoint');
-            // this._createCheckpoint(e.latlng);
-          }
-        }
-      });
+  public onMapClick(e: L.LeafletMouseEvent) {
+    if (this.allowPlanning) {
+      if (this.mode === 'routing') {
+        this._waypointMarkerService.addWaypoints([e.latlng]);
+      } else {
+        // this._createCheckpoint(e.latlng);
+      }
+    }
+  }
 
-    /* WARNING: CAUSES BROWSER LAG!!
-    // Turn on scrollWheelZoom after the first interaction (click/drag)
-    .on('mouseup', () => {
-      this.mapComponent.leafletMap.scrollWheelZoom.enable();
-    })
-    // Turn off scrollWheelZoom on mouse out
-    .on('mouseout', () => {
-      this.mapComponent.leafletMap.scrollWheelZoom.disable();
-    });
-    */
+  public onMapMouseUp(e: L.LeafletMouseEvent) {
+    // this.adminMap.leafletMap.scrollWheelZoom.enable();
+  }
+
+  public onMapMouseOut(e: L.LeafletMouseEvent) {
+    // this.adminMap.leafletMap.scrollWheelZoom.disable();
   }
 
   public toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
 
-    this.currentLocation$.pipe(take(1)).subscribe((position: IGeoPosition) => {
-      if (position && position.coords) {
-        const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
-        this.mapComponent.map.currentPositionMarker.goToPosition(latLng);
-      }
-    });
+    this.currentLocation$
+      .pipe(take(1))
+      .subscribe((position: IGeoPosition) => {
+        if (position && position.coords) {
+          const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
+          this.adminMap.currentPositionMarker.goToPosition(latLng);
+        }
+      });
   }
 
   public resetMap($event: Event) {
@@ -165,7 +174,15 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
         take(1)
       )
       .subscribe((route: any) => {
-        this.mapComponent.map.fitBounds(route);
+        const bounds: L.LatLngBoundsExpression = [[
+          route.bounds.NorthEast.lat,
+          route.bounds.NorthEast.lon
+        ], [
+          route.bounds.SouthWest.lat,
+          route.bounds.SouthWest.lon
+        ]];
+
+        this._leafletMapService.fitBounds(bounds);
       });
   }
 
@@ -182,19 +199,20 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private _addBuffer(size: EBufferSize) {
-    this.mapComponent.map
+    this._adminMapService
       .getBuffer(size)
       .pipe(take(1))
-      .subscribe(buffer => {
+      .subscribe((buffer: GeoJsonObject) => {
         if (buffer) {
-          this._bufferOnMap[size] = this.mapComponent.map.addGeoJSON(buffer);
+          const style = size === EBufferSize.SMALL ? GEOJSON_STYLES.smallBuffer : GEOJSON_STYLES.bigBuffer;
+          this._bufferOnMap[size] = this._leafletMapService.addGeoJSONObject(buffer, style);
         }
       });
   }
 
   private _removeBuffer(size: EBufferSize) {
     if (this._bufferOnMap[size]) {
-      this.mapComponent.map.removeGeoJSON(this._bufferOnMap[size]);
+      this._leafletMapService.removeLayer(this._bufferOnMap[size]);
     }
   }
 
@@ -214,7 +232,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     $event.stopPropagation();
 
     if (this.locationSearchResult) {
-      this.mapComponent.map.leafletMap.setView(
+      this._leafletMapService.leafletMap.setView(
         [this.locationSearchResult.geometry.location.lat(), this.locationSearchResult.geometry.location.lng()],
         13
       );

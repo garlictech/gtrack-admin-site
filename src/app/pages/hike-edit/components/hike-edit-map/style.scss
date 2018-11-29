@@ -7,6 +7,9 @@
     z-index: 800 !important;
   }
 
+  .leaflet-container {
+    cursor: pointer;
+  }
 }
 
 .search-group {

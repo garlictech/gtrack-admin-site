@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject, of, combineLatest } from 'rxjs';
 import { filter, takeUntil, switchMap, take, map, debounceTime } from 'rxjs/operators';
-import { AdminMap, AdminMapService, RoutePlannerService } from '../../../../shared/services/admin-map';
+import { AdminMapService, RoutePlannerService } from '../../../../shared/services/admin-map';
 import { PoiEditorService } from '../../../../shared/services';
 import { PoiSelectors, IGeoSearchContextState, GeoSearchSelectors } from 'subrepos/gtrack-common-ngx';
 import { EPoiTypes } from 'subrepos/provider-client';
@@ -11,7 +11,6 @@ import {
 } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
 import { hikeEditPoiActions } from '../../../../store/actions';
-import * as hikeEditMapSelectors from '../../../../store/selectors/hike-edit-map';
 import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 
@@ -37,7 +36,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   public showOffrouteMarkers = true;
   public modalPoi: IWikipediaPoi | IGooglePoi | IOsmPoi;
   public displayPoiModal = false;
-  private _map: AdminMap;
   private _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -50,16 +48,6 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._store
-      .pipe(
-        select(hikeEditMapSelectors.getMapId),
-        filter(id => id !== ''),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
-      });
-
     // Poi list from store
     this.pois$ = this._getSubdomainSelector(this.poiType.subdomain);
 
@@ -115,10 +103,10 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         // Get gTrack pois for checking inGtrackDb
         if (pois.length > 0) {
           this._poiEditorService.getGTrackPois();
-          this._poiEditorService.refreshPoiMarkers(this._map);
+          this._poiEditorService.refreshPoiMarkers();
           // We have to refresh markers w/ empty poi list, too.
         } else {
-          this._poiEditorService.refreshPoiMarkers(this._map);
+          this._poiEditorService.refreshPoiMarkers();
         }
 
         this._store.dispatch(new hikeEditPoiActions.SetProcessing(this.poiType.subdomain, false));
@@ -179,7 +167,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
                     this._poiEditorService.handleInCollectorPois(externalPois, collectedPois)
                   );
 
-                  this._poiEditorService.refreshPoiMarkers(this._map);
+                  this._poiEditorService.refreshPoiMarkers();
                 });
             }
           });
@@ -225,7 +213,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         this.showOnrouteMarkers = value;
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });
@@ -245,7 +233,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         this.showOffrouteMarkers = value;
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
-            this._poiEditorService.refreshPoiMarkers(this._map);
+            this._poiEditorService.refreshPoiMarkers();
           }
         });
       });
@@ -371,7 +359,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
 
     if (_bounds) {
       // Get pois for the current domain
-      this._store.dispatch(new hikeEditPoiActions[this.poiType.getAction](_bounds, this._map.id));
+      this._store.dispatch(new hikeEditPoiActions[this.poiType.getAction](_bounds));
     }
   }
 

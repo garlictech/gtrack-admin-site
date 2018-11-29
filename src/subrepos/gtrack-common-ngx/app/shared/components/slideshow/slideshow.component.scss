@@ -1,117 +1,173 @@
 gtrack-slideshow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  overflow: hidden;
-
-  .slide {
+  .slideshow {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 1;
+    display: block;
     overflow: hidden;
-    background-position: center center;
-    background-size: cover;
 
-    &.slide-animate {
-      &.slide-left {
-        transform: scale3d(1.5, 1.5, 1.5) translate3d(10%, 0, 0);
+    .slideshow-with-gallery {
+      cursor: pointer;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+      overflow: hidden;
+      background-position: center center;
+      background-size: cover;
+
+      &.slide-animate {
+        &.slide-left {
+          transform: scale3d(1.5, 1.5, 1.5) translate3d(10%, 0, 0);
+        }
+
+        &.slide-right {
+          transform: scale3d(1.5, 1.5, 1.5) translate3d(-10%, 0, 0);
+        }
+
+        &.slide-up {
+          transform: scale3d(1.5, 1.5, 1.5) translate3d(0, 10%, 0);
+        }
+
+        &.slide-down {
+          transform: scale3d(1.5, 1.5, 1.5) translate3d(0, -10%, 0);
+        }
+
+        &.slide-down-left {
+          transform: scale3d(1.5, 1.5, 1.5) translate3d(10%, -10%, 0);
+        }
+
+        &.slide-down-right {
+          transform: scale3d(1.5, 1.5, 1.5) translate3d(-10%, 10%, 0);
+        }
+
+        &.slide-up-left {
+          transform: scale3d(1.5, 1.5, 1.5) translate3d(10%, 10%, 0);
+        }
+
+        &.slide-up-right {
+          transform: scale3d(1.5, 1.5, 1.5) translate3d(-10%, 10%, 0);
+        }
+
+        &.animate-kenburns-left {
+          animation: kenburnsLeft ease-out 20s;
+          animation-fill-mode: forwards;
+        }
+
+        &.animate-kenburns-right {
+          animation: kenburnsRight ease-out 20s;
+          animation-fill-mode: forwards;
+        }
+
+        &.animate-kenburns-up {
+          animation: kenburnsUp ease-out 20s;
+          animation-fill-mode: forwards;
+        }
+
+        &.animate-kenburns-down {
+          animation: kenburnsDown ease-out 20s;
+          animation-fill-mode: forwards;
+        }
+
+        &.animate-kenburns-down-left {
+          animation: kenburnsDownLeft ease-out 20s;
+          animation-fill-mode: forwards;
+        }
+
+        &.animate-kenburns-down-right {
+          animation: kenburnsDownRight ease-out 20s;
+          animation-fill-mode: forwards;
+        }
+
+        &.animate-kenburns-up-left {
+          animation: kenburnsUpLeft ease-out 20s;
+          animation-fill-mode: forwards;
+        }
+
+        &.animate-kenburns-up-right {
+          animation: kenburnsUpRight ease-out 20s;
+          animation-fill-mode: forwards;
+        }
+      }
+    }
+
+    .active-slide {
+      transition: opacity ease-out 1.5s;
+    }
+
+    .controls {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+
+      .control {
+        display: block;
+        color: #FFFFFF;
+        padding: 5%;
+        z-index: 500;
+        pointer-events: all;
+      }
+    }
+
+    .thumbnails {
+      display: flex;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      justify-content: flex-end;
+      right: 0;
+      z-index: 200;
+      background: linear-gradient(to top, rgba(33,33,33,0.7),rgba(33,33,33,0) 100%);
+      transform: translate3d(0, 100%, 0);
+      transition: transform 0.4s ease-in-out;
+
+      .thumbnail {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        border: 1px solid #FFFFFF;
+        margin: 5px;
+        height: 69px;
+        width: 94px;
+        opacity: 0.8;
       }
 
-      &.slide-right {
-        transform: scale3d(1.5, 1.5, 1.5) translate3d(-10%, 0, 0);
+      .active-thumbnail {
+        border: 3px solid #FFFFFF;
+        margin: 3px;
+        width: 100px;
+        height: 75px;
+        opacity: 1;
       }
+    }
 
-      &.slide-up {
-        transform: scale3d(1.5, 1.5, 1.5) translate3d(0, 10%, 0);
-      }
-
-      &.slide-down {
-        transform: scale3d(1.5, 1.5, 1.5) translate3d(0, -10%, 0);
-      }
-
-      &.slide-down-left {
-        transform: scale3d(1.5, 1.5, 1.5) translate3d(10%, -10%, 0);
-      }
-
-      &.slide-down-right {
-        transform: scale3d(1.5, 1.5, 1.5) translate3d(-10%, 10%, 0);
-      }
-
-      &.slide-up-left {
-        transform: scale3d(1.5, 1.5, 1.5) translate3d(10%, 10%, 0);
-      }
-
-      &.slide-up-right {
-        transform: scale3d(1.5, 1.5, 1.5) translate3d(-10%, 10%, 0);
-      }
-
-      &.animate-kenburns-left {
-        animation: kenburnsLeft ease-out 20s;
-        animation-fill-mode: forwards;
-      }
-
-      &.animate-kenburns-right {
-        animation: kenburnsRight ease-out 20s;
-        animation-fill-mode: forwards;
-      }
-
-      &.animate-kenburns-up {
-        animation: kenburnsUp ease-out 20s;
-        animation-fill-mode: forwards;
-      }
-
-      &.animate-kenburns-down {
-        animation: kenburnsDown ease-out 20s;
-        animation-fill-mode: forwards;
-      }
-
-      &.animate-kenburns-down-left {
-        animation: kenburnsDownLeft ease-out 20s;
-        animation-fill-mode: forwards;
-      }
-
-      &.animate-kenburns-down-right {
-        animation: kenburnsDownRight ease-out 20s;
-        animation-fill-mode: forwards;
-      }
-
-      &.animate-kenburns-up-left {
-        animation: kenburnsUpLeft ease-out 20s;
-        animation-fill-mode: forwards;
-      }
-
-      &.animate-kenburns-up-right {
-        animation: kenburnsUpRight ease-out 20s;
-        animation-fill-mode: forwards;
-      }
+    &:hover .thumbnails {
+      transform: translate3d(0, 0, 0);
     }
   }
 
-  .active-slide {
-    transition: opacity ease-out 1.5s;
+  .ui-widget-content {
+    border: 0 none;
+    border-radius: 0;
+
   }
 
-  .controls {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .control {
-      display: block;
-      color: #FFFFFF;
-      padding: 5%;
-      z-index: 5000;
+  .ui-galleria {
+    .ui-galleria-panel {
+      width: 100%;
     }
   }
 }

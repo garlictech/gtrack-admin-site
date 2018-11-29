@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store, StoreModule, select } from '@ngrx/store';
 import { IHikeProgramStored } from 'subrepos/provider-client';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { hikeReducer } from '../reducer';
 import { IHikeState } from '../state';
@@ -73,8 +74,10 @@ describe('HikeProgram selectors', () => {
       const hikeSelectors: HikeSelectors = TestBed.get(HikeSelectors);
 
       store
-        .select(hikeSelectors.getHikeIds)
-        .takeUntil(destroy$)
+        .pipe(
+          select(hikeSelectors.getHikeIds),
+          takeUntil(destroy$)
+        )
         .subscribe(_ids => (result = _ids));
 
       expect(result).toEqual([]);
@@ -90,8 +93,10 @@ describe('HikeProgram selectors', () => {
       const hikeSelectors: HikeSelectors = TestBed.get(HikeSelectors);
 
       store
-        .select(hikeSelectors.getAllHikes)
-        .takeUntil(destroy$)
+        .pipe(
+          select(hikeSelectors.getAllHikes),
+          takeUntil(destroy$)
+        )
         .subscribe(_hikePrograms => (result = _hikePrograms));
 
       expect(result).toEqual([]);

@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { State } from '../../../store';
 import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { of, interval } from 'rxjs';
-import { filter, take, flatMap, combineAll } from 'rxjs/operators';
-import { AdminMapService } from './admin-map.service';
+import { take, flatMap, combineAll } from 'rxjs/operators';
 import { RoutePlannerService } from './route-planner.service';
-import { AdminMap, EAdminMarkerType } from './lib/admin-map';
 import { HttpClient } from '../../../../../node_modules/@angular/common/http';
 import { environment } from 'environments/environment';
 import { ElevationService, IconService } from 'subrepos/gtrack-common-ngx';
-import * as hikeEditMapSelectors from '../../../store/selectors/hike-edit-map';
+import { EMarkerType } from '@common.features/leaflet-map/interfaces';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+
 import * as L from 'leaflet';
 import _map from 'lodash-es/map';
 import _get from 'lodash-es/get';
@@ -30,36 +30,28 @@ export interface IWaypoint {
 
 @Injectable()
 export class WaypointMarkerService {
-  private _map: AdminMap;
+  private _waypointMarkers: L.FeatureGroup = new L.FeatureGroup();
   private _markers: L.Marker[] = [];
   private _dragging = false;
 
   constructor(
     private _store: Store<State>,
-    private _adminMapService: AdminMapService,
+    private _leafletMapService: LeafletMapService,
     private _routePlannerService: RoutePlannerService,
     private _elevationService: ElevationService,
     private _iconService: IconService,
     private _http: HttpClient
   ) {
-    this._store
-      .pipe(
-        select(hikeEditMapSelectors.getMapId),
-        filter(id => id !== '')
-      )
-      .subscribe((mapId: string) => {
-        this._map = this._adminMapService.getMapById(mapId);
-      });
-
     this.reset();
   }
 
   public reset() {
     for (const marker of this._markers) {
-      if (this._map.leafletMap.hasLayer(marker)) {
-        this._map.leafletMap.removeLayer(marker);
+      if (this._waypointMarkers.hasLayer(marker)) {
+        this._waypointMarkers.removeLayer(marker);
       }
     }
+
     this._markers = [];
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
   }
@@ -67,8 +59,8 @@ export class WaypointMarkerService {
   public removeSegments(idx, count) {
     for (let i = idx; i <= idx + count; i++) {
       const marker = this._markers[i];
-      if (this._map && this._map.leafletMap.hasLayer(marker)) {
-        this._map.leafletMap.removeLayer(marker);
+      if (this._waypointMarkers.hasLayer(marker)) {
+        this._waypointMarkers.removeLayer(marker);
       }
     }
     this._markers.splice(idx, count + 1);
@@ -100,7 +92,7 @@ export class WaypointMarkerService {
   public removeLast() {
     // Remove last marker
     if (this._markers.length > 0) {
-      this._map.leafletMap.removeLayer(this._markers.pop());
+      this._waypointMarkers.removeLayer(this._markers.pop());
     }
     // Remove last segment
     this._routePlannerService.removeLastSegment();
@@ -118,9 +110,8 @@ export class WaypointMarkerService {
       return;
     }
 
-    if (_get(this, '_map.leafletMap')) {
-      this._map.leafletMap.spin(true);
-    }
+    // this._leafletMapService.spin(true);
+
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
 
     for (const idx in latlngs) {
@@ -147,9 +138,7 @@ export class WaypointMarkerService {
 
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingFinished());
 
-    if (_get(this, '_map.leafletMap')) {
-      this._map.leafletMap.spin(false);
-    }
+    // this._leafletMapService.spin(false);
   }
 
   private _createMarker(_waypoint: IWaypoint) {
@@ -160,7 +149,7 @@ export class WaypointMarkerService {
       icon: _icon,
       alt: (_waypoint.idx).toString() // orderID
     });
-    _marker.options.type = EAdminMarkerType.WAYPOINT;
+    _marker.options.type = EMarkerType.WAYPOINT;
     _marker.options.idx = _waypoint.idx;
 
     _marker.on('click', (e) => e.originalEvent.preventDefault());
@@ -172,9 +161,7 @@ export class WaypointMarkerService {
       }
     });
 
-    if (_get(this, '_map.leafletMap')) {
-      _marker.addTo(this._map.leafletMap);
-    }
+    _marker.addTo(this._waypointMarkers);
 
     return _marker;
   }
@@ -210,9 +197,9 @@ export class WaypointMarkerService {
       this._markers[this._markers.length - 1].setZIndexOffset(10000);
     }
 
-    if (this._map) {
-      this._map.refreshSpiderfierMarkers(this._markers, EAdminMarkerType.WAYPOINT);
-    }
+    this._leafletMapService.addLayer(this._waypointMarkers);
+
+    this._leafletMapService.refreshSpiderfierMarkers(this._markers, EMarkerType.WAYPOINT);
   }
 
   public getRouteFromApi(p1, p2) {
@@ -281,7 +268,7 @@ export class WaypointMarkerService {
       })
       .catch(() => {
         this._store.dispatch(new hikeEditRoutePlannerActions.RoutingError());
-        this._map.leafletMap.spin(false);
+        // this._leafletMapService.spin(false);
       });
   }
 

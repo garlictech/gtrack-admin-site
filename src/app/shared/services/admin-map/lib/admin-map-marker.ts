@@ -1,8 +1,8 @@
-// import { MapMarker } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker';
-import { MapMarker, IconService } from 'subrepos/gtrack-common-ngx';
-import { IMarkerPopupData } from 'subrepos/provider-client/interfaces';
+import { LeafletMapMarker } from '@common.features/leaflet-map/services/lib';
+import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
+import { ILeafletMarkerPopupData } from '@common.features/leaflet-map/interfaces';
 
-export class AdminMapMarker extends MapMarker {
+export class AdminMapMarker extends LeafletMapMarker {
   public poiId: string;
 
   constructor(
@@ -10,9 +10,9 @@ export class AdminMapMarker extends MapMarker {
     lon: number,
     protected types: Array<string>,
     title: string,
-    protected iconService: IconService,
+    protected iconService: LeafletIconService,
     poiId: string,
-    popupData: IMarkerPopupData
+    popupData: ILeafletMarkerPopupData
   ) {
     super(lat, lon, types, title, iconService, popupData);
 

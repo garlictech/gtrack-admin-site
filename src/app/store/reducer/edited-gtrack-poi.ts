@@ -28,10 +28,10 @@ export const initialEditedGTrackPoiState: IEditedGTrackPoiState = {
   failed: null
 };
 
-export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
+export function editedGTrackPoiReducer(
   state = initialEditedGTrackPoiState,
   action: editedGTrackPoiActions.AllEditedGTrackPoiActions
-): IEditedGTrackPoiState => {
+): IEditedGTrackPoiState {
   const newState = _cloneDeep(state);
 
   switch (action.type) {
@@ -92,4 +92,4 @@ export const editedGTrackPoiReducer: ActionReducer<IEditedGTrackPoiState> = (
     default:
       return state;
   }
-};
+}
