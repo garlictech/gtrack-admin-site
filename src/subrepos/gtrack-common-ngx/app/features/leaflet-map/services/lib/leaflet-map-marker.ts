@@ -1,9 +1,9 @@
-import { IconService } from '../icon';
-import { IMarkerPopupData } from '../../../../../provider-client/interfaces';
+import { LeafletIconService } from '../leaflet-icon.service';
+import { ILeafletMarkerPopupData } from '../../interfaces';
 
 import * as L from 'leaflet';
 
-export class MapMarker {
+export class LeafletMapMarker {
   public marker: L.Marker;
   protected _highlighted = false;
 
@@ -12,8 +12,8 @@ export class MapMarker {
     lon: number,
     protected types: Array<string>,
     title: string,
-    protected iconService: IconService,
-    popupData: IMarkerPopupData
+    protected iconService: LeafletIconService,
+    popupData: ILeafletMarkerPopupData
   ) {
     this.marker = new L.Marker([lat, lon], {
       icon: iconService.getLeafletIcon(types),

@@ -154,7 +154,6 @@ export class LeafletMapService {
   }
 
   public addLayer(layer: L.Layer): L.Layer {
-    console.log('ADD LAYER');
     if (!this.leafletMap.hasLayer(layer)) {
       layer.addTo(this.leafletMap);
     }
