@@ -1,7 +1,6 @@
 import { take } from 'rxjs/operators';
 import * as L from 'leaflet';
 import 'leaflet-usermarker';
-import 'leaflet-spin';
 import { Store, select } from '@ngrx/store';
 
 import { selectCurrentLocation } from '../../../store';
@@ -21,7 +20,7 @@ export class CurrentPositionMarker {
   }
 
   public goToCurrentPosition() {
-    this.map.spin(true);
+    // this.map.spin(true);
 
     this._store
       .pipe(
@@ -39,7 +38,7 @@ export class CurrentPositionMarker {
         this.marker.setLatLng([geoPosition.coords.latitude, geoPosition.coords.longitude]);
         this.marker.setAccuracy(geoPosition.coords.accuracy);
         this.map.setView([geoPosition.coords.latitude, geoPosition.coords.longitude], this.map.getZoom());
-        this.map.spin(false);
+        // this.map.spin(false);
       });
   }
 
@@ -53,6 +52,6 @@ export class CurrentPositionMarker {
 
     this.marker.setLatLng(pos);
     this.map.setView(pos, this.map.getZoom());
-    this.map.spin(false);
+    // this.map.spin(false);
   }
 }

@@ -32,6 +32,10 @@ export class Environment implements IEnvironment {
     s3: 'to-be-configured',
     policyGenerator: this.lambdaEndpoint + '/generate-s3-policy'
   };
+
+  openWeatherMap = {
+    key: 'e5a0aba93cfca3ee54c272133018df78'
+  };
 }
 
 export const environment = new Environment();

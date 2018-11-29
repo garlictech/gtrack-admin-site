@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "types": ["node", "jest", "spin.js", "googlemaps", "d3", "suncalc"],
+    "types": ["node", "jest", "googlemaps", "d3", "suncalc"],
     "baseUrl": "./",
     "paths": {
       "@common.features/*": ["./subrepos/gtrack-common-ngx/app/features/*"],
