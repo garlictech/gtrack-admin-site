@@ -3,18 +3,20 @@ import { TestBed } from '@angular/core/testing';
 import { RouterModule, Router } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Observable } from 'rxjs';
 import { hot, cold } from 'jest-marbles';
 import { routingActions } from 'app/store/actions';
 import { AuthEffects } from '../auth';
 import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule } from '../../../../subrepos/gtrack-common-ngx';
-import { TestActions, getActions, mockRouter } from './helpers';
+import { mockRouter } from './helpers';
 
 import * as _ from 'lodash';
 
 describe('Auth effects', () => {
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let effects: AuthEffects;
 
   beforeEach(() => {
@@ -28,10 +30,7 @@ describe('Auth effects', () => {
       ],
       providers: [
         AuthEffects,
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions$),
         {
           provide: DeepstreamService,
           useValue: {}
@@ -53,7 +52,7 @@ describe('Auth effects', () => {
       const completion = new routingActions.Go(['/login']);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.routeForbidden$).toBeObservable(expected);
     });
@@ -65,7 +64,7 @@ describe('Auth effects', () => {
       const completion = new routingActions.Go(['/']);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.loginSuccess$).toBeObservable(expected);
     });
@@ -77,7 +76,7 @@ describe('Auth effects', () => {
       const completion = new routingActions.Go(['/login']);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.logoutSuccess$).toBeObservable(expected);
     });

@@ -2,13 +2,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { hot, cold, Scheduler } from 'jest-marbles';
 import { EditedGTrackPoiEffects } from '../edited-gtrack-poi';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, PoiService } from '../../../../subrepos/gtrack-common-ngx';
 import { RouterModule, Router } from '@angular/router';
-import { TestActions, getActions, mockRouter } from './helpers';
+import { mockRouter } from './helpers';
 import { editedGTrackPoiActions } from '../../actions';
 import { IExternalPoi } from '../../../shared/interfaces';
 import * as editedGTrackPoiSelectors from '../../../store/selectors/edited-gtrack-poi';
@@ -18,7 +19,7 @@ import * as _ from 'lodash';
 import { pois as poiFixtures } from '../../reducer/test/fixtures';
 
 describe('EditedGTrackPoiEffects effects', () => {
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let effects: EditedGTrackPoiEffects;
   let poiService: PoiService;
   let pois: IExternalPoi[];
@@ -37,10 +38,7 @@ describe('EditedGTrackPoiEffects effects', () => {
       providers: [
         EditedGTrackPoiEffects,
         PoiService,
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions$),
         {
           provide: DeepstreamService,
           useValue: {}
@@ -71,7 +69,7 @@ describe('EditedGTrackPoiEffects effects', () => {
       const completion = new editedGTrackPoiActions.PoiSaveSuccess(pois[0].id);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.save$).toBeObservable(expected);
 
@@ -88,7 +86,7 @@ describe('EditedGTrackPoiEffects effects', () => {
       const completion = new editedGTrackPoiActions.PoiSaveFailed('error');
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.save$).toBeObservable(expected);
 

@@ -3,11 +3,12 @@ import { TestBed } from '@angular/core/testing';
 import { RouterModule, Router } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { hot, cold, Scheduler } from 'jest-marbles';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule } from '../../../../subrepos/gtrack-common-ngx';
-import { TestActions, getActions, mockRouter } from './helpers';
+import { mockRouter } from './helpers';
 import { MapillaryService, FlickrService, PoiEditorService } from '../../../shared/services';
 import { hikeEditImageActions } from '../../actions';
 import { IBackgroundImageDataStored } from 'subrepos/provider-client';
@@ -18,7 +19,7 @@ import * as _ from 'lodash';
 import { bgImagesStored as bgImageStoredFixtures } from '../../reducer/test/fixtures';
 
 describe('HikeEditImageEffects effects', () => {
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let effects: HikeEditImageEffects;
   let mapillaryService: MapillaryService;
   let flickrService: FlickrService;
@@ -40,10 +41,7 @@ describe('HikeEditImageEffects effects', () => {
         MapillaryService,
         FlickrService,
         PoiEditorService,
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions$),
         {
           provide: DeepstreamService,
           useValue: {}
@@ -75,7 +73,7 @@ describe('HikeEditImageEffects effects', () => {
       const completion = new hikeEditImageActions.SetMapillaryImages(bgImages);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.getMapillaryImages$).toBeObservable(expected);
 
@@ -93,7 +91,7 @@ describe('HikeEditImageEffects effects', () => {
       const completion = new hikeEditImageActions.SetFlickrImages(bgImages);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.getFlickrImages$).toBeObservable(expected);
 

@@ -2,13 +2,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { hot, cold, Scheduler } from 'jest-marbles';
 import { EditedHikeProgramEffects } from '../edited-hike-program';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, HikeProgramService, GeospatialService } from '../../../../subrepos/gtrack-common-ngx';
 import { RouterModule, Router } from '@angular/router';
-import { TestActions, getActions, mockRouter } from './helpers';
+import { mockRouter } from './helpers';
 import { editedHikeProgramActions, commonRouteActions } from '../../actions';
 import { IHikeProgram, EObjectState } from 'subrepos/provider-client';
 import { IExternalPoi } from '../../../shared/interfaces';
@@ -19,7 +20,7 @@ import * as _ from 'lodash';
 import { pois as poiFixtures, hikePrograms as hikeProgramFixtures } from '../../reducer/test/fixtures';
 
 describe('EditedHikeProgramEffects effects', () => {
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let effects: EditedHikeProgramEffects;
   let hikeProgramService: HikeProgramService;
   let geospatialService: GeospatialService;
@@ -42,10 +43,7 @@ describe('EditedHikeProgramEffects effects', () => {
         EditedHikeProgramEffects,
         HikeProgramService,
         GeospatialService,
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions$),
         {
           provide: DeepstreamService,
           useValue: {}
@@ -96,7 +94,7 @@ describe('EditedHikeProgramEffects effects', () => {
       const completion = new editedHikeProgramActions.AddStop(stop);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.prepareThenAddStop$).toBeObservable(expected);
 
@@ -119,7 +117,7 @@ describe('EditedHikeProgramEffects effects', () => {
       const completion = new editedHikeProgramActions.HikeProgramSaveSuccess();
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.save$).toBeObservable(expected);
 
@@ -136,7 +134,7 @@ describe('EditedHikeProgramEffects effects', () => {
       const completion = new editedHikeProgramActions.HikeProgramSaveFailed('error');
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.save$).toBeObservable(expected);
 
@@ -156,7 +154,7 @@ describe('EditedHikeProgramEffects effects', () => {
       const completion = new commonRouteActions.LoadRoute(context);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.loadSavedRoute$).toBeObservable(expected);
     });
