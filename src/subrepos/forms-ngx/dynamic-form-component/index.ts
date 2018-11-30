@@ -2,7 +2,7 @@ import _pick from 'lodash-es/pick';
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { DebugLog, log } from 'app/log';
 import { FieldControlService, IFormInstance } from '../field-control-service';
-import { filter, map, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { FormArray } from '@angular/forms';
 import { IFormDescriptor } from '../field';
 import { select, Store } from '@ngrx/store';
