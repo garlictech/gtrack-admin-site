@@ -31,8 +31,10 @@ export class Selectors {
 
     const selectFeature = createFeatureSelector<IDeepstreamState>(this._externals.storeDomain);
 
-    this.permissions = createSelector(selectFeature, this._externals.selectors.getUserRole, (state, role) =>
-      _get(state, 'permissionRecord')
+    this.permissions = createSelector(
+      selectFeature,
+      this._externals.selectors.getUserRole,
+      (state, role) => _get(state, 'permissionRecord')
     );
 
     this.loggingIn = createSelector(
@@ -42,7 +44,10 @@ export class Selectors {
         state.state === EDeepstreamState.LOGGING_IN || (_get(state, 'auth.id') !== 'open' && permissions === null)
     );
 
-    this.permissionRecordName = createSelector(selectFeature, state => _get(state, 'auth.permissionRecord'));
+    this.permissionRecordName = createSelector(
+      selectFeature,
+      state => _get(state, 'auth.permissionRecord')
+    );
 
     this.loggedIn = createSelector(
       selectFeature,
@@ -50,9 +55,15 @@ export class Selectors {
       (state, permissions) => state.state === EDeepstreamState.LOGGED_IN && !!permissions
     );
 
-    this.loggedOut = createSelector(selectFeature, state => state.state === EDeepstreamState.LOGGED_OUT);
+    this.loggedOut = createSelector(
+      selectFeature,
+      state => state.state === EDeepstreamState.LOGGED_OUT
+    );
 
-    this.failed = createSelector(selectFeature, state => state.failure);
+    this.failed = createSelector(
+      selectFeature,
+      state => state.failure
+    );
 
     this.userData = createSelector(
       this._externals.selectors.getUserId,
@@ -62,7 +73,10 @@ export class Selectors {
       }
     );
 
-    this.isOpenUser = createSelector(selectFeature, state => _get(state, 'auth.id') === 'open');
+    this.isOpenUser = createSelector(
+      selectFeature,
+      state => _get(state, 'auth.id') === 'open'
+    );
 
     this.getPermissionRecord = combineLatest(
       this._store.pipe(select(this._externals.selectors.getUserRole)),
