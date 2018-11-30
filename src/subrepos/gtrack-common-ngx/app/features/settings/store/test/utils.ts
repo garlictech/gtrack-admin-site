@@ -71,7 +71,7 @@ export const initialAuthState: IAuthenticationState = {
   emailSent: false
 };
 
-export const initialState: ISettingsState  = {
+export const initialState: ISettingsState = {
   privateProfile: initialPrivateProfileState,
   publicProfiles: initialPublicProfileState,
   hikeProgramSettings: initialHikeProgramSettingsState
@@ -88,7 +88,7 @@ export const createFeatureState = (changes: Partial<ISettingsState> = {}): ISett
 
 export interface TestState {
   authentication: {
-    jwtAuth: IAuthenticationState
+    jwtAuth: IAuthenticationState;
   };
   'features.settings': ISettingsState;
 }

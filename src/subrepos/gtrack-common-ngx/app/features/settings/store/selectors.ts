@@ -35,11 +35,10 @@ const selectPrivateProfileFeature = createSelector(
   (state: ISettingsState) => state.privateProfile
 );
 
-export const selectHikeProgramSettingsFeature = createSelector<
-  object,
-  ISettingsState,
-  IHikeProgramSettingsState
->(selectFeature, (state: ISettingsState) => state.hikeProgramSettings);
+export const selectHikeProgramSettingsFeature = createSelector<object, ISettingsState, IHikeProgramSettingsState>(
+  selectFeature,
+  (state: ISettingsState) => state.hikeProgramSettings
+);
 
 export const getHikeStartDate = createSelector<object, IHikeProgramSettingsState, Date>(
   selectHikeProgramSettingsFeature,
@@ -62,16 +61,21 @@ export const isFetchingProfile = createSelector(
 );
 
 export const profileGroupSelector = (group: EProfileGroup) =>
-  createSelector(selectPrivateProfileFeature, state => _get(state, `data.profile.${group}`));
+  createSelector(
+    selectPrivateProfileFeature,
+    state => _get(state, `data.profile.${group}`)
+  );
 
 export const profileGroupSaveFailure = (group: EProfileGroup) =>
-  createSelector(selectPrivateProfileFeature, (state: IPrivateProfileState) =>
-    _get(state, `profileGroups.${group}.failed`)
+  createSelector(
+    selectPrivateProfileFeature,
+    (state: IPrivateProfileState) => _get(state, `profileGroups.${group}.failed`)
   );
 
 export const profileGroupSaving = (group: EProfileGroup) =>
-  createSelector(selectPrivateProfileFeature, (state: IPrivateProfileState) =>
-    _get(state, `profileGroups.${group}.working`)
+  createSelector(
+    selectPrivateProfileFeature,
+    (state: IPrivateProfileState) => _get(state, `profileGroups.${group}.working`)
   );
 
 export const selectPrivateProfileInCurrentRole = createSelector(
@@ -84,12 +88,13 @@ const publicProfilesSelector = createSelector(
   (state: ISettingsState) => state.publicProfiles
 );
 
-const { selectEntities: selectPublicUserEntities } = publicProfileStateAdapter.getSelectors(
-  publicProfilesSelector
-);
+const { selectEntities: selectPublicUserEntities } = publicProfileStateAdapter.getSelectors(publicProfilesSelector);
 
 const selectPublicDataOf = userId =>
-  createSelector(selectPublicUserEntities, entities => entities[userId]);
+  createSelector(
+    selectPublicUserEntities,
+    entities => entities[userId]
+  );
 
 @Injectable()
 export class Selectors {

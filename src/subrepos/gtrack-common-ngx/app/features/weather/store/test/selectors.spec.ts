@@ -19,12 +19,8 @@ describe('Weather selectors', () => {
     reducers[featureName] = weatherReducer;
 
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot(reducers)
-      ],
-      providers: [
-        WeatherSelectors
-      ]
+      imports: [StoreModule.forRoot(reducers)],
+      providers: [WeatherSelectors]
     });
 
     store = TestBed.get(Store);
@@ -46,14 +42,16 @@ describe('Weather selectors', () => {
           select(selectors.getWeather(position)),
           takeUntil(destroy$)
         )
-        .subscribe(weather => result = weather);
+        .subscribe(weather => (result = weather));
 
       expect(result).toEqual(undefined);
 
-      store.dispatch(new actions.ForecastReturned({
-        id: `${position[0]}-${position[1]}`,
-        test: true
-      } as any));
+      store.dispatch(
+        new actions.ForecastReturned({
+          id: `${position[0]}-${position[1]}`,
+          test: true
+        } as any)
+      );
 
       expect(result).toEqual({
         id: `${position[0]}-${position[1]}`,
@@ -71,7 +69,7 @@ describe('Weather selectors', () => {
           select(selectors.getWeatherContext(position)),
           takeUntil(destroy$)
         )
-        .subscribe(context => result = context);
+        .subscribe(context => (result = context));
 
       expect(result).toEqual(undefined);
 
@@ -83,10 +81,12 @@ describe('Weather selectors', () => {
         loaded: false
       });
 
-      store.dispatch(new actions.ForecastReturned({
-        id: `${position[0]}-${position[1]}`,
-        test: true
-      } as any));
+      store.dispatch(
+        new actions.ForecastReturned({
+          id: `${position[0]}-${position[1]}`,
+          test: true
+        } as any)
+      );
 
       expect(result).toEqual({
         id: `${position[0]}-${position[1]}`,

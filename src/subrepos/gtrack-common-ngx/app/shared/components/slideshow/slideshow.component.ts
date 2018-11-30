@@ -59,9 +59,7 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
 
   private _availableAnimations = ['down-left', 'down-right', 'down', 'left', 'right', 'up-left', 'up-right', 'up'];
 
-  constructor(private _changeDetectorRef: ChangeDetectorRef) {
-
-  }
+  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     if (this.imageUrls.length > 0) {

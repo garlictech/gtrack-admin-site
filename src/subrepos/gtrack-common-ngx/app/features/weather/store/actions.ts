@@ -18,6 +18,4 @@ export class ForecastReturned implements Action {
   constructor(public forecast: IWeatherEntity) {}
 }
 
-export type AllWeatherActions =
-  | GetForecast
-  | ForecastReturned;
+export type AllWeatherActions = GetForecast | ForecastReturned;

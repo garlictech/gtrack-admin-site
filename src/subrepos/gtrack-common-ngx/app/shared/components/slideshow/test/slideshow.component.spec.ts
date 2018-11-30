@@ -10,25 +10,16 @@ describe('SlideshowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
-        SlideShowComponent
-      ]
-    })
-    .compileComponents();
+      imports: [FontAwesomeModule],
+      declarations: [SlideShowComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SlideShowComponent);
     component = fixture.componentInstance;
 
-    component.imageUrls = [
-      'http://test.com/test.jpg',
-      'http://test.com/test2.jpg',
-      'http://test.com/test3.jpg'
-    ];
+    component.imageUrls = ['http://test.com/test.jpg', 'http://test.com/test2.jpg', 'http://test.com/test3.jpg'];
 
     spy = jasmine.createSpy('lightGallery');
     (window as any).lightGallery = spy;
@@ -42,9 +33,7 @@ describe('SlideshowComponent', () => {
   });
 
   it('should not create a slideshow when there is not enough image', () => {
-    component.imageUrls = [
-      'http://test.com/test.jpg'
-    ];
+    component.imageUrls = ['http://test.com/test.jpg'];
 
     fixture.detectChanges();
 
@@ -87,10 +76,9 @@ describe('SlideshowComponent', () => {
 
     next.click();
 
-    fixture.whenStable()
-      .then(() => {
-        expect(clickSpy).toHaveBeenCalled();
-      });
+    fixture.whenStable().then(() => {
+      expect(clickSpy).toHaveBeenCalled();
+    });
   }));
 
   it('should open the first image when onNext is clicked on the last element', async(() => {
@@ -109,10 +97,9 @@ describe('SlideshowComponent', () => {
 
     next.click();
 
-    fixture.whenStable()
-      .then(() => {
-        expect(clickSpy).toHaveBeenCalled();
-      });
+    fixture.whenStable().then(() => {
+      expect(clickSpy).toHaveBeenCalled();
+    });
   }));
 
   it('should open the previous image when onPrev is clicked', async(() => {
@@ -131,10 +118,9 @@ describe('SlideshowComponent', () => {
 
     prev.click();
 
-    fixture.whenStable()
-      .then(() => {
-        expect(clickSpy).toHaveBeenCalled();
-      });
+    fixture.whenStable().then(() => {
+      expect(clickSpy).toHaveBeenCalled();
+    });
   }));
 
   it('should open the last image when onPrev is clicked on the first image', async(() => {
@@ -151,10 +137,9 @@ describe('SlideshowComponent', () => {
 
     prev.click();
 
-    fixture.whenStable()
-      .then(() => {
-        expect(clickSpy).toHaveBeenCalled();
-      });
+    fixture.whenStable().then(() => {
+      expect(clickSpy).toHaveBeenCalled();
+    });
   }));
 
   it('should handle z-index correctly', () => {

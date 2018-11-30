@@ -1,11 +1,11 @@
 import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
 
 import {
-   IAllWeatherContextState,
-   weatherContextAdapter,
-   IWeatherEntityState,
-   IWeatherState,
-   weatherAdapter
+  IAllWeatherContextState,
+  weatherContextAdapter,
+  IWeatherEntityState,
+  IWeatherState,
+  weatherAdapter
 } from './state';
 
 import { AllWeatherActions, WeatherActionTypes } from './actions';
@@ -19,18 +19,24 @@ const contextReducer: ActionReducer<IAllWeatherContextState> = (
 ): IAllWeatherContextState => {
   switch (action.type) {
     case WeatherActionTypes.GET_FORECAST:
-      return weatherContextAdapter.upsertOne({
-        id: `${action.position[0]}-${action.position[1]}`,
-        loading: true,
-        loaded: false
-      }, state);
+      return weatherContextAdapter.upsertOne(
+        {
+          id: `${action.position[0]}-${action.position[1]}`,
+          loading: true,
+          loaded: false
+        },
+        state
+      );
 
     case WeatherActionTypes.FORECAST_RETURNED:
-      return weatherContextAdapter.upsertOne({
-        id: action.forecast.id,
-        loading: false,
-        loaded: true
-      }, state);
+      return weatherContextAdapter.upsertOne(
+        {
+          id: action.forecast.id,
+          loading: false,
+          loaded: true
+        },
+        state
+      );
 
     default:
       return state;

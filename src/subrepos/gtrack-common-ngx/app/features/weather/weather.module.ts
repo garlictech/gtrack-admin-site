@@ -8,13 +8,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { WeatherService } from './services';
 import { WeatherInfoComponent, WeatherIconComponent, WindDirectionIconComponent } from './components';
 
-import {
-  WeatherEffects,
-  WeatherSelectors,
-  WEATHER_REDUCER_TOKEN,
-  featureName,
-  getReducers
-} from './store';
+import { WeatherEffects, WeatherSelectors, WEATHER_REDUCER_TOKEN, featureName, getReducers } from './store';
 
 @NgModule({
   imports: [
@@ -24,15 +18,8 @@ import {
     StoreModule.forFeature(featureName, WEATHER_REDUCER_TOKEN),
     AngularSvgIconModule
   ],
-  declarations: [
-    WeatherInfoComponent,
-    WeatherIconComponent,
-    WindDirectionIconComponent
-  ],
-  exports: [
-    WeatherIconComponent,
-    WindDirectionIconComponent
-  ],
+  declarations: [WeatherInfoComponent, WeatherIconComponent, WindDirectionIconComponent],
+  exports: [WeatherIconComponent, WindDirectionIconComponent],
   providers: [
     WeatherService,
     WeatherEffects,
@@ -41,6 +28,6 @@ import {
       provide: WEATHER_REDUCER_TOKEN,
       useFactory: getReducers
     }
-  ],
+  ]
 })
-export class WeatherModule { }
+export class WeatherModule {}

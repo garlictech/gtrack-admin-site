@@ -16,10 +16,16 @@ export class SearchFiltersSelectors {
     this._externals = externals;
     const filterSelector = createFeatureSelector<ISearchFilters>(this._externals.storeDomain);
 
-    this.getFilters = createSelector(filterSelector, (state: ISearchFilters) => state);
+    this.getFilters = createSelector(
+      filterSelector,
+      (state: ISearchFilters) => state
+    );
   }
 
   public getFilter(name: keyof ISearchFilters): MemoizedSelector<object, any> {
-    return createSelector(this.getFilters, (filters: ISearchFilters) => _get(filters, name));
+    return createSelector(
+      this.getFilters,
+      (filters: ISearchFilters) => _get(filters, name)
+    );
   }
 }

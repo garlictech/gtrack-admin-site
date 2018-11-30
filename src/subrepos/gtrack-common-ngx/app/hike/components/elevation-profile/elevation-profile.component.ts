@@ -26,13 +26,7 @@ import { State } from 'app/store';
 import { Subject, ReplaySubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import {
-  select as d3Select,
-  mouse as d3Mouse,
-  event as d3Event,
-  Selection,
-  BaseType
-} from 'd3-selection';
+import { select as d3Select, mouse as d3Mouse, event as d3Event, Selection, BaseType } from 'd3-selection';
 
 import { bisector as d3Bisector } from 'd3-array';
 
@@ -184,9 +178,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       this._hikeProgram = hikeProgram;
       this.routeId = hikeProgram.routeId;
 
-      const poiIds = hikeProgram.stops
-        .map(stop => stop.poiId)
-        .filter(poiId => !poiId.match(/endpoint/));
+      const poiIds = hikeProgram.stops.map(stop => stop.poiId).filter(poiId => !poiId.match(/endpoint/));
 
       this._hikeProgramChanged$.next(true);
 
@@ -200,10 +192,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
           for (const poiId of poiIds) {
             const context = contexts[poiId];
 
-            if (
-              typeof context === 'undefined' ||
-              (context.loaded !== true && context.loading !== true)
-            ) {
+            if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
               this._store.dispatch(new poiActions.LoadPoi(poiId));
             }
           }
@@ -234,10 +223,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         takeUntil(this._destroy$)
       )
       .subscribe(context => {
-        if (
-          typeof context === 'undefined' ||
-          (context.loaded !== true && context.loading !== true)
-        ) {
+        if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
           this._store.dispatch(new routeActions.LoadRoute(routeId));
         }
       });
@@ -266,12 +252,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
             .attr('viewBox', `0, 0, ${this.width}, ${this.height + 60}`);
         }
 
-        this._elevationData = this._elevationService.getd3ElevationData(
-          route,
-          this.width,
-          this.height,
-          this.margins
-        );
+        this._elevationData = this._elevationService.getd3ElevationData(route, this.width, this.height, this.margins);
 
         if (this._elevationData === null) {
           return;
@@ -343,9 +324,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       const yRange = this._elevationData.yRange;
       const coordinates = this.route.path.coordinates;
 
-      const distance =
-        this._geospatial.distanceOnLine(coordinates[0], position, this.route.route.features[0]) /
-        1000;
+      const distance = this._geospatial.distanceOnLine(coordinates[0], position, this.route.route.features[0]) / 1000;
 
       const bisect = d3Bisector((d: [number, number]) => {
         return d[0];
@@ -393,7 +372,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
     return this.weather.list.find((item, i) => {
       const wtime = item.dt * 1000;
-      const next = wtime + (3 * 60 * 60 * 1000); // 3 hours
+      const next = wtime + 3 * 60 * 60 * 1000; // 3 hours
       if (wtime <= time && time <= next) {
         return true;
       }
@@ -410,7 +389,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
     const index = bisect(lineData, x);
 
-   return this._routeService.getTrackPoint(this.route, index);
+    return this._routeService.getTrackPoint(this.route, index);
   }
 
   protected _eventToPosition(eventX: number): GeoJSON.Position | null {
@@ -641,11 +620,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         const stop = this._hikeProgram.stops.find(hikeStop => hikeStop.poiId === poi.id);
 
         const distance =
-          this._geospatial.distanceOnLine(
-            coordinates[0],
-            [poi.lon, poi.lat],
-            this.route.route.features[0]
-          ) / 1000;
+          this._geospatial.distanceOnLine(coordinates[0], [poi.lon, poi.lat], this.route.route.features[0]) / 1000;
         const type = _get(poi, 'types[0]', 'unknown');
 
         const lineData = this._elevationData.lineData;

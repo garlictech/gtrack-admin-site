@@ -10,13 +10,8 @@ describe('WindDirectionIconComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        AngularSvgIconModule,
-        HttpClientTestingModule
-      ],
-      declarations: [
-        WindDirectionIconComponent
-      ]
+      imports: [AngularSvgIconModule, HttpClientTestingModule],
+      declarations: [WindDirectionIconComponent]
     });
 
     fixture = TestBed.createComponent(WindDirectionIconComponent);

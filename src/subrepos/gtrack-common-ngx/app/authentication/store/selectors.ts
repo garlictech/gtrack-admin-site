@@ -12,15 +12,33 @@ import { IAuthenticationState } from './state';
 
 const selectAuthFeature = createFeatureSelector<IAuthenticationState>('authentication');
 
-const selectJwtFeature = createSelector(selectAuthFeature, (state: IAuthenticationState) => state.jwtAuth);
+const selectJwtFeature = createSelector(
+  selectAuthFeature,
+  (state: IAuthenticationState) => state.jwtAuth
+);
 
-const selectAuth = createSelector(selectJwtFeature, (state: IJwtAuthState) => state.auth);
+const selectAuth = createSelector(
+  selectJwtFeature,
+  (state: IJwtAuthState) => state.auth
+);
 
-export const selectUser = createSelector(selectAuth, (state: IAuth) => _get(state, 'user'));
+export const selectUser = createSelector(
+  selectAuth,
+  (state: IAuth) => _get(state, 'user')
+);
 
-export const selectRole = createSelector(selectUser, (user: User) => _get(user, 'roles[0]'));
-export const selectUserId = createSelector(selectUser, (user: User) => _get(user, 'id'));
-export const loggedOut = createSelector(selectUser, user => !user);
+export const selectRole = createSelector(
+  selectUser,
+  (user: User) => _get(user, 'roles[0]')
+);
+export const selectUserId = createSelector(
+  selectUser,
+  (user: User) => _get(user, 'id')
+);
+export const loggedOut = createSelector(
+  selectUser,
+  user => !user
+);
 
 @Injectable()
 export class Selectors {
@@ -40,12 +58,18 @@ export class Selectors {
   public selectUserId: MemoizedSelector<object, string>;
 
   constructor(private _deepstreamSelectors: DeepstreamSelectors) {
-    const selectUiFeature = createSelector(selectAuthFeature, (state: IAuthenticationState) => state.uiState);
+    const selectUiFeature = createSelector(
+      selectAuthFeature,
+      (state: IAuthenticationState) => state.uiState
+    );
 
     this.auth = selectAuth;
     this.user = selectUser;
 
-    this.jwtLoggingIn = createSelector(selectJwtFeature, jwtState => jwtState.loggingIn);
+    this.jwtLoggingIn = createSelector(
+      selectJwtFeature,
+      jwtState => jwtState.loggingIn
+    );
 
     this.loggingIn = createSelector(
       this.jwtLoggingIn,
@@ -55,7 +79,10 @@ export class Selectors {
 
     this.loggedOut = loggedOut;
 
-    this.token = createSelector(selectAuth, state => _get(state, 'token'));
+    this.token = createSelector(
+      selectAuth,
+      state => _get(state, 'token')
+    );
 
     this.loggedIn = createSelector(
       this.token,
@@ -63,7 +90,10 @@ export class Selectors {
       (token, dsState) => !!token && dsState
     );
 
-    this.magicLinkEmailSent = createSelector(selectJwtFeature, state => state.emailSent);
+    this.magicLinkEmailSent = createSelector(
+      selectJwtFeature,
+      state => state.emailSent
+    );
 
     this.loginFailed = createSelector(
       selectJwtFeature,
@@ -74,10 +104,19 @@ export class Selectors {
     this.role = selectRole;
     this.selectUserId = selectUserId;
 
-    this.selectedRole = createSelector(selectUiFeature, state => state.selectedRole);
+    this.selectedRole = createSelector(
+      selectUiFeature,
+      state => state.selectedRole
+    );
 
-    this.termsAccepted = createSelector(selectUiFeature, state => state.termsAccepted);
+    this.termsAccepted = createSelector(
+      selectUiFeature,
+      state => state.termsAccepted
+    );
 
-    this.loginRefused = createSelector(selectUiFeature, state => state.loginRefused);
+    this.loginRefused = createSelector(
+      selectUiFeature,
+      state => state.loginRefused
+    );
   }
 }

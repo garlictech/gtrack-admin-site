@@ -19,8 +19,14 @@ export class WeatherSelectors {
   constructor() {
     this.selectFeature = createFeatureSelector<IWeatherState>(featureName);
 
-    const weatherSelector = createSelector(this.selectFeature, (state: IWeatherState) => state.weathers);
-    const contextSelector = createSelector(this.selectFeature, (state: IWeatherState) => state.contexts);
+    const weatherSelector = createSelector(
+      this.selectFeature,
+      (state: IWeatherState) => state.weathers
+    );
+    const contextSelector = createSelector(
+      this.selectFeature,
+      (state: IWeatherState) => state.contexts
+    );
 
     const selectors = weatherAdapter.getSelectors(weatherSelector);
     const contextSelectors = weatherContextAdapter.getSelectors(contextSelector);
@@ -31,14 +37,20 @@ export class WeatherSelectors {
 
   public getWeather(position: GeoJSON.Position) {
     const context = `${position[0]}-${position[1]}`;
-    return createSelector(this.getAllWeathers, (weathers: IWeatherEntity[]) => weathers.find(weather => weather.id === context));
+    return createSelector(
+      this.getAllWeathers,
+      (weathers: IWeatherEntity[]) => weathers.find(weather => weather.id === context)
+    );
   }
 
   public getWeatherContext(position: GeoJSON.Position) {
     const id = `${position[0]}-${position[1]}`;
 
-    return createSelector(this.getAllContexts, contexts => {
-      return contexts.find(context => context.id === id);
-    });
+    return createSelector(
+      this.getAllContexts,
+      contexts => {
+        return contexts.find(context => context.id === id);
+      }
+    );
   }
 }

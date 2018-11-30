@@ -26,8 +26,14 @@ export class PoiSelectors {
 
     this.selectFeature = createFeatureSelector<IPoiState>(this._externals.storeDomain);
 
-    const poiSelector = createSelector(this.selectFeature, (state: IPoiState) => state.pois);
-    const contextSelector = createSelector(this.selectFeature, (state: IPoiState) => state.contexts);
+    const poiSelector = createSelector(
+      this.selectFeature,
+      (state: IPoiState) => state.pois
+    );
+    const contextSelector = createSelector(
+      this.selectFeature,
+      (state: IPoiState) => state.contexts
+    );
 
     const selectors = poiAdapter.getSelectors(poiSelector);
     const contextSelectors = poiContextStateAdapter.getSelectors(contextSelector);
@@ -41,76 +47,96 @@ export class PoiSelectors {
   }
 
   public getPoi(context: string) {
-    return createSelector(this.getAllPois, (pois: IPoi[]) => pois.find(poi => poi.id === context));
+    return createSelector(
+      this.getAllPois,
+      (pois: IPoi[]) => pois.find(poi => poi.id === context)
+    );
   }
 
   public getAllPoisCount() {
-    return createSelector(this.getAllPois, (pois: IPoi[]) => (pois || []).length);
+    return createSelector(
+      this.getAllPois,
+      (pois: IPoi[]) => (pois || []).length
+    );
   }
 
   public getAllPoiPhotos() {
-    return createSelector(this.getAllPois, pois => {
-      let photos = [];
+    return createSelector(
+      this.getAllPois,
+      pois => {
+        let photos = [];
 
-      pois.forEach(poi => {
-        photos = photos.concat(_get(poi, 'additionalData.photos', []));
-      });
+        pois.forEach(poi => {
+          photos = photos.concat(_get(poi, 'additionalData.photos', []));
+        });
 
-      return photos;
-    });
+        return photos;
+      }
+    );
   }
 
   public getPoiContext(context: string) {
-    return createSelector(this.getAllContexts, (contexts: IPoiContextState[]) => {
-      return contexts.find(c => c.id === context);
-    });
+    return createSelector(
+      this.getAllContexts,
+      (contexts: IPoiContextState[]) => {
+        return contexts.find(c => c.id === context);
+      }
+    );
   }
 
   public getPoiContexts(contexts: string[]) {
-    return createSelector(this.getAllContexts, poiContexts =>
-      poiContexts.filter(context => {
-        if (context.id) {
-          return contexts.indexOf(context.id) !== -1;
-        } else {
-          return false;
-        }
-      })
+    return createSelector(
+      this.getAllContexts,
+      poiContexts =>
+        poiContexts.filter(context => {
+          if (context.id) {
+            return contexts.indexOf(context.id) !== -1;
+          } else {
+            return false;
+          }
+        })
     );
   }
 
   public getPoiContextEntities(ids: string[]) {
-    return createSelector(this.getAllContextEntities, contexts =>
-      _pickBy(contexts, context => {
-        if (context.id) {
-          return ids.indexOf(context.id) !== -1;
-        } else {
-          return false;
-        }
-      })
+    return createSelector(
+      this.getAllContextEntities,
+      contexts =>
+        _pickBy(contexts, context => {
+          if (context.id) {
+            return ids.indexOf(context.id) !== -1;
+          } else {
+            return false;
+          }
+        })
     );
   }
 
   public getPois(contexts: string[]) {
-    return createSelector(this.getAllPois, pois =>
-      pois.filter(poi => {
-        if (poi.id) {
-          return contexts.indexOf(poi.id) !== -1;
-        } else {
-          return false;
-        }
-      })
+    return createSelector(
+      this.getAllPois,
+      pois =>
+        pois.filter(poi => {
+          if (poi.id) {
+            return contexts.indexOf(poi.id) !== -1;
+          } else {
+            return false;
+          }
+        })
     );
   }
 
   public getPoiEntities(contexts: string[]) {
-    return createSelector(this.getAllPoiEntities, pois =>
-      _pickBy(pois, poi => {
-        if (poi.id) {
-          return contexts.indexOf(poi.id) !== -1;
-        } else {
-          return false;
-        }
-      })
+    return createSelector(
+      this.getAllPoiEntities,
+      pois =>
+        _pickBy(pois, poi => {
+          if (poi.id) {
+            return contexts.indexOf(poi.id) !== -1;
+          } else {
+            return false;
+          }
+        })
     );
   }
 }

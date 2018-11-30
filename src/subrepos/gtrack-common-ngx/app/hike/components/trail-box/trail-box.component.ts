@@ -178,7 +178,10 @@ export class TrailBoxComponent implements AfterViewInit, OnInit, OnChanges, OnDe
       const locked = changes.elevationMarkerLocked.currentValue;
 
       if (locked === true) {
-        this.map.leafletMap.setView([this.elevationMarkerPosition[1], this.elevationMarkerPosition[0]], this.center.zoom);
+        this.map.leafletMap.setView(
+          [this.elevationMarkerPosition[1], this.elevationMarkerPosition[0]],
+          this.center.zoom
+        );
       } else {
         this.resetMap();
       }

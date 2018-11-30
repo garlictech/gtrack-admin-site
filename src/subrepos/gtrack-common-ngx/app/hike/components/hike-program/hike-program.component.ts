@@ -81,7 +81,7 @@ export class HikeProgramComponent implements OnInit, OnChanges {
 
     return this.weather.list.find((item, i) => {
       const wtime = item.dt * 1000;
-      const next = wtime + (3 * 60 * 60 * 1000); // 3 hours
+      const next = wtime + 3 * 60 * 60 * 1000; // 3 hours
       if (wtime <= time && time <= next) {
         return true;
       }
@@ -246,7 +246,10 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     const time = this.hikeProgram.stops
       .filter((stop, i) => i < segmentIndex)
       .map(stop => stop.segment)
-      .reduce((previous, segment) => previous + this._gameRule.segmentTime(segment.distance, segment.uphill, this.speed), 0);
+      .reduce(
+        (previous, segment) => previous + this._gameRule.segmentTime(segment.distance, segment.uphill, this.speed),
+        0
+      );
 
     const arrive = new Date(this.startDate.getTime());
 

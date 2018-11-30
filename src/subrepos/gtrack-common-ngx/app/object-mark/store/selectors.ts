@@ -32,8 +32,14 @@ export class ObjectMarkSelectors {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IObjectMarkState>(externals.storeDomain);
 
-    const objectMarkSelector = createSelector(this.selectFeature, (state: IObjectMarkState) => state.objectMarks);
-    const contextSelector = createSelector(this.selectFeature, (state: IObjectMarkState) => state.contexts);
+    const objectMarkSelector = createSelector(
+      this.selectFeature,
+      (state: IObjectMarkState) => state.objectMarks
+    );
+    const contextSelector = createSelector(
+      this.selectFeature,
+      (state: IObjectMarkState) => state.contexts
+    );
 
     const selectors = objectMarkAdapter.getSelectors(objectMarkSelector);
     const contextSelectors = objectMarkContextAdapter.getSelectors(contextSelector);
@@ -45,28 +51,40 @@ export class ObjectMarkSelectors {
   }
 
   public getObjectMarks(context: EObjectMarkContext) {
-    return createSelector(this.getAllObjectMarks, objectMarks => {
-      const mark = objectMarks.find(objectMark => objectMark.id === context);
+    return createSelector(
+      this.getAllObjectMarks,
+      objectMarks => {
+        const mark = objectMarks.find(objectMark => objectMark.id === context);
 
-      return _get(mark, 'markedObjects', []);
-    });
+        return _get(mark, 'markedObjects', []);
+      }
+    );
   }
 
   public getObjectMarkObject(context: EObjectMarkContext, objectToFind: any) {
-    return createSelector(this.getObjectMarks(context), objects => {
-      return _find(objects, val => _isEqual(val, objectToFind));
-    });
+    return createSelector(
+      this.getObjectMarks(context),
+      objects => {
+        return _find(objects, val => _isEqual(val, objectToFind));
+      }
+    );
   }
 
   public isObjectMarked(context: EObjectMarkContext, objectToFind: any) {
-    return createSelector(this.getObjectMarkObject(context, objectToFind), object => {
-      return typeof object !== 'undefined';
-    });
+    return createSelector(
+      this.getObjectMarkObject(context, objectToFind),
+      object => {
+        return typeof object !== 'undefined';
+      }
+    );
   }
 
   public getObjectMarkContext(id: EObjectMarkContext) {
-    return createSelector(this.getAllContexts, contexts => {
-      return contexts.find(context => context.id === id);
-    });
+    return createSelector(
+      this.getAllContexts,
+      contexts => {
+        return contexts.find(context => context.id === id);
+      }
+    );
   }
 }

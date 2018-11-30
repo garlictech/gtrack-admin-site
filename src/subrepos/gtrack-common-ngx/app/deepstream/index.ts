@@ -7,7 +7,10 @@ import { IExternalDeepstreamDependencies, EXTERNAL_DEEPSTREAM_DEPENDENCIES } fro
 import { environment } from 'environments/environment';
 import { selectRole, selectUser } from '../authentication/store/selectors';
 
-export const userIdSelector = createSelector(selectUser, state => _get(state, 'id'));
+export const userIdSelector = createSelector(
+  selectUser,
+  state => _get(state, 'id')
+);
 
 export function externalDeepstreamDependencies(): IExternalDeepstreamDependencies {
   return {

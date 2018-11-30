@@ -8,10 +8,14 @@ import { ILocalizationState } from 'subrepos/localize-ngx';
 
 const selectFeature = createFeatureSelector<ILocalizationState>('language');
 
-export const currentLanguage = createSelector(selectFeature, state => _get(state, 'actualLanguage', null));
+export const currentLanguage = createSelector(
+  selectFeature,
+  state => _get(state, 'actualLanguage', null)
+);
 
-export const descriptionLanguageList = createSelector(selectFeature, state =>
-  _get(state, 'descriptionLanguageList', [])
+export const descriptionLanguageList = createSelector(
+  selectFeature,
+  state => _get(state, 'descriptionLanguageList', [])
 );
 
 // The various property selectors. Consider using the reselect package.
