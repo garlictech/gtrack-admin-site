@@ -10,6 +10,8 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { HikeComponentsModule as BaseModule } from '../../../gtrack-common-ngx/app/hike/components';
 import { AstronomyModule } from 'subrepos/gtrack-common-ngx';
+import { WeatherModule } from '@web.features/weather';
+import { WeatherModule as BaseWeatherModule } from '@common.features/weather';
 
 import { CheckpointsComponent } from './checkpoints';
 import { DownloadGpxButtonComponent } from './download-gpx-button';
@@ -72,7 +74,9 @@ const COMPONENTS = [
     WebLocalizeModule,
     FormModule,
     AstronomyModule,
-    AngularSvgIconModule
+    AngularSvgIconModule,
+    BaseWeatherModule,
+    WeatherModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS]

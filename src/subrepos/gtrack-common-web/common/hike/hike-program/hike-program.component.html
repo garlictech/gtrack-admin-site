@@ -33,6 +33,7 @@
         <td>
           <svg-icon [svgStyle]="{ 'width.px':24, 'height.px':24 }" [ngStyle]="{ width: '24px', height: '24px' }" *ngFor="let event of stop.events"
             [title]="event.title | translate" [src]="event.icon"></svg-icon>
+          <gtrack-weather-icon *ngFor="let weather of stop.weather" [icon]="weather.icon"></gtrack-weather-icon>
         </td>
       </ng-container>
       <ng-template #event_template>
@@ -41,7 +42,10 @@
           <td></td>
           <td></td>
           <td>{{ stop.arrive | date:'HH:mm' }}</td>
-          <td><svg-icon [svgStyle]="{ 'width.px':24, 'height.px':24 }" [ngStyle]="{ width: '24px', height: '24px' }" [title]="stop.title | translate" [src]="stop.eventIcon"></svg-icon></td>
+          <td>
+            <svg-icon [svgStyle]="{ 'width.px':24, 'height.px':24 }" [ngStyle]="{ width: '24px', height: '24px' }" [title]="stop.title | translate" [src]="stop.eventIcon"></svg-icon>
+            <gtrack-weather-icon *ngFor="let weather of stop.weather" [icon]="weather.icon"></gtrack-weather-icon>
+          </td>
       </ng-template>
     </tr>
   </ng-container>

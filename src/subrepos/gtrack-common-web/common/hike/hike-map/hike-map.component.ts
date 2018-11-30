@@ -7,6 +7,8 @@ import { ElevationProfileComponent } from '../elevation-profile';
 import { BehaviorSubject } from 'rxjs';
 import { log, DebugLog } from 'app/log';
 
+import { IWeatherEntity } from '@common.features/weather/store';
+
 @Component({
   selector: 'gtrack-hike-map',
   templateUrl: './hike-map.component.html',
@@ -20,6 +22,9 @@ export class HikeMapComponent {
   public startDate: Date;
 
   @Input()
+  public weather: IWeatherEntity;
+
+  @Input()
   public speed: number;
 
   @ViewChild('trailBox')
@@ -30,11 +35,11 @@ export class HikeMapComponent {
 
   public elevationMarkerPosition$ = new BehaviorSubject<GeoJSON.Position>([0, 0]);
   public elevationMarkerVisible$ = new BehaviorSubject<boolean>(false);
-  protected _elevationMarkerLocked = false;
+  public elevationMarkerLocked$ = new BehaviorSubject<boolean>(false);
 
   @DebugLog
   onElevationLineOver() {
-    const locked = this._elevationMarkerLocked;
+    const locked = this.elevationMarkerLocked$.getValue();
 
     log.data('Locked', locked);
 
@@ -44,7 +49,7 @@ export class HikeMapComponent {
   }
 
   onElevationLineMove(position: GeoJSON.Position) {
-    const locked = this._elevationMarkerLocked;
+    const locked = this.elevationMarkerLocked$.getValue();
 
     if (!locked) {
       this.elevationMarkerPosition$.next(position);
@@ -53,37 +58,37 @@ export class HikeMapComponent {
 
   @DebugLog
   onElevationLineClick(position: GeoJSON.Position) {
-    const locked = this._elevationMarkerLocked;
+    const locked = this.elevationMarkerLocked$.getValue();
 
     log.data('Locked', locked);
 
     if (!locked) {
       this.elevationMarkerPosition$.next(position);
-      this._elevationMarkerLocked = true;
       this.elevationMarkerVisible$.next(true);
+      this.elevationMarkerLocked$.next(true);
     } else {
-      this._elevationMarkerLocked = false;
+      this.elevationMarkerLocked$.next(false);
     }
   }
 
   @DebugLog
   onElevationLineClickMap(data: { position: GeoJSON.Position; forced?: boolean }) {
-    const locked = this._elevationMarkerLocked;
+    const locked = this.elevationMarkerLocked$.getValue();
 
     log.data('Locked', locked);
 
     if (!locked || data.forced === true) {
       this.elevationMarkerPosition$.next(data.position);
-      this._elevationMarkerLocked = true;
       this.elevationMarkerVisible$.next(true);
+      this.elevationMarkerLocked$.next(true);
     } else {
-      this._elevationMarkerLocked = false;
+      this.elevationMarkerLocked$.next(false);
     }
   }
 
   @DebugLog
   onElevationLineOut() {
-    const locked = this._elevationMarkerLocked;
+    const locked = this.elevationMarkerLocked$.getValue();
 
     log.data('Locked', locked);
 

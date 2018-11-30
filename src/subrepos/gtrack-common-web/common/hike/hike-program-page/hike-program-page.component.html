@@ -5,14 +5,14 @@
   <gtrack-description [description]="hikeProgram.description"></gtrack-description>
 
   <div *ngIf="images && images.length > 0" class="slides">
-    <gtrack-slideshow [controls]="true" [imageUrls]="images"></gtrack-slideshow>
+    <gtrack-slideshow [fullscreenGallery]="true" [controls]="true" [imageUrls]="images"></gtrack-slideshow>
   </div>
 
   <div class="mb-10">
     <gtrack-download-gpx [hikeProgram]="hikeProgram"></gtrack-download-gpx>
   </div>
 
-  <gtrack-hike-map [speed]="speed$ | async" [startDate]="startDate$ | async" [hikeProgram]="hikeProgram"></gtrack-hike-map>
+  <gtrack-hike-map [weather]="forecast$ | async" [speed]="speed$ | async" [startDate]="startDate$ | async" [hikeProgram]="hikeProgram"></gtrack-hike-map>
 
   <gtrack-hike-data-item [hikeProgram]="hikeProgram"></gtrack-hike-data-item>
 
@@ -24,9 +24,15 @@
     <gtrack-sunrise [day]="startDate$ | async" [position]="[hikeProgram.stops[0].lon, hikeProgram.stops[0].lat]"></gtrack-sunrise>
   </div>
 
+  <div *ngIf="startDate$ | async as startDate" class="mb-20">
+    <h2>Weather</h2>
+    <p>The forecast refers to the hike's start point.</p>
+    <gtrack-weather-info [date]="startDate" [position]="[hikeProgram.stops[0].lon, hikeProgram.stops[0].lat]"></gtrack-weather-info>
+  </div>
+
   <gtrack-hike-day></gtrack-hike-day>
 
-  <gtrack-hike-program [speed]="speed$ | async" [startDate]="startDate$ | async" [hikeProgram]="hikeProgram"></gtrack-hike-program>
+  <gtrack-hike-program [weather]="forecast$ | async" [speed]="speed$ | async" [startDate]="startDate$ | async" [hikeProgram]="hikeProgram"></gtrack-hike-program>
 
   <!-- <div class="tim-title">
     <h2>Checkpoints</h2>
