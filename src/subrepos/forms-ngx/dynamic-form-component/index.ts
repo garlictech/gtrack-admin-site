@@ -21,11 +21,7 @@ export class DynamicFormComponent implements AfterViewInit, OnDestroy {
 
   private _componentDestroyed$: Subject<boolean> = new Subject();
 
-  constructor(
-    private _fcs: FieldControlService,
-    private _store: Store<any>,
-    private _cdr: ChangeDetectorRef
-  ) {
+  constructor(private _fcs: FieldControlService, private _store: Store<any>, private _cdr: ChangeDetectorRef) {
     /* EMPTY */
   }
 
