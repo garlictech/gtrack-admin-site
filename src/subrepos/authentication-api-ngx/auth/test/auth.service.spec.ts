@@ -32,9 +32,6 @@ describe('AuthService', () => {
   authConfig.apiUrl = apiUrl;
   authConfig.webserverUrl = webserverUrl;
 
-  let firebaseLoginSpy: jasmine.Spy;
-  let firebaseLogoutSpy: jasmine.Spy;
-
   reducer[domain] = authReducer;
 
   beforeEach(() => {
