@@ -4,7 +4,7 @@ globalConf.coverageThreshold = {
     "global": {
         "statements": 67,
         "branches": 50,
-        "functions": 51,
+        "functions": 47,
         "lines": 65
     }
 }
