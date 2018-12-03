@@ -8,9 +8,7 @@ describe('WeatherIconComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        WeatherIconComponent
-      ]
+      declarations: [WeatherIconComponent]
     }).compileComponents();
   }));
 

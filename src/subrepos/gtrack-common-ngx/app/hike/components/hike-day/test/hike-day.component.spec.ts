@@ -16,11 +16,7 @@ fdescribe('HikeDayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot(reducer),
-        EffectsModule.forRoot([]),
-        FormModule
-      ],
+      imports: [StoreModule.forRoot(reducer), EffectsModule.forRoot([]), FormModule],
       providers: [
         {
           provide: LANGUAGE_CONFIG,

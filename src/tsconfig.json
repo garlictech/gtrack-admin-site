@@ -10,9 +10,5 @@
       "fs": ["./global-shims"],
       "path": ["./global-shims"]
     }
-  },
-  "exclude": [
-    "**/test/**/*",
-    "**/*.spec.ts"
-  ]
+  }
 }

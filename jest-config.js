@@ -6,7 +6,8 @@
 module.exports = {
     "rootDir": "../",
     "preset": "jest-preset-angular",
-
+    "verbose": true,
+    "bail": true,
     "setupTestFrameworkScriptFile": "./src/jest.ts",
     "browser": true,
     "globals": {
@@ -34,10 +35,10 @@ module.exports = {
     "coverageDirectory": "<rootDir>/artifacts/reports/coverage",
     "coverageThreshold": {
         "global": {
-            "statements": 100,
-            "branches": 100,
-            "functions": 100,
-            "lines": 100
+            "statements": 10,
+            "branches": 10,
+            "functions": 10,
+            "lines": 10
         }
     },
     "coverageReporters": ["json", "lcov", "text", "html"],
@@ -52,5 +53,5 @@ module.exports = {
     "transformIgnorePatterns": [
         "node_modules/(?!@ngrx|@ionic-native|@ionic|lodash-es)"
     ],
-    "testPathIgnorePatterns": ["/node_modules/", "/dist/", "/.git/"]
+    testPathIgnorePatterns: ["/node_modules/", "/dist/", "/.git/"]
 }

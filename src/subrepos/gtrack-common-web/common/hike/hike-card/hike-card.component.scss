@@ -6,6 +6,7 @@
     }
     .card-body {
         height: 300px;
+        z-index: 300;
         position: relative;
         .card-row {
             flex: 1;

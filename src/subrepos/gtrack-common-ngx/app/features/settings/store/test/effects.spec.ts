@@ -1,4 +1,3 @@
-
 import { TestBed } from '@angular/core/testing';
 import { hot, cold, Scheduler } from 'jest-marbles';
 import { Actions } from '@ngrx/effects';
@@ -44,9 +43,7 @@ describe('Settings effects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({})
-      ],
+      imports: [StoreModule.forRoot({})],
       providers: [
         {
           provide: SettingsService,
@@ -108,5 +105,4 @@ describe('Settings effects', () => {
       expect(service.getPublicProfile).toHaveBeenCalledWith('test');
     });
   });
-
 });

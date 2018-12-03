@@ -29,12 +29,7 @@ export class WeatherInfoComponent implements OnInit, OnChanges {
 
   public dailyForecast$: Observable<any>;
 
-  constructor(
-    protected _selectors: WeatherSelectors,
-    protected _store: Store<any>
-  ) {
-
-  }
+  constructor(protected _selectors: WeatherSelectors, protected _store: Store<any>) {}
 
   ngOnInit() {
     if (this.date) {
@@ -42,46 +37,41 @@ export class WeatherInfoComponent implements OnInit, OnChanges {
     }
 
     const forecast$ = combineLatest(
-      this._store
-        .pipe(
-          select(this._selectors.getWeatherContext(this.position)),
-          tap(context => {
-            log.data('Context', context);
-            if (!context || (!context.loading && !context.loaded)) {
-              this._store.dispatch(new actions.GetForecast(this.position));
-            }
-          }),
-          map(context => context && (context.loaded === true)),
-          filter(loaded => (loaded === true)),
-          switchMap(() =>
-              this._store.pipe(
-                select(this._selectors.getWeather(this.position))
-              )
-          ),
-        ),
-        this.date$
-      );
+      this._store.pipe(
+        select(this._selectors.getWeatherContext(this.position)),
+        tap(context => {
+          log.data('Context', context);
+          if (!context || (!context.loading && !context.loaded)) {
+            this._store.dispatch(new actions.GetForecast(this.position));
+          }
+        }),
+        map(context => context && context.loaded === true),
+        filter(loaded => loaded === true),
+        switchMap(() => this._store.pipe(select(this._selectors.getWeather(this.position))))
+      ),
+      this.date$
+    );
 
-    this.forecast$ = forecast$
-      .pipe(
-        tap(results => log.data('Forecast data:', results)),
-        map(([forecast, date]) => this._getForecastForDate(forecast, date)),
-        map(forecast => Object.values(_groupBy(forecast, item => {
-          const date = new Date(item.dt * 1000);
-          date.setHours(0);
-          date.setMinutes(0);
-          date.setSeconds(0);
-          date.setMilliseconds(0);
+    this.forecast$ = forecast$.pipe(
+      tap(results => log.data('Forecast data:', results)),
+      map(([forecast, date]) => this._getForecastForDate(forecast, date)),
+      map(forecast =>
+        Object.values(
+          _groupBy(forecast, item => {
+            const date = new Date(item.dt * 1000);
+            date.setHours(0);
+            date.setMinutes(0);
+            date.setSeconds(0);
+            date.setMilliseconds(0);
 
-          return date.getTime();
-        }))),
-        map(results => (results.length === 0) ? undefined : results)
-      );
+            return date.getTime();
+          })
+        )
+      ),
+      map(results => (results.length === 0 ? undefined : results))
+    );
 
-    this.dailyForecast$ = forecast$
-      .pipe(
-        map(([forecast, date]) => this._getDailyForecast(forecast, date))
-      );
+    this.dailyForecast$ = forecast$.pipe(map(([forecast, date]) => this._getDailyForecast(forecast, date)));
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -97,15 +87,15 @@ export class WeatherInfoComponent implements OnInit, OnChanges {
 
     return forecast.list.filter(item => {
       const dtTime = item.dt * 1000; // Convert to ms
-      const prevTime = dateAsTime - (3 * 60 * 60 * 1000); // 3 hours
+      const prevTime = dateAsTime - 3 * 60 * 60 * 1000; // 3 hours
 
-      return (prevTime < dtTime);
+      return prevTime < dtTime;
     });
   }
 
   private _getDailyForecast(forecast: IWeatherEntity, date: Date) {
     const dayStart = new Date(date.getTime());
-    const ONEDAY = (86400 * 1000); // ms in one day
+    const ONEDAY = 86400 * 1000; // ms in one day
 
     dayStart.setHours(0);
     dayStart.setMinutes(0);
@@ -116,11 +106,10 @@ export class WeatherInfoComponent implements OnInit, OnChanges {
     const start = dayStart.getTime();
     const end = dayEnd.getTime();
 
-    const items = forecast.list
-      .filter(item => {
-        const dtTime = item.dt * 1000; // Convert to ms
-        return (start <= dtTime && dtTime < end);
-      });
+    const items = forecast.list.filter(item => {
+      const dtTime = item.dt * 1000; // Convert to ms
+      return start <= dtTime && dtTime < end;
+    });
 
     if (items.length === 0) {
       return undefined;
@@ -128,7 +117,7 @@ export class WeatherInfoComponent implements OnInit, OnChanges {
 
     const mins = items.map(item => item.main.temp_min);
     const maxes = items.map(item => item.main.temp_max);
-    const sum = items.reduce((prev, current) => (prev + current.main.temp), 0);
+    const sum = items.reduce((prev, current) => prev + current.main.temp, 0);
     const avg = Math.round(sum / items.length);
 
     const min = Math.min(...mins);

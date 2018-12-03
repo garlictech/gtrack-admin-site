@@ -23,9 +23,11 @@ describe('Weather effects', () => {
         {
           provide: WeatherService,
           useValue: {
-            getWeather: jasmine.createSpy('getWeather').and.returnValue(of({
-              test: true
-            }))
+            getWeather: jasmine.createSpy('getWeather').and.returnValue(
+              of({
+                test: true
+              })
+            )
           }
         },
         provideMockActions(() => actions$)

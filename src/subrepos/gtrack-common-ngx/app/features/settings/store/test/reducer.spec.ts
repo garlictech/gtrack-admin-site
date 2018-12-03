@@ -3,9 +3,7 @@ import { initialHikeProgramSettingsState } from '../state';
 import * as actions from '../actions';
 
 describe('Settings reducer', () => {
-
   describe('HikeProgramSettingsReducer', () => {
-
     describe('undefined action', () => {
       it('should return the default state', () => {
         const action = {} as any;
@@ -35,5 +33,4 @@ describe('Settings reducer', () => {
       });
     });
   });
-
 });

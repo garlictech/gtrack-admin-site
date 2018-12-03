@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { DynamicFormFieldComponent as NativeDynamicFormFieldComponent } from 'subrepos/forms-ngx';
+import { DynamicFormFieldComponent as NativeDynamicFormFieldComponent } from 'subrepos/forms-ngx/dynamic-form-field-component';
 
 @Component({
   selector: 'gtrack-form-field',

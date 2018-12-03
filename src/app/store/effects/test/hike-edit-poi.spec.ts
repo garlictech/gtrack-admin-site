@@ -3,18 +3,18 @@ import { TestBed } from '@angular/core/testing';
 import { RouterModule, Router } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { IExternalPoi } from '../../../shared/interfaces';
 import { hot, cold, Scheduler } from 'jest-marbles';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, RouteService } from '../../../../subrepos/gtrack-common-ngx';
-import { TestActions, getActions, mockRouter } from './helpers';
+import { mockRouter } from './helpers';
 import {
   HikeProgramService,
   WikipediaPoiService,
   OsmPoiService,
-  GooglePoiService,
-  // OsmRoutePoiService
+  GooglePoiService
 } from '../../../shared/services';
 import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../../actions';
 import { HikeEditPoiEffects } from '../hike-edit-poi';
@@ -24,7 +24,7 @@ import * as _ from 'lodash';
 import { pois as poiFixtures } from '../../reducer/test/fixtures';
 
 describe('HikeEditPoiEffects effects', () => {
-  let actions$: TestActions;
+  let actions$: Observable<any>;
   let effects: HikeEditPoiEffects;
   let routeService: RouteService;
   let hikeProgramService: HikeProgramService;
@@ -53,10 +53,7 @@ describe('HikeEditPoiEffects effects', () => {
         HikeEditPoiEffects,
         RouteService,
         HikeProgramService,
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions$),
         {
           provide: DeepstreamService,
           useValue: {}
@@ -126,7 +123,7 @@ describe('HikeEditPoiEffects effects', () => {
       const completion = new hikeEditPoiActions.SetWikipediaPois(pois);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.getWikipediaPois$).toBeObservable(expected);
 
@@ -147,7 +144,7 @@ describe('HikeEditPoiEffects effects', () => {
       const completion = new hikeEditPoiActions.SetGooglePois([...pois]);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.getGooglePois$).toBeObservable(expected);
 
@@ -166,7 +163,7 @@ describe('HikeEditPoiEffects effects', () => {
       const completion = new hikeEditPoiActions.SetOsmNaturalPois(pois);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.getOsmNaturalPois$).toBeObservable(expected);
 
@@ -184,7 +181,7 @@ describe('HikeEditPoiEffects effects', () => {
       const completion = new hikeEditPoiActions.SetOsmAmenityPois(pois);
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.getOsmAmenityPois$).toBeObservable(expected);
 
@@ -220,7 +217,7 @@ describe('HikeEditPoiEffects effects', () => {
       const completion = new commonPoiActions.LoadPoi('fakePoiId');
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.loadSavedPoi$).toBeObservable(expected);
     });
@@ -232,7 +229,7 @@ describe('HikeEditPoiEffects effects', () => {
       const completion = new commonPoiActions.LoadPoi('fakePoiId');
       const expected = cold('-b', { b: completion });
 
-      actions$.stream = hot('-a', { a: action });
+      actions$ = hot('-a', { a: action });
 
       expect(effects.loadModifiedPoi$).toBeObservable(expected);
     });

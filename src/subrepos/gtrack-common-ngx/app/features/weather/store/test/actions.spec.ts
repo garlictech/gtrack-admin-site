@@ -1,7 +1,6 @@
 import * as actions from '../actions';
 
 describe('Weather actions', () => {
-
   describe('GetForecast', () => {
     it('should create an action', () => {
       const position = [19.040236, 47.497913];
@@ -22,5 +21,4 @@ describe('Weather actions', () => {
       expect(action.forecast).toEqual(forecast);
     });
   });
-
 });

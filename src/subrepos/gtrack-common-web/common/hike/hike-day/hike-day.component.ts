@@ -5,6 +5,4 @@ import { HikeDayComponent as BaseComponent } from 'subrepos/gtrack-common-ngx';
   selector: 'gtrack-hike-day',
   templateUrl: './hike-day.component.html'
 })
-export class HikeDayComponent extends BaseComponent {
-
-}
+export class HikeDayComponent extends BaseComponent {}

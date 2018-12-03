@@ -39,9 +39,7 @@ describe('Settings selectors', () => {
           initialState: initialState
         })
       ],
-      providers: [
-        fromSelectors.Selectors
-      ]
+      providers: [fromSelectors.Selectors]
     });
 
     store = TestBed.get(Store);
@@ -114,7 +112,7 @@ describe('Settings selectors', () => {
 
         expect(result).toEqual(null);
 
-        store.dispatch(new actions.SettingsFetchFailure({ errorMsg: 'Test error'}));
+        store.dispatch(new actions.SettingsFetchFailure({ errorMsg: 'Test error' }));
 
         expect(result).toEqual({
           errorMsg: 'Test error'
@@ -184,7 +182,7 @@ describe('Settings selectors', () => {
 
         expect(result).toEqual(undefined);
 
-        store.dispatch(new actions.SettingsSaveFailure({ errorMsg: 'Test error'}, EProfileGroup.basic));
+        store.dispatch(new actions.SettingsSaveFailure({ errorMsg: 'Test error' }, EProfileGroup.basic));
 
         expect(result).toEqual({
           errorMsg: 'Test error'
@@ -205,7 +203,9 @@ describe('Settings selectors', () => {
 
         expect(result).toEqual(undefined);
 
-        store.dispatch(new actions.SettingsSaveStart(EProfileGroup.basic, initialPrivateProfileState.data.profile.basic));
+        store.dispatch(
+          new actions.SettingsSaveStart(EProfileGroup.basic, initialPrivateProfileState.data.profile.basic)
+        );
         expect(result).toEqual(true);
 
         store.dispatch(new actions.SettingsSaveSuccess(EProfileGroup.basic));
@@ -232,9 +232,7 @@ describe('Settings selectors', () => {
       it('should return my public profile', () => {
         let result;
 
-        selectors
-          .getMyPublicProfile
-          .subscribe(profile => (result = profile));
+        selectors.getMyPublicProfile.subscribe(profile => (result = profile));
 
         expect(result).toEqual(jasmine.objectContaining(initialPublicProfileState.entities.test.user));
       });
@@ -244,9 +242,7 @@ describe('Settings selectors', () => {
       it('should return the user\'s public profile', () => {
         let result;
 
-        selectors
-          .getPublicProfileOf('test', EAuthRoles.user)
-          .subscribe(profile => (result = profile));
+        selectors.getPublicProfileOf('test', EAuthRoles.user).subscribe(profile => (result = profile));
 
         expect(result).toEqual(jasmine.objectContaining(initialPublicProfileState.entities.test.user));
       });
@@ -256,9 +252,7 @@ describe('Settings selectors', () => {
       it('should return my public data', () => {
         let result;
 
-        selectors
-          .getMyPublicData
-          .subscribe(data => (result = data));
+        selectors.getMyPublicData.subscribe(data => (result = data));
 
         expect(result).toEqual(initialPublicProfileState.entities.test.user);
       });
@@ -268,9 +262,7 @@ describe('Settings selectors', () => {
       it('should return the user\'s public data', () => {
         let result;
 
-        selectors
-          .getPublicDataOf('test', EAuthRoles.user)
-          .subscribe(data => (result = data));
+        selectors.getPublicDataOf('test', EAuthRoles.user).subscribe(data => (result = data));
 
         expect(result).toEqual(initialPublicProfileState.entities.test.user);
       });

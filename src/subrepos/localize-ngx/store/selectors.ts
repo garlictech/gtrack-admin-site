@@ -7,4 +7,7 @@ import { domain } from './state';
 
 const selectFeature = createFeatureSelector<ILocalizationState>(domain);
 
-export const currentLanguage = createSelector(selectFeature, state => _get(state, 'actualLanguage', null));
+export const currentLanguage = createSelector(
+  selectFeature,
+  state => _get(state, 'actualLanguage', null)
+);

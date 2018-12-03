@@ -9,7 +9,6 @@ import * as LocalActions from './actions';
 
 @Injectable()
 export class WeatherEffects {
-
   @Effect()
   public getForecast$: Observable<Action> = this._actions$.pipe(
     ofType<LocalActions.GetForecast>(LocalActions.WeatherActionTypes.GET_FORECAST),

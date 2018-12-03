@@ -6,7 +6,7 @@ describe('Settings actions', () => {
       const date = new Date();
       const action = new actions.ChangeHikeProgramStartDate(date);
 
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: actions.SETTINGS_CHANGE_HIKE_PROGRAM_DATE,
         startDate: date
       });
@@ -18,7 +18,7 @@ describe('Settings actions', () => {
       const speed = 9;
       const action = new actions.ChangeHikeProgramSpeed(speed);
 
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: actions.SETTINGS_CHANGE_HIKE_PROGRAM_SPEED,
         speed: speed
       });

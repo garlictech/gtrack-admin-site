@@ -15,4 +15,6 @@ export function getReducers() {
   return reducer;
 }
 
-export const SETTINGS_REDUCER_TOKEN = new InjectionToken<ActionReducerMap<ISettingsState>>('Registered Settings Reducers');
+export const SETTINGS_REDUCER_TOKEN = new InjectionToken<ActionReducerMap<ISettingsState>>(
+  'Registered Settings Reducers'
+);

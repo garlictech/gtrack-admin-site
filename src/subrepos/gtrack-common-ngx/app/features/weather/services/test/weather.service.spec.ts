@@ -13,12 +13,8 @@ describe('WeatherService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [
-        WeatherService
-      ]
+      imports: [HttpClientTestingModule],
+      providers: [WeatherService]
     });
 
     service = TestBed.get(WeatherService);
@@ -33,9 +29,7 @@ describe('WeatherService', () => {
     it('should call openweathermap.org for weather forecast', () => {
       service
         .getWeather(position)
-        .pipe(
-          take(1)
-        )
+        .pipe(take(1))
         .subscribe(result => {
           expect(result as any).toEqual('success');
         });
@@ -44,12 +38,12 @@ describe('WeatherService', () => {
         const urlRegexp = new RegExp(`^${url}$`);
         const req = httpTestingController.expectOne(request => (request.url.match(urlRegexp) !== null));
 
-        expect(req.request.method).toEqual('GET');
-        expect(req.request.params.get('APIKEY')).toEqual(environment.openWeatherMap.key);
-        expect(req.request.params.get('lat')).toEqual(position[1].toString());
-        expect(req.request.params.get('lon')).toEqual(position[0].toString());
+      expect(req.request.method).toEqual('GET');
+      expect(req.request.params.get('APIKEY')).toEqual(environment.openWeatherMap.key);
+      expect(req.request.params.get('lat')).toEqual(position[1].toString());
+      expect(req.request.params.get('lon')).toEqual(position[0].toString());
 
-        req.flush('success');
+      req.flush('success');
     });
   });
 });

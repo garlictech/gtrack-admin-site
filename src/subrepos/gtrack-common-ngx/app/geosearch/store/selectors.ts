@@ -27,8 +27,14 @@ export class GeoSearchSelectors {
     this._externals = externals;
     this.selectFeature = createFeatureSelector<IGeoSearchState>(this._externals.storeDomain);
 
-    const geoSearchSelector = createSelector(this.selectFeature, (state: IGeoSearchState) => state.geoSearches);
-    const contextSelector = createSelector(this.selectFeature, (state: IGeoSearchState) => state.contexts);
+    const geoSearchSelector = createSelector(
+      this.selectFeature,
+      (state: IGeoSearchState) => state.geoSearches
+    );
+    const contextSelector = createSelector(
+      this.selectFeature,
+      (state: IGeoSearchState) => state.contexts
+    );
 
     const selectors = geoSearchAdapter.getSelectors(geoSearchSelector);
     const contextSelectors = geoSearchContextStateAdapter.getSelectors(contextSelector);
@@ -39,24 +45,30 @@ export class GeoSearchSelectors {
   }
 
   public getGeoSearch(context: string) {
-    return createSelector(this.getAllGeoSearches, (searches: IGeoSearchResponseItem[]) =>
-      searches.find(search => search.id === context)
+    return createSelector(
+      this.getAllGeoSearches,
+      (searches: IGeoSearchResponseItem[]) => searches.find(search => search.id === context)
     );
   }
 
   public getGeoSearchContext(context: string) {
-    return createSelector(this.getAllContexts, (searches: IGeoSearchContextState[]) =>
-      searches.find(search => search.id === context)
+    return createSelector(
+      this.getAllContexts,
+      (searches: IGeoSearchContextState[]) => searches.find(search => search.id === context)
     );
   }
 
   public getGeoSearchResults<T extends GeoSearchableItem>(context: string, getAllSelector: ((state: object) => T[])) {
-    return createSelector(getAllSelector, this.getGeoSearch(context), (data, results) => {
-      if (typeof results !== 'undefined') {
-        const ids = results.results;
+    return createSelector(
+      getAllSelector,
+      this.getGeoSearch(context),
+      (data, results) => {
+        if (typeof results !== 'undefined') {
+          const ids = results.results;
 
-        return data.filter(item => ids.indexOf(item.id) !== -1);
+          return data.filter(item => ids.indexOf(item.id) !== -1);
+        }
       }
-    });
+    );
   }
 }

@@ -49,13 +49,13 @@ export class SettingsFormComponent implements OnDestroy, AfterViewInit, OnInit {
 
   ngOnInit() {
     this.handledFormDescriptor = {
-      formDataSelector: createSelector(Selectors.selectPrivateProfileInCurrentRole, state =>
-        _get(state, this.formGroupLabel)
+      formDataSelector: createSelector(
+        Selectors.selectPrivateProfileInCurrentRole,
+        state => _get(state, this.formGroupLabel)
       ),
       remoteErrorStateSelector: Selectors.profileGroupSaveFailure(this.formGroupLabel),
       submit: {
-        translatableLabel:
-          this.formGroupLabel !== EProfileGroup.settings ? 'form.submit' : undefined,
+        translatableLabel: this.formGroupLabel !== EProfileGroup.settings ? 'form.submit' : undefined,
         submitFv: (formGroup: FormGroup) =>
           this._store.dispatch(new Actions.SettingsSaveStart(this.formGroupLabel, formGroup.value))
       },
@@ -71,17 +71,11 @@ export class SettingsFormComponent implements OnDestroy, AfterViewInit, OnInit {
     this.saving$ = this._store.pipe(select(Selectors.profileGroupSaving(this.formGroupLabel)));
     this.fetchFailure$ = this._store.pipe(select(Selectors.profileFetchFailure));
 
-    const saveFailureBase$ = this._store.pipe(
-      select(Selectors.profileGroupSaveFailure(this.formGroupLabel))
-    );
+    const saveFailureBase$ = this._store.pipe(select(Selectors.profileGroupSaveFailure(this.formGroupLabel)));
 
-    this.fieldFailure$ = saveFailureBase$.pipe(
-      filter(error => _get(error, 'errorMsg') === 'Invalid data')
-    );
+    this.fieldFailure$ = saveFailureBase$.pipe(filter(error => _get(error, 'errorMsg') === 'Invalid data'));
 
-    this.saveFailure$ = saveFailureBase$.pipe(
-      filter(error => _get(error, 'errorMsg') !== 'Invalid data')
-    );
+    this.saveFailure$ = saveFailureBase$.pipe(filter(error => _get(error, 'errorMsg') !== 'Invalid data'));
 
     combineLatest(this.loading$, this.saving$)
       .pipe(
@@ -111,12 +105,7 @@ export class SettingsFormComponent implements OnDestroy, AfterViewInit, OnInit {
         const index = actualIndex === undefined ? 0 : actualIndex + 1;
 
         const embeddedPath = `${errorPath}.${key}[0][${index}]`;
-        this._handleFormDescriptor(
-          field.embeddedForm,
-          newValue.embeddedForm,
-          embeddedPath,
-          actualIndex
-        );
+        this._handleFormDescriptor(field.embeddedForm, newValue.embeddedForm, embeddedPath, actualIndex);
       } else {
         newValue.label = `settings.${this.formGroupLabel}.${key}`;
 
