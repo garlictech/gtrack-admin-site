@@ -18,12 +18,14 @@
           <img title="Finish" [src]="finishIcon" *ngIf="rowIndex === (stops.length - 1)" />
           {{(stop.description | localizeDescription).title}}
 
+          <!-- The 1st stop is a fake (start) endpoint  -->
           <span *ngIf="rowIndex === 1 && stops[0].poiId.includes('endpoint')" class="ml-10">
             <span *ngIf="(isPlanning$ | async)">
               [<a (click)="startHere($event, stop)">start here</a>]
             </span>
           </span>
 
+          <!-- The penultimate stop is a fake (end) endpoint  -->
           <span
             *ngIf="rowIndex > 1 && rowIndex === (stops.length - 2) && stops[stops.length - 1].poiId.includes('endpoint')" class="ml-10"
           >
@@ -33,8 +35,10 @@
           </span>
         </td>
 
+        <!-- Show a start icon -->
         <td *ngIf="rowIndex === 0 && stop.poiId.includes('endpoint')" class="icon"><img title="Start" [src]="startIcon" /></td>
 
+        <!-- Show a finish icon -->
         <td *ngIf="rowIndex === (stops.length - 1) && stop.poiId.includes('endpoint')" class="icon" ><img title="Finish" [src]="finishIcon" /></td>
 
         <td>{{stop.distanceFromOrigo | distance}}</td>
