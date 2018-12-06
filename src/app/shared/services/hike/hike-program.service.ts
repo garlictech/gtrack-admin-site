@@ -48,7 +48,7 @@ export class HikeProgramService {
     )
       .pipe(take(1))
       .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
-        const poiStops = _cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
+        const poiStops = _cloneDeep(stops).filter(stop => !stop.poiId.includes('endpoint'));
 
         if (poiStops.length > 0) {
           for (const stop of poiStops) {
@@ -103,7 +103,7 @@ export class HikeProgramService {
       distanceFromOrigo:
         coord === 0 ? 0 : this._geospatialService.distanceOnLine(path.geometry.coordinates[0], coord, path),
       onRoute: true,
-      poiId: 'endpoint',
+      poiId: 'endpoint-' + (coordIdx === 0 ? 'start' : 'finish'),
       lat: coord[1],
       lon: coord[0],
       segment: {

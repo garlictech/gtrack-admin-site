@@ -56,7 +56,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       )
       .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
         const missingPoiIds = _difference(inHikePoiIds, _intersection(inHikePoiIds, inStorePoiIds)).filter(
-          id => id !== 'endpoint'
+          id => !id.includes('endpoint')
         );
 
         // Get only the not-loaded pois

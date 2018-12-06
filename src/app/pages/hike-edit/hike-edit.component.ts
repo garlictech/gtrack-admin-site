@@ -324,7 +324,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
           // Publish pois
           for (const stop of stops) {
-            if (stop.poiId !== 'endpoint') {
+            if (!stop.poiId.includes('endpoint')) {
               this._store.dispatch(new commonPoiActions.UpdatePoiState(stop.poiId, EObjectState.published));
             }
           }
