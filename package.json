@@ -210,7 +210,7 @@
         "weak": "^1.0.1"
     },
     "config": {
-        "dockerWorkflowVersion": "v11.0.6",
+        "dockerWorkflowVersion": "v11.0.8",
         "commitizen": {
             "path": "/app/node_modules/cz-conventional-changelog"
         }
