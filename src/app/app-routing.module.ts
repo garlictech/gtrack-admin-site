@@ -10,6 +10,7 @@ import { EAuthRoles } from 'subrepos/provider-client';
 
 const fallbackRoute: Route = { path: '**', component: NotFound404Component };
 
+// Trick for compodoc build
 const roles = {
   enabledRoles: EAuthRoles.admin
 };
