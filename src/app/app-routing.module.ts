@@ -10,6 +10,10 @@ import { EAuthRoles } from 'subrepos/provider-client';
 
 const fallbackRoute: Route = { path: '**', component: NotFound404Component };
 
+const roles = {
+  enabledRoles: EAuthRoles.admin
+};
+
 export const routes: Routes = [
   {
     path: '',
@@ -34,7 +38,7 @@ export const routes: Routes = [
       }
     ],
     canActivate: [RouteRedirectGuard],
-    data: { enabledRole: EAuthRoles.admin }
+    data: { enabledRole: roles.enabledRoles }
   },
   {
     path: 'login',
