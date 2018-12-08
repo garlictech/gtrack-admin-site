@@ -6,9 +6,18 @@ import { LeafletMapMarker } from './lib';
 
 @Injectable()
 export class LeafletMapMarkerService {
-  constructor(private iconService: LeafletIconService) {}
+  constructor(
+    private _leafletIconService: LeafletIconService
+  ) {}
 
-  create(lat: number, lon: number, types: Array<string>, title: string, popupData: ILeafletMarkerPopupData = null) {
-    return new LeafletMapMarker(lat, lon, types, title, this.iconService, popupData);
+  create(
+    lat: number,
+    lon: number,
+    types: string[],
+    title: string,
+    additionalData: any = null,
+    popupData: ILeafletMarkerPopupData = null
+  ) {
+    return new LeafletMapMarker(lat, lon, types, title, this._leafletIconService, additionalData, popupData);
   }
 }

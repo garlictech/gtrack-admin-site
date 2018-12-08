@@ -10,18 +10,19 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil, take, delay } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../../../store';
-
+import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
 import { IHikeProgramStop } from 'subrepos/provider-client';
-import { PoiSelectors, IconService, ISegment } from 'subrepos/gtrack-common-ngx';
+import { PoiSelectors, ISegment } from 'subrepos/gtrack-common-ngx';
 import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
+import { WaypointMarkerService, RoutePlannerService } from 'app/shared/services';
+import { IRoutePlanResult } from 'app/shared/services/admin-map/waypoint-marker.service';
+
 import * as L from 'leaflet';
 import _first from 'lodash-es/first';
 import _last from 'lodash-es/last';
 import { point as turfPoint, lineString as turfLineString } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
-import { WaypointMarkerService, RoutePlannerService } from 'app/shared/services';
-import { IRoutePlanResult } from 'app/shared/services/admin-map/waypoint-marker.service';
 
 interface INearestSegmentData {
   nearestIdx: number;
@@ -47,10 +48,10 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
     private _waypointMarkerService: WaypointMarkerService,
     private _routePlannerService: RoutePlannerService,
     private _poiSelectors: PoiSelectors,
-    private _iconService: IconService
+    private _leafletIconService: LeafletIconService
   ) {
-    this.startIcon = this._iconService.url('start');
-    this.finishIcon = this._iconService.url('finish');
+    this.startIcon = this._leafletIconService.url('start');
+    this.finishIcon = this._leafletIconService.url('finish');
   }
 
   ngOnInit() {

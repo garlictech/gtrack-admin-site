@@ -4,7 +4,6 @@ import { Observable, Subject, combineLatest } from 'rxjs';
 import { filter, takeUntil, debounceTime, switchMap, take, map } from 'rxjs/operators';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import { IPoiStored } from 'subrepos/provider-client';
-import { AdminMapService } from '../../../../shared/services/admin-map';
 import { PoiEditorService, HikeProgramService } from '../../../../shared/services';
 import { IGTrackPoi } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
@@ -32,7 +31,6 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
 
   constructor(
     private _store: Store<State>,
-    private _adminMapService: AdminMapService,
     private _poiEditorService: PoiEditorService,
     private _hikeProgramService: HikeProgramService,
     private _poiSelectors: PoiSelectors
@@ -56,7 +54,7 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
       )
       .subscribe(([inHikePoiIds, inStorePoiIds]: [string[], string[]]) => {
         const missingPoiIds = _difference(inHikePoiIds, _intersection(inHikePoiIds, inStorePoiIds)).filter(
-          id => id !== 'endpoint'
+          id => !id.includes('endpoint')
         );
 
         // Get only the not-loaded pois

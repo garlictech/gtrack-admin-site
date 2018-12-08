@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { combineLatest } from 'rxjs';
+import { take, debounceTime } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../../store';
 import { editedHikeProgramActions } from '../../../store/actions';
@@ -18,7 +19,6 @@ import turfLength from '@turf/length';
 import turfDistance from '@turf/distance';
 import { select as d3Select } from 'd3-selection';
 import * as geojson2svg from 'geojson2svg';
-import { take } from 'rxjs/operators';
 
 @Injectable()
 export class HikeProgramService {
@@ -39,49 +39,53 @@ export class HikeProgramService {
     combineLatest(
       this._store.pipe(
         select(editedHikeProgramSelectors.getStops),
+        debounceTime(250),
         take(1)
       ),
       this._store.pipe(
         select(hikeEditRoutePlannerSelectors.getPath),
+        debounceTime(250),
         take(1)
       )
     )
-      .pipe(take(1))
-      .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
-        const poiStops = _cloneDeep(stops).filter(stop => stop.poiId !== 'endpoint');
+    .pipe(take(1))
+    .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
+      const poiStops = _cloneDeep(stops).filter(stop => !stop.poiId.includes('endpoint'));
 
-        if (poiStops.length > 0) {
-          for (const stop of poiStops) {
-            this._updateStopDistanceFromOrigo(stop, path);
-          }
+      if (poiStops.length > 0) {
+        for (const stop of poiStops) {
+          this._updateStopDistanceFromOrigo(stop, path);
+        }
 
-          if (path.geometry.coordinates.length > 0) {
-            if (poiStops[0].distanceFromOrigo > 25) {
-              poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
-            }
-
-            const distanceFromFinish = Math.round(
-              1000 *
-                turfDistance(
-                  turfPoint([_last(poiStops).lon, _last(poiStops).lat]),
-                  turfPoint([_last(path.geometry.coordinates)[0], _last(path.geometry.coordinates)[1]]),
-                  { units: 'kilometers' }
-                )
-            );
-
-            if (distanceFromFinish > 25) {
-              poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
-            }
-          }
-        } else {
-          if (path.geometry.coordinates.length > 0) {
+        if (path.geometry.coordinates.length > 0) {
+          if (poiStops[0].distanceFromOrigo > 25) {
             poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
+          }
+
+          const distanceFromFinish = Math.round(
+            1000 *
+              turfDistance(
+                turfPoint([_last(poiStops).lon, _last(poiStops).lat]),
+                turfPoint([_last(path.geometry.coordinates)[0], _last(path.geometry.coordinates)[1]]),
+                { units: 'kilometers' }
+              )
+          );
+
+          if (path.geometry.coordinates.length > 1 && distanceFromFinish > 25) {
             poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
           }
         }
+      } else {
+        if (path.geometry.coordinates.length > 0) {
+          poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
+        }
+        if (path.geometry.coordinates.length > 1) {
+          poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
+        }
+      }
 
-        this._updateStopsSegment(_orderBy(poiStops, ['distanceFromOrigo']), path);
-      });
+      this._updateStopsSegment(_orderBy(poiStops, ['distanceFromOrigo']), path);
+    });
   }
 
   private _updateStopDistanceFromOrigo(stop, path) {
@@ -103,7 +107,7 @@ export class HikeProgramService {
       distanceFromOrigo:
         coord === 0 ? 0 : this._geospatialService.distanceOnLine(path.geometry.coordinates[0], coord, path),
       onRoute: true,
-      poiId: 'endpoint',
+      poiId: 'endpoint-' + (coordIdx === 0 ? 'start' : 'finish'),
       lat: coord[1],
       lon: coord[0],
       segment: {
@@ -123,21 +127,27 @@ export class HikeProgramService {
     if (_get(path, 'geometry.coordinates', []).length > 0) {
       let _segmentStartPoint = path.geometry.coordinates[0];
 
-      for (const stop of stops) {
-        const _segmentEndPoint = [stop.lon, stop.lat];
-        const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
-        const _segmentDistance = 1000 * turfLength(_segmentPath, { units: 'kilometers' });
+      for (const idx in stops) {
+        if (stops[idx]) {
+          const stop = stops[idx];
+          const _segmentEndPoint = [stop.lon, stop.lat];
+          const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
+          const _segmentDistance = 1000 * turfLength(_segmentPath, { units: 'kilometers' });
 
-        stop.segment = {
-          uphill: this._elevationService.calculateUphill((<any>_segmentPath).geometry.coordinates),
-          downhill: this._elevationService.calculateDownhill((<any>_segmentPath).geometry.coordinates),
-          distance: _segmentDistance
-        };
-        (stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, stop.segment.uphill)),
-          (stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill));
+          stop.segment = {
+            uphill: this._elevationService.calculateUphill((<any>_segmentPath).geometry.coordinates),
+            downhill: this._elevationService.calculateDownhill((<any>_segmentPath).geometry.coordinates),
+            distance: _segmentDistance
+          };
+          (stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, stop.segment.uphill)),
+            (stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill));
 
-        // Save coords for the next segment - DEPRECATED LOGIC
-        _segmentStartPoint = [stop.lon, stop.lat];
+          stop.isStart = parseInt(idx, 0) === 0;
+          stop.isFinish = parseInt(idx, 0) === stops.length - 1;
+
+          // Save coords for the next segment - DEPRECATED LOGIC
+          _segmentStartPoint = [stop.lon, stop.lat];
+        }
       }
 
       this._store.dispatch(new editedHikeProgramActions.SetStops(stops));

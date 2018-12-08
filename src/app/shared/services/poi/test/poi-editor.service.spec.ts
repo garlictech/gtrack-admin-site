@@ -18,6 +18,7 @@ import { OSM_AMENITY_POIS } from './fixtures/osm-amenity-pois';
 import { OSM_NATURAL_POIS } from './fixtures/osm-natural-pois';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
+import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
 
 describe('PoiEditorService', () => {
   let poiEditorService: PoiEditorService;
@@ -102,6 +103,12 @@ describe('PoiEditorService', () => {
           provide: GooglePoiService,
           useValue: {
             getPoiDetails: () => {}
+          }
+        },
+        {
+          provide: LeafletMapMarkerService,
+          useValue: {
+            create: () => {}
           }
         },
         {

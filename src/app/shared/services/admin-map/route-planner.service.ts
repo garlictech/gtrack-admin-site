@@ -208,7 +208,6 @@ export class RoutePlannerService {
    * Create multi-line group from a LineString
    */
   public drawRouteLineGeoJSON(geoJSON) {
-    console.log('drawRouteLineGeoJSON');
     if (this._savedRouteOnMap) {
       this._leafletMapService.removeLayer(this._savedRouteOnMap);
       delete this._savedRouteOnMap;
