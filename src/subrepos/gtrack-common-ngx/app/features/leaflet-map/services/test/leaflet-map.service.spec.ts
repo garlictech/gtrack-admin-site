@@ -99,7 +99,7 @@ describe('LeafletMapService', () => {
     );
 
     const mapClick = new EventEmitter<L.LeafletMouseEvent>();
-    mapClick.pipe(take(1)).subscribe(); // Fill the EventEmitter observers array
+    const subscription = mapClick.pipe(take(1)).subscribe(); // Fill the EventEmitter observers array
 
     const emitSpy = jest.spyOn(mapClick, 'emit');
 
@@ -117,6 +117,8 @@ describe('LeafletMapService', () => {
     });
 
     expect(emitSpy).toHaveBeenCalled();
+
+    subscription.unsubscribe();
 
     done();
   });
