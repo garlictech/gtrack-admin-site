@@ -12,12 +12,12 @@ export class LeafletMapMarker {
     public lon: number,
     protected types: Array<string>,
     public title: string,
-    protected iconService: LeafletIconService,
+    protected leafletIconService: LeafletIconService,
     public additionalData: any,
     public popupData: ILeafletMarkerPopupData
   ) {
     this.marker = new L.Marker([lat, lon], {
-      icon: iconService.getLeafletIcon(types),
+      icon: this.leafletIconService.getLeafletIcon(types),
       title: title,
       zIndexOffset: 1500
     });
@@ -34,13 +34,13 @@ export class LeafletMapMarker {
 
     const iconType = this._highlighted ? 'highlight' : 'default';
 
-    this.marker.setIcon(this.iconService.getLeafletIcon(this.types, iconType));
+    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, iconType));
   }
 
   public addToMap(map: L.Map): void {
     this.marker.addTo(map);
 
-    // Custom even
+    // Custom event
     this.marker.on('click', (e: L.LeafletMouseEvent) => {
       map.fire('gcmarkerclick', e);
     });
