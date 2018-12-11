@@ -163,7 +163,6 @@ export class LeafletMapService {
   }
 
   public refreshSpiderfierMarkers(markers: L.Marker[], type: EMarkerType) {
-    console.log('??????????????????', typeof this.overlappingMarkerSpiderfier);
     if (typeof this.overlappingMarkerSpiderfier !== 'undefined') {
       for (const marker of this.overlappingMarkerSpiderfier.markers.filter(m => m.options.type === type)) {
         this.overlappingMarkerSpiderfier.removeMarker(marker);
