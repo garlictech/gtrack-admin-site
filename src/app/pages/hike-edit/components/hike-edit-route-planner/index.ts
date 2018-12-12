@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import {
-  AdminMapService, WaypointMarkerService, RoutePlannerService
-} from '../../../../shared/services/admin-map';
+import { WaypointMarkerService, RoutePlannerService } from '../../../../shared/services/admin-map';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, filter, switchMap, take, debounceTime } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { State, IHikeEditRoutePlannerState, IHikeEditRoutePlannerTotalState } from '../../../../store';
+import { State, IHikeEditRoutePlannerState } from '../../../../store';
 import { editedHikeProgramActions, hikeEditPoiActions } from '../../../../store/actions';
 import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
@@ -18,6 +16,7 @@ import _pick from 'lodash-es/pick';
 import _values from 'lodash-es/values';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 import * as leafletMapSelectors from '@common.features/leaflet-map/store/selectors';
+import { IRouteTotal } from 'app/shared/interfaces';
 
 @Component({
   selector: 'app-hike-edit-route-planner',
@@ -110,29 +109,18 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         // Clear location
         if (route.features.length === 1) {
           this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
-          // 1st segment added (line + 2 points)
+        // 1st segment added (line + 2 points)
         } else if (route.features.length === 3) {
           this._updateLocation(route.features[1].geometry.coordinates);
         }
 
-        this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
-          if (isPlanning) {
-            this._hikeProgramService.updateHikeProgramStops();
-            this._refreshIcons(route);
-          }
-        });
-      });
-
-    this._store
-      .pipe(
-        select(hikeEditRoutePlannerSelectors.getTotal),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((total: IHikeEditRoutePlannerTotalState) => {
-        const fields = _pick(total, ['distance', 'uphill', 'downhill', 'time', 'score']);
-        if (_values(fields).length > 0) {
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(fields, true));
-        }
+        this.isPlanning$
+          .pipe(take(1))
+          .subscribe((isPlanning: boolean) => {
+            if (isPlanning) {
+              this._refreshIcons(route);
+            }
+          });
       });
   }
 
