@@ -18,7 +18,9 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
     uphill: 0,
     downhill: 0,
     time: 0,
+    reverseTime: 0,
     score: 0,
+    reverseScore: 0,
     location: '',
     difficulty: 1,
     backgroundImages: [],
@@ -32,6 +34,7 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
       }
     },
     stops: [],
+    reverseStops: [],
     checkpoints: new CheckpointSequence([]),
     timestamp: 0,
     state: EObjectState.draft
@@ -100,6 +103,11 @@ export function editedHikeProgramReducer(
 
     case editedHikeProgramActions.SET_STOPS: {
       newState.data.stops = _cloneDeep(action.stops);
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_REVERSE_STOPS: {
+      newState.data.reverseStops = _cloneDeep(action.stops);
       return newState;
     }
 

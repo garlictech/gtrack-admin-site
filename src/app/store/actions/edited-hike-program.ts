@@ -10,6 +10,7 @@ export const ADD_HIKE_PROGRAM_DETAILS = '[HikeProgram] Add some details';
 export const PREPARE_THEN_ADD_STOP = '[HikeProgram] Prepare then add stop';
 export const ADD_STOP = '[HikeProgram] Add stop';
 export const SET_STOPS = '[HikeProgram] Set stops';
+export const SET_REVERSE_STOPS = '[HikeProgram] Set reverse stops';
 export const SET_CHECKPOINTS = '[HikeProgram] Set checkpoints';
 export const REMOVE_STOP_BY_POI_ID = '[HikeProgram] Remove stop by poi id';
 export const SAVE_HIKE_PROGRAM = '[HikeProgram] Save hike program';
@@ -44,7 +45,9 @@ export interface IDetails {
   uphill?: number;
   downhill?: number;
   time?: number;
+  reverseTime?: number;
   score?: number;
+  reverseScore?: number;
   location?: string;
   routeIcon?: string;
   elevationIcon?: string;
@@ -68,6 +71,11 @@ export class PrepareThenAddStop implements Action {
 
 export class SetStops implements Action {
   readonly type = SET_STOPS;
+  constructor(public stops: IHikeProgramStop[]) {}
+}
+
+export class SetReverseStops implements Action {
+  readonly type = SET_REVERSE_STOPS;
   constructor(public stops: IHikeProgramStop[]) {}
 }
 
@@ -115,6 +123,7 @@ export type AllEditedHikeProgramActions =
   | PrepareThenAddStop
   | AddStop
   | SetStops
+  | SetReverseStops
   | SetCheckpoints
   | RemoveStopByPoiId
   | SaveHikeProgram

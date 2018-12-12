@@ -1,14 +1,9 @@
-export * from './admin-map';
 export * from './hike-edit-poi';
 export * from './hike-edit-image';
 export * from './hike-edit-route-planner';
 export * from './hike-list';
 export * from './edited-gtrack-poi';
 export * from './edited-hike-program';
-
-import * as adminMapActions from './admin-map';
-export type AdminMapAction = adminMapActions.AllAdminMapActions;
-export { adminMapActions };
 
 import * as editedGTrackPoiActions from './edited-gtrack-poi';
 export type EditedGTrackPoiAction = editedGTrackPoiActions.AllEditedGTrackPoiActions;

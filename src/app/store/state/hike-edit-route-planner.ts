@@ -1,17 +1,9 @@
 import { ISegment } from 'subrepos/gtrack-common-ngx';
-
-export interface IHikeEditRoutePlannerTotalState {
-  distance?: number;
-  uphill?: number;
-  downhill?: number;
-  coordinates?: any;
-  time?: number;
-  score?: number;
-}
+import { IRouteTotal } from 'app/shared/interfaces';
 
 export interface IHikeEditRoutePlannerState {
   segments: ISegment[];
-  total: IHikeEditRoutePlannerTotalState;
+  total: IRouteTotal;
   location: any;
   route: GeoJSON.FeatureCollection<any>;
   routing: boolean; // Routing queries are running
