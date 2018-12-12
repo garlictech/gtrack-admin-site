@@ -107,13 +107,13 @@ export class LeafletMapService {
     return this._currentPositionMarker;
   }
 
-  public addGeoJSONObject(geoJson: GeoJsonObject, geoJsonStyle: any): L.GeoJSON {
+  public addGeoJSONObject(geoJson: GeoJsonObject, geoJsonStyle: any): L.GeoJSON<any> {
     const geoJSON = L.geoJSON(geoJson, {
       style: geoJsonStyle,
       // onEachFeature: this._propagateClick // ??? legacy from old code
     });
 
-    return <L.GeoJSON>this.addLayer(geoJSON);
+    return <L.GeoJSON<any>>this.addLayer(geoJSON);
   }
 
   /*
@@ -138,21 +138,21 @@ export class LeafletMapService {
         style: geoJsonStyle
       });
 
-      geoJSON.addTo(featureGroup);
+      featureGroup.addLayer(geoJSON);
     });
 
     return featureGroup;
   }
 
-  public addLayer(layer: L.Layer): L.Layer {
-    if (!this.leafletMap.hasLayer(layer)) {
-      layer.addTo(this.leafletMap);
+  public addLayer(layer: any): any {
+    if (layer && !this.leafletMap.hasLayer(layer)) {
+      this.leafletMap.addLayer(layer);
     }
 
     return layer;
   }
 
-  public removeLayer(layer: L.Layer) {
+  public removeLayer(layer: any) {
     if (layer && this.leafletMap.hasLayer(layer)) {
       this.leafletMap.removeLayer(layer);
     }

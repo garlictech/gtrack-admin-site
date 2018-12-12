@@ -18,7 +18,6 @@ import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '..
 import { GooglePoiService } from './google-poi.service';
 import { WikipediaPoiService } from './wikipedia-poi.service';
 import { IMarkerPopupData, IBackgroundImageData } from 'subrepos/provider-client/interfaces';
-import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker/marker-popup.service';
 
 import * as L from 'leaflet';
 import _defaultsDeep from 'lodash-es/defaultsDeep';
@@ -45,6 +44,7 @@ import { EMarkerType } from '@common.features/leaflet-map/interfaces';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 import { LeafletMapMarker } from '@common.features/leaflet-map/services/lib';
 import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
+import { LeafletMarkerPopupService } from 'subrepos/gtrack-common-ngx/app/features/leaflet-map/services/leaflet-marker-popup.service';
 
 @Injectable()
 export class PoiEditorService {
@@ -67,7 +67,7 @@ export class PoiEditorService {
     private _poiSelectors: PoiSelectors,
     private _googlePoiService: GooglePoiService,
     private _wikipediaPoiService: WikipediaPoiService,
-    private _markerPopupService: MarkerPopupService,
+    private _markerPopupService: LeafletMarkerPopupService,
     private _leafletMapService: LeafletMapService
   ) {}
 

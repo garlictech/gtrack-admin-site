@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { AdminMapService } from '../admin-map.service';
-import {
-  MapMarkerService, DescriptionLanguageListService, MarkerPopupService
-} from '../../../../../subrepos/gtrack-common-ngx';
+import { DescriptionLanguageListService } from '../../../../../subrepos/gtrack-common-ngx';
 
 import { StoreModule, Store } from '@ngrx/store';
 import { State } from 'app/store';
 
 import * as _ from 'lodash';
 import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
+import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
+import { LeafletMarkerPopupService } from '@common.features/leaflet-map/services/leaflet-marker-popup.service';
 
 describe('AdminMapService', () => {
   let adminMapService: AdminMapService;
@@ -32,7 +32,7 @@ describe('AdminMapService', () => {
           useValue: {}
         },
         {
-          provide: MapMarkerService,
+          provide: LeafletMapMarkerService,
           useValue: {}
         },
         {
@@ -40,7 +40,7 @@ describe('AdminMapService', () => {
           useValue: {}
         },
         {
-          provide: MarkerPopupService,
+          provide: LeafletMarkerPopupService,
           useValue: {}
         }
       ]

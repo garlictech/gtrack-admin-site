@@ -4,8 +4,8 @@ import { GOOGLE_POIS } from './fixtures/google-pois';
 import { StoreModule } from '@ngrx/store';
 import { hikeEditPoiReducer, editedHikeProgramReducer } from '../../../../../app/store/reducer';
 import {
-  GeometryService, GeospatialService, ElevationService, IconService, GeoSearchSelectors,
-  PoiSelectors, MarkerPopupService, EXTERNAL_GEO_SEARCH_DEPENDENCIES, EXTERNAL_POI_DEPENDENCIES
+  GeometryService, GeospatialService, ElevationService, GeoSearchSelectors,
+  PoiSelectors, EXTERNAL_GEO_SEARCH_DEPENDENCIES, EXTERNAL_POI_DEPENDENCIES
 } from '../../../../../subrepos/gtrack-common-ngx';
 import { RoutePlannerService } from '../../admin-map';
 import { GooglePoiService } from '../google-poi.service';
@@ -19,6 +19,7 @@ import { OSM_NATURAL_POIS } from './fixtures/osm-natural-pois';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
 import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
+import { LeafletMarkerPopupService } from '@common.features/leaflet-map/services/leaflet-marker-popup.service';
 
 describe('PoiEditorService', () => {
   let poiEditorService: PoiEditorService;
@@ -26,12 +27,12 @@ describe('PoiEditorService', () => {
   let geospatialService: GeospatialService;
   let routePlannerService: RoutePlannerService;
   let elevationService: ElevationService;
-  let iconService: IconService;
+  let iconService: LeafletIconService;
   let geoSearchSelectors: GeoSearchSelectors;
   let poiSelectors: PoiSelectors;
   let googlePoiService: GooglePoiService;
   let wikipediaPoiService: WikipediaPoiService;
-  let markerPopupService: MarkerPopupService;
+  let markerPopupService: LeafletMarkerPopupService;
   let messageService: MessageService;
 
   beforeEach(() => {
@@ -45,11 +46,11 @@ describe('PoiEditorService', () => {
       ],
       providers: [
         PoiEditorService,
-        IconService,
+        LeafletIconService,
         GeoSearchSelectors,
         PoiSelectors,
         LeafletMapService,
-        MarkerPopupService,
+        LeafletMarkerPopupService,
         {
           provide: GeometryService,
           useValue: {
@@ -123,12 +124,12 @@ describe('PoiEditorService', () => {
     geospatialService = TestBed.get(GeospatialService);
     routePlannerService = TestBed.get(RoutePlannerService);
     elevationService = TestBed.get(ElevationService);
-    iconService = TestBed.get(IconService);
+    iconService = TestBed.get(LeafletIconService);
     geoSearchSelectors = TestBed.get(GeoSearchSelectors);
     poiSelectors = TestBed.get(PoiSelectors);
     googlePoiService = TestBed.get(GooglePoiService);
     wikipediaPoiService = TestBed.get(WikipediaPoiService);
-    markerPopupService = TestBed.get(MarkerPopupService);
+    markerPopupService = TestBed.get(LeafletMarkerPopupService);
     messageService = TestBed.get(MessageService);
   });
 
