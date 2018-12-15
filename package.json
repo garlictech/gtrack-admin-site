@@ -158,7 +158,7 @@
         "password-validator": "^4.1.1",
         "popper.js": "^1.14.6",
         "primeicons": "^1.0.0",
-        "primeng": "^7.0.0-rc.1",
+        "primeng": "^7.0.0",
         "raven-js": "^3.26.4",
         "rxjs": "^6.3.2",
         "rxjs-compat": "^6.2.1",

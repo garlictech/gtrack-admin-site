@@ -32,9 +32,7 @@ export class RoutePlannerService {
   ) {
     // Update totals on each segment update
     this._store
-      .pipe(
-        select(hikeEditRoutePlannerSelectors.getSegments)
-      )
+      .pipe(select(hikeEditRoutePlannerSelectors.getSegments))
       .subscribe((segments: ISegment[]) => {
         // Update total for route info
         this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
@@ -97,8 +95,8 @@ export class RoutePlannerService {
 
     for (const segment of segments) {
       for (const key in _omit(segment, 'coordinates')) {
-        if (segment[key]) {
-          if (!total[key]) {
+        if (typeof segment[key] !== 'undefined') {
+          if (typeof total[key] === 'undefined') {
             total[key] = 0;
           }
           total[key] += segment[key];

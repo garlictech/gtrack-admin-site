@@ -71,7 +71,9 @@ export interface IHikeProgram {
   uphill: number;
   downhill: number;
   time: number;
+  reverseTime: number;
   score: number;
+  reverseScore: number;
   location: string;
   difficulty: number;
   backgroundImages?: IBackgroundImageData[];
@@ -82,6 +84,7 @@ export interface IHikeProgram {
   description: ILocalizedItem<ITextualDescription>;
   offlineMap?: string;
   stops: IHikeProgramStop[];
+  reverseStops: IHikeProgramStop[];
   checkpoints?: CheckpointSequence;
 }
 

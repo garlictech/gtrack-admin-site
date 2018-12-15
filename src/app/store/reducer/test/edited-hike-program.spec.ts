@@ -193,6 +193,16 @@ describe('Edited HikeProgram reducers', () => {
     });
   });
 
+  describe('SetReverseStops action', () => {
+    it('should set reverse stops to hikeProgram', () => {
+      const stopsData = stops;
+      const action = new editedHikeProgramActions.SetReverseStops(stopsData);
+      const state = editedHikeProgramReducer(initialState, action);
+
+      expect(state.data.reverseStops).toEqual(stopsData);
+    });
+  });
+
   describe('RemoveStopByPoiId action', () => {
     it('should remove stops from hikeProgram by poi ID', () => {
       const action = new editedHikeProgramActions.RemoveStopByPoiId(['1']);

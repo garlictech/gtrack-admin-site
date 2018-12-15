@@ -5,7 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { SelectItem } from 'primeng/api';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { State } from '../../../../store';
-import { adminMapActions, commonBackgroundGeolocationActions } from '../../../../store/actions';
+import { commonBackgroundGeolocationActions } from '../../../../store/actions';
 import { selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
 import { LeafletMapComponent } from '@common.features/leaflet-map/components/leaflet-map';
 import { WaypointMarkerService, EBufferSize, AdminMapService } from '../../../../shared/services/admin-map';
@@ -126,7 +126,6 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     this._destroy$.complete();
 
     this._store.dispatch(new commonBackgroundGeolocationActions.EndTracking());
-    this._store.dispatch(new adminMapActions.ResetMap());
   }
 
   ngAfterViewInit() {

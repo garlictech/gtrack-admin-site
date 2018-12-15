@@ -12,6 +12,7 @@ import { ElevationService, GameRuleService, Route, CheckpointService } from 'sub
 
 import _get from 'lodash-es/get';
 import _last from 'lodash-es/last';
+import _first from 'lodash-es/first';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _orderBy from 'lodash-es/orderBy';
 import { point as turfPoint } from '@turf/helpers';
@@ -19,6 +20,7 @@ import turfLength from '@turf/length';
 import turfDistance from '@turf/distance';
 import { select as d3Select } from 'd3-selection';
 import * as geojson2svg from 'geojson2svg';
+import { IRouteTotal } from 'app/shared/interfaces';
 
 @Injectable()
 export class HikeProgramService {
@@ -51,47 +53,78 @@ export class HikeProgramService {
     .pipe(take(1))
     .subscribe(([stops, path]: [IHikeProgramStop[], any]) => {
       const poiStops = _cloneDeep(stops).filter(stop => !stop.poiId.includes('endpoint'));
+      const reversePoiStops = _cloneDeep(poiStops);
 
       if (poiStops.length > 0) {
         for (const stop of poiStops) {
-          this._updateStopDistanceFromOrigo(stop, path);
+          this._updateStopDistanceFromOrigo(stop, path, 0);
+        }
+
+        for (const stop of reversePoiStops) {
+          this._updateStopDistanceFromOrigo(stop, path, path.geometry.coordinates.length - 1);
         }
 
         if (path.geometry.coordinates.length > 0) {
+          // Add endpoint-start
           if (poiStops[0].distanceFromOrigo > 25) {
-            poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
+            poiStops.unshift(this._createStopFromPathEndPoint(path, 0, false));
+          }
+          if (reversePoiStops[0].distanceFromOrigo > 25) {
+            reversePoiStops.unshift(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, true));
           }
 
-          const distanceFromFinish = Math.round(
-            1000 *
-              turfDistance(
-                turfPoint([_last(poiStops).lon, _last(poiStops).lat]),
-                turfPoint([_last(path.geometry.coordinates)[0], _last(path.geometry.coordinates)[1]]),
-                { units: 'kilometers' }
-              )
-          );
-
+          // Add endpoint-finish
+          const distanceFromFinish = Math.round(1000 * turfDistance(
+            turfPoint([_last(poiStops).lon, _last(poiStops).lat]),
+            turfPoint([_last(path.geometry.coordinates)[0], _last(path.geometry.coordinates)[1]]),
+            { units: 'kilometers' }
+          ));
           if (path.geometry.coordinates.length > 1 && distanceFromFinish > 25) {
-            poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
+            poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, false));
+          }
+
+          const reverseDistanceFromFinish = Math.round(1000 * turfDistance(
+            turfPoint([_last(reversePoiStops).lon, _last(reversePoiStops).lat]),
+            turfPoint([_first(path.geometry.coordinates)[0], _first(path.geometry.coordinates)[1]]),
+            { units: 'kilometers' }
+          ));
+          if (path.geometry.coordinates.length > 1 && reverseDistanceFromFinish > 25) {
+            reversePoiStops.push(this._createStopFromPathEndPoint(path, 0, true));
           }
         }
       } else {
+        // Add endpoint-start
         if (path.geometry.coordinates.length > 0) {
-          poiStops.unshift(this._createStopFromPathEndPoint(path, 0));
+          poiStops.unshift(this._createStopFromPathEndPoint(path, 0, false));
+          reversePoiStops.unshift(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, true));
         }
+        // Add endpoint-finish
         if (path.geometry.coordinates.length > 1) {
-          poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1));
+          poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, false));
+          reversePoiStops.push(this._createStopFromPathEndPoint(path, 0, true));
         }
       }
 
-      this._updateStopsSegment(_orderBy(poiStops, ['distanceFromOrigo']), path);
+      // Update segments
+      this._updateStopsSegment(_orderBy(poiStops, ['distanceFromOrigo']), path, false);
+      this._updateStopsSegment(_orderBy(reversePoiStops, ['distanceFromOrigo']), path, true);
+
+      // Update total
+      const total = this._calculateTotal(poiStops);
+      const reverseTotal: IRouteTotal = this._calculateTotal(reversePoiStops);
+      const totals = {
+        ...total,
+        reverseTime: reverseTotal.time,
+        reverseScore: reverseTotal.score,
+      };
+      this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(totals, true));
     });
   }
 
-  private _updateStopDistanceFromOrigo(stop, path) {
+  private _updateStopDistanceFromOrigo(stop: IHikeProgramStop, path: any, coordIdx: number) {
     if (path.geometry.coordinates.length > 1) {
       stop.distanceFromOrigo = this._geospatialService.distanceOnLine(
-        path.geometry.coordinates[0],
+        path.geometry.coordinates[coordIdx],
         [stop.lon, stop.lat],
         path
       );
@@ -101,13 +134,19 @@ export class HikeProgramService {
   /**
    * Create begin/end stop from path endpoints
    */
-  private _createStopFromPathEndPoint(path, coordIdx) {
+  private _createStopFromPathEndPoint(path: any, coordIdx: number, reverse: boolean) {
     const coord = path.geometry.coordinates[coordIdx];
+    const distCoordIdx = reverse ? path.geometry.coordinates.length - 1 : 0;
+
     return {
       distanceFromOrigo:
-        coord === 0 ? 0 : this._geospatialService.distanceOnLine(path.geometry.coordinates[0], coord, path),
+        (coordIdx === 0
+        ? (reverse ? this._geospatialService.distanceOnLine(path.geometry.coordinates[distCoordIdx], coord, path) : 0)
+        : (reverse ? 0 : this._geospatialService.distanceOnLine(path.geometry.coordinates[distCoordIdx], coord, path))),
       onRoute: true,
-      poiId: 'endpoint-' + (coordIdx === 0 ? 'start' : 'finish'),
+      poiId: 'endpoint-' + (coordIdx === 0
+        ? (reverse ? 'finish' : 'start')
+        : (reverse ? 'start' : 'finish')),
       lat: coord[1],
       lon: coord[0],
       segment: {
@@ -123,9 +162,11 @@ export class HikeProgramService {
   /**
    * Update stops' segment info
    */
-  private _updateStopsSegment(stops: IHikeProgramStop[], path: any) {
+  private _updateStopsSegment(stops: IHikeProgramStop[], path: any, reverse: boolean) {
     if (_get(path, 'geometry.coordinates', []).length > 0) {
-      let _segmentStartPoint = path.geometry.coordinates[0];
+      let _segmentStartPoint = reverse
+        ? path.geometry.coordinates[path.geometry.coordinates.length - 1]
+        : path.geometry.coordinates[0];
 
       for (const idx in stops) {
         if (stops[idx]) {
@@ -139,8 +180,12 @@ export class HikeProgramService {
             downhill: this._elevationService.calculateDownhill((<any>_segmentPath).geometry.coordinates),
             distance: _segmentDistance
           };
-          (stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, stop.segment.uphill)),
-            (stop.segment.score = this._gameRuleService.score(_segmentDistance, stop.segment.uphill));
+          stop.segment.time = this._gameRuleService.segmentTime(
+            _segmentDistance, reverse ? stop.segment.uphill : stop.segment.downhill
+          ),
+          stop.segment.score = this._gameRuleService.score(
+            _segmentDistance, reverse ? stop.segment.uphill : stop.segment.downhill
+          );
 
           stop.isStart = parseInt(idx, 0) === 0;
           stop.isFinish = parseInt(idx, 0) === stops.length - 1;
@@ -150,9 +195,30 @@ export class HikeProgramService {
         }
       }
 
-      this._store.dispatch(new editedHikeProgramActions.SetStops(stops));
-      this._store.dispatch(new editedHikeProgramActions.SetCheckpoints(this._checkpointService.createSequence(stops)));
+      if (reverse) {
+        this._store.dispatch(new editedHikeProgramActions.SetReverseStops(stops));
+      } else {
+        this._store.dispatch(new editedHikeProgramActions.SetStops(stops));
+        this._store.dispatch(new editedHikeProgramActions.SetCheckpoints(this._checkpointService.createSequence(stops)));
+      }
     }
+  }
+
+  private _calculateTotal(stops: IHikeProgramStop[]) {
+    const total = {};
+
+    for (const stop of stops) {
+      for (const key in stop.segment) {
+        if (typeof stop.segment[key] !== 'undefined') {
+          if (typeof total[key] === 'undefined') {
+            total[key] = 0;
+          }
+          total[key] += stop.segment[key];
+        }
+      }
+    }
+
+    return total;
   }
 
   /**

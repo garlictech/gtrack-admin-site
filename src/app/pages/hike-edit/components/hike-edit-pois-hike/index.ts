@@ -121,25 +121,20 @@ export class HikeEditPoisHikeComponent implements OnInit, OnDestroy {
         this._poiEditorService.refreshPoiMarkers();
       });
 
-    this._store
-      .pipe(
+    combineLatest(
+      this._store.pipe(
         select(editedHikeProgramSelectors.getStopsCount),
-        takeUntil(this._destroy$),
-        debounceTime(250)
-      )
-      .subscribe(() => {
-        this._hikeProgramService.updateHikeProgramStops();
-      });
-
-    this._store
-      .pipe(
+        takeUntil(this._destroy$)
+      ),
+      this._store.pipe(
         select(hikeEditRoutePlannerSelectors.getPathLength),
-        takeUntil(this._destroy$),
-        debounceTime(250)
+        takeUntil(this._destroy$)
       )
-      .subscribe(() => {
-        this._hikeProgramService.updateHikeProgramStops();
-      });
+    )
+    .pipe(debounceTime(500))
+    .subscribe(() => {
+      this._hikeProgramService.updateHikeProgramStops();
+    });
 
     //
     // Contexts & Refresh markers

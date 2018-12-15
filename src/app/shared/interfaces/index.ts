@@ -6,3 +6,4 @@ export * from './wikipedia-poi.interface';
 export * from './external-poi-type.interface';
 export * from './textual-description-item.interface';
 export * from './mapillary-image.interface';
+export * from './route-total.interface';

@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { IEditedHikeProgramState } from '../../state';
 import { editedHikeProgramReducer, initialEditedHikeProgramState } from '../../reducer/edited-hike-program';
 import { editedHikeProgramActions, commonPoiActions } from '../../actions';
-import { IBackgroundImageData, EObjectState, IHikeProgramStop } from '../../../../subrepos/provider-client';
+import { IBackgroundImageData, EObjectState, IHikeProgramStop, ETextualDescriptionType } from '../../../../subrepos/provider-client';
 import { PoiSelectors, EXTERNAL_POI_DEPENDENCIES, poiReducer } from '../../../../subrepos/gtrack-common-ngx';
 
 import { pois as poiFixtures, bgImages as bgImageFixtures, stops as stopsFixtures } from '../../reducer/test/fixtures';
@@ -445,6 +445,30 @@ describe('Edited HikeProgram selectors', () => {
 
       store.dispatch(new editedHikeProgramActions.AddHikeProgramBackgroundImage(images[0]));
       expect(result).toEqual(['fakeOriginalUrl']);
+    });
+  });
+
+  describe('getDescriptionByLang', () => {
+    it('should return editedHikeProgram description by lang', () => {
+      let result;
+
+      store
+        .pipe(
+          select(editedHikeProgramSelectors.getDescriptionByLang('en_US')),
+          takeUntil(destroy$)
+        )
+        .subscribe(res => (result = res));
+
+      expect(result).toEqual({
+        title: 'A new hike',
+        fullDescription: '',
+        summary: '',
+        type: ETextualDescriptionType.markdown
+      });
+
+      store.dispatch(new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('en_US', { title: 'fakeTitle' }));
+
+      expect(result).toEqual({ title: 'fakeTitle' });
     });
   });
 });
