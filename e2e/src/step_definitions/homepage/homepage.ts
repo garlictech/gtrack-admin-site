@@ -8,6 +8,8 @@ const expect = chai.expect;
 defineSupportCode(async ({ Before, Given, Then }) => {
   Before({ timeout: 30000 }, async function() {
     browser.ignoreSynchronization = true;
+    browser.waitForAngular();
+
     await browser.get(browser.baseUrl);
   });
 
