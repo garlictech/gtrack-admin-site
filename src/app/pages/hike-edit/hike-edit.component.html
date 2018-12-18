@@ -75,7 +75,7 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-card title="General info">
+      <p-card header="General info">
         <app-hike-edit-general-info></app-hike-edit-general-info>
       </p-card>
     </div>
@@ -83,7 +83,7 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-card title="Map">
+      <p-card header="Map">
         <app-hike-edit-map></app-hike-edit-map>
       </p-card>
     </div>
@@ -91,7 +91,7 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-card title="Hike outline">
+      <p-card header="Hike outline">
         <app-hike-edit-outline [isPlanning$]="isPlanning$"></app-hike-edit-outline>
       </p-card>
     </div>
@@ -99,7 +99,7 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-card title="Route planning">
+      <p-card header="Route planning">
         <app-hike-edit-route-planner [isPlanning$]="isPlanning$"></app-hike-edit-route-planner>
       </p-card>
     </div>
@@ -107,7 +107,7 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-card title="Pois">
+      <p-card header="Pois">
         <app-hike-edit-pois [isPlanning$]="isPlanning$"></app-hike-edit-pois>
       </p-card>
     </div>
@@ -115,7 +115,7 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-card title="Photos">
+      <p-card header="Photos">
         <app-hike-edit-photos
           [backgroundImageSelector]="backgroundImageSelector"
           [backgroundImageUrlSelector]="backgroundImageUrlSelector"

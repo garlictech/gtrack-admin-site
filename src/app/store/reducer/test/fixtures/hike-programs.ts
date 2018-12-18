@@ -9,7 +9,9 @@ export const hikePrograms: IHikeProgram[] = [
     uphill: 1,
     downhill: 1,
     time: 20,
+    reverseTime: 200,
     score: 20,
+    reverseScore: 20,
     location: 'Budapest',
     difficulty: 5,
     feature: true,
@@ -24,7 +26,8 @@ export const hikePrograms: IHikeProgram[] = [
         type: ETextualDescriptionType.markdown
       }
     },
-    stops: []
+    stops: [],
+    reverseStops: []
   },
   {
     id: uuid(),
@@ -33,7 +36,9 @@ export const hikePrograms: IHikeProgram[] = [
     uphill: 20,
     downhill: 30,
     time: 15,
+    reverseTime: 100,
     score: 40,
+    reverseScore: 400,
     location: 'London',
     difficulty: 1,
     feature: true,
@@ -48,6 +53,7 @@ export const hikePrograms: IHikeProgram[] = [
         type: ETextualDescriptionType.markdown
       }
     },
-    stops: []
+    stops: [],
+    reverseStops: []
   }
 ];

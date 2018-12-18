@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AuthenticationSelectors } from './store';
-import { NotAuthGuard } from './guards';
+import { NotAuthGuard, AuthGuard, RoleGuard } from './guards';
 import { Selectors as DeepstreamSelectors } from '../../../deepstream-ngx';
 
 @NgModule({
@@ -10,7 +10,9 @@ import { Selectors as DeepstreamSelectors } from '../../../deepstream-ngx';
       useClass: AuthenticationSelectors.Selectors,
       deps: [DeepstreamSelectors]
     },
-    NotAuthGuard
+    NotAuthGuard,
+    AuthGuard,
+    RoleGuard
   ]
 })
 export class AuthenticationModule {}

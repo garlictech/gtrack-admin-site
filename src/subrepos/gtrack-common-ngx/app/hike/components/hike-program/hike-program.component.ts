@@ -72,6 +72,7 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     }
   }
 
+  // TODO: Move this to a service
   public getWeather(date: Date) {
     const time = date.getTime();
 
@@ -79,14 +80,12 @@ export class HikeProgramComponent implements OnInit, OnChanges {
       return;
     }
 
-    return this.weather.list.find((item, i) => {
-      const wtime = item.dt * 1000;
-      const next = wtime + 3 * 60 * 60 * 1000; // 3 hours
-      if (wtime <= time && time <= next) {
-        return true;
-      }
+    // Find the closest item
+    return this.weather.list.reduce((prev, current) => {
+      const diff1 = Math.abs(time - current.dt * 1000);
+      const diff2 = Math.abs(time - prev.dt * 1000);
 
-      return false;
+      return diff1 < diff2 ? current : prev;
     });
   }
 

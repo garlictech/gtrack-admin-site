@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, Route } from '@angular/router';
-import { AuthGuard } from 'subrepos/authentication-api-ngx';
 import { NotFound404Component } from './not-found404.component';
 import { LoginComponent } from './auth/components/login';
 import { HikeListComponent } from './pages/hike-list';
 import { HikeEditComponent } from './pages/hike-edit';
 import { LayoutComponent } from './core/components/layout';
+import { RouteRedirectGuard } from './auth/auth.guard';
+import { EAuthRoles } from 'subrepos/provider-client';
 
 const fallbackRoute: Route = { path: '**', component: NotFound404Component };
+
+// Trick for compodoc build
+const roles = {
+  enabledRoles: EAuthRoles.admin
+};
 
 export const routes: Routes = [
   {
@@ -32,7 +38,8 @@ export const routes: Routes = [
         component: HikeEditComponent
       }
     ],
-    canActivate: [AuthGuard]
+    canActivate: [RouteRedirectGuard],
+    data: { enabledRole: roles.enabledRoles }
   },
   {
     path: 'login',

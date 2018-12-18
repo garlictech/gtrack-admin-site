@@ -130,6 +130,25 @@ describe('Edited GTrackPoi selectors', () => {
     });
   });
 
+  describe('getDescriptionByLang', () => {
+    it('should return editedGTrackPoi description by lang', () => {
+      let result;
+
+      store
+        .pipe(
+          select(editedGTrackPoiSelectors.getDescriptionByLang('en_US')),
+          takeUntil(destroy$)
+        )
+        .subscribe(res => (result = res));
+
+      expect(result).toEqual({ title: 'A new poi', type: ETextualDescriptionType.markdown });
+
+      store.dispatch(new editedGTrackPoiActions.AddNewTranslatedPoiDescription('en_US', { title: 'fakeTitle' }));
+
+      expect(result).toEqual({ title: 'fakeTitle' });
+    });
+  });
+
   describe('getData', () => {
     it('should return editedGTrackPoi data', () => {
       let result;

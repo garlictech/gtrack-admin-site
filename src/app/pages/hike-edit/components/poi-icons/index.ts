@@ -1,7 +1,7 @@
 // Core
 import { Component, Input, OnInit } from '@angular/core';
 import { IExternalPoi } from '../../../../shared/interfaces';
-import { IconService } from 'subrepos/gtrack-common-ngx';
+import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
 
 import _uniq from 'lodash-es/uniq';
 
@@ -13,11 +13,13 @@ export class PoiIconsComponent implements OnInit {
   @Input() poi: IExternalPoi;
   public urls: string[] = [];
 
-  constructor(private _iconService: IconService) {}
+  constructor(
+    private _leafletIconService: LeafletIconService
+  ) {}
 
   ngOnInit() {
     if (typeof this.poi.types !== 'undefined') {
-      this.urls = _uniq(this._iconService.urls(this.poi.types));
+      this.urls = _uniq(this._leafletIconService.urls(this.poi.types));
     } else {
       this.urls = [];
     }

@@ -17,6 +17,7 @@ import _get from 'lodash-es/get';
 import _chunk from 'lodash-es/chunk';
 import { point as turfPoint, lineString as turfLineString } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
+import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
 
 export interface IRoutePlanResult {
   coordsArr: any;
@@ -39,7 +40,7 @@ export class WaypointMarkerService {
     private _leafletMapService: LeafletMapService,
     private _routePlannerService: RoutePlannerService,
     private _elevationService: ElevationService,
-    private _iconService: IconService,
+    private _leafletIconService: LeafletIconService,
     private _http: HttpClient
   ) {
     this.reset();
@@ -188,11 +189,11 @@ export class WaypointMarkerService {
     }
 
     if (this._markers.length > 0) {
-      this._markers[0].setIcon(this._iconService.getLeafletIcon(['start'], 'default'));
+      this._markers[0].setIcon(this._leafletIconService.getLeafletIcon(['start'], 'default'));
       this._markers[0].setZIndexOffset(10000);
 
       this._markers[this._markers.length - 1].setIcon(
-        this._iconService.getLeafletIcon(['finish'], 'default')
+        this._leafletIconService.getLeafletIcon(['finish'], 'default')
       );
       this._markers[this._markers.length - 1].setZIndexOffset(10000);
     }

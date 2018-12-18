@@ -13,19 +13,21 @@
     <ng-template pTemplate="body" let-stop let-rowIndex="rowIndex">
       <tr>
         <td>{{rowIndex + 1}}.</td>
-        <td *ngIf="stop.poiId !== 'endpoint'" class="icon">
+        <td *ngIf="!stop.poiId.includes('endpoint')" class="icon">
           <img title="Start" [src]="startIcon" *ngIf="rowIndex === 0" />
           <img title="Finish" [src]="finishIcon" *ngIf="rowIndex === (stops.length - 1)" />
           {{(stop.description | localizeDescription).title}}
 
-          <span *ngIf="rowIndex === 1 && stops[0].poiId === 'endpoint'" class="ml-10">
+          <!-- The 1st stop is a fake (start) endpoint  -->
+          <span *ngIf="rowIndex === 1 && stops[0].poiId.includes('endpoint')" class="ml-10">
             <span *ngIf="(isPlanning$ | async)">
               [<a (click)="startHere($event, stop)">start here</a>]
             </span>
           </span>
 
+          <!-- The penultimate stop is a fake (end) endpoint  -->
           <span
-            *ngIf="rowIndex > 1 && rowIndex === (stops.length - 2) && stops[stops.length - 1].poiId === 'endpoint'" class="ml-10"
+            *ngIf="rowIndex > 1 && rowIndex === (stops.length - 2) && stops[stops.length - 1].poiId.includes('endpoint')" class="ml-10"
           >
             <span *ngIf="(isPlanning$ | async)">
               [<a (click)="endHere($event, stop)">end here</a>]
@@ -33,9 +35,11 @@
           </span>
         </td>
 
-        <td *ngIf="rowIndex === 0 && stop.poiId === 'endpoint'" class="icon"><img title="Start" [src]="startIcon" /></td>
+        <!-- Show a start icon -->
+        <td *ngIf="rowIndex === 0 && stop.poiId.includes('endpoint')" class="icon"><img title="Start" [src]="startIcon" /></td>
 
-        <td *ngIf="rowIndex === (stops.length - 1) && stop.poiId === 'endpoint'" class="icon" ><img title="Finish" [src]="finishIcon" /></td>
+        <!-- Show a finish icon -->
+        <td *ngIf="rowIndex === (stops.length - 1) && stop.poiId.includes('endpoint')" class="icon" ><img title="Finish" [src]="finishIcon" /></td>
 
         <td>{{stop.distanceFromOrigo | distance}}</td>
         <td>{{stop.segment.distance | distance}}</td>

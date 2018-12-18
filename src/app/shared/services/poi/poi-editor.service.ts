@@ -13,12 +13,11 @@ import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hik
 import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 import * as hikeEditPoiSelectors from '../../../store/selectors/hike-edit-poi';
 import * as hikeEditImageSelectors from '../../../store/selectors/hike-edit-image';
-import { AdminMapMarker, RoutePlannerService } from '../admin-map';
+import { RoutePlannerService } from '../admin-map';
 import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../interfaces';
 import { GooglePoiService } from './google-poi.service';
 import { WikipediaPoiService } from './wikipedia-poi.service';
 import { IMarkerPopupData, IBackgroundImageData } from 'subrepos/provider-client/interfaces';
-import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker/marker-popup.service';
 
 import * as L from 'leaflet';
 import _defaultsDeep from 'lodash-es/defaultsDeep';
@@ -43,7 +42,9 @@ import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import { SMALL_BUFFER_SIZE, BIG_BUFFER_SIZE } from 'app/config';
 import { EMarkerType } from '@common.features/leaflet-map/interfaces';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
-import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
+import { LeafletMapMarker } from '@common.features/leaflet-map/services/lib';
+import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
+import { LeafletMarkerPopupService } from 'subrepos/gtrack-common-ngx/app/features/leaflet-map/services/leaflet-marker-popup.service';
 
 @Injectable()
 export class PoiEditorService {
@@ -61,12 +62,12 @@ export class PoiEditorService {
     private _geospatialService: GeospatialService,
     private _routePlannerService: RoutePlannerService,
     private _elevationService: ElevationService,
-    private _iconService: LeafletIconService,
+    private _leafletMapMarkerService: LeafletMapMarkerService,
     private _geoSearchSelectors: GeoSearchSelectors,
     private _poiSelectors: PoiSelectors,
     private _googlePoiService: GooglePoiService,
     private _wikipediaPoiService: WikipediaPoiService,
-    private _markerPopupService: MarkerPopupService,
+    private _markerPopupService: LeafletMarkerPopupService,
     private _leafletMapService: LeafletMapService
   ) {}
 
@@ -658,7 +659,7 @@ export class PoiEditorService {
    * refreshPoiMarkers submethod
    */
   private _generatePoiMarkers(pois) {
-    const _markers: AdminMapMarker[] = [];
+    const _markers: LeafletMapMarker[] = [];
 
     for (const poi of pois) {
       const popupData: IMarkerPopupData = {
@@ -672,7 +673,16 @@ export class PoiEditorService {
         data: _cloneDeep(poi)
       };
 
-      const _marker = new AdminMapMarker(poi.lat, poi.lon, poi.types || [], '', this._iconService, poi.id, popupData);
+      const _marker = this._leafletMapMarkerService.create(
+        poi.lat,
+        poi.lon,
+        poi.types || [],
+        '',
+        {
+          poiId: poi.id
+        },
+        popupData
+      );
       (<any>_marker).marker.options.type = EMarkerType.POI;
 
       _markers.push(_marker);
@@ -682,7 +692,7 @@ export class PoiEditorService {
   }
 
   private _generateImageMarkers() {
-    const _markers: AdminMapMarker[] = [];
+    const _markers: LeafletMapMarker[] = [];
 
     combineLatest(
       this._store.pipe(
@@ -707,13 +717,14 @@ export class PoiEditorService {
           data: _cloneDeep(image)
         };
 
-        const _marker = new AdminMapMarker(
+        const _marker = this._leafletMapMarkerService.create(
           image.lat,
           image.lon,
           ['photo'],
           '',
-          this._iconService,
-          image.original.url,
+          {
+            imageUrl: image.original.url
+          },
           popupData
         );
         (<any>_marker).marker.options.type = EMarkerType.IMAGE;

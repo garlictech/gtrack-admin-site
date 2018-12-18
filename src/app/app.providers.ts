@@ -3,9 +3,9 @@ import { ConfirmationService } from 'primeng/api';
 
 import { CONFIG as LANGUAGE_CONFIG } from 'subrepos/localize-ngx';
 
+import { RouteRedirectGuard } from './auth';
 import { RoutePlannerService } from './shared/services/admin-map';
 import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
-import { MarkerPopupService } from 'subrepos/gtrack-common-ngx/app/map/services/map-marker/marker-popup.service';
 
 // Services
 import {
@@ -33,6 +33,7 @@ export const APP_PROVIDERS = [
   { provide: REDUCER_TOKEN, useFactory: getReducers },
   { provide: LANGUAGE_CONFIG, useValue: config.language },
   ReverseGeocodingService,
+  RouteRedirectGuard,
   AdminMapService,
   RoutePlannerService,
   WaypointMarkerService,
@@ -46,6 +47,5 @@ export const APP_PROVIDERS = [
   FlickrService,
   MapillaryService,
   ConfirmationService,
-  MarkerPopupService,
   MessageService
 ];

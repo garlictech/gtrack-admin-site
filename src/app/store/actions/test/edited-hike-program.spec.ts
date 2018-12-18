@@ -15,6 +15,7 @@ describe('EditedHikeProgram actions', () => {
     expect(EditedHikeProgramActions.PREPARE_THEN_ADD_STOP).toEqual('[HikeProgram] Prepare then add stop');
     expect(EditedHikeProgramActions.ADD_STOP).toEqual('[HikeProgram] Add stop');
     expect(EditedHikeProgramActions.SET_STOPS).toEqual('[HikeProgram] Set stops');
+    expect(EditedHikeProgramActions.SET_REVERSE_STOPS).toEqual('[HikeProgram] Set reverse stops');
     expect(EditedHikeProgramActions.SET_CHECKPOINTS).toEqual('[HikeProgram] Set checkpoints');
     expect(EditedHikeProgramActions.REMOVE_STOP_BY_POI_ID).toEqual('[HikeProgram] Remove stop by poi id');
     expect(EditedHikeProgramActions.SAVE_HIKE_PROGRAM).toEqual('[HikeProgram] Save hike program');
@@ -123,6 +124,29 @@ describe('EditedHikeProgram actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.SET_STOPS,
+      stops: stops
+    });
+  });
+
+  it('should create SetReverseStops action', () => {
+    const stops = [
+      {
+        distanceFromOrigo: 0,
+        poiId: 'fakePoiId',
+        lat: 0,
+        lon: 0,
+        segment: {
+          uphill: 0,
+          downhill: 0,
+          distance: 0
+        }
+      }
+    ];
+    const action = new EditedHikeProgramActions.SetReverseStops(stops);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: EditedHikeProgramActions.SET_REVERSE_STOPS,
       stops: stops
     });
   });

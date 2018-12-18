@@ -34,7 +34,9 @@ export class LeafletMarkerPopupService {
       this._compRef.instance.data = _cloneDeep(popupData.data);
       this._compRef.instance.closePopup = () => {
         this._compRef.destroy();
-        popupData.closeCallback();
+        if (popupData.closeCallback) {
+          popupData.closeCallback();
+        }
       };
 
       // It's necessary for change detection within MapInfoWindow

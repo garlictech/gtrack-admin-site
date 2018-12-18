@@ -8,20 +8,21 @@ export class LeafletMapMarker {
   protected _highlighted = false;
 
   constructor(
-    lat: number,
-    lon: number,
+    public lat: number,
+    public lon: number,
     protected types: Array<string>,
-    title: string,
-    protected iconService: LeafletIconService,
-    popupData: ILeafletMarkerPopupData
+    public title: string,
+    protected leafletIconService: LeafletIconService,
+    public additionalData: any,
+    public popupData: ILeafletMarkerPopupData
   ) {
     this.marker = new L.Marker([lat, lon], {
-      icon: iconService.getLeafletIcon(types),
+      icon: this.leafletIconService.getLeafletIcon(types),
       title: title,
       zIndexOffset: 1500
     });
 
-    this.marker.on('click', e => {
+    this.marker.on('click', (e: L.LeafletMouseEvent) => {
       if (popupData) {
         popupData.markerClickCallback(this.marker, popupData, e);
       }
@@ -29,20 +30,17 @@ export class LeafletMapMarker {
   }
 
   public toggleHighlight() {
-    let iconType = 'default';
-
     this._highlighted = !this._highlighted;
 
-    if (this._highlighted === true) {
-      iconType = 'highlight';
-    }
+    const iconType = this._highlighted ? 'highlight' : 'default';
 
-    this.marker.setIcon(this.iconService.getLeafletIcon(this.types, iconType));
+    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, iconType));
   }
 
   public addToMap(map: L.Map): void {
     this.marker.addTo(map);
 
+    // Custom event
     this.marker.on('click', (e: L.LeafletMouseEvent) => {
       map.fire('gcmarkerclick', e);
     });
@@ -57,8 +55,6 @@ export class LeafletMapMarker {
   }
 
   public get coordinates(): L.LatLng {
-    const latlng = this.marker.getLatLng();
-
-    return latlng;
+    return this.marker.getLatLng();
   }
 }

@@ -1,7 +1,7 @@
 import { TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { AdminMapService } from '../admin-map.service';
 import {
-  ElevationService, IconService
+  ElevationService
 } from '../../../../../subrepos/gtrack-common-ngx';
 import { StoreModule, Store } from '@ngrx/store';
 import { RoutePlannerService } from '../route-planner.service';
@@ -14,6 +14,7 @@ import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet
 
 import * as _ from 'lodash';
 import * as L from 'leaflet';
+import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
 
 describe('WaypointMarkerService', () => {
   let waypointMarkerService: WaypointMarkerService;
@@ -53,7 +54,7 @@ describe('WaypointMarkerService', () => {
           useValue: {}
         },
         {
-          provide: IconService,
+          provide: LeafletIconService,
           useValue: {}
         },
         {
