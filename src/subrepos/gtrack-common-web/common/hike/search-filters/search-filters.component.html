@@ -1,5 +1,0 @@
-<button pButton (click)="toggleFilters()" [label]="(showFilters ? 'common.hike.location-search.close' : 'common.hike.location-search.filters') | translate"></button>
-
-<div *ngIf="showFilters" class="filters-container">
-    <gtrack-form [formDescriptor]='formDescriptor'></gtrack-form>
-</div>

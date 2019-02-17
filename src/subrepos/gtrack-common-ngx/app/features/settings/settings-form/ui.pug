@@ -1,6 +1,0 @@
-gtrack-form([formDescriptor]='handledFormDescriptor')
-
-div(*ngIf="saveFailure$ | async") {{'form.saveFailure' | translate }}
-
-div(*ngIf="fetchFailure$ | async") {{'form.fetchFailure' | translate }}
-  button((click)="retryFetch()") {{ 'form.retry' | translate }}
