@@ -1,0 +1,70 @@
+<div *ngIf="hikeProgram" class="hike-body container">
+  <gtrack-bookmark [hikeProgramId]="hikeProgram.id"></gtrack-bookmark>
+
+  <div *ngIf="(hikeProgram.description | localizeDescription) as localizedDescription" class="tim-title">
+    <h1 class="text-4xl font-sans font-thin">
+      {{ localizedDescription.title }}
+      <ng-container *ngIf="hikeProgram.reversed"> ({{ 'pages.common.hike.reversed' | translate }})</ng-container>
+    </h1>
+  </div>
+
+  <div class="grid grid-columns-12 grid-gap-1">
+    <div class="col-span-9">
+      <gtrack-description [showTitle]="false" [description]="hikeProgram.description"></gtrack-description>
+
+      <div *ngIf="images && images.length > 0" class="slides">
+        <gtrack-slideshow [fullscreenGallery]="true" [controls]="true" [imageUrls]="images"></gtrack-slideshow>
+      </div>
+
+      <gtrack-hike-map
+        [weather]="forecast$ | async"
+        [speed]="speed$ | async"
+        [startDate]="startDate$ | async"
+        [hikeProgram]="hikeProgram"
+      ></gtrack-hike-map>
+
+      <gtrack-hike-program
+        [weather]="forecast$ | async"
+        [speed]="speed$ | async"
+        [startDate]="startDate$ | async"
+        [hikeProgram]="hikeProgram"
+      ></gtrack-hike-program>
+    </div>
+    <div class="col-span-3">
+      <div class="">
+        <gtrack-download-gpx [hikeProgram]="hikeProgram"></gtrack-download-gpx>
+      </div>
+
+      <div class="">
+        <gtrack-reverse-hike-button [hikeProgram]="hikeProgram"></gtrack-reverse-hike-button>
+      </div>
+
+      <div class="">
+        <gtrack-sunrise
+          [day]="startDate$ | async"
+          [position]="[hikeProgram.stops[0].lon, hikeProgram.stops[0].lat]"
+        ></gtrack-sunrise>
+      </div>
+
+      <gtrack-hike-data-item [hikeProgram]="hikeProgram"></gtrack-hike-data-item>
+    </div>
+  </div>
+
+  <div class="tim-title">
+    <h2>{{ 'pages.common.hike.outlineTitle' | translate }}</h2>
+  </div>
+
+  <!-- <div *ngIf="startDate$ | async as startDate" class="">
+    <h2>{{ 'pages.common.hike.weather.title' | translate }}</h2>
+    <p>{{ 'pages.common.hike.weather.description' | translate }}</p>
+    <gtrack-weather-info [date]="startDate" [position]="[hikeProgram.stops[0].lon, hikeProgram.stops[0].lat]"></gtrack-weather-info>
+  </div> -->
+
+  <!-- <gtrack-hike-day></gtrack-hike-day> -->
+
+  <!-- <div class="tim-title">
+    <h2>Checkpoints</h2>
+  </div>
+
+  <gtrack-checkpoints [checkpoints]="hikeProgram.checkpoints.checkpoints"></gtrack-checkpoints>-->
+</div>

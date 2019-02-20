@@ -1,0 +1,118 @@
+<table *ngIf="stops">
+  <tr>
+    <td></td>
+    <td>
+      <b>{{ 'common.hike.program.header.name' | translate }}</b>
+    </td>
+    <td>
+      <b>{{ 'common.hike.program.header.start' | translate }}</b>
+    </td>
+    <td>
+      <b>{{ 'common.hike.program.header.next' | translate }}</b>
+    </td>
+    <td>
+      <b>{{ 'common.hike.program.header.arrive' | translate }}</b>
+    </td>
+    <td>
+      <b>{{ 'common.hike.program.header.weather' | translate }}</b>
+    </td>
+  </tr>
+
+  <ng-container *ngIf="(pois$ | async) as pois">
+    <tr (click)="displayStop(stop)" *ngFor="let stop of stops; let i = index; trackBy: trackByFn">
+      <ng-container *ngIf="stop.eventOnly !== true; else event_template">
+        <td *ngIf="i === 0"><img title="Start" [src]="startIcon" /></td>
+        <td *ngIf="i === stops.length - 1"><img title="Finish" [src]="finishIcon" /></td>
+        <td *ngIf="i > 0 && i < stops.length - 1">
+          <gtrack-icon *ngIf="pois[stop.poiId]" [poi]="pois[stop.poiId]"></gtrack-icon>
+        </td>
+
+        <td *ngIf="i === 0">START</td>
+        <td *ngIf="i === stops.length - 1">FINISH</td>
+        <td *ngIf="i > 0 && i < stops.length - 1">
+          <ng-container *ngIf="pois[stop.poiId] && pois[stop.poiId].description">
+            {{ (pois[stop.poiId].description | localizeDescription).title }}</ng-container
+          >
+        </td>
+
+        <td *ngIf="i === 0"><b>START</b></td>
+        <td *ngIf="i > 0">{{ stop.distanceFromOrigo | distance }}</td>
+
+        <td *ngIf="i < stops.length - 1">{{ stops[i + 1].segment.distance | distance }}</td>
+        <td *ngIf="i === stops.length - 1"><b>STOP</b></td>
+        <td>{{ stop.arrive | date: 'HH:mm' }}</td>
+        <td>
+          <svg-icon
+            [svgStyle]="{ 'width.px': 24, 'height.px': 24 }"
+            [ngStyle]="{ width: '24px', height: '24px' }"
+            *ngFor="let event of stop.events; trackBy: trackByFn"
+            [title]="event.title | translate"
+            [src]="event.icon"
+          ></svg-icon>
+          <gtrack-weather-icon
+            *ngFor="let weather of stop.weather; trackBy: trackByFn"
+            [icon]="weather.icon"
+          ></gtrack-weather-icon>
+        </td>
+      </ng-container>
+      <ng-template #event_template>
+        <td></td>
+        <td>{{ stop.title | translate }}</td>
+        <td></td>
+        <td></td>
+        <td>{{ stop.arrive | date: 'HH:mm' }}</td>
+        <td>
+          <svg-icon
+            [svgStyle]="{ 'width.px': 24, 'height.px': 24 }"
+            [ngStyle]="{ width: '24px', height: '24px' }"
+            [title]="stop.title | translate"
+            [src]="stop.eventIcon"
+          ></svg-icon>
+          <gtrack-weather-icon
+            *ngFor="let weather of stop.weather; trackBy: trackByFn"
+            [icon]="weather.icon"
+          ></gtrack-weather-icon>
+        </td>
+      </ng-template>
+    </tr>
+  </ng-container>
+</table>
+
+<ng-container *ngIf="(pois$ | async) as pois">
+  <ng-container *ngIf="activeStop?.poiId === 'endpoint-first'">
+    <p-dialog [header]="'Start'" [(visible)]="activeStop" [width]="400">
+      <div><img title="Start" [src]="startIcon" /></div>
+      <strong>{{ activeStop.lat }}, {{ activeStop.lon }}</strong>
+    </p-dialog>
+  </ng-container>
+
+  <ng-container *ngIf="activeStop?.poiId === 'endpoint-last'">
+    <p-dialog [header]="'Finish'" [(visible)]="activeStop" [width]="400">
+      <div><img title="Finish" [src]="finishIcon" /></div>
+      <strong>{{ activeStop.lat }}, {{ activeStop.lon }}</strong>
+      <p>Distance from start: {{ activeStop.distanceFromOrigo | distance }}</p>
+    </p-dialog>
+  </ng-container>
+
+  <ng-container *ngIf="activeStop && activeStop.poiId !== 'endpoint-first' && activeStop.poiId !== 'endpoint-last'">
+    <p-dialog
+      [header]="(pois[activeStop.poiId].description | localizeDescription).title || 'Unknown'"
+      [(visible)]="activeStop"
+      [width]="400"
+    >
+      <gtrack-description [description]="pois[activeStop.poiId].description"></gtrack-description>
+
+      <div><gtrack-icon [poi]="pois[activeStop.poiId]"></gtrack-icon></div>
+      <strong>{{ activeStop.lat }}, {{ activeStop.lon }}</strong>
+      <p>Distance from start: {{ activeStop.distanceFromOrigo | distance }}</p>
+      <p>Elevation: {{ pois[activeStop.poiId].elevation | distance }}</p>
+      <p-galleria
+        *ngIf="pois[activeStop.poiId].backgroundImages"
+        [images]="pois[activeStop.poiId].backgroundImages | poiImagesToGallery"
+        panelWidth="340"
+        panelHeight="313"
+        [showCaption]="false"
+      ></p-galleria>
+    </p-dialog>
+  </ng-container>
+</ng-container>

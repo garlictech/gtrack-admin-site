@@ -1,0 +1,28 @@
+<div class="grid grid-gap-1 grid-columns-12">
+  <div class="col-span-4">
+    <gtrack-trail-box
+      (elevationLineMove)="onElevationLineMove($event)"
+      (elevationLineOut)="onElevationLineOut()"
+      (elevationLineOver)="onElevationLineOver()"
+      (elevationLineClick)="onElevationLineClickMap($event)"
+      [elevationMarkerPosition]="elevationMarkerPosition$ | async"
+      [elevationMarkerVisible]="elevationMarkerVisible$ | async"
+      [elevationMarkerLocked]="elevationMarkerLocked$ | async"
+      [hikeProgram]="hikeProgram"
+    ></gtrack-trail-box>
+  </div>
+  <div class="col-span-8">
+    <gtrack-elevation-profile
+      (elevationLineMove)="onElevationLineMove($event)"
+      (elevationLineOut)="onElevationLineOut()"
+      (elevationLineOver)="onElevationLineOver()"
+      (elevationLineClick)="onElevationLineClick($event)"
+      [elevationMarkerPosition]="elevationMarkerPosition$ | async"
+      [elevationMarkerVisible]="elevationMarkerVisible$ | async"
+      [hikeProgram]="hikeProgram"
+      [startDate]="startDate"
+      [speed]="speed"
+      [weather]="weather"
+    ></gtrack-elevation-profile>
+  </div>
+</div>

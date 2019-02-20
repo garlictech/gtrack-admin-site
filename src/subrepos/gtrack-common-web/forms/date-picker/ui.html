@@ -1,0 +1,15 @@
+<p-calendar
+  yearNavigator="true"
+  yearRange="{{ (minDate ? (minDate | date:'y') : 1800) }} : {{ (maxDate ? (maxDate | date:'y') : currentYear) }}"
+  showIcon="true"
+  [showTime]="showTime"
+  hourFormat="24"
+  readonlyInput="true"
+  [(ngModel)]="value"
+  (onChange)="doChange()"
+  [defaultDate]="defaultDate"
+  [minDate]="minDate"
+  [maxDate]="maxDate"
+  [placeholder]="placeholder"
+  (ngModelChange)="doChange()"
+></p-calendar>

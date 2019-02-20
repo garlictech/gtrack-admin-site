@@ -1,0 +1,38 @@
+<div class="flex justify-center">
+  <a class="button is-success" (click)="toggleFilters()">
+    {{ (showFilters ? 'common.hike.location-search.close' : 'common.hike.location-search.filters') | translate }}
+  </a>
+</div>
+<div *ngIf="showFilters">
+  <form class="grid grid-columns-4 grid-gap-1 pt-4" [formGroup]="filterForm">
+    <p-slider
+      class="grid pl-8 md:col-start-1 md:col-end-2  col-start-1  col-end-5"
+      formControlName="radius"
+      [min]="formDescriptor.fields.radius.min"
+      [max]="formDescriptor.fields.radius.max"
+    ></p-slider>
+    <p-slider
+      class="grid pl-8 md:col-start-2 md:col-end-3  col-start-1  col-end-5"
+      formControlName="difficulty"
+      [range]="true"
+      [min]="formDescriptor.fields.difficulty.min"
+      [max]="formDescriptor.fields.difficulty.max"
+    ></p-slider>
+
+    <p-slider
+      class="grid pl-8 md:col-start-3 md:col-end-4  col-start-1  col-end-5"
+      formControlName="length"
+      [range]="true"
+      [min]="formDescriptor.fields.length.min"
+      [max]="formDescriptor.fields.length.max"
+    ></p-slider>
+
+    <p-slider
+      class="grid pl-8 md:col-start-4 md:col-end-5  col-start-1  col-end-5"
+      formControlName="time"
+      [range]="true"
+      [min]="formDescriptor.fields.time.min"
+      [max]="formDescriptor.fields.time.max"
+    ></p-slider>
+  </form>
+</div>

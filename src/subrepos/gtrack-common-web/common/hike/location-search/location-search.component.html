@@ -1,0 +1,19 @@
+<div class="flex justify-center">
+  <input
+    #search
+    [placeholder]="placeholder"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck="off"
+    type="search"
+    placeholder="{{ 'common.hike.location-search.search' | translate }}"
+  />
+  <div>
+    <a class="button is-success" (click)="searchLocation()">
+      <i class="fas fa-search"></i>
+    </a>
+    <a class="button is-success" (click)="requestLocation()">
+      {{ 'common.hike.location-search.use-my-location' | translate }}
+    </a>
+  </div>
+</div>

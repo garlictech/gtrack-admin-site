@@ -1,0 +1,9 @@
+<div *ngIf="astronomyData">
+  {{ 'astronomy.sunrise' | translate }}: {{ astronomyData.sun.sunrise | date:"HH:mm" }}<br/>
+  {{ 'astronomy.sunset' | translate }}: {{ astronomyData.sun.sunset | date:"HH:mm" }}<br/>
+  {{ 'astronomy.moonrise' | translate }}: {{ astronomyData.moon.rise | date:"HH:mm" }}<br/>
+  {{ 'astronomy.moonset' | translate }}: {{ astronomyData.moon.set | date:"HH:mm" }}<br/>
+  {{ 'astronomy.moonphase' | translate }}:
+  <gtrack-moonphase-icon [title]="'astronomy.phases.' + astronomyData.moonPhase | translate" [phase]="astronomyData.moonPhase"></gtrack-moonphase-icon>
+  ({{ 'astronomy.phases.' + astronomyData.moonPhase | translate }})
+</div>

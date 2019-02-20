@@ -1,0 +1,18 @@
+:host {
+  .angular-leaflet-map {
+    width: 100%;
+    height: 400px;
+  }
+  gtrack-leaflet {
+    position: relative;
+  }
+  .map-button-container {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 450;
+    .map-button {
+      padding: 10px;
+    }
+  }
+}

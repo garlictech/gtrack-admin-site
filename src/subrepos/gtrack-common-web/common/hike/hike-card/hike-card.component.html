@@ -1,0 +1,20 @@
+<div class="card rounded-lg" *ngIf="hikeProgram">
+  <div class="flex flex-col justify-between h-64 bg-green text-white rounded-lg">
+    <gtrack-bookmark [hikeProgramId]="hikeProgram.id"></gtrack-bookmark>
+    <gtrack-slideshow [imageUrls]="images"></gtrack-slideshow>
+
+    <div class="flex flex-col items-center uppercase">
+      <h2 class="card-title font-bold" style="padding-top:5rem !important">
+        {{ (hikeProgram.description | localizeDescription).title }}
+      </h2>
+      <h6 class="card-subtitle font-hairline"><i class="ion-ios-location"></i> {{ hikeProgram.location }}</h6>
+    </div>
+
+    <div class="flex flex-col">
+      <div class="text-center italic">
+        A megye legszebb naplementéje
+      </div>
+      <gtrack-hike-info class="w-full" [hikeProgram]="hikeProgram"></gtrack-hike-info>
+    </div>
+  </div>
+</div>

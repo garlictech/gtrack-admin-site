@@ -1,0 +1,15 @@
+<div class="flex h-12 bg-white text-black rounded-lg" *ngIf="hikeProgram">
+  <span class="distance hike-info-item px-1 rounded-bl-lg rounded-tl-lg">
+    <fa-icon [icon]="faArrowRight"></fa-icon> {{ hikeProgram.distance | distance }}</span
+  >
+  <span class="uphill hike-info-item px-1">
+    <fa-icon [icon]="faSortUp"></fa-icon> {{ hikeProgram.uphill | distance }}</span
+  >
+  <span class="downhill hike-info-item px-1">
+    <fa-icon [icon]="faSortDown"></fa-icon> {{ hikeProgram.downhill | distance }}</span
+  >
+  <span class="time hike-info-item px-1"> <fa-icon [icon]="faClock"></fa-icon> {{ hikeProgram.time | duration }}</span>
+  <span class="score hike-info-item px-1 rounded-br-lg rounded-tr-lg">
+    <fa-icon [icon]="faTrophy"></fa-icon> {{ hikeProgram.score }}</span
+  >
+</div>
