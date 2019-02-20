@@ -1,6 +1,7 @@
-import { Action } from '@ngrx/store';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { Action } from '@ngrx/store';
 
 export class MockStore<T> extends BehaviorSubject<T> {
   constructor(private _initialState: T) {

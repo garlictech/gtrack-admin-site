@@ -1,12 +1,13 @@
-// Core
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { HikeProgramService } from '../../../../shared/services';
+import _cloneDeep from 'lodash-es/cloneDeep';
+import _get from 'lodash-es/get';
 import { RouteService } from 'subrepos/gtrack-common-ngx';
 
+// Core
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import * as toGeoJSON from '@mapbox/togeojson';
-import _get from 'lodash-es/get';
-import _cloneDeep from 'lodash-es/cloneDeep';
+
+import { HikeProgramService } from '../../../../shared/services';
 
 @Component({
   selector: 'app-gpx-input',
@@ -18,16 +19,16 @@ export class GpxInputComponent {
   @ViewChild('gpxInput') gpxInput: ElementRef;
 
   constructor(
-    private _router: Router,
-    private _hikeProgramService: HikeProgramService,
-    private _routeService: RouteService
+    private readonly _router: Router,
+    private readonly _hikeProgramService: HikeProgramService,
+    private readonly _routeService: RouteService
   ) {}
 
-  public openGPX() {
+  openGPX() {
     this.gpxInput.nativeElement.click();
   }
 
-  public gpxInputListener($event) {
+  gpxInputListener($event) {
     const file = $event.target.files[0];
 
     if (file) {
@@ -65,14 +66,14 @@ export class GpxInputComponent {
    */
   private _checkAndFixMultiLineString(route) {
     const _geometry = _get(route, 'features[0].geometry');
-    let _lineString: number[][] = [];
+    let _lineString: Array<Array<number>> = [];
 
     if (_geometry && _geometry.type === 'MultiLineString') {
       for (const i in _geometry.coordinates) {
         if (_geometry.coordinates[i]) {
           const coords = _geometry.coordinates[i];
 
-          if (<any>i === 0) {
+          if ((i as any) === 0) {
             _lineString = _lineString.concat(coords);
           } else {
             // Drop the 1st coord, it's same as the prev last coord...

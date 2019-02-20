@@ -8,16 +8,14 @@
 </p-accordion>
 
 <p-accordion [multiple]="true" styleClass="mt-10">
-    <p-accordionTab header="Poi collector">
-      <app-hike-edit-pois-collector [isPlanning$]="isPlanning$"></app-hike-edit-pois-collector>
-    </p-accordionTab>
-  </p-accordion>
+  <p-accordionTab header="Poi collector">
+    <app-hike-edit-pois-collector [isPlanning$]="isPlanning$"></app-hike-edit-pois-collector>
+  </p-accordionTab>
+</p-accordion>
 
 <p-accordion [multiple]="true" styleClass="mt-10">
-  <p-accordionTab header="{{poiType.title}}" *ngFor="let poiType of externalPoiTypes; let idx = index;">
-    <app-hike-edit-pois-external
-      [isPlanning$]="isPlanning$"
-      [poiType]="poiType"
-    ></app-hike-edit-pois-external>
+  <p-accordionTab header="{{ poiType.title }}"
+    *ngFor="let poiType of externalPoiTypes; let idx = index; trackBy: trackByFn">
+    <app-hike-edit-pois-external [isPlanning$]="isPlanning$" [poiType]="poiType"></app-hike-edit-pois-external>
   </p-accordionTab>
 </p-accordion>

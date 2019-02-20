@@ -1,31 +1,32 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import * as L from 'leaflet';
+import _pick from 'lodash-es/pick';
+import { MessageService } from 'primeng/api';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { delay, filter, skipWhile, switchMap, take, takeUntil } from 'rxjs/operators';
+import { HikeSelectors, IHikeContextState, RouteSelectors } from 'subrepos/gtrack-common-ngx';
+import { BackgroundImageData, EObjectState, IHikeProgramStored, IRoute } from 'subrepos/provider-client';
+import * as uuid from 'uuid/v1';
+
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject, combineLatest } from 'rxjs';
-import { takeUntil, filter, switchMap, take, skipWhile, delay } from 'rxjs/operators';
-import { Store, MemoizedSelector, createSelector, select } from '@ngrx/store';
-import { State, IHikeEditRoutePlannerState } from '../../store';
-import {
-  commonRouteActions,
-  commonHikeActions,
-  editedHikeProgramActions,
-  commonPoiActions,
-  hikeEditImageActions
-} from '../../store/actions';
-import { hikeEditRoutePlannerActions } from '../../store/actions';
-import * as hikeEditRoutePlannerSelectors from '../../store/selectors/hike-edit-route-planner';
-import * as editedHikeProgramSelectors from '../../store/selectors/edited-hike-program';
-import { WaypointMarkerService, RoutePlannerService } from '../../shared/services/admin-map';
-import { IHikeProgramStored, IRoute, EObjectState, IBackgroundImageData } from 'subrepos/provider-client';
-import { HikeSelectors, IHikeContextState, RouteSelectors } from 'subrepos/gtrack-common-ngx';
-import { HikeProgramService } from '../../shared/services';
-import { MessageService } from 'primeng/api';
-
-import * as L from 'leaflet';
-import * as uuid from 'uuid/v1';
-import _pick from 'lodash-es/pick';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 import { leafletMapActions } from '@common.features/leaflet-map/store';
+import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
+
+import { HikeProgramService } from '../../shared/services';
+import { RoutePlannerService, WaypointMarkerService } from '../../shared/services/admin-map';
+import { HikeEditRoutePlannerState, State } from '../../store';
+import {
+  commonHikeActions,
+  commonPoiActions,
+  commonRouteActions,
+  editedHikeProgramActions,
+  hikeEditImageActions,
+  hikeEditRoutePlannerActions
+} from '../../store/actions';
+import * as editedHikeProgramSelectors from '../../store/selectors/edited-hike-program';
+import * as hikeEditRoutePlannerSelectors from '../../store/selectors/hike-edit-route-planner';
 
 @Component({
   selector: 'app-hike-edit',
@@ -33,33 +34,33 @@ import { leafletMapActions } from '@common.features/leaflet-map/store';
   styleUrls: ['./hike-edit.component.scss']
 })
 export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
-  public hikeProgramState$: Observable<EObjectState>;
-  public hikeProgramData$: Observable<IHikeProgramStored>;
-  public allowSave$: Observable<boolean>;
-  public isPlanning$: Observable<boolean>;
-  public working$: Observable<string | null>;
-  public EObjectState = EObjectState;
-  public paramsId: string;
-  public backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
-  public backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
-  public clickActions: any;
-  public displayPreview = false;
+  hikeProgramState$: Observable<EObjectState>;
+  hikeProgramData$: Observable<IHikeProgramStored>;
+  allowSave$: Observable<boolean>;
+  isPlanning$: Observable<boolean>;
+  working$: Observable<string | null>;
+  EObjectState = EObjectState;
+  paramsId: string;
+  backgroundImageUrlSelector: MemoizedSelector<object, Array<string>>;
+  backgroundImageSelector: MemoizedSelector<object, Array<BackgroundImageData>>;
+  clickActions: any;
+  displayPreview = false;
   private _hikeId: string;
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private _store: Store<State>,
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _activatedRoute: ActivatedRoute,
-    private _leafletMapService: LeafletMapService,
-    private _waypointMarkerService: WaypointMarkerService,
-    private _routePlannerService: RoutePlannerService,
-    private _hikeProgramService: HikeProgramService,
-    private _hikeSelectors: HikeSelectors,
-    private _routeSelectors: RouteSelectors,
-    private _messageService: MessageService,
-    private _router: Router,
-    private _title: Title
+    private readonly _store: Store<State>,
+    private readonly _changeDetectorRef: ChangeDetectorRef,
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _leafletMapService: LeafletMapService,
+    private readonly _waypointMarkerService: WaypointMarkerService,
+    private readonly _routePlannerService: RoutePlannerService,
+    private readonly _hikeProgramService: HikeProgramService,
+    private readonly _hikeSelectors: HikeSelectors,
+    private readonly _routeSelectors: RouteSelectors,
+    private readonly _messageService: MessageService,
+    private readonly _router: Router,
+    private readonly _title: Title
   ) {}
 
   ngOnInit() {
@@ -159,7 +160,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       )
       .subscribe((error: any) => {
         if (error) {
-          const msg: string[] = [];
+          const msg: Array<string> = [];
           for (const idx in error) {
             if (error[idx]) {
               msg.push(`${idx}: ${error[idx]}`);
@@ -212,7 +213,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         if (hikeContext.loaded) {
           this._store
             .pipe(
-              select(this._hikeSelectors.getHike((<IHikeContextState>hikeContext).id)),
+              select(this._hikeSelectors.getHike(hikeContext.id)),
               take(1)
             )
             .subscribe((hikeData: IHikeProgramStored) => {
@@ -248,7 +249,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     this._destroy$.complete();
   }
 
-  public saveHike() {
+  saveHike() {
     // Save hikeProgram
     this._store.dispatch(new editedHikeProgramActions.SaveHikeProgram());
 
@@ -262,11 +263,11 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         select(editedHikeProgramSelectors.getRouteId),
         take(1)
       )
-    ).subscribe(([routePlannerState, routeId]: [IHikeEditRoutePlannerState, string]) => {
+    ).subscribe(([routePlannerState, routeId]: [HikeEditRoutePlannerState, string]) => {
       if (routePlannerState && routeId) {
         const _route: IRoute = {
           id: routeId,
-          bounds: (<any>routePlannerState.route).bounds,
+          bounds: (routePlannerState.route as any).bounds,
           route: _pick(routePlannerState.route, ['type', 'features'])
         };
         this._store.dispatch(new commonRouteActions.SaveRoute(_route));
@@ -274,26 +275,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  private _parseGpxRoute() {
-    this._routePlannerService.drawRouteLineGeoJSON(this._hikeProgramService.gpxRoute.route.features[0]);
-
-    // Load path to routePlanner state - necessary for drawing pois
-    this._routePlannerService.addRouteToTheStore(this._hikeProgramService.gpxRoute.route);
-
-    const bounds: L.LatLngBoundsExpression = [[
-      this._hikeProgramService.gpxRoute.bounds.NorthEast.lat,
-      this._hikeProgramService.gpxRoute.bounds.NorthEast.lon
-    ], [
-      this._hikeProgramService.gpxRoute.bounds.SouthWest.lat,
-      this._hikeProgramService.gpxRoute.bounds.SouthWest.lon
-    ]];
-
-    this._leafletMapService.fitBounds(bounds);
-
-    delete this._hikeProgramService.gpxRoute;
-  }
-
-  public updateHikeState(hikeProgramState: EObjectState) {
+  updateHikeState(hikeProgramState: EObjectState) {
     this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(this.paramsId, hikeProgramState));
 
     if (hikeProgramState === EObjectState.published) {
@@ -335,11 +317,11 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public openPreview() {
+  openPreview() {
     this.displayPreview = true;
   }
 
-  public handleHikeProgramFeature() {
+  handleHikeProgramFeature() {
     this.hikeProgramData$.pipe(take(1)).subscribe((hikeProgramData: IHikeProgramStored) => {
       this._store.dispatch(
         new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true)
@@ -347,7 +329,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public retrievePlan() {
+  retrievePlan() {
     this._store
       .pipe(
         select(editedHikeProgramSelectors.getRouteId),
@@ -362,7 +344,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((storedRoute: any) => {
         this._waypointMarkerService.reset();
 
-        const _coords: L.LatLng[] = [];
+        const _coords: Array<L.LatLng> = [];
 
         for (const feature of storedRoute.route.features) {
           if (feature.geometry.type === 'Point') {
@@ -375,5 +357,21 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         // Enable planning
         this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(true));
       });
+  }
+
+  private _parseGpxRoute() {
+    this._routePlannerService.drawRouteLineGeoJSON(this._hikeProgramService.gpxRoute.route.features[0]);
+
+    // Load path to routePlanner state - necessary for drawing pois
+    this._routePlannerService.addRouteToTheStore(this._hikeProgramService.gpxRoute.route);
+
+    const bounds: L.LatLngBoundsExpression = [
+      [this._hikeProgramService.gpxRoute.bounds.NorthEast.lat, this._hikeProgramService.gpxRoute.bounds.NorthEast.lon],
+      [this._hikeProgramService.gpxRoute.bounds.SouthWest.lat, this._hikeProgramService.gpxRoute.bounds.SouthWest.lon]
+    ];
+
+    this._leafletMapService.fitBounds(bounds);
+
+    delete this._hikeProgramService.gpxRoute;
   }
 }

@@ -11,25 +11,19 @@
     <ng-template pTemplate="body" let-image>
       <tr *ngIf="!!image.onRoute === onRouteCheck">
         <td>
-          <a href="{{image.original.url}}" target="_blank">
-            <img *ngIf="image.source.type === 'wikipedia'" class="thumbs" src="{{image.original.url}}">
-            <img *ngIf="image.source.type !== 'wikipedia'" class="thumbs" src="{{image.thumbnail.url}}">
+          <a href="{{ image.original.url }}" target="_blank">
+            <img *ngIf="image.source.type === 'wikipedia'" class="thumbs" src="{{ image.original.url }}">
+            <img *ngIf="image.source.type !== 'wikipedia'" class="thumbs" src="{{ image.thumbnail.url }}">
           </a>
         </td>
         <td [innerHTML]="image.title | trustedHtml"></td>
         <td class="text-center">
-          <p-checkbox
-            binary="true"
-            [(ngModel)]="imageSelections[image.original.url]"
-            (onChange)="toggleBackgroundImage(image)"
-          ></p-checkbox>
+          <p-checkbox binary="true" [(ngModel)]="imageSelections[image.original.url]"
+            (onChange)="toggleBackgroundImage(image)"></p-checkbox>
         </td>
         <td class="text-center" *ngIf="showMarkerColumn">
-          <p-checkbox
-            binary="true"
-            [(ngModel)]="imageMarkerSelections[image.original.url]"
-            (onChange)="toggleImageMarker(image)"
-          ></p-checkbox>
+          <p-checkbox binary="true" [(ngModel)]="imageMarkerSelections[image.original.url]"
+            (onChange)="toggleImageMarker(image)"></p-checkbox>
         </td>
       </tr>
     </ng-template>

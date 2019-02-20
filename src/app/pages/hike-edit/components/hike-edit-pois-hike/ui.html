@@ -1,52 +1,24 @@
-
-<p-dialog
-  header="{{(modalPoi?.description | localizeDescription).title}}"
-  [(visible)]="displayGTrackPoiModal"
-  [modal]="true"
-  [closable]="true"
-  [width]="600"
-  [blockScroll]="true"
->
-  <app-hike-edit-gtrack-poi-info
-    *ngIf="displayGTrackPoiModal"
-    [poiId]="modalPoi.id"
-    [closeModal]="closeModal"
-  ></app-hike-edit-gtrack-poi-info>
+<p-dialog header="{{ (modalPoi?.description | localizeDescription).title }}" [(visible)]="displayGTrackPoiModal"
+  [modal]="true" [closable]="true" [width]="600" [blockScroll]="true">
+  <app-hike-edit-gtrack-poi-info *ngIf="displayGTrackPoiModal" [poiId]="modalPoi.id" [closeModal]="closeModal">
+  </app-hike-edit-gtrack-poi-info>
 </p-dialog>
 
 <div class="clearfix mb-20">
-  <p-checkbox
-    class="f-right ml-20"
-    label="Show offroute markers"
-    binary="true"
-    [(ngModel)]="showOffrouteMarkers"
-    (onChange)="toggleOffrouteMarkers()"
-    [disabled]="!(isPlanning$ | async)"
-  ></p-checkbox>
+  <p-checkbox class="f-right ml-20" label="Show offroute markers" binary="true" [(ngModel)]="showOffrouteMarkers"
+    (onChange)="toggleOffrouteMarkers()" [disabled]="!(isPlanning$ | async)"></p-checkbox>
 
-  <p-checkbox
-    class="f-right"
-    label="Show onroute markers"
-    binary="true"
-    [(ngModel)]="showOnrouteMarkers"
-    (onChange)="toggleOnrouteMarkers()"
-    [disabled]="!(isPlanning$ | async)"
-  ></p-checkbox>
+  <p-checkbox class="f-right" label="Show onroute markers" binary="true" [(ngModel)]="showOnrouteMarkers"
+    (onChange)="toggleOnrouteMarkers()" [disabled]="!(isPlanning$ | async)"></p-checkbox>
 </div>
 
 <p-accordion [multiple]="true">
   <p-accordionTab header="On route pois">
-    <app-hike-edit-pois-hike-table
-      [pois$]="pois$"
-      [onRouteCheck]="true"
-      [openGTrackPoiModal]="openGTrackPoiModal"
-    ></app-hike-edit-pois-hike-table>
+    <app-hike-edit-pois-hike-table [pois$]="pois$" [onRouteCheck]="true" [openGTrackPoiModal]="openGTrackPoiModal">
+    </app-hike-edit-pois-hike-table>
   </p-accordionTab>
   <p-accordionTab header="Off route pois">
-    <app-hike-edit-pois-hike-table
-      [pois$]="pois$"
-      [onRouteCheck]="false"
-      [openGTrackPoiModal]="openGTrackPoiModal"
-    ></app-hike-edit-pois-hike-table>
+    <app-hike-edit-pois-hike-table [pois$]="pois$" [onRouteCheck]="false" [openGTrackPoiModal]="openGTrackPoiModal">
+    </app-hike-edit-pois-hike-table>
   </p-accordionTab>
 </p-accordion>

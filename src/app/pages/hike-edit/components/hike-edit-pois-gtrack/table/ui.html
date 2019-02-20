@@ -17,29 +17,20 @@
         <td>
           <app-poi-icons [poi]="poi"></app-poi-icons>
         </td>
-        <td [ngClass]="{'text-danger': !poi.inHike}" [innerHTML]="(poi?.description | localizeDescription).title"></td>
-        <td>{{poi.distFromRoute | distance : true}}</td>
-        <td>{{poi.distFromOrigo | distance : true}}</td>
-        <td>{{poi.types?.join(', ')}}</td>
-        <td>{{poi.objectTypes?.join(', ')}}</td>
-        <td>{{poi.elevation | distance}}</td>
+        <td [ngClass]="{'text-danger': !poi.inHike}"  [innerHTML]="(poi?.description | localizeDescription).title"></td>
+        <td>{{ poi.distFromRoute | distance : true }}</td>
+        <td>{{ poi.distFromOrigo | distance : true }}</td>
+        <td>{{ poi.types?.join(', ') }}</td>
+        <td>{{ poi.objectTypes?.join(', ') }}</td>
+        <td>{{ poi.elevation | distance }}</td>
         <td class="text-center">
-          <p-button
-            *ngIf="!poi.inHike"
-            icon="pi pi-plus"
-            styleClass="ui-button-success"
-            (onClick)="addPoi($event, poi)"
-            title="Add to hike"
-          ></p-button>
+          <p-button *ngIf="!poi.inHike" icon="pi pi-plus" styleClass="ui-button-success" (onClick)="addPoi($event, poi)"
+            title="Add to hike"></p-button>
 
-          <p-button
-            icon="pi pi-pencil"
-            styleClass="ui-button-warning ml-5"
-            (onClick)="openGTrackPoiModal(poi)"
-          ></p-button>
+          <p-button icon="pi pi-pencil" styleClass="ui-button-warning ml-5" (onClick)="openGTrackPoiModal(poi)">
+          </p-button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </ng-container>
-

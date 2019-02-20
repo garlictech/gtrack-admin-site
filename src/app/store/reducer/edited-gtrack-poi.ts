@@ -1,12 +1,12 @@
-import { ActionReducer } from '@ngrx/store';
-import { IEditedGTrackPoiState } from '../state';
-import { editedGTrackPoiActions } from '../actions';
-import { EObjectState, ETextualDescriptionType } from 'subrepos/provider-client';
-
+// tslint:disable:only-arrow-functions no-small-switch
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _omit from 'lodash-es/omit';
+import { EObjectState, ETextualDescriptionType } from 'subrepos/provider-client';
 
-export const initialEditedGTrackPoiState: IEditedGTrackPoiState = {
+import { editedGTrackPoiActions } from '../actions';
+import { EditedGTrackPoiState } from '../state';
+
+export const initialEditedGTrackPoiState: EditedGTrackPoiState = {
   data: {
     id: '',
     timestamp: 0,
@@ -24,68 +24,75 @@ export const initialEditedGTrackPoiState: IEditedGTrackPoiState = {
     state: EObjectState.draft
   },
   dirty: false,
-  working: null,
-  failed: null
+  working: undefined,
+  failed: undefined
 };
 
 export function editedGTrackPoiReducer(
   state = initialEditedGTrackPoiState,
   action: editedGTrackPoiActions.AllEditedGTrackPoiActions
-): IEditedGTrackPoiState {
+): EditedGTrackPoiState {
   const newState = _cloneDeep(state);
 
   switch (action.type) {
     case editedGTrackPoiActions.ADD_NEW_TRANSLATED_POI_DESCRIPTION: {
       newState.data.description[action.languageKey] = action.content;
       newState.dirty = true;
+
       return newState;
     }
 
     case editedGTrackPoiActions.DELETE_TRANSLATED_POI_DESCRIPTION: {
       newState.data.description = _omit(newState.data.description, action.languageKey);
       newState.dirty = true;
+
       return newState;
     }
 
     case editedGTrackPoiActions.SAVE_POI: {
       newState.working = 'saving...';
-      newState.failed = null;
+      newState.failed = undefined;
+
       return newState;
     }
 
     case editedGTrackPoiActions.POI_SAVE_SUCCESS: {
-      newState.working = null;
-      newState.failed = null;
+      newState.working = undefined;
+      newState.failed = undefined;
       newState.dirty = false;
+
       return newState;
     }
 
     case editedGTrackPoiActions.POI_SAVE_FAILED: {
-      newState.working = null;
+      newState.working = undefined;
       newState.failed = action.error;
+
       return newState;
     }
 
     case editedGTrackPoiActions.LOAD_POI: {
-      newState.working = null;
-      newState.failed = null;
+      newState.working = undefined;
+      newState.failed = undefined;
       newState.dirty = false;
       newState.data = action.data;
+
       return newState;
     }
 
     case editedGTrackPoiActions.ADD_POI_BACKGROUND_IMAGE: {
       newState.dirty = true;
-      newState.data.backgroundImages = [...(<any>state.data.backgroundImages || []), action.imageData];
+      newState.data.backgroundImages = [...((state.data.backgroundImages as any) || []), action.imageData];
 
       return newState;
     }
 
     case editedGTrackPoiActions.REMOVE_POI_BACKGROUND_IMAGE: {
       newState.dirty = true;
-      newState.data.backgroundImages = (<any>newState.data.backgroundImages || []).filter(
+      newState.data.backgroundImages = ((newState.data.backgroundImages as any) || []).filter(
         img => img.original.url !== action.origUrl
       );
+
       return newState;
     }
 

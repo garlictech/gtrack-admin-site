@@ -1,21 +1,20 @@
+import _uniq from 'lodash-es/uniq';
+
 // Core
 import { Component, Input, OnInit } from '@angular/core';
-import { IExternalPoi } from '../../../../shared/interfaces';
 import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
 
-import _uniq from 'lodash-es/uniq';
+import { ExternalPoi } from '../../../../shared/interfaces';
 
 @Component({
   selector: 'app-poi-icons',
   template: '<img *ngFor="let url of urls" [src]="url">'
 })
 export class PoiIconsComponent implements OnInit {
-  @Input() poi: IExternalPoi;
-  public urls: string[] = [];
+  @Input() poi: ExternalPoi;
+  urls: Array<string> = [];
 
-  constructor(
-    private _leafletIconService: LeafletIconService
-  ) {}
+  constructor(private readonly _leafletIconService: LeafletIconService) {}
 
   ngOnInit() {
     if (typeof this.poi.types !== 'undefined') {

@@ -1,6 +1,9 @@
+// tslint:disable:no-property-initializers max-classes-per-file
+import { BackgroundImageData } from 'subrepos/provider-client';
+
 import { Action } from '@ngrx/store';
-import { IBackgroundImageDataStored } from '../../shared/interfaces/mapillary-image.interface';
-import { IBackgroundImageData } from 'subrepos/provider-client';
+
+import { BackgroundImageDataStored } from '../../shared/interfaces/mapillary-image.interface';
 
 export const RESET_IMAGE_STATE = '[HikeEditImage] Reset images';
 
@@ -30,7 +33,7 @@ export class GetMapillaryImages implements Action {
 
 export class SetMapillaryImages implements Action {
   readonly type = SET_MAPILLARY_IMAGES;
-  constructor(public images: IBackgroundImageDataStored[]) {}
+  constructor(public images: Array<BackgroundImageDataStored>) {}
 }
 
 /**
@@ -44,7 +47,7 @@ export class GetFlickrImages implements Action {
 
 export class SetFlickrImages implements Action {
   readonly type = SET_FLICKR_IMAGES;
-  constructor(public images: IBackgroundImageDataStored[]) {}
+  constructor(public images: Array<BackgroundImageDataStored>) {}
 }
 
 /**
@@ -53,22 +56,22 @@ export class SetFlickrImages implements Action {
 
 export class AddImageMarker implements Action {
   readonly type = ADD_IMAGE_MARKER;
-  constructor(public image: IBackgroundImageData) {}
+  constructor(public image: BackgroundImageData) {}
 }
 
 export class AddImageMarkers implements Action {
   readonly type = ADD_IMAGE_MARKERS;
-  constructor(public images: IBackgroundImageData[]) {}
+  constructor(public images: Array<BackgroundImageData>) {}
 }
 
 export class RemoveImageMarker implements Action {
   readonly type = REMOVE_IMAGE_MARKER;
-  constructor(public image: IBackgroundImageData) {}
+  constructor(public image: BackgroundImageData) {}
 }
 
 export class RemoveImageMarkers implements Action {
   readonly type = REMOVE_IMAGE_MARKERS;
-  constructor(public images: IBackgroundImageData[]) {}
+  constructor(public images: Array<BackgroundImageData>) {}
 }
 
 export type AllHikeEditImageActions =

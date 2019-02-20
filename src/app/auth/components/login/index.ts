@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { State } from '../../../store';
 import { Observable } from 'rxjs';
 import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
-import { Title } from '@angular/platform-browser';
 import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
+
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { select, Store } from '@ngrx/store';
+
+import { State } from '../../../store';
 
 @Component({
   selector: 'app-login',
@@ -14,14 +16,14 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./style.scss']
 })
 export class LoginComponent implements OnInit {
-  public loggingIn$: Observable<Boolean>;
-  public faSpinner = faSpinner;
-  public faGoogle = faGoogle;
+  loggingIn$: Observable<Boolean>;
+  faSpinner = faSpinner;
+  faGoogle = faGoogle;
 
   constructor(
-    private _store: Store<State>,
-    private _title: Title,
-    private _authSelectors: AuthenticationSelectors.Selectors
+    private readonly _store: Store<State>,
+    private readonly _title: Title,
+    private readonly _authSelectors: AuthenticationSelectors.Selectors
   ) {}
 
   ngOnInit() {
@@ -30,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.loggingIn$ = this._store.pipe(select(this._authSelectors.loggingIn));
   }
 
-  public login() {
+  login() {
     this._store.dispatch(new AuthActions.GoogleLogin(['admin']));
   }
 }

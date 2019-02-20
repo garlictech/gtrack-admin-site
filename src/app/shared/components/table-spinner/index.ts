@@ -7,5 +7,5 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./style.scss']
 })
 export class TableSpinnerComponent {
-  public faSpinner = faSpinner;
+  faSpinner = faSpinner;
 }

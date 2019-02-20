@@ -1,21 +1,24 @@
-import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, select } from '@ngrx/store';
+// tslint:disable:no-big-function
+import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IEditedGTrackPoiState } from '../../state';
-import { editedGTrackPoiReducer, initialEditedGTrackPoiState } from '../../reducer/edited-gtrack-poi';
-import * as editedGTrackPoiSelectors from '../../selectors/edited-gtrack-poi';
+
+import { TestBed } from '@angular/core/testing';
+import { select, Store, StoreModule } from '@ngrx/store';
+
+import { BackgroundImageData, ETextualDescriptionType } from '../../../../subrepos/provider-client';
 import { editedGTrackPoiActions } from '../../actions';
-import { IBackgroundImageData, ETextualDescriptionType } from '../../../../subrepos/provider-client';
-
+import { editedGTrackPoiReducer, initialEditedGTrackPoiState } from '../../reducer/edited-gtrack-poi';
 import { bgImages as bgImageFixtures } from '../../reducer/test/fixtures';
+import * as editedGTrackPoiSelectors from '../../selectors/edited-gtrack-poi';
+import { EditedGTrackPoiState } from '../../state';
 
-import * as _ from 'lodash';
+const A_NEW_TRANSLATION = 'A new translation';
 
 describe('Edited GTrackPoi selectors', () => {
-  let store: Store<IEditedGTrackPoiState>;
+  let store: Store<EditedGTrackPoiState>;
   let destroy$: Subject<boolean>;
-  let images: IBackgroundImageData[];
+  let images: Array<BackgroundImageData>;
 
   beforeEach(() => {
     images = _.cloneDeep(bgImageFixtures);
@@ -58,7 +61,7 @@ describe('Edited GTrackPoi selectors', () => {
 
       store.dispatch(
         new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
-          title: 'A new translation'
+          title: A_NEW_TRANSLATION
         })
       );
 
@@ -67,7 +70,7 @@ describe('Edited GTrackPoi selectors', () => {
           title: 'A new poi',
           type: ETextualDescriptionType.markdown
         },
-        hu_HU: { title: 'A new translation' }
+        hu_HU: { title: A_NEW_TRANSLATION }
       });
     });
   });
@@ -87,7 +90,7 @@ describe('Edited GTrackPoi selectors', () => {
 
       store.dispatch(
         new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
-          title: 'A new translation'
+          title: A_NEW_TRANSLATION
         })
       );
       expect(result).toBeTruthy();
@@ -164,7 +167,7 @@ describe('Edited GTrackPoi selectors', () => {
 
       store.dispatch(
         new editedGTrackPoiActions.AddNewTranslatedPoiDescription('hu_HU', {
-          title: 'A new translation'
+          title: A_NEW_TRANSLATION
         })
       );
 
@@ -172,7 +175,7 @@ describe('Edited GTrackPoi selectors', () => {
         _.merge({}, initialEditedGTrackPoiState.data, {
           description: {
             hu_HU: {
-              title: 'A new translation'
+              title: A_NEW_TRANSLATION
             }
           }
         })

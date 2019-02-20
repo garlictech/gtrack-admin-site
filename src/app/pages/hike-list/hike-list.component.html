@@ -2,7 +2,8 @@
   <div class="ui-g-12">
     <p-card title="Hikes">
       <div class="mb-20">
-        <p-button label="New hike" class="f-right" styleClass="ui-button-success" routerLink="/admin/hike/new"></p-button>
+        <p-button label="New hike" class="f-right" styleClass="ui-button-success" routerLink="/admin/hike/new">
+        </p-button>
 
         <app-gpx-input title="Import GPX" class="f-right mr-10"></app-gpx-input>
 
@@ -33,42 +34,30 @@
             <tr *ngIf="hike.state === selectedListState">
               <td>
                 <div>
-                  <a
-                    href="#"
-                    routerLink="/admin/hike/{{hike.id}}"
-                    [innerHTML]="(hike.description | localizeDescription).title | trustedHtml"
-                  ></a>
+                  <a href="#" routerLink="/admin/hike/{{ hike.id }}"
+                    [innerHTML]="(hike.description | localizeDescription).title | trustedHtml"></a>
                 </div>
                 <div>
-                  <small class="text-secondary">ID: {{hike.id}}</small>
+                  <small class="text-secondary">ID: {{ hike.id }}</small>
                 </div>
                 <div>
-                  <small class="text-secondary">Last update: {{hike.timestamp | date: 'yyyy.MM.dd. HH:mm'}}</small>
+                  <small class="text-secondary">Last update: {{ hike.timestamp | date: 'yyyy.MM.dd. HH:mm' }}</small>
                 </div>
               </td>
               <td [innerHTML]="(hike.description | localizeDescription).summary | trustedHtml"></td>
-              <td>{{hike.published | date: 'yyyy.MM.dd. HH:mm'}}</td>
+              <td>{{ hike.published | date: 'yyyy.MM.dd. HH:mm' }}</td>
               <td class="icons">
                 <img class="svg" *ngIf="hike.elevationIcon?.length" [src]="hike.elevationIcon | trustedUrl">
               </td>
               <td class="icons">
-                <img class="svg ml-25" *ngIf="hike.routeIcon?.length"  [src]="hike.routeIcon | trustedUrl">
+                <img class="svg ml-25" *ngIf="hike.routeIcon?.length" [src]="hike.routeIcon | trustedUrl">
               </td>
               <td class="text-center">
-                <p-button
-                  icon="pi pi-pencil"
-                  routerLink="/admin/hike/{{hike.id}}"
-                  styleClass="ui-button-warning"
-                  title="Edit hike"
-                ></p-button>
+                <p-button icon="pi pi-pencil" routerLink="/admin/hike/{{ hike.id }}" styleClass="ui-button-warning"
+                  title="Edit hike"></p-button>
 
-                <p-button
-                  icon="pi pi-trash"
-                  styleClass="ui-button-danger ml-5"
-                  (click)="deleteHike(hike.id)"
-                  title="Delete hike"
-                  *ngIf="hike.state === EObjectState.draft && !hike.published"
-                ></p-button>
+                <p-button icon="pi pi-trash" styleClass="ui-button-danger ml-5" (click)="deleteHike(hike.id)"
+                  title="Delete hike" *ngIf="hike.state === EObjectState.draft && !hike.published"></p-button>
               </td>
             </tr>
           </ng-template>

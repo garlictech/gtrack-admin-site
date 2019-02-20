@@ -1,25 +1,32 @@
-import { TestBed } from '@angular/core/testing';
-import { PoiEditorService } from '../poi-editor.service';
-import { GOOGLE_POIS } from './fixtures/google-pois';
-import { StoreModule } from '@ngrx/store';
-import { hikeEditPoiReducer, editedHikeProgramReducer } from '../../../../../app/store/reducer';
-import {
-  GeometryService, GeospatialService, ElevationService, GeoSearchSelectors,
-  PoiSelectors, EXTERNAL_GEO_SEARCH_DEPENDENCIES, EXTERNAL_POI_DEPENDENCIES
-} from '../../../../../subrepos/gtrack-common-ngx';
-import { RoutePlannerService } from '../../admin-map';
-import { GooglePoiService } from '../google-poi.service';
-import { WikipediaPoiService } from '../wikipedia-poi.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MessageService } from 'primeng/api';
-import { ETextualDescriptionType, EPoiTypes } from '../../../../../subrepos/provider-client';
-import { WIKIPEDIA_POIS } from './fixtures/wikipedia-pois';
-import { OSM_AMENITY_POIS } from './fixtures/osm-amenity-pois';
-import { OSM_NATURAL_POIS } from './fixtures/osm-natural-pois';
-import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
 import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 import { LeafletMarkerPopupService } from '@common.features/leaflet-map/services/leaflet-marker-popup.service';
+import { StoreModule } from '@ngrx/store';
+
+import { editedHikeProgramReducer, hikeEditPoiReducer } from '../../../../../app/store/reducer';
+import {
+  ElevationService,
+  EXTERNAL_GEO_SEARCH_DEPENDENCIES,
+  EXTERNAL_POI_DEPENDENCIES,
+  GeometryService,
+  GeoSearchSelectors,
+  GeospatialService,
+  PoiSelectors
+} from '../../../../../subrepos/gtrack-common-ngx';
+import { EPoiTypes, ETextualDescriptionType } from '../../../../../subrepos/provider-client';
+import { RoutePlannerService } from '../../admin-map';
+import { GooglePoiService } from '../google-poi.service';
+import { PoiEditorService } from '../poi-editor.service';
+import { WikipediaPoiService } from '../wikipedia-poi.service';
+import { GOOGLE_POIS } from './fixtures/google-pois';
+import { OSM_AMENITY_POIS } from './fixtures/osm-amenity-pois';
+import { OSM_NATURAL_POIS } from './fixtures/osm-natural-pois';
+import { WIKIPEDIA_POIS } from './fixtures/wikipedia-pois';
 
 describe('PoiEditorService', () => {
   let poiEditorService: PoiEditorService;
@@ -42,7 +49,7 @@ describe('PoiEditorService', () => {
         StoreModule.forRoot({
           hikeEditPoi: hikeEditPoiReducer,
           editedHikeProgram: editedHikeProgramReducer
-        }),
+        })
       ],
       providers: [
         PoiEditorService,
@@ -54,26 +61,26 @@ describe('PoiEditorService', () => {
         {
           provide: GeometryService,
           useValue: {
-            getCenterRadius: () => {},
-            distanceFromRoute: () => 0
+            getCenterRadius: () => {},
+            distanceFromRoute: () => 0
           }
         },
         {
           provide: GeospatialService,
           useValue: {
-            distanceOnLine: () => 0
+            distanceOnLine: () => 0
           }
         },
         {
           provide: RoutePlannerService,
           useValue: {
-            getSearchBounds: () => 0
+            getSearchBounds: () => 0
           }
         },
         {
           provide: ElevationService,
           useValue: {
-            getData: () => 0
+            getData: () => 0
           }
         },
         {
@@ -91,25 +98,25 @@ describe('PoiEditorService', () => {
         {
           provide: MessageService,
           useValue: {
-            add: () => {}
+            add: () => {}
           }
         },
         {
           provide: WikipediaPoiService,
           useValue: {
-            getPoiDetails: () => {}
+            getPoiDetails: () => {}
           }
         },
         {
           provide: GooglePoiService,
           useValue: {
-            getPoiDetails: () => {}
+            getPoiDetails: () => {}
           }
         },
         {
           provide: LeafletMapMarkerService,
           useValue: {
-            create: () => {}
+            create: () => {}
           }
         },
         {

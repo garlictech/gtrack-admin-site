@@ -1,6 +1,6 @@
-import { IExternalPoi } from './external-poi.interface';
+import { ExternalPoi } from './external-poi.interface';
 
-export interface IOsmPoi extends IExternalPoi {
+export interface IOsmPoi extends ExternalPoi {
   osm?:
     | {
         [lng: string]: any;

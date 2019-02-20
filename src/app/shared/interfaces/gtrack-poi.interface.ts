@@ -10,7 +10,7 @@ export interface IGTrackPoi extends IPoiStored {
 // gTRackPoi merge
 
 export interface IComparedProperty {
-  [flatKey: string]: any[];
+  [flatKey: string]: Array<any>;
 }
 
 export interface IFilteredProperties {

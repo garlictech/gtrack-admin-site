@@ -1,23 +1,24 @@
-import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { take } from 'rxjs/operators';
-import { State } from '../../../store';
-import { hikeEditRoutePlannerActions } from '../../../store/actions';
-import { GameRuleService, ISegment, RouteService } from 'subrepos/gtrack-common-ngx';
-import { initialRouteDataState } from '../../../store/reducer';
-import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
-
-import * as L from 'leaflet';
+import { BIG_BUFFER_SIZE } from 'app/config';
+import { geoBounds as d3GeoBounds } from 'd3-geo';
 import * as rewind from 'geojson-rewind';
+import * as L from 'leaflet';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _omit from 'lodash-es/omit';
+import { take } from 'rxjs/operators';
+import { GameRuleService, ISegment, RouteService } from 'subrepos/gtrack-common-ngx';
+
+import { Injectable } from '@angular/core';
+import { GEOJSON_STYLES } from '@common.features/leaflet-map/constants/geojson-styles';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+import { select, Store } from '@ngrx/store';
 import turfBuffer from '@turf/buffer';
 import { lineString as turfLineString } from '@turf/helpers';
 import turfLength from '@turf/length';
-import { geoBounds as d3GeoBounds } from 'd3-geo';
-import { BIG_BUFFER_SIZE } from 'app/config';
-import { GEOJSON_STYLES } from '@common.features/leaflet-map/constants/geojson-styles';
-import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+
+import { State } from '../../../store';
+import { hikeEditRoutePlannerActions } from '../../../store/actions';
+import { initialRouteDataState } from '../../../store/reducer';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 
 @Injectable()
 export class RoutePlannerService {
@@ -25,55 +26,53 @@ export class RoutePlannerService {
   private _routePlanOnMap: L.FeatureGroup;
 
   constructor(
-    private _store: Store<State>,
-    private _gameRuleService: GameRuleService,
-    private _routeService: RouteService,
-    private _leafletMapService: LeafletMapService
+    private readonly _store: Store<State>,
+    private readonly _gameRuleService: GameRuleService,
+    private readonly _routeService: RouteService,
+    private readonly _leafletMapService: LeafletMapService
   ) {
     // Update totals on each segment update
-    this._store
-      .pipe(select(hikeEditRoutePlannerSelectors.getSegments))
-      .subscribe((segments: ISegment[]) => {
-        // Update total for route info
-        this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
+    this._store.pipe(select(hikeEditRoutePlannerSelectors.getSegments)).subscribe((segments: Array<ISegment>) => {
+      // Update total for route info
+      this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
 
-        // Refresh route data and draw to map
-        const _route = this._createGeoJsonFromSegments(segments);
-        this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_route));
-        this.drawRoutePlanGeoJSON(_route.features[0]);
-      });
+      // Refresh route data and draw to map
+      const _route = this._createGeoJsonFromSegments(segments);
+      this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_route));
+      this.drawRoutePlanGeoJSON(_route.features[0]);
+    });
   }
 
   /**
    * Add the loaded route to the store
    * This is an initial loading method, the segment based route drawing will replace it.
    */
-  public addRouteToTheStore(route) {
+  addRouteToTheStore(route) {
     const _geoJSON = _cloneDeep(route);
 
     this._store.dispatch(new hikeEditRoutePlannerActions.AddRoute(_geoJSON));
   }
 
-  public addRouteSegment(coordinates, updown) {
+  addRouteSegment(coordinates, updown) {
     const _segment: ISegment = this.createRouteSegment(coordinates, updown);
 
     // Add segment to store
     this._store.dispatch(new hikeEditRoutePlannerActions.PushSegment(_segment));
   }
 
-  public updateRouteSegment(segmentIdx, coordinates, updown) {
+  updateRouteSegment(segmentIdx, coordinates, updown) {
     const _segment: ISegment = this.createRouteSegment(coordinates, updown);
 
     // Update segment
     this._store.dispatch(new hikeEditRoutePlannerActions.UpdateSegment(segmentIdx, _segment));
   }
 
-  public createRouteSegment(coordinates, updown) {
+  createRouteSegment(coordinates, updown) {
     const _segment: ISegment = {
       distance: turfLength(turfLineString(coordinates), { units: 'kilometers' }) * 1000, // summary.totalDistance, // in meters
       uphill: updown.uphill,
       downhill: updown.downhill,
-      coordinates: coordinates
+      coordinates
     };
 
     // Now, things according to the game rules
@@ -83,8 +82,88 @@ export class RoutePlannerService {
     return _segment;
   }
 
-  public removeLastSegment() {
+  removeLastSegment() {
     this._store.dispatch(new hikeEditRoutePlannerActions.PopSegment());
+  }
+
+  /**
+   * Get path bounds for POI search
+   */
+  getSearchBounds() {
+    let _bounds;
+
+    this._store
+      .pipe(
+        select(hikeEditRoutePlannerSelectors.getPath),
+        take(1)
+      )
+      .subscribe(path => {
+        // declare as 'any' for avoid d3.geoBounds error
+        const _buffer: any = turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
+
+        if (typeof _buffer !== 'undefined') {
+          const _geoBounds = d3GeoBounds(rewind(_buffer, true));
+
+          _bounds = {
+            SouthWest: {
+              lat: _geoBounds[0][1],
+              lon: _geoBounds[0][0]
+            },
+            NorthEast: {
+              lat: _geoBounds[1][1],
+              lon: _geoBounds[1][0]
+            }
+          };
+        } else {
+          _bounds = null;
+        }
+      });
+
+    return _bounds;
+  }
+
+  /**
+   * Create multi-line group from a LineString
+   */
+  drawRouteLineGeoJSON(geoJSON) {
+    if (this._savedRouteOnMap) {
+      this._leafletMapService.removeLayer(this._savedRouteOnMap);
+      delete this._savedRouteOnMap;
+    }
+
+    this._savedRouteOnMap = this._leafletMapService.addLayer(
+      this._leafletMapService.createFeatureGroupFromGeoJSONObject(geoJSON, GEOJSON_STYLES.routeMultiline)
+    ) as L.FeatureGroup;
+  }
+
+  /**
+   * Refresh route path after save
+   */
+  refreshRouteOnMap() {
+    this._store
+      .pipe(
+        select(hikeEditRoutePlannerSelectors.getPath),
+        take(1)
+      )
+      .subscribe((path: any) => {
+        this.drawRouteLineGeoJSON(path);
+      });
+  }
+
+  /**
+   * Create multi-line group from a LineString
+   */
+  drawRoutePlanGeoJSON(geoJSON) {
+    if (this._leafletMapService.leafletMap) {
+      if (this._routePlanOnMap) {
+        this._leafletMapService.removeLayer(this._routePlanOnMap);
+        delete this._routePlanOnMap;
+      }
+
+      this._routePlanOnMap = this._leafletMapService.addLayer(
+        this._leafletMapService.createFeatureGroupFromGeoJSONObject(geoJSON, GEOJSON_STYLES.routePlanMultiline)
+      ) as L.FeatureGroup;
+    }
   }
 
   /**
@@ -122,15 +201,16 @@ export class RoutePlannerService {
         }
 
         // Add the segment start point
-        _geoJSON.features.push(<any>this._createRoutePoint(_segment.coordinates[0], i + 1));
+        _geoJSON.features.push(this._createRoutePoint(_segment.coordinates[0], i + 1) as any);
       }
     }
 
     // Add the last route point: the last point of the last segment
     if (segments.length > 0) {
-      _geoJSON.features.push(<any>(
-        this._createRoutePoint(this._getLastPointOfLastSegment(segments), segments.length + 1)
-      ));
+      _geoJSON.features.push(this._createRoutePoint(
+        this._getLastPointOfLastSegment(segments),
+        segments.length + 1
+      ) as any);
     }
 
     if (segments.length > 0) {
@@ -164,85 +244,5 @@ export class RoutePlannerService {
     const _coordinateNumInLastSegment = _lastSegment.coordinates.length;
 
     return _lastSegment.coordinates[_coordinateNumInLastSegment - 1];
-  }
-
-  /**
-   * Get path bounds for POI search
-   */
-  public getSearchBounds() {
-    let _bounds;
-
-    this._store
-      .pipe(
-        select(hikeEditRoutePlannerSelectors.getPath),
-        take(1)
-      )
-      .subscribe(path => {
-        // declare as 'any' for avoid d3.geoBounds error
-        const _buffer: any = turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
-
-        if (typeof _buffer !== 'undefined') {
-          const _geoBounds = d3GeoBounds(rewind(_buffer, true));
-
-          _bounds = {
-            SouthWest: {
-              lat: _geoBounds[0][1],
-              lon: _geoBounds[0][0]
-            },
-            NorthEast: {
-              lat: _geoBounds[1][1],
-              lon: _geoBounds[1][0]
-            }
-          };
-        } else {
-          _bounds = null;
-        }
-      });
-
-    return _bounds;
-  }
-
-  /**
-   * Create multi-line group from a LineString
-   */
-  public drawRouteLineGeoJSON(geoJSON) {
-    if (this._savedRouteOnMap) {
-      this._leafletMapService.removeLayer(this._savedRouteOnMap);
-      delete this._savedRouteOnMap;
-    }
-
-    this._savedRouteOnMap = <L.FeatureGroup<any>>this._leafletMapService.addLayer(
-      this._leafletMapService.createFeatureGroupFromGeoJSONObject(geoJSON, GEOJSON_STYLES.routeMultiline)
-    );
-  }
-
-  /**
-   * Refresh route path after save
-   */
-  public refreshRouteOnMap() {
-    this._store
-      .pipe(
-        select(hikeEditRoutePlannerSelectors.getPath),
-        take(1)
-      )
-      .subscribe((path: any) => {
-        this.drawRouteLineGeoJSON(path);
-      });
-  }
-
-  /**
-   * Create multi-line group from a LineString
-   */
-  public drawRoutePlanGeoJSON(geoJSON) {
-    if (this._leafletMapService.leafletMap) {
-      if (this._routePlanOnMap) {
-        this._leafletMapService.removeLayer(this._routePlanOnMap);
-        delete this._routePlanOnMap;
-      }
-
-      this._routePlanOnMap = <L.FeatureGroup<any>>this._leafletMapService.addLayer(
-        this._leafletMapService.createFeatureGroupFromGeoJSONObject(geoJSON, GEOJSON_STYLES.routePlanMultiline)
-      );
-    }
   }
 }

@@ -1,14 +1,15 @@
 import { EntityState } from '@ngrx/entity';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
 
-export interface IWikipediaPoiEntityState extends EntityState<IWikipediaPoi> {}
-export interface IGooglePoiEntityState extends EntityState<IGooglePoi> {}
-export interface IOsmAmenityPoiEntityState extends EntityState<IOsmPoi> {}
-export interface IOsmNaturalPoiEntityState extends EntityState<IOsmPoi> {}
-export interface IOsmRoutePoiEntityState extends EntityState<IOsmPoi> {}
-export interface IPoiCollectorEntityState extends EntityState<any> {}
+import { IGooglePoi, IOsmPoi, IWikipediaPoi } from '../../shared/interfaces';
 
-export interface IExternalPoiListContextItemState {
+export interface WikipediaPoiEntityState extends EntityState<IWikipediaPoi> {}
+export interface GooglePoiEntityState extends EntityState<IGooglePoi> {}
+export interface OsmAmenityPoiEntityState extends EntityState<IOsmPoi> {}
+export interface OsmNaturalPoiEntityState extends EntityState<IOsmPoi> {}
+export interface OsmRoutePoiEntityState extends EntityState<IOsmPoi> {}
+export interface PoiCollectorEntityState extends EntityState<any> {}
+
+export interface ExternalPoiListContextItemState {
   loading: boolean;
   loaded: boolean;
   saving: boolean;
@@ -17,29 +18,29 @@ export interface IExternalPoiListContextItemState {
   showOffrouteMarkers?: boolean;
 }
 
-export interface IExternalPoiListContextState {
-  google: IExternalPoiListContextItemState;
-  osmAmenity: IExternalPoiListContextItemState;
-  osmNatural: IExternalPoiListContextItemState;
-  osmRoute: IExternalPoiListContextItemState;
-  wikipedia: IExternalPoiListContextItemState;
-  collector: IExternalPoiListContextItemState;
-  gTrack: IExternalPoiListContextItemState; // context for common Poi list
-  hike: IExternalPoiListContextItemState; // context for hike Poi list
+export interface ExternalPoiListContextState {
+  google: ExternalPoiListContextItemState;
+  osmAmenity: ExternalPoiListContextItemState;
+  osmNatural: ExternalPoiListContextItemState;
+  osmRoute: ExternalPoiListContextItemState;
+  wikipedia: ExternalPoiListContextItemState;
+  collector: ExternalPoiListContextItemState;
+  gTrack: ExternalPoiListContextItemState; // context for common Poi list
+  hike: ExternalPoiListContextItemState; // context for hike Poi list
 }
 
-export interface IGTrackPoiMergeState {
-  selections: string[];
+export interface GTrackPoiMergeState {
+  selections: Array<string>;
 }
 
 // State
-export interface IHikeEditPoiState {
-  googlePois: IGooglePoiEntityState;
-  osmAmenityPois: IOsmAmenityPoiEntityState;
-  osmNaturalPois: IOsmNaturalPoiEntityState;
-  osmRoutePois: IOsmRoutePoiEntityState;
-  wikipediaPois: IWikipediaPoiEntityState;
-  collectorPois: IPoiCollectorEntityState;
-  contexts: IExternalPoiListContextState;
-  gTrackPoiMerge: IGTrackPoiMergeState;
+export interface HikeEditPoiState {
+  googlePois: GooglePoiEntityState;
+  osmAmenityPois: OsmAmenityPoiEntityState;
+  osmNaturalPois: OsmNaturalPoiEntityState;
+  osmRoutePois: OsmRoutePoiEntityState;
+  wikipediaPois: WikipediaPoiEntityState;
+  collectorPois: PoiCollectorEntityState;
+  contexts: ExternalPoiListContextState;
+  gTrackPoiMerge: GTrackPoiMergeState;
 }

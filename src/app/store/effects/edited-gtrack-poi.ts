@@ -1,27 +1,22 @@
+// tslint:disable:no-property-initializers
+import _omit from 'lodash-es/omit';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
+import { PoiService } from 'subrepos/gtrack-common-ngx';
+import { IPoiStored } from 'subrepos/provider-client';
+
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action, Store, select } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { switchMap, take, map, catchError } from 'rxjs/operators';
-import { PoiService } from 'subrepos/gtrack-common-ngx';
-import { State } from '..';
-import { editedGTrackPoiActions } from '../actions';
-import { IPoiStored, IPoi } from 'subrepos/provider-client';
-import { log } from '../../log';
+import { Action, select, Store } from '@ngrx/store';
 
+import { State } from '../';
+import { log } from '../../log';
+import { editedGTrackPoiActions } from '../actions';
 import * as editedGTrackPoiSelectors from '../selectors/edited-gtrack-poi';
-import _omit from 'lodash-es/omit';
 
 @Injectable()
 export class EditedGTrackPoiEffects {
-  constructor(
-    private _actions$: Actions,
-    private _poiService: PoiService,
-    private _store: Store<State>
-  ) {}
-
-  @Effect()
-  save$: Observable<Action> = this._actions$.pipe(
+  @Effect() save$: Observable<Action> = this._actions$.pipe(
     ofType(editedGTrackPoiActions.SAVE_POI),
     switchMap(() =>
       this._store.pipe(
@@ -32,7 +27,7 @@ export class EditedGTrackPoiEffects {
     switchMap((data: IPoiStored) => {
       const poiData = _omit(data, ['timestamp']);
 
-      return this._poiService.create(<IPoi>poiData).pipe(
+      return this._poiService.create(poiData).pipe(
         take(1),
         map(poi => new editedGTrackPoiActions.PoiSaveSuccess(poi.id)),
         catchError(error => {
@@ -42,4 +37,9 @@ export class EditedGTrackPoiEffects {
       );
     })
   );
+  constructor(
+    private readonly _actions$: Actions,
+    private readonly _poiService: PoiService,
+    private readonly _store: Store<State>
+  ) {}
 }

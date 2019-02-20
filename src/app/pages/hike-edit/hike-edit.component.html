@@ -67,7 +67,7 @@
           label="Save hike"
           styleClass="ui-button-success"
           (onClick)="saveHike()"
-          [disabled]="!(allowSave$ | async)"
+          [disabled]="(allowSave$ | async) === false"
         ></p-button>
       </div>
     </div>

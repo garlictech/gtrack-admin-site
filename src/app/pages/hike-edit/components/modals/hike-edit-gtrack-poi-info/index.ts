@@ -1,14 +1,20 @@
-import { Component, OnDestroy, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, map, filter, switchMap, take } from 'rxjs/operators';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { Store, MemoizedSelector, select } from '@ngrx/store';
-import { State } from '../../../../../store';
-import { commonPoiActions, editedGTrackPoiActions } from '../../../../../store/actions';
+import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import {
-  IPoiStored, ILocalizedItem, ITextualDescription, EObjectState, IBackgroundImageData
+  BackgroundImageData,
+  EObjectState,
+  ILocalizedItem,
+  IPoiStored,
+  ITextualDescription
 } from 'subrepos/provider-client';
+
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MemoizedSelector, select, Store } from '@ngrx/store';
+
+import { State } from '../../../../../store';
+import { commonPoiActions, editedGTrackPoiActions } from '../../../../../store/actions';
 import * as editedGTrackPoiSelectors from '../../../../../store/selectors/edited-gtrack-poi';
 
 @Component({
@@ -21,25 +27,25 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
   @Input() poiId: string;
   @Input() closeModal: any;
 
-  public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
-  public descriptionLangSelector: any;
+  descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
+  descriptionLangSelector: any;
 
-  public poiLoaded$: Observable<boolean>;
-  public isDirty$: Observable<boolean>;
+  poiLoaded$: Observable<boolean>;
+  isDirty$: Observable<boolean>;
 
-  public backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
-  public backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
-  public clickActions: any;
+  backgroundImageUrlSelector: MemoizedSelector<object, Array<string>>;
+  backgroundImageSelector: MemoizedSelector<object, Array<BackgroundImageData>>;
+  clickActions: any;
 
-  public gTrackPoi: IPoiStored;
-  public EObjectState = EObjectState;
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  gTrackPoi: IPoiStored;
+  EObjectState = EObjectState;
+  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private _store: Store<State>,
-    private _poiSelectors: PoiSelectors,
-    private _messageService: MessageService,
-    private _confirmationService: ConfirmationService
+    private readonly _store: Store<State>,
+    private readonly _poiSelectors: PoiSelectors,
+    private readonly _messageService: MessageService,
+    private readonly _confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -97,7 +103,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
       )
       .subscribe((error: any) => {
         if (error) {
-          const msg: string[] = [];
+          const msg: Array<string> = [];
           for (const idx in error) {
             if (error[idx]) {
               msg.push(`${idx}: ${error[idx]}`);
@@ -121,7 +127,7 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
 
     this._store
       .pipe(
-        select(this._poiSelectors.getPoi(<string>this.poiId)),
+        select(this._poiSelectors.getPoi(this.poiId)),
         take(1)
       )
       .subscribe((poi: IPoiStored) => this._store.dispatch(new editedGTrackPoiActions.LoadPoi(poi)));
@@ -132,12 +138,12 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public savePoi() {
+  savePoi() {
     // Save hikeProgram
     this._store.dispatch(new editedGTrackPoiActions.SavePoi());
   }
 
-  public deletePoi(poiId: string) {
+  deletePoi(poiId: string) {
     this._confirmationService.confirm({
       message: 'Are you sure that you want to delete?',
       accept: () => {
@@ -147,16 +153,16 @@ export class HikeEditGTrackPoiInfoComponent implements OnInit, OnDestroy {
     });
   }
 
-  public submitDescription = (langKey: string, data: any) => {
+  submitDescription = (langKey: string, data: any) => {
     this._store.dispatch(new editedGTrackPoiActions.AddNewTranslatedPoiDescription(langKey, data));
-  }
+  };
 
-  public deleteDescription = lang => {
+  deleteDescription = lang => {
     this._confirmationService.confirm({
       message: 'Are you sure that you want to delete?',
       accept: () => {
         this._store.dispatch(new editedGTrackPoiActions.DeleteTranslatedPoiDescription(lang));
       }
     });
-  }
+  };
 }

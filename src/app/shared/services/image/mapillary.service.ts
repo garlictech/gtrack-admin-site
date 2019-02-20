@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-
-import * as uuid from 'uuid/v1';
-import _get from 'lodash-es/get';
 import _cloneDeep from 'lodash-es/cloneDeep';
-import { IBackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
-import { EPoiImageTypes } from 'subrepos/provider-client';
+import _get from 'lodash-es/get';
 import { Observable } from 'rxjs';
+import { EPoiImageTypes } from 'subrepos/provider-client';
+import * as uuid from 'uuid/v1';
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { BackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
 import { PoiEditorService } from '../poi';
 
 @Injectable()
 export class MapillaryService {
-  constructor(private _http: HttpClient, private _poiEditorService: PoiEditorService) {}
+  constructor(private readonly _http: HttpClient, private readonly _poiEditorService: PoiEditorService) {}
 
-  public get(bounds, path) {
+  get(bounds, path) {
     // tslint:disable:max-line-length
     const request = `https://a.mapillary.com/v3/images?client_id=${environment.mapillary.clientID}&bbox=${
       bounds.SouthWest.lon
@@ -23,11 +24,11 @@ export class MapillaryService {
 
     return this._http.get(request).switchMap((response: any) => {
       const _features = _get(response, 'features');
-      const _images: IBackgroundImageDataStored[] = [];
+      const _images: Array<BackgroundImageDataStored> = [];
 
       if (_features) {
         for (const _feature of _features) {
-          const _image: IBackgroundImageDataStored = {
+          const _image: BackgroundImageDataStored = {
             id: uuid(),
             title: 'untitled',
             lat: _feature.geometry.coordinates[1],

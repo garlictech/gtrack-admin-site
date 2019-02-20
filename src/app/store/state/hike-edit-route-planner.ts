@@ -1,8 +1,8 @@
-import { ISegment } from 'subrepos/gtrack-common-ngx';
 import { IRouteTotal } from 'app/shared/interfaces';
+import { ISegment } from 'subrepos/gtrack-common-ngx';
 
-export interface IHikeEditRoutePlannerState {
-  segments: ISegment[];
+export interface HikeEditRoutePlannerState {
+  segments: Array<ISegment>;
   total: IRouteTotal;
   location: any;
   route: GeoJSON.FeatureCollection<any>;

@@ -1,29 +1,30 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { of, interval, Observable } from 'rxjs';
-import { take, map, combineAll } from 'rxjs/operators';
-import { EPoiTypes, IBackgroundImageData, EPoiImageTypes, ETextualDescriptionType } from 'subrepos/provider-client';
-import { GeometryService, CenterRadius } from 'subrepos/gtrack-common-ngx';
-import { IWikipediaPoi } from '../../interfaces';
-import { LanguageService } from '../language.service';
-import { HikeProgramService } from '../hike/hike-program.service';
-import { MessageService } from 'primeng/api';
-
-import * as uuid from 'uuid/v1';
-import _filter from 'lodash-es/filter';
 import _chunk from 'lodash-es/chunk';
+import _filter from 'lodash-es/filter';
 import _get from 'lodash-es/get';
+import { MessageService } from 'primeng/api';
+import { interval, Observable, of } from 'rxjs';
+import { combineAll, map, take } from 'rxjs/operators';
+import { CenterRadius, GeometryService } from 'subrepos/gtrack-common-ngx';
+import { BackgroundImageData, EPoiImageTypes, EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
+import * as uuid from 'uuid/v1';
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { IWikipediaPoi } from '../../interfaces';
+import { HikeProgramService } from '../hike/hike-program.service';
+import { LanguageService } from '../language.service';
 
 @Injectable()
 export class WikipediaPoiService {
   constructor(
-    private _http: HttpClient,
-    private _geometryService: GeometryService,
-    private _messageService: MessageService,
-    private _hikeProgramService: HikeProgramService
+    private readonly _http: HttpClient,
+    private readonly _geometryService: GeometryService,
+    private readonly _messageService: MessageService,
+    private readonly _hikeProgramService: HikeProgramService
   ) {}
 
-  public get(bounds, lng = 'en') {
+  get(bounds, lng = 'en') {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
     const gsLimit = 500;
     // tslint:disable:max-line-length
@@ -40,7 +41,7 @@ export class WikipediaPoiService {
         .get(request)
         // .toPromise()
         .switchMap((data: any) => {
-          const _pois: IWikipediaPoi[] = [];
+          const _pois: Array<IWikipediaPoi> = [];
 
           if (data.query) {
             for (const _point of data.query.geosearch) {
@@ -65,7 +66,7 @@ export class WikipediaPoiService {
               _poi.wikipedia = {
                 pageid: _point.pageid,
                 url: `https://${lng}.wikipedia.org/?curid=${_point.pageid}`,
-                lng: lng
+                lng
               };
               _pois.push(_poi);
             }
@@ -89,9 +90,9 @@ export class WikipediaPoiService {
   /**
    * handlePoiDetails() submethod
    */
-  public getPoiDetails(pois: IWikipediaPoi[]) {
-    const langs: string[] = this._hikeProgramService.getDescriptionLanguages();
-    const promises: Promise<IWikipediaPoi[]>[] = [];
+  getPoiDetails(pois: Array<IWikipediaPoi>) {
+    const langs: Array<string> = this._hikeProgramService.getDescriptionLanguages();
+    const promises: Array<Promise<Array<IWikipediaPoi>>> = [];
 
     for (const lng of langs) {
       const langPois = _filter(pois, p => p.wikipedia.lng === lng);
@@ -100,15 +101,13 @@ export class WikipediaPoiService {
       promises.push(this._getPageImages(langPois, lng));
     }
 
-    return Promise.all(promises).then(() => {
-      return pois;
-    });
+    return Promise.all(promises).then(() => pois);
   }
 
   /**
    * get submethod - load wikipedia lead sections
    */
-  private _getPageExtracts(_pois: IWikipediaPoi[], lng) {
+  private _getPageExtracts(_pois: Array<IWikipediaPoi>, lng) {
     const _poiIds = _pois.map((p: IWikipediaPoi) => _get(p, 'wikipedia.pageid', ''));
     const _chunks = _chunk(_poiIds, 20);
 
@@ -147,15 +146,13 @@ export class WikipediaPoiService {
         combineAll()
       )
       .toPromise()
-      .then(() => {
-        return _pois;
-      });
+      .then(() => _pois);
   }
 
   /**
    * get submethod - load wikipedia page images
    */
-  private _getPageImages(_pois: IWikipediaPoi[], lng) {
+  private _getPageImages(_pois: Array<IWikipediaPoi>, lng) {
     const _poiIds = _pois.map((p: IWikipediaPoi) => _get(p, 'wikipedia.pageid', ''));
     const _chunks = _chunk(_poiIds, 20);
 
@@ -185,7 +182,7 @@ export class WikipediaPoiService {
                     delete _imgData.original.source;
                     delete _imgData.thumbnail.source;
 
-                    const _imageInfo: IBackgroundImageData = {
+                    const _imageInfo: BackgroundImageData = {
                       title: _imgData.title,
                       lat: _pois.find((p: IWikipediaPoi) => p.wikipedia.pageid === _imgData.pageid).lat,
                       lon: _pois.find((p: IWikipediaPoi) => p.wikipedia.pageid === _imgData.pageid).lon,
@@ -212,8 +209,6 @@ export class WikipediaPoiService {
         combineAll()
       )
       .toPromise()
-      .then(() => {
-        return _pois;
-      });
+      .then(() => _pois);
   }
 }

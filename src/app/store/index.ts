@@ -1,23 +1,17 @@
+// tslint:disable:only-arrow-functions
+import { metaReducers, reducer as commonReducers } from 'subrepos/gtrack-common-web/store';
+
+// State
+import { InjectionToken } from '@angular/core';
 import { ActionReducerMap } from '@ngrx/store/src/models';
 
-import { reducer as commonReducers, metaReducers } from 'subrepos/gtrack-common-web/store';
-
-//////////////
 // Reducers
-//////////////
-
-import { hikeEditRoutePlannerReducer } from './reducer/hike-edit-route-planner';
-import { hikeEditPoiReducer } from './reducer/hike-edit-poi';
-import { hikeEditImageReducer } from './reducer/hike-edit-image';
-import { editedHikeProgramReducer } from './reducer/edited-hike-program';
 import { editedGTrackPoiReducer } from './reducer/edited-gtrack-poi';
-
-//////////////
-// State
-//////////////
-
+import { editedHikeProgramReducer } from './reducer/edited-hike-program';
+import { hikeEditImageReducer } from './reducer/hike-edit-image';
+import { hikeEditPoiReducer } from './reducer/hike-edit-poi';
+import { hikeEditRoutePlannerReducer } from './reducer/hike-edit-route-planner';
 import { State } from './state';
-import { InjectionToken } from '@angular/core';
 
 // Same keys as in the state!!!
 export const reducer: ActionReducerMap<State> = {
@@ -31,7 +25,7 @@ export const reducer: ActionReducerMap<State> = {
 
 export const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<State>>('Registered Reducers');
 
-export function getReducers() {
+export function getReducers(): ActionReducerMap<State> {
   return reducer;
 }
 

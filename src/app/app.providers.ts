@@ -1,32 +1,26 @@
-import { TransferState } from '@angular/platform-browser';
-import { ConfirmationService } from 'primeng/api';
-
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CONFIG as LANGUAGE_CONFIG } from 'subrepos/localize-ngx';
 
-import { RouteRedirectGuard } from './auth';
-import { RoutePlannerService } from './shared/services/admin-map';
-import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
+import { TransferState } from '@angular/platform-browser';
 
+import { RouteRedirectGuard } from './auth';
+import { config } from './config';
 // Services
 import {
   AdminMapService,
-  PoiEditorService,
-  WikipediaPoiService,
-  OsmPoiService,
-  // OsmRoutePoiService,
+  FlickrService,
   GooglePoiService,
-  ReverseGeocodingService,
-  LanguageService,
   HikeProgramService,
+  LanguageService,
   MapillaryService,
-  FlickrService
+  OsmPoiService,
+  PoiEditorService,
+  ReverseGeocodingService,
+  WikipediaPoiService
 } from './shared/services';
-
-import { REDUCER_TOKEN, getReducers } from './store';
-
-import { config } from './config';
-
-import { MessageService } from 'primeng/api';
+import { RoutePlannerService } from './shared/services/admin-map';
+import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
+import { getReducers, REDUCER_TOKEN } from './store';
 
 export const APP_PROVIDERS = [
   TransferState,

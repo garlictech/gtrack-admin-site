@@ -1,28 +1,28 @@
+import { cold, hot, Scheduler } from 'jest-marbles';
+import * as _ from 'lodash';
+import { Observable } from 'rxjs';
+
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
+import { Router, RouterModule } from '@angular/router';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
-import { hot, cold, Scheduler } from 'jest-marbles';
-import { EditedGTrackPoiEffects } from '../edited-gtrack-poi';
+import { StoreModule } from '@ngrx/store';
+
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, PoiService } from '../../../../subrepos/gtrack-common-ngx';
-import { RouterModule, Router } from '@angular/router';
-import { mockRouter } from './helpers';
-import { editedGTrackPoiActions } from '../../actions';
-import { IExternalPoi } from '../../../shared/interfaces';
+import { ExternalPoi } from '../../../shared/interfaces';
 import * as editedGTrackPoiSelectors from '../../../store/selectors/edited-gtrack-poi';
-
-import * as _ from 'lodash';
-
+import { editedGTrackPoiActions } from '../../actions';
 import { pois as poiFixtures } from '../../reducer/test/fixtures';
+import { EditedGTrackPoiEffects } from '../edited-gtrack-poi';
+import { mockRouter } from './helpers';
 
 describe('EditedGTrackPoiEffects effects', () => {
   let actions$: Observable<any>;
   let effects: EditedGTrackPoiEffects;
   let poiService: PoiService;
-  let pois: IExternalPoi[];
+  let pois: Array<ExternalPoi>;
 
   beforeEach(() => {
     pois = _.cloneDeep(poiFixtures);

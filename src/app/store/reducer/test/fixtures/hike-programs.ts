@@ -1,7 +1,7 @@
-import { IHikeProgram, ETextualDescriptionType } from 'subrepos/provider-client';
+import { ETextualDescriptionType, IHikeProgram } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v4';
 
-export const hikePrograms: IHikeProgram[] = [
+export const hikePrograms: Array<IHikeProgram> = [
   {
     id: uuid(),
     distance: 5,

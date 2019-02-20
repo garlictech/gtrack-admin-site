@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
 import { GoogleMapsService } from 'subrepos/gtrack-common-ngx';
+
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ReverseGeocodingService {
-  constructor(private _googleMapsService: GoogleMapsService) {}
+  constructor(private readonly _googleMapsService: GoogleMapsService) {}
 
-  public get(coordinates) {
+  get(coordinates) {
     return this._googleMapsService.map.then(() => {
       const _point = new google.maps.LatLng(coordinates.lat, coordinates.lon);
       const _geocoder = new google.maps.Geocoder();
@@ -22,7 +23,7 @@ export class ReverseGeocodingService {
     });
   }
 
-  private _parseResults(results: google.maps.GeocoderResult[]) {
+  private _parseResults(results: Array<google.maps.GeocoderResult>) {
     const _parts: any = {};
 
     for (const res of results) {

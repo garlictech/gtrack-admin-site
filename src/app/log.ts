@@ -5,7 +5,7 @@ log.color = 'lightgreen';
 
 export function DebugLog(target: Object, key: string, descriptor: TypedPropertyDescriptor<any>) {
   return {
-    value: function(...args: any[]) {
+    value(...args: Array<any>) {
       const result = descriptor.value.apply(this, args);
       log.data(`Call: ${target.constructor.name}.${key}`, { arguments: args });
       return result;

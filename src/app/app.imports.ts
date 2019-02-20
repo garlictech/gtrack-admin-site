@@ -1,13 +1,7 @@
+import { environment } from 'environments/environment';
 import _get from 'lodash-es/get';
-import {
-  AuthEffects,
-  EditedGTrackPoiEffects,
-  EditedHikeProgramEffects,
-  HikeEditImageEffects,
-  HikeEditPoiEffects
-} from './store/effects';
+import { ToastModule } from 'primeng/toast';
 import { AuthenticationApiModule, defaultAuthenticationApiConfig } from 'subrepos/authentication-api-ngx';
-import { AuthModule } from './auth';
 import {
   BackgroundGeolocationModule,
   DeepstreamModule,
@@ -20,18 +14,27 @@ import {
   SearchFiltersModule,
   SharedModule
 } from 'subrepos/gtrack-common-ngx';
-import { CoreLayoutModule } from './core';
-import { EffectsModule } from '@ngrx/effects';
-import { environment } from 'environments/environment';
-import { GenericUiModule } from '@web.features/generic-ui';
 import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
+
+import { LeafletMapModule } from '@common.features/leaflet-map/leaflet-map.module';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { GenericUiModule } from '@web.features/generic-ui';
+
+import { AuthModule } from './auth';
+import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';
 import { HikeListModule } from './pages/hike-list';
 import { metaReducers, REDUCER_TOKEN } from './store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreModule } from '@ngrx/store';
-import { ToastModule } from 'primeng/toast';
-import { LeafletMapModule } from '@common.features/leaflet-map/leaflet-map.module';
+import {
+  AuthEffects,
+  EditedGTrackPoiEffects,
+  EditedHikeProgramEffects,
+  HikeEditImageEffects,
+  HikeEditPoiEffects
+} from './store/effects';
+
 const sharedConfig = {
   ...defaultSharedConfig
 };

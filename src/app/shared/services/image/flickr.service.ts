@@ -1,24 +1,25 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-
-import * as uuid from 'uuid/v1';
-import _get from 'lodash-es/get';
 import _cloneDeep from 'lodash-es/cloneDeep';
-import { IBackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
-import { EPoiImageTypes } from 'subrepos/provider-client';
+import _get from 'lodash-es/get';
 import { Observable } from 'rxjs';
+import { EPoiImageTypes } from 'subrepos/provider-client';
+import * as uuid from 'uuid/v1';
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { BackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
 import { PoiEditorService } from '../poi';
 
 @Injectable()
 export class FlickrService {
-  constructor(private _http: HttpClient, private _poiEditorService: PoiEditorService) {}
+  constructor(private readonly _http: HttpClient, private readonly _poiEditorService: PoiEditorService) {}
 
-  public get(bounds, path) {
-    const promise: Promise<IBackgroundImageDataStored[]> = new Promise(resolve => {
+  get(bounds, path) {
+    const promise: Promise<Array<BackgroundImageDataStored>> = new Promise(resolve => {
       this._batchGet(this._getOnePage, {
-        bounds: bounds,
-        path: path,
+        bounds,
+        path,
         page: 1,
         results: []
       }).then(_res => {
@@ -42,7 +43,7 @@ export class FlickrService {
     });
   }
 
-  private _getOnePage = params => {
+  private readonly _getOnePage = params => {
     // tslint:disable:max-line-length
     const request = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
       environment.flickr.apiKey
@@ -57,12 +58,12 @@ export class FlickrService {
       .get(request)
       .toPromise()
       .then((data: any) => {
-        const _images: IBackgroundImageDataStored[] = [];
+        const _images: Array<BackgroundImageDataStored> = [];
         const _photos = _get(data, 'photos.photo', null);
 
         if (_photos) {
           for (const _photo of _photos) {
-            const _image: IBackgroundImageDataStored = {
+            const _image: BackgroundImageDataStored = {
               id: uuid(),
               title: 'untitled',
               lat: _photo.latitude,
@@ -103,5 +104,5 @@ export class FlickrService {
 
         return result;
       });
-  }
+  };
 }

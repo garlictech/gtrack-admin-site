@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import _get from 'lodash-es/get';
+import { Observable } from 'rxjs';
 import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
+import * as uuid from 'uuid/v1';
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
 import { IOsmPoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
-import * as uuid from 'uuid/v1';
-import _get from 'lodash-es/get';
-import { Observable } from 'rxjs';
-
 @Injectable()
 export class OsmPoiService {
-  constructor(private _http: HttpClient) {}
+  constructor(private readonly _http: HttpClient) {}
 
-  public get(bounds, typeParam, lng = 'en') {
+  get(bounds, typeParam, lng = 'en') {
     const request = `
       <osm-script output="json" timeout="25">
         <union into="_">
@@ -41,7 +42,7 @@ export class OsmPoiService {
       </osm-script>`;
 
     return this._http.post('https://overpass-api.de/api/interpreter', request).switchMap((response: any) => {
-      const _res: IOsmPoi[] = [];
+      const _res: Array<IOsmPoi> = [];
 
       if (response.elements) {
         for (const _point of response.elements) {

@@ -1,12 +1,12 @@
-import { IPoi, EPoiTypes, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { EPoiTypes, ILocalizedItem, IPoi, ITextualDescription } from 'subrepos/provider-client';
 
-export interface IExternalPoi extends IPoi {
+export interface ExternalPoi extends IPoi {
   id: string;
   elevation: number;
   lat: number;
   lon: number;
-  objectTypes?: EPoiTypes[];
-  types: string[];
+  objectTypes?: Array<EPoiTypes>;
+  types: Array<string>;
   description: ILocalizedItem<ITextualDescription>;
   selected?: boolean | undefined;
   distanceFromOrigo?: number | undefined;

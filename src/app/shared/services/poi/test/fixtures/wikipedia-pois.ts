@@ -1,5 +1,4 @@
 // tslint:disable:max-line-length
-
 import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
 
 export const WIKIPEDIA_RESPONSE = {

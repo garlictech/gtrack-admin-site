@@ -1,5 +1,6 @@
 // Core
 import { Component, Input } from '@angular/core';
+
 import { IGooglePoi, IOsmPoi, IWikipediaPoi } from '../../../../shared/interfaces';
 
 @Component({

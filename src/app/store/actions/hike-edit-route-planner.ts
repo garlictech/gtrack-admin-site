@@ -1,3 +1,4 @@
+// tslint:disable:no-property-initializers max-classes-per-file
 import { Action } from '@ngrx/store';
 
 export const RESET_ROUTE_PLANNING_STATE = '[HikeEditRoutePlanner] Reset';

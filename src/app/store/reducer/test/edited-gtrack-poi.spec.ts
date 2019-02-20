@@ -1,22 +1,16 @@
-import { IEditedGTrackPoiState } from '../../state';
-import { initialEditedGTrackPoiState, editedGTrackPoiReducer } from '../edited-gtrack-poi';
-import { editedGTrackPoiActions } from '../../actions';
-import { IExternalPoi } from '../../../shared/interfaces';
-import {
-  IBackgroundImageData,
-  IPoiStored,
-  EObjectState,
-  ETextualDescriptionType
-} from '../../../../subrepos/provider-client';
-
 import * as _ from 'lodash';
 
-import { pois as poiFixtures, pois as poiStoredFixtures, bgImages as bgImageFixtures } from './fixtures';
+import { BackgroundImageData, EObjectState, ETextualDescriptionType } from '../../../../subrepos/provider-client';
+import { ExternalPoi } from '../../../shared/interfaces';
+import { editedGTrackPoiActions } from '../../actions';
+import { EditedGTrackPoiState } from '../../state';
+import { editedGTrackPoiReducer, initialEditedGTrackPoiState } from '../edited-gtrack-poi';
+import { bgImages as bgImageFixtures, pois as poiFixtures } from './fixtures';
 
 describe('Edited GTrackPoi reducers', () => {
-  let initialState: IEditedGTrackPoiState;
-  let pois: IExternalPoi[];
-  let images: IBackgroundImageData[];
+  let initialState: EditedGTrackPoiState;
+  let pois: Array<ExternalPoi>;
+  let images: Array<BackgroundImageData>;
 
   beforeEach(() => {
     initialState = _.cloneDeep(initialEditedGTrackPoiState);

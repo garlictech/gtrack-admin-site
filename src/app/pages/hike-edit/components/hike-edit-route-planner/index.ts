@@ -1,22 +1,22 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { WaypointMarkerService, RoutePlannerService } from '../../../../shared/services/admin-map';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil, filter, switchMap, take, debounceTime } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { State, IHikeEditRoutePlannerState } from '../../../../store';
-import { editedHikeProgramActions, hikeEditPoiActions } from '../../../../store/actions';
-import { RouteSelectors, IRouteContextState, Route } from 'subrepos/gtrack-common-ngx';
-import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
-import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
-import { ReverseGeocodingService, HikeProgramService, PoiEditorService } from '../../../../shared/services';
-import { IRouteStored } from 'subrepos/provider-client';
-
 import _pick from 'lodash-es/pick';
 import _values from 'lodash-es/values';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, filter, switchMap, take, takeUntil } from 'rxjs/operators';
+import { IRouteContextState, Route, RouteSelectors } from 'subrepos/gtrack-common-ngx';
+import { IRouteStored } from 'subrepos/provider-client';
+
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 import * as leafletMapSelectors from '@common.features/leaflet-map/store/selectors';
-import { IRouteTotal } from 'app/shared/interfaces';
+import { select, Store } from '@ngrx/store';
+
+import { HikeProgramService, PoiEditorService, ReverseGeocodingService } from '../../../../shared/services';
+import { RoutePlannerService, WaypointMarkerService } from '../../../../shared/services/admin-map';
+import { HikeEditRoutePlannerState, State } from '../../../../store';
+import { editedHikeProgramActions, hikeEditPoiActions } from '../../../../store/actions';
+import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 
 @Component({
   selector: 'app-hike-edit-route-planner',
@@ -24,21 +24,21 @@ import { IRouteTotal } from 'app/shared/interfaces';
 })
 export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   @Input() isPlanning$: Observable<boolean>;
-  public routeInfoData$: Observable<IHikeEditRoutePlannerState>;
-  public route$: Observable<any>;
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  routeInfoData$: Observable<HikeEditRoutePlannerState>;
+  route$: Observable<any>;
+  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private _waypointMarkerService: WaypointMarkerService,
-    private _routePlannerService: RoutePlannerService,
-    private _routeSelectors: RouteSelectors,
-    private _hikeProgramService: HikeProgramService,
-    private _store: Store<State>,
-    private _reverseGeocodingService: ReverseGeocodingService,
-    private _confirmationService: ConfirmationService,
-    private _poiEditorService: PoiEditorService,
-    private _messageService: MessageService,
-    private _leafletMapService: LeafletMapService
+    private readonly _waypointMarkerService: WaypointMarkerService,
+    private readonly _routePlannerService: RoutePlannerService,
+    private readonly _routeSelectors: RouteSelectors,
+    private readonly _hikeProgramService: HikeProgramService,
+    private readonly _store: Store<State>,
+    private readonly _reverseGeocodingService: ReverseGeocodingService,
+    private readonly _confirmationService: ConfirmationService,
+    private readonly _poiEditorService: PoiEditorService,
+    private readonly _messageService: MessageService,
+    private readonly _leafletMapService: LeafletMapService
   ) {}
 
   ngOnInit() {
@@ -51,9 +51,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       .pipe(
         select(leafletMapSelectors.getMapId),
         filter(id => id !== ''),
-        switchMap(() => {
-          return this._store.pipe(select(editedHikeProgramSelectors.getRouteId));
-        }),
+        switchMap(() => this._store.pipe(select(editedHikeProgramSelectors.getRouteId))),
         switchMap((routeId: string) => this._store.pipe(select(this._routeSelectors.getRouteContext(routeId)))),
         filter(routeContext => !!routeContext),
         takeUntil(this._destroy$)
@@ -72,7 +70,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         } else if (routeContext.loaded) {
           this._store
             .pipe(
-              select(this._routeSelectors.getRoute((<IRouteContextState>routeContext).id)),
+              select(this._routeSelectors.getRoute(routeContext.id)),
               filter((route: IRouteStored) => !!route),
               take(1)
             )
@@ -80,13 +78,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
               // Draw an independent path to the map
               this._routePlannerService.drawRouteLineGeoJSON(route.route.features[0]);
 
-              const bounds: L.LatLngBoundsExpression = [[
-                route.bounds.NorthEast.lat,
-                route.bounds.NorthEast.lon
-              ], [
-                route.bounds.SouthWest.lat,
-                route.bounds.SouthWest.lon
-              ]];
+              const bounds: L.LatLngBoundsExpression = [
+                [route.bounds.NorthEast.lat, route.bounds.NorthEast.lon],
+                [route.bounds.SouthWest.lat, route.bounds.SouthWest.lon]
+              ];
+              // TODO fotRouteBounds
               this._leafletMapService.fitBounds(bounds);
 
               // Load path to routePlanner state - necessary for drawing pois
@@ -109,18 +105,16 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         // Clear location
         if (route.features.length === 1) {
           this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
-        // 1st segment added (line + 2 points)
+          // 1st segment added (line + 2 points)
         } else if (route.features.length === 3) {
           this._updateLocation(route.features[1].geometry.coordinates);
         }
 
-        this.isPlanning$
-          .pipe(take(1))
-          .subscribe((isPlanning: boolean) => {
-            if (isPlanning) {
-              this._refreshIcons(route);
-            }
-          });
+        this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
+          if (isPlanning) {
+            this._refreshIcons(route);
+          }
+        });
       });
   }
 
@@ -129,15 +123,15 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public removeLast() {
+  removeLast() {
     this._waypointMarkerService.removeLast();
   }
 
-  public closeCircle() {
+  closeCircle() {
     this._waypointMarkerService.closeCircle();
   }
 
-  public deletePlan() {
+  deletePlan() {
     this._confirmationService.confirm({
       message: 'Are you sure that you want to delete?',
       accept: () => {
@@ -156,7 +150,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       })
       .then(
         (location: string) => {
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: location }, false));
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location }, false));
         },
         err => {
           this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));

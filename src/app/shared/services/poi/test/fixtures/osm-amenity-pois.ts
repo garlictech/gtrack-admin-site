@@ -1,4 +1,4 @@
-import { ETextualDescriptionType, EPoiTypes } from 'subrepos/provider-client';
+import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
 
 export const OSM_AMENITY_RESPONSE = {
   version: 0.6,
@@ -62,7 +62,7 @@ export const OSM_AMENITY_POIS = [
         fullDescription: '',
         summary: '',
         title: 'Game feeding',
-        type: ETextualDescriptionType.markdown,
+        type: ETextualDescriptionType.markdown
       }
     },
     elevation: undefined,
@@ -82,7 +82,7 @@ export const OSM_AMENITY_POIS = [
         fullDescription: '',
         summary: '',
         title: 'Hunting stand',
-        type: ETextualDescriptionType.markdown,
+        type: ETextualDescriptionType.markdown
       }
     },
     elevation: undefined,
@@ -102,7 +102,7 @@ export const OSM_AMENITY_POIS = [
         fullDescription: '',
         summary: '',
         title: 'Hunting stand',
-        type: ETextualDescriptionType.markdown,
+        type: ETextualDescriptionType.markdown
       }
     },
     elevation: undefined,
@@ -122,7 +122,7 @@ export const OSM_AMENITY_POIS = [
         fullDescription: '',
         summary: '',
         title: 'Hunting stand',
-        type: ETextualDescriptionType.markdown,
+        type: ETextualDescriptionType.markdown
       }
     },
     elevation: undefined,

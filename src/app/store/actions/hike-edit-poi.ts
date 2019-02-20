@@ -1,5 +1,7 @@
+// tslint:disable:no-property-initializers max-classes-per-file
 import { Action } from '@ngrx/store';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
+
+import { IGooglePoi, IOsmPoi, IWikipediaPoi } from '../../shared/interfaces';
 
 export const RESET_POI_STATE = '[HikeEditPoi] Reset';
 
@@ -64,7 +66,7 @@ export class GetGooglePois implements Action {
 
 export class SetGooglePois implements Action {
   readonly type = SET_GOOGLE_POIS;
-  constructor(public pois: IGooglePoi[]) {}
+  constructor(public pois: Array<IGooglePoi>) {}
 }
 
 export class SetGooglePoisInGtrackDb implements Action {
@@ -79,7 +81,7 @@ export class SetGooglePoisInCollector implements Action {
 
 export class SetGooglePoiSelected implements Action {
   readonly type = SET_GOOGLE_POI_SELECTED;
-  constructor(public poiIds: string[]) {}
+  constructor(public poiIds: Array<string>) {}
 }
 
 /**
@@ -93,7 +95,7 @@ export class GetOsmAmenityPois implements Action {
 
 export class SetOsmAmenityPois implements Action {
   readonly type = SET_OSM_AMENITY_POIS;
-  constructor(public pois: IOsmPoi[]) {}
+  constructor(public pois: Array<IOsmPoi>) {}
 }
 
 export class SetOsmAmenityPoisInGtrackDb implements Action {
@@ -108,7 +110,7 @@ export class SetOsmAmenityPoisInCollector implements Action {
 
 export class SetOsmAmenityPoiSelected implements Action {
   readonly type = SET_OSM_AMENITY_POI_SELECTED;
-  constructor(public poiIds: string[]) {}
+  constructor(public poiIds: Array<string>) {}
 }
 
 /**
@@ -122,7 +124,7 @@ export class GetOsmNaturalPois implements Action {
 
 export class SetOsmNaturalPois implements Action {
   readonly type = SET_OSM_NATURAL_POIS;
-  constructor(public pois: IOsmPoi[]) {}
+  constructor(public pois: Array<IOsmPoi>) {}
 }
 
 export class SetOsmNaturalPoisInGtrackDb implements Action {
@@ -137,7 +139,7 @@ export class SetOsmNaturalPoisInCollector implements Action {
 
 export class SetOsmNaturalPoiSelected implements Action {
   readonly type = SET_OSM_NATURAL_POI_SELECTED;
-  constructor(public poiIds: string[]) {}
+  constructor(public poiIds: Array<string>) {}
 }
 
 /**
@@ -151,7 +153,7 @@ export class GetOsmRoutePois implements Action {
 
 export class SetOsmRoutePois implements Action {
   readonly type = SET_OSM_ROUTE_POIS;
-  constructor(public pois: IOsmPoi[]) {}
+  constructor(public pois: Array<IOsmPoi>) {}
 }
 
 export class SetOsmRoutePoisInGtrackDb implements Action {
@@ -166,7 +168,7 @@ export class SetOsmRoutePoisInCollector implements Action {
 
 export class SetOsmRoutePoiSelected implements Action {
   readonly type = SET_OSM_ROUTE_POI_SELECTED;
-  constructor(public poiIds: string[]) {}
+  constructor(public poiIds: Array<string>) {}
 }
 
 /**
@@ -180,7 +182,7 @@ export class GetWikipediaPois implements Action {
 
 export class SetWikipediaPois implements Action {
   readonly type = SET_WIKIPEDIA_POIS;
-  constructor(public pois: IWikipediaPoi[]) {}
+  constructor(public pois: Array<IWikipediaPoi>) {}
 }
 
 export class SetWikipediaPoisInGtrackDb implements Action {
@@ -195,7 +197,7 @@ export class SetWikipediaPoisInCollector implements Action {
 
 export class SetWikipediaPoiSelected implements Action {
   readonly type = SET_WIKIPEDIA_POI_SELECTED;
-  constructor(public poiIds: string[]) {}
+  constructor(public poiIds: Array<string>) {}
 }
 
 /**
@@ -204,17 +206,17 @@ export class SetWikipediaPoiSelected implements Action {
 
 export class AddPoisToCollector implements Action {
   readonly type = ADD_POIS_TO_COLLECTOR;
-  constructor(public pois: any[]) {}
+  constructor(public pois: Array<any>) {}
 }
 
 export class RemovePoisFromCollector implements Action {
   readonly type = REMOVE_POIS_FROM_COLLECTOR;
-  constructor(public poiIds: string[]) {}
+  constructor(public poiIds: Array<string>) {}
 }
 
 export class SetCollectorPoiSelected implements Action {
   readonly type = SET_COLLECTOR_POI_SELECTED;
-  constructor(public poiIds: string[]) {}
+  constructor(public poiIds: Array<string>) {}
 }
 
 /**
@@ -260,12 +262,12 @@ export class ResetPoiMergeSelection implements Action {
 
 export class AddGTrackPoiToMergeSelection implements Action {
   readonly type = ADD_GTRACK_POI_TO_MERGE_SELECTION;
-  constructor(public poiIds: string[]) {}
+  constructor(public poiIds: Array<string>) {}
 }
 
 export class RemoveGTrackPoiFromMergeSelection implements Action {
   readonly type = REMOVE_GTRACK_POI_FROM_MERGE_SELECTION;
-  constructor(public poiIds: string[]) {}
+  constructor(public poiIds: Array<string>) {}
 }
 
 export type AllHikeEditPoiActions =

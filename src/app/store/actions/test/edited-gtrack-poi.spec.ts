@@ -1,7 +1,6 @@
-import { IBackgroundImageData, EPoiImageTypes } from '../../../../subrepos/provider-client';
-import * as EditedGTrackPoiActions from '../edited-gtrack-poi';
-
 import { poisStored as poiFixtures } from '../../../../subrepos/gtrack-common-ngx/app/hike/store/poi/test/fixtures';
+import { BackgroundImageData, EPoiImageTypes } from '../../../../subrepos/provider-client';
+import * as EditedGTrackPoiActions from '../edited-gtrack-poi';
 
 describe('EditedGTrackPoi actions', () => {
   it('should have action names defined', () => {
@@ -90,7 +89,7 @@ describe('EditedGTrackPoi actions', () => {
   });
 
   it('should create AddBackgroundImage action', () => {
-    const imageData: IBackgroundImageData = {
+    const imageData: BackgroundImageData = {
       title: 'title',
       lat: 0,
       lon: 0,
@@ -119,7 +118,7 @@ describe('EditedGTrackPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedGTrackPoiActions.ADD_POI_BACKGROUND_IMAGE,
-      imageData: imageData
+      imageData
     });
   });
 

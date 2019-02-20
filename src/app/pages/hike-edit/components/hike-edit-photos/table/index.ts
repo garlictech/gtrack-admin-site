@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil, take } from 'rxjs/operators';
-import { IBackgroundImageData } from 'subrepos/provider-client';
-
 import _keys from 'lodash-es/keys';
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
+import { BackgroundImageData } from 'subrepos/provider-client';
+
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-hike-edit-photos-table',
@@ -11,25 +11,23 @@ import _keys from 'lodash-es/keys';
   styleUrls: ['./style.scss']
 })
 export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
-  @Input() images$: Observable<IBackgroundImageData[]>;
-  @Input() backgroundOriginalUrls$: Observable<string[]>;
+  @Input() images$: Observable<Array<BackgroundImageData>>;
+  @Input() backgroundOriginalUrls$: Observable<Array<string>>;
   @Input() clickActions: any;
   @Input() showMarkerColumn: boolean;
   @Input() onRouteCheck: boolean;
-  @Input() distanceFrom: number[] = null; // Used in gTrackPoi bgImages!
-  public imageSelections: { [id: string]: boolean } = {};
-  public imageMarkerSelections: { [id: string]: boolean } = {};
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  @Input() distanceFrom: Array<number> = null; // Used in gTrackPoi bgImages!
+  imageSelections: { [id: string]: boolean } = {};
+  imageMarkerSelections: { [id: string]: boolean } = {};
+  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
 
   ngOnInit() {
-    this.backgroundOriginalUrls$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((backgroundOriginalUrls: string[]) => {
-        this.imageSelections = {};
-        backgroundOriginalUrls.map(url => {
-          this.imageSelections[url] = true;
-        });
+    this.backgroundOriginalUrls$.pipe(takeUntil(this._destroy$)).subscribe((backgroundOriginalUrls: Array<string>) => {
+      this.imageSelections = {};
+      backgroundOriginalUrls.map(url => {
+        this.imageSelections[url] = true;
       });
+    });
   }
 
   ngOnDestroy() {
@@ -37,7 +35,7 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public toggleBackgroundImage(image: IBackgroundImageData) {
+  toggleBackgroundImage(image: BackgroundImageData) {
     if (!this.imageSelections[image.original.url]) {
       this.clickActions.remove(image.original.url);
     } else {
@@ -45,7 +43,7 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  public toggleImageMarker(image: IBackgroundImageData) {
+  toggleImageMarker(image: BackgroundImageData) {
     if (!this.imageMarkerSelections[image.original.url]) {
       this.clickActions.removeMarker(image);
     } else {
@@ -53,7 +51,7 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  public invertMarkerSelection() {
+  invertMarkerSelection() {
     const _imageSelection = [];
 
     for (const imgUrl in this.imageMarkerSelections) {
@@ -62,21 +60,19 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.images$
-      .pipe(take(1))
-      .subscribe((images: IBackgroundImageData[]) => {
-        const _imagesToAdd = images.filter(i => {
-          return !_imageSelection.includes(i.original.url) && (<any>i).onRoute === this.onRouteCheck;
-        });
-        const _imagesToRemove = images.filter(i => {
-          return _imageSelection.includes(i.original.url) && (<any>i).onRoute === this.onRouteCheck;
-        });
+    this.images$.pipe(take(1)).subscribe((images: Array<BackgroundImageData>) => {
+      const _imagesToAdd = images.filter(
+        i => !_imageSelection.includes(i.original.url) && (i as any).onRoute === this.onRouteCheck
+      );
+      const _imagesToRemove = images.filter(
+        i => _imageSelection.includes(i.original.url) && (i as any).onRoute === this.onRouteCheck
+      );
 
-        _imagesToAdd.map(i => this.imageMarkerSelections[i.original.url] = true);
-        _imagesToRemove.map(i => this.imageMarkerSelections[i.original.url] = false);
+      _imagesToAdd.map(i => (this.imageMarkerSelections[i.original.url] = true));
+      _imagesToRemove.map(i => (this.imageMarkerSelections[i.original.url] = false));
 
-        this.clickActions.addMarkers(_imagesToAdd);
-        this.clickActions.removeMarkers(_imagesToRemove);
-      });
+      this.clickActions.addMarkers(_imagesToAdd);
+      this.clickActions.removeMarkers(_imagesToRemove);
+    });
   }
 }

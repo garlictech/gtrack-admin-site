@@ -1,74 +1,32 @@
-<p-dialog
-  header="{{(modalPoi?.description | localizeDescription).title}}"
-  [(visible)]="displayPoiModal"
-  [modal]="true"
-  [closable]="true"
-  [width]="600"
-  [blockScroll]="true"
-  >
-  <app-hike-edit-external-poi-info
-    *ngIf="displayPoiModal"
-    [poi]="modalPoi"
-  ></app-hike-edit-external-poi-info>
+<p-dialog header="{{ (modalPoi?.description | localizeDescription).title }}" [(visible)]="displayPoiModal"
+  [modal]="true" [closable]="true" [width]="600" [blockScroll]="true">
+  <app-hike-edit-external-poi-info *ngIf="displayPoiModal" [poi]="modalPoi"></app-hike-edit-external-poi-info>
 </p-dialog>
 
-<p-dialog
-  header="Merge pois"
-  [(visible)]="displayMergeModal"
-  [modal]="true"
-  [closable]="true"
-  [width]="600"
-  [blockScroll]="true"
->
-  <app-hike-edit-merge-gtrack-poi-info
-    *ngIf="displayMergeModal"
-    [conflicts]="mergeProperties.conflicts"
-    [saveCallback]="saveMergedPoi"
-  ></app-hike-edit-merge-gtrack-poi-info>
+<p-dialog header="Merge pois" [(visible)]="displayMergeModal" [modal]="true" [closable]="true" [width]="600"
+  [blockScroll]="true">
+  <app-hike-edit-merge-gtrack-poi-info *ngIf="displayMergeModal" [conflicts]="mergeProperties.conflicts"
+    [saveCallback]="saveMergedPoi"></app-hike-edit-merge-gtrack-poi-info>
 </p-dialog>
 
 <div class="clearfix mb-20">
   <div class="f-left">
-    <p-button
-      label="Save as GTrack poi"
-      styleClass="ui-button-success"
-      (onClick)="savePois()"
-      [disabled]="(selectedPois$ | async).length === 0"
-    ></p-button>
+    <p-button label="Save as GTrack poi" styleClass="ui-button-success" (onClick)="savePois()"
+      [disabled]="(selectedPois$ | async).length === 0"></p-button>
 
-    <p-button
-      label="Merge pois"
-      styleClass="ui-button-primary ml-5"
-      (onClick)="mergePois()"
-      [disabled]="(mergeSelectionCount$ | async) < 2"
-    ></p-button>
+    <p-button label="Merge pois" styleClass="ui-button-primary ml-5" (onClick)="mergePois()"
+      [disabled]="(mergeSelectionCount$ | async) < 2"></p-button>
 
-    <p-button
-      label="Remove selected"
-      styleClass="ui-button-danger ml-5"
-      (onClick)="removeSelectedPois()"
-      [disabled]="(selectedPois$ | async).length === 0"
-    ></p-button>
+    <p-button label="Remove selected" styleClass="ui-button-danger ml-5" (onClick)="removeSelectedPois()"
+      [disabled]="(selectedPois$ | async).length === 0"></p-button>
   </div>
 
   <div class="f-right">
-    <p-checkbox
-      class="f-right ml-20"
-      label="Show offroute markers"
-      binary="true"
-      [(ngModel)]="showOffrouteMarkers"
-      (onChange)="toggleOffrouteMarkers()"
-      [disabled]="!(isPlanning$ | async)"
-    ></p-checkbox>
+    <p-checkbox class="f-right ml-20" label="Show offroute markers" binary="true" [(ngModel)]="showOffrouteMarkers"
+      (onChange)="toggleOffrouteMarkers()" [disabled]="!(isPlanning$ | async)"></p-checkbox>
 
-    <p-checkbox
-      class="f-right"
-      label="Show onroute markers"
-      binary="true"
-      [(ngModel)]="showOnrouteMarkers"
-      (onChange)="toggleOnrouteMarkers()"
-      [disabled]="!(isPlanning$ | async)"
-    ></p-checkbox>
+    <p-checkbox class="f-right" label="Show onroute markers" binary="true" [(ngModel)]="showOnrouteMarkers"
+      (onChange)="toggleOnrouteMarkers()" [disabled]="!(isPlanning$ | async)"></p-checkbox>
   </div>
 </div>
 
@@ -77,18 +35,12 @@
 <ng-template #collectorTable>
   <p-accordion [multiple]="true">
     <p-accordionTab header="On route pois">
-      <app-hike-edit-pois-collector-table
-        [pois$]="pois$"
-        [onRouteCheck]="true"
-        [openPoiModal]="openPoiModal"
-      ></app-hike-edit-pois-collector-table>
+      <app-hike-edit-pois-collector-table [pois$]="pois$" [onRouteCheck]="true" [openPoiModal]="openPoiModal">
+      </app-hike-edit-pois-collector-table>
     </p-accordionTab>
     <p-accordionTab header="Off route pois">
-      <app-hike-edit-pois-collector-table
-        [pois$]="pois$"
-        [onRouteCheck]="false"
-        [openPoiModal]="openPoiModal"
-      ></app-hike-edit-pois-collector-table>
+      <app-hike-edit-pois-collector-table [pois$]="pois$" [onRouteCheck]="false" [openPoiModal]="openPoiModal">
+      </app-hike-edit-pois-collector-table>
     </p-accordionTab>
   </p-accordion>
 </ng-template>

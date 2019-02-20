@@ -8,17 +8,19 @@ module.exports = {
     "preset": "jest-preset-angular",
     "verbose": true,
     "bail": true,
-    "setupTestFrameworkScriptFile": "./src/jest.ts",
+    "setupFilesAfterEnv": ["./src/jest.ts"],
     "browser": true,
+    "clearMocks": true,
     "globals": {
         "ts-jest": {
             "tsConfigFile": "src/tsconfig.spec.json",
-            "ignoreCoverageForDecorators": true
+            "ignoreCoverageForAllDecorators": true
         },
         "__TRANSFORM_HTML__": true
     },
     "transform": {
-        "^.+\\.(ts|js|html)$": "<rootDir>/node_modules/jest-preset-angular/preprocessor.js"
+        "^.+\\.(ts|js|html)$": "<rootDir>/node_modules/jest-preset-angular/preprocessor.js",
+        "\\.(pug)$": "<rootDir>/node_modules/pug-jest"
     },
     "moduleFileExtensions": [
         "ts",
@@ -29,7 +31,7 @@ module.exports = {
     "moduleDirectories": ["node_modules", "src"],
     "moduleNameMapper": {
         "subrepos/(.*)": "<rootDir>/src/subrepos/$1",
-        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|pug)$": "<rootDir>/src/test/jest/mocks/fileMock.js",
+        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/test/jest/mocks/fileMock.js",
         "\\.(css|less)$": "<rootDir>/src/test/jest/mocks/styleMock.js"
     },
     "coverageDirectory": "<rootDir>/artifacts/reports/coverage",
@@ -44,14 +46,16 @@ module.exports = {
     "coverageReporters": ["json", "lcov", "text", "html"],
     "coveragePathIgnorePatterns": [
         "/node_modules/",
-        "/\\.(e2e|spec)\\.ts$/",
+        "\\.(e2e|spec|d)\\.ts$",
         "/test/",
         "src/jest-global-mocks.ts",
         "src/jest.ts",
-        "log.ts"
+        "log.ts",
+        "assets"
     ],
+    "collectCoverageFrom": ["src/*/**/*.ts"],
     "transformIgnorePatterns": [
-        "node_modules/(?!@ngrx|@ionic-native|@ionic|lodash-es)"
+        "node_modules/(?!@ngrx|@ionic-native|@ionic|lodash-es|@bit)"
     ],
-    testPathIgnorePatterns: ["/node_modules/", "/dist/", "/.git/"]
+    testPathIgnorePatterns: ["/node_modules/", "/artifacts/", "<rootDir>.git"]
 }

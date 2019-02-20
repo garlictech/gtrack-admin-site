@@ -1,26 +1,26 @@
+// tslint:disable:no-big-function
+import * as _ from 'lodash';
+
 import { EPoiTypes } from '../../../../subrepos/provider-client';
+import { ExternalPoi } from '../../../shared/interfaces';
+import { hikeEditPoiActions } from '../../actions';
+import { HikeEditPoiState } from '../../index';
 import {
-  hikeEditPoiReducer,
-  wikipediaPoiInitialState,
+  externalPoiInitialContextState,
   googlePoiInitialState,
+  hikeEditPoiReducer,
+  initialGTrackPoiMergeState,
   osmAmenityPoiInitialState,
   osmNaturalPoiInitialState,
   osmRoutePoiInitialState,
-  externalPoiInitialContextState,
-  initialGTrackPoiMergeState,
-  poiCollectorInitialState
+  poiCollectorInitialState,
+  wikipediaPoiInitialState
 } from '../hike-edit-poi';
-import { IHikeEditPoiState } from '../../index';
-import { hikeEditPoiActions } from '../../actions';
-import { IExternalPoi } from '../../../shared/interfaces';
-
-import * as _ from 'lodash';
-
-import { pois as poiFixtures, entities as entityFixtures } from './fixtures';
+import { entities as entityFixtures, pois as poiFixtures } from './fixtures';
 
 describe('HikeEditPoi reducers', () => {
-  let initialState: IHikeEditPoiState;
-  let pois: IExternalPoi[];
+  let initialState: HikeEditPoiState;
+  let pois: Array<ExternalPoi>;
   let entities: any;
 
   beforeEach(() => {
@@ -96,7 +96,7 @@ describe('HikeEditPoi reducers', () => {
   describe('GooglePois actions', () => {
     describe('GetGooglePois action', () => {
       it('should get google pois', () => {
-        const action = new hikeEditPoiActions.GetGooglePois(null, 'fakeMapId');
+        const action = new hikeEditPoiActions.GetGooglePois(undefined, 'fakeMapId');
         const state = hikeEditPoiReducer(initialState, action);
 
         expect(state.googlePois.ids).toEqual([]);
@@ -127,7 +127,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             googlePois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -147,7 +147,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             googlePois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -165,7 +165,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             googlePois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -183,7 +183,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             googlePois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -197,7 +197,7 @@ describe('HikeEditPoi reducers', () => {
   describe('OsmAmenityPois actions', () => {
     describe('GetOsmAmenityPois action', () => {
       it('should get osmAmenity pois', () => {
-        const action = new hikeEditPoiActions.GetOsmAmenityPois(null, 'fakeMapId');
+        const action = new hikeEditPoiActions.GetOsmAmenityPois(undefined, 'fakeMapId');
         const state = hikeEditPoiReducer(initialState, action);
 
         expect(state.osmAmenityPois.ids).toEqual([]);
@@ -230,7 +230,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmAmenityPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -252,7 +252,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmAmenityPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -270,7 +270,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmAmenityPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -288,7 +288,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmAmenityPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -302,7 +302,7 @@ describe('HikeEditPoi reducers', () => {
   describe('OsmNaturalPois actions', () => {
     describe('GetOsmNaturalPois action', () => {
       it('should get osmNatural pois', () => {
-        const action = new hikeEditPoiActions.GetOsmNaturalPois(null, 'fakeMapId');
+        const action = new hikeEditPoiActions.GetOsmNaturalPois(undefined, 'fakeMapId');
         const state = hikeEditPoiReducer(initialState, action);
 
         expect(state.osmNaturalPois.ids).toEqual([]);
@@ -335,7 +335,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmNaturalPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -357,7 +357,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmNaturalPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -375,7 +375,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmNaturalPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -393,7 +393,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmNaturalPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -407,7 +407,7 @@ describe('HikeEditPoi reducers', () => {
   describe('OsmRoutePois action', () => {
     describe('GetOsmRoutePois action', () => {
       it('should get osmRoute pois', () => {
-        const action = new hikeEditPoiActions.GetOsmRoutePois(null, 'fakeMapId');
+        const action = new hikeEditPoiActions.GetOsmRoutePois(undefined, 'fakeMapId');
         const state = hikeEditPoiReducer(initialState, action);
 
         expect(state.osmRoutePois.ids).toEqual([]);
@@ -438,7 +438,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmRoutePois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -460,7 +460,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmRoutePois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -478,7 +478,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmRoutePois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -496,7 +496,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             osmRoutePois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -510,7 +510,7 @@ describe('HikeEditPoi reducers', () => {
   describe('WikipediaPois actions', () => {
     describe('GetWikipediaPois action', () => {
       it('should get wikipedia pois', () => {
-        const action = new hikeEditPoiActions.GetWikipediaPois(null, 'fakeMapId');
+        const action = new hikeEditPoiActions.GetWikipediaPois(undefined, 'fakeMapId');
         const state = hikeEditPoiReducer(initialState, action);
 
         expect(state.wikipediaPois.ids).toEqual([]);
@@ -543,7 +543,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             wikipediaPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -565,7 +565,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             wikipediaPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -583,7 +583,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             wikipediaPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -600,7 +600,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             wikipediaPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -729,7 +729,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             wikipediaPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -746,7 +746,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             collectorPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -763,7 +763,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             collectorPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action
@@ -780,7 +780,7 @@ describe('HikeEditPoi reducers', () => {
           _.merge({}, initialState, {
             collectorPois: {
               ids: ['1', '2'],
-              entities: entities
+              entities
             }
           }),
           action

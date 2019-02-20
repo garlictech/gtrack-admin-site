@@ -1,21 +1,21 @@
-import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, select } from '@ngrx/store';
-import * as hikeEditPoiSelectors from '../../selectors/hike-edit-poi';
+import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { hikeEditPoiReducer, initialContextItemState } from '../../reducer';
-import { IHikeEditPoiState } from '../../state';
-import { hikeEditPoiActions } from '../../actions';
 
-import { pois as poiFixtures } from '../../reducer/test/fixtures';
+import { TestBed } from '@angular/core/testing';
+import { select, Store, StoreModule } from '@ngrx/store';
 
-import * as _ from 'lodash';
 import { EPoiTypes } from '../../../../subrepos/provider-client';
+import { hikeEditPoiActions } from '../../actions';
+import { hikeEditPoiReducer, initialContextItemState } from '../../reducer';
+import { pois as poiFixtures } from '../../reducer/test/fixtures';
+import * as hikeEditPoiSelectors from '../../selectors/hike-edit-poi';
+import { HikeEditPoiState } from '../../state';
 
 describe('HikeEditPoi selectors', () => {
-  let store: Store<IHikeEditPoiState>;
+  let store: Store<HikeEditPoiState>;
   let destroy$: Subject<boolean>;
-  let pois: any[];
+  let pois: Array<any>;
 
   beforeEach(() => {
     pois = _.cloneDeep(poiFixtures);
@@ -293,7 +293,7 @@ describe('HikeEditPoi selectors', () => {
 
       expect(result).toEqual(initialContextItemState);
 
-      store.dispatch(new hikeEditPoiActions.GetWikipediaPois(null, 'fakeMapId'));
+      store.dispatch(new hikeEditPoiActions.GetWikipediaPois(undefined, 'fakeMapId'));
       expect(result).toEqual(_.merge({}, initialContextItemState, { loading: true }));
     });
   });
@@ -311,7 +311,7 @@ describe('HikeEditPoi selectors', () => {
 
       expect(result).toBeFalsy();
 
-      store.dispatch(new hikeEditPoiActions.GetWikipediaPois(null, 'fakeMapId'));
+      store.dispatch(new hikeEditPoiActions.GetWikipediaPois(undefined, 'fakeMapId'));
       expect(result).toBeTruthy();
     });
   });

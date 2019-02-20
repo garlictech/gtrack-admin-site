@@ -1,95 +1,513 @@
-import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { of, interval, combineLatest } from 'rxjs';
-import { take, switchMap, filter, map as rxMap, combineAll, debounceTime } from 'rxjs/operators';
-import {
-  GeometryService, ElevationService, IconService, CenterRadius, GeoSearchSelectors,
-  PoiSelectors, GeospatialService
-} from 'subrepos/gtrack-common-ngx';
-import { IPoi, IPoiStored, EPoiTypes } from 'subrepos/provider-client';
-import { State, IExternalPoiListContextItemState } from '../../../store';
-import { commonGeoSearchActions } from '../../../store/actions';
-import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
-import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
-import * as hikeEditPoiSelectors from '../../../store/selectors/hike-edit-poi';
-import * as hikeEditImageSelectors from '../../../store/selectors/hike-edit-image';
-import { RoutePlannerService } from '../admin-map';
-import { IExternalPoi, IWikipediaPoi, IGooglePoi, IOsmPoi, IGTrackPoi } from '../../interfaces';
-import { GooglePoiService } from './google-poi.service';
-import { WikipediaPoiService } from './wikipedia-poi.service';
-import { IMarkerPopupData, IBackgroundImageData } from 'subrepos/provider-client/interfaces';
-
+import { BIG_BUFFER_SIZE, SMALL_BUFFER_SIZE } from 'app/config';
 import * as L from 'leaflet';
-import _defaultsDeep from 'lodash-es/defaultsDeep';
-import _pick from 'lodash-es/pick';
-import _merge from 'lodash-es/merge';
-import _cloneDeep from 'lodash-es/cloneDeep';
-import _forEach from 'lodash-es/forEach';
-import _uniq from 'lodash-es/uniq';
-import _includes from 'lodash-es/includes';
-import _keys from 'lodash-es/keys';
+import _assign from 'lodash-es/assign';
 import _chunk from 'lodash-es/chunk';
+import _cloneDeep from 'lodash-es/cloneDeep';
+import _defaultsDeep from 'lodash-es/defaultsDeep';
 import _filter from 'lodash-es/filter';
 import _find from 'lodash-es/find';
-import _assign from 'lodash-es/assign';
-import _map from 'lodash-es/map';
-import _sortBy from 'lodash-es/sortBy';
+import _forEach from 'lodash-es/forEach';
+import _includes from 'lodash-es/includes';
 import _intersection from 'lodash-es/intersection';
+import _keys from 'lodash-es/keys';
+import _map from 'lodash-es/map';
+import _merge from 'lodash-es/merge';
+import _pick from 'lodash-es/pick';
+import _sortBy from 'lodash-es/sortBy';
+import _uniq from 'lodash-es/uniq';
+import { combineLatest, interval, of } from 'rxjs';
+import { combineAll, debounceTime, filter, map as rxMap, switchMap, take } from 'rxjs/operators';
+import {
+  CenterRadius,
+  ElevationService,
+  GeometryService,
+  GeoSearchSelectors,
+  GeospatialService,
+  PoiSelectors
+} from 'subrepos/gtrack-common-ngx';
+import { LeafletMarkerPopupService } from 'subrepos/gtrack-common-ngx/app/features/leaflet-map/services/leaflet-marker-popup.service';
+import { EPoiTypes, IPoi, IPoiStored } from 'subrepos/provider-client';
+import { BackgroundImageData, IMarkerPopupData } from 'subrepos/provider-client/interfaces';
 
-import turfBuffer from '@turf/buffer';
-import { point as turfPoint } from '@turf/helpers';
-import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import { SMALL_BUFFER_SIZE, BIG_BUFFER_SIZE } from 'app/config';
+import { Injectable } from '@angular/core';
 import { EMarkerType } from '@common.features/leaflet-map/interfaces';
+import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
 import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 import { LeafletMapMarker } from '@common.features/leaflet-map/services/lib';
-import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
-import { LeafletMarkerPopupService } from 'subrepos/gtrack-common-ngx/app/features/leaflet-map/services/leaflet-marker-popup.service';
+import { select, Store } from '@ngrx/store';
+import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
+import turfBuffer from '@turf/buffer';
+import { point as turfPoint } from '@turf/helpers';
+
+import { ExternalPoiListContextItemState, State } from '../../../store';
+import { commonGeoSearchActions } from '../../../store/actions';
+import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
+import * as hikeEditImageSelectors from '../../../store/selectors/hike-edit-image';
+import * as hikeEditPoiSelectors from '../../../store/selectors/hike-edit-poi';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
+import { ExternalPoi, IGooglePoi, IGTrackPoi, IOsmPoi, IWikipediaPoi } from '../../interfaces';
+import { RoutePlannerService } from '../admin-map';
+import { GooglePoiService } from './google-poi.service';
+import { WikipediaPoiService } from './wikipedia-poi.service';
 
 @Injectable()
 export class PoiEditorService {
   private _markersGroup: L.LayerGroup;
-  private _removedTypes: string[] = ['political', 'point_of_interest', 'establishment'];
-  private _replaceTypes = {
+  private readonly _removedTypes: Array<string> = ['political', 'point_of_interest', 'establishment'];
+  private readonly _replaceTypes = {
     gas_station: 'fuel',
     grocery_or_supermarket: 'store',
     food: 'restaurant'
   };
 
   constructor(
-    private _store: Store<State>,
-    private _geometryService: GeometryService,
-    private _geospatialService: GeospatialService,
-    private _routePlannerService: RoutePlannerService,
-    private _elevationService: ElevationService,
-    private _leafletMapMarkerService: LeafletMapMarkerService,
-    private _geoSearchSelectors: GeoSearchSelectors,
-    private _poiSelectors: PoiSelectors,
-    private _googlePoiService: GooglePoiService,
-    private _wikipediaPoiService: WikipediaPoiService,
-    private _markerPopupService: LeafletMarkerPopupService,
-    private _leafletMapService: LeafletMapService
+    private readonly _store: Store<State>,
+    private readonly _geometryService: GeometryService,
+    private readonly _geospatialService: GeospatialService,
+    private readonly _routePlannerService: RoutePlannerService,
+    private readonly _elevationService: ElevationService,
+    private readonly _leafletMapMarkerService: LeafletMapMarkerService,
+    private readonly _geoSearchSelectors: GeoSearchSelectors,
+    private readonly _poiSelectors: PoiSelectors,
+    private readonly _googlePoiService: GooglePoiService,
+    private readonly _wikipediaPoiService: WikipediaPoiService,
+    private readonly _markerPopupService: LeafletMarkerPopupService,
+    private readonly _leafletMapService: LeafletMapService
   ) {}
 
-  public getDbObj(poi: IExternalPoi) {
+  getDbObj(poi: ExternalPoi) {
     const _poiData = {};
     _defaultsDeep(_poiData, _pick(poi, ['id', 'lat', 'lon', 'elevation', 'objectTypes', 'description', 'types']));
 
     if (poi.objectTypes.indexOf(EPoiTypes.google) >= 0) {
-      this._getGoogleDbObj(_poiData, <IGooglePoi>poi);
+      this._getGoogleDbObj(_poiData, poi as IGooglePoi);
     }
     if (poi.objectTypes.indexOf(EPoiTypes.wikipedia) >= 0) {
-      this._getWikipediaDbObj(_poiData, <IWikipediaPoi>poi);
+      this._getWikipediaDbObj(_poiData, poi as IWikipediaPoi);
     }
     if (
       poi.objectTypes.indexOf(EPoiTypes.osmAmenity) >= 0 ||
       poi.objectTypes.indexOf(EPoiTypes.osmNatural) >= 0 ||
       poi.objectTypes.indexOf(EPoiTypes.osmRoute) >= 0
     ) {
-      this._getOsmDbObj(_poiData, <IOsmPoi>poi);
+      this._getOsmDbObj(_poiData, poi as IOsmPoi);
     }
 
-    return <IPoi>_poiData;
+    return _poiData as IPoi;
+  }
+
+  /**
+   * Set the pois' onRoute property
+   */
+  organizePois(
+    pois: Array<ExternalPoi> | Array<IGTrackPoi>,
+    path: GeoJSON.Feature<GeoJSON.LineString>,
+    forceAdd = false
+  ) {
+    const _pois: Array<any> = [];
+
+    if (pois && pois.length > 0 && path) {
+      const _smallBuffer = turfBuffer(path, SMALL_BUFFER_SIZE, { units: 'meters' }) as GeoJSON.Feature<GeoJSON.Polygon>;
+      const _bigBuffer = turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' }) as GeoJSON.Feature<GeoJSON.Polygon>;
+
+      for (const p of _cloneDeep(pois)) {
+        const _point = turfPoint([p.lon, p.lat]);
+
+        if (typeof _bigBuffer !== 'undefined') {
+          if (turfBooleanPointInPolygon(_point, _bigBuffer) || forceAdd) {
+            if (typeof _smallBuffer !== 'undefined') {
+              p.onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
+            }
+            p.distFromRoute = this._geometryService.distanceFromRoute(_point.geometry.coordinates, path);
+
+            this._handleTypes(p as ExternalPoi);
+
+            _pois.push(p);
+          }
+        }
+      }
+    }
+
+    return _pois;
+  }
+
+  /**
+   * Filter poi photos based on their distance from the path
+   */
+  organizePoiPhotos(photos: Array<BackgroundImageData>, path: GeoJSON.Feature<GeoJSON.LineString>) {
+    const _photos: Array<any> = [];
+
+    if (photos && photos.length > 0 && path) {
+      const _smallBuffer = turfBuffer(path, SMALL_BUFFER_SIZE, { units: 'meters' }) as GeoJSON.Feature<GeoJSON.Polygon>;
+      const _bigBuffer = turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' }) as GeoJSON.Feature<GeoJSON.Polygon>;
+
+      for (const _photo of _cloneDeep(photos)) {
+        const _point = turfPoint([_photo.lon, _photo.lat]);
+
+        if (typeof _bigBuffer !== 'undefined') {
+          if (turfBooleanPointInPolygon(_point, _bigBuffer)) {
+            if (typeof _smallBuffer !== 'undefined') {
+              (_photo as any).onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
+            }
+            _photos.push(_photo);
+          }
+        }
+      }
+    }
+
+    return _photos;
+  }
+
+  /**
+   * HikeEditPoi effect submethod - for gTrack pois
+   */
+  handleHikeInclusion(pois: Array<IGTrackPoi>) {
+    let _pois;
+
+    this._store
+      .pipe(
+        select(editedHikeProgramSelectors.getPoiIds),
+        take(1)
+      )
+      .subscribe((hikePoiIds: Array<string>) => {
+        if (pois) {
+          const _gTrackPois = _cloneDeep(pois);
+          _gTrackPois.map((_gTrackPoi: IGTrackPoi) => {
+            _gTrackPoi.inHike = _includes(hikePoiIds, _gTrackPoi.id);
+          });
+          _pois = _gTrackPois;
+        } else {
+          _pois = [];
+        }
+      });
+
+    return _pois;
+  }
+
+  /**
+   * Update gTrackPois DistanceFromOrigo value
+   */
+  getGTrackPoiDistanceFromOrigo(pois: Array<IGTrackPoi>, path: GeoJSON.Feature<GeoJSON.LineString>) {
+    if (pois.length > 0 && path && path.geometry && path.geometry.coordinates.length > 0) {
+      for (const poi of pois) {
+        poi.distFromOrigo = this._geospatialService.distanceOnLine(
+          path.geometry.coordinates[0],
+          [poi.lon, poi.lat],
+          path
+        );
+      }
+    }
+
+    return pois;
+  }
+
+  /**
+   * Set the selected flag on the service pois based on on/off route state
+   */
+  assignOnOffRoutePois(pois: Array<ExternalPoi>) {
+    const _pois = _sortBy(_cloneDeep(pois), (p: ExternalPoi) => p.distFromRoute);
+    const _onRoutePois = this._getOnroutePois(_pois);
+    const _offRoutePois = this._getOffroutePois(_pois);
+    _forEach(_onRoutePois, p => ((p as any).selected = true));
+    _forEach(_offRoutePois, p => ((p as any).selected = false));
+
+    return of(_pois);
+  }
+
+  /**
+   * Get elevation data for pois
+   */
+  handleElevation(pois: Array<ExternalPoi>) {
+    // Google Elevation Service
+    // 2,500 free requests per day
+    // 512 locations per request.
+    // 50 requests per second
+    const _pois = _cloneDeep(pois);
+    const _poisWithoutElevation = _filter(_pois, (p: ExternalPoi) => !p.elevation);
+    const _chunks: Array<Array<ExternalPoi>> = _chunk(_poisWithoutElevation, 500);
+
+    if (_chunks.length > 0) {
+      return interval(100).pipe(
+        take(_chunks.length),
+        rxMap(counter => {
+          const _chunkedPois: Array<ExternalPoi> = _chunks[counter];
+          const _coordinates = _map(_chunkedPois, (p: ExternalPoi) => [p.lat, p.lon]);
+
+          return this._elevationService.getData(_coordinates).then(data => {
+            // Update elevation only if we got all data
+            if (data.length === _chunkedPois.length) {
+              for (const i in _chunkedPois) {
+                if (_chunkedPois[i]) {
+                  _chunkedPois[i].elevation = data[i][2];
+                }
+              }
+            }
+            return of(counter);
+          });
+        }),
+        combineAll(),
+        rxMap(() => _pois)
+      );
+    } else {
+      return of(_pois);
+    }
+  }
+
+  handlePoiDetails(pois, subdomain) {
+    return new Promise(resolve => {
+      switch (subdomain) {
+        case EPoiTypes.google:
+          this._googlePoiService.getPoiDetails(pois).then((detailedPois: Array<IGooglePoi>) => {
+            resolve(detailedPois);
+          });
+          break;
+        case EPoiTypes.wikipedia:
+          this._wikipediaPoiService.getPoiDetails(pois).then((detailedPois: Array<IWikipediaPoi>) => {
+            resolve(detailedPois);
+          });
+          break;
+        default:
+          resolve(pois);
+          break;
+      }
+    });
+  }
+
+  getGTrackPois() {
+    const _bounds = this._routePlannerService.getSearchBounds();
+    const _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);
+    const _centerCoord = _geo.center.geometry.coordinates;
+
+    if (_centerCoord) {
+      this._store.dispatch(
+        new commonGeoSearchActions.SearchInCircle(
+          {
+            table: 'pois',
+            circle: {
+              radius: _geo.radius,
+              center: [_centerCoord[0], _centerCoord[1]]
+            }
+          },
+          'gTrackPois'
+        )
+      );
+    }
+  }
+
+  /**
+   * Update inGtrackDb property on the given poi
+   */
+  handleGTrackPois(pois: Array<IGooglePoi> | Array<IWikipediaPoi> | Array<IOsmPoi>, gTrackPois: Array<IGTrackPoi>) {
+    const _pois = _cloneDeep(pois);
+
+    for (const poi of _pois) {
+      const _found = _find(gTrackPois, (gTrackPoi: IGTrackPoi) => {
+        let _idCheck = false;
+
+        const _commonObjectTypes = _intersection(
+          Array.isArray(gTrackPoi.objectTypes) ? gTrackPoi.objectTypes : [gTrackPoi.objectTypes],
+          Array.isArray(poi.objectTypes) ? poi.objectTypes : [poi.objectTypes]
+        );
+
+        if (_commonObjectTypes.length > 0) {
+          for (const objectType of _commonObjectTypes) {
+            if (objectType.substring(0, 3) === 'osm') {
+              _idCheck = gTrackPoi.objectId.osm === (poi as IOsmPoi).osm.id ? true : _idCheck;
+            } else if (objectType === EPoiTypes.google) {
+              _idCheck = gTrackPoi.objectId.google === (poi as IGooglePoi).google.id ? true : _idCheck;
+            } else if (objectType === EPoiTypes.wikipedia) {
+              _idCheck =
+                gTrackPoi.objectId.wikipedia[(poi as IWikipediaPoi).wikipedia.lng] ===
+                (poi as IWikipediaPoi).wikipedia.pageid
+                  ? true
+                  : _idCheck;
+            }
+
+            if (_idCheck) {
+              break;
+            }
+          }
+        }
+
+        return _idCheck;
+      });
+
+      if (_found) {
+        poi.inGtrackDb = true;
+      } else {
+        poi.inGtrackDb = false;
+      }
+    }
+
+    return _pois;
+  }
+
+  /**
+   * Update inCollector property on the given poi
+   */
+  handleInCollectorPois(pois: Array<IGooglePoi> | Array<IWikipediaPoi> | Array<IOsmPoi>, collectedPois: Array<any>) {
+    const _pois = _cloneDeep(pois);
+
+    for (const poi of _pois) {
+      const _found = _find(collectedPois, (collectedPoi: any) => collectedPoi.id === poi.id);
+
+      if (_found) {
+        poi.inCollector = true;
+      } else {
+        poi.inCollector = false;
+      }
+    }
+
+    return _pois;
+  }
+
+  refreshPoiMarkers() {
+    let _pois: Array<any> = [];
+
+    //
+    // Hike pois
+    //
+
+    combineLatest(
+      this._store.pipe(
+        select(hikeEditPoiSelectors.getHikeEditPoiContextSelector('hike')),
+        take(1)
+      ),
+      this._store.pipe(
+        select(editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
+        take(1)
+      ),
+      this._store.pipe(
+        select(hikeEditRoutePlannerSelectors.getPath),
+        take(1)
+      )
+    )
+      .pipe(
+        debounceTime(250),
+        filter(
+          ([hikePoiContext, pois, path]: [ExternalPoiListContextItemState, Array<IPoiStored>, any]) =>
+            (pois && pois.length > 0 && path && (hikePoiContext as any).showOnrouteMarkers) ||
+            (hikePoiContext as any).showOffrouteMarkers
+        ),
+        switchMap(([hikePoiContext, pois, path]: [ExternalPoiListContextItemState, Array<IPoiStored>, any]) =>
+          of([hikePoiContext as any, this.organizePois(pois, path)])
+        )
+      )
+      .subscribe(([hikePoiContext, pois]: [ExternalPoiListContextItemState, Array<any>]) => {
+        _pois = _pois.concat(
+          pois
+            .map(p => _assign(p, { markerType: 'hike' }))
+            .filter(p => {
+              const _onRouteCheck = p.onRoute ? hikePoiContext.showOnrouteMarkers : hikePoiContext.showOffrouteMarkers;
+              return !p.inHike && _onRouteCheck;
+            })
+        );
+      });
+
+    //
+    // gTrackPois
+    //
+
+    combineLatest(
+      this._store.pipe(
+        select(hikeEditPoiSelectors.getHikeEditPoiContextSelector('gTrack')),
+        take(1)
+      ),
+      this._store.pipe(
+        select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois', this._poiSelectors.getAllPois)),
+        take(1)
+      ),
+      this._store.pipe(
+        select(hikeEditRoutePlannerSelectors.getPath),
+        take(1)
+      )
+    )
+      .pipe(
+        debounceTime(250),
+        filter(
+          ([gTrackPoiContext, pois, path]: [ExternalPoiListContextItemState, Array<IGTrackPoi> | undefined, any]) =>
+            (pois && pois.length > 0 && path && (gTrackPoiContext as any).showOnrouteMarkers) ||
+            (gTrackPoiContext as any).showOffrouteMarkers
+        ),
+        switchMap(
+          ([gTrackPoiContext, pois, path]: [ExternalPoiListContextItemState, Array<IGTrackPoi> | undefined, any]) =>
+            of([gTrackPoiContext as any, this.organizePois(pois as any, path)])
+        ),
+        switchMap(([gTrackPoiContext, pois]: [ExternalPoiListContextItemState, Array<IGTrackPoi>]) =>
+          of([gTrackPoiContext as any, this.handleHikeInclusion(pois)])
+        )
+      )
+      .subscribe(([gTrackPoiContext, pois]: [ExternalPoiListContextItemState, Array<any>]) => {
+        _pois = _pois.concat(
+          pois
+            .map(p => _assign(p, { markerType: 'gTrack' }))
+            .filter(p => {
+              const _onRouteCheck = p.onRoute
+                ? gTrackPoiContext.showOnrouteMarkers
+                : gTrackPoiContext.showOffrouteMarkers;
+              return !p.inHike && _onRouteCheck;
+            })
+        );
+      });
+
+    //
+    // Service pois
+    //
+
+    this._getVisibleServicePois('collector', hikeEditPoiSelectors.getAllCollectorPois).subscribe((pois: Array<any>) => {
+      _pois = _pois.concat(pois.map(p => _assign(_cloneDeep(p), { markerType: 'collector' })));
+    });
+    this._getVisibleServicePois(EPoiTypes.google, hikeEditPoiSelectors.getAllGooglePois).subscribe(
+      (pois: Array<ExternalPoi>) => {
+        _pois = _pois.concat(
+          pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.google })).filter(p => !p.inCollector)
+        );
+      }
+    );
+    this._getVisibleServicePois(EPoiTypes.osmAmenity, hikeEditPoiSelectors.getAllOsmAmenityPois).subscribe(
+      (pois: Array<ExternalPoi>) => {
+        _pois = _pois.concat(
+          pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.osmAmenity })).filter(p => !p.inCollector)
+        );
+      }
+    );
+    this._getVisibleServicePois(EPoiTypes.osmNatural, hikeEditPoiSelectors.getAllOsmNaturalPois).subscribe(
+      (pois: Array<ExternalPoi>) => {
+        _pois = _pois.concat(
+          pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.osmNatural })).filter(p => !p.inCollector)
+        );
+      }
+    );
+    this._getVisibleServicePois(EPoiTypes.osmRoute, hikeEditPoiSelectors.getAllOsmRoutePois).subscribe(
+      (pois: Array<ExternalPoi>) => {
+        _pois = _pois.concat(
+          pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.osmRoute })).filter(p => !p.inCollector)
+        );
+      }
+    );
+    this._getVisibleServicePois(EPoiTypes.wikipedia, hikeEditPoiSelectors.getAllWikipediaPois).subscribe(
+      (pois: Array<ExternalPoi>) => {
+        _pois = _pois.concat(
+          pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.wikipedia })).filter(p => !p.inCollector)
+        );
+      }
+    );
+
+    // Generate poi markers
+    const _poiMarkers = this._generatePoiMarkers(_pois);
+    const _imageMarkers = this._generateImageMarkers();
+    const _markers = _poiMarkers.concat(_imageMarkers);
+
+    // Add markers to the map
+    this._leafletMapService.removeLayer(this._markersGroup);
+
+    if (_markers.length > 0) {
+      this._markersGroup = this._leafletMapService.createMarkersGroup(_map(_markers, 'marker'));
+      this._leafletMapService.addLayer(this._markersGroup);
+
+      // Register marker to spiderfier
+      this._leafletMapService.refreshSpiderfierMarkers(_markers.map(m => m.marker), EMarkerType.POI);
+    }
   }
 
   /**
@@ -145,12 +563,12 @@ export class PoiEditorService {
       _merge(poiData, {
         objectId: {
           wikipedia: {
-            [<string>poi.wikipedia.lng]: poi.wikipedia.pageid
+            [poi.wikipedia.lng as string]: poi.wikipedia.pageid
           }
         },
         additionalData: {
           wikipedia: {
-            [<string>poi.wikipedia.lng]: {
+            [poi.wikipedia.lng as string]: {
               url: poi.wikipedia.url
             }
           }
@@ -178,124 +596,19 @@ export class PoiEditorService {
     });
   }
 
-  /**
-   * Set the pois' onRoute property
-   */
-  public organizePois(
-    pois: IExternalPoi[] | IGTrackPoi[],
-    path: GeoJSON.Feature<GeoJSON.LineString>,
-    forceAdd: boolean = false
-  ) {
-    const _pois: any[] = [];
-
-    if (pois && pois.length > 0 && path) {
-      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, SMALL_BUFFER_SIZE, { units: 'meters' });
-      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
-
-      for (const p of _cloneDeep(pois)) {
-        const _point = turfPoint([p.lon, p.lat]);
-
-        if (typeof _bigBuffer !== 'undefined') {
-          if (turfBooleanPointInPolygon(_point, _bigBuffer) || forceAdd) {
-            if (typeof _smallBuffer !== 'undefined') {
-              p.onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
-            }
-            p.distFromRoute = this._geometryService.distanceFromRoute(_point.geometry.coordinates, path);
-
-            this._handleTypes(<IExternalPoi>p);
-
-            _pois.push(p);
-          }
-        }
-      }
-    }
-
-    return _pois;
+  private _getOnroutePois(pois: Array<ExternalPoi>) {
+    return _filter(pois, (p: ExternalPoi) => p.onRoute);
   }
 
-  /**
-   * Filter poi photos based on their distance from the path
-   */
-  public organizePoiPhotos(photos: IBackgroundImageData[], path: GeoJSON.Feature<GeoJSON.LineString>) {
-    const _photos: any[] = [];
-
-    if (photos && photos.length > 0 && path) {
-      const _smallBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, SMALL_BUFFER_SIZE, { units: 'meters' });
-      const _bigBuffer = <GeoJSON.Feature<GeoJSON.Polygon>>turfBuffer(path, BIG_BUFFER_SIZE, { units: 'meters' });
-
-      for (const _photo of _cloneDeep(photos)) {
-        const _point = turfPoint([_photo.lon, _photo.lat]);
-
-        if (typeof _bigBuffer !== 'undefined') {
-          if (turfBooleanPointInPolygon(_point, _bigBuffer)) {
-            if (typeof _smallBuffer !== 'undefined') {
-              (<any>_photo).onRoute = turfBooleanPointInPolygon(_point, _smallBuffer);
-            }
-            _photos.push(_photo);
-          }
-        }
-      }
-    }
-
-    return _photos;
-  }
-
-  /**
-   * HikeEditPoi effect submethod - for gTrack pois
-   */
-  public handleHikeInclusion(pois: IGTrackPoi[]) {
-    let _pois;
-
-    this._store
-      .pipe(
-        select(editedHikeProgramSelectors.getPoiIds),
-        take(1)
-      )
-      .subscribe((hikePoiIds: string[]) => {
-        if (pois) {
-          const _gTrackPois = _cloneDeep(pois);
-          _gTrackPois.map((_gTrackPoi: IGTrackPoi) => {
-            _gTrackPoi.inHike = _includes(hikePoiIds, _gTrackPoi.id);
-          });
-          _pois = _gTrackPois;
-        } else {
-          _pois = [];
-        }
-      });
-
-    return _pois;
-  }
-
-  /**
-   * Update gTrackPois DistanceFromOrigo value
-   */
-  public getGTrackPoiDistanceFromOrigo(pois: IGTrackPoi[], path: GeoJSON.Feature<GeoJSON.LineString>) {
-    if (pois.length > 0 && path && path.geometry && path.geometry.coordinates.length > 0) {
-      for (const poi of pois) {
-        poi.distFromOrigo = this._geospatialService.distanceOnLine(
-          path.geometry.coordinates[0],
-          [poi.lon, poi.lat],
-          path
-        );
-      }
-    }
-
-    return pois;
-  }
-
-  private _getOnroutePois(pois: IExternalPoi[]) {
-    return _filter(pois, (p: IExternalPoi) => p.onRoute);
-  }
-
-  private _getOffroutePois(pois: IExternalPoi[]) {
-    return _filter(pois, (p: IExternalPoi) => !p.onRoute);
+  private _getOffroutePois(pois: Array<ExternalPoi>) {
+    return _filter(pois, (p: ExternalPoi) => !p.onRoute);
   }
 
   /**
    * organizePois submethod
    */
-  private _handleTypes(poi: IExternalPoi) {
-    const _types: string[] = [];
+  private _handleTypes(poi: ExternalPoi) {
+    const _types: Array<string> = [];
     const _replaceTypesKeys = _keys(this._replaceTypes);
 
     _forEach(poi.types, t => {
@@ -314,321 +627,6 @@ export class PoiEditorService {
   }
 
   /**
-   * Set the selected flag on the service pois based on on/off route state
-   */
-  public assignOnOffRoutePois(pois: IExternalPoi[]) {
-    const _pois = _sortBy(_cloneDeep(pois), (p: IExternalPoi) => p.distFromRoute);
-    const _onRoutePois = this._getOnroutePois(_pois);
-    const _offRoutePois = this._getOffroutePois(_pois);
-    _forEach(_onRoutePois, p => ((<any>p).selected = true));
-    _forEach(_offRoutePois, p => ((<any>p).selected = false));
-
-    return of(_pois);
-  }
-
-  /**
-   * Get elevation data for pois
-   */
-  public handleElevation(pois: IExternalPoi[]) {
-    // Google Elevation Service
-    // 2,500 free requests per day
-    // 512 locations per request.
-    // 50 requests per second
-    const _pois = _cloneDeep(pois);
-    const _poisWithoutElevation = _filter(_pois, (p: IExternalPoi) => !p.elevation);
-    const _chunks: IExternalPoi[][] = _chunk(_poisWithoutElevation, 500);
-
-    if (_chunks.length > 0) {
-      return interval(100).pipe(
-        take(_chunks.length),
-        rxMap(counter => {
-          const _chunkedPois: IExternalPoi[] = _chunks[counter];
-          const _coordinates = _map(_chunkedPois, (p: IExternalPoi) => [p.lat, p.lon]);
-
-          return this._elevationService.getData(_coordinates).then(data => {
-            // Update elevation only if we got all data
-            if (data.length === _chunkedPois.length) {
-              for (const i in _chunkedPois) {
-                if (_chunkedPois[i]) {
-                  _chunkedPois[i].elevation = data[i][2];
-                }
-              }
-            }
-            return of(counter);
-          });
-        }),
-        combineAll(),
-        rxMap(() => {
-          return _pois;
-        })
-      );
-    } else {
-      return of(_pois);
-    }
-  }
-
-  public handlePoiDetails(pois, subdomain) {
-    return new Promise(resolve => {
-      switch (subdomain) {
-        case EPoiTypes.google:
-          this._googlePoiService.getPoiDetails(pois).then((detailedPois: IGooglePoi[]) => {
-            resolve(detailedPois);
-          });
-          break;
-        case EPoiTypes.wikipedia:
-          this._wikipediaPoiService.getPoiDetails(pois).then((detailedPois: IWikipediaPoi[]) => {
-            resolve(detailedPois);
-          });
-          break;
-        default:
-          resolve(pois);
-          break;
-      }
-    });
-  }
-
-  public getGTrackPois() {
-    const _bounds = this._routePlannerService.getSearchBounds();
-    const _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);
-    const _centerCoord = _geo.center.geometry.coordinates;
-
-    if (_centerCoord) {
-      this._store.dispatch(
-        new commonGeoSearchActions.SearchInCircle(
-          {
-            table: 'pois',
-            circle: {
-              radius: _geo.radius,
-              center: [_centerCoord[0], _centerCoord[1]]
-            }
-          },
-          'gTrackPois'
-        )
-      );
-    }
-  }
-
-  /**
-   * Update inGtrackDb property on the given poi
-   */
-  public handleGTrackPois(pois: IGooglePoi[] | IWikipediaPoi[] | IOsmPoi[], gTrackPois: IGTrackPoi[]) {
-    const _pois = _cloneDeep(pois);
-
-    for (const poi of _pois) {
-      const _found = _find(gTrackPois, (gTrackPoi: IGTrackPoi) => {
-        let _idCheck = false;
-
-        const _commonObjectTypes = _intersection(
-          Array.isArray(gTrackPoi.objectTypes) ? gTrackPoi.objectTypes : [gTrackPoi.objectTypes],
-          Array.isArray(poi.objectTypes) ? poi.objectTypes : [poi.objectTypes]
-        );
-
-        if (_commonObjectTypes.length > 0) {
-          for (const objectType of _commonObjectTypes) {
-            if (objectType.substring(0, 3) === 'osm') {
-              _idCheck = gTrackPoi.objectId.osm === (<IOsmPoi>poi).osm.id ? true : _idCheck;
-            } else if (objectType === EPoiTypes.google) {
-              _idCheck = gTrackPoi.objectId.google === (<IGooglePoi>poi).google.id ? true : _idCheck;
-            } else if (objectType === EPoiTypes.wikipedia) {
-              _idCheck =
-                gTrackPoi.objectId.wikipedia[(<IWikipediaPoi>poi).wikipedia.lng] ===
-                (<IWikipediaPoi>poi).wikipedia.pageid
-                  ? true
-                  : _idCheck;
-            }
-
-            if (_idCheck) {
-              break;
-            }
-          }
-        }
-
-        return _idCheck;
-      });
-
-      if (_found) {
-        poi.inGtrackDb = true;
-      } else {
-        poi.inGtrackDb = false;
-      }
-    }
-
-    return _pois;
-  }
-
-  /**
-   * Update inCollector property on the given poi
-   */
-  public handleInCollectorPois(pois: IGooglePoi[] | IWikipediaPoi[] | IOsmPoi[], collectedPois: any[]) {
-    const _pois = _cloneDeep(pois);
-
-    for (const poi of _pois) {
-      const _found = _find(collectedPois, (collectedPoi: any) => collectedPoi.id === poi.id);
-
-      if (_found) {
-        poi.inCollector = true;
-      } else {
-        poi.inCollector = false;
-      }
-    }
-
-    return _pois;
-  }
-
-  public refreshPoiMarkers() {
-    let _pois: any[] = [];
-
-    //
-    // Hike pois
-    //
-
-    combineLatest(
-      this._store.pipe(
-        select(hikeEditPoiSelectors.getHikeEditPoiContextSelector('hike')),
-        take(1)
-      ),
-      this._store.pipe(
-        select(editedHikeProgramSelectors.getHikePois(this._poiSelectors.getAllPois)),
-        take(1)
-      ),
-      this._store.pipe(
-        select(hikeEditRoutePlannerSelectors.getPath),
-        take(1)
-      )
-    )
-      .pipe(
-        debounceTime(250),
-        filter(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IPoiStored[], any]) => {
-          return (
-            (pois && pois.length > 0 && path && (<any>hikePoiContext).showOnrouteMarkers) ||
-            (<any>hikePoiContext).showOffrouteMarkers
-          );
-        }),
-        switchMap(([hikePoiContext, pois, path]: [IExternalPoiListContextItemState, IPoiStored[], any]) => {
-          return of([<any>hikePoiContext, this.organizePois(pois, path)]);
-        })
-      )
-      .subscribe(([hikePoiContext, pois]: [IExternalPoiListContextItemState, any[]]) => {
-        _pois = _pois.concat(
-          pois.map(p => _assign(p, { markerType: 'hike' })).filter(p => {
-            const _onRouteCheck = p.onRoute ? hikePoiContext.showOnrouteMarkers : hikePoiContext.showOffrouteMarkers;
-            return !p.inHike && _onRouteCheck;
-          })
-        );
-      });
-
-    //
-    // gTrackPois
-    //
-
-    combineLatest(
-      this._store.pipe(
-        select(hikeEditPoiSelectors.getHikeEditPoiContextSelector('gTrack')),
-        take(1)
-      ),
-      this._store.pipe(
-        select(this._geoSearchSelectors.getGeoSearchResults<IPoiStored>('gTrackPois', this._poiSelectors.getAllPois)),
-        take(1)
-      ),
-      this._store.pipe(
-        select(hikeEditRoutePlannerSelectors.getPath),
-        take(1)
-      )
-    )
-      .pipe(
-        debounceTime(250),
-        filter(
-          ([gTrackPoiContext, pois, path]: [IExternalPoiListContextItemState, IGTrackPoi[] | undefined, any]) => {
-            return (
-              (pois && pois.length > 0 && path && (<any>gTrackPoiContext).showOnrouteMarkers) ||
-              (<any>gTrackPoiContext).showOffrouteMarkers
-            );
-          }
-        ),
-        switchMap(
-          ([gTrackPoiContext, pois, path]: [IExternalPoiListContextItemState, IGTrackPoi[] | undefined, any]) => {
-            return of([<any>gTrackPoiContext, this.organizePois(<any>pois, path)]);
-          }
-        ),
-        switchMap(([gTrackPoiContext, pois]: [IExternalPoiListContextItemState, IGTrackPoi[]]) => {
-          return of([<any>gTrackPoiContext, this.handleHikeInclusion(pois)]);
-        })
-      )
-      .subscribe(([gTrackPoiContext, pois]: [IExternalPoiListContextItemState, any[]]) => {
-        _pois = _pois.concat(
-          pois.map(p => _assign(p, { markerType: 'gTrack' })).filter(p => {
-            const _onRouteCheck = p.onRoute
-              ? gTrackPoiContext.showOnrouteMarkers
-              : gTrackPoiContext.showOffrouteMarkers;
-            return !p.inHike && _onRouteCheck;
-          })
-        );
-      });
-
-    //
-    // Service pois
-    //
-
-    this._getVisibleServicePois('collector', hikeEditPoiSelectors.getAllCollectorPois).subscribe(
-      (pois: any[]) => {
-        _pois = _pois.concat(pois.map(p => _assign(_cloneDeep(p), { markerType: 'collector' })));
-      }
-    );
-    this._getVisibleServicePois(EPoiTypes.google, hikeEditPoiSelectors.getAllGooglePois).subscribe(
-      (pois: IExternalPoi[]) => {
-        _pois = _pois.concat(
-          pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.google })).filter(p => !p.inCollector)
-        );
-      }
-    );
-    this._getVisibleServicePois(EPoiTypes.osmAmenity, hikeEditPoiSelectors.getAllOsmAmenityPois).subscribe(
-      (pois: IExternalPoi[]) => {
-        _pois = _pois.concat(
-          pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.osmAmenity })).filter(p => !p.inCollector)
-        );
-      }
-    );
-    this._getVisibleServicePois(EPoiTypes.osmNatural, hikeEditPoiSelectors.getAllOsmNaturalPois).subscribe(
-      (pois: IExternalPoi[]) => {
-        _pois = _pois.concat(
-          pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.osmNatural })).filter(p => !p.inCollector)
-        );
-      }
-    );
-    this._getVisibleServicePois(EPoiTypes.osmRoute, hikeEditPoiSelectors.getAllOsmRoutePois).subscribe(
-      (pois: IExternalPoi[]) => {
-        _pois = _pois.concat(
-          pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.osmRoute })).filter(p => !p.inCollector)
-        );
-      }
-    );
-    this._getVisibleServicePois(EPoiTypes.wikipedia, hikeEditPoiSelectors.getAllWikipediaPois).subscribe(
-      (pois: IExternalPoi[]) => {
-        _pois = _pois.concat(
-          pois.map(p => _assign(_cloneDeep(p), { markerType: EPoiTypes.wikipedia })).filter(p => !p.inCollector)
-        );
-      }
-    );
-
-    // Generate poi markers
-
-    const _poiMarkers = this._generatePoiMarkers(_pois);
-    const _imageMarkers = this._generateImageMarkers();
-    const _markers = _poiMarkers.concat(_imageMarkers);
-
-    // Add markers to the map
-    this._leafletMapService.removeLayer(this._markersGroup);
-
-    if (_markers.length > 0) {
-      this._markersGroup = this._leafletMapService.createMarkersGroup(_map(_markers, 'marker'));
-      this._leafletMapService.addLayer(this._markersGroup);
-
-      // Register marker to spiderfier
-      this._leafletMapService.refreshSpiderfierMarkers(_markers.map(m => m.marker), EMarkerType.POI);
-    }
-  }
-
-  /**
    * refreshPoiMarkers submethod
    */
   private _getVisibleServicePois(subdomain, poiSelector) {
@@ -642,7 +640,7 @@ export class PoiEditorService {
         take(1)
       )
     ).pipe(
-      rxMap(([poiContext, pois]: [IExternalPoiListContextItemState, IExternalPoi[]]) => {
+      rxMap(([poiContext, pois]: [ExternalPoiListContextItemState, Array<ExternalPoi>]) => {
         if (poiContext.showOnrouteMarkers || poiContext.showOffrouteMarkers) {
           return pois.filter(p => {
             const _onRouteCheck = p.onRoute ? poiContext.showOnrouteMarkers : poiContext.showOffrouteMarkers;
@@ -659,7 +657,7 @@ export class PoiEditorService {
    * refreshPoiMarkers submethod
    */
   private _generatePoiMarkers(pois) {
-    const _markers: LeafletMapMarker[] = [];
+    const _markers: Array<LeafletMapMarker> = [];
 
     for (const poi of pois) {
       const popupData: IMarkerPopupData = {
@@ -683,7 +681,7 @@ export class PoiEditorService {
         },
         popupData
       );
-      (<any>_marker).marker.options.type = EMarkerType.POI;
+      (_marker as any).marker.options.type = EMarkerType.POI;
 
       _markers.push(_marker);
     }
@@ -692,7 +690,7 @@ export class PoiEditorService {
   }
 
   private _generateImageMarkers() {
-    const _markers: LeafletMapMarker[] = [];
+    const _markers: Array<LeafletMapMarker> = [];
 
     combineLatest(
       this._store.pipe(
@@ -703,8 +701,7 @@ export class PoiEditorService {
         select(hikeEditImageSelectors.getImageMarkerImages),
         take(1)
       )
-    )
-    .subscribe(([bgImageUrls, markerImages]: [string[], IBackgroundImageData[]]) => {
+    ).subscribe(([bgImageUrls, markerImages]: [Array<string>, Array<BackgroundImageData>]) => {
       for (const image of markerImages) {
         const popupData: IMarkerPopupData = {
           popupComponentName: 'ImageMarkerPopupComponent',
@@ -727,7 +724,7 @@ export class PoiEditorService {
           },
           popupData
         );
-        (<any>_marker).marker.options.type = EMarkerType.IMAGE;
+        (_marker as any).marker.options.type = EMarkerType.IMAGE;
 
         if (bgImageUrls.includes(image.original.url)) {
           _marker.toggleHighlight();

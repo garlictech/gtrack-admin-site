@@ -1,22 +1,22 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { State } from '../../../../store';
-import { hikeEditPoiActions, commonPoiActions } from '../../../../store/actions';
-import { IExternalPoi, IFilteredProperties, IGTrackPoi } from '../../../../shared/interfaces';
-import { Subject, Observable, interval, combineLatest } from 'rxjs';
-import { filter, takeUntil, debounceTime, take, switchMap } from 'rxjs/operators';
+import _cloneDeep from 'lodash-es/cloneDeep';
+import _filter from 'lodash-es/filter';
+import _keys from 'lodash-es/keys';
+import _map from 'lodash-es/map';
+import _set from 'lodash-es/set';
+import { combineLatest, interval, Observable, Subject } from 'rxjs';
+import { debounceTime, filter, switchMap, take, takeUntil } from 'rxjs/operators';
+import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
+import * as uuid from 'uuid/v1';
+
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+
+import { ExternalPoi, IFilteredProperties, IGTrackPoi } from '../../../../shared/interfaces';
 import { PoiEditorService, PoiMergeService } from '../../../../shared/services';
 import { AdminMapService } from '../../../../shared/services/admin-map';
+import { State } from '../../../../store';
+import { commonPoiActions, hikeEditPoiActions } from '../../../../store/actions';
 import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
-import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
-
-import _map from 'lodash-es/map';
-import _keys from 'lodash-es/keys';
-import _set from 'lodash-es/set';
-import _filter from 'lodash-es/filter';
-import _cloneDeep from 'lodash-es/cloneDeep';
-
-import * as uuid from 'uuid/v1';
 
 @Component({
   selector: 'app-hike-edit-pois-collector',
@@ -24,27 +24,27 @@ import * as uuid from 'uuid/v1';
 })
 export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   @Input() isPlanning$: Observable<boolean>;
-  public pois$: Observable<any[]>;
-  public selectedPois$: Observable<any[]>;
-  public saveablePoisCount$: Observable<number>;
-  public saving$: Observable<boolean>;
-  public showOnrouteMarkers = true;
-  public showOffrouteMarkers = true;
-  public modalPoi: any;
-  public displayPoiModal = false;
-  public mergeSelectionCount$: Observable<number>;
-  public mergeProperties: IFilteredProperties = {};
-  public mergedPoiIds: string[] = [];
-  public mergedPoiData: any;
-  public displayMergeModal = false;
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  pois$: Observable<Array<any>>;
+  selectedPois$: Observable<Array<any>>;
+  saveablePoisCount$: Observable<number>;
+  saving$: Observable<boolean>;
+  showOnrouteMarkers = true;
+  showOffrouteMarkers = true;
+  modalPoi: any;
+  displayPoiModal = false;
+  mergeSelectionCount$: Observable<number>;
+  mergeProperties: IFilteredProperties = {};
+  mergedPoiIds: Array<string> = [];
+  mergedPoiData: any;
+  displayMergeModal = false;
+  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private _store: Store<State>,
-    private _poiSelectors: PoiSelectors,
-    private _poiEditorService: PoiEditorService,
-    private _poiMergeService: PoiMergeService,
-    private _adminMapService: AdminMapService
+    private readonly _store: Store<State>,
+    private readonly _poiSelectors: PoiSelectors,
+    private readonly _poiEditorService: PoiEditorService,
+    private readonly _poiMergeService: PoiMergeService,
+    private readonly _adminMapService: AdminMapService
   ) {}
 
   ngOnInit() {
@@ -74,18 +74,21 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .pipe(
         select(this._poiSelectors.getAllPois),
         debounceTime(250),
-        filter((gTrackPois: IGTrackPoi[]) => gTrackPois.length > 0),
+        filter((gTrackPois: Array<IGTrackPoi>) => gTrackPois.length > 0),
         takeUntil(this._destroy$)
       )
-      .subscribe((gTrackPois: IGTrackPoi[]) => {
+      .subscribe((gTrackPois: Array<IGTrackPoi>) => {
         this._store
           .pipe(
             select(hikeEditPoiSelectors.getAllCollectorPois),
-            filter((collectedPois: any[]) => collectedPois.length > 0),
+            filter((collectedPois: Array<any>) => collectedPois.length > 0),
             take(1)
           )
-          .subscribe((collectedPois: any[]) => {
-            const _checkedCollectorPois: any[] = this._poiEditorService.handleGTrackPois(collectedPois, gTrackPois);
+          .subscribe((collectedPois: Array<any>) => {
+            const _checkedCollectorPois: Array<any> = this._poiEditorService.handleGTrackPois(
+              collectedPois,
+              gTrackPois
+            );
             const _removablePoiIds = _map(_checkedCollectorPois.filter(p => p.inGtrackDb), 'id');
             if (_removablePoiIds.length > 0) {
               this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(_removablePoiIds));
@@ -150,27 +153,27 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   /**
    * Show onroute markers checkbox click
    */
-  public toggleOnrouteMarkers() {
+  toggleOnrouteMarkers() {
     this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers('collector'));
   }
 
   /**
    * Show offroute markers checkbox click
    */
-  public toggleOffrouteMarkers() {
+  toggleOffrouteMarkers() {
     this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('collector'));
   }
 
   /**
    * Start merge
    */
-  public mergePois() {
+  mergePois() {
     this._store
       .pipe(
         select(hikeEditPoiSelectors.getMergeSelections),
         take(1)
       )
-      .subscribe((selections: string[]) => {
+      .subscribe((selections: Array<string>) => {
         combineLatest(
           ...selections.map(poiId =>
             this._store.pipe(
@@ -199,7 +202,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   /**
    * Merge modal callback
    */
-  public saveMergedPoi = mergedData => {
+  saveMergedPoi = mergedData => {
     const _coordsArr = mergedData.coords.slice(1, -1).split(',');
 
     this.mergedPoiData.lat = parseFloat(_coordsArr[0]);
@@ -224,28 +227,16 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
     this.displayMergeModal = false;
 
     this._saveMergedPoiData();
-  }
-
-  /**
-   * Save the new merged poi and remove merge sources
-   */
-  private _saveMergedPoiData() {
-    this.mergedPoiData.id = uuid();
-
-    this._store.dispatch(new hikeEditPoiActions.AddPoisToCollector([this.mergedPoiData]));
-    this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(this.mergedPoiIds));
-  }
+  };
 
   /**
    * Save selected pois as gTrackPoi
    */
-  public savePois() {
+  savePois() {
     this._store.dispatch(new hikeEditPoiActions.SetSaving('collector', true));
 
-    this.pois$.pipe(take(1)).subscribe((pois: IExternalPoi[]) => {
-      const _externalPoisToSave = _filter(pois, (poi: IExternalPoi) => {
-        return !!(poi.selected && !poi.inGtrackDb);
-      });
+    this.pois$.pipe(take(1)).subscribe((pois: Array<ExternalPoi>) => {
+      const _externalPoisToSave = _filter(pois, (poi: ExternalPoi) => !!(poi.selected && !poi.inGtrackDb));
 
       return interval(50)
         .pipe(take(_externalPoisToSave.length))
@@ -262,15 +253,25 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   /**
    * Remove selected pois from the collector
    */
-  public removeSelectedPois() {
-    this.selectedPois$.pipe(take(1)).subscribe((selectedPois: any[]) => {
+  removeSelectedPois() {
+    this.selectedPois$.pipe(take(1)).subscribe((selectedPois: Array<any>) => {
       const _removablePoiIds = _map(selectedPois, 'id');
       this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(_removablePoiIds));
     });
   }
 
-  public openPoiModal = poi => {
+  openPoiModal = poi => {
     this.modalPoi = _cloneDeep(poi);
     this.displayPoiModal = true;
+  };
+
+  /**
+   * Save the new merged poi and remove merge sources
+   */
+  private _saveMergedPoiData() {
+    this.mergedPoiData.id = uuid();
+
+    this._store.dispatch(new hikeEditPoiActions.AddPoisToCollector([this.mergedPoiData]));
+    this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(this.mergedPoiIds));
   }
 }

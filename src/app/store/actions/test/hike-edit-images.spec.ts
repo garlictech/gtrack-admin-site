@@ -1,6 +1,5 @@
-import * as HikeEditImageActions from '../hike-edit-image';
-
 import { bgImages as bgImageFixtures } from '../../reducer/test/fixtures';
+import * as HikeEditImageActions from '../hike-edit-image';
 
 describe('HikeEditMap actions', () => {
   it('should have action names defined', () => {
@@ -28,8 +27,8 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditImageActions.GET_MAPILLARY_IMAGES,
-      bounds: bounds,
-      path: path
+      bounds,
+      path
     });
   });
 
@@ -51,8 +50,8 @@ describe('HikeEditMap actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditImageActions.GET_FLICKR_IMAGES,
-      bounds: bounds,
-      path: path
+      bounds,
+      path
     });
   });
 

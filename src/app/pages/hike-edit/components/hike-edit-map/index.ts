@@ -1,40 +1,46 @@
-import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit, ElementRef, NgZone } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil, take } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
+import { GeoJsonObject } from 'geojson';
+import * as L from 'leaflet';
 import { SelectItem } from 'primeng/api';
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
+import { GoogleMapsService, IGeoPosition, selectCurrentLocation } from 'subrepos/gtrack-common-ngx';
+
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { LeafletMapComponent } from '@common.features/leaflet-map/components/leaflet-map';
+import { GEOJSON_STYLES } from '@common.features/leaflet-map/constants/geojson-styles';
+import { ICenter, ILayerDef, ILeafletMapConfig } from '@common.features/leaflet-map/interfaces';
+import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { select, Store } from '@ngrx/store';
+
+import { AdminMapService, EBufferSize, WaypointMarkerService } from '../../../../shared/services/admin-map';
 import { State } from '../../../../store';
 import { commonBackgroundGeolocationActions } from '../../../../store/actions';
-import { selectCurrentLocation, IGeoPosition, GoogleMapsService } from 'subrepos/gtrack-common-ngx';
-import { LeafletMapComponent } from '@common.features/leaflet-map/components/leaflet-map';
-import { WaypointMarkerService, EBufferSize, AdminMapService } from '../../../../shared/services/admin-map';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
-import { ILeafletMapConfig, ICenter, ILayerDef } from '@common.features/leaflet-map/interfaces';
 
-import * as L from 'leaflet';
-import { GeoJsonObject } from 'geojson';
-import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
-import { GEOJSON_STYLES } from '@common.features/leaflet-map/constants/geojson-styles';
-
-const CENTER = <ICenter>{
+const CENTER = {
   lat: 47.689714,
   lng: 18.904206,
   zoom: 12
-};
+} as ICenter;
 
-const LAYERS: ILayerDef[] = [{
-  name: 'street',
-  url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-}, {
-  name: 'topo',
-  url: 'https://opentopomap.org/{z}/{x}/{y}.png'
-}];
+const LAYERS: Array<ILayerDef> = [
+  {
+    name: 'street',
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+  },
+  {
+    name: 'topo',
+    url: 'https://opentopomap.org/{z}/{x}/{y}.png'
+  }
+];
 
-const OVERLAYS: ILayerDef[]  = [{
-  name: 'trails',
-  url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
-}];
+const OVERLAYS: Array<ILayerDef> = [
+  {
+    name: 'trails',
+    url: 'http://tile.lonvia.de/hiking/{z}/{x}/{y}.png'
+  }
+];
 
 @Component({
   selector: 'app-hike-edit-map',
@@ -42,31 +48,31 @@ const OVERLAYS: ILayerDef[]  = [{
   styleUrls: ['./style.scss']
 })
 export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('adminMap') public adminMap: LeafletMapComponent;
-  @ViewChild('search') private _searchElementRef: ElementRef;
+  @ViewChild('adminMap') adminMap: LeafletMapComponent;
+  center: ICenter = CENTER;
+  layers: Array<ILayerDef> = LAYERS;
+  overlays: Array<ILayerDef> = OVERLAYS;
+  mapConfig: ILeafletMapConfig;
+  mode = 'routing';
+  allowPlanning: boolean;
+  currentLocation$: Observable<IGeoPosition | null>;
+  clickModes: Array<SelectItem> = [];
+  locationSearchResult: google.maps.places.PlaceResult;
+  faSearch = faSearch;
+  EBufferSize = EBufferSize;
+  @ViewChild('search') private readonly _searchElementRef: ElementRef;
   private _searchInput: HTMLInputElement;
-  public center: ICenter = CENTER;
-  public layers: ILayerDef[] = LAYERS;
-  public overlays: ILayerDef[] = OVERLAYS;
-  public mapConfig: ILeafletMapConfig;
-  public mode = 'routing';
-  public allowPlanning: boolean;
-  public currentLocation$: Observable<IGeoPosition | null>;
-  public clickModes: SelectItem[] = [];
-  public locationSearchResult: google.maps.places.PlaceResult;
-  public faSearch = faSearch;
-  public EBufferSize = EBufferSize;
-  private _bufferShown = {};
-  private _bufferOnMap = {};
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  private readonly _bufferShown = {};
+  private readonly _bufferOnMap = {};
+  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private _store: Store<State>,
-    private _waypointMarkerService: WaypointMarkerService,
-    private _adminMapService: AdminMapService,
-    private _googleMapsService: GoogleMapsService,
-    private _ngZone: NgZone,
-    private _leafletMapService: LeafletMapService
+    private readonly _store: Store<State>,
+    private readonly _waypointMarkerService: WaypointMarkerService,
+    private readonly _adminMapService: AdminMapService,
+    private readonly _googleMapsService: GoogleMapsService,
+    private readonly _ngZone: NgZone,
+    private readonly _leafletMapService: LeafletMapService
   ) {}
 
   ngOnInit() {
@@ -133,7 +139,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     this.adminMap.leafletMap.scrollWheelZoom.disable();
   }
 
-  public onMapClick(e: L.LeafletMouseEvent) {
+  onMapClick(e: L.LeafletMouseEvent) {
     if (this.allowPlanning) {
       if (this.mode === 'routing') {
         this._waypointMarkerService.addWaypoints([e.latlng]);
@@ -143,28 +149,26 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public onMapMouseUp(e: L.LeafletMouseEvent) {
+  onMapMouseUp(e: L.LeafletMouseEvent) {
     // this.adminMap.leafletMap.scrollWheelZoom.enable();
   }
 
-  public onMapMouseOut(e: L.LeafletMouseEvent) {
+  onMapMouseOut(e: L.LeafletMouseEvent) {
     // this.adminMap.leafletMap.scrollWheelZoom.disable();
   }
 
-  public toggleCurrentPositionMarker($event: Event) {
+  toggleCurrentPositionMarker($event: Event) {
     $event.stopPropagation();
 
-    this.currentLocation$
-      .pipe(take(1))
-      .subscribe((position: IGeoPosition) => {
-        if (position && position.coords) {
-          const latLng = L.latLng(<number>position.coords.latitude, <number>position.coords.longitude);
-          this.adminMap.currentPositionMarker.goToPosition(latLng);
-        }
-      });
+    this.currentLocation$.pipe(take(1)).subscribe((position: IGeoPosition) => {
+      if (position && position.coords) {
+        const latLng = L.latLng(position.coords.latitude as number, position.coords.longitude as number);
+        this.adminMap.currentPositionMarker.goToPosition(latLng);
+      }
+    });
   }
 
-  public resetMap($event: Event) {
+  resetMap($event: Event) {
     $event.stopPropagation();
 
     this._store
@@ -173,19 +177,16 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
         take(1)
       )
       .subscribe((route: any) => {
-        const bounds: L.LatLngBoundsExpression = [[
-          route.bounds.NorthEast.lat,
-          route.bounds.NorthEast.lon
-        ], [
-          route.bounds.SouthWest.lat,
-          route.bounds.SouthWest.lon
-        ]];
+        const bounds: L.LatLngBoundsExpression = [
+          [route.bounds.NorthEast.lat, route.bounds.NorthEast.lon],
+          [route.bounds.SouthWest.lat, route.bounds.SouthWest.lon]
+        ];
 
         this._leafletMapService.fitBounds(bounds);
       });
   }
 
-  public toggleBuffer($event: Event, size: EBufferSize) {
+  toggleBuffer($event: Event, size: EBufferSize) {
     $event.stopPropagation();
 
     this._bufferShown[size] = !this._bufferShown[size];
@@ -194,6 +195,17 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
       this._addBuffer(size);
     } else {
       this._removeBuffer(size);
+    }
+  }
+
+  goToLocation($event) {
+    $event.stopPropagation();
+
+    if (this.locationSearchResult) {
+      this._leafletMapService.leafletMap.setView(
+        [this.locationSearchResult.geometry.location.lat(), this.locationSearchResult.geometry.location.lng()],
+        13
+      );
     }
   }
 
@@ -225,16 +237,5 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     });
-  }
-
-  public goToLocation($event) {
-    $event.stopPropagation();
-
-    if (this.locationSearchResult) {
-      this._leafletMapService.leafletMap.setView(
-        [this.locationSearchResult.geometry.location.lat(), this.locationSearchResult.geometry.location.lng()],
-        13
-      );
-    }
   }
 }

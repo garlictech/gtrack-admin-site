@@ -1,15 +1,15 @@
-import { ActionReducer } from '@ngrx/store';
-import { IEditedHikeProgramState } from '../state';
-import { editedHikeProgramActions } from '../actions';
+// tslint:disable:only-arrow-functions no-small-switch
+import _assign from 'lodash-es/assign';
+import _cloneDeep from 'lodash-es/cloneDeep';
+import _omit from 'lodash-es/omit';
+import _union from 'lodash-es/union';
+import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 import { EObjectState, ETextualDescriptionType } from 'subrepos/provider-client';
 
-import _omit from 'lodash-es/omit';
-import _assign from 'lodash-es/assign';
-import _union from 'lodash-es/union';
-import _cloneDeep from 'lodash-es/cloneDeep';
-import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
+import { editedHikeProgramActions } from '../actions';
+import { EditedHikeProgramState } from '../state';
 
-export const initialEditedHikeProgramState: IEditedHikeProgramState = {
+export const initialEditedHikeProgramState: EditedHikeProgramState = {
   data: {
     id: '',
     distance: 0,
@@ -47,12 +47,12 @@ export const initialEditedHikeProgramState: IEditedHikeProgramState = {
 export function editedHikeProgramReducer(
   state = initialEditedHikeProgramState,
   action: editedHikeProgramActions.AllEditedHikeProgramActions
-): IEditedHikeProgramState {
+): EditedHikeProgramState {
   const newState = _cloneDeep(state);
 
   switch (action.type) {
     case editedHikeProgramActions.RESET_HIKE_PROGRAM: {
-      return initialEditedHikeProgramState;
+      return { ...initialEditedHikeProgramState };
     }
 
     case editedHikeProgramActions.ADD_NEW_TRANSLATED_HIKE_DESCRIPTION: {
@@ -124,14 +124,14 @@ export function editedHikeProgramReducer(
 
     case editedHikeProgramActions.ADD_HIKE_PROGRAM_BACKGROUND_IMAGE: {
       newState.dirty = true;
-      newState.data.backgroundImages = [...(<any>state.data.backgroundImages), action.imageData];
+      newState.data.backgroundImages = [...(state.data.backgroundImages as any), action.imageData];
 
       return newState;
     }
 
     case editedHikeProgramActions.REMOVE_HIKE_PROGRAM_BACKGROUND_IMAGE: {
       newState.dirty = true;
-      newState.data.backgroundImages = (<any>newState.data.backgroundImages).filter(
+      newState.data.backgroundImages = (newState.data.backgroundImages as any).filter(
         img => img.original.url !== action.origUrl
       );
       return newState;

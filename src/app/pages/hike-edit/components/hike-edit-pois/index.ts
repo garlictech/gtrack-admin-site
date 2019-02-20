@@ -1,20 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { EPoiTypes } from 'subrepos/provider-client';
+
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+
+import { IExternalPoiType } from '../../../../shared/interfaces';
 import { State } from '../../../../store';
 import { hikeEditPoiActions } from '../../../../store/actions';
-import { IExternalPoiType } from '../../../../shared/interfaces';
-import { EPoiTypes } from 'subrepos/provider-client';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-hike-edit-pois',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisComponent implements OnInit {
-  @Input()
-  isPlanning$: Observable<boolean>;
+  @Input() isPlanning$: Observable<boolean>;
 
-  public externalPoiTypes: IExternalPoiType[] = [
+  externalPoiTypes: Array<IExternalPoiType> = [
     {
       title: 'Wikipedia pois',
       subdomain: EPoiTypes.wikipedia,
@@ -41,9 +42,13 @@ export class HikeEditPoisComponent implements OnInit {
     }*/
   ];
 
-  constructor(private _store: Store<State>) {}
+  constructor(private readonly _store: Store<State>) {}
 
   ngOnInit() {
     this._store.dispatch(new hikeEditPoiActions.ResetPoiState());
+  }
+
+  trackByFn(index: number): number {
+    return index;
   }
 }

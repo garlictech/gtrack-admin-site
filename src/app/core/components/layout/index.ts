@@ -5,10 +5,10 @@ import { Component } from '@angular/core';
   templateUrl: './ui.html'
 })
 export class LayoutComponent {
-  public sidebarActive = false;
+  sidebarActive = false;
 
-  public onMenuButtonClick = (event: Event) => {
+  onMenuButtonClick = (event: Event) => {
     this.sidebarActive = !this.sidebarActive;
     event.preventDefault();
-  }
+  };
 }

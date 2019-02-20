@@ -1,48 +1,48 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Observable, Subject, of, combineLatest } from 'rxjs';
-import { takeUntil, switchMap, debounceTime, take } from 'rxjs/operators';
-import { Store, MemoizedSelector, select } from '@ngrx/store';
+import _map from 'lodash-es/map';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { debounceTime, switchMap, take, takeUntil } from 'rxjs/operators';
+import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
+import { BackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
+
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MemoizedSelector, select, Store } from '@ngrx/store';
+
+import { AdminMapService, PoiEditorService, RoutePlannerService } from '../../../../shared/services';
 import { State } from '../../../../store';
 import { hikeEditImageActions } from '../../../../store/actions';
-import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
 import * as hikeEditImageSelectors from '../../../../store/selectors/hike-edit-image';
+import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
-
-import { RoutePlannerService, PoiEditorService, AdminMapService } from '../../../../shared/services';
-import { IBackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
-import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
-
-import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-hike-edit-photos',
   templateUrl: './ui.html'
 })
 export class HikeEditPhotosComponent implements OnInit, OnDestroy {
-  @Input() backgroundImageSelector: MemoizedSelector<object, IBackgroundImageData[]>;
-  @Input() backgroundImageUrlSelector: MemoizedSelector<object, string[]>;
+  @Input() backgroundImageSelector: MemoizedSelector<object, Array<BackgroundImageData>>;
+  @Input() backgroundImageUrlSelector: MemoizedSelector<object, Array<string>>;
   @Input() clickActions: any;
   @Input() showMarkerColumn: boolean;
-  @Input() distanceFrom: number[] = null;
-  public gTrackPoiPhotos$: Observable<IBackgroundImageData[]>;
-  public googlePhotos$: Observable<IBackgroundImageData[]>;
-  public wikipediaPhotos$: Observable<IBackgroundImageData[]>;
-  public mapillaryImages$: Observable<IBackgroundImageData[]>;
-  public flickrImages$: Observable<IBackgroundImageData[]>;
-  public routePath$: Observable<any>;
-  public mapillaryLoading$: Observable<boolean>;
-  public flickrLoading$: Observable<boolean>;
-  public bgImages$: Observable<IBackgroundImageData[]>;
-  public backgroundOriginalUrls$: Observable<string[]>;
-  public slideShowUrls: string[];
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  @Input() distanceFrom: Array<number> = null;
+  gTrackPoiPhotos$: Observable<Array<BackgroundImageData>>;
+  googlePhotos$: Observable<Array<BackgroundImageData>>;
+  wikipediaPhotos$: Observable<Array<BackgroundImageData>>;
+  mapillaryImages$: Observable<Array<BackgroundImageData>>;
+  flickrImages$: Observable<Array<BackgroundImageData>>;
+  routePath$: Observable<any>;
+  mapillaryLoading$: Observable<boolean>;
+  flickrLoading$: Observable<boolean>;
+  bgImages$: Observable<Array<BackgroundImageData>>;
+  backgroundOriginalUrls$: Observable<Array<string>>;
+  slideShowUrls: Array<string>;
+  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private _store: Store<State>,
-    private _routePlannerService: RoutePlannerService,
-    private _poiSelectors: PoiSelectors,
-    private _poiEditorService: PoiEditorService,
-    private _adminMapService: AdminMapService
+    private readonly _store: Store<State>,
+    private readonly _routePlannerService: RoutePlannerService,
+    private readonly _poiSelectors: PoiSelectors,
+    private readonly _poiEditorService: PoiEditorService,
+    private readonly _adminMapService: AdminMapService
   ) {}
 
   ngOnInit() {
@@ -58,9 +58,9 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
       )
     ).pipe(
       debounceTime(250),
-      switchMap(([photos, path]: [IBackgroundImageData[], any]) => {
-        return of(this._poiEditorService.organizePoiPhotos(photos, path));
-      })
+      switchMap(([photos, path]: [Array<BackgroundImageData>, any]) =>
+        of(this._poiEditorService.organizePoiPhotos(photos, path))
+      )
     );
 
     this.googlePhotos$ = this._store.pipe(
@@ -96,11 +96,9 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
       debounceTime(250)
     );
 
-    this.bgImages$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((images: IBackgroundImageData[]) => {
-        this.slideShowUrls = _map(images, 'original.url');
-      });
+    this.bgImages$.pipe(takeUntil(this._destroy$)).subscribe((images: Array<BackgroundImageData>) => {
+      this.slideShowUrls = _map(images, 'original.url');
+    });
 
     // Route info from the store (for disabling GET buttons)
     this.routePath$ = this._store.pipe(select(hikeEditRoutePlannerSelectors.getPath));
@@ -128,7 +126,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public getMapillaryPhotos() {
+  getMapillaryPhotos() {
     const _bounds = this._routePlannerService.getSearchBounds();
 
     if (_bounds) {
@@ -138,7 +136,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getFlickrPhotos() {
+  getFlickrPhotos() {
     const _bounds = this._routePlannerService.getSearchBounds();
 
     if (_bounds) {

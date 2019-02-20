@@ -99,5 +99,5 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/subrepos/gtrack-common-ngx/app/features/generic-ui"
     },
-    "version": "13.0.4"
+    "version": "14.0.0"
 }

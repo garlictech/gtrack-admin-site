@@ -1,5 +1,4 @@
 import { EPoiTypes } from '../../../../subrepos/provider-client';
-
 import * as HikeEditPoiActions from '../hike-edit-poi';
 
 describe('HikeEditPoi actions', () => {
@@ -95,7 +94,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_GOOGLE_POIS,
-      pois: pois
+      pois
     });
   });
 
@@ -106,7 +105,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_GOOGLE_POIS_IN_GTRACK_DB,
-      properties: properties
+      properties
     });
   });
 
@@ -117,7 +116,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_GOOGLE_POIS_IN_COLLECTOR,
-      properties: properties
+      properties
     });
   });
 
@@ -128,7 +127,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_GOOGLE_POI_SELECTED,
-      poiIds: poiIds
+      poiIds
     });
   });
 
@@ -158,7 +157,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_AMENITY_POIS,
-      pois: pois
+      pois
     });
   });
 
@@ -169,7 +168,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_GTRACK_DB,
-      properties: properties
+      properties
     });
   });
 
@@ -180,7 +179,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_COLLECTOR,
-      properties: properties
+      properties
     });
   });
 
@@ -191,7 +190,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_AMENITY_POI_SELECTED,
-      poiIds: poiIds
+      poiIds
     });
   });
 
@@ -221,7 +220,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_NATURAL_POIS,
-      pois: pois
+      pois
     });
   });
 
@@ -232,7 +231,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_GTRACK_DB,
-      properties: properties
+      properties
     });
   });
 
@@ -243,7 +242,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_COLLECTOR,
-      properties: properties
+      properties
     });
   });
 
@@ -254,7 +253,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_NATURAL_POI_SELECTED,
-      poiIds: poiIds
+      poiIds
     });
   });
 
@@ -284,7 +283,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_ROUTE_POIS,
-      pois: pois
+      pois
     });
   });
 
@@ -295,7 +294,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_GTRACK_DB,
-      properties: properties
+      properties
     });
   });
 
@@ -306,7 +305,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_COLLECTOR,
-      properties: properties
+      properties
     });
   });
 
@@ -317,7 +316,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_OSM_ROUTE_POI_SELECTED,
-      poiIds: poiIds
+      poiIds
     });
   });
 
@@ -347,7 +346,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_WIKIPEDIA_POIS,
-      pois: pois
+      pois
     });
   });
 
@@ -358,7 +357,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_GTRACK_DB,
-      properties: properties
+      properties
     });
   });
 
@@ -369,7 +368,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_COLLECTOR,
-      properties: properties
+      properties
     });
   });
 
@@ -380,7 +379,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_WIKIPEDIA_POI_SELECTED,
-      poiIds: poiIds
+      poiIds
     });
   });
 
@@ -395,7 +394,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.ADD_POIS_TO_COLLECTOR,
-      pois: pois
+      pois
     });
   });
 
@@ -406,7 +405,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.REMOVE_POIS_FROM_COLLECTOR,
-      poiIds: poiIds
+      poiIds
     });
   });
 
@@ -417,7 +416,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.SET_COLLECTOR_POI_SELECTED,
-      poiIds: poiIds
+      poiIds
     });
   });
 
@@ -432,7 +431,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.TOGGLE_ONROUTE_MARKERS,
-      subdomain: subdomain
+      subdomain
     });
   });
 
@@ -443,7 +442,7 @@ describe('HikeEditPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditPoiActions.TOGGLE_OFFROUTE_MARKERS,
-      subdomain: subdomain
+      subdomain
     });
   });
 

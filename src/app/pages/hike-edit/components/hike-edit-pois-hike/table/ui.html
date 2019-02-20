@@ -17,23 +17,15 @@
           <app-poi-icons [poi]="poi"></app-poi-icons>
         </td>
         <td [innerHTML]="(poi?.description | localizeDescription).title"></td>
-        <td>{{poi.distFromRoute | distance : true}}</td>
-        <td>{{poi.types?.join(', ')}}</td>
-        <td>{{poi.objectTypes?.join(', ')}}</td>
-        <td>{{poi.elevation | distance}}</td>
+        <td>{{ poi.distFromRoute | distance : true }}</td>
+        <td>{{ poi.types?.join(', ') }}</td>
+        <td>{{ poi.objectTypes?.join(', ') }}</td>
+        <td>{{ poi.elevation | distance }}</td>
         <td class="text-center">
-          <p-button
-            *ngIf="!poi.inHike"
-            icon="pi pi-minus"
-            styleClass="ui-button-danger"
-            (onClick)="removePoi($event, poi)"
-            title="Remove from hike"
-          ></p-button>
-          <p-button
-            icon="pi pi-pencil"
-            styleClass="ui-button-warning ml-5"
-            (onClick)="openGTrackPoiModal(poi.id)"
-          ></p-button>
+          <p-button *ngIf="!poi.inHike" icon="pi pi-minus" styleClass="ui-button-danger"
+            (onClick)="removePoi($event, poi)" title="Remove from hike"></p-button>
+          <p-button icon="pi pi-pencil" styleClass="ui-button-warning ml-5" (onClick)="openGTrackPoiModal(poi.id)">
+          </p-button>
         </td>
       </tr>
     </ng-template>
