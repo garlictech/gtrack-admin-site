@@ -1,0 +1,19 @@
+{
+    "name": "@bit/garlictech.angular-features.common.multi-language-text",
+    "version": "0.0.4",
+    "homepage": "https://bitsrc.io/garlictech/angular-features/common/multi-language-text",
+    "main": "index.ts",
+    "dependencies": {
+        "@angular/common": "~7.2.1",
+        "@angular/core": "~7.2.1",
+        "@ngrx/store": "~7.1.0",
+        "lodash-es": "^4.17.11",
+        "rxjs": "~6.3.2",
+        "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces",
+        "@bit/garlictech.angular-features.common.localization": "file:../localization"
+    },
+    "devDependencies": {},
+    "peerDependencies": {},
+    "componentRootFolder": "src/features/common/multi-language-text",
+    "license": "SEE LICENSE IN LICENSE"
+}

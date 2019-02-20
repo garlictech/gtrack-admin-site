@@ -1,0 +1,22 @@
+{
+    "name": "@bit/garlictech.angular-features.common.current-geolocation",
+    "version": "0.0.3",
+    "homepage": "https://bitsrc.io/garlictech/angular-features/common/current-geolocation",
+    "main": "index.ts",
+    "dependencies": {
+        "@angular/core": "~7.2.1",
+        "@ngrx/store": "~7.1.0",
+        "rxjs": "~6.3.2",
+        "ng2-logger": "^2.0.0",
+        "@angular/common": "~7.2.1",
+        "@ngrx/effects": "~7.1.0",
+        "@turf/distance": "^6.0.1",
+        "@turf/helpers": "^6.1.4",
+        "lodash-es": "^4.17.11",
+        "jest-marbles": "^2.1.0"
+    },
+    "devDependencies": {},
+    "peerDependencies": {},
+    "componentRootFolder": "src/features/common/current-geolocation",
+    "license": "SEE LICENSE IN LICENSE"
+}

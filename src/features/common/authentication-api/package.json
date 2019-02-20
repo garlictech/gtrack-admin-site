@@ -1,0 +1,19 @@
+{
+    "name": "@bit/garlictech.angular-features.common.authentication-api",
+    "version": "0.0.5",
+    "homepage": "https://bitsrc.io/garlictech/angular-features/common/authentication-api",
+    "main": "index.ts",
+    "dependencies": {
+        "@angular/common": "~7.2.1",
+        "@angular/core": "~7.2.1",
+        "@ngrx/store": "~7.1.0",
+        "rxjs": "~6.3.2",
+        "@angular/router": "~7.2.1",
+        "@ngrx/effects": "~7.1.0",
+        "ng2-logger": "^2.0.0"
+    },
+    "devDependencies": {},
+    "peerDependencies": {},
+    "componentRootFolder": "src/features/common/authentication-api",
+    "license": "SEE LICENSE IN LICENSE"
+}
