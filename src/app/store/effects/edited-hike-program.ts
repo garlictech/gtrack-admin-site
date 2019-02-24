@@ -47,6 +47,7 @@ export class EditedHikeProgramEffects {
               time: 0
             }
           };
+
           return new editedHikeProgramActions.AddStop(stop);
         })
       )
@@ -69,6 +70,7 @@ export class EditedHikeProgramEffects {
         map(() => new editedHikeProgramActions.HikeProgramSaveSuccess()),
         catchError(error => {
           log.error('Effect: Hike program save error: ', error);
+
           return of(new editedHikeProgramActions.HikeProgramSaveFailed(error));
         })
       );

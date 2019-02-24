@@ -1,3 +1,4 @@
+// tslint:disable:no-unbound-method
 import { cold, hot, Scheduler } from 'jest-marbles';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';

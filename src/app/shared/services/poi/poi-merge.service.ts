@@ -79,7 +79,7 @@ export class PoiMergeService {
     return filteredProperties;
   }
 
-  createGTrackPoiFromUniqueValues(flatProperties: IComparedProperty) {
+  createGTrackPoiFromUniqueValues(flatProperties: IComparedProperty): any {
     const poiData = {};
 
     for (const key in flatProperties) {

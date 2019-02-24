@@ -61,7 +61,7 @@ describe('Auth effects', () => {
 
   describe('loginSuccess$', () => {
     it('should return empty observable from LoginSuccess', () => {
-      const action = new AuthActions.LoginSuccess(null);
+      const action = new AuthActions.LoginSuccess(undefined);
       const completion = new routingActions.Go(['/']);
       const expected = cold('-b', { b: completion });
 

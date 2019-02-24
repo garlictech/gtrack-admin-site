@@ -1,6 +1,6 @@
-import { searchFiltersReducer, initialState } from '../reducer';
-import * as actions from '../actions';
 import { SearchFilters } from '../../interfaces';
+import * as actions from '../actions';
+import { initialState, searchFiltersReducer } from '../reducer';
 
 describe('SearchFiltersReducer', () => {
   describe('undefined action', () => {

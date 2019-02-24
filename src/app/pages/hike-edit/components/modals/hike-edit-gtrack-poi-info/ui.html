@@ -10,7 +10,8 @@
       </div>
       <div class="ui-g">
         <div class="ui-g-12">
-          <p-button label="Save" styleClass="ui-button-success" (onClick)="savePoi()" [disabled]="!(isDirty$ | async)">
+          <p-button label="Save" styleClass="ui-button-success" (onClick)="savePoi()"
+            [disabled]="(isDirty$ | async) === false">
           </p-button>
 
           <p-button label="Delete" styleClass="ui-button-danger ml-5" (onClick)="deletePoi(gTrackPoi?.id)"

@@ -17,23 +17,10 @@ import _sortBy from 'lodash-es/sortBy';
 import _uniq from 'lodash-es/uniq';
 import { combineLatest, interval, of } from 'rxjs';
 import { combineAll, debounceTime, filter, map as rxMap, switchMap, take } from 'rxjs/operators';
-import {
-  CenterRadius,
-  ElevationService,
-  GeometryService,
-  GeoSearchSelectors,
-  GeospatialService,
-  PoiSelectors
-} from 'subrepos/gtrack-common-ngx';
-import { LeafletMarkerPopupService } from 'subrepos/gtrack-common-ngx/app/features/leaflet-map/services/leaflet-marker-popup.service';
-import { EPoiTypes, IPoi, IPoiStored } from 'subrepos/provider-client';
-import { BackgroundImageData, IMarkerPopupData } from 'subrepos/provider-client/interfaces';
 
 import { Injectable } from '@angular/core';
 import { EMarkerType } from '@common.features/leaflet-map/interfaces';
-import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
-import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
-import { LeafletMapMarker } from '@common.features/leaflet-map/services/lib';
+
 import { select, Store } from '@ngrx/store';
 import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import turfBuffer from '@turf/buffer';
@@ -45,7 +32,7 @@ import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hik
 import * as hikeEditImageSelectors from '../../../store/selectors/hike-edit-image';
 import * as hikeEditPoiSelectors from '../../../store/selectors/hike-edit-poi';
 import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
-import { ExternalPoi, IGooglePoi, IGTrackPoi, IOsmPoi, IWikipediaPoi } from '../../interfaces';
+import { ExternalPoi, GooglePoi, IGTrackPoi, IOsmPoi, WikipediaPoi } from '../../interfaces';
 import { RoutePlannerService } from '../admin-map';
 import { GooglePoiService } from './google-poi.service';
 import { WikipediaPoiService } from './wikipedia-poi.service';
@@ -80,10 +67,10 @@ export class PoiEditorService {
     _defaultsDeep(_poiData, _pick(poi, ['id', 'lat', 'lon', 'elevation', 'objectTypes', 'description', 'types']));
 
     if (poi.objectTypes.indexOf(EPoiTypes.google) >= 0) {
-      this._getGoogleDbObj(_poiData, poi as IGooglePoi);
+      this._getGoogleDbObj(_poiData, poi as GooglePoi);
     }
     if (poi.objectTypes.indexOf(EPoiTypes.wikipedia) >= 0) {
-      this._getWikipediaDbObj(_poiData, poi as IWikipediaPoi);
+      this._getWikipediaDbObj(_poiData, poi as WikipediaPoi);
     }
     if (
       poi.objectTypes.indexOf(EPoiTypes.osmAmenity) >= 0 ||
@@ -96,7 +83,7 @@ export class PoiEditorService {
     return _poiData as IPoi;
   }
 
-  /**
+  /**WikipediaPoi
    * Set the pois' onRoute property
    */
   organizePois(
@@ -257,12 +244,12 @@ export class PoiEditorService {
     return new Promise(resolve => {
       switch (subdomain) {
         case EPoiTypes.google:
-          this._googlePoiService.getPoiDetails(pois).then((detailedPois: Array<IGooglePoi>) => {
+          this._googlePoiService.getPoiDetails(pois).then((detailedPois: Array<GooglePoi>) => {
             resolve(detailedPois);
           });
           break;
         case EPoiTypes.wikipedia:
-          this._wikipediaPoiService.getPoiDetails(pois).then((detailedPois: Array<IWikipediaPoi>) => {
+          this._wikipediaPoiService.getPoiDetails(pois).then((detailedPois: Array<WikipediaPoi>) => {
             resolve(detailedPois);
           });
           break;
@@ -275,7 +262,7 @@ export class PoiEditorService {
 
   getGTrackPois() {
     const _bounds = this._routePlannerService.getSearchBounds();
-    const _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);
+    const _geo: CenterRadius = this._geometryService.getCenterRadius(_bounds);WikipediaPoi
     const _centerCoord = _geo.center.geometry.coordinates;
 
     if (_centerCoord) {
@@ -297,7 +284,7 @@ export class PoiEditorService {
   /**
    * Update inGtrackDb property on the given poi
    */
-  handleGTrackPois(pois: Array<IGooglePoi> | Array<IWikipediaPoi> | Array<IOsmPoi>, gTrackPois: Array<IGTrackPoi>) {
+  handleGTrackPois(pois: Array<GooglePoi> | Array<WikipediaPoi> | Array<IOsmPoi>, gTrackPois: Array<IGTrackPoi>) {
     const _pois = _cloneDeep(pois);
 
     for (const poi of _pois) {
@@ -310,15 +297,15 @@ export class PoiEditorService {
         );
 
         if (_commonObjectTypes.length > 0) {
-          for (const objectType of _commonObjectTypes) {
+          for (const objectType of _commonObjectTyWikipediaPoi
             if (objectType.substring(0, 3) === 'osm') {
               _idCheck = gTrackPoi.objectId.osm === (poi as IOsmPoi).osm.id ? true : _idCheck;
             } else if (objectType === EPoiTypes.google) {
-              _idCheck = gTrackPoi.objectId.google === (poi as IGooglePoi).google.id ? true : _idCheck;
+              _idCheck = gTrackPoi.objectId.google === (poi as GooglePoi).google.id ? true : _idCheck;
             } else if (objectType === EPoiTypes.wikipedia) {
               _idCheck =
-                gTrackPoi.objectId.wikipedia[(poi as IWikipediaPoi).wikipedia.lng] ===
-                (poi as IWikipediaPoi).wikipedia.pageid
+                gTrackPoi.objectId.wikipedia[(poi as WikipediaPoi).wikipedia.lng] ===
+                (poi as WikipediaPoi).wikipedia.pageid
                   ? true
                   : _idCheck;
             }
@@ -330,8 +317,8 @@ export class PoiEditorService {
         }
 
         return _idCheck;
-      });
-
+      });WikipediaPoi
+WikipediaPoi
       if (_found) {
         poi.inGtrackDb = true;
       } else {
@@ -345,7 +332,7 @@ export class PoiEditorService {
   /**
    * Update inCollector property on the given poi
    */
-  handleInCollectorPois(pois: Array<IGooglePoi> | Array<IWikipediaPoi> | Array<IOsmPoi>, collectedPois: Array<any>) {
+  handleInCollectorPois(pois: Array<GooglePoi> | Array<WikipediaPoi> | Array<IOsmPoi>, collectedPois: Array<any>): Array<GooglePoi> | Array<WikipediaPoi> | Array<IOsmPoi> {
     const _pois = _cloneDeep(pois);
 
     for (const poi of _pois) {
@@ -358,10 +345,10 @@ export class PoiEditorService {
       }
     }
 
-    return _pois;
+    return _pois;WikipediaPoiWikipediaPoi
   }
 
-  refreshPoiMarkers() {
+  refreshPoiMarkers(): void {
     let _pois: Array<any> = [];
 
     //
@@ -399,6 +386,7 @@ export class PoiEditorService {
             .map(p => _assign(p, { markerType: 'hike' }))
             .filter(p => {
               const _onRouteCheck = p.onRoute ? hikePoiContext.showOnrouteMarkers : hikePoiContext.showOffrouteMarkers;
+
               return !p.inHike && _onRouteCheck;
             })
         );
@@ -445,6 +433,7 @@ export class PoiEditorService {
               const _onRouteCheck = p.onRoute
                 ? gTrackPoiContext.showOnrouteMarkers
                 : gTrackPoiContext.showOffrouteMarkers;
+
               return !p.inHike && _onRouteCheck;
             })
         );
@@ -513,7 +502,7 @@ export class PoiEditorService {
   /**
    * getDbObj submethod
    */
-  private _getGoogleDbObj(poiData: any, poi: IGooglePoi) {
+  private _getGoogleDbObj(poiData: any, poi: GooglePoi): void {
     if (poi.google && poi.google.id) {
       _merge(poiData, {
         objectId: {
@@ -558,7 +547,7 @@ export class PoiEditorService {
   /**
    * getDbObj submethod
    */
-  private _getWikipediaDbObj(poiData, poi: IWikipediaPoi) {
+  private _getWikipediaDbObj(poiData, poi: WikipediaPoi): void {
     if (poi.wikipedia && poi.wikipedia.pageid) {
       _merge(poiData, {
         objectId: {
@@ -571,7 +560,7 @@ export class PoiEditorService {
             [poi.wikipedia.lng as string]: {
               url: poi.wikipedia.url
             }
-          }
+          }WikipediaPoi
         }
       });
 
@@ -596,11 +585,11 @@ export class PoiEditorService {
     });
   }
 
-  private _getOnroutePois(pois: Array<ExternalPoi>) {
+  private _getOnroutePois(pois: Array<ExternalPoi>): Array<ExternalPoi> {
     return _filter(pois, (p: ExternalPoi) => p.onRoute);
   }
 
-  private _getOffroutePois(pois: Array<ExternalPoi>) {
+  private _getOffroutePois(pois: Array<ExternalPoi>): Array<ExternalPoi> {
     return _filter(pois, (p: ExternalPoi) => !p.onRoute);
   }
 

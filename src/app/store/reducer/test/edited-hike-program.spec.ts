@@ -1,3 +1,4 @@
+// tslint:disable:no-big-function
 import * as _ from 'lodash';
 import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 

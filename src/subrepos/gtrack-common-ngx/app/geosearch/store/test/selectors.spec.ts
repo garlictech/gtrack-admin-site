@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, select } from '@ngrx/store';
+import { select, Store, StoreModule } from '@ngrx/store';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -7,18 +7,18 @@ import { takeUntil } from 'rxjs/operators';
 import { geoSearchReducer } from '../reducer';
 import { GeoSearchState } from '../state';
 
-import { searches as fixtures } from './fixtures';
+import { EXTERNAL_GEO_SEARCH_DEPENDENCIES } from '../../externals';
 import * as actions from '../actions';
 import { GeoSearchSelectors } from '../selectors';
 import { GeoSearchResponseItem } from '../state';
-import { EXTERNAL_GEO_SEARCH_DEPENDENCIES } from '../../externals';
+import { searches as fixtures } from './fixtures';
 
 import 'rxjs/add/operator/takeUntil';
 
 describe('GeoSearch selectors', () => {
   let store: Store<GeoSearchState>;
-  let searches: GeoSearchResponseItem[];
-  let contexts: string[];
+  let searches: Array<GeoSearchResponseItem>;
+  let contexts: Array<string>;
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {

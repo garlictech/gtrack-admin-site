@@ -35,11 +35,6 @@ describe('EditedGTrackPoi actions', () => {
   });
 
   it('should create DeleteTranslatedPoiDescription action', () => {
-    const desc = {
-      title: 'Test hike',
-      fullDescription: 'desc',
-      summary: 'summary'
-    };
     const action = new EditedGTrackPoiActions.DeleteTranslatedPoiDescription('en_US');
 
     expect(action).toBeDefined();

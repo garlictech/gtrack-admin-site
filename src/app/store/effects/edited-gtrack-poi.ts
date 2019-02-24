@@ -32,6 +32,7 @@ export class EditedGTrackPoiEffects {
         map(poi => new editedGTrackPoiActions.PoiSaveSuccess(poi.id)),
         catchError(error => {
           log.error('Effect: Poi save error: ', error);
+
           return of(new editedGTrackPoiActions.PoiSaveFailed(error));
         })
       );

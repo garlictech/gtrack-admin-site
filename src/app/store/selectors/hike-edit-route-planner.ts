@@ -47,12 +47,11 @@ export const getIsRoundTrip = createSelector(
 
     if (_coords && _coords.length > 1) {
       const _dist = Math.round(
-        1000 *
-          turfDistance(
-            turfPoint([_coords[0][1], _coords[0][0]]),
-            turfPoint([_coords[_coords.length - 1][1], _coords[_coords.length - 1][0]]),
-            { units: 'kilometers' }
-          )
+        turfDistance(
+          turfPoint([_coords[0][1], _coords[0][0]]),
+          turfPoint([_coords[_coords.length - 1][1], _coords[_coords.length - 1][0]]),
+          { units: 'kilometers' }
+        ) * 1000
       );
 
       return _dist <= 10;

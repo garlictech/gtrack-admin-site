@@ -1,4 +1,4 @@
-// tslint:disable:only-arrow-functions no-small-switch
+// tslint:disable:only-arrow-functions no-small-switch no-duplicated-branches
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _merge from 'lodash-es/merge';
 import _omit from 'lodash-es/omit';
@@ -6,7 +6,7 @@ import _omit from 'lodash-es/omit';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { ActionReducerMap, combineReducers } from '@ngrx/store';
 
-import { IGooglePoi, IOsmPoi, IWikipediaPoi } from '../../shared/interfaces';
+import { GooglePoi, IOsmPoi, WikipediaPoi } from '../../shared/interfaces';
 import { hikeEditPoiActions } from '../actions';
 import {
   ExternalPoiListContextState,
@@ -24,7 +24,7 @@ import {
  * Google
  */
 
-export const googlePoiAdapter: EntityAdapter<IGooglePoi> = createEntityAdapter<IGooglePoi>();
+export const googlePoiAdapter: EntityAdapter<GooglePoi> = createEntityAdapter<GooglePoi>();
 export const googlePoiInitialState = googlePoiAdapter.getInitialState();
 
 export function googlePoiReducer(
@@ -248,7 +248,7 @@ export function osmRoutePoiReducer(
  * Wikipedia
  */
 
-export const wikipediaPoiAdapter: EntityAdapter<IWikipediaPoi> = createEntityAdapter<IWikipediaPoi>();
+export const wikipediaPoiAdapter: EntityAdapter<WikipediaPoi = createEntityAdapter<WWikipediaPoi);
 export const wikipediaPoiInitialState = wikipediaPoiAdapter.getInitialState();
 
 export function wikipediaPoiReducer(

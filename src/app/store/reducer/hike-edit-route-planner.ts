@@ -66,10 +66,12 @@ export function hikeEditRoutePlannerReducer(
 
     case hikeEditRoutePlannerActions.UPDATE_SEGMENT:
       newState.segments.splice(action.index, 1, action.segment);
+
       return newState;
 
     case hikeEditRoutePlannerActions.REMOVE_SEGMENTS:
       newState.segments.splice(action.idx, action.count);
+
       return newState;
 
     case hikeEditRoutePlannerActions.POP_SEGMENT:

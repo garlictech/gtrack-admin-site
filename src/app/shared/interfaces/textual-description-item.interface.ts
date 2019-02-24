@@ -1,6 +1,6 @@
 import { ITextualDescription } from 'subrepos/provider-client';
 
-export interface ITextualDescriptionItem extends ITextualDescription {
+export interface TextualDescriptionItem extends ITextualDescription {
   id: string;
   title: string;
   summary?: string;

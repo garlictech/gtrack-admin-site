@@ -1,6 +1,5 @@
-import { GpsLocationService } from '../gps-location.service';
 import { TestBed } from '@angular/core/testing';
-import { EMPTY } from 'rxjs';
+import { GpsLocationService } from '../gps-location.service';
 
 class TestGpsLocationService extends GpsLocationService {
   _isPlatformBrowser = jest.fn();

@@ -1,15 +1,14 @@
-import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, select } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import * as actions from '../actions';
-import { searchFiltersReducer, initialState } from '../reducer';
-import { SearchFilters } from '../../interfaces';
-import { SearchFiltersSelectors } from '../selectors';
-import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES } from '../../externals';
+import { TestBed } from '@angular/core/testing';
+import { select, Store, StoreModule } from '@ngrx/store';
 
-import 'rxjs/add/operator/takeUntil';
+import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES } from '../../externals';
+import { SearchFilters } from '../../interfaces';
+import * as actions from '../actions';
+import { initialState, searchFiltersReducer } from '../reducer';
+import { SearchFiltersSelectors } from '../selectors';
 
 describe('SearchFilters selectors', () => {
   let store: Store<SearchFilters>;

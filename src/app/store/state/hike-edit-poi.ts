@@ -1,9 +1,9 @@
 import { EntityState } from '@ngrx/entity';
 
-import { IGooglePoi, IOsmPoi, IWikipediaPoi } from '../../shared/interfaces';
+import { GooglePoi, IOsmPoi, WikipediaPoi } from '../../shared/interfaces';
 
-export interface WikipediaPoiEntityState extends EntityState<IWikipediaPoi> {}
-export interface GooglePoiEntityState extends EntityState<IGooglePoi> {}
+export interface WikipediaPoiEntityState extends EntityState<WikipediaPoi {}
+export interface GooglePoiEntityState extends EntityState<GooglePoi> {}
 export interface OsmAmenityPoiEntityState extends EntityState<IOsmPoi> {}
 export interface OsmNaturalPoiEntityState extends EntityState<IOsmPoi> {}
 export interface OsmRoutePoiEntityState extends EntityState<IOsmPoi> {}

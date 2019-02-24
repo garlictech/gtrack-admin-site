@@ -1,3 +1,4 @@
+// tslint:disable:no-big-function
 import { BackgroundImageData, EPoiImageTypes, HikeProgramStop } from '../../../../subrepos/provider-client';
 import { IGTrackPoi } from '../../../shared/interfaces';
 import * as EditedHikeProgramActions from '../edited-hike-program';
@@ -95,7 +96,7 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create Prepare then add stop action', () => {
-    const poi: IGTrackPoi = null;
+    const poi: IGTrackPoi = undefined;
     const action = new EditedHikeProgramActions.PrepareThenAddStop(poi);
 
     expect(action).toBeDefined();
@@ -152,7 +153,7 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create SetCheckpoints action', () => {
-    const checkpoints = null;
+    const checkpoints = undefined;
     const action = new EditedHikeProgramActions.SetCheckpoints(checkpoints);
 
     expect(action).toBeDefined();

@@ -1,7 +1,7 @@
-import { reducer } from '../reducer';
-import * as fromActions from '../actions';
-import { createFeatureState } from './utils';
 import { GeoPosition } from '../../interfaces';
+import * as fromActions from '../actions';
+import { reducer } from '../reducer';
+import { createFeatureState } from './utils';
 
 const mockLocation: GeoPosition = {
   coords: {

@@ -1,3 +1,4 @@
+// tslint:disable:no-big-function
 import * as _ from 'lodash';
 
 import { BackgroundImageData, EObjectState, ETextualDescriptionType } from '../../../../subrepos/provider-client';
@@ -161,7 +162,7 @@ describe('Edited GTrackPoi reducers', () => {
       const state = editedGTrackPoiReducer(
         _.merge({}, initialState, {
           data: {
-            backgroundImages: null
+            backgroundImages: undefined
           }
         }),
         action
@@ -208,7 +209,7 @@ describe('Edited GTrackPoi reducers', () => {
       const state = editedGTrackPoiReducer(
         _.merge({}, initialState, {
           data: {
-            backgroundImages: null
+            backgroundImages: undefined
           }
         }),
         action

@@ -12,7 +12,7 @@ import { select, Store } from '@ngrx/store';
 import {
   ExternalPoi,
   IExternalPoiType,
-  IGooglePoi,
+  GooglePoi,
   IGTrackPoi,
   IOsmPoi,
   IWikipediaPoi
@@ -31,7 +31,7 @@ import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike
 export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   @Input() poiType: IExternalPoiType;
   @Input() isPlanning$: Observable<boolean>;
-  pois$: Observable<Array<IWikipediaPoi> | Array<IGooglePoi> | Array<IOsmPoi>>;
+  pois$: Observable<Array<IWikipediaPoi> | Array<GooglePoi> | Array<IOsmPoi>>;
   segments$: Observable<any>;
   selectedPoisCount$: Observable<number>;
   loading$: Observable<boolean>;
@@ -40,7 +40,7 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
   searchContext$: Observable<IGeoSearchContextState | undefined>;
   showOnrouteMarkers = true;
   showOffrouteMarkers = true;
-  modalPoi: IWikipediaPoi | IGooglePoi | IOsmPoi;
+  modalPoi: IWikipediaPoi | GooglePoi | IOsmPoi;
   displayPoiModal = false;
   private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
 

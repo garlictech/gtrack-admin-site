@@ -1,7 +1,7 @@
 // tslint:disable:no-property-initializers max-classes-per-file
 import { Action } from '@ngrx/store';
 
-import { IGooglePoi, IOsmPoi, IWikipediaPoi } from '../../shared/interfaces';
+import { GooglePoi, IOsmPoi, WikipediaPoi } from '../../shared/interfaces';
 
 export const RESET_POI_STATE = '[HikeEditPoi] Reset';
 
@@ -66,7 +66,7 @@ export class GetGooglePois implements Action {
 
 export class SetGooglePois implements Action {
   readonly type = SET_GOOGLE_POIS;
-  constructor(public pois: Array<IGooglePoi>) {}
+  constructor(public pois: Array<GooglePoi>) {}
 }
 
 export class SetGooglePoisInGtrackDb implements Action {
@@ -182,7 +182,7 @@ export class GetWikipediaPois implements Action {
 
 export class SetWikipediaPois implements Action {
   readonly type = SET_WIKIPEDIA_POIS;
-  constructor(public pois: Array<IWikipediaPoi>) {}
+  constructor(public pois: Array<WikipediaPoi) {}
 }
 
 export class SetWikipediaPoisInGtrackDb implements Action {

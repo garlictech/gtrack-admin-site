@@ -15,6 +15,8 @@ import { IWikipediaPoi } from '../../interfaces';
 import { HikeProgramService } from '../hike/hike-program.service';
 import { LanguageService } from '../language.service';
 
+const WIKIPEDIA_PAGEID = 'wikipedia.pageid';
+
 @Injectable()
 export class WikipediaPoiService {
   constructor(
@@ -81,6 +83,7 @@ export class WikipediaPoiService {
                 life: 8000
               });
             }
+
             return Observable.of(_pois);
           }
         })
@@ -90,12 +93,12 @@ export class WikipediaPoiService {
   /**
    * handlePoiDetails() submethod
    */
-  getPoiDetails(pois: Array<IWikipediaPoi>) {
+  getPoiDetails(pois: Array<IWikipediaPoi>): Promise<Array<IWikipediaPoi>> {
     const langs: Array<string> = this._hikeProgramService.getDescriptionLanguages();
     const promises: Array<Promise<Array<IWikipediaPoi>>> = [];
 
     for (const lng of langs) {
-      const langPois = _filter(pois, p => p.wikipedia.lng === lng);
+      const langPois = _filter(pois, p => _get(p, 'wikipedia.lng') === lng);
 
       promises.push(this._getPageExtracts(langPois, lng));
       promises.push(this._getPageImages(langPois, lng));
@@ -107,14 +110,14 @@ export class WikipediaPoiService {
   /**
    * get submethod - load wikipedia lead sections
    */
-  private _getPageExtracts(_pois: Array<IWikipediaPoi>, lng) {
-    const _poiIds = _pois.map((p: IWikipediaPoi) => _get(p, 'wikipedia.pageid', ''));
+  private _getPageExtracts(_pois: Array<IWikipediaPoi>, lng): Promise<Array<IWikipediaPoi>> {
+    const _poiIds = _pois.map((p: IWikipediaPoi) => _get(p, WIKIPEDIA_PAGEID, ''));
     const _chunks = _chunk(_poiIds, 20);
 
     return interval(100)
       .pipe(
         take(_chunks.length),
-        map(counter => {
+        map(async counter => {
           const _ids = _chunks[counter];
           // tslint:disable:max-line-length
           const request = `https://${lng}.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&exlimit=max&pageids=${_ids.join(
@@ -131,7 +134,7 @@ export class WikipediaPoiService {
                   const _exData = data.query.pages[idx];
 
                   if (_exData.extract) {
-                    const _targetPoi = _pois.find(p => p.wikipedia.pageid === _exData.pageid);
+                    const _targetPoi = _pois.find(p => _get(p, WIKIPEDIA_PAGEID) === _exData.pageid);
 
                     if (_targetPoi && _targetPoi.wikipedia) {
                       _targetPoi.wikipedia.extract = _exData.extract;
@@ -152,14 +155,14 @@ export class WikipediaPoiService {
   /**
    * get submethod - load wikipedia page images
    */
-  private _getPageImages(_pois: Array<IWikipediaPoi>, lng) {
-    const _poiIds = _pois.map((p: IWikipediaPoi) => _get(p, 'wikipedia.pageid', ''));
+  private async _getPageImages(_pois: Array<IWikipediaPoi>, lng): Promise<Array<IWikipediaPoi>> {
+    const _poiIds = _pois.map((p: IWikipediaPoi) => _get(p, WIKIPEDIA_PAGEID, ''));
     const _chunks = _chunk(_poiIds, 20);
 
     return interval(100)
       .pipe(
         take(_chunks.length),
-        map(counter => {
+        map(async counter => {
           const _ids = _chunks[counter];
           // tslint:disable:max-line-length
           const request = `https://${lng}.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&piprop=original|name|thumbnail&pageids=${_ids.join(
@@ -184,8 +187,8 @@ export class WikipediaPoiService {
 
                     const _imageInfo: BackgroundImageData = {
                       title: _imgData.title,
-                      lat: _pois.find((p: IWikipediaPoi) => p.wikipedia.pageid === _imgData.pageid).lat,
-                      lon: _pois.find((p: IWikipediaPoi) => p.wikipedia.pageid === _imgData.pageid).lon,
+                      lat: _pois.find((p: IWikipediaPoi) => _get(p, WIKIPEDIA_PAGEID) === _imgData.pageid).lat,
+                      lon: _pois.find((p: IWikipediaPoi) => _get(p, WIKIPEDIA_PAGEID) === _imgData.pageid).lon,
                       original: _imgData.original,
                       card: _imgData.original,
                       thumbnail: _imgData.thumbnail,
@@ -194,7 +197,7 @@ export class WikipediaPoiService {
                         poiObjectId: _imgData.pageid
                       }
                     };
-                    const _targetPoi = _pois.find(p => p.wikipedia.pageid === _imgData.pageid);
+                    const _targetPoi = _pois.find(p => _get(p, WIKIPEDIA_PAGEID) === _imgData.pageid);
 
                     if (_targetPoi && _targetPoi.wikipedia) {
                       _targetPoi.wikipedia.photos = [_imageInfo];

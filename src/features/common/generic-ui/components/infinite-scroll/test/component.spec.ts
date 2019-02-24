@@ -72,7 +72,7 @@ describe('NativeInfiniteScrollComponent', () => {
           expect(value).toMatchSnapshot('totalRecords$');
         })
       )
-      .subscribe(() => done());
+      .subscribe(done);
   });
 
   it('paginate must proceed to the next page', () => {

@@ -7,16 +7,16 @@
 <div class="clearfix mb-20">
   <div class="f-left">
     <p-button label="Get new" styleClass="ui-button-primary" (onClick)="getPois()"
-      [disabled]="(segments$ | async)?.length < 1 || (searchContext$ | async)?.working || !(isPlanning$ | async)">
+      [disabled]="(segments$ | async)?.length < 1 || (searchContext$ | async)?.working || (isPlanning$ | async) === false">
     </p-button>
   </div>
 
   <div class="f-right">
     <p-checkbox class="f-right ml-20" label="Show offroute markers" binary="true" [(ngModel)]="showOffrouteMarkers"
-      (onChange)="toggleOffrouteMarkers()" [disabled]="!(isPlanning$ | async)"></p-checkbox>
+      (onChange)="toggleOffrouteMarkers()" [disabled]="(isPlanning$ | async) === false"></p-checkbox>
 
     <p-checkbox class="f-right" label="Show onroute markers" binary="true" [(ngModel)]="showOnrouteMarkers"
-      (onChange)="toggleOnrouteMarkers()" [disabled]="!(isPlanning$ | async)"></p-checkbox>
+      (onChange)="toggleOnrouteMarkers()" [disabled]="(isPlanning$ | async) === false"></p-checkbox>
   </div>
 </div>
 

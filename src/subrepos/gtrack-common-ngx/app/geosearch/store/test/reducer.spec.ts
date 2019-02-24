@@ -1,7 +1,7 @@
 import * as uuid from 'uuid/v1';
 
-import { geoSearchReducer, geoSearchReducerInitialState, geoSearchContextReducerInitialState } from '../reducer';
 import * as actions from '../actions';
+import { geoSearchContextReducerInitialState, geoSearchReducer, geoSearchReducerInitialState } from '../reducer';
 import { GeoSearchState } from '../state';
 
 describe('GeoSearchReducer', () => {
@@ -110,7 +110,7 @@ describe('GeoSearchReducer', () => {
 
       expect(state.geoSearches.entities[context]).toEqual({
         id: context,
-        results: results
+        results
       });
 
       expect(state.geoSearches.ids).toEqual([context]);

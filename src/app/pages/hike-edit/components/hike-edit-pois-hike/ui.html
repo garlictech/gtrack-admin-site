@@ -6,10 +6,10 @@
 
 <div class="clearfix mb-20">
   <p-checkbox class="f-right ml-20" label="Show offroute markers" binary="true" [(ngModel)]="showOffrouteMarkers"
-    (onChange)="toggleOffrouteMarkers()" [disabled]="!(isPlanning$ | async)"></p-checkbox>
+    (onChange)="toggleOffrouteMarkers()" [disabled]="(isPlanning$ | async) === false"></p-checkbox>
 
   <p-checkbox class="f-right" label="Show onroute markers" binary="true" [(ngModel)]="showOnrouteMarkers"
-    (onChange)="toggleOnrouteMarkers()" [disabled]="!(isPlanning$ | async)"></p-checkbox>
+    (onChange)="toggleOnrouteMarkers()" [disabled]="(isPlanning$ | async) === false"></p-checkbox>
 </div>
 
 <p-accordion [multiple]="true">

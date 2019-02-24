@@ -388,6 +388,110 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@bit/garlictech.angular-features.common.authentication-api@file:./src/features/common/authentication-api":
+  version "0.0.5"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@angular/router" "~7.2.1"
+    "@ngrx/effects" "~7.1.0"
+    "@ngrx/store" "~7.1.0"
+    ng2-logger "^2.0.0"
+    rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.common.checkpoints@file:./src/features/common/checkpoints":
+  version "0.0.1"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.1-f0b6aebe-347b-476e-94d2-f9aa4c64c63c-1550664812612/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.1-f0b6aebe-347b-476e-94d2-f9aa4c64c63c-1550664812612/node_modules/@bit/leaflet-map"
+    leaflet "^1.0.3"
+    lodash-es "^4.17.11"
+
+"@bit/garlictech.angular-features.common.current-geolocation@file:./src/features/common/current-geolocation":
+  version "0.0.3"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@ngrx/effects" "~7.1.0"
+    "@ngrx/store" "~7.1.0"
+    "@turf/distance" "^6.0.1"
+    "@turf/helpers" "^6.1.4"
+    jest-marbles "^2.1.0"
+    lodash-es "^4.17.11"
+    ng2-logger "^2.0.0"
+    rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.common.forms@file:./src/features/common/forms":
+  version "0.0.0"
+
+"@bit/garlictech.angular-features.common.generic-ui@file:./src/features/common/generic-ui":
+  version "0.0.12"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.utils" "0.0.5"
+    "@ngrx/effects" "~7.1.0"
+    "@ngrx/store" "~7.1.0"
+    "@ngx-translate/core" "^11.0.1"
+    jest-marbles "^2.1.0"
+    lodash "^4.17.4"
+    rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.common.gtrack-interfaces@file:./src/features/common/gtrack-interfaces", "@bit/garlictech.angular-features.common.gtrack-interfaces@file:src/features/common/gtrack-interfaces":
+  version "0.0.1"
+
+"@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map", "@bit/garlictech.angular-features.common.leaflet-map@file:src/features/common/leaflet-map":
+  version "0.0.11"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.11-88a34cf9-804d-434a-8c3e-0e14b2c26cf9-1550664812601/node_modules/@bit/gtrack-interfaces"
+    "@ngrx/store" "~7.1.0"
+    geojson "^0.5.0"
+    leaflet "^1.0.3"
+    leaflet-usermarker "^1.0.0"
+    leaflet.fullscreen "^1.4.5"
+    lodash "^4.17.4"
+    lodash-es "^4.17.11"
+    overlapping-marker-spiderfier-leaflet "^0.2.6-2"
+    rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.common.localization@file:./src/features/common/localization", "@bit/garlictech.angular-features.common.localization@file:src/features/common/localization":
+  version "0.0.6"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@ngrx/store" "^7.0.0-beta.0"
+    "@ngx-translate/core" "^11.0.1"
+    "@ngx-translate/http-loader" "^4.0.0"
+    lodash-es "^4.17.11"
+    ng2-logger "2.0.46"
+
+"@bit/garlictech.angular-features.common.multi-language-text@file:./src/features/common/multi-language-text":
+  version "0.0.4"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.4-5f881c2d-5cd2-4952-8ee9-bd9ad1189445-1550664812606/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.4-5f881c2d-5cd2-4952-8ee9-bd9ad1189445-1550664812606/node_modules/@bit/localization"
+    "@ngrx/store" "~7.1.0"
+    lodash-es "^4.17.11"
+    rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.common.router@file:./src/features/common/router":
+  version "0.0.9"
+  dependencies:
+    jest-marbles "2.1.0"
+    lodash "4.17.11"
+    rxjs "~6.3.3"
+
+"@bit/garlictech.angular-features.common.utils@file:./src/features/common/utils":
+  version "0.0.5"
+  dependencies:
+    rxjs "~6.3.2"
+
 "@fimbul/bifrost@^0.17.0":
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/@fimbul/bifrost/-/bifrost-0.17.0.tgz#f0383ba7e40992e3193dc87e2ddfde2ad62a9cf4"
@@ -461,9 +565,6 @@
     rxjs "~6.3.0"
     uuid "^3.1.0"
 
-"@garlictech/gtrack-provider-client@file:src/subrepos/provider-client":
-  version "0.0.0-local"
-
 "@mapbox/corslite@0.0.7":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@mapbox/corslite/-/corslite-0.0.7.tgz#29f5b6a188ba946e514bdf0b6401ed4fbe13a39e"
@@ -514,6 +615,11 @@
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-7.2.0.tgz#91e2287f0d67d4e79c51bd3d649a5013e71bbcad"
   integrity sha512-t+8K1IG8+MvFqLIuRSM+ZE1EkZIuUExJ0JsqZR4r4K3MRPRoGy1ZqlStBWYaYLumEToesiCOGxuJYQ4zyVwlZg==
+
+"@ngrx/store@^7.0.0-beta.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-7.2.0.tgz#b22200fd48b721afe0e5cc9eec92f3dc31c078b1"
+  integrity sha512-E9c0cDot0HeE0mXyeqw18SwmJ2+eKnA5mMMfwvoskpMInCYGI2pq1i6/lCVQ2wrEHSH+KvObK4PQbepcA9vP+w==
 
 "@ngrx/store@~7.1.0":
   version "7.1.0"
@@ -1874,9 +1980,6 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
-
-"authentication-api-ngx@file:src/subrepos/authentication-api-ngx":
-  version "0.0.0-local"
 
 autoprefixer@9.4.3:
   version "9.4.3"
@@ -3570,9 +3673,6 @@ deep-is@~0.1.3:
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
   integrity sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
 
-"deepstream-ngx@file:src/subrepos/deepstream-ngx":
-  version "0.0.0"
-
 deepstream.io-client-js@2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/deepstream.io-client-js/-/deepstream.io-client-js-2.3.0.tgz#9be8b89a9c868624191aa45f444870192cc3feb7"
@@ -4581,9 +4681,6 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-"forms-ngx@file:./src/subrepos/forms-ngx":
-  version "0.0.0-local"
-
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
@@ -4734,6 +4831,11 @@ geojson2svg@^1.2.3:
   integrity sha1-3CY4So+uwEcignLpf6/PU5wOE/M=
   dependencies:
     multigeojson "~0.0.1"
+
+geojson@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/geojson/-/geojson-0.5.0.tgz#3cd6c96399be65b56ee55596116fe9191ce701c0"
+  integrity sha1-PNbJY5m+ZbVu5VWWEW/pGRznAcA=
 
 get-caller-file@^1.0.1:
   version "1.0.3"
@@ -6085,6 +6187,11 @@ jest-leak-detector@^24.0.0:
   dependencies:
     pretty-format "^24.0.0"
 
+jest-marbles@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/jest-marbles/-/jest-marbles-2.1.0.tgz#4714e5a611a8fa3cf32898a1a8edb327e42111e9"
+  integrity sha512-j9ZDugAcpXeseUr6p3k39ZJV7ksa+O5OXg/raIDwmC6SUH5B47nax8Uf3DvklWQh+xNGGRaAXQfLbQApfxo7eQ==
+
 jest-marbles@^2.1.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/jest-marbles/-/jest-marbles-2.3.0.tgz#81bd6e65695daa9d9accf5ab98b5636f102fc827"
@@ -6531,7 +6638,7 @@ leaflet.fullscreen@^1.4.5:
   resolved "https://registry.yarnpkg.com/leaflet.fullscreen/-/leaflet.fullscreen-1.4.5.tgz#3b558dece24d9b51ce762b2e00fe902727f47272"
   integrity sha512-rQnZswt/bI2HXmYDWjvgu8GIgg5TAyJEVOXJ1SVpo+36G9/YJ4j8gt8bz7VQU5P/gs2tQNCFbuuWtKYpSw8gbA==
 
-leaflet@^1.4.0:
+leaflet@^1.0.3, leaflet@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.4.0.tgz#d5f56eeb2aa32787c24011e8be4c77e362ae171b"
   integrity sha512-x9j9tGY1+PDLN9pcWTx9/y6C5nezoTMB8BLK5jTakx+H7bPlnbCHfi9Hjg+Qt36sgDz/cb9lrSpNQXmk45Tvhw==
@@ -6692,9 +6799,6 @@ loader-utils@^1.0.1, loader-utils@^1.0.2, loader-utils@^1.1.0:
     emojis-list "^2.0.0"
     json5 "^1.0.1"
 
-"localize-ngx@file:./src/subrepos/localize-ngx":
-  version "0.0.0-local"
-
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
@@ -6746,7 +6850,7 @@ lodash.tail@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.tail/-/lodash.tail-4.1.1.tgz#d2333a36d9e7717c8ad2f7cacafec7c32b444664"
   integrity sha1-0jM6NtnncXyK0vfKyv7HwytERmQ=
 
-lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@~4.17.10:
+lodash@4.17.11, lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@~4.17.10:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
@@ -7315,7 +7419,7 @@ ng-cli-pug-loader@^0.1.7:
     jasmine "^2.8.0"
     typescript "^2.5.2"
 
-ng2-logger@^2.0.0:
+ng2-logger@2.0.46, ng2-logger@^2.0.0:
   version "2.0.46"
   resolved "https://registry.yarnpkg.com/ng2-logger/-/ng2-logger-2.0.46.tgz#ca3052eea106a57200e15e04871c06754ddcf92a"
   integrity sha512-zlTN3HsPCmARCLvHxEx3Sf1m6q81NQgMzUrf3+9R/A13Axh0GvI6Co6PlH7UCsqjHvaU4xxy6AJ6U5PQvDI54Q==
@@ -9201,7 +9305,7 @@ rxjs-compat@~6.3.2:
   resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.3.3.tgz#2ab3b9ac0dac0c073749d55fef9c03ea1df2045c"
   integrity sha512-caGN7ixiabHpOofginKEquuHk7GgaCrC7UpUQ9ZqGp80tMc68msadOeP/2AKy2R4YJsT1+TX5GZCtxO82qWkyA==
 
-rxjs@6.3.3, rxjs@~6.3.0, rxjs@~6.3.2:
+rxjs@6.3.3, rxjs@~6.3.0, rxjs@~6.3.2, rxjs@~6.3.3:
   version "6.3.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.3.tgz#3c6a7fa420e844a81390fb1158a9ec614f4bad55"
   integrity sha512-JTWmoY9tWCs7zvIk/CvRjhjGaOd+OVBM987mxFo+OW66cGpdKjZcpmc74ES1sB//7Kl/PAe8+wEakuhG4pcgOw==

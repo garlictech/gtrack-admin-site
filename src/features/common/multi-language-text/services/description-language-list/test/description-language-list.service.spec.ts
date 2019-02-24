@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LocalizeSelectors } from '../../../store';
-import { DescriptionLanguageListService } from '../';
-import { Observable, of } from 'rxjs';
-import { LocalizationState } from '@bit/garlictech.angular-features.common.localization';
 import { LocalizedItem, TextualDescription } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { LocalizationState } from '@bit/garlictech.angular-features.common.localization';
+import { Observable, of } from 'rxjs';
+import { DescriptionLanguageListService } from '../';
+import { LocalizeSelectors } from '../../../store';
 
 describe('DescriptionLanguageListService', () => {
   let state = {
@@ -19,7 +19,7 @@ describe('DescriptionLanguageListService', () => {
       return of(state.actualLanguage);
     }
 
-    getDescriptionLanguageList(): Observable<string[]> {
+    getDescriptionLanguageList(): Observable<Array<string>> {
       return of(state.descriptionLanguageList);
     }
 

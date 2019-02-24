@@ -270,8 +270,8 @@ export class HikeProgramService {
           const _segmentDistance = 1000 * turfLength(_segmentPath, { units: 'kilometers' });
 
           stop.segment = {
-            uphill: this._elevationService.calculateUphill((_segmentPath as any).geometry.coordinates),
-            downhill: this._elevationService.calculateDownhill((_segmentPath as any).geometry.coordinates),
+            uphill: this._elevationService.calculateUphill((_segmentPath).geometry.coordinates),
+            downhill: this._elevationService.calculateDownhill((_segmentPath).geometry.coordinates),
             distance: _segmentDistance
           };
           (stop.segment.time = this._gameRuleService.segmentTime(

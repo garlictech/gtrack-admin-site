@@ -1,3 +1,4 @@
+// tslint:disable:no-unbound-method
 import { cold, hot, Scheduler } from 'jest-marbles';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
@@ -9,7 +10,6 @@ import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, RouteService } from '../../../../subrepos/gtrack-common-ngx';
 import { ExternalPoi } from '../../../shared/interfaces';
 import { GooglePoiService, HikeProgramService, OsmPoiService, WikipediaPoiService } from '../../../shared/services';
@@ -74,19 +74,19 @@ describe('HikeEditPoiEffects effects', () => {
         {
           provide: WikipediaPoiService,
           useValue: {
-            get: () => {}
+            get: () => jest.fn()
           }
         },
         {
           provide: OsmPoiService,
           useValue: {
-            get: () => {}
+            get: () => jest.fn()
           }
         },
         {
           provide: GooglePoiService,
           useValue: {
-            get: () => {}
+            get: () => jest.fn()
           }
         }
       ]

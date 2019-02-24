@@ -20,9 +20,9 @@ export const hikePrograms: Array<IHikeProgram> = [
     routeId: uuid(),
     description: {
       en_US: {
-        fullDescription: 'Test hike',
-        title: 'Test hike',
-        summary: 'Test hike',
+        fullDescription: 'Test hike description',
+        title: 'Test hike title',
+        summary: 'Test hike summary',
         type: ETextualDescriptionType.markdown
       }
     },
@@ -47,9 +47,9 @@ export const hikePrograms: Array<IHikeProgram> = [
     routeId: uuid(),
     description: {
       en_US: {
-        fullDescription: 'Test hike 2',
-        title: 'Test hike 2',
-        summary: 'Test hike 2',
+        fullDescription: 'Test hike description 2',
+        title: 'Test hike title 2',
+        summary: 'Test hike summary 2',
         type: ETextualDescriptionType.markdown
       }
     },

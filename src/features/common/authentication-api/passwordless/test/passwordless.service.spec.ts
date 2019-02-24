@@ -1,13 +1,13 @@
-import { TestBed } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 import { take } from 'rxjs/operators';
 
-import { PasswordlessService } from '../passwordless.service';
+import { AUTH_CONFIG_TOKEN, AuthenticationApiModule, defaultAuthenticationApiConfig, MagiclinkConfig } from '../../lib';
 import { Reducer as authReducer } from '../../store';
-import { defaultAuthenticationApiConfig, AuthenticationApiModule, MagiclinkConfig, AUTH_CONFIG_TOKEN } from '../../lib';
+import { PasswordlessService } from '../passwordless.service';
 
 import { ApiModule } from '../../api';
 import { LocalStorage } from '../../storage/local-storage.service';
@@ -70,7 +70,7 @@ describe('PasswordlessService', () => {
     passwordless
       .requestToken('test@test.com')
       .pipe(take(1))
-      .subscribe(() => done(), done);
+      .subscribe(done, done);
 
     const req = httpTestingController.expectOne(`${apiUrl}/auth/passwordless/token/request`);
     expect(req.request.method).toEqual('POST');
@@ -87,7 +87,7 @@ describe('PasswordlessService', () => {
     passwordless
       .requestToken('test@test.com', 'hu_HU')
       .pipe(take(1))
-      .subscribe(() => done(), done);
+      .subscribe(done, done);
 
     const req = httpTestingController.expectOne(`${apiUrl}/auth/passwordless/token/request`);
     expect(req.request.method).toEqual('POST');

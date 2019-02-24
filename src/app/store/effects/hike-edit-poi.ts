@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 
-import { IGooglePoi, IOsmPoi, IWikipediaPoi } from '../../shared/interfaces';
+import { GooglePoi, IOsmPoi, WikipediaPoi } from '../../shared/interfaces';
 import { GooglePoiService, HikeProgramService, OsmPoiService, WikipediaPoiService } from '../../shared/services';
 import { commonPoiActions, editedGTrackPoiActions, hikeEditPoiActions } from '../actions';
 
@@ -26,7 +26,7 @@ export class HikeEditPoiEffects {
       this._routeService.splitBounds(bounds, 10000, boundsArr);
 
       const langs: Array<string> = this._hikeProgramService.getDescriptionLanguages();
-      const _observables: Array<Observable<Array<IWikipediaPoi>>> = [];
+      const _observables: Array<Observable<Array<WikipediaPoi>> = [];
 
       for (const lang of langs) {
         for (const _bounds of boundsArr) {
@@ -35,10 +35,11 @@ export class HikeEditPoiEffects {
       }
 
       return forkJoin(_observables).map(poisArr => {
-        let pois: Array<IWikipediaPoi> = [];
-        poisArr.map((poiArr: Array<IWikipediaPoi>) => {
+        let pois: Array<WikipediaPoi = [];
+        poisArr.forEach((poiArr: Array<WikipediaPoi) => {
           pois = _concat(pois, poiArr);
         });
+
         return new hikeEditPoiActions.SetWikipediaPois(_uniqBy(pois, 'wikipedia.pageid'));
       });
     })
@@ -55,7 +56,7 @@ export class HikeEditPoiEffects {
 
       return this._googlePoiService
         .get(bounds, langs)
-        .map((pois: Array<IGooglePoi>) => new hikeEditPoiActions.SetGooglePois(pois));
+        .map((pois: Array<GooglePoi>) => new hikeEditPoiActions.SetGooglePois(pois));
     })
   );
 
@@ -84,22 +85,6 @@ export class HikeEditPoiEffects {
         .map((pois: Array<IOsmPoi>) => new hikeEditPoiActions.SetOsmAmenityPois(pois))
     )
   );
-
-  /**
-   * Get pois from OSM api
-   */
-  /*
-  @Effect()
-  getOsmRoutePois$: Observable<Action> = this._actions$.pipe(
-    ofType(hikeEditPoiActions.GET_OSM_ROUTE_POIS),
-    map((action: hikeEditPoiActions.GetOsmRoutePois) => action.bounds),
-    switchMap(bounds => {
-      return this._osmRoutePoiService.get(bounds).map((pois: IOsmPoi[]) => {
-        return new hikeEditPoiActions.SetOsmRoutePois(pois);
-      });
-    })
-  );
-  */
 
   /**
    * Load gTrackPoi after save from servicePoi

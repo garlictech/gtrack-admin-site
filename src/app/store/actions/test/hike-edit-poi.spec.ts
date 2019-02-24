@@ -1,3 +1,4 @@
+// tslint:disable:no-big-function
 import { EPoiTypes } from '../../../../subrepos/provider-client';
 import * as HikeEditPoiActions from '../hike-edit-poi';
 
@@ -74,7 +75,7 @@ describe('HikeEditPoi actions', () => {
 
   it('should create GetGooglePois action', () => {
     const payload = {
-      bounds: null,
+      bounds: undefined,
       mapId: 'fakeMapId'
     };
     const action = new HikeEditPoiActions.GetGooglePois(payload.bounds, payload.mapId);
@@ -137,7 +138,7 @@ describe('HikeEditPoi actions', () => {
 
   it('should create GetOsmAmenityPois action', () => {
     const payload = {
-      bounds: null,
+      bounds: undefined,
       mapId: 'fakeMapId'
     };
     const action = new HikeEditPoiActions.GetOsmAmenityPois(payload.bounds, payload.mapId);
@@ -200,7 +201,7 @@ describe('HikeEditPoi actions', () => {
 
   it('should create GetOsmNaturalPois action', () => {
     const payload = {
-      bounds: null,
+      bounds: undefined,
       mapId: 'fakeMapId'
     };
     const action = new HikeEditPoiActions.GetOsmNaturalPois(payload.bounds, payload.mapId);
@@ -263,7 +264,7 @@ describe('HikeEditPoi actions', () => {
 
   it('should create GetOsmRoutePois action', () => {
     const payload = {
-      bounds: null,
+      bounds: undefined,
       mapId: 'fakeMapId'
     };
     const action = new HikeEditPoiActions.GetOsmRoutePois(payload.bounds, payload.mapId);
@@ -326,7 +327,7 @@ describe('HikeEditPoi actions', () => {
 
   it('should create GetWikipediaPois action', () => {
     const payload = {
-      bounds: null,
+      bounds: undefined,
       mapId: 'fakeMapId'
     };
     const action = new HikeEditPoiActions.GetWikipediaPois(payload.bounds, payload.mapId);

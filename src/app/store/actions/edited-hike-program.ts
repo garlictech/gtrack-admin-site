@@ -38,7 +38,7 @@ export class DeleteTranslatedHikeProgramDescription implements Action {
   constructor(public languageKey: string) {}
 }
 
-export interface IDetails {
+export interface Details {
   id?: string;
   routeId?: string;
   difficulty?: number;
@@ -59,7 +59,7 @@ export interface IDetails {
 export class AddHikeProgramDetails implements Action {
   readonly type = ADD_HIKE_PROGRAM_DETAILS;
 
-  constructor(public details: IDetails, public setDirty: boolean) {}
+  constructor(public details: Details, public setDirty: boolean) {}
 }
 
 export class AddStop implements Action {

@@ -1,8 +1,7 @@
-
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { LanguageSelectorComponent } from '../';

@@ -1,18 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-import { Actions, EffectsModule } from '@ngrx/effects';
+import { EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { DeepstreamService } from '@features/common/deepstream-ngx';
-import { Observable, EMPTY, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import * as uuid from 'uuid/v1';
 
-import { hot, cold, Scheduler } from 'jest-marbles';
+import { cold, hot, Scheduler } from 'jest-marbles';
 
-import { GeoSearchEffects } from '../effects';
-import * as geoSearchActions from '../actions';
 import { GeoSearchService } from '../../services';
+import * as geoSearchActions from '../actions';
+import { GeoSearchEffects } from '../effects';
 
 import { DeepstreamModule } from '../../../deepstream';
 
@@ -20,7 +20,7 @@ describe('GeoSearch effects', () => {
   let actions$: Observable<any>;
   let geoSearchService: GeoSearchService;
   let effects: GeoSearchEffects;
-  let results: string[];
+  let results: Array<string>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

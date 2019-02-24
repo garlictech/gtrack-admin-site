@@ -10,7 +10,7 @@ import * as uuid from 'uuid/v1';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { IGooglePoi } from '../../interfaces';
+import { GooglePoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
 
 export const PURE_PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
@@ -23,7 +23,7 @@ export class GooglePoiService {
   get(bounds, langs = ['en']) {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
 
-    const promise: Promise<Array<IGooglePoi>> = new Promise(resolve => {
+    const promise: Promise<Array<GooglePoi>> = new Promise(resolve => {
       this._batchGet(this._getOnePage, {
         geo,
         langs,
@@ -39,7 +39,7 @@ export class GooglePoiService {
   /**
    * handlePoiDetails() submethod
    */
-  getPoiDetails(pois: Array<IGooglePoi>) {
+  getPoiDetails(pois: Array<GooglePoi>) {
     const thumbnailWidth = 320;
     const cardWidth = 640;
 
@@ -161,9 +161,9 @@ export class GooglePoiService {
       .then((data: any) => {
         // DOC: https://developers.google.com/places/web-service/search
 
-        const _res: Array<IGooglePoi> = [];
+        const _res: Array<GooglePoi> = [];
         for (const _point of data.results) {
-          const _pointData: IGooglePoi = {
+          const _pointData: GooglePoi = {
             id: uuid(),
             lat: _point.geometry.location.lat,
             lon: _point.geometry.location.lng,
