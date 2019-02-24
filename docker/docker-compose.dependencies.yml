@@ -20,6 +20,9 @@ services:
   redis:
     image: redis:alpine
 
+  redis-cache:
+    image: redis:alpine
+
   rethinkdb:
     image: rethinkdb
     env_file:
@@ -36,6 +39,7 @@ services:
       - ./tokens.env
     depends_on:
       - deepstream
+      - redis-cache
     restart: always
     secrets:
       - DEEPSTREAM_PROVIDER_JWT_SECRET
