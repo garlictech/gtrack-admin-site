@@ -1,6 +1,10 @@
 import * as _ from 'lodash';
 
-import { BackgroundImageData, BackgroundImageDataStored } from '../../../../subrepos/provider-client';
+import {
+  BackgroundImageData,
+  BackgroundImageDataStored
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
 import { hikeEditImageActions } from '../../actions';
 import { HikeEditImageState } from '../../state';
 import {

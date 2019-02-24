@@ -2,22 +2,35 @@ import { environment } from 'environments/environment';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _get from 'lodash-es/get';
 import { Observable } from 'rxjs';
-import { EPoiImageTypes } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v1';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { EPoiImageTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { BackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
 import { PoiEditorService } from '../poi';
+
+const _batchGet = (getter, params): any =>
+  getter(params).then(result => {
+    params.results = params.results.concat(result.data);
+
+    if (!result.nextParams) {
+      return params.results;
+    } else {
+      params.page = result.nextParams.page;
+
+      return _batchGet(getter, params);
+    }
+  });
 
 @Injectable()
 export class FlickrService {
   constructor(private readonly _http: HttpClient, private readonly _poiEditorService: PoiEditorService) {}
 
-  get(bounds, path) {
+  get(bounds, path): any {
     const promise: Promise<Array<BackgroundImageDataStored>> = new Promise(resolve => {
-      this._batchGet(this._getOnePage, {
+      _batchGet(this._getOnePage, {
         bounds,
         path,
         page: 1,
@@ -30,19 +43,7 @@ export class FlickrService {
     return Observable.fromPromise(promise);
   }
 
-  private _batchGet(getter, params) {
-    return getter(params).then(result => {
-      params.results = params.results.concat(result.data);
-
-      if (!result.nextParams) {
-        return params.results;
-      } else {
-        params.page = result.nextParams.page;
-        return this._batchGet(getter, params);
-      }
-    });
-  }
-
+  // tslint:disable:no-property-initializers
   private readonly _getOnePage = params => {
     // tslint:disable:max-line-length
     const request = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
@@ -59,7 +60,7 @@ export class FlickrService {
       .toPromise()
       .then((data: any) => {
         const _images: Array<BackgroundImageDataStored> = [];
-        const _photos = _get(data, 'photos.photo', null);
+        const _photos = _get(data, 'photos.photo');
 
         if (_photos) {
           for (const _photo of _photos) {

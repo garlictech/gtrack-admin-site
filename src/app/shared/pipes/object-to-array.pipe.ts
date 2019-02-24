@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'obj2arr' })
 export class ObjectToArrayPipe implements PipeTransform {
-  transform(obj: Object): any {
+  transform(obj: object): any {
     const keys: Array<any> = [];
 
     if (typeof obj === 'object' && Object.keys(obj).length) {

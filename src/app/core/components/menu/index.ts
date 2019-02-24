@@ -13,23 +13,27 @@ import { State } from '../../../store';
   styles: ['.layout-sidebar { z-index: 10000; }']
 })
 export class MenuComponent implements OnInit, AfterViewInit {
-  @ViewChild('scrollPanel') layoutMenuScrollerViewChild: ScrollPanel;
+  @ViewChild('scrollPanel') layoutMenuScrollerViewChild!: ScrollPanel;
   @Input() sidebarActive: boolean;
   @Input() onMenuButtonClick: any;
   pages: Array<any>;
 
-  constructor(private readonly _store: Store<State>, private readonly _confirmationService: ConfirmationService) {}
+  constructor(private readonly _store: Store<State>, private readonly _confirmationService: ConfirmationService) {
+    this.sidebarActive = false;
+    this.pages = [];
+  }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     setTimeout(() => {
       this.layoutMenuScrollerViewChild.moveBar();
     }, 100);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.pages = [{ label: 'Hikes', routerLink: ['/admin/hikes'] }, { label: 'Logout', command: this.logout }];
   }
 
+  // tslint:disable-next-line:no-property-initializers
   logout = () => {
     this._confirmationService.confirm({
       message: 'Are you sure that you want to logout?',

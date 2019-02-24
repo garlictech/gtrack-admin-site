@@ -1,11 +1,15 @@
+// tslint:disable:no-big-function
 import { MessageService } from 'primeng/api';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
-import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
-import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
-import { LeafletMarkerPopupService } from '@common.features/leaflet-map/services/leaflet-marker-popup.service';
+import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import {
+  LeafletIconService,
+  LeafletMapMarkerService,
+  LeafletMapService,
+  LeafletMarkerPopupService
+} from '@bit/garlictech.angular-features.common.leaflet-map';
 import { StoreModule } from '@ngrx/store';
 
 import { editedHikeProgramReducer, hikeEditPoiReducer } from '../../../../../app/store/reducer';
@@ -18,7 +22,6 @@ import {
   GeospatialService,
   PoiSelectors
 } from '../../../../../subrepos/gtrack-common-ngx';
-import { EPoiTypes, ETextualDescriptionType } from '../../../../../subrepos/provider-client';
 import { RoutePlannerService } from '../../admin-map';
 import { GooglePoiService } from '../google-poi.service';
 import { PoiEditorService } from '../poi-editor.service';
@@ -61,7 +64,7 @@ describe('PoiEditorService', () => {
         {
           provide: GeometryService,
           useValue: {
-            getCenterRadius: () => {},
+            getCenterRadius: jest.fn(),
             distanceFromRoute: () => 0
           }
         },
@@ -98,25 +101,25 @@ describe('PoiEditorService', () => {
         {
           provide: MessageService,
           useValue: {
-            add: () => {}
+            add: jest.fn()
           }
         },
         {
           provide: WikipediaPoiService,
           useValue: {
-            getPoiDetails: () => {}
+            getPoiDetails: jest.fn()
           }
         },
         {
           provide: GooglePoiService,
           useValue: {
-            getPoiDetails: () => {}
+            getPoiDetails: jest.fn()
           }
         },
         {
           provide: LeafletMapMarkerService,
           useValue: {
-            create: () => {}
+            create: jest.fn()
           }
         },
         {

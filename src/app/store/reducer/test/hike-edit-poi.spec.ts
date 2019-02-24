@@ -1,7 +1,8 @@
 // tslint:disable:no-big-function
 import * as _ from 'lodash';
 
-import { EPoiTypes } from '../../../../subrepos/provider-client';
+import { EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
 import { ExternalPoi } from '../../../shared/interfaces';
 import { hikeEditPoiActions } from '../../actions';
 import { HikeEditPoiState } from '../../index';

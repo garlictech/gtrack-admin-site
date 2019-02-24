@@ -2,11 +2,11 @@ import { environment } from 'environments/environment';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _get from 'lodash-es/get';
 import { Observable } from 'rxjs';
-import { EPoiImageTypes } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v1';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { EPoiImageTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { BackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
 import { PoiEditorService } from '../poi';
@@ -15,7 +15,7 @@ import { PoiEditorService } from '../poi';
 export class MapillaryService {
   constructor(private readonly _http: HttpClient, private readonly _poiEditorService: PoiEditorService) {}
 
-  get(bounds, path) {
+  get(bounds, path): any {
     // tslint:disable:max-line-length
     const request = `https://a.mapillary.com/v3/images?client_id=${environment.mapillary.clientID}&bbox=${
       bounds.SouthWest.lon

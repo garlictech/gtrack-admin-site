@@ -1,7 +1,6 @@
-import { EAuthRoles } from 'subrepos/provider-client';
-
 import { NgModule } from '@angular/core';
 import { Route, RouterModule, Routes } from '@angular/router';
+import { EAuthRoles } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { RouteRedirectGuard } from './auth/auth.guard';
 import { LoginComponent } from './auth/components/login';

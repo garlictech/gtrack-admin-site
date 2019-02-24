@@ -3,7 +3,7 @@ import _forEach from 'lodash-es/forEach';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { IComparedProperty } from '../../../../../shared/interfaces';
+import { ComparedProperty } from '../../../../../shared/interfaces';
 
 @Component({
   selector: 'app-hike-edit-merge-gtrack-poi-info',
@@ -11,11 +11,11 @@ import { IComparedProperty } from '../../../../../shared/interfaces';
   styleUrls: ['./style.scss']
 })
 export class HikeEditMergeGTrackPoiComponent implements OnInit {
-  @Input() conflicts: IComparedProperty;
+  @Input() conflicts: ComparedProperty;
   @Input() saveCallback: any;
   mergeForm: FormGroup;
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Create form
     const _controls = {};
     _forEach(this.conflicts, (values: any, key: string) => {
@@ -25,7 +25,7 @@ export class HikeEditMergeGTrackPoiComponent implements OnInit {
     this.mergeForm = new FormGroup(_controls);
   }
 
-  saveMerge() {
+  saveMerge(): void {
     this.saveCallback(this.mergeForm.value);
   }
 

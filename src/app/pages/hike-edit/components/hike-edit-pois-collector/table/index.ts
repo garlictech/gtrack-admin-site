@@ -18,12 +18,15 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
   @Input() pois$: Observable<Array<any>>;
   @Input() onRouteCheck: boolean;
   @Input() openPoiModal: any;
-  mergeSelections: { [id: string]: boolean } = {};
-  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
+  mergeSelections: { [id: string]: boolean };
+  private readonly _destroy$: Subject<boolean>;
 
-  constructor(private readonly _store: Store<State>) {}
+  constructor(private readonly _store: Store<State>) {
+    this.mergeSelections = {};
+    this._destroy$ = new Subject<boolean>();
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._store
       .pipe(
         select(hikeEditPoiSelectors.getMergeSelections),
@@ -32,21 +35,22 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
       )
       .subscribe((selections: Array<string>) => {
         this.mergeSelections = {};
-        selections.map(id => {
+        selections.forEach(id => {
           this.mergeSelections[id] = true;
         });
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  handlePoiSelection(poiIds) {
+  handlePoiSelection(poiIds): void {
     this._store.dispatch(new hikeEditPoiActions.SetCollectorPoiSelected(poiIds));
   }
 
+  // tslint:disable-next-line:no-property-initializers
   toggleMergeSelection = (poiIds: Array<string>) => {
     const removeblePoiIds = [];
     const poiIdsToAdd = [];
@@ -68,7 +72,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
     }
   };
 
-  invertMerge() {
+  invertMerge(): void {
     this.pois$.pipe(take(1)).subscribe(pois => {
       const clickablePois = pois.filter(p => !!p.onRoute === this.onRouteCheck && !p.inGtrackDb);
 
@@ -76,7 +80,7 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  invertSelection() {
+  invertSelection(): void {
     this.pois$.pipe(take(1)).subscribe(pois => {
       const clickablePois = pois.filter(p => !!p.onRoute === this.onRouteCheck && !p.inGtrackDb);
 

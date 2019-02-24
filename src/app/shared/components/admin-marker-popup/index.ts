@@ -16,12 +16,13 @@ import { PoiEditorService } from '../../services';
   styleUrls: ['./style.scss']
 })
 export class AdminMarkerPopupComponent implements OnInit {
+  // tslint:disable-next-line:no-property-initializers
   static componentName = 'AdminMarkerPopupComponent';
   isPlanning$: Observable<boolean>;
   data: any;
   closePopup: any;
 
-  images: Array<string> = [];
+  images: Array<string>;
   btnTitle: string;
   btn2Title: string;
   btnClass: string;
@@ -29,14 +30,21 @@ export class AdminMarkerPopupComponent implements OnInit {
   btnClick: any;
   btn2Click: any;
 
-  constructor(private readonly _store: Store<State>, private readonly _poiEditorService: PoiEditorService) {}
+  constructor(private readonly _store: Store<State>, private readonly _poiEditorService: PoiEditorService) {
+    this.images = [];
 
-  ngOnInit() {
     this.isPlanning$ = this._store.pipe(
       select(hikeEditRoutePlannerSelectors.getIsPlanning),
       take(1)
     );
 
+    this.btnTitle = '';
+    this.btn2Title = '';
+    this.btnClass = '';
+    this.btn2Class = '';
+  }
+
+  ngOnInit(): void {
     switch (this.data.markerType) {
       case 'hike':
         this.btnTitle = 'Remove from hike';
@@ -68,7 +76,7 @@ export class AdminMarkerPopupComponent implements OnInit {
     }
   }
 
-  private _getBgImagesUrls() {
+  private _getBgImagesUrls(): Array<string> {
     if (this.data.google && this.data.google.photos && this.data.google.photos.length > 0) {
       return _map(this.data.google.photos, 'card.url');
     }
@@ -76,32 +84,39 @@ export class AdminMarkerPopupComponent implements OnInit {
     if (this.data.wikipedia && this.data.wikipedia.photos && this.data.wikipedia.photos.length > 0) {
       return _map(this.data.wikipedia.photos, 'original.url');
     }
+
+    return [];
   }
 
+  // tslint:disable-next-line:no-property-initializers
   private readonly _removeFromHike = () => {
     this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId([this.data.id]));
 
     this.closePopup();
   };
 
+  // tslint:disable-next-line:no-property-initializers
   private readonly _addToHike = () => {
     this._store.dispatch(new editedHikeProgramActions.PrepareThenAddStop(this.data));
 
     this.closePopup();
   };
 
+  // tslint:disable-next-line:no-property-initializers
   private readonly _removeFromCollector = () => {
     this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector([this.data.id]));
 
     this.closePopup();
   };
 
+  // tslint:disable-next-line:no-property-initializers
   private readonly _addToCollector = () => {
     this._store.dispatch(new hikeEditPoiActions.AddPoisToCollector([this.data]));
 
     this.closePopup();
   };
 
+  // tslint:disable-next-line:no-property-initializers
   private readonly _addToGTrackPoi = () => {
     const _poiData = this._poiEditorService.getDbObj(this.data);
     this._store.dispatch(new commonPoiActions.SavePoi(_poiData));

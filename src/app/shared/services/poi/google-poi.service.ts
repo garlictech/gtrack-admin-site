@@ -4,11 +4,16 @@ import _take from 'lodash-es/take';
 import { EMPTY, interval, Observable, of } from 'rxjs';
 import { combineAll, flatMap, take } from 'rxjs/operators';
 import { CenterRadius, defaultSharedConfig, GeometryService } from 'subrepos/gtrack-common-ngx';
-import { BackgroundImageData, EPoiImageTypes, EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v1';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {
+  BackgroundImageData,
+  EPoiImageTypes,
+  EPoiTypes,
+  ETextualDescriptionType
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { GooglePoi } from '../../interfaces';
 import { LanguageService } from '../language.service';
@@ -16,15 +21,28 @@ import { LanguageService } from '../language.service';
 export const PURE_PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
 export const PLACE_API_URL = `https://cors-anywhere.herokuapp.com/${PURE_PLACE_API_URL}`;
 
+const _batchGet = (getter, params): any =>
+  getter(params).then(result => {
+    params.results = params.results.concat(result.data);
+
+    if (!result.nextParams) {
+      return params.results;
+    } else {
+      params.pageToken = result.nextParams.pageToken;
+
+      return _batchGet(getter, params);
+    }
+  });
+
 @Injectable()
 export class GooglePoiService {
   constructor(private readonly _http: HttpClient, private readonly _geometryService: GeometryService) {}
 
-  get(bounds, langs = ['en']) {
+  get(bounds, langs = ['en']): Observable<Array<GooglePoi>> {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
 
     const promise: Promise<Array<GooglePoi>> = new Promise(resolve => {
-      this._batchGet(this._getOnePage, {
+      _batchGet(this._getOnePage, {
         geo,
         langs,
         results: []
@@ -39,7 +57,7 @@ export class GooglePoiService {
   /**
    * handlePoiDetails() submethod
    */
-  getPoiDetails(pois: Array<GooglePoi>) {
+  async getPoiDetails(pois: Array<GooglePoi>): Promise<Array<GooglePoi>> {
     const thumbnailWidth = 320;
     const cardWidth = 640;
 
@@ -49,7 +67,7 @@ export class GooglePoiService {
         flatMap(idx => {
           const _googleData = pois[idx].google;
 
-          if (_googleData.id) {
+          if (_googleData && _googleData.id) {
             const request = `${PLACE_API_URL}/details/json?placeid=${_googleData.id}&key=${
               defaultSharedConfig.googleMaps.key
             }`;
@@ -131,19 +149,7 @@ export class GooglePoiService {
       .then(() => pois);
   }
 
-  private _batchGet(getter, params) {
-    return getter(params).then(result => {
-      params.results = params.results.concat(result.data);
-
-      if (!result.nextParams) {
-        return params.results;
-      } else {
-        params.pageToken = result.nextParams.pageToken;
-        return this._batchGet(getter, params);
-      }
-    });
-  }
-
+  // tslint:disable-next-line:no-property-initializers
   private readonly _getOnePage = params => {
     // tslint:disable:max-line-length
     let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${
@@ -198,6 +204,7 @@ export class GooglePoiService {
             pageToken: data.next_page_token
           };
         }
+
         return result;
       });
   };

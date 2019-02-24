@@ -1,5 +1,4 @@
-import { BackgroundImageData } from 'subrepos/provider-client';
-
+import { BackgroundImageData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { EntityState } from '@ngrx/entity';
 
 import { BackgroundImageDataStored } from '../../shared/interfaces/mapillary-image.interface';

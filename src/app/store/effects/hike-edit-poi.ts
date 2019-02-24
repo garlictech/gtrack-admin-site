@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 
-import { GooglePoi, IOsmPoi, WikipediaPoi } from '../../shared/interfaces';
+import { GooglePoi, OsmPoi, WikipediaPoi } from '../../shared/interfaces';
 import { GooglePoiService, HikeProgramService, OsmPoiService, WikipediaPoiService } from '../../shared/services';
 import { commonPoiActions, editedGTrackPoiActions, hikeEditPoiActions } from '../actions';
 
@@ -26,7 +26,7 @@ export class HikeEditPoiEffects {
       this._routeService.splitBounds(bounds, 10000, boundsArr);
 
       const langs: Array<string> = this._hikeProgramService.getDescriptionLanguages();
-      const _observables: Array<Observable<Array<WikipediaPoi>> = [];
+      const _observables: Array<Observable<Array<WikipediaPoi>>> = [];
 
       for (const lang of langs) {
         for (const _bounds of boundsArr) {
@@ -35,8 +35,8 @@ export class HikeEditPoiEffects {
       }
 
       return forkJoin(_observables).map(poisArr => {
-        let pois: Array<WikipediaPoi = [];
-        poisArr.forEach((poiArr: Array<WikipediaPoi) => {
+        let pois: Array<WikipediaPoi> = [];
+        poisArr.forEach((poiArr: Array<WikipediaPoi>) => {
           pois = _concat(pois, poiArr);
         });
 
@@ -69,7 +69,7 @@ export class HikeEditPoiEffects {
     switchMap(bounds =>
       this._osmPoiService
         .get(bounds, 'natural')
-        .map((pois: Array<IOsmPoi>) => new hikeEditPoiActions.SetOsmNaturalPois(pois))
+        .map((pois: Array<OsmPoi>) => new hikeEditPoiActions.SetOsmNaturalPois(pois))
     )
   );
 
@@ -82,7 +82,7 @@ export class HikeEditPoiEffects {
     switchMap(bounds =>
       this._osmPoiService
         .get(bounds, 'amenity')
-        .map((pois: Array<IOsmPoi>) => new hikeEditPoiActions.SetOsmAmenityPois(pois))
+        .map((pois: Array<OsmPoi>) => new hikeEditPoiActions.SetOsmAmenityPois(pois))
     )
   );
 

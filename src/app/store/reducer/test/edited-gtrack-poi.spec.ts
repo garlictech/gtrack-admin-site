@@ -1,7 +1,12 @@
 // tslint:disable:no-big-function
 import * as _ from 'lodash';
 
-import { BackgroundImageData, EObjectState, ETextualDescriptionType } from '../../../../subrepos/provider-client';
+import {
+  BackgroundImageData,
+  EObjectState,
+  ETextualDescriptionType
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
 import { ExternalPoi } from '../../../shared/interfaces';
 import { editedGTrackPoiActions } from '../../actions';
 import { EditedGTrackPoiState } from '../../state';

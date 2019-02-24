@@ -3,15 +3,19 @@ import _pick from 'lodash-es/pick';
 import { MessageService } from 'primeng/api';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { delay, filter, skipWhile, switchMap, take, takeUntil } from 'rxjs/operators';
-import { HikeSelectors, IHikeContextState, RouteSelectors } from 'subrepos/gtrack-common-ngx';
-import { BackgroundImageData, EObjectState, IHikeProgramStored, IRoute } from 'subrepos/provider-client';
+import { HikeContextState, HikeSelectors, RouteSelectors } from 'subrepos/gtrack-common-ngx';
 import * as uuid from 'uuid/v1';
 
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
-import { leafletMapActions } from '@common.features/leaflet-map/store';
+import {
+  BackgroundImageData,
+  EObjectState,
+  HikeProgramStored,
+  RouteData
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { leafletMapActions, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 
 import { HikeProgramService } from '../../shared/services';
@@ -35,18 +39,19 @@ import * as hikeEditRoutePlannerSelectors from '../../store/selectors/hike-edit-
 })
 export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   hikeProgramState$: Observable<EObjectState>;
-  hikeProgramData$: Observable<IHikeProgramStored>;
+  hikeProgramData$: Observable<HikeProgramStored>;
   allowSave$: Observable<boolean>;
   isPlanning$: Observable<boolean>;
   working$: Observable<string | null>;
+  // tslint:disable-next-line:no-property-initializers
   EObjectState = EObjectState;
   paramsId: string;
   backgroundImageUrlSelector: MemoizedSelector<object, Array<string>>;
   backgroundImageSelector: MemoizedSelector<object, Array<BackgroundImageData>>;
   clickActions: any;
-  displayPreview = false;
+  displayPreview: boolean;
   private _hikeId: string;
-  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
+  private readonly _destroy$: Subject<boolean>;
 
   constructor(
     private readonly _store: Store<State>,
@@ -61,9 +66,12 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     private readonly _messageService: MessageService,
     private readonly _router: Router,
     private readonly _title: Title
-  ) {}
+  ) {
+    this.displayPreview = false;
+    this._destroy$ = new Subject<boolean>();
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.working$ = this._store.pipe(
       select(editedHikeProgramSelectors.getWorking),
       takeUntil(this._destroy$)
@@ -209,14 +217,14 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         ),
         filter(hikeContext => !!hikeContext)
       )
-      .subscribe((hikeContext: IHikeContextState) => {
+      .subscribe((hikeContext: HikeContextState) => {
         if (hikeContext.loaded) {
           this._store
             .pipe(
               select(this._hikeSelectors.getHike(hikeContext.id)),
               take(1)
             )
-            .subscribe((hikeData: IHikeProgramStored) => {
+            .subscribe((hikeData: HikeProgramStored) => {
               // Add the whole data to store
               this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(hikeData, false));
 
@@ -240,16 +248,16 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this._changeDetectorRef.detectChanges();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  saveHike() {
+  saveHike(): void {
     // Save hikeProgram
     this._store.dispatch(new editedHikeProgramActions.SaveHikeProgram());
 
@@ -265,7 +273,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       )
     ).subscribe(([routePlannerState, routeId]: [HikeEditRoutePlannerState, string]) => {
       if (routePlannerState && routeId) {
-        const _route: IRoute = {
+        const _route: RouteData = {
           id: routeId,
           bounds: (routePlannerState.route as any).bounds,
           route: _pick(routePlannerState.route, ['type', 'features'])
@@ -275,7 +283,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  updateHikeState(hikeProgramState: EObjectState) {
+  updateHikeState(hikeProgramState: EObjectState): void {
     this._store.dispatch(new commonHikeActions.UpdateHikeProgramState(this.paramsId, hikeProgramState));
 
     if (hikeProgramState === EObjectState.published) {
@@ -317,19 +325,19 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  openPreview() {
+  openPreview(): void {
     this.displayPreview = true;
   }
 
-  handleHikeProgramFeature() {
-    this.hikeProgramData$.pipe(take(1)).subscribe((hikeProgramData: IHikeProgramStored) => {
+  handleHikeProgramFeature(): void {
+    this.hikeProgramData$.pipe(take(1)).subscribe((hikeProgramData: HikeProgramStored) => {
       this._store.dispatch(
         new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true)
       );
     });
   }
 
-  retrievePlan() {
+  retrievePlan(): void {
     this._store
       .pipe(
         select(editedHikeProgramSelectors.getRouteId),
@@ -359,7 +367,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
 
-  private _parseGpxRoute() {
+  private _parseGpxRoute(): void {
     this._routePlannerService.drawRouteLineGeoJSON(this._hikeProgramService.gpxRoute.route.features[0]);
 
     // Load path to routePlanner state - necessary for drawing pois

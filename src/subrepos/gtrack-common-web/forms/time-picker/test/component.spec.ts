@@ -1,4 +1,4 @@
-// tslint:disable:no-unused-variable
+// tslint:disable:no-unused-variable no-floating-promises
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 

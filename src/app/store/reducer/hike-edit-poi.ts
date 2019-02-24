@@ -6,7 +6,7 @@ import _omit from 'lodash-es/omit';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { ActionReducerMap, combineReducers } from '@ngrx/store';
 
-import { GooglePoi, IOsmPoi, WikipediaPoi } from '../../shared/interfaces';
+import { GooglePoi, OsmPoi, WikipediaPoi } from '../../shared/interfaces';
 import { hikeEditPoiActions } from '../actions';
 import {
   ExternalPoiListContextState,
@@ -80,7 +80,7 @@ export function googlePoiReducer(
  * OSM Amenity
  */
 
-export const osmAmenityPoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
+export const osmAmenityPoiAdapter: EntityAdapter<OsmPoi> = createEntityAdapter<OsmPoi>();
 export const osmAmenityPoiInitialState = osmAmenityPoiAdapter.getInitialState();
 
 export function osmAmenityPoiReducer(
@@ -136,7 +136,7 @@ export function osmAmenityPoiReducer(
  * OSM Natural
  */
 
-export const osmNaturalPoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
+export const osmNaturalPoiAdapter: EntityAdapter<OsmPoi> = createEntityAdapter<OsmPoi>();
 export const osmNaturalPoiInitialState = osmNaturalPoiAdapter.getInitialState();
 
 export function osmNaturalPoiReducer(
@@ -192,7 +192,7 @@ export function osmNaturalPoiReducer(
  * OSM Route
  */
 
-export const osmRoutePoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
+export const osmRoutePoiAdapter: EntityAdapter<OsmPoi> = createEntityAdapter<OsmPoi>();
 export const osmRoutePoiInitialState = osmRoutePoiAdapter.getInitialState();
 
 export function osmRoutePoiReducer(
@@ -248,7 +248,7 @@ export function osmRoutePoiReducer(
  * Wikipedia
  */
 
-export const wikipediaPoiAdapter: EntityAdapter<WikipediaPoi = createEntityAdapter<WWikipediaPoi);
+export const wikipediaPoiAdapter: EntityAdapter<WikipediaPoi> = createEntityAdapter<WikipediaPoi>();
 export const wikipediaPoiInitialState = wikipediaPoiAdapter.getInitialState();
 
 export function wikipediaPoiReducer(

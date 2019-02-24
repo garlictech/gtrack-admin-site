@@ -1,10 +1,14 @@
 // tslint:disable:no-property-initializers max-classes-per-file
 import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
-import { BackgroundImageData, HikeProgramStop, ITextualDescription } from 'subrepos/provider-client';
 
+import {
+  BackgroundImageData,
+  HikeProgramStop,
+  TextualDescription
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Action } from '@ngrx/store';
 
-import { IGTrackPoi } from '../../shared/interfaces';
+import { GTrackPoi } from '../../shared/interfaces';
 
 export const RESET_HIKE_PROGRAM = '[HikeProgram] Reset';
 export const ADD_NEW_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Add new translated hike description';
@@ -29,7 +33,7 @@ export class ResetHikeProgram implements Action {
 export class AddNewTranslatedHikeProgramDescription implements Action {
   readonly type = ADD_NEW_TRANSLATED_HIKE_DESCRIPTION;
 
-  constructor(public languageKey: string, public content: ITextualDescription) {}
+  constructor(public languageKey: string, public content: TextualDescription) {}
 }
 
 export class DeleteTranslatedHikeProgramDescription implements Action {
@@ -69,7 +73,7 @@ export class AddStop implements Action {
 
 export class PrepareThenAddStop implements Action {
   readonly type = PREPARE_THEN_ADD_STOP;
-  constructor(public poi: IGTrackPoi) {}
+  constructor(public poi: GTrackPoi) {}
 }
 
 export class SetStops implements Action {

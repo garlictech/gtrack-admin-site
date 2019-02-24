@@ -1,6 +1,5 @@
+import { BackgroundImageData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 // tslint:disable:no-property-initializers max-classes-per-file
-import { BackgroundImageData } from 'subrepos/provider-client';
-
 import { Action } from '@ngrx/store';
 
 import { BackgroundImageDataStored } from '../../shared/interfaces/mapillary-image.interface';

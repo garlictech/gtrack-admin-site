@@ -1,4 +1,4 @@
-import { IRouteTotal } from 'app/shared/interfaces';
+import { RouteTotal } from 'app/shared/interfaces';
 import { select as d3Select } from 'd3-selection';
 import * as geojson2svg from 'geojson2svg';
 import _cloneDeep from 'lodash-es/cloneDeep';
@@ -10,7 +10,6 @@ import { combineLatest } from 'rxjs';
 import { debounceTime, take } from 'rxjs/operators';
 import { CheckpointService, ElevationService, GameRuleService, Route } from 'subrepos/gtrack-common-ngx';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
-import { HikeProgramStop, IRoute } from 'subrepos/provider-client';
 
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
@@ -18,14 +17,32 @@ import turfDistance from '@turf/distance';
 import { point as turfPoint } from '@turf/helpers';
 import turfLength from '@turf/length';
 
+import { HikeProgramStop, RouteData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { State } from '../../../store';
 import { editedHikeProgramActions } from '../../../store/actions';
 import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
 import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 
+const _calculateTotal = (stops: Array<HikeProgramStop>): any => {
+  const total = {};
+
+  for (const stop of stops) {
+    for (const key in stop.segment) {
+      if (typeof stop.segment[key] !== 'undefined') {
+        if (typeof total[key] === 'undefined') {
+          total[key] = 0;
+        }
+        total[key] += stop.segment[key];
+      }
+    }
+  }
+
+  return total;
+};
+
 @Injectable()
 export class HikeProgramService {
-  gpxRoute: IRoute;
+  gpxRoute: RouteData;
 
   constructor(
     private readonly _store: Store<State>,
@@ -38,7 +55,7 @@ export class HikeProgramService {
   /**
    * Update stop segments and start/end points
    */
-  updateHikeProgramStops() {
+  updateHikeProgramStops(): void {
     combineLatest(
       this._store.pipe(
         select(editedHikeProgramSelectors.getStops),
@@ -78,24 +95,22 @@ export class HikeProgramService {
 
             // Add endpoint-finish
             const distanceFromFinish = Math.round(
-              1000 *
-                turfDistance(
-                  turfPoint([_last(poiStops).lon, _last(poiStops).lat]),
-                  turfPoint([_last(path.geometry.coordinates)[0], _last(path.geometry.coordinates)[1]]),
-                  { units: 'kilometers' }
-                )
+              turfDistance(
+                turfPoint([_last(poiStops).lon, _last(poiStops).lat]),
+                turfPoint([_last(path.geometry.coordinates)[0], _last(path.geometry.coordinates)[1]]),
+                { units: 'kilometers' }
+              ) * 1000
             );
             if (path.geometry.coordinates.length > 1 && distanceFromFinish > 25) {
               poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, false));
             }
 
             const reverseDistanceFromFinish = Math.round(
-              1000 *
-                turfDistance(
-                  turfPoint([_last(reversePoiStops).lon, _last(reversePoiStops).lat]),
-                  turfPoint([_first(path.geometry.coordinates)[0], _first(path.geometry.coordinates)[1]]),
-                  { units: 'kilometers' }
-                )
+              turfDistance(
+                turfPoint([_last(reversePoiStops).lon, _last(reversePoiStops).lat]),
+                turfPoint([_first(path.geometry.coordinates)[0], _first(path.geometry.coordinates)[1]]),
+                { units: 'kilometers' }
+              ) * 1000
             );
             if (path.geometry.coordinates.length > 1 && reverseDistanceFromFinish > 25) {
               reversePoiStops.push(this._createStopFromPathEndPoint(path, 0, true));
@@ -119,8 +134,8 @@ export class HikeProgramService {
         this._updateStopsSegment(_orderBy(reversePoiStops, ['distanceFromOrigo']), path, true);
 
         // Update total
-        const total = this._calculateTotal(poiStops);
-        const reverseTotal: IRouteTotal = this._calculateTotal(reversePoiStops);
+        const total = _calculateTotal(poiStops);
+        const reverseTotal: RouteTotal = _calculateTotal(reversePoiStops);
         const totals = {
           ...total,
           reverseTime: reverseTotal.time,
@@ -133,7 +148,7 @@ export class HikeProgramService {
   /**
    * Get current languages from descriptions
    */
-  getDescriptionLanguages() {
+  getDescriptionLanguages(): Array<string> {
     let langs: Array<string> = [];
     this._store
       .pipe(
@@ -147,7 +162,7 @@ export class HikeProgramService {
     return langs;
   }
 
-  createElevationIcon(_route: Route) {
+  createElevationIcon(_route: Route): string {
     const _iconWidth = 54;
     const _iconHeight = 20;
     const _elevationData = this._elevationService.getd3ElevationData(_route, _iconWidth, _iconHeight, {
@@ -177,7 +192,7 @@ export class HikeProgramService {
     }
   }
 
-  createRouteIcon(_route: Route) {
+  createRouteIcon(_route: Route): string {
     const _iconWidth = 54;
     const _iconHeight = 54;
 
@@ -205,15 +220,16 @@ export class HikeProgramService {
       const _svgString = _converter.convert(_route.path);
       const _p = -5; // padding; viewBox: [x, y, w, h]
       // tslint:disable:max-line-length
+
       return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="${_p} ${_p} ${_iconWidth -
-        2 * _p} ${_iconHeight - 2 * _p}">${_svgString}</svg>`;
+        _p * 2} ${_iconHeight - _p * 2}">${_svgString}</svg>`;
       // tslint:enable:max-line-length
     } else {
       return '';
     }
   }
 
-  private _updateStopDistanceFromOrigo(stop: HikeProgramStop, path: any, coordIdx: number) {
+  private _updateStopDistanceFromOrigo(stop: HikeProgramStop, path: any, coordIdx: number): void {
     if (path.geometry.coordinates.length > 1) {
       stop.distanceFromOrigo = this._geospatialService.distanceOnLine(
         path.geometry.coordinates[coordIdx],
@@ -226,7 +242,7 @@ export class HikeProgramService {
   /**
    * Create begin/end stop from path endpoints
    */
-  private _createStopFromPathEndPoint(path: any, coordIdx: number, reverse: boolean) {
+  private _createStopFromPathEndPoint(path: any, coordIdx: number, reverse: boolean): HikeProgramStop {
     const coord = path.geometry.coordinates[coordIdx];
     const distCoordIdx = reverse ? path.geometry.coordinates.length - 1 : 0;
 
@@ -240,7 +256,7 @@ export class HikeProgramService {
           ? 0
           : this._geospatialService.distanceOnLine(path.geometry.coordinates[distCoordIdx], coord, path),
       onRoute: true,
-      poiId: 'endpoint-' + (coordIdx === 0 ? (reverse ? 'finish' : 'start') : reverse ? 'start' : 'finish'),
+      poiId: `endpoint-${coordIdx === 0 ? (reverse ? 'finish' : 'start') : reverse ? 'start' : 'finish'}`,
       lat: coord[1],
       lon: coord[0],
       segment: {
@@ -256,7 +272,7 @@ export class HikeProgramService {
   /**
    * Update stops' segment info
    */
-  private _updateStopsSegment(stops: Array<HikeProgramStop>, path: any, reverse: boolean) {
+  private _updateStopsSegment(stops: Array<HikeProgramStop>, path: any, reverse: boolean): void {
     if (_get(path, 'geometry.coordinates', []).length > 0) {
       let _segmentStartPoint = reverse
         ? path.geometry.coordinates[path.geometry.coordinates.length - 1]
@@ -267,21 +283,18 @@ export class HikeProgramService {
           const stop = stops[idx];
           const _segmentEndPoint = [stop.lon, stop.lat];
           const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
-          const _segmentDistance = 1000 * turfLength(_segmentPath, { units: 'kilometers' });
+          const _segmentDistance = turfLength(_segmentPath, { units: 'kilometers' }) * 1000;
 
           stop.segment = {
-            uphill: this._elevationService.calculateUphill((_segmentPath).geometry.coordinates),
-            downhill: this._elevationService.calculateDownhill((_segmentPath).geometry.coordinates),
+            uphill: this._elevationService.calculateUphill(_segmentPath.geometry.coordinates),
+            downhill: this._elevationService.calculateDownhill(_segmentPath.geometry.coordinates),
             distance: _segmentDistance
           };
-          (stop.segment.time = this._gameRuleService.segmentTime(
-            _segmentDistance,
-            reverse ? stop.segment.uphill : stop.segment.downhill
-          )),
-            (stop.segment.score = this._gameRuleService.score(
-              _segmentDistance,
-              reverse ? stop.segment.uphill : stop.segment.downhill
-            ));
+
+          const _uphill = reverse ? stop.segment.uphill : stop.segment.downhill;
+
+          stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, _uphill);
+          stop.segment.score = this._gameRuleService.score(_segmentDistance, _uphill);
 
           stop.isStart = parseInt(idx, 0) === 0;
           stop.isFinish = parseInt(idx, 0) === stops.length - 1;
@@ -300,22 +313,5 @@ export class HikeProgramService {
         );
       }
     }
-  }
-
-  private _calculateTotal(stops: Array<HikeProgramStop>) {
-    const total = {};
-
-    for (const stop of stops) {
-      for (const key in stop.segment) {
-        if (typeof stop.segment[key] !== 'undefined') {
-          if (typeof total[key] === 'undefined') {
-            total[key] = 0;
-          }
-          total[key] += stop.segment[key];
-        }
-      }
-    }
-
-    return total;
   }
 }

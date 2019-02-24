@@ -8,33 +8,41 @@ import { combineAll, flatMap, take } from 'rxjs/operators';
 import { ElevationService } from 'subrepos/gtrack-common-ngx';
 
 import { Injectable } from '@angular/core';
-import { EMarkerType } from '@common.features/leaflet-map/interfaces';
-import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
-import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
+
 import { Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
 
+import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import { HttpClient } from '../../../../../node_modules/@angular/common/http';
 import { State } from '../../../store';
 import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { RoutePlannerService } from './route-planner.service';
 
-export interface IRoutePlanResult {
+export interface RoutePlanResult {
   coordsArr: any;
   upDown: any;
 }
 
-export interface IWaypoint {
+export interface Waypoint {
   latLng: L.LatLng;
   idx: number;
 }
 
+const _getSingleMarkerIcon = (title: string): L.DivIcon =>
+  L.divIcon({
+    html: `<span>${title}</span>`,
+    iconSize: [25, 41],
+    iconAnchor: [13, 41],
+    className: 'routing-control-marker'
+  });
+
 @Injectable()
 export class WaypointMarkerService {
-  private readonly _waypointMarkers: L.FeatureGroup = new L.FeatureGroup();
-  private _markers: Array<L.Marker> = [];
-  private _dragging = false;
+  private readonly _waypointMarkers: L.FeatureGroup;
+  private _markers: Array<L.Marker>;
+  private _dragging: boolean;
 
   constructor(
     private readonly _store: Store<State>,
@@ -45,9 +53,13 @@ export class WaypointMarkerService {
     private readonly _http: HttpClient
   ) {
     this.reset();
+
+    this._waypointMarkers = new L.FeatureGroup();
+    this._markers = [];
+    this._dragging = false;
   }
 
-  reset() {
+  reset(): void {
     for (const marker of this._markers) {
       if (this._waypointMarkers.hasLayer(marker)) {
         this._waypointMarkers.removeLayer(marker);
@@ -58,7 +70,7 @@ export class WaypointMarkerService {
     this._store.dispatch(new hikeEditRoutePlannerActions.ResetRoutePlanningState());
   }
 
-  removeSegments(idx, count) {
+  removeSegments(idx, count): void {
     for (let i = idx; i <= idx + count; i++) {
       const marker = this._markers[i];
       if (this._waypointMarkers.hasLayer(marker)) {
@@ -69,8 +81,8 @@ export class WaypointMarkerService {
     this._store.dispatch(new hikeEditRoutePlannerActions.RemoveSegments(idx, count));
   }
 
-  insertNewStartPoint(latlng: L.LatLng) {
-    const _waypoint: IWaypoint = {
+  insertNewStartPoint(latlng: L.LatLng): void {
+    const _waypoint: Waypoint = {
       latLng: latlng,
       idx: 0
     };
@@ -80,8 +92,8 @@ export class WaypointMarkerService {
     this._refreshEndpointMarkerIcons();
   }
 
-  insertNewEndPoint(latlng: L.LatLng) {
-    const _waypoint: IWaypoint = {
+  insertNewEndPoint(latlng: L.LatLng): void {
+    const _waypoint: Waypoint = {
       latLng: latlng,
       idx: this._markers.length
     };
@@ -91,7 +103,7 @@ export class WaypointMarkerService {
     this._refreshEndpointMarkerIcons();
   }
 
-  removeLast() {
+  removeLast(): void {
     // Remove last marker
     if (this._markers.length > 0) {
       this._waypointMarkers.removeLayer(this._markers.pop());
@@ -101,13 +113,13 @@ export class WaypointMarkerService {
     this._refreshEndpointMarkerIcons();
   }
 
-  closeCircle() {
+  closeCircle(): void {
     if (this._markers.length > 0) {
       this.addWaypoints([this._markers[0].getLatLng()]);
     }
   }
 
-  async addWaypoints(latlngs: Array<L.LatLng>) {
+  async addWaypoints(latlngs: Array<L.LatLng>): Promise<void> {
     if (this._dragging) {
       return;
     }
@@ -118,7 +130,7 @@ export class WaypointMarkerService {
 
     for (const idx in latlngs) {
       if (latlngs[idx]) {
-        const _waypoint: IWaypoint = {
+        const _waypoint: Waypoint = {
           latLng: latlngs[idx],
           idx: parseInt(idx, 0) + this._markers.length
         };
@@ -128,7 +140,7 @@ export class WaypointMarkerService {
           await this.getRouteFromApi(
             this._markers[this._markers.length - 2].getLatLng(),
             this._markers[this._markers.length - 1].getLatLng()
-          ).then((data: IRoutePlanResult) => {
+          ).then((data: RoutePlanResult) => {
             this._routePlannerService.addRouteSegment(data.coordsArr, data.upDown);
             this._moveLastWaypointToRoute(data.coordsArr);
           });
@@ -143,9 +155,9 @@ export class WaypointMarkerService {
     // this._leafletMapService.spin(false);
   }
 
-  _refreshEndpointMarkerIcons() {
+  _refreshEndpointMarkerIcons(): void {
     for (let i = 0; i < this._markers.length; i++) {
-      this._markers[i].setIcon(this._getSingleMarkerIcon(i + 1));
+      this._markers[i].setIcon(_getSingleMarkerIcon((i + 1).toString()));
       (this._markers[i] as any).options.idx = i;
     }
 
@@ -162,7 +174,7 @@ export class WaypointMarkerService {
     this._leafletMapService.refreshSpiderfierMarkers(this._markers, EMarkerType.WAYPOINT);
   }
 
-  getRouteFromApi(p1, p2) {
+  getRouteFromApi(p1, p2): Promise<any> {
     const _urlParams = {
       vehicle: 'hike',
       instructions: false,
@@ -182,8 +194,8 @@ export class WaypointMarkerService {
       .then((data: any) => this._calculateCoordsElevation(data));
   }
 
-  private _createMarker(_waypoint: IWaypoint) {
-    const _icon = this._getSingleMarkerIcon((_waypoint.idx + 1).toString());
+  private _createMarker(_waypoint: Waypoint): L.Marker {
+    const _icon = _getSingleMarkerIcon((_waypoint.idx + 1).toString());
     const _marker = L.marker(_waypoint.latLng, {
       opacity: 1,
       draggable: true,
@@ -207,22 +219,13 @@ export class WaypointMarkerService {
     return _marker;
   }
 
-  private _updateMarkerNumbers() {
+  private _updateMarkerNumbers(): void {
     for (let i = 0; i < this._markers.length; i++) {
-      this._markers[i].setIcon(this._getSingleMarkerIcon(i + 1));
+      this._markers[i].setIcon(_getSingleMarkerIcon((i + 1).toString()));
     }
   }
 
-  private _getSingleMarkerIcon(title) {
-    return L.divIcon({
-      html: `<span>${title}</span>`,
-      iconSize: [25, 41],
-      iconAnchor: [13, 41],
-      className: 'routing-control-marker'
-    });
-  }
-
-  private _calculateCoordsElevation(routeData: any) {
+  private _calculateCoordsElevation(routeData: any): Promise<any> {
     // GraphHopper format fix
     const _coordsArr = routeData.paths[0].points.coordinates.map(coord => [coord[1], coord[0]]);
 
@@ -247,6 +250,7 @@ export class WaypointMarkerService {
                 }
               }
             }
+
             return of(counter);
           });
         }),
@@ -273,7 +277,7 @@ export class WaypointMarkerService {
   /**
    * Move marker positions to line
    */
-  private _moveLastWaypointToRoute(coords) {
+  private _moveLastWaypointToRoute(coords): void {
     for (let i = this._markers.length - 2; i < this._markers.length; i++) {
       const line = turfLineString(coords);
       const pt = turfPoint([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
@@ -285,7 +289,7 @@ export class WaypointMarkerService {
     }
   }
 
-  private _refreshSegmentsAfterDrag(markerIdx: number) {
+  private _refreshSegmentsAfterDrag(markerIdx: number): void {
     // Update the first segment
     if (markerIdx === 0) {
       const start = this._markers[0].getLatLng();
@@ -309,8 +313,8 @@ export class WaypointMarkerService {
     }
   }
 
-  private _getRouteAndUpdateSegment(start: L.LatLng, end: L.LatLng, segmentIdx: number) {
-    this.getRouteFromApi(start, end).then((data: IRoutePlanResult) => {
+  private _getRouteAndUpdateSegment(start: L.LatLng, end: L.LatLng, segmentIdx: number): void {
+    this.getRouteFromApi(start, end).then((data: RoutePlanResult) => {
       this._routePlannerService.updateRouteSegment(segmentIdx, data.coordsArr, data.upDown);
     });
   }

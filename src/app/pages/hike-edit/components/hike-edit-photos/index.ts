@@ -2,12 +2,12 @@ import _map from 'lodash-es/map';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { debounceTime, switchMap, take, takeUntil } from 'rxjs/operators';
 import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
-import { BackgroundImageData, EPoiTypes } from 'subrepos/provider-client';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { BackgroundImageData, EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { MemoizedSelector, select, Store } from '@ngrx/store';
 
-import { AdminMapService, PoiEditorService, RoutePlannerService } from '../../../../shared/services';
+import { PoiEditorService, RoutePlannerService } from '../../../../shared/services';
 import { State } from '../../../../store';
 import { hikeEditImageActions } from '../../../../store/actions';
 import * as hikeEditImageSelectors from '../../../../store/selectors/hike-edit-image';
@@ -23,7 +23,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   @Input() backgroundImageUrlSelector: MemoizedSelector<object, Array<string>>;
   @Input() clickActions: any;
   @Input() showMarkerColumn: boolean;
-  @Input() distanceFrom: Array<number> = null;
+  @Input() distanceFrom: Array<number>;
   gTrackPoiPhotos$: Observable<Array<BackgroundImageData>>;
   googlePhotos$: Observable<Array<BackgroundImageData>>;
   wikipediaPhotos$: Observable<Array<BackgroundImageData>>;
@@ -35,17 +35,18 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
   bgImages$: Observable<Array<BackgroundImageData>>;
   backgroundOriginalUrls$: Observable<Array<string>>;
   slideShowUrls: Array<string>;
-  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
+  private readonly _destroy$: Subject<boolean>;
 
   constructor(
     private readonly _store: Store<State>,
     private readonly _routePlannerService: RoutePlannerService,
     private readonly _poiSelectors: PoiSelectors,
-    private readonly _poiEditorService: PoiEditorService,
-    private readonly _adminMapService: AdminMapService
-  ) {}
+    private readonly _poiEditorService: PoiEditorService
+  ) {
+    this._destroy$ = new Subject<boolean>();
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Photo sources getAllPoiPhotos
     this.gTrackPoiPhotos$ = combineLatest(
       this._store.pipe(
@@ -121,12 +122,12 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  getMapillaryPhotos() {
+  getMapillaryPhotos(): void {
     const _bounds = this._routePlannerService.getSearchBounds();
 
     if (_bounds) {
@@ -136,7 +137,7 @@ export class HikeEditPhotosComponent implements OnInit, OnDestroy {
     }
   }
 
-  getFlickrPhotos() {
+  getFlickrPhotos(): void {
     const _bounds = this._routePlannerService.getSearchBounds();
 
     if (_bounds) {

@@ -15,21 +15,26 @@ import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-ed
   styleUrls: ['./style.scss']
 })
 export class ImageMarkerPopupComponent implements OnInit, OnDestroy {
+  // tslint:disable-next-line:no-property-initializers
   static componentName = 'ImageMarkerPopupComponent';
   isPlanning$: Observable<boolean>;
   isBackground: boolean;
   data: any;
   closePopup: any;
-  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private readonly _store: Store<State>) {}
+  private readonly _destroy$: Subject<boolean>;
 
-  ngOnInit() {
+  constructor(private readonly _store: Store<State>) {
     this.isPlanning$ = this._store.pipe(
       select(hikeEditRoutePlannerSelectors.getIsPlanning),
       take(1)
     );
 
+    this.isBackground = false;
+    this._destroy$ = new Subject<boolean>();
+  }
+
+  ngOnInit(): void {
     this._store
       .pipe(
         select(editedHikeProgramSelectors.getBackgroundOriginalUrls()),
@@ -41,12 +46,12 @@ export class ImageMarkerPopupComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  toggleBackgroundImage() {
+  toggleBackgroundImage(): void {
     if (this.isBackground) {
       this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(this.data.original.url));
     } else {

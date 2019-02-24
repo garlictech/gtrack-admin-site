@@ -1,5 +1,4 @@
-import { BackgroundImageData } from 'subrepos/provider-client';
-
+import { BackgroundImageData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { ExternalPoi } from './external-poi.interface';
 
 export interface WikipediaPoiInfo {

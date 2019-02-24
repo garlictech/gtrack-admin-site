@@ -1,7 +1,7 @@
 // tslint:disable:no-property-initializers max-classes-per-file
 import { Action } from '@ngrx/store';
 
-import { GooglePoi, IOsmPoi, WikipediaPoi } from '../../shared/interfaces';
+import { GooglePoi, OsmPoi, WikipediaPoi } from '../../shared/interfaces';
 
 export const RESET_POI_STATE = '[HikeEditPoi] Reset';
 
@@ -95,7 +95,7 @@ export class GetOsmAmenityPois implements Action {
 
 export class SetOsmAmenityPois implements Action {
   readonly type = SET_OSM_AMENITY_POIS;
-  constructor(public pois: Array<IOsmPoi>) {}
+  constructor(public pois: Array<OsmPoi>) {}
 }
 
 export class SetOsmAmenityPoisInGtrackDb implements Action {
@@ -124,7 +124,7 @@ export class GetOsmNaturalPois implements Action {
 
 export class SetOsmNaturalPois implements Action {
   readonly type = SET_OSM_NATURAL_POIS;
-  constructor(public pois: Array<IOsmPoi>) {}
+  constructor(public pois: Array<OsmPoi>) {}
 }
 
 export class SetOsmNaturalPoisInGtrackDb implements Action {
@@ -153,7 +153,7 @@ export class GetOsmRoutePois implements Action {
 
 export class SetOsmRoutePois implements Action {
   readonly type = SET_OSM_ROUTE_POIS;
-  constructor(public pois: Array<IOsmPoi>) {}
+  constructor(public pois: Array<OsmPoi>) {}
 }
 
 export class SetOsmRoutePoisInGtrackDb implements Action {
@@ -182,7 +182,7 @@ export class GetWikipediaPois implements Action {
 
 export class SetWikipediaPois implements Action {
   readonly type = SET_WIKIPEDIA_POIS;
-  constructor(public pois: Array<WikipediaPoi) {}
+  constructor(public pois: Array<WikipediaPoi>) {}
 }
 
 export class SetWikipediaPoisInGtrackDb implements Action {

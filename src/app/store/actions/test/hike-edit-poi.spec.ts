@@ -1,5 +1,6 @@
+import { EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
 // tslint:disable:no-big-function
-import { EPoiTypes } from '../../../../subrepos/provider-client';
 import * as HikeEditPoiActions from '../hike-edit-poi';
 
 describe('HikeEditPoi actions', () => {

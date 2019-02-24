@@ -1,19 +1,24 @@
-import { EPoiTypes, ILocalizedItem, IPoi, ITextualDescription } from 'subrepos/provider-client';
+import {
+  EPoiTypes,
+  LocalizedItem,
+  PoiData,
+  TextualDescription
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
-export interface ExternalPoi extends IPoi {
+export interface ExternalPoi extends PoiData {
   id: string;
   elevation: number;
   lat: number;
   lon: number;
   objectTypes?: Array<EPoiTypes>;
   types: Array<string>;
-  description: ILocalizedItem<ITextualDescription>;
-  selected?: boolean | undefined;
-  distanceFromOrigo?: number | undefined;
-  isStart?: boolean | undefined;
-  isFinish?: boolean | undefined;
-  inGtrackDb?: boolean | undefined;
-  inCollector?: boolean | undefined;
-  distFromRoute?: number | undefined;
-  onRoute?: boolean | undefined;
+  description: LocalizedItem<TextualDescription>;
+  selected?: boolean;
+  distanceFromOrigo?: number;
+  isStart?: boolean;
+  isFinish?: boolean;
+  inGtrackDb?: boolean;
+  inCollector?: boolean;
+  distFromRoute?: number;
+  onRoute?: boolean;
 }

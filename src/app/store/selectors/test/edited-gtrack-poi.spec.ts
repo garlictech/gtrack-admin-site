@@ -4,9 +4,12 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { TestBed } from '@angular/core/testing';
+import {
+  BackgroundImageData,
+  ETextualDescriptionType
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store, StoreModule } from '@ngrx/store';
 
-import { BackgroundImageData, ETextualDescriptionType } from '../../../../subrepos/provider-client';
 import { editedGTrackPoiActions } from '../../actions';
 import { editedGTrackPoiReducer, initialEditedGTrackPoiState } from '../../reducer/edited-gtrack-poi';
 import { bgImages as bgImageFixtures } from '../../reducer/test/fixtures';

@@ -4,7 +4,7 @@ import {
   BackgroundImageData,
   BackgroundImageDataStored,
   EPoiImageTypes
-} from '../../../../../subrepos/provider-client';
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 const bgImageData = {
   title: 'fakeImageTitle',

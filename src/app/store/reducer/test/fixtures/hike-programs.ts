@@ -1,7 +1,9 @@
-import { ETextualDescriptionType, IHikeProgram } from 'subrepos/provider-client';
+import { HikeProgram } from 'subrepos/gtrack-common-ngx';
 import * as uuid from 'uuid/v4';
 
-export const hikePrograms: Array<IHikeProgram> = [
+import { ETextualDescriptionType, HikeProgramData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
+export const hikePrograms: Array<HikeProgramData> = [
   {
     id: uuid(),
     distance: 5,

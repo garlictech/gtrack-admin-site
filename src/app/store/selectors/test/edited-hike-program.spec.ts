@@ -4,15 +4,15 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { TestBed } from '@angular/core/testing';
-import { select, Store, StoreModule } from '@ngrx/store';
-
-import { EXTERNAL_POI_DEPENDENCIES, poiReducer, PoiSelectors } from '../../../../subrepos/gtrack-common-ngx';
 import {
   BackgroundImageData,
   EObjectState,
   ETextualDescriptionType,
   HikeProgramStop
-} from '../../../../subrepos/provider-client';
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { select, Store, StoreModule } from '@ngrx/store';
+
+import { EXTERNAL_POI_DEPENDENCIES, poiReducer, PoiSelectors } from '../../../../subrepos/gtrack-common-ngx';
 import { ExternalPoi } from '../../../shared/interfaces';
 import { commonPoiActions, editedHikeProgramActions } from '../../actions';
 import { editedHikeProgramReducer, initialEditedHikeProgramState } from '../../reducer/edited-hike-program';

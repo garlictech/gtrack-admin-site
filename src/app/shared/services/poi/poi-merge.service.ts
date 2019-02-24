@@ -7,13 +7,13 @@ import _uniq from 'lodash-es/uniq';
 
 import { Injectable } from '@angular/core';
 
-import { IComparedProperty, IFilteredProperties } from '../../interfaces';
+import { ComparedProperty, FilteredProperties } from '../../interfaces';
 
 @Injectable()
 export class PoiMergeService {
-  collectFlatKeyValues(pois) {
+  collectFlatKeyValues(pois): FilteredProperties {
     // Collect properties
-    const flatProperties: IComparedProperty = {};
+    const flatProperties: ComparedProperty = {};
     let commonTypes: Array<string> = [];
     let objectTypes: Array<string> = [];
 
@@ -60,7 +60,7 @@ export class PoiMergeService {
     }
 
     // Separate
-    const filteredProperties: IFilteredProperties = {
+    const filteredProperties: FilteredProperties = {
       unique: {
         types: _uniq(commonTypes),
         objectTypes
@@ -79,7 +79,7 @@ export class PoiMergeService {
     return filteredProperties;
   }
 
-  createGTrackPoiFromUniqueValues(flatProperties: IComparedProperty): any {
+  createGTrackPoiFromUniqueValues(flatProperties: ComparedProperty): any {
     const poiData = {};
 
     for (const key in flatProperties) {

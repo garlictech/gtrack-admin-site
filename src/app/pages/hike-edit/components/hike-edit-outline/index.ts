@@ -5,11 +5,11 @@ import _first from 'lodash-es/first';
 import _last from 'lodash-es/last';
 import { Observable, Subject } from 'rxjs';
 import { delay, take, takeUntil } from 'rxjs/operators';
-import { ISegment, PoiSelectors } from 'subrepos/gtrack-common-ngx';
-import { HikeProgramStop } from 'subrepos/provider-client';
+import { PoiSelectors, Segment } from 'subrepos/gtrack-common-ngx';
 
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
+import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { select, Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
@@ -18,9 +18,9 @@ import { State } from '../../../../store';
 import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
 import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 
-interface INearestSegmentData {
+interface NearestSegmentData {
   nearestIdx: number;
-  segments: Array<ISegment>;
+  segments: Array<Segment>;
 }
 
 @Component({
@@ -33,7 +33,7 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
   stops$: Observable<Array<HikeProgramStop>>;
   startIcon: string;
   finishIcon: string;
-  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
+  private readonly _destroy$: Subject<boolean>;
 
   constructor(
     private readonly _store: Store<State>,
@@ -45,9 +45,11 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
   ) {
     this.startIcon = this._leafletIconService.url('start');
     this.finishIcon = this._leafletIconService.url('finish');
+
+    this._destroy$ = new Subject<boolean>();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.stops$ = this._store.pipe(
       select(editedHikeProgramSelectors.getStopsWithPoiNames(this._poiSelectors.getAllPois)),
       delay(0),
@@ -55,19 +57,19 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
     );
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this._changeDetectorRef.detectChanges();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  startHere(event, stop: HikeProgramStop) {
+  startHere(event, stop: HikeProgramStop): void {
     event.preventDefault();
 
-    this._getNearestSegmentToPoint(stop).then((sData: INearestSegmentData) => {
+    this._getNearestSegmentToPoint(stop).then((sData: NearestSegmentData) => {
       // Plan new route between the snapped point and the segment endpoint
       this._waypointMarkerService
         .getRouteFromApi(
@@ -85,10 +87,10 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
     });
   }
 
-  endHere(event, stop: HikeProgramStop) {
+  endHere(event, stop: HikeProgramStop): void {
     event.preventDefault();
 
-    this._getNearestSegmentToPoint(stop).then((sData: INearestSegmentData) => {
+    this._getNearestSegmentToPoint(stop).then((sData: NearestSegmentData) => {
       // Plan new route between the snapped point and the segment endpoint
       this._waypointMarkerService
         .getRouteFromApi(
@@ -106,14 +108,14 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
     });
   }
 
-  private _getNearestSegmentToPoint(stop: HikeProgramStop) {
+  private async _getNearestSegmentToPoint(stop: HikeProgramStop): Promise<any> {
     return new Promise(resolve => {
       this._store
         .pipe(
           select(hikeEditRoutePlannerSelectors.getSegments),
           take(1)
         )
-        .subscribe((segments: Array<ISegment>) => {
+        .subscribe((segments: Array<Segment>) => {
           const stopPoint = turfPoint([stop.lat, stop.lon]);
           const snappedPoints = [];
 
@@ -136,17 +138,3 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
     });
   }
 }
-/*
-rivate _moveLastWaypointToRoute(coords) {
-    for (let i = this._markers.length - 2; i < this._markers.length; i++) {
-      const line = turfLineString(coords);
-      const pt = turfPoint([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
-      const snapped = turfNearestPointOnLine(line, pt);
-
-      this._markers[i].setLatLng(new L.LatLng(
-        (<any>snapped.geometry).coordinates[0],
-        (<any>snapped.geometry).coordinates[1]
-      ));
-    }
-  }
-*/

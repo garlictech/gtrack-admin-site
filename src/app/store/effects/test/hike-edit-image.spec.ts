@@ -2,11 +2,11 @@
 import { cold, hot, Scheduler } from 'jest-marbles';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
-import { BackgroundImageDataStored } from 'subrepos/provider-client';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
+import { BackgroundImageDataStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';

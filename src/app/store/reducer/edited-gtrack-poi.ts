@@ -1,7 +1,8 @@
 // tslint:disable:only-arrow-functions no-small-switch
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _omit from 'lodash-es/omit';
-import { EObjectState, ETextualDescriptionType } from 'subrepos/provider-client';
+
+import { EObjectState, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { editedGTrackPoiActions } from '../actions';
 import { EditedGTrackPoiState } from '../state';

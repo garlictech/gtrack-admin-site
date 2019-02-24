@@ -1,17 +1,22 @@
 import { cold, hot, Scheduler } from 'jest-marbles';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
-import { EObjectState, IHikeProgram } from 'subrepos/provider-client';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
+import { EObjectState } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
-import { DeepstreamModule, GeospatialService, HikeProgramService } from '../../../../subrepos/gtrack-common-ngx';
+import {
+  DeepstreamModule,
+  GeospatialService,
+  HikeProgram,
+  HikeProgramService
+} from '../../../../subrepos/gtrack-common-ngx';
 import { ExternalPoi } from '../../../shared/interfaces';
 import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
 import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
@@ -26,7 +31,7 @@ describe('EditedHikeProgramEffects effects', () => {
   let hikeProgramService: HikeProgramService;
   let geospatialService: GeospatialService;
   let pois: Array<ExternalPoi>;
-  let hikePrograms: Array<IHikeProgram>;
+  let hikePrograms: Array<HikeProgram>;
 
   beforeEach(() => {
     pois = _.cloneDeep(poiFixtures);

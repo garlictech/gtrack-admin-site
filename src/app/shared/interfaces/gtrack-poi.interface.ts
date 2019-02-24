@@ -1,19 +1,19 @@
-import { IPoiStored } from 'subrepos/provider-client';
+import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
-export interface IGTrackPoi extends IPoiStored {
-  inHike?: boolean | undefined;
-  distFromRoute?: number | undefined;
-  distFromOrigo?: number | undefined;
-  onRoute?: boolean | undefined;
+export interface GTrackPoi extends PoiStored {
+  inHike?: boolean;
+  distFromRoute?: number;
+  distFromOrigo?: number;
+  onRoute?: boolean;
 }
 
 // gTRackPoi merge
 
-export interface IComparedProperty {
+export interface ComparedProperty {
   [flatKey: string]: Array<any>;
 }
 
-export interface IFilteredProperties {
-  unique?: IComparedProperty;
-  conflicts?: IComparedProperty;
+export interface FilteredProperties {
+  unique?: ComparedProperty;
+  conflicts?: ComparedProperty;
 }

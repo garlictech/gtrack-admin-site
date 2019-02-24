@@ -3,9 +3,9 @@ import _omit from 'lodash-es/omit';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { PoiService } from 'subrepos/gtrack-common-ngx';
-import { IPoiStored } from 'subrepos/provider-client';
 
 import { Injectable } from '@angular/core';
+import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, select, Store } from '@ngrx/store';
 
@@ -24,7 +24,7 @@ export class EditedGTrackPoiEffects {
         take(1)
       )
     ),
-    switchMap((data: IPoiStored) => {
+    switchMap((data: PoiStored) => {
       const poiData = _omit(data, ['timestamp']);
 
       return this._poiService.create(poiData).pipe(

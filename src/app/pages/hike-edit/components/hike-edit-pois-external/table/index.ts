@@ -1,10 +1,10 @@
 import _map from 'lodash-es/map';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { EPoiTypes } from 'subrepos/provider-client';
 
 // Core
 import { Component, Input } from '@angular/core';
+import { EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Store } from '@ngrx/store';
 
 import { State } from '../../../../../store';
@@ -22,7 +22,7 @@ export class HikeEditPoisExternalTableComponent {
 
   constructor(private readonly _store: Store<State>) {}
 
-  handlePoiSelection(poiIds: Array<string>) {
+  handlePoiSelection(poiIds: Array<string>): void {
     switch (this.subdomain) {
       case EPoiTypes.google:
         this._store.dispatch(new hikeEditPoiActions.SetGooglePoiSelected(poiIds));
@@ -39,10 +39,12 @@ export class HikeEditPoisExternalTableComponent {
       case EPoiTypes.osmRoute:
         this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiSelected(poiIds));
         break;
+      default:
+        break;
     }
   }
 
-  invertSelection() {
+  invertSelection(): void {
     this.pois$.pipe(take(1)).subscribe(pois => {
       const clickablePois = pois.filter(p => !!p.onRoute === this.onRouteCheck && !p.inCollector && !p.inGtrackDb);
 

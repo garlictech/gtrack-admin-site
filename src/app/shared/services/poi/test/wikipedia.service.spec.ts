@@ -4,9 +4,9 @@ import { MessageService } from 'primeng/api';
 import { HttpRequest } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { GeometryService } from '../../../../../subrepos/gtrack-common-ngx';
-import { EPoiTypes } from '../../../../../subrepos/provider-client';
 import { HikeProgramService } from '../../hike';
 import { WikipediaPoiService } from '../wikipedia-poi.service';
 import {
@@ -18,7 +18,6 @@ import {
 
 describe('WikipediaPoiService', () => {
   let wikipediaPoiService: WikipediaPoiService;
-  let geometryService: GeometryService;
   let hikeProgramService: HikeProgramService;
   let messageService: MessageService;
   let httpMock: HttpTestingController;
@@ -36,19 +35,19 @@ describe('WikipediaPoiService', () => {
         {
           provide: GeometryService,
           useValue: {
-            getCenterRadius: () => {}
+            getCenterRadius: jest.fn()
           }
         },
         {
           provide: MessageService,
           useValue: {
-            add: () => {}
+            add: jest.fn()
           }
         },
         {
           provide: HikeProgramService,
           useValue: {
-            getDescriptionLanguages: () => {}
+            getDescriptionLanguages: jest.fn()
           }
         }
       ]
@@ -56,7 +55,6 @@ describe('WikipediaPoiService', () => {
 
     wikipediaPoiService = TestBed.get(WikipediaPoiService);
     hikeProgramService = TestBed.get(HikeProgramService);
-    geometryService = TestBed.get(GeometryService);
     messageService = TestBed.get(MessageService);
     httpMock = TestBed.get(HttpTestingController);
   });
@@ -67,10 +65,6 @@ describe('WikipediaPoiService', () => {
 
   it('should get wikipedia pois from api', done => {
     let wikipediaPois = [];
-    const geoSpy = jest.spyOn(geometryService, 'getCenterRadius').mockReturnValue({
-      center: { geometry: { coordinates: [0, 0] } },
-      radius: 10
-    });
 
     wikipediaPoiService.get(BOUNDS, 'en').subscribe(pois => {
       wikipediaPois = pois;
@@ -93,10 +87,6 @@ describe('WikipediaPoiService', () => {
 
   it('should show error message on api failure', done => {
     let wikipediaPois = [];
-    const geoSpy = jest.spyOn(geometryService, 'getCenterRadius').mockReturnValue({
-      center: { geometry: { coordinates: [0, 0] } },
-      radius: 10
-    });
     const messageSpy = jest.spyOn(messageService, 'add');
 
     wikipediaPoiService.get(BOUNDS, 'en').subscribe(pois => {

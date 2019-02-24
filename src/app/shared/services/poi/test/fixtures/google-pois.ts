@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
-import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
+
+import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 // tslint:disable:max-line-length
 

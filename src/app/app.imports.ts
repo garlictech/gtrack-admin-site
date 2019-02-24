@@ -3,25 +3,25 @@ import _get from 'lodash-es/get';
 import { ToastModule } from 'primeng/toast';
 import { AuthenticationApiModule, defaultAuthenticationApiConfig } from 'subrepos/authentication-api-ngx';
 import {
-  BackgroundGeolocationModule,
   DeepstreamModule,
   defaultSharedConfig,
   GeoSearchModule,
   HikeModule,
-  IHikeModuleConfig,
-  IObjectMarkModuleConfig,
+  HikeModuleConfig,
   ObjectMarkModule,
+  ObjectMarkModuleConfig,
   SearchFiltersModule,
   SharedModule
 } from 'subrepos/gtrack-common-ngx';
 import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
 
-import { LeafletMapModule } from '@common.features/leaflet-map/leaflet-map.module';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { GenericUiModule } from '@web.features/generic-ui';
 
+import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
+import { GenericUiModule } from '@bit/garlictech.angular-features.common.generic-ui';
+import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';
@@ -39,11 +39,12 @@ const sharedConfig = {
   ...defaultSharedConfig
 };
 
-export function getSharedConfig() {
+// tslint:disable-next-line:only-arrow-functions
+export function getSharedConfig(): any {
   return sharedConfig;
 }
 
-const hikeModuleConfig: IHikeModuleConfig = {
+const hikeModuleConfig: HikeModuleConfig = {
   storeDomains: {
     hike: 'hike',
     poi: 'poi',
@@ -51,7 +52,7 @@ const hikeModuleConfig: IHikeModuleConfig = {
   }
 };
 
-const objectMarkConfig: IObjectMarkModuleConfig = {
+const objectMarkConfig: ObjectMarkModuleConfig = {
   storeDomain: 'objectMarks'
 };
 
@@ -65,7 +66,8 @@ authConfig.facebook.appId = _get(environment, 'authentication.facebook.appId');
 authConfig.google.appId = _get(environment, 'authentication.google.appId');
 authConfig.magiclink = { redirectSlug: '/auth/magiclink' };
 
-export function getAuthConfig() {
+// tslint:disable-next-line:only-arrow-functions
+export function getAuthConfig(): any {
   return authConfig;
 }
 
@@ -82,12 +84,11 @@ export const APP_IMPORTS = [
     storeDomain: 'searchFilters'
   }),
   SharedModule.forRoot(getSharedConfig),
-  BackgroundGeolocationModule.forRoot(),
   GeoSearchModule.forRoot({
     storeDomain: 'geosearch'
   }),
   HikeModule.forRoot(hikeModuleConfig),
-  BackgroundGeolocationModule.forRoot(),
+  CurrentGeolocationModule.forRoot({ timeOut: 2000 }, { endpoint: environment.lambdaEndpoint }),
   CoreLayoutModule,
   AuthModule,
   HikeListModule,

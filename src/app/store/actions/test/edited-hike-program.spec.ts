@@ -1,6 +1,11 @@
+import {
+  BackgroundImageData,
+  EPoiImageTypes,
+  HikeProgramStop
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
 // tslint:disable:no-big-function
-import { BackgroundImageData, EPoiImageTypes, HikeProgramStop } from '../../../../subrepos/provider-client';
-import { IGTrackPoi } from '../../../shared/interfaces';
+import { GTrackPoi } from '../../../shared/interfaces';
 import * as EditedHikeProgramActions from '../edited-hike-program';
 
 describe('EditedHikeProgram actions', () => {
@@ -96,7 +101,7 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create Prepare then add stop action', () => {
-    const poi: IGTrackPoi = undefined;
+    const poi: GTrackPoi = undefined;
     const action = new EditedHikeProgramActions.PrepareThenAddStop(poi);
 
     expect(action).toBeDefined();

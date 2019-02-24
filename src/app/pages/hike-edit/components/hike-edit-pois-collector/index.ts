@@ -11,9 +11,8 @@ import * as uuid from 'uuid/v1';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
-import { ExternalPoi, IFilteredProperties, IGTrackPoi } from '../../../../shared/interfaces';
+import { ExternalPoi, FilteredProperties, GTrackPoi } from '../../../../shared/interfaces';
 import { PoiEditorService, PoiMergeService } from '../../../../shared/services';
-import { AdminMapService } from '../../../../shared/services/admin-map';
 import { State } from '../../../../store';
 import { commonPoiActions, hikeEditPoiActions } from '../../../../store/actions';
 import * as hikeEditPoiSelectors from '../../../../store/selectors/hike-edit-poi';
@@ -28,26 +27,35 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   selectedPois$: Observable<Array<any>>;
   saveablePoisCount$: Observable<number>;
   saving$: Observable<boolean>;
-  showOnrouteMarkers = true;
-  showOffrouteMarkers = true;
+  showOnrouteMarkers: boolean;
+  showOffrouteMarkers: boolean;
   modalPoi: any;
-  displayPoiModal = false;
+  displayPoiModal: boolean;
   mergeSelectionCount$: Observable<number>;
-  mergeProperties: IFilteredProperties = {};
-  mergedPoiIds: Array<string> = [];
+  mergeProperties: FilteredProperties;
+  mergedPoiIds: Array<string>;
   mergedPoiData: any;
-  displayMergeModal = false;
-  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
+  displayMergeModal: boolean;
+  private readonly _destroy$: Subject<boolean>;
 
   constructor(
     private readonly _store: Store<State>,
     private readonly _poiSelectors: PoiSelectors,
     private readonly _poiEditorService: PoiEditorService,
-    private readonly _poiMergeService: PoiMergeService,
-    private readonly _adminMapService: AdminMapService
-  ) {}
+    private readonly _poiMergeService: PoiMergeService
+  ) {
+    this.showOnrouteMarkers = true;
+    this.showOffrouteMarkers = true;
+    this.displayPoiModal = false;
+    this.displayMergeModal = false;
 
-  ngOnInit() {
+    this.mergeProperties = {};
+    this.mergedPoiIds = [];
+
+    this._destroy$ = new Subject<boolean>();
+  }
+
+  ngOnInit(): void {
     // Poi list from store
     this.pois$ = this._store.pipe(
       select(hikeEditPoiSelectors.getAllCollectorPois),
@@ -74,10 +82,10 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       .pipe(
         select(this._poiSelectors.getAllPois),
         debounceTime(250),
-        filter((gTrackPois: Array<IGTrackPoi>) => gTrackPois.length > 0),
+        filter((gTrackPois: Array<GTrackPoi>) => gTrackPois.length > 0),
         takeUntil(this._destroy$)
       )
-      .subscribe((gTrackPois: Array<IGTrackPoi>) => {
+      .subscribe((gTrackPois: Array<GTrackPoi>) => {
         this._store
           .pipe(
             select(hikeEditPoiSelectors.getAllCollectorPois),
@@ -145,7 +153,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
@@ -153,21 +161,21 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   /**
    * Show onroute markers checkbox click
    */
-  toggleOnrouteMarkers() {
+  toggleOnrouteMarkers(): void {
     this._store.dispatch(new hikeEditPoiActions.ToggleOnrouteMarkers('collector'));
   }
 
   /**
    * Show offroute markers checkbox click
    */
-  toggleOffrouteMarkers() {
+  toggleOffrouteMarkers(): void {
     this._store.dispatch(new hikeEditPoiActions.ToggleOffrouteMarkers('collector'));
   }
 
   /**
    * Start merge
    */
-  mergePois() {
+  mergePois(): void {
     this._store
       .pipe(
         select(hikeEditPoiSelectors.getMergeSelections),
@@ -202,6 +210,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   /**
    * Merge modal callback
    */
+  // tslint:disable-next-line:no-property-initializers
   saveMergedPoi = mergedData => {
     const _coordsArr = mergedData.coords.slice(1, -1).split(',');
 
@@ -232,7 +241,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   /**
    * Save selected pois as gTrackPoi
    */
-  savePois() {
+  savePois(): void {
     this._store.dispatch(new hikeEditPoiActions.SetSaving('collector', true));
 
     this.pois$.pipe(take(1)).subscribe((pois: Array<ExternalPoi>) => {
@@ -253,13 +262,14 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   /**
    * Remove selected pois from the collector
    */
-  removeSelectedPois() {
+  removeSelectedPois(): void {
     this.selectedPois$.pipe(take(1)).subscribe((selectedPois: Array<any>) => {
       const _removablePoiIds = _map(selectedPois, 'id');
       this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector(_removablePoiIds));
     });
   }
 
+  // tslint:disable-next-line:no-property-initializers
   openPoiModal = poi => {
     this.modalPoi = _cloneDeep(poi);
     this.displayPoiModal = true;
@@ -268,7 +278,7 @@ export class HikeEditPoisCollectorComponent implements OnInit, OnDestroy {
   /**
    * Save the new merged poi and remove merge sources
    */
-  private _saveMergedPoiData() {
+  private _saveMergedPoiData(): void {
     this.mergedPoiData.id = uuid();
 
     this._store.dispatch(new hikeEditPoiActions.AddPoisToCollector([this.mergedPoiData]));

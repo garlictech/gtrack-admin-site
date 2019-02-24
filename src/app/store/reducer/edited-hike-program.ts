@@ -3,8 +3,8 @@ import _assign from 'lodash-es/assign';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _omit from 'lodash-es/omit';
 import _union from 'lodash-es/union';
-import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
-import { EObjectState, ETextualDescriptionType } from 'subrepos/provider-client';
+
+import { EObjectState, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { editedHikeProgramActions } from '../actions';
 import { EditedHikeProgramState } from '../state';
@@ -35,7 +35,7 @@ export const initialEditedHikeProgramState: EditedHikeProgramState = {
     },
     stops: [],
     reverseStops: [],
-    checkpoints: new CheckpointSequence([]),
+    // checkpoints: new CheckpointSequence([]),
     timestamp: 0,
     state: EObjectState.draft
   },
@@ -127,7 +127,7 @@ export function editedHikeProgramReducer(
     }
 
     case editedHikeProgramActions.SET_CHECKPOINTS: {
-      newState.data.checkpoints = _cloneDeep(action.checkpoints);
+      // newState.data.checkpoints = _cloneDeep(action.checkpoints);
 
       return newState;
     }

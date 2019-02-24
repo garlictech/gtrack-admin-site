@@ -3,9 +3,9 @@ import _omit from 'lodash-es/omit';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { GeospatialService, HikeProgramService, RouteActionTypes } from 'subrepos/gtrack-common-ngx';
-import { IHikeProgramStored } from 'subrepos/provider-client';
 
 import { Injectable } from '@angular/core';
+import { HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, select, Store } from '@ngrx/store';
 
@@ -62,7 +62,7 @@ export class EditedHikeProgramEffects {
         take(1)
       )
     ),
-    switchMap((data: IHikeProgramStored) => {
+    switchMap((data: HikeProgramStored) => {
       const hikeProgramData = _omit(data, ['timestamp']);
 
       return this._hikeProgramService.save(hikeProgramData).pipe(

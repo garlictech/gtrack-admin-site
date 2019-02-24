@@ -1,9 +1,9 @@
 import _keys from 'lodash-es/keys';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { BackgroundImageData } from 'subrepos/provider-client';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { BackgroundImageData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 @Component({
   selector: 'app-hike-edit-photos-table',
@@ -16,26 +16,33 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
   @Input() clickActions: any;
   @Input() showMarkerColumn: boolean;
   @Input() onRouteCheck: boolean;
-  @Input() distanceFrom: Array<number> = null; // Used in gTrackPoi bgImages!
-  imageSelections: { [id: string]: boolean } = {};
-  imageMarkerSelections: { [id: string]: boolean } = {};
-  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
+  @Input() distanceFrom: Array<number>; // Used in gTrackPoi bgImages!
+  imageSelections: { [id: string]: boolean };
+  imageMarkerSelections: { [id: string]: boolean };
+  private readonly _destroy$: Subject<boolean>;
 
-  ngOnInit() {
+  constructor() {
+    this.imageSelections = {};
+    this.imageMarkerSelections = {};
+
+    this._destroy$ = new Subject<boolean>();
+  }
+
+  ngOnInit(): void {
     this.backgroundOriginalUrls$.pipe(takeUntil(this._destroy$)).subscribe((backgroundOriginalUrls: Array<string>) => {
       this.imageSelections = {};
-      backgroundOriginalUrls.map(url => {
+      backgroundOriginalUrls.forEach(url => {
         this.imageSelections[url] = true;
       });
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  toggleBackgroundImage(image: BackgroundImageData) {
+  toggleBackgroundImage(image: BackgroundImageData): void {
     if (!this.imageSelections[image.original.url]) {
       this.clickActions.remove(image.original.url);
     } else {
@@ -43,7 +50,7 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleImageMarker(image: BackgroundImageData) {
+  toggleImageMarker(image: BackgroundImageData): void {
     if (!this.imageMarkerSelections[image.original.url]) {
       this.clickActions.removeMarker(image);
     } else {
@@ -51,7 +58,7 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  invertMarkerSelection() {
+  invertMarkerSelection(): void {
     const _imageSelection = [];
 
     for (const imgUrl in this.imageMarkerSelections) {
@@ -68,8 +75,8 @@ export class HikeEditPhotosTableComponent implements OnInit, OnDestroy {
         i => _imageSelection.includes(i.original.url) && (i as any).onRoute === this.onRouteCheck
       );
 
-      _imagesToAdd.map(i => (this.imageMarkerSelections[i.original.url] = true));
-      _imagesToRemove.map(i => (this.imageMarkerSelections[i.original.url] = false));
+      _imagesToAdd.forEach(i => (this.imageMarkerSelections[i.original.url] = true));
+      _imagesToRemove.forEach(i => (this.imageMarkerSelections[i.original.url] = false));
 
       this.clickActions.addMarkers(_imagesToAdd);
       this.clickActions.removeMarkers(_imagesToRemove);

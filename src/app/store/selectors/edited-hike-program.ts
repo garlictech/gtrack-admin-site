@@ -2,8 +2,12 @@ import _cloneDeep from 'lodash-es/cloneDeep';
 import _get from 'lodash-es/get';
 import _keys from 'lodash-es/keys';
 import _uniq from 'lodash-es/uniq';
-import { BackgroundImageData, HikeProgramStop, IPoiStored } from 'subrepos/provider-client';
 
+import {
+  BackgroundImageData,
+  HikeProgramStop,
+  PoiStored
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { EditedHikeProgramState } from '../state/edited-hike-program';
@@ -69,7 +73,7 @@ export const getDescriptionByLang = (lang: string) =>
     (state: EditedHikeProgramState) => _get(state, `data.description.${lang}`)
   );
 
-export const getHikePois = (getAllSelector: (state: object) => Array<IPoiStored>) =>
+export const getHikePois = (getAllSelector: (state: object) => Array<PoiStored>) =>
   createSelector(
     getAllSelector,
     getPoiIds,
@@ -80,7 +84,7 @@ export const getHikePois = (getAllSelector: (state: object) => Array<IPoiStored>
     }
   );
 
-export const getHikePoisCount = (getAllSelector: (state: object) => Array<IPoiStored>) =>
+export const getHikePoisCount = (getAllSelector: (state: object) => Array<PoiStored>) =>
   createSelector(
     getAllSelector,
     getPoiIds,
@@ -91,7 +95,7 @@ export const getHikePoisCount = (getAllSelector: (state: object) => Array<IPoiSt
     }
   );
 
-export const getStopsWithPoiNames = (getAllSelector: (state: object) => Array<IPoiStored>) =>
+export const getStopsWithPoiNames = (getAllSelector: (state: object) => Array<PoiStored>) =>
   createSelector(
     getAllSelector,
     getStops,

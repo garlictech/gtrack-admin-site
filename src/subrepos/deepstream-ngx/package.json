@@ -1,0 +1,17 @@
+{
+    "name": "deepstream-ngx",
+    "description": "deepstream ngx",
+    "main": "index.ts",
+    "version": "0.0.0",
+    "files": ["src", "index.ts"],
+    "license": "SEE LICENSE IN license.txt",
+    "engines": {
+        "npm": ">=3.0.0",
+        "node": ">=5.0.0"
+    },
+    "peerDependencies": {
+        "@garlictech/deepstream-rxjs": "^1.0.0"
+    },
+    "devDependencies": {},
+    "scripts": {}
+}

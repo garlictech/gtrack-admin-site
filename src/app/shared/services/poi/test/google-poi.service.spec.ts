@@ -5,7 +5,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { defaultSharedConfig, GeometryService } from '../../../../../subrepos/gtrack-common-ngx';
-import { EPoiImageTypes } from '../../../../../subrepos/provider-client';
+
+import { EPoiImageTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { GooglePoiService, PLACE_API_URL, PURE_PLACE_API_URL } from '../google-poi.service';
 import { DETAILED_GOOGLE_POI, GOOGLE_POI_RESPONSE, GOOGLE_POIS } from './fixtures/google-pois';
 
@@ -27,7 +28,7 @@ describe('GooglePoiService', () => {
         {
           provide: GeometryService,
           useValue: {
-            getCenterRadius: () => {}
+            getCenterRadius: jest.fn()
           }
         }
       ]
@@ -45,7 +46,11 @@ describe('GooglePoiService', () => {
   it('should get pois from Google', done => {
     let googlePois = [];
     const geoSpy = jest.spyOn(geometryService, 'getCenterRadius').mockReturnValue({
-      center: { geometry: { coordinates: [0, 0] } },
+      center: {
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: [0, 0] },
+        properties: undefined
+      },
       radius: 10
     });
     const request = `${PLACE_API_URL}/nearbysearch/json?location=0,0&radius=10&key=${

@@ -1,4 +1,6 @@
-import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
+import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
+const HUNTING_STAND = 'Hunting stand';
 
 export const OSM_AMENITY_RESPONSE = {
   version: 0.6,
@@ -81,7 +83,7 @@ export const OSM_AMENITY_POIS = [
       en_US: {
         fullDescription: '',
         summary: '',
-        title: 'Hunting stand',
+        title: HUNTING_STAND,
         type: ETextualDescriptionType.markdown
       }
     },
@@ -101,7 +103,7 @@ export const OSM_AMENITY_POIS = [
       en_US: {
         fullDescription: '',
         summary: '',
-        title: 'Hunting stand',
+        title: HUNTING_STAND,
         type: ETextualDescriptionType.markdown
       }
     },
@@ -121,7 +123,7 @@ export const OSM_AMENITY_POIS = [
       en_US: {
         fullDescription: '',
         summary: '',
-        title: 'Hunting stand',
+        title: HUNTING_STAND,
         type: ETextualDescriptionType.markdown
       }
     },

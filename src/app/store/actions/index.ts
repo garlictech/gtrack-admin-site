@@ -4,8 +4,9 @@ import * as commonHikeActions from 'subrepos/gtrack-common-ngx/app/hike/store/hi
 import * as commonPoiActions from 'subrepos/gtrack-common-ngx/app/hike/store/poi/actions';
 import * as commonRouteActions from 'subrepos/gtrack-common-ngx/app/hike/store/route/actions';
 import * as routingActions from 'subrepos/gtrack-common-ngx/app/router/store/actions';
+
 // tslint:disable:max-line-length
-import * as commonBackgroundGeolocationActions from 'subrepos/gtrack-common-ngx/app/shared/services/background-geolocation-service/store/actions';
+import * as commonBackgroundGeolocationActions from '@bit/garlictech.angular-features.common.current-geolocation/store/actions';
 
 import * as editedGTrackPoiActions from './edited-gtrack-poi';
 import * as editedHikeProgramActions from './edited-hike-program';

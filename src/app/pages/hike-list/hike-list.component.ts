@@ -3,10 +3,10 @@ import { ConfirmationService, SelectItem } from 'primeng/api';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
-import { EObjectState, IHikeProgramStored } from 'subrepos/provider-client';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { EObjectState, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store } from '@ngrx/store';
 
 import { State } from '../../store';
@@ -18,20 +18,25 @@ import { commonHikeActions } from '../../store/actions';
   styleUrls: ['./hike-list.component.scss']
 })
 export class HikeListComponent implements OnInit, OnDestroy {
-  hikeList$: Observable<Array<IHikeProgramStored>>;
+  hikeList$: Observable<Array<HikeProgramStored>>;
+  // tslint:disable-next-line:no-property-initializers
   EObjectState = EObjectState;
-  selectedListState: EObjectState = EObjectState.published;
-  listStates: Array<SelectItem> = [];
-  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
+  selectedListState: EObjectState;
+  listStates: Array<SelectItem>;
+  private readonly _destroy$: Subject<boolean>;
 
   constructor(
     private readonly _store: Store<State>,
     private readonly _hikeSelectors: HikeSelectors,
     private readonly _title: Title,
     private readonly _confirmationService: ConfirmationService
-  ) {}
+  ) {
+    this.selectedListState = EObjectState.published;
+    this.listStates = [];
+    this._destroy$ = new Subject<boolean>();
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._title.setTitle('Hikes');
 
     this.listStates = [
@@ -49,12 +54,12 @@ export class HikeListComponent implements OnInit, OnDestroy {
     this._store.dispatch(new commonHikeActions.LoadHikePrograms());
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  deleteHike(hikeId: string) {
+  deleteHike(hikeId: string): void {
     this._confirmationService.confirm({
       message: 'Are you sure that you want to delete?',
       accept: () => {

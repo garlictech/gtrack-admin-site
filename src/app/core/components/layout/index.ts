@@ -5,8 +5,13 @@ import { Component } from '@angular/core';
   templateUrl: './ui.html'
 })
 export class LayoutComponent {
-  sidebarActive = false;
+  sidebarActive: boolean;
 
+  constructor() {
+    this.sidebarActive = false;
+  }
+
+  // tslint:disable-next-line:no-property-initializers
   onMenuButtonClick = (event: Event) => {
     this.sidebarActive = !this.sidebarActive;
     event.preventDefault();

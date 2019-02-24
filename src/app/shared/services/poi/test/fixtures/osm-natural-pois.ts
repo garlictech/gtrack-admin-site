@@ -1,4 +1,4 @@
-import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
+import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 export const OSM_NATURAL_RESPONSE = {
   version: 0.6,

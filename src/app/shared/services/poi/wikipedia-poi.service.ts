@@ -5,13 +5,18 @@ import { MessageService } from 'primeng/api';
 import { interval, Observable, of } from 'rxjs';
 import { combineAll, map, take } from 'rxjs/operators';
 import { CenterRadius, GeometryService } from 'subrepos/gtrack-common-ngx';
-import { BackgroundImageData, EPoiImageTypes, EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
 import * as uuid from 'uuid/v1';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {
+  BackgroundImageData,
+  EPoiImageTypes,
+  EPoiTypes,
+  ETextualDescriptionType
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
-import { IWikipediaPoi } from '../../interfaces';
+import { WikipediaPoi } from '../../interfaces';
 import { HikeProgramService } from '../hike/hike-program.service';
 import { LanguageService } from '../language.service';
 
@@ -26,7 +31,7 @@ export class WikipediaPoiService {
     private readonly _hikeProgramService: HikeProgramService
   ) {}
 
-  get(bounds, lng = 'en') {
+  get(bounds, lng = 'en'): Observable<Array<WikipediaPoi>> {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
     const gsLimit = 500;
     // tslint:disable:max-line-length
@@ -43,11 +48,11 @@ export class WikipediaPoiService {
         .get(request)
         // .toPromise()
         .switchMap((data: any) => {
-          const _pois: Array<IWikipediaPoi> = [];
+          const _pois: Array<WikipediaPoi> = [];
 
           if (data.query) {
             for (const _point of data.query.geosearch) {
-              const _poi: IWikipediaPoi = {
+              const _poi: WikipediaPoi = {
                 id: uuid(),
                 lat: _point.lat,
                 lon: _point.lon,
@@ -93,9 +98,9 @@ export class WikipediaPoiService {
   /**
    * handlePoiDetails() submethod
    */
-  getPoiDetails(pois: Array<IWikipediaPoi>): Promise<Array<IWikipediaPoi>> {
+  async getPoiDetails(pois: Array<WikipediaPoi>): Promise<Array<WikipediaPoi>> {
     const langs: Array<string> = this._hikeProgramService.getDescriptionLanguages();
-    const promises: Array<Promise<Array<IWikipediaPoi>>> = [];
+    const promises: Array<Promise<Array<WikipediaPoi>>> = [];
 
     for (const lng of langs) {
       const langPois = _filter(pois, p => _get(p, 'wikipedia.lng') === lng);
@@ -110,8 +115,8 @@ export class WikipediaPoiService {
   /**
    * get submethod - load wikipedia lead sections
    */
-  private _getPageExtracts(_pois: Array<IWikipediaPoi>, lng): Promise<Array<IWikipediaPoi>> {
-    const _poiIds = _pois.map((p: IWikipediaPoi) => _get(p, WIKIPEDIA_PAGEID, ''));
+  private async _getPageExtracts(_pois: Array<WikipediaPoi>, lng): Promise<Array<WikipediaPoi>> {
+    const _poiIds = _pois.map((p: WikipediaPoi) => _get(p, WIKIPEDIA_PAGEID, ''));
     const _chunks = _chunk(_poiIds, 20);
 
     return interval(100)
@@ -155,8 +160,8 @@ export class WikipediaPoiService {
   /**
    * get submethod - load wikipedia page images
    */
-  private async _getPageImages(_pois: Array<IWikipediaPoi>, lng): Promise<Array<IWikipediaPoi>> {
-    const _poiIds = _pois.map((p: IWikipediaPoi) => _get(p, WIKIPEDIA_PAGEID, ''));
+  private async _getPageImages(_pois: Array<WikipediaPoi>, lng): Promise<Array<WikipediaPoi>> {
+    const _poiIds = _pois.map((p: WikipediaPoi) => _get(p, WIKIPEDIA_PAGEID, ''));
     const _chunks = _chunk(_poiIds, 20);
 
     return interval(100)
@@ -185,22 +190,27 @@ export class WikipediaPoiService {
                     delete _imgData.original.source;
                     delete _imgData.thumbnail.source;
 
-                    const _imageInfo: BackgroundImageData = {
-                      title: _imgData.title,
-                      lat: _pois.find((p: IWikipediaPoi) => _get(p, WIKIPEDIA_PAGEID) === _imgData.pageid).lat,
-                      lon: _pois.find((p: IWikipediaPoi) => _get(p, WIKIPEDIA_PAGEID) === _imgData.pageid).lon,
-                      original: _imgData.original,
-                      card: _imgData.original,
-                      thumbnail: _imgData.thumbnail,
-                      source: {
-                        type: EPoiImageTypes.wikipedia,
-                        poiObjectId: _imgData.pageid
-                      }
-                    };
-                    const _targetPoi = _pois.find(p => _get(p, WIKIPEDIA_PAGEID) === _imgData.pageid);
+                    const wikipediaPoi = _pois.find((p: WikipediaPoi) => _get(p, WIKIPEDIA_PAGEID) === _imgData.pageid);
 
-                    if (_targetPoi && _targetPoi.wikipedia) {
-                      _targetPoi.wikipedia.photos = [_imageInfo];
+                    if (wikipediaPoi) {
+                      const _imageInfo: BackgroundImageData = {
+                        title: _imgData.title,
+                        lat: wikipediaPoi.lat,
+                        lon: wikipediaPoi.lon,
+                        original: _imgData.original,
+                        card: _imgData.original,
+                        thumbnail: _imgData.thumbnail,
+                        source: {
+                          type: EPoiImageTypes.wikipedia,
+                          poiObjectId: _imgData.pageid
+                        }
+                      };
+
+                      const _targetPoi = _pois.find(p => _get(p, WIKIPEDIA_PAGEID) === _imgData.pageid);
+
+                      if (_targetPoi && _targetPoi.wikipedia) {
+                        _targetPoi.wikipedia.photos = [_imageInfo];
+                      }
                     }
                   }
                 }

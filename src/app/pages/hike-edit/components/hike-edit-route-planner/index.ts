@@ -1,14 +1,13 @@
 import _pick from 'lodash-es/pick';
-import _values from 'lodash-es/values';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, filter, switchMap, take, takeUntil } from 'rxjs/operators';
-import { IRouteContextState, Route, RouteSelectors } from 'subrepos/gtrack-common-ngx';
-import { IRouteStored } from 'subrepos/provider-client';
+import { Route, RouteContextState, RouteSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
-import * as leafletMapSelectors from '@common.features/leaflet-map/store/selectors';
+import { RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import * as leafletMapSelectors from '@bit/garlictech.angular-features.common.leaflet-map/store/selectors';
 import { select, Store } from '@ngrx/store';
 
 import { HikeProgramService, PoiEditorService, ReverseGeocodingService } from '../../../../shared/services';
@@ -26,7 +25,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
   @Input() isPlanning$: Observable<boolean>;
   routeInfoData$: Observable<HikeEditRoutePlannerState>;
   route$: Observable<any>;
-  private readonly _destroy$: Subject<boolean> = new Subject<boolean>();
+  private readonly _destroy$: Subject<boolean>;
 
   constructor(
     private readonly _waypointMarkerService: WaypointMarkerService,
@@ -39,9 +38,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     private readonly _poiEditorService: PoiEditorService,
     private readonly _messageService: MessageService,
     private readonly _leafletMapService: LeafletMapService
-  ) {}
+  ) {
+    this._destroy$ = new Subject<boolean>();
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.routeInfoData$ = this._store.pipe(
       select(hikeEditRoutePlannerSelectors.getRoutePlanner),
       takeUntil(this._destroy$)
@@ -56,7 +57,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         filter(routeContext => !!routeContext),
         takeUntil(this._destroy$)
       )
-      .subscribe((routeContext: IRouteContextState) => {
+      .subscribe((routeContext: RouteContextState) => {
         // Route saved
         if (routeContext.saved) {
           this._messageService.add({
@@ -71,10 +72,10 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
           this._store
             .pipe(
               select(this._routeSelectors.getRoute(routeContext.id)),
-              filter((route: IRouteStored) => !!route),
+              filter((route: RouteStored) => !!route),
               take(1)
             )
-            .subscribe((route: IRouteStored) => {
+            .subscribe((route: RouteStored) => {
               // Draw an independent path to the map
               this._routePlannerService.drawRouteLineGeoJSON(route.route.features[0]);
 
@@ -118,20 +119,20 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  removeLast() {
+  removeLast(): void {
     this._waypointMarkerService.removeLast();
   }
 
-  closeCircle() {
+  closeCircle(): void {
     this._waypointMarkerService.closeCircle();
   }
 
-  deletePlan() {
+  deletePlan(): void {
     this._confirmationService.confirm({
       message: 'Are you sure that you want to delete?',
       accept: () => {
@@ -142,7 +143,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _updateLocation(coords) {
+  private _updateLocation(coords): void {
     this._reverseGeocodingService
       .get({
         lat: coords[1],
@@ -158,7 +159,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       );
   }
 
-  private _refreshIcons(route) {
+  private _refreshIcons(route): void {
     const _route = new Route({
       id: '',
       timestamp: 0,

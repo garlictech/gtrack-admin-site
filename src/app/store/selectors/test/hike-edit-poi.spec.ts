@@ -4,9 +4,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { TestBed } from '@angular/core/testing';
+import { EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store, StoreModule } from '@ngrx/store';
 
-import { EPoiTypes } from '../../../../subrepos/provider-client';
 import { hikeEditPoiActions } from '../../actions';
 import { hikeEditPoiReducer, initialContextItemState } from '../../reducer';
 import { pois as poiFixtures } from '../../reducer/test/fixtures';

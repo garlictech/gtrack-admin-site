@@ -2,7 +2,12 @@
 import * as _ from 'lodash';
 import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 
-import { BackgroundImageData, ETextualDescriptionType, HikeProgramStop } from '../../../../subrepos/provider-client';
+import {
+  BackgroundImageData,
+  ETextualDescriptionType,
+  HikeProgramStop
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
 import { editedHikeProgramActions } from '../../actions';
 import { EditedHikeProgramState } from '../../state';
 import { editedHikeProgramReducer, initialEditedHikeProgramState } from '../edited-hike-program';

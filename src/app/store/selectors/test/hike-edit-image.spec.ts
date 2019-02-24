@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { TestBed } from '@angular/core/testing';
+import { EPoiImageTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store, StoreModule } from '@ngrx/store';
 
-import { EPoiImageTypes } from '../../../../subrepos/provider-client';
 import { BackgroundImageDataStored } from '../../../shared/interfaces';
 import { hikeEditImageActions } from '../../actions';
 import { hikeEditImageReducer, imageListInitialContextState } from '../../reducer/hike-edit-image';

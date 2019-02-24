@@ -1,7 +1,7 @@
 import _get from 'lodash-es/get';
 import _uniq from 'lodash-es/uniq';
-import { BackgroundImageData } from 'subrepos/provider-client';
 
+import { BackgroundImageData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { EditedGTrackPoiState } from '../state/edited-gtrack-poi';

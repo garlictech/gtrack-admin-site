@@ -7,39 +7,7 @@ import { MenuComponent } from '../menu';
 
 @Component({
   selector: 'app-submenu',
-  template: `
-    <ng-template ngFor let-child let-i="index" [ngForOf]="root ? item : item.items">
-      <li [ngClass]="{ 'active-menuitem': isActive(i) }" [class]="child.badgeStyleClass">
-        <a
-          [href]="child.url || '#'"
-          (click)="itemClick($event, child, i)"
-          *ngIf="!child.routerLink"
-          [attr.target]="child.target"
-        >
-          <span class="menuitem-text">{{ child.label }}</span>
-          <i class="fa fa-chevron-down layout-submenu-toggler" *ngIf="child.items"></i>
-        </a>
-        <a
-          (click)="itemClick($event, child, i)"
-          *ngIf="child.routerLink"
-          [routerLink]="child.routerLink"
-          routerLinkActive="active-menuitem-routerlink"
-          [routerLinkActiveOptions]="{ exact: true }"
-          [attr.target]="child.target"
-        >
-          <span class="menuitem-text">{{ child.label }}</span>
-          <i class="fa fa-chevron-down layout-submenu-toggler" *ngIf="child.items"></i>
-        </a>
-        <ul>
-          <app-submenu
-            [item]="child"
-            *ngIf="child.items"
-            [@children]="isActive(i) ? 'visible' : 'hidden'"
-          ></app-submenu>
-        </ul>
-      </li>
-    </ng-template>
-  `,
+  templateUrl: './ui.html',
   animations: [
     trigger('children', [
       state(
@@ -66,13 +34,17 @@ export class SubMenuComponent {
 
   private _activeIndex: number;
 
-  constructor(public appMenu: MenuComponent) {}
+  constructor(public appMenu: MenuComponent) {
+    this.root = false;
+    this._activeIndex = 0;
+  }
 
-  itemClick(event: Event, item: MenuItem, index: number) {
+  itemClick(event: Event, item: MenuItem, index: number): void {
     // avoid processing disabled items
     if (item.disabled) {
       event.preventDefault();
-      return true;
+
+      return;
     }
 
     // activate current item and deactivate active sibling if any
@@ -101,5 +73,9 @@ export class SubMenuComponent {
 
   isActive(index: number): boolean {
     return this._activeIndex === index;
+  }
+
+  trackByFn(index: number): number {
+    return index;
   }
 }

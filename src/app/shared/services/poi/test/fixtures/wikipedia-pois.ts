@@ -1,6 +1,6 @@
-// tslint:disable:max-line-length
-import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
+import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
+// tslint:disable:max-line-length
 export const WIKIPEDIA_RESPONSE = {
   batchcomplete: '',
   query: {

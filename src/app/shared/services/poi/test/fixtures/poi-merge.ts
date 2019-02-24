@@ -1,4 +1,4 @@
-import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
+import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 export const EXPECTED_FLAT_KEY_VALUES = {
   conflicts: {
