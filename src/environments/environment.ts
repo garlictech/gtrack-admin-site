@@ -9,7 +9,6 @@ export class Environment implements IEnvironment {
 
   lambdaEndpoint = 'https://3zcs4wggya.execute-api.us-east-1.amazonaws.com/latest';
 
-
   authentication = {
     server: 'https://17g10h60ff.execute-api.us-east-1.amazonaws.com/latest',
     google: { appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com' }
