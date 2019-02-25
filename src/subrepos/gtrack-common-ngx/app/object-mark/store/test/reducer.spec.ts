@@ -1,4 +1,4 @@
-import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
+import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import * as actions from '../actions';
 import { objectMarkContextReducerInitialState, objectMarkReducer, objectMarkReducerInitialState } from '../reducer';

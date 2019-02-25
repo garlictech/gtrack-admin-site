@@ -4,10 +4,10 @@ import _get from 'lodash-es/get';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 
-import { getHikeSpeed, getHikeStartDate } from '@features/common/settings/store/selectors';
-import { WeatherEntity } from '@features/common/weather/store';
-import * as actions from '@features/common/weather/store/actions';
-import { WeatherSelectors } from '@features/common/weather/store/selectors';
+import { getHikeSpeed, getHikeStartDate } from '@bit/garlictech.angular-features.common.settings/store/selectors';
+import { WeatherEntity } from '@bit/garlictech.angular-features.common.weather/store';
+import * as actions from '@bit/garlictech.angular-features.common.weather/store/actions';
+import { WeatherSelectors } from '@bit/garlictech.angular-features.common.weather/store/selectors';
 import { log } from 'app/log';
 import { State } from 'app/store';
 import { HikeProgram } from 'subrepos/gtrack-common-ngx';

@@ -1,5 +1,5 @@
 import * as uuid from 'uuid/v4';
-import { HikeProgramData, HikeProgramStored, EObjectState } from '@features/common/gtrack-interfaces';
+import { HikeProgramData, HikeProgramStored, EObjectState } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import * as actions from '../actions';
 
 describe('Hike actions', () => {

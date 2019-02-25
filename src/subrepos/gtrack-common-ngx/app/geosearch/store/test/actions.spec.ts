@@ -1,4 +1,4 @@
-import { GeospatialBoxSearchPayload, GeospatialCircleSearchPayload } from '@features/common/gtrack-interfaces';
+import { GeospatialBoxSearchPayload, GeospatialCircleSearchPayload } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import * as uuid from 'uuid/v1';
 import * as actions from '../actions';
 

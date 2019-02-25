@@ -1,6 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DropdownSelectComponent as NativeDropdownSelectComponent } from '@features/common/forms';
+import { DropdownSelectComponent as NativeDropdownSelectComponent } from '@bit/garlictech.angular-features.common.forms';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,

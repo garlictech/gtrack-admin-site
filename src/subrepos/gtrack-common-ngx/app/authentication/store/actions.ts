@@ -1,5 +1,5 @@
 // tslint:disable:no-property-initializers max-classes-per-file
-import { Actions } from '@features/common/authentication-api';
+import { Actions } from '@bit/garlictech.angular-features.common.authentication-api';
 import { Action } from '@ngrx/store';
 
 export const TERMS_ACCEPTED = '[Authentication] Terms accepted';
@@ -20,6 +20,6 @@ export class SelectRole implements Action {
   constructor(public payload: string) {}
 }
 
-export * from '@features/common/authentication-api/store/actions';
+export * from '@bit/garlictech.angular-features.common.authentication-api/store/actions';
 
 export type AllActions = TermsAccepted | LoginRefused | SelectRole | Actions.AllActions;

@@ -1,4 +1,4 @@
-import { HikeProgramStop } from '@features/common/gtrack-interfaces';
+import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 export class Checkpoint {
   protected _name: string;

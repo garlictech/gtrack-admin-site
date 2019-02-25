@@ -4,8 +4,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { HikeProgramStored, EObjectState } from '@features/common/gtrack-interfaces';
-import { DeepstreamService } from '@features/common/deepstream-ngx';
+import { HikeProgramStored, EObjectState } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 
 import _zipObject from 'lodash-es/zipObject';
 

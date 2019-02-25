@@ -1,4 +1,4 @@
-import { HikeProgramData, HikeProgramStored, EObjectState } from '@features/common/gtrack-interfaces';
+import { HikeProgramData, HikeProgramStored, EObjectState } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import * as uuid from 'uuid/v1';
 
 import { hikeReducer, hikeReducerInitialState, hikeContextReducerInitialState } from '../reducer';

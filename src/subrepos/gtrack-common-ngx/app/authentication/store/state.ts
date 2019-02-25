@@ -1,4 +1,4 @@
-import { AuthenticationState as IJwtAuthState } from '@features/common/authentication-api';
+import { AuthenticationState as IJwtAuthState } from '@bit/garlictech.angular-features.common.authentication-api';
 
 export interface AuthenticationState {
   jwtAuth: IJwtAuthState;

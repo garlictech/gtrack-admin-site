@@ -2,7 +2,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { TestBed } from '@angular/core/testing';
-import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
+import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store, StoreModule } from '@ngrx/store';
 
 import { EXTERNAL_OBJECT_MARK_DEPENDENCIES } from '../../externals';

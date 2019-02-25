@@ -1,4 +1,4 @@
-import { EObjectState, HikeProgramData, HikeProgramStored } from '@features/common/gtrack-interfaces';
+import { EObjectState, HikeProgramData, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import * as uuid from 'uuid/v4';
 
 export const hikePrograms: Array<HikeProgramData> = [

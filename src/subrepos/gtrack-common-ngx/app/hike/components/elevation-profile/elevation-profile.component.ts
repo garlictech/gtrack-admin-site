@@ -29,10 +29,10 @@ import {
   ViewChild
 } from '@angular/core';
 import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { HikeProgramStop, PoiStored } from '@features/common/gtrack-interfaces';
-import { DescriptionLanguageListService } from '@features/common/multi-language-text';
-import { OpenWeatherMapForecastItem } from '@features/common/weather';
-import { WeatherEntity } from '@features/common/weather/store';
+import { HikeProgramStop, PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { OpenWeatherMapForecastItem } from '@bit/garlictech.angular-features.common.weather';
+import { WeatherEntity } from '@bit/garlictech.angular-features.common.weather/store';
 import { select, Store } from '@ngrx/store';
 import { lineString as turfLineString } from '@turf/helpers';
 import lineSliceAlong from '@turf/line-slice-along';

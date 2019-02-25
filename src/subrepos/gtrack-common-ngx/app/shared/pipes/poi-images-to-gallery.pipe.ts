@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { BackgroundImageData } from '@features/common/gtrack-interfaces';
+import { BackgroundImageData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { PrimeNgGalleryImage } from '../interfaces';
 
 @Pipe({ name: 'poiImagesToGallery' })

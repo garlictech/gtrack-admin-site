@@ -6,12 +6,12 @@ import { StoreModule } from '@ngrx/store';
 import { GameRuleService } from '../../../services/game-rule';
 import { AstronomyService } from '../../../../astronomy';
 
-import { HikeProgramStored, LocalizedItem, TextualDescription } from '@features/common/gtrack-interfaces';
+import { HikeProgramStored, LocalizedItem, TextualDescription } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { PoiSelectors, poiReducer } from '../../../store/poi';
 import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
 
 import { HikeProgramComponent } from '../';
-import { LeafletIconService } from '@features/common/leaflet-map';
+import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
 
 @Pipe({
   name: 'distance'

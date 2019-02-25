@@ -4,9 +4,9 @@ import { Observable, of as observableOf } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { HikeProgramData, HikeProgramStop, PoiData } from '@features/common/gtrack-interfaces';
-import { LeafletIconService } from '@features/common/leaflet-map';
-import { WeatherEntity } from '@features/common/weather/store';
+import { HikeProgramData, HikeProgramStop, PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { WeatherEntity } from '@bit/garlictech.angular-features.common.weather/store';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { select, Store } from '@ngrx/store';
 

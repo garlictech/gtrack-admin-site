@@ -4,7 +4,7 @@ import {
   LocalizedItem,
   PoiData,
   TextualDescription
-} from '@features/common/gtrack-interfaces';
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import _cloneDeep from 'lodash-es/cloneDeep';
 
 export class Poi implements PoiData {

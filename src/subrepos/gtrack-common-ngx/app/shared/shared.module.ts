@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { GeoIpService } from '@features/common/current-geolocation';
+import { GeoIpService } from '@bit/garlictech.angular-features.common.current-geolocation';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GalleriaModule } from 'primeng/galleria';
 import { LightboxModule } from 'primeng/lightbox';

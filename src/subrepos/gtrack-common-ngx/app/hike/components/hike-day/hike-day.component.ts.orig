@@ -3,8 +3,8 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { DatePickerField, SliderField } from '@features/common/forms';
-import { IFormDescriptor } from '@features/common/forms';
+import { DatePickerField, SliderField } from '@bit/garlictech.angular-features.common.forms';
+import { IFormDescriptor } from '@bit/garlictech.angular-features.common.forms';
 
 <<<<<<< Updated upstream
 import * as actions from 'app/settings/store/actions';

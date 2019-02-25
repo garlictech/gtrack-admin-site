@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { RouteStored } from '@features/common/gtrack-interfaces';
+import { RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import { EXTERNAL_ROUTE_DEPENDENCIES, ExternalRouteDependencies } from '../../externals';
 import { routeAdapter, RouteContextState, routeContextStateAdapter, RouteState } from './state';

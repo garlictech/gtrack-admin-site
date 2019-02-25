@@ -1,6 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SliderComponent as NativeSliderComponent } from '@features/common/forms';
+import { SliderComponent as NativeSliderComponent } from '@bit/garlictech.angular-features.common.forms';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,

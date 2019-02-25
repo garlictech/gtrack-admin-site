@@ -4,8 +4,8 @@ import { NEVER, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 
 import { Component, ElementRef, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { GeoPosition } from '@features/common/current-geolocation';
-import * as fromCurrentLocationSelectors from '@features/common/current-geolocation/store/selectors';
+import { GeoPosition } from '@bit/garlictech.angular-features.common.current-geolocation';
+import * as fromCurrentLocationSelectors from '@bit/garlictech.angular-features.common.current-geolocation/store/selectors';
 import { faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';
 import distance from '@turf/distance';

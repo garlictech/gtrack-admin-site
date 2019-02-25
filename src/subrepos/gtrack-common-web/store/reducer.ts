@@ -4,12 +4,13 @@ import { ActionReducer, ActionReducerMap } from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { storeLogger } from 'ngrx-store-logger';
 
-import { LOGOUT_SUCCESS } from '@features/common/authentication-api/store/actions';
 import { environment } from 'environments/environment';
 
-import { Reducer as languageReducer } from '@features/common/localization/store/reducer';
 import { commonReducers } from 'subrepos/gtrack-common-ngx/app/store/reducer';
 
+import { Reducer as languageReducer } from '@bit/garlictech.angular-features.common.localization/store/reducer';
+
+import { LOGOUT_SUCCESS } from '@bit/garlictech.angular-features.common.authentication-api/store/actions';
 import { State } from './state';
 
 export const reducer: ActionReducerMap<State> = {

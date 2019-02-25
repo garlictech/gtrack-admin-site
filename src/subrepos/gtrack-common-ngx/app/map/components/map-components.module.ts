@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MultiLanguageTextModule } from '@features/common/multi-language-text';
+import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { SharedModule } from '../../shared';
 import { IconComponent } from './icon';
 

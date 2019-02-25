@@ -1,7 +1,7 @@
 import _cloneDeep from 'lodash-es/cloneDeep';
 
-import { CheckpointSequence } from '@features/common/checkpoints/lib/checkpoint-sequence';
-import { CheckpointService } from '@features/common/checkpoints/services/checkpoint.service';
+import { CheckpointSequence } from '@bit/garlictech.angular-features.common.checkpoints/lib/checkpoint-sequence';
+import { CheckpointService } from '@bit/garlictech.angular-features.common.checkpoints/services/checkpoint.service';
 import {
   BackgroundImageData,
   EObjectState,
@@ -9,7 +9,7 @@ import {
   HikeProgramStored,
   LocalizedItem,
   TextualDescription
-} from '@features/common/gtrack-interfaces';
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 export class HikeProgram implements HikeProgramStored {
   get title(): string {

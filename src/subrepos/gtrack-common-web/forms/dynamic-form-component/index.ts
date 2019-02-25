@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DynamicFormComponent as NativeDynamicFormComponent } from '@features/common/forms';
+import { DynamicFormComponent as NativeDynamicFormComponent } from '@bit/garlictech.angular-features.common.forms';
 
 @Component({
   selector: 'gtrack-form',

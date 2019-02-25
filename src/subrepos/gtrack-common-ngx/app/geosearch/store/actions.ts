@@ -3,7 +3,7 @@ import {
   GeospatialBoxSearchPayload,
   GeospatialCircleSearchPayload,
   GeospatialSearchResponse
-} from '@features/common/gtrack-interfaces';
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Action } from '@ngrx/store';
 
 export enum GeoSearchActionTypes {

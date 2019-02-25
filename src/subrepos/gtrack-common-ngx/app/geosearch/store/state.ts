@@ -1,4 +1,4 @@
-import { GeospatialSearchResponse } from '@features/common/gtrack-interfaces';
+import { GeospatialSearchResponse } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 
 export interface GeoSearchResponseItem {

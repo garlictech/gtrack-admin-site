@@ -2,7 +2,7 @@ import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { take } from 'rxjs/operators';
 import { StoreModule, Store } from '@ngrx/store';
 
-import { HikeProgramData } from '@features/common/gtrack-interfaces';
+import { HikeProgramData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { ReverseHikeButtonComponent } from '../reverse-hike-button.component';
 import * as actions from '../../../store/hike/actions';
 

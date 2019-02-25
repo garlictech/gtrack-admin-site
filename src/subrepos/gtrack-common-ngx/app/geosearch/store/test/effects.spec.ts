@@ -3,7 +3,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { DeepstreamService } from '@features/common/deepstream-ngx';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { Observable, of } from 'rxjs';
 
 import * as uuid from 'uuid/v1';

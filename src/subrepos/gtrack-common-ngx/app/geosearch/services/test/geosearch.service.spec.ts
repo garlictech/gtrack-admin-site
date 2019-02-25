@@ -3,7 +3,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { GeospatialBoxSearchPayload, GeospatialCircleSearchPayload } from '@features/common/gtrack-interfaces';
+import { GeospatialBoxSearchPayload, GeospatialCircleSearchPayload } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { DeepstreamService } from 'subrepos/gtrack-common-ngx';
 
 import { GeoSearchService } from '../geosearch.service';

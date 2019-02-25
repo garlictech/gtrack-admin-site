@@ -1,4 +1,4 @@
-import { PoiStored } from '@features/common/gtrack-interfaces';
+import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 
 export const poiAdapter = createEntityAdapter<PoiStored>();
