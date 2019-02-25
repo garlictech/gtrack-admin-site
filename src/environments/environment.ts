@@ -7,7 +7,7 @@ export class Environment implements IEnvironment {
   webappServer = window.location.origin;
   deepstream = 'ws://localhost:6020/deepstream';
 
-  lambdaEndpoint = 'https://qujdxsdi8g.execute-api.us-east-1.amazonaws.com/latest';
+  lambdaEndpoint = 'https://3zcs4wggya.execute-api.us-east-1.amazonaws.com/latest';
 
 
   authentication = {
