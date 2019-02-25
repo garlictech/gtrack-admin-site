@@ -1,6 +1,6 @@
 import { Environment } from './ienvironment';
 
-const lambdaEndpoint = 'https://y3nuwgmlpc.execute-api.us-east-1.amazonaws.com/latest';
+const lambdaEndpoint = 'https://3zcs4wggya.execute-api.us-east-1.amazonaws.com/latest';
 
 // Development environment
 export const environment: Environment = {
@@ -8,9 +8,11 @@ export const environment: Environment = {
   staging: false,
   webappServer: window.location.origin,
   deepstream: 'ws://localhost:6020/deepstream',
+
   lambdaEndpoint,
+
   authentication: {
-    server: 'https://lz679q1jla.execute-api.us-east-1.amazonaws.com/latest',
+    server: 'https://17g10h60ff.execute-api.us-east-1.amazonaws.com/latest',
     google: { appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com' }
   },
 
