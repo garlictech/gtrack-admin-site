@@ -7,10 +7,10 @@ export class Environment implements IEnvironment {
   webappServer = window.location.origin;
   deepstream = 'ws://localhost:6020/deepstream';
 
-  lambdaEndpoint = 'https://3zcs4wggya.execute-api.us-east-1.amazonaws.com/latest';
+  lambdaEndpoint = 'https://njpebvpadh.execute-api.us-east-1.amazonaws.com/latest';
 
   authentication = {
-    server: 'https://17g10h60ff.execute-api.us-east-1.amazonaws.com/latest',
+    server: 'https://9i0oeair61.execute-api.us-east-1.amazonaws.com/latest',
     google: { appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com' }
   };
 
