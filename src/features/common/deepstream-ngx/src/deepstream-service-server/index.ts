@@ -1,9 +1,8 @@
+import _get from 'lodash-es/get';
+import { Observable, Observer, Subject } from 'rxjs';
 import { filter, finalize, map, multicast, refCount, switchMap, take } from 'rxjs/operators';
 
 import { Inject, Injectable } from '@angular/core';
-import _get from 'lodash-es/get';
-import { Observable, Observer, Subject } from 'rxjs';
-
 import { EAuthRoles } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Client as DeepstreamClient, IClientData, List, Query, Record, Rpc } from '@garlictech/deepstream-rxjs';
 import { select, Store } from '@ngrx/store';

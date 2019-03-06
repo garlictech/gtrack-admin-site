@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { LeafletIconService } from '../../leaflet-icon.service';
 import { LeafletMapMarker } from '../leaflet-map-marker';
+import { LeafletIconService } from '../../leaflet-icon.service';
 
 import * as L from 'leaflet';
 
@@ -38,7 +38,7 @@ describe('LeafletMapMarker', () => {
       popupComponentName: 'FakePopup',
       markerClickCallback: jest.fn(),
       closeCallback: jest.fn(),
-      map,
+      map: map,
       data: {}
     };
 
@@ -54,18 +54,18 @@ describe('LeafletMapMarker', () => {
   it('should toggle highlight', () => {
     leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, null);
 
-    leafletMapMarker._highlighted = false;
+    leafletMapMarker['_highlighted'] = false;
 
     const iconSpy = jest.spyOn(leafletMapMarker.marker, 'setIcon');
 
     const highlightIcon = leafletIconService.getLeafletIcon('cafe', 'highlight');
     leafletMapMarker.toggleHighlight();
-    expect(leafletMapMarker._highlighted).toBeTruthy();
+    expect(leafletMapMarker['_highlighted']).toBeTruthy();
     expect(iconSpy).toBeCalledWith(highlightIcon);
 
     const defaultIcon = leafletIconService.getLeafletIcon('cafe', 'default');
     leafletMapMarker.toggleHighlight();
-    expect(leafletMapMarker._highlighted).toBeFalsy();
+    expect(leafletMapMarker['_highlighted']).toBeFalsy();
     expect(iconSpy).toBeCalledWith(defaultIcon);
   });
 
@@ -98,7 +98,7 @@ describe('LeafletMapMarker', () => {
 
     const highlighted = leafletMapMarker.highlighted;
 
-    expect(highlighted).toEqual(leafletMapMarker._highlighted);
+    expect(highlighted).toEqual(leafletMapMarker['_highlighted']);
   });
 
   it('should get coordinates value with getter', () => {

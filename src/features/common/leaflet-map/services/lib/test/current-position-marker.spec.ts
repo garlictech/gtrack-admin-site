@@ -25,7 +25,7 @@ describe('CurrentPositionMarker', () => {
     currentPositionMarker = new CurrentPositionMarker(map);
 
     const pos = L.latLng(10, 10);
-    currentPositionMarker.marker = L.userMarker(pos, {
+    currentPositionMarker['marker'] = L.userMarker(pos, {
       pulsing: true,
       smallIcon: true
     }).addTo(map);
@@ -35,7 +35,7 @@ describe('CurrentPositionMarker', () => {
     currentPositionMarker.stopPositioning();
 
     expect(removeSpy).toHaveBeenCalled();
-    expect(currentPositionMarker.marker).toEqual(undefined);
+    expect(currentPositionMarker['marker']).toEqual(undefined);
   });
 
   it('should go to position', () => {
@@ -47,6 +47,6 @@ describe('CurrentPositionMarker', () => {
     currentPositionMarker.goToPosition(L.latLng(10, 10));
 
     expect(viewSpy).toHaveBeenCalled();
-    expect(currentPositionMarker.marker).toBeDefined();
+    expect(currentPositionMarker['marker']).toBeDefined();
   });
 });

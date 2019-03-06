@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { select, Store, StoreModule } from '@ngrx/store';
+import { Store, StoreModule, select } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { State, featureName } from '../state';
 import * as actions from '../actions';
 import { reducer } from '../reducer';
 import * as selectors from '../selectors';
-import { featureName, State } from '../state';
 
 describe('HikeEditMap selectors', () => {
   let store: Store<State>;

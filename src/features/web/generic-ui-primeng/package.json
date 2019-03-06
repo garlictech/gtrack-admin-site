@@ -1,0 +1,22 @@
+{
+    "name": "@bit/garlictech.angular-features.web.generic-ui-primeng",
+    "version": "0.0.1",
+    "homepage": "https://bitsrc.io/garlictech/angular-features/web/generic-ui-primeng",
+    "main": "index.ts",
+    "dependencies": {
+        "@angular/core": "~7.2.1",
+        "@fortawesome/free-solid-svg-icons": "^5.5.0",
+        "rxjs": "~6.3.2",
+        "@ngrx/store": "~7.1.0",
+        "@angular/common": "~7.2.1",
+        "@angular/forms": "~7.2.1",
+        "@fortawesome/angular-fontawesome": "^0.3.0",
+        "@ngx-translate/core": "^11.0.1",
+        "primeng": "~7.0.0",
+        "@bit/garlictech.angular-features.common.generic-ui": "0.0.12"
+    },
+    "devDependencies": {},
+    "peerDependencies": {},
+    "componentRootFolder": "src/features/web/generic-ui-primeng",
+    "license": "SEE LICENSE IN LICENSE"
+}

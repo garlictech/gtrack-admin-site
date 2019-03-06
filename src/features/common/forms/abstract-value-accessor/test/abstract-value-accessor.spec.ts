@@ -27,10 +27,10 @@ describe('Test the abstract value accessor', () => {
 
   it('doChange should call change if defined', () => {
     // Thsi should simply not fail and do nothing if change is undefined
-    accessor.doChange();
-    accessor.change = jest.fn();
-    accessor.doChange();
-    expect(accessor.change).toHaveBeenCalled();
+    accessor.doChange('test');
+    accessor.onChange = jest.fn();
+    accessor.doChange('test2');
+    expect(accessor.onChange).toHaveBeenCalled();
   });
 
   it('writeValue should change the value', () => {

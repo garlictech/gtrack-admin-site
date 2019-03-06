@@ -1,0 +1,6 @@
+<div class="spinner fixed" *ngIf="showSpinner$ | async">
+  <div>
+    <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+  </div>
+  <div class="text">{{ spinnerText$ | async | translate }}</div>
+</div>

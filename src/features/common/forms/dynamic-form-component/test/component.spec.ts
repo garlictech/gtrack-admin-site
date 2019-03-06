@@ -22,16 +22,8 @@ describe('DynamicFormComponent', () => {
     }
   };
 
-  @Component({ selector: 'app-testcomponent', template: '' })
-  class TestComponent extends DynamicFormComponent {
-    _destroy = jest.fn();
-    constructor(_fcs: FieldControlService, _store: Store<any>, _cdr: ChangeDetectorRef) {
-      super(_fcs, _store, _cdr);
-    }
-  }
-
-  let component: TestComponent;
-  let fixture: ComponentFixture<TestComponent>;
+  let component: DynamicFormComponent;
+  let fixture: ComponentFixture<DynamicFormComponent>;
   let fcs: FieldControlService;
 
   const initTestBed = (mockFormData, mockFormDescriptor = formDescriptor) => {
@@ -45,13 +37,13 @@ describe('DynamicFormComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [StoreModule.forRoot({})],
-      declarations: [TestComponent],
+      declarations: [DynamicFormComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: FieldControlService, useClass: MockFieldControlService }]
     }).compileComponents();
 
     fcs = TestBed.get(FieldControlService);
-    fixture = TestBed.createComponent(TestComponent);
+    fixture = TestBed.createComponent(DynamicFormComponent);
     component = fixture.componentInstance;
     component.formDescriptor = mockFormDescriptor;
     fixture.detectChanges();
@@ -66,8 +58,6 @@ describe('DynamicFormComponent', () => {
     initTestBed(mockFormData);
     Scheduler.get().flush();
     expect(component.formInstance.form.patchValue).toHaveBeenCalledWith(mockFormData);
-    const call = (fcs.toFormGroup as any).mock.calls;
-    expect(call).toMatchSnapshot();
   });
 
   it('ngAfterViewInit should handle formDataSelector if there is no formData emitted', () => {
@@ -159,10 +149,5 @@ describe('DynamicFormComponent', () => {
       component.onSubmit(undefined);
       expect(testControl.markAsTouched).toHaveBeenCalledWith({ onlySelf: true });
     });
-  });
-
-  it('ngOnDestroy should call _destroy', () => {
-    component.ngOnDestroy();
-    expect(component._destroy).toHaveBeenCalled();
   });
 });

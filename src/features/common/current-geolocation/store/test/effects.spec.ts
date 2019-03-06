@@ -3,10 +3,10 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot, Scheduler } from 'jest-marbles';
 import { Observable, of } from 'rxjs';
 
-import { CURRENT_GEOLOCATION_CONFIG } from '../../config';
-import { GeoIpService, GpsLocationService } from '../../services';
-import * as fromActions from '../actions';
 import { CurrentGeolocationEffects as Effects } from '../effects';
+import * as fromActions from '../actions';
+import { GpsLocationService, GeoIpService } from '../../services';
+import { CURRENT_GEOLOCATION_CONFIG } from '../../config';
 
 describe('CurrentGeolocation effect tests', () => {
   let actions: Observable<any>;

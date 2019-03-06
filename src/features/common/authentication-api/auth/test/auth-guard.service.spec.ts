@@ -1,18 +1,18 @@
-import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { EffectsModule } from '@ngrx/effects';
-import { Store, StoreModule } from '@ngrx/store';
-import { AUTH_CONFIG_TOKEN, AuthenticationApiModule, defaultAuthenticationApiConfig } from '../../lib';
 import { AuthGuard } from '../auth-guard.service';
+import { Router } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
+import { StoreModule, Store } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { AUTH_CONFIG_TOKEN, defaultAuthenticationApiConfig, AuthenticationApiModule } from '../../lib';
 
-import { domain, Reducer as authReducer } from '../../store';
+import { Reducer as authReducer, domain } from '../../store';
 import * as Actions from '../../store/actions';
 
 describe('AuthGuard', () => {
   class MockRouterService {
-    url = '';
+    public url = '';
 
-    navigate(commands: Array<any>) {
+    public navigate(commands: any[]) {
       this.url = commands.join('/');
     }
   }

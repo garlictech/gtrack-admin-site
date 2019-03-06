@@ -10,7 +10,7 @@ import * as actions from '../../store/actions';
 import { WeatherSelectors } from '../../store/selectors';
 import { WeatherEntity } from '../../store/state';
 
-import { DebugLog, log } from 'app/log';
+import { DebugLog, log } from '../../log';
 
 const getDailyForecast = (forecast: WeatherEntity, date: Date): any => {
   const dayStart = new Date(date.getTime());

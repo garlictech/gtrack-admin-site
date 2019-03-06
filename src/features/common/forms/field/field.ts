@@ -21,6 +21,9 @@ export interface FieldBase {
   submitOnChange?: boolean;
   placeholder?: string;
   remoteErrorStateSelector?: Selector<any, string>;
+  containerCls?: string | Array<string>;
+  inputCls?: string | Array<string>;
+  labelCls?: string | Array<string>;
 }
 
 export interface FieldOptions<T> extends FieldBase {
@@ -48,6 +51,9 @@ export class Field<T> implements FieldOptions<T> {
   required?: boolean;
   submitOnChange?: boolean;
   placeholder?: string;
+  containerCls: string | Array<string>;
+  inputCls: string | Array<string>;
+  labelCls: string | Array<string>;
 
   constructor(options: FieldOptions<T>) {
     this.label = options.label || String('');
@@ -68,6 +74,9 @@ export class Field<T> implements FieldOptions<T> {
     this.labelParams = options.labelParams;
     this.placeholder = options.placeholder;
     this.disabled = options.disabled;
+    this.containerCls = options.containerCls || '';
+    this.inputCls = options.inputCls || '';
+    this.labelCls = options.labelCls || '';
 
     if (!!options.required) {
       this.validators.unshift(Validators.required);

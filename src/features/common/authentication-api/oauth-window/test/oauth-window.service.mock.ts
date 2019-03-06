@@ -1,31 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { Observable, Subject, ReplaySubject } from 'rxjs';
 
 @Injectable()
 export class OauthWindowMockService {
-  subject: ReplaySubject<string>;
+  public subject: ReplaySubject<string>;
 
-  changeUrl$: Subject<string>;
+  public changeUrl$: Subject<string>;
 
   constructor() {
     this.subject = new ReplaySubject<string>(1);
     this.changeUrl$ = new Subject<string>();
   }
 
-  callback = (url: string) => {
+  public callback = (url: string) => {
     /* EMPTY ON PURPOSE */
   };
 
-  open(loginUrl: string, parameter = 'access_token'): Observable<any> {
+  public open(loginUrl: string, parameter = 'access_token'): Observable<any> {
     this.changeUrl(loginUrl);
     return this.subject.asObservable();
   }
 
-  close(): void {
+  public close(): void {
     // do nothing
   }
 
-  changeUrl(url: string): void {
+  public changeUrl(url: string): void {
     this.changeUrl$.next(url);
 
     if (url) {

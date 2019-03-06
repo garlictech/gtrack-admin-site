@@ -1,9 +1,13 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-
-import { WeatherService } from '../weather.service';
 import { take } from 'rxjs/operators';
-import { environment } from 'environments/environment';
+
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+
+import { defaultWeatherConfig, WEATHER_CONFIG } from '../../interfaces';
+import { WeatherService } from '../weather.service';
+
+const weatherConfig = { ...defaultWeatherConfig };
+weatherConfig.openWeatherMap.key = 'testKey';
 
 describe('WeatherService', () => {
   const position: GeoJSON.Position = [19.040236, 47.497913]; // lon, lat
@@ -14,7 +18,13 @@ describe('WeatherService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [WeatherService]
+      providers: [
+        WeatherService,
+        {
+          provide: WEATHER_CONFIG,
+          useValue: weatherConfig
+        }
+      ]
     });
 
     service = TestBed.get(WeatherService);
@@ -39,7 +49,7 @@ describe('WeatherService', () => {
       const req = httpTestingController.expectOne(request => request.url.match(urlRegexp) !== null);
 
       expect(req.request.method).toEqual('GET');
-      expect(req.request.params.get('APIKEY')).toEqual(environment.openWeatherMap.key);
+      expect(req.request.params.get('APIKEY')).toEqual(weatherConfig.openWeatherMap.key);
       expect(req.request.params.get('lat')).toEqual(position[1].toString());
       expect(req.request.params.get('lon')).toEqual(position[0].toString());
 

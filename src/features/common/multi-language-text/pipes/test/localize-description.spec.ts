@@ -1,15 +1,15 @@
-import { ChangeDetectorRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { ChangeDetectorRef } from '@angular/core';
 // import { Selectors } from 'subrepos/gtrack-common-web/language';
 
 import 'rxjs/add/operator/take';
 
 import { LocalizedItem, TextualDescription } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
-import { of } from 'rxjs';
 import { LocalizeDescriptionPipe } from '..';
 import { DescriptionLanguageListService } from '../../services';
 import { LocalizeSelectors } from '../../store';
+import { of } from 'rxjs';
 
 import _get from 'lodash-es/get';
 

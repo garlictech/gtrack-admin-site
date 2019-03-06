@@ -9,9 +9,9 @@ import {
   weatherReducerInitialState,
   weatherContextReducerIntialState,
   WeatherSelectors
-} from '@bit/garlictech.angular-features.common.weather/store';
-import * as actions from '@bit/garlictech.angular-features.common.weather/store/actions';
-import { WeatherIconComponent, WindDirectionIconComponent } from '@bit/garlictech.angular-features.common.weather/components';
+} from '@features/common/weather/store';
+import * as actions from '@features/common/weather/store/actions';
+import { WeatherIconComponent, WindDirectionIconComponent } from '@features/common/weather/components';
 import { WeatherInfoComponent } from '../weather-info.component';
 
 import { weather as testWeather } from './fixture';

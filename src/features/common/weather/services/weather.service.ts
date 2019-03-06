@@ -1,14 +1,15 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { OpenWeatherMapForecast } from '../interfaces';
+
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+
+import { OpenWeatherMapForecast, WEATHER_CONFIG, WeatherConfig } from '../interfaces';
 
 @Injectable()
 export class WeatherService {
   private readonly _apiUrl: string;
 
-  constructor(private readonly _http: HttpClient) {
+  constructor(private readonly _http: HttpClient, @Inject(WEATHER_CONFIG) private readonly _config: WeatherConfig) {
     this._apiUrl = 'https://api.openweathermap.org/data/2.5';
   }
 
@@ -17,7 +18,7 @@ export class WeatherService {
       params: {
         lat: position[1].toString(),
         lon: position[0].toString(),
-        APIKEY: environment.openWeatherMap.key,
+        APIKEY: this._config.openWeatherMap.key,
         units: 'metric'
       }
     });

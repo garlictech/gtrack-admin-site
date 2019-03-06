@@ -1,3 +1,5 @@
+import { InjectionToken } from '@angular/core';
+
 export interface OpenWeatherMapForecastItem {
   clouds: object;
   dt: number;
@@ -42,3 +44,17 @@ export interface OpenWeatherMapForecast {
   list: Array<OpenWeatherMapForecastItem>;
   message: number;
 }
+
+export interface WeatherConfig {
+  openWeatherMap: {
+    key: string;
+  };
+}
+
+export const defaultWeatherConfig: WeatherConfig = {
+  openWeatherMap: {
+    key: undefined
+  }
+};
+
+export const WEATHER_CONFIG = new InjectionToken<WeatherConfig>('WeatherConfig');

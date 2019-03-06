@@ -5,19 +5,19 @@ import { Storage } from '../storage.interface';
 export class MockStorageService implements Storage {
   private data = {};
 
-  getItem(key: string): string {
+  public getItem(key: string): string {
     return this.data[key] || null;
   }
 
-  setItem(key: string, value: string): void {
+  public setItem(key: string, value: string): void {
     this.data[key] = value;
   }
 
-  removeItem(key: string): void {
+  public removeItem(key: string): void {
     delete this.data[key];
   }
 
-  clear() {
+  public clear() {
     this.data = {};
   }
 }

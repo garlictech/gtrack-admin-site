@@ -29,11 +29,11 @@ import {
   DeepstreamModule as CoreDeepstreamModule,
   IExternalDeepstreamDependencies,
   EXTERNAL_DEEPSTREAM_DEPENDENCIES
-} from '@bit/garlictech.angular-features.common.deepstream-ngx';
+} from '@features/common/deepstream-ngx';
 
 import { environment } from '../../environments/environment';
 
-import { Actions as JwtActions } from '@bit/garlictech.angular-features.common.authentication-api';
+import { Actions as JwtActions } from '@features/common/authentication-api';
 
 let externalDeepstreamDependencies: IExternalDeepstreamDependencies = {
   deepstreamConnectionString: environment.deepstream,
@@ -49,7 +49,7 @@ let externalDeepstreamDependencies: IExternalDeepstreamDependencies = {
 })
 export class DeepstreamModule {}
 
-export { Reducer, IDeepstreamState, DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+export { Reducer, IDeepstreamState, DeepstreamService } from '@features/common/deepstream-ngx';
 ```
 
 We assume that you use the `authentication-api-ngx`, however, any JWT login/logout lib works if you can implement `EXTERNAL_DEEPSTREAM_DEPENDENCIES` on top of that.

@@ -1,64 +1,64 @@
-import { Emitter } from '../../emitter';
 import { OauthWindowService } from '../oauth-window.service';
+import { Emitter } from '../../emitter';
 
-import { catchError, elementAt, filter, map, switchMap, take } from 'rxjs/operators';
+import { take, elementAt, map, filter, catchError, switchMap } from 'rxjs/operators';
 
 import { ReplaySubject } from 'rxjs';
 
-import { combineLatest, interval } from 'rxjs';
+import { interval, combineLatest } from 'rxjs';
 
 class WindowLocation extends Emitter {
   private _href = '';
-  get href(): string {
+  public get href(): string {
     return this._href;
   }
 
-  set href(url: string) {
+  public set href(url: string) {
     this._href = url;
     this.emit('change', url);
   }
 }
 
 class MockWindow extends Emitter {
-  closed = false;
+  public closed = false;
 
-  location: WindowLocation;
+  public location: WindowLocation;
 
-  focus() {
+  public focus() {
     /* EMPTY ON PURPOSE */
   }
 
-  constructor() {
+  public constructor() {
     super();
     this.location = new WindowLocation();
   }
 
-  addEventListener(name: string, handler: (value: any) => void) {
+  public addEventListener(name: string, handler: (value: any) => void) {
     this.on(name, handler);
   }
 
-  removeEventListener(name: string) {
+  public removeEventListener(name: string) {
     this.off(name);
   }
 
-  close() {
+  public close() {
     this.closed = true;
     this.emit('exit');
   }
 }
 
 class MockWindowCordova extends MockWindow {
-  constructor() {
+  public constructor() {
     super();
 
     this.location.on('change', url => {
       this.emit('loadstart', {
-        url
+        url: url
       });
     });
   }
 
-  executeScript(script) {
+  public executeScript(script) {
     const matches = script.code.match(/window.location.href='([^']*)'/);
 
     if (matches.length === 2) {
@@ -117,7 +117,7 @@ describe('OauthWindow', () => {
     });
 
     const oauthWindow: OauthWindowService = new OauthWindowService(windowService);
-    oauthWindow.open(url).pipe(catchError(done));
+    oauthWindow.open(url).pipe(catchError(err => done(err)));
   });
 
   it('should close previous window', done => {
@@ -167,7 +167,7 @@ describe('OauthWindow', () => {
     interval(200)
       .pipe(
         map(() => oauthWindow.isOpened()),
-        filter(opened => opened),
+        filter(opened => opened === true),
         take(1),
         switchMap(() => windows$.pipe(take(1)))
       )
@@ -247,7 +247,7 @@ describe('OauthWindow', () => {
 
     windows$.pipe(elementAt(0)).subscribe((win: MockWindow) => {
       win.on('loadstart', () => {
-        setTimeout(done, 400);
+        setTimeout(() => done(), 400);
       });
     });
 
@@ -314,7 +314,7 @@ describe('OauthWindow', () => {
       interval(200)
         .pipe(
           map(() => oauthWindow.isOpened()),
-          filter(opened => opened),
+          filter(opened => opened === true),
           take(1)
         )
         .subscribe(() => oauthWindow.close());

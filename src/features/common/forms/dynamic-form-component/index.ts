@@ -1,14 +1,15 @@
+import _isEqual from 'lodash-es/isEqual';
+import _isFunction from 'lodash-es/isFunction';
+import _pick from 'lodash-es/pick';
+
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { FormArray } from '@angular/forms';
-import { DestroyableComponent } from '@bit/garlictech.angular-features.common.utils';
 import { select, Store } from '@ngrx/store';
-import * as _ from 'lodash';
-import _get from 'lodash-es/get';
-import _pick from 'lodash-es/pick';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { DebugLog, log } from 'app/log';
+import { Subject } from 'rxjs';
+import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 import { FormDescriptor } from '../field';
 import { FieldControlService, FormInstance } from '../field-control-service';
-import { DebugLog, log } from '../log';
 
 const _validateForm = (form: any) => {
   Object.keys(form.controls).forEach(field => {
@@ -26,17 +27,19 @@ const _validateForm = (form: any) => {
   moduleId: module.id,
   template: ''
 })
-export class DynamicFormComponent extends DestroyableComponent implements AfterViewInit, OnDestroy {
+export class DynamicFormComponent implements AfterViewInit, OnDestroy {
   @Input() formDescriptor: FormDescriptor;
 
   formInstance: FormInstance;
+
+  protected readonly _destroy$: Subject<boolean>;
 
   constructor(
     private readonly _fcs: FieldControlService,
     private readonly _store: Store<any>,
     private readonly _cdr: ChangeDetectorRef
   ) {
-    super();
+    this._destroy$ = new Subject<boolean>();
   }
 
   @DebugLog ngAfterViewInit(): void {
@@ -53,10 +56,10 @@ export class DynamicFormComponent extends DestroyableComponent implements AfterV
             const fieldKeys = Object.keys(this.formDescriptor.fields);
 
             return _pick(formData, fieldKeys);
-          })
+          }),
+          distinctUntilChanged(_isEqual) // We don't need to patch the form when the value is not changed
         )
         .subscribe(formData => {
-          this.formInstance = this._fcs.toFormGroup(this.formDescriptor.fields, formData);
           this.formInstance.form.patchValue(formData);
           this._cdr.detectChanges();
         });
@@ -80,18 +83,19 @@ export class DynamicFormComponent extends DestroyableComponent implements AfterV
     }
   }
 
-  getOnSubmit(): any {
+  getOnSubmit(): () => void {
     return (): void => this.onSubmit();
   }
 
   ngOnDestroy(): void {
-    this._destroy();
+    this._destroy$.next(true);
+    this._destroy$.complete();
   }
+
   private _resetForm(): void {
-    this.formInstance = _.isFunction(this.formDescriptor.submit.resetFv)
+    this.formInstance = _isFunction(this.formDescriptor.submit.resetFv)
       ? this.formDescriptor.submit.resetFv(this.formDescriptor)
       : this._fcs.toFormGroup(this.formDescriptor.fields, {});
-
     this._cdr.detectChanges();
   }
 }

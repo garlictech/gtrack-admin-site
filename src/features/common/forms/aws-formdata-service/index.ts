@@ -1,7 +1,7 @@
 // import { Injectable } from '@angular/core';
 // import { Observable } from 'rxjs';
 
-// import { ApiService } from '@bit/garlictech.angular-features.common.authentication-api';
+// import { ApiService } from '@features/common/authentication-api';
 // import { environment } from 'environments/environment';
 // import { Policy } from './policy';
 

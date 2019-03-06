@@ -1,17 +1,17 @@
-import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { EventEmitter } from '@angular/core';
+import { StoreModule, Store } from '@ngrx/store';
+import { Center, LeafletMapConfig, EMarkerType } from '../../interfaces';
 import { DEFAULT_LAYERS, DEFAULT_OVERLAY_LAYERS } from '../../constants';
-import { Center, EMarkerType, LeafletMapConfig } from '../../interfaces';
 
 import { LeafletMapService } from '../leaflet-map.service';
 
-import * as L from 'leaflet';
 import * as _ from 'lodash';
-import { take } from 'rxjs/operators';
+import * as L from 'leaflet';
 import { GEOJSON_STYLES } from '../../constants/geojson-styles';
-import { reducer } from '../../store';
+import { take } from 'rxjs/operators';
 import { featureName } from '../../store/state';
+import { reducer } from '../../store';
 
 describe('LeafletMapService', () => {
   let leafletMapService: LeafletMapService;
@@ -153,11 +153,11 @@ describe('LeafletMapService', () => {
   it('should get currentPositionMarker', done => {
     leafletMapService.createMap('testMap', mapElement, center, DEFAULT_LAYERS, DEFAULT_OVERLAY_LAYERS, ['trails'], {});
 
-    expect(leafletMapService._currentPositionMarker).toBeUndefined();
+    expect(leafletMapService['_currentPositionMarker']).toBeUndefined();
 
     leafletMapService.getCurrentPositionMarker();
 
-    expect(leafletMapService._currentPositionMarker).toBeDefined();
+    expect(leafletMapService['_currentPositionMarker']).toBeDefined();
 
     done();
   });
@@ -226,9 +226,9 @@ describe('LeafletMapService', () => {
   });
 
   it('should create markersGroup', done => {
-    const waypointMarker = L.marker(L.latLng(0, 0), {}) as any;
+    const waypointMarker = <any>L.marker(L.latLng(0, 0), {});
     waypointMarker.options.type = EMarkerType.WAYPOINT;
-    const imageMarker = L.marker(L.latLng(0, 0), {}) as any;
+    const imageMarker = <any>L.marker(L.latLng(0, 0), {});
     imageMarker.options.type = EMarkerType.IMAGE;
     const markers = [waypointMarker, imageMarker];
 

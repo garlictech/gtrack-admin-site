@@ -6,7 +6,7 @@ import { point } from '@turf/helpers';
 import _every from 'lodash-es/every';
 import _has from 'lodash-es/has';
 import _partial from 'lodash-es/partial';
-import { merge, throwError, timer } from 'rxjs';
+import { asyncScheduler, merge, of, throwError, timer } from 'rxjs';
 import {
   catchError,
   delay,
@@ -33,6 +33,7 @@ export class CurrentGeolocationEffects {
       merge(this.geoip$, this.geolocation$).pipe(map(result => new LocalActions.CurrentLocationObtained(result)))
     )
   );
+  @Effect() init$ = of(new LocalActions.StartPositioning(), asyncScheduler);
   private readonly geolocation$ = timer(0, this._config.interval).pipe(
     switchMap(() => {
       log.data('Getting current location...');

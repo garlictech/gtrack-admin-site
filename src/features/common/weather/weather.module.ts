@@ -1,13 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
-import { WeatherIconComponent, WeatherInfoComponent, WindDirectionIconComponent } from './components';
-import { WeatherService } from './services';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
+import { WeatherIconComponent, WeatherInfoComponent, WindDirectionIconComponent } from './components';
+import { WEATHER_CONFIG, WeatherConfig } from './interfaces';
+import { WeatherService } from './services';
 import { featureName, getReducers, WEATHER_REDUCER_TOKEN, WeatherEffects, WeatherSelectors } from './store';
 
 @NgModule({
@@ -30,4 +31,16 @@ import { featureName, getReducers, WEATHER_REDUCER_TOKEN, WeatherEffects, Weathe
     }
   ]
 })
-export class WeatherModule {}
+export class WeatherModule {
+  static forRoot(config: WeatherConfig): ModuleWithProviders {
+    return {
+      ngModule: WeatherModule,
+      providers: [
+        {
+          provide: WEATHER_CONFIG,
+          useValue: config
+        }
+      ]
+    };
+  }
+}
