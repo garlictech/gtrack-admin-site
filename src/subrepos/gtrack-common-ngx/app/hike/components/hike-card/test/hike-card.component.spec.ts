@@ -1,6 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
+/* tslint:disable:no-unused-variable */
+import { StoreModule } from '@ngrx/store';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HikeProgramStored, LocalizedItem, TextualDescription } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { By } from '@angular/platform-browser';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
+import { HikeProgramStored, TextualDescription, LocalizedItem } from '@features/common/gtrack-interfaces';
 
 import { HikeCardComponent } from '../';
 
@@ -49,7 +52,7 @@ describe('HikeCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HikeCardComponent);
     component = fixture.componentInstance;
-    component.hikeProgram = {
+    component.hikeProgram = <HikeProgramStored>{
       id: '1',
       distance: 4500,
       uphill: 2345,
@@ -57,7 +60,7 @@ describe('HikeCardComponent', () => {
       time: 120,
       score: 500,
       location: 'Budapest'
-    } as HikeProgramStored;
+    };
 
     fixture.detectChanges();
   });

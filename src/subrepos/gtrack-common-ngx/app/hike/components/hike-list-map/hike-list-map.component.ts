@@ -4,10 +4,10 @@ import { Observable, Subject } from 'rxjs';
 import { map as rxjsMap, take, takeUntil } from 'rxjs/operators';
 
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { GeoPosition, selectCurrentLocation } from '@bit/garlictech.angular-features.common.current-geolocation';
 import { LeafletMapMarkerService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
 import { Center, LayerDef } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+import { GeoPosition, selectCurrentLocation } from '@features/common/current-geolocation';
 import { select, Store } from '@ngrx/store';
 
 import { GeometryService } from '../../services/geometry';

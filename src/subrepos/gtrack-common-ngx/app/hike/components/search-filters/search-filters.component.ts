@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
-import { FormDescriptor, RangeSliderField, SliderField } from '@bit/garlictech.angular-features.common.forms';
+import { FormDescriptor, RangeSliderField, SliderField } from '@features/common/forms';
 
 import * as filterActions from '../../../search-filters/store/actions';
 

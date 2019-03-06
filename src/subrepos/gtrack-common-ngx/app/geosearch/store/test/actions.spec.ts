@@ -1,6 +1,6 @@
-import { GeospatialBoxSearchPayload, GeospatialCircleSearchPayload } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import * as uuid from 'uuid/v1';
 import * as actions from '../actions';
+import * as uuid from 'uuid/v1';
+import { GeospatialBoxSearchPayload, GeospatialCircleSearchPayload } from '@features/common/gtrack-interfaces';
 
 describe('GeoSearch actions', () => {
   describe('SearchInBox action', () => {

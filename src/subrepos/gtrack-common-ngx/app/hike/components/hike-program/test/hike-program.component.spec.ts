@@ -1,4 +1,4 @@
-
+/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
@@ -6,7 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { GameRuleService } from '../../../services/game-rule';
 import { AstronomyService } from '../../../../astronomy';
 
-import { HikeProgramStored, LocalizedItem, TextualDescription } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeProgramStored, LocalizedItem, TextualDescription } from '@features/common/gtrack-interfaces';
 import { PoiSelectors, poiReducer } from '../../../store/poi';
 import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
 

@@ -1,4 +1,4 @@
-
+/* tslint:disable:no-unused-variable */
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -8,7 +8,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angu
 import { HikeDayComponent } from '../';
 import { reducer } from 'app/store';
 import { FormModule } from 'subrepos/gtrack-common-web/forms';
-import { CONFIG as LANGUAGE_CONFIG } from '@bit/garlictech.angular-features.common.localization';
+import { CONFIG as LANGUAGE_CONFIG } from '@features/common/localization';
 
 fdescribe('HikeDayComponent', () => {
   let component: HikeDayComponent;

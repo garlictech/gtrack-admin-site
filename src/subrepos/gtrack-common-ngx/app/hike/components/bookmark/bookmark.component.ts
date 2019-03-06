@@ -6,7 +6,7 @@ import { State } from 'app/store/state';
 
 import * as actions from '../../../object-mark/store/actions';
 
-import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 import { AuthenticationSelectors } from '../../../authentication/store';
 
 import { combineLatest, Observable, Subject } from 'rxjs';

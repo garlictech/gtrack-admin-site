@@ -4,9 +4,9 @@ import _get from 'lodash-es/get';
 
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 
-import { Selectors as DeepstreamSelectors } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { Selectors as DeepstreamSelectors } from '@features/common/deepstream-ngx';
 
-import { Auth, AuthenticationState as IJwtAuthState, User } from '@bit/garlictech.angular-features.common.authentication-api';
+import { Auth, AuthenticationState as IJwtAuthState, User } from '@features/common/authentication-api';
 
 import { AuthenticationState } from './state';
 

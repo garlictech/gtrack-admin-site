@@ -5,7 +5,7 @@ import {
   GeospatialBoxSearchPayload,
   GeospatialCircleSearchPayload,
   GeospatialSearchResponse
-} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+} from '@features/common/gtrack-interfaces';
 import { map, take } from 'rxjs/operators';
 import { DeepstreamService } from '../../deepstream';
 

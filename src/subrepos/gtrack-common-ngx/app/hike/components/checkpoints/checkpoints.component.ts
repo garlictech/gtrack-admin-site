@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { PoiData } from '@features/common/gtrack-interfaces';
 import {
   faArrowRight,
   faClock,

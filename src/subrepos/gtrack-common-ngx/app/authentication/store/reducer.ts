@@ -1,7 +1,7 @@
 // tslint:disable:only-arrow-functions
 import { ActionReducer, combineReducers } from '@ngrx/store';
 
-import { Reducer as jwtReducer } from '@bit/garlictech.angular-features.common.authentication-api';
+import { Reducer as jwtReducer } from '@features/common/authentication-api';
 import * as Actions from './actions';
 
 export type Action = Actions.AllActions;

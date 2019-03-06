@@ -1,7 +1,7 @@
 import * as uuid from 'uuid/v1';
 import { GeoSearchResponseItem } from '../../state';
 
-export const searches: Array<GeoSearchResponseItem> = [
+export const searches: GeoSearchResponseItem[] = [
   {
     id: uuid(),
     results: [uuid(), uuid()]

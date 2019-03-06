@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { HikeProgramData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeProgramData } from '@features/common/gtrack-interfaces';
 import _get from 'lodash-es/get';
 
 @Component({
