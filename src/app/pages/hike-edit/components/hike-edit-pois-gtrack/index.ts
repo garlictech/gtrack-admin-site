@@ -15,7 +15,6 @@ import { select, Store } from '@ngrx/store';
 
 import { GTrackPoi } from '../../../../shared/interfaces';
 import { PoiEditorService } from '../../../../shared/services';
-import { AdminMapService } from '../../../../shared/services/admin-map';
 import { State } from '../../../../store';
 import { commonPoiActions, hikeEditPoiActions } from '../../../../store/actions';
 import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
@@ -39,7 +38,6 @@ export class HikeEditPoisGTrackComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly _store: Store<State>,
-    private readonly _adminMapService: AdminMapService,
     private readonly _poiEditorService: PoiEditorService,
     private readonly _geoSearchSelectors: GeoSearchSelectors,
     private readonly _poiSelectors: PoiSelectors

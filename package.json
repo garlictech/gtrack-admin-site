@@ -174,7 +174,11 @@
     "@bit/garlictech.angular-features.common.multi-language-text": "file:./src/features/common/multi-language-text",
     "@bit/garlictech.angular-features.common.router": "file:./src/features/common/router",
     "@bit/garlictech.angular-features.common.utils": "file:./src/features/common/utils",
-    "@bit/garlictech.angular-features.common.checkpoints": "file:./src/features/common/checkpoints"
+    "@bit/garlictech.angular-features.common.checkpoints": "file:./src/features/common/checkpoints",
+    "@bit/garlictech.angular-features.common.deepstream-ngx": "file:./src/features/common/deepstream-ngx",
+    "@bit/garlictech.angular-features.common.weather": "file:./src/features/common/weather",
+    "@bit/garlictech.angular-features.web.weather": "file:./src/features/web/weather",
+    "@bit/garlictech.angular-features.web.generic-ui-primeng": "file:./src/features/web/generic-ui-primeng"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",
@@ -236,7 +240,7 @@
     "weak": "^1.0.1"
   },
   "config": {
-    "dockerWorkflowVersion": "v13.1.8",
+    "dockerWorkflowVersion": "v15.0.0",
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"
     }
@@ -251,7 +255,8 @@
     "components/.dependencies/**/*",
     "src/features/{namespace}/{name}/**/*",
     "src/features/common/**/*",
-    "src/features/web/**/*"
+    "src/features/web/**/*",
+    "src/features/{name}/**/*"
   ],
   "private": true
 }

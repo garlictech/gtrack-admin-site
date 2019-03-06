@@ -404,13 +404,13 @@
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.1-f0b6aebe-347b-476e-94d2-f9aa4c64c63c-1550664812612/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.1-f0b6aebe-347b-476e-94d2-f9aa4c64c63c-1550664812612/node_modules/@bit/leaflet-map"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.1"
+    "@bit/garlictech.angular-features.common.leaflet-map" "0.0.11"
     leaflet "^1.0.3"
     lodash-es "^4.17.11"
 
 "@bit/garlictech.angular-features.common.current-geolocation@file:./src/features/common/current-geolocation":
-  version "0.0.3"
+  version "0.0.4"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
@@ -423,8 +423,36 @@
     ng2-logger "^2.0.0"
     rxjs "~6.3.2"
 
+"@bit/garlictech.angular-features.common.deepstream-ngx@file:./src/features/common/deepstream-ngx":
+  version "0.0.1"
+  dependencies:
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.1"
+    "@garlictech/deepstream-rxjs" "^1.9.2"
+    "@ngrx/effects" "~7.1.0"
+    "@ngrx/store" "~7.1.0"
+    lodash-es "^4.17.11"
+    ng2-logger "^2.0.0"
+    rxjs "~6.3.2"
+
 "@bit/garlictech.angular-features.common.forms@file:./src/features/common/forms":
-  version "0.0.0"
+  version "0.0.1"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@angular/forms" "~7.2.1"
+    "@angular/platform-browser" "~7.2.1"
+    "@bit/garlictech.angular-features.common.utils" "0.0.5"
+    "@ngrx/store" "~7.1.0"
+    "@ngx-translate/core" "^11.0.1"
+    google-libphonenumber "3.2.2"
+    jest-create-mock-instance "^1.1.0"
+    jest-marbles "^2.1.0"
+    lodash "^4.17.4"
+    lodash-es "^4.17.11"
+    ng2-logger "^2.0.0"
+    password-validator "^4.1.1"
+    rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.generic-ui@file:./src/features/common/generic-ui":
   version "0.0.12"
@@ -439,15 +467,17 @@
     lodash "^4.17.4"
     rxjs "~6.3.2"
 
-"@bit/garlictech.angular-features.common.gtrack-interfaces@file:./src/features/common/gtrack-interfaces", "@bit/garlictech.angular-features.common.gtrack-interfaces@file:src/features/common/gtrack-interfaces":
+"@bit/garlictech.angular-features.common.gtrack-interfaces@file:./src/features/common/gtrack-interfaces":
   version "0.0.1"
 
-"@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map", "@bit/garlictech.angular-features.common.leaflet-map@file:src/features/common/leaflet-map":
+"@bit/garlictech.angular-features.common.leaflet-map@0.0.11":
   version "0.0.11"
+  resolved "https://node.bitsrc.io/garlictech.angular-features.common.leaflet-map/-/garlictech.angular-features.common.leaflet-map-0.0.11.tgz#2ef881194af7cd7c5dbb656f8d00917669d38982"
+  integrity sha1-LviBGUr3zXxdu2VvjQCRdmnTiYI=
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.11-88a34cf9-804d-434a-8c3e-0e14b2c26cf9-1550664812601/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.1"
     "@ngrx/store" "~7.1.0"
     geojson "^0.5.0"
     leaflet "^1.0.3"
@@ -458,7 +488,23 @@
     overlapping-marker-spiderfier-leaflet "^0.2.6-2"
     rxjs "~6.3.2"
 
-"@bit/garlictech.angular-features.common.localization@file:./src/features/common/localization", "@bit/garlictech.angular-features.common.localization@file:src/features/common/localization":
+"@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map":
+  version "0.0.12"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.1"
+    "@ngrx/store" "~7.1.0"
+    geojson "^0.5.0"
+    leaflet "^1.0.3"
+    leaflet-usermarker "^1.0.0"
+    leaflet.fullscreen "^1.4.5"
+    lodash "^4.17.4"
+    lodash-es "^4.17.11"
+    overlapping-marker-spiderfier-leaflet "^0.2.6-2"
+    rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.common.localization@file:./src/features/common/localization":
   version "0.0.6"
   dependencies:
     "@angular/common" "~7.2.1"
@@ -474,8 +520,8 @@
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.4-5f881c2d-5cd2-4952-8ee9-bd9ad1189445-1550664812606/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.4-5f881c2d-5cd2-4952-8ee9-bd9ad1189445-1550664812606/node_modules/@bit/localization"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.1"
+    "@bit/garlictech.angular-features.common.localization" "0.0.6"
     "@ngrx/store" "~7.1.0"
     lodash-es "^4.17.11"
     rxjs "~6.3.2"
@@ -491,6 +537,44 @@
   version "0.0.5"
   dependencies:
     rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.common.weather@file:./src/features/common/weather":
+  version "0.0.2"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@ngrx/effects" "~7.1.0"
+    "@ngrx/entity" "~7.1.0"
+    "@ngrx/store" "~7.1.0"
+    angular-svg-icon "^7.0.0"
+    jest-marbles "^2.1.0"
+    lodash-es "^4.17.11"
+    ng2-logger "^2.0.0"
+    rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.web.generic-ui-primeng@file:./src/features/web/generic-ui-primeng":
+  version "0.0.1"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@angular/forms" "~7.2.1"
+    "@bit/garlictech.angular-features.common.generic-ui" "0.0.12"
+    "@fortawesome/angular-fontawesome" "^0.3.0"
+    "@fortawesome/free-solid-svg-icons" "^5.5.0"
+    "@ngrx/store" "~7.1.0"
+    "@ngx-translate/core" "^11.0.1"
+    primeng "~7.0.0"
+    rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.web.weather@file:./src/features/web/weather":
+  version "0.0.2"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.weather" "0.0.2"
+    "@ngrx/store" "~7.1.0"
+    angular-svg-icon "^7.0.0"
+    primeng "~7.0.0"
 
 "@fimbul/bifrost@^0.17.0":
   version "0.17.0"
@@ -556,7 +640,7 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.15"
 
-"@garlictech/deepstream-rxjs@^1.9.4":
+"@garlictech/deepstream-rxjs@^1.9.2", "@garlictech/deepstream-rxjs@^1.9.4":
   version "1.9.4"
   resolved "https://registry.yarnpkg.com/@garlictech/deepstream-rxjs/-/deepstream-rxjs-1.9.4.tgz#187661c9fa0d9c24ddd1a939181dd44978c5d4bd"
   integrity sha512-zRv7RolqV38nzhtP/stZDVonNeWmYUKJuxr1mAOjQy88ujBZD1GdPeK+uYJBwa5kPxufnVWTLoo22k7SDE4RQA==
@@ -1662,7 +1746,7 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-angular-svg-icon@^7.2.0:
+angular-svg-icon@^7.0.0, angular-svg-icon@^7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/angular-svg-icon/-/angular-svg-icon-7.2.0.tgz#6c0f5b7932bfd68e913af91412c689e892d7afed"
   integrity sha512-fRgz9i/qQNbPixSzwNh2LZW15323vgKFbYCm1SLZ2Jl3wKNqqaehdShTFcFMQMGoJPk46gC12MrGS1wBq9tW2g==
@@ -5035,7 +5119,7 @@ good-listener@^1.2.2:
   dependencies:
     delegate "^3.1.2"
 
-google-libphonenumber@^3.1.15:
+google-libphonenumber@3.2.2, google-libphonenumber@^3.1.15:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/google-libphonenumber/-/google-libphonenumber-3.2.2.tgz#3d9d7ba727e99a50812f21b0ed313723b76c5c54"
   integrity sha512-ubjGeosYPeusjYbUHy76lCniGTTI0k1rIFc+uKBX+jHQLDmWOSUtlFUxaeoLJ+Y+PAMM6dWp+C1HjHx5BI8kEw==
@@ -6093,6 +6177,11 @@ jest-config@^24.1.0:
     micromatch "^3.1.10"
     pretty-format "^24.0.0"
     realpath-native "^1.0.2"
+
+jest-create-mock-instance@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/jest-create-mock-instance/-/jest-create-mock-instance-1.1.0.tgz#b69e97a4dad34ccebf180424a178217513644d2f"
+  integrity sha1-tp6XpNrTTM6/GAQkoXghdRNkTS8=
 
 jest-diff@^24.0.0:
   version "24.0.0"

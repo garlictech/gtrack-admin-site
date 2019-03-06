@@ -57,6 +57,8 @@ import { RoutePlannerService } from '../admin-map';
 import { GooglePoiService } from './google-poi.service';
 import { WikipediaPoiService } from './wikipedia-poi.service';
 
+type ExternalPois = Array<GooglePoi> | Array<WikipediaPoi> | Array<OsmPoi>;
+
 /**
  * getDbObj submethod
  */
@@ -273,7 +275,7 @@ export class PoiEditorService {
       .subscribe((hikePoiIds: Array<string>) => {
         if (pois) {
           const _gTrackPois = _cloneDeep(pois);
-          _gTrackPois.map((_gTrackPoi: GTrackPoi) => {
+          _gTrackPois.forEach((_gTrackPoi: GTrackPoi) => {
             _gTrackPoi.inHike = _includes(hikePoiIds, _gTrackPoi.id);
           });
           _pois = _gTrackPois;
@@ -330,18 +332,16 @@ export class PoiEditorService {
     if (_chunks.length > 0) {
       return interval(100).pipe(
         take(_chunks.length),
-        rxMap(counter => {
+        rxMap(async counter => {
           const _chunkedPois: Array<ExternalPoi> = _chunks[counter];
           const _coordinates = _map(_chunkedPois, (p: ExternalPoi) => [p.lat, p.lon]);
 
           return this._elevationService.getData(_coordinates).then(data => {
             // Update elevation only if we got all data
             if (data.length === _chunkedPois.length) {
-              for (const i in _chunkedPois) {
-                if (_chunkedPois[i]) {
-                  _chunkedPois[i].elevation = data[i][2];
-                }
-              }
+              _chunkedPois.forEach((_chunkedPoi, i) => {
+                _chunkedPoi.elevation = data[i][2];
+              });
             }
 
             return of(counter);
@@ -359,14 +359,24 @@ export class PoiEditorService {
     return new Promise(resolve => {
       switch (subdomain) {
         case EPoiTypes.google:
-          this._googlePoiService.getPoiDetails(pois).then((detailedPois: Array<GooglePoi>) => {
-            resolve(detailedPois);
-          });
+          this._googlePoiService.getPoiDetails(pois).then(
+            (detailedPois: Array<GooglePoi>) => {
+              resolve(detailedPois);
+            },
+            () => {
+              /**/
+            }
+          );
           break;
         case EPoiTypes.wikipedia:
-          this._wikipediaPoiService.getPoiDetails(pois).then((detailedPois: Array<WikipediaPoi>) => {
-            resolve(detailedPois);
-          });
+          this._wikipediaPoiService.getPoiDetails(pois).then(
+            (detailedPois: Array<WikipediaPoi>) => {
+              resolve(detailedPois);
+            },
+            () => {
+              /**/
+            }
+          );
           break;
         default:
           resolve(pois);
@@ -399,10 +409,7 @@ export class PoiEditorService {
   /**
    * Update inGtrackDb property on the given poi
    */
-  handleGTrackPois(
-    pois: Array<GooglePoi> | Array<WikipediaPoi> | Array<OsmPoi>,
-    gTrackPois: Array<GTrackPoi>
-  ): Array<GooglePoi> | Array<WikipediaPoi> | Array<OsmPoi> {
+  handleGTrackPois(pois: ExternalPois, gTrackPois: Array<GTrackPoi>): ExternalPois {
     const _pois = _cloneDeep(pois);
 
     for (const poi of _pois) {
@@ -437,7 +444,7 @@ export class PoiEditorService {
         return _idCheck;
       });
 
-      poi.inGtrackDb = _found ? true : false;
+      poi.inGtrackDb = typeof _found !== 'undefined';
     }
 
     return _pois;
@@ -455,7 +462,7 @@ export class PoiEditorService {
     for (const poi of _pois) {
       const _found = _find(collectedPois, (collectedPoi: any) => collectedPoi.id === poi.id);
 
-      poi.inCollector = _found ? true : false;
+      poi.inCollector = typeof _found !== 'undefined';
     }
 
     return _pois;

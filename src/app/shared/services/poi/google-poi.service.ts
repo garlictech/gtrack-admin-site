@@ -77,7 +77,7 @@ export class GooglePoiService {
               .toPromise()
               .then((data: any) => {
                 if (data.status !== 'OK') {
-                  return;
+                  return undefined;
                 }
 
                 if (data.status === 'OK') {
@@ -150,7 +150,7 @@ export class GooglePoiService {
   }
 
   // tslint:disable-next-line:no-property-initializers
-  private readonly _getOnePage = params => {
+  private readonly _getOnePage = async params => {
     // tslint:disable:max-line-length
     let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${
       params.geo.center.geometry.coordinates[0]

@@ -190,6 +190,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
           // Load the hike page if it's a new hike
           if (!this.paramsId) {
+            // tslint:disable-next-line:no-floating-promises
             this._router.navigate([`/admin/hike/${this._hikeId}`]);
           } else {
             // Disable planning
@@ -360,7 +361,14 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }
 
-        this._waypointMarkerService.addWaypoints(_coords);
+        this._waypointMarkerService.addWaypoints(_coords).then(
+          () => {
+            /**/
+          },
+          () => {
+            /**/
+          }
+        );
 
         // Enable planning
         this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(true));

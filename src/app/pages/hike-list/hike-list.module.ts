@@ -3,12 +3,12 @@ import { CardModule } from 'primeng/card';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
-import { LocalizeModule } from 'subrepos/gtrack-common-ngx';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { LocalizeModule } from '@bit/garlictech.angular-features.common.localization';
 
 import { SharedComponentsModule } from '../../shared/components';
 import { PipesModule } from '../../shared/pipes/pipes.module';

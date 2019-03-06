@@ -1,5 +1,5 @@
+import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
 import { Observable, of } from 'rxjs';
-import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { Component, OnInit } from '@angular/core';

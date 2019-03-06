@@ -34,7 +34,7 @@ export class AuthModule {
     this._init();
   }
 
-  private _init() {
+  private _init(): void {
     this._store
       .pipe(
         select(this._authSelectors.jwtLoggingIn),

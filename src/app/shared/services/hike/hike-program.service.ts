@@ -278,31 +278,28 @@ export class HikeProgramService {
         ? path.geometry.coordinates[path.geometry.coordinates.length - 1]
         : path.geometry.coordinates[0];
 
-      for (const idx in stops) {
-        if (stops[idx]) {
-          const stop = stops[idx];
-          const _segmentEndPoint = [stop.lon, stop.lat];
-          const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
-          const _segmentDistance = turfLength(_segmentPath, { units: 'kilometers' }) * 1000;
+      stops.forEach((stop, idx) => {
+        const _segmentEndPoint = [stop.lon, stop.lat];
+        const _segmentPath = this._geospatialService.snappedLineSlice(_segmentStartPoint, _segmentEndPoint, path);
+        const _segmentDistance = turfLength(_segmentPath, { units: 'kilometers' }) * 1000;
 
-          stop.segment = {
-            uphill: this._elevationService.calculateUphill(_segmentPath.geometry.coordinates),
-            downhill: this._elevationService.calculateDownhill(_segmentPath.geometry.coordinates),
-            distance: _segmentDistance
-          };
+        stop.segment = {
+          uphill: this._elevationService.calculateUphill(_segmentPath.geometry.coordinates),
+          downhill: this._elevationService.calculateDownhill(_segmentPath.geometry.coordinates),
+          distance: _segmentDistance
+        };
 
-          const _uphill = reverse ? stop.segment.uphill : stop.segment.downhill;
+        const _uphill = reverse ? stop.segment.uphill : stop.segment.downhill;
 
-          stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, _uphill);
-          stop.segment.score = this._gameRuleService.score(_segmentDistance, _uphill);
+        stop.segment.time = this._gameRuleService.segmentTime(_segmentDistance, _uphill);
+        stop.segment.score = this._gameRuleService.score(_segmentDistance, _uphill);
 
-          stop.isStart = parseInt(idx, 0) === 0;
-          stop.isFinish = parseInt(idx, 0) === stops.length - 1;
+        stop.isStart = idx === 0;
+        stop.isFinish = idx === stops.length - 1;
 
-          // Save coords for the next segment - DEPRECATED LOGIC
-          _segmentStartPoint = [stop.lon, stop.lat];
-        }
-      }
+        // Save coords for the next segment - DEPRECATED LOGIC
+        _segmentStartPoint = [stop.lon, stop.lat];
+      });
 
       if (reverse) {
         this._store.dispatch(new editedHikeProgramActions.SetReverseStops(stops));

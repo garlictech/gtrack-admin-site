@@ -35,8 +35,8 @@ const _parseResults = (results: Array<google.maps.GeocoderResult>) => {
 export class ReverseGeocodingService {
   constructor(private readonly _googleMapsService: GoogleMapsService) {}
 
-  get(coordinates): Promise<any> {
-    return this._googleMapsService.map.then(() => {
+  async get(coordinates): Promise<any> {
+    return this._googleMapsService.map.then(async () => {
       const _point = new google.maps.LatLng(coordinates.lat, coordinates.lon);
       const _geocoder = new google.maps.Geocoder();
 

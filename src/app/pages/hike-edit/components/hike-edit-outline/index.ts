@@ -1,5 +1,5 @@
 import { RoutePlannerService, WaypointMarkerService } from 'app/shared/services';
-import { IRoutePlanResult } from 'app/shared/services/admin-map/waypoint-marker.service';
+import { RoutePlanResult } from 'app/shared/services/admin-map/waypoint-marker.service';
 import * as L from 'leaflet';
 import _first from 'lodash-es/first';
 import _last from 'lodash-es/last';
@@ -69,43 +69,66 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
   startHere(event, stop: HikeProgramStop): void {
     event.preventDefault();
 
-    this._getNearestSegmentToPoint(stop).then((sData: NearestSegmentData) => {
-      // Plan new route between the snapped point and the segment endpoint
-      this._waypointMarkerService
-        .getRouteFromApi(
-          L.latLng(stop.lat, stop.lon),
-          L.latLng(
-            _last(sData.segments[sData.nearestIdx].coordinates)[0],
-            _last(sData.segments[sData.nearestIdx].coordinates)[1]
+    this._getNearestSegmentToPoint(stop).then(
+      (sData: NearestSegmentData) => {
+        // Plan new route between the snapped point and the segment endpoint
+        this._waypointMarkerService
+          .getRouteFromApi(
+            L.latLng(stop.lat, stop.lon),
+            L.latLng(
+              _last(sData.segments[sData.nearestIdx].coordinates)[0],
+              _last(sData.segments[sData.nearestIdx].coordinates)[1]
+            )
           )
-        )
-        .then((data: IRoutePlanResult) => {
-          this._waypointMarkerService.removeSegments(0, sData.nearestIdx);
-          this._waypointMarkerService.insertNewStartPoint(L.latLng(stop.lat, stop.lon));
-          this._routePlannerService.updateRouteSegment(0, data.coordsArr, data.upDown);
-        });
-    });
+          .then(
+            (data: RoutePlanResult) => {
+              this._waypointMarkerService.removeSegments(0, sData.nearestIdx);
+              this._waypointMarkerService.insertNewStartPoint(L.latLng(stop.lat, stop.lon));
+              this._routePlannerService.updateRouteSegment(0, data.coordsArr, data.upDown);
+            },
+            () => {
+              /**/
+            }
+          );
+      },
+      () => {
+        /**/
+      }
+    );
   }
 
   endHere(event, stop: HikeProgramStop): void {
     event.preventDefault();
 
-    this._getNearestSegmentToPoint(stop).then((sData: NearestSegmentData) => {
-      // Plan new route between the snapped point and the segment endpoint
-      this._waypointMarkerService
-        .getRouteFromApi(
-          L.latLng(
-            _first(sData.segments[sData.nearestIdx].coordinates)[0],
-            _first(sData.segments[sData.nearestIdx].coordinates)[1]
-          ),
-          L.latLng(stop.lat, stop.lon)
-        )
-        .then((data: IRoutePlanResult) => {
-          this._waypointMarkerService.removeSegments(sData.nearestIdx, sData.segments.length - sData.nearestIdx + 1);
-          this._waypointMarkerService.insertNewEndPoint(L.latLng(stop.lat, stop.lon));
-          this._routePlannerService.updateRouteSegment(sData.nearestIdx, data.coordsArr, data.upDown);
-        });
-    });
+    this._getNearestSegmentToPoint(stop).then(
+      (sData: NearestSegmentData) => {
+        // Plan new route between the snapped point and the segment endpoint
+        this._waypointMarkerService
+          .getRouteFromApi(
+            L.latLng(
+              _first(sData.segments[sData.nearestIdx].coordinates)[0],
+              _first(sData.segments[sData.nearestIdx].coordinates)[1]
+            ),
+            L.latLng(stop.lat, stop.lon)
+          )
+          .then(
+            (data: RoutePlanResult) => {
+              this._waypointMarkerService.removeSegments(
+                sData.nearestIdx,
+                sData.segments.length - sData.nearestIdx + 1
+              );
+              this._waypointMarkerService.insertNewEndPoint(L.latLng(stop.lat, stop.lon));
+              this._routePlannerService.updateRouteSegment(sData.nearestIdx, data.coordsArr, data.upDown);
+            },
+            () => {
+              /**/
+            }
+          );
+      },
+      () => {
+        /**/
+      }
+    );
   }
 
   private async _getNearestSegmentToPoint(stop: HikeProgramStop): Promise<any> {

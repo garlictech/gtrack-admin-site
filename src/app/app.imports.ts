@@ -1,7 +1,6 @@
 import { environment } from 'environments/environment';
 import _get from 'lodash-es/get';
 import { ToastModule } from 'primeng/toast';
-import { AuthenticationApiModule, defaultAuthenticationApiConfig } from 'subrepos/authentication-api-ngx';
 import {
   DeepstreamModule,
   defaultSharedConfig,
@@ -15,13 +14,17 @@ import {
 } from 'subrepos/gtrack-common-ngx';
 import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
 
+import {
+  AuthenticationApiModule,
+  defaultAuthenticationApiConfig
+} from '@bit/garlictech.angular-features.common.authentication-api';
+import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
+import { GenericUiModule } from '@bit/garlictech.angular-features.common.generic-ui';
+import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
-import { GenericUiModule } from '@bit/garlictech.angular-features.common.generic-ui';
-import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';

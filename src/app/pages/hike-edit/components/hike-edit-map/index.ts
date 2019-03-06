@@ -137,7 +137,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allowPlanning = planning;
       });
 
-    this._store.dispatch(new commonBackgroundGeolocationActions.StartTracking());
+    this._store.dispatch(new commonBackgroundGeolocationActions.StartPositioning());
 
     this.currentLocation$ = this._store.pipe(
       select(selectCurrentLocation),
@@ -151,7 +151,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
     this._destroy$.next(true);
     this._destroy$.complete();
 
-    this._store.dispatch(new commonBackgroundGeolocationActions.EndTracking());
+    this._store.dispatch(new commonBackgroundGeolocationActions.EndPositioning());
   }
 
   ngAfterViewInit(): void {
@@ -162,6 +162,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   onMapClick(e: L.LeafletMouseEvent): void {
     if (this.allowPlanning) {
       if (this.mode === 'routing') {
+        // tslint:disable-next-line:no-floating-promises
         this._waypointMarkerService.addWaypoints([e.latlng]);
       } else {
         // this._createCheckpoint(e.latlng);
@@ -182,7 +183,7 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.currentLocation$.pipe(take(1)).subscribe((position: GeoPosition) => {
       if (position && position.coords) {
-        const latLng = L.latLng(position.coords.latitude as number, position.coords.longitude as number);
+        const latLng = L.latLng(position.coords.latitude, position.coords.longitude);
         this.adminMap.currentPositionMarker.goToPosition(latLng);
       }
     });
@@ -250,12 +251,17 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   private _initLocationSearchInput(): void {
     this._searchInput = this._searchElementRef.nativeElement;
 
-    this._googleMapsService.autocomplete(this._searchInput).then(autocomplete => {
-      autocomplete.addListener('place_changed', () => {
-        this._ngZone.run(() => {
-          this.locationSearchResult = autocomplete.getPlace();
+    this._googleMapsService.autocomplete(this._searchInput).then(
+      autocomplete => {
+        autocomplete.addListener('place_changed', () => {
+          this._ngZone.run(() => {
+            this.locationSearchResult = autocomplete.getPlace();
+          });
         });
-      });
-    });
+      },
+      () => {
+        /**/
+      }
+    );
   }
 }

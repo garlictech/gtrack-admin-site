@@ -55,7 +55,7 @@ const _createRoutePoint = (dataPoint, index): any => ({
 /**
  * _createGeoJsonFromSegments submethod
  */
-const _getLastPointOfLastSegment = (segments: Array<any>): any => {
+const _getLastPointOfLastSegment = (segments: Array<Segment>): any => {
   const _lastSegment = segments[segments.length - 1];
   const _coordinateNumInLastSegment = _lastSegment.coordinates.length;
 
@@ -211,21 +211,18 @@ export class RoutePlannerService {
   /**
    * Create track from geoJson
    */
-  private _createGeoJsonFromSegments(segments): any {
+  private _createGeoJsonFromSegments(segments: Array<Segment>): any {
     const _geoJSON: any = _cloneDeep(initialRouteDataState);
 
-    for (const i in segments) {
-      if (segments[i]) {
-        // Add segment coords to LineString
-        const _segment = segments[i];
-        for (const p of _segment.coordinates) {
-          _geoJSON.features[0].geometry.coordinates.push([p[1], p[0], p[2]]);
-        }
-
-        // Add the segment start point
-        _geoJSON.features.push(_createRoutePoint(_segment.coordinates[0], i + 1));
+    segments.forEach((segment, i) => {
+      // Add segment coords to LineString
+      for (const p of segment.coordinates) {
+        _geoJSON.features[0].geometry.coordinates.push([p[1], p[0], p[2]]);
       }
-    }
+
+      // Add the segment start point
+      _geoJSON.features.push(_createRoutePoint(segment.coordinates[0], i + 1));
+    });
 
     // Add the last route point: the last point of the last segment
     if (segments.length > 0) {

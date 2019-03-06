@@ -1,10 +1,10 @@
 // tslint:disable:no-property-initializers
 import { Observable, of } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
-import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
 import { routingActions } from '../actions';

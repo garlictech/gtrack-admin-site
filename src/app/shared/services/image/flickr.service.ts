@@ -44,7 +44,7 @@ export class FlickrService {
   }
 
   // tslint:disable:no-property-initializers
-  private readonly _getOnePage = params => {
+  private readonly _getOnePage = async params => {
     // tslint:disable:max-line-length
     const request = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
       environment.flickr.apiKey

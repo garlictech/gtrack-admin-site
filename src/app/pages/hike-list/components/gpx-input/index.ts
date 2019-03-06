@@ -9,7 +9,7 @@ import * as toGeoJSON from '@mapbox/togeojson';
 
 import { HikeProgramService } from '../../../../shared/services';
 
-const _loadFile = (file: any): Promise<any> =>
+const _loadFile = async (file: any): Promise<any> =>
   new Promise((resolve, reject) => {
     const _reader: FileReader = new FileReader();
     _reader.onloadend = e => {
@@ -65,19 +65,25 @@ export class GpxInputComponent {
     const file = $event.target.files[0];
 
     if (file) {
-      _loadFile(file).then((content: string) => {
-        const _doc = new DOMParser().parseFromString(content, 'application/xml');
-        const _route = toGeoJSON.gpx(_doc);
+      _loadFile(file).then(
+        (content: string) => {
+          const _doc = new DOMParser().parseFromString(content, 'application/xml');
+          const _route = toGeoJSON.gpx(_doc);
 
-        _checkAndFixMultiLineString(_route);
+          _checkAndFixMultiLineString(_route);
 
-        this._hikeProgramService.gpxRoute = {
-          route: _route,
-          bounds: this._routeService.getBounds(_route)
-        };
+          this._hikeProgramService.gpxRoute = {
+            route: _route,
+            bounds: this._routeService.getBounds(_route)
+          };
 
-        this._router.navigate(['/admin/hike/new']);
-      });
+          // tslint:disable-next-line:no-floating-promises
+          this._router.navigate(['/admin/hike/new']);
+        },
+        () => {
+          /**/
+        }
+      );
     }
   }
 }

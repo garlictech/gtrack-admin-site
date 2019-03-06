@@ -8,7 +8,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
-import { HikeModule, LocalizeModule, MapModule, SharedModule } from 'subrepos/gtrack-common-ngx';
+import { HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 // Components
 import { FormModule, HikeComponentsModule, LanguageModule } from 'subrepos/gtrack-common-web';
@@ -17,7 +17,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { LeafletMapModule } from '@common.features/leaflet-map/leaflet-map.module';
+import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { LocalizeModule } from '@bit/garlictech.angular-features.common.localization';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { SharedComponentsModule } from '../../shared/components';
@@ -83,7 +84,7 @@ const COMPONENTS = [
     FormModule,
     LanguageModule,
     ReactiveFormsModule,
-    MapModule,
+    LeafletMapModule,
     HikeModule,
     HikeComponentsModule,
     SharedModule,

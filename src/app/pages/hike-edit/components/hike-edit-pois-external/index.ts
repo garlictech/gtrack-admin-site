@@ -10,7 +10,12 @@ import { EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interf
 import { select, Store } from '@ngrx/store';
 
 import {
-  ExternalPoi, ExternalPoiType, GooglePoi, GTrackPoi, OsmPoi, WikipediaPoi
+  ExternalPoi,
+  ExternalPoiType,
+  GooglePoi,
+  GTrackPoi,
+  OsmPoi,
+  WikipediaPoi
 } from '../../../../shared/interfaces';
 import { PoiEditorService } from '../../../../shared/services';
 import { RoutePlannerService } from '../../../../shared/services/admin-map';
@@ -89,7 +94,9 @@ export class HikeEditPoisExternalComponent implements OnInit, OnDestroy {
         switchMap(([pois, path]: [Array<ExternalPoi>, any]) => of(this._poiEditorService.organizePois(pois, path))),
         switchMap((pois: Array<ExternalPoi>) => this._poiEditorService.assignOnOffRoutePois(pois)),
         switchMap((pois: Array<ExternalPoi>) => this._poiEditorService.handleElevation(pois)),
-        switchMap((pois: Array<ExternalPoi>) => this._poiEditorService.handlePoiDetails(pois, this.poiType.subdomain)),
+        switchMap(async (pois: Array<ExternalPoi>) =>
+          this._poiEditorService.handlePoiDetails(pois, this.poiType.subdomain)
+        ),
         switchMap((pois: Array<ExternalPoi>) =>
           this._store.pipe(
             select(this._poiSelectors.getAllPois),

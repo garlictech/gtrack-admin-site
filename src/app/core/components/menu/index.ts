@@ -1,6 +1,6 @@
+import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
 import { ConfirmationService } from 'primeng/api';
 import { ScrollPanel } from 'primeng/scrollpanel';
-import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';

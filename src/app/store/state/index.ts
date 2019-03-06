@@ -1,4 +1,4 @@
-import { IState as CommonState } from 'subrepos/gtrack-common-web/store';
+import { State as CommonState } from 'subrepos/gtrack-common-web/store';
 
 import { EditedGTrackPoiState } from './edited-gtrack-poi';
 import { EditedHikeProgramState } from './edited-hike-program';
