@@ -1,6 +1,6 @@
 import { Environment } from './ienvironment';
 
-const lambdaEndpoint = 'https://y3nuwgmlpc.execute-api.us-east-1.amazonaws.com/latest';
+const lambdaEndpoint = 'https://njpebvpadh.execute-api.us-east-1.amazonaws.com/latest';
 
 export const environment: Environment = {
   production: true,
@@ -12,7 +12,8 @@ export const environment: Environment = {
   lambdaEndpoint,
 
   authentication: {
-    server: 'https://lz679q1jla.execute-api.us-east-1.amazonaws.com/latest',
+    server: 'https://9i0oeair61.execute-api.us-east-1.amazonaws.com/latest',
+
     google: { appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com' }
   },
 
