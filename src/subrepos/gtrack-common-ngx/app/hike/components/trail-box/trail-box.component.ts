@@ -20,14 +20,19 @@ import {
   ViewChild
 } from '@angular/core';
 import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-
+import {
+  LeafletIconService,
+  LeafletMapMarkerService,
+  LeafletMapService,
+  LeafletMarkerPopupService
+} from '@bit/garlictech.angular-features.common.leaflet-map';
+import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
 import { Center, LayerDef } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leaflet-map/services/lib';
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { CheckpointMarkerCollection } from '@features/common/checkpoints/lib/checkpoint-marker-collection';
 import { GeoPosition, selectCurrentLocation } from '@features/common/current-geolocation';
 import { PoiData } from '@features/common/gtrack-interfaces';
-
-
 import { faCrosshairs, faSyncAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';
 import bbox from '@turf/bbox';
@@ -37,19 +42,11 @@ import { lineString as turfLineString, point as turfPoint } from '@turf/helpers'
 import nearestPointOnLine from '@turf/nearest-point-on-line';
 import transformScale from '@turf/transform-scale';
 
-import {
-  LeafletIconService,
-  LeafletMapMarkerService,
-  LeafletMapService,
-  LeafletMarkerPopupService
-} from '@bit/garlictech.angular-features.common.leaflet-map';
-import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leaflet-map/services/lib';
 import { HikeProgram } from '../../services/hike-program';
 import { Route } from '../../services/route';
 import { PoiSelectors, RouteSelectors } from '../../store';
 import * as poiActions from '../../store/poi/actions';
 import * as routeActions from '../../store/route/actions';
-import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
 
 @Component({
   selector: 'gtrack-common-trail-box',
