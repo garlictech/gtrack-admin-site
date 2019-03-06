@@ -2,7 +2,7 @@ import * as uuid from 'uuid/v4';
 
 import { routeReducer, routeReducerInitialState, routeContextReducerInitialState } from '../reducer';
 
-import { RouteData, RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { RouteData, RouteStored } from '@features/common/gtrack-interfaces';
 import * as actions from '../actions';
 import { RouteState } from '../state';
 

@@ -1,7 +1,5 @@
-// tslint:disable:no-duplicate-string
-import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-
 import * as actions from '../actions';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 
 describe('ObjectMark actions', () => {
   describe('LoadContext action', () => {

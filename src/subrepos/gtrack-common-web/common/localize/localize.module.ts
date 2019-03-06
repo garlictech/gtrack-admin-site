@@ -3,7 +3,7 @@ import { SharedModule } from 'subrepos/gtrack-common-ngx/app/shared';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { MultiLanguageTextModule } from '@features/common/multi-language-text';
 
 import { DescriptionComponent } from './description';
 import { HtmlDescriptionComponent } from './description/html-description/html-description.component';

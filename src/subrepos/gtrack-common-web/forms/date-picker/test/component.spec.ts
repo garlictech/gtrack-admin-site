@@ -1,6 +1,7 @@
-// tslint:disable:no-unused-variable no-floating-promises
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 
 import { DatePickerComponent } from '../';
 

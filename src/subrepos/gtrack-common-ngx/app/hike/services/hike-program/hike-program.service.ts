@@ -5,13 +5,13 @@ import { filter, take } from 'rxjs/operators';
 
 import { HikeProgram } from './hike-program';
 
-import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 import {
   EObjectState,
   HikeProgramData,
   HikeProgramSaveResponse,
   HikeProgramStored
-} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+} from '@features/common/gtrack-interfaces';
 
 @Injectable()
 export class HikeProgramService {

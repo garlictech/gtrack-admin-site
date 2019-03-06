@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import _find from 'lodash-es/find';

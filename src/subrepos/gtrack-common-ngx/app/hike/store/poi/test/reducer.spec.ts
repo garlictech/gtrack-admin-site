@@ -1,4 +1,4 @@
-import { PoiData, PoiStored, EObjectState } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { PoiData, PoiStored, EObjectState } from '@features/common/gtrack-interfaces';
 
 import { poiReducer, poiReducerInitialState, poiContextReducerInitialState } from '../reducer';
 import * as actions from '../actions';

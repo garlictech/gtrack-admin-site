@@ -1,6 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
 
-import { TimePickerComponent as NativeTimePickerComponent } from '@bit/garlictech.angular-features.common.forms';
+import { TimePickerComponent as NativeTimePickerComponent } from '@features/common/forms';
 
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 

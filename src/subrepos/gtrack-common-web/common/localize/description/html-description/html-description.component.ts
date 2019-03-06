@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TextualDescription } from '@features/common/gtrack-interfaces';
 
 @Component({
   selector: 'gtrack-html-description',
@@ -6,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class HtmlDescriptionComponent {
   @Input() localizedDescription;
+  @Input() field: keyof TextualDescription;
 }

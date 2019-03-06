@@ -9,8 +9,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { WeatherModule as BaseWeatherModule } from '@bit/garlictech.angular-features.common.weather';
-import { WeatherModule } from '@bit/garlictech.angular-features.web.weather';
+import { WeatherModule as BaseWeatherModule } from '@features/common/weather';
+import { WeatherModule } from '@features/web/weather';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -37,6 +37,12 @@ import { ReverseHikeButtonComponent } from './reverse-hike-button';
 import { SearchFiltersComponent } from './search-filters';
 import { SearchResultsMapComponent } from './search-results-map';
 import { TrailBoxComponent } from './trail-box';
+
+const WEATHER_CONFIG = {
+  openWeatherMap: {
+    key: 'e5a0aba93cfca3ee54c272133018df78'
+  }
+};
 
 const COMPONENTS = [
   TrailBoxComponent,
@@ -77,7 +83,7 @@ const COMPONENTS = [
     FormModule,
     AstronomyModule,
     AngularSvgIconModule,
-    BaseWeatherModule,
+    BaseWeatherModule.forRoot(WEATHER_CONFIG),
     WeatherModule,
     SliderModule
   ],

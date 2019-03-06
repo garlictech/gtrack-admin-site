@@ -23,11 +23,11 @@ import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-
 
 import { Center, LayerDef } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
-import { CheckpointMarkerCollection } from '@bit/garlictech.angular-features.common.checkpoints/lib/checkpoint-marker-collection';
-import { GeoPosition, selectCurrentLocation } from '@bit/garlictech.angular-features.common.current-geolocation';
-import { PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { CheckpointMarkerCollection } from '@features/common/checkpoints/lib/checkpoint-marker-collection';
+import { GeoPosition, selectCurrentLocation } from '@features/common/current-geolocation';
+import { PoiData } from '@features/common/gtrack-interfaces';
 
-import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
+
 import { faCrosshairs, faSyncAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';
 import bbox from '@turf/bbox';
@@ -49,6 +49,7 @@ import { Route } from '../../services/route';
 import { PoiSelectors, RouteSelectors } from '../../store';
 import * as poiActions from '../../store/poi/actions';
 import * as routeActions from '../../store/route/actions';
+import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
 
 @Component({
   selector: 'gtrack-common-trail-box',

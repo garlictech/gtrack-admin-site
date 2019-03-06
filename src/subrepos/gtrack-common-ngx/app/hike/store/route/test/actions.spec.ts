@@ -1,4 +1,4 @@
-import { RouteData, RouteStored, EObjectState } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { RouteData, RouteStored, EObjectState } from '@features/common/gtrack-interfaces';
 import * as uuid from 'uuid/v4';
 import * as actions from '../actions';
 

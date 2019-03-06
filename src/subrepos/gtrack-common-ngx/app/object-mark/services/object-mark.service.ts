@@ -4,9 +4,9 @@ import { State } from 'app/store/state';
 
 import { filter, switchMap, tap } from 'rxjs/operators';
 
-import { EObjectMarkContext, ObjectMark } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { EObjectMarkContext, ObjectMark } from '@features/common/gtrack-interfaces';
 
-import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 import { AuthenticationSelectors } from '../../authentication/store';
 
 import { DebugLog, log } from 'app/log';

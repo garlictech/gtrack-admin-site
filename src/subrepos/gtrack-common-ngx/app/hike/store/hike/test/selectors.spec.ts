@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeProgramStored } from '@features/common/gtrack-interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

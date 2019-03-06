@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DynamicFormGroupComponent as NativeDynamicFormGroupComponent } from '@bit/garlictech.angular-features.common.forms/dynamic-form-group-component';
+import { DynamicFormGroupComponent as NativeDynamicFormGroupComponent } from '@features/common/forms/dynamic-form-group-component';
 
 @Component({
   selector: 'gtrack-form-group',

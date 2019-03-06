@@ -4,8 +4,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { PoiStored } from '@features/common/gtrack-interfaces';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 
 import _zipObject from 'lodash-es/zipObject';
 
@@ -23,7 +23,7 @@ import { pois as poiFixtures, poisStored } from './fixtures';
 
 import { GeometryService } from '../../../services/geometry';
 import { GeoSearchService } from '../../../../geosearch';
-import { EObjectState } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { EObjectState } from '@features/common/gtrack-interfaces';
 
 describe('Poi effects', () => {
   let poisMap: {

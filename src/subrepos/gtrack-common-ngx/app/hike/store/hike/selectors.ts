@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { EObjectState, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { EObjectState, HikeProgramStored } from '@features/common/gtrack-interfaces';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import _pickBy from 'lodash-es/pickBy';

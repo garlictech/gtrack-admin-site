@@ -1,4 +1,4 @@
-import { RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { RouteStored } from '@features/common/gtrack-interfaces';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 
 export const routeAdapter = createEntityAdapter<RouteStored>();

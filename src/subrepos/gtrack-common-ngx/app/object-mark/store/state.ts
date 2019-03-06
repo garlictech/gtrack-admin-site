@@ -1,4 +1,4 @@
-import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 
 export interface ObjectMarkData {

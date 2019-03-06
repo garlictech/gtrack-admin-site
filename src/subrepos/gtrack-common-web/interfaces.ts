@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { LocalizeConfig } from '@bit/garlictech.angular-features.common.localization';
+import { LocalizeConfig } from '@features/common/localization';
 
 export interface Config {
   language: LocalizeConfig;

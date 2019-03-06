@@ -8,12 +8,16 @@
     type="search"
     placeholder="{{ 'common.hike.location-search.search' | translate }}"
   />
-  <div>
-    <a class="button is-success" (click)="searchLocation()">
-      <i class="fas fa-search"></i>
+  <div class="flex">
+    <a class="general-button mr-2" (click)="searchLocation()">
+      <span class="inline-block w-8">
+        <i class="fas fa-search"></i>
+      </span>
     </a>
-    <a class="button is-success" (click)="requestLocation()">
-      {{ 'common.hike.location-search.use-my-location' | translate }}
+    <a class="general-button pl-2 pr-2" (click)="requestLocation()">
+      <span>
+        {{ 'common.hike.location-search.use-my-location' | translate }}
+      </span>
     </a>
   </div>
 </div>

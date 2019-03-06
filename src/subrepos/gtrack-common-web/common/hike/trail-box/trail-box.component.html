@@ -8,18 +8,3 @@
     </button>
   </div>
 </gtrack-leaflet-map>
-
-<div class="mt-3 mb-3">
-  <button class="button" *ngIf="!checkpointsOnly" (click)="showCheckpointsOnly($event)">
-    {{ 'common.hike.trailbox.checkpointsOnly' | translate }}
-  </button>
-  <button class="button" *ngIf="checkpointsOnly" (click)="showCheckpointsOnly($event)">
-    {{ 'common.hike.trailbox.checkpointsOnly' | translate }}
-  </button>
-  <button class="button" *ngIf="checkpointsOnly" (click)="showAllPoints($event)">
-    {{ 'common.hike.trailbox.allPoints' | translate }}
-  </button>
-  <button class="button" *ngIf="!checkpointsOnly" (click)="showAllPoints($event)">
-    {{ 'common.hike.trailbox.allPoints' | translate }}
-  </button>
-</div>

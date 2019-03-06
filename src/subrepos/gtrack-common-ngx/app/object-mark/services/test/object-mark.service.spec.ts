@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
-import { EAuthRoles, EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { AuthenticationSelectors } from '../../../authentication/store';
+import { EAuthRoles, EObjectMarkContext } from '@features/common/gtrack-interfaces';
 import { ObjectMarkService } from '../object-mark.service';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
+import { AuthenticationSelectors } from '../../../authentication/store';
 
 describe('ObjectMarkService', () => {
   let store: Store<any>;
@@ -41,7 +41,7 @@ describe('ObjectMarkService', () => {
         {
           provide: AuthenticationSelectors.Selectors,
           useValue: {
-            user: undefined
+            user: null
           }
         }
       ]

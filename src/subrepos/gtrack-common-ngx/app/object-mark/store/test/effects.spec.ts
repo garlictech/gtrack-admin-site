@@ -1,21 +1,24 @@
-import { cold, hot, Scheduler } from 'jest-marbles';
-import { Observable, of } from 'rxjs';
-
 import { TestBed } from '@angular/core/testing';
-import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { EffectsModule } from '@ngrx/effects';
+import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { ObjectMarkService } from '../../services';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
+
+import { hot, cold, Scheduler } from 'jest-marbles';
+
 import * as actions from '../actions';
 import { ObjectMarkEffects } from '../effects';
+import { ObjectMarkService } from '../../services';
+
+import { Observable, EMPTY } from 'rxjs';
+import { of } from 'rxjs';
 
 describe('ObjectMark effects', () => {
   let actions$: Observable<any>;
   let effects: ObjectMarkEffects;
 
-  let testObjectMarks: Array<any>;
+  let testObjectMarks: any[];
 
   let loadContext: jasmine.Spy;
   let mark: jasmine.Spy;

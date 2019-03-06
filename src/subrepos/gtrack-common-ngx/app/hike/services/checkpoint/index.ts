@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeProgramStop } from '@features/common/gtrack-interfaces';
 import { Checkpoint } from './checkpoint';
 import { CheckpointSequence } from './checkpoint-sequence';
 

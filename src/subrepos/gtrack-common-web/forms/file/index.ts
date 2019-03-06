@@ -2,7 +2,7 @@ import { AfterViewInit, Component, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-import { FileComponent as NativeFileComponent } from '@bit/garlictech.angular-features.common.forms';
+import { FileComponent as NativeFileComponent } from '@features/common/forms';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,

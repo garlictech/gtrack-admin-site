@@ -1,15 +1,15 @@
+import { TestBed } from '@angular/core/testing';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
+import { Store, StoreModule, select } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { TestBed } from '@angular/core/testing';
-import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { select, Store, StoreModule } from '@ngrx/store';
-
-import { EXTERNAL_OBJECT_MARK_DEPENDENCIES } from '../../externals';
-import * as Actions from '../actions';
 import { objectMarkReducer } from '../reducer';
-import { ObjectMarkSelectors } from '../selectors';
 import { ObjectMarkState } from '../state';
+import { ObjectMarkSelectors } from '../selectors';
+import { EXTERNAL_OBJECT_MARK_DEPENDENCIES } from '../../externals';
+
+import * as Actions from '../actions';
 
 describe('ObjectMark selectors', () => {
   let store: Store<ObjectMarkState>;

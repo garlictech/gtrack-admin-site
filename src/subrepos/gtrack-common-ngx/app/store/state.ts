@@ -1,4 +1,4 @@
-import { DeepstreamState } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { DeepstreamState } from '@features/common/deepstream-ngx';
 import { AuthenticationState } from '../authentication';
 import { GeoSearchState } from '../geosearch';
 import { HikeState, PoiState, RouteState } from '../hike';

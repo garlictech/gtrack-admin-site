@@ -2,7 +2,7 @@
   timeOnly="true"
   showIcon="true"
   [(ngModel)]="value"
-  (ngModelChange)="doChange()"
+  (ngModelChange)="doChange($event)"
   [defaultDate]="defaultDate"
   hourFormat="24"
   [placeholder]="placeholder"

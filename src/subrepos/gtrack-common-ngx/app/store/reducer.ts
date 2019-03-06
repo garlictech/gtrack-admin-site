@@ -1,4 +1,4 @@
-import { Reducer as deepstreamReducer } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { Reducer as deepstreamReducer } from '@features/common/deepstream-ngx';
 import { Reducer as authReducer } from '../authentication';
 import { geoSearchReducer } from '../geosearch';
 import { hikeReducer } from '../hike/store/hike/reducer';

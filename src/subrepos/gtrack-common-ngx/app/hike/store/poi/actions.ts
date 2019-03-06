@@ -1,5 +1,5 @@
 // tslint:disable:no-property-initializers max-classes-per-file
-import { EObjectState, PoiData, PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { EObjectState, PoiData, PoiStored } from '@features/common/gtrack-interfaces';
 import { Action } from '@ngrx/store';
 
 export enum PoiActionTypes {

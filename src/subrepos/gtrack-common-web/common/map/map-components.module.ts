@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 
-import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { MultiLanguageTextModule } from '@features/common/multi-language-text';
 import { MapComponentsModule as BaseModule } from 'subrepos/gtrack-common-ngx/app/map';
 import { SharedModule } from 'subrepos/gtrack-common-ngx/app/shared';
 import { MarkerPopupComponent } from './marker-popup';

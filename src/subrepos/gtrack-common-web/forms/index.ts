@@ -15,7 +15,7 @@ import { SliderModule } from 'primeng/slider';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { FormModule as NativeFormModule } from '@bit/garlictech.angular-features.common.forms';
+import { FormModule as NativeFormModule } from '@features/common/forms';
 
 import { LanguageModule } from '../language';
 
@@ -79,4 +79,4 @@ import { TimePickerComponent } from './time-picker';
 })
 export class FormModule {}
 
-export * from '@bit/garlictech.angular-features.common.forms';
+export * from '@features/common/forms';

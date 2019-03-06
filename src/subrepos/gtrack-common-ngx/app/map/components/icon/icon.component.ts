@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
 
+import { LeafletIconService } from '@features/common/leaflet-map';
 import { Poi } from '../../../hike/services/poi';
 
 @Component({

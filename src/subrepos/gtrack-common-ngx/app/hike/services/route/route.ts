@@ -1,4 +1,4 @@
-import { RouteBounds, RouteData, RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { RouteBounds, RouteData, RouteStored } from '@features/common/gtrack-interfaces';
 
 import _cloneDeep from 'lodash-es/cloneDeep';
 
