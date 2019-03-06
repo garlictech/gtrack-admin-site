@@ -13,8 +13,8 @@ npm run doc:build
 
 if [[ "$TRAVIS_EVENT_TYPE" != "pull_request" ]]; then
 #   npm run e2e:prod
-  mkdir -p artifacts/reports/e2e
-  touch artifacts/reports/e2e/index.html
+  sudo mkdir -p artifacts/reports/e2e
+  sudo touch artifacts/reports/e2e/index.html
 fi
 
 if [ -f hooks/travis/script_project ]; then
