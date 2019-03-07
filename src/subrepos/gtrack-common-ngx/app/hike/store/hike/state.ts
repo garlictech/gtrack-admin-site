@@ -1,20 +1,20 @@
+import { HikeProgramStored } from '@features/common/gtrack-interfaces';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { IHikeProgramStored } from '../../../../../provider-client';
 
-export const hikeAdapter = createEntityAdapter<IHikeProgramStored>();
-export interface IHikeEntityState extends EntityState<IHikeProgramStored> {}
+export const hikeAdapter = createEntityAdapter<HikeProgramStored>();
+export interface HikeEntityState extends EntityState<HikeProgramStored> {}
 
-export interface IHikeContextState {
+export interface HikeContextState {
   id: string;
   loading: boolean;
   loaded: boolean;
 }
 
-export interface IAllHikeContextState extends EntityState<IHikeContextState> {}
+export interface AllHikeContextState extends EntityState<HikeContextState> {}
 
-export const hikeContextStateAdapter = createEntityAdapter<IHikeContextState>();
+export const hikeContextStateAdapter = createEntityAdapter<HikeContextState>();
 
-export interface IHikeState {
-  hikes: IHikeEntityState;
-  contexts: IAllHikeContextState;
+export interface HikeState {
+  hikes: HikeEntityState;
+  contexts: AllHikeContextState;
 }

@@ -1,1 +1,1 @@
-export { ISegment } from './isegment';
+export { Segment } from './segment';

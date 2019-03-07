@@ -6,4 +6,8 @@ import { Component, Input } from '@angular/core';
 })
 export class HikeEditExternalPoiInfoComponent {
   @Input() poi: any;
+
+  trackByFn(index: number): number {
+    return index;
+  }
 }

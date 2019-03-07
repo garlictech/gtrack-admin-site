@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
 
-export interface IExternalPoiDependencies {
+export interface ExternalPoiDependencies {
   storeDomain: string;
 }
 
-export const EXTERNAL_POI_DEPENDENCIES = new InjectionToken<IExternalPoiDependencies>('IExternalPoiDependencies');
+export const EXTERNAL_POI_DEPENDENCIES = new InjectionToken<ExternalPoiDependencies>('ExternalPoiDependencies');

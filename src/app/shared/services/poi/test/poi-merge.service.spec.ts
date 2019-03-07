@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import { PoiMergeService } from '../poi-merge.service';
 import { GOOGLE_POIS } from './fixtures/google-pois';
 import { EXPECTED_FLAT_KEY_VALUES } from './fixtures/poi-merge';

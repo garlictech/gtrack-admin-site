@@ -1,14 +1,14 @@
 export class LengthUnit {
-  public smallUnit: string;
-  public bigUnit: string;
-  public conversionFromMeter: number;
-  public conversionToBig: number;
+  smallUnit: string;
+  bigUnit: string;
+  conversionFromMeter: number;
+  conversionToBig: number;
 
-  public convertDistance(meters: number): number {
-    return Math.round((1.0 * meters) / this.conversionFromMeter);
+  convertDistance(meters: number): number {
+    return Math.round((meters * 1.0) / this.conversionFromMeter);
   }
 
-  public convertDistanceInBigUnit(meters: number): number {
-    return Math.round((10.0 * meters) / this.conversionFromMeter / this.conversionToBig) / 10;
+  convertDistanceInBigUnit(meters: number): number {
+    return Math.round((meters * 10.0) / this.conversionFromMeter / this.conversionToBig) / 10;
   }
 }

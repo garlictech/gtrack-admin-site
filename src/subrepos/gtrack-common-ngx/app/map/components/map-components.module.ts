@@ -1,23 +1,20 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MapModule } from '../map.module';
-import { IconComponent } from './icon';
-import { LeafletComponent } from './leaflet';
-import { LocalizeModule } from '../../localize';
+import { MultiLanguageTextModule } from '@features/common/multi-language-text';
 import { SharedModule } from '../../shared';
+import { IconComponent } from './icon';
 
 // PrimeNG
 import { ButtonModule } from 'primeng/button';
 
-const COMPONENTS = [LeafletComponent, IconComponent];
+const COMPONENTS = [IconComponent];
 
 @NgModule({
   imports: [
     CommonModule,
-    MapModule,
-    LocalizeModule,
+    MultiLanguageTextModule,
     // PrimeNG
     ButtonModule,
     SharedModule,

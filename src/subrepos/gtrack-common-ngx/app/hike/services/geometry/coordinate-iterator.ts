@@ -1,41 +1,44 @@
-import _isEqual from 'lodash-es/isEqual';
 import _first from 'lodash-es/first';
+import _isEqual from 'lodash-es/isEqual';
 import _last from 'lodash-es/last';
 import _round from 'lodash-es/round';
 
 export class CoordinateIterator {
-  protected index = 0;
-  protected loop = false;
-  protected _coordinates: GeoJSON.Position[];
+  protected index: number;
+  protected loop: boolean;
+  protected _coordinates: Array<GeoJSON.Position>;
 
-  public constructor(coordinates: GeoJSON.Position[]) {
+  constructor(coordinates: Array<GeoJSON.Position>) {
     this.coordinates = coordinates;
     this.start();
+
+    this.index = 0;
+    this.loop = false;
   }
 
-  public set coordinates(coordinates: GeoJSON.Position[]) {
+  set coordinates(coordinates: Array<GeoJSON.Position>) {
     this._coordinates = coordinates;
     this.loop = this.isLoop();
   }
 
-  public get coordinates(): GeoJSON.Position[] {
+  get coordinates(): Array<GeoJSON.Position> {
     return this._coordinates;
   }
 
-  public start(index = 0): GeoJSON.Position {
+  start(index = 0): GeoJSON.Position {
     this.index = index;
 
-    return this.coordinates[index] || null;
+    return this.coordinates[index] || undefined;
   }
 
-  public next(): GeoJSON.Position | null {
-    let next: GeoJSON.Position | null = null;
+  next(): GeoJSON.Position | undefined {
+    let next: GeoJSON.Position | undefined;
 
     if (this.coordinates) {
       this.index++;
-      next = this.coordinates[this.index] || null;
+      next = this.coordinates[this.index] || undefined;
 
-      if (this.index === this.coordinates.length - 1 && this.loop === true) {
+      if (this.index === this.coordinates.length - 1 && this.loop) {
         next = this.start();
       }
     }
@@ -43,19 +46,17 @@ export class CoordinateIterator {
     return next;
   }
 
-  public at(): number {
+  at(): number {
     return this.index;
   }
 
-  public end(): boolean {
+  end(): boolean {
     return this.index >= this.coordinates.length;
   }
 
   protected isLoop(): boolean {
     let isLoop = false;
-    const round = (numbers: number[]): number[] => {
-      return numbers.map((n: number) => _round(n, 6));
-    };
+    const round = (numbers: Array<number>): Array<number> => numbers.map((n: number) => _round(n, 6));
 
     const first = _first(this.coordinates);
     const last = _last(this.coordinates);

@@ -3,10 +3,6 @@
 </div>
 
 <div *ngIf="(isPlanning$ | async)">
-  <p-button
-    class="mt-10"
-    label="{{isBackground ? 'Remove background' : 'Add background'}}"
-    styleClass="ui-button-{{btnClass}}"
-    (onClick)="toggleBackgroundImage()"
-  ></p-button>
+  <p-button class="mt-10" label="{{ isBackground ? 'Remove background' : 'Add background' }}"
+    styleClass="ui-button-{{ btnClass }}" (onClick)="toggleBackgroundImage()"></p-button>
 </div>

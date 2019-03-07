@@ -1,24 +1,24 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { IHikeProgramStored } from 'subrepos/provider-client';
+import { HikeProgramStored } from '@features/common/gtrack-interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { hikeReducer } from '../reducer';
-import { IHikeState } from '../state';
+import { HikeState } from '../state';
 
 import * as actions from '../actions';
 import { HikeSelectors } from '../selectors';
 import { EXTERNAL_HIKE_DEPENDENCIES } from '../../../externals';
-import { hikeProgramsStored as hikeProgramFixtures, HikeProgramComponent } from './fixtures';
+import { hikeProgramsStored as hikeProgramFixtures, HikeProgramComponent } from '../../../testing/fixtures';
 
 import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES, SearchFiltersSelectors } from '../../../../search-filters';
 
 import { EXTERNAL_GEO_SEARCH_DEPENDENCIES, GeoSearchSelectors } from '../../../../geosearch';
 
 describe('HikeProgram selectors', () => {
-  let store: Store<IHikeState>;
-  let hikePrograms: IHikeProgramStored[];
+  let store: Store<HikeState>;
+  let hikePrograms: HikeProgramStored[];
   let ids: string[];
   let destroy$: Subject<boolean>;
 

@@ -1,11 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Actions, EffectsModule } from '@ngrx/effects';
+import { EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
-import { DeepstreamService } from 'subrepos/deepstream-ngx';
+import { HikeProgramStored, EObjectState } from '@features/common/gtrack-interfaces';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 
 import _zipObject from 'lodash-es/zipObject';
 
@@ -15,19 +15,25 @@ import { hot, cold, Scheduler } from 'jest-marbles';
 
 import * as hikeProgramActions from '../actions';
 import { HikeEffects } from '../effects';
+import { HikeSelectors } from '../selectors';
 import { HikeProgramService } from '../../../services/hike-program';
 import { DeepstreamModule } from '../../../../deepstream';
 import { CheckpointService } from '../../../services/checkpoint';
 
-import { Observable, EMPTY, of } from 'rxjs';
-import { hikeProgramsStored } from './fixtures';
+import { Observable, of } from 'rxjs';
+import { hikeProgramsStored } from '../../../testing/fixtures';
+import { HikeState } from '../state';
+import { hikeReducer } from '../reducer';
+import { GeoSearchSelectors } from '../../../../geosearch';
+import { SearchFiltersSelectors } from '../../../../search-filters';
+import { EXTERNAL_HIKE_DEPENDENCIES } from '../../../externals/hike';
 
 describe('HikeProgram effects', () => {
   let hikeProgramsMap: {
-    [key: string]: IHikeProgramStored;
+    [key: string]: HikeProgramStored;
   };
 
-  let hikePrograms: IHikeProgramStored[];
+  let hikePrograms: HikeProgramStored[];
 
   let actions$: Observable<any>;
   let hikeProgramService: HikeProgramService;
@@ -44,9 +50,39 @@ describe('HikeProgram effects', () => {
     newId = uuid();
     hikePrograms = [...hikeProgramsStored];
 
+    const contextEntities = {};
+    const hikeProgramEntities = {};
+
+    contextEntities[hikePrograms[0].id] = {
+      loading: false,
+      loaded: true
+    };
+
+    hikeProgramEntities[hikePrograms[0].id] = hikePrograms[0];
+
+    const state: HikeState = {
+      contexts: {
+        ids: [hikePrograms[0].id],
+        entities: contextEntities
+      },
+      hikes: {
+        ids: [hikePrograms[0].id],
+        entities: hikeProgramEntities
+      }
+    };
+
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({}),
+        StoreModule.forRoot(
+          {
+            hike: hikeReducer
+          },
+          {
+            initialState: {
+              hike: state
+            }
+          }
+        ),
         EffectsModule.forRoot([]),
         HttpClientTestingModule,
         DeepstreamModule.forRoot()
@@ -59,6 +95,21 @@ describe('HikeProgram effects', () => {
           provide: DeepstreamService,
           useValue: {}
         },
+        {
+          provide: GeoSearchSelectors,
+          useValue: {}
+        },
+        {
+          provide: SearchFiltersSelectors,
+          useValue: {}
+        },
+        {
+          provide: EXTERNAL_HIKE_DEPENDENCIES,
+          useValue: {
+            storeDomain: 'hike'
+          }
+        },
+        HikeSelectors,
         CheckpointService
       ]
     });
@@ -68,6 +119,11 @@ describe('HikeProgram effects', () => {
     checkpointService = TestBed.get(CheckpointService);
 
     spyOn(hikeProgramService, 'get').and.callFake(id => of(hikeProgramsMap[id]));
+    spyOn(hikeProgramService, 'reverse').and.callFake(hikeProgram => ({
+      ...hikeProgramsMap[hikeProgram.id],
+      reversed: true
+    }));
+
     spyOn(hikeProgramService, 'query').and.returnValue(of(hikePrograms));
     spyOn(hikeProgramService, 'save').and.returnValue(
       of({
@@ -95,6 +151,26 @@ describe('HikeProgram effects', () => {
       Scheduler.get().flush();
 
       expect(hikeProgramService.get).toHaveBeenCalledWith(ids[0]);
+    });
+  });
+
+  describe('reverseHike$', () => {
+    it('should return a reversed HikeProgram from HikeProgramReversed', () => {
+      const action = new hikeProgramActions.ReverseHikeProgram(ids[0]);
+      const completion = new hikeProgramActions.HikeProgramReversed(ids[0], {
+        ...hikePrograms[0],
+        reversed: true
+      });
+
+      const expected = cold('-b', { b: completion });
+
+      actions$ = hot('-a', { a: action });
+
+      expect(effects.reverseHike$).toBeObservable(expected);
+
+      Scheduler.get().flush();
+
+      expect(hikeProgramService.reverse).toHaveBeenCalledWith(hikePrograms[0]);
     });
   });
 

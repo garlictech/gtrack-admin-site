@@ -1,17 +1,13 @@
-import { take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-
+import { DeepstreamService } from '@features/common/deepstream-ngx';
+import { EObjectState, RouteData, RouteSaveResponse, RouteStored } from '@features/common/gtrack-interfaces';
 import { geoBounds as d3GeoBounds } from 'd3-geo';
-
-import { DeepstreamService } from 'subrepos/deepstream-ngx';
-import { IRoute, IRouteStored, IRouteSaveResponse, EObjectState } from 'subrepos/provider-client';
 import { Observable } from 'rxjs';
-
+import { take } from 'rxjs/operators';
+import { CenterRadius, GeometryService } from '../geometry';
 import { Route } from './route';
 
-import { CenterRadius, GeometryService } from '../geometry';
-
-export interface IBounds {
+export interface Bounds {
   NorthEast: {
     lat: number;
     lon: number;
@@ -24,30 +20,30 @@ export interface IBounds {
 
 @Injectable()
 export class RouteService {
-  constructor(private _deepstream: DeepstreamService, private _geometryService: GeometryService) {}
+  constructor(private readonly _deepstream: DeepstreamService, private readonly _geometryService: GeometryService) {}
 
-  public get(id: string): Observable<IRouteStored | null> {
+  get(id: string): Observable<RouteStored | null> {
     return this._deepstream
-      .getRecord<IRouteStored>(`routes/${id}`)
+      .getRecord<RouteStored>(`routes/${id}`)
       .get()
       .pipe(take(1));
   }
 
-  public create(route: IRoute) {
-    return this._deepstream.callRpc<IRouteSaveResponse>('admin.route.save', route);
+  create(route: RouteData): Observable<any> {
+    return this._deepstream.callRpc<RouteSaveResponse>('admin.route.save', route);
   }
 
-  public updateState(id: string, state: EObjectState) {
+  updateState(id: string, state: EObjectState): Observable<any> {
     return this._deepstream
       .callRpc('admin.state', {
-        id: id,
+        id,
         table: 'routes',
-        state: state
+        state
       })
       .pipe(take(1));
   }
 
-  public getBounds(track: GeoJSON.FeatureCollection<any>): IBounds {
+  getBounds(track: GeoJSON.FeatureCollection<any>): Bounds {
     const d3Bounds = d3GeoBounds(track.features[0]);
     const padding = 0.003; // about 330m
 
@@ -73,7 +69,7 @@ export class RouteService {
    *
    * When the recursive function ends, the boundsArr will contains the correct bounds
    */
-  public splitBounds(bounds, maxRadius, boundsArr) {
+  splitBounds(bounds, maxRadius, boundsArr): void {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
 
     if (geo.radius < maxRadius) {
@@ -115,7 +111,7 @@ export class RouteService {
     }
   }
 
-  public getTrackPoint(route: Route, index: number) {
+  getTrackPoint(route: Route, index: number): any {
     return route.path.coordinates[index];
   }
 }

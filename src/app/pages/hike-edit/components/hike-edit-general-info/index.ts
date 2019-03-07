@@ -1,16 +1,19 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Store, MemoizedSelector, select } from '@ngrx/store';
+import { FormDescriptor, SliderField } from '@bit/garlictech.angular-features.common.forms';
+import {
+  HikeProgramStored,
+  LocalizedItem,
+  TextualDescription
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { MemoizedSelector, select, Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 import { State } from '../../../../store';
 import { editedHikeProgramActions } from '../../../../store/actions';
-import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 import * as editedHikeProgramSelectors from '../../../../store/selectors/edited-hike-program';
-import { ILocalizedItem, ITextualDescription, IHikeProgramStored } from 'subrepos/provider-client';
-import { IFormDescriptor, SliderField } from 'subrepos/gtrack-common-web/forms';
+import * as hikeEditRoutePlannerSelectors from '../../../../store/selectors/hike-edit-route-planner';
 
 @Component({
   selector: 'app-hike-edit-general-info',
@@ -18,22 +21,27 @@ import { IFormDescriptor, SliderField } from 'subrepos/gtrack-common-web/forms';
   styleUrls: ['./style.scss']
 })
 export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterViewInit {
-  public hikeProgramData$: Observable<IHikeProgramStored>;
-  public isRoundTrip$: Observable<boolean>;
-  public remoteError$: Observable<any>;
-  public formDataPath$ = of('editedHikeProgram.data');
-  public generalInfoFormDescriptor: IFormDescriptor;
-  public descriptionSelector: MemoizedSelector<object, ILocalizedItem<ITextualDescription>>;
-  public descriptionLangSelector: any;
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  hikeProgramData$: Observable<HikeProgramStored>;
+  isRoundTrip$: Observable<boolean>;
+  remoteError$: Observable<any>;
+  formDataPath$: Observable<string>;
+  generalInfoFormDescriptor: FormDescriptor;
+  descriptionSelector: MemoizedSelector<object, LocalizedItem<TextualDescription>>;
+  descriptionLangSelector: any;
+
+  private readonly _destroy$: Subject<boolean>;
 
   constructor(
-    private _store: Store<State>,
-    private _confirmationService: ConfirmationService,
-    private _changeDetectorRef: ChangeDetectorRef
-  ) {}
+    private readonly _store: Store<State>,
+    private readonly _confirmationService: ConfirmationService,
+    private readonly _changeDetectorRef: ChangeDetectorRef
+  ) {
+    this.formDataPath$ = of('editedHikeProgram.data');
 
-  ngOnInit() {
+    this._destroy$ = new Subject<boolean>();
+  }
+
+  ngOnInit(): void {
     this._initDescriptionFormConfig();
 
     // Selectors
@@ -56,7 +64,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
       this._store.dispatch(
         new editedHikeProgramActions.AddHikeProgramDetails(
           {
-            isRoundTrip: isRoundTrip
+            isRoundTrip
           },
           false
         )
@@ -64,16 +72,31 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
     });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this._changeDetectorRef.detectChanges();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  private _initDescriptionFormConfig() {
+  // tslint:disable-next-line:no-property-initializers
+  submitDescription = (langKey: string, data: any) => {
+    this._store.dispatch(new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription(langKey, data));
+  };
+
+  // tslint:disable-next-line:no-property-initializers
+  deleteDescription = lang => {
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to delete?',
+      accept: () => {
+        this._store.dispatch(new editedHikeProgramActions.DeleteTranslatedHikeProgramDescription(lang));
+      }
+    });
+  };
+
+  private _initDescriptionFormConfig(): void {
     this.descriptionSelector = editedHikeProgramSelectors.getDescriptions;
     this.descriptionLangSelector = editedHikeProgramSelectors.getDescriptionByLang;
 
@@ -82,9 +105,8 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
       submit: {
         translatableLabel: 'form.submit',
         classList: ['btn', 'btn-sm', 'btn-fill', 'btn-success'],
-        submitFv: (formGroup: FormGroup) => {
-          return this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(formGroup.value, true));
-        }
+        submitFv: (formGroup: FormGroup) =>
+          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(formGroup.value, true))
       },
       fields: {
         difficulty: new SliderField({
@@ -95,18 +117,5 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
         })
       }
     };
-  }
-
-  public submitDescription = (langKey: string, data: any) => {
-    this._store.dispatch(new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription(langKey, data));
-  }
-
-  public deleteDescription = lang => {
-    this._confirmationService.confirm({
-      message: 'Are you sure that you want to delete?',
-      accept: () => {
-        this._store.dispatch(new editedHikeProgramActions.DeleteTranslatedHikeProgramDescription(lang));
-      }
-    });
   }
 }

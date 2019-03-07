@@ -1,9 +1,7 @@
-import { IExternalPoi } from './external-poi.interface';
+import { ExternalPoi } from './external-poi.interface';
 
-export interface IGooglePoi extends IExternalPoi {
-  google?:
-    | {
-        [lng: string]: any;
-      }
-    | undefined;
+export interface GooglePoi extends ExternalPoi {
+  google?: {
+    [lng: string]: any;
+  };
 }

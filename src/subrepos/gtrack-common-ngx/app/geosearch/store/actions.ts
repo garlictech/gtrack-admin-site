@@ -1,9 +1,10 @@
-import { Action } from '@ngrx/store';
+// tslint:disable:no-property-initializers max-classes-per-file
 import {
-  IGeospatialBoxSearchPayload,
-  IGeospatialCircleSearchPayload,
+  GeospatialBoxSearchPayload,
+  GeospatialCircleSearchPayload,
   GeospatialSearchResponse
-} from '../../../../provider-client';
+} from '@features/common/gtrack-interfaces';
+import { Action } from '@ngrx/store';
 
 export enum GeoSearchActionTypes {
   SEARCH_IN_BOX = '[GeoSearch] Search in box',
@@ -14,13 +15,13 @@ export enum GeoSearchActionTypes {
 export class SearchInBox implements Action {
   readonly type = GeoSearchActionTypes.SEARCH_IN_BOX;
 
-  constructor(public query: IGeospatialBoxSearchPayload, public context: string) {}
+  constructor(public query: GeospatialBoxSearchPayload, public context: string) {}
 }
 
 export class SearchInCircle implements Action {
   readonly type = GeoSearchActionTypes.SEARCH_IN_CIRCLE;
 
-  constructor(public query: IGeospatialCircleSearchPayload, public context: string) {}
+  constructor(public query: GeospatialCircleSearchPayload, public context: string) {}
 }
 
 export class GeoSearchComplete implements Action {

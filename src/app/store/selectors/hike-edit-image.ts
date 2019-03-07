@@ -1,27 +1,35 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { IHikeEditImageState } from '../state/hike-edit-image';
-import { mapillaryImageAdapter, flickrImageAdapter } from '../reducer';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-const featureSelector = createFeatureSelector<IHikeEditImageState>('hikeEditImage');
+import { flickrImageAdapter, mapillaryImageAdapter } from '../reducer';
+import { HikeEditImageState } from '../state/hike-edit-image';
 
-const mapillaryImageSelector = createSelector(featureSelector, (state: IHikeEditImageState) =>
-  state.mapillaryImages
+const featureSelector = createFeatureSelector<HikeEditImageState>('hikeEditImage');
+
+const mapillaryImageSelector = createSelector(
+  featureSelector,
+  (state: HikeEditImageState) => state.mapillaryImages
 );
 export const getAllMapillaryImages = mapillaryImageAdapter.getSelectors(mapillaryImageSelector).selectAll;
 
-const flickrImageSelector = createSelector(featureSelector, (state: IHikeEditImageState) =>
-  state.flickrImages
+const flickrImageSelector = createSelector(
+  featureSelector,
+  (state: HikeEditImageState) => state.flickrImages
 );
 export const getAllFlickrImages = flickrImageAdapter.getSelectors(flickrImageSelector).selectAll;
 
-export const getImageMarkerImages = createSelector(featureSelector, (state: IHikeEditImageState) =>
-  state.imageMarkerImages.images
+export const getImageMarkerImages = createSelector(
+  featureSelector,
+  (state: HikeEditImageState) => state.imageMarkerImages.images
 );
 
-export const getHikeEditImageContextSelector = (subdomain) => {
-  return createSelector(featureSelector, (state: IHikeEditImageState) => state.contexts[subdomain]);
-};
+export const getHikeEditImageContextSelector = subdomain =>
+  createSelector(
+    featureSelector,
+    (state: HikeEditImageState) => state.contexts[subdomain]
+  );
 
-export const getHikeEditImageContextPropertySelector = (subdomain, property) => {
-  return createSelector(featureSelector, (state: IHikeEditImageState) => state.contexts[subdomain][property]);
-};
+export const getHikeEditImageContextPropertySelector = (subdomain, property) =>
+  createSelector(
+    featureSelector,
+    (state: HikeEditImageState) => state.contexts[subdomain][property]
+  );

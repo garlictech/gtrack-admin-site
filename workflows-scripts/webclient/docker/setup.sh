@@ -19,7 +19,3 @@ ${DOCKER_RUN_CMD} > tsconfig.json
 echo "Updating jest-config.js..."
 export DOCKER_CMD="cat jest-config.js"
 ${DOCKER_RUN_CMD} > jest-config.js
-
-echo "Adding ng packages..."
-rm -f ng-add-pug-loader.js
-ng add ng-cli-pug-loader

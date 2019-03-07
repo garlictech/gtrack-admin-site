@@ -1,8 +1,8 @@
-import { Component, forwardRef, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-import { FileComponent as NativeFileComponent } from 'subrepos/forms-ngx';
+import { FileComponent as NativeFileComponent } from '@features/common/forms';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -16,19 +16,20 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 
 @Component({
   selector: 'gtrack-form-file',
-  templateUrl: './ui.pug',
+  templateUrl: './ui.html',
   styleUrls: ['./style.scss'],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class FileComponent extends NativeFileComponent implements AfterViewInit {
   mode: string;
-  icon = faCheck;
+  icon: IconDefinition;
 
   constructor() {
     super();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.mode = this.isBasic ? 'basic' : 'advanced';
+    this.icon = faCheck;
   }
 }

@@ -1,5 +1,6 @@
+// tslint:disable:no-property-initializers max-classes-per-file
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 import { Action } from '@ngrx/store';
-import { EObjectMarkContext } from 'subrepos/provider-client';
 
 export enum ObjectMarkActionTypes {
   LOAD_CONTEXT = '[ObjectMark] Load context',
@@ -17,7 +18,7 @@ export class LoadContext implements Action {
 export class ContextLoaded implements Action {
   readonly type = ObjectMarkActionTypes.CONTEXT_LOADED;
 
-  constructor(public context: EObjectMarkContext, public objects: any[]) {}
+  constructor(public context: EObjectMarkContext, public objects: Array<any>) {}
 }
 
 export class MarkObject implements Action {

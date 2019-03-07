@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DynamicFormFieldComponent containerClasses shold return proper values if the field is not switch 1`] = `
+Array [
+  "form-group",
+]
+`;
+
+exports[`DynamicFormFieldComponent containerClasses shold return proper values if the field is switch 1`] = `
+Array [
+  "form-group",
+  "switch-group",
+]
+`;
+
+exports[`DynamicFormFieldComponent sanitizedPlaceholder should work if it has no placeholder 1`] = `""`;
+
+exports[`DynamicFormFieldComponent sanitizedPlaceholder should work if it has placeholder 1`] = `"fooplaceholder"`;

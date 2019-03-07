@@ -1,11 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Actions, EffectsModule } from '@ngrx/effects';
+import { EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { IPoiStored } from 'subrepos/provider-client';
-import { DeepstreamService } from 'subrepos/deepstream-ngx';
+import { PoiStored } from '@features/common/gtrack-interfaces';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 
 import _zipObject from 'lodash-es/zipObject';
 
@@ -18,19 +18,19 @@ import { PoiEffects } from '../effects';
 import { PoiService } from '../../../services/poi';
 import { DeepstreamModule } from '../../../../deepstream';
 
-import { Observable, EMPTY, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { pois as poiFixtures, poisStored } from './fixtures';
 
 import { GeometryService } from '../../../services/geometry';
 import { GeoSearchService } from '../../../../geosearch';
-import { EObjectState } from '../../../../../../provider-client';
+import { EObjectState } from '@features/common/gtrack-interfaces';
 
 describe('Poi effects', () => {
   let poisMap: {
-    [key: string]: IPoiStored;
+    [key: string]: PoiStored;
   };
 
-  let pois: IPoiStored[];
+  let pois: PoiStored[];
 
   let actions$: Observable<any>;
   let service: PoiService;

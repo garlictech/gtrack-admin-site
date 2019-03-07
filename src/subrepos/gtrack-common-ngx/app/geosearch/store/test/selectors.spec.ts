@@ -5,19 +5,19 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { geoSearchReducer } from '../reducer';
-import { IGeoSearchState } from '../state';
+import { GeoSearchState } from '../state';
 
 import { searches as fixtures } from './fixtures';
 import * as actions from '../actions';
 import { GeoSearchSelectors } from '../selectors';
-import { IGeoSearchResponseItem } from '../state';
+import { GeoSearchResponseItem } from '../state';
 import { EXTERNAL_GEO_SEARCH_DEPENDENCIES } from '../../externals';
 
 import 'rxjs/add/operator/takeUntil';
 
 describe('GeoSearch selectors', () => {
-  let store: Store<IGeoSearchState>;
-  let searches: IGeoSearchResponseItem[];
+  let store: Store<GeoSearchState>;
+  let searches: GeoSearchResponseItem[];
   let contexts: string[];
   let destroy$: Subject<boolean>;
 

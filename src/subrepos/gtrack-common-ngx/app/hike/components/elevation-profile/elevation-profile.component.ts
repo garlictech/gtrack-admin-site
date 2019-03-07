@@ -1,176 +1,161 @@
-import { map, filter, takeUntil } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
+import { State } from 'app/store';
+import { bisector as d3Bisector } from 'd3-array';
+import {
+  axisBottom as d3AxisBottom,
+  axisLeft as d3AxisLeft,
+  axisRight as d3AxisRight,
+  axisTop as d3AxisTop
+} from 'd3-axis';
+import { drag as d3Drag } from 'd3-drag';
+import { interpolateNumber as d3InterpolateNumber } from 'd3-interpolate';
+import { BaseType, event as d3Event, mouse as d3Mouse, select as d3Select, Selection } from 'd3-selection';
+import { sliderLeft } from 'd3-simple-slider';
+import _cloneDeep from 'lodash-es/cloneDeep';
+import _get from 'lodash-es/get';
 import * as moment from 'moment';
-
-import lineSliceAlong from '@turf/line-slice-along';
-import { lineString as turfLineString } from '@turf/helpers';
-
-import { IWeatherEntity } from '@common.features/weather/store';
+import { ReplaySubject, Subject } from 'rxjs';
+import { filter, map, take, takeUntil } from 'rxjs/operators';
 
 import {
   Component,
-  Input,
-  ViewChild,
   ElementRef,
-  OnInit,
-  OnDestroy,
-  OnChanges,
-  Output,
   EventEmitter,
-  SimpleChanges
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
+import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { HikeProgramStop, PoiStored } from '@features/common/gtrack-interfaces';
+import { DescriptionLanguageListService } from '@features/common/multi-language-text';
+import { OpenWeatherMapForecastItem } from '@features/common/weather';
+import { WeatherEntity } from '@features/common/weather/store';
+import { select, Store } from '@ngrx/store';
+import { lineString as turfLineString } from '@turf/helpers';
+import lineSliceAlong from '@turf/line-slice-along';
 
-import { DescriptionLanguageListService } from '../../../localize';
-
-import { State } from 'app/store';
-import { Subject, ReplaySubject } from 'rxjs';
-import { take } from 'rxjs/operators';
-
-import { select as d3Select, mouse as d3Mouse, event as d3Event, Selection, BaseType } from 'd3-selection';
-
-import { bisector as d3Bisector } from 'd3-array';
-import { drag as d3Drag } from 'd3-drag';
-
-import {
-  axisLeft as d3AxisLeft,
-  axisRight as d3AxisRight,
-  axisTop as d3AxisTop,
-  axisBottom as d3AxisBottom
-} from 'd3-axis';
-
-import { sliderLeft } from 'd3-simple-slider';
-
-import { line as d3Line } from 'd3-shape';
-
-import { interpolateNumber as d3InterpolateNumber } from 'd3-interpolate';
-
-import _get from 'lodash-es/get';
-import _range from 'lodash-es/range';
-
-import { DistancePipe, UnitsService } from '../../../shared';
-import { IElevationData, ElevationService } from '../../services/elevation';
-import { Route, RouteService } from '../../services/route';
-import { RouteSelectors } from '../../store/route/selectors';
-import { PoiSelectors } from '../../store/poi/selectors';
-
-import * as routeActions from '../../store/route/actions';
-import * as poiActions from '../../store/poi/actions';
-
-import { HikeProgram } from '../../services/hike-program';
-import { GeospatialService } from '../../../shared/services/geospatial';
-import { IconService } from '../../../map/services/icon';
 import { AstronomyService } from '../../../astronomy';
-
-import { IPoiStored, IPoi, IHikeProgramStop } from 'subrepos/provider-client';
+import { DistancePipe, UnitsService } from '../../../shared';
+import { GeospatialService } from '../../../shared/services/geospatial';
+import { ElevationData, ElevationService } from '../../services/elevation';
 import { GameRuleService } from '../../services/game-rule';
+import { HikeProgram } from '../../services/hike-program';
+import { Route, RouteService } from '../../services/route';
+import * as poiActions from '../../store/poi/actions';
+import { PoiSelectors } from '../../store/poi/selectors';
+import * as routeActions from '../../store/route/actions';
+import { RouteSelectors } from '../../store/route/selectors';
 
 @Component({
   selector: 'gtrack-common-elevation-profile',
   template: ''
 })
 export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
-  @ViewChild('elevationProfile')
-  public mainDiv: ElementRef;
+  @ViewChild('elevationProfile') mainDiv: ElementRef;
+  @ViewChild('experiment') experiment: ElementRef;
+  @Output() readonly elevationLineOver: EventEmitter<void>;
+  @Output() readonly elevationLineMove: EventEmitter<GeoJSON.Position>;
+  @Output() readonly elevationLineOut: EventEmitter<void>;
+  @Output() readonly elevationLineClick: EventEmitter<GeoJSON.Position>;
+  @Input() elevationMarkerPosition: GeoJSON.Position;
+  @Input() elevationMarkerVisible: boolean;
 
-  @ViewChild('experiment')
-  public experiment: ElementRef;
+  @Input() width: number;
+  @Input() height: number;
+  @Input() startDate: Date;
+  @Input() speed: number;
 
-  @Output()
-  public elevationLineOver = new EventEmitter<void>();
+  @Input() weather: WeatherEntity;
 
-  @Output()
-  public elevationLineMove = new EventEmitter<GeoJSON.Position>();
-
-  @Output()
-  public elevationLineOut = new EventEmitter<void>();
-
-  @Output()
-  public elevationLineClick = new EventEmitter<GeoJSON.Position>();
-
-  @Input()
-  public elevationMarkerPosition: GeoJSON.Position;
-
-  @Input()
-  public elevationMarkerVisible: boolean;
-
-  @Input()
-  public width = 570;
-
-  @Input()
-  public height = 220;
-
-  @Input()
-  public startDate = new Date();
-
-  @Input()
-  public speed = 4; // km/h
-
-  @Input()
-  public weather: IWeatherEntity;
-
-  @Input()
-  public margins = {
-    top: 40,
-    right: 20,
-    bottom: 20,
-    left: 70
+  @Input() margins: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
   };
 
-  @Input()
-  public zoom = 1;
+  @Input() zoom: number;
 
-  public route: Route | null;
-  public activePoi: IPoiStored | null;
-  public activeStop: IHikeProgramStop | null;
-  public marker: Selection<BaseType, {}, null, undefined>;
-  public elevationText: Selection<BaseType, {}, null, undefined>;
+  route: Route | null;
+  activePoi: PoiStored | null;
+  activeStop: HikeProgramStop | null;
+  marker: Selection<BaseType, {}, null, undefined>;
+  elevationText: Selection<BaseType, {}, null, undefined>;
 
   protected vis: Selection<BaseType, {}, null, undefined>;
-  protected _elevationData: IElevationData | null = null;
-  protected markerOn = false;
+  protected _elevationData?: ElevationData;
+  protected markerOn: boolean;
   protected distance: DistancePipe;
 
-  protected _displayWidth = this.width;
+  protected _displayWidth: number;
 
-  private _destroy$ = new Subject<boolean>();
-  private _hikeProgramChanged$ = new Subject<boolean>();
-  private _hikeProgram: HikeProgram | undefined;
+  private readonly _destroy$: Subject<boolean>;
+  private readonly _hikeProgramChanged$: Subject<boolean>;
+  private _hikeProgram?: HikeProgram;
 
-  private _pois$ = new ReplaySubject<IPoiStored[]>(1);
+  private readonly _pois$: ReplaySubject<Array<PoiStored>>;
 
   private _zoomRectangle: Selection<SVGRectElement, {}, null, undefined>;
   private _scrollableGroup: Selection<BaseType, {}, null, undefined>;
-  private _scrollPosition = 0.5;
+  private _scrollPosition: number;
 
   constructor(
-    private _elevationService: ElevationService,
-    private _routeService: RouteService,
-    private _store: Store<State>,
-    private _routeSelectors: RouteSelectors,
-    private _poiSelectors: PoiSelectors,
-    private _geospatial: GeospatialService,
-    private _icon: IconService,
-    private _gameRule: GameRuleService,
-    private _descriptionLanguageList: DescriptionLanguageListService,
-    private _astronomy: AstronomyService,
+    private readonly _elevationService: ElevationService,
+    private readonly _routeService: RouteService,
+    private readonly _store: Store<State>,
+    private readonly _routeSelectors: RouteSelectors,
+    private readonly _poiSelectors: PoiSelectors,
+    private readonly _geospatial: GeospatialService,
+    private readonly _icon: LeafletIconService,
+    private readonly _gameRule: GameRuleService,
+    private readonly _descriptionLanguageList: DescriptionLanguageListService,
+    private readonly _astronomy: AstronomyService,
     unitsService: UnitsService
   ) {
     this.distance = new DistancePipe(unitsService);
+
+    this.elevationLineOver = new EventEmitter<void>();
+    this.elevationLineMove = new EventEmitter<GeoJSON.Position>();
+    this.elevationLineOut = new EventEmitter<void>();
+    this.elevationLineClick = new EventEmitter<GeoJSON.Position>();
+
+    this.width = 570;
+    this.height = 220;
+    this.startDate = new Date();
+    this.speed = 4; // km/h
+
+    this.margins = {
+      top: 40,
+      right: 20,
+      bottom: 20,
+      left: 70
+    };
+
+    this.zoom = 1;
+    this.markerOn = false;
+    this._displayWidth = this.width;
+    this._destroy$ = new Subject<boolean>();
+    this._hikeProgramChanged$ = new Subject<boolean>();
+    this._pois$ = new ReplaySubject<Array<PoiStored>>(1);
+    this._scrollPosition = 0.5;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (typeof this.elevationMarkerPosition !== 'undefined') {
       this.moveHandlerToCoordinate(this.elevationMarkerPosition);
     }
 
-    if (this.elevationMarkerVisible === true) {
+    if (this.elevationMarkerVisible) {
       this.showHandler();
     }
 
     this._displayWidth = this.width * this.zoom;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (typeof changes.elevationMarkerVisible !== 'undefined') {
       const markerVisible = changes.elevationMarkerVisible;
       this.showHandler(markerVisible.currentValue);
@@ -191,7 +176,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   @Input()
-  public set hikeProgram(hikeProgram: HikeProgram) {
+  set hikeProgram(hikeProgram: HikeProgram) {
     if (hikeProgram) {
       this._hikeProgram = hikeProgram;
       this.routeId = hikeProgram.routeId;
@@ -210,7 +195,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
           for (const poiId of poiIds) {
             const context = contexts[poiId];
 
-            if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
+            if (typeof context === 'undefined' || (!context.loaded && !context.loading)) {
               this._store.dispatch(new poiActions.LoadPoi(poiId));
             }
           }
@@ -224,15 +209,14 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         )
         .subscribe(pois => this._pois$.next(pois));
     } else {
-      this.routeId = null;
-      this._hikeProgram = null;
+      this.routeId = undefined;
+      this._hikeProgram = undefined;
     }
   }
 
-  public set routeId(routeId: string | null) {
+  set routeId(routeId: string | null) {
     if (!routeId) {
-      this.route = null;
-      return;
+      this.route = undefined;
     }
 
     this._store
@@ -241,7 +225,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         takeUntil(this._destroy$)
       )
       .subscribe(context => {
-        if (typeof context === 'undefined' || (context.loaded !== true && context.loading !== true)) {
+        if (typeof context === 'undefined' || (!context.loaded && !context.loading)) {
           this._store.dispatch(new routeActions.LoadRoute(routeId));
         }
       });
@@ -261,7 +245,16 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         if (!route) {
           throw new Error(`Route ${routeId} is unknown`);
         }
-        this.route = route;
+
+        const firstDraw = typeof this.route === 'undefined';
+
+        if (this._hikeProgram.reversed) {
+          const reversed = _cloneDeep(route);
+          reversed.path.coordinates.reverse();
+          this.route = reversed;
+        } else {
+          this.route = route;
+        }
 
         if (!this.vis) {
           this.vis = d3Select(this.mainDiv.nativeElement)
@@ -269,14 +262,18 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
             .attr('viewBox', `0, 0, ${this._displayWidth}, ${this.height + 60}`);
         }
 
-        this._addZoomRectangle();
-        this._draw();
-        this._addZoomSlider();
-        this._addElevationLabel();
+        if (firstDraw) {
+          this._addZoomRectangle();
+          this._draw();
+          this._addZoomSlider();
+          this._addElevationLabel();
+        } else {
+          this._redraw();
+        }
       });
   }
 
-  protected _redraw() {
+  protected _redraw(): void {
     this.vis.select('#elevation-time-axis').remove();
     this.vis.select('#elevation-line-graph').remove();
     this.vis.select('#elevation-filled-area').remove();
@@ -289,11 +286,16 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     this._draw();
   }
 
-  protected _draw() {
-    this._elevationData = this._elevationService.getd3ElevationData(this.route, this._displayWidth, this.height, this.margins);
+  protected _draw(): any {
+    this._elevationData = this._elevationService.getd3ElevationData(
+      this.route,
+      this._displayWidth,
+      this.height,
+      this.margins
+    );
 
     if (this._elevationData === null) {
-      return;
+      return undefined;
     }
 
     this._addFilledArea();
@@ -313,13 +315,14 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       .style('display', 'none')
       .style('pointer-events', 'none')
       .style('stroke', 'orange')
+      // tslint:disable-next-line:no-duplicate-string
       .style('stroke-width', '2px');
 
     if (this.elevationMarkerPosition) {
       this.moveHandlerToCoordinate(this.elevationMarkerPosition);
     }
 
-    if (this.elevationMarkerVisible === true) {
+    if (this.elevationMarkerVisible) {
       this.showHandler();
     }
 
@@ -347,13 +350,13 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     this._scrollTo(this._scrollPosition);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  public moveHandlerToCoordinate(position: GeoJSON.Position) {
-    if (this._elevationData !== null) {
+  moveHandlerToCoordinate(position: GeoJSON.Position): void {
+    if (typeof this._elevationData !== 'undefined') {
       const lineData = this._elevationData.lineData;
       const xRange = this._elevationData.xRange;
       const yRange = this._elevationData.yRange;
@@ -361,9 +364,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
       const distance = this._geospatial.distanceOnLine(coordinates[0], position, this.route.route.features[0]) / 1000;
 
-      const bisect = d3Bisector((d: [number, number]) => {
-        return d[0];
-      }).right;
+      const bisect = _get(d3Bisector((d: [number, number]) => d[0]), 'right');
 
       const x = distance;
 
@@ -388,9 +389,9 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  public showHandler(show = true) {
+  showHandler(show = true): void {
     if (this.marker) {
-      if (show === true) {
+      if (show) {
         this.marker.style('display', 'inherit');
       } else {
         this.marker.style('display', 'none');
@@ -398,11 +399,11 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  public getWeather(date: Date) {
+  getWeather(date: Date): OpenWeatherMapForecastItem {
     const time = date.getTime();
 
     if (!this.weather) {
-      return;
+      return undefined;
     }
 
     // Find the closest item
@@ -416,9 +417,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
   protected _xToPosition(x: number): GeoJSON.Position {
     const lineData = this._elevationData.lineData;
-    const bisect = d3Bisector((d: [number, number]) => {
-      return d[0];
-    }).right;
+    const bisect = _get(d3Bisector((d: [number, number]) => d[0]), 'right');
 
     const index = bisect(lineData, x);
 
@@ -426,7 +425,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   protected _eventToPosition(eventX: number): GeoJSON.Position | null {
-    let trackPoint: GeoJSON.Position = null;
+    let trackPoint: GeoJSON.Position;
 
     if (this._elevationData !== null) {
       const xRange = this._elevationData.xRange;
@@ -439,7 +438,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     return trackPoint;
   }
 
-  private _addElevationLabel() {
+  private _addElevationLabel(): void {
     this.elevationText = this.vis
       .append('text')
       .attr('class', 'elevation-label')
@@ -447,7 +446,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       .attr('y', this.margins.top - 5);
   }
 
-  private _addYAxis() {
+  private _addYAxis(): void {
     // The vertical axis
     const yAxisVertical = d3AxisLeft(this._elevationData.yRange).tickSize(5);
 
@@ -461,7 +460,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     const lineWidth = this._displayWidth - this.margins.left - this.margins.right;
     const yAxisLines = d3AxisRight(this._elevationData.yRange).tickSize(lineWidth);
 
-    function customYAxis(g) {
+    const customYAxis = g => {
       g.call(yAxisLines);
       g.select('.domain').remove();
       g.selectAll('.tick line')
@@ -469,7 +468,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         .attr('stroke-dasharray', '2,2');
 
       g.selectAll('text').remove();
-    }
+    };
 
     this._scrollableGroup
       .append('svg:g')
@@ -478,7 +477,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       .call(customYAxis);
   }
 
-  private _addZoomRectangle() {
+  private _addZoomRectangle(): void {
     this.vis
       .append('defs')
       .append('clipPath')
@@ -489,47 +488,48 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       .attr('width', this.width - this.margins.left - this.margins.right + 11)
       .attr('height', this.height + 60);
 
-    const scrollableGroupParent = this.vis
-      .append('svg:g')
-      .attr('clip-path', 'url(#scroll-clip)');
+    const scrollableGroupParent = this.vis.append('svg:g').attr('clip-path', 'url(#scroll-clip)');
 
     this._scrollableGroup = scrollableGroupParent
       .append('svg:g')
       .attr('id', 'scrollable')
-      .call(d3Drag()
-        .on('drag', () => {
-          this._scrollableGroup.style('cursor', 'grab');
-          this._onScroll(true);
-        })
-        .on('end', () => this._scrollableGroup.style('cursor', 'auto'))
+      .call(
+        d3Drag()
+          .on('drag', () => {
+            this._scrollableGroup.style('cursor', 'grab');
+            this._onScroll(true);
+          })
+          .on('end', () => this._scrollableGroup.style('cursor', 'auto'))
       );
   }
 
-  private _addZoomSlider() {
+  private _addZoomSlider(): void {
+    const sliderHeight = this.height - this.margins.top - this.margins.bottom - 15;
+    const steps = 5; // max 16x
+
     const slider = sliderLeft()
-      .min(1)
-      .max(10)
+      .min(0)
+      .max(steps - 1)
       .step(1)
-      .tickFormat(d => `${11 - d}x`)
-      .height(this.height - this.margins.top - this.margins.bottom - 15)
-      .default(11 - this.zoom)
+      .ticks(steps)
+      .tickFormat(d => `${2 ** (steps - 1 - d)}x`)
+      .height(sliderHeight)
+      .default(steps - 1)
       .on('onchange', val => {
-        this.zoom = 11 - val;
+        this.zoom = 2 ** (steps - 1 - val);
         this._displayWidth = this.width * this.zoom;
         this._redraw();
       });
 
-    function customSlider(g) {
+    const customSlider = g => {
       g.call(slider);
 
-      g.selectAll('.tick line').remove();
+      g.selectAll('.axis .tick line').attr('x2', -5);
 
-      g.selectAll('.axis .tick text')
-        .attr('x', -5);
+      g.selectAll('.axis .tick text').attr('x', -7);
 
-      g.selectAll('.slider .parameter-value text')
-        .attr('x', -12);
-    }
+      g.selectAll('.slider .parameter-value text').attr('x', -14);
+    };
 
     this.vis
       .append('svg:g')
@@ -538,33 +538,33 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       .call(customSlider);
   }
 
-  private _addZoomScroll() {
+  private _addZoomScroll(): void {
     if (this.zoom > 1) {
       this._zoomRectangle = this.vis
-      .append('rect')
-      .attr('id', 'elevation-zoom-scroll')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('transform', `translate(${this.margins.left}, ${this.height - this.margins.bottom})`)
-      .attr('height', 10)
-      .attr('width', (this.width - this.margins.left) / this.zoom)
-      .attr('fill', '#0000AA')
-      .attr('pointer-events', 'all')
-      .attr('cursor', 'pointer')
-      .attr('opacity', .4)
-      .call(d3Drag().on('drag', () => this._onScroll()));
+        .append('rect')
+        .attr('id', 'elevation-zoom-scroll')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('transform', `translate(${this.margins.left}, ${this.height - this.margins.bottom})`)
+        .attr('height', 10)
+        .attr('width', (this.width - this.margins.left) / this.zoom)
+        .attr('fill', '#0000AA')
+        .attr('pointer-events', 'all')
+        .attr('cursor', 'pointer')
+        .attr('opacity', 0.4)
+        .call(d3Drag().on('drag', () => this._onScroll()));
     }
   }
 
-  private _onScroll(negate = false) {
+  private _onScroll(negate = false): any {
     let multiplier = 1;
 
-    if (negate === true) {
+    if (negate) {
       multiplier = -1;
     }
 
     if (this.zoom === 1) {
-      return;
+      return undefined;
     }
 
     const currentX = parseInt(this._zoomRectangle.attr('x'), 10);
@@ -576,7 +576,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       newX = 0;
     }
 
-    if (newX + currentWidth > viewportWidth)  {
+    if (newX + currentWidth > viewportWidth) {
       newX = viewportWidth - currentWidth;
     }
 
@@ -585,11 +585,11 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     this._zoomRectangle.attr('x', newX);
     this._scrollableGroup.attr('transform', `translate(${-transform}, 0)`);
 
-    this._scrollPosition = percentage + (1 / (this.zoom * 2));
+    this._scrollPosition = percentage + 1 / (this.zoom * 2);
   }
 
-  private _scrollTo(center: number)  {
-    let percentage = center - (1 / (this.zoom * 2));
+  private _scrollTo(center: number): void {
+    let percentage = center - 1 / (this.zoom * 2);
     const viewportWidth = this.width - this.margins.left;
 
     if (this.zoom > 1) {
@@ -600,7 +600,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         x = 0;
       }
 
-      if (x + currentWidth > viewportWidth)  {
+      if (x + currentWidth > viewportWidth) {
         x = viewportWidth - currentWidth;
       }
 
@@ -614,7 +614,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private _addXAxis() {
+  private _addXAxis(): void {
     // The vertical axis
     const xAxisHorizontal = d3AxisBottom(this._elevationData.xRange)
       .tickSize(5)
@@ -631,7 +631,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
 
     const xAxisLines = d3AxisTop(this._elevationData.xRange).tickSize(lineHeight);
 
-    function customXAxis(g) {
+    const customXAxis = g => {
       g.call(xAxisLines);
       g.select('.domain').remove();
       g.selectAll('.tick line')
@@ -639,7 +639,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         .attr('stroke-dasharray', '2,2');
 
       g.selectAll('text').remove();
-    }
+    };
 
     this._scrollableGroup
       .append('svg:g')
@@ -648,7 +648,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       .call(customXAxis);
   }
 
-  private _addTimeAxis() {
+  private _addTimeAxis(): void {
     // The vertical axis
     const xAxisHorizontal = d3AxisBottom(this._elevationData.xRange)
       .tickSize(0)
@@ -715,11 +715,11 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       .attr('transform', 'translate(-10, 20)');
   }
 
-  private _removeTimeAxis() {
+  private _removeTimeAxis(): void {
     this.vis.select('#elevation-time-axis').remove();
   }
 
-  private _getTimeForDistance(distance: number) {
+  private _getTimeForDistance(distance: number): Date {
     let time = 0;
 
     if (distance > 0) {
@@ -737,7 +737,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     return arrive;
   }
 
-  private _addLineGraph() {
+  private _addLineGraph(): void {
     const line = this._elevationData.lineFunc(this._elevationData.lineData);
 
     if (line !== null) {
@@ -746,13 +746,14 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
         .attr('d', line)
         .attr('id', 'elevation-line-graph')
         .attr('stroke', 'black')
+        // tslint:disable-next-line:no-duplicate-string
         .attr('stroke-width', 1)
         .attr('transform', `translate(0, ${this.margins.top - 20})`)
         .attr('fill', 'none');
     }
   }
 
-  private _addFilledArea() {
+  private _addFilledArea(): void {
     const areaGradient = this.vis
       .append('defs')
       .append('linearGradient')
@@ -783,7 +784,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       .attr('fill', 'url(#areaGradient)');
   }
 
-  private _addPoiIcons() {
+  private _addPoiIcons(): void {
     this._pois$.pipe(takeUntil(this._destroy$)).subscribe(pois => {
       this.vis.selectAll('image.poi-icon').remove();
       this.vis.selectAll('.poi-line').remove();
@@ -791,28 +792,12 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
       for (const poi of pois) {
         const coordinates = this.route.path.coordinates;
         const xRange = this._elevationData.xRange;
-        const yRange = this._elevationData.yRange;
-        const bisect = d3Bisector((d: [number, number]) => {
-          return d[0];
-        }).right;
 
         const stop = this._hikeProgram.stops.find(hikeStop => hikeStop.poiId === poi.id);
 
         const distance =
           this._geospatial.distanceOnLine(coordinates[0], [poi.lon, poi.lat], this.route.route.features[0]) / 1000;
         const type = _get(poi, 'types[0]', 'unknown');
-
-        const lineData = this._elevationData.lineData;
-
-        const x = distance;
-
-        const index = bisect(lineData, x);
-        const startData = lineData[index - 1];
-        const endData = lineData[index];
-
-        const interpolate = d3InterpolateNumber(startData[1], endData[1]);
-        const range = endData[0] - startData[0];
-        const valueY = interpolate((x % range) / range);
 
         const poiImage = this._scrollableGroup
           .append('svg:image')
@@ -839,11 +824,11 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
           .append('svg:line')
           .attr('class', 'poi-line')
           .style('stroke', 'black')
+          // tslint:disable-next-line:no-duplicate-string
           .style('stroke-width', '0.5px')
           .attr('x1', xRange(distance))
           .attr('x2', xRange(distance))
           .attr('y1', this.margins.top)
-          // .attr('y2', yRange(valueY) + this.margins.top - 23);
           .attr('y2', this.height - this.margins.bottom);
       }
     });

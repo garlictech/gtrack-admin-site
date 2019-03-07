@@ -1,5 +1,5 @@
-export interface IGenericEditedState {
+export interface GenericEditedState {
   dirty: boolean;
-  working: string | null;
-  failed: null;
+  working?: string;
+  failed: undefined;
 }

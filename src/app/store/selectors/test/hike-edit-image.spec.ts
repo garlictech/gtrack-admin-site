@@ -1,22 +1,22 @@
-import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, select } from '@ngrx/store';
-import * as hikeEditImageSelectors from '../../selectors/hike-edit-image';
+import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IHikeEditImageState } from '../../state';
+
+import { TestBed } from '@angular/core/testing';
+import { EPoiImageTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { select, Store, StoreModule } from '@ngrx/store';
+
+import { BackgroundImageDataStored } from '../../../shared/interfaces';
 import { hikeEditImageActions } from '../../actions';
-import { EPoiImageTypes } from '../../../../subrepos/provider-client';
 import { hikeEditImageReducer, imageListInitialContextState } from '../../reducer/hike-edit-image';
-import { IBackgroundImageDataStored } from '../../../shared/interfaces';
-
 import { bgImagesStored as bgImageStoredFixtures } from '../../reducer/test/fixtures';
-
-import * as _ from 'lodash';
+import * as hikeEditImageSelectors from '../../selectors/hike-edit-image';
+import { HikeEditImageState } from '../../state';
 
 describe('HikeEditImage selectors', () => {
-  let store: Store<IHikeEditImageState>;
+  let store: Store<HikeEditImageState>;
   let destroy$: Subject<boolean>;
-  let imagesStored: IBackgroundImageDataStored[];
+  let imagesStored: Array<BackgroundImageDataStored>;
 
   beforeEach(() => {
     imagesStored = _.cloneDeep(bgImageStoredFixtures);

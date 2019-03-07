@@ -1,5 +1,5 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
-import { GetTimesResult, GetMoonTimes } from 'suncalc';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { GetMoonTimes, GetTimesResult } from 'suncalc';
 
 import { AstronomyService } from '../../services/astronomy.service';
 
@@ -8,29 +8,27 @@ import { AstronomyService } from '../../services/astronomy.service';
   templateUrl: './sunrise.component.html'
 })
 export class SunriseComponent implements OnInit, OnChanges {
-  @Input()
-  public position: GeoJSON.Position;
+  @Input() position: GeoJSON.Position;
 
-  @Input()
-  public day: Date;
+  @Input() day: Date;
 
-  public astronomyData: {
+  astronomyData: {
     sun: GetTimesResult;
     moon: GetMoonTimes;
     moonPhase: string;
   };
 
-  constructor(private _astronomy: AstronomyService) {}
+  constructor(private readonly _astronomy: AstronomyService) {}
 
-  ngOnInit() {
-    this.astronomyData = {
-      sun: this._astronomy.getSunTimes(this.position, this.day),
-      moon: this._astronomy.getMoonTimes(this.position, this.day),
-      moonPhase: this._astronomy.getMoonPhase(this.day)
-    };
+  ngOnInit(): void {
+    this._refreshAstronomyData();
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
+    this._refreshAstronomyData();
+  }
+
+  private _refreshAstronomyData(): void {
     this.astronomyData = {
       sun: this._astronomy.getSunTimes(this.position, this.day),
       moon: this._astronomy.getMoonTimes(this.position, this.day),

@@ -1,90 +1,69 @@
-import {
-  IHikeProgramStored,
-  ILocalizedItem,
-  ITextualDescription,
-  IHikeProgramStop,
-  EObjectState,
-  IBackgroundImageData
-} from '../../../../../provider-client';
-
-import { CheckpointSequence, CheckpointService } from '../checkpoint';
-
 import _cloneDeep from 'lodash-es/cloneDeep';
 
-export class HikeProgram implements IHikeProgramStored {
-  public id: string;
-  public distance: number;
-  public uphill: number;
-  public downhill: number;
-  public time: number;
-  public reverseTime: number;
-  public score: number;
-  public reverseScore: number;
-  public location: string;
-  public difficulty: number;
-  public rate?: string;
-  public routeIcon: string;
-  public elevationIcon: string;
-  public routeId: string;
-  public description: ILocalizedItem<ITextualDescription>;
-  public backgroundImages?: IBackgroundImageData[];
-  public offlineMap?: string;
-  public isRoundTrip: boolean;
-  public timestamp: number;
-  public feature: boolean;
-  public stops: IHikeProgramStop[];
-  public reverseStops: IHikeProgramStop[];
-  public checkpoints: CheckpointSequence;
-  public state: EObjectState;
+import { CheckpointSequence } from '@features/common/checkpoints/lib/checkpoint-sequence';
+import { CheckpointService } from '@features/common/checkpoints/services/checkpoint.service';
+import {
+  BackgroundImageData,
+  EObjectState,
+  HikeProgramStop,
+  HikeProgramStored,
+  LocalizedItem,
+  TextualDescription
+} from '@features/common/gtrack-interfaces';
 
-  private locale = 'en_US';
+export class HikeProgram implements HikeProgramStored {
+  get title(): string {
+    return this.description[this.locale].title;
+  }
 
-  constructor(data: IHikeProgramStored, private _checkpointService: CheckpointService) {
+  get fullDescription(): string {
+    return this.description[this.locale].fullDescription || '';
+  }
+
+  get summary(): string {
+    return this.description[this.locale].summary || '';
+  }
+  id: string;
+  distance: number;
+  uphill: number;
+  downhill: number;
+  time: number;
+  reverseTime: number;
+  score: number;
+  reverseScore: number;
+  location: string;
+  difficulty: number;
+  rate?: string;
+  routeIcon: string;
+  elevationIcon: string;
+  routeId: string;
+  description: LocalizedItem<TextualDescription>;
+  backgroundImages?: Array<BackgroundImageData>;
+  offlineMap?: string;
+  isRoundTrip: boolean;
+  timestamp: number;
+  feature: boolean;
+  stops: Array<HikeProgramStop>;
+  reverseStops: Array<HikeProgramStop>;
+  checkpoints: CheckpointSequence;
+  state: EObjectState;
+  reversed: boolean;
+
+  private readonly locale: string;
+
+  constructor(data: HikeProgramStored, private readonly _checkpointService: CheckpointService) {
     const converted = _cloneDeep(data);
     Object.assign(this, converted);
 
     this._handleStartFinish();
     this.checkpoints = this._checkpointService.createSequence(this.stops);
+
+    this.reversed = false;
+    this.locale = 'en_US';
   }
 
-  public get title(): string {
-    return this.description[this.locale].title;
-  }
-
-  public get fullDescription(): string {
-    return this.description[this.locale].fullDescription || '';
-  }
-
-  public get summary(): string {
-    return this.description[this.locale].summary || '';
-  }
-
-  private _handleStartFinish() {
-    const first = this.stops[0] || null;
-    const last = this.stops[this.stops.length - 1] || null;
-
-    first.poiId = 'endpoint-first';
-    last.poiId = 'endpoint-last';
-
-    if (first) {
-      first.isStart = true;
-
-      if (this.isRoundTrip === true) {
-        first.isFinish = true;
-      }
-    }
-
-    if (last) {
-      last.isFinish = true;
-
-      if (this.isRoundTrip === true) {
-        last.isStart = true;
-      }
-    }
-  }
-
-  public toObject(): IHikeProgramStored {
-    const data: IHikeProgramStored = {
+  toObject(): HikeProgramStored {
+    return {
       id: this.id,
       distance: this.distance,
       isRoundTrip: this.isRoundTrip,
@@ -106,11 +85,33 @@ export class HikeProgram implements IHikeProgramStored {
       timestamp: this.timestamp,
       stops: this.stops,
       reverseStops: this.reverseStops,
-      checkpoints: this.checkpoints,
+      // checkpoints: this.checkpoints,
       state: this.state,
       feature: this.feature
     };
+  }
 
-    return data;
+  private _handleStartFinish(): void {
+    const first = this.stops[0] || undefined;
+    const last = this.stops[this.stops.length - 1] || undefined;
+
+    first.poiId = 'endpoint-first';
+    last.poiId = 'endpoint-last';
+
+    if (first) {
+      first.isStart = true;
+
+      if (this.isRoundTrip) {
+        first.isFinish = true;
+      }
+    }
+
+    if (last) {
+      last.isFinish = true;
+
+      if (this.isRoundTrip) {
+        last.isStart = true;
+      }
+    }
   }
 }

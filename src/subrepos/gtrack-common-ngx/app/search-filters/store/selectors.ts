@@ -1,31 +1,31 @@
 import { Inject, Injectable } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 
 import _get from 'lodash-es/get';
 
-import { ISearchFilters } from '../interfaces';
-import { IExternalSearchFiltersDependencies, EXTERNAL_SEARCH_FILTERS_DEPENDENCIES } from '../externals';
+import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES, ExternalSearchFiltersDependencies } from '../externals';
+import { SearchFilters } from '../interfaces';
 
 @Injectable()
 export class SearchFiltersSelectors {
-  public getFilters: (state: object) => ISearchFilters;
+  getFilters: (state: object) => SearchFilters;
 
-  protected _externals: IExternalSearchFiltersDependencies;
+  protected _externals: ExternalSearchFiltersDependencies;
 
   constructor(@Inject(EXTERNAL_SEARCH_FILTERS_DEPENDENCIES) externals) {
     this._externals = externals;
-    const filterSelector = createFeatureSelector<ISearchFilters>(this._externals.storeDomain);
+    const filterSelector = createFeatureSelector<SearchFilters>(this._externals.storeDomain);
 
     this.getFilters = createSelector(
       filterSelector,
-      (state: ISearchFilters) => state
+      (state: SearchFilters) => state
     );
   }
 
-  public getFilter(name: keyof ISearchFilters): MemoizedSelector<object, any> {
+  getFilter(name: keyof SearchFilters): MemoizedSelector<object, any> {
     return createSelector(
       this.getFilters,
-      (filters: ISearchFilters) => _get(filters, name)
+      (filters: SearchFilters) => _get(filters, name)
     );
   }
 }

@@ -3,7 +3,7 @@ import { StoreModule } from '@ngrx/store';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
-import { IHikeProgramStored, ITextualDescription, ILocalizedItem } from 'subrepos/provider-client';
+import { HikeProgramStored, TextualDescription, LocalizedItem } from '@features/common/gtrack-interfaces';
 
 import { HikeCardComponent } from '../';
 
@@ -29,7 +29,7 @@ class DurationPipe implements PipeTransform {
   name: 'localizeDescription'
 })
 class LocalizeDescriptionPipe implements PipeTransform {
-  transform(value: ILocalizedItem<ITextualDescription>): ITextualDescription {
+  transform(value: LocalizedItem<TextualDescription>): TextualDescription {
     return {
       title: '',
       fullDescription: '',
@@ -52,7 +52,7 @@ describe('HikeCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HikeCardComponent);
     component = fixture.componentInstance;
-    component.hikeProgram = <IHikeProgramStored>{
+    component.hikeProgram = <HikeProgramStored>{
       id: '1',
       distance: 4500,
       uphill: 2345,

@@ -1,5 +1,10 @@
+// tslint:disable:no-property-initializers max-classes-per-file
+import {
+  BackgroundImageData,
+  PoiStored,
+  TextualDescription
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Action } from '@ngrx/store';
-import { ITextualDescription, IPoiStored, IBackgroundImageData } from 'subrepos/provider-client';
 
 export const ADD_NEW_TRANSLATED_POI_DESCRIPTION = '[Gtrack Poi Edit] Add new translated poi description';
 export const DELETE_TRANSLATED_POI_DESCRIPTION = '[Gtrack Poi Edit] Delete translated poi description';
@@ -13,7 +18,7 @@ export const REMOVE_POI_BACKGROUND_IMAGE = '[Gtrack Poi Edit] Remove background 
 export class AddNewTranslatedPoiDescription implements Action {
   readonly type = ADD_NEW_TRANSLATED_POI_DESCRIPTION;
 
-  constructor(public languageKey: string, public content: ITextualDescription) {}
+  constructor(public languageKey: string, public content: TextualDescription) {}
 }
 
 export class DeleteTranslatedPoiDescription implements Action {
@@ -41,13 +46,13 @@ export class PoiSaveFailed implements Action {
 export class LoadPoi implements Action {
   readonly type = LOAD_POI;
 
-  constructor(public data: IPoiStored) {}
+  constructor(public data: PoiStored) {}
 }
 
 export class AddPoiBackgroundImage implements Action {
   readonly type = ADD_POI_BACKGROUND_IMAGE;
 
-  constructor(public imageData: IBackgroundImageData) {}
+  constructor(public imageData: BackgroundImageData) {}
 }
 
 export class RemovePoiBackgroundImage implements Action {

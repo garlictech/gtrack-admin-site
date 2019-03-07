@@ -1,21 +1,27 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { GeoIpService } from '@features/common/current-geolocation';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GalleriaModule } from 'primeng/galleria';
 import { LightboxModule } from 'primeng/lightbox';
-
-import { UnitsService } from './services/units';
-import { GoogleMapsService } from './services/google-maps';
-import { GeospatialService } from './services/geospatial';
-
-import { ISharedConfig, SHARED_CONFIG_TOKEN } from './config';
-
-import { DistancePipe, DurationPipe, CoordinatePipe, PoiImagesToGalleryPipe, PoiImagesWithinCirclePipe } from './pipes';
-import { SanitizeHtmlDirective } from './directives/sanitize-html';
 import { SlideShowComponent } from './components';
-import { GeoIpService } from './services/geoip';
+import { SanitizeHtmlDirective } from './directives/sanitize-html';
+import {
+  CoordinatePipe,
+  DifficultyPipe,
+  DistancePipe,
+  DurationPipe,
+  PoiImagesToGalleryPipe,
+  PoiImagesWithinCirclePipe
+} from './pipes';
+import { GeospatialService } from './services/geospatial';
+import { GoogleMapsService } from './services/google-maps';
+
+import { SHARED_CONFIG_TOKEN, SharedConfig } from './config';
+import { UnitsService } from './services/units';
 
 const DECLARATIONS = [
+  DifficultyPipe,
   DistancePipe,
   DurationPipe,
   CoordinatePipe,
@@ -33,7 +39,10 @@ const DECLARATIONS = [
 })
 export class SharedModule {
   static forRoot(configFactory: any): ModuleWithProviders {
-    return { ngModule: SharedModule, providers: [{ provide: SHARED_CONFIG_TOKEN, useFactory: configFactory }] };
+    return {
+      ngModule: SharedModule,
+      providers: [{ provide: SHARED_CONFIG_TOKEN, useFactory: configFactory }]
+    };
   }
 }
 
@@ -43,7 +52,7 @@ export {
   CoordinatePipe,
   UnitsService,
   GoogleMapsService,
-  ISharedConfig,
+  SharedConfig,
   GeospatialService,
   PoiImagesToGalleryPipe,
   PoiImagesWithinCirclePipe,

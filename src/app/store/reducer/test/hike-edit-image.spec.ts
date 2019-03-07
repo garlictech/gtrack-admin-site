@@ -1,21 +1,24 @@
-import { IHikeEditImageState } from '../../state';
-import {
-  mapillaryImageInitialState,
-  initialImageMarkerState,
-  imageListInitialContextState,
-  hikeEditImageReducer
-} from '../hike-edit-image';
-import { hikeEditImageActions } from '../../actions';
-import { IBackgroundImageData, IBackgroundImageDataStored } from '../../../../subrepos/provider-client';
-
 import * as _ from 'lodash';
 
+import {
+  BackgroundImageData,
+  BackgroundImageDataStored
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
+import { hikeEditImageActions } from '../../actions';
+import { HikeEditImageState } from '../../state';
+import {
+  hikeEditImageReducer,
+  imageListInitialContextState,
+  initialImageMarkerState,
+  mapillaryImageInitialState
+} from '../hike-edit-image';
 import { bgImages as bgImageFixtures, bgImagesStored as bgImageStoredFixtures } from './fixtures';
 
 describe('HikeEditImage reducers', () => {
-  let initialState: IHikeEditImageState;
-  let images: IBackgroundImageData[];
-  let imagesStored: IBackgroundImageDataStored[];
+  let initialState: HikeEditImageState;
+  let images: Array<BackgroundImageData>;
+  let imagesStored: Array<BackgroundImageDataStored>;
 
   beforeEach(() => {
     initialState = {

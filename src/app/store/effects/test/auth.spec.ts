@@ -1,19 +1,20 @@
+import { routingActions } from 'app/store/actions';
+import { cold, hot } from 'jest-marbles';
+import * as _ from 'lodash';
+import { Observable } from 'rxjs';
+
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { RouterModule, Router } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
+import { Router, RouterModule } from '@angular/router';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
-import { hot, cold } from 'jest-marbles';
-import { routingActions } from 'app/store/actions';
-import { AuthEffects } from '../auth';
+import { StoreModule } from '@ngrx/store';
+
 import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule } from '../../../../subrepos/gtrack-common-ngx';
+import { AuthEffects } from '../auth';
 import { mockRouter } from './helpers';
-
-import * as _ from 'lodash';
 
 describe('Auth effects', () => {
   let actions$: Observable<any>;
@@ -60,7 +61,7 @@ describe('Auth effects', () => {
 
   describe('loginSuccess$', () => {
     it('should return empty observable from LoginSuccess', () => {
-      const action = new AuthActions.LoginSuccess(null);
+      const action = new AuthActions.LoginSuccess(undefined);
       const completion = new routingActions.Go(['/']);
       const expected = cold('-b', { b: completion });
 

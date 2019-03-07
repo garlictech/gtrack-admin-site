@@ -1,5 +1,6 @@
+// tslint:disable:no-property-initializers max-classes-per-file
 import { Action } from '@ngrx/store';
-import { ISearchFilters } from '../interfaces';
+import { SearchFilters } from '../interfaces';
 
 export enum SearchFilterActionTypes {
   CHANGE_FILTERS = '[SearchFilters] Change filters',
@@ -9,7 +10,7 @@ export enum SearchFilterActionTypes {
 export class ChangeFilters implements Action {
   readonly type = SearchFilterActionTypes.CHANGE_FILTERS;
 
-  constructor(public filters: Partial<ISearchFilters>) {}
+  constructor(public filters: Partial<SearchFilters>) {}
 }
 
 export class ResetFilters implements Action {

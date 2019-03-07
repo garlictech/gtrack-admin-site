@@ -1,11 +1,11 @@
 import * as uuid from 'uuid/v4';
-import { IHikeProgram, IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
+import { HikeProgramData, HikeProgramStored, EObjectState } from '@features/common/gtrack-interfaces';
 import * as actions from '../actions';
 
 describe('Hike actions', () => {
   let id;
-  let hikeProgramData: IHikeProgram;
-  let hikeProgramStoredData: IHikeProgramStored;
+  let hikeProgramData: HikeProgramData;
+  let hikeProgramStoredData: HikeProgramStored;
 
   beforeEach(() => {
     id = uuid();
@@ -16,6 +16,8 @@ describe('Hike actions', () => {
       uphill: 1,
       downhill: 1,
       time: 20,
+      reverseTime: 19,
+      reverseScore: 30,
       score: 20,
       location: 'Budapest',
       feature: false,
@@ -30,7 +32,8 @@ describe('Hike actions', () => {
           summary: ''
         }
       },
-      stops: []
+      stops: [],
+      reverseStops: []
     };
 
     hikeProgramStoredData = {
@@ -127,6 +130,29 @@ describe('Hike actions', () => {
       expect({ ...action }).toEqual({
         type: actions.HikeProgramActionTypes.HIKE_PROGRAM_DELETED,
         context: id
+      });
+    });
+  });
+
+  describe('ReverseHikeProgram action', () => {
+    it('should create an action', () => {
+      const action = new actions.ReverseHikeProgram(id);
+
+      expect({ ...action }).toEqual({
+        type: actions.HikeProgramActionTypes.REVERSE_HIKE_PROGRAM,
+        context: id
+      });
+    });
+  });
+
+  describe('ReverseHikeProgram action', () => {
+    it('should create an action', () => {
+      const action = new actions.HikeProgramReversed(id, hikeProgramStoredData);
+
+      expect({ ...action }).toEqual({
+        type: actions.HikeProgramActionTypes.HIKE_PROGRAM_REVERSED,
+        context: id,
+        hikeProgram: hikeProgramStoredData
       });
     });
   });

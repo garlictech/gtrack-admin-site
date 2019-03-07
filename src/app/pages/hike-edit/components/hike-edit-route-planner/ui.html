@@ -1,24 +1,13 @@
 <div class="clearfix mb-20">
-  <p-button
-    label="Close circle"
-    styleClass="ui-button-primary mr-5"
-    [disabled]="!(isPlanning$| async) || (route$ | async)?.features.length < 3"
-    (onClick)="closeCircle()"
-  ></p-button>
+  <p-button label="Close circle" styleClass="ui-button-primary mr-5"
+    [disabled]="(isPlanning$| async) === false || (route$ | async)?.features.length < 3" (onClick)="closeCircle()">
+  </p-button>
 
-  <p-button
-    label="Remove last"
-    styleClass="ui-button-warning mr-5"
-    [disabled]="!(isPlanning$| async)"
-    (onClick)="removeLast()"
-  ></p-button>
+  <p-button label="Remove last" styleClass="ui-button-warning mr-5" [disabled]="(isPlanning$| async) === false"
+    (onClick)="removeLast()"></p-button>
 
-  <p-button
-    label="Delete plan"
-    styleClass="ui-button-danger"
-    [disabled]="!(isPlanning$| async)"
-    (onClick)="deletePlan()"
-  ></p-button>
+  <p-button label="Delete plan" styleClass="ui-button-danger" [disabled]="(isPlanning$| async) === false"
+    (onClick)="deletePlan()"></p-button>
 </div>
 
 <ng-container *ngIf="(routeInfoData$ | async)?.segments as segments">
@@ -35,22 +24,22 @@
     </ng-template>
     <ng-template pTemplate="body" let-segment let let-rowIndex="rowIndex">
       <tr>
-        <td>{{rowIndex + 1}}</td>
-        <td>{{segment.distance | distance}}</td>
-        <td>{{segment.time | duration}}</td>
-        <td>{{segment.uphill | distance : true}}</td>
-        <td>{{segment.downhill | distance : true}}</td>
-        <td>{{segment.score}}</td>
+        <td>{{ rowIndex + 1 }}</td>
+        <td>{{ segment.distance | distance }}</td>
+        <td>{{ segment.time | duration }}</td>
+        <td>{{ segment.uphill | distance : true }}</td>
+        <td>{{ segment.downhill | distance : true }}</td>
+        <td>{{ segment.score }}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="footer">
       <tr>
         <td>Total</td>
-        <td>{{(routeInfoData$ | async)?.total?.distance | distance}}</td>
-        <td>{{(routeInfoData$ | async)?.total?.time | duration}}</td>
-        <td>{{(routeInfoData$ | async)?.total?.uphill | distance : true}}</td>
-        <td>{{(routeInfoData$ | async)?.total?.downhill | distance : true}}</td>
-        <td>{{(routeInfoData$ | async)?.total?.score}}</td>
+        <td>{{ (routeInfoData$ | async)?.total?.distance | distance }}</td>
+        <td>{{ (routeInfoData$ | async)?.total?.time | duration }}</td>
+        <td>{{ (routeInfoData$ | async)?.total?.uphill | distance : true }}</td>
+        <td>{{ (routeInfoData$ | async)?.total?.downhill | distance : true }}</td>
+        <td>{{ (routeInfoData$ | async)?.total?.score }}</td>
       </tr>
     </ng-template>
   </p-table>

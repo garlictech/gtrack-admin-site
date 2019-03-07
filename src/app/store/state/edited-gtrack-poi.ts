@@ -1,6 +1,7 @@
-import { IPoiStored } from 'subrepos/provider-client';
-import { IGenericEditedState } from './generic';
+import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
-export interface IEditedGTrackPoiState extends IGenericEditedState {
-  data: IPoiStored;
+import { GenericEditedState } from './generic';
+
+export interface EditedGTrackPoiState extends GenericEditedState {
+  data: PoiStored;
 }

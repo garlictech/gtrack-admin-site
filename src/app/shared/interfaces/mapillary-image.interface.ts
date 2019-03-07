@@ -1,6 +1,6 @@
-import { IBackgroundImageData } from 'subrepos/provider-client';
+import { BackgroundImageData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
-export interface IMapillaryImage {
+export interface MapillaryImage {
   ca?: number; // Image's camera angle in range  [0, 360)
   camera_make: string; // Camera make.
   camera_model: string; // Camera model.
@@ -12,6 +12,6 @@ export interface IMapillaryImage {
   username: string; // Username of who captured the image.
 }
 
-export interface IBackgroundImageDataStored extends IBackgroundImageData {
+export interface BackgroundImageDataStored extends BackgroundImageData {
   id: string;
 }

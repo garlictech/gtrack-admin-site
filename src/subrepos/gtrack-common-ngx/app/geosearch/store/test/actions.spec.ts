@@ -1,13 +1,13 @@
 import * as actions from '../actions';
 import * as uuid from 'uuid/v1';
-import { IGeospatialBoxSearchPayload, IGeospatialCircleSearchPayload } from 'subrepos/provider-client';
+import { GeospatialBoxSearchPayload, GeospatialCircleSearchPayload } from '@features/common/gtrack-interfaces';
 
 describe('GeoSearch actions', () => {
   describe('SearchInBox action', () => {
     it('should create an action', () => {
       const context = uuid();
 
-      const query: IGeospatialBoxSearchPayload = {
+      const query: GeospatialBoxSearchPayload = {
         table: 'test',
         box: {
           type: 'Polygon',
@@ -26,7 +26,7 @@ describe('GeoSearch actions', () => {
     it('should create an action', () => {
       const context = uuid();
 
-      const query: IGeospatialCircleSearchPayload = {
+      const query: GeospatialCircleSearchPayload = {
         table: 'test',
         circle: {
           center: [19.41, 47.13],

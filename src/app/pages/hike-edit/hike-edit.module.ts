@@ -1,57 +1,51 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LocalizeModule } from 'subrepos/gtrack-common-ngx';
-import { LeafletMapModule } from '@common.features/leaflet-map/leaflet-map.module';
-// PrimeNG
+import { TagInputModule } from 'ngx-chips';
+import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { AccordionModule } from 'primeng/accordion';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
-
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
+import { HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
+import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
+import { FormModule, HikeComponentsModule, LanguageModule } from 'subrepos/gtrack-common-web';
 
-// Components
-import { FormModule, LanguageModule, HikeComponentsModule } from 'subrepos/gtrack-common-web';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { HikeEditComponent } from './hike-edit.component';
+import { SharedComponentsModule } from '../../shared/components';
+import { PipesModule } from '../../shared/pipes/pipes.module';
+import { PoiMergeService } from '../../shared/services';
 import {
+  BackgroundImagesComponent,
+  HikeEditExternalPoiInfoComponent,
   HikeEditGeneralInfoComponent,
+  HikeEditGTrackPoiInfoComponent,
   HikeEditMapComponent,
-  HikeEditRoutePlannerComponent,
+  HikeEditMergeGTrackPoiComponent,
+  HikeEditOutlineComponent,
+  HikeEditPhotosComponent,
+  HikeEditPhotosTableComponent,
+  HikeEditPoisCollectorComponent,
+  HikeEditPoisCollectorTableComponent,
   HikeEditPoisComponent,
+  HikeEditPoisExternalComponent,
+  HikeEditPoisExternalTableComponent,
   HikeEditPoisGTrackComponent,
   HikeEditPoisGTrackTableComponent,
   HikeEditPoisHikeComponent,
   HikeEditPoisHikeTableComponent,
-  HikeEditPoisExternalComponent,
-  HikeEditPoisExternalTableComponent,
-  HikeEditPoisCollectorComponent,
-  HikeEditPoisCollectorTableComponent,
-  HikeEditOutlineComponent,
-  HikeEditPhotosComponent,
-  HikeEditPhotosTableComponent,
+  HikeEditRoutePlannerComponent,
   PoiIconsComponent,
-  SpecialPoiDataComponent,
-  BackgroundImagesComponent,
-  // Modals
-  HikeEditExternalPoiInfoComponent,
-  HikeEditGTrackPoiInfoComponent,
-  HikeEditMergeGTrackPoiComponent
+  SpecialPoiDataComponent
 } from './components';
-// Shared components
-import { PoiMergeService } from '../../shared/services';
-// gTrack common
-import { MapModule, HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
-import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
-// Lib
-import { TagInputModule } from 'ngx-chips';
-import { SharedComponentsModule } from '../../shared/components';
-import { PipesModule } from '../../shared/pipes/pipes.module';
+import { HikeEditComponent } from './hike-edit.component';
 
 const COMPONENTS = [
   HikeEditComponent,
@@ -85,16 +79,17 @@ const COMPONENTS = [
     RouterModule,
     FormsModule,
     FormModule,
-    LanguageModule,
+    TranslateModule,
     ReactiveFormsModule,
-    MapModule,
+    LeafletMapModule,
     HikeModule,
     HikeComponentsModule,
     SharedModule,
     TagInputModule,
     SharedComponentsModule,
     FontAwesomeModule,
-    LocalizeModule,
+    LanguageModule,
+    MultiLanguageTextModule,
     LeafletMapModule,
     // PrimeNG
     ButtonModule,

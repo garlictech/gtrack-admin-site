@@ -1,6 +1,6 @@
-import { IConfig } from 'subrepos/gtrack-common-web/interfaces';
+import { Config } from 'subrepos/gtrack-common-web';
 
-export const config: IConfig = {
+export const config: Config = {
   language: {
     defaultLanguage: 'en_US',
     supportedLanguages: ['en_US']

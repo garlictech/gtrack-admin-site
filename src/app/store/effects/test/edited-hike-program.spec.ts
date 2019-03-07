@@ -1,31 +1,37 @@
+import { cold, hot, Scheduler } from 'jest-marbles';
+import * as _ from 'lodash';
+import { Observable } from 'rxjs';
+
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
+import { Router, RouterModule } from '@angular/router';
+import { EObjectState } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
-import { hot, cold, Scheduler } from 'jest-marbles';
-import { EditedHikeProgramEffects } from '../edited-hike-program';
+import { StoreModule } from '@ngrx/store';
+
 import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
-import { DeepstreamModule, HikeProgramService, GeospatialService } from '../../../../subrepos/gtrack-common-ngx';
-import { RouterModule, Router } from '@angular/router';
-import { mockRouter } from './helpers';
-import { editedHikeProgramActions, commonRouteActions } from '../../actions';
-import { IHikeProgram, EObjectState } from 'subrepos/provider-client';
-import { IExternalPoi } from '../../../shared/interfaces';
+import {
+  DeepstreamModule,
+  GeospatialService,
+  HikeProgram,
+  HikeProgramService
+} from '../../../../subrepos/gtrack-common-ngx';
+import { ExternalPoi } from '../../../shared/interfaces';
 import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
 import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
-import * as _ from 'lodash';
-
-import { pois as poiFixtures, hikePrograms as hikeProgramFixtures } from '../../reducer/test/fixtures';
+import { commonRouteActions, editedHikeProgramActions } from '../../actions';
+import { hikePrograms as hikeProgramFixtures, pois as poiFixtures } from '../../reducer/test/fixtures';
+import { EditedHikeProgramEffects } from '../edited-hike-program';
+import { mockRouter } from './helpers';
 
 describe('EditedHikeProgramEffects effects', () => {
   let actions$: Observable<any>;
   let effects: EditedHikeProgramEffects;
   let hikeProgramService: HikeProgramService;
   let geospatialService: GeospatialService;
-  let pois: IExternalPoi[];
-  let hikePrograms: IHikeProgram[];
+  let pois: Array<ExternalPoi>;
+  let hikePrograms: Array<HikeProgram>;
 
   beforeEach(() => {
     pois = _.cloneDeep(poiFixtures);
@@ -145,7 +151,7 @@ describe('EditedHikeProgramEffects effects', () => {
     });
   });
 
-  describe('loadSavedRoute$', () => {
+  describe('loadSavedRoute$', () => {
     it('should return context observable from RouteSaved success', () => {
       spyOn(hikeProgramService, 'save').and.returnValue(Observable.throwError('error'));
 

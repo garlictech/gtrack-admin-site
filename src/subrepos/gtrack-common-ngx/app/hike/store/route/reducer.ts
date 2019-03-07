@@ -1,16 +1,15 @@
-import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
-
-import { IAllRouteContextState, routeContextStateAdapter, IRouteEntityState, IRouteState, routeAdapter } from './state';
-
-import { RouteActionTypes, AllRouteActions } from './actions';
+// tslint:disable:only-arrow-functions no-small-switch
+import { ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
+import { AllRouteActions, RouteActionTypes } from './actions';
+import { AllRouteContextState, routeAdapter, routeContextStateAdapter, RouteEntityState, RouteState } from './state';
 
 export const routeReducerInitialState = routeAdapter.getInitialState();
 export const routeContextReducerInitialState = routeContextStateAdapter.getInitialState();
 
-const contextReducer: ActionReducer<IAllRouteContextState> = (
-  state: IAllRouteContextState = routeContextReducerInitialState,
+const contextReducer: ActionReducer<AllRouteContextState> = (
+  state: AllRouteContextState = routeContextReducerInitialState,
   action: AllRouteActions
-): IAllRouteContextState => {
+): AllRouteContextState => {
   switch (action.type) {
     case RouteActionTypes.LOAD_ROUTE:
       return routeContextStateAdapter.upsertOne(
@@ -63,10 +62,10 @@ const contextReducer: ActionReducer<IAllRouteContextState> = (
   }
 };
 
-const reducer: ActionReducer<IRouteEntityState> = (
-  state: IRouteEntityState = routeReducerInitialState,
+const reducer: ActionReducer<RouteEntityState> = (
+  state: RouteEntityState = routeReducerInitialState,
   action: AllRouteActions
-): IRouteEntityState => {
+): RouteEntityState => {
   switch (action.type) {
     case RouteActionTypes.ROUTE_LOADED:
       return routeAdapter.upsertOne(action.route, state);
@@ -76,7 +75,7 @@ const reducer: ActionReducer<IRouteEntityState> = (
   }
 };
 
-const reducerMap: ActionReducerMap<IRouteState> = {
+const reducerMap: ActionReducerMap<RouteState> = {
   contexts: contextReducer,
   routes: reducer
 };

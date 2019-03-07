@@ -1,22 +1,22 @@
-import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
-
-import {
-  IAllGeoSearchContextState,
-  IGeoSearchEntityState,
-  IGeoSearchState,
-  geoSearchAdapter,
-  geoSearchContextStateAdapter
-} from './state';
+// tslint:disable:only-arrow-functions no-small-switch
+import { ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
 
 import { AllGeoSearchActions, GeoSearchActionTypes } from './actions';
+import {
+  AllGeoSearchContextState,
+  geoSearchAdapter,
+  geoSearchContextStateAdapter,
+  GeoSearchEntityState,
+  GeoSearchState
+} from './state';
 
 export const geoSearchContextReducerInitialState = geoSearchContextStateAdapter.getInitialState();
 export const geoSearchReducerInitialState = geoSearchAdapter.getInitialState();
 
-const contextReducer: ActionReducer<IAllGeoSearchContextState> = (
-  state: IAllGeoSearchContextState = geoSearchContextReducerInitialState,
+const contextReducer: ActionReducer<AllGeoSearchContextState> = (
+  state: AllGeoSearchContextState = geoSearchContextReducerInitialState,
   action: AllGeoSearchActions
-): IAllGeoSearchContextState => {
+): AllGeoSearchContextState => {
   switch (action.type) {
     case GeoSearchActionTypes.SEARCH_IN_BOX:
     case GeoSearchActionTypes.SEARCH_IN_CIRCLE:
@@ -44,10 +44,10 @@ const contextReducer: ActionReducer<IAllGeoSearchContextState> = (
   }
 };
 
-const reducer: ActionReducer<IGeoSearchEntityState> = (
-  state: IGeoSearchEntityState = geoSearchReducerInitialState,
+const reducer: ActionReducer<GeoSearchEntityState> = (
+  state: GeoSearchEntityState = geoSearchReducerInitialState,
   action: AllGeoSearchActions
-): IGeoSearchEntityState => {
+): GeoSearchEntityState => {
   switch (action.type) {
     case GeoSearchActionTypes.GEOSEARCH_COMPLETE:
       return geoSearchAdapter.upsertOne(
@@ -63,7 +63,7 @@ const reducer: ActionReducer<IGeoSearchEntityState> = (
   }
 };
 
-const reducerMap: ActionReducerMap<IGeoSearchState> = {
+const reducerMap: ActionReducerMap<GeoSearchState> = {
   contexts: contextReducer,
   geoSearches: reducer
 };

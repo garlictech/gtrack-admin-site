@@ -1,5 +1,5 @@
-import { MarkerPopupComponent as BaseComponent } from 'subrepos/gtrack-common-ngx/app/map/components/marker-popup';
 import { Component } from '@angular/core';
+import { MarkerPopupComponent as BaseComponent } from 'subrepos/gtrack-common-ngx/app/map/components/marker-popup';
 
 @Component({
   selector: 'gtrack-marker-popup',
@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./marker-popup.component.scss']
 })
 export class MarkerPopupComponent extends BaseComponent {
-  public showPopup = false;
+  showPopup: boolean;
+
+  constructor() {
+    super();
+    this.showPopup = false;
+  }
 }

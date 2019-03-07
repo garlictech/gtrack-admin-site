@@ -3,7 +3,7 @@ import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { DeepstreamService } from 'subrepos/deepstream-ngx';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 import { Observable, EMPTY, of } from 'rxjs';
 
 import * as uuid from 'uuid/v1';

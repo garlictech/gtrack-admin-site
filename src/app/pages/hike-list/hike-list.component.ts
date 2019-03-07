@@ -1,15 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Store, select } from '@ngrx/store';
+import _orderBy from 'lodash-es/orderBy';
+import { ConfirmationService, SelectItem } from 'primeng/api';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
+import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { EObjectState, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { select, Store } from '@ngrx/store';
+
 import { State } from '../../store';
 import { commonHikeActions } from '../../store/actions';
-import { IHikeProgramStored, EObjectState } from 'subrepos/provider-client';
-import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
-import { SelectItem, ConfirmationService } from 'primeng/api';
-
-import _orderBy from 'lodash-es/orderBy';
 
 @Component({
   selector: 'app-hike-list',
@@ -17,20 +18,25 @@ import _orderBy from 'lodash-es/orderBy';
   styleUrls: ['./hike-list.component.scss']
 })
 export class HikeListComponent implements OnInit, OnDestroy {
-  public hikeList$: Observable<IHikeProgramStored[]>;
-  public EObjectState = EObjectState;
-  public selectedListState: EObjectState = EObjectState.published;
-  public listStates: SelectItem[] = [];
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  hikeList$: Observable<Array<HikeProgramStored>>;
+  // tslint:disable-next-line:no-property-initializers
+  EObjectState = EObjectState;
+  selectedListState: EObjectState;
+  listStates: Array<SelectItem>;
+  private readonly _destroy$: Subject<boolean>;
 
   constructor(
-    private _store: Store<State>,
-    private _hikeSelectors: HikeSelectors,
-    private _title: Title,
-    private _confirmationService: ConfirmationService
-  ) {}
+    private readonly _store: Store<State>,
+    private readonly _hikeSelectors: HikeSelectors,
+    private readonly _title: Title,
+    private readonly _confirmationService: ConfirmationService
+  ) {
+    this.selectedListState = EObjectState.published;
+    this.listStates = [];
+    this._destroy$ = new Subject<boolean>();
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._title.setTitle('Hikes');
 
     this.listStates = [
@@ -48,12 +54,12 @@ export class HikeListComponent implements OnInit, OnDestroy {
     this._store.dispatch(new commonHikeActions.LoadHikePrograms());
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  public deleteHike(hikeId: string) {
+  deleteHike(hikeId: string): void {
     this._confirmationService.confirm({
       message: 'Are you sure that you want to delete?',
       accept: () => {

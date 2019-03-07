@@ -4,7 +4,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 
 import { DeepstreamService } from 'subrepos/gtrack-common-ngx';
-import { IGeospatialBoxSearchPayload, IGeospatialCircleSearchPayload } from 'subrepos/provider-client';
+import { GeospatialBoxSearchPayload, GeospatialCircleSearchPayload } from '@features/common/gtrack-interfaces';
 
 import { GeoSearchService } from '../geosearch.service';
 
@@ -35,7 +35,7 @@ describe('GeoSearchService', () => {
 
   describe('searchInBox', () => {
     it('should call the provider', async () => {
-      const query: IGeospatialBoxSearchPayload = {
+      const query: GeospatialBoxSearchPayload = {
         table: 'test',
         box: {
           type: 'Polygon',
@@ -53,7 +53,7 @@ describe('GeoSearchService', () => {
 
   describe('searchInCircle', () => {
     it('should call the provider', async () => {
-      const query: IGeospatialCircleSearchPayload = {
+      const query: GeospatialCircleSearchPayload = {
         table: 'test',
         circle: {
           radius: 500,

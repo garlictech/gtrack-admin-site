@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-table-spinner',
@@ -7,5 +7,9 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./style.scss']
 })
 export class TableSpinnerComponent {
-  public faSpinner = faSpinner;
+  faSpinner: IconDefinition;
+
+  constructor() {
+    this.faSpinner = faSpinner;
+  }
 }

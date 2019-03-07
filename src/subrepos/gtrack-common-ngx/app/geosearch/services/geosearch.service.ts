@@ -1,33 +1,29 @@
-import { timer as observableTimer, combineLatest as observableCombineLatest, Observable } from 'rxjs';
+import { combineLatest as observableCombineLatest, Observable, timer as observableTimer } from 'rxjs';
 
-import { take, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { DeepstreamService } from '../../deepstream';
 import {
-  IGeospatialBoxSearchPayload,
-  IGeospatialCircleSearchPayload,
+  GeospatialBoxSearchPayload,
+  GeospatialCircleSearchPayload,
   GeospatialSearchResponse
-} from '../../../../provider-client';
+} from '@features/common/gtrack-interfaces';
+import { map, take } from 'rxjs/operators';
+import { DeepstreamService } from '../../deepstream';
 
 @Injectable()
 export class GeoSearchService {
-  constructor(private _deepstream: DeepstreamService) {}
+  constructor(private readonly _deepstream: DeepstreamService) {}
 
-  public searchBox(query: IGeospatialBoxSearchPayload): Observable<string[]> {
-    return observableCombineLatest(
-      this._deepstream.callRpc<GeospatialSearchResponse>('open.geo.query.includedInBox', {
-        payload: query
-      }),
-      observableTimer(500).pipe(
-        take(1),
-        map(() => '')
-      )
-    ).pipe(map(results => results[0]));
+  searchBox(query: GeospatialBoxSearchPayload): Observable<Array<string>> {
+    return this._search(query, 'open.geo.query.includedInBox');
   }
 
-  public searchCircle(query: IGeospatialCircleSearchPayload): Observable<string[]> {
+  searchCircle(query: GeospatialCircleSearchPayload): Observable<Array<string>> {
+    return this._search(query, 'open.geo.query.includedInCircle');
+  }
+
+  private _search(query: any, name: string): Observable<Array<string>> {
     return observableCombineLatest(
-      this._deepstream.callRpc<GeospatialSearchResponse>('open.geo.query.includedInCircle', {
+      this._deepstream.callRpc<GeospatialSearchResponse>(name, {
         payload: query
       }),
       observableTimer(500).pipe(

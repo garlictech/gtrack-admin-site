@@ -1,9 +1,0 @@
-a(*ngIf="(profile$ | async)?.profilePicture",
-  [routerLink]="(profile$ | async)?.profileUrl.split(',')",
-  [ngStyle]="{ 'background-image': 'url(' + (profile$ | async)?.profilePicture + ')' }"
-)
-
-a(*ngIf="!((profile$ | async)?.profilePicture)",
-  [routerLink]="(profile$ | async)?.profileUrl.split(',')"
-)
-  fa-icon([icon]="icon")

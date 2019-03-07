@@ -1,34 +1,33 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { combineLatest as observableCombineLatest } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
-import { Component, OnInit, Input } from '@angular/core';
 import * as togpx from 'togpx';
 
-import _get from 'lodash-es/get';
 import _cloneDeep from 'lodash-es/cloneDeep';
+import _get from 'lodash-es/get';
 
 import { HikeProgram } from '../../services/hike-program/hike-program';
-import { RouteSelectors } from '../../store/route/selectors';
 import { PoiSelectors } from '../../store/poi/selectors';
+import { RouteSelectors } from '../../store/route/selectors';
 
-import * as RouteActions from '../../store/route/actions';
 import * as PoiActions from '../../store/poi/actions';
+import * as RouteActions from '../../store/route/actions';
 
 @Component({
   selector: 'gtrack-common-download-gpx',
   template: ''
 })
 export class DownloadGpxButtonComponent implements OnInit {
-  @Input()
-  public hikeProgram: HikeProgram;
+  @Input() hikeProgram: HikeProgram;
 
   constructor(
-    private _store: Store<any>,
-    private _routeSelectors: RouteSelectors,
-    private _poiSelectors: PoiSelectors
+    private readonly _store: Store<any>,
+    private readonly _routeSelectors: RouteSelectors,
+    private readonly _poiSelectors: PoiSelectors
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const poiIds = this.hikeProgram.stops.map(stop => stop.poiId);
     this._store
       .pipe(
@@ -66,7 +65,7 @@ export class DownloadGpxButtonComponent implements OnInit {
       });
   }
 
-  public onClick(e: Event) {
+  onClick(e: Event): void {
     e.preventDefault();
 
     const poiIds = this.hikeProgram.stops.map(stop => stop.poiId);
@@ -82,7 +81,7 @@ export class DownloadGpxButtonComponent implements OnInit {
         const locale = 'en_US'; // TODO: Use the locale settings
 
         const geojson = _cloneDeep(route.route);
-        const points: GeoJSON.Feature<GeoJSON.Point>[] = pois.map(poi => ({
+        const points: Array<GeoJSON.Feature<GeoJSON.Point>> = pois.map(poi => ({
           type: 'Feature' as 'Feature',
           geometry: {
             type: 'Point' as 'Point',

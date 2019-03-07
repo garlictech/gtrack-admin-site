@@ -1,28 +1,30 @@
+// tslint:disable:max-classes-per-file
 import { Injectable } from '@angular/core';
 
-import { ActivatedRouteSnapshot, RouterStateSnapshot, Params } from '@angular/router';
+import { ActivatedRouteSnapshot, Params, RouterStateSnapshot } from '@angular/router';
 
 import * as fromRouter from '@ngrx/router-store';
 
 import { createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
-export interface IRouterState {
+export interface RouterState {
   url: string;
   queryParams: Params;
   params: Params;
+  data: any;
 }
 
 @Injectable()
 export class RouterSelectors {
-  public getRouterState: MemoizedSelector<object, fromRouter.RouterReducerState<IRouterState>>;
+  getRouterState: MemoizedSelector<object, fromRouter.RouterReducerState<RouterState>>;
 
   constructor() {
-    this.getRouterState = createFeatureSelector<fromRouter.RouterReducerState<IRouterState>>('router');
+    this.getRouterState = createFeatureSelector<fromRouter.RouterReducerState<RouterState>>('router');
   }
 }
 
-export class CustomSerializer implements fromRouter.RouterStateSerializer<IRouterState> {
-  serialize(routerState: RouterStateSnapshot): IRouterState {
+export class CustomSerializer implements fromRouter.RouterStateSerializer<RouterState> {
+  serialize(routerState: RouterStateSnapshot): RouterState {
     const { url } = routerState;
     const { queryParams } = routerState.root;
 
@@ -30,8 +32,8 @@ export class CustomSerializer implements fromRouter.RouterStateSerializer<IRoute
     while (state.firstChild) {
       state = state.firstChild;
     }
-    const { params } = state;
+    const { params, data } = state;
 
-    return { url, queryParams, params };
+    return { url, queryParams, params, data };
   }
 }

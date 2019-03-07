@@ -1,11 +1,11 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 
-import { ObjectMarkService } from './services';
 import { DeepstreamModule } from '../deepstream';
-import { ObjectMarkSelectors, ObjectMarkEffects } from './store';
+import { ObjectMarkModuleConfig } from './config';
 import { EXTERNAL_OBJECT_MARK_DEPENDENCIES } from './externals';
-import { IObjectMarkModuleConfig } from './config';
+import { ObjectMarkService } from './services';
+import { ObjectMarkEffects, ObjectMarkSelectors } from './store';
 
 @NgModule({
   imports: [DeepstreamModule, EffectsModule.forFeature([ObjectMarkEffects])],
@@ -14,7 +14,7 @@ import { IObjectMarkModuleConfig } from './config';
   providers: [ObjectMarkService, ObjectMarkEffects, ObjectMarkSelectors]
 })
 export class ObjectMarkModule {
-  static forRoot(config: IObjectMarkModuleConfig): ModuleWithProviders {
+  static forRoot(config: ObjectMarkModuleConfig): ModuleWithProviders {
     return {
       ngModule: ObjectMarkModule,
       providers: [

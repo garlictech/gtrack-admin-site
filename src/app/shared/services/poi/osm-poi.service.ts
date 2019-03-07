@@ -1,18 +1,32 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { EPoiTypes, ETextualDescriptionType } from 'subrepos/provider-client';
-import { IOsmPoi } from '../../interfaces';
-import { LanguageService } from '../language.service';
-
-import * as uuid from 'uuid/v1';
 import _get from 'lodash-es/get';
 import { Observable } from 'rxjs';
 
+import * as uuid from 'uuid/v1';
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { OsmPoi } from '../../interfaces';
+import { AdminLanguageService } from '../language.service';
+
+const _checkPoiTags = (_point, type): boolean => {
+  if (_point.tags) {
+    if (type === 'tree') {
+      return _point.tags.name;
+    } else {
+      return true;
+    }
+  } else {
+    return false;
+  }
+};
+
 @Injectable()
 export class OsmPoiService {
-  constructor(private _http: HttpClient) {}
+  constructor(private readonly _http: HttpClient) {}
 
-  public get(bounds, typeParam, lng = 'en') {
+  get(bounds, typeParam, lng = 'en'): any {
     const request = `
       <osm-script output="json" timeout="25">
         <union into="_">
@@ -41,13 +55,13 @@ export class OsmPoiService {
       </osm-script>`;
 
     return this._http.post('https://overpass-api.de/api/interpreter', request).switchMap((response: any) => {
-      const _res: IOsmPoi[] = [];
+      const _res: Array<OsmPoi> = [];
 
       if (response.elements) {
         for (const _point of response.elements) {
           const type = _get(_point.tags, typeParam);
 
-          if (_point.lat && this._checkPoiTags(_point, type)) {
+          if (_point.lat && _checkPoiTags(_point, type)) {
             _res.push({
               id: uuid(),
               lat: _point.lat,
@@ -55,8 +69,8 @@ export class OsmPoiService {
               elevation: _point.tags.ele,
               types: [type],
               description: {
-                [LanguageService.shortToLocale(lng)]: {
-                  title: _point.tags.name || LanguageService.pascalize(type) || 'unknown',
+                [AdminLanguageService.shortToLocale(lng)]: {
+                  title: _point.tags.name || AdminLanguageService.pascalize(type) || 'unknown',
                   summary: '',
                   fullDescription: '',
                   type: ETextualDescriptionType.markdown
@@ -74,17 +88,5 @@ export class OsmPoiService {
 
       return Observable.of(_res);
     });
-  }
-
-  private _checkPoiTags(_point, type) {
-    if (_point.tags) {
-      if (type === 'tree') {
-        return _point.tags.name ? true : false;
-      } else {
-        return true;
-      }
-    } else {
-      return false;
-    }
   }
 }

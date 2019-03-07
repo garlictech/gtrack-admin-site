@@ -1,15 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 
+import { EXTERNAL_GEO_SEARCH_DEPENDENCIES, ExternalGeoSearchDependencies } from '../externals';
 import {
   geoSearchAdapter,
+  GeoSearchContextState,
   geoSearchContextStateAdapter,
-  IGeoSearchState,
-  IGeoSearchContextState,
-  IGeoSearchResponseItem
+  GeoSearchResponseItem,
+  GeoSearchState
 } from './state';
-
-import { IExternalGeoSearchDependencies, EXTERNAL_GEO_SEARCH_DEPENDENCIES } from '../externals';
 
 interface GeoSearchableItem {
   id: string;
@@ -17,23 +16,23 @@ interface GeoSearchableItem {
 
 @Injectable()
 export class GeoSearchSelectors {
-  public selectFeature: MemoizedSelector<object, IGeoSearchState>;
-  public getGeoSearchContexts: (state: object) => string[] | number[];
-  public getAllGeoSearches: (state: object) => IGeoSearchResponseItem[];
-  public getAllContexts: (state: object) => IGeoSearchContextState[];
-  private _externals: IExternalGeoSearchDependencies;
+  selectFeature: MemoizedSelector<object, GeoSearchState>;
+  getGeoSearchContexts: (state: object) => Array<string> | Array<number>;
+  getAllGeoSearches: (state: object) => Array<GeoSearchResponseItem>;
+  getAllContexts: (state: object) => Array<GeoSearchContextState>;
+  private readonly _externals: ExternalGeoSearchDependencies;
 
   constructor(@Inject(EXTERNAL_GEO_SEARCH_DEPENDENCIES) externals) {
     this._externals = externals;
-    this.selectFeature = createFeatureSelector<IGeoSearchState>(this._externals.storeDomain);
+    this.selectFeature = createFeatureSelector<GeoSearchState>(this._externals.storeDomain);
 
     const geoSearchSelector = createSelector(
       this.selectFeature,
-      (state: IGeoSearchState) => state.geoSearches
+      (state: GeoSearchState) => state.geoSearches
     );
     const contextSelector = createSelector(
       this.selectFeature,
-      (state: IGeoSearchState) => state.contexts
+      (state: GeoSearchState) => state.contexts
     );
 
     const selectors = geoSearchAdapter.getSelectors(geoSearchSelector);
@@ -44,21 +43,24 @@ export class GeoSearchSelectors {
     this.getAllContexts = contextSelectors.selectAll;
   }
 
-  public getGeoSearch(context: string) {
+  getGeoSearch(context: string): MemoizedSelector<object, GeoSearchResponseItem> {
     return createSelector(
       this.getAllGeoSearches,
-      (searches: IGeoSearchResponseItem[]) => searches.find(search => search.id === context)
+      (searches: Array<GeoSearchResponseItem>) => searches.find(search => search.id === context)
     );
   }
 
-  public getGeoSearchContext(context: string) {
+  getGeoSearchContext(context: string): MemoizedSelector<object, GeoSearchContextState> {
     return createSelector(
       this.getAllContexts,
-      (searches: IGeoSearchContextState[]) => searches.find(search => search.id === context)
+      (searches: Array<GeoSearchContextState>) => searches.find(search => search.id === context)
     );
   }
 
-  public getGeoSearchResults<T extends GeoSearchableItem>(context: string, getAllSelector: ((state: object) => T[])) {
+  getGeoSearchResults<T extends GeoSearchableItem>(
+    context: string,
+    getAllSelector: (state: object) => Array<T>
+  ): MemoizedSelector<object, Array<T>> {
     return createSelector(
       getAllSelector,
       this.getGeoSearch(context),

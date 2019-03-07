@@ -1,9 +1,9 @@
 import { InjectionToken } from '@angular/core';
 
-export interface IExternalObjectMarkDependencies {
+export interface ExternalObjectMarkDependencies {
   storeDomain: string;
 }
 
-export const EXTERNAL_OBJECT_MARK_DEPENDENCIES = new InjectionToken<IExternalObjectMarkDependencies>(
+export const EXTERNAL_OBJECT_MARK_DEPENDENCIES = new InjectionToken<ExternalObjectMarkDependencies>(
   'IExternalObjectMarkDependencies'
 );

@@ -1,15 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+import { FooterComponent } from './components/footer';
 import { LayoutComponent } from './components/layout';
 import { MenuComponent } from './components/menu';
-import { TopBarComponent } from './components/topbar';
-import { FooterComponent } from './components/footer';
 import { SubMenuComponent } from './components/sub-menu';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TopBarComponent } from './components/topbar';
 
 const COMPONENTS = [LayoutComponent, MenuComponent, SubMenuComponent, TopBarComponent, FooterComponent];
 

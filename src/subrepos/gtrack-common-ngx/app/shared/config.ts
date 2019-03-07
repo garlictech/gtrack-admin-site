@@ -1,16 +1,16 @@
 import { InjectionToken } from '@angular/core';
 
-export interface IGoogleMapsConfig {
+export interface GoogleMapsConfig {
   key: string;
-  libraries?: string[];
+  libraries?: Array<string>;
   v?: string;
 }
 
-export interface ISharedConfig {
-  googleMaps: IGoogleMapsConfig;
+export interface SharedConfig {
+  googleMaps: GoogleMapsConfig;
 }
 
-export const defaultSharedConfig: ISharedConfig = {
+export const defaultSharedConfig: SharedConfig = {
   googleMaps: {
     key: 'AIzaSyANByCixyD2mLtE80aUooldhc3E9W1NqGQ',
     // key: 'AIzaSyAlBUYkm8VYLS1eeOL7rYdd7Sh0syilXL4', // gTrackDemo1 - Tamás
@@ -18,4 +18,4 @@ export const defaultSharedConfig: ISharedConfig = {
   }
 };
 
-export const SHARED_CONFIG_TOKEN = new InjectionToken<ISharedConfig>('Shared config');
+export const SHARED_CONFIG_TOKEN = new InjectionToken<SharedConfig>('Shared config');

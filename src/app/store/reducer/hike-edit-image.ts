@@ -1,28 +1,30 @@
-import { ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
-import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { IBackgroundImageDataStored } from '../../shared/interfaces';
-import { IMapillaryImageEntityState, IImageListContextState, IHikeEditImageState } from '../index';
-import { hikeEditImageActions } from '../actions';
-import { IImageMarkerState, IFlickrImageEntityState } from '../state';
-
+// tslint:disable:only-arrow-functions no-small-switch
 import _cloneDeep from 'lodash-es/cloneDeep';
+
+import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
+import { ActionReducerMap, combineReducers } from '@ngrx/store';
+
+import { BackgroundImageDataStored } from '../../shared/interfaces';
+import { hikeEditImageActions } from '../actions';
+import { HikeEditImageState, ImageListContextState, MapillaryImageEntityState } from '../index';
+import { FlickrImageEntityState, ImageMarkerState } from '../state';
 
 /**
  * Mapillary
  */
 
-export const mapillaryImageAdapter: EntityAdapter<IBackgroundImageDataStored> = createEntityAdapter<
-  IBackgroundImageDataStored
+export const mapillaryImageAdapter: EntityAdapter<BackgroundImageDataStored> = createEntityAdapter<
+  BackgroundImageDataStored
 >();
 export const mapillaryImageInitialState = mapillaryImageAdapter.getInitialState();
 
 export function mapillaryImageReducer(
-  state: IMapillaryImageEntityState = mapillaryImageInitialState,
+  state: MapillaryImageEntityState = mapillaryImageInitialState,
   action: hikeEditImageActions.AllHikeEditImageActions
-): IMapillaryImageEntityState {
+): MapillaryImageEntityState {
   switch (action.type) {
     case hikeEditImageActions.RESET_IMAGE_STATE: {
-      return mapillaryImageInitialState;
+      return { ...mapillaryImageInitialState };
     }
 
     case hikeEditImageActions.SET_MAPILLARY_IMAGES: {
@@ -38,18 +40,18 @@ export function mapillaryImageReducer(
  * Flickr
  */
 
-export const flickrImageAdapter: EntityAdapter<IBackgroundImageDataStored> = createEntityAdapter<
-  IBackgroundImageDataStored
+export const flickrImageAdapter: EntityAdapter<BackgroundImageDataStored> = createEntityAdapter<
+  BackgroundImageDataStored
 >();
 export const flickrImageInitialState = flickrImageAdapter.getInitialState();
 
-export function flickrImageReducer (
-  state: IFlickrImageEntityState = flickrImageInitialState,
+export function flickrImageReducer(
+  state: FlickrImageEntityState = flickrImageInitialState,
   action: hikeEditImageActions.AllHikeEditImageActions
-): IFlickrImageEntityState {
+): FlickrImageEntityState {
   switch (action.type) {
     case hikeEditImageActions.RESET_IMAGE_STATE: {
-      return flickrImageInitialState;
+      return { ...flickrImageInitialState };
     }
 
     case hikeEditImageActions.SET_FLICKR_IMAGES: {
@@ -65,17 +67,17 @@ export function flickrImageReducer (
  * Context
  */
 
-export const initialImageMarkerState: IImageMarkerState = {
+export const initialImageMarkerState: ImageMarkerState = {
   images: []
 };
 
 export function imageMarkerReducer(
   state = initialImageMarkerState,
   action: hikeEditImageActions.AllHikeEditImageActions
-): IImageMarkerState {
+): ImageMarkerState {
   switch (action.type) {
     case hikeEditImageActions.RESET_IMAGE_STATE:
-      return initialImageMarkerState;
+      return { ...initialImageMarkerState };
 
     /**
      * Image marker urls
@@ -83,28 +85,28 @@ export function imageMarkerReducer(
     case hikeEditImageActions.ADD_IMAGE_MARKER: {
       return {
         ...state,
-        images: [...(<any>state.images), action.image]
+        images: [...(state.images as any), action.image]
       };
     }
 
     case hikeEditImageActions.ADD_IMAGE_MARKERS: {
       return {
         ...state,
-        images: [...(<any>state.images), ...action.images]
+        images: [...(state.images as any), ...action.images]
       };
     }
 
     case hikeEditImageActions.REMOVE_IMAGE_MARKER: {
       return {
         ...state,
-        images: (<any>state.images).filter(img => img.original.url !== action.image.original.url)
+        images: (state.images as any).filter(img => img.original.url !== action.image.original.url)
       };
     }
 
     case hikeEditImageActions.REMOVE_IMAGE_MARKERS: {
       return {
         ...state,
-        images: (<any>state.images).filter(img => !(action.images.map(i => i.original.url).includes(img.original.url)))
+        images: (state.images as any).filter(img => !action.images.map(i => i.original.url).includes(img.original.url))
       };
     }
 
@@ -123,7 +125,7 @@ const initialContextItemState = {
   saving: false
 };
 
-export const imageListInitialContextState: IImageListContextState = {
+export const imageListInitialContextState: ImageListContextState = {
   mapillary: _cloneDeep(initialContextItemState),
   flickr: _cloneDeep(initialContextItemState)
 };
@@ -131,10 +133,10 @@ export const imageListInitialContextState: IImageListContextState = {
 export function imageListContextReducer(
   state = imageListInitialContextState,
   action: hikeEditImageActions.AllHikeEditImageActions
-): IImageListContextState {
+): ImageListContextState {
   switch (action.type) {
     case hikeEditImageActions.RESET_IMAGE_STATE:
-      return imageListInitialContextState;
+      return { ...imageListInitialContextState };
 
     /**
      * Mapillary
@@ -191,7 +193,7 @@ export function imageListContextReducer(
   }
 }
 
-const reducerMap: ActionReducerMap<IHikeEditImageState> = {
+const reducerMap: ActionReducerMap<HikeEditImageState> = {
   mapillaryImages: mapillaryImageReducer,
   flickrImages: flickrImageReducer,
   imageMarkerImages: imageMarkerReducer,

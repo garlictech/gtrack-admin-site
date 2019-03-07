@@ -1,14 +1,13 @@
 <ng-container *ngIf="(description | localizeDescription) as localizedDescription">
-  <div class="tim-title">
-    <h1>{{ localizedDescription.title }}</h1>
-  </div>
-
-  <div *ngIf="localizedDescription.type === ETextualDescriptionType.html">
-    <p *ngIf="localizedDescription.summary" [gtrackSanitizeHtml]='localizedDescription.summary'></p>
-    <p *ngIf="localizedDescription.fullDescription" [gtrackSanitizeHtml]='localizedDescription.fullDescription'></p>
-  </div>
-  <div *ngIf="localizedDescription.type === ETextualDescriptionType.markdown">
-    <ngx-md *ngIf="localizedDescription.summary" [data]='localizedDescription.summary'></ngx-md>
-    <ngx-md *ngIf="localizedDescription.fullDescription" [data]='localizedDescription.fullDescription'></ngx-md>
-  </div>
+  <gtrack-html-description
+    *ngIf="localizedDescription.type === eTextualDescriptionType.html; else markdown"
+    [field]="field"
+    [localizedDescription]="localizedDescription"
+  ></gtrack-html-description>
+  <ng-template #markdown>
+    <gtrack-markdown-description
+      [localizedDescription]="localizedDescription"
+      [field]="field"
+    ></gtrack-markdown-description>
+  </ng-template>
 </ng-container>

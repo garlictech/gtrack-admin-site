@@ -1,45 +1,38 @@
 <ng-container *ngIf="(pois$ | async) as pois">
-    <p-table [value]="pois">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Icon</th>
-          <th>Title</th>
-          <th>Distance from route</th>
-          <th>Types</th>
-          <th>Origin</th>
-          <th>Special</th>
-          <th (click)="invertMerge()" class="cursor-pointer">[Merge]</th>
-          <th (click)="invertSelection()" class="cursor-pointer">[Select]</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-poi>
-        <tr *ngIf="!!poi.onRoute === onRouteCheck">
-          <td>
-            <app-poi-icons [poi]="poi"></app-poi-icons>
-          </td>
-          <td [ngClass]="{'text-danger': !poi.selected}" [innerHTML]="(poi?.description | localizeDescription).title"></td>
-          <td>{{poi.distFromRoute | distance : true}}</td>
-          <td>{{poi.types?.join(', ')}}</td>
-          <td>{{poi.objectTypes?.join(', ')}}</td>
-          <td>
-            <app-special-poi-data [poi]="poi" [openPoiModal]="openPoiModal"></app-special-poi-data>
-          </td>
-          <td class="text-center">
-            <p-checkbox
-              binary="true"
-              [ngModel]="mergeSelections[poi.id]"
-              (onChange)="toggleMergeSelection([poi.id])"
-            ></p-checkbox>
-          </td>
-          <td class="text-center">
-            <p-checkbox
-              binary="true"
-              [ngModel]="poi.selected"
-              (onChange)="handlePoiSelection([poi.id])"
-            ></p-checkbox>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </ng-container>
-
+  <p-table [value]="pois">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Icon</th>
+        <th>Title</th>
+        <th>Distance from route</th>
+        <th>Types</th>
+        <th>Origin</th>
+        <th>Special</th>
+        <th (click)="invertMerge()" class="cursor-pointer">[Merge]</th>
+        <th (click)="invertSelection()" class="cursor-pointer">[Select]</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-poi>
+      <tr *ngIf="!!poi.onRoute === onRouteCheck">
+        <td>
+          <app-poi-icons [poi]="poi"></app-poi-icons>
+        </td>
+        <td [ngClass]="{'text-danger': !poi.selected}" [innerHTML]="(poi?.description | localizeDescription).title">
+        </td>
+        <td>{{ poi.distFromRoute | distance : true }}</td>
+        <td>{{ poi.types?.join(', ') }}</td>
+        <td>{{ poi.objectTypes?.join(', ') }}</td>
+        <td>
+          <app-special-poi-data [poi]="poi" [openPoiModal]="openPoiModal"></app-special-poi-data>
+        </td>
+        <td class="text-center">
+          <p-checkbox binary="true" [ngModel]="mergeSelections[poi.id]" (onChange)="toggleMergeSelection([poi.id])">
+          </p-checkbox>
+        </td>
+        <td class="text-center">
+          <p-checkbox binary="true" [ngModel]="poi.selected" (onChange)="handlePoiSelection([poi.id])"></p-checkbox>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-container>

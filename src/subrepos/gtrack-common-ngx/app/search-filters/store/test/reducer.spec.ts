@@ -1,6 +1,6 @@
 import { searchFiltersReducer, initialState } from '../reducer';
 import * as actions from '../actions';
-import { ISearchFilters } from '../../interfaces';
+import { SearchFilters } from '../../interfaces';
 
 describe('SearchFiltersReducer', () => {
   describe('undefined action', () => {
@@ -14,7 +14,7 @@ describe('SearchFiltersReducer', () => {
 
   describe('CHANGE_FILTERS action', () => {
     it('should change the filters', () => {
-      const filters: Partial<ISearchFilters> = {
+      const filters: Partial<SearchFilters> = {
         difficulty: [5, 6]
       };
 
@@ -30,7 +30,7 @@ describe('SearchFiltersReducer', () => {
 
   describe('RESET_FILTERS action', () => {
     it('should reset the filters to the initial values', () => {
-      const filters: Partial<ISearchFilters> = {
+      const filters: Partial<SearchFilters> = {
         difficulty: [5, 6]
       };
 

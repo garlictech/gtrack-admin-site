@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { IRouteStored } from 'subrepos/provider-client';
+import { RouteStored } from '@features/common/gtrack-interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { routeReducer } from '../reducer';
-import { IRouteState } from '../state';
+import { RouteState } from '../state';
 
 import * as actions from '../actions';
 import { RouteSelectors } from '../selectors';
@@ -14,8 +14,8 @@ import { EXTERNAL_ROUTE_DEPENDENCIES } from '../../../externals';
 import { routesStored as routeFixtures } from './fixtures';
 
 describe('Route selectors', () => {
-  let store: Store<IRouteState>;
-  let routes: IRouteStored[];
+  let store: Store<RouteState>;
+  let routes: RouteStored[];
   let ids: string[];
   let destroy$: Subject<boolean>;
 

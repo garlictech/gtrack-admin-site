@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
 
-import { IHikeProgramStored } from 'subrepos/provider-client';
+import { HikeProgramStored } from '@features/common/gtrack-interfaces';
 import { HikeDataItemComponent } from '../';
 
 @Pipe({
@@ -39,7 +39,7 @@ describe('HikeDataItemComponent', () => {
     fixture = TestBed.createComponent(HikeDataItemComponent);
     component = fixture.componentInstance;
 
-    component.hikeProgram = <IHikeProgramStored>{
+    component.hikeProgram = <HikeProgramStored>{
       id: '1',
       distance: 4500,
       uphill: 2345,

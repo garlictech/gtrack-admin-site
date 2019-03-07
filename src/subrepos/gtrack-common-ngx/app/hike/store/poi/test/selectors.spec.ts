@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { IPoiStored } from 'subrepos/provider-client';
+import { PoiStored } from '@features/common/gtrack-interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import _keys from 'lodash-es/keys';
 import _zipObject from 'lodash-es/zipObject';
 
 import { poiReducer } from '../reducer';
-import { IPoiState } from '../state';
+import { PoiState } from '../state';
 
 import * as actions from '../actions';
 import { PoiSelectors } from '../selectors';
@@ -18,9 +18,9 @@ import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
 import { poisStored as poiFixtures } from './fixtures';
 
 describe('Poi selectors', () => {
-  let store: Store<IPoiState>;
-  let poisData: IPoiStored[];
-  let pois: IPoiStored[];
+  let store: Store<PoiState>;
+  let poisData: PoiStored[];
+  let pois: PoiStored[];
   let ids: string[];
   let destroy$: Subject<boolean>;
 

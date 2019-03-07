@@ -1,18 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { NgxMdModule } from 'ngx-md';
-
-import { DescriptionComponent } from './description';
-
-import { LocalizeModule as BaseModule } from 'subrepos/gtrack-common-ngx/app/localize';
-
 import { SharedModule } from 'subrepos/gtrack-common-ngx/app/shared';
 
-const COMPONENTS = [DescriptionComponent];
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MultiLanguageTextModule } from '@features/common/multi-language-text';
+
+import { DescriptionComponent } from './description';
+import { HtmlDescriptionComponent } from './description/html-description/html-description.component';
+import { MarkdownDescriptionComponent } from './description/markdown-description/markdown-description.component';
+
+const COMPONENTS = [DescriptionComponent, HtmlDescriptionComponent, MarkdownDescriptionComponent];
 
 @NgModule({
-  imports: [BaseModule, SharedModule, CommonModule, NgxMdModule],
-  exports: [...COMPONENTS],
+  imports: [SharedModule, CommonModule, NgxMdModule, MultiLanguageTextModule],
+  exports: [...COMPONENTS, MultiLanguageTextModule],
   declarations: [...COMPONENTS],
   providers: []
 })

@@ -1,36 +1,20 @@
 :host {
   display: block;
-  border-bottom: 1px solid #CFCFCF;
   margin-bottom: 20px;
-}
 
-.angular-leaflet-map {
-  width: 100%;
-  height: 400px;
-}
+  ::ng-deep {
+    gtrack-leaflet-map {
+      width: 100%;
+      height: 300px;
+      display: block;
+    }
 
-.hike-body {
-  width: 1170px;
-  margin: auto;
-  box-sizing: border-box;
-  padding: 15px;
-
-  max-width: 100%;
-
-  table {
-    width: 100%;
-    border: 1px solid #000000;
-
-    tr {
-      td {
-        border: 1px solid #000000;
+    .hike-body {
+      .slides {
+        width: 100%;
+        height: 400px;
+        position: relative;
       }
     }
-  }
-
-  .slides {
-    width: 100%;
-    height: 400px;
-    position: relative;
   }
 }

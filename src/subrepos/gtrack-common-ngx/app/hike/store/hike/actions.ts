@@ -1,5 +1,6 @@
+// tslint:disable:no-property-initializers max-classes-per-file
+import { EObjectState, HikeProgramStored } from '@features/common/gtrack-interfaces';
 import { Action } from '@ngrx/store';
-import { IHikeProgramStored, EObjectState } from '../../../../../provider-client';
 
 export enum HikeProgramActionTypes {
   LOAD_HIKE_PROGRAM = '[HikeProgram] Load hikeProgram',
@@ -9,7 +10,9 @@ export enum HikeProgramActionTypes {
   ALL_HIKE_PROGRAMS_LOADED = '[HikeProgram] All hikePrograms loaded',
   UPDATE_HIKE_PROGRAM_STATE = '[HikeProgram] Update hike program state',
   DELETE_HIKE_PROGRAM = '[HikeProgram] Delete hikeProgram',
-  HIKE_PROGRAM_DELETED = '[HikeProgram] HikeProgram deleted'
+  HIKE_PROGRAM_DELETED = '[HikeProgram] HikeProgram deleted',
+  REVERSE_HIKE_PROGRAM = '[HikeProgram] Reverse HikeProgram',
+  HIKE_PROGRAM_REVERSED = '[HikeProgram] HikeProgram Reversed'
 }
 
 export class LoadHikeProgram implements Action {
@@ -27,7 +30,7 @@ export class LoadHikeProgramFailed implements Action {
 export class HikeProgramLoaded implements Action {
   readonly type = HikeProgramActionTypes.HIKE_PROGRAM_LOADED;
 
-  constructor(public context: string, public hikeProgram: IHikeProgramStored) {}
+  constructor(public context: string, public hikeProgram: HikeProgramStored) {}
 }
 
 export class LoadHikePrograms implements Action {
@@ -37,7 +40,7 @@ export class LoadHikePrograms implements Action {
 export class AllHikeProgramsLoaded implements Action {
   readonly type = HikeProgramActionTypes.ALL_HIKE_PROGRAMS_LOADED;
 
-  constructor(public contexts: string[], public hikePrograms: IHikeProgramStored[]) {}
+  constructor(public contexts: Array<string>, public hikePrograms: Array<HikeProgramStored>) {}
 }
 
 export class UpdateHikeProgramState implements Action {
@@ -58,6 +61,18 @@ export class HikeProgramDeleted implements Action {
   constructor(public context: string) {}
 }
 
+export class ReverseHikeProgram implements Action {
+  readonly type = HikeProgramActionTypes.REVERSE_HIKE_PROGRAM;
+
+  constructor(public context: string) {}
+}
+
+export class HikeProgramReversed implements Action {
+  readonly type = HikeProgramActionTypes.HIKE_PROGRAM_REVERSED;
+
+  constructor(public context: string, public hikeProgram: HikeProgramStored) {}
+}
+
 export type AllHikeActions =
   | LoadHikeProgram
   | HikeProgramLoaded
@@ -66,4 +81,6 @@ export type AllHikeActions =
   | AllHikeProgramsLoaded
   | UpdateHikeProgramState
   | DeleteHikeProgram
-  | HikeProgramDeleted;
+  | HikeProgramDeleted
+  | ReverseHikeProgram
+  | HikeProgramReversed;

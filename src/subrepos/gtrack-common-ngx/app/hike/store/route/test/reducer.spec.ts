@@ -2,15 +2,15 @@ import * as uuid from 'uuid/v4';
 
 import { routeReducer, routeReducerInitialState, routeContextReducerInitialState } from '../reducer';
 
-import { IRoute, IRouteStored } from 'subrepos/provider-client';
+import { RouteData, RouteStored } from '@features/common/gtrack-interfaces';
 import * as actions from '../actions';
-import { IRouteState } from '../state';
+import { RouteState } from '../state';
 
 describe('Route reducer', () => {
-  let initialState: IRouteState;
+  let initialState: RouteState;
   let id: string;
-  let routeData: IRoute;
-  let route: IRouteStored;
+  let routeData: RouteData;
+  let route: RouteStored;
 
   beforeEach(() => {
     id = uuid();

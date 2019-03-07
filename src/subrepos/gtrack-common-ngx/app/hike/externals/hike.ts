@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
 
-export interface IExternalHikeDependencies {
+export interface ExternalHikeDependencies {
   storeDomain: string;
 }
 
-export const EXTERNAL_HIKE_DEPENDENCIES = new InjectionToken<IExternalHikeDependencies>('IExternalHikeDependencies');
+export const EXTERNAL_HIKE_DEPENDENCIES = new InjectionToken<ExternalHikeDependencies>('ExternalHikeDependencies');

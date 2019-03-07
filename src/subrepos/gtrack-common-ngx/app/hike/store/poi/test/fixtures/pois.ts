@@ -1,7 +1,7 @@
-import { IPoi, IPoiStored, EPoiTypes, EObjectState } from 'subrepos/provider-client';
+import { PoiData, PoiStored, EPoiTypes, EObjectState } from '@features/common/gtrack-interfaces';
 import * as uuid from 'uuid/v4';
 
-export const pois: IPoi[] = [
+export const pois: PoiData[] = [
   {
     id: uuid(),
     lat: 42.25,
@@ -30,7 +30,7 @@ export const pois: IPoi[] = [
   }
 ];
 
-export const poisStored: IPoiStored[] = [
+export const poisStored: PoiStored[] = [
   {
     ...pois[0],
     id: uuid(),

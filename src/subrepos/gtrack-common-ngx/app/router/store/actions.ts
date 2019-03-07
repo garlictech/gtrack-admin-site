@@ -1,5 +1,6 @@
-import { Action } from '@ngrx/store';
+// tslint:disable:no-property-initializers max-classes-per-file
 import { NavigationExtras } from '@angular/router';
+import { Action } from '@ngrx/store';
 
 export const GO = '[Router] Go';
 export const REPLACE = '[Router] Replace';
@@ -9,15 +10,13 @@ export const FORWARD = '[Router] Forward';
 export class Go implements Action {
   readonly type = GO;
 
-  constructor(public path: any[], public extras?: NavigationExtras) {
-    /* EMPTY */
-  }
+  constructor(public path: Array<any>, public extras?: NavigationExtras) {}
 }
 
 export class Replace implements Action {
   readonly type = REPLACE;
 
-  constructor(public path: any[], public extras: NavigationExtras = {}) {
+  constructor(public path: Array<any>, public extras: NavigationExtras = {}) {
     this.extras.replaceUrl = true;
   }
 }

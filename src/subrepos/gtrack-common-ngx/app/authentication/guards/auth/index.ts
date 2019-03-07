@@ -1,21 +1,18 @@
-import { switchMap, filter } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 
-import { Selectors } from '../../store/selectors';
+import { select, Store } from '@ngrx/store';
 import { DebugLog } from 'app/log';
-import { Store, select } from '@ngrx/store';
 import { State } from 'app/store';
+import { Selectors } from '../../store/selectors';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private _selectors: Selectors, private _store: Store<State>) {
-    /* EMPTY */
-  }
+  constructor(private readonly _selectors: Selectors, private readonly _store: Store<State>) {}
 
-  @DebugLog
-  canActivate(): Observable<boolean> {
+  @DebugLog canActivate(): Observable<boolean> {
     return this._store.pipe(
       select(this._selectors.loggingIn),
       filter(loggingIn => !loggingIn),

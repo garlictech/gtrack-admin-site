@@ -1,37 +1,39 @@
-import { ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
-import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import {
-  IHikeEditPoiState,
-  IWikipediaPoiEntityState,
-  IGooglePoiEntityState,
-  IOsmAmenityPoiEntityState,
-  IOsmNaturalPoiEntityState,
-  IOsmRoutePoiEntityState,
-  IExternalPoiListContextState,
-  IGTrackPoiMergeState,
-  IPoiCollectorEntityState
-} from '../state';
-import { IWikipediaPoi, IGooglePoi, IOsmPoi } from '../../shared/interfaces';
-import { hikeEditPoiActions } from '../actions';
-
-import _omit from 'lodash-es/omit';
-import _merge from 'lodash-es/merge';
+// tslint:disable:only-arrow-functions no-small-switch no-duplicated-branches
 import _cloneDeep from 'lodash-es/cloneDeep';
+import _merge from 'lodash-es/merge';
+import _omit from 'lodash-es/omit';
+
+import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
+import { ActionReducerMap, combineReducers } from '@ngrx/store';
+
+import { GooglePoi, OsmPoi, WikipediaPoi } from '../../shared/interfaces';
+import { hikeEditPoiActions } from '../actions';
+import {
+  ExternalPoiListContextState,
+  GooglePoiEntityState,
+  GTrackPoiMergeState,
+  HikeEditPoiState,
+  OsmAmenityPoiEntityState,
+  OsmNaturalPoiEntityState,
+  OsmRoutePoiEntityState,
+  PoiCollectorEntityState,
+  WikipediaPoiEntityState
+} from '../state';
 
 /**
  * Google
  */
 
-export const googlePoiAdapter: EntityAdapter<IGooglePoi> = createEntityAdapter<IGooglePoi>();
+export const googlePoiAdapter: EntityAdapter<GooglePoi> = createEntityAdapter<GooglePoi>();
 export const googlePoiInitialState = googlePoiAdapter.getInitialState();
 
 export function googlePoiReducer(
-  state: IGooglePoiEntityState = googlePoiInitialState,
+  state: GooglePoiEntityState = googlePoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IGooglePoiEntityState {
+): GooglePoiEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
-      return googlePoiInitialState;
+      return { ...googlePoiInitialState };
     }
 
     case hikeEditPoiActions.SET_GOOGLE_POIS: {
@@ -40,38 +42,32 @@ export function googlePoiReducer(
 
     case hikeEditPoiActions.SET_GOOGLE_POIS_IN_GTRACK_DB: {
       return googlePoiAdapter.updateMany(
-        action.properties.map(poi => {
-          return {
-            id: poi.id,
-            changes: _omit(poi, ['id'])
-          };
-        }),
+        action.properties.map(poi => ({
+          id: poi.id,
+          changes: _omit(poi, ['id'])
+        })),
         state
       );
     }
 
     case hikeEditPoiActions.SET_GOOGLE_POIS_IN_COLLECTOR: {
       return googlePoiAdapter.updateMany(
-        action.properties.map(poi => {
-          return {
-            id: poi.id,
-            changes: _omit(poi, ['id'])
-          };
-        }),
+        action.properties.map(poi => ({
+          id: poi.id,
+          changes: _omit(poi, ['id'])
+        })),
         state
       );
     }
 
     case hikeEditPoiActions.SET_GOOGLE_POI_SELECTED:
       return googlePoiAdapter.updateMany(
-        action.poiIds.map(poiId => {
-          return {
-            id: poiId,
-            changes: {
-              selected: !state.entities[poiId].selected
-            }
-          };
-        }),
+        action.poiIds.map(poiId => ({
+          id: poiId,
+          changes: {
+            selected: !state.entities[poiId].selected
+          }
+        })),
         state
       );
 
@@ -84,16 +80,16 @@ export function googlePoiReducer(
  * OSM Amenity
  */
 
-export const osmAmenityPoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
+export const osmAmenityPoiAdapter: EntityAdapter<OsmPoi> = createEntityAdapter<OsmPoi>();
 export const osmAmenityPoiInitialState = osmAmenityPoiAdapter.getInitialState();
 
 export function osmAmenityPoiReducer(
-  state: IOsmAmenityPoiEntityState = osmAmenityPoiInitialState,
+  state: OsmAmenityPoiEntityState = osmAmenityPoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IOsmAmenityPoiEntityState {
+): OsmAmenityPoiEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
-      return osmAmenityPoiInitialState;
+      return { ...osmAmenityPoiInitialState };
     }
 
     case hikeEditPoiActions.SET_OSM_AMENITY_POIS: {
@@ -102,38 +98,32 @@ export function osmAmenityPoiReducer(
 
     case hikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_GTRACK_DB: {
       return osmAmenityPoiAdapter.updateMany(
-        action.properties.map(poi => {
-          return {
-            id: poi.id,
-            changes: _omit(poi, ['id'])
-          };
-        }),
+        action.properties.map(poi => ({
+          id: poi.id,
+          changes: _omit(poi, ['id'])
+        })),
         state
       );
     }
 
     case hikeEditPoiActions.SET_OSM_AMENITY_POIS_IN_COLLECTOR: {
       return osmAmenityPoiAdapter.updateMany(
-        action.properties.map(poi => {
-          return {
-            id: poi.id,
-            changes: _omit(poi, ['id'])
-          };
-        }),
+        action.properties.map(poi => ({
+          id: poi.id,
+          changes: _omit(poi, ['id'])
+        })),
         state
       );
     }
 
     case hikeEditPoiActions.SET_OSM_AMENITY_POI_SELECTED:
       return osmAmenityPoiAdapter.updateMany(
-        action.poiIds.map(poiId => {
-          return {
-            id: poiId,
-            changes: {
-              selected: !state.entities[poiId].selected
-            }
-          };
-        }),
+        action.poiIds.map(poiId => ({
+          id: poiId,
+          changes: {
+            selected: !state.entities[poiId].selected
+          }
+        })),
         state
       );
 
@@ -146,16 +136,16 @@ export function osmAmenityPoiReducer(
  * OSM Natural
  */
 
-export const osmNaturalPoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
+export const osmNaturalPoiAdapter: EntityAdapter<OsmPoi> = createEntityAdapter<OsmPoi>();
 export const osmNaturalPoiInitialState = osmNaturalPoiAdapter.getInitialState();
 
 export function osmNaturalPoiReducer(
-  state: IOsmNaturalPoiEntityState = osmNaturalPoiInitialState,
+  state: OsmNaturalPoiEntityState = osmNaturalPoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IOsmNaturalPoiEntityState {
+): OsmNaturalPoiEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
-      return osmNaturalPoiInitialState;
+      return { ...osmNaturalPoiInitialState };
     }
 
     case hikeEditPoiActions.SET_OSM_NATURAL_POIS: {
@@ -164,38 +154,32 @@ export function osmNaturalPoiReducer(
 
     case hikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_GTRACK_DB: {
       return osmNaturalPoiAdapter.updateMany(
-        action.properties.map(poi => {
-          return {
-            id: poi.id,
-            changes: _omit(poi, ['id'])
-          };
-        }),
+        action.properties.map(poi => ({
+          id: poi.id,
+          changes: _omit(poi, ['id'])
+        })),
         state
       );
     }
 
     case hikeEditPoiActions.SET_OSM_NATURAL_POIS_IN_COLLECTOR: {
       return osmNaturalPoiAdapter.updateMany(
-        action.properties.map(poi => {
-          return {
-            id: poi.id,
-            changes: _omit(poi, ['id'])
-          };
-        }),
+        action.properties.map(poi => ({
+          id: poi.id,
+          changes: _omit(poi, ['id'])
+        })),
         state
       );
     }
 
     case hikeEditPoiActions.SET_OSM_NATURAL_POI_SELECTED:
       return osmNaturalPoiAdapter.updateMany(
-        action.poiIds.map(poiId => {
-          return {
-            id: poiId,
-            changes: {
-              selected: !state.entities[poiId].selected
-            }
-          };
-        }),
+        action.poiIds.map(poiId => ({
+          id: poiId,
+          changes: {
+            selected: !state.entities[poiId].selected
+          }
+        })),
         state
       );
 
@@ -208,16 +192,16 @@ export function osmNaturalPoiReducer(
  * OSM Route
  */
 
-export const osmRoutePoiAdapter: EntityAdapter<IOsmPoi> = createEntityAdapter<IOsmPoi>();
+export const osmRoutePoiAdapter: EntityAdapter<OsmPoi> = createEntityAdapter<OsmPoi>();
 export const osmRoutePoiInitialState = osmRoutePoiAdapter.getInitialState();
 
 export function osmRoutePoiReducer(
-  state: IOsmRoutePoiEntityState = osmRoutePoiInitialState,
+  state: OsmRoutePoiEntityState = osmRoutePoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IOsmRoutePoiEntityState {
+): OsmRoutePoiEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
-      return osmRoutePoiInitialState;
+      return { ...osmRoutePoiInitialState };
     }
 
     case hikeEditPoiActions.SET_OSM_ROUTE_POIS: {
@@ -226,38 +210,32 @@ export function osmRoutePoiReducer(
 
     case hikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_GTRACK_DB: {
       return osmRoutePoiAdapter.updateMany(
-        action.properties.map(poi => {
-          return {
-            id: poi.id,
-            changes: _omit(poi, ['id'])
-          };
-        }),
+        action.properties.map(poi => ({
+          id: poi.id,
+          changes: _omit(poi, ['id'])
+        })),
         state
       );
     }
 
     case hikeEditPoiActions.SET_OSM_ROUTE_POIS_IN_COLLECTOR: {
       return osmRoutePoiAdapter.updateMany(
-        action.properties.map(poi => {
-          return {
-            id: poi.id,
-            changes: _omit(poi, ['id'])
-          };
-        }),
+        action.properties.map(poi => ({
+          id: poi.id,
+          changes: _omit(poi, ['id'])
+        })),
         state
       );
     }
 
     case hikeEditPoiActions.SET_OSM_ROUTE_POI_SELECTED:
       return osmRoutePoiAdapter.updateMany(
-        action.poiIds.map(poiId => {
-          return {
-            id: poiId,
-            changes: {
-              selected: !state.entities[poiId].selected
-            }
-          };
-        }),
+        action.poiIds.map(poiId => ({
+          id: poiId,
+          changes: {
+            selected: !state.entities[poiId].selected
+          }
+        })),
         state
       );
 
@@ -270,16 +248,16 @@ export function osmRoutePoiReducer(
  * Wikipedia
  */
 
-export const wikipediaPoiAdapter: EntityAdapter<IWikipediaPoi> = createEntityAdapter<IWikipediaPoi>();
+export const wikipediaPoiAdapter: EntityAdapter<WikipediaPoi> = createEntityAdapter<WikipediaPoi>();
 export const wikipediaPoiInitialState = wikipediaPoiAdapter.getInitialState();
 
 export function wikipediaPoiReducer(
-  state: IWikipediaPoiEntityState = wikipediaPoiInitialState,
+  state: WikipediaPoiEntityState = wikipediaPoiInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IWikipediaPoiEntityState {
+): WikipediaPoiEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
-      return wikipediaPoiInitialState;
+      return { ...wikipediaPoiInitialState };
     }
 
     case hikeEditPoiActions.SET_WIKIPEDIA_POIS: {
@@ -288,38 +266,32 @@ export function wikipediaPoiReducer(
 
     case hikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_GTRACK_DB: {
       return wikipediaPoiAdapter.updateMany(
-        action.properties.map(poi => {
-          return {
-            id: poi.id,
-            changes: _omit(poi, ['id'])
-          };
-        }),
+        action.properties.map(poi => ({
+          id: poi.id,
+          changes: _omit(poi, ['id'])
+        })),
         state
       );
     }
 
     case hikeEditPoiActions.SET_WIKIPEDIA_POIS_IN_COLLECTOR: {
       return wikipediaPoiAdapter.updateMany(
-        action.properties.map(poi => {
-          return {
-            id: poi.id,
-            changes: _omit(poi, ['id'])
-          };
-        }),
+        action.properties.map(poi => ({
+          id: poi.id,
+          changes: _omit(poi, ['id'])
+        })),
         state
       );
     }
 
     case hikeEditPoiActions.SET_WIKIPEDIA_POI_SELECTED:
       return wikipediaPoiAdapter.updateMany(
-        action.poiIds.map(poiId => {
-          return {
-            id: poiId,
-            changes: {
-              selected: !state.entities[poiId].selected
-            }
-          };
-        }),
+        action.poiIds.map(poiId => ({
+          id: poiId,
+          changes: {
+            selected: !state.entities[poiId].selected
+          }
+        })),
         state
       );
 
@@ -336,12 +308,12 @@ export const poiCollectorAdapter: EntityAdapter<any> = createEntityAdapter<any>(
 export const poiCollectorInitialState = poiCollectorAdapter.getInitialState();
 
 export function poiCollectorReducer(
-  state: IPoiCollectorEntityState = poiCollectorInitialState,
+  state: PoiCollectorEntityState = poiCollectorInitialState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IPoiCollectorEntityState {
+): PoiCollectorEntityState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE: {
-      return poiCollectorInitialState;
+      return { ...poiCollectorInitialState };
     }
 
     case hikeEditPoiActions.ADD_POIS_TO_COLLECTOR: {
@@ -354,14 +326,12 @@ export function poiCollectorReducer(
 
     case hikeEditPoiActions.SET_COLLECTOR_POI_SELECTED:
       return poiCollectorAdapter.updateMany(
-        action.poiIds.map(poiId => {
-          return {
-            id: poiId,
-            changes: {
-              selected: !state.entities[poiId].selected
-            }
-          };
-        }),
+        action.poiIds.map(poiId => ({
+          id: poiId,
+          changes: {
+            selected: !state.entities[poiId].selected
+          }
+        })),
         state
       );
 
@@ -383,7 +353,7 @@ export const initialContextItemState = {
   showOffrouteMarkers: false
 };
 
-export const externalPoiInitialContextState: IExternalPoiListContextState = {
+export const externalPoiInitialContextState: ExternalPoiListContextState = {
   google: _cloneDeep(initialContextItemState),
   osmAmenity: _cloneDeep(initialContextItemState),
   osmNatural: _cloneDeep(initialContextItemState),
@@ -403,10 +373,10 @@ export const externalPoiInitialContextState: IExternalPoiListContextState = {
 export function externalPoiListContextReducer(
   state = externalPoiInitialContextState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IExternalPoiListContextState {
+): ExternalPoiListContextState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE:
-      return externalPoiInitialContextState;
+      return { ...externalPoiInitialContextState };
 
     /**
      * Wikipedia
@@ -611,10 +581,10 @@ export const initialGTrackPoiMergeState = {
 export function gTrackPoiMergeReducer(
   state = initialGTrackPoiMergeState,
   action: hikeEditPoiActions.AllHikeEditPoiActions
-): IGTrackPoiMergeState {
+): GTrackPoiMergeState {
   switch (action.type) {
     case hikeEditPoiActions.RESET_POI_STATE:
-      return initialGTrackPoiMergeState;
+      return { ...initialGTrackPoiMergeState };
 
     case hikeEditPoiActions.RESET_POI_MERGE_SELECTION:
       return initialGTrackPoiMergeState;
@@ -636,7 +606,7 @@ export function gTrackPoiMergeReducer(
   }
 }
 
-const reducerMap: ActionReducerMap<IHikeEditPoiState> = {
+const reducerMap: ActionReducerMap<HikeEditPoiState> = {
   wikipediaPois: wikipediaPoiReducer,
   googlePois: googlePoiReducer,
   osmAmenityPois: osmAmenityPoiReducer,

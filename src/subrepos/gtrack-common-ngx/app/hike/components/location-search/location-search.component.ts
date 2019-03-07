@@ -1,66 +1,67 @@
-import { map, take, takeUntil, filter, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { Component, NgZone, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Subject, NEVER } from 'rxjs';
-
-import { GoogleMapsService } from '../../../shared';
-import * as geoSearchActions from '../../../geosearch/store/actions';
-import { selectCurrentLocation, selectTracking } from '../../../store';
-import { IGeoPosition } from '../../../shared/services/background-geolocation-service';
-
-import { SearchFiltersSelectors } from '../../../search-filters/store/selectors';
-import * as searchFilterActions from '../../../search-filters/store/actions';
-
-import * as BackgroundGeolocationActions from '../../../shared/services/background-geolocation-service/store/actions';
-
+import * as fromGeoLocationActions from 'features/common/current-geolocation/store/actions';
 import _get from 'lodash-es/get';
+import { NEVER, Subject } from 'rxjs';
+import { distinctUntilChanged, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 
+import { Component, ElementRef, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { GeoPosition } from '@features/common/current-geolocation';
+import * as fromCurrentLocationSelectors from '@features/common/current-geolocation/store/selectors';
+import { faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { select, Store } from '@ngrx/store';
 import distance from '@turf/distance';
 import { Coord as turfCoord } from '@turf/helpers';
+
+import * as geoSearchActions from '../../../geosearch/store/actions';
+import * as searchFilterActions from '../../../search-filters/store/actions';
+import { SearchFiltersSelectors } from '../../../search-filters/store/selectors';
+import { GoogleMapsService } from '../../../shared';
 
 @Component({
   selector: 'gtrack-common-location-search',
   template: ''
 })
 export class LocationSearchComponent implements OnInit, OnDestroy {
-  @ViewChild('search', {
-    read: ElementRef
-  })
-  private _searchElementRef: ElementRef;
+  @Input() context: string;
+
+  @Input() placeholder: string;
+
+  icon: IconDefinition;
+
+  radiusRange: number;
+
+  protected _radius: number;
+  protected _location?: GeoJSON.Position;
+  protected _address: string;
+  @ViewChild('search', { read: ElementRef }) _searchElementRef: ElementRef;
 
   private _input: HTMLElement;
-  private _destroy$ = new Subject<boolean>();
-  private _locate$ = new Subject<boolean>();
-
-  @Input()
-  public context: string;
-
-  @Input()
-  public placeholder: string;
-
-  public icon = faSearch;
-
-  public radiusRange = 50;
-
-  protected _radius = 50000;
-  protected _location: GeoJSON.Position | null = null;
-  protected _address = 'my-location';
+  private readonly _destroy$: Subject<boolean>;
+  private readonly _locate$: Subject<boolean>;
 
   constructor(
-    private _googleMapsService: GoogleMapsService,
-    private _ngZone: NgZone,
-    private _store: Store<any>,
-    private _searchFiltersSelectors: SearchFiltersSelectors
-  ) {}
+    private readonly _googleMapsService: GoogleMapsService,
+    private readonly _ngZone: NgZone,
+    private readonly _store: Store<any>,
+    private readonly _searchFiltersSelectors: SearchFiltersSelectors
+  ) {
+    this.icon = faSearch;
 
-  ngOnDestroy() {
-    this._destroy$.next(true);
-    this._destroy$.complete();
-    this._store.dispatch(new BackgroundGeolocationActions.EndTracking());
+    this.radiusRange = 50;
+
+    this._radius = 50000;
+    this._address = 'my-location';
+
+    this._destroy$ = new Subject<boolean>();
+    this._locate$ = new Subject<boolean>();
   }
 
-  ngOnInit() {
+  ngOnDestroy(): void {
+    this._destroy$.next(true);
+    this._destroy$.complete();
+    this._store.dispatch(new fromGeoLocationActions.StartPositioning());
+  }
+
+  ngOnInit(): void {
     this._input = this._searchElementRef.nativeElement;
 
     if (!(this._input instanceof HTMLInputElement)) {
@@ -72,69 +73,39 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     }
 
     if (this._input instanceof HTMLInputElement) {
-      this._googleMapsService.autocomplete(this._input).then(autocomplete => {
-        autocomplete.addListener('place_changed', () => {
-          this._ngZone.run(() => {
-            const place = autocomplete.getPlace();
+      this._googleMapsService
+        .autocomplete(this._input)
+        .then(autocomplete => {
+          autocomplete.addListener('place_changed', () => {
+            this._ngZone.run(() => {
+              const place = autocomplete.getPlace();
 
-            if (typeof place.geometry === 'undefined' || place.geometry === null) {
-              return;
-            }
+              if (typeof place.geometry === 'undefined' || place.geometry === null) {
+                return undefined;
+              }
 
-            this._locate$.next(false);
+              this._locate$.next(false);
 
-            this._location = [place.geometry.location.lng(), place.geometry.location.lat()];
-            this._address = place.formatted_address;
+              this._location = [place.geometry.location.lng(), place.geometry.location.lat()];
+              this._address = place.formatted_address;
+            });
           });
-        });
-      });
+        })
+        .catch(() => undefined);
     }
 
     this._store
       .pipe(
-        select(selectTracking),
+        select(fromCurrentLocationSelectors.selectTracking),
         take(1)
       )
       .subscribe(tracking => {
-        if (tracking === false) {
-          this._store.dispatch(new BackgroundGeolocationActions.StartTracking());
+        if (!tracking) {
+          this._store.dispatch(new fromGeoLocationActions.EndPositioning());
         }
       });
 
-    const location$ = this._store.pipe(
-      select(selectCurrentLocation),
-      takeUntil(this._destroy$),
-      filter((location: IGeoPosition) => !!_get(location, 'coords.latitude') && !!_get(location, 'coords.latitude')),
-      map((location: IGeoPosition) => <GeoJSON.Position>[location.coords.longitude, location.coords.latitude]),
-      distinctUntilChanged((position1, position2) => {
-        const point1: turfCoord = {
-          type: 'Point',
-          coordinates: [position1[0], position1[1]]
-        };
-
-        const point2: turfCoord = {
-          type: 'Point',
-          coordinates: [position2[0], position2[1]]
-        };
-
-        return distance(point1, point2) <= 0.1;
-      })
-    );
-
-    this._locate$
-      .pipe(
-        takeUntil(this._destroy$),
-        switchMap(locate => {
-          return locate ? location$.pipe(take(1)) : NEVER;
-        })
-      )
-      .subscribe((coords: number[]) => {
-        this._address = 'my-location';
-        this._location = coords;
-        this._search();
-      });
-
-    this._locate$.next(true);
+    this._initLocation();
 
     this._store
       .pipe(
@@ -148,9 +119,9 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
       });
   }
 
-  protected _search() {
+  protected _search(): any {
     if (!this._location) {
-      return;
+      return undefined;
     }
 
     if (this._address) {
@@ -177,7 +148,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     );
   }
 
-  public searchLocation() {
+  searchLocation(): void {
     if (this._input instanceof HTMLInputElement) {
       this._input.value = '';
     }
@@ -186,17 +157,52 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     this._search();
   }
 
-  public requestLocation() {
+  requestLocation(): void {
     if (this._input instanceof HTMLInputElement) {
       this._input.value = '';
-      this._location = null;
+      this._location = undefined;
     }
 
     this._locate$.next(true);
   }
 
-  public onRadiusChange(data: number) {
+  onRadiusChange(data: number): void {
     this._radius = data * 1000;
     this._search();
+  }
+
+  private _initLocation(): void {
+    const location$ = this._store.pipe(
+      select(fromCurrentLocationSelectors.selectCurrentLocation),
+      takeUntil(this._destroy$),
+      filter((location: GeoPosition) => !!_get(location, 'coords.longitude') && !!_get(location, 'coords.latitude')),
+      map((location: GeoPosition) => [location.coords.longitude, location.coords.latitude]),
+      distinctUntilChanged((position1, position2) => {
+        const point1: turfCoord = {
+          type: 'Point',
+          coordinates: [position1[0], position1[1]]
+        };
+
+        const point2: turfCoord = {
+          type: 'Point',
+          coordinates: [position2[0], position2[1]]
+        };
+
+        return distance(point1, point2) <= 0.1;
+      })
+    );
+
+    this._locate$
+      .pipe(
+        takeUntil(this._destroy$),
+        switchMap(locate => (locate ? location$.pipe(take(1)) : NEVER))
+      )
+      .subscribe((coords: Array<number>) => {
+        this._address = 'my-location';
+        this._location = coords;
+        this._search();
+      });
+
+    this._locate$.next(true);
   }
 }

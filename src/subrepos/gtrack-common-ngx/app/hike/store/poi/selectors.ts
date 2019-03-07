@@ -1,38 +1,35 @@
 import { Inject, Injectable } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-
-import { poiAdapter, IPoiState, IPoiContextState } from './state';
-import { EXTERNAL_POI_DEPENDENCIES, IExternalPoiDependencies } from '../../externals';
-import { poiContextStateAdapter } from './state';
-import { IPoi, IPoiStored } from '../../../../../provider-client';
+import { PoiData, PoiStored } from '@features/common/gtrack-interfaces';
 import { Dictionary } from '@ngrx/entity/src/models';
-
+import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import _get from 'lodash-es/get';
 import _pickBy from 'lodash-es/pickBy';
+import { EXTERNAL_POI_DEPENDENCIES, ExternalPoiDependencies } from '../../externals';
+import { poiAdapter, PoiContextState, poiContextStateAdapter, PoiState } from './state';
 
 @Injectable()
 export class PoiSelectors {
-  public selectFeature: MemoizedSelector<object, IPoiState>;
-  public getPoiIds: (state: object) => string[] | number[];
-  public getAllPois: (state: object) => IPoiStored[];
-  public getAllPoiEntities: (state: object) => Dictionary<IPoi>;
-  public getAllContexts: (state: object) => IPoiContextState[];
-  public getAllContextEntities: (state: object) => Dictionary<IPoiContextState>;
-  protected _selectPoiEntities: (state: object) => Dictionary<IPoiStored>;
-  protected _externals: IExternalPoiDependencies;
+  selectFeature: MemoizedSelector<object, PoiState>;
+  getPoiIds: (state: object) => Array<string> | Array<number>;
+  getAllPois: (state: object) => Array<PoiStored>;
+  getAllPoiEntities: (state: object) => Dictionary<PoiData>;
+  getAllContexts: (state: object) => Array<PoiContextState>;
+  getAllContextEntities: (state: object) => Dictionary<PoiContextState>;
+  protected _selectPoiEntities: (state: object) => Dictionary<PoiStored>;
+  protected _externals: ExternalPoiDependencies;
 
   constructor(@Inject(EXTERNAL_POI_DEPENDENCIES) externals) {
     this._externals = externals;
 
-    this.selectFeature = createFeatureSelector<IPoiState>(this._externals.storeDomain);
+    this.selectFeature = createFeatureSelector<PoiState>(this._externals.storeDomain);
 
     const poiSelector = createSelector(
       this.selectFeature,
-      (state: IPoiState) => state.pois
+      (state: PoiState) => state.pois
     );
     const contextSelector = createSelector(
       this.selectFeature,
-      (state: IPoiState) => state.contexts
+      (state: PoiState) => state.contexts
     );
 
     const selectors = poiAdapter.getSelectors(poiSelector);
@@ -46,21 +43,21 @@ export class PoiSelectors {
     this._selectPoiEntities = selectors.selectEntities;
   }
 
-  public getPoi(context: string) {
+  getPoi(context: string): MemoizedSelector<object, PoiData> {
     return createSelector(
       this.getAllPois,
-      (pois: IPoi[]) => pois.find(poi => poi.id === context)
+      (pois: Array<PoiData>) => pois.find(poi => poi.id === context)
     );
   }
 
-  public getAllPoisCount() {
+  getAllPoisCount(): MemoizedSelector<object, number> {
     return createSelector(
       this.getAllPois,
-      (pois: IPoi[]) => (pois || []).length
+      (pois: Array<PoiData>) => (pois || []).length
     );
   }
 
-  public getAllPoiPhotos() {
+  getAllPoiPhotos(): MemoizedSelector<object, Array<any>> {
     return createSelector(
       this.getAllPois,
       pois => {
@@ -75,16 +72,14 @@ export class PoiSelectors {
     );
   }
 
-  public getPoiContext(context: string) {
+  getPoiContext(context: string): MemoizedSelector<object, PoiContextState> {
     return createSelector(
       this.getAllContexts,
-      (contexts: IPoiContextState[]) => {
-        return contexts.find(c => c.id === context);
-      }
+      (contexts: Array<PoiContextState>) => contexts.find(c => c.id === context)
     );
   }
 
-  public getPoiContexts(contexts: string[]) {
+  getPoiContexts(contexts: Array<string>): MemoizedSelector<object, Array<PoiContextState>> {
     return createSelector(
       this.getAllContexts,
       poiContexts =>
@@ -98,7 +93,7 @@ export class PoiSelectors {
     );
   }
 
-  public getPoiContextEntities(ids: string[]) {
+  getPoiContextEntities(ids: Array<string>): MemoizedSelector<object, any> {
     return createSelector(
       this.getAllContextEntities,
       contexts =>
@@ -112,7 +107,7 @@ export class PoiSelectors {
     );
   }
 
-  public getPois(contexts: string[]) {
+  getPois(contexts: Array<string>): MemoizedSelector<object, Array<PoiStored>> {
     return createSelector(
       this.getAllPois,
       pois =>
@@ -126,13 +121,13 @@ export class PoiSelectors {
     );
   }
 
-  public getPoiEntities(contexts: string[]) {
+  getPoiEntities(contexts: Array<string>): MemoizedSelector<object, any> {
     return createSelector(
       this.getAllPoiEntities,
       pois =>
-        _pickBy(pois, poi => {
-          if (poi.id) {
-            return contexts.indexOf(poi.id) !== -1;
+        _pickBy(pois, poiEntity => {
+          if (poiEntity.id) {
+            return contexts.indexOf(poiEntity.id) !== -1;
           } else {
             return false;
           }

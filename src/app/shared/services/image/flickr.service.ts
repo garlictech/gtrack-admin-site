@@ -1,24 +1,38 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-
-import * as uuid from 'uuid/v1';
-import _get from 'lodash-es/get';
 import _cloneDeep from 'lodash-es/cloneDeep';
-import { IBackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
-import { EPoiImageTypes } from 'subrepos/provider-client';
+import _get from 'lodash-es/get';
 import { Observable } from 'rxjs';
+import * as uuid from 'uuid/v1';
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { EPoiImageTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
+import { BackgroundImageDataStored } from '../../interfaces/mapillary-image.interface';
 import { PoiEditorService } from '../poi';
+
+const _batchGet = (getter, params): any =>
+  getter(params).then(result => {
+    params.results = params.results.concat(result.data);
+
+    if (!result.nextParams) {
+      return params.results;
+    } else {
+      params.page = result.nextParams.page;
+
+      return _batchGet(getter, params);
+    }
+  });
 
 @Injectable()
 export class FlickrService {
-  constructor(private _http: HttpClient, private _poiEditorService: PoiEditorService) {}
+  constructor(private readonly _http: HttpClient, private readonly _poiEditorService: PoiEditorService) {}
 
-  public get(bounds, path) {
-    const promise: Promise<IBackgroundImageDataStored[]> = new Promise(resolve => {
-      this._batchGet(this._getOnePage, {
-        bounds: bounds,
-        path: path,
+  get(bounds, path): any {
+    const promise: Promise<Array<BackgroundImageDataStored>> = new Promise(resolve => {
+      _batchGet(this._getOnePage, {
+        bounds,
+        path,
         page: 1,
         results: []
       }).then(_res => {
@@ -29,20 +43,8 @@ export class FlickrService {
     return Observable.fromPromise(promise);
   }
 
-  private _batchGet(getter, params) {
-    return getter(params).then(result => {
-      params.results = params.results.concat(result.data);
-
-      if (!result.nextParams) {
-        return params.results;
-      } else {
-        params.page = result.nextParams.page;
-        return this._batchGet(getter, params);
-      }
-    });
-  }
-
-  private _getOnePage = params => {
+  // tslint:disable:no-property-initializers
+  private readonly _getOnePage = async params => {
     // tslint:disable:max-line-length
     const request = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
       environment.flickr.apiKey
@@ -57,12 +59,12 @@ export class FlickrService {
       .get(request)
       .toPromise()
       .then((data: any) => {
-        const _images: IBackgroundImageDataStored[] = [];
-        const _photos = _get(data, 'photos.photo', null);
+        const _images: Array<BackgroundImageDataStored> = [];
+        const _photos = _get(data, 'photos.photo');
 
         if (_photos) {
           for (const _photo of _photos) {
-            const _image: IBackgroundImageDataStored = {
+            const _image: BackgroundImageDataStored = {
               id: uuid(),
               title: 'untitled',
               lat: _photo.latitude,
@@ -103,5 +105,5 @@ export class FlickrService {
 
         return result;
       });
-  }
+  };
 }

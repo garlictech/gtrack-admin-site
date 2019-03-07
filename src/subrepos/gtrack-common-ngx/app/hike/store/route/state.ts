@@ -1,21 +1,21 @@
+import { RouteStored } from '@features/common/gtrack-interfaces';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { IRouteStored } from '../../../../../provider-client';
 
-export const routeAdapter = createEntityAdapter<IRouteStored>();
-export interface IRouteEntityState extends EntityState<IRouteStored> {}
+export const routeAdapter = createEntityAdapter<RouteStored>();
+export interface RouteEntityState extends EntityState<RouteStored> {}
 
-export interface IRouteContextState {
+export interface RouteContextState {
   id: string;
   loading: boolean;
   loaded: boolean;
   saved: boolean;
 }
 
-export interface IAllRouteContextState extends EntityState<IRouteContextState> {}
+export interface AllRouteContextState extends EntityState<RouteContextState> {}
 
-export const routeContextStateAdapter = createEntityAdapter<IRouteContextState>();
+export const routeContextStateAdapter = createEntityAdapter<RouteContextState>();
 
-export interface IRouteState {
-  routes: IRouteEntityState;
-  contexts: IAllRouteContextState;
+export interface RouteState {
+  routes: RouteEntityState;
+  contexts: AllRouteContextState;
 }

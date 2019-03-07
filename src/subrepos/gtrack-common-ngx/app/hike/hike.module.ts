@@ -1,30 +1,28 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 
-import { HikeProgramService } from './services/hike-program';
-import { RouteService } from './services/route';
-import { PoiService } from './services/poi';
+import { GeoSearchModule } from '../geosearch';
+import { SearchFiltersModule } from '../search-filters';
 import { CheckpointService } from './services/checkpoint';
+import { ElevationService } from './services/elevation';
 import { GameRuleService } from './services/game-rule';
 import { GeometryService } from './services/geometry';
-import { ElevationService } from './services/elevation';
-import { SearchFiltersModule } from '../search-filters';
-import { GeoSearchModule } from '../geosearch';
+import { HikeProgramService } from './services/hike-program';
+import { PoiService } from './services/poi';
+import { RouteService } from './services/route';
 
-import { EXTERNAL_POI_DEPENDENCIES, EXTERNAL_HIKE_DEPENDENCIES, EXTERNAL_ROUTE_DEPENDENCIES } from './externals';
+import { EXTERNAL_HIKE_DEPENDENCIES, EXTERNAL_POI_DEPENDENCIES, EXTERNAL_ROUTE_DEPENDENCIES } from './externals';
 
-import { HikeSelectors, PoiSelectors, RouteSelectors, HikeEffects, PoiEffects, RouteEffects } from './store';
+import { HikeEffects, HikeSelectors, PoiEffects, PoiSelectors, RouteEffects, RouteSelectors } from './store';
 
 import { SharedModule } from '../shared';
-import { MapModule } from '../map';
-import { IHikeModuleConfig } from './config';
+import { HikeModuleConfig } from './config';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    MapModule,
     SearchFiltersModule,
     GeoSearchModule,
     EffectsModule.forFeature([HikeEffects, PoiEffects, RouteEffects])
@@ -46,7 +44,7 @@ import { IHikeModuleConfig } from './config';
   ]
 })
 export class HikeModule {
-  static forRoot(config: IHikeModuleConfig): ModuleWithProviders {
+  static forRoot(config: HikeModuleConfig): ModuleWithProviders {
     return {
       ngModule: HikeModule,
       providers: [

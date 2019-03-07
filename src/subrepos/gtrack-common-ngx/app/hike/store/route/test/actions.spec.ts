@@ -1,11 +1,11 @@
-import { IRoute, IRouteStored, EObjectState } from 'subrepos/provider-client';
+import { RouteData, RouteStored, EObjectState } from '@features/common/gtrack-interfaces';
 import * as uuid from 'uuid/v4';
 import * as actions from '../actions';
 
 describe('Route actions', () => {
   let id: string;
-  let routeData: IRoute;
-  let route: IRouteStored;
+  let routeData: RouteData;
+  let route: RouteStored;
 
   beforeEach(() => {
     id = uuid();

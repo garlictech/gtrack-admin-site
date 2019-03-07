@@ -1,54 +1,57 @@
+import _map from 'lodash-es/map';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, take, takeUntil } from 'rxjs/operators';
+
 // Core
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+
 import { State } from '../../../../../store';
 import { hikeEditPoiActions } from '../../../../../store/actions';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, takeUntil, take } from 'rxjs/operators';
 import * as hikeEditPoiSelectors from '../../../../../store/selectors/hike-edit-poi';
-
-import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-hike-edit-pois-collector-table',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
-  @Input() pois$: Observable<any[]>;
+  @Input() pois$: Observable<Array<any>>;
   @Input() onRouteCheck: boolean;
   @Input() openPoiModal: any;
-  public mergeSelections: { [id: string]: boolean } = {};
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  mergeSelections: { [id: string]: boolean };
+  private readonly _destroy$: Subject<boolean>;
 
-  constructor(
-    private _store: Store<State>
-  ) {}
+  constructor(private readonly _store: Store<State>) {
+    this.mergeSelections = {};
+    this._destroy$ = new Subject<boolean>();
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._store
       .pipe(
         select(hikeEditPoiSelectors.getMergeSelections),
         debounceTime(250),
         takeUntil(this._destroy$)
       )
-      .subscribe((selections: string[]) => {
+      .subscribe((selections: Array<string>) => {
         this.mergeSelections = {};
-        selections.map(id => {
+        selections.forEach(id => {
           this.mergeSelections[id] = true;
         });
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  public handlePoiSelection(poiIds) {
+  handlePoiSelection(poiIds): void {
     this._store.dispatch(new hikeEditPoiActions.SetCollectorPoiSelected(poiIds));
   }
 
-  public toggleMergeSelection = (poiIds: string[]) => {
+  // tslint:disable-next-line:no-property-initializers
+  toggleMergeSelection = (poiIds: Array<string>) => {
     const removeblePoiIds = [];
     const poiIdsToAdd = [];
 
@@ -67,23 +70,19 @@ export class HikeEditPoisCollectorTableComponent implements OnInit, OnDestroy {
     if (poiIdsToAdd.length > 0) {
       this._store.dispatch(new hikeEditPoiActions.AddGTrackPoiToMergeSelection(poiIdsToAdd));
     }
-  }
+  };
 
-  public invertMerge() {
+  invertMerge(): void {
     this.pois$.pipe(take(1)).subscribe(pois => {
-      const clickablePois = pois.filter(p => {
-        return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
-      });
+      const clickablePois = pois.filter(p => !!p.onRoute === this.onRouteCheck && !p.inGtrackDb);
 
       this.toggleMergeSelection(_map(clickablePois, 'id'));
     });
   }
 
-  public invertSelection() {
+  invertSelection(): void {
     this.pois$.pipe(take(1)).subscribe(pois => {
-      const clickablePois = pois.filter(p => {
-        return !!p.onRoute === this.onRouteCheck && !p.inGtrackDb;
-      });
+      const clickablePois = pois.filter(p => !!p.onRoute === this.onRouteCheck && !p.inGtrackDb);
 
       this.handlePoiSelection(_map(clickablePois, 'id'));
     });

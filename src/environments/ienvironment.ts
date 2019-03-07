@@ -1,4 +1,4 @@
-export interface IEnvironment {
+export interface Environment {
   production: boolean;
   staging: boolean;
   webappServer: string;
@@ -23,4 +23,19 @@ export interface IEnvironment {
   };
 
   lambdaEndpoint: string;
+
+  mapillary: {
+    clientID: string;
+  };
+
+  flickr: {
+    apiKey: string;
+    secret: string;
+  };
+
+  googlePhotoLimit: number;
+
+  openWeatherMap: {
+    key: string;
+  };
 }

@@ -1,37 +1,26 @@
-import { Component, Input, ChangeDetectionStrategy, ViewEncapsulation, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { tap, map, filter, switchMap, combineLatest } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import _get from 'lodash-es/get';
+import { Observable } from 'rxjs';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 
+import { getHikeSpeed, getHikeStartDate } from '@features/common/settings/store/selectors';
+import { WeatherEntity } from '@features/common/weather/store';
+import * as actions from '@features/common/weather/store/actions';
+import { WeatherSelectors } from '@features/common/weather/store/selectors';
+import { log } from 'app/log';
 import { State } from 'app/store';
 import { HikeProgram } from 'subrepos/gtrack-common-ngx';
-import { getHikeStartDate, getHikeSpeed } from '@common.features/settings/store/selectors';
-import { WeatherSelectors } from '@common.features/weather/store/selectors';
-import { IWeatherEntity } from '@common.features/weather/store';
-import * as actions from '@common.features/weather/store/actions';
-import { log } from 'app/log';
 
 @Component({
   selector: 'gtrack-hike-program-page',
   templateUrl: './hike-program-page.component.html',
   styleUrls: ['./hike-program-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HikeProgramPageComponent implements OnInit {
-  @Input()
-  public hikeProgram: HikeProgram;
-
-  public forecast$: Observable<IWeatherEntity>;
-
-  private _position: GeoJSON.Position;
-
-  public startDate$: Observable<Date>;
-  public speed$: Observable<number>;
-
-  public get images() {
-    let urls: string[] = [];
+  get images(): Array<string> {
+    let urls: Array<string> = [];
 
     if (this.hikeProgram && this.hikeProgram.backgroundImages instanceof Array) {
       const imageUrls = this.hikeProgram.backgroundImages;
@@ -41,10 +30,18 @@ export class HikeProgramPageComponent implements OnInit {
 
     return urls;
   }
+  @Input() hikeProgram: HikeProgram;
 
-  constructor(private _store: Store<State>, private _weatherSelectors: WeatherSelectors) {}
+  forecast$: Observable<WeatherEntity>;
 
-  ngOnInit() {
+  startDate$: Observable<Date>;
+  speed$: Observable<number>;
+
+  private _position: GeoJSON.Position;
+
+  constructor(private readonly _store: Store<State>, private readonly _weatherSelectors: WeatherSelectors) {}
+
+  ngOnInit(): void {
     const start = this.hikeProgram.stops[0];
 
     this.startDate$ = this._store.pipe(select(getHikeStartDate));
@@ -61,8 +58,8 @@ export class HikeProgramPageComponent implements OnInit {
             this._store.dispatch(new actions.GetForecast(this._position));
           }
         }),
-        map(context => context && context.loaded === true),
-        filter(loaded => loaded === true),
+        map(context => context && context.loaded),
+        filter(loaded => loaded),
         switchMap(() => this._store.pipe(select(this._weatherSelectors.getWeather(this._position))))
       );
     }

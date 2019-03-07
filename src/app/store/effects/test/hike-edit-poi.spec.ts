@@ -1,27 +1,22 @@
+// tslint:disable:no-unbound-method
+import { cold, hot, Scheduler } from 'jest-marbles';
+import * as _ from 'lodash';
+import { Observable } from 'rxjs';
+
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { RouterModule, Router } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
+import { Router, RouterModule } from '@angular/router';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
-import { IExternalPoi } from '../../../shared/interfaces';
-import { hot, cold, Scheduler } from 'jest-marbles';
-import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
+import { StoreModule } from '@ngrx/store';
+
 import { DeepstreamModule, RouteService } from '../../../../subrepos/gtrack-common-ngx';
-import { mockRouter } from './helpers';
-import {
-  HikeProgramService,
-  WikipediaPoiService,
-  OsmPoiService,
-  GooglePoiService
-} from '../../../shared/services';
-import { hikeEditPoiActions, commonPoiActions, editedGTrackPoiActions } from '../../actions';
-import { HikeEditPoiEffects } from '../hike-edit-poi';
-
-import * as _ from 'lodash';
-
+import { ExternalPoi } from '../../../shared/interfaces';
+import { GooglePoiService, HikeProgramService, OsmPoiService, WikipediaPoiService } from '../../../shared/services';
+import { commonPoiActions, editedGTrackPoiActions, hikeEditPoiActions } from '../../actions';
 import { pois as poiFixtures } from '../../reducer/test/fixtures';
+import { HikeEditPoiEffects } from '../hike-edit-poi';
+import { mockRouter } from './helpers';
 
 describe('HikeEditPoiEffects effects', () => {
   let actions$: Observable<any>;
@@ -32,7 +27,7 @@ describe('HikeEditPoiEffects effects', () => {
   let googlePoiService: GooglePoiService;
   let osmPoiService: OsmPoiService;
   // let osmRoutePoiService: OsmRoutePoiService;
-  let pois: IExternalPoi[];
+  let pois: Array<ExternalPoi>;
   const mockBounds = {
     SouthWest: { lat: 0, lon: 0 },
     NorthEast: { lat: 1, lon: 1 }
@@ -79,25 +74,19 @@ describe('HikeEditPoiEffects effects', () => {
         {
           provide: WikipediaPoiService,
           useValue: {
-            get: () => {}
+            get: () => jest.fn()
           }
         },
         {
           provide: OsmPoiService,
           useValue: {
-            get: () => {}
+            get: () => jest.fn()
           }
         },
-        /*{
-          provide: OsmRoutePoiService,
-          useValue: {
-            get: () => {}
-          }
-        },*/
         {
           provide: GooglePoiService,
           useValue: {
-            get: () => {}
+            get: () => jest.fn()
           }
         }
       ]
@@ -190,26 +179,6 @@ describe('HikeEditPoiEffects effects', () => {
       expect(osmPoiService.get).toHaveBeenCalled();
     });
   });
-
-  /*
-  describe('getOsmRoutePois$', () => {
-    it('should return pois observable from GetOsmRoutePois', () => {
-      spyOn(osmRoutePoiService, 'get').and.returnValue(Observable.of(pois));
-
-      const action = new hikeEditPoiActions.GetOsmRoutePois(mockBounds, 'fakeMapId');
-      const completion = new hikeEditPoiActions.SetOsmRoutePois(pois);
-      const expected = cold('-b', { b: completion });
-
-      actions$.stream = hot('-a', { a: action });
-
-      expect(effects.getOsmRoutePois$).toBeObservable(expected);
-
-      Scheduler.get().flush();
-
-      expect(osmRoutePoiService.get).toHaveBeenCalled();
-    });
-  });
-  */
 
   describe('loadSavedPoi$', () => {
     it('should return poiId observable from PoiSaved', () => {

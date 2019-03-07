@@ -1,8 +1,8 @@
 import { InjectionToken } from '@angular/core';
-import { ILocalizeConfig } from 'subrepos/localize-ngx';
+import { LocalizeConfig } from '@features/common/localization';
 
-export interface IConfig {
-  language: ILocalizeConfig;
+export interface Config {
+  language: LocalizeConfig;
 }
 
-export const CONFIG = new InjectionToken<IConfig>('Config');
+export const CONFIG = new InjectionToken<Config>('Config');

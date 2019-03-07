@@ -1,12 +1,12 @@
-import { EObjectMarkContext } from 'subrepos/provider-client';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 
 import { objectMarkReducerInitialState, objectMarkContextReducerInitialState, objectMarkReducer } from '../reducer';
 
-import { IObjectMarkState } from '../state';
+import { ObjectMarkState } from '../state';
 import * as actions from '../actions';
 
 describe('ObjectMarkReducer', () => {
-  let initialState: IObjectMarkState;
+  let initialState: ObjectMarkState;
 
   beforeEach(() => {
     initialState = {

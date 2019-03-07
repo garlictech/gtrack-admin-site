@@ -1,4 +1,4 @@
-import { ETextualDescriptionType, EPoiTypes } from 'subrepos/provider-client';
+import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 export const OSM_NATURAL_RESPONSE = {
   version: 0.6,
@@ -65,7 +65,7 @@ export const OSM_NATURAL_POIS = [
         title: 'Studenka-forrás',
         summary: '',
         fullDescription: '',
-        type: ETextualDescriptionType.markdown,
+        type: ETextualDescriptionType.markdown
       }
     },
     objectTypes: [EPoiTypes.osmNatural],
@@ -85,7 +85,7 @@ export const OSM_NATURAL_POIS = [
         title: 'Arany-hegy',
         summary: '',
         fullDescription: '',
-        type: ETextualDescriptionType.markdown,
+        type: ETextualDescriptionType.markdown
       }
     },
     objectTypes: [EPoiTypes.osmNatural],
@@ -105,7 +105,7 @@ export const OSM_NATURAL_POIS = [
         title: 'Tölgyfa',
         summary: '',
         fullDescription: '',
-        type: ETextualDescriptionType.markdown,
+        type: ETextualDescriptionType.markdown
       }
     },
     objectTypes: [EPoiTypes.osmNatural],

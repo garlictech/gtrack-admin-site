@@ -1,7 +1,7 @@
 import * as uuid from 'uuid/v1';
-import { IGeoSearchResponseItem } from '../../state';
+import { GeoSearchResponseItem } from '../../state';
 
-export const searches: IGeoSearchResponseItem[] = [
+export const searches: GeoSearchResponseItem[] = [
   {
     id: uuid(),
     results: [uuid(), uuid()]

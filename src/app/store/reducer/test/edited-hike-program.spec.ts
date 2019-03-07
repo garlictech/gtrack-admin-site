@@ -1,17 +1,22 @@
-import { IEditedHikeProgramState } from '../../state';
-import { initialEditedHikeProgramState, editedHikeProgramReducer } from '../edited-hike-program';
-import { IBackgroundImageData, IHikeProgramStop, ETextualDescriptionType } from '../../../../subrepos/provider-client';
-import { editedHikeProgramActions } from '../../actions';
-
+// tslint:disable:no-big-function
 import * as _ from 'lodash';
-
-import { bgImages as bgImageFixtures, stops as stopsFixtures } from './fixtures';
 import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 
+import {
+  BackgroundImageData,
+  ETextualDescriptionType,
+  HikeProgramStop
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
+import { editedHikeProgramActions } from '../../actions';
+import { EditedHikeProgramState } from '../../state';
+import { editedHikeProgramReducer, initialEditedHikeProgramState } from '../edited-hike-program';
+import { bgImages as bgImageFixtures, stops as stopsFixtures } from './fixtures';
+
 describe('Edited HikeProgram reducers', () => {
-  let initialState: IEditedHikeProgramState;
-  let images: IBackgroundImageData[];
-  let stops: IHikeProgramStop[];
+  let initialState: EditedHikeProgramState;
+  let images: Array<BackgroundImageData>;
+  let stops: Array<HikeProgramStop>;
 
   beforeEach(() => {
     initialState = _.cloneDeep(initialEditedHikeProgramState);
@@ -209,7 +214,7 @@ describe('Edited HikeProgram reducers', () => {
       const state = editedHikeProgramReducer(
         _.merge({}, initialState, {
           data: {
-            stops: stops
+            stops
           }
         }),
         action

@@ -1,17 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'primeng/accordion';
-import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormModule } from 'subrepos/gtrack-common-web/forms';
+
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { SharedModule } from 'subrepos/gtrack-common-ngx';
+import { AdminMarkerPopupComponent } from './admin-marker-popup';
+import { ImageMarkerPopupComponent } from './image-marker-popup';
 import { LocalizedDescriptionComponent } from './localized-description';
 import { TableSpinnerComponent } from './table-spinner';
-import { AdminMarkerPopupComponent } from './admin-marker-popup';
-import { LocalizeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
-import { ImageMarkerPopupComponent } from './image-marker-popup';
 
 const COMPONENTS = [
   LocalizedDescriptionComponent,
@@ -25,7 +28,7 @@ const COMPONENTS = [
     FormModule,
     FormsModule,
     FontAwesomeModule,
-    LocalizeModule,
+    MultiLanguageTextModule,
     SharedModule,
     // PrimeNG
     DropdownModule,

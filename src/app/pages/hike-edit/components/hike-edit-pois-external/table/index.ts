@@ -1,27 +1,28 @@
-// Core
-import { Component, Input } from '@angular/core';
-import { Store } from '@ngrx/store';
+import _map from 'lodash-es/map';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+
+// Core
+import { Component, Input } from '@angular/core';
+import { EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { Store } from '@ngrx/store';
+
 import { State } from '../../../../../store';
 import { hikeEditPoiActions } from '../../../../../store/actions';
-import { EPoiTypes } from 'subrepos/provider-client';
-
-import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-hike-edit-pois-external-table',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisExternalTableComponent {
-  @Input() pois$: Observable<any[]>;
+  @Input() pois$: Observable<Array<any>>;
   @Input() subdomain: string;
   @Input() onRouteCheck: boolean;
   @Input() openPoiModal: any;
 
-  constructor(private _store: Store<State>) {}
+  constructor(private readonly _store: Store<State>) {}
 
-  public handlePoiSelection(poiIds: string[]) {
+  handlePoiSelection(poiIds: Array<string>): void {
     switch (this.subdomain) {
       case EPoiTypes.google:
         this._store.dispatch(new hikeEditPoiActions.SetGooglePoiSelected(poiIds));
@@ -38,14 +39,14 @@ export class HikeEditPoisExternalTableComponent {
       case EPoiTypes.osmRoute:
         this._store.dispatch(new hikeEditPoiActions.SetOsmRoutePoiSelected(poiIds));
         break;
+      default:
+        break;
     }
   }
 
-  public invertSelection() {
+  invertSelection(): void {
     this.pois$.pipe(take(1)).subscribe(pois => {
-      const clickablePois = pois.filter(p => {
-        return !!p.onRoute === this.onRouteCheck && !p.inCollector && !p.inGtrackDb;
-      });
+      const clickablePois = pois.filter(p => !!p.onRoute === this.onRouteCheck && !p.inCollector && !p.inGtrackDb);
 
       this.handlePoiSelection(_map(clickablePois, 'id'));
     });

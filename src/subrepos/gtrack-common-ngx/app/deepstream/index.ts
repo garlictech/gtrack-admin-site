@@ -1,8 +1,8 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import _get from 'lodash-es/get';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { createSelector } from '@ngrx/store';
+import _get from 'lodash-es/get';
 
-import { IExternalDeepstreamDependencies, EXTERNAL_DEEPSTREAM_DEPENDENCIES } from '../../../deepstream-ngx';
+import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, ExternalDeepstreamDependencies } from '@features/common/deepstream-ngx';
 
 import { environment } from 'environments/environment';
 import { selectRole, selectUser } from '../authentication/store/selectors';
@@ -12,7 +12,8 @@ export const userIdSelector = createSelector(
   state => _get(state, 'id')
 );
 
-export function externalDeepstreamDependencies(): IExternalDeepstreamDependencies {
+// tslint:disable-next-line:only-arrow-functions
+export function externalDeepstreamDependencies(): ExternalDeepstreamDependencies {
   return {
     deepstreamConnectionString: environment.deepstream,
     storeDomain: 'deepstream',
@@ -32,8 +33,8 @@ export class DeepstreamModule {
 
 export {
   Reducer as DeepstreamReducer,
-  IDeepstreamState,
+  DeepstreamState,
   Actions as DeepstreamActions,
   DeepstreamService,
   Selectors
-} from '../../../deepstream-ngx';
+} from '@features/common/deepstream-ngx';

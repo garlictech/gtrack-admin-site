@@ -1,7 +1,7 @@
-import { IRoute, IRouteStored } from 'subrepos/provider-client';
+import { RouteData, RouteStored } from '@features/common/gtrack-interfaces';
 import * as uuid from 'uuid/v4';
 
-export const routes: IRoute[] = [
+export const routes: RouteData[] = [
   {
     bounds: {
       NorthEast: {
@@ -68,7 +68,7 @@ export const routes: IRoute[] = [
   }
 ];
 
-export const routesStored: IRouteStored[] = [
+export const routesStored: RouteStored[] = [
   {
     ...routes[0],
     id: uuid(),

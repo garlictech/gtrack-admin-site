@@ -1,18 +1,19 @@
-import { IPoi, IHikeProgramStop } from 'subrepos/provider-client';
+import { HikeProgramStop, PoiData } from '@features/common/gtrack-interfaces';
 
 import _get from 'lodash-es/get';
 
 export class MarkerPopupComponent {
-  public static componentName = 'MarkerPopupComponent';
+  // tslint:disable-next-line:no-property-initializers
+  static componentName = 'MarkerPopupComponent';
 
-  public data: {
-    poi: IPoi;
-    stop: IHikeProgramStop;
+  data: {
+    poi: PoiData;
+    stop: HikeProgramStop;
   };
 
-  public closePopup: any; // Popup close method
+  closePopup: any; // Popup close method
 
-  public get image(): string {
+  get image(): string {
     let url = '';
 
     if (this.data && this.data.poi && this.data.poi.backgroundImages instanceof Array) {

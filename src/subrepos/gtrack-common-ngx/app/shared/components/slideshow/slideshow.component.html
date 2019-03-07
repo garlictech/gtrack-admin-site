@@ -1,66 +1,70 @@
 <div class="slideshow">
-  <div [ngClass]="{'slideshow-with-gallery': fullscreenGallery}" #slideshow *ngIf="images.length > 1">
-      <ng-container *ngFor="let image of images; let i = index">
-        <div [attr.data-exthumbimage]="image.url" [attr.data-src]="image.url" #slide
-          [ngStyle]="{
-            'background-image': 'url(' + image.url + ')',
-            'z-index': getZIndex(i)
-          }"
+  <div [ngClass]="{ 'slideshow-with-gallery': fullscreenGallery }" #slideshow *ngIf="images.length > 1">
+    <ng-container *ngFor="let image of images; let i = index; trackBy: trackByFn">
+      <div
+        [attr.data-exthumbimage]="image.url"
+        [attr.data-src]="image.url"
+        #slide
+        [ngStyle]="{
+          'background-image': 'url(' + image.url + ')',
+          'z-index': getZIndex(i)
+        }"
+        [ngClass]="{
+          'slide-animate': animate === true,
+          'slide-left': image.animation === 'left',
+          'slide-right': image.animation === 'right',
+          'slide-up': image.animation === 'up',
+          'slide-down': image.animation === 'down',
+          'slide-down-left': image.animation === 'down-left',
+          'slide-down-right': image.animation === 'down-right',
+          'slide-up-left': image.animation === 'up-left',
+          'slide-up-right': image.animation === 'up-right',
+          'animate-kenburns-left': i === currentIndex && image.animation === 'left',
+          'animate-kenburns-right': i === currentIndex && image.animation === 'right',
+          'animate-kenburns-up': i === currentIndex && image.animation === 'up',
+          'animate-kenburns-down': i === currentIndex && image.animation === 'down',
+          'animate-kenburns-down-left': i === currentIndex && image.animation === 'down-left',
+          'animate-kenburns-down-right': i === currentIndex && image.animation === 'down-right',
+          'animate-kenburns-up-left': i === currentIndex && image.animation === 'up-left',
+          'animate-kenburns-up-right': i === currentIndex && image.animation === 'up-right',
+          'active-slide': i === currentIndex
+        }"
+        class="slide"
+      ></div>
+    </ng-container>
+  </div>
+  <div *ngIf="fullscreenGallery" #thumbnails class="thumbnails">
+    <ng-container *ngFor="let image of images; let i = index">
+      <a
+        [attr.data-exthumbimage]="image.url"
+        [href]="image.url"
+        [ngStyle]="{
+          'background-image': 'url(' + image.url + ')'
+        }"
+        [ngClass]="{
+          'active-thumbnail': i === currentIndex
+        }"
+        class="thumbnail"
+      ></a>
+    </ng-container>
+  </div>
 
-          [ngClass]="{
-            'slide-animate': (animate === true),
-            'slide-left': (image.animation === 'left'),
-            'slide-right': (image.animation === 'right'),
-            'slide-up': (image.animation === 'up'),
-            'slide-down': (image.animation === 'down'),
-            'slide-down-left': (image.animation === 'down-left'),
-            'slide-down-right': (image.animation === 'down-right'),
-            'slide-up-left': (image.animation === 'up-left'),
-            'slide-up-right': (image.animation === 'up-right'),
-            'animate-kenburns-left': (i === currentIndex && image.animation === 'left'),
-            'animate-kenburns-right': (i === currentIndex && image.animation === 'right'),
-            'animate-kenburns-up': (i === currentIndex && image.animation === 'up'),
-            'animate-kenburns-down': (i === currentIndex && image.animation === 'down'),
-            'animate-kenburns-down-left': (i === currentIndex && image.animation === 'down-left'),
-            'animate-kenburns-down-right': (i === currentIndex && image.animation === 'down-right'),
-            'animate-kenburns-up-left': (i === currentIndex && image.animation === 'up-left'),
-            'animate-kenburns-up-right': (i === currentIndex && image.animation === 'up-right'),
-            'active-slide': (i === currentIndex)
-          }"
-
-          class="slide"
-        >
-
-        </div>
-      </ng-container>
-    </div>
-    <div *ngIf="fullscreenGallery" #thumbnails class="thumbnails">
-      <ng-container *ngFor="let image of images; let i = index">
-        <a [attr.data-exthumbimage]="image.url" [href]="image.url"
-          [ngStyle]="{
-            'background-image': 'url(' + image.url + ')'
-          }"
-          [ngClass]="{
-            'active-thumbnail': (i === currentIndex)
-          }"
-          class="thumbnail"
-        ></a>
-      </ng-container>
-    </div>
-
-    <ng-container *ngIf="images.length === 1">
-      <div #slide
+  <ng-container *ngIf="images.length === 1">
+    <div
+      #slide
       [ngStyle]="{
         'background-image': 'url(' + images[0].url + ')'
       }"
-
       class="active-slide slide slide-image-only"
-    >
-    </div>
+    ></div>
   </ng-container>
 
   <div *ngIf="controls" class="controls">
-    <a (click)="onPrev($event)" class="control control-prev" href="#"><fa-icon [icon]="icons.left" size="2x"></fa-icon></a>
-    <a (click)="onNext($event)" class="control control-next" href="#"><fa-icon [icon]="icons.right" size="2x"></fa-icon></a>
+    <a (click)="onPrev($event)" class="control control-prev" href="#"
+      ><fa-icon [icon]="icons.left" size="2x"></fa-icon
+    ></a>
+    <a (click)="onNext($event)" class="control control-next" href="#"
+      ><fa-icon [icon]="icons.right" size="2x"></fa-icon
+    ></a>
   </div>
 </div>

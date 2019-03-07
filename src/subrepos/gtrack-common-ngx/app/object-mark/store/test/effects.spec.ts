@@ -3,7 +3,7 @@ import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { EObjectMarkContext } from 'subrepos/provider-client';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 
 import { hot, cold, Scheduler } from 'jest-marbles';
 

@@ -1,21 +1,22 @@
-import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, select } from '@ngrx/store';
-import * as hikeEditRoutePlannerSelectors from '../../selectors/hike-edit-route-planner';
+// tslint:disable:no-big-function
+import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IHikeEditRoutePlannerState } from '../../state';
-import { hikeEditRoutePlannerReducer, initialRouteInfoDataState } from '../../reducer';
+
+import { TestBed } from '@angular/core/testing';
+import { select, Store, StoreModule } from '@ngrx/store';
+
 import { hikeEditRoutePlannerActions } from '../../actions';
-
+import { hikeEditRoutePlannerReducer, initialRouteInfoDataState } from '../../reducer';
 import { route as routeFixtures, segments as segmentFixtures } from '../../reducer/test/fixtures';
-
-import * as _ from 'lodash';
+import * as hikeEditRoutePlannerSelectors from '../../selectors/hike-edit-route-planner';
+import { HikeEditRoutePlannerState } from '../../state';
 
 describe('HikeEditRoutePlanner selectors', () => {
-  let store: Store<IHikeEditRoutePlannerState>;
+  let store: Store<HikeEditRoutePlannerState>;
   let destroy$: Subject<boolean>;
   let route: any;
-  let segments: any[];
+  let segments: Array<any>;
 
   beforeEach(() => {
     route = _.cloneDeep(routeFixtures);
