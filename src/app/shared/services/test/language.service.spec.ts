@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LanguageService } from '../language.service';
+import { AdminLanguageService } from '../language.service';
 
-describe('LanguageService', () => {
+describe('AdminLanguageService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LanguageService]
+      providers: [AdminLanguageService]
     });
   });
 
   it('should get descriptionLanguages', () => {
-    const langs = LanguageService.descriptionLanguages;
+    const langs = AdminLanguageService.descriptionLanguages;
 
     expect(langs).toEqual({
       en_US: 'English',
@@ -22,12 +22,12 @@ describe('LanguageService', () => {
   });
 
   it('should call shortToLocale', () => {
-    const localEN = LanguageService.shortToLocale('en');
-    const localHU = LanguageService.shortToLocale('hu');
-    const localDE = LanguageService.shortToLocale('de');
-    const localFR = LanguageService.shortToLocale('fr');
-    const localIT = LanguageService.shortToLocale('it');
-    const noLocal = LanguageService.shortToLocale('fakeLang');
+    const localEN = AdminLanguageService.shortToLocale('en');
+    const localHU = AdminLanguageService.shortToLocale('hu');
+    const localDE = AdminLanguageService.shortToLocale('de');
+    const localFR = AdminLanguageService.shortToLocale('fr');
+    const localIT = AdminLanguageService.shortToLocale('it');
+    const noLocal = AdminLanguageService.shortToLocale('fakeLang');
 
     expect(localEN).toEqual('en_US');
     expect(localHU).toEqual('hu_HU');
@@ -38,12 +38,12 @@ describe('LanguageService', () => {
   });
 
   it('should call localeToName', () => {
-    const nameEN = LanguageService.localeToName('en_US');
-    const nameHU = LanguageService.localeToName('hu_HU');
-    const nameDE = LanguageService.localeToName('de_DE');
-    const nameFR = LanguageService.localeToName('fr_FR');
-    const nameIT = LanguageService.localeToName('it_IT');
-    const noLocal = LanguageService.localeToName('fakeLocale');
+    const nameEN = AdminLanguageService.localeToName('en_US');
+    const nameHU = AdminLanguageService.localeToName('hu_HU');
+    const nameDE = AdminLanguageService.localeToName('de_DE');
+    const nameFR = AdminLanguageService.localeToName('fr_FR');
+    const nameIT = AdminLanguageService.localeToName('it_IT');
+    const noLocal = AdminLanguageService.localeToName('fakeLocale');
 
     expect(nameEN).toEqual('English');
     expect(nameHU).toEqual('Hungarian');
@@ -54,8 +54,8 @@ describe('LanguageService', () => {
   });
 
   it('should call pascalize', () => {
-    const expected1 = LanguageService.pascalize('one_more thing');
-    const expected2 = LanguageService.pascalize('his name_is Bob');
+    const expected1 = AdminLanguageService.pascalize('one_more thing');
+    const expected2 = AdminLanguageService.pascalize('his name_is Bob');
 
     expect(expected1).toEqual('One more thing');
     expect(expected2).toEqual('His name is Bob');

@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   template: `
     <div class="layout-footer clearfix">
       <span class="footer-text-right">
-        <span>&c{{ y; {{currentDate | date: ' }}yy'}} <a href="http://www.gtracksport.com">GTrack</a></span>
+        <span>&copy; {{ currentDate | date: 'yyyy' }} <a href="http://www.gtracksport.com">GTrack</a></span>
       </span>
     </div>
   `

@@ -1,26 +1,17 @@
 {
-    "name": "@bit/garlictech.angular-features.web.weather",
-    "version": "0.0.2",
-    "homepage": "https://bitsrc.io/garlictech/angular-features/web/weather",
-    "main": "index.ts",
-    "dependencies": {
-        "@angular/common": "~7.2.1",
-        "@angular/core": "~7.2.1",
-        "@ngrx/store": "~7.1.0",
-        "angular-svg-icon": "^7.0.0",
-        "primeng": "~7.0.0",
-        "@bit/garlictech.angular-features.common.weather": "0.0.2"
-    },
-    "devDependencies": {},
-    "peerDependencies": {},
-    "componentRootFolder": "src/features/web/weather",
-    "license": "SEE LICENSE IN LICENSE",
-    "bit": {
-        "resolveAliases": {
-            "@features/common/weather/components": "@bit/garlictech.angular-features.common.weather/components/index.ts",
-            "@features/common/weather/store/actions": "@bit/garlictech.angular-features.common.weather/store/actions.ts",
-            "@features/common/weather/store": "@bit/garlictech.angular-features.common.weather/store/index.ts",
-            "@features/common/weather": "@bit/garlictech.angular-features.common.weather"
-        }
-    }
+  "name": "@bit/garlictech.angular-features.web.weather",
+  "version": "0.0.3",
+  "homepage": "https://bitsrc.io/garlictech/angular-features/web/weather",
+  "main": "index.ts",
+  "dependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1",
+    "@ngrx/store": "~7.1.0",
+    "angular-svg-icon": "^7.0.0",
+    "primeng": "~7.0.0",
+    "@bit/garlictech.angular-features.common.weather": "file:../../common/weather"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "license": "SEE LICENSE IN LICENSE"
 }

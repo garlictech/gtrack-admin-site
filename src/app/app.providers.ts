@@ -8,11 +8,11 @@ import { RouteRedirectGuard } from './auth';
 import { config } from './config';
 // Services
 import {
+  AdminLanguageService,
   AdminMapService,
   FlickrService,
   GooglePoiService,
   HikeProgramService,
-  LanguageService,
   MapillaryService,
   OsmPoiService,
   PoiEditorService,
@@ -37,7 +37,7 @@ export const APP_PROVIDERS = [
   OsmPoiService,
   // OsmRoutePoiService,
   GooglePoiService,
-  LanguageService,
+  AdminLanguageService,
   HikeProgramService,
   FlickrService,
   MapillaryService,

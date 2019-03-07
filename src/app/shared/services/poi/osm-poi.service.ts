@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 
 import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { OsmPoi } from '../../interfaces';
-import { LanguageService } from '../language.service';
+import { AdminLanguageService } from '../language.service';
 
 const _checkPoiTags = (_point, type): boolean => {
   if (_point.tags) {
@@ -69,8 +69,8 @@ export class OsmPoiService {
               elevation: _point.tags.ele,
               types: [type],
               description: {
-                [LanguageService.shortToLocale(lng)]: {
-                  title: _point.tags.name || LanguageService.pascalize(type) || 'unknown',
+                [AdminLanguageService.shortToLocale(lng)]: {
+                  title: _point.tags.name || AdminLanguageService.pascalize(type) || 'unknown',
                   summary: '',
                   fullDescription: '',
                   type: ETextualDescriptionType.markdown

@@ -3,7 +3,7 @@ import { metaReducers, reducer as commonReducers } from 'subrepos/gtrack-common-
 
 // State
 import { InjectionToken } from '@angular/core';
-import { ActionReducerMap } from '@ngrx/store/src/models';
+import { ActionReducerMap } from '@ngrx/store';
 
 // Reducers
 import { editedGTrackPoiReducer } from './reducer/edited-gtrack-poi';

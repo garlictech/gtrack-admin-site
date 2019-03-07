@@ -1,7 +1,5 @@
-// Lib
 import { TagInputModule } from 'ngx-chips';
 import { AccordionModule } from 'primeng/accordion';
-// PrimeNG
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -10,7 +8,6 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
-// Components
 import { FormModule, HikeComponentsModule, LanguageModule } from 'subrepos/gtrack-common-web';
 
 import { CommonModule } from '@angular/common';
@@ -18,34 +15,20 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { LocalizeModule } from '@bit/garlictech.angular-features.common.localization';
+import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedComponentsModule } from '../../shared/components';
 import { PipesModule } from '../../shared/pipes/pipes.module';
-// Shared components
 import { PoiMergeService } from '../../shared/services';
 import {
-  BackgroundImagesComponent,
-  HikeEditExternalPoiInfoComponent,
-  HikeEditGeneralInfoComponent,
-  HikeEditGTrackPoiInfoComponent,
-  HikeEditMapComponent,
-  HikeEditMergeGTrackPoiComponent,
-  HikeEditOutlineComponent,
-  HikeEditPhotosComponent,
-  HikeEditPhotosTableComponent,
-  HikeEditPoisCollectorComponent,
-  HikeEditPoisCollectorTableComponent,
-  HikeEditPoisComponent,
-  HikeEditPoisExternalComponent,
-  HikeEditPoisExternalTableComponent,
-  HikeEditPoisGTrackComponent,
-  HikeEditPoisGTrackTableComponent,
-  HikeEditPoisHikeComponent,
-  HikeEditPoisHikeTableComponent,
-  HikeEditRoutePlannerComponent,
-  PoiIconsComponent,
+  BackgroundImagesComponent, HikeEditExternalPoiInfoComponent, HikeEditGeneralInfoComponent,
+  HikeEditGTrackPoiInfoComponent, HikeEditMapComponent, HikeEditMergeGTrackPoiComponent, HikeEditOutlineComponent,
+  HikeEditPhotosComponent, HikeEditPhotosTableComponent, HikeEditPoisCollectorComponent,
+  HikeEditPoisCollectorTableComponent, HikeEditPoisComponent, HikeEditPoisExternalComponent,
+  HikeEditPoisExternalTableComponent, HikeEditPoisGTrackComponent, HikeEditPoisGTrackTableComponent,
+  HikeEditPoisHikeComponent, HikeEditPoisHikeTableComponent, HikeEditRoutePlannerComponent, PoiIconsComponent,
   SpecialPoiDataComponent
 } from './components';
 import { HikeEditComponent } from './hike-edit.component';
@@ -82,7 +65,7 @@ const COMPONENTS = [
     RouterModule,
     FormsModule,
     FormModule,
-    LanguageModule,
+    TranslateModule,
     ReactiveFormsModule,
     LeafletMapModule,
     HikeModule,
@@ -91,7 +74,8 @@ const COMPONENTS = [
     TagInputModule,
     SharedComponentsModule,
     FontAwesomeModule,
-    LocalizeModule,
+    LanguageModule,
+    MultiLanguageTextModule,
     LeafletMapModule,
     // PrimeNG
     ButtonModule,

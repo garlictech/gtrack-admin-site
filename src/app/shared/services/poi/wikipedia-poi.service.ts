@@ -18,7 +18,7 @@ import {
 
 import { WikipediaPoi } from '../../interfaces';
 import { HikeProgramService } from '../hike/hike-program.service';
-import { LanguageService } from '../language.service';
+import { AdminLanguageService } from '../language.service';
 
 const WIKIPEDIA_PAGEID = 'wikipedia.pageid';
 
@@ -60,7 +60,7 @@ export class WikipediaPoiService {
                 types: ['sight'],
                 objectTypes: [EPoiTypes.wikipedia],
                 description: {
-                  [LanguageService.shortToLocale(lng)]: {
+                  [AdminLanguageService.shortToLocale(lng)]: {
                     title: _point.title,
                     summary: '',
                     fullDescription: '',

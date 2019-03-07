@@ -16,7 +16,7 @@ import {
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { GooglePoi } from '../../interfaces';
-import { LanguageService } from '../language.service';
+import { AdminLanguageService } from '../language.service';
 
 export const PURE_PLACE_API_URL = 'https://maps.googleapis.com/maps/api/place';
 export const PLACE_API_URL = `https://cors-anywhere.herokuapp.com/${PURE_PLACE_API_URL}`;
@@ -175,8 +175,8 @@ export class GooglePoiService {
             lon: _point.geometry.location.lng,
             elevation: 0,
             description: {
-              [LanguageService.shortToLocale(params.langs[0] || 'en')]: {
-                title: _point.name || LanguageService.pascalize(_point.types[0]) || 'unknown',
+              [AdminLanguageService.shortToLocale(params.langs[0] || 'en')]: {
+                title: _point.name || AdminLanguageService.pascalize(_point.types[0]) || 'unknown',
                 summary: '',
                 fullDescription: '',
                 type: ETextualDescriptionType.markdown

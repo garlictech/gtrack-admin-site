@@ -19,12 +19,13 @@ import {
   defaultAuthenticationApiConfig
 } from '@bit/garlictech.angular-features.common.authentication-api';
 import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
-import { GenericUiModule } from '@bit/garlictech.angular-features.common.generic-ui';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
+
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';
@@ -81,6 +82,7 @@ export const APP_IMPORTS = [
   StoreDevtoolsModule.instrument({
     maxAge: 25
   }),
+  GenericUiModule,
   DeepstreamModule.forRoot(),
   AuthenticationApiModule.forRoot(getAuthConfig),
   SearchFiltersModule.forRoot({
@@ -91,7 +93,6 @@ export const APP_IMPORTS = [
     storeDomain: 'geosearch'
   }),
   HikeModule.forRoot(hikeModuleConfig),
-  CurrentGeolocationModule.forRoot({ timeOut: 2000 }, { endpoint: environment.lambdaEndpoint }),
   CoreLayoutModule,
   AuthModule,
   HikeListModule,
@@ -105,7 +106,7 @@ export const APP_IMPORTS = [
   ]),
   ObjectMarkModule.forRoot(objectMarkConfig),
   GtrackCommonWebModule,
-  GenericUiModule,
+  CurrentGeolocationModule.forRoot({ timeOut: 2000 }, { endpoint: environment.lambdaEndpoint }),
   LeafletMapModule,
   ToastModule
 ];

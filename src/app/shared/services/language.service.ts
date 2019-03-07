@@ -15,7 +15,7 @@ export const DESCRIPTION_LANGUAGES: Array<LngObject> = [
 ];
 
 @Injectable()
-export class LanguageService {
+export class AdminLanguageService {
   static get descriptionLanguages(): any {
     return {
       en_US: 'English',

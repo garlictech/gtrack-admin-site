@@ -9,7 +9,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { LocalizeModule } from '@bit/garlictech.angular-features.common.localization';
+import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { SharedModule } from 'subrepos/gtrack-common-ngx';
 import { AdminMarkerPopupComponent } from './admin-marker-popup';
 import { ImageMarkerPopupComponent } from './image-marker-popup';
@@ -28,7 +28,7 @@ const COMPONENTS = [
     FormModule,
     FormsModule,
     FontAwesomeModule,
-    LocalizeModule,
+    MultiLanguageTextModule,
     SharedModule,
     // PrimeNG
     DropdownModule,

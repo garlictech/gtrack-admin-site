@@ -1,4 +1,4 @@
-import { AbstractValueAccessor } from '..';
+import { AbstractValueAccessor } from '../abstract-value-accessor';
 
 describe('Test the abstract value accessor', () => {
   let accessor: AbstractValueAccessor;

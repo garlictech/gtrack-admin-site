@@ -8,8 +8,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { LocalizeModule } from '@bit/garlictech.angular-features.common.localization';
 
+import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { SharedComponentsModule } from '../../shared/components';
 import { PipesModule } from '../../shared/pipes/pipes.module';
 import { GpxInputComponent } from './components';
@@ -23,7 +23,7 @@ const COMPONENTS = [HikeListComponent, GpxInputComponent];
     RouterModule,
     SharedComponentsModule,
     FormsModule,
-    LocalizeModule,
+    MultiLanguageTextModule,
     // PrimeNG
     ButtonModule,
     SelectButtonModule,

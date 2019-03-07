@@ -1,15 +1,16 @@
 FROM garlictech2/workflows-angular:v15.0.0
-
 ENV NO_UPDATE_NOTIFIER 1
 
-RUN mkdir -p /app/src/subrepos && \
-  cd /app/src/subrepos && \
-  mkdir -p mkdir -p /app/src/assets  gtrack-common-ngx
+#RUN mkdir -p /app/src/subrepos && \
+#  cd /app/src/subrepos && \
+#  mkdir -p mkdir -p /app/src/assets  gtrack-common-ngx
 
 
-COPY src/subrepos/gtrack-common-ngx/package.json /app/src/subrepos/gtrack-common-ngx
+# COPY src/subrepos/gtrack-common-ngx/package.json /app/src/subrepos/gtrack-common-ngx
 
-COPY package.json /app/package.project.json
+
+# install_dependencies will merge deps in the container
+COPY ./package.json /app/package.project.json
 ADD src /app/src
 
 RUN scripts/install_dependencies.js

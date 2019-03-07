@@ -16,7 +16,7 @@ import { LocalizedItem, TextualDescription } from '@bit/garlictech.angular-featu
 import { select, Store } from '@ngrx/store';
 
 import { State } from '../../../store';
-import { DESCRIPTION_LANGUAGES, LanguageService } from '../../services';
+import { AdminLanguageService, DESCRIPTION_LANGUAGES } from '../../services';
 
 interface LanguageKeyObject {
   [key: string]: any;
@@ -105,7 +105,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   }
 
   getLangName(key): string {
-    return LanguageService.localeToName(key);
+    return AdminLanguageService.localeToName(key);
   }
 
   trackByFn(index: number): number {
