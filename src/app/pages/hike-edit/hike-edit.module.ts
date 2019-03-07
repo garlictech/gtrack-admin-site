@@ -23,12 +23,26 @@ import { SharedComponentsModule } from '../../shared/components';
 import { PipesModule } from '../../shared/pipes/pipes.module';
 import { PoiMergeService } from '../../shared/services';
 import {
-  BackgroundImagesComponent, HikeEditExternalPoiInfoComponent, HikeEditGeneralInfoComponent,
-  HikeEditGTrackPoiInfoComponent, HikeEditMapComponent, HikeEditMergeGTrackPoiComponent, HikeEditOutlineComponent,
-  HikeEditPhotosComponent, HikeEditPhotosTableComponent, HikeEditPoisCollectorComponent,
-  HikeEditPoisCollectorTableComponent, HikeEditPoisComponent, HikeEditPoisExternalComponent,
-  HikeEditPoisExternalTableComponent, HikeEditPoisGTrackComponent, HikeEditPoisGTrackTableComponent,
-  HikeEditPoisHikeComponent, HikeEditPoisHikeTableComponent, HikeEditRoutePlannerComponent, PoiIconsComponent,
+  BackgroundImagesComponent,
+  HikeEditExternalPoiInfoComponent,
+  HikeEditGeneralInfoComponent,
+  HikeEditGTrackPoiInfoComponent,
+  HikeEditMapComponent,
+  HikeEditMergeGTrackPoiComponent,
+  HikeEditOutlineComponent,
+  HikeEditPhotosComponent,
+  HikeEditPhotosTableComponent,
+  HikeEditPoisCollectorComponent,
+  HikeEditPoisCollectorTableComponent,
+  HikeEditPoisComponent,
+  HikeEditPoisExternalComponent,
+  HikeEditPoisExternalTableComponent,
+  HikeEditPoisGTrackComponent,
+  HikeEditPoisGTrackTableComponent,
+  HikeEditPoisHikeComponent,
+  HikeEditPoisHikeTableComponent,
+  HikeEditRoutePlannerComponent,
+  PoiIconsComponent,
   SpecialPoiDataComponent
 } from './components';
 import { HikeEditComponent } from './hike-edit.component';
