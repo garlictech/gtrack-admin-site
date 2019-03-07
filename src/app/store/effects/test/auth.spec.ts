@@ -10,8 +10,8 @@ import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { Actions as AuthActions } from '../../../../subrepos/authentication-api-ngx';
-import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
+import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { DeepstreamModule } from '../../../../subrepos/gtrack-common-ngx';
 import { AuthEffects } from '../auth';
 import { mockRouter } from './helpers';

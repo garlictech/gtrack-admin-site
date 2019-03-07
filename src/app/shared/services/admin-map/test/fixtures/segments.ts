@@ -143,7 +143,7 @@ export const MOCK_SEGMENT_GEOJSON = {
         type: 'Point'
       },
       properties: {
-        name: 'Route point 01'
+        name: 'Route point 1'
       },
       type: 'Feature'
     },
@@ -153,7 +153,7 @@ export const MOCK_SEGMENT_GEOJSON = {
         type: 'Point'
       },
       properties: {
-        name: 'Route point 11'
+        name: 'Route point 2'
       },
       type: 'Feature'
     },

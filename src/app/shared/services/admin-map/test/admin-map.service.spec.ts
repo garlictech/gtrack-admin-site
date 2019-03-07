@@ -2,13 +2,16 @@ import { State } from 'app/store';
 import * as _ from 'lodash';
 
 import { TestBed } from '@angular/core/testing';
-import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
-import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
-import { LeafletMarkerPopupService } from '@common.features/leaflet-map/services/leaflet-marker-popup.service';
+
 import { Store, StoreModule } from '@ngrx/store';
 
-import { DescriptionLanguageListService } from '../../../../../subrepos/gtrack-common-ngx';
 import { AdminMapService } from '../admin-map.service';
+import {
+  LeafletMapMarkerService,
+  LeafletIconService,
+  LeafletMarkerPopupService
+} from '@bit/garlictech.angular-features.common.leaflet-map';
+import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
 
 describe('AdminMapService', () => {
   let adminMapService: AdminMapService;

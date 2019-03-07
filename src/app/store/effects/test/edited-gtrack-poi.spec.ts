@@ -1,15 +1,15 @@
 import { cold, hot, Scheduler } from 'jest-marbles';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule, PoiService } from '../../../../subrepos/gtrack-common-ngx';
 import { ExternalPoi } from '../../../shared/interfaces';
 import * as editedGTrackPoiSelectors from '../../../store/selectors/edited-gtrack-poi';
@@ -23,9 +23,30 @@ describe('EditedGTrackPoiEffects effects', () => {
   let effects: EditedGTrackPoiEffects;
   let poiService: PoiService;
   let pois: Array<ExternalPoi>;
+  let getRecordSpy: jasmine.Spy;
+  let callSpy: jasmine.Spy;
+  let testRecord: any;
+  let getSpy: jasmine.Spy;
 
   beforeEach(() => {
     pois = _.cloneDeep(poiFixtures);
+
+    testRecord = {
+      get: getSpy
+    };
+
+    getRecordSpy = jasmine.createSpy('getRecord').and.returnValue(testRecord);
+
+    callSpy = jasmine.createSpy('callRpc').and.returnValue(
+      of({
+        success: true
+      })
+    );
+
+    const deepstream = {
+      getRecord: getRecordSpy,
+      callRpc: callSpy
+    };
 
     TestBed.configureTestingModule({
       imports: [
@@ -37,11 +58,16 @@ describe('EditedGTrackPoiEffects effects', () => {
       ],
       providers: [
         EditedGTrackPoiEffects,
-        PoiService,
         provideMockActions(() => actions$),
         {
+          provide: PoiService,
+          useValue: {
+            create: jest.fn()
+          }
+        },
+        {
           provide: DeepstreamService,
-          useValue: {}
+          useFactory: () => deepstream
         },
         {
           provide: Router,

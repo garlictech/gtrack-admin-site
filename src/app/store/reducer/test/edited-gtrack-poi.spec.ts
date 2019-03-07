@@ -111,7 +111,7 @@ describe('Edited GTrackPoi reducers', () => {
       const state = editedGTrackPoiReducer(initialState, action);
 
       expect(state.working).toBe('saving...');
-      expect(state.failed).toBeNull();
+      expect(state.failed).toBeUndefined();
     });
   });
 
@@ -120,8 +120,8 @@ describe('Edited GTrackPoi reducers', () => {
       const action = new editedGTrackPoiActions.PoiSaveSuccess('1');
       const state = editedGTrackPoiReducer(initialState, action);
 
-      expect(state.working).toBeNull();
-      expect(state.failed).toBeNull();
+      expect(state.working).toBeUndefined();
+      expect(state.failed).toBeUndefined();
       expect(state.dirty).toBeFalsy();
     });
   });
@@ -131,7 +131,7 @@ describe('Edited GTrackPoi reducers', () => {
       const action = new editedGTrackPoiActions.PoiSaveFailed('Error');
       const state = editedGTrackPoiReducer(initialState, action);
 
-      expect(state.working).toBeNull();
+      expect(state.working).toBeUndefined();
       expect(state.failed).toEqual('Error');
     });
   });
@@ -146,8 +146,8 @@ describe('Edited GTrackPoi reducers', () => {
       );
       const state = editedGTrackPoiReducer(initialState, action);
 
-      expect(state.working).toBeNull();
-      expect(state.failed).toBeNull();
+      expect(state.working).toBeUndefined();
+      expect(state.failed).toBeUndefined();
       expect(state.dirty).toBeFalsy();
       expect(state.data).toEqual(pois[0]);
     });

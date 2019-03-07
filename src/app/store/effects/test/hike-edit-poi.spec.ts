@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx/src/deepstream-service';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
