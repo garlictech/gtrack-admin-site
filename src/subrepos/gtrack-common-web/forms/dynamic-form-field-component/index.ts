@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DynamicFormFieldComponent as NativeDynamicFormFieldComponent } from '@features/common/forms/dynamic-form-field-component';
+import { DynamicFormFieldComponent as NativeDynamicFormFieldComponent } from '@features/common/forms/dynamic-form-field/dynamic-form-field.component';
 
 @Component({
   selector: 'gtrack-form-field',

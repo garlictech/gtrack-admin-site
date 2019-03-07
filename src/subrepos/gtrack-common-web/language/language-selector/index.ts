@@ -16,7 +16,7 @@ import { currentLanguage } from '@features/common/localization/store/selectors';
 })
 export class LanguageSelectorComponent extends LanguageSelectorComponentBase implements OnInit {
   allLanguages: any;
-  selectedLanguage: string;
+  selectedLanguage: any;
 
   constructor(_languageService: LanguageService, private readonly _store: Store<any>) {
     super(_languageService);
@@ -25,7 +25,7 @@ export class LanguageSelectorComponent extends LanguageSelectorComponentBase imp
 
   ngOnInit(): void {
     this.allLanguages = this.supportedLanguages.map(lang => ({
-      label: lang.name,
+      label: lang.title,
       value: lang
     }));
 
@@ -38,5 +38,8 @@ export class LanguageSelectorComponent extends LanguageSelectorComponentBase imp
         const theLanguage = this.allLanguages.find(lang => lang.value.id === selected);
         this.selectedLanguage = theLanguage && theLanguage.value;
       });
+  }
+  setLanguage(language: string): void {
+    this._languageService.setLanguage(language);
   }
 }

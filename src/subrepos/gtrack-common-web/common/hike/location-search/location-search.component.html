@@ -1,4 +1,4 @@
-<div class="flex justify-center">
+<div class="flex justify-center w-full">
   <input
     #search
     [placeholder]="placeholder"
@@ -11,12 +11,12 @@
   <div class="flex">
     <a class="general-button mr-2" (click)="searchLocation()">
       <span class="inline-block w-8">
-        <i class="fas fa-search"></i>
+        <i class="ion ion-md-search"></i>
       </span>
     </a>
-    <a class="general-button pl-2 pr-2" (click)="requestLocation()">
-      <span>
-        {{ 'common.hike.location-search.use-my-location' | translate }}
+    <a class="general-button mr-2" (click)="requestLocation()">
+      <span class="inline-block w-8">
+        <i class="ion ion-md-locate"></i>
       </span>
     </a>
   </div>

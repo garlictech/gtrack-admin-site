@@ -1,10 +1,13 @@
-<div class="langselinfo">
-  <p-dropdown [options]="allLanguages" [(ngModel)]="selectedLanguage" (onChange)="setLanguage($event.value.id)">
-    <ng-template let-language="let-language" pTemplate="item">
-      <div class="row">
-        <img src="{{ language.value.flagImg }}" />
-        <div class="label">{{ language.label }}</div>
-      </div>
-    </ng-template>
-  </p-dropdown>
-</div>
+<p-dropdown
+  [options]="allLanguages"
+  [(ngModel)]="selectedLanguage"
+  optionLabel="label"
+  (onChange)="setLanguage($event.value.id)"
+>
+  <ng-template let-language="let-language" pTemplate="item">
+    <div class="row">
+      <!-- <img src="{{ language.value.flagImg }}" /> -->
+      <!-- <div class="label">{{ language.label }}</div> -->
+    </div>
+  </ng-template>
+</p-dropdown>

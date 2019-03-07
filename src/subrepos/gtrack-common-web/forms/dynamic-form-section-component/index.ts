@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DynamicFormSectionComponent as NativeDynamicFormSectionComponent } from '@features/common/forms/dynamic-form-section-component';
+import { DynamicFormSectionComponent as NativeDynamicFormSectionComponent } from '@features/common/forms/dynamic-form-section/dynamic-form-section.component';
 
 @Component({
   selector: 'gtrack-form-section',
