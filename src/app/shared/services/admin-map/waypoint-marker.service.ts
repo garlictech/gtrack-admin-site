@@ -52,11 +52,11 @@ export class WaypointMarkerService {
     private readonly _leafletIconService: LeafletIconService,
     private readonly _http: HttpClient
   ) {
-    this.reset();
-
     this._waypointMarkers = new L.FeatureGroup();
     this._markers = [];
     this._dragging = false;
+
+    this.reset();
   }
 
   reset(): void {

@@ -77,7 +77,9 @@
     "prettier": "npm run npm prettier",
     "cypress": "cypress open",
     "cypress:all": "cypress run",
-    "bundle-report": "docker/cmd-ports.sh npm run bundle-report"
+    "bundle-report": "docker/cmd-ports.sh npm run bundle-report",
+    "format:fix": "docker/quick-fix.sh",
+    "format:fix:l": "pretty-quick --staged"
   },
   "dependencies": {
     "@angular/animations": "^7.2.8",
@@ -251,6 +253,12 @@
     "branch": "staging"
   },
   "browserslist": "last 2 versions",
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-s format:fix:l",
+      "pre-push": "run-s lint:l build:prod:l unittest:l"
+    }
+  },
   "workspaces": [
     "components/.dependencies/**/*",
     "src/features/{namespace}/{name}/**/*",
