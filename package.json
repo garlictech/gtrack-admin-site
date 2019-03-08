@@ -78,6 +78,7 @@
     "doc:serve": "npm run npm doc:serve",
     "doc:buildandserve": "npm run npm doc:buildandserve",
     "prettier": "npm run npm prettier",
+    "prettier:l": "prettier --config ./.prettierrc --write \"src/**/*{.ts,.js,.json,.css,.scss}\"",
     "cypress": "cypress open",
     "cypress:all": "cypress run",
     "bundle-report": "docker/cmd-ports.sh npm run bundle-report",
