@@ -34,6 +34,7 @@ export class WikipediaPoiService {
   get(bounds, lng = 'en'): Observable<Array<WikipediaPoi>> {
     const geo: CenterRadius = this._geometryService.getCenterRadius(bounds);
     const gsLimit = 500;
+
     // tslint:disable:max-line-length
     const request = `https://${lng}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${
       geo.radius
@@ -89,7 +90,7 @@ export class WikipediaPoiService {
               });
             }
 
-            return Observable.of(_pois);
+            return of(_pois);
           }
         })
     );

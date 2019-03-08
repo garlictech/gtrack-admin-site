@@ -1,17 +1,17 @@
-// tslint:disable:no-unbound-method
 import { cold, hot, Scheduler } from 'jest-marbles';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
+// tslint:disable:no-unbound-method
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { BackgroundImageDataStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { DeepstreamService } from '../../../../subrepos/deepstream-ngx';
 import { DeepstreamModule } from '../../../../subrepos/gtrack-common-ngx';
 import { FlickrService, MapillaryService, PoiEditorService } from '../../../shared/services';
 import { hikeEditImageActions } from '../../actions';
@@ -25,9 +25,30 @@ describe('HikeEditImageEffects effects', () => {
   let mapillaryService: MapillaryService;
   let flickrService: FlickrService;
   let bgImages: Array<BackgroundImageDataStored>;
+  let getRecordSpy: jasmine.Spy;
+  let callSpy: jasmine.Spy;
+  let testRecord: any;
+  let getSpy: jasmine.Spy;
 
   beforeEach(() => {
     bgImages = _.cloneDeep(bgImageStoredFixtures);
+
+    testRecord = {
+      get: getSpy
+    };
+
+    getRecordSpy = jasmine.createSpy('getRecord').and.returnValue(testRecord);
+
+    callSpy = jasmine.createSpy('callRpc').and.returnValue(
+      of({
+        success: true
+      })
+    );
+
+    const deepstream = {
+      getRecord: getRecordSpy,
+      callRpc: callSpy
+    };
 
     TestBed.configureTestingModule({
       imports: [
@@ -45,7 +66,7 @@ describe('HikeEditImageEffects effects', () => {
         provideMockActions(() => actions$),
         {
           provide: DeepstreamService,
-          useValue: {}
+          useFactory: () => deepstream
         },
         {
           provide: Router,

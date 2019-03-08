@@ -1,6 +1,6 @@
-// tslint:disable:no-big-function
 import { MessageService } from 'primeng/api';
 
+// tslint:disable:no-big-function
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
@@ -8,9 +8,11 @@ import {
   LeafletIconService,
   LeafletMapMarkerService,
   LeafletMapService,
-  LeafletMarkerPopupService
+  LeafletMarkerPopupService,
+  reducer as leafletMapReducer
 } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { StoreModule } from '@ngrx/store';
+import { featureName as leafletFeatureName } from '@bit/garlictech.angular-features.common.leaflet-map/store/state';
+import { StoreModule, Store } from '@ngrx/store';
 
 import { editedHikeProgramReducer, hikeEditPoiReducer } from '../../../../../app/store/reducer';
 import {
@@ -30,6 +32,7 @@ import { GOOGLE_POIS } from './fixtures/google-pois';
 import { OSM_AMENITY_POIS } from './fixtures/osm-amenity-pois';
 import { OSM_NATURAL_POIS } from './fixtures/osm-natural-pois';
 import { WIKIPEDIA_POIS } from './fixtures/wikipedia-pois';
+import { EMPTY } from 'rxjs';
 
 describe('PoiEditorService', () => {
   let poiEditorService: PoiEditorService;
@@ -51,7 +54,8 @@ describe('PoiEditorService', () => {
         HttpClientTestingModule,
         StoreModule.forRoot({
           hikeEditPoi: hikeEditPoiReducer,
-          editedHikeProgram: editedHikeProgramReducer
+          editedHikeProgram: editedHikeProgramReducer,
+          [leafletFeatureName]: leafletMapReducer
         })
       ],
       providers: [
@@ -59,8 +63,17 @@ describe('PoiEditorService', () => {
         LeafletIconService,
         GeoSearchSelectors,
         PoiSelectors,
-        LeafletMapService,
         LeafletMarkerPopupService,
+        {
+          provide: LeafletMapService,
+          useValue: {
+            addLayer: jest.fn(),
+            removeLayer: jest.fn(),
+            refreshSpiderfierMarkers: jest.fn(),
+            leafletMap: jest.fn(),
+            spin: jest.fn()
+          }
+        },
         {
           provide: GeometryService,
           useValue: {

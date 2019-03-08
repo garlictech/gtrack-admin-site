@@ -32,12 +32,7 @@ describe('WikipediaPoiService', () => {
       imports: [HttpClientTestingModule],
       providers: [
         WikipediaPoiService,
-        {
-          provide: GeometryService,
-          useValue: {
-            getCenterRadius: jest.fn()
-          }
-        },
+        GeometryService,
         {
           provide: MessageService,
           useValue: {

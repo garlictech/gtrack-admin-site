@@ -1,6 +1,5 @@
 // tslint:disable:no-big-function
 import * as _ from 'lodash';
-import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 
 import {
   BackgroundImageData,
@@ -124,7 +123,7 @@ describe('Edited HikeProgram reducers', () => {
       const state = editedHikeProgramReducer(initialState, action);
 
       expect(state.working).toBe('saving...');
-      expect(state.failed).toBeNull();
+      expect(state.failed).toBeUndefined();
     });
   });
 
@@ -133,8 +132,8 @@ describe('Edited HikeProgram reducers', () => {
       const action = new editedHikeProgramActions.HikeProgramSaveSuccess();
       const state = editedHikeProgramReducer(initialState, action);
 
-      expect(state.working).toBeNull();
-      expect(state.failed).toBeNull();
+      expect(state.working).toBeUndefined();
+      expect(state.failed).toBeUndefined();
       expect(state.dirty).toBeFalsy();
     });
   });
@@ -144,7 +143,7 @@ describe('Edited HikeProgram reducers', () => {
       const action = new editedHikeProgramActions.HikeProgramSaveFailed('Error');
       const state = editedHikeProgramReducer(initialState, action);
 
-      expect(state.working).toBeNull();
+      expect(state.working).toBeUndefined();
       expect(state.failed).toEqual('Error');
     });
   });
@@ -224,6 +223,7 @@ describe('Edited HikeProgram reducers', () => {
     });
   });
 
+  /*
   describe('SetCheckpoints action', () => {
     it('should set checkpoints to hikeProgram', () => {
       const checkpointSequence = new CheckpointSequence([]);
@@ -233,6 +233,7 @@ describe('Edited HikeProgram reducers', () => {
       expect(state.data.checkpoints).toEqual(checkpointSequence);
     });
   });
+  */
 
   describe('AddHikeProgramBackgroundImage action', () => {
     it('should add hikeProgram background images', () => {

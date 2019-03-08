@@ -36,6 +36,7 @@
     "build:dev": "npm run build $@",
     "build:dev:all": "docker/build-dev-all.sh $@",
     "build:prod": "npm run npm build:prod",
+    "build:prod:l": "export NODE_OPTIONS=--max_old_space_size=4096 && ng build --configuration=${PROJECT_CONFIG:-default}",
     "build:prod:debug": "npm run npm build:prod:debug",
     "build:universal": "npm run npm build:universal",
     "build:prod:stat": "npm run npm build:prod:stat",
@@ -61,6 +62,8 @@
     "lint:fix": "npm run npm lint:fix",
     "lint:fix:l": "export NODE_OPTIONS=--max_old_space_size=8192 && ng lint --fix",
     "unittest": "npm run npm unittest",
+    "unittest:l": "jest -c src/jest.config.js",
+    "unittest:lc": "jest -c src/jest.config.js --coverage",
     "unittest:watch": "npm run npm unittest:watch",
     "test": "jest --config ./src/jest-config.js",
     "testc": "jest --config ./src/jest-config.js --coverage",
@@ -77,7 +80,9 @@
     "prettier": "npm run npm prettier",
     "cypress": "cypress open",
     "cypress:all": "cypress run",
-    "bundle-report": "docker/cmd-ports.sh npm run bundle-report"
+    "bundle-report": "docker/cmd-ports.sh npm run bundle-report",
+    "format:fix": "docker/quick-fix.sh",
+    "format:fix:l": "pretty-quick --staged"
   },
   "dependencies": {
     "@angular/animations": "^7.2.8",
@@ -251,6 +256,12 @@
     "branch": "staging"
   },
   "browserslist": "last 2 versions",
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-s format:fix:l",
+      "pre-push": "run-s lint:l build:prod:l unittest:l"
+    }
+  },
   "workspaces": [
     "components/.dependencies/**/*",
     "src/features/{namespace}/{name}/**/*",

@@ -21,47 +21,6 @@ import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { initialRouteDataState } from '../../../store/reducer';
 import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 
-const _calculateTotal = (segments: Array<any>): any => {
-  const total = {};
-
-  for (const segment of segments) {
-    for (const key in _omit(segment, 'coordinates')) {
-      if (typeof segment[key] !== 'undefined') {
-        if (typeof total[key] === 'undefined') {
-          total[key] = 0;
-        }
-        total[key] += segment[key];
-      }
-    }
-  }
-
-  return total;
-};
-
-/**
- * _createGeoJsonFromSegments submethod
- */
-const _createRoutePoint = (dataPoint, index): any => ({
-  type: 'Feature',
-  geometry: {
-    type: 'Point',
-    coordinates: [dataPoint[1], dataPoint[0], dataPoint[2]]
-  },
-  properties: {
-    name: `Route point ${index}`
-  }
-});
-
-/**
- * _createGeoJsonFromSegments submethod
- */
-const _getLastPointOfLastSegment = (segments: Array<Segment>): any => {
-  const _lastSegment = segments[segments.length - 1];
-  const _coordinateNumInLastSegment = _lastSegment.coordinates.length;
-
-  return _lastSegment.coordinates[_coordinateNumInLastSegment - 1];
-};
-
 @Injectable()
 export class RoutePlannerService {
   private _savedRouteOnMap: L.FeatureGroup;
@@ -76,7 +35,7 @@ export class RoutePlannerService {
     // Update totals on each segment update
     this._store.pipe(select(hikeEditRoutePlannerSelectors.getSegments)).subscribe((segments: Array<Segment>) => {
       // Update total for route info
-      this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(_calculateTotal(segments)));
+      this._store.dispatch(new hikeEditRoutePlannerActions.UpdateTotal(this._calculateTotal(segments)));
 
       // Refresh route data and draw to map
       const _route = this._createGeoJsonFromSegments(segments);
@@ -221,12 +180,12 @@ export class RoutePlannerService {
       }
 
       // Add the segment start point
-      _geoJSON.features.push(_createRoutePoint(segment.coordinates[0], i + 1));
+      _geoJSON.features.push(this._createRoutePoint(segment.coordinates[0], i + 1));
     });
 
     // Add the last route point: the last point of the last segment
     if (segments.length > 0) {
-      _geoJSON.features.push(_createRoutePoint(_getLastPointOfLastSegment(segments), segments.length + 1));
+      _geoJSON.features.push(this._createRoutePoint(this._getLastPointOfLastSegment(segments), segments.length + 1));
     }
 
     if (segments.length > 0) {
@@ -234,5 +193,51 @@ export class RoutePlannerService {
     }
 
     return _geoJSON;
+  }
+
+  // tslint:disable-next-line:prefer-function-over-method
+  private _calculateTotal(segments: Array<any>): any {
+    const total = {};
+
+    for (const segment of segments) {
+      for (const key in _omit(segment, 'coordinates')) {
+        if (typeof segment[key] !== 'undefined') {
+          if (typeof total[key] === 'undefined') {
+            total[key] = 0;
+          }
+          total[key] += segment[key];
+        }
+      }
+    }
+
+    return total;
+  }
+
+  /**
+   * _createGeoJsonFromSegments submethod
+   */
+  // tslint:disable-next-line:prefer-function-over-method
+  private _createRoutePoint(dataPoint, index): any {
+    return {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [dataPoint[1], dataPoint[0], dataPoint[2]]
+      },
+      properties: {
+        name: `Route point ${index}`
+      }
+    };
+  }
+
+  /**
+   * _createGeoJsonFromSegments submethod
+   */
+  // tslint:disable-next-line:prefer-function-over-method
+  private _getLastPointOfLastSegment(segments: Array<Segment>): any {
+    const _lastSegment = segments[segments.length - 1];
+    const _coordinateNumInLastSegment = _lastSegment.coordinates.length;
+
+    return _lastSegment.coordinates[_coordinateNumInLastSegment - 1];
   }
 }

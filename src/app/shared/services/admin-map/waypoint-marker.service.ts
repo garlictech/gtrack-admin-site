@@ -30,14 +30,6 @@ export interface Waypoint {
   idx: number;
 }
 
-const _getSingleMarkerIcon = (title: string): L.DivIcon =>
-  L.divIcon({
-    html: `<span>${title}</span>`,
-    iconSize: [25, 41],
-    iconAnchor: [13, 41],
-    className: 'routing-control-marker'
-  });
-
 @Injectable()
 export class WaypointMarkerService {
   private readonly _waypointMarkers: L.FeatureGroup;
@@ -52,11 +44,11 @@ export class WaypointMarkerService {
     private readonly _leafletIconService: LeafletIconService,
     private readonly _http: HttpClient
   ) {
-    this.reset();
-
     this._waypointMarkers = new L.FeatureGroup();
     this._markers = [];
     this._dragging = false;
+
+    this.reset();
   }
 
   reset(): void {
@@ -160,25 +152,6 @@ export class WaypointMarkerService {
     // this._leafletMapService.spin(false);
   }
 
-  _refreshEndpointMarkerIcons(): void {
-    for (let i = 0; i < this._markers.length; i++) {
-      this._markers[i].setIcon(_getSingleMarkerIcon((i + 1).toString()));
-      (this._markers[i] as any).options.idx = i;
-    }
-
-    if (this._markers.length > 0) {
-      this._markers[0].setIcon(this._leafletIconService.getLeafletIcon(['start'], 'default'));
-      this._markers[0].setZIndexOffset(10000);
-
-      this._markers[this._markers.length - 1].setIcon(this._leafletIconService.getLeafletIcon(['finish'], 'default'));
-      this._markers[this._markers.length - 1].setZIndexOffset(10000);
-    }
-
-    this._leafletMapService.addLayer(this._waypointMarkers);
-
-    this._leafletMapService.refreshSpiderfierMarkers(this._markers, EMarkerType.WAYPOINT);
-  }
-
   async getRouteFromApi(p1, p2): Promise<any> {
     const _urlParams = {
       vehicle: 'hike',
@@ -199,8 +172,27 @@ export class WaypointMarkerService {
       .then(async (data: any) => this._calculateCoordsElevation(data));
   }
 
+  private _refreshEndpointMarkerIcons(): void {
+    for (let i = 0; i < this._markers.length; i++) {
+      this._markers[i].setIcon(this._getSingleMarkerIcon((i + 1).toString()));
+      (this._markers[i] as any).options.idx = i;
+    }
+
+    if (this._markers.length > 0) {
+      this._markers[0].setIcon(this._leafletIconService.getLeafletIcon(['start'], 'default'));
+      this._markers[0].setZIndexOffset(10000);
+
+      this._markers[this._markers.length - 1].setIcon(this._leafletIconService.getLeafletIcon(['finish'], 'default'));
+      this._markers[this._markers.length - 1].setZIndexOffset(10000);
+    }
+
+    this._leafletMapService.addLayer(this._waypointMarkers);
+
+    this._leafletMapService.refreshSpiderfierMarkers(this._markers, EMarkerType.WAYPOINT);
+  }
+
   private _createMarker(_waypoint: Waypoint): L.Marker {
-    const _icon = _getSingleMarkerIcon((_waypoint.idx + 1).toString());
+    const _icon = this._getSingleMarkerIcon((_waypoint.idx + 1).toString());
     const _marker = L.marker(_waypoint.latLng, {
       opacity: 1,
       draggable: true,
@@ -226,7 +218,7 @@ export class WaypointMarkerService {
 
   private _updateMarkerNumbers(): void {
     for (let i = 0; i < this._markers.length; i++) {
-      this._markers[i].setIcon(_getSingleMarkerIcon((i + 1).toString()));
+      this._markers[i].setIcon(this._getSingleMarkerIcon((i + 1).toString()));
     }
   }
 
@@ -325,5 +317,15 @@ export class WaypointMarkerService {
         /**/
       }
     );
+  }
+
+  // tslint:disable-next-line:prefer-function-over-method
+  private _getSingleMarkerIcon(title: string): L.DivIcon {
+    return L.divIcon({
+      html: `<span>${title}</span>`,
+      iconSize: [25, 41],
+      iconAnchor: [13, 41],
+      className: 'routing-control-marker'
+    });
   }
 }
