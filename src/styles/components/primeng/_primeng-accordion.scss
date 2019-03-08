@@ -1,26 +1,26 @@
 .ui-accordion {
-    border: 1px solid $border-default-color;
-    border-radius: $primeng-accordion-border-radius;
-    overflow: hidden;
-    .ui-accordion-header {
-        color: $base-font-color;
-        font-weight: 300;
-        font-size: 1.25rem;
-        .fa {
-            color: $base-font-color;
-        }
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+  border: 1px solid $border-default-color;
+  border-radius: $primeng-accordion-border-radius;
+  overflow: hidden;
+  .ui-accordion-header {
+    color: $base-font-color;
+    font-weight: 300;
+    font-size: 1.25rem;
+    .fa {
+      color: $base-font-color;
     }
-    .ui-accordion-content-wrapper {
-        padding: 0 15px;
-        color: $base-font-color;
-        .ui-accordion-content {
-            padding: 15px;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
     }
+  }
+  .ui-accordion-content-wrapper {
+    padding: 0 15px;
+    color: $base-font-color;
+    .ui-accordion-content {
+      padding: 15px;
+    }
+  }
 }
 
 // @include media-breakpoint-up(sm) {

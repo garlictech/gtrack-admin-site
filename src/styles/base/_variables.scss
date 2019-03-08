@@ -1,4 +1,14 @@
-$breakpoints: ( xs: 0, sm: 766px, md: 1024px, lg: 1366px, xl: 1920px, xxl: 2560px, fourk: 3820px, fivek: 5120px, eightk: 7680px);
+$breakpoints: (
+  xs: 0,
+  sm: 766px,
+  md: 1024px,
+  lg: 1366px,
+  xl: 1920px,
+  xxl: 2560px,
+  fourk: 3820px,
+  fivek: 5120px,
+  eightk: 7680px
+);
 $black: #000;
 $white: #fff;
 $gray-light: #e6e6e6;
@@ -12,11 +22,15 @@ $red-dark: #b00000;
 $red-darker: #920202;
 $orange-light: #ffeecc;
 $orange: #ffcd6d;
-$colors: ( black: $black, white: $white, green: $green, red: $red, gray: $gray, gray-dark: $gray-dark);
-$font-family-base: 'Montserrat',
-'Helvetica',
-Arial,
-sans-serif;
+$colors: (
+  black: $black,
+  white: $white,
+  green: $green,
+  red: $red,
+  gray: $gray,
+  gray-dark: $gray-dark
+);
+$font-family-base: 'Montserrat', 'Helvetica', Arial, sans-serif;
 $font-size-base: 14px;
 $font-weight-base: 400;
 $line-height-base: 1.5;
@@ -47,9 +61,31 @@ $input-border-color: $border-default-color;
 $input-padding: 5px 10px;
 // Border defaults
 // Sizes in px for padding, margin and size helpers
-$sizes: ( 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 75, 90, 115, 120);
+$sizes: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 75, 90, 115, 120);
 // Sizes for font
-$font-sizes: ( 8: 0.5rem, 9: 0.5625rem, 10: 0.625rem, 11: 0.6875rem, 12: 0.75rem, 13: 0.8125rem, 14: 0.875rem, 15: 0.9375rem, 16: 1rem, 18: 1.125rem, 20: 1.25rem, 22: 1.375rem, 24: 1.5rem, 26: 1.625rem, 28: 1.75rem, 30: 1.875rem, 32: 2rem, 34: 2.125rem, 36: 2.25rem, 38: 2.375rem, 40: 2.5rem);
+$font-sizes: (
+  8: 0.5rem,
+  9: 0.5625rem,
+  10: 0.625rem,
+  11: 0.6875rem,
+  12: 0.75rem,
+  13: 0.8125rem,
+  14: 0.875rem,
+  15: 0.9375rem,
+  16: 1rem,
+  18: 1.125rem,
+  20: 1.25rem,
+  22: 1.375rem,
+  24: 1.5rem,
+  26: 1.625rem,
+  28: 1.75rem,
+  30: 1.875rem,
+  32: 2rem,
+  34: 2.125rem,
+  36: 2.25rem,
+  38: 2.375rem,
+  40: 2.5rem
+);
 // Social buttons
 $facebook-color: #3b5998;
 $google-color: #d34836;
@@ -78,7 +114,12 @@ $contrast: 5%;
 $vp-overlay-button-border-radius: 20px;
 // ---------------------- OLD ----------------------- //
 // Responsive stuff
-$app-breakpoints: ( small: 0, medium: 640px, large: 1024px, xlarge: 1200px);
+$app-breakpoints: (
+  small: 0,
+  medium: 640px,
+  large: 1024px,
+  xlarge: 1200px
+);
 // breakpoints for later use
 $brp-small: 766px; // 766px
 $brp-medium: 1024px; // 1024px
@@ -109,9 +150,7 @@ $dark-gold: #ffcd6d;
 $other-text: #e8cabd;
 $circle-shadow: rgba(46, 1, 1, 0.3);
 // Fonts
-$app-default-font: 'Roboto',
-'Raleway',
-sans-serif;
+$app-default-font: 'Roboto', 'Raleway', sans-serif;
 $body-font-color: #333333;
 $body-font-family: $app-default-font;
 $base-font-color: #333333;

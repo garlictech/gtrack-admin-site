@@ -1,50 +1,50 @@
 .ui-multiselect {
-    background-color: $white;
-    border-radius: $btn-border-radius;
-    border: 1px solid $black;
-    color: $black;
-    width: 100%;
-    .ui-multiselect-label {
-        padding-top: 5px;
-        padding-bottom: 5px;
-        padding-left: 10px;
-    }
-    .ui-multiselect-trigger {
-        padding: 0 10px;
-        width: auto;
-    }
-    .ui-multiselect-panel {
-        background: $white;
-        margin: 20px;
-        ul {
-            li {
-                padding: 5px;
-                div {
-                    display: flex;
-                    align-items: center;
-                    img {
-                        margin-right: 5px;
-                    }
-                }
-            }
+  background-color: $white;
+  border-radius: $btn-border-radius;
+  border: 1px solid $black;
+  color: $black;
+  width: 100%;
+  .ui-multiselect-label {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+  }
+  .ui-multiselect-trigger {
+    padding: 0 10px;
+    width: auto;
+  }
+  .ui-multiselect-panel {
+    background: $white;
+    margin: 20px;
+    ul {
+      li {
+        padding: 5px;
+        div {
+          display: flex;
+          align-items: center;
+          img {
+            margin-right: 5px;
+          }
         }
-        .ui-multiselect-header {
-            .ui-chkbox,
-            .ui-multiselect-close {
-                color: $black;
-            }
-            .ui-multiselect-filter-container {
-                input {
-                    color: $black;
-                    padding: 5px 30px;
-                }
-                .fa {
-                    text-shadow: none;
-                    color: $white;
-                    top: 8px;
-                    left: 8px;
-                }
-            }
-        }
+      }
     }
+    .ui-multiselect-header {
+      .ui-chkbox,
+      .ui-multiselect-close {
+        color: $black;
+      }
+      .ui-multiselect-filter-container {
+        input {
+          color: $black;
+          padding: 5px 30px;
+        }
+        .fa {
+          text-shadow: none;
+          color: $white;
+          top: 8px;
+          left: 8px;
+        }
+      }
+    }
+  }
 }

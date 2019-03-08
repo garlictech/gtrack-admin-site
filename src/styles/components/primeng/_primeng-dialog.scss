@@ -1,77 +1,77 @@
 .ui-dialog-mask {
-    background: $primeng-dialog-overlay-bg;
+  background: $primeng-dialog-overlay-bg;
 }
 
 .ui-dialog {
-    width: 100%;
-    max-width: 100%;
-    border-radius: $border-radius;
-    background: $white;
+  width: 100%;
+  max-width: 100%;
+  border-radius: $border-radius;
+  background: $white;
+  padding: 0;
+  overflow: hidden;
+  z-index: 999999999 !important;
+  &.ui-shadow {
+    @include box-shadow(5px 5px 15px 0px rgba(0, 0, 0, 0.5));
+  }
+  .ui-dialog-titlebar {
+    position: relative;
+    color: $red;
+    font-weight: 700;
+    font-size: 1rem;
     padding: 0;
-    overflow: hidden;
-    z-index: 999999999 !important;
-    &.ui-shadow {
-        @include box-shadow(5px 5px 15px 0px rgba(0, 0, 0, 0.5));
+    text-align: left;
+    .ui-dialog-title {
+      display: block;
+      padding: 10px 15px;
     }
-    .ui-dialog-titlebar {
-        position: relative;
-        color: $red;
-        font-weight: 700;
-        font-size: 1rem;
-        padding: 0;
-        text-align: left;
-        .ui-dialog-title {
-            display: block;
-            padding: 10px 15px;
-        }
-        .ui-dialog-titlebar-icon {
-            color: $black;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
+    .ui-dialog-titlebar-icon {
+      color: $black;
+      position: absolute;
+      top: 10px;
+      right: 10px;
     }
-    .ui-dialog-content {
-        padding: 15px 30px;
-        .message {
-            color: $red;
-            font-size: 1.125rem;
-        }
-        .controls {
-            padding-top: 15px;
-            text-align: right;
-        }
+  }
+  .ui-dialog-content {
+    padding: 15px 30px;
+    .message {
+      color: $red;
+      font-size: 1.125rem;
     }
+    .controls {
+      padding-top: 15px;
+      text-align: right;
+    }
+  }
 }
 
 .ui-dialog-default {
-    .ui-dialog {
-        background: $white;
-        border: 1px solid $black;
-        .ui-dialog-titlebar {
-            color: $black;
-        }
-        .ui-dialog-content {
-            .message {
-                color: $black;
-            }
-        }
+  .ui-dialog {
+    background: $white;
+    border: 1px solid $black;
+    .ui-dialog-titlebar {
+      color: $black;
     }
+    .ui-dialog-content {
+      .message {
+        color: $black;
+      }
+    }
+  }
 }
 
 @include media-breakpoint-up(sm) {
+  .ui-dialog {
+    .ui-dialog-titlebar {
+      font-size: 1.25rem;
+      text-align: center;
+      .ui-dialog-title {
+        padding: 10px 30px;
+      }
+    }
+  }
+  .ui-dialog-message {
     .ui-dialog {
-        .ui-dialog-titlebar {
-            font-size: 1.25rem;
-            text-align: center;
-            .ui-dialog-title {
-                padding: 10px 30px;
-            }
-        }
+      max-width: 500px;
     }
-    .ui-dialog-message {
-        .ui-dialog {
-            max-width: 500px;
-        }
-    }
+  }
 }

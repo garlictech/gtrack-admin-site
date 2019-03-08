@@ -11,10 +11,18 @@
 @each $name, $size in $breakpoints {
   @if $size > 0 {
     @include media-breakpoint-up($name) {
-      .d-#{$name}-flex { display: flex !important; }
-      .d-#{$name}-block { display: block !important; }
-      .d-#{$name}-inline-block { display: inline-block !important; }
-      .d-#{$name}-none { display: none !important; }
+      .d-#{$name}-flex {
+        display: flex !important;
+      }
+      .d-#{$name}-block {
+        display: block !important;
+      }
+      .d-#{$name}-inline-block {
+        display: inline-block !important;
+      }
+      .d-#{$name}-none {
+        display: none !important;
+      }
     }
   }
 }

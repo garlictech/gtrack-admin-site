@@ -1,7 +1,9 @@
 @each $name, $size in $breakpoints {
   @if $size > 0 {
     @include media-breakpoint-up($name) {
-      .flex-grow-#{$name}-1 { flex-grow: 1 !important; }
+      .flex-grow-#{$name}-1 {
+        flex-grow: 1 !important;
+      }
     }
   }
 }

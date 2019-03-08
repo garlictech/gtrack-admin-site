@@ -1,63 +1,63 @@
 .dynamic-list-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .dynamic-list-item {
-    max-width: 140px;
-    padding: 10px;
-    position: relative;
-    .icon-wrapper {
-        pointer-events: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        z-index: 1;
-        color: $red;
-        font-size: 1.125rem;
-        background: $orange-light;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-    }
-    .dynamic-list-item-content {
-        transform: scale(1);
-        .dynamic-list-item-body {
-            .background-wrapper {
-                position: relative;
-                .thumbnail {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    max-width: 120px;
-                    max-height: 120px;
-                }
-                .thumbnail {
-                    background-size: cover;
-                    background-position: center center;
-                }
-            }
+  max-width: 140px;
+  padding: 10px;
+  position: relative;
+  .icon-wrapper {
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
+    color: $red;
+    font-size: 1.125rem;
+    background: $orange-light;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+  }
+  .dynamic-list-item-content {
+    transform: scale(1);
+    .dynamic-list-item-body {
+      .background-wrapper {
+        position: relative;
+        .thumbnail {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          max-width: 120px;
+          max-height: 120px;
         }
+        .thumbnail {
+          background-size: cover;
+          background-position: center center;
+        }
+      }
     }
+  }
 }
 
 @include media-breakpoint-down(md) {
-    .dynamic-list-item {
-        width: 100%;
-        padding: 0;
-        border: 0px solid $black;
-        border-bottom-width: 1px;
-    }
-    .dynamic-list-item-content {
-        border: none;
-    }
+  .dynamic-list-item {
+    width: 100%;
+    padding: 0;
+    border: 0px solid $black;
+    border-bottom-width: 1px;
+  }
+  .dynamic-list-item-content {
+    border: none;
+  }
 }
 
 // @include media-breakpoint-up(md) {

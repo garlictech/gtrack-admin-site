@@ -1,41 +1,41 @@
 .ui-dropdown {
-    background-color: $white;
-    border-radius: $btn-border-radius;
-    border: 1px solid $btn-border-color;
+  background-color: $white;
+  border-radius: $btn-border-radius;
+  border: 1px solid $btn-border-color;
+  color: $black;
+  .ui-dropdown-label {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
     color: $black;
-    .ui-dropdown-label {
-        padding-top: 5px;
-        padding-bottom: 5px;
-        padding-left: 10px;
-        color: $black;
+    i {
+      margin-right: 5px;
+    }
+  }
+  .ui-dropdown-trigger {
+    padding: 0 10px;
+    width: auto;
+    .fa {
+      margin-top: 8px;
+      margin-left: 0;
+    }
+  }
+  .ui-dropdown-panel {
+    background: $white;
+    ul {
+      li {
+        padding: 5px;
         i {
+          margin-right: 5px;
+        }
+        div {
+          display: flex;
+          align-items: center;
+          img {
             margin-right: 5px;
+          }
         }
+      }
     }
-    .ui-dropdown-trigger {
-        padding: 0 10px;
-        width: auto;
-        .fa {
-            margin-top: 8px;
-            margin-left: 0;
-        }
-    }
-    .ui-dropdown-panel {
-        background: $white;
-        ul {
-            li {
-                padding: 5px;
-                i {
-                    margin-right: 5px;
-                }
-                div {
-                    display: flex;
-                    align-items: center;
-                    img {
-                        margin-right: 5px;
-                    }
-                }
-            }
-        }
-    }
+  }
 }

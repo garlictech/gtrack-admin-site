@@ -4,68 +4,68 @@
   align-items: center;
   width: 100%;
   i.fa-search {
-      position: absolute;
-      color: $black;
-      font-size: 1.175rem;
-      top: 3px;
-      left: 5px;
-      cursor: pointer;
+    position: absolute;
+    color: $black;
+    font-size: 1.175rem;
+    top: 3px;
+    left: 5px;
+    cursor: pointer;
   }
   input {
-      @include placeholder-color(rgba($black, 0.5));
-      text-transform: uppercase;
-      cursor: pointer;
-      border: 0;
-      background: transparent;
-      padding-left: 30px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-right: 5px;
-      width: 100%;
-      // border-bottom: 2px solid $black;
-      outline: 0;
-      color: $black;
+    @include placeholder-color(rgba($black, 0.5));
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 0;
+    background: transparent;
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    width: 100%;
+    // border-bottom: 2px solid $black;
+    outline: 0;
+    color: $black;
   }
   .search-result-wrapper {
-      @include box-shadow(1px 1px 20px 5px rgba($black, 0.3));
-      position: absolute;
-      z-index: 1000;
-      top: 30px;
-      left: 0;
-      width: 100%;
-      height: 400px;
-      max-width: 600px;
-      background: $red-dark;
-      .search-result-content-wrapper {
-          padding: 15px;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          .search-result-header {
-              h1 {
-                  margin: 0;
-                  font-size: 1.25rem;
-                  color: $orange;
-              }
-          }
-          .search-result-body {
-              padding-top: 15px;
-              color: $black;
-              overflow: auto;
-              ul {
-                  li {
-                      padding: 5px 0;
-                      display: flex;
-                      a {
-                          color: inherit;
-                          flex: 1;
-                          white-space: nowrap;
-                          overflow: hidden;
-                          text-overflow: ellipsis;
-                      }
-                  }
-              }
-          }
+    @include box-shadow(1px 1px 20px 5px rgba($black, 0.3));
+    position: absolute;
+    z-index: 1000;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    height: 400px;
+    max-width: 600px;
+    background: $red-dark;
+    .search-result-content-wrapper {
+      padding: 15px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      .search-result-header {
+        h1 {
+          margin: 0;
+          font-size: 1.25rem;
+          color: $orange;
+        }
       }
+      .search-result-body {
+        padding-top: 15px;
+        color: $black;
+        overflow: auto;
+        ul {
+          li {
+            padding: 5px 0;
+            display: flex;
+            a {
+              color: inherit;
+              flex: 1;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
   }
 }
