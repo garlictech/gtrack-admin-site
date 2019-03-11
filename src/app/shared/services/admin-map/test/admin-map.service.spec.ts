@@ -5,13 +5,13 @@ import { TestBed } from '@angular/core/testing';
 
 import { Store, StoreModule } from '@ngrx/store';
 
-import { AdminMapService } from '../admin-map.service';
 import {
-  LeafletMapMarkerService,
   LeafletIconService,
+  LeafletMapMarkerService,
   LeafletMarkerPopupService
 } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { AdminMapService } from '../admin-map.service';
 
 describe('AdminMapService', () => {
   let adminMapService: AdminMapService;

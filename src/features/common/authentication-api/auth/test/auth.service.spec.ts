@@ -1,15 +1,15 @@
-import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { StoreModule, Store } from '@ngrx/store';
+import { TestBed } from '@angular/core/testing';
 import { EffectsModule } from '@ngrx/effects';
+import { Store, StoreModule } from '@ngrx/store';
 
 import { ApiModule } from '../../api';
 import { ApiService } from '../../api/api.service';
-import { AuthService } from '../auth.service';
-import { defaultAuthenticationApiConfig, AUTH_CONFIG_TOKEN, AuthenticationApiModule } from '../../lib';
+import { AUTH_CONFIG_TOKEN, AuthenticationApiModule, defaultAuthenticationApiConfig } from '../../lib';
 import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
-import { Reducer as authReducer, domain } from '../../store';
+import { domain, Reducer as authReducer } from '../../store';
+import { AuthService } from '../auth.service';
 
 import { take } from 'rxjs/operators';
 

@@ -1,4 +1,3 @@
-import { HikeProgram } from 'subrepos/gtrack-common-ngx';
 import * as uuid from 'uuid/v4';
 
 import { ETextualDescriptionType, HikeProgramData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';

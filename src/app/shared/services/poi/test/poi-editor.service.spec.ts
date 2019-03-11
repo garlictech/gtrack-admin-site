@@ -12,7 +12,7 @@ import {
   reducer as leafletMapReducer
 } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { featureName as leafletFeatureName } from '@bit/garlictech.angular-features.common.leaflet-map/store/state';
-import { StoreModule, Store } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 
 import { editedHikeProgramReducer, hikeEditPoiReducer } from '../../../../../app/store/reducer';
 import {
@@ -32,7 +32,6 @@ import { GOOGLE_POIS } from './fixtures/google-pois';
 import { OSM_AMENITY_POIS } from './fixtures/osm-amenity-pois';
 import { OSM_NATURAL_POIS } from './fixtures/osm-natural-pois';
 import { WIKIPEDIA_POIS } from './fixtures/wikipedia-pois';
-import { EMPTY } from 'rxjs';
 
 describe('PoiEditorService', () => {
   let poiEditorService: PoiEditorService;

@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { EMPTY } from 'rxjs';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { Store, StoreModule } from '@ngrx/store';
 
@@ -85,7 +85,7 @@ describe('WaypointMarkerService', () => {
     });
 
     it('should have empty markers array', done => {
-      expect(waypointMarkerService['_markers']).toEqual([]);
+      expect(waypointMarkerService._markers).toEqual([]);
       done();
     });
   });
@@ -115,25 +115,25 @@ describe('WaypointMarkerService', () => {
         idx: 0
       };
 
-      waypointMarkerService['_createMarker'] = jest.fn(wp => L.marker(wp.latLng));
-      waypointMarkerService['_updateMarkerNumbers'] = jest.fn();
-      waypointMarkerService['_refreshEndpointMarkerIcons'] = jest.fn();
+      waypointMarkerService._createMarker = jest.fn(wp => L.marker(wp.latLng));
+      waypointMarkerService._updateMarkerNumbers = jest.fn();
+      waypointMarkerService._refreshEndpointMarkerIcons = jest.fn();
 
       waypointMarkerService.insertNewStartPoint(latLng);
     });
 
     it('should have markers', done => {
-      expect(waypointMarkerService['_markers']).toEqual([L.marker(waypoint.latLng)]);
+      expect(waypointMarkerService._markers).toEqual([L.marker(waypoint.latLng)]);
       done();
     });
 
     it('should call _updateMarkerNumbers', done => {
-      expect(waypointMarkerService['_updateMarkerNumbers']).toHaveBeenCalled();
+      expect(waypointMarkerService._updateMarkerNumbers).toHaveBeenCalled();
       done();
     });
 
     it('should call _refreshEndpointMarkerIcons', done => {
-      expect(waypointMarkerService['_refreshEndpointMarkerIcons']).toHaveBeenCalled();
+      expect(waypointMarkerService._refreshEndpointMarkerIcons).toHaveBeenCalled();
       done();
     });
   });
@@ -149,36 +149,36 @@ describe('WaypointMarkerService', () => {
         idx: 0
       };
 
-      waypointMarkerService['_createMarker'] = jest.fn(wp => L.marker(wp.latLng));
-      waypointMarkerService['_updateMarkerNumbers'] = jest.fn();
-      waypointMarkerService['_refreshEndpointMarkerIcons'] = jest.fn();
+      waypointMarkerService._createMarker = jest.fn(wp => L.marker(wp.latLng));
+      waypointMarkerService._updateMarkerNumbers = jest.fn();
+      waypointMarkerService._refreshEndpointMarkerIcons = jest.fn();
 
       waypointMarkerService.insertNewEndPoint(latLng);
     });
 
     it('should have markers', done => {
-      expect(waypointMarkerService['_markers']).toEqual([L.marker(waypoint.latLng)]);
+      expect(waypointMarkerService._markers).toEqual([L.marker(waypoint.latLng)]);
       done();
     });
 
     it('should call _updateMarkerNumbers', done => {
-      expect(waypointMarkerService['_updateMarkerNumbers']).toHaveBeenCalled();
+      expect(waypointMarkerService._updateMarkerNumbers).toHaveBeenCalled();
       done();
     });
 
     it('should call _refreshEndpointMarkerIcons', done => {
-      expect(waypointMarkerService['_refreshEndpointMarkerIcons']).toHaveBeenCalled();
+      expect(waypointMarkerService._refreshEndpointMarkerIcons).toHaveBeenCalled();
       done();
     });
   });
 
   it('should remove last', done => {
-    waypointMarkerService['_refreshEndpointMarkerIcons'] = jest.fn();
+    waypointMarkerService._refreshEndpointMarkerIcons = jest.fn();
 
     waypointMarkerService.removeLast();
 
     expect(routePlannerService.removeLastSegment).toHaveBeenCalled();
-    expect(waypointMarkerService['_refreshEndpointMarkerIcons']).toHaveBeenCalled();
+    expect(waypointMarkerService._refreshEndpointMarkerIcons).toHaveBeenCalled();
 
     done();
   });
@@ -238,7 +238,7 @@ describe('WaypointMarkerService', () => {
         idx: 0
       };
 
-      marker = waypointMarkerService['_createMarker'](waypoint);
+      marker = waypointMarkerService._createMarker(waypoint);
     });
 
     it('should have coordinates', done => {
@@ -266,12 +266,12 @@ describe('WaypointMarkerService', () => {
     const marker1 = L.marker(L.latLng(10, 20));
     const marker2 = L.marker(L.latLng(30, 40));
 
-    waypointMarkerService['_markers'] = [marker1, marker2];
+    waypointMarkerService._markers = [marker1, marker2];
 
-    waypointMarkerService['_updateMarkerNumbers']();
+    waypointMarkerService._updateMarkerNumbers();
 
-    expect(waypointMarkerService['_markers'][0].options.icon.options.html).toEqual('<span>1</span>');
-    expect(waypointMarkerService['_markers'][1].options.icon.options.html).toEqual('<span>2</span>');
+    expect(waypointMarkerService._markers[0].options.icon.options.html).toEqual('<span>1</span>');
+    expect(waypointMarkerService._markers[1].options.icon.options.html).toEqual('<span>2</span>');
 
     done();
   });
@@ -285,7 +285,7 @@ describe('WaypointMarkerService', () => {
       className: 'routing-control-marker'
     });
 
-    const icon = waypointMarkerService['_getSingleMarkerIcon'](title);
+    const icon = waypointMarkerService._getSingleMarkerIcon(title);
 
     expect(icon).toEqual(expected);
 
