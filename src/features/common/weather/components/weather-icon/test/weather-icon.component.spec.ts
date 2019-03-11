@@ -1,6 +1,5 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-
-import { WeatherIconComponent } from '../weather-icon.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { WeatherIconComponent } from '@bit/garlictech.angular-features.common.weather/components';
 
 describe('WeatherIconComponent', () => {
   let component: WeatherIconComponent;

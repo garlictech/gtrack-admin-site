@@ -1,19 +1,19 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { WeatherIconComponent, WindDirectionIconComponent } from '@features/common/weather/components';
 import {
-  WeatherState,
+  weatherContextReducerIntialState,
   weatherReducer,
   weatherReducerInitialState,
-  weatherContextReducerIntialState,
-  WeatherSelectors
+  WeatherSelectors,
+  WeatherState
 } from '@features/common/weather/store';
 import * as actions from '@features/common/weather/store/actions';
-import { WeatherIconComponent, WindDirectionIconComponent } from '@features/common/weather/components';
-import { WeatherInfoComponent } from '../weather-info.component';
+import { Store, StoreModule } from '@ngrx/store';
 
+import { WeatherInfoComponent } from '../weather-info.component';
 import { weather as testWeather } from './fixture';
 
 describe('WeatherInfoComponent', () => {
@@ -77,7 +77,7 @@ describe('WeatherInfoComponent', () => {
       expect(store.dispatch).toHaveBeenCalledWith(
         jasmine.objectContaining({
           type: actions.WeatherActionTypes.GET_FORECAST,
-          position: position
+          position
         })
       );
     });
@@ -93,7 +93,7 @@ describe('WeatherInfoComponent', () => {
     beforeEach(() => {
       store.dispatch(
         new actions.ForecastReturned({
-          id: id,
+          id,
           ...testWeather
         })
       );
