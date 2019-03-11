@@ -404,8 +404,8 @@
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.2-3053ec5e-b934-4305-b35d-8395a8384665-1552315049291/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.2-3053ec5e-b934-4305-b35d-8395a8384665-1552315049291/node_modules/@bit/leaflet-map"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.2-80d1e212-9c09-4cbc-b5fa-0f78f3c6de59-1552317434307/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.2-80d1e212-9c09-4cbc-b5fa-0f78f3c6de59-1552317434307/node_modules/@bit/leaflet-map"
     leaflet "^1.0.3"
     lodash-es "^4.17.11"
 
@@ -427,7 +427,7 @@
   version "0.0.1"
   dependencies:
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-deepstream-ngx-0.0.1-20f35b62-088d-4b6d-bbf5-a958e797021b-1552315049317/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-deepstream-ngx-0.0.1-b5d70b9a-11fb-4a64-a5d3-46658acef87e-1552317434322/node_modules/@bit/gtrack-interfaces"
     "@garlictech/deepstream-rxjs" "^1.9.2"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/store" "~7.1.0"
@@ -442,7 +442,7 @@
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
     "@angular/platform-browser" "~7.2.1"
-    "@bit/garlictech.angular-features.common.utils" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-forms-0.0.2-67b300ea-cd46-455e-a972-b94ff7a295cd-1552315049364/node_modules/@bit/utils"
+    "@bit/garlictech.angular-features.common.utils" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-forms-0.0.2-ab0a53de-35e3-4759-a47f-8bb6bdeb05b4-1552317434373/node_modules/@bit/utils"
     "@ngrx/store" "~7.1.0"
     "@ngx-translate/core" "^11.0.1"
     google-libphonenumber "3.2.2"
@@ -459,7 +459,7 @@
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.utils" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-generic-ui-0.0.12-1a42ef7f-b729-4aee-863a-b3a82591aa8d-1552315049370/node_modules/@bit/utils"
+    "@bit/garlictech.angular-features.common.utils" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-generic-ui-0.0.12-1509c1df-7dc0-47c2-a178-6444426cc4a8-1552317434383/node_modules/@bit/utils"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/store" "~7.1.0"
     "@ngx-translate/core" "^11.0.1"
@@ -475,7 +475,7 @@
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.12-f553d34d-6854-4a93-8a7e-54145fc1624f-1552315049299/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.12-5cd75ca1-0310-4f09-a2ff-115ab174acd2-1552317434315/node_modules/@bit/gtrack-interfaces"
     "@ngrx/store" "~7.1.0"
     geojson "^0.5.0"
     leaflet "^1.0.3"
@@ -502,8 +502,8 @@
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.5-9fd7d2e1-f499-4de1-9490-b25fa9770f4b-1552315049376/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.localization" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.5-9fd7d2e1-f499-4de1-9490-b25fa9770f4b-1552315049376/node_modules/@bit/localization"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.5-186db759-4949-4ded-be95-8bee08a1b12c-1552317434391/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.localization" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.5-186db759-4949-4ded-be95-8bee08a1b12c-1552317434391/node_modules/@bit/localization"
     "@ngrx/store" "~7.1.0"
     lodash-es "^4.17.11"
     rxjs "~6.3.2"
@@ -540,7 +540,7 @@
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
-    "@bit/garlictech.angular-features.common.generic-ui" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-generic-ui-primeng-0.0.1-e1b6775a-612d-4af3-9394-83288cf68847-1552315049383/node_modules/common/generic-ui"
+    "@bit/garlictech.angular-features.common.generic-ui" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-generic-ui-primeng-0.0.1-9748adb5-868f-4fc4-bb53-80ae2337f1f1-1552317434401/node_modules/common/generic-ui"
     "@fortawesome/angular-fontawesome" "^0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@ngrx/store" "~7.1.0"
@@ -553,7 +553,7 @@
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.weather" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-weather-0.0.3-a029d5d7-2aca-4dde-98c2-b34f060c9af6-1552315049386/node_modules/common/weather"
+    "@bit/garlictech.angular-features.common.weather" "file:../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-weather-0.0.3-3d1c76ac-3504-479d-98e3-6a393d998c00-1552317434404/node_modules/common/weather"
     "@ngrx/store" "~7.1.0"
     angular-svg-icon "^7.0.0"
     primeng "~7.0.0"

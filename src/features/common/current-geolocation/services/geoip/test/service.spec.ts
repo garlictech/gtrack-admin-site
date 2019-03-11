@@ -1,7 +1,7 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { GEO_IP_CONFIG } from '../../../config';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { GeoIpService } from '../geoip.service';
+import { GEO_IP_CONFIG } from '../../../config';
 
 describe('GeoIpService', () => {
   let service: GeoIpService;
