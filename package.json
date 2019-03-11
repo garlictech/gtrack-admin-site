@@ -98,7 +98,6 @@
     "@angular/router": "~7.2.1",
     "@bit/garlictech.angular-features.common.authentication-api": "file:./src/features/common/authentication-api",
     "@bit/garlictech.angular-features.common.checkpoints": "file:./src/features/common/checkpoints",
-    "@bit/garlictech.angular-features.common.current-geolocation": "file:./src/features/common/current-geolocation",
     "@bit/garlictech.angular-features.common.deepstream-ngx": "file:./src/features/common/deepstream-ngx",
     "@bit/garlictech.angular-features.common.forms": "file:./src/features/common/forms",
     "@bit/garlictech.angular-features.common.generic-ui": "file:./src/features/common/generic-ui",
@@ -183,7 +182,8 @@
     "suncalc": "^1.8.0",
     "tether": "^1.4.5",
     "togpx": "^0.5.4",
-    "zone.js": "~0.8.28"
+    "zone.js": "~0.8.28",
+    "@bit/garlictech.angular-features.common.current-geolocation": "file:./src/features/common/current-geolocation"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",
