@@ -20,12 +20,11 @@ import {
 } from '@bit/garlictech.angular-features.common.authentication-api';
 import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
-
+import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';
