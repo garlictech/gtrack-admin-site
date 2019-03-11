@@ -2,15 +2,18 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { WeatherIconComponent, WindDirectionIconComponent } from '@features/common/weather/components';
+import {
+  WeatherIconComponent,
+  WindDirectionIconComponent
+} from '@bit/garlictech.angular-features.common.weather/components';
 import {
   weatherContextReducerIntialState,
   weatherReducer,
   weatherReducerInitialState,
   WeatherSelectors,
   WeatherState
-} from '@features/common/weather/store';
-import * as actions from '@features/common/weather/store/actions';
+} from '@bit/garlictech.angular-features.common.weather/store';
+import * as actions from '@bit/garlictech.angular-features.common.weather/store/actions';
 import { Store, StoreModule } from '@ngrx/store';
 
 import { WeatherInfoComponent } from '../weather-info.component';

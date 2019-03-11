@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WeatherInfoComponent as BaseComponent } from '@features/common/weather/components';
+import { WeatherInfoComponent as BaseComponent } from '@bit/garlictech.angular-features.common.weather/components';
 
 @Component({
   selector: 'gtrack-weather-info',
