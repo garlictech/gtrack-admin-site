@@ -30,16 +30,6 @@
   },
   "linterOptions": {
     "files": ["src/**/*.ts"],
-    "exclude": [
-      "artifacts",
-      "node_modules",
-      "cypress",
-      "docker",
-      "src/**/test/**/*.*",
-      "src/**/*.spec.ts",
-      "e2e",
-      "src/assets",
-      "src/**/jest*"
-    ]
+    "exclude": ["artifacts", "node_modules", "cypress", "docker", "e2e", "src/assets", "src/**/jest*"]
   }
 }

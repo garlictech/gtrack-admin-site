@@ -1,18 +1,18 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { take, filter } from 'rxjs/operators';
+import { StoreModule } from '@ngrx/store';
+import { filter, take } from 'rxjs/operators';
 
-import { OauthWindowService } from '../../oauth-window';
-import { WindowModule, WindowService } from '../../window';
-import { TwitterService } from '../twitter.service';
-import { AuthService } from '../../auth';
-import { Reducer as authReducer } from '../../store';
-import { AUTH_CONFIG_TOKEN, defaultAuthenticationApiConfig } from '../../lib';
 import { ApiModule } from '../../api';
+import { AuthService } from '../../auth';
+import { AUTH_CONFIG_TOKEN, defaultAuthenticationApiConfig } from '../../lib';
+import { OauthWindowService } from '../../oauth-window';
 import { OauthWindowMockService } from '../../oauth-window/test/oauth-window.service.mock';
 import { LocalStorage } from '../../storage/local-storage.service';
+import { Reducer as authReducer } from '../../store';
+import { WindowModule, WindowService } from '../../window';
+import { TwitterService } from '../twitter.service';
 
 describe('TwitterService', () => {
   const apiUrl = 'http://api';

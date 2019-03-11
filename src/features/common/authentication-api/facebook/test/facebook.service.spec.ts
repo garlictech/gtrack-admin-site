@@ -1,17 +1,17 @@
-import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { StoreModule } from '@ngrx/store';
+import { TestBed } from '@angular/core/testing';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 import { take } from 'rxjs/operators';
 
-import { OauthWindowService } from '../../oauth-window';
-import { FacebookService } from '../facebook.service';
-import { Reducer as authReducer } from '../../store';
-import { defaultAuthenticationApiConfig, AuthenticationApiModule, FacebookConfig, AUTH_CONFIG_TOKEN } from '../../lib';
 import { ApiModule } from '../../api';
+import { AUTH_CONFIG_TOKEN, AuthenticationApiModule, defaultAuthenticationApiConfig, FacebookConfig } from '../../lib';
+import { OauthWindowService } from '../../oauth-window';
 import { OauthWindowMockService } from '../../oauth-window/test/oauth-window.service.mock';
 import { LocalStorage } from '../../storage/local-storage.service';
+import { Reducer as authReducer } from '../../store';
+import { FacebookService } from '../facebook.service';
 
 import { WindowModule, WindowService } from '../../window';
 

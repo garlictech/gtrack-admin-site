@@ -151,7 +151,7 @@ describe('RoutePlannerService', () => {
   });
 
   it('should calculate total from segment', done => {
-    const total = routePlannerService['_calculateTotal'](MOCK_SEGMENTS);
+    const total = routePlannerService._calculateTotal(MOCK_SEGMENTS);
     const expected = MOCK_SEGMENT_TOTAL;
 
     expect(expected).toEqual(total);
@@ -160,7 +160,7 @@ describe('RoutePlannerService', () => {
   });
 
   it('should create geoJSON from segment', done => {
-    const total = routePlannerService['_createGeoJsonFromSegments'](MOCK_SEGMENTS);
+    const total = routePlannerService._createGeoJsonFromSegments(MOCK_SEGMENTS);
     const expected = MOCK_SEGMENT_GEOJSON;
 
     expect(expected).toEqual(total);
@@ -169,7 +169,7 @@ describe('RoutePlannerService', () => {
   });
 
   it('should create route point', done => {
-    const total = routePlannerService['_createRoutePoint'](MOCK_SEGMENTS[0].coordinates[0], 1);
+    const total = routePlannerService._createRoutePoint(MOCK_SEGMENTS[0].coordinates[0], 1);
     const expected = {
       type: 'Feature',
       geometry: {
@@ -191,7 +191,7 @@ describe('RoutePlannerService', () => {
   });
 
   it('should get last point of last segment', done => {
-    const total = routePlannerService['_getLastPointOfLastSegment'](MOCK_SEGMENTS);
+    const total = routePlannerService._getLastPointOfLastSegment(MOCK_SEGMENTS);
     const expected = [...MOCK_SEGMENTS].pop().coordinates.pop();
 
     expect(expected).toEqual(total);
@@ -200,7 +200,7 @@ describe('RoutePlannerService', () => {
   });
 
   it('should get search bounds', done => {
-    const total = routePlannerService['_getLastPointOfLastSegment'](MOCK_SEGMENTS);
+    const total = routePlannerService._getLastPointOfLastSegment(MOCK_SEGMENTS);
     const expected = [...MOCK_SEGMENTS].pop().coordinates.pop();
 
     expect(expected).toEqual(total);

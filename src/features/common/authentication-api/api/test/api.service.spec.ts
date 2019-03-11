@@ -1,12 +1,12 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Store, StoreModule } from '@ngrx/store';
-import { TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { Store, StoreModule } from '@ngrx/store';
 
 import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
+import { Actions, AuthenticationState, Reducer } from '../../store';
 import { ApiService } from '../api.service';
-import { Reducer, AuthenticationState, Actions } from '../../store';
 
 import 'rxjs/add/operator/take';
 
