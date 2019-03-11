@@ -1,10 +1,10 @@
-import { takeUntil, debounceTime, filter } from 'rxjs/operators';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
-import { SliderField, RangeSliderField, IFormDescriptor } from 'subrepos/forms-ngx';
+import { FormDescriptor, RangeSliderField, SliderField } from '@features/common/forms';
 
 import * as filterActions from '../../../search-filters/store/actions';
 
@@ -15,29 +15,31 @@ import { SearchFiltersSelectors } from '../../../search-filters/store';
   template: ''
 })
 export class SearchFiltersComponent implements OnInit, OnDestroy {
-  public formDescriptor: IFormDescriptor;
-
-  public filterForm: FormGroup;
-  public showFilters = false;
-
-  private _defaultFormConfig = {
-    radius: 50,
-    difficulty: [[0, 10]],
-    length: [[0, 50]],
-    time: [[0, 60]]
-  };
-
-  private _destroy$ = new Subject<boolean>();
+  formDescriptor: FormDescriptor;
+  filterForm: FormGroup;
+  showFilters: boolean;
+  private readonly _defaultFormConfig: any;
+  private readonly _destroy$: Subject<boolean>;
 
   constructor(
-    private _fb: FormBuilder,
-    private _store: Store<any>,
-    private _searchFiltersSelectors: SearchFiltersSelectors
+    private readonly _fb: FormBuilder,
+    private readonly _store: Store<any>,
+    private readonly _searchFiltersSelectors: SearchFiltersSelectors
   ) {
+    this.showFilters = false;
+    this._destroy$ = new Subject<boolean>();
+
+    this._defaultFormConfig = {
+      radius: 50,
+      difficulty: [[0, 10]],
+      length: [[0, 50]],
+      time: [[0, 60]]
+    };
+
     this.filterForm = this._fb.group(this._defaultFormConfig);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formDescriptor = {
       submit: { submitFv: (formGroup: FormGroup) => this.onChanges(formGroup.value) },
       fields: {
@@ -100,12 +102,12 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  onChanges(value) {
+  onChanges(value): void {
     this._store.dispatch(
       new filterActions.ChangeFilters({
         radius: value.radius * 1000,
@@ -116,7 +118,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     );
   }
 
-  public toggleFilters() {
+  toggleFilters(): void {
     this.showFilters = !this.showFilters;
   }
 }

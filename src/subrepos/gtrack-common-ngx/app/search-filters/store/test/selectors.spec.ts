@@ -5,14 +5,14 @@ import { takeUntil } from 'rxjs/operators';
 
 import * as actions from '../actions';
 import { searchFiltersReducer, initialState } from '../reducer';
-import { ISearchFilters } from '../../interfaces';
+import { SearchFilters } from '../../interfaces';
 import { SearchFiltersSelectors } from '../selectors';
 import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES } from '../../externals';
 
 import 'rxjs/add/operator/takeUntil';
 
 describe('SearchFilters selectors', () => {
-  let store: Store<ISearchFilters>;
+  let store: Store<SearchFilters>;
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {

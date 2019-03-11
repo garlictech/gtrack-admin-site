@@ -1,6 +1,7 @@
-import { IHikeProgramStored } from 'subrepos/provider-client';
-import { IGenericEditedState } from './generic';
+import { HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
-export interface IEditedHikeProgramState extends IGenericEditedState {
-  data: IHikeProgramStored;
+import { GenericEditedState } from './generic';
+
+export interface EditedHikeProgramState extends GenericEditedState {
+  data: HikeProgramStored;
 }

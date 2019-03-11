@@ -1,16 +1,15 @@
-import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
-
-import { IAllPoiContextState, poiContextStateAdapter, IPoiEntityState, IPoiState, poiAdapter } from './state';
-
-import { PoiActionTypes, AllPoiActions } from './actions';
+// tslint:disable:only-arrow-functions
+import { ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
+import { AllPoiActions, PoiActionTypes } from './actions';
+import { AllPoiContextState, poiAdapter, poiContextStateAdapter, PoiEntityState, PoiState } from './state';
 
 export const poiContextReducerInitialState = poiContextStateAdapter.getInitialState();
 export const poiReducerInitialState = poiAdapter.getInitialState();
 
-const contextReducer: ActionReducer<IAllPoiContextState> = (
-  state: IAllPoiContextState = poiContextReducerInitialState,
+const contextReducer: ActionReducer<AllPoiContextState> = (
+  state: AllPoiContextState = poiContextReducerInitialState,
   action: AllPoiActions
-): IAllPoiContextState => {
+): AllPoiContextState => {
   switch (action.type) {
     case PoiActionTypes.LOAD_POI:
       return poiContextStateAdapter.upsertOne(
@@ -25,14 +24,12 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
 
     case PoiActionTypes.LOAD_POIS:
       return poiContextStateAdapter.upsertMany(
-        action.contexts.map(context => {
-          return {
-            id: context,
-            loading: true,
-            loaded: false,
-            saved: false
-          };
-        }),
+        action.contexts.map(context => ({
+          id: context,
+          loading: true,
+          loaded: false,
+          saved: false
+        })),
         state
       );
 
@@ -49,14 +46,12 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
 
     case PoiActionTypes.ALL_POI_LOADED:
       return poiContextStateAdapter.upsertMany(
-        action.contexts.map(context => {
-          return {
-            id: context,
-            loading: false,
-            loaded: true,
-            saved: false
-          };
-        }),
+        action.contexts.map(context => ({
+          id: context,
+          loading: false,
+          loaded: true,
+          saved: false
+        })),
         state
       );
 
@@ -90,10 +85,10 @@ const contextReducer: ActionReducer<IAllPoiContextState> = (
   }
 };
 
-const reducer: ActionReducer<IPoiEntityState> = (
-  state: IPoiEntityState = poiReducerInitialState,
+const reducer: ActionReducer<PoiEntityState> = (
+  state: PoiEntityState = poiReducerInitialState,
   action: AllPoiActions
-): IPoiEntityState => {
+): PoiEntityState => {
   switch (action.type) {
     case PoiActionTypes.POI_LOADED:
       return poiAdapter.upsertOne(action.poi, state);
@@ -112,7 +107,7 @@ const reducer: ActionReducer<IPoiEntityState> = (
   }
 };
 
-const reducerMap: ActionReducerMap<IPoiState> = {
+const reducerMap: ActionReducerMap<PoiState> = {
   contexts: contextReducer,
   pois: reducer
 };

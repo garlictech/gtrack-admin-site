@@ -1,2 +1,2 @@
 export * from './reducer';
-export { IState } from './state';
+export { State } from './state';

@@ -1,9 +1,10 @@
-import {
-  IBackgroundImageData,
-  EPoiImageTypes,
-  IBackgroundImageDataStored
-} from '../../../../../subrepos/provider-client';
 import * as _ from 'lodash';
+
+import {
+  BackgroundImageData,
+  BackgroundImageDataStored,
+  EPoiImageTypes
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 const bgImageData = {
   title: 'fakeImageTitle',
@@ -36,5 +37,5 @@ const bgImageDataStored = _.merge({}, bgImageData, {
   id: '1'
 });
 
-export const bgImages: IBackgroundImageData[] = [bgImageData];
-export const bgImagesStored: IBackgroundImageDataStored[] = [bgImageDataStored];
+export const bgImages: Array<BackgroundImageData> = [bgImageData];
+export const bgImagesStored: Array<BackgroundImageDataStored> = [bgImageDataStored];

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-
-import { IHikeProgramStop } from '../../../../../provider-client';
-import { CheckpointSequence } from './checkpoint-sequence';
+import { HikeProgramStop } from '@features/common/gtrack-interfaces';
 import { Checkpoint } from './checkpoint';
+import { CheckpointSequence } from './checkpoint-sequence';
 
 @Injectable()
 export class CheckpointService {
-  public createSequence(stops: IHikeProgramStop[]): CheckpointSequence {
+  createSequence(stops: Array<HikeProgramStop>): CheckpointSequence {
     return new CheckpointSequence(stops);
   }
 }

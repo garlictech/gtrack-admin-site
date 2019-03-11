@@ -1,22 +1,22 @@
-import { IEditedGTrackPoiState } from '../../state';
-import { initialEditedGTrackPoiState, editedGTrackPoiReducer } from '../edited-gtrack-poi';
-import { editedGTrackPoiActions } from '../../actions';
-import { IExternalPoi } from '../../../shared/interfaces';
-import {
-  IBackgroundImageData,
-  IPoiStored,
-  EObjectState,
-  ETextualDescriptionType
-} from '../../../../subrepos/provider-client';
-
+// tslint:disable:no-big-function
 import * as _ from 'lodash';
 
-import { pois as poiFixtures, pois as poiStoredFixtures, bgImages as bgImageFixtures } from './fixtures';
+import {
+  BackgroundImageData,
+  EObjectState,
+  ETextualDescriptionType
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
+import { ExternalPoi } from '../../../shared/interfaces';
+import { editedGTrackPoiActions } from '../../actions';
+import { EditedGTrackPoiState } from '../../state';
+import { editedGTrackPoiReducer, initialEditedGTrackPoiState } from '../edited-gtrack-poi';
+import { bgImages as bgImageFixtures, pois as poiFixtures } from './fixtures';
 
 describe('Edited GTrackPoi reducers', () => {
-  let initialState: IEditedGTrackPoiState;
-  let pois: IExternalPoi[];
-  let images: IBackgroundImageData[];
+  let initialState: EditedGTrackPoiState;
+  let pois: Array<ExternalPoi>;
+  let images: Array<BackgroundImageData>;
 
   beforeEach(() => {
     initialState = _.cloneDeep(initialEditedGTrackPoiState);
@@ -111,7 +111,7 @@ describe('Edited GTrackPoi reducers', () => {
       const state = editedGTrackPoiReducer(initialState, action);
 
       expect(state.working).toBe('saving...');
-      expect(state.failed).toBeNull();
+      expect(state.failed).toBeUndefined();
     });
   });
 
@@ -120,8 +120,8 @@ describe('Edited GTrackPoi reducers', () => {
       const action = new editedGTrackPoiActions.PoiSaveSuccess('1');
       const state = editedGTrackPoiReducer(initialState, action);
 
-      expect(state.working).toBeNull();
-      expect(state.failed).toBeNull();
+      expect(state.working).toBeUndefined();
+      expect(state.failed).toBeUndefined();
       expect(state.dirty).toBeFalsy();
     });
   });
@@ -131,7 +131,7 @@ describe('Edited GTrackPoi reducers', () => {
       const action = new editedGTrackPoiActions.PoiSaveFailed('Error');
       const state = editedGTrackPoiReducer(initialState, action);
 
-      expect(state.working).toBeNull();
+      expect(state.working).toBeUndefined();
       expect(state.failed).toEqual('Error');
     });
   });
@@ -146,8 +146,8 @@ describe('Edited GTrackPoi reducers', () => {
       );
       const state = editedGTrackPoiReducer(initialState, action);
 
-      expect(state.working).toBeNull();
-      expect(state.failed).toBeNull();
+      expect(state.working).toBeUndefined();
+      expect(state.failed).toBeUndefined();
       expect(state.dirty).toBeFalsy();
       expect(state.data).toEqual(pois[0]);
     });
@@ -167,7 +167,7 @@ describe('Edited GTrackPoi reducers', () => {
       const state = editedGTrackPoiReducer(
         _.merge({}, initialState, {
           data: {
-            backgroundImages: null
+            backgroundImages: undefined
           }
         }),
         action
@@ -214,7 +214,7 @@ describe('Edited GTrackPoi reducers', () => {
       const state = editedGTrackPoiReducer(
         _.merge({}, initialState, {
           data: {
-            backgroundImages: null
+            backgroundImages: undefined
           }
         }),
         action

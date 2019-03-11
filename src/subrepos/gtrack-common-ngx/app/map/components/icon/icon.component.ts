@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { IconService } from '../../services/icon';
+import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+
 import { Poi } from '../../../hike/services/poi';
 
 @Component({
@@ -8,17 +9,23 @@ import { Poi } from '../../../hike/services/poi';
   styleUrls: ['./icon.component.scss']
 })
 export class IconComponent {
-  public urls: string[] = [];
+  urls: Array<string>;
+
+  @Input() width: number;
 
   @Input()
-  public width = 32;
-
-  @Input()
-  public set poi(poi: Poi) {
+  set poi(poi: Poi) {
     if (poi && poi.types instanceof Array) {
       this.urls = this.iconService.urls(poi.types);
     }
   }
 
-  constructor(private iconService: IconService) {}
+  constructor(private readonly iconService: LeafletIconService) {
+    this.urls = [];
+    this.width = 32;
+  }
+
+  trackByFn(index: number): number {
+    return index;
+  }
 }

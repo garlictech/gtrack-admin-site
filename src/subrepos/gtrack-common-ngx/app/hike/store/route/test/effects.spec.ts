@@ -4,13 +4,13 @@ import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 import * as uuid from 'uuid/v4';
-import { DeepstreamService } from 'subrepos/deepstream-ngx';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 
 import { Observable, EMPTY, of } from 'rxjs';
 
 import { hot, cold, Scheduler } from 'jest-marbles';
 
-import { IRouteStored, IRoute, EObjectState } from 'subrepos/provider-client';
+import { RouteStored, RouteData, EObjectState } from '@features/common/gtrack-interfaces';
 import { RouteService } from '../../../services/route';
 import { RouteEffects } from '../effects';
 import * as routeActions from '../actions';
@@ -19,8 +19,8 @@ import { UnitsService } from '../../../../shared';
 import { GeometryService } from '../../../services/geometry';
 
 describe('Route effects', () => {
-  let routeData: IRoute;
-  let route: IRouteStored;
+  let routeData: RouteData;
+  let route: RouteStored;
   let actions$: Observable<any>;
   let routeService: RouteService;
   let effects: RouteEffects;

@@ -1,4 +1,4 @@
-import { IPoi, IPoiStored, EPoiTypes, EObjectState } from 'subrepos/provider-client';
+import { PoiData, PoiStored, EPoiTypes, EObjectState } from '@features/common/gtrack-interfaces';
 import { pois as poiFixtures } from './fixtures';
 
 import * as uuid from 'uuid/v4';
@@ -6,8 +6,8 @@ import * as actions from '../actions';
 
 describe('Poi actions', () => {
   let id;
-  let poiData: IPoi;
-  let poi: IPoiStored;
+  let poiData: PoiData;
+  let poi: PoiStored;
 
   beforeEach(() => {
     id = uuid();

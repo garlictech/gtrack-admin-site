@@ -1,3 +1,5 @@
 @each $size, $rem in $font-sizes {
-  .fs-#{$size} { font-size: #{$rem} !important; }
+  .fs-#{$size} {
+    font-size: #{$rem} !important;
+  }
 }

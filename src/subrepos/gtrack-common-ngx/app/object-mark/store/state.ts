@@ -1,15 +1,15 @@
-import { EObjectMarkContext } from 'subrepos/provider-client';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 
-export interface IObjectMarkData {
+export interface ObjectMarkData {
   id: EObjectMarkContext;
-  markedObjects: any[];
+  markedObjects: Array<any>;
 }
 
-export const objectMarkAdapter = createEntityAdapter<IObjectMarkData>();
-export interface IObjectMarkEntityState extends EntityState<IObjectMarkData> {}
+export const objectMarkAdapter = createEntityAdapter<ObjectMarkData>();
+export interface ObjectMarkEntityState extends EntityState<ObjectMarkData> {}
 
-export interface IObjectMarkContext {
+export interface ObjectMarkContext {
   id: EObjectMarkContext;
   loading: boolean;
   loaded: boolean;
@@ -17,10 +17,10 @@ export interface IObjectMarkContext {
   saved: boolean;
 }
 
-export interface IObjectMarkContextState extends EntityState<IObjectMarkContext> {}
-export const objectMarkContextAdapter = createEntityAdapter<IObjectMarkContext>();
+export interface ObjectMarkContextState extends EntityState<ObjectMarkContext> {}
+export const objectMarkContextAdapter = createEntityAdapter<ObjectMarkContext>();
 
-export interface IObjectMarkState {
-  objectMarks: IObjectMarkEntityState;
-  contexts: IObjectMarkContextState;
+export interface ObjectMarkState {
+  objectMarks: ObjectMarkEntityState;
+  contexts: ObjectMarkContextState;
 }

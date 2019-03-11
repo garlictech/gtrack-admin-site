@@ -1,29 +1,47 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { IEditedGTrackPoiState } from '../state/edited-gtrack-poi';
-import { IBackgroundImageData } from 'subrepos/provider-client';
-
 import _get from 'lodash-es/get';
 import _uniq from 'lodash-es/uniq';
 
-const featureSelector = createFeatureSelector<IEditedGTrackPoiState>('editedGtrackPoi');
+import { BackgroundImageData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-export const getDescriptions = createSelector(featureSelector, (state: IEditedGTrackPoiState) =>
-  _get(state, 'data.description')
+import { EditedGTrackPoiState } from '../state/edited-gtrack-poi';
+
+const featureSelector = createFeatureSelector<EditedGTrackPoiState>('editedGtrackPoi');
+
+export const getDescriptions = createSelector(
+  featureSelector,
+  (state: EditedGTrackPoiState) => _get(state, 'data.description')
 );
-export const getDirty = createSelector(featureSelector, (state: IEditedGTrackPoiState) => state.dirty);
-export const getBackgroundImages = createSelector(featureSelector, (state: IEditedGTrackPoiState) =>
-  _get(state, 'data.backgroundImages')
+export const getDirty = createSelector(
+  featureSelector,
+  (state: EditedGTrackPoiState) => state.dirty
 );
-export const getData = createSelector(featureSelector, (state: IEditedGTrackPoiState) => state.data);
-export const getWorking = createSelector(featureSelector, (state: IEditedGTrackPoiState) => state.working);
-export const getError = createSelector(featureSelector, (state: IEditedGTrackPoiState) => _get(state, 'failed'));
+export const getBackgroundImages = createSelector(
+  featureSelector,
+  (state: EditedGTrackPoiState) => _get(state, 'data.backgroundImages')
+);
+export const getData = createSelector(
+  featureSelector,
+  (state: EditedGTrackPoiState) => state.data
+);
+export const getWorking = createSelector(
+  featureSelector,
+  (state: EditedGTrackPoiState) => state.working
+);
+export const getError = createSelector(
+  featureSelector,
+  (state: EditedGTrackPoiState) => _get(state, 'failed')
+);
 
-export const getDescriptionByLang = (lang: string) => {
-  return createSelector(featureSelector, (state: IEditedGTrackPoiState) => _get(state, `data.description.${lang}`));
-};
+export const getDescriptionByLang = (lang: string) =>
+  createSelector(
+    featureSelector,
+    (state: EditedGTrackPoiState) => _get(state, `data.description.${lang}`)
+  );
 
-export const getBackgroundOriginalUrls = () => {
-  return createSelector(featureSelector, (state: IEditedGTrackPoiState) => {
-    return _uniq((<IBackgroundImageData[]>_get(state, 'data.backgroundImages', [])).map(img => img.original.url));
-  });
-};
+export const getBackgroundOriginalUrls = () =>
+  createSelector(
+    featureSelector,
+    (state: EditedGTrackPoiState) =>
+      _uniq((_get(state, 'data.backgroundImages', []) as Array<BackgroundImageData>).map(img => img.original.url))
+  );

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoaderWatch service test should handle the undefined text label 1`] = `
+ShowProgressSpinner {
+  "textLabel": undefined,
+  "type": "[UI] Show progress spinner",
+}
+`;
+
+exports[`LoaderWatch service test should switch off the spinner if the selector emits false 1`] = `
+HideProgressSpinner {
+  "type": "[UI] Hide progress spinner",
+}
+`;
+
+exports[`LoaderWatch service test should switch on the spinner if the selector emits true 1`] = `
+ShowProgressSpinner {
+  "textLabel": "foobarlabel",
+  "type": "[UI] Show progress spinner",
+}
+`;

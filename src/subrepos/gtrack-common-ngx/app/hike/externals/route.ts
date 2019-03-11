@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
 
-export interface IExternalRouteDependencies {
+export interface ExternalRouteDependencies {
   storeDomain: string;
 }
 
-export const EXTERNAL_ROUTE_DEPENDENCIES = new InjectionToken<IExternalRouteDependencies>('IExternalRouteDependencies');
+export const EXTERNAL_ROUTE_DEPENDENCIES = new InjectionToken<ExternalRouteDependencies>('ExternalRouteDependencies');

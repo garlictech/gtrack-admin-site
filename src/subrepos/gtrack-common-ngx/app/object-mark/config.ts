@@ -1,3 +1,3 @@
-export interface IObjectMarkModuleConfig {
+export interface ObjectMarkModuleConfig {
   storeDomain: string;
 }

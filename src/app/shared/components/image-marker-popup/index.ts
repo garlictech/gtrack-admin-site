@@ -1,11 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { State } from '../../../store';
-import { Observable, of, Subject } from 'rxjs';
-import { take, takeUntil, switchMap } from 'rxjs/operators';
-import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
-import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
 import { editedHikeProgramActions } from 'app/store/actions';
+import { Observable, of, Subject } from 'rxjs';
+import { switchMap, take, takeUntil } from 'rxjs/operators';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+
+import { State } from '../../../store';
+import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
+import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 
 @Component({
   selector: 'app-image-marker-popup',
@@ -13,43 +15,43 @@ import { editedHikeProgramActions } from 'app/store/actions';
   styleUrls: ['./style.scss']
 })
 export class ImageMarkerPopupComponent implements OnInit, OnDestroy {
-  public static componentName = 'ImageMarkerPopupComponent';
-  public isPlanning$: Observable<boolean>;
-  public isBackground: boolean;
-  public data: any;
-  public closePopup: any;
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  // tslint:disable-next-line:no-property-initializers
+  static componentName = 'ImageMarkerPopupComponent';
+  isPlanning$: Observable<boolean>;
+  isBackground: boolean;
+  data: any;
+  closePopup: any;
 
-  constructor(
-    private _store: Store<State>
-  ) {}
+  private readonly _destroy$: Subject<boolean>;
 
-  ngOnInit() {
-    this.isPlanning$ = this._store
-      .pipe(
-        select(hikeEditRoutePlannerSelectors.getIsPlanning),
-        take(1)
-      );
+  constructor(private readonly _store: Store<State>) {
+    this.isPlanning$ = this._store.pipe(
+      select(hikeEditRoutePlannerSelectors.getIsPlanning),
+      take(1)
+    );
 
+    this.isBackground = false;
+    this._destroy$ = new Subject<boolean>();
+  }
+
+  ngOnInit(): void {
     this._store
       .pipe(
         select(editedHikeProgramSelectors.getBackgroundOriginalUrls()),
-        switchMap((bgImageUrls: string[]) => {
-          return of(bgImageUrls.includes(this.data.original.url));
-        }),
+        switchMap((bgImageUrls: Array<string>) => of(bgImageUrls.includes(this.data.original.url))),
         takeUntil(this._destroy$)
       )
-      .subscribe(isBG => {
+      .subscribe(isBG => {
         this.isBackground = isBG;
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  public toggleBackgroundImage() {
+  toggleBackgroundImage(): void {
     if (this.isBackground) {
       this._store.dispatch(new editedHikeProgramActions.RemoveHikeProgramBackgroundImage(this.data.original.url));
     } else {

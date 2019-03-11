@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { getTimes, getMoonTimes, getMoonIllumination } from 'suncalc';
 import _kebabCase from 'lodash-es/kebabCase';
+import { getMoonIllumination, getMoonTimes, getTimes } from 'suncalc';
+
+import { Injectable } from '@angular/core';
 
 export enum EMoonPhases {
   NewMoon = 0,
@@ -15,26 +16,21 @@ export enum EMoonPhases {
 
 @Injectable()
 export class AstronomyService {
-  public getSunTimes(position: GeoJSON.Position, date = new Date()) {
-    const times = getTimes(date, position[1], position[0]);
-
-    return times;
+  getSunTimes(position: GeoJSON.Position, date = new Date()): any {
+    return getTimes(date, position[1], position[0]);
   }
 
-  public getMoonTimes(position: GeoJSON.Position, date = new Date()) {
-    const times = getMoonTimes(date, position[1], position[0]);
-
-    return times;
+  getMoonTimes(position: GeoJSON.Position, date = new Date()): any {
+    return getMoonTimes(date, position[1], position[0]);
   }
 
-  public getMoonIconName(date = new Date()) {
+  getMoonIconName(date = new Date()): string {
     const phase = this.getMoonPhase();
-    const icon = _kebabCase(phase);
 
-    return icon;
+    return _kebabCase(phase);
   }
 
-  public getMoonPhase(date = new Date()) {
+  getMoonPhase(date = new Date()): string {
     const illumination = getMoonIllumination(date);
     let value = Math.round(illumination.phase * 8);
 

@@ -1,7 +1,7 @@
-import { IBackgroundImageData, EPoiImageTypes } from '../../../../subrepos/provider-client';
-import * as EditedGTrackPoiActions from '../edited-gtrack-poi';
+import { BackgroundImageData, EPoiImageTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { poisStored as poiFixtures } from '../../../../subrepos/gtrack-common-ngx/app/hike/store/poi/test/fixtures';
+import * as EditedGTrackPoiActions from '../edited-gtrack-poi';
 
 describe('EditedGTrackPoi actions', () => {
   it('should have action names defined', () => {
@@ -36,11 +36,6 @@ describe('EditedGTrackPoi actions', () => {
   });
 
   it('should create DeleteTranslatedPoiDescription action', () => {
-    const desc = {
-      title: 'Test hike',
-      fullDescription: 'desc',
-      summary: 'summary'
-    };
     const action = new EditedGTrackPoiActions.DeleteTranslatedPoiDescription('en_US');
 
     expect(action).toBeDefined();
@@ -90,7 +85,7 @@ describe('EditedGTrackPoi actions', () => {
   });
 
   it('should create AddBackgroundImage action', () => {
-    const imageData: IBackgroundImageData = {
+    const imageData: BackgroundImageData = {
       title: 'title',
       lat: 0,
       lon: 0,
@@ -119,7 +114,7 @@ describe('EditedGTrackPoi actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedGTrackPoiActions.ADD_POI_BACKGROUND_IMAGE,
-      imageData: imageData
+      imageData
     });
   });
 

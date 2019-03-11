@@ -1,5 +1,6 @@
+// tslint:disable:no-property-initializers max-classes-per-file
+import { EObjectState, RouteData, RouteStored } from '@features/common/gtrack-interfaces';
 import { Action } from '@ngrx/store';
-import { IRoute, IRouteStored, EObjectState } from '../../../../../provider-client';
 
 export enum RouteActionTypes {
   LOAD_ROUTE = '[Route] Load route',
@@ -26,13 +27,13 @@ export class LoadRouteFailed implements Action {
 export class RouteLoaded implements Action {
   readonly type = RouteActionTypes.ROUTE_LOADED;
 
-  constructor(public context: string, public route: IRouteStored) {}
+  constructor(public context: string, public route: RouteStored) {}
 }
 
 export class SaveRoute implements Action {
   readonly type = RouteActionTypes.SAVE_ROUTE;
 
-  constructor(public route: IRoute) {}
+  constructor(public route: RouteData) {}
 }
 
 export class RouteSaved implements Action {

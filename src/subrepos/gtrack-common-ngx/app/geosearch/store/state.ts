@@ -1,24 +1,24 @@
+import { GeospatialSearchResponse } from '@features/common/gtrack-interfaces';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { GeospatialSearchResponse } from '../../../../provider-client';
 
-export interface IGeoSearchResponseItem {
+export interface GeoSearchResponseItem {
   id: string;
   results: GeospatialSearchResponse;
 }
 
-export const geoSearchAdapter = createEntityAdapter<IGeoSearchResponseItem>();
-export interface IGeoSearchEntityState extends EntityState<IGeoSearchResponseItem> {}
+export const geoSearchAdapter = createEntityAdapter<GeoSearchResponseItem>();
+export interface GeoSearchEntityState extends EntityState<GeoSearchResponseItem> {}
 
-export interface IGeoSearchContextState {
+export interface GeoSearchContextState {
   id: string;
   working: boolean;
 }
 
-export interface IAllGeoSearchContextState extends EntityState<IGeoSearchContextState> {}
+export interface AllGeoSearchContextState extends EntityState<GeoSearchContextState> {}
 
-export const geoSearchContextStateAdapter = createEntityAdapter<IGeoSearchContextState>();
+export const geoSearchContextStateAdapter = createEntityAdapter<GeoSearchContextState>();
 
-export interface IGeoSearchState {
-  geoSearches: IGeoSearchEntityState;
-  contexts: IAllGeoSearchContextState;
+export interface GeoSearchState {
+  geoSearches: GeoSearchEntityState;
+  contexts: AllGeoSearchContextState;
 }

@@ -1,4 +1,36 @@
+import { environment } from 'environments/environment';
 import _get from 'lodash-es/get';
+import { ToastModule } from 'primeng/toast';
+import {
+  DeepstreamModule,
+  defaultSharedConfig,
+  GeoSearchModule,
+  HikeModule,
+  HikeModuleConfig,
+  ObjectMarkModule,
+  ObjectMarkModuleConfig,
+  SearchFiltersModule,
+  SharedModule
+} from 'subrepos/gtrack-common-ngx';
+import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
+
+import {
+  AuthenticationApiModule,
+  defaultAuthenticationApiConfig
+} from '@bit/garlictech.angular-features.common.authentication-api';
+import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
+import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
+
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
+import { AuthModule } from './auth';
+import { CoreLayoutModule } from './core';
+import { HikeEditModule } from './pages/hike-edit';
+import { HikeListModule } from './pages/hike-list';
+import { metaReducers, REDUCER_TOKEN } from './store';
 import {
   AuthEffects,
   EditedGTrackPoiEffects,
@@ -6,41 +38,17 @@ import {
   HikeEditImageEffects,
   HikeEditPoiEffects
 } from './store/effects';
-import { AuthenticationApiModule, defaultAuthenticationApiConfig } from 'subrepos/authentication-api-ngx';
-import { AuthModule } from './auth';
-import {
-  BackgroundGeolocationModule,
-  DeepstreamModule,
-  defaultSharedConfig,
-  GeoSearchModule,
-  HikeModule,
-  IHikeModuleConfig,
-  IObjectMarkModuleConfig,
-  ObjectMarkModule,
-  SearchFiltersModule,
-  SharedModule
-} from 'subrepos/gtrack-common-ngx';
-import { CoreLayoutModule } from './core';
-import { EffectsModule } from '@ngrx/effects';
-import { environment } from 'environments/environment';
-import { GenericUiModule } from '@web.features/generic-ui';
-import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
-import { HikeEditModule } from './pages/hike-edit';
-import { HikeListModule } from './pages/hike-list';
-import { metaReducers, REDUCER_TOKEN } from './store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreModule } from '@ngrx/store';
-import { ToastModule } from 'primeng/toast';
-import { LeafletMapModule } from '@common.features/leaflet-map/leaflet-map.module';
+
 const sharedConfig = {
   ...defaultSharedConfig
 };
 
-export function getSharedConfig() {
+// tslint:disable-next-line:only-arrow-functions
+export function getSharedConfig(): any {
   return sharedConfig;
 }
 
-const hikeModuleConfig: IHikeModuleConfig = {
+const hikeModuleConfig: HikeModuleConfig = {
   storeDomains: {
     hike: 'hike',
     poi: 'poi',
@@ -48,7 +56,7 @@ const hikeModuleConfig: IHikeModuleConfig = {
   }
 };
 
-const objectMarkConfig: IObjectMarkModuleConfig = {
+const objectMarkConfig: ObjectMarkModuleConfig = {
   storeDomain: 'objectMarks'
 };
 
@@ -62,7 +70,8 @@ authConfig.facebook.appId = _get(environment, 'authentication.facebook.appId');
 authConfig.google.appId = _get(environment, 'authentication.google.appId');
 authConfig.magiclink = { redirectSlug: '/auth/magiclink' };
 
-export function getAuthConfig() {
+// tslint:disable-next-line:only-arrow-functions
+export function getAuthConfig(): any {
   return authConfig;
 }
 
@@ -73,18 +82,17 @@ export const APP_IMPORTS = [
   StoreDevtoolsModule.instrument({
     maxAge: 25
   }),
+  GenericUiModule,
   DeepstreamModule.forRoot(),
   AuthenticationApiModule.forRoot(getAuthConfig),
   SearchFiltersModule.forRoot({
     storeDomain: 'searchFilters'
   }),
   SharedModule.forRoot(getSharedConfig),
-  BackgroundGeolocationModule.forRoot(),
   GeoSearchModule.forRoot({
     storeDomain: 'geosearch'
   }),
   HikeModule.forRoot(hikeModuleConfig),
-  BackgroundGeolocationModule.forRoot(),
   CoreLayoutModule,
   AuthModule,
   HikeListModule,
@@ -98,7 +106,7 @@ export const APP_IMPORTS = [
   ]),
   ObjectMarkModule.forRoot(objectMarkConfig),
   GtrackCommonWebModule,
-  GenericUiModule,
+  CurrentGeolocationModule.forRoot({ timeOut: 2000 }, { endpoint: environment.lambdaEndpoint }),
   LeafletMapModule,
   ToastModule
 ];

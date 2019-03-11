@@ -1,15 +1,15 @@
 ul {
-    &.list-unstyle {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
+  &.list-unstyle {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  &.striped {
+    li {
+      background: $red;
+      &:nth-child(2n) {
+        background: $white;
+      }
     }
-    &.striped {
-        li {
-            background: $red;
-            &:nth-child(2n) {
-                background: $white;
-            }
-        }
-    }
+  }
 }

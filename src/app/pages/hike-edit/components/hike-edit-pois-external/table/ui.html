@@ -16,22 +16,18 @@
           <app-poi-icons [poi]="poi"></app-poi-icons>
         </td>
         <td [ngClass]="{'text-danger': !poi.inGtrackDb}">
-          {{(poi?.description | localizeDescription).title}}
-          {{poi?.wikipedia ? '[' + poi.wikipedia.lng + ']' : ''}}
-          {{poi?.lng}}
+          {{ (poi?.description | localizeDescription).title }}
+          {{ poi?.wikipedia ? '[' + poi.wikipedia.lng + ']' : '' }}
+          {{ poi?.lng }}
         </td>
-        <td>{{poi.distFromRoute | distance : true}}</td>
-        <td>{{poi.types?.join(', ')}}</td>
+        <td>{{ poi.distFromRoute | distance : true }}</td>
+        <td>{{ poi.types?.join(', ') }}</td>
         <td>
           <app-special-poi-data [poi]="poi" [openPoiModal]="openPoiModal"></app-special-poi-data>
         </td>
         <td class="text-center">
-          <p-checkbox
-            *ngIf="!poi.inCollector && !poi.inGtrackDb"
-            binary="true"
-            [ngModel]="poi.selected"
-            (onChange)="handlePoiSelection([poi.id])"
-          ></p-checkbox>
+          <p-checkbox *ngIf="!poi.inCollector && !poi.inGtrackDb" binary="true" [ngModel]="poi.selected"
+            (onChange)="handlePoiSelection([poi.id])"></p-checkbox>
           <span *ngIf="poi.inCollector && !poi.inGtrackDb">In Poi Collector</span>
           <span *ngIf="poi.inGtrackDb">In gTrackDB</span>
         </td>

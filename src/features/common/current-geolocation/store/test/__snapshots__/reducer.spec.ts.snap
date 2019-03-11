@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CurrentLocationObtained with initial state {"tracking":true} 1`] = `
+Object {
+  "currentLocation": Object {
+    "coords": Object {
+      "accuracy": 20,
+      "altitude": null,
+      "altitudeAccuracy": null,
+      "heading": null,
+      "latitude": 47.5,
+      "longitude": 19.0833,
+      "speed": null,
+    },
+    "timestamp": 1542882905854,
+  },
+  "tracking": true,
+}
+`;
+
+exports[`EndPositioning with initial state {"tracking":true} 1`] = `
+Object {
+  "currentLocation": undefined,
+  "tracking": false,
+}
+`;
+
+exports[`StartPositioning with initial state {"tracking":false} 1`] = `
+Object {
+  "currentLocation": undefined,
+  "tracking": true,
+}
+`;
+
+exports[`The Unknown Action with initial state {"tracking":false} 1`] = `
+Object {
+  "currentLocation": undefined,
+  "tracking": false,
+}
+`;
+
+exports[`The state init with initial state undefined 1`] = `
+Object {
+  "currentLocation": undefined,
+  "tracking": false,
+}
+`;

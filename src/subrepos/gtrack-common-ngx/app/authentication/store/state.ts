@@ -1,6 +1,6 @@
-import { IAuthenticationState as IJwtAuthState } from '../../../../authentication-api-ngx';
+import { AuthenticationState as IJwtAuthState } from '@features/common/authentication-api';
 
-export interface IAuthenticationState {
+export interface AuthenticationState {
   jwtAuth: IJwtAuthState;
   uiState: {
     termsAccepted: boolean;

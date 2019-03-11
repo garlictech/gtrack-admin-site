@@ -1,14 +1,14 @@
-import { IExternalPoi } from './external-poi.interface';
-import { IBackgroundImageData } from 'subrepos/provider-client';
+import { BackgroundImageData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { ExternalPoi } from './external-poi.interface';
 
-export interface IWikipediaPoiInfo {
+export interface WikipediaPoiInfo {
   pageid?: number;
   lng?: string;
   url?: string;
   extract?: string;
-  photos?: IBackgroundImageData[];
+  photos?: Array<BackgroundImageData>;
 }
 
-export interface IWikipediaPoi extends IExternalPoi {
-  wikipedia?: IWikipediaPoiInfo | undefined;
+export interface WikipediaPoi extends ExternalPoi {
+  wikipedia?: WikipediaPoiInfo;
 }

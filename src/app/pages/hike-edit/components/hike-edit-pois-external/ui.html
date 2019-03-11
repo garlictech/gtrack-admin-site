@@ -1,74 +1,40 @@
-<p-dialog
-  header="{{(modalPoi?.description | localizeDescription).title}}"
-  [(visible)]="displayPoiModal"
-  [modal]="true"
-  [closable]="true"
-  [width]="600"
-  [blockScroll]="true"
-  >
-  <app-hike-edit-external-poi-info
-    *ngIf="displayPoiModal"
-    [poi]="modalPoi"
-  ></app-hike-edit-external-poi-info>
+<p-dialog header="{{ (modalPoi?.description | localizeDescription).title }}" [(visible)]="displayPoiModal"
+  [modal]="true" [closable]="true" [width]="600" [blockScroll]="true">
+  <app-hike-edit-external-poi-info *ngIf="displayPoiModal" [poi]="modalPoi"></app-hike-edit-external-poi-info>
 </p-dialog>
 
 <div class="clearfix mb-20">
   <div class="f-left">
-    <p-button
-      label="Copy to poi collector"
-      styleClass="ui-button-success"
-      (onClick)="copyToPoiCollector()"
-      [disabled]="(selectedPoisCount$ | async) === 0 "
-    ></p-button>
+    <p-button label="Copy to poi collector" styleClass="ui-button-success" (onClick)="copyToPoiCollector()"
+      [disabled]="(selectedPoisCount$ | async) === 0 "></p-button>
 
-    <p-button
-      label="Get new"
-      styleClass="ui-button-primary ml-5"
-      (onClick)="getPois()"
-      [disabled]="(segments$ | async)?.length < 1 || (searchContext$ | async)?.working || (loading$ | async) || (processing$ | async) || (saving$ | async) || !(isPlanning$ | async)"
-    ></p-button>
+    <p-button label="Get new" styleClass="ui-button-primary ml-5" (onClick)="getPois()"
+      [disabled]="(segments$ | async)?.length < 1 || (searchContext$ | async)?.working || (loading$ | async) || (processing$ | async) || (saving$ | async) || (isPlanning$ | async) === false">
+    </p-button>
   </div>
 
   <div class="f-right">
-    <p-checkbox
-      class="f-right ml-20"
-      label="Show offroute markers"
-      binary="true"
-      [(ngModel)]="showOffrouteMarkers"
-      (onChange)="toggleOffrouteMarkers()"
-      [disabled]="!(isPlanning$ | async)"
-    ></p-checkbox>
+    <p-checkbox class="f-right ml-20" label="Show offroute markers" binary="true" [(ngModel)]="showOffrouteMarkers"
+      (onChange)="toggleOffrouteMarkers()" [disabled]="(isPlanning$ | async) === false"></p-checkbox>
 
-    <p-checkbox
-      class="f-right"
-      label="Show onroute markers"
-      binary="true"
-      [(ngModel)]="showOnrouteMarkers"
-      (onChange)="toggleOnrouteMarkers()"
-      [disabled]="!(isPlanning$ | async)"
-    ></p-checkbox>
+    <p-checkbox class="f-right" label="Show onroute markers" binary="true" [(ngModel)]="showOnrouteMarkers"
+      (onChange)="toggleOnrouteMarkers()" [disabled]="(isPlanning$ | async) === false"></p-checkbox>
   </div>
 </div>
 
-<app-table-spinner *ngIf="((loading$ | async) || (searchContext$ | async)?.working || (processing$ | async) || (saving$ | async)) as working; else externalPoiTable"></app-table-spinner>
+<app-table-spinner
+  *ngIf="((loading$ | async) || (searchContext$ | async)?.working || (processing$ | async) || (saving$ | async)) as working; else externalPoiTable">
+</app-table-spinner>
 
 <ng-template #externalPoiTable>
   <p-accordion [multiple]="true">
     <p-accordionTab header="On route pois">
-      <app-hike-edit-pois-external-table
-        [pois$]="pois$"
-        [subdomain]="poiType.subdomain"
-        [onRouteCheck]="true"
-        [openPoiModal]="openPoiModal"
-      ></app-hike-edit-pois-external-table>
+      <app-hike-edit-pois-external-table [pois$]="pois$" [subdomain]="poiType.subdomain" [onRouteCheck]="true"
+        [openPoiModal]="openPoiModal"></app-hike-edit-pois-external-table>
     </p-accordionTab>
     <p-accordionTab header="Off route pois">
-      <app-hike-edit-pois-external-table
-        [pois$]="pois$"
-        [subdomain]="poiType.subdomain"
-        [onRouteCheck]="false"
-        [openPoiModal]="openPoiModal"
-      ></app-hike-edit-pois-external-table>
+      <app-hike-edit-pois-external-table [pois$]="pois$" [subdomain]="poiType.subdomain" [onRouteCheck]="false"
+        [openPoiModal]="openPoiModal"></app-hike-edit-pois-external-table>
     </p-accordionTab>
   </p-accordion>
 </ng-template>

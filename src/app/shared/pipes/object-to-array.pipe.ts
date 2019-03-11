@@ -1,15 +1,15 @@
-import { PipeTransform, Pipe } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'obj2arr' })
 export class ObjectToArrayPipe implements PipeTransform {
-  transform(obj: Object): any {
-    const keys: any[] = [];
+  transform(obj: object): any {
+    const keys: Array<any> = [];
 
     if (typeof obj === 'object' && Object.keys(obj).length) {
       for (const key in obj) {
         if (obj[key]) {
           const item = {
-            key: key,
+            key,
             value: obj[key]
           };
           keys.push(item);

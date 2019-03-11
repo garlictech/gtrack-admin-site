@@ -1,18 +1,17 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 import { GameRuleService } from '../../../services/game-rule';
 import { AstronomyService } from '../../../../astronomy';
 
-import { IHikeProgramStored, ILocalizedItem, ITextualDescription } from 'subrepos/provider-client';
+import { HikeProgramStored, LocalizedItem, TextualDescription } from '@features/common/gtrack-interfaces';
 import { PoiSelectors, poiReducer } from '../../../store/poi';
 import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
-import { IconService } from '../../../../map/services/icon';
 
 import { HikeProgramComponent } from '../';
+import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
 
 @Pipe({
   name: 'distance'
@@ -27,7 +26,7 @@ class DistancePipe implements PipeTransform {
   name: 'localizeDescription'
 })
 class LocalizeDescriptionPipe implements PipeTransform {
-  transform(value: ILocalizedItem<ITextualDescription>): ITextualDescription {
+  transform(value: LocalizedItem<TextualDescription>): TextualDescription {
     return {
       title: '',
       fullDescription: '',
@@ -50,7 +49,7 @@ describe('HikeProgramComponent', () => {
             storeDomain: 'poi'
           }
         },
-        IconService,
+        LeafletIconService,
         GameRuleService,
         AstronomyService
       ],
@@ -68,7 +67,7 @@ describe('HikeProgramComponent', () => {
     fixture = TestBed.createComponent(HikeProgramComponent);
     component = fixture.componentInstance;
 
-    component.hikeProgram = <IHikeProgramStored>{
+    component.hikeProgram = <HikeProgramStored>{
       id: '1',
       distance: 4500,
       uphill: 2345,

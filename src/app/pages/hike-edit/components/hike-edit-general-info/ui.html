@@ -1,10 +1,6 @@
-<app-localized-description
-  [descriptionSelector]="descriptionSelector"
-  [descriptionLangSelector]="descriptionLangSelector"
-  [submitFv]="submitDescription"
-  [deleteFv]="deleteDescription"
-  [type]="'hike'"
-></app-localized-description>
+<app-localized-description [descriptionSelector]="descriptionSelector"
+  [descriptionLangSelector]="descriptionLangSelector" [submitFv]="submitDescription" [deleteFv]="deleteDescription"
+  [type]="'hike'"></app-localized-description>
 
 <div class="mt-20">
   <gtrack-form [formDescriptor]="generalInfoFormDescriptor"></gtrack-form>
@@ -14,36 +10,38 @@
   <div class="ui-g-2 ui-g-nopad">
     <strong>RoundTrip:</strong>
     <span [ngClass]="{'text-success': (isRoundTrip$ | async)}">
-      {{(isRoundTrip$ | async) ? 'Yes' : 'No'}}
+      {{ (isRoundTrip$ | async) ? 'Yes' : 'No' }}
     </span>
   </div>
 
   <div class="ui-g-2 ui-g-nopad">
-    <strong>State:</strong> {{hikeProgramData.state}}
+    <strong>State:</strong> {{ hikeProgramData.state }}
   </div>
 
   <div class="ui-g-2 ui-g-nopad">
-    <strong>Published:</strong> {{hikeProgramData.published | date: 'yyyy.MM.dd. HH:mm'}}
+    <strong>Published:</strong> {{ hikeProgramData.published | date: 'yyyy.MM.dd. HH:mm' }}
   </div>
 
   <div class="ui-g-2 ui-g-nopad">
     <strong>Location:</strong>
     <span [ngClass]="{'text-success': hikeProgramData.location}">
-      {{hikeProgramData.location}}
+      {{ hikeProgramData.location }}
     </span>
 
     <div class="feedback invalid" *ngIf="(remoteError$ | async)?.location as locationError">
-      {{locationError[0] | translate}}
+      {{ locationError[0] | translate }}
     </div>
   </div>
 
   <div class="ui-g-2 ui-g-nopad p-relative">
     <strong>Elevation:</strong>
-    <img class="svg svg-elevation p-absolute" *ngIf="hikeProgramData.elevationIcon?.length" [src]="hikeProgramData.elevationIcon | trustedUrl">
+    <img class="svg svg-elevation p-absolute" *ngIf="hikeProgramData.elevationIcon?.length"
+      [src]="hikeProgramData.elevationIcon | trustedUrl">
   </div>
 
   <div class="ui-g-2 ui-g-nopad p-relative">
     <strong>Route:</strong>
-    <img class="svg svg-route p-absolute" *ngIf="hikeProgramData.routeIcon?.length"  [src]="hikeProgramData.routeIcon | trustedUrl">
+    <img class="svg svg-route p-absolute" *ngIf="hikeProgramData.routeIcon?.length"
+      [src]="hikeProgramData.routeIcon | trustedUrl">
   </div>
 </div>

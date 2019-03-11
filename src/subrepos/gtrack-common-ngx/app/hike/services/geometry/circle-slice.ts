@@ -4,12 +4,12 @@ import { CoordinateIterator } from './coordinate-iterator';
 
 export class CircleSlice {
   constructor(
-    private startPoint: GeoJSON.Feature<GeoJSON.Point>,
-    private endPoint: GeoJSON.Feature<GeoJSON.Point>,
-    private line: GeoJSON.Feature<GeoJSON.LineString>
+    private readonly startPoint: GeoJSON.Feature<GeoJSON.Point>,
+    private readonly endPoint: GeoJSON.Feature<GeoJSON.Point>,
+    private readonly line: GeoJSON.Feature<GeoJSON.LineString>
   ) {}
 
-  public get(): GeoJSON.Feature<GeoJSON.LineString> | null {
+  get(): GeoJSON.Feature<GeoJSON.LineString> | null {
     const startVertex = nearestPointOnLine(this.line, this.startPoint);
     const stopVertex = nearestPointOnLine(this.line, this.endPoint);
     let clipLine: GeoJSON.Feature<GeoJSON.LineString>;
@@ -24,13 +24,13 @@ export class CircleSlice {
       stopVertex.geometry === null ||
       this.line.geometry === null
     ) {
-      return null;
+      return undefined;
     }
 
-    clipLine = <GeoJSON.Feature<GeoJSON.LineString>>turfLineString([startVertex.geometry.coordinates]);
+    clipLine = turfLineString([startVertex.geometry.coordinates]) as GeoJSON.Feature<GeoJSON.LineString>;
 
     if (clipLine === null || clipLine.geometry === null) {
-      return null;
+      return undefined;
     }
 
     it = new CoordinateIterator(this.line.geometry.coordinates);

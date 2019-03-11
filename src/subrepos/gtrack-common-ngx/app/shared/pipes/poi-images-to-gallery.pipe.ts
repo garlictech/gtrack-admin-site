@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IBackgroundImageData } from 'subrepos/provider-client';
-import { IPrimeNgGalleryImage } from '../interfaces';
+import { BackgroundImageData } from '@features/common/gtrack-interfaces';
+import { PrimeNgGalleryImage } from '../interfaces';
 
 @Pipe({ name: 'poiImagesToGallery' })
 export class PoiImagesToGalleryPipe implements PipeTransform {
-  transform(images: IBackgroundImageData[]): IPrimeNgGalleryImage[] {
+  transform(images: Array<BackgroundImageData>): Array<PrimeNgGalleryImage> {
     if (!images) {
       return [];
     }

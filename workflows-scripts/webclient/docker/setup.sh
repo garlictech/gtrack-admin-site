@@ -8,18 +8,10 @@ DOCKER_RUN_CMD="docker-compose -f docker/docker-compose.webpack.yml run -T ${PRO
 echo "Updating package.json..."
 ${DOCKER_RUN_CMD} > package.json
 
-echo "Updating tslint.json..."
-export DOCKER_CMD="cat tslint.json"
-${DOCKER_RUN_CMD} > tslint.json
+for file in "tslint.json" "tsconfig.json" "jest-config.js" ".prettierrc" ".editorconfig"; do
+  echo "Updating $file..."
+  export DOCKER_CMD="cat $file"
+  ${DOCKER_RUN_CMD} > $file
+done
 
-echo "Updating tsconfig.json..."
-export DOCKER_CMD="cat tsconfig.json"
-${DOCKER_RUN_CMD} > tsconfig.json
-
-echo "Updating jest-config.js..."
-export DOCKER_CMD="cat jest-config.js"
-${DOCKER_RUN_CMD} > jest-config.js
-
-echo "Adding ng packages..."
-rm -f ng-add-pug-loader.js
-ng add ng-cli-pug-loader
+yarn

@@ -1,8 +1,8 @@
-import { ActionReducer } from '@ngrx/store';
-import { IHikeEditRoutePlannerState } from '../state';
-import { hikeEditRoutePlannerActions } from '../actions';
-
+// tslint:disable:only-arrow-functions no-small-switch
 import _cloneDeep from 'lodash-es/cloneDeep';
+
+import { hikeEditRoutePlannerActions } from '../actions';
+import { HikeEditRoutePlannerState } from '../state';
 
 export const initialRouteDataState: GeoJSON.FeatureCollection<any> = {
   type: 'FeatureCollection',
@@ -20,7 +20,7 @@ export const initialRouteDataState: GeoJSON.FeatureCollection<any> = {
   ]
 };
 
-export const initialRouteInfoDataState: IHikeEditRoutePlannerState = {
+export const initialRouteInfoDataState: HikeEditRoutePlannerState = {
   segments: [],
   total: {},
   location: '',
@@ -33,12 +33,12 @@ export const initialRouteInfoDataState: IHikeEditRoutePlannerState = {
 export function hikeEditRoutePlannerReducer(
   state = initialRouteInfoDataState,
   action: hikeEditRoutePlannerActions.AllHikeEditRoutePlannerActions
-): IHikeEditRoutePlannerState {
+): HikeEditRoutePlannerState {
   const newState = _cloneDeep(state);
 
   switch (action.type) {
     case hikeEditRoutePlannerActions.RESET_ROUTE_PLANNING_STATE:
-      return initialRouteInfoDataState;
+      return { ...initialRouteInfoDataState };
 
     case hikeEditRoutePlannerActions.ROUTING_START:
       return {
@@ -66,10 +66,12 @@ export function hikeEditRoutePlannerReducer(
 
     case hikeEditRoutePlannerActions.UPDATE_SEGMENT:
       newState.segments.splice(action.index, 1, action.segment);
+
       return newState;
 
     case hikeEditRoutePlannerActions.REMOVE_SEGMENTS:
       newState.segments.splice(action.idx, action.count);
+
       return newState;
 
     case hikeEditRoutePlannerActions.POP_SEGMENT:

@@ -1,44 +1,45 @@
-import { IEnvironment } from './ienvironment';
+import { Environment } from './ienvironment';
+
+const lambdaEndpoint = 'https://njpebvpadh.execute-api.us-east-1.amazonaws.com/latest';
 
 // Development environment
-export class Environment implements IEnvironment {
-  production = false;
-  staging = false;
-  webappServer = window.location.origin;
-  deepstream = 'ws://localhost:6020/deepstream';
+export const environment: Environment = {
+  production: false,
+  staging: false,
+  webappServer: window.location.origin,
+  deepstream: 'ws://localhost:6020/deepstream',
 
-  lambdaEndpoint = 'https://njpebvpadh.execute-api.us-east-1.amazonaws.com/latest';
+  lambdaEndpoint,
 
-  authentication = {
+  authentication: {
     server: 'https://9i0oeair61.execute-api.us-east-1.amazonaws.com/latest',
+
     google: { appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com' }
-  };
+  },
 
-  raven = 'no-raven-in-dev';
+  raven: 'no-raven-in-dev',
 
-  graphhopper = {
+  graphhopper: {
     apiKey: '111444bf-7c37-499b-b87c-b324d7406715'
-  };
+  },
 
-  mapillary = {
+  mapillary: {
     clientID: 'bWxkcHdGR0dyRVJPNU1wRklzVHZoZzo5YmE0YzlmNzQ1NmY0ZWFh'
-  };
+  },
 
-  flickr = {
+  flickr: {
     apiKey: '0191c7b116e215758a6c2450bf8a4c46',
     secret: 'c420ea95cde9cfb9'
-  };
+  },
 
-  googlePhotoLimit = 2;
+  googlePhotoLimit: 2,
 
-  awsConfig = {
+  awsConfig: {
     s3: 'to-be-configured',
-    policyGenerator: this.lambdaEndpoint + '/generate-s3-policy'
-  };
+    policyGenerator: `${lambdaEndpoint}/generate-s3-policy`
+  },
 
-  openWeatherMap = {
+  openWeatherMap: {
     key: 'e5a0aba93cfca3ee54c272133018df78'
-  };
-}
-
-export const environment = new Environment();
+  }
+};

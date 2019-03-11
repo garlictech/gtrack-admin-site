@@ -1,7 +1,7 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES } from './externals';
 import { SearchFiltersModuleConfig } from './search-filters-module-config';
 import { SearchFiltersSelectors } from './store';
-import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES } from './externals';
 
 @NgModule({
   imports: [],

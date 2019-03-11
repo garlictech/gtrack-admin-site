@@ -1,12 +1,11 @@
-import { Reducer as deepstreamReducer } from '../../../deepstream-ngx';
+import { Reducer as deepstreamReducer } from '@features/common/deepstream-ngx';
 import { Reducer as authReducer } from '../authentication';
-import { poiReducer } from '../hike/store/poi/reducer';
-import { hikeReducer } from '../hike/store/hike/reducer';
-import { routeReducer } from '../hike/store/route/reducer';
 import { geoSearchReducer } from '../geosearch';
-import { reducer as backgroundGeolocationReducer } from './reducers/background-geolocation';
-import { searchFiltersReducer } from '../search-filters';
+import { hikeReducer } from '../hike/store/hike/reducer';
+import { poiReducer } from '../hike/store/poi/reducer';
+import { routeReducer } from '../hike/store/route/reducer';
 import { objectMarkReducer } from '../object-mark';
+import { searchFiltersReducer } from '../search-filters';
 
 export const commonReducers = {
   deepstream: deepstreamReducer,
@@ -15,7 +14,6 @@ export const commonReducers = {
   route: routeReducer,
   geosearch: geoSearchReducer,
   authentication: authReducer,
-  geolocation: backgroundGeolocationReducer,
   searchFilters: searchFiltersReducer,
   objectMarks: objectMarkReducer
 };

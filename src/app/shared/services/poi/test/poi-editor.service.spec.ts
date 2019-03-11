@@ -1,25 +1,37 @@
+import { MessageService } from 'primeng/api';
+
+// tslint:disable:no-big-function
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { PoiEditorService } from '../poi-editor.service';
-import { GOOGLE_POIS } from './fixtures/google-pois';
-import { StoreModule } from '@ngrx/store';
-import { hikeEditPoiReducer, editedHikeProgramReducer } from '../../../../../app/store/reducer';
+import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import {
-  GeometryService, GeospatialService, ElevationService, GeoSearchSelectors,
-  PoiSelectors, EXTERNAL_GEO_SEARCH_DEPENDENCIES, EXTERNAL_POI_DEPENDENCIES
+  LeafletIconService,
+  LeafletMapMarkerService,
+  LeafletMapService,
+  LeafletMarkerPopupService,
+  reducer as leafletMapReducer
+} from '@bit/garlictech.angular-features.common.leaflet-map';
+import { featureName as leafletFeatureName } from '@bit/garlictech.angular-features.common.leaflet-map/store/state';
+import { StoreModule } from '@ngrx/store';
+
+import { editedHikeProgramReducer, hikeEditPoiReducer } from '../../../../../app/store/reducer';
+import {
+  ElevationService,
+  EXTERNAL_GEO_SEARCH_DEPENDENCIES,
+  EXTERNAL_POI_DEPENDENCIES,
+  GeometryService,
+  GeoSearchSelectors,
+  GeospatialService,
+  PoiSelectors
 } from '../../../../../subrepos/gtrack-common-ngx';
 import { RoutePlannerService } from '../../admin-map';
 import { GooglePoiService } from '../google-poi.service';
+import { PoiEditorService } from '../poi-editor.service';
 import { WikipediaPoiService } from '../wikipedia-poi.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MessageService } from 'primeng/api';
-import { ETextualDescriptionType, EPoiTypes } from '../../../../../subrepos/provider-client';
-import { WIKIPEDIA_POIS } from './fixtures/wikipedia-pois';
+import { GOOGLE_POIS } from './fixtures/google-pois';
 import { OSM_AMENITY_POIS } from './fixtures/osm-amenity-pois';
 import { OSM_NATURAL_POIS } from './fixtures/osm-natural-pois';
-import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
-import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
-import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
-import { LeafletMarkerPopupService } from '@common.features/leaflet-map/services/leaflet-marker-popup.service';
+import { WIKIPEDIA_POIS } from './fixtures/wikipedia-pois';
 
 describe('PoiEditorService', () => {
   let poiEditorService: PoiEditorService;
@@ -41,39 +53,49 @@ describe('PoiEditorService', () => {
         HttpClientTestingModule,
         StoreModule.forRoot({
           hikeEditPoi: hikeEditPoiReducer,
-          editedHikeProgram: editedHikeProgramReducer
-        }),
+          editedHikeProgram: editedHikeProgramReducer,
+          [leafletFeatureName]: leafletMapReducer
+        })
       ],
       providers: [
         PoiEditorService,
         LeafletIconService,
         GeoSearchSelectors,
         PoiSelectors,
-        LeafletMapService,
         LeafletMarkerPopupService,
+        {
+          provide: LeafletMapService,
+          useValue: {
+            addLayer: jest.fn(),
+            removeLayer: jest.fn(),
+            refreshSpiderfierMarkers: jest.fn(),
+            leafletMap: jest.fn(),
+            spin: jest.fn()
+          }
+        },
         {
           provide: GeometryService,
           useValue: {
-            getCenterRadius: () => {},
-            distanceFromRoute: () => 0
+            getCenterRadius: jest.fn(),
+            distanceFromRoute: () => 0
           }
         },
         {
           provide: GeospatialService,
           useValue: {
-            distanceOnLine: () => 0
+            distanceOnLine: () => 0
           }
         },
         {
           provide: RoutePlannerService,
           useValue: {
-            getSearchBounds: () => 0
+            getSearchBounds: () => 0
           }
         },
         {
           provide: ElevationService,
           useValue: {
-            getData: () => 0
+            getData: () => 0
           }
         },
         {
@@ -91,25 +113,25 @@ describe('PoiEditorService', () => {
         {
           provide: MessageService,
           useValue: {
-            add: () => {}
+            add: jest.fn()
           }
         },
         {
           provide: WikipediaPoiService,
           useValue: {
-            getPoiDetails: () => {}
+            getPoiDetails: jest.fn()
           }
         },
         {
           provide: GooglePoiService,
           useValue: {
-            getPoiDetails: () => {}
+            getPoiDetails: jest.fn()
           }
         },
         {
           provide: LeafletMapMarkerService,
           useValue: {
-            create: () => {}
+            create: jest.fn()
           }
         },
         {

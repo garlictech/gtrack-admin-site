@@ -1,24 +1,25 @@
-import { filter, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-
+import _cloneDeep from 'lodash-es/cloneDeep';
 import { Observable } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
+
 import { HikeProgram } from './hike-program';
 
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 import {
-  IHikeProgram,
-  IHikeProgramStored,
-  IHikeProgramSaveResponse,
-  EObjectState
-} from '../../../../../provider-client';
-import { DeepstreamService } from '../../../../../deepstream-ngx';
+  EObjectState,
+  HikeProgramData,
+  HikeProgramSaveResponse,
+  HikeProgramStored
+} from '@features/common/gtrack-interfaces';
 
 @Injectable()
 export class HikeProgramService {
-  constructor(private _deepstream: DeepstreamService) {}
+  constructor(private readonly _deepstream: DeepstreamService) {}
 
-  get(id: string): Observable<IHikeProgramStored | null> {
+  get(id: string): Observable<HikeProgramStored | null> {
     return this._deepstream
-      .getRecord<IHikeProgramStored>(`hike_programs/${id}`)
+      .getRecord<HikeProgramStored>(`hike_programs/${id}`)
       .get()
       .pipe(
         filter(data => data.stops instanceof Array),
@@ -26,41 +27,66 @@ export class HikeProgramService {
       );
   }
 
-  query(): Observable<IHikeProgramStored[]> {
+  query(): Observable<Array<HikeProgramStored>> {
     return this._deepstream
-      .doQuery<IHikeProgramStored>({
+      .doQuery<HikeProgramStored>({
         table: 'hike_programs',
         query: []
       })
       .pipe(take(1));
   }
 
-  public save(hikeProgram: IHikeProgram) {
+  save(hikeProgram: HikeProgramData): Observable<HikeProgramSaveResponse> {
     let data = hikeProgram;
 
     if (hikeProgram instanceof HikeProgram) {
       data = hikeProgram.toObject();
     }
 
-    return this._deepstream.callRpc<IHikeProgramSaveResponse>('admin.hike-program.save', data).pipe(take(1));
+    return this._deepstream.callRpc<HikeProgramSaveResponse>('admin.hike-program.save', data).pipe(take(1));
   }
 
-  public updateState(id: string, state: EObjectState) {
+  updateState(id: string, state: EObjectState): Observable<any> {
     return this._deepstream
       .callRpc('admin.state', {
-        id: id,
+        id,
         table: 'hike_programs',
-        state: state
+        state
       })
       .pipe(take(1));
   }
 
-  public delete(id: string) {
+  delete(id: string): Observable<any> {
     return this._deepstream
       .callRpc('admin.delete', {
-        id: id,
+        id,
         table: 'hike_programs'
       })
       .pipe(take(1));
+  }
+
+  reverse(hikeProgram: HikeProgramStored): HikeProgramStored {
+    const reversed = _cloneDeep(hikeProgram);
+    const isReversed = !!hikeProgram.reversed;
+    const reverseStops = reversed.reverseStops;
+    const reverseScore = reversed.reverseScore;
+    const score = reversed.score;
+    const time = reversed.time;
+    const stops = reversed.stops;
+    const reverseTime = reversed.reverseTime;
+    const uphill = reversed.uphill;
+    const downhill = reversed.downhill;
+
+    reversed.reversed = !isReversed;
+    reversed.stops = reverseStops;
+    reversed.score = reverseScore;
+    reversed.time = reverseTime;
+    reversed.uphill = downhill;
+    reversed.downhill = uphill;
+    reversed.reverseScore = score;
+    reversed.reverseTime = time;
+    reversed.reverseStops = stops;
+
+    return reversed;
   }
 }

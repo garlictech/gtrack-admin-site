@@ -1,21 +1,21 @@
 .ui-spinner {
-    .ui-spinner-input {
-        @include box-shadow(inset 0px 0px 0px 0px $red-lighter);
-        border: 1px solid $white;
-        border-radius: $input-border-radius;
-        background: $white;
-        color: $black;
-        padding: $input-padding;
-    }
-    .ui-spinner-button {
-        background: $black;
-        color: $black;
-        border: 0;
-    }
-    .ui-spinner-up {
-        border-radius: 0 20px 0 0;
-    }
-    .ui-spinner-down {
-        border-radius: 0 0 20px 0;
-    }
+  .ui-spinner-input {
+    @include box-shadow(inset 0px 0px 0px 0px $red-lighter);
+    border: 1px solid $white;
+    border-radius: $input-border-radius;
+    background: $white;
+    color: $black;
+    padding: $input-padding;
+  }
+  .ui-spinner-button {
+    background: $black;
+    color: $black;
+    border: 0;
+  }
+  .ui-spinner-up {
+    border-radius: 0 20px 0 0;
+  }
+  .ui-spinner-down {
+    border-radius: 0 0 20px 0;
+  }
 }

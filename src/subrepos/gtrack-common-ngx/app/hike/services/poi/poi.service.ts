@@ -1,56 +1,54 @@
-import { take, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { EObjectState, PoiData, PoiSaveResponse, PoiStored } from '@features/common/gtrack-interfaces';
 import { Observable } from 'rxjs';
-import { IPoi, IPoiStored, IPoiSaveResponse, EObjectState } from '../../../../../provider-client';
+import { map, take } from 'rxjs/operators';
 
-import { DeepstreamService } from '../../../../../deepstream-ngx';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 
 import _cloneDeep from 'lodash-es/cloneDeep';
 
 @Injectable()
 export class PoiService {
-  constructor(private _deepstream: DeepstreamService) {}
+  constructor(private readonly _deepstream: DeepstreamService) {}
 
-  public get(id: string): Observable<IPoiStored> {
+  get(id: string): Observable<PoiStored> {
     return this._deepstream
-      .getRecord<IPoiStored>(`pois/${id}`)
+      .getRecord<PoiStored>(`pois/${id}`)
       .get()
       .pipe(
         take(1),
-        map(data => {
-          return _cloneDeep(data);
-        })
+        map(_cloneDeep)
       );
   }
 
-  public create(poi: IPoi) {
-    return this._deepstream.callRpc<IPoiSaveResponse>('admin.poi.save', poi);
+  create(poi: PoiData): Observable<any> {
+    return this._deepstream.callRpc<PoiSaveResponse>('admin.poi.save', poi);
   }
 
-  public updateState(id: string, state: EObjectState) {
+  updateState(id: string, state: EObjectState): Observable<any> {
     return this._deepstream
       .callRpc('admin.state', {
-        id: id,
+        id,
         table: 'pois',
-        state: state
+        state
       })
       .pipe(take(1));
   }
 
-  public delete(id: string) {
+  delete(id: string): Observable<any> {
     return this._deepstream
       .callRpc('admin.delete', {
-        id: id,
+        id,
         table: 'pois'
       })
       .pipe(take(1));
   }
 
-  public merge(ids: string[], newData: IPoi) {
+  merge(ids: Array<string>, newData: PoiData): Observable<any> {
     return this._deepstream
       .callRpc('admin.poi.merge', {
-        ids: ids,
-        newData: newData
+        ids,
+        newData
       })
       .pipe(take(1));
   }

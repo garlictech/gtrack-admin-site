@@ -1,44 +1,41 @@
 import { Inject, Injectable } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 import { Dictionary } from '@ngrx/entity/src/models';
-
-import _get from 'lodash-es/get';
+import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 import _find from 'lodash-es/find';
+import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
-
+import { EXTERNAL_OBJECT_MARK_DEPENDENCIES, ExternalObjectMarkDependencies } from '../externals';
 import {
   objectMarkAdapter,
+  ObjectMarkContext,
   objectMarkContextAdapter,
-  IObjectMarkState,
-  IObjectMarkContext,
-  IObjectMarkData
+  ObjectMarkData,
+  ObjectMarkState
 } from './state';
-
-import { EObjectMarkContext } from 'subrepos/provider-client';
-import { IExternalObjectMarkDependencies, EXTERNAL_OBJECT_MARK_DEPENDENCIES } from '../externals';
 
 @Injectable()
 export class ObjectMarkSelectors {
-  public selectFeature: MemoizedSelector<object, IObjectMarkState>;
+  selectFeature: MemoizedSelector<object, ObjectMarkState>;
 
-  public getAllObjectMarks: (state: object) => IObjectMarkData[];
-  public getAllContexts: (state: object) => IObjectMarkContext[];
+  getAllObjectMarks: (state: object) => Array<ObjectMarkData>;
+  getAllContexts: (state: object) => Array<ObjectMarkContext>;
 
-  protected _selectContextEntities: (state: object) => Dictionary<IObjectMarkContext>;
-  protected _selectObjectMarkEntities: (state: object) => Dictionary<IObjectMarkData>;
-  protected _externals: IExternalObjectMarkDependencies;
+  protected _selectContextEntities: (state: object) => Dictionary<ObjectMarkContext>;
+  protected _selectObjectMarkEntities: (state: object) => Dictionary<ObjectMarkData>;
+  protected _externals: ExternalObjectMarkDependencies;
 
   constructor(@Inject(EXTERNAL_OBJECT_MARK_DEPENDENCIES) externals) {
     this._externals = externals;
-    this.selectFeature = createFeatureSelector<IObjectMarkState>(externals.storeDomain);
+    this.selectFeature = createFeatureSelector<ObjectMarkState>(externals.storeDomain);
 
     const objectMarkSelector = createSelector(
       this.selectFeature,
-      (state: IObjectMarkState) => state.objectMarks
+      (state: ObjectMarkState) => state.objectMarks
     );
     const contextSelector = createSelector(
       this.selectFeature,
-      (state: IObjectMarkState) => state.contexts
+      (state: ObjectMarkState) => state.contexts
     );
 
     const selectors = objectMarkAdapter.getSelectors(objectMarkSelector);
@@ -50,7 +47,7 @@ export class ObjectMarkSelectors {
     this._selectContextEntities = contextSelectors.selectEntities;
   }
 
-  public getObjectMarks(context: EObjectMarkContext) {
+  getObjectMarks(context: EObjectMarkContext): MemoizedSelector<object, any> {
     return createSelector(
       this.getAllObjectMarks,
       objectMarks => {
@@ -61,30 +58,24 @@ export class ObjectMarkSelectors {
     );
   }
 
-  public getObjectMarkObject(context: EObjectMarkContext, objectToFind: any) {
+  getObjectMarkObject(context: EObjectMarkContext, objectToFind: any): MemoizedSelector<object, any> {
     return createSelector(
       this.getObjectMarks(context),
-      objects => {
-        return _find(objects, val => _isEqual(val, objectToFind));
-      }
+      objects => _find(objects, val => _isEqual(val, objectToFind))
     );
   }
 
-  public isObjectMarked(context: EObjectMarkContext, objectToFind: any) {
+  isObjectMarked(context: EObjectMarkContext, objectToFind: any): MemoizedSelector<object, boolean> {
     return createSelector(
       this.getObjectMarkObject(context, objectToFind),
-      object => {
-        return typeof object !== 'undefined';
-      }
+      object => typeof object !== 'undefined'
     );
   }
 
-  public getObjectMarkContext(id: EObjectMarkContext) {
+  getObjectMarkContext(id: EObjectMarkContext): MemoizedSelector<object, any> {
     return createSelector(
       this.getAllContexts,
-      contexts => {
-        return contexts.find(context => context.id === id);
-      }
+      contexts => contexts.find(context => context.id === id)
     );
   }
 }

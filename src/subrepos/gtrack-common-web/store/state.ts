@@ -1,8 +1,8 @@
+import { LocalizationState } from '@features/common/localization/store';
 import { RouterReducerState } from '@ngrx/router-store';
 import { CommonState } from 'subrepos/gtrack-common-ngx/app/store/';
-import { ILocalizationState } from 'subrepos/localize-ngx/store';
 
-export interface IState extends CommonState {
-  language: ILocalizationState;
+export interface State extends CommonState {
+  language: LocalizationState;
   router: RouterReducerState; // ngrx/router
 }

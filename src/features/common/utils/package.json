@@ -1,0 +1,13 @@
+{
+  "name": "@bit/garlictech.angular-features.common.utils",
+  "version": "0.0.5",
+  "homepage": "https://bitsrc.io/garlictech/angular-features/common/utils",
+  "main": "index.ts",
+  "dependencies": {
+    "rxjs": "~6.3.2"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "componentRootFolder": "src/features/common/utils",
+  "license": "SEE LICENSE IN LICENSE"
+}

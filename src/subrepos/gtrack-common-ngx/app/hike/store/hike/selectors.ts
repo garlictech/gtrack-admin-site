@@ -1,42 +1,39 @@
 import { Inject, Injectable } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-
-import _pickBy from 'lodash-es/pickBy';
-
-import { hikeAdapter, hikeContextStateAdapter, IHikeState, IHikeContextState } from './state';
-import { EXTERNAL_HIKE_DEPENDENCIES, IExternalHikeDependencies } from '../../externals';
+import { EObjectState, HikeProgramStored } from '@features/common/gtrack-interfaces';
 import { Dictionary } from '@ngrx/entity/src/models';
-import { IHikeProgramStored, EObjectState } from '../../../../../provider-client';
-
+import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
+import _pickBy from 'lodash-es/pickBy';
 import { GeoSearchSelectors } from '../../../geosearch';
 import { SearchFiltersSelectors } from '../../../search-filters';
+import { EXTERNAL_HIKE_DEPENDENCIES, ExternalHikeDependencies } from '../../externals';
+import { hikeAdapter, HikeContextState, hikeContextStateAdapter, HikeState } from './state';
 
 @Injectable()
 export class HikeSelectors {
-  public selectFeature: MemoizedSelector<object, IHikeState>;
-  public getHikeIds: (state: object) => string[] | number[];
-  public getAllHikes: (state: object) => IHikeProgramStored[];
-  public getAllContexts: (state: object) => IHikeContextState[];
-  public getAllContextEntities: (state: object) => Dictionary<IHikeContextState>;
+  selectFeature: MemoizedSelector<object, HikeState>;
+  getHikeIds: (state: object) => Array<string> | Array<number>;
+  getAllHikes: (state: object) => Array<HikeProgramStored>;
+  getAllContexts: (state: object) => Array<HikeContextState>;
+  getAllContextEntities: (state: object) => Dictionary<HikeContextState>;
 
-  protected _selectHikeEntities: (state: object) => Dictionary<IHikeProgramStored>;
-  protected _externals: IExternalHikeDependencies;
+  protected _selectHikeEntities: (state: object) => Dictionary<HikeProgramStored>;
+  protected _externals: ExternalHikeDependencies;
 
   constructor(
     @Inject(EXTERNAL_HIKE_DEPENDENCIES) externals,
-    private _geoSearchSelectors: GeoSearchSelectors,
-    private _searchFiltersSelectors: SearchFiltersSelectors
+    private readonly _geoSearchSelectors: GeoSearchSelectors,
+    private readonly _searchFiltersSelectors: SearchFiltersSelectors
   ) {
     this._externals = externals;
-    this.selectFeature = createFeatureSelector<IHikeState>(this._externals.storeDomain);
+    this.selectFeature = createFeatureSelector<HikeState>(this._externals.storeDomain);
 
     const hikeSelector = createSelector(
       this.selectFeature,
-      (state: IHikeState) => state.hikes
+      (state: HikeState) => state.hikes
     );
     const contextSelector = createSelector(
       this.selectFeature,
-      (state: IHikeState) => state.contexts
+      (state: HikeState) => state.contexts
     );
 
     const selectors = hikeAdapter.getSelectors(hikeSelector);
@@ -49,44 +46,42 @@ export class HikeSelectors {
     this.getAllContextEntities = contextSelectors.selectEntities;
   }
 
-  public getHike(context: string) {
+  getHike(context: string): MemoizedSelector<object, HikeProgramStored> {
     return createSelector(
       this.getAllHikes,
-      (hikes: IHikeProgramStored[]) => hikes.find(hike => hike.id === context)
+      (hikes: Array<HikeProgramStored>) => hikes.find(hike => hike.id === context)
     );
   }
 
-  public getHikes(contexts: string[]) {
+  getHikes(contexts: Array<string>): MemoizedSelector<object, Array<HikeProgramStored>> {
     return createSelector(
       this.getAllHikes,
       hikes => hikes.filter(hike => contexts.indexOf(hike.id) !== -1)
     );
   }
 
-  public getActiveHikes() {
+  getActiveHikes(): MemoizedSelector<object, Array<HikeProgramStored>> {
     return createSelector(
       this.getAllHikes,
-      (hikes: IHikeProgramStored[]) => hikes.filter(hike => hike.state !== EObjectState.archived)
+      (hikes: Array<HikeProgramStored>) => hikes.filter(hike => hike.state !== EObjectState.archived)
     );
   }
 
-  public getHikeContext(id: string) {
+  getHikeContext(id: string): MemoizedSelector<object, any> {
     return createSelector(
       this.getAllContexts,
-      contexts => {
-        return contexts.find(context => context.id === id);
-      }
+      contexts => contexts.find(context => context.id === id)
     );
   }
 
-  public getHikeContexts(ids: string[]) {
+  getHikeContexts(ids: Array<string>): MemoizedSelector<object, Array<any>> {
     return createSelector(
       this.getAllContexts,
       contexts => contexts.filter(context => ids.indexOf(context.id) !== -1)
     );
   }
 
-  public getHikeContextEntities(ids: string[]) {
+  getHikeContextEntities(ids: Array<string>): MemoizedSelector<object, Dictionary<any>> {
     return createSelector(
       this.getAllContextEntities,
       contexts =>
@@ -100,9 +95,9 @@ export class HikeSelectors {
     );
   }
 
-  public getFilteredSearchResults(context: string) {
+  getFilteredSearchResults(context: string): MemoizedSelector<object, Dictionary<any>> {
     return createSelector(
-      this._geoSearchSelectors.getGeoSearchResults<IHikeProgramStored>(context, this.getAllHikes),
+      this._geoSearchSelectors.getGeoSearchResults<HikeProgramStored>(context, this.getAllHikes),
       this._searchFiltersSelectors.getFilters,
       (hikes, filters) => {
         if (!(hikes instanceof Array)) {
@@ -115,12 +110,8 @@ export class HikeSelectors {
 
             return difficulty >= filters.difficulty[0] && difficulty <= filters.difficulty[1];
           })
-          .filter(hike => {
-            return hike.time >= filters.time[0] && hike.time <= filters.time[1];
-          })
-          .filter(hike => {
-            return hike.distance >= filters.length[0] && hike.distance <= filters.length[1];
-          });
+          .filter(hike => hike.time >= filters.time[0] && hike.time <= filters.time[1])
+          .filter(hike => hike.distance >= filters.length[0] && hike.distance <= filters.length[1]);
       }
     );
   }

@@ -1,22 +1,23 @@
 // Core
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
+
+import { GTrackPoi } from '../../../../../shared/interfaces';
 import { State } from '../../../../../store';
 import { editedHikeProgramActions } from '../../../../../store/actions';
-import { IGTrackPoi } from '../../../../../shared/interfaces';
 
 @Component({
   selector: 'app-hike-edit-pois-hike-table',
   templateUrl: './ui.html'
 })
 export class HikeEditPoisHikeTableComponent {
-  @Input() pois$: IGTrackPoi[];
+  @Input() pois$: Array<GTrackPoi>;
   @Input() onRouteCheck: boolean;
   @Input() openGTrackPoiModal: any;
 
-  constructor(private _store: Store<State>) {}
+  constructor(private readonly _store: Store<State>) {}
 
-  public removePoi($event, poi) {
+  removePoi($event, poi): void {
     $event.stopPropagation();
 
     this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId([poi.id]));

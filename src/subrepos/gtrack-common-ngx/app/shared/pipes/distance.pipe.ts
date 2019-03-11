@@ -5,10 +5,11 @@ import { UnitsService } from '../services/units';
   name: 'distance'
 })
 export class DistancePipe implements PipeTransform {
-  constructor(private units: UnitsService) {}
+  constructor(private readonly units: UnitsService) {}
 
   transform(value: number): string {
     const converted = this.units.convertDistance(value);
+
     return `${converted.value} ${converted.unit}`;
   }
 }

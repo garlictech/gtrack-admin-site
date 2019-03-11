@@ -1,16 +1,16 @@
-import { IPoi, IPoiStored, EObjectState } from 'subrepos/provider-client';
+import { PoiData, PoiStored, EObjectState } from '@features/common/gtrack-interfaces';
 
 import { poiReducer, poiReducerInitialState, poiContextReducerInitialState } from '../reducer';
 import * as actions from '../actions';
-import { IPoiState } from '../state';
+import { PoiState } from '../state';
 
 import { pois as poiFixtures } from './fixtures';
 
 describe('PoiReducer', () => {
   let id: string;
-  let initialState: IPoiState;
-  let poiData: IPoi;
-  let poi: IPoiStored;
+  let initialState: PoiState;
+  let poiData: PoiData;
+  let poi: PoiStored;
 
   beforeEach(() => {
     initialState = {

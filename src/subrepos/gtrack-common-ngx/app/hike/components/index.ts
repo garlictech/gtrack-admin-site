@@ -13,4 +13,5 @@ export * from './bookmark';
 export * from './hike-list-map';
 export * from './poi-map';
 export * from './hike-day';
+export * from './reverse-hike-button';
 export * from './hike-components.module';

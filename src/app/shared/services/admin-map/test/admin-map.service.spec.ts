@@ -1,14 +1,17 @@
-import { TestBed } from '@angular/core/testing';
-import { AdminMapService } from '../admin-map.service';
-import { DescriptionLanguageListService } from '../../../../../subrepos/gtrack-common-ngx';
-
-import { StoreModule, Store } from '@ngrx/store';
 import { State } from 'app/store';
-
 import * as _ from 'lodash';
-import { LeafletIconService } from '@common.features/leaflet-map/services/leaflet-icon.service';
-import { LeafletMapMarkerService } from '@common.features/leaflet-map/services/leaflet-map-marker.service';
-import { LeafletMarkerPopupService } from '@common.features/leaflet-map/services/leaflet-marker-popup.service';
+
+import { TestBed } from '@angular/core/testing';
+
+import { Store, StoreModule } from '@ngrx/store';
+
+import {
+  LeafletIconService,
+  LeafletMapMarkerService,
+  LeafletMarkerPopupService
+} from '@bit/garlictech.angular-features.common.leaflet-map';
+import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { AdminMapService } from '../admin-map.service';
 
 describe('AdminMapService', () => {
   let adminMapService: AdminMapService;
@@ -16,15 +19,13 @@ describe('AdminMapService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({})
-      ],
+      imports: [StoreModule.forRoot({})],
       providers: [
         AdminMapService,
         {
           provide: Store,
           useValue: {
-            dispatch: jest.fn(() => 1)
+            dispatch: jest.fn(() => 1)
           }
         },
         {

@@ -59,7 +59,7 @@ describe('HikeEditRoutePlanner actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditRoutePlannerActions.ADD_ROUTE,
-      route: route
+      route
     });
   });
 
@@ -70,7 +70,7 @@ describe('HikeEditRoutePlanner actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditRoutePlannerActions.PUSH_SEGMENT,
-      segment: segment
+      segment
     });
   });
 
@@ -82,7 +82,7 @@ describe('HikeEditRoutePlanner actions', () => {
     expect({ ...action }).toEqual({
       type: HikeEditRoutePlannerActions.UPDATE_SEGMENT,
       index: 0,
-      segment: segment
+      segment
     });
   });
 
@@ -113,7 +113,7 @@ describe('HikeEditRoutePlanner actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditRoutePlannerActions.UPDATE_TOTAL,
-      total: total
+      total
     });
   });
 
@@ -124,7 +124,7 @@ describe('HikeEditRoutePlanner actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: HikeEditRoutePlannerActions.SET_LOCATION,
-      location: location
+      location
     });
   });
 

@@ -1,4 +1,4 @@
-export interface IRouteTotal {
+export interface RouteTotal {
   distance?: number;
   uphill?: number;
   downhill?: number;

@@ -194,6 +194,4 @@ const _nationalities = [
   { name: 'Zimbabwean' }
 ];
 
-export const nationalities = _nationalities.map(val => {
-  return { label: val.name, value: val.name };
-});
+export const nationalities = _nationalities.map(val => ({ label: val.name, value: val.name }));

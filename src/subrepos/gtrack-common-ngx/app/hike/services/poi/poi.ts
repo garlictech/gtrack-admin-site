@@ -1,26 +1,28 @@
 import {
-  IPoi,
+  BackgroundImageData,
   EPoiTypes,
-  ILocalizedItem,
-  ITextualDescription,
-  IBackgroundImageData
-} from '../../../../../provider-client';
-
+  LocalizedItem,
+  PoiData,
+  TextualDescription
+} from '@features/common/gtrack-interfaces';
 import _cloneDeep from 'lodash-es/cloneDeep';
 
-export class Poi implements IPoi {
-  public id: string;
-  public elevation: number;
-  public lat: number;
-  public lon: number;
-  public objectTypes: EPoiTypes[];
-  public types: string[] = [];
-  public description: ILocalizedItem<ITextualDescription>;
-  public tags: string[] = [];
-  public backgroundImages: IBackgroundImageData[];
+export class Poi implements PoiData {
+  id: string;
+  elevation: number;
+  lat: number;
+  lon: number;
+  objectTypes: Array<EPoiTypes>;
+  types: Array<string>;
+  description: LocalizedItem<TextualDescription>;
+  tags: Array<string>;
+  backgroundImages: Array<BackgroundImageData>;
 
-  public constructor(data: IPoi) {
+  constructor(data: PoiData) {
     const converted = _cloneDeep(data);
     Object.assign(this, converted);
+
+    this.types = [];
+    this.tags = [];
   }
 }

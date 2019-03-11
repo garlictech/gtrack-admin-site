@@ -1,9 +1,9 @@
 import { InjectionToken } from '@angular/core';
 
-export interface IExternalSearchFiltersDependencies {
+export interface ExternalSearchFiltersDependencies {
   storeDomain: string;
 }
 
-export const EXTERNAL_SEARCH_FILTERS_DEPENDENCIES = new InjectionToken<IExternalSearchFiltersDependencies>(
+export const EXTERNAL_SEARCH_FILTERS_DEPENDENCIES = new InjectionToken<ExternalSearchFiltersDependencies>(
   'IExternalSearchFiltersDependencies'
 );

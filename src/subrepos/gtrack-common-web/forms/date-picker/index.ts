@@ -1,6 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
 
-import { DatePickerComponent as NativeDatePickerComponent } from 'subrepos/forms-ngx';
+import { DatePickerComponent as NativeDatePickerComponent } from '@features/common/forms';
 
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -16,7 +16,7 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 
 @Component({
   selector: 'gtrack-form-date-picker',
-  templateUrl: './ui.pug',
+  templateUrl: './ui.html',
   styleUrls: ['./style.scss'],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })

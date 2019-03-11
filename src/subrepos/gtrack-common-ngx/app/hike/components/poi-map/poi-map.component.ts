@@ -1,49 +1,53 @@
-import { Component, AfterViewInit, ViewChild, Input } from '@angular/core';
-
 import { take } from 'rxjs/operators';
 
-import { LeafletComponent, MapMarkerService, Center } from '../../../map';
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { LeafletMapMarkerService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
+import { Center, LayerDef } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+import { DescriptionLanguageListService } from '@features/common/multi-language-text';
 
 import { Poi } from '../../services/poi';
-import { DescriptionLanguageListService } from '../../../localize';
 
 @Component({
   selector: 'gtrack-common-poi-map',
   template: ''
 })
 export class PoiMapComponent implements AfterViewInit {
-  @Input()
-  public poi: Poi;
+  @Input() poi: Poi;
 
-  @Input()
-  public zoom = 15;
+  @Input() zoom: number;
 
-  public layers = [
-    {
-      name: 'street',
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-    },
-    {
-      name: 'topo',
-      url: 'https://opentopomap.org/{z}/{x}/{y}.png'
-    }
-  ];
+  layers: Array<LayerDef>;
 
-  public center = <Center>{
-    lat: 47.497912,
-    lng: 19.040235,
-    zoom: 14
-  };
+  center: Center;
 
-  @ViewChild('map')
-  public map: LeafletComponent;
+  @ViewChild('map') map: LeafletMapComponent;
 
   constructor(
-    protected _mapMarker: MapMarkerService,
+    protected _mapMarker: LeafletMapMarkerService,
     protected _descriptionLanguageList: DescriptionLanguageListService
-  ) {}
+  ) {
+    this.zoom = 15;
 
-  ngAfterViewInit() {
+    this.layers = [
+      {
+        name: 'street',
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      },
+      {
+        name: 'topo',
+        url: 'https://opentopomap.org/{z}/{x}/{y}.png'
+      }
+    ];
+
+    this.center = {
+      lat: 47.497912,
+      lng: 19.040235,
+      zoom: 14
+    };
+  }
+
+  ngAfterViewInit(): void {
     this._descriptionLanguageList
       .getLocalizedDescription(this.poi.description)
       .pipe(take(1))

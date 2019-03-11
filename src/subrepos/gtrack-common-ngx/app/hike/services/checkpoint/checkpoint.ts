@@ -1,22 +1,22 @@
-import { IHikeProgramStop } from '../../../../../provider-client';
+import { HikeProgramStop } from '@features/common/gtrack-interfaces';
 
 export class Checkpoint {
   protected _name: string;
-  public id: string;
+  id: string;
 
-  constructor(public stop: IHikeProgramStop, public index: number) {
+  constructor(public stop: HikeProgramStop, public index: number) {
     this._name = `Checkpoint ${index}`;
     this.id = stop.poiId;
   }
 
-  public get name(): string {
+  get name(): string {
     let name = this._name;
 
-    if (this.stop.isStart === true && this.stop.isFinish === true) {
+    if (this.stop.isStart && this.stop.isFinish) {
       name = 'Start - Finish';
-    } else if (this.stop.isStart === true) {
+    } else if (this.stop.isStart) {
       name = 'Start';
-    } else if (this.stop.isFinish === true) {
+    } else if (this.stop.isFinish) {
       name = 'Finish';
     }
 

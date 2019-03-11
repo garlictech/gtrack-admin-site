@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { RouteService } from '..';
-import { DeepstreamService } from 'subrepos/deepstream-ngx';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 import { GeometryService } from '../../geometry';
 
 class MockDeepstreamService {}

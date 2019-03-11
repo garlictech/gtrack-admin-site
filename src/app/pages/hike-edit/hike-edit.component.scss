@@ -4,7 +4,8 @@
   position: relative;
   top: 2px;
 
-  .form-check-sign::before, .form-check-sign::after {
+  .form-check-sign::before,
+  .form-check-sign::after {
     margin-top: 1px !important;
   }
 }

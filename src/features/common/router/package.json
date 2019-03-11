@@ -1,0 +1,14 @@
+{
+  "name": "@bit/garlictech.angular-features.common.router",
+  "version": "0.0.10",
+  "homepage": "https://bitsrc.io/garlictech/angular-features/common/router",
+  "main": "index.ts",
+  "dependencies": {
+    "rxjs": "~6.3.3",
+    "lodash": "4.17.11",
+    "jest-marbles": "2.1.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "license": "SEE LICENSE IN LICENSE"
+}

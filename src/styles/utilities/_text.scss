@@ -1,9 +1,15 @@
 @each $name, $size in $breakpoints {
   @if $size > 0 {
     @include media-breakpoint-up($name) {
-      .text-#{$name}-left { text-align: left !important; }
-      .text-#{$name}-center { text-align: center !important; }
-      .text-#{$name}-right { text-align: right !important; }
+      .text-#{$name}-left {
+        text-align: left !important;
+      }
+      .text-#{$name}-center {
+        text-align: center !important;
+      }
+      .text-#{$name}-right {
+        text-align: right !important;
+      }
     }
   }
 }

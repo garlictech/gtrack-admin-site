@@ -1,17 +1,21 @@
-import { IEditedHikeProgramState } from '../../state';
-import { initialEditedHikeProgramState, editedHikeProgramReducer } from '../edited-hike-program';
-import { IBackgroundImageData, IHikeProgramStop, ETextualDescriptionType } from '../../../../subrepos/provider-client';
-import { editedHikeProgramActions } from '../../actions';
-
+// tslint:disable:no-big-function
 import * as _ from 'lodash';
 
+import {
+  BackgroundImageData,
+  ETextualDescriptionType,
+  HikeProgramStop
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
+import { editedHikeProgramActions } from '../../actions';
+import { EditedHikeProgramState } from '../../state';
+import { editedHikeProgramReducer, initialEditedHikeProgramState } from '../edited-hike-program';
 import { bgImages as bgImageFixtures, stops as stopsFixtures } from './fixtures';
-import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 
 describe('Edited HikeProgram reducers', () => {
-  let initialState: IEditedHikeProgramState;
-  let images: IBackgroundImageData[];
-  let stops: IHikeProgramStop[];
+  let initialState: EditedHikeProgramState;
+  let images: Array<BackgroundImageData>;
+  let stops: Array<HikeProgramStop>;
 
   beforeEach(() => {
     initialState = _.cloneDeep(initialEditedHikeProgramState);
@@ -119,7 +123,7 @@ describe('Edited HikeProgram reducers', () => {
       const state = editedHikeProgramReducer(initialState, action);
 
       expect(state.working).toBe('saving...');
-      expect(state.failed).toBeNull();
+      expect(state.failed).toBeUndefined();
     });
   });
 
@@ -128,8 +132,8 @@ describe('Edited HikeProgram reducers', () => {
       const action = new editedHikeProgramActions.HikeProgramSaveSuccess();
       const state = editedHikeProgramReducer(initialState, action);
 
-      expect(state.working).toBeNull();
-      expect(state.failed).toBeNull();
+      expect(state.working).toBeUndefined();
+      expect(state.failed).toBeUndefined();
       expect(state.dirty).toBeFalsy();
     });
   });
@@ -139,7 +143,7 @@ describe('Edited HikeProgram reducers', () => {
       const action = new editedHikeProgramActions.HikeProgramSaveFailed('Error');
       const state = editedHikeProgramReducer(initialState, action);
 
-      expect(state.working).toBeNull();
+      expect(state.working).toBeUndefined();
       expect(state.failed).toEqual('Error');
     });
   });
@@ -209,7 +213,7 @@ describe('Edited HikeProgram reducers', () => {
       const state = editedHikeProgramReducer(
         _.merge({}, initialState, {
           data: {
-            stops: stops
+            stops
           }
         }),
         action
@@ -219,6 +223,7 @@ describe('Edited HikeProgram reducers', () => {
     });
   });
 
+  /*
   describe('SetCheckpoints action', () => {
     it('should set checkpoints to hikeProgram', () => {
       const checkpointSequence = new CheckpointSequence([]);
@@ -228,6 +233,7 @@ describe('Edited HikeProgram reducers', () => {
       expect(state.data.checkpoints).toEqual(checkpointSequence);
     });
   });
+  */
 
   describe('AddHikeProgramBackgroundImage action', () => {
     it('should add hikeProgram background images', () => {

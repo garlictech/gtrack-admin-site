@@ -1,5 +1,5 @@
 import * as actions from '../actions';
-import { EObjectMarkContext } from 'subrepos/provider-client';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 
 describe('ObjectMark actions', () => {
   describe('LoadContext action', () => {

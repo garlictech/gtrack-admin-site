@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
+  // tslint:disable-next-line:max-inline-declarations
   template: `
     <div class="layout-footer clearfix">
       <span class="footer-text-right">
-        <span>&copy; {{currentDate | date: 'yyyy'}} <a href="http://www.gtracksport.com">GTrack</a></span>
+        <span>&copy; {{ currentDate | date: 'yyyy' }} <a href="http://www.gtracksport.com">GTrack</a></span>
       </span>
     </div>
   `
   // styles: ['.layout-footer { z-index: 100; }']
 })
-export class FooterComponent implements OnInit {
-  public currentDate: Date;
+export class FooterComponent {
+  currentDate: Date;
 
-  ngOnInit() {
+  constructor() {
     this.currentDate = new Date();
   }
 }

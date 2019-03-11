@@ -1,26 +1,34 @@
-import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, select } from '@ngrx/store';
-import * as editedHikeProgramSelectors from '../../selectors/edited-hike-program';
+// tslint:disable:no-big-function
+import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IEditedHikeProgramState } from '../../state';
+
+import { TestBed } from '@angular/core/testing';
+import {
+  BackgroundImageData,
+  EObjectState,
+  ETextualDescriptionType,
+  HikeProgramStop
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { select, Store, StoreModule } from '@ngrx/store';
+
+import { EXTERNAL_POI_DEPENDENCIES, poiReducer, PoiSelectors } from '../../../../subrepos/gtrack-common-ngx';
+import { ExternalPoi } from '../../../shared/interfaces';
+import { commonPoiActions, editedHikeProgramActions } from '../../actions';
 import { editedHikeProgramReducer, initialEditedHikeProgramState } from '../../reducer/edited-hike-program';
-import { editedHikeProgramActions, commonPoiActions } from '../../actions';
-import { IBackgroundImageData, EObjectState, IHikeProgramStop, ETextualDescriptionType } from '../../../../subrepos/provider-client';
-import { PoiSelectors, EXTERNAL_POI_DEPENDENCIES, poiReducer } from '../../../../subrepos/gtrack-common-ngx';
+import { bgImages as bgImageFixtures, pois as poiFixtures, stops as stopsFixtures } from '../../reducer/test/fixtures';
+import * as editedHikeProgramSelectors from '../../selectors/edited-hike-program';
+import { EditedHikeProgramState } from '../../state';
 
-import { pois as poiFixtures, bgImages as bgImageFixtures, stops as stopsFixtures } from '../../reducer/test/fixtures';
-
-import * as _ from 'lodash';
-import { IExternalPoi } from '../../../shared/interfaces';
+const A_NEW_TRANSLATION = 'A new translation';
 
 describe('Edited HikeProgram selectors', () => {
-  let store: Store<IEditedHikeProgramState>;
+  let store: Store<EditedHikeProgramState>;
   let destroy$: Subject<boolean>;
-  let images: IBackgroundImageData[];
-  let pois: IExternalPoi[];
-  let stops: IHikeProgramStop[];
-  let ids: string[];
+  let images: Array<BackgroundImageData>;
+  let pois: Array<ExternalPoi>;
+  let stops: Array<HikeProgramStop>;
+  let ids: Array<string>;
 
   beforeEach(() => {
     images = _.cloneDeep(bgImageFixtures);
@@ -71,7 +79,7 @@ describe('Edited HikeProgram selectors', () => {
 
       store.dispatch(
         new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
-          title: 'A new translation'
+          title: A_NEW_TRANSLATION
         })
       );
 
@@ -79,7 +87,7 @@ describe('Edited HikeProgram selectors', () => {
         _.merge({}, initialEditedHikeProgramState.data, {
           description: {
             hu_HU: {
-              title: 'A new translation'
+              title: A_NEW_TRANSLATION
             }
           }
         })
@@ -211,14 +219,14 @@ describe('Edited HikeProgram selectors', () => {
 
       store.dispatch(
         new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
-          title: 'A new translation'
+          title: A_NEW_TRANSLATION
         })
       );
 
       expect(result).toEqual(
         _.merge({}, initialEditedHikeProgramState.data.description, {
           hu_HU: {
-            title: 'A new translation'
+            title: A_NEW_TRANSLATION
           }
         })
       );
@@ -240,7 +248,7 @@ describe('Edited HikeProgram selectors', () => {
 
       store.dispatch(
         new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
-          title: 'A new translation'
+          title: A_NEW_TRANSLATION
         })
       );
 
@@ -296,7 +304,7 @@ describe('Edited HikeProgram selectors', () => {
 
       store.dispatch(
         new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('hu_HU', {
-          title: 'A new translation'
+          title: A_NEW_TRANSLATION
         })
       );
       expect(result).toBeTruthy();
@@ -466,7 +474,9 @@ describe('Edited HikeProgram selectors', () => {
         type: ETextualDescriptionType.markdown
       });
 
-      store.dispatch(new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('en_US', { title: 'fakeTitle' }));
+      store.dispatch(
+        new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription('en_US', { title: 'fakeTitle' })
+      );
 
       expect(result).toEqual({ title: 'fakeTitle' });
     });

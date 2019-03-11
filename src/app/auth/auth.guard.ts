@@ -1,20 +1,21 @@
-import { of, combineLatest, Observable } from 'rxjs';
-import { filter, switchMapTo, switchMap } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Store, select } from '@ngrx/store';
 import { State } from 'app/store';
+import { combineLatest, Observable, of } from 'rxjs';
+import { filter, switchMap, switchMapTo } from 'rxjs/operators';
 import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
-import { Actions as AuthActions } from 'subrepos/authentication-api-ngx';
 import { AuthGuard, RoleGuard } from 'subrepos/gtrack-common-ngx/app/authentication/guards';
+
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
+import { select, Store } from '@ngrx/store';
 
 @Injectable()
 export class RouteRedirectGuard implements CanActivate {
   constructor(
-    private _auth: AuthGuard,
-    private _role: RoleGuard,
-    private _store: Store<State>,
-    private _selectors: AuthenticationSelectors.Selectors
+    private readonly _auth: AuthGuard,
+    private readonly _role: RoleGuard,
+    private readonly _store: Store<State>,
+    private readonly _selectors: AuthenticationSelectors.Selectors
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

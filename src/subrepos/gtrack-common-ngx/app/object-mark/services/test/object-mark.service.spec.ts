@@ -2,9 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { StoreModule, Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import { EAuthRoles, EObjectMarkContext } from 'subrepos/provider-client';
+import { EAuthRoles, EObjectMarkContext } from '@features/common/gtrack-interfaces';
 import { ObjectMarkService } from '../object-mark.service';
-import { DeepstreamService } from '../../../../../deepstream-ngx';
+import { DeepstreamService } from '@features/common/deepstream-ngx';
 import { AuthenticationSelectors } from '../../../authentication/store';
 
 describe('ObjectMarkService', () => {

@@ -1,8 +1,8 @@
-import { IPoi, IHikeProgramStop } from 'subrepos/provider-client';
+import { HikeProgramStop, PoiData } from '@features/common/gtrack-interfaces';
 
-export interface IHikeProgramOutline {
-  poi: IPoi;
-  stop: IHikeProgramStop;
+export interface HikeProgramOutline {
+  poi: PoiData;
+  stop: HikeProgramStop;
   name: string;
   distanceFromOrigo: number;
   toNextStop: number;

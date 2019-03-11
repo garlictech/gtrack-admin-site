@@ -1,6 +1,23 @@
-<div class="search">
-    <fa-icon [icon]="icon"></fa-icon>
-    <input type="text" #search [placeholder]="placeholder" autocorrect="off" autocapitalize="off" spellcheck="off" />
-    <button pButton (click)="searchLocation()" [label]="'common.hike.location-search.search' | translate"></button>
-    <button pButton (click)="requestLocation()" [label]="'common.hike.location-search.use-my-location' | translate"></button>
+<div class="flex justify-center w-full">
+  <input
+    #search
+    [placeholder]="placeholder"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck="off"
+    type="search"
+    placeholder="{{ 'common.hike.location-search.search' | translate }}"
+  />
+  <div class="flex">
+    <a class="general-button mr-2" (click)="searchLocation()">
+      <span class="inline-block w-8">
+        <i class="ion ion-md-search"></i>
+      </span>
+    </a>
+    <a class="general-button mr-2" (click)="requestLocation()">
+      <span class="inline-block w-8">
+        <i class="ion ion-md-locate"></i>
+      </span>
+    </a>
+  </div>
 </div>

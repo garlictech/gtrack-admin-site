@@ -1,7 +1,7 @@
-import { Component, forwardRef, ViewEncapsulation } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { EmojiInputComponent as NativeEmojiInputComponent } from 'subrepos/forms-ngx';
+import { EmojiInputComponent as NativeEmojiInputComponent } from '@features/common/forms';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -15,9 +15,8 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 
 @Component({
   selector: 'gtrack-form-emoji-input',
-  templateUrl: './ui.pug',
+  templateUrl: './ui.html',
   styleUrls: ['./style.scss'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-  encapsulation: ViewEncapsulation.None
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class EmojiInputComponent extends NativeEmojiInputComponent {}

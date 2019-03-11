@@ -1,0 +1,22 @@
+{
+  "name": "@bit/garlictech.angular-features.common.weather",
+  "version": "0.0.2",
+  "homepage": "https://bitsrc.io/garlictech/angular-features/common/weather",
+  "main": "index.ts",
+  "dependencies": {
+    "@angular/core": "~7.2.1",
+    "@ngrx/store": "~7.1.0",
+    "lodash-es": "^4.17.11",
+    "rxjs": "~6.3.2",
+    "@angular/common": "~7.2.1",
+    "angular-svg-icon": "^7.0.0",
+    "ng2-logger": "^2.0.0",
+    "@ngrx/effects": "~7.1.0",
+    "@ngrx/entity": "~7.1.0",
+    "jest-marbles": "^2.1.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "componentRootFolder": "src/features/common/weather",
+  "license": "SEE LICENSE IN LICENSE"
+}

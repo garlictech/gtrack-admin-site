@@ -1,18 +1,18 @@
 <form [formGroup]="mergeForm">
-  <p-card styleClass="mb-10" title="{{conflict.key}}" *ngFor="let conflict of conflicts | obj2arr; let cIdx = index;">
-    <div class="form-check form-check-inline" *ngFor="let option of conflict.value; let oIdx = index;">
-      <input [formControlName]="conflict.key" class="form-check-input" type="radio" id="{{cIdx}}-{{oIdx}}" [value]="option">
-      <label class="form-check-label" for="{{cIdx}}-{{oIdx}}">{{option}}</label>
+  <p-card styleClass="mb-10" title="{{ conflict.key }}"
+    *ngFor="let conflict of conflicts | obj2arr; let cIdx = index; trackBy: trackByFn">
+    <div class="form-check form-check-inline"
+      *ngFor="let option of conflict.value; let oIdx = index; trackBy: trackByFn">
+      <input [formControlName]="conflict.key" class="form-check-input" type="radio" id="{{ cIdx }}-{{ oIdx }}"
+        [value]="option">
+      <label class="form-check-label" for="{{ cIdx }}-{{ oIdx }}">{{ option }}</label>
     </div>
-   </p-card>
+  </p-card>
 </form>
 
 <div class="ui-g mt-20">
   <div class="ui-g-12 ui-g-nopad">
-    <p-button
-      label="Merge"
-      styleClass="ui-button-success"
-      (onClick)="saveMerge()">
+    <p-button label="Merge" styleClass="ui-button-success" (onClick)="saveMerge()">
     </p-button>
   </div>
 </div>

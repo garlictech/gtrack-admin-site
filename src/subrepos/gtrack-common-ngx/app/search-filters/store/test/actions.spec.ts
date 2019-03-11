@@ -1,10 +1,10 @@
 import * as actions from '../actions';
-import { ISearchFilters } from '../../interfaces';
+import { SearchFilters } from '../../interfaces';
 
 describe('SearchFilters actions', () => {
   describe('ChangeFilters action', () => {
     it('should create an action', () => {
-      const filters: Partial<ISearchFilters> = {
+      const filters: Partial<SearchFilters> = {
         radius: 50,
         difficulty: [0, 5],
         time: [0, 5]

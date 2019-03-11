@@ -1,21 +1,21 @@
-import { IRoute, IRouteBounds, IRouteStored } from '../../../../../provider-client';
+import { RouteBounds, RouteData, RouteStored } from '@features/common/gtrack-interfaces';
 
 import _cloneDeep from 'lodash-es/cloneDeep';
 
-export class Route implements IRoute {
-  public id: string;
-  public bounds: IRouteBounds;
-  public route: GeoJSON.FeatureCollection<any>;
+export class Route implements RouteData {
+  id: string;
+  bounds: RouteBounds;
+  route: GeoJSON.FeatureCollection<any>;
 
-  public get path(): GeoJSON.LineString {
+  get path(): GeoJSON.LineString {
     return this.route.features[0].geometry;
   }
 
-  public get geojson() {
+  get geojson(): any {
     return this.route;
   }
 
-  constructor(data: IRouteStored) {
+  constructor(data: RouteStored) {
     const converted = _cloneDeep(data);
     Object.assign(this, converted);
   }

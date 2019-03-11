@@ -1,36 +1,30 @@
-import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action, Store, select } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { map, switchMap, take, catchError } from 'rxjs/operators';
-import { HikeProgramService, GeospatialService, RouteActionTypes } from 'subrepos/gtrack-common-ngx';
-import { State } from '..';
-import { editedHikeProgramActions, commonRouteActions } from '../actions';
-import { IHikeProgramStored, IHikeProgram } from 'subrepos/provider-client';
-import { log } from '../../log';
-import * as hikeEditRoutePlannerSelectors from '../selectors/hike-edit-route-planner';
-import * as editedHikeProgramSelectors from '../selectors/edited-hike-program';
-
+// tslint:disable:no-property-initializers
 import _omit from 'lodash-es/omit';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
+import { GeospatialService, HikeProgramService, RouteActionTypes } from 'subrepos/gtrack-common-ngx';
+
+import { Injectable } from '@angular/core';
+import { HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Action, select, Store } from '@ngrx/store';
+
+import { State } from '../';
+import { log } from '../../log';
+import { commonRouteActions, editedHikeProgramActions } from '../actions';
+import * as editedHikeProgramSelectors from '../selectors/edited-hike-program';
+import * as hikeEditRoutePlannerSelectors from '../selectors/hike-edit-route-planner';
 
 @Injectable()
 export class EditedHikeProgramEffects {
-  constructor(
-    private _actions$: Actions,
-    private _hikeProgramService: HikeProgramService,
-    private _geospatialService: GeospatialService,
-    private _store: Store<State>
-  ) {}
-
   /**
    * Prepare stop from poi then add to store
    */
-  @Effect()
-  prepareThenAddStop$: Observable<Action> = this._actions$.pipe(
+  @Effect() prepareThenAddStop$: Observable<Action> = this._actions$.pipe(
     ofType(editedHikeProgramActions.PREPARE_THEN_ADD_STOP),
     map((action: editedHikeProgramActions.PrepareThenAddStop) => action.poi),
-    switchMap(poi => {
-      return this._store.pipe(
+    switchMap(poi =>
+      this._store.pipe(
         select(hikeEditRoutePlannerSelectors.getPath),
         take(1),
         map(path => {
@@ -53,14 +47,14 @@ export class EditedHikeProgramEffects {
               time: 0
             }
           };
+
           return new editedHikeProgramActions.AddStop(stop);
         })
-      );
-    })
+      )
+    )
   );
 
-  @Effect()
-  save$: Observable<Action> = this._actions$.pipe(
+  @Effect() save$: Observable<Action> = this._actions$.pipe(
     ofType(editedHikeProgramActions.SAVE_HIKE_PROGRAM),
     switchMap(() =>
       this._store.pipe(
@@ -68,14 +62,15 @@ export class EditedHikeProgramEffects {
         take(1)
       )
     ),
-    switchMap((data: IHikeProgramStored) => {
+    switchMap((data: HikeProgramStored) => {
       const hikeProgramData = _omit(data, ['timestamp']);
 
-      return this._hikeProgramService.save(<IHikeProgram>hikeProgramData).pipe(
+      return this._hikeProgramService.save(hikeProgramData).pipe(
         take(1),
         map(() => new editedHikeProgramActions.HikeProgramSaveSuccess()),
         catchError(error => {
           log.error('Effect: Hike program save error: ', error);
+
           return of(new editedHikeProgramActions.HikeProgramSaveFailed(error));
         })
       );
@@ -85,9 +80,14 @@ export class EditedHikeProgramEffects {
   /**
    * Load route after save
    */
-  @Effect()
-  loadSavedRoute$: Observable<Action> = this._actions$.pipe(
+  @Effect() loadSavedRoute$: Observable<Action> = this._actions$.pipe(
     ofType<commonRouteActions.RouteSaved>(RouteActionTypes.ROUTE_SAVED),
     map(action => new commonRouteActions.LoadRoute(action.context))
   );
+  constructor(
+    private readonly _actions$: Actions,
+    private readonly _hikeProgramService: HikeProgramService,
+    private readonly _geospatialService: GeospatialService,
+    private readonly _store: Store<State>
+  ) {}
 }

@@ -1,16 +1,15 @@
-import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
-
-import { IAllHikeContextState, hikeContextStateAdapter, IHikeEntityState, IHikeState, hikeAdapter } from './state';
-
-import { HikeProgramActionTypes, AllHikeActions } from './actions';
+// tslint:disable:only-arrow-functions
+import { ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
+import { AllHikeActions, HikeProgramActionTypes } from './actions';
+import { AllHikeContextState, hikeAdapter, hikeContextStateAdapter, HikeEntityState, HikeState } from './state';
 
 export const hikeContextReducerInitialState = hikeContextStateAdapter.getInitialState();
 export const hikeReducerInitialState = hikeAdapter.getInitialState();
 
-const contextReducer: ActionReducer<IAllHikeContextState> = (
-  state: IAllHikeContextState = hikeContextReducerInitialState,
+const contextReducer: ActionReducer<AllHikeContextState> = (
+  state: AllHikeContextState = hikeContextReducerInitialState,
   action: AllHikeActions
-): IAllHikeContextState => {
+): AllHikeContextState => {
   switch (action.type) {
     case HikeProgramActionTypes.LOAD_HIKE_PROGRAM:
       return hikeContextStateAdapter.upsertOne(
@@ -23,13 +22,11 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
       );
 
     case HikeProgramActionTypes.HIKE_PROGRAM_LOADED:
-      return hikeContextStateAdapter.updateOne(
+      return hikeContextStateAdapter.upsertOne(
         {
           id: action.context,
-          changes: {
-            loading: false,
-            loaded: true
-          }
+          loading: false,
+          loaded: true
         },
         state
       );
@@ -39,13 +36,22 @@ const contextReducer: ActionReducer<IAllHikeContextState> = (
   }
 };
 
-const reducer: ActionReducer<IHikeEntityState> = (
-  state: IHikeEntityState = hikeReducerInitialState,
+const reducer: ActionReducer<HikeEntityState> = (
+  state: HikeEntityState = hikeReducerInitialState,
   action: AllHikeActions
-): IHikeEntityState => {
+): HikeEntityState => {
   switch (action.type) {
     case HikeProgramActionTypes.HIKE_PROGRAM_LOADED:
       return hikeAdapter.upsertOne(action.hikeProgram, state);
+
+    case HikeProgramActionTypes.HIKE_PROGRAM_REVERSED:
+      return hikeAdapter.updateOne(
+        {
+          id: action.context,
+          changes: action.hikeProgram
+        },
+        state
+      );
 
     case HikeProgramActionTypes.ALL_HIKE_PROGRAMS_LOADED:
       return hikeAdapter.upsertMany(action.hikePrograms, state);
@@ -55,7 +61,7 @@ const reducer: ActionReducer<IHikeEntityState> = (
   }
 };
 
-const reducerMap: ActionReducerMap<IHikeState> = {
+const reducerMap: ActionReducerMap<HikeState> = {
   contexts: contextReducer,
   hikes: reducer
 };

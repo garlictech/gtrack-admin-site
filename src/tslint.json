@@ -1,15 +1,14 @@
 {
-    "extends": "../tslint.json",
-    "rules": {
-        "directive-selector": [
-            true,
-            "attribute", ["app", "gtrack", "garlictech"],
-            "camelCase"
-        ],
-        "component-selector": [
-            true,
-            "element", ["app", "gtrack", "garlictech"],
-            "kebab-case"
-        ]
-    }
+  "extends": "../tslint.json",
+  "rules": {
+    "directive-selector": [true, "attribute", ["app", "gtrack", "garlictech"], "camelCase"],
+    "component-selector": [true, "element", ["app", "gtrack", "garlictech"], "kebab-case"],
+    "template-cyclomatic-complexity": false,
+    "template-conditional-complexity": false,
+    "no-template-call-expression": false,
+    "cognitive-complexity": false,
+    "no-commented-code": false,
+    "no-console": false,
+    "no-identical-functions": false
+  }
 }

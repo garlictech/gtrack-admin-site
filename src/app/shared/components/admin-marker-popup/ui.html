@@ -5,35 +5,25 @@
 
 <!-- DATA -->
 <div class="title">
-  <h3>{{(data.description | localizeDescription).title}}</h3>
+  <h3>{{ (data.description | localizeDescription).title }}</h3>
 </div>
 
 <div>
-  <strong>Dist/Route</strong>: {{data.distFromRoute}}m
+  <strong>Dist/Route</strong>: {{ data.distFromRoute }}m
 </div>
 
 <div>
-  <strong>markerType</strong>: {{data.markerType}}
+  <strong>markerType</strong>: {{ data.markerType }}
 </div>
 
 <!-- Buttons -->
 
 <div *ngIf="(isPlanning$ | async)">
-  <p-button
-    class="mt-20"
-    label="{{btnTitle}}"
-    styleClass="ui-button-{{btnClass}}"
-    (onClick)="btnClick()"
-  ></p-button>
+  <p-button class="mt-20" label="{{ btnTitle }}" styleClass="ui-button-{{ btnClass }}" (onClick)="btnClick()">
+  </p-button>
 
-  <p-button
-    class="mt-20"
-    label="{{btn2Title}}"
-    styleClass="ui-button-{{btn2Class}} ml-5"
-    (onClick)="btn2Click()"
-    *ngIf="btn2Click"
-  ></p-button>
+  <p-button class="mt-20" label="{{ btn2Title }}" styleClass="ui-button-{{ btn2Class }} ml-5" (onClick)="btn2Click()"
+    *ngIf="btn2Click"></p-button>
 </div>
 
 <div class="clearfix"></div>
-

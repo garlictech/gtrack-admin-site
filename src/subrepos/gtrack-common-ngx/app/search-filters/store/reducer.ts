@@ -1,8 +1,9 @@
+// tslint:disable:only-arrow-functions
 import { ActionReducer } from '@ngrx/store';
-import { ISearchFilters } from '../interfaces';
+import { SearchFilters } from '../interfaces';
 import { AllSearchFiltersAction, SearchFilterActionTypes } from './actions';
 
-export const initialState: ISearchFilters = {
+export const initialState: SearchFilters = {
   radius: 50000,
   difficulty: [0, 10],
   length: [0, 50000],
@@ -11,10 +12,10 @@ export const initialState: ISearchFilters = {
   center: [19.040235, 47.497912]
 };
 
-export const searchFiltersReducer: ActionReducer<ISearchFilters> = (
-  state: ISearchFilters = initialState,
+export const searchFiltersReducer: ActionReducer<SearchFilters> = (
+  state: SearchFilters = initialState,
   action: AllSearchFiltersAction
-): ISearchFilters => {
+): SearchFilters => {
   switch (action.type) {
     case SearchFilterActionTypes.CHANGE_FILTERS:
       return {

@@ -1,3 +1,5 @@
+const ROUTE_POINT = 'Route point';
+
 export const route = {
   features: [
     {
@@ -16,7 +18,7 @@ export const route = {
         type: 'Point'
       },
       properties: {
-        name: 'Route point'
+        name: ROUTE_POINT
       },
       type: 'Feature'
     },
@@ -26,7 +28,7 @@ export const route = {
         type: 'Point'
       },
       properties: {
-        name: 'Route point'
+        name: ROUTE_POINT
       },
       type: 'Feature'
     },
@@ -36,7 +38,7 @@ export const route = {
         type: 'Point'
       },
       properties: {
-        name: 'Route point'
+        name: ROUTE_POINT
       },
       type: 'Feature'
     },
@@ -46,7 +48,7 @@ export const route = {
         type: 'Point'
       },
       properties: {
-        name: 'Route point'
+        name: ROUTE_POINT
       },
       type: 'Feature'
     },
@@ -56,7 +58,7 @@ export const route = {
         type: 'Point'
       },
       properties: {
-        name: 'Route point'
+        name: ROUTE_POINT
       },
       type: 'Feature'
     }

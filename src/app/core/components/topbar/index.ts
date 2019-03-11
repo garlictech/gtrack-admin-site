@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-topbar',
@@ -7,7 +7,10 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./style.scss']
 })
 export class TopBarComponent {
-  @Input()
-  onMenuButtonClick: any;
-  public faBars = faBars;
+  @Input() onMenuButtonClick: any;
+  faBars: IconDefinition;
+
+  constructor() {
+    this.faBars = faBars;
+  }
 }

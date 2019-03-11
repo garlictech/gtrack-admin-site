@@ -1,7 +1,7 @@
 import { Component, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { SwitchComponent as NativeSwitchComponent } from 'subrepos/forms-ngx';
+import { SwitchComponent as NativeSwitchComponent } from '@features/common/forms';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -15,7 +15,7 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 
 @Component({
   selector: 'gtrack-form-switch',
-  templateUrl: './ui.pug',
+  templateUrl: './ui.html',
   styleUrls: ['./style.scss'],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })

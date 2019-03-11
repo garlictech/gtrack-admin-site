@@ -1,11 +1,14 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { DynamicFormComponent as NativeDynamicFormComponent } from 'subrepos/forms-ngx';
+import { DynamicFormComponent as NativeDynamicFormComponent } from '@features/common/forms';
 
 @Component({
   selector: 'gtrack-form',
-  templateUrl: './ui.pug',
-  styleUrls: ['./style.scss'],
-  encapsulation: ViewEncapsulation.None
+  templateUrl: './ui.html',
+  styleUrls: ['./style.scss']
 })
-export class DynamicFormComponent extends NativeDynamicFormComponent {}
+export class DynamicFormComponent extends NativeDynamicFormComponent {
+  trackByFn(index: number): number {
+    return index;
+  }
+}

@@ -1,17 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { HikeListComponent } from './hike-list.component';
-import { GpxInputComponent } from './components';
-import { SharedComponentsModule } from '../../shared/components';
 import { ButtonModule } from 'primeng/button';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { FileUploadModule } from 'primeng/fileupload';
 import { CardModule } from 'primeng/card';
+import { FileUploadModule } from 'primeng/fileupload';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
+
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
+import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { SharedComponentsModule } from '../../shared/components';
 import { PipesModule } from '../../shared/pipes/pipes.module';
-import { LocalizeModule } from 'subrepos/gtrack-common-ngx';
+import { GpxInputComponent } from './components';
+import { HikeListComponent } from './hike-list.component';
 
 const COMPONENTS = [HikeListComponent, GpxInputComponent];
 
@@ -21,7 +23,7 @@ const COMPONENTS = [HikeListComponent, GpxInputComponent];
     RouterModule,
     SharedComponentsModule,
     FormsModule,
-    LocalizeModule,
+    MultiLanguageTextModule,
     // PrimeNG
     ButtonModule,
     SelectButtonModule,

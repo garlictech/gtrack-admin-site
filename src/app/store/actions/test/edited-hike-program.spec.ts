@@ -1,6 +1,12 @@
+import {
+  BackgroundImageData,
+  EPoiImageTypes,
+  HikeProgramStop
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
+// tslint:disable:no-big-function
+import { GTrackPoi } from '../../../shared/interfaces';
 import * as EditedHikeProgramActions from '../edited-hike-program';
-import { IHikeProgramStop, IBackgroundImageData, EPoiImageTypes } from '../../../../subrepos/provider-client';
-import { IGTrackPoi } from '../../../shared/interfaces';
 
 describe('EditedHikeProgram actions', () => {
   it('should have action names defined', () => {
@@ -74,7 +80,7 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create AddStop action', () => {
-    const stop: IHikeProgramStop = {
+    const stop: HikeProgramStop = {
       distanceFromOrigo: 0,
       poiId: 'fakePoiId',
       lat: 0,
@@ -90,18 +96,18 @@ describe('EditedHikeProgram actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.ADD_STOP,
-      stop: stop
+      stop
     });
   });
 
   it('should create Prepare then add stop action', () => {
-    const poi: IGTrackPoi = null;
+    const poi: GTrackPoi = undefined;
     const action = new EditedHikeProgramActions.PrepareThenAddStop(poi);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.PREPARE_THEN_ADD_STOP,
-      poi: poi
+      poi
     });
   });
 
@@ -124,7 +130,7 @@ describe('EditedHikeProgram actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.SET_STOPS,
-      stops: stops
+      stops
     });
   });
 
@@ -147,18 +153,18 @@ describe('EditedHikeProgram actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.SET_REVERSE_STOPS,
-      stops: stops
+      stops
     });
   });
 
   it('should create SetCheckpoints action', () => {
-    const checkpoints = null;
+    const checkpoints = undefined;
     const action = new EditedHikeProgramActions.SetCheckpoints(checkpoints);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.SET_CHECKPOINTS,
-      checkpoints: checkpoints
+      checkpoints
     });
   });
 
@@ -201,7 +207,7 @@ describe('EditedHikeProgram actions', () => {
   });
 
   it('should create AddBackgroundImage action', () => {
-    const imageData: IBackgroundImageData = {
+    const imageData: BackgroundImageData = {
       title: 'title',
       lat: 0,
       lon: 0,
@@ -230,7 +236,7 @@ describe('EditedHikeProgram actions', () => {
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
       type: EditedHikeProgramActions.ADD_HIKE_PROGRAM_BACKGROUND_IMAGE,
-      imageData: imageData
+      imageData
     });
   });
 

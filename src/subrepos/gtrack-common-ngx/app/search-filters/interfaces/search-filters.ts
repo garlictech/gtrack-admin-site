@@ -1,4 +1,4 @@
-export interface ISearchFilters {
+export interface SearchFilters {
   radius: number;
   difficulty: [number, number];
   time: [number, number];

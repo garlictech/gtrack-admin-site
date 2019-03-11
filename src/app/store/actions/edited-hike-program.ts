@@ -1,7 +1,14 @@
-import { Action } from '@ngrx/store';
-import { ITextualDescription, IHikeProgramStop, IBackgroundImageData } from 'subrepos/provider-client';
-import { IGTrackPoi } from '../../shared/interfaces';
+// tslint:disable:no-property-initializers max-classes-per-file
 import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
+
+import {
+  BackgroundImageData,
+  HikeProgramStop,
+  TextualDescription
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { Action } from '@ngrx/store';
+
+import { GTrackPoi } from '../../shared/interfaces';
 
 export const RESET_HIKE_PROGRAM = '[HikeProgram] Reset';
 export const ADD_NEW_TRANSLATED_HIKE_DESCRIPTION = '[HikeProgram] Add new translated hike description';
@@ -26,7 +33,7 @@ export class ResetHikeProgram implements Action {
 export class AddNewTranslatedHikeProgramDescription implements Action {
   readonly type = ADD_NEW_TRANSLATED_HIKE_DESCRIPTION;
 
-  constructor(public languageKey: string, public content: ITextualDescription) {}
+  constructor(public languageKey: string, public content: TextualDescription) {}
 }
 
 export class DeleteTranslatedHikeProgramDescription implements Action {
@@ -35,7 +42,7 @@ export class DeleteTranslatedHikeProgramDescription implements Action {
   constructor(public languageKey: string) {}
 }
 
-export interface IDetails {
+export interface Details {
   id?: string;
   routeId?: string;
   difficulty?: number;
@@ -56,27 +63,27 @@ export interface IDetails {
 export class AddHikeProgramDetails implements Action {
   readonly type = ADD_HIKE_PROGRAM_DETAILS;
 
-  constructor(public details: IDetails, public setDirty: boolean) {}
+  constructor(public details: Details, public setDirty: boolean) {}
 }
 
 export class AddStop implements Action {
   readonly type = ADD_STOP;
-  constructor(public stop: IHikeProgramStop) {}
+  constructor(public stop: HikeProgramStop) {}
 }
 
 export class PrepareThenAddStop implements Action {
   readonly type = PREPARE_THEN_ADD_STOP;
-  constructor(public poi: IGTrackPoi) {}
+  constructor(public poi: GTrackPoi) {}
 }
 
 export class SetStops implements Action {
   readonly type = SET_STOPS;
-  constructor(public stops: IHikeProgramStop[]) {}
+  constructor(public stops: Array<HikeProgramStop>) {}
 }
 
 export class SetReverseStops implements Action {
   readonly type = SET_REVERSE_STOPS;
-  constructor(public stops: IHikeProgramStop[]) {}
+  constructor(public stops: Array<HikeProgramStop>) {}
 }
 
 export class SetCheckpoints implements Action {
@@ -86,7 +93,7 @@ export class SetCheckpoints implements Action {
 
 export class RemoveStopByPoiId implements Action {
   readonly type = REMOVE_STOP_BY_POI_ID;
-  constructor(public poiIds: string[]) {}
+  constructor(public poiIds: Array<string>) {}
 }
 
 export class SaveHikeProgram implements Action {
@@ -106,7 +113,7 @@ export class HikeProgramSaveFailed implements Action {
 export class AddHikeProgramBackgroundImage implements Action {
   readonly type = ADD_HIKE_PROGRAM_BACKGROUND_IMAGE;
 
-  constructor(public imageData: IBackgroundImageData) {}
+  constructor(public imageData: BackgroundImageData) {}
 }
 
 export class RemoveHikeProgramBackgroundImage implements Action {

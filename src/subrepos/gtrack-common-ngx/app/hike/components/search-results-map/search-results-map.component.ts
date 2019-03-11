@@ -1,22 +1,20 @@
 import { Component, Input } from '@angular/core';
-import { HikeListMapComponent } from '../hike-list-map';
-
 import * as L from 'leaflet';
+import { HikeListMapComponent } from '../hike-list-map';
 
 @Component({
   selector: 'gtrack-common-search-results-map',
   template: ''
 })
 export class SearchResultsMapComponent extends HikeListMapComponent {
-  @Input()
-  public circle: {
+  @Input() circle: {
     lat: number;
     lng: number;
     radius: number;
   };
 
-  protected _centerMap() {
-    const map = this.map.map;
+  protected _centerMap(): void {
+    const map = this.map.leafletMap;
 
     const envelope = this._geometry.envelopeCircle([this.circle.lng, this.circle.lat], this.circle.radius);
     const southWest = new L.LatLng(envelope[0][0], envelope[0][1]);
@@ -31,8 +29,8 @@ export class SearchResultsMapComponent extends HikeListMapComponent {
       this.circle.radius
     );
 
-    circle.addTo(map.leafletMap);
+    circle.addTo(map);
 
-    map.fitBox(box);
+    this._leafletMapService.fitBounds(box);
   }
 }

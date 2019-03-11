@@ -1,10 +1,9 @@
-import { IDeepstreamState } from '../../../deepstream-ngx';
-import { IAuthenticationState } from '../authentication';
-import { IPoiState, IHikeState, IRouteState } from '../hike';
-import { IGeoSearchState } from '../geosearch';
-import { IBackgroundGeolocationState } from './reducers/background-geolocation';
-import { ISearchFilters } from '../search-filters';
-import { IObjectMarkState } from '../object-mark';
+import { DeepstreamState } from '@features/common/deepstream-ngx';
+import { AuthenticationState } from '../authentication';
+import { GeoSearchState } from '../geosearch';
+import { HikeState, PoiState, RouteState } from '../hike';
+import { ObjectMarkState } from '../object-mark';
+import { SearchFilters } from '../search-filters';
 
 // A module with store must export its reducers and its store interface - do it here, like in the example
 // import * as Authentication from '../authentication/store'
@@ -13,13 +12,12 @@ import { IObjectMarkState } from '../object-mark';
 
 // Extend the store interface with that.
 export interface CommonState {
-  deepstream: IDeepstreamState;
-  poi: IPoiState;
-  hike: IHikeState;
-  route: IRouteState;
-  geosearch: IGeoSearchState;
-  authentication: IAuthenticationState;
-  geolocation: IBackgroundGeolocationState | null;
-  searchFilters: ISearchFilters;
-  objectMarks: IObjectMarkState;
+  deepstream: DeepstreamState;
+  poi: PoiState;
+  hike: HikeState;
+  route: RouteState;
+  geosearch: GeoSearchState;
+  authentication: AuthenticationState;
+  searchFilters: SearchFilters;
+  objectMarks: ObjectMarkState;
 }

@@ -1,18 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-import { EObjectMarkContext } from 'subrepos/provider-client';
+import { EObjectMarkContext } from '@features/common/gtrack-interfaces';
 import { Store, StoreModule, select } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { objectMarkReducer } from '../reducer';
-import { IObjectMarkState } from '../state';
+import { ObjectMarkState } from '../state';
 import { ObjectMarkSelectors } from '../selectors';
 import { EXTERNAL_OBJECT_MARK_DEPENDENCIES } from '../../externals';
 
 import * as Actions from '../actions';
 
 describe('ObjectMark selectors', () => {
-  let store: Store<IObjectMarkState>;
+  let store: Store<ObjectMarkState>;
   let destroy$: Subject<boolean>;
 
   const contexts = ['foo1', 'foo2'];

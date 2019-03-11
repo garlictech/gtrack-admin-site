@@ -1,77 +1,77 @@
 .ui-calendar {
-    position: relative;
-    display: block;
+  position: relative;
+  display: block;
+  width: 100%;
+  color: $black;
+  .ui-inputtext {
     width: 100%;
+    border-radius: $input-border-radius !important;
+    border: 1px solid $black;
+    padding: $input-padding;
+  }
+  .ui-calendar-button {
+    border-radius: $input-border-radius;
+    position: absolute;
+    right: 0;
+    background: $white;
     color: $black;
-    .ui-inputtext {
-        width: 100%;
-        border-radius: $input-border-radius !important;
-        border: 1px solid $black;
-        padding: $input-padding;
-    }
-    .ui-calendar-button {
-        border-radius: $input-border-radius;
-        position: absolute;
-        right: 0;
-        background: $white;
-        color: $black;
-        border: 0;
-        height: 100%;
-        margin: 0;
-        min-width: 40px;
-        text-align: center;
-        padding: 1px;
-    }
+    border: 0;
+    height: 100%;
+    margin: 0;
+    min-width: 40px;
+    text-align: center;
+    padding: 1px;
+  }
 }
 
 .ui-datepicker {
-    background: $red;
-    width: 320px;
-    .ui-datepicker-header {
-        .ui-datepicker-prev,
-        .ui-datepicker-next {
-            color: $black;
+  background: $red;
+  width: 320px;
+  .ui-datepicker-header {
+    .ui-datepicker-prev,
+    .ui-datepicker-next {
+      color: $black;
+      font-weight: 700;
+    }
+    .ui-datepicker-title {
+      .ui-datepicker-month {
+        color: $black;
+        margin-right: 15px;
+      }
+    }
+  }
+  .ui-datepicker-calendar {
+    thead {
+      tr {
+        th {
+          color: $black;
+          font-size: 1rem;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          color: $white;
+          font-size: 1rem;
+          text-align: center;
+          &.ui-state-disabled {
+            color: rgba($white, 0.4);
+          }
+          &.ui-datepicker-current-day {
             font-weight: 700;
-        }
-        .ui-datepicker-title {
-            .ui-datepicker-month {
-                color: $black;
-                margin-right: 15px;
+          }
+          a {
+            color: inherit;
+            font-weight: inherit;
+            display: block;
+            text-align: inherit;
+            &.ui-state-active {
+              background: $white;
             }
+          }
         }
+      }
     }
-    .ui-datepicker-calendar {
-        thead {
-            tr {
-                th {
-                    color: $black;
-                    font-size: 1rem;
-                }
-            }
-        }
-        tbody {
-            tr {
-                td {
-                    color: $white;
-                    font-size: 1rem;
-                    text-align: center;
-                    &.ui-state-disabled {
-                        color: rgba($white, 0.4);
-                    }
-                    &.ui-datepicker-current-day {
-                        font-weight: 700;
-                    }
-                    a {
-                        color: inherit;
-                        font-weight: inherit;
-                        display: block;
-                        text-align: inherit;
-                        &.ui-state-active {
-                            background: $white;
-                        }
-                    }
-                }
-            }
-        }
-    }
+  }
 }

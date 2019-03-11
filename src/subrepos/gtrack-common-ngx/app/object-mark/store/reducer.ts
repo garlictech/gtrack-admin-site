@@ -1,22 +1,21 @@
-import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
-
+// tslint:disable:only-arrow-functions no-small-switch
+import { ActionReducer, ActionReducerMap, combineReducers } from '@ngrx/store';
+import { AllObjectMarkActionTypes, ObjectMarkActionTypes } from './actions';
 import {
   objectMarkAdapter,
   objectMarkContextAdapter,
-  IObjectMarkState,
-  IObjectMarkEntityState,
-  IObjectMarkContextState
+  ObjectMarkContextState,
+  ObjectMarkEntityState,
+  ObjectMarkState
 } from './state';
-
-import { AllObjectMarkActionTypes, ObjectMarkActionTypes } from './actions';
 
 export const objectMarkReducerInitialState = objectMarkAdapter.getInitialState();
 export const objectMarkContextReducerInitialState = objectMarkContextAdapter.getInitialState();
 
-const contextReducer: ActionReducer<IObjectMarkContextState> = (
-  state: IObjectMarkContextState = objectMarkContextReducerInitialState,
+const contextReducer: ActionReducer<ObjectMarkContextState> = (
+  state: ObjectMarkContextState = objectMarkContextReducerInitialState,
   action: AllObjectMarkActionTypes
-): IObjectMarkContextState => {
+): ObjectMarkContextState => {
   switch (action.type) {
     case ObjectMarkActionTypes.LOAD_CONTEXT:
       return objectMarkContextAdapter.upsertOne(
@@ -71,10 +70,10 @@ const contextReducer: ActionReducer<IObjectMarkContextState> = (
   }
 };
 
-const reducer: ActionReducer<IObjectMarkEntityState> = (
-  state: IObjectMarkEntityState = objectMarkReducerInitialState,
+const reducer: ActionReducer<ObjectMarkEntityState> = (
+  state: ObjectMarkEntityState = objectMarkReducerInitialState,
   action: AllObjectMarkActionTypes
-): IObjectMarkEntityState => {
+): ObjectMarkEntityState => {
   switch (action.type) {
     case ObjectMarkActionTypes.CONTEXT_LOADED:
       return objectMarkAdapter.upsertOne(
@@ -90,7 +89,7 @@ const reducer: ActionReducer<IObjectMarkEntityState> = (
   }
 };
 
-const reducerMap: ActionReducerMap<IObjectMarkState> = {
+const reducerMap: ActionReducerMap<ObjectMarkState> = {
   contexts: contextReducer,
   objectMarks: reducer
 };

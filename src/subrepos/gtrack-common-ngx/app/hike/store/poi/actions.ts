@@ -1,5 +1,6 @@
+// tslint:disable:no-property-initializers max-classes-per-file
+import { EObjectState, PoiData, PoiStored } from '@features/common/gtrack-interfaces';
 import { Action } from '@ngrx/store';
-import { IPoi, IPoiStored, EObjectState } from '../../../../../provider-client';
 
 export enum PoiActionTypes {
   LOAD_POI = '[Poi] Load poi',
@@ -27,25 +28,25 @@ export class LoadPoi implements Action {
 export class LoadPois implements Action {
   readonly type = PoiActionTypes.LOAD_POIS;
 
-  constructor(public contexts: string[]) {}
+  constructor(public contexts: Array<string>) {}
 }
 
 export class PoiLoaded implements Action {
   readonly type = PoiActionTypes.POI_LOADED;
 
-  constructor(public context: string, public poi: IPoiStored) {}
+  constructor(public context: string, public poi: PoiStored) {}
 }
 
 export class AllPoiLoaded implements Action {
   readonly type = PoiActionTypes.ALL_POI_LOADED;
 
-  constructor(public contexts: string[], public pois: IPoiStored[]) {}
+  constructor(public contexts: Array<string>, public pois: Array<PoiStored>) {}
 }
 
 export class SavePoi implements Action {
   readonly type = PoiActionTypes.SAVE_POI;
 
-  constructor(public poi: IPoi) {}
+  constructor(public poi: PoiData) {}
 }
 
 export class PoiSaved implements Action {
@@ -81,13 +82,13 @@ export class PoiDeleted implements Action {
 export class MergePoi implements Action {
   readonly type = PoiActionTypes.MERGE_POI;
 
-  constructor(public ids: string[], public newData: any) {}
+  constructor(public ids: Array<string>, public newData: any) {}
 }
 
 export class PoiMergedSuccessfully implements Action {
   readonly type = PoiActionTypes.POI_MERGED_SUCCESSFULLY;
 
-  constructor(public newId: string, public mergedIds: string[]) {}
+  constructor(public newId: string, public mergedIds: Array<string>) {}
 }
 
 export class PoiMergeFailed implements Action {

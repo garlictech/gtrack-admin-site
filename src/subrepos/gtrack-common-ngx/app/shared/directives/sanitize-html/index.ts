@@ -1,19 +1,16 @@
-import { Directive, Input, HostBinding } from '@angular/core';
+import { Directive, HostBinding, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Directive({
   selector: '[gtrackSanitizeHtml]'
 })
 export class SanitizeHtmlDirective {
-  @Input()
-  public gtrackSanitizeHtml: string;
+  @Input() gtrackSanitizeHtml: string;
 
   @HostBinding('innerHtml')
-  public get innerHtml(): SafeHtml {
+  get innerHtml(): SafeHtml {
     return this._sanitizer.bypassSecurityTrustHtml(this.gtrackSanitizeHtml);
   }
 
-  constructor(private _sanitizer: DomSanitizer) {
-    /* EMPTY */
-  }
+  constructor(private readonly _sanitizer: DomSanitizer) {}
 }

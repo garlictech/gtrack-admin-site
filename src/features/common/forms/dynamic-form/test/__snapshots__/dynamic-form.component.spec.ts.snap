@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DynamicFormComponent Test onSubmit onSubmit should submit the form if it is valid and it should reset the form with the submited reset function if resetOnSubmit is set 1`] = `"valueAfterReset"`;
+
+exports[`DynamicFormComponent ngAfterViewInit should handle formDataSelector if there is no formData emitted 1`] = `
+Array [
+  Array [
+    Object {
+      "fooField": Object {
+        "foo": "field",
+      },
+    },
+    Object {},
+  ],
+]
+`;
+
+exports[`DynamicFormComponent ngAfterViewInit should handle formDataSelector if there is no formDataSelector defined 1`] = `
+Array [
+  Array [
+    Object {
+      "fooField": Object {
+        "foo": "field",
+      },
+    },
+    Object {},
+  ],
+]
+`;

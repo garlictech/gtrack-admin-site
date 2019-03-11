@@ -1,37 +1,37 @@
 gtrack-search-filters {
+  display: block;
+  margin-bottom: 10px;
+  form {
+    margin: 0;
+    padding: 0;
+  }
+  .show-filters-button {
+    margin: 10px auto;
     display: block;
-    margin-bottom: 10px;
-    form {
-        margin: 0;
-        padding: 0;
+  }
+  .filters-container {
+    border-bottom: 1px solid #000000;
+    padding-bottom: 10px;
+  }
+  .filters {
+    max-width: 1366px;
+    margin: auto;
+    padding: 5px 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    .filter {
+      width: 100%;
+      padding: 5px 40px;
+      @include media-breakpoint-up(sm) {
+        width: 50%;
+      }
+      @include media-breakpoint-up(md) {
+        width: 25%;
+      }
     }
-    .show-filters-button {
-        margin: 10px auto;
-        display: block;
+    label {
+      font-size: 12px;
     }
-    .filters-container {
-        border-bottom: 1px solid #000000;
-        padding-bottom: 10px;
-    }
-    .filters {
-        max-width: 1366px;
-        margin: auto;
-        padding: 5px 0;
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        .filter {
-            width: 100%;
-            padding: 5px 40px;
-            @include media-breakpoint-up(sm) {
-                width: 50%;
-            }
-            @include media-breakpoint-up(md) {
-                width: 25%;
-            }
-        }
-        label {
-            font-size: 12px;
-        }
-    }
+  }
 }

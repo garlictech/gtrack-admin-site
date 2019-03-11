@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { Store, select } from '@ngrx/store';
 import { filter, switchMapTo } from 'rxjs/operators';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
 import { DeepstreamActions } from 'subrepos/gtrack-common-ngx/app/deepstream';
 
-import { LoginComponent } from './components/login';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { select, Store } from '@ngrx/store';
+
 import { State } from '../store';
+import { LoginComponent } from './components/login';
 
 const COMPONENTS = [LoginComponent];
 
@@ -27,11 +27,14 @@ const COMPONENTS = [LoginComponent];
   entryComponents: [...COMPONENTS]
 })
 export class AuthModule {
-  constructor(private _authSelectors: AuthenticationSelectors.Selectors, private _store: Store<State>) {
+  constructor(
+    private readonly _authSelectors: AuthenticationSelectors.Selectors,
+    private readonly _store: Store<State>
+  ) {
     this._init();
   }
 
-  private _init() {
+  private _init(): void {
     this._store
       .pipe(
         select(this._authSelectors.jwtLoggingIn),

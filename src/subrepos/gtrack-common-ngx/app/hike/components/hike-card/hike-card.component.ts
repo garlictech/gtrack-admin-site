@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IHikeProgram } from '../../../../../provider-client';
-
+import { HikeProgramData } from '@features/common/gtrack-interfaces';
 import _get from 'lodash-es/get';
 
 @Component({
@@ -8,11 +7,10 @@ import _get from 'lodash-es/get';
   template: ''
 })
 export class HikeCardComponent {
-  @Input()
-  public hikeProgram: IHikeProgram;
+  @Input() hikeProgram: HikeProgramData;
 
-  public get images(): string[] {
-    let urls: string[] = [];
+  get images(): Array<string> {
+    let urls: Array<string> = [];
 
     if (this.hikeProgram && this.hikeProgram.backgroundImages instanceof Array) {
       const imageUrls = this.hikeProgram.backgroundImages;
@@ -23,7 +21,7 @@ export class HikeCardComponent {
     return urls;
   }
 
-  public get image(): string {
+  get image(): string {
     let url = '';
 
     if (this.hikeProgram && this.hikeProgram.backgroundImages instanceof Array) {

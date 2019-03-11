@@ -1,30 +1,29 @@
 import { Inject, Injectable } from '@angular/core';
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
-
-import { routeAdapter, routeContextStateAdapter, IRouteState, IRouteContextState } from './state';
-import { EXTERNAL_ROUTE_DEPENDENCIES, IExternalRouteDependencies } from '../../externals';
-import { IRouteStored } from '../../../../../provider-client';
+import { RouteStored } from '@features/common/gtrack-interfaces';
+import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
+import { EXTERNAL_ROUTE_DEPENDENCIES, ExternalRouteDependencies } from '../../externals';
+import { routeAdapter, RouteContextState, routeContextStateAdapter, RouteState } from './state';
 
 @Injectable()
 export class RouteSelectors {
-  public selectFeature: MemoizedSelector<object, IRouteState>;
-  public getRouteIds: (state: object) => string[] | number[];
-  public getAllRoutes: (state: object) => IRouteStored[];
-  public getAllContexts: (state: object) => IRouteContextState[];
+  selectFeature: MemoizedSelector<object, RouteState>;
+  getRouteIds: (state: object) => Array<string> | Array<number>;
+  getAllRoutes: (state: object) => Array<RouteStored>;
+  getAllContexts: (state: object) => Array<RouteContextState>;
 
-  private _externals: IExternalRouteDependencies;
+  private readonly _externals: ExternalRouteDependencies;
 
   constructor(@Inject(EXTERNAL_ROUTE_DEPENDENCIES) externals) {
     this._externals = externals;
-    this.selectFeature = createFeatureSelector<IRouteState>(this._externals.storeDomain);
+    this.selectFeature = createFeatureSelector<RouteState>(this._externals.storeDomain);
 
     const routeSelector = createSelector(
       this.selectFeature,
-      (state: IRouteState) => state.routes
+      (state: RouteState) => state.routes
     );
     const contextSelector = createSelector(
       this.selectFeature,
-      (state: IRouteState) => state.contexts
+      (state: RouteState) => state.contexts
     );
 
     const selectors = routeAdapter.getSelectors(routeSelector);
@@ -35,14 +34,14 @@ export class RouteSelectors {
     this.getAllContexts = contextSelectors.selectAll;
   }
 
-  public getRoute(context: string) {
+  getRoute(context: string): MemoizedSelector<object, RouteStored> {
     return createSelector(
       this.getAllRoutes,
-      (routes: IRouteStored[]) => routes.find(route => route.id === context)
+      (routes: Array<RouteStored>) => routes.find(route => route.id === context)
     );
   }
 
-  public getRoutes(contexts: string[]) {
+  getRoutes(contexts: Array<string>): MemoizedSelector<object, Array<RouteStored>> {
     return createSelector(
       this.getAllRoutes,
       routes =>
@@ -56,16 +55,14 @@ export class RouteSelectors {
     );
   }
 
-  public getRouteContext(id: string) {
+  getRouteContext(id: string): MemoizedSelector<object, any> {
     return createSelector(
       this.getAllContexts,
-      contexts => {
-        return contexts.find(context => context.id === id);
-      }
+      contexts => contexts.find(context => context.id === id)
     );
   }
 
-  public getRouteContexts(ids: string[]) {
+  getRouteContexts(ids: Array<string>): MemoizedSelector<object, Array<any>> {
     return createSelector(
       this.getAllContexts,
       contexts =>

@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
-import { IComparedProperty, IFilteredProperties } from '../../interfaces';
-
 import * as flatten from 'flat';
-import _pick from 'lodash-es/pick';
-import _omit from 'lodash-es/omit';
-import _uniq from 'lodash-es/uniq';
-import _set from 'lodash-es/set';
 import _isObject from 'lodash-es/isObject';
+import _omit from 'lodash-es/omit';
+import _pick from 'lodash-es/pick';
+import _set from 'lodash-es/set';
+import _uniq from 'lodash-es/uniq';
+
+import { Injectable } from '@angular/core';
+
+import { ComparedProperty, FilteredProperties } from '../../interfaces';
 
 @Injectable()
 export class PoiMergeService {
-  public collectFlatKeyValues(pois) {
+  collectFlatKeyValues(pois): FilteredProperties {
     // Collect properties
-    const flatProperties: IComparedProperty = {};
-    let commonTypes: string[] = [];
-    let objectTypes: string[] = [];
+    const flatProperties: ComparedProperty = {};
+    let commonTypes: Array<string> = [];
+    let objectTypes: Array<string> = [];
 
     for (const poi of pois) {
       let flatPoi = flatten(
@@ -59,10 +60,10 @@ export class PoiMergeService {
     }
 
     // Separate
-    const filteredProperties: IFilteredProperties = {
+    const filteredProperties: FilteredProperties = {
       unique: {
         types: _uniq(commonTypes),
-        objectTypes: objectTypes
+        objectTypes
       },
       conflicts: {}
     };
@@ -78,7 +79,7 @@ export class PoiMergeService {
     return filteredProperties;
   }
 
-  public createGTrackPoiFromUniqueValues(flatProperties: IComparedProperty) {
+  createGTrackPoiFromUniqueValues(flatProperties: ComparedProperty): any {
     const poiData = {};
 
     for (const key in flatProperties) {

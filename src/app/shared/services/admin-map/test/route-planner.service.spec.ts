@@ -1,17 +1,16 @@
-import { TestBed } from '@angular/core/testing';
-import { AdminMapService } from '../admin-map.service';
-import {
-  RouteService, GameRuleService
-} from '../../../../../subrepos/gtrack-common-ngx';
-import { EMPTY } from 'rxjs';
-import { StoreModule, Store } from '@ngrx/store';
-import { State } from '../../../../store';
-import { RoutePlannerService } from '../route-planner.service';
-import { MOCK_SEGMENTS, MOCK_SEGMENT_TOTAL, MOCK_SEGMENT_GEOJSON } from './fixtures/segments';
-import { hikeEditRoutePlannerActions } from '../../../../store/actions';
-import { LeafletMapService } from '@common.features/leaflet-map/services/leaflet-map.service';
-
 import * as _ from 'lodash';
+import { EMPTY } from 'rxjs';
+
+import { TestBed } from '@angular/core/testing';
+import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { Store, StoreModule } from '@ngrx/store';
+
+import { GameRuleService, RouteService } from '../../../../../subrepos/gtrack-common-ngx';
+import { State } from '../../../../store';
+import { hikeEditRoutePlannerActions } from '../../../../store/actions';
+import { AdminMapService } from '../admin-map.service';
+import { RoutePlannerService } from '../route-planner.service';
+import { MOCK_SEGMENT_GEOJSON, MOCK_SEGMENT_TOTAL, MOCK_SEGMENTS } from './fixtures/segments';
 
 describe('RoutePlannerService', () => {
   let routePlannerService: RoutePlannerService;
@@ -19,14 +18,19 @@ describe('RoutePlannerService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({
-
-        })
-      ],
+      imports: [StoreModule.forRoot({})],
       providers: [
         RoutePlannerService,
-        LeafletMapService,
+        {
+          provide: LeafletMapService,
+          useValue: {
+            addLayer: jest.fn(),
+            removeLayer: jest.fn(),
+            refreshSpiderfierMarkers: jest.fn(),
+            leafletMap: jest.fn(),
+            spin: jest.fn()
+          }
+        },
         {
           provide: Store,
           useValue: {
@@ -75,7 +79,7 @@ describe('RoutePlannerService', () => {
     expect(routePlannerService).toBeTruthy();
   });
 
-  it('should add route to the store', (done) => {
+  it('should add route to the store', done => {
     const storeSpy = jest.spyOn(store, 'dispatch');
     const route = 'fakeRouteData';
     const action = new hikeEditRoutePlannerActions.AddRoute(route);
@@ -87,7 +91,7 @@ describe('RoutePlannerService', () => {
     done();
   });
 
-  it('should add route segment', (done) => {
+  it('should add route segment', done => {
     const storeSpy = jest.spyOn(store, 'dispatch');
     const segment = 'mockSegment';
     const action = new hikeEditRoutePlannerActions.PushSegment(segment);
@@ -101,7 +105,7 @@ describe('RoutePlannerService', () => {
     done();
   });
 
-  it('should update route segment', (done) => {
+  it('should update route segment', done => {
     const storeSpy = jest.spyOn(store, 'dispatch');
     const segmentIdx = 0;
     const segment = 'mockSegment';
@@ -116,8 +120,7 @@ describe('RoutePlannerService', () => {
     done();
   });
 
-  it('should create route segment', (done) => {
-
+  it('should create route segment', done => {
     const updown = {
       uphill: 10,
       downhill: 20
@@ -127,7 +130,7 @@ describe('RoutePlannerService', () => {
       distance: 0,
       uphill: updown.uphill,
       downhill: updown.downhill,
-      coordinates: coordinates
+      coordinates
     };
     const segment = routePlannerService.createRouteSegment(coordinates, updown);
 
@@ -136,7 +139,7 @@ describe('RoutePlannerService', () => {
     done();
   });
 
-  it('should remove last segment', (done) => {
+  it('should remove last segment', done => {
     const storeSpy = jest.spyOn(store, 'dispatch');
     const action = new hikeEditRoutePlannerActions.PopSegment();
 
@@ -147,8 +150,8 @@ describe('RoutePlannerService', () => {
     done();
   });
 
-  it('should calculate total from segment', (done) => {
-    const total = routePlannerService['_calculateTotal'](MOCK_SEGMENTS);
+  it('should calculate total from segment', done => {
+    const total = routePlannerService._calculateTotal(MOCK_SEGMENTS);
     const expected = MOCK_SEGMENT_TOTAL;
 
     expect(expected).toEqual(total);
@@ -156,8 +159,8 @@ describe('RoutePlannerService', () => {
     done();
   });
 
-  it('should create geoJSON from segment', (done) => {
-    const total = routePlannerService['_createGeoJsonFromSegments'](MOCK_SEGMENTS);
+  it('should create geoJSON from segment', done => {
+    const total = routePlannerService._createGeoJsonFromSegments(MOCK_SEGMENTS);
     const expected = MOCK_SEGMENT_GEOJSON;
 
     expect(expected).toEqual(total);
@@ -165,8 +168,8 @@ describe('RoutePlannerService', () => {
     done();
   });
 
-  it('should create route point', (done) => {
-    const total = routePlannerService['_createRoutePoint'](MOCK_SEGMENTS[0].coordinates[0], 1);
+  it('should create route point', done => {
+    const total = routePlannerService._createRoutePoint(MOCK_SEGMENTS[0].coordinates[0], 1);
     const expected = {
       type: 'Feature',
       geometry: {
@@ -187,8 +190,8 @@ describe('RoutePlannerService', () => {
     done();
   });
 
-  it('should get last point of last segment', (done) => {
-    const total = routePlannerService['_getLastPointOfLastSegment'](MOCK_SEGMENTS);
+  it('should get last point of last segment', done => {
+    const total = routePlannerService._getLastPointOfLastSegment(MOCK_SEGMENTS);
     const expected = [...MOCK_SEGMENTS].pop().coordinates.pop();
 
     expect(expected).toEqual(total);
@@ -196,8 +199,8 @@ describe('RoutePlannerService', () => {
     done();
   });
 
-  it('should get search bounds', (done) => {
-    const total = routePlannerService['_getLastPointOfLastSegment'](MOCK_SEGMENTS);
+  it('should get search bounds', done => {
+    const total = routePlannerService._getLastPointOfLastSegment(MOCK_SEGMENTS);
     const expected = [...MOCK_SEGMENTS].pop().coordinates.pop();
 
     expect(expected).toEqual(total);

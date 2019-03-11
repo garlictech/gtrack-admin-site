@@ -1,10 +1,10 @@
-import { IState as CommonState } from 'subrepos/gtrack-common-web/store';
+import { State as CommonState } from 'subrepos/gtrack-common-web/store';
 
-import { IHikeEditRoutePlannerState } from './hike-edit-route-planner';
-import { IHikeEditPoiState } from './hike-edit-poi';
-import { IEditedHikeProgramState } from './edited-hike-program';
-import { IEditedGTrackPoiState } from './edited-gtrack-poi';
-import { IHikeEditImageState } from './hike-edit-image';
+import { EditedGTrackPoiState } from './edited-gtrack-poi';
+import { EditedHikeProgramState } from './edited-hike-program';
+import { HikeEditImageState } from './hike-edit-image';
+import { HikeEditPoiState } from './hike-edit-poi';
+import { HikeEditRoutePlannerState } from './hike-edit-route-planner';
 
 export * from './hike-edit-poi';
 export * from './hike-edit-image';
@@ -13,9 +13,9 @@ export * from './edited-hike-program';
 export * from './edited-gtrack-poi';
 
 export interface State extends CommonState {
-  hikeEditRoutePlanner: IHikeEditRoutePlannerState;
-  hikeEditPoi: IHikeEditPoiState;
-  hikeEditImage: IHikeEditImageState;
-  editedHikeProgram: IEditedHikeProgramState;
-  editedGtrackPoi: IEditedGTrackPoiState;
+  hikeEditRoutePlanner: HikeEditRoutePlannerState;
+  hikeEditPoi: HikeEditPoiState;
+  hikeEditImage: HikeEditImageState;
+  editedHikeProgram: EditedHikeProgramState;
+  editedGtrackPoi: EditedGTrackPoiState;
 }

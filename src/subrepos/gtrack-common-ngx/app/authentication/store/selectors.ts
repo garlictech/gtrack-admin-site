@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 
 import _get from 'lodash-es/get';
 
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 
-import { Selectors as DeepstreamSelectors } from '../../../../deepstream-ngx';
+import { Selectors as DeepstreamSelectors } from '@features/common/deepstream-ngx';
 
-import { User, IAuthenticationState as IJwtAuthState, IAuth } from '../../../../authentication-api-ngx';
+import { Auth, AuthenticationState as IJwtAuthState, User } from '@features/common/authentication-api';
 
-import { IAuthenticationState } from './state';
+import { AuthenticationState } from './state';
 
-const selectAuthFeature = createFeatureSelector<IAuthenticationState>('authentication');
+const selectAuthFeature = createFeatureSelector<AuthenticationState>('authentication');
 
 const selectJwtFeature = createSelector(
   selectAuthFeature,
-  (state: IAuthenticationState) => state.jwtAuth
+  (state: AuthenticationState) => state.jwtAuth
 );
 
 const selectAuth = createSelector(
@@ -24,7 +24,7 @@ const selectAuth = createSelector(
 
 export const selectUser = createSelector(
   selectAuth,
-  (state: IAuth) => _get(state, 'user')
+  (state: Auth) => _get(state, 'user')
 );
 
 export const selectRole = createSelector(
@@ -42,25 +42,25 @@ export const loggedOut = createSelector(
 
 @Injectable()
 export class Selectors {
-  public auth: MemoizedSelector<object, IAuth>;
-  public user: MemoizedSelector<object, User>;
-  public loggingIn: MemoizedSelector<object, boolean>;
-  public jwtLoggingIn: MemoizedSelector<object, boolean>;
-  public loggedIn: MemoizedSelector<object, boolean>;
-  public loggedOut: MemoizedSelector<object, boolean>;
-  public magicLinkEmailSent: MemoizedSelector<object, boolean>;
-  public loginFailed: MemoizedSelector<object, boolean>;
-  public role;
-  public selectedRole;
-  public token: MemoizedSelector<object, string>;
-  public termsAccepted: MemoizedSelector<object, boolean>;
-  public loginRefused: MemoizedSelector<object, boolean>;
-  public selectUserId: MemoizedSelector<object, string>;
+  auth: MemoizedSelector<object, Auth>;
+  user: MemoizedSelector<object, User>;
+  loggingIn: MemoizedSelector<object, boolean>;
+  jwtLoggingIn: MemoizedSelector<object, boolean>;
+  loggedIn: MemoizedSelector<object, boolean>;
+  loggedOut: MemoizedSelector<object, boolean>;
+  magicLinkEmailSent: MemoizedSelector<object, boolean>;
+  loginFailed: MemoizedSelector<object, boolean>;
+  role;
+  selectedRole;
+  token: MemoizedSelector<object, string>;
+  termsAccepted: MemoizedSelector<object, boolean>;
+  loginRefused: MemoizedSelector<object, boolean>;
+  selectUserId: MemoizedSelector<object, string>;
 
-  constructor(private _deepstreamSelectors: DeepstreamSelectors) {
+  constructor(private readonly _deepstreamSelectors: DeepstreamSelectors) {
     const selectUiFeature = createSelector(
       selectAuthFeature,
-      (state: IAuthenticationState) => state.uiState
+      (state: AuthenticationState) => state.uiState
     );
 
     this.auth = selectAuth;

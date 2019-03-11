@@ -1,14 +1,14 @@
 .card {
-    background: $white;
-    color: $black;
-    .card-header {
-        padding: 30px 30px 0 30px;
-    }
-    .card-body {
-        padding: 30px;
-        overflow: visible;
-    }
-    .card-footer {
-        padding: 0 30px 30px 30px;
-    }
+  background: $white;
+  color: $black;
+  .card-header {
+    padding: 30px 30px 0 30px;
+  }
+  .card-body {
+    padding: 30px;
+    overflow: visible;
+  }
+  .card-footer {
+    padding: 0 30px 30px 30px;
+  }
 }

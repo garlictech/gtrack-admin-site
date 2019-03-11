@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { State } from '../../../store';
-import { editedHikeProgramActions, hikeEditPoiActions, commonPoiActions } from '../../../store/actions';
+import _map from 'lodash-es/map';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+
+import { State } from '../../../store';
+import { commonPoiActions, editedHikeProgramActions, hikeEditPoiActions } from '../../../store/actions';
 import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
 import { PoiEditorService } from '../../services';
-
-import _map from 'lodash-es/map';
 
 @Component({
   selector: 'app-marker-popup',
@@ -15,30 +16,35 @@ import _map from 'lodash-es/map';
   styleUrls: ['./style.scss']
 })
 export class AdminMarkerPopupComponent implements OnInit {
-  public static componentName = 'AdminMarkerPopupComponent';
-  public isPlanning$: Observable<boolean>;
-  public data: any;
-  public closePopup: any;
+  // tslint:disable-next-line:no-property-initializers
+  static componentName = 'AdminMarkerPopupComponent';
+  isPlanning$: Observable<boolean>;
+  data: any;
+  closePopup: any;
 
-  public images: string[] = [];
-  public btnTitle: string;
-  public btn2Title: string;
-  public btnClass: string;
-  public btn2Class: string;
-  public btnClick: any;
-  public btn2Click: any;
+  images: Array<string>;
+  btnTitle: string;
+  btn2Title: string;
+  btnClass: string;
+  btn2Class: string;
+  btnClick: any;
+  btn2Click: any;
 
-  constructor(
-    private _store: Store<State>,
-    private _poiEditorService: PoiEditorService
-  ) {}
+  constructor(private readonly _store: Store<State>, private readonly _poiEditorService: PoiEditorService) {
+    this.images = [];
 
-  ngOnInit() {
     this.isPlanning$ = this._store.pipe(
       select(hikeEditRoutePlannerSelectors.getIsPlanning),
       take(1)
     );
 
+    this.btnTitle = '';
+    this.btn2Title = '';
+    this.btnClass = '';
+    this.btn2Class = '';
+  }
+
+  ngOnInit(): void {
     switch (this.data.markerType) {
       case 'hike':
         this.btnTitle = 'Remove from hike';
@@ -70,7 +76,7 @@ export class AdminMarkerPopupComponent implements OnInit {
     }
   }
 
-  private _getBgImagesUrls() {
+  private _getBgImagesUrls(): Array<string> {
     if (this.data.google && this.data.google.photos && this.data.google.photos.length > 0) {
       return _map(this.data.google.photos, 'card.url');
     }
@@ -78,36 +84,43 @@ export class AdminMarkerPopupComponent implements OnInit {
     if (this.data.wikipedia && this.data.wikipedia.photos && this.data.wikipedia.photos.length > 0) {
       return _map(this.data.wikipedia.photos, 'original.url');
     }
+
+    return [];
   }
 
-  private _removeFromHike = () => {
+  // tslint:disable-next-line:no-property-initializers
+  private readonly _removeFromHike = () => {
     this._store.dispatch(new editedHikeProgramActions.RemoveStopByPoiId([this.data.id]));
 
     this.closePopup();
-  }
+  };
 
-  private _addToHike = () => {
+  // tslint:disable-next-line:no-property-initializers
+  private readonly _addToHike = () => {
     this._store.dispatch(new editedHikeProgramActions.PrepareThenAddStop(this.data));
 
     this.closePopup();
-  }
+  };
 
-  private _removeFromCollector = () => {
+  // tslint:disable-next-line:no-property-initializers
+  private readonly _removeFromCollector = () => {
     this._store.dispatch(new hikeEditPoiActions.RemovePoisFromCollector([this.data.id]));
 
     this.closePopup();
-  }
+  };
 
-  private _addToCollector = () => {
+  // tslint:disable-next-line:no-property-initializers
+  private readonly _addToCollector = () => {
     this._store.dispatch(new hikeEditPoiActions.AddPoisToCollector([this.data]));
 
     this.closePopup();
-  }
+  };
 
-  private _addToGTrackPoi = () => {
+  // tslint:disable-next-line:no-property-initializers
+  private readonly _addToGTrackPoi = () => {
     const _poiData = this._poiEditorService.getDbObj(this.data);
     this._store.dispatch(new commonPoiActions.SavePoi(_poiData));
 
     this.closePopup();
-  }
+  };
 }

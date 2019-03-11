@@ -1,71 +1,72 @@
 import {
-  Component,
-  OnInit,
   AfterViewInit,
-  Input,
-  ViewChildren,
-  ViewEncapsulation,
-  ElementRef,
-  QueryList,
   ChangeDetectorRef,
-  ViewChild
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
 } from '@angular/core';
 
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 import { DebugLog } from 'app/log';
 
 @Component({
   selector: 'gtrack-slideshow',
   templateUrl: './slideshow.component.html',
-  styleUrls: ['./slideshow.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./slideshow.component.scss']
 })
 export class SlideShowComponent implements OnInit, AfterViewInit {
-  @Input()
-  public imageUrls: string[] = [];
+  @Input() imageUrls: Array<string>;
 
-  public animate = true;
+  animate: boolean;
 
-  @Input()
-  public controls = false;
+  @Input() controls: boolean;
 
-  @Input()
-  public fullscreenGallery = false;
+  @Input() fullscreenGallery: boolean;
 
-  private _gallery: any;
-  private _thumbGallery: any;
-
-  public icons = {
-    left: faChevronLeft,
-    right: faChevronRight
+  icons: {
+    left: IconDefinition;
+    right: IconDefinition;
   };
 
-  public currentIndex = -1;
+  currentIndex: number;
 
-  public images: {
+  images: Array<{
     url: string;
     animation: string;
-  }[] = [];
+  }>;
 
-  @ViewChildren('slide')
-  public slides: QueryList<ElementRef>;
+  @ViewChildren('slide') slides: QueryList<ElementRef>;
 
-  @ViewChild('slideshow')
-  public slideshow: ElementRef;
+  @ViewChild('slideshow') slideshow: ElementRef;
 
-  @ViewChild('thumbnails')
-  public thumbnails: ElementRef;
+  @ViewChild('thumbnails') thumbnails: ElementRef;
 
-  private _availableAnimations = ['down-left', 'down-right', 'down', 'left', 'right', 'up-left', 'up-right', 'up'];
+  private readonly _availableAnimations: Array<string>;
 
-  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
+  constructor(private readonly _changeDetectorRef: ChangeDetectorRef) {
+    this.imageUrls = [];
+    this.animate = true;
+    this.controls = false;
+    this.fullscreenGallery = false;
+    this.icons = {
+      left: faChevronLeft,
+      right: faChevronRight
+    };
+    this.currentIndex = -1;
+    this.images = [];
+    this._availableAnimations = ['down-left', 'down-right', 'down', 'left', 'right', 'up-left', 'up-right', 'up'];
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.imageUrls.length > 0) {
       this.images = this.imageUrls
         .map(url => ({
-          url: url,
+          url,
           animation: this._getRandomAnimation()
         }))
         .filter(url => !!url);
@@ -74,8 +75,7 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
     this.currentIndex = 0;
   }
 
-  @DebugLog
-  public onPrev(e: Event) {
+  @DebugLog onPrev(e: Event): void {
     e.preventDefault();
     const slides = this.slides.toArray();
     let prev = this.currentIndex - 1;
@@ -89,8 +89,7 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
     prevSlide.nativeElement.click();
   }
 
-  @DebugLog
-  public onNext(e: Event) {
+  @DebugLog onNext(e: Event): void {
     e.preventDefault();
     const slides = this.slides.toArray();
     let next = this.currentIndex + 1;
@@ -104,7 +103,7 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
     nextSlide.nativeElement.click();
   }
 
-  public getZIndex(i: number) {
+  getZIndex(i: number): number {
     if (i - this.currentIndex >= 0) {
       return (this.images.length - i + this.currentIndex) * 10;
     }
@@ -112,7 +111,7 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
     return (this.currentIndex - i) * 10;
   }
 
-  public animationEnd(elem: ElementRef) {
+  animationEnd(elem: ElementRef): void {
     const transitionEnd = () => {
       const slides = this.slides.toArray();
       const last = slides[this.currentIndex];
@@ -130,7 +129,7 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
     elem.nativeElement.style.opacity = 0;
   }
 
-  public addAnimationEnd() {
+  addAnimationEnd(): void {
     const slides = this.slides.toArray();
 
     if (slides && slides.length > 0) {
@@ -145,16 +144,16 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (this.fullscreenGallery) {
       if (this.slideshow) {
-        this._gallery = lightGallery(this.slideshow.nativeElement, {
+        lightGallery(this.slideshow.nativeElement, {
           exThumbImage: 'data-exthumbimage'
         });
       }
 
       if (this.thumbnails) {
-        this._thumbGallery = lightGallery(this.thumbnails.nativeElement, {
+        lightGallery(this.thumbnails.nativeElement, {
           exThumbImage: 'data-exthumbimage'
         });
       }
@@ -167,14 +166,18 @@ export class SlideShowComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private _getRandomAnimation() {
+  trackByFn(index: number): number {
+    return index;
+  }
+
+  private _getRandomAnimation(): string {
     const max = this._availableAnimations.length;
     const randomIndex = Math.floor(Math.random() * max);
 
     return this._availableAnimations[randomIndex];
   }
 
-  private _next() {
+  private _next(): void {
     this.currentIndex++;
 
     if (this.currentIndex > this.slides.length - 1) {

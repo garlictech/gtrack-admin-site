@@ -1,38 +1,39 @@
 .ui-inputswitch {
-    @include user-select(none);
-    display: inline-block;
-    overflow: hidden;
-    height: 25px;
-    cursor: pointer;
+  @include user-select(none);
+  display: inline-block;
+  overflow: hidden;
+  height: 25px;
+  cursor: pointer;
+  background: $white;
+  border: 1px solid $black;
+  .ui-inputswitch-off {
+    white-space: nowrap;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    line-height: 28px;
+    span {
+      background: $gray;
+      color: $black;
+    }
+  }
+  .ui-inputswitch-on {
+    position: absolute;
+    white-space: nowrap;
+    top: 0;
+    height: 100%;
+    line-height: 23px;
+    width: 35px;
+    span {
+    }
+  }
+  .ui-inputswitch-handle {
+    display: block;
+    position: absolute;
+    width: 0;
+    top: 0;
+    left: 0;
+    height: 100%;
     background: $white;
-    border: 1px solid $black;
-    .ui-inputswitch-off {
-        white-space: nowrap;
-        position: absolute;
-        top: 0;
-        height: 100%;
-        line-height: 28px;
-        span {
-            background: $gray;
-            color: $black;
-        }
-    }
-    .ui-inputswitch-on {
-        position: absolute;
-        white-space: nowrap;
-        top: 0;
-        height: 100%;
-        line-height: 23px;
-        width: 35px;
-        span {}
-    }
-    .ui-inputswitch-handle {
-        display: block;
-        position: absolute;
-        width: 0;
-        top: 0;
-        left: 0;
-        height: 100%;
-        background: $white;
-    }
+  }
 }

@@ -1,0 +1,9 @@
+<p-calendar
+  timeOnly="true"
+  showIcon="true"
+  [(ngModel)]="value"
+  (ngModelChange)="doChange($event)"
+  [defaultDate]="defaultDate"
+  hourFormat="24"
+  [placeholder]="placeholder"
+></p-calendar>

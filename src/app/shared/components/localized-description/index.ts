@@ -1,18 +1,24 @@
-import {
-  Component, Input, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy
-} from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable, Subject, of } from 'rxjs';
-import { takeUntil, map } from 'rxjs/operators';
-import { FormGroup } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 
-import { ITextualDescription, ILocalizedItem } from 'subrepos/provider-client';
-import { TextboxField, MarkdownField } from 'subrepos/gtrack-common-web/forms';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { MarkdownField, TextboxField } from '@bit/garlictech.angular-features.common.forms';
+import { LocalizedItem, TextualDescription } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { select, Store } from '@ngrx/store';
 
 import { State } from '../../../store';
-import { DESCRIPTION_LANGUAGES, LanguageService } from '../../services';
+import { AdminLanguageService, DESCRIPTION_LANGUAGES } from '../../services';
 
-interface ILanguageKeyObject {
+interface LanguageKeyObject {
   [key: string]: any;
 }
 
@@ -29,18 +35,23 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
   @Input() deleteFv: (langKey: string) => void;
   @Input() type?: string;
 
-  public descriptions$: Observable<ILocalizedItem<ITextualDescription>>;
-  public languageKeys$: Observable<string[]>;
-  public selectableLanguages$: Observable<{ label: string; value: string }[]>;
-  public existingLangKeys: string[] = [];
-  public langs = DESCRIPTION_LANGUAGES;
-  public selectedLanguage;
-  public languageFormDescriptors: ILanguageKeyObject = {};
-  private _destroy$: Subject<boolean> = new Subject<boolean>();
+  descriptions$: Observable<LocalizedItem<TextualDescription>>;
+  languageKeys$: Observable<Array<string>>;
+  selectableLanguages$: Observable<Array<{ label: string; value: string }>>;
+  existingLangKeys: Array<string>;
+  langs: any;
+  selectedLanguage;
+  languageFormDescriptors: LanguageKeyObject;
+  private readonly _destroy$: Subject<boolean>;
 
-  constructor(private _store: Store<State>, private _changeDetectorRef: ChangeDetectorRef) {}
+  constructor(private readonly _store: Store<State>, private readonly _changeDetectorRef: ChangeDetectorRef) {
+    this.langs = DESCRIPTION_LANGUAGES;
+    this.existingLangKeys = [];
+    this.languageFormDescriptors = {};
+    this._destroy$ = new Subject<boolean>();
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.languageKeys$ = this._store.pipe(
       select(this.descriptionSelector),
       takeUntil(this._destroy$),
@@ -58,25 +69,50 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
     );
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.selectableLanguages$ = this.languageKeys$.pipe(
       takeUntil(this._destroy$),
       map(usedKeys =>
-        DESCRIPTION_LANGUAGES.filter(lang => usedKeys.indexOf(lang.locale) === -1).map(lang => {
-          return { label: lang.name, value: lang.locale };
-        })
+        DESCRIPTION_LANGUAGES.filter(lang => usedKeys.indexOf(lang.locale) === -1).map(lang => ({
+          label: lang.name,
+          value: lang.locale
+        }))
       )
     );
 
     this._changeDetectorRef.detectChanges();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
   }
 
-  private _getLanguageFormDescriptor(languageKey: string) {
+  addTranslation(): void {
+    if (this.selectedLanguage) {
+      this.submitFv(this.selectedLanguage.value, {
+        title: `A new ${this.type}`,
+        fullDescription: '',
+        summary: ''
+      });
+
+      this.selectedLanguage = undefined;
+    }
+  }
+
+  deleteTranslation(lang): void {
+    this.deleteFv(lang);
+  }
+
+  getLangName(key): string {
+    return AdminLanguageService.localeToName(key);
+  }
+
+  trackByFn(index: number): number {
+    return index;
+  }
+
+  private _getLanguageFormDescriptor(languageKey: string): any {
     return {
       formDataSelector: this.descriptionLangSelector(languageKey),
       submit: {
@@ -103,25 +139,5 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
         })
       }
     };
-  }
-
-  public addTranslation() {
-    if (this.selectedLanguage) {
-      this.submitFv(this.selectedLanguage.value, {
-        title: `A new ${this.type}`,
-        fullDescription: '',
-        summary: ''
-      });
-
-      this.selectedLanguage = null;
-    }
-  }
-
-  public deleteTranslation(lang) {
-    this.deleteFv(lang);
-  }
-
-  public getLangName(key) {
-    return LanguageService.localeToName(key);
   }
 }

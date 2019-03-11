@@ -1,8 +1,17 @@
 import { LengthUnit } from './length-unit';
 
 export class Imperial extends LengthUnit {
-  public smallUnit = 'yd.';
-  public bigUnit = 'mi.';
-  public conversionFromMeter = 0.9144;
-  public conversionToBig = 1760;
+  smallUnit: string;
+  bigUnit: string;
+  conversionFromMeter: number;
+  conversionToBig: number;
+
+  constructor() {
+    super();
+
+    this.smallUnit = 'yd.';
+    this.bigUnit = 'mi.';
+    this.conversionFromMeter = 0.9144;
+    this.conversionToBig = 1760;
+  }
 }

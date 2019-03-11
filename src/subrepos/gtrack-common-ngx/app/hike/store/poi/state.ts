@@ -1,21 +1,21 @@
+import { PoiStored } from '@features/common/gtrack-interfaces';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { IPoiStored } from '../../../../../provider-client';
 
-export const poiAdapter = createEntityAdapter<IPoiStored>();
-export interface IPoiEntityState extends EntityState<IPoiStored> {}
+export const poiAdapter = createEntityAdapter<PoiStored>();
+export interface PoiEntityState extends EntityState<PoiStored> {}
 
-export interface IPoiContextState {
+export interface PoiContextState {
   id: string;
   loading: boolean;
   loaded: boolean;
   saved: boolean;
 }
 
-export interface IAllPoiContextState extends EntityState<IPoiContextState> {}
+export interface AllPoiContextState extends EntityState<PoiContextState> {}
 
-export const poiContextStateAdapter = createEntityAdapter<IPoiContextState>();
+export const poiContextStateAdapter = createEntityAdapter<PoiContextState>();
 
-export interface IPoiState {
-  pois: IPoiEntityState;
-  contexts: IAllPoiContextState;
+export interface PoiState {
+  pois: PoiEntityState;
+  contexts: AllPoiContextState;
 }

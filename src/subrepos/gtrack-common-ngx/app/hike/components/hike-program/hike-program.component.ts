@@ -1,83 +1,81 @@
-import { of as observableOf, Observable } from 'rxjs';
-
-import { filter, take } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
-import { Component, Input, OnInit, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
-import { Dictionary } from '@ngrx/entity/src/models';
-
 import _get from 'lodash-es/get';
-
-import { GameRuleService } from '../../services/game-rule';
-import { AstronomyService } from '../../../astronomy';
-
 import _isEmpty from 'lodash-es/isEmpty';
+import { Observable, of as observableOf } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 
-import { IPoi, IHikeProgram, IHikeProgramStop } from '../../../../../provider-client';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { HikeProgramData, HikeProgramStop, PoiData } from '@features/common/gtrack-interfaces';
+import { WeatherEntity } from '@features/common/weather/store';
+import { Dictionary } from '@ngrx/entity/src/models';
+import { select, Store } from '@ngrx/store';
+
+import { AstronomyService } from '../../../astronomy';
+import { GameRuleService } from '../../services/game-rule';
 import { PoiSelectors } from '../../store/poi';
 import * as poiActions from '../../store/poi/actions';
-import { IconService } from '../../../map/services/icon';
-import { IWeatherEntity } from '@common.features/weather/store';
 
 @Component({
   selector: 'gtrack-common-hike-program',
   template: ''
 })
 export class HikeProgramComponent implements OnInit, OnChanges {
-  @Input()
-  public hikeProgram: IHikeProgram;
+  @Input() hikeProgram: HikeProgramData;
 
-  @Input()
-  public weather: IWeatherEntity;
+  @Input() weather: WeatherEntity;
 
-  public stops: IHikeProgramStop[];
+  stops: Array<HikeProgramStop>;
 
-  public pois$: Observable<Partial<Dictionary<IPoi>>>;
-  public startIcon: string;
-  public finishIcon: string;
-  public activeStop: IHikeProgramStop;
+  pois$: Observable<Partial<Dictionary<PoiData>>>;
+  startIcon: string;
+  finishIcon: string;
+  activeStop: HikeProgramStop;
 
-  public startTime = {
-    hours: 5,
-    minutes: 0
+  startTime: {
+    hours: number;
+    minutes: number;
   };
 
-  @Input()
-  public startDate: Date;
+  @Input() startDate: Date;
 
-  @Input()
-  public speed = 4;
+  @Input() speed;
 
-  public timeline: {
+  timeline: Array<{
     time: Date;
-    events: {
+    events: Array<{
       icon: string;
       title: string;
-    }[];
-  }[];
+    }>;
+  }>;
 
   constructor(
-    private _poiSelectors: PoiSelectors,
-    private _store: Store<any>,
-    private _gameRule: GameRuleService,
-    private _astronomy: AstronomyService,
-    public icon: IconService
+    private readonly _poiSelectors: PoiSelectors,
+    private readonly _store: Store<any>,
+    private readonly _gameRule: GameRuleService,
+    private readonly _astronomy: AstronomyService,
+    public icon: LeafletIconService
   ) {
     this.startIcon = icon.url('start');
     this.finishIcon = icon.url('finish');
+    this.speed = 4;
+    this.startTime = {
+      hours: 5,
+      minutes: 0
+    };
   }
 
-  public displayStop(stop) {
+  displayStop(stop): void {
     if (stop.eventOnly !== true) {
       this.activeStop = stop;
     }
   }
 
   // TODO: Move this to a service
-  public getWeather(date: Date) {
+  getWeather(date: Date): any {
     const time = date.getTime();
 
     if (!this.weather) {
-      return;
+      return undefined;
     }
 
     // Find the closest item
@@ -89,9 +87,9 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     });
   }
 
-  public generateTimeline() {
+  generateTimeline(): any {
     if (!this.startDate) {
-      return;
+      return undefined;
     }
 
     const times = this.hikeProgram.stops.map((stop, i) => this.getSegmentStartTime(i));
@@ -102,21 +100,21 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     const events = 'dawn sunrise sunset dusk'.split(' ');
 
     const icons = {
-      dawn: 'assets/icons/weather/wi-horizon-alt.svg',
-      sunrise: 'assets/icons/weather/wi-sunrise.svg',
-      sunset: 'assets/icons/weather/wi-sunset.svg',
-      dusk: 'assets/icons/weather/wi-horizon.svg'
+      dawn: '/assets/icons/weather/wi-horizon-alt.svg',
+      sunrise: '/assets/icons/weather/wi-sunrise.svg',
+      sunset: '/assets/icons/weather/wi-sunset.svg',
+      dusk: '/assets/icons/weather/wi-horizon.svg'
     };
 
-    const positions = events.map(event => {
-      return times.findIndex((time, i) => {
+    const positions = events.map(event =>
+      times.findIndex((time, i) => {
         const nextTime = times[i];
 
         return typeof nextTime !== 'undefined' && nextTime.getTime() >= sunrise[event].getTime();
-      });
-    });
+      })
+    );
 
-    this.stops = this.hikeProgram.stops.reduce((array, stop, i) => {
+    this.stops = this.hikeProgram.stops.reduce((array, stop, i: number) => {
       const eventIndexes = positions
         .map((position, index) => {
           if (position === i) {
@@ -189,12 +187,12 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     }, []);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes.hikeProgram) {
       const change = changes.hikeProgram;
 
-      if (change.firstChange !== true) {
-        this.stops = [...this.hikeProgram.stops];
+      if (!change.firstChange) {
+        this.stops = [...change.currentValue.stops];
         this.generateTimeline();
       }
     }
@@ -204,7 +202,7 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const hikePois = this.hikeProgram.stops.filter(stop => !/^endpoint/.test(stop.poiId)).map(stop => stop.poiId);
 
     if (hikePois.length > 0) {
@@ -241,12 +239,13 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     this.generateTimeline();
   }
 
-  public getSegmentStartTime(segmentIndex: number) {
-    const time = this.hikeProgram.stops
+  getSegmentStartTime(segmentIndex: number): Date {
+    const time: number = this.hikeProgram.stops
       .filter((stop, i) => i < segmentIndex)
       .map(stop => stop.segment)
       .reduce(
-        (previous, segment) => previous + this._gameRule.segmentTime(segment.distance, segment.uphill, this.speed),
+        (previous: number, segment) =>
+          previous + this._gameRule.segmentTime(segment.distance, segment.uphill, this.speed),
         0
       );
 
