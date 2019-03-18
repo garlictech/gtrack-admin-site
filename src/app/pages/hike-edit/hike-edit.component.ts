@@ -16,6 +16,7 @@ import {
   RouteData
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { leafletMapActions, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import * as leafletMapSelectors from '@bit/garlictech.angular-features.common.leaflet-map/store/selectors';
 import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 
 import { HikeProgramService } from '../../shared/services';
@@ -376,18 +377,33 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private _parseGpxRoute(): void {
-    this._routePlannerService.drawRouteLineGeoJSON(this._hikeProgramService.gpxRoute.route.features[0]);
+    // We have to wait for the map
+    this._store
+      .pipe(
+        select(leafletMapSelectors.getMapId),
+        filter(id => id !== ''),
+        take(1)
+      )
+      .subscribe(() => {
+        this._routePlannerService.drawRouteLineGeoJSON(this._hikeProgramService.gpxRoute.route.features[0]);
 
-    // Load path to routePlanner state - necessary for drawing pois
-    this._routePlannerService.addRouteToTheStore(this._hikeProgramService.gpxRoute.route);
+        // Load path to routePlanner state - necessary for drawing pois
+        this._routePlannerService.addRouteToTheStore(this._hikeProgramService.gpxRoute.route);
 
-    const bounds: L.LatLngBoundsExpression = [
-      [this._hikeProgramService.gpxRoute.bounds.NorthEast.lat, this._hikeProgramService.gpxRoute.bounds.NorthEast.lon],
-      [this._hikeProgramService.gpxRoute.bounds.SouthWest.lat, this._hikeProgramService.gpxRoute.bounds.SouthWest.lon]
-    ];
+        const bounds: L.LatLngBoundsExpression = [
+          [
+            this._hikeProgramService.gpxRoute.bounds.NorthEast.lat,
+            this._hikeProgramService.gpxRoute.bounds.NorthEast.lon
+          ],
+          [
+            this._hikeProgramService.gpxRoute.bounds.SouthWest.lat,
+            this._hikeProgramService.gpxRoute.bounds.SouthWest.lon
+          ]
+        ];
 
-    this._leafletMapService.fitBounds(bounds);
+        this._leafletMapService.fitBounds(bounds);
 
-    delete this._hikeProgramService.gpxRoute;
+        delete this._hikeProgramService.gpxRoute;
+      });
   }
 }
