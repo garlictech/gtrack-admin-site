@@ -1,4 +1,4 @@
-FROM garlictech2/workflows-angular:v16.0.0
+FROM garlictech2/workflows-angular:v15.0.0
 ENV NO_UPDATE_NOTIFIER 1
 
 # install_dependencies will merge deps in the container
