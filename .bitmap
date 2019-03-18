@@ -1729,139 +1729,6 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/common/native/blocks/utils"
     },
-    "garlictech.angular-features/common/weather@0.0.2": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "weather-icon.component.spec.ts",
-                "relativePath": "components/weather-icon/test/weather-icon.component.spec.ts",
-                "test": true
-            },
-            {
-                "name": "weather-icon.component.html",
-                "relativePath": "components/weather-icon/weather-icon.component.html",
-                "test": false
-            },
-            {
-                "name": "weather-icon.component.ts",
-                "relativePath": "components/weather-icon/weather-icon.component.ts",
-                "test": false
-            },
-            {
-                "name": "weather-info.component.ts",
-                "relativePath": "components/weather-info/weather-info.component.ts",
-                "test": false
-            },
-            {
-                "name": "wind-direction-icon.component.spec.ts",
-                "relativePath": "components/wind-direction-icon/test/wind-direction-icon.component.spec.ts",
-                "test": false
-            },
-            {
-                "name": "wind-direction-icon.component.html",
-                "relativePath": "components/wind-direction-icon/wind-direction-icon.component.html",
-                "test": false
-            },
-            {
-                "name": "wind-direction-icon.component.ts",
-                "relativePath": "components/wind-direction-icon/wind-direction-icon.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "interfaces.ts",
-                "relativePath": "interfaces.ts",
-                "test": false
-            },
-            {
-                "name": "log.ts",
-                "relativePath": "log.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            },
-            {
-                "name": "weather.service.spec.ts",
-                "relativePath": "services/test/weather.service.spec.ts",
-                "test": false
-            },
-            {
-                "name": "weather.service.ts",
-                "relativePath": "services/weather.service.ts",
-                "test": false
-            },
-            {
-                "name": "actions.ts",
-                "relativePath": "store/actions.ts",
-                "test": false
-            },
-            {
-                "name": "effects.ts",
-                "relativePath": "store/effects.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/index.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.ts",
-                "relativePath": "store/reducer.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.ts",
-                "relativePath": "store/selectors.ts",
-                "test": false
-            },
-            {
-                "name": "state.ts",
-                "relativePath": "store/state.ts",
-                "test": false
-            },
-            {
-                "name": "actions.spec.ts",
-                "relativePath": "store/test/actions.spec.ts",
-                "test": false
-            },
-            {
-                "name": "effects.spec.ts",
-                "relativePath": "store/test/effects.spec.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.spec.ts",
-                "relativePath": "store/test/reducer.spec.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.spec.ts",
-                "relativePath": "store/test/selectors.spec.ts",
-                "test": false
-            },
-            {
-                "name": "weather.module.ts",
-                "relativePath": "weather.module.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/weather",
-        "origin": "IMPORTED",
-        "originallySharedDir": "src/features/common/weather"
-    },
     "garlictech.angular-features/common/checkpoints@0.0.2": {
         "files": [
             {
@@ -2536,57 +2403,6 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/localization"
     },
-    "garlictech.angular-features/web/weather@0.0.3": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "fixture.ts",
-                "relativePath": "components/weather-info/test/fixture.ts",
-                "test": true
-            },
-            {
-                "name": "weather-info.component.spec.ts",
-                "relativePath": "components/weather-info/test/weather-info.component.spec.ts",
-                "test": false
-            },
-            {
-                "name": "weather-info.component.html",
-                "relativePath": "components/weather-info/weather-info.component.html",
-                "test": false
-            },
-            {
-                "name": "weather-info.component.scss",
-                "relativePath": "components/weather-info/weather-info.component.scss",
-                "test": false
-            },
-            {
-                "name": "weather-info.component.ts",
-                "relativePath": "components/weather-info/weather-info.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "weather.module.ts",
-                "relativePath": "weather.module.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/web/weather",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/weather@0.0.2"
-        ],
-        "originallySharedDir": "src/features/web/weather"
-    },
     "garlictech.angular-features/common/multi-language-text@0.0.5": {
         "files": [
             {
@@ -2812,7 +2628,140 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/current-geolocation"
     },
-    "garlictech.angular-features/common/authentication-api@0.0.6": {
+    "garlictech.angular-features/common/weather@0.0.3": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "weather-icon.component.spec.ts",
+                "relativePath": "components/weather-icon/test/weather-icon.component.spec.ts",
+                "test": true
+            },
+            {
+                "name": "weather-icon.component.html",
+                "relativePath": "components/weather-icon/weather-icon.component.html",
+                "test": false
+            },
+            {
+                "name": "weather-icon.component.ts",
+                "relativePath": "components/weather-icon/weather-icon.component.ts",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.ts",
+                "relativePath": "components/weather-info/weather-info.component.ts",
+                "test": false
+            },
+            {
+                "name": "wind-direction-icon.component.spec.ts",
+                "relativePath": "components/wind-direction-icon/test/wind-direction-icon.component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "wind-direction-icon.component.html",
+                "relativePath": "components/wind-direction-icon/wind-direction-icon.component.html",
+                "test": false
+            },
+            {
+                "name": "wind-direction-icon.component.ts",
+                "relativePath": "components/wind-direction-icon/wind-direction-icon.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "interfaces.ts",
+                "relativePath": "interfaces.ts",
+                "test": false
+            },
+            {
+                "name": "log.ts",
+                "relativePath": "log.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "weather.service.spec.ts",
+                "relativePath": "services/test/weather.service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "weather.service.ts",
+                "relativePath": "services/weather.service.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": false
+            },
+            {
+                "name": "effects.spec.ts",
+                "relativePath": "store/test/effects.spec.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false
+            },
+            {
+                "name": "weather.module.ts",
+                "relativePath": "weather.module.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/weather",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/weather"
+    },
+    "garlictech.angular-features/common/authentication-api@0.0.7": {
         "files": [
             {
                 "name": "README.md",
@@ -3100,7 +3049,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/authentication-api"
     },
-    "garlictech.angular-features/common/router@0.0.10": {
+    "garlictech.angular-features/common/router@0.0.11": {
         "files": [
             {
                 "name": "README.md",
@@ -3182,6 +3131,57 @@
         "rootDir": "src/features/common/router",
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/router"
+    },
+    "garlictech.angular-features/web/weather@0.0.6": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "fixture.ts",
+                "relativePath": "components/weather-info/test/fixture.ts",
+                "test": true
+            },
+            {
+                "name": "weather-info.component.spec.ts",
+                "relativePath": "components/weather-info/test/weather-info.component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.html",
+                "relativePath": "components/weather-info/weather-info.component.html",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.scss",
+                "relativePath": "components/weather-info/weather-info.component.scss",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.ts",
+                "relativePath": "components/weather-info/weather-info.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "weather.module.ts",
+                "relativePath": "weather.module.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/web/weather",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/weather@0.0.3"
+        ],
+        "originallySharedDir": "src/features/web/weather"
     },
     "version": "14.0.2"
 }

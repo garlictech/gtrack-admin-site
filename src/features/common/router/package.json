@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.router",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "homepage": "https://bitsrc.io/garlictech/angular-features/common/router",
   "main": "index.ts",
   "dependencies": {
@@ -10,5 +10,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
+  "componentRootFolder": "src/features/common/router",
   "license": "SEE LICENSE IN LICENSE"
 }
