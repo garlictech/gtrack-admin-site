@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>icon/normal/post-office</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/normal/post-office" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M2,7 L3.8191672e-14,7 L8,0 L12,3.5 L12,2 L14,2 L14,5.25 L16,7 L14,7 L14,16 L2,16 L2,7 Z M4,9 L4,13 L12,13 L12,9 L4,9 Z M8,12 L4,9 L12,9 L8,12 Z M4,9 L12,9 L4,9 Z M8,10 L12,7 L4,7 L8,10 Z" id="icon" fill="#7C7CF0" fill-rule="nonzero"></path>
+    </g>
+</svg>

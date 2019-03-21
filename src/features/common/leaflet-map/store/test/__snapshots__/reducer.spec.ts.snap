@@ -1,13 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AddFeature with initial state {"mapId":"foobar"} 1`] = `
+Object {
+  "featureId": 2,
+  "mapId": "foobar",
+}
+`;
+
 exports[`RegisterMap with initial state {"mapId":"foobar"} 1`] = `
 Object {
+  "featureId": undefined,
   "mapId": "mapID",
 }
 `;
 
 exports[`ResetMap with initial state {"mapId":"existingMapID"} 1`] = `
 Object {
+  "featureId": undefined,
   "mapId": "",
 }
 `;

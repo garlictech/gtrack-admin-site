@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>icon/normal/waste-basket</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/normal/waste-basket" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M10,1 L14,1 C14.5522847,1 15,1.44771525 15,2 L15,3 L1,3 L1,2 C1,1.44771525 1.44771525,1 2,1 L6,1 L6,0 L10,0 L10,1 Z M2,4 L14,4 L13,16 L3,16 L2,4 Z M4,6 L5,14 L6,14 L6,6 L4,6 Z M7,6 L7,14 L9,14 L9,6 L7,6 Z M10,6 L10,14 L11,14 L12,6 L10,6 Z" id="icon" fill="#7C7CF0" fill-rule="nonzero"></path>
+    </g>
+</svg>

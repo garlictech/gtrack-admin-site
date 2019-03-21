@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.multi-language-text",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://bitsrc.io/garlictech/angular-features/common/multi-language-text",
   "main": "index.ts",
   "dependencies": {

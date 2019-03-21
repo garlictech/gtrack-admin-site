@@ -7,3 +7,8 @@ export const getMapId = createSelector(
   featureSelector,
   (state: State) => state.mapId
 );
+
+export const selectFeatureId = createSelector(
+  featureSelector,
+  (state: State) => state.featureId
+);

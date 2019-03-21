@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>icon/normal/pharmacy</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/normal/pharmacy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M11,7 L11,4 L9,4 L9,7 L6,7 L6,9 L9,9 L9,12 L11,12 L11,9 L14,9 L14,7 L11,7 Z M4,4 C4,2.8954305 4.8954305,2 6,2 L14,2 C15.1045695,2 16,2.8954305 16,4 L16,12 C16,13.1045695 15.1045695,14 14,14 L6,14 C4.8954305,14 4,13.1045695 4,12 L3,12 L3,16 L0,16 L0,0 L3,0 L3,4 L4,4 Z M4,6 L3,6 L3,10 L4,10 L4,6 Z" id="icon" fill="#7C7CF0" fill-rule="nonzero"></path>
+    </g>
+</svg>

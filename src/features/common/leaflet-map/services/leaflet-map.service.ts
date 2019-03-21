@@ -32,6 +32,7 @@ export class LeafletMapService {
 
   baseLayers: LeafletTileLayerDef;
   overlayLayers: LeafletTileLayerDef;
+  geoJSONLayerGroup: L.GeoJSON;
 
   protected _currentPositionMarker: CurrentPositionMarker;
 
@@ -142,6 +143,12 @@ export class LeafletMapService {
       style: geoJsonStyle
     });
 
+    if (this.geoJSONLayerGroup) {
+      this.geoJSONLayerGroup.addLayer(geoJSON);
+    } else {
+      this.geoJSONLayerGroup = geoJSON;
+    }
+
     return this.addLayer(geoJSON) as L.GeoJSON;
   }
 
@@ -171,6 +178,9 @@ export class LeafletMapService {
     if (layer && this.leafletMap && this.leafletMap.hasLayer(layer)) {
       this.leafletMap.removeLayer(layer);
     }
+    if (layer && this.geoJSONLayerGroup && this.geoJSONLayerGroup.hasLayer(layer)) {
+      this.geoJSONLayerGroup.removeLayer(layer);
+    }
   }
 
   createMarkersGroup(markers: Array<L.Marker> | Array<any>): L.LayerGroup {
@@ -188,5 +198,12 @@ export class LeafletMapService {
         this.overlappingMarkerSpiderfier.addMarker(marker);
       }
     }
+  }
+
+  updateFeature(oldId: number, newLayer: GeoJsonObject): number {
+    this.removeLayer(this.geoJSONLayerGroup.getLayer(oldId));
+    const layer = this.addGeoJSONObject(newLayer, undefined);
+
+    return this.geoJSONLayerGroup.getLayerId(layer);
   }
 }
