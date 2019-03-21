@@ -6,3 +6,4 @@ COPY ./package.json /app/package.project.json
 ADD src /app/src
 
 RUN scripts/install_dependencies.js
+RUN bit link

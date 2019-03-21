@@ -183,7 +183,10 @@
     "tether": "^1.4.5",
     "togpx": "^0.5.4",
     "zone.js": "~0.8.28",
-    "@bit/garlictech.angular-features.common.current-geolocation": "file:./src/features/common/current-geolocation"
+    "@bit/garlictech.angular-features.common.current-geolocation": "file:./src/features/common/current-geolocation",
+    "@bit/garlictech.angular-features.common.marker-icons": "file:./src/features/common/marker-icons",
+    "@bit/garlictech.angular-features.web.spinner": "file:./src/features/web/spinner",
+    "@bit/garlictech.angular-features.common.spinner": "file:./src/features/common/spinner"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",
