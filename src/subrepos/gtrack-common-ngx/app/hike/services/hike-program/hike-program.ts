@@ -38,6 +38,7 @@ export class HikeProgram implements HikeProgramStored {
   elevationIcon: string;
   routeId: string;
   description: LocalizedItem<TextualDescription>;
+  teaser: LocalizedItem<TextualDescription>;
   backgroundImages?: Array<BackgroundImageData>;
   offlineMap?: string;
   isRoundTrip: boolean;
@@ -81,6 +82,7 @@ export class HikeProgram implements HikeProgramStored {
       elevationIcon: this.elevationIcon,
       routeId: this.routeId,
       description: this.description,
+      teaser: this.teaser,
       offlineMap: this.offlineMap,
       timestamp: this.timestamp,
       stops: this.stops,

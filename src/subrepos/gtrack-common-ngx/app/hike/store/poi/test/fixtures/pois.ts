@@ -1,5 +1,6 @@
-import { EObjectState, EPoiTypes, PoiData, PoiStored } from '@features/common/gtrack-interfaces';
 import * as uuid from 'uuid/v4';
+
+import { EObjectState, EPoiTypes, PoiData, PoiStored } from '@features/common/gtrack-interfaces';
 
 export const pois: Array<PoiData> = [
   {

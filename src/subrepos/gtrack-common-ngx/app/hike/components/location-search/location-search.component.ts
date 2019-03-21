@@ -3,7 +3,17 @@ import _get from 'lodash-es/get';
 import { NEVER, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 
-import { Component, ElementRef, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { GeoPosition } from '@features/common/current-geolocation';
 import * as fromCurrentLocationSelectors from '@features/common/current-geolocation/store/selectors';
 import { faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -24,6 +34,8 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   @Input() context: string;
 
   @Input() placeholder: string;
+  @Input() displaySidebar;
+  @Output() readonly displaySidebarChange: EventEmitter<boolean>;
 
   icon: IconDefinition;
 
@@ -53,6 +65,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
 
     this._destroy$ = new Subject<boolean>();
     this._locate$ = new Subject<boolean>();
+    this.displaySidebarChange = new EventEmitter();
   }
 
   ngOnDestroy(): void {
@@ -62,6 +75,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.displaySidebar = true;
     this._input = this._searchElementRef.nativeElement;
 
     if (!(this._input instanceof HTMLInputElement)) {
@@ -155,6 +169,8 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
 
     this._locate$.next(false);
     this._search();
+    this.displaySidebar = false;
+    this.displaySidebarChange.emit(this.displaySidebar);
   }
 
   requestLocation(): void {
@@ -164,6 +180,8 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     }
 
     this._locate$.next(true);
+    this.displaySidebar = false;
+    this.displaySidebarChange.emit(this.displaySidebar);
   }
 
   onRadiusChange(data: number): void {

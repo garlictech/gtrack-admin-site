@@ -35,8 +35,7 @@ export class LanguageSelectorComponent extends LanguageSelectorComponentBase imp
         take(1)
       )
       .subscribe(selected => {
-        const theLanguage = this.allLanguages.find(lang => lang.value.id === selected);
-        this.selectedLanguage = theLanguage && theLanguage.value;
+        this.selectedLanguage = this.allLanguages.find(lang => lang.value.id === selected);
       });
   }
   setLanguage(language: string): void {
