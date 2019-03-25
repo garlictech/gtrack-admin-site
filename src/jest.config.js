@@ -1,4 +1,4 @@
-let globalConf = require('../jest-config');
+let globalConf = require('../jest.config');
 
 globalConf.coverageThreshold = {
   global: {
@@ -8,13 +8,6 @@ globalConf.coverageThreshold = {
     lines: 65
   }
 };
-
-/* Deprecated
-Object.assign(globalConf.moduleNameMapper, {
-    "@common.features/(.*)": "<rootDir>/src/subrepos/gtrack-common-ngx/app/features/$1",
-    "@web.features/(.*)": "<rootDir>/src/subrepos/gtrack-common-web/features/$1"
-})
-*/
 
 Object.assign(globalConf.moduleNameMapper, {
   '@features/common/(.*)': '<rootDir>/src/features/common/$1',

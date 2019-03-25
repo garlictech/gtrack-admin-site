@@ -1,0 +1,1 @@
+../workflows-scripts/docker/aws-release.sh

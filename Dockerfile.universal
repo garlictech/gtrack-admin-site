@@ -1,3 +1,3 @@
-FROM garlictech2/server-common:v15.0.0
+FROM garlictech2/server-common:v16.2.1
 COPY artifacts/dist/ /app
 CMD ["node", "/app/server.js"]

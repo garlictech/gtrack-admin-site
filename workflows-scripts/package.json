@@ -1,0 +1,11 @@
+{
+  "name": "@bit/garlictech.angular-features.infrastructure.workflows-scripts",
+  "version": "0.0.3",
+  "homepage": "https://bit.dev/garlictech/angular-features/infrastructure/workflows-scripts",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {},
+  "componentRootFolder": "workflows-scripts",
+  "license": "SEE LICENSE IN LICENSE"
+}

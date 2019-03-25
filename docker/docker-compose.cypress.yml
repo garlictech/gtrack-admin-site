@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  gtrack-admin-site.cypress:
+    build:
+      context: ..
+      dockerfile: Dockerfile.cypress
+    volumes:
+      - '../cypress:/app/cypress'
+      - '../cypress.json:/app/cypress.json'
+      - '../artifacts:/app/artifacts'
+    environment:
+      - CYPRESS_baseUrl=http://website
+    depends_on:
+      - garlictech.gtrack-admin-site.prod
+    links:
+      - 'garlictech.gtrack-admin-site.prod:website'
