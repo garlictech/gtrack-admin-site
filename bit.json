@@ -15,7 +15,8 @@
     "garlictech.angular-features/common/weather": "0.0.3",
     "garlictech.angular-features/web/generic-ui-primeng": "0.0.1",
     "garlictech.angular-features/web/weather": "0.0.6",
-    "garlictech.angular-features/common/current-geolocation": "0.0.4"
+    "garlictech.angular-features/common/current-geolocation": "0.0.4",
+    "garlictech.angular-features/infrastructure/workflows-scripts": "0.0.3"
   },
   "componentsDefaultDirectory": "src/features/{namespace}/{name}",
   "packageManager": "yarn",

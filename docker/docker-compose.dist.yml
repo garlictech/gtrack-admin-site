@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  garlictech.gtrack-admin.prod:
+  garlictech.gtrack-admin-site.prod:
     build:
       context: ..
       dockerfile: Dockerfile.prod
@@ -9,6 +9,6 @@ services:
       - NODE_ENV
       - CI
     ports:
-      - "9081:80"
+      - '9081:80'
     depends_on:
       - deepstream_providers

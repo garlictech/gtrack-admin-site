@@ -3183,5 +3183,298 @@
         ],
         "originallySharedDir": "src/features/web/weather"
     },
-    "version": "14.0.2"
+    "garlictech.angular-features/infrastructure/workflows-scripts@0.0.3": {
+        "files": [
+            {
+                "name": "Makefile",
+                "relativePath": "Makefile",
+                "test": false
+            },
+            {
+                "name": "README.md",
+                "relativePath": "README.md",
+                "test": false
+            },
+            {
+                "name": "aws-release.sh",
+                "relativePath": "docker/aws-release.sh",
+                "test": false
+            },
+            {
+                "name": "commit.sh",
+                "relativePath": "docker/commit.sh",
+                "test": false
+            },
+            {
+                "name": "semantic-release.sh",
+                "relativePath": "docker/semantic-release.sh",
+                "test": false
+            },
+            {
+                "name": "setup.sh",
+                "relativePath": "docker/setup.sh",
+                "test": false
+            },
+            {
+                "name": "travis.sh",
+                "relativePath": "docker/travis.sh",
+                "test": false
+            },
+            {
+                "name": "after_deploy",
+                "relativePath": "hooks/travis/after_deploy",
+                "test": false
+            },
+            {
+                "name": "after_script",
+                "relativePath": "hooks/travis/after_script",
+                "test": false
+            },
+            {
+                "name": "after_success",
+                "relativePath": "hooks/travis/after_success",
+                "test": false
+            },
+            {
+                "name": "before_install",
+                "relativePath": "hooks/travis/before_install",
+                "test": false
+            },
+            {
+                "name": "deploy",
+                "relativePath": "hooks/travis/deploy",
+                "test": false
+            },
+            {
+                "name": "install",
+                "relativePath": "hooks/travis/install",
+                "test": false
+            },
+            {
+                "name": "script",
+                "relativePath": "hooks/travis/script",
+                "test": false
+            },
+            {
+                "name": "setup_docker.sh",
+                "relativePath": "hooks/travis/setup_docker.sh",
+                "test": false
+            },
+            {
+                "name": "index.js",
+                "relativePath": "index.js",
+                "test": false
+            },
+            {
+                "name": "create-lambdas.sh",
+                "relativePath": "lambda/create-lambdas.sh",
+                "test": false
+            },
+            {
+                "name": "destroy-lambdas.sh",
+                "relativePath": "lambda/destroy-lambdas.sh",
+                "test": false
+            },
+            {
+                "name": "claudia-deploy.sh",
+                "relativePath": "lambda/docker/claudia-deploy.sh",
+                "test": false
+            },
+            {
+                "name": "encrypt-secrets.sh",
+                "relativePath": "lambda/encrypt-secrets.sh",
+                "test": false
+            },
+            {
+                "name": "docker-deploy.sh",
+                "relativePath": "scripts/docker-deploy.sh",
+                "test": false
+            },
+            {
+                "name": "docker-login.sh",
+                "relativePath": "scripts/docker-login.sh",
+                "test": false
+            },
+            {
+                "name": "encrypt-secrets.sh",
+                "relativePath": "scripts/encrypt-secrets.sh",
+                "test": false
+            },
+            {
+                "name": "get-docker-tag-base.sh",
+                "relativePath": "scripts/get-docker-tag-base.sh",
+                "test": false
+            },
+            {
+                "name": "get-docker-tag.sh",
+                "relativePath": "scripts/get-docker-tag.sh",
+                "test": false
+            },
+            {
+                "name": "push-to-aws.sh",
+                "relativePath": "scripts/push-to-aws.sh",
+                "test": false
+            },
+            {
+                "name": "systemtest-prod.sh",
+                "relativePath": "scripts/systemtest-prod.sh",
+                "test": false
+            },
+            {
+                "name": "tag-image.sh",
+                "relativePath": "scripts/tag-image.sh",
+                "test": false
+            },
+            {
+                "name": "bash.sh",
+                "relativePath": "webclient/docker/bash.sh",
+                "test": false
+            },
+            {
+                "name": "build-dev-all.sh",
+                "relativePath": "webclient/docker/build-dev-all.sh",
+                "test": false
+            },
+            {
+                "name": "build-dev.sh",
+                "relativePath": "webclient/docker/build-dev.sh",
+                "test": false
+            },
+            {
+                "name": "cmd-ports.sh",
+                "relativePath": "webclient/docker/cmd-ports.sh",
+                "test": false
+            },
+            {
+                "name": "cmd-with-deps.sh",
+                "relativePath": "webclient/docker/cmd-with-deps.sh",
+                "test": false
+            },
+            {
+                "name": "cmd.sh",
+                "relativePath": "webclient/docker/cmd.sh",
+                "test": false
+            },
+            {
+                "name": "commit.sh",
+                "relativePath": "webclient/docker/commit.sh",
+                "test": false
+            },
+            {
+                "name": "cypresstest.sh",
+                "relativePath": "webclient/docker/cypresstest.sh",
+                "test": false
+            },
+            {
+                "name": "deploy-lambda.sh",
+                "relativePath": "webclient/docker/deploy-lambda.sh",
+                "test": false
+            },
+            {
+                "name": "deploy.sh",
+                "relativePath": "webclient/docker/deploy.sh",
+                "test": false
+            },
+            {
+                "name": "e2etest-universal.sh",
+                "relativePath": "webclient/docker/e2etest-universal.sh",
+                "test": false
+            },
+            {
+                "name": "e2etest.sh",
+                "relativePath": "webclient/docker/e2etest.sh",
+                "test": false
+            },
+            {
+                "name": "login.sh",
+                "relativePath": "webclient/docker/login.sh",
+                "test": false
+            },
+            {
+                "name": "quick-fix.sh",
+                "relativePath": "webclient/docker/quick-fix.sh",
+                "test": false
+            },
+            {
+                "name": "semantic-release.sh",
+                "relativePath": "webclient/docker/semantic-release.sh",
+                "test": false
+            },
+            {
+                "name": "setup.sh",
+                "relativePath": "webclient/docker/setup.sh",
+                "test": false
+            },
+            {
+                "name": "start-dev.sh",
+                "relativePath": "webclient/docker/start-dev.sh",
+                "test": false
+            },
+            {
+                "name": "start-dist.sh",
+                "relativePath": "webclient/docker/start-dist.sh",
+                "test": false
+            },
+            {
+                "name": "start-universal.sh",
+                "relativePath": "webclient/docker/start-universal.sh",
+                "test": false
+            },
+            {
+                "name": "stop-dev.sh",
+                "relativePath": "webclient/docker/stop-dev.sh",
+                "test": false
+            },
+            {
+                "name": "stop-dist.sh",
+                "relativePath": "webclient/docker/stop-dist.sh",
+                "test": false
+            },
+            {
+                "name": "stop-universal.sh",
+                "relativePath": "webclient/docker/stop-universal.sh",
+                "test": false
+            },
+            {
+                "name": "travis.sh",
+                "relativePath": "webclient/docker/travis.sh",
+                "test": false
+            },
+            {
+                "name": "after_deploy",
+                "relativePath": "webclient/hooks/travis/after_deploy",
+                "test": false
+            },
+            {
+                "name": "after_success",
+                "relativePath": "webclient/hooks/travis/after_success",
+                "test": false
+            },
+            {
+                "name": "before_install",
+                "relativePath": "webclient/hooks/travis/before_install",
+                "test": false
+            },
+            {
+                "name": "deploy",
+                "relativePath": "webclient/hooks/travis/deploy",
+                "test": false
+            },
+            {
+                "name": "install",
+                "relativePath": "webclient/hooks/travis/install",
+                "test": false
+            },
+            {
+                "name": "script",
+                "relativePath": "webclient/hooks/travis/script",
+                "test": false
+            }
+        ],
+        "mainFile": "index.js",
+        "rootDir": "workflows-scripts",
+        "origin": "IMPORTED",
+        "originallySharedDir": "workflows-scripts"
+    },
+    "version": "14.0.4"
 }
