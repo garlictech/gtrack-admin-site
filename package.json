@@ -178,7 +178,7 @@
     "password-validator": "^4.1.1",
     "popper.js": "^1.14.7",
     "primeicons": "^1.0.0",
-    "primeng": "~7.0.0",
+    "primeng": "~7.1.0",
     "randomcolor": "^0.5.3",
     "raven-js": "^3.26.4",
     "rxjs": "~6.3.2",
@@ -256,7 +256,7 @@
     "cypress-cucumber-preprocessor": "^1.11.0"
   },
   "config": {
-    "dockerWorkflowVersion": "v16.2.1",
+    "dockerWorkflowVersion": "v16.2.2",
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"
     }
@@ -280,5 +280,8 @@
     "src/features/{name}/**/*",
     "workflows-scripts"
   ],
-  "private": true
+  "private": true,
+  "resolutions": {
+    "primeng": "7.1.0"
+  }
 }

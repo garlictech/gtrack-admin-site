@@ -13,5 +13,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
+  "componentRootFolder": "src/features/common/checkpoints",
   "license": "SEE LICENSE IN LICENSE"
 }
