@@ -2,11 +2,11 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { MarkerIconService } from './services';
+import { StoreModule } from '@ngrx/store';
+import { markerIconsReducer } from './store';
+import { featureName } from './store/state';
 
 @NgModule({
-  imports: [CommonModule, AngularSvgIconModule],
-  providers: [MarkerIconService]
+  imports: [CommonModule, AngularSvgIconModule, StoreModule.forFeature(featureName, markerIconsReducer)]
 })
 export class MarkerIconsModule {}
