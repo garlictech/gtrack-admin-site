@@ -1,6 +1,6 @@
 import * as actions from '../actions';
 
-describe('AdminMap actions', () => {
+describe('LeafletMap actions', () => {
   it('should have action names defined', () => {
     expect(actions.ActionTypes.RegisterMap).toEqual('[Leaflet Map] Register Map');
     expect(actions.ActionTypes.ResetMap).toEqual('[Leaflet Map] Reset Map');
