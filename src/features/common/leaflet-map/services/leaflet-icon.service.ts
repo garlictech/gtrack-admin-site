@@ -1,34 +1,37 @@
-import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
 
-import { MarkerIconService } from '@bit/garlictech.angular-features.common.marker-icons/services';
-import { iconmap } from '../assets/icon';
+import { Injectable } from '@angular/core';
+import { EIconSource, EIconStyle, MarkerIconService } from '@bit/garlictech.angular-features.common.marker-icons';
+import * as markerIconSelectors from '@bit/garlictech.angular-features.common.marker-icons/store/selectors';
+import { SvgContent } from '@bit/garlictech.angular-features.common.marker-icons/store/state';
+import { select, Store } from '@ngrx/store';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeafletIconService {
-  protected iconMap: any;
+  s;
+  constructor(private readonly _store: Store<any>, private readonly _markerIconService: MarkerIconService) {}
 
-  constructor(private readonly _markerIconService: MarkerIconService) {
-    this.iconMap = iconmap;
+  url(type: string, iconSource: EIconSource = EIconSource.ICON, iconStyle: EIconStyle = EIconStyle.DEFAULT): string {
+    const fileName = type === 'unknown' ? 'asterisco' : type; // bench -> picnic
+    const svg = ''; // this._markerIconService.getInlineSvg(`/assets/${iconSource}`, fileName, iconStyle) as any;
+
+    console.log('svg in LeafletIconService', svg);
+
+    return svg;
   }
 
-  url(type: string, iconType = 'default'): any {
-    const baseUrl = `/assets/poi-icons/${iconType}`;
-    const fileName = this.iconMap[type] || this.iconMap.unknown;
-
-    console.log('LEafletIconService', `${baseUrl}/${fileName}`);
-    this._markerIconService.getInlineSvg(`${baseUrl}/${fileName}`);
-
-    return `${baseUrl}/${fileName}`;
+  urls(
+    types: Array<string>,
+    iconSource: EIconSource = EIconSource.ICON,
+    iconStyle: EIconStyle = EIconStyle.DEFAULT
+  ): Array<string> {
+    return types.map((type: string) => this.url(type, iconSource, iconStyle));
   }
 
-  urls(types: Array<string>, iconType = 'default'): Array<string> {
-    return types.map(type => this.url(type, iconType));
-  }
-
-  getLeafletIcon(types: Array<string> | string = '', iconType = 'default'): L.Icon {
+  getLeafletIcon(types: Array<string> | string = '', iconStyle: EIconStyle = EIconStyle.DEFAULT): L.Icon {
     let type: string;
     let typeArray: Array<string>;
 
@@ -36,7 +39,7 @@ export class LeafletIconService {
     type = typeArray[0] || 'unknown';
 
     return L.icon({
-      iconUrl: this.url(type, iconType),
+      iconUrl: this._markerIconService.getMarker(type, true, iconStyle),
       iconSize: [32, 37],
       iconAnchor: [16, 37]
     });

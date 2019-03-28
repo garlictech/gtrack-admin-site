@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { LeafletMapMarkerService } from '../leaflet-map-marker.service';
+
 import { LeafletIconService } from '../leaflet-icon.service';
+import { LeafletMapMarkerService } from '../leaflet-map-marker.service';
 import { LeafletMapMarker } from '../lib';
 
 describe('LeafletMapMarkerService', () => {

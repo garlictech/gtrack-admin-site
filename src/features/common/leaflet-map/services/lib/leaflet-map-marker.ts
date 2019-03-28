@@ -1,6 +1,7 @@
 import { LeafletMarkerPopupData } from '../../interfaces';
 import { LeafletIconService } from '../leaflet-icon.service';
 
+import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons/enums';
 import * as L from 'leaflet';
 
 export class LeafletMapMarker {
@@ -38,9 +39,9 @@ export class LeafletMapMarker {
   toggleHighlight(): void {
     this._highlighted = !this._highlighted;
 
-    const iconType = this._highlighted ? 'highlight' : 'default';
+    const iconStyle = this._highlighted ? EIconStyle.HIGHLIGHTED : EIconStyle.DEFAULT;
 
-    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, iconType));
+    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, iconStyle));
   }
 
   addToMap(map: L.Map): void {
