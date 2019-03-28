@@ -8,6 +8,7 @@ import { LayoutComponent } from './core/components/layout';
 import { NotFound404Component } from './not-found404.component';
 import { HikeEditComponent } from './pages/hike-edit';
 import { HikeListComponent } from './pages/hike-list';
+import { HikeResolver } from './shared/services/resolver/hike.resolver';
 
 const fallbackRoute: Route = { path: '**', component: NotFound404Component };
 
@@ -32,14 +33,16 @@ export const routes: Routes = [
       },
       {
         path: 'hike/new',
-        component: HikeEditComponent
+        component: HikeEditComponent,
+        resolve: { hike: HikeResolver }
       },
       {
         path: 'hike/:id',
-        component: HikeEditComponent
+        component: HikeEditComponent,
+        resolve: { hike: HikeResolver }
       }
     ],
-    canActivate: [RouteRedirectGuard],
+    // TODO vissza canActivate: [RouteRedirectGuard],
     data: { enabledRole: roles.enabledRoles }
   },
   {

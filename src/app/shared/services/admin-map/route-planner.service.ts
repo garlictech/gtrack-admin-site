@@ -8,14 +8,12 @@ import { take } from 'rxjs/operators';
 import { GameRuleService, RouteService, Segment } from 'subrepos/gtrack-common-ngx';
 
 import { Injectable } from '@angular/core';
-
+import { GEOJSON_STYLES, LeafletMapService } from '@features/common/leaflet-map';
 import { select, Store } from '@ngrx/store';
 import turfBuffer from '@turf/buffer';
 import { lineString as turfLineString } from '@turf/helpers';
 import turfLength from '@turf/length';
 
-import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { GEOJSON_STYLES } from '@bit/garlictech.angular-features.common.leaflet-map/constants/geojson-styles';
 import { State } from '../../../store';
 import { hikeEditRoutePlannerActions } from '../../../store/actions';
 import { initialRouteDataState } from '../../../store/reducer';

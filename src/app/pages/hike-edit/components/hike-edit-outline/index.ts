@@ -8,8 +8,9 @@ import { delay, take, takeUntil } from 'rxjs/operators';
 import { PoiSelectors, Segment } from 'subrepos/gtrack-common-ngx';
 
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { MarkerIconService } from '@bit/garlictech.angular-features.common.marker-icons';
 import { select, Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
@@ -31,8 +32,8 @@ interface NearestSegmentData {
 export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() isPlanning$: Observable<boolean>;
   stops$: Observable<Array<HikeProgramStop>>;
-  startIcon: string;
-  finishIcon: string;
+  startIcon: SafeResourceUrl;
+  finishIcon: SafeResourceUrl;
   private readonly _destroy$: Subject<boolean>;
 
   constructor(
@@ -41,15 +42,15 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
     private readonly _waypointMarkerService: WaypointMarkerService,
     private readonly _routePlannerService: RoutePlannerService,
     private readonly _poiSelectors: PoiSelectors,
-    private readonly _leafletIconService: LeafletIconService
+    private readonly _markerIconService: MarkerIconService
   ) {
-    this.startIcon = this._leafletIconService.url('start');
-    this.finishIcon = this._leafletIconService.url('finish');
-
     this._destroy$ = new Subject<boolean>();
   }
 
   ngOnInit(): void {
+    this.startIcon = this._markerIconService.getIcon('start', true);
+    this.finishIcon = this._markerIconService.getIcon('finish', true);
+
     this.stops$ = this._store.pipe(
       select(editedHikeProgramSelectors.getStopsWithPoiNames(this._poiSelectors.getAllPois)),
       delay(0),

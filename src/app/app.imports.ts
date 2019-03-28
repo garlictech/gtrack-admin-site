@@ -25,6 +25,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { MarkerIconsModule } from '@bit/garlictech.angular-features.common.marker-icons';
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';
@@ -107,5 +108,6 @@ export const APP_IMPORTS = [
   GtrackCommonWebModule,
   CurrentGeolocationModule.forRoot({ timeOut: 2000 }, { endpoint: environment.lambdaEndpoint }),
   LeafletMapModule,
+  MarkerIconsModule,
   ToastModule
 ];
