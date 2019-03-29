@@ -42,7 +42,6 @@ export class WaypointMarkerService {
     private readonly _routePlannerService: RoutePlannerService,
     private readonly _elevationService: ElevationService,
     private readonly _leafletIconService: LeafletIconService,
-    private readonly _markerIconService: MarkerIconService,
     private readonly _http: HttpClient
   ) {
     this._waypointMarkers = new L.FeatureGroup();

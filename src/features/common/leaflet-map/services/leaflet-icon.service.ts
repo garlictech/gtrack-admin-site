@@ -2,10 +2,7 @@ import * as L from 'leaflet';
 
 import { Injectable } from '@angular/core';
 import { EIconSource, EIconStyle, MarkerIconService } from '@bit/garlictech.angular-features.common.marker-icons';
-import * as markerIconSelectors from '@bit/garlictech.angular-features.common.marker-icons/store/selectors';
-import { SvgContent } from '@bit/garlictech.angular-features.common.marker-icons/store/state';
-import { select, Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +11,7 @@ export class LeafletIconService {
   s;
   constructor(private readonly _store: Store<any>, private readonly _markerIconService: MarkerIconService) {}
 
+  // TODO DEPRECATED
   url(type: string, iconSource: EIconSource = EIconSource.ICON, iconStyle: EIconStyle = EIconStyle.DEFAULT): string {
     const fileName = type === 'unknown' ? 'asterisco' : type; // bench -> picnic
     const svg = ''; // this._markerIconService.getInlineSvg(`/assets/${iconSource}`, fileName, iconStyle) as any;
@@ -23,6 +21,7 @@ export class LeafletIconService {
     return svg;
   }
 
+  // TODO DEPRECATED
   urls(
     types: Array<string>,
     iconSource: EIconSource = EIconSource.ICON,
