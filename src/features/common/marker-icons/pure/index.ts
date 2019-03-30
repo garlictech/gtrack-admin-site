@@ -1,9 +1,9 @@
 import { DEFAULT_COLOR_MAP, EColorCodes, EIconStyle } from '../enums';
 
-export const updateColors = (svgContent = '', type: string, iconStyle: EIconStyle): string => {
-  // Original fill color in the svg files
-  const originalSvgColor = '#7C7CF0';
+// Original fill color in the svg files
+export const originalSvgColor = '#7C7CF0';
 
+export const updateColors = (svgContent = '', type: string, iconStyle: EIconStyle): string => {
   let fillColor: string;
 
   switch (iconStyle) {

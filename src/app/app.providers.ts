@@ -21,7 +21,6 @@ import {
 } from './shared/services';
 import { RoutePlannerService } from './shared/services/admin-map';
 import { WaypointMarkerService } from './shared/services/admin-map/waypoint-marker.service';
-import { HikeResolver } from './shared/services/resolver/hike.resolver';
 import { getReducers, REDUCER_TOKEN } from './store';
 
 export const APP_PROVIDERS = [
@@ -43,6 +42,5 @@ export const APP_PROVIDERS = [
   FlickrService,
   MapillaryService,
   ConfirmationService,
-  MessageService,
-  HikeResolver
+  MessageService
 ];

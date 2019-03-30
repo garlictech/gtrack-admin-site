@@ -10,7 +10,7 @@ import { PoiSelectors, Segment } from 'subrepos/gtrack-common-ngx';
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { MarkerIconService } from '@bit/garlictech.angular-features.common.marker-icons';
+import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 import { select, Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
@@ -42,14 +42,14 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
     private readonly _waypointMarkerService: WaypointMarkerService,
     private readonly _routePlannerService: RoutePlannerService,
     private readonly _poiSelectors: PoiSelectors,
-    private readonly _markerIconService: MarkerIconService
+    private readonly _markerIconsService: MarkerIconsService
   ) {
     this._destroy$ = new Subject<boolean>();
   }
 
   ngOnInit(): void {
-    this.startIcon = this._markerIconService.getIcon('start', true);
-    this.finishIcon = this._markerIconService.getIcon('finish', true);
+    this.startIcon = this._markerIconsService.getIcon('start', true);
+    this.finishIcon = this._markerIconsService.getIcon('finish', true);
 
     this.stops$ = this._store.pipe(
       select(editedHikeProgramSelectors.getStopsWithPoiNames(this._poiSelectors.getAllPois)),

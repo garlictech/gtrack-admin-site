@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { EIconStyle } from '../enums';
-import { getFileId, prepareSvg, updateColors } from '../pure';
+import { getFileId, prepareSvg } from '../pure';
 import { svgIconContentAdapter, svgMarkerContentAdapter } from './reducer';
 import { featureName, State, SvgContent } from './state';
 

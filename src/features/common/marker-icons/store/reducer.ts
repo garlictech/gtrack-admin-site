@@ -56,8 +56,6 @@ const reducerMap: ActionReducerMap<State> = {
   markers: svgMarkerReducer
 };
 
-// export const cacheListReducer = combineReducers(reducerMap);
-
 const reducer: ActionReducer<State> = combineReducers(reducerMap);
 
 export function markerIconsReducer(state: any, action: any): State {

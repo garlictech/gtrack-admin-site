@@ -1,10 +1,10 @@
-import { State } from '../state';
+import { featureName, State } from '../state';
 
-export const createFeatureState = ({ mapId = 'foobar', featureId = undefined } = {}): State => ({
+export const createFeatureState = ({ mapId = 'foobar', featureId } = {}): State => ({
   mapId,
   featureId
 });
 
-export const createState = (stateParams?): { 'features.leaflet-map': State } => ({
-  'features.leaflet-map': createFeatureState(stateParams)
+export const createState = (stateParams?): { [featureName]: State } => ({
+  [featureName]: createFeatureState(stateParams)
 });
