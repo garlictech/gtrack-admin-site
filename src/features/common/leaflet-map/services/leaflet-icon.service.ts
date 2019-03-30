@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 
 import { Injectable } from '@angular/core';
-import { EIconSource, EIconStyle, MarkerIconService } from '@bit/garlictech.angular-features.common.marker-icons';
+import { EIconSource, EIconStyle, MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 import { Store } from '@ngrx/store';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 })
 export class LeafletIconService {
   s;
-  constructor(private readonly _store: Store<any>, private readonly _markerIconService: MarkerIconService) {}
+  constructor(private readonly _store: Store<any>, private readonly _markerIconsService: MarkerIconsService) {}
 
   // TODO DEPRECATED
   url(type: string, iconSource: EIconSource = EIconSource.ICON, iconStyle: EIconStyle = EIconStyle.DEFAULT): string {
@@ -38,7 +38,7 @@ export class LeafletIconService {
     type = typeArray[0] || 'unknown';
 
     return L.icon({
-      iconUrl: this._markerIconService.getMarker(type, true, iconStyle),
+      iconUrl: this._markerIconsService.getMarker(type, true, iconStyle),
       iconSize: [32, 37],
       iconAnchor: [16, 37]
     });
