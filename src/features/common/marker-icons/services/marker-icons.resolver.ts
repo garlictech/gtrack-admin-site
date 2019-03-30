@@ -3,14 +3,15 @@ import { skipWhile, switchMap, take } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import * as markerIconSelectors from '@bit/garlictech.angular-features.common.marker-icons/store';
 import { select, Store } from '@ngrx/store';
 
-import { State } from '../../../store';
+import * as markerIconSelectors from '../store';
 
-@Injectable()
-export class HikeResolver implements Resolve<any> {
-  constructor(private readonly _store: Store<State>) {}
+@Injectable({
+  providedIn: 'root'
+})
+export class MarkerIconsResolver implements Resolve<any> {
+  constructor(private readonly _store: Store<any>) {}
 
   resolve(): Observable<boolean> {
     return combineLatest(

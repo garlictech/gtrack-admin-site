@@ -8,7 +8,7 @@ import { LayoutComponent } from './core/components/layout';
 import { NotFound404Component } from './not-found404.component';
 import { HikeEditComponent } from './pages/hike-edit';
 import { HikeListComponent } from './pages/hike-list';
-import { HikeResolver } from './shared/services/resolver/hike.resolver';
+import { MarkerIconsResolver } from '@bit/garlictech.angular-features.common.marker-icons';
 
 const fallbackRoute: Route = { path: '**', component: NotFound404Component };
 
@@ -34,12 +34,12 @@ export const routes: Routes = [
       {
         path: 'hike/new',
         component: HikeEditComponent,
-        resolve: { hike: HikeResolver }
+        resolve: { hike: MarkerIconsResolver }
       },
       {
         path: 'hike/:id',
         component: HikeEditComponent,
-        resolve: { hike: HikeResolver }
+        resolve: { hike: MarkerIconsResolver }
       }
     ],
     // TODO vissza canActivate: [RouteRedirectGuard],
