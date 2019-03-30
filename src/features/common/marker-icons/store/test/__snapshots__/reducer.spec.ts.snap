@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddSvgIconContents with initial state {} 1`] = `
+Object {
+  "icons": Object {
+    "entities": Object {
+      "atm": Object {
+        "content": "<svg></svg>",
+        "id": "atm",
+      },
+      "bank": Object {
+        "content": "<svg></svg>",
+        "id": "bank",
+      },
+    },
+    "ids": Array [
+      "atm",
+      "bank",
+    ],
+  },
+  "markers": Object {
+    "entities": Object {},
+    "ids": Array [],
+  },
+}
+`;
+
+exports[`AddSvgMarkerContents with initial state {} 1`] = `
+Object {
+  "icons": Object {
+    "entities": Object {},
+    "ids": Array [],
+  },
+  "markers": Object {
+    "entities": Object {
+      "atm": Object {
+        "content": "<svg></svg>",
+        "id": "atm",
+      },
+      "bank": Object {
+        "content": "<svg></svg>",
+        "id": "bank",
+      },
+    },
+    "ids": Array [
+      "atm",
+      "bank",
+    ],
+  },
+}
+`;
+
+exports[`Reset with initial state {"markers":{"ids":["atm","bank"],"entities":{"atm":{"id":"atm","content":"<svg></svg>"},"bank":{"id":"bank","content":"<svg></svg>"}}},"icons":{"ids":["atm","bank"],"entities":{"atm":{"id":"atm","content":"<svg></svg>"},"bank":{"id":"bank","content":"<svg></svg>"}}}} 1`] = `
+Object {
+  "icons": Object {
+    "entities": Object {},
+    "ids": Array [],
+  },
+  "markers": Object {
+    "entities": Object {},
+    "ids": Array [],
+  },
+}
+`;

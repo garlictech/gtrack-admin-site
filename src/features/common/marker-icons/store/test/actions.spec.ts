@@ -1,41 +1,41 @@
-/*
 import * as actions from '../actions';
+import { createSvgContent } from './utils';
 
-describe('AdminMap actions', () => {
+describe('MarkerIcon actions', () => {
   it('should have action names defined', () => {
-    expect(actions.ActionTypes.RegisterMap).toEqual('[Leaflet Map] Register Map');
-    expect(actions.ActionTypes.ResetMap).toEqual('[Leaflet Map] Reset Map');
+    expect(actions.ActionTypes.Reset).toEqual('[Marker icons] Reset');
+    expect(actions.ActionTypes.AddSvgIconContents).toEqual('[Marker icons] Add SVG icon contents');
+    expect(actions.ActionTypes.AddSvgMarkerContents).toEqual('[Marker icons] Add SVG marker contents');
   });
 
-  it('should create RegisterMap action', () => {
-    const mapId = 'fakeMapId';
-    const action = new actions.RegisterMap(mapId);
+  it('should create Reset action', () => {
+    const action = new actions.Reset();
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: actions.ActionTypes.RegisterMap,
-      mapId
+      type: actions.ActionTypes.Reset
     });
   });
 
-  it('should create ResetMap action', () => {
-    const action = new actions.ResetMap();
+  it('should create AddSvgIconContents action', () => {
+    const contents = [createSvgContent('atm'), createSvgContent('bank')];
+    const action = new actions.AddSvgIconContents(contents);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: actions.ActionTypes.ResetMap
+      type: actions.ActionTypes.AddSvgIconContents,
+      svgContents: contents
     });
   });
 
-  it('should create AddFeature action', () => {
-    const id = 1;
-    const action = new actions.AddFeature({ id });
+  it('should create AddSvgMarkerContents action', () => {
+    const contents = [createSvgContent('atm'), createSvgContent('bank')];
+    const action = new actions.AddSvgMarkerContents(contents);
 
     expect(action).toBeDefined();
     expect({ ...action }).toEqual({
-      type: actions.ActionTypes.AddFeature,
-      payload: { id }
+      type: actions.ActionTypes.AddSvgMarkerContents,
+      svgContents: contents
     });
   });
 });
-*/

@@ -1,31 +1,34 @@
-/*
 import * as _ from 'lodash';
 
-import { createFeatureState } from './utils';
-import { reducer } from '../reducer';
 import * as fromActions from '../actions';
+import { markerIconsReducer } from '../reducer';
+import { createFeatureState, createSvgContent, createSvgContentEntityState } from './utils';
+
+const contents = [createSvgContent('atm'), createSvgContent('bank')];
 
 const testCases = [
   {
-    actionName: 'ResetMap',
-    action: new fromActions.ResetMap(),
-    initialState: createFeatureState({ mapId: 'existingMapID' })
+    actionName: 'Reset',
+    action: new fromActions.Reset(),
+    initialState: createFeatureState({
+      markers: createSvgContentEntityState(contents),
+      icons: createSvgContentEntityState(contents)
+    })
   },
   {
-    actionName: 'RegisterMap',
-    action: new fromActions.RegisterMap('mapID'),
-    initialState: createFeatureState({})
+    actionName: 'AddSvgIconContents',
+    action: new fromActions.AddSvgIconContents(contents),
+    initialState: createFeatureState()
   },
   {
-    actionName: 'AddFeature',
-    action: new fromActions.AddFeature({ id: 2 }),
-    initialState: createFeatureState({})
+    actionName: 'AddSvgMarkerContents',
+    action: new fromActions.AddSvgMarkerContents(contents),
+    initialState: createFeatureState()
   }
 ];
 
 testCases.forEach(({ actionName, action, initialState }) => {
   test(`${actionName} with initial state ${JSON.stringify(initialState)}`, () => {
-    expect(reducer(initialState, action)).toMatchSnapshot();
+    expect(markerIconsReducer(initialState, action)).toMatchSnapshot();
   });
 });
-*/
