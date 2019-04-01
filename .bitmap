@@ -1866,19 +1866,19 @@
                 "name": "bank.svg"
             },
             {
-                "relativePath": "assets/icon/bicycle-parking.svg",
-                "test": false,
-                "name": "bicycle-parking.svg"
-            },
-            {
                 "relativePath": "assets/icon/bicycle.svg",
                 "test": false,
                 "name": "bicycle.svg"
             },
             {
-                "relativePath": "assets/icon/bus-station.svg",
+                "relativePath": "assets/icon/bicycle_parking.svg",
                 "test": false,
-                "name": "bus-station.svg"
+                "name": "bicycle_parking.svg"
+            },
+            {
+                "relativePath": "assets/icon/bus_station.svg",
+                "test": false,
+                "name": "bus_station.svg"
             },
             {
                 "relativePath": "assets/icon/cafe.svg",
@@ -1886,9 +1886,9 @@
                 "name": "cafe.svg"
             },
             {
-                "relativePath": "assets/icon/cave-entrance.svg",
+                "relativePath": "assets/icon/cave_entrance.svg",
                 "test": false,
-                "name": "cave-entrance.svg"
+                "name": "cave_entrance.svg"
             },
             {
                 "relativePath": "assets/icon/checkpoint.svg",
@@ -1906,9 +1906,9 @@
                 "name": "cliff.svg"
             },
             {
-                "relativePath": "assets/icon/drinking-water.svg",
+                "relativePath": "assets/icon/drinking_water.svg",
                 "test": false,
-                "name": "drinking-water.svg"
+                "name": "drinking_water.svg"
             },
             {
                 "relativePath": "assets/icon/finish.svg",
@@ -1926,9 +1926,9 @@
                 "name": "hiking.svg"
             },
             {
-                "relativePath": "assets/icon/hunting-stand.svg",
+                "relativePath": "assets/icon/hunting_stand.svg",
                 "test": false,
-                "name": "hunting-stand.svg"
+                "name": "hunting_stand.svg"
             },
             {
                 "relativePath": "assets/icon/lodging.svg",
@@ -1961,11 +1961,6 @@
                 "name": "pharmacy.svg"
             },
             {
-                "relativePath": "assets/icon/phone.svg",
-                "test": false,
-                "name": "phone.svg"
-            },
-            {
                 "relativePath": "assets/icon/photo.svg",
                 "test": false,
                 "name": "photo.svg"
@@ -1976,9 +1971,9 @@
                 "name": "picnic.svg"
             },
             {
-                "relativePath": "assets/icon/place-of-worship.svg",
+                "relativePath": "assets/icon/place_of_worship.svg",
                 "test": false,
-                "name": "place-of-worship.svg"
+                "name": "place_of_worship.svg"
             },
             {
                 "relativePath": "assets/icon/police.svg",
@@ -1986,14 +1981,14 @@
                 "name": "police.svg"
             },
             {
-                "relativePath": "assets/icon/post-box.svg",
+                "relativePath": "assets/icon/post_box.svg",
                 "test": false,
-                "name": "post-box.svg"
+                "name": "post_box.svg"
             },
             {
-                "relativePath": "assets/icon/post-office.svg",
+                "relativePath": "assets/icon/post_office.svg",
                 "test": false,
-                "name": "post-office.svg"
+                "name": "post_office.svg"
             },
             {
                 "relativePath": "assets/icon/pub.svg",
@@ -2001,9 +1996,9 @@
                 "name": "pub.svg"
             },
             {
-                "relativePath": "assets/icon/recycle.svg",
+                "relativePath": "assets/icon/recycling.svg",
                 "test": false,
-                "name": "recycle.svg"
+                "name": "recycling.svg"
             },
             {
                 "relativePath": "assets/icon/restaurant.svg",
@@ -2026,14 +2021,14 @@
                 "name": "spring.svg"
             },
             {
-                "relativePath": "assets/icon/start-finish.svg",
-                "test": false,
-                "name": "start-finish.svg"
-            },
-            {
                 "relativePath": "assets/icon/start.svg",
                 "test": false,
                 "name": "start.svg"
+            },
+            {
+                "relativePath": "assets/icon/start_finish.svg",
+                "test": false,
+                "name": "start_finish.svg"
             },
             {
                 "relativePath": "assets/icon/store.svg",
@@ -2046,14 +2041,19 @@
                 "name": "sunsetland.svg"
             },
             {
+                "relativePath": "assets/icon/telephone.svg",
+                "test": false,
+                "name": "telephone.svg"
+            },
+            {
                 "relativePath": "assets/icon/toilets.svg",
                 "test": false,
                 "name": "toilets.svg"
             },
             {
-                "relativePath": "assets/icon/train-station.svg",
+                "relativePath": "assets/icon/train_station.svg",
                 "test": false,
-                "name": "train-station.svg"
+                "name": "train_station.svg"
             },
             {
                 "relativePath": "assets/icon/tree.svg",
@@ -2061,9 +2061,9 @@
                 "name": "tree.svg"
             },
             {
-                "relativePath": "assets/icon/waste-basket.svg",
+                "relativePath": "assets/icon/waste_basket.svg",
                 "test": false,
-                "name": "waste-basket.svg"
+                "name": "waste_basket.svg"
             },
             {
                 "relativePath": "assets/icon/water.svg",
@@ -2086,19 +2086,19 @@
                 "name": "bank.svg"
             },
             {
-                "relativePath": "assets/marker/bicycle-parking.svg",
-                "test": false,
-                "name": "bicycle-parking.svg"
-            },
-            {
                 "relativePath": "assets/marker/bicycle.svg",
                 "test": false,
                 "name": "bicycle.svg"
             },
             {
-                "relativePath": "assets/marker/bus-station.svg",
+                "relativePath": "assets/marker/bicycle_parking.svg",
                 "test": false,
-                "name": "bus-station.svg"
+                "name": "bicycle_parking.svg"
+            },
+            {
+                "relativePath": "assets/marker/bus_station.svg",
+                "test": false,
+                "name": "bus_station.svg"
             },
             {
                 "relativePath": "assets/marker/cafe.svg",
@@ -2106,9 +2106,9 @@
                 "name": "cafe.svg"
             },
             {
-                "relativePath": "assets/marker/cave-entrance.svg",
+                "relativePath": "assets/marker/cave_entrance.svg",
                 "test": false,
-                "name": "cave-entrance.svg"
+                "name": "cave_entrance.svg"
             },
             {
                 "relativePath": "assets/marker/checkpoint.svg",
@@ -2126,9 +2126,9 @@
                 "name": "cliff.svg"
             },
             {
-                "relativePath": "assets/marker/drinking-water.svg",
+                "relativePath": "assets/marker/drinking_water.svg",
                 "test": false,
-                "name": "drinking-water.svg"
+                "name": "drinking_water.svg"
             },
             {
                 "relativePath": "assets/marker/finish.svg",
@@ -2146,9 +2146,9 @@
                 "name": "hiking.svg"
             },
             {
-                "relativePath": "assets/marker/hunting-stand.svg",
+                "relativePath": "assets/marker/hunting_stand.svg",
                 "test": false,
-                "name": "hunting-stand.svg"
+                "name": "hunting_stand.svg"
             },
             {
                 "relativePath": "assets/marker/lodging.svg",
@@ -2191,9 +2191,14 @@
                 "name": "picnic.svg"
             },
             {
-                "relativePath": "assets/marker/place-of-worship.svg",
+                "relativePath": "assets/marker/pin.svg",
                 "test": false,
-                "name": "place-of-worship.svg"
+                "name": "pin.svg"
+            },
+            {
+                "relativePath": "assets/marker/place_of_worship.svg",
+                "test": false,
+                "name": "place_of_worship.svg"
             },
             {
                 "relativePath": "assets/marker/police.svg",
@@ -2201,14 +2206,14 @@
                 "name": "police.svg"
             },
             {
-                "relativePath": "assets/marker/postbox.svg",
+                "relativePath": "assets/marker/post_box.svg",
                 "test": false,
-                "name": "postbox.svg"
+                "name": "post_box.svg"
             },
             {
-                "relativePath": "assets/marker/postoffice.svg",
+                "relativePath": "assets/marker/post_office.svg",
                 "test": false,
-                "name": "postoffice.svg"
+                "name": "post_office.svg"
             },
             {
                 "relativePath": "assets/marker/pub.svg",
@@ -2241,14 +2246,14 @@
                 "name": "spring.svg"
             },
             {
-                "relativePath": "assets/marker/start-finish.svg",
-                "test": false,
-                "name": "start-finish.svg"
-            },
-            {
                 "relativePath": "assets/marker/start.svg",
                 "test": false,
                 "name": "start.svg"
+            },
+            {
+                "relativePath": "assets/marker/start_finish.svg",
+                "test": false,
+                "name": "start_finish.svg"
             },
             {
                 "relativePath": "assets/marker/store.svg",
@@ -2271,9 +2276,9 @@
                 "name": "toilets.svg"
             },
             {
-                "relativePath": "assets/marker/train-station.svg",
+                "relativePath": "assets/marker/train_station.svg",
                 "test": false,
-                "name": "train-station.svg"
+                "name": "train_station.svg"
             },
             {
                 "relativePath": "assets/marker/tree.svg",
@@ -2281,9 +2286,9 @@
                 "name": "tree.svg"
             },
             {
-                "relativePath": "assets/marker/waste-basket.svg",
+                "relativePath": "assets/marker/waste_basket.svg",
                 "test": false,
-                "name": "waste-basket.svg"
+                "name": "waste_basket.svg"
             },
             {
                 "relativePath": "assets/marker/water.svg",
@@ -2326,9 +2331,89 @@
                 "test": false
             },
             {
+                "relativePath": "pure/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
                 "relativePath": "services/index.ts",
                 "test": false,
                 "name": "index.ts"
+            },
+            {
+                "relativePath": "services/marker-icons.resolver.ts",
+                "test": false,
+                "name": "marker-icons.resolver.ts"
+            },
+            {
+                "relativePath": "services/marker-icons.service.ts",
+                "test": false,
+                "name": "marker-icons.service.ts"
+            },
+            {
+                "relativePath": "services/test/__snapshots__/marker-icons.service.spec.ts.snap",
+                "test": false,
+                "name": "marker-icons.service.spec.ts.snap"
+            },
+            {
+                "relativePath": "services/test/marker-icons.service.spec.ts",
+                "test": false,
+                "name": "marker-icons.service.spec.ts"
+            },
+            {
+                "relativePath": "store/actions.ts",
+                "test": false,
+                "name": "actions.ts"
+            },
+            {
+                "relativePath": "store/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "store/reducer.ts",
+                "test": false,
+                "name": "reducer.ts"
+            },
+            {
+                "relativePath": "store/selectors.ts",
+                "test": false,
+                "name": "selectors.ts"
+            },
+            {
+                "relativePath": "store/state.ts",
+                "test": false,
+                "name": "state.ts"
+            },
+            {
+                "relativePath": "store/test/__snapshots__/reducer.spec.ts.snap",
+                "test": false,
+                "name": "reducer.spec.ts.snap"
+            },
+            {
+                "relativePath": "store/test/__snapshots__/selectors.spec.ts.snap",
+                "test": false,
+                "name": "selectors.spec.ts.snap"
+            },
+            {
+                "relativePath": "store/test/actions.spec.ts",
+                "test": false,
+                "name": "actions.spec.ts"
+            },
+            {
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false,
+                "name": "reducer.spec.ts"
+            },
+            {
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false,
+                "name": "selectors.spec.ts"
+            },
+            {
+                "relativePath": "store/test/utils.ts",
+                "test": false,
+                "name": "utils.ts"
             }
         ],
         "mainFile": "index.ts",
@@ -2643,5 +2728,5 @@
         ],
         "originallySharedDir": "src/features/common/leaflet-map"
     },
-    "version": "14.0.2"
+    "version": "14.0.4"
 }

@@ -11,11 +11,12 @@ export const createSvgContentEntityState = (svgContents: Array<SvgContent>) => (
   entities: _.keyBy(svgContents, 'id')
 });
 
-export const createFeatureState = ({ markers, icons } = {}): State => ({
+// tslint:disable-next-line:no-unnecessary-initializer
+export const createFeatureState = ({ markers = undefined, icons = undefined } = {}): State => ({
   markers,
   icons
 });
 
-export const createState = (stateParams?): { [featureName]: State } => ({
+export const createState = (stateParams?: any): { [featureName]: State } => ({
   [featureName]: createFeatureState(stateParams)
 });

@@ -10,6 +10,7 @@ import { WeatherEntity } from '@features/common/weather/store';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { select, Store } from '@ngrx/store';
 
+import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 import { AstronomyService } from '../../../astronomy';
 import { GameRuleService } from '../../services/game-rule';
 import { PoiSelectors } from '../../store/poi';
@@ -53,10 +54,10 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     private readonly _store: Store<any>,
     private readonly _gameRule: GameRuleService,
     private readonly _astronomy: AstronomyService,
-    public icon: LeafletIconService
+    public _markerIconsService: MarkerIconsService
   ) {
-    this.startIcon = icon.url('start');
-    this.finishIcon = icon.url('finish');
+    this.startIcon = _markerIconsService.getIcon('start', true);
+    this.finishIcon = _markerIconsService.getIcon('finish', true);
     this.speed = 4;
     this.startTime = {
       hours: 5,

@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
 
-import { createFeatureState } from './utils';
-import { reducer } from '../reducer';
 import * as fromActions from '../actions';
+import { reducer } from '../reducer';
+import { createFeatureState } from './utils';
 
 const testCases = [
   {

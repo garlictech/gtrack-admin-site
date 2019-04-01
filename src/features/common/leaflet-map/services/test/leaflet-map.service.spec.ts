@@ -153,11 +153,11 @@ describe('LeafletMapService', () => {
   it('should get currentPositionMarker', done => {
     leafletMapService.createMap('testMap', mapElement, center, DEFAULT_LAYERS, DEFAULT_OVERLAY_LAYERS, ['trails'], {});
 
-    expect(leafletMapService._currentPositionMarker).toBeUndefined();
+    expect(leafletMapService['_currentPositionMarker']).toBeUndefined();
 
     leafletMapService.getCurrentPositionMarker();
 
-    expect(leafletMapService._currentPositionMarker).toBeDefined();
+    expect(leafletMapService['_currentPositionMarker']).toBeDefined();
 
     done();
   });
