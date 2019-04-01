@@ -1,0 +1,1 @@
+../workflows-scripts/webclient/docker/e2etest-universal.sh

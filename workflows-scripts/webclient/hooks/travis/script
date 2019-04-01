@@ -7,14 +7,13 @@ npm run travis script
 # ADD YOUR PARTS HERE
 npm run build
 npm run lint
-npm run unittest
+npm run alltest
 npm run build:prod
 npm run doc:build
 
 if [[ "$TRAVIS_EVENT_TYPE" != "pull_request" ]]; then
-#   npm run e2e:prod
-  sudo mkdir -p artifacts/reports/e2e
-  sudo touch artifacts/reports/e2e/index.html
+  npm run cypress:run:ci
+  npm run e2e:prod
 fi
 
 if [ -f hooks/travis/script_project ]; then

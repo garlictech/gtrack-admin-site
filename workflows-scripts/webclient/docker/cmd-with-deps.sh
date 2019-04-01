@@ -10,4 +10,5 @@ fi
 
 export DOCKER_CMD="$@"
 
-${DOCKER_COMPOSE} up --remove-orphans
+${DOCKER_COMPOSE} up --remove-orphans -d
+ng serve

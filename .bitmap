@@ -177,11 +177,19 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/common/native/blocks/utils"
     },
+<<<<<<< HEAD
     "garlictech.angular-features/common/localization@0.0.7": {
         "files": [
             {
                 "name": "README.md",
                 "relativePath": "README.md",
+=======
+    "garlictech.angular-features/common/checkpoints@0.0.2": {
+        "files": [
+            {
+                "name": "checkpoints.module.ts",
+                "relativePath": "checkpoints.module.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
                 "test": false
             },
             {
@@ -190,6 +198,7 @@
                 "test": false
             },
             {
+<<<<<<< HEAD
                 "name": "index.ts",
                 "relativePath": "language-selector/index.ts",
                 "test": false
@@ -217,9 +226,47 @@
             {
                 "name": "br.png",
                 "relativePath": "languages/flags/br.png",
+=======
+                "name": "checkpoint-marker-collection.ts",
+                "relativePath": "lib/checkpoint-marker-collection.ts",
                 "test": false
             },
             {
+                "name": "checkpoint-sequence.ts",
+                "relativePath": "lib/checkpoint-sequence.ts",
+                "test": false
+            },
+            {
+                "name": "checkpoint.ts",
+                "relativePath": "lib/checkpoint.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "lib/index.ts",
+                "test": false
+            },
+            {
+                "name": "checkpoint.service.ts",
+                "relativePath": "services/checkpoint.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/checkpoints",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/checkpoints"
+    },
+    "garlictech.angular-features/common/forms@0.0.2": {
+        "files": [
+            {
+<<<<<<< HEAD
                 "name": "ca.png",
                 "relativePath": "languages/flags/ca.png",
                 "test": false
@@ -475,6 +522,260 @@
             {
                 "name": "config.ts",
                 "relativePath": "config.ts",
+=======
+                "name": "abstract-value-accessor.ts",
+                "relativePath": "abstract-value-accessor/abstract-value-accessor.ts",
+                "test": false
+            },
+            {
+                "name": "abstract-value-accessor.spec.ts",
+                "relativePath": "abstract-value-accessor/test/abstract-value-accessor.spec.ts",
+                "test": false
+            },
+            {
+                "name": "aws-formdata.service.ts",
+                "relativePath": "aws-formdata/aws-formdata.service.ts",
+                "test": false
+            },
+            {
+                "name": "policy.ts",
+                "relativePath": "aws-formdata/policy.ts",
+                "test": false
+            },
+            {
+                "name": "chips.component.ts",
+                "relativePath": "chips/chips.component.ts",
+                "test": false
+            },
+            {
+                "name": "chips.spec.ts",
+                "relativePath": "chips/test/chips.spec.ts",
+                "test": false
+            },
+            {
+                "name": "date-picker.component.ts",
+                "relativePath": "date-picker/date-picker.component.ts",
+                "test": false
+            },
+            {
+                "name": "date-picker.spec.ts",
+                "relativePath": "date-picker/test/date-picker.spec.ts",
+                "test": false
+            },
+            {
+                "name": "dropdown-select.component.ts",
+                "relativePath": "dropdown-select/dropdown-select.component.ts",
+                "test": false
+            },
+            {
+                "name": "dropdown-select.spec.ts",
+                "relativePath": "dropdown-select/test/dropdown-select.spec.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form-field.component.ts",
+                "relativePath": "dynamic-form-field/dynamic-form-field.component.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form-field-component.spec.ts.snap",
+                "relativePath": "dynamic-form-field/test/__snapshots__/dynamic-form-field-component.spec.ts.snap",
+                "test": true
+            },
+            {
+                "name": "dynamic-form-field-component.spec.ts",
+                "relativePath": "dynamic-form-field/test/dynamic-form-field-component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form-group.component.ts",
+                "relativePath": "dynamic-form-group/dynamic-form-group.component.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form-section.component.ts",
+                "relativePath": "dynamic-form-section/dynamic-form-section.component.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form.component.ts",
+                "relativePath": "dynamic-form/dynamic-form.component.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form.component.spec.ts.snap",
+                "relativePath": "dynamic-form/test/__snapshots__/dynamic-form.component.spec.ts.snap",
+                "test": false
+            },
+            {
+                "name": "dynamic-form.component.spec.ts",
+                "relativePath": "dynamic-form/test/dynamic-form.component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "emoji-input.component.ts",
+                "relativePath": "emoji-input/emoji-input.component.ts",
+                "test": false
+            },
+            {
+                "name": "field-control.service.ts",
+                "relativePath": "field-control/field-control.service.ts",
+                "test": false
+            },
+            {
+                "name": "checkbox.ts",
+                "relativePath": "field/checkbox.ts",
+                "test": false
+            },
+            {
+                "name": "chips.ts",
+                "relativePath": "field/chips.ts",
+                "test": false
+            },
+            {
+                "name": "date-picker.ts",
+                "relativePath": "field/date-picker.ts",
+                "test": false
+            },
+            {
+                "name": "email.ts",
+                "relativePath": "field/email.ts",
+                "test": false
+            },
+            {
+                "name": "emoji.ts",
+                "relativePath": "field/emoji.ts",
+                "test": false
+            },
+            {
+                "name": "field.ts",
+                "relativePath": "field/field.ts",
+                "test": false
+            },
+            {
+                "name": "file-s3.ts",
+                "relativePath": "field/file-s3.ts",
+                "test": false
+            },
+            {
+                "name": "file-upload.ts",
+                "relativePath": "field/file-upload.ts",
+                "test": false
+            },
+            {
+                "name": "file.ts",
+                "relativePath": "field/file.ts",
+                "test": false
+            },
+            {
+                "name": "group.ts",
+                "relativePath": "field/group.ts",
+                "test": false
+            },
+            {
+                "name": "html.ts",
+                "relativePath": "field/html.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "field/index.ts",
+                "test": false
+            },
+            {
+                "name": "interfaces.ts",
+                "relativePath": "field/interfaces.ts",
+                "test": false
+            },
+            {
+                "name": "markdown.ts",
+                "relativePath": "field/markdown.ts",
+                "test": false
+            },
+            {
+                "name": "multi-select.ts",
+                "relativePath": "field/multi-select.ts",
+                "test": false
+            },
+            {
+                "name": "password.ts",
+                "relativePath": "field/password.ts",
+                "test": false
+            },
+            {
+                "name": "phone-number.ts",
+                "relativePath": "field/phone-number.ts",
+                "test": false
+            },
+            {
+                "name": "range-slider.ts",
+                "relativePath": "field/range-slider.ts",
+                "test": false
+            },
+            {
+                "name": "rich-text-editor.ts",
+                "relativePath": "field/rich-text-editor.ts",
+                "test": false
+            },
+            {
+                "name": "section.ts",
+                "relativePath": "field/section.ts",
+                "test": false
+            },
+            {
+                "name": "select.ts",
+                "relativePath": "field/select.ts",
+                "test": false
+            },
+            {
+                "name": "slider.ts",
+                "relativePath": "field/slider.ts",
+                "test": false
+            },
+            {
+                "name": "switch.ts",
+                "relativePath": "field/switch.ts",
+                "test": false
+            },
+            {
+                "name": "template.ts",
+                "relativePath": "field/template.ts",
+                "test": false
+            },
+            {
+                "name": "text.ts",
+                "relativePath": "field/text.ts",
+                "test": false
+            },
+            {
+                "name": "textarea.ts",
+                "relativePath": "field/textarea.ts",
+                "test": false
+            },
+            {
+                "name": "textbox.ts",
+                "relativePath": "field/textbox.ts",
+                "test": false
+            },
+            {
+                "name": "time-picker.ts",
+                "relativePath": "field/time-picker.ts",
+                "test": false
+            },
+            {
+                "name": "title.ts",
+                "relativePath": "field/title.ts",
+                "test": false
+            },
+            {
+                "name": "file-s3.component.ts",
+                "relativePath": "file-s3/file-s3.component.ts",
+                "test": false
+            },
+            {
+                "name": "file.component.ts",
+                "relativePath": "file/file.component.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
                 "test": false
             },
             {
@@ -483,6 +784,7 @@
                 "test": false
             },
             {
+<<<<<<< HEAD
                 "name": "interfaces.ts",
                 "relativePath": "interfaces.ts",
                 "test": false
@@ -490,6 +792,15 @@
             {
                 "name": "log.ts",
                 "relativePath": "log.ts",
+=======
+                "name": "log.ts",
+                "relativePath": "log.ts",
+                "test": false
+            },
+            {
+                "name": "markdown.component.ts",
+                "relativePath": "markdown/markdown.component.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
                 "test": false
             },
             {
@@ -498,6 +809,7 @@
                 "test": false
             },
             {
+<<<<<<< HEAD
                 "name": "geoip.service.ts",
                 "relativePath": "services/geoip/geoip.service.ts",
                 "test": false
@@ -540,6 +852,246 @@
             {
                 "name": "effects.ts",
                 "relativePath": "store/effects.ts",
+=======
+                "name": "multi-select.component.ts",
+                "relativePath": "multi-select/multi-select.component.ts",
+                "test": false
+            },
+            {
+                "name": "multi-select.spec.ts",
+                "relativePath": "multi-select/test/multi-select.spec.ts",
+                "test": false
+            },
+            {
+                "name": "radio-select.component.ts",
+                "relativePath": "radio-select/radio-select.component.ts",
+                "test": false
+            },
+            {
+                "name": "range-slider.component.ts",
+                "relativePath": "range-slider/range-slider.component.ts",
+                "test": false
+            },
+            {
+                "name": "rich-text-editor.component.ts",
+                "relativePath": "rich-text-editor/rich-text-editor.component.ts",
+                "test": false
+            },
+            {
+                "name": "slider.component.ts",
+                "relativePath": "slider/slider.component.ts",
+                "test": false
+            },
+            {
+                "name": "switch.component.ts",
+                "relativePath": "switch/switch.component.ts",
+                "test": false
+            },
+            {
+                "name": "time-picker.spec.ts",
+                "relativePath": "time-picker/test/time-picker.spec.ts",
+                "test": false
+            },
+            {
+                "name": "time-picker.component.ts",
+                "relativePath": "time-picker/time-picker.component.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            },
+            {
+                "name": "index.ts",
+<<<<<<< HEAD
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+=======
+                "relativePath": "validators/index.ts",
+                "test": false
+            },
+            {
+                "name": "password-validator.ts",
+                "relativePath": "validators/password/password-validator.ts",
+                "test": false
+            },
+            {
+                "name": "phone-number-validator.ts",
+                "relativePath": "validators/phone-number/phone-number-validator.ts",
+                "test": false
+            },
+            {
+                "name": "xhr-file-upload.service.ts",
+                "relativePath": "xhr-file-upload/xhr-file-upload.service.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/forms",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/forms"
+    },
+    "garlictech.angular-features/common/localization@0.0.7": {
+        "files": [
+            {
+<<<<<<< HEAD
+                "name": "reducer.spec.ts.snap",
+                "relativePath": "store/test/__snapshots__/reducer.spec.ts.snap",
+                "test": true
+            },
+            {
+                "name": "selectors.spec.ts.snap",
+                "relativePath": "store/test/__snapshots__/selectors.spec.ts.snap",
+                "test": false
+            },
+            {
+                "name": "effects.spec.ts",
+                "relativePath": "store/test/effects.spec.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false
+            },
+            {
+                "name": "utils.ts",
+                "relativePath": "store/test/utils.ts",
+=======
+                "name": "README.md",
+                "relativePath": "README.md",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "language-selector/index.ts",
+                "test": false
+            },
+            {
+                "name": "component.spec.ts",
+                "relativePath": "language-selector/test/component.spec.ts",
+                "test": true
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "language-service/index.ts",
+                "test": false
+            },
+            {
+                "name": "be.png",
+                "relativePath": "languages/flags/be.png",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/current-geolocation",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/current-geolocation"
+    },
+    "garlictech.angular-features/common/weather@0.0.3": {
+        "files": [
+            {
+<<<<<<< HEAD
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "weather-icon.component.spec.ts",
+                "relativePath": "components/weather-icon/test/weather-icon.component.spec.ts",
+                "test": true
+            },
+            {
+                "name": "weather-icon.component.html",
+                "relativePath": "components/weather-icon/weather-icon.component.html",
+                "test": false
+            },
+            {
+                "name": "weather-icon.component.ts",
+                "relativePath": "components/weather-icon/weather-icon.component.ts",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.ts",
+                "relativePath": "components/weather-info/weather-info.component.ts",
+                "test": false
+            },
+            {
+                "name": "wind-direction-icon.component.spec.ts",
+                "relativePath": "components/wind-direction-icon/test/wind-direction-icon.component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "wind-direction-icon.component.html",
+                "relativePath": "components/wind-direction-icon/wind-direction-icon.component.html",
+                "test": false
+            },
+            {
+                "name": "wind-direction-icon.component.ts",
+                "relativePath": "components/wind-direction-icon/wind-direction-icon.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "interfaces.ts",
+                "relativePath": "interfaces.ts",
+                "test": false
+            },
+            {
+                "name": "log.ts",
+                "relativePath": "log.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "weather.service.spec.ts",
+                "relativePath": "services/test/weather.service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "weather.service.ts",
+                "relativePath": "services/weather.service.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
                 "test": false
             },
             {
@@ -553,6 +1105,797 @@
                 "test": false
             },
             {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": false
+            },
+            {
+                "name": "effects.spec.ts",
+                "relativePath": "store/test/effects.spec.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false
+            },
+            {
+                "name": "weather.module.ts",
+                "relativePath": "weather.module.ts",
+=======
+                "name": "bg.png",
+                "relativePath": "languages/flags/bg.png",
+                "test": false
+            },
+            {
+                "name": "br.png",
+                "relativePath": "languages/flags/br.png",
+                "test": false
+            },
+            {
+                "name": "ca.png",
+                "relativePath": "languages/flags/ca.png",
+                "test": false
+            },
+            {
+                "name": "catalonia.png",
+                "relativePath": "languages/flags/catalonia.png",
+                "test": false
+            },
+            {
+                "name": "cn.png",
+                "relativePath": "languages/flags/cn.png",
+                "test": false
+            },
+            {
+                "name": "cz.png",
+                "relativePath": "languages/flags/cz.png",
+                "test": false
+            },
+            {
+                "name": "de.png",
+                "relativePath": "languages/flags/de.png",
+                "test": false
+            },
+            {
+                "name": "dk.png",
+                "relativePath": "languages/flags/dk.png",
+                "test": false
+            },
+            {
+                "name": "ee.png",
+                "relativePath": "languages/flags/ee.png",
+                "test": false
+            },
+            {
+                "name": "es.png",
+                "relativePath": "languages/flags/es.png",
+                "test": false
+            },
+            {
+                "name": "fi.png",
+                "relativePath": "languages/flags/fi.png",
+                "test": false
+            },
+            {
+                "name": "fr.png",
+                "relativePath": "languages/flags/fr.png",
+                "test": false
+            },
+            {
+                "name": "gb.png",
+                "relativePath": "languages/flags/gb.png",
+                "test": false
+            },
+            {
+                "name": "gr.png",
+                "relativePath": "languages/flags/gr.png",
+                "test": false
+            },
+            {
+                "name": "hk.png",
+                "relativePath": "languages/flags/hk.png",
+                "test": false
+            },
+            {
+                "name": "hr.png",
+                "relativePath": "languages/flags/hr.png",
+                "test": false
+            },
+            {
+                "name": "hu.png",
+                "relativePath": "languages/flags/hu.png",
+                "test": false
+            },
+            {
+                "name": "in.png",
+                "relativePath": "languages/flags/in.png",
+                "test": false
+            },
+            {
+                "name": "is.png",
+                "relativePath": "languages/flags/is.png",
+                "test": false
+            },
+            {
+                "name": "it.png",
+                "relativePath": "languages/flags/it.png",
+                "test": false
+            },
+            {
+                "name": "jp.png",
+                "relativePath": "languages/flags/jp.png",
+                "test": false
+            },
+            {
+                "name": "kr.png",
+                "relativePath": "languages/flags/kr.png",
+                "test": false
+            },
+            {
+                "name": "lt.png",
+                "relativePath": "languages/flags/lt.png",
+                "test": false
+            },
+            {
+                "name": "lv.png",
+                "relativePath": "languages/flags/lv.png",
+                "test": false
+            },
+            {
+                "name": "nl.png",
+                "relativePath": "languages/flags/nl.png",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/weather",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/weather"
+    },
+    "garlictech.angular-features/common/authentication-api@0.0.7": {
+        "files": [
+            {
+<<<<<<< HEAD
+                "name": "README.md",
+                "relativePath": "README.md",
+                "test": false
+            },
+            {
+                "name": "api.service.ts",
+                "relativePath": "api/api.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "api/index.ts",
+                "test": false
+            },
+            {
+                "name": "api.service.spec.ts",
+                "relativePath": "api/test/api.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "auth-provider-base/index.ts",
+                "test": false
+            },
+            {
+                "name": "auth-guard.service.ts",
+                "relativePath": "auth/auth-guard.service.ts",
+                "test": false
+            },
+            {
+                "name": "auth.service.ts",
+                "relativePath": "auth/auth.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "auth/index.ts",
+                "test": false
+            },
+            {
+                "name": "auth-guard.service.spec.ts",
+                "relativePath": "auth/test/auth-guard.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "auth.service.spec.ts",
+                "relativePath": "auth/test/auth.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "verify-success.component.ts",
+                "relativePath": "auth/verify-success.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "deferred/index.ts",
+                "test": false
+            },
+            {
+                "name": "deferred.spec.ts",
+                "relativePath": "deferred/test/deferred.spec.ts",
+                "test": true
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "emitter/index.ts",
+                "test": false
+            },
+            {
+                "name": "emitter.spec.ts",
+                "relativePath": "emitter/test/emitter.spec.ts",
+                "test": true
+            },
+            {
+                "name": "login-error.ts",
+                "relativePath": "errors/login-error.ts",
+                "test": false
+            },
+            {
+                "name": "facebook.service.ts",
+                "relativePath": "facebook/facebook.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "facebook/index.ts",
+                "test": false
+            },
+            {
+                "name": "success.html",
+                "relativePath": "facebook/success.html",
+                "test": false
+            },
+            {
+                "name": "facebook.service.spec.ts",
+                "relativePath": "facebook/test/facebook.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "google.service.ts",
+                "relativePath": "google/google.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "google/index.ts",
+                "test": false
+            },
+            {
+                "name": "success.html",
+                "relativePath": "google/success.html",
+                "test": false
+            },
+            {
+                "name": "google.service.spec.ts",
+                "relativePath": "google/test/google.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "interfaces.ts",
+                "relativePath": "interfaces.ts",
+                "test": false
+            },
+            {
+                "name": "config.ts",
+                "relativePath": "lib/config.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "lib/index.ts",
+                "test": false
+            },
+            {
+                "name": "log.ts",
+                "relativePath": "log.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "oauth-window/index.ts",
+                "test": false
+            },
+            {
+                "name": "oauth-window.service.ts",
+                "relativePath": "oauth-window/oauth-window.service.ts",
+                "test": false
+            },
+            {
+                "name": "oauth-window.service.mock.spec.ts",
+                "relativePath": "oauth-window/test/oauth-window.service.mock.spec.ts",
+                "test": true
+            },
+            {
+                "name": "oauth-window.service.mock.ts",
+                "relativePath": "oauth-window/test/oauth-window.service.mock.ts",
+                "test": true
+            },
+            {
+                "name": "oauth-window.service.spec.ts",
+                "relativePath": "oauth-window/test/oauth-window.service.spec.ts",
+=======
+                "name": "no.png",
+                "relativePath": "languages/flags/no.png",
+                "test": false
+            },
+            {
+                "name": "pg.png",
+                "relativePath": "languages/flags/pg.png",
+                "test": false
+            },
+            {
+                "name": "pl.png",
+                "relativePath": "languages/flags/pl.png",
+                "test": false
+            },
+            {
+                "name": "ro.png",
+                "relativePath": "languages/flags/ro.png",
+                "test": false
+            },
+            {
+                "name": "ru.png",
+                "relativePath": "languages/flags/ru.png",
+                "test": false
+            },
+            {
+                "name": "se.png",
+                "relativePath": "languages/flags/se.png",
+                "test": false
+            },
+            {
+                "name": "si.png",
+                "relativePath": "languages/flags/si.png",
+                "test": false
+            },
+            {
+                "name": "sk.png",
+                "relativePath": "languages/flags/sk.png",
+                "test": false
+            },
+            {
+                "name": "tr.png",
+                "relativePath": "languages/flags/tr.png",
+                "test": false
+            },
+            {
+                "name": "tw.png",
+                "relativePath": "languages/flags/tw.png",
+                "test": false
+            },
+            {
+                "name": "ua.png",
+                "relativePath": "languages/flags/ua.png",
+                "test": false
+            },
+            {
+                "name": "us.png",
+                "relativePath": "languages/flags/us.png",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "languages/index.ts",
+                "test": false
+            },
+            {
+                "name": "config.ts",
+                "relativePath": "lib/config.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "lib/index.ts",
+                "test": false
+            },
+            {
+                "name": "module.spec.ts",
+                "relativePath": "lib/test/module.spec.ts",
+                "test": true
+            },
+            {
+                "name": "log.ts",
+                "relativePath": "log.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "changeme.spec.ts",
+                "relativePath": "test/changeme.spec.ts",
+                "test": true
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/localization",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/localization"
+    },
+    "garlictech.angular-features/common/multi-language-text@0.0.5": {
+        "files": [
+            {
+                "name": "description.component.ts",
+                "relativePath": "components/description/description.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/description/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "localize.module.ts",
+                "relativePath": "localize.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "pipes/index.ts",
+                "test": false
+            },
+            {
+                "name": "localize-description.pipe.ts",
+                "relativePath": "pipes/localize-description.pipe.ts",
+                "test": false
+            },
+            {
+                "name": "localize-description.spec.ts",
+                "relativePath": "pipes/test/localize-description.spec.ts",
+                "test": true
+            },
+            {
+                "name": "description-language-list.service.ts",
+                "relativePath": "services/description-language-list/description-language-list.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/description-language-list/index.ts",
+                "test": false
+            },
+            {
+                "name": "description-language-list.service.spec.ts",
+                "relativePath": "services/description-language-list/test/description-language-list.service.spec.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": true
+            },
+            {
+                "name": "index.ts",
+<<<<<<< HEAD
+                "relativePath": "passwordless/index.ts",
+                "test": false
+            },
+            {
+                "name": "passwordless-success.component.ts",
+                "relativePath": "passwordless/passwordless-success.component.ts",
+                "test": false
+            },
+            {
+                "name": "passwordless.service.ts",
+                "relativePath": "passwordless/passwordless.service.ts",
+=======
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/multi-language-text",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.1",
+            "garlictech.angular-features/common/localization@0.0.7"
+        ],
+        "originallySharedDir": "src/features/common/multi-language-text"
+    },
+    "garlictech.angular-features/common/current-geolocation@0.0.4": {
+        "files": [
+            {
+<<<<<<< HEAD
+                "name": "passwordless.service.spec.ts",
+                "relativePath": "passwordless/test/passwordless.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "storage/index.ts",
+                "test": false
+            },
+            {
+                "name": "local-storage.service.ts",
+                "relativePath": "storage/local-storage.service.ts",
+                "test": false
+            },
+            {
+                "name": "storage.interface.ts",
+                "relativePath": "storage/storage.interface.ts",
+                "test": false
+            },
+            {
+                "name": "local-storage.service.spec.ts",
+                "relativePath": "storage/test/local-storage.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "mock-storage.service.spec.ts",
+                "relativePath": "storage/test/mock-storage.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "mock-storage.service.ts",
+                "relativePath": "storage/test/mock-storage.service.ts",
+                "test": true
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
+=======
+                "name": "component.ts",
+                "relativePath": "components/current-geo-location/component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/current-geo-location/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "config.ts",
+                "relativePath": "config.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "interfaces.ts",
+                "relativePath": "interfaces.ts",
+                "test": false
+            },
+            {
+                "name": "log.ts",
+                "relativePath": "log.ts",
+                "test": false
+            },
+            {
+                "name": "module.ts",
+                "relativePath": "module.ts",
+                "test": false
+            },
+            {
+                "name": "geoip.service.ts",
+                "relativePath": "services/geoip/geoip.service.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            },
+            {
+                "name": "index.ts",
+<<<<<<< HEAD
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+=======
+                "relativePath": "services/geoip/index.ts",
+                "test": false
+            },
+            {
+                "name": "service.spec.ts",
+                "relativePath": "services/geoip/test/service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "gps-location.service.ts",
+                "relativePath": "services/gps-location/gps-location.service.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            },
+            {
+                "name": "index.ts",
+<<<<<<< HEAD
+                "relativePath": "twitter/index.ts",
+                "test": false
+            },
+            {
+                "name": "success.html",
+                "relativePath": "twitter/success.html",
+                "test": false
+            },
+            {
+                "name": "twitter.service.spec.ts",
+                "relativePath": "twitter/test/twitter.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "twitter.service.ts",
+                "relativePath": "twitter/twitter.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "window/index.ts",
+                "test": false
+            },
+            {
+                "name": "window.service.spec.ts",
+                "relativePath": "window/test/window.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "window.service.ts",
+                "relativePath": "window/window.service.ts",
+=======
+                "relativePath": "services/gps-location/index.ts",
+                "test": false
+            },
+            {
+                "name": "service.spec.ts",
+                "relativePath": "services/gps-location/test/service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/authentication-api",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/authentication-api"
+    },
+    "garlictech.angular-features/web/weather@0.0.6": {
+        "files": [
+            {
+<<<<<<< HEAD
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "fixture.ts",
+                "relativePath": "components/weather-info/test/fixture.ts",
+                "test": true
+            },
+            {
+                "name": "weather-info.component.spec.ts",
+                "relativePath": "components/weather-info/test/weather-info.component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.html",
+                "relativePath": "components/weather-info/weather-info.component.html",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.scss",
+                "relativePath": "components/weather-info/weather-info.component.scss",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.ts",
+                "relativePath": "components/weather-info/weather-info.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "weather.module.ts",
+                "relativePath": "weather.module.ts",
+=======
                 "name": "selectors.ts",
                 "relativePath": "store/selectors.ts",
                 "test": false
@@ -603,9 +1946,155 @@
             {
                 "name": "index.ts",
                 "relativePath": "components/index.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/web/weather",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/weather@0.0.3"
+        ],
+        "originallySharedDir": "src/features/web/weather"
+    },
+    "garlictech.angular-features/common/gtrack-interfaces@0.0.2": {
+        "files": [
+            {
+<<<<<<< HEAD
+                "name": "index.ts",
+                "relativePath": "index.ts",
                 "test": false
             },
             {
+                "name": "chat.ts",
+                "relativePath": "interfaces/chat.ts",
+                "test": false
+            },
+            {
+                "name": "checkpoint.ts",
+                "relativePath": "interfaces/checkpoint.ts",
+                "test": false
+            },
+            {
+                "name": "common.ts",
+                "relativePath": "interfaces/common.ts",
+                "test": false
+            },
+            {
+                "name": "full-profile.ts",
+                "relativePath": "interfaces/full-profile.ts",
+                "test": false
+            },
+            {
+                "name": "geospatial-search.ts",
+                "relativePath": "interfaces/geospatial-search.ts",
+                "test": false
+            },
+            {
+                "name": "hike-program.ts",
+                "relativePath": "interfaces/hike-program.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "interfaces/index.ts",
+                "test": false
+            },
+            {
+                "name": "location.ts",
+                "relativePath": "interfaces/location.ts",
+                "test": false
+            },
+            {
+                "name": "marker-popup-data.ts",
+                "relativePath": "interfaces/marker-popup-data.ts",
+                "test": false
+            },
+            {
+                "name": "messaging.ts",
+                "relativePath": "interfaces/messaging.ts",
+                "test": false
+            },
+            {
+                "name": "object-delete.ts",
+                "relativePath": "interfaces/object-delete.ts",
+                "test": false
+            },
+            {
+                "name": "object-mark.ts",
+                "relativePath": "interfaces/object-mark.ts",
+                "test": false
+            },
+            {
+                "name": "permission-record.ts",
+                "relativePath": "interfaces/permission-record.ts",
+                "test": false
+            },
+            {
+                "name": "poi.ts",
+                "relativePath": "interfaces/poi.ts",
+                "test": false
+            },
+            {
+                "name": "profile.ts",
+                "relativePath": "interfaces/profile.ts",
+                "test": false
+            },
+            {
+                "name": "provider.ts",
+                "relativePath": "interfaces/provider.ts",
+                "test": false
+            },
+            {
+                "name": "roles.ts",
+                "relativePath": "interfaces/roles.ts",
+                "test": false
+            },
+            {
+                "name": "route.ts",
+                "relativePath": "interfaces/route.ts",
+                "test": false
+            },
+            {
+                "name": "search.ts",
+                "relativePath": "interfaces/search.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "interfaces/state.ts",
+                "test": false
+            },
+            {
+                "name": "track.ts",
+                "relativePath": "interfaces/track.ts",
+                "test": false
+            },
+            {
+                "name": "user.ts",
+                "relativePath": "interfaces/user.ts",
+                "test": false
+            },
+            {
+                "name": "constants.ts",
+                "relativePath": "user-profile/constants.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "user-profile/index.ts",
+                "test": false
+            },
+            {
+                "name": "languages.ts",
+                "relativePath": "user-profile/languages.ts",
+                "test": false
+            },
+            {
+                "name": "nationalities.ts",
+                "relativePath": "user-profile/nationalities.ts",
+=======
                 "name": "weather-icon.component.spec.ts",
                 "relativePath": "components/weather-icon/test/weather-icon.component.spec.ts",
                 "test": true
@@ -1019,36 +2508,11 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/authentication-api"
     },
-    "garlictech.angular-features/web/weather@0.0.6": {
+    "garlictech.angular-features/common/router@0.0.11": {
         "files": [
             {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "fixture.ts",
-                "relativePath": "components/weather-info/test/fixture.ts",
-                "test": true
-            },
-            {
-                "name": "weather-info.component.spec.ts",
-                "relativePath": "components/weather-info/test/weather-info.component.spec.ts",
-                "test": false
-            },
-            {
-                "name": "weather-info.component.html",
-                "relativePath": "components/weather-info/weather-info.component.html",
-                "test": false
-            },
-            {
-                "name": "weather-info.component.scss",
-                "relativePath": "components/weather-info/weather-info.component.scss",
-                "test": false
-            },
-            {
-                "name": "weather-info.component.ts",
-                "relativePath": "components/weather-info/weather-info.component.ts",
+                "name": "README.md",
+                "relativePath": "README.md",
                 "test": false
             },
             {
@@ -1057,158 +2521,74 @@
                 "test": false
             },
             {
-                "name": "weather.module.ts",
-                "relativePath": "weather.module.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/web/weather",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/weather@0.0.3"
-        ],
-        "originallySharedDir": "src/features/web/weather"
-    },
-    "garlictech.angular-features/common/gtrack-interfaces@0.0.2": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
+                "name": "module.ts",
+                "relativePath": "module.ts",
                 "test": false
             },
             {
-                "name": "chat.ts",
-                "relativePath": "interfaces/chat.ts",
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
                 "test": false
             },
             {
-                "name": "checkpoint.ts",
-                "relativePath": "interfaces/checkpoint.ts",
-                "test": false
-            },
-            {
-                "name": "common.ts",
-                "relativePath": "interfaces/common.ts",
-                "test": false
-            },
-            {
-                "name": "full-profile.ts",
-                "relativePath": "interfaces/full-profile.ts",
-                "test": false
-            },
-            {
-                "name": "geospatial-search.ts",
-                "relativePath": "interfaces/geospatial-search.ts",
-                "test": false
-            },
-            {
-                "name": "hike-program.ts",
-                "relativePath": "interfaces/hike-program.ts",
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "interfaces/index.ts",
+                "relativePath": "store/index.ts",
                 "test": false
             },
             {
-                "name": "location.ts",
-                "relativePath": "interfaces/location.ts",
-                "test": false
-            },
-            {
-                "name": "marker-popup-data.ts",
-                "relativePath": "interfaces/marker-popup-data.ts",
-                "test": false
-            },
-            {
-                "name": "messaging.ts",
-                "relativePath": "interfaces/messaging.ts",
-                "test": false
-            },
-            {
-                "name": "object-delete.ts",
-                "relativePath": "interfaces/object-delete.ts",
-                "test": false
-            },
-            {
-                "name": "object-mark.ts",
-                "relativePath": "interfaces/object-mark.ts",
-                "test": false
-            },
-            {
-                "name": "permission-record.ts",
-                "relativePath": "interfaces/permission-record.ts",
-                "test": false
-            },
-            {
-                "name": "poi.ts",
-                "relativePath": "interfaces/poi.ts",
-                "test": false
-            },
-            {
-                "name": "profile.ts",
-                "relativePath": "interfaces/profile.ts",
-                "test": false
-            },
-            {
-                "name": "provider.ts",
-                "relativePath": "interfaces/provider.ts",
-                "test": false
-            },
-            {
-                "name": "roles.ts",
-                "relativePath": "interfaces/roles.ts",
-                "test": false
-            },
-            {
-                "name": "route.ts",
-                "relativePath": "interfaces/route.ts",
-                "test": false
-            },
-            {
-                "name": "search.ts",
-                "relativePath": "interfaces/search.ts",
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
                 "test": false
             },
             {
                 "name": "state.ts",
-                "relativePath": "interfaces/state.ts",
+                "relativePath": "store/state.ts",
                 "test": false
             },
             {
-                "name": "track.ts",
-                "relativePath": "interfaces/track.ts",
+                "name": "customserializer.spec.ts.snap",
+                "relativePath": "store/test/__snapshots__/customserializer.spec.ts.snap",
+                "test": true
+            },
+            {
+                "name": "selectors.spec.ts.snap",
+                "relativePath": "store/test/__snapshots__/selectors.spec.ts.snap",
                 "test": false
             },
             {
-                "name": "user.ts",
-                "relativePath": "interfaces/user.ts",
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
                 "test": false
             },
             {
-                "name": "constants.ts",
-                "relativePath": "user-profile/constants.ts",
+                "name": "customserializer.spec.ts",
+                "relativePath": "store/test/customserializer.spec.ts",
                 "test": false
             },
             {
-                "name": "index.ts",
-                "relativePath": "user-profile/index.ts",
+                "name": "effects.spec.ts",
+                "relativePath": "store/test/effects.spec.ts",
                 "test": false
             },
             {
-                "name": "languages.ts",
-                "relativePath": "user-profile/languages.ts",
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
                 "test": false
             },
             {
-                "name": "nationalities.ts",
-                "relativePath": "user-profile/nationalities.ts",
+                "name": "utils.ts",
+                "relativePath": "store/test/utils.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
                 "test": false
             }
         ],
         "mainFile": "index.ts",
+<<<<<<< HEAD
         "rootDir": "src/features/common/gtrack-interfaces",
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/gtrack-interfaces"
@@ -1253,9 +2633,67 @@
             {
                 "name": "date-picker.spec.ts",
                 "relativePath": "date-picker/test/date-picker.spec.ts",
+=======
+        "rootDir": "src/features/common/router",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/router"
+    },
+    "garlictech.angular-features/web/weather@0.0.6": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
                 "test": false
             },
             {
+                "name": "fixture.ts",
+                "relativePath": "components/weather-info/test/fixture.ts",
+                "test": true
+            },
+            {
+                "name": "weather-info.component.spec.ts",
+                "relativePath": "components/weather-info/test/weather-info.component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.html",
+                "relativePath": "components/weather-info/weather-info.component.html",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.scss",
+                "relativePath": "components/weather-info/weather-info.component.scss",
+                "test": false
+            },
+            {
+                "name": "weather-info.component.ts",
+                "relativePath": "components/weather-info/weather-info.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "weather.module.ts",
+                "relativePath": "weather.module.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/web/weather",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/weather@0.0.3"
+        ],
+        "originallySharedDir": "src/features/web/weather"
+    },
+    "garlictech.angular-features/infrastructure/workflows-scripts@0.0.3": {
+        "files": [
+            {
+<<<<<<< HEAD
                 "name": "dropdown-select.component.ts",
                 "relativePath": "dropdown-select/dropdown-select.component.ts",
                 "test": false
@@ -1468,14 +2906,229 @@
             {
                 "name": "file.component.ts",
                 "relativePath": "file/file.component.ts",
+=======
+                "name": "Makefile",
+                "relativePath": "Makefile",
                 "test": false
             },
             {
-                "name": "index.ts",
-                "relativePath": "index.ts",
+                "name": "README.md",
+                "relativePath": "README.md",
                 "test": false
             },
             {
+                "name": "aws-release.sh",
+                "relativePath": "docker/aws-release.sh",
+                "test": false
+            },
+            {
+                "name": "commit.sh",
+                "relativePath": "docker/commit.sh",
+                "test": false
+            },
+            {
+                "name": "semantic-release.sh",
+                "relativePath": "docker/semantic-release.sh",
+                "test": false
+            },
+            {
+                "name": "setup.sh",
+                "relativePath": "docker/setup.sh",
+                "test": false
+            },
+            {
+                "name": "travis.sh",
+                "relativePath": "docker/travis.sh",
+                "test": false
+            },
+            {
+                "name": "after_deploy",
+                "relativePath": "hooks/travis/after_deploy",
+                "test": false
+            },
+            {
+                "name": "after_script",
+                "relativePath": "hooks/travis/after_script",
+                "test": false
+            },
+            {
+                "name": "after_success",
+                "relativePath": "hooks/travis/after_success",
+                "test": false
+            },
+            {
+                "name": "before_install",
+                "relativePath": "hooks/travis/before_install",
+                "test": false
+            },
+            {
+                "name": "deploy",
+                "relativePath": "hooks/travis/deploy",
+                "test": false
+            },
+            {
+                "name": "install",
+                "relativePath": "hooks/travis/install",
+                "test": false
+            },
+            {
+                "name": "script",
+                "relativePath": "hooks/travis/script",
+                "test": false
+            },
+            {
+                "name": "setup_docker.sh",
+                "relativePath": "hooks/travis/setup_docker.sh",
+                "test": false
+            },
+            {
+                "name": "index.js",
+                "relativePath": "index.js",
+                "test": false
+            },
+            {
+                "name": "create-lambdas.sh",
+                "relativePath": "lambda/create-lambdas.sh",
+                "test": false
+            },
+            {
+                "name": "destroy-lambdas.sh",
+                "relativePath": "lambda/destroy-lambdas.sh",
+                "test": false
+            },
+            {
+                "name": "claudia-deploy.sh",
+                "relativePath": "lambda/docker/claudia-deploy.sh",
+                "test": false
+            },
+            {
+                "name": "encrypt-secrets.sh",
+                "relativePath": "lambda/encrypt-secrets.sh",
+                "test": false
+            },
+            {
+                "name": "docker-deploy.sh",
+                "relativePath": "scripts/docker-deploy.sh",
+                "test": false
+            },
+            {
+                "name": "docker-login.sh",
+                "relativePath": "scripts/docker-login.sh",
+                "test": false
+            },
+            {
+                "name": "encrypt-secrets.sh",
+                "relativePath": "scripts/encrypt-secrets.sh",
+                "test": false
+            },
+            {
+                "name": "get-docker-tag-base.sh",
+                "relativePath": "scripts/get-docker-tag-base.sh",
+                "test": false
+            },
+            {
+                "name": "get-docker-tag.sh",
+                "relativePath": "scripts/get-docker-tag.sh",
+                "test": false
+            },
+            {
+                "name": "push-to-aws.sh",
+                "relativePath": "scripts/push-to-aws.sh",
+                "test": false
+            },
+            {
+                "name": "systemtest-prod.sh",
+                "relativePath": "scripts/systemtest-prod.sh",
+                "test": false
+            },
+            {
+                "name": "tag-image.sh",
+                "relativePath": "scripts/tag-image.sh",
+                "test": false
+            },
+            {
+                "name": "bash.sh",
+                "relativePath": "webclient/docker/bash.sh",
+                "test": false
+            },
+            {
+                "name": "build-dev-all.sh",
+                "relativePath": "webclient/docker/build-dev-all.sh",
+                "test": false
+            },
+            {
+                "name": "build-dev.sh",
+                "relativePath": "webclient/docker/build-dev.sh",
+                "test": false
+            },
+            {
+                "name": "cmd-ports.sh",
+                "relativePath": "webclient/docker/cmd-ports.sh",
+                "test": false
+            },
+            {
+                "name": "cmd-with-deps.sh",
+                "relativePath": "webclient/docker/cmd-with-deps.sh",
+                "test": false
+            },
+            {
+                "name": "cmd.sh",
+                "relativePath": "webclient/docker/cmd.sh",
+                "test": false
+            },
+            {
+                "name": "commit.sh",
+                "relativePath": "webclient/docker/commit.sh",
+                "test": false
+            },
+            {
+                "name": "cypresstest.sh",
+                "relativePath": "webclient/docker/cypresstest.sh",
+                "test": false
+            },
+            {
+                "name": "deploy-lambda.sh",
+                "relativePath": "webclient/docker/deploy-lambda.sh",
+                "test": false
+            },
+            {
+                "name": "deploy.sh",
+                "relativePath": "webclient/docker/deploy.sh",
+                "test": false
+            },
+            {
+                "name": "e2etest-universal.sh",
+                "relativePath": "webclient/docker/e2etest-universal.sh",
+                "test": false
+            },
+            {
+                "name": "e2etest.sh",
+                "relativePath": "webclient/docker/e2etest.sh",
+                "test": false
+            },
+            {
+                "name": "login.sh",
+                "relativePath": "webclient/docker/login.sh",
+                "test": false
+            },
+            {
+                "name": "quick-fix.sh",
+                "relativePath": "webclient/docker/quick-fix.sh",
+                "test": false
+            },
+            {
+                "name": "semantic-release.sh",
+                "relativePath": "webclient/docker/semantic-release.sh",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
+                "test": false
+            },
+            {
+                "name": "setup.sh",
+                "relativePath": "webclient/docker/setup.sh",
+                "test": false
+            },
+            {
+<<<<<<< HEAD
                 "name": "log.ts",
                 "relativePath": "log.ts",
                 "test": false
@@ -1553,6 +3206,113 @@
             {
                 "name": "xhr-file-upload.service.ts",
                 "relativePath": "xhr-file-upload/xhr-file-upload.service.ts",
+=======
+                "name": "start-dev.sh",
+                "relativePath": "webclient/docker/start-dev.sh",
+                "test": false
+            },
+            {
+                "name": "start-dist.sh",
+                "relativePath": "webclient/docker/start-dist.sh",
+                "test": false
+            },
+            {
+                "name": "start-universal.sh",
+                "relativePath": "webclient/docker/start-universal.sh",
+                "test": false
+            },
+            {
+                "name": "stop-dev.sh",
+                "relativePath": "webclient/docker/stop-dev.sh",
+                "test": false
+            },
+            {
+                "name": "stop-dist.sh",
+                "relativePath": "webclient/docker/stop-dist.sh",
+                "test": false
+            },
+            {
+                "name": "stop-universal.sh",
+                "relativePath": "webclient/docker/stop-universal.sh",
+                "test": false
+            },
+            {
+                "name": "travis.sh",
+                "relativePath": "webclient/docker/travis.sh",
+                "test": false
+            },
+            {
+                "name": "after_deploy",
+                "relativePath": "webclient/hooks/travis/after_deploy",
+                "test": false
+            },
+            {
+                "name": "after_success",
+                "relativePath": "webclient/hooks/travis/after_success",
+                "test": false
+            },
+            {
+                "name": "before_install",
+                "relativePath": "webclient/hooks/travis/before_install",
+                "test": false
+            },
+            {
+                "name": "deploy",
+                "relativePath": "webclient/hooks/travis/deploy",
+                "test": false
+            },
+            {
+                "name": "install",
+                "relativePath": "webclient/hooks/travis/install",
+                "test": false
+            },
+            {
+                "name": "script",
+                "relativePath": "webclient/hooks/travis/script",
+                "test": false
+            }
+        ],
+        "mainFile": "index.js",
+        "rootDir": "workflows-scripts",
+        "origin": "IMPORTED",
+        "originallySharedDir": "workflows-scripts"
+    },
+    "garlictech.angular-features/common/gtrack-interfaces@0.0.1": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "chat.ts",
+                "relativePath": "interfaces/chat.ts",
+                "test": false
+            },
+            {
+                "name": "checkpoint.ts",
+                "relativePath": "interfaces/checkpoint.ts",
+                "test": false
+            },
+            {
+                "name": "common.ts",
+                "relativePath": "interfaces/common.ts",
+                "test": false
+            },
+            {
+                "name": "full-profile.ts",
+                "relativePath": "interfaces/full-profile.ts",
+                "test": false
+            },
+            {
+                "name": "geospatial-search.ts",
+                "relativePath": "interfaces/geospatial-search.ts",
+                "test": false
+            },
+            {
+                "name": "hike-program.ts",
+                "relativePath": "interfaces/hike-program.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
                 "test": false
             }
         ],
@@ -1567,6 +3327,7 @@
     "garlictech.angular-features/common/multi-language-text@0.0.6": {
         "files": [
             {
+<<<<<<< HEAD
                 "name": "description.component.ts",
                 "relativePath": "components/description/description.component.ts",
                 "test": false
@@ -1694,19 +3455,127 @@
             {
                 "name": "spinner.module.ts",
                 "relativePath": "spinner.module.ts",
+=======
+                "name": "index.ts",
+                "relativePath": "interfaces/index.ts",
+                "test": false
+            },
+            {
+                "name": "location.ts",
+                "relativePath": "interfaces/location.ts",
+                "test": false
+            },
+            {
+                "name": "marker-popup-data.ts",
+                "relativePath": "interfaces/marker-popup-data.ts",
+                "test": false
+            },
+            {
+                "name": "messaging.ts",
+                "relativePath": "interfaces/messaging.ts",
+                "test": false
+            },
+            {
+                "name": "object-delete.ts",
+                "relativePath": "interfaces/object-delete.ts",
+                "test": false
+            },
+            {
+                "name": "object-mark.ts",
+                "relativePath": "interfaces/object-mark.ts",
+                "test": false
+            },
+            {
+                "name": "permission-record.ts",
+                "relativePath": "interfaces/permission-record.ts",
+                "test": false
+            },
+            {
+                "name": "poi.ts",
+                "relativePath": "interfaces/poi.ts",
+                "test": false
+            },
+            {
+                "name": "profile.ts",
+                "relativePath": "interfaces/profile.ts",
+                "test": false
+            },
+            {
+                "name": "provider.ts",
+                "relativePath": "interfaces/provider.ts",
+                "test": false
+            },
+            {
+                "name": "roles.ts",
+                "relativePath": "interfaces/roles.ts",
+                "test": false
+            },
+            {
+                "name": "route.ts",
+                "relativePath": "interfaces/route.ts",
+                "test": false
+            },
+            {
+                "name": "search.ts",
+                "relativePath": "interfaces/search.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "interfaces/state.ts",
+                "test": false
+            },
+            {
+                "name": "track.ts",
+                "relativePath": "interfaces/track.ts",
+                "test": false
+            },
+            {
+                "name": "user.ts",
+                "relativePath": "interfaces/user.ts",
+                "test": false
+            },
+            {
+                "name": "constants.ts",
+                "relativePath": "user-profile/constants.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "user-profile/index.ts",
+                "test": false
+            },
+            {
+                "name": "languages.ts",
+                "relativePath": "user-profile/languages.ts",
+                "test": false
+            },
+            {
+                "name": "nationalities.ts",
+                "relativePath": "user-profile/nationalities.ts",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
                 "test": false
             }
         ],
         "mainFile": "index.ts",
+<<<<<<< HEAD
         "rootDir": "src/features/common/spinner",
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/spinner"
     },
     "garlictech.angular-features/common/deepstream-ngx@0.0.2": {
+=======
+        "rootDir": "src/features/common/gtrack-interfaces",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/gtrack-interfaces"
+    },
+    "garlictech.angular-features/common/leaflet-map@0.0.12": {
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
         "files": [
             {
                 "name": "README.md",
                 "relativePath": "README.md",
+<<<<<<< HEAD
                 "test": false
             },
             {
@@ -1833,6 +3702,208 @@
             {
                 "name": "index.ts",
                 "relativePath": "services/index.ts",
+=======
+                "test": false
+            },
+            {
+                "name": "asterisco.png",
+                "relativePath": "assets/icon/default/asterisco.png",
+                "test": false
+            },
+            {
+                "name": "atm.png",
+                "relativePath": "assets/icon/default/atm.png",
+                "test": false
+            },
+            {
+                "name": "bank.png",
+                "relativePath": "assets/icon/default/bank.png",
+                "test": false
+            },
+            {
+                "name": "bicycle_parking.png",
+                "relativePath": "assets/icon/default/bicycle_parking.png",
+                "test": false
+            },
+            {
+                "name": "bicycle_store.png",
+                "relativePath": "assets/icon/default/bicycle_store.png",
+                "test": false
+            },
+            {
+                "name": "bus_station.png",
+                "relativePath": "assets/icon/default/bus_station.png",
+                "test": false
+            },
+            {
+                "name": "cafe.png",
+                "relativePath": "assets/icon/default/cafe.png",
+                "test": false
+            },
+            {
+                "name": "cave_entrance.png",
+                "relativePath": "assets/icon/default/cave_entrance.png",
+                "test": false
+            },
+            {
+                "name": "checkpoint.png",
+                "relativePath": "assets/icon/default/checkpoint.png",
+                "test": false
+            },
+            {
+                "name": "city.png",
+                "relativePath": "assets/icon/default/city.png",
+                "test": false
+            },
+            {
+                "name": "cliff.png",
+                "relativePath": "assets/icon/default/cliff.png",
+                "test": false
+            },
+            {
+                "name": "drinking_water.png",
+                "relativePath": "assets/icon/default/drinking_water.png",
+                "test": false
+            },
+            {
+                "name": "finish.png",
+                "relativePath": "assets/icon/default/finish.png",
+                "test": false
+            },
+            {
+                "name": "fuel.png",
+                "relativePath": "assets/icon/default/fuel.png",
+                "test": false
+            },
+            {
+                "name": "hiking.png",
+                "relativePath": "assets/icon/default/hiking.png",
+                "test": false
+            },
+            {
+                "name": "hunting_stand.png",
+                "relativePath": "assets/icon/default/hunting_stand.png",
+                "test": false
+            },
+            {
+                "name": "lodging.png",
+                "relativePath": "assets/icon/default/lodging.png",
+                "test": false
+            },
+            {
+                "name": "marketplace.png",
+                "relativePath": "assets/icon/default/marketplace.png",
+                "test": false
+            },
+            {
+                "name": "mud.png",
+                "relativePath": "assets/icon/default/mud.png",
+                "test": false
+            },
+            {
+                "name": "parking.png",
+                "relativePath": "assets/icon/default/parking.png",
+                "test": false
+            },
+            {
+                "name": "peak.png",
+                "relativePath": "assets/icon/default/peak.png",
+                "test": false
+            },
+            {
+                "name": "pharmacy.png",
+                "relativePath": "assets/icon/default/pharmacy.png",
+                "test": false
+            },
+            {
+                "name": "photo.png",
+                "relativePath": "assets/icon/default/photo.png",
+                "test": false
+            },
+            {
+                "name": "picnic.png",
+                "relativePath": "assets/icon/default/picnic.png",
+                "test": false
+            },
+            {
+                "name": "place_of_worship.png",
+                "relativePath": "assets/icon/default/place_of_worship.png",
+                "test": false
+            },
+            {
+                "name": "police.png",
+                "relativePath": "assets/icon/default/police.png",
+                "test": false
+            },
+            {
+                "name": "post_box.png",
+                "relativePath": "assets/icon/default/post_box.png",
+                "test": false
+            },
+            {
+                "name": "post_office.png",
+                "relativePath": "assets/icon/default/post_office.png",
+                "test": false
+            },
+            {
+                "name": "pub.png",
+                "relativePath": "assets/icon/default/pub.png",
+                "test": false
+            },
+            {
+                "name": "recycling.png",
+                "relativePath": "assets/icon/default/recycling.png",
+                "test": false
+            },
+            {
+                "name": "restaurant.png",
+                "relativePath": "assets/icon/default/restaurant.png",
+                "test": false
+            },
+            {
+                "name": "shelter.png",
+                "relativePath": "assets/icon/default/shelter.png",
+                "test": false
+            },
+            {
+                "name": "sight.png",
+                "relativePath": "assets/icon/default/sight.png",
+                "test": false
+            },
+            {
+                "name": "spring.png",
+                "relativePath": "assets/icon/default/spring.png",
+                "test": false
+            },
+            {
+                "name": "start.png",
+                "relativePath": "assets/icon/default/start.png",
+                "test": false
+            },
+            {
+                "name": "startfinish.png",
+                "relativePath": "assets/icon/default/startfinish.png",
+                "test": false
+            },
+            {
+                "name": "store.png",
+                "relativePath": "assets/icon/default/store.png",
+                "test": false
+            },
+            {
+                "name": "sunsetland.png",
+                "relativePath": "assets/icon/default/sunsetland.png",
+                "test": false
+            },
+            {
+                "name": "telephone.png",
+                "relativePath": "assets/icon/default/telephone.png",
+                "test": false
+            },
+            {
+                "name": "toilets.png",
+                "relativePath": "assets/icon/default/toilets.png",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
                 "test": false
             }
         ],
@@ -1851,6 +3922,7 @@
     "garlictech.angular-features/common/marker-icons@0.0.3": {
         "files": [
             {
+<<<<<<< HEAD
                 "relativePath": "assets/icon/asterisco.svg",
                 "test": false,
                 "name": "asterisco.svg"
@@ -2411,6 +4483,905 @@
             {
                 "name": "utils.ts",
                 "relativePath": "store/test/utils.ts",
+=======
+                "name": "train_station.png",
+                "relativePath": "assets/icon/default/train_station.png",
+                "test": false
+            },
+            {
+                "name": "tree.png",
+                "relativePath": "assets/icon/default/tree.png",
+                "test": false
+            },
+            {
+                "name": "waste_basket.png",
+                "relativePath": "assets/icon/default/waste_basket.png",
+                "test": false
+            },
+            {
+                "name": "water.png",
+                "relativePath": "assets/icon/default/water.png",
+                "test": false
+            },
+            {
+                "name": "asterisco.png",
+                "relativePath": "assets/icon/green/asterisco.png",
+                "test": false
+            },
+            {
+                "name": "atm.png",
+                "relativePath": "assets/icon/green/atm.png",
+                "test": false
+            },
+            {
+                "name": "bank.png",
+                "relativePath": "assets/icon/green/bank.png",
+                "test": false
+            },
+            {
+                "name": "bicycle_parking.png",
+                "relativePath": "assets/icon/green/bicycle_parking.png",
+                "test": false
+            },
+            {
+                "name": "bicycle_store.png",
+                "relativePath": "assets/icon/green/bicycle_store.png",
+                "test": false
+            },
+            {
+                "name": "bus_station.png",
+                "relativePath": "assets/icon/green/bus_station.png",
+                "test": false
+            },
+            {
+                "name": "cafe.png",
+                "relativePath": "assets/icon/green/cafe.png",
+                "test": false
+            },
+            {
+                "name": "cave_entrance.png",
+                "relativePath": "assets/icon/green/cave_entrance.png",
+                "test": false
+            },
+            {
+                "name": "checkpoint.png",
+                "relativePath": "assets/icon/green/checkpoint.png",
+                "test": false
+            },
+            {
+                "name": "city.png",
+                "relativePath": "assets/icon/green/city.png",
+                "test": false
+            },
+            {
+                "name": "cliff.png",
+                "relativePath": "assets/icon/green/cliff.png",
+                "test": false
+            },
+            {
+                "name": "drinking_water.png",
+                "relativePath": "assets/icon/green/drinking_water.png",
+                "test": false
+            },
+            {
+                "name": "finish.png",
+                "relativePath": "assets/icon/green/finish.png",
+                "test": false
+            },
+            {
+                "name": "fuel.png",
+                "relativePath": "assets/icon/green/fuel.png",
+                "test": false
+            },
+            {
+                "name": "hiking.png",
+                "relativePath": "assets/icon/green/hiking.png",
+                "test": false
+            },
+            {
+                "name": "hunting_stand.png",
+                "relativePath": "assets/icon/green/hunting_stand.png",
+                "test": false
+            },
+            {
+                "name": "lodging.png",
+                "relativePath": "assets/icon/green/lodging.png",
+                "test": false
+            },
+            {
+                "name": "marketplace.png",
+                "relativePath": "assets/icon/green/marketplace.png",
+                "test": false
+            },
+            {
+                "name": "mud.png",
+                "relativePath": "assets/icon/green/mud.png",
+                "test": false
+            },
+            {
+                "name": "parking.png",
+                "relativePath": "assets/icon/green/parking.png",
+                "test": false
+            },
+            {
+                "name": "peak.png",
+                "relativePath": "assets/icon/green/peak.png",
+                "test": false
+            },
+            {
+                "name": "pharmacy.png",
+                "relativePath": "assets/icon/green/pharmacy.png",
+                "test": false
+            },
+            {
+                "name": "photo.png",
+                "relativePath": "assets/icon/green/photo.png",
+                "test": false
+            },
+            {
+                "name": "picnic.png",
+                "relativePath": "assets/icon/green/picnic.png",
+                "test": false
+            },
+            {
+                "name": "place_of_worship.png",
+                "relativePath": "assets/icon/green/place_of_worship.png",
+                "test": false
+            },
+            {
+                "name": "police.png",
+                "relativePath": "assets/icon/green/police.png",
+                "test": false
+            },
+            {
+                "name": "post_box.png",
+                "relativePath": "assets/icon/green/post_box.png",
+                "test": false
+            },
+            {
+                "name": "post_office.png",
+                "relativePath": "assets/icon/green/post_office.png",
+                "test": false
+            },
+            {
+                "name": "pub.png",
+                "relativePath": "assets/icon/green/pub.png",
+                "test": false
+            },
+            {
+                "name": "recycling.png",
+                "relativePath": "assets/icon/green/recycling.png",
+                "test": false
+            },
+            {
+                "name": "restaurant.png",
+                "relativePath": "assets/icon/green/restaurant.png",
+                "test": false
+            },
+            {
+                "name": "shelter.png",
+                "relativePath": "assets/icon/green/shelter.png",
+                "test": false
+            },
+            {
+                "name": "sight.png",
+                "relativePath": "assets/icon/green/sight.png",
+                "test": false
+            },
+            {
+                "name": "spring.png",
+                "relativePath": "assets/icon/green/spring.png",
+                "test": false
+            },
+            {
+                "name": "start.png",
+                "relativePath": "assets/icon/green/start.png",
+                "test": false
+            },
+            {
+                "name": "startfinish.png",
+                "relativePath": "assets/icon/green/startfinish.png",
+                "test": false
+            },
+            {
+                "name": "store.png",
+                "relativePath": "assets/icon/green/store.png",
+                "test": false
+            },
+            {
+                "name": "sunsetland.png",
+                "relativePath": "assets/icon/green/sunsetland.png",
+                "test": false
+            },
+            {
+                "name": "telephone.png",
+                "relativePath": "assets/icon/green/telephone.png",
+                "test": false
+            },
+            {
+                "name": "toilets.png",
+                "relativePath": "assets/icon/green/toilets.png",
+                "test": false
+            },
+            {
+                "name": "train_station.png",
+                "relativePath": "assets/icon/green/train_station.png",
+                "test": false
+            },
+            {
+                "name": "tree.png",
+                "relativePath": "assets/icon/green/tree.png",
+                "test": false
+            },
+            {
+                "name": "waste_basket.png",
+                "relativePath": "assets/icon/green/waste_basket.png",
+                "test": false
+            },
+            {
+                "name": "water.png",
+                "relativePath": "assets/icon/green/water.png",
+                "test": false
+            },
+            {
+                "name": "asterisco.png",
+                "relativePath": "assets/icon/grey/asterisco.png",
+                "test": false
+            },
+            {
+                "name": "atm.png",
+                "relativePath": "assets/icon/grey/atm.png",
+                "test": false
+            },
+            {
+                "name": "bank.png",
+                "relativePath": "assets/icon/grey/bank.png",
+                "test": false
+            },
+            {
+                "name": "bicycle_parking.png",
+                "relativePath": "assets/icon/grey/bicycle_parking.png",
+                "test": false
+            },
+            {
+                "name": "bicycle_store.png",
+                "relativePath": "assets/icon/grey/bicycle_store.png",
+                "test": false
+            },
+            {
+                "name": "bus_station.png",
+                "relativePath": "assets/icon/grey/bus_station.png",
+                "test": false
+            },
+            {
+                "name": "cafe.png",
+                "relativePath": "assets/icon/grey/cafe.png",
+                "test": false
+            },
+            {
+                "name": "cave_entrance.png",
+                "relativePath": "assets/icon/grey/cave_entrance.png",
+                "test": false
+            },
+            {
+                "name": "checkpoint.png",
+                "relativePath": "assets/icon/grey/checkpoint.png",
+                "test": false
+            },
+            {
+                "name": "city.png",
+                "relativePath": "assets/icon/grey/city.png",
+                "test": false
+            },
+            {
+                "name": "cliff.png",
+                "relativePath": "assets/icon/grey/cliff.png",
+                "test": false
+            },
+            {
+                "name": "drinking_water.png",
+                "relativePath": "assets/icon/grey/drinking_water.png",
+                "test": false
+            },
+            {
+                "name": "finish.png",
+                "relativePath": "assets/icon/grey/finish.png",
+                "test": false
+            },
+            {
+                "name": "fuel.png",
+                "relativePath": "assets/icon/grey/fuel.png",
+                "test": false
+            },
+            {
+                "name": "hiking.png",
+                "relativePath": "assets/icon/grey/hiking.png",
+                "test": false
+            },
+            {
+                "name": "hunting_stand.png",
+                "relativePath": "assets/icon/grey/hunting_stand.png",
+                "test": false
+            },
+            {
+                "name": "lodging.png",
+                "relativePath": "assets/icon/grey/lodging.png",
+                "test": false
+            },
+            {
+                "name": "marketplace.png",
+                "relativePath": "assets/icon/grey/marketplace.png",
+                "test": false
+            },
+            {
+                "name": "mud.png",
+                "relativePath": "assets/icon/grey/mud.png",
+                "test": false
+            },
+            {
+                "name": "parking.png",
+                "relativePath": "assets/icon/grey/parking.png",
+                "test": false
+            },
+            {
+                "name": "peak.png",
+                "relativePath": "assets/icon/grey/peak.png",
+                "test": false
+            },
+            {
+                "name": "pharmacy.png",
+                "relativePath": "assets/icon/grey/pharmacy.png",
+                "test": false
+            },
+            {
+                "name": "photo.png",
+                "relativePath": "assets/icon/grey/photo.png",
+                "test": false
+            },
+            {
+                "name": "picnic.png",
+                "relativePath": "assets/icon/grey/picnic.png",
+                "test": false
+            },
+            {
+                "name": "place_of_worship.png",
+                "relativePath": "assets/icon/grey/place_of_worship.png",
+                "test": false
+            },
+            {
+                "name": "police.png",
+                "relativePath": "assets/icon/grey/police.png",
+                "test": false
+            },
+            {
+                "name": "post_box.png",
+                "relativePath": "assets/icon/grey/post_box.png",
+                "test": false
+            },
+            {
+                "name": "post_office.png",
+                "relativePath": "assets/icon/grey/post_office.png",
+                "test": false
+            },
+            {
+                "name": "pub.png",
+                "relativePath": "assets/icon/grey/pub.png",
+                "test": false
+            },
+            {
+                "name": "recycling.png",
+                "relativePath": "assets/icon/grey/recycling.png",
+                "test": false
+            },
+            {
+                "name": "restaurant.png",
+                "relativePath": "assets/icon/grey/restaurant.png",
+                "test": false
+            },
+            {
+                "name": "shelter.png",
+                "relativePath": "assets/icon/grey/shelter.png",
+                "test": false
+            },
+            {
+                "name": "sight.png",
+                "relativePath": "assets/icon/grey/sight.png",
+                "test": false
+            },
+            {
+                "name": "spring.png",
+                "relativePath": "assets/icon/grey/spring.png",
+                "test": false
+            },
+            {
+                "name": "start.png",
+                "relativePath": "assets/icon/grey/start.png",
+                "test": false
+            },
+            {
+                "name": "startfinish.png",
+                "relativePath": "assets/icon/grey/startfinish.png",
+                "test": false
+            },
+            {
+                "name": "store.png",
+                "relativePath": "assets/icon/grey/store.png",
+                "test": false
+            },
+            {
+                "name": "sunsetland.png",
+                "relativePath": "assets/icon/grey/sunsetland.png",
+                "test": false
+            },
+            {
+                "name": "telephone.png",
+                "relativePath": "assets/icon/grey/telephone.png",
+                "test": false
+            },
+            {
+                "name": "toilets.png",
+                "relativePath": "assets/icon/grey/toilets.png",
+                "test": false
+            },
+            {
+                "name": "train_station.png",
+                "relativePath": "assets/icon/grey/train_station.png",
+                "test": false
+            },
+            {
+                "name": "tree.png",
+                "relativePath": "assets/icon/grey/tree.png",
+                "test": false
+            },
+            {
+                "name": "waste_basket.png",
+                "relativePath": "assets/icon/grey/waste_basket.png",
+                "test": false
+            },
+            {
+                "name": "water.png",
+                "relativePath": "assets/icon/grey/water.png",
+                "test": false
+            },
+            {
+                "name": "asterisco.png",
+                "relativePath": "assets/icon/highlight/asterisco.png",
+                "test": false
+            },
+            {
+                "name": "atm.png",
+                "relativePath": "assets/icon/highlight/atm.png",
+                "test": false
+            },
+            {
+                "name": "bank.png",
+                "relativePath": "assets/icon/highlight/bank.png",
+                "test": false
+            },
+            {
+                "name": "bicycle_parking.png",
+                "relativePath": "assets/icon/highlight/bicycle_parking.png",
+                "test": false
+            },
+            {
+                "name": "bicycle_store.png",
+                "relativePath": "assets/icon/highlight/bicycle_store.png",
+                "test": false
+            },
+            {
+                "name": "bus_station.png",
+                "relativePath": "assets/icon/highlight/bus_station.png",
+                "test": false
+            },
+            {
+                "name": "cafe.png",
+                "relativePath": "assets/icon/highlight/cafe.png",
+                "test": false
+            },
+            {
+                "name": "cave_entrance.png",
+                "relativePath": "assets/icon/highlight/cave_entrance.png",
+                "test": false
+            },
+            {
+                "name": "checkpoint.png",
+                "relativePath": "assets/icon/highlight/checkpoint.png",
+                "test": false
+            },
+            {
+                "name": "city.png",
+                "relativePath": "assets/icon/highlight/city.png",
+                "test": false
+            },
+            {
+                "name": "cliff.png",
+                "relativePath": "assets/icon/highlight/cliff.png",
+                "test": false
+            },
+            {
+                "name": "drinking_water.png",
+                "relativePath": "assets/icon/highlight/drinking_water.png",
+                "test": false
+            },
+            {
+                "name": "finish.png",
+                "relativePath": "assets/icon/highlight/finish.png",
+                "test": false
+            },
+            {
+                "name": "fuel.png",
+                "relativePath": "assets/icon/highlight/fuel.png",
+                "test": false
+            },
+            {
+                "name": "hiking.png",
+                "relativePath": "assets/icon/highlight/hiking.png",
+                "test": false
+            },
+            {
+                "name": "hunting_stand.png",
+                "relativePath": "assets/icon/highlight/hunting_stand.png",
+                "test": false
+            },
+            {
+                "name": "lodging.png",
+                "relativePath": "assets/icon/highlight/lodging.png",
+                "test": false
+            },
+            {
+                "name": "marketplace.png",
+                "relativePath": "assets/icon/highlight/marketplace.png",
+                "test": false
+            },
+            {
+                "name": "mud.png",
+                "relativePath": "assets/icon/highlight/mud.png",
+                "test": false
+            },
+            {
+                "name": "parking.png",
+                "relativePath": "assets/icon/highlight/parking.png",
+                "test": false
+            },
+            {
+                "name": "peak.png",
+                "relativePath": "assets/icon/highlight/peak.png",
+                "test": false
+            },
+            {
+                "name": "pharmacy.png",
+                "relativePath": "assets/icon/highlight/pharmacy.png",
+                "test": false
+            },
+            {
+                "name": "photo.png",
+                "relativePath": "assets/icon/highlight/photo.png",
+                "test": false
+            },
+            {
+                "name": "picnic.png",
+                "relativePath": "assets/icon/highlight/picnic.png",
+                "test": false
+            },
+            {
+                "name": "place_of_worship.png",
+                "relativePath": "assets/icon/highlight/place_of_worship.png",
+                "test": false
+            },
+            {
+                "name": "police.png",
+                "relativePath": "assets/icon/highlight/police.png",
+                "test": false
+            },
+            {
+                "name": "post_box.png",
+                "relativePath": "assets/icon/highlight/post_box.png",
+                "test": false
+            },
+            {
+                "name": "post_office.png",
+                "relativePath": "assets/icon/highlight/post_office.png",
+                "test": false
+            },
+            {
+                "name": "pub.png",
+                "relativePath": "assets/icon/highlight/pub.png",
+                "test": false
+            },
+            {
+                "name": "recycling.png",
+                "relativePath": "assets/icon/highlight/recycling.png",
+                "test": false
+            },
+            {
+                "name": "restaurant.png",
+                "relativePath": "assets/icon/highlight/restaurant.png",
+                "test": false
+            },
+            {
+                "name": "shelter.png",
+                "relativePath": "assets/icon/highlight/shelter.png",
+                "test": false
+            },
+            {
+                "name": "sight.png",
+                "relativePath": "assets/icon/highlight/sight.png",
+                "test": false
+            },
+            {
+                "name": "spring.png",
+                "relativePath": "assets/icon/highlight/spring.png",
+                "test": false
+            },
+            {
+                "name": "start.png",
+                "relativePath": "assets/icon/highlight/start.png",
+                "test": false
+            },
+            {
+                "name": "startfinish.png",
+                "relativePath": "assets/icon/highlight/startfinish.png",
+                "test": false
+            },
+            {
+                "name": "store.png",
+                "relativePath": "assets/icon/highlight/store.png",
+                "test": false
+            },
+            {
+                "name": "sunsetland.png",
+                "relativePath": "assets/icon/highlight/sunsetland.png",
+                "test": false
+            },
+            {
+                "name": "telephone.png",
+                "relativePath": "assets/icon/highlight/telephone.png",
+                "test": false
+            },
+            {
+                "name": "toilets.png",
+                "relativePath": "assets/icon/highlight/toilets.png",
+                "test": false
+            },
+            {
+                "name": "train_station.png",
+                "relativePath": "assets/icon/highlight/train_station.png",
+                "test": false
+            },
+            {
+                "name": "tree.png",
+                "relativePath": "assets/icon/highlight/tree.png",
+                "test": false
+            },
+            {
+                "name": "waste_basket.png",
+                "relativePath": "assets/icon/highlight/waste_basket.png",
+                "test": false
+            },
+            {
+                "name": "water.png",
+                "relativePath": "assets/icon/highlight/water.png",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "assets/icon/index.ts",
+                "test": false
+            },
+            {
+                "name": "asterisco.png",
+                "relativePath": "assets/icon/red/asterisco.png",
+                "test": false
+            },
+            {
+                "name": "atm.png",
+                "relativePath": "assets/icon/red/atm.png",
+                "test": false
+            },
+            {
+                "name": "bank.png",
+                "relativePath": "assets/icon/red/bank.png",
+                "test": false
+            },
+            {
+                "name": "bicycle_parking.png",
+                "relativePath": "assets/icon/red/bicycle_parking.png",
+                "test": false
+            },
+            {
+                "name": "bicycle_store.png",
+                "relativePath": "assets/icon/red/bicycle_store.png",
+                "test": false
+            },
+            {
+                "name": "bus_station.png",
+                "relativePath": "assets/icon/red/bus_station.png",
+                "test": false
+            },
+            {
+                "name": "cafe.png",
+                "relativePath": "assets/icon/red/cafe.png",
+                "test": false
+            },
+            {
+                "name": "cave_entrance.png",
+                "relativePath": "assets/icon/red/cave_entrance.png",
+                "test": false
+            },
+            {
+                "name": "checkpoint.png",
+                "relativePath": "assets/icon/red/checkpoint.png",
+                "test": false
+            },
+            {
+                "name": "city.png",
+                "relativePath": "assets/icon/red/city.png",
+                "test": false
+            },
+            {
+                "name": "cliff.png",
+                "relativePath": "assets/icon/red/cliff.png",
+                "test": false
+            },
+            {
+                "name": "drinking_water.png",
+                "relativePath": "assets/icon/red/drinking_water.png",
+                "test": false
+            },
+            {
+                "name": "finish.png",
+                "relativePath": "assets/icon/red/finish.png",
+                "test": false
+            },
+            {
+                "name": "fuel.png",
+                "relativePath": "assets/icon/red/fuel.png",
+                "test": false
+            },
+            {
+                "name": "hiking.png",
+                "relativePath": "assets/icon/red/hiking.png",
+                "test": false
+            },
+            {
+                "name": "hunting_stand.png",
+                "relativePath": "assets/icon/red/hunting_stand.png",
+                "test": false
+            },
+            {
+                "name": "lodging.png",
+                "relativePath": "assets/icon/red/lodging.png",
+                "test": false
+            },
+            {
+                "name": "marketplace.png",
+                "relativePath": "assets/icon/red/marketplace.png",
+                "test": false
+            },
+            {
+                "name": "mud.png",
+                "relativePath": "assets/icon/red/mud.png",
+                "test": false
+            },
+            {
+                "name": "parking.png",
+                "relativePath": "assets/icon/red/parking.png",
+                "test": false
+            },
+            {
+                "name": "peak.png",
+                "relativePath": "assets/icon/red/peak.png",
+                "test": false
+            },
+            {
+                "name": "pharmacy.png",
+                "relativePath": "assets/icon/red/pharmacy.png",
+                "test": false
+            },
+            {
+                "name": "photo.png",
+                "relativePath": "assets/icon/red/photo.png",
+                "test": false
+            },
+            {
+                "name": "picnic.png",
+                "relativePath": "assets/icon/red/picnic.png",
+                "test": false
+            },
+            {
+                "name": "place_of_worship.png",
+                "relativePath": "assets/icon/red/place_of_worship.png",
+                "test": false
+            },
+            {
+                "name": "police.png",
+                "relativePath": "assets/icon/red/police.png",
+                "test": false
+            },
+            {
+                "name": "post_box.png",
+                "relativePath": "assets/icon/red/post_box.png",
+                "test": false
+            },
+            {
+                "name": "post_office.png",
+                "relativePath": "assets/icon/red/post_office.png",
+                "test": false
+            },
+            {
+                "name": "pub.png",
+                "relativePath": "assets/icon/red/pub.png",
+                "test": false
+            },
+            {
+                "name": "recycling.png",
+                "relativePath": "assets/icon/red/recycling.png",
+                "test": false
+            },
+            {
+                "name": "restaurant.png",
+                "relativePath": "assets/icon/red/restaurant.png",
+                "test": false
+            },
+            {
+                "name": "shelter.png",
+                "relativePath": "assets/icon/red/shelter.png",
+                "test": false
+            },
+            {
+                "name": "sight.png",
+                "relativePath": "assets/icon/red/sight.png",
+                "test": false
+            },
+            {
+                "name": "spring.png",
+                "relativePath": "assets/icon/red/spring.png",
+                "test": false
+            },
+            {
+                "name": "start.png",
+                "relativePath": "assets/icon/red/start.png",
+                "test": false
+            },
+            {
+                "name": "startfinish.png",
+                "relativePath": "assets/icon/red/startfinish.png",
+                "test": false
+            },
+            {
+                "name": "store.png",
+                "relativePath": "assets/icon/red/store.png",
+                "test": false
+            },
+            {
+                "name": "sunsetland.png",
+                "relativePath": "assets/icon/red/sunsetland.png",
+                "test": false
+            },
+            {
+                "name": "telephone.png",
+                "relativePath": "assets/icon/red/telephone.png",
+                "test": false
+            },
+            {
+                "name": "toilets.png",
+                "relativePath": "assets/icon/red/toilets.png",
+                "test": false
+            },
+            {
+                "name": "train_station.png",
+                "relativePath": "assets/icon/red/train_station.png",
+                "test": false
+            },
+            {
+                "name": "tree.png",
+                "relativePath": "assets/icon/red/tree.png",
+                "test": false
+            },
+            {
+                "name": "waste_basket.png",
+                "relativePath": "assets/icon/red/waste_basket.png",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
                 "test": false
             }
         ],
@@ -2422,8 +5393,13 @@
     "garlictech.angular-features/common/leaflet-map@0.0.18": {
         "files": [
             {
+<<<<<<< HEAD
                 "name": "README.md",
                 "relativePath": "README.md",
+=======
+                "name": "water.png",
+                "relativePath": "assets/icon/red/water.png",
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
                 "test": false
             },
             {
@@ -2599,11 +5575,14 @@
             {
                 "name": "reducer.spec.ts.snap",
                 "relativePath": "store/test/__snapshots__/reducer.spec.ts.snap",
+<<<<<<< HEAD
                 "test": false
             },
             {
                 "name": "selectors.spec.ts.snap",
                 "relativePath": "store/test/__snapshots__/selectors.spec.ts.snap",
+=======
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
                 "test": false
             },
             {
@@ -2636,12 +5615,16 @@
         "rootDir": "src/features/common/leaflet-map",
         "origin": "IMPORTED",
         "dependencies": [
+<<<<<<< HEAD
             "garlictech.angular-features/common/spinner@0.0.2",
             "garlictech.angular-features/web/spinner@0.0.6",
             "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
             "garlictech.angular-features/common/marker-icons@0.0.3"
+=======
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.1"
+>>>>>>> 7809e61df7d185e7c2af1e0f22c88eb126fc032f
         ],
         "originallySharedDir": "src/features/common/leaflet-map"
     },
-    "version": "14.0.2"
+    "version": "14.0.4"
 }

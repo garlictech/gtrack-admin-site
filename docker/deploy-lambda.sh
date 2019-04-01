@@ -1,0 +1,1 @@
+../workflows-scripts/webclient/docker/deploy-lambda.sh
