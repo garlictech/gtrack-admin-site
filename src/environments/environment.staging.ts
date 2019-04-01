@@ -1,6 +1,6 @@
 import { Environment } from './ienvironment';
 
-const lambdaEndpoint = 'https://njpebvpadh.execute-api.us-east-1.amazonaws.com/latest';
+const lambdaEndpoint = 'https://vj8zrkz1p5.execute-api.us-east-1.amazonaws.com/dev';
 
 export const environment: Environment = {
   production: true,

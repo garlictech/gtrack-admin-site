@@ -3,7 +3,7 @@ import _each from 'lodash-es/each';
 
 import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { EIconStyle } from '@bit/garlictech.angular-features.common.leaflet-map/node_modules/@bit/garlictech.angular-features.common.marker-icons/enums';
+import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons';
 
 import { Checkpoint } from './checkpoint';
 

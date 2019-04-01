@@ -1,7 +1,7 @@
 {
   "name": "@bit/garlictech.angular-features.common.forms",
-  "version": "0.0.5",
-  "homepage": "https://bitsrc.io/garlictech/angular-features/common/forms",
+  "version": "0.0.6",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/forms",
   "main": "index.ts",
   "dependencies": {
     "@angular/core": "~7.2.1",
