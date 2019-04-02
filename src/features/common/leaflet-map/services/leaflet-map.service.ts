@@ -111,23 +111,23 @@ export class LeafletMapService {
     }
   }
 
-  fitBounds(box: L.LatLngBoundsExpression): L.Map {
+  fitBounds(box: L.LatLngBoundsExpression): void {
     if (this.leafletMap) {
       this.leafletMap.invalidateSize();
 
-      return this.leafletMap.fitBounds(box, {
+      this.leafletMap.fitBounds(box, {
         padding: [50, 50]
       });
     }
   }
 
-  fitRouteBounds(route: RouteData): L.Map {
+  fitRouteBounds(route: RouteData): void {
     const bounds: L.LatLngBoundsExpression = [
       [route.bounds.NorthEast.lat, route.bounds.NorthEast.lon],
       [route.bounds.SouthWest.lat, route.bounds.SouthWest.lon]
     ];
 
-    return this.fitBounds(bounds);
+    this.fitBounds(bounds);
   }
 
   getCurrentPositionMarker(): CurrentPositionMarker {
