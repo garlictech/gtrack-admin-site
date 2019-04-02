@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:garlictech/gtrack-common-web.git
+	branch = master
+	commit = 577fa94466fb2caf72be07960df6b32b6795079b
+	parent = d544cfe497abc28b6930ce46bc7dcb6d734198ec
+	method = merge
+	cmdver = 0.4.0

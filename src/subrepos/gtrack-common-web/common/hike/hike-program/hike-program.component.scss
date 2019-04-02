@@ -1,0 +1,21 @@
+:host {
+  @media (min-width: 576px) {
+    .timeline {
+      &::before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 8.3333%;
+        height: 100%;
+        width: 2px;
+        background: var(--color-grey-lighter);
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+
+    .timeline-icon {
+      width: 24px;
+    }
+  }
+}

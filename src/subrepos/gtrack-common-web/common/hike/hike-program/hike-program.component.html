@@ -1,0 +1,51 @@
+<div class="py-4 flex flex-col relative timeline" *ngIf="stops">
+  <ng-container *ngIf="(pois$ | async) as pois">
+    <div
+      *ngFor="let stop of stops; let i = index; trackBy: trackByFn"
+      class="flex items-center justify-center content-center my-4 relative"
+    >
+      <div class="w-1/6 hidden sm:flex items-center justify-center self-stretch">
+        <div class="bg-primary text-white text-xs flex items-center justify-center rounded-full shadow-md h-16 w-16">
+          {{ stop.arrive | date: 'HH:mm' }}
+        </div>
+      </div>
+      <div class="flex-1">
+        <small class="mb-1 block">{{ stop.distanceFromOrigo | distance }}</small>
+        <div class="rounded shadow-md p-2">
+          <ng-container *ngIf="stop.eventOnly !== true; else event_template">
+            <h4 class="m-0 font-bold text-xl flex items-center">
+              <ng-container *ngIf="i === 0"
+                ><img class="mr-2 timeline-icon" title="Start" [src]="startIcon" /><span>START</span></ng-container
+              >
+              <ng-container *ngIf="i === stops.length - 1"
+                ><img class="mr-2 timeline-icon" title="Finish" [src]="finishIcon" /><span>FINISH</span></ng-container
+              >
+              <ng-container *ngIf="i > 0 && i < stops.length - 1">
+                <ng-container *ngIf="pois[stop.poiId] && pois[stop.poiId].description">
+                  <gtrack-icon
+                    class="mr-2 timeline-icon"
+                    *ngIf="pois[stop.poiId]"
+                    [poi]="pois[stop.poiId]"
+                  ></gtrack-icon>
+                  <span>{{ (pois[stop.poiId].description | localizeDescription).title }}</span>
+                </ng-container>
+              </ng-container>
+            </h4>
+            <div>
+              <gtrack-description
+                *ngIf="pois[stop.poiId] && pois[stop.poiId].description"
+                field="summary"
+                [description]="pois[stop.poiId].description"
+              ></gtrack-description>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #event_template>
+    <header class="card-header">
+      <p class="card-header-title">{{ stop.title | translate }}</p>
+    </header>
+  </ng-template>
+</div>
