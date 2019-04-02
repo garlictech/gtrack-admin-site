@@ -1,0 +1,21 @@
+{
+  "name": "@bit/garlictech.angular-features.common.geosearch",
+  "version": "0.0.1",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/geosearch",
+  "main": "index.ts",
+  "dependencies": {
+    "@angular/core": "~7.2.1",
+    "@ngrx/effects": "~7.1.0",
+    "@ngrx/store": "~7.1.0",
+    "rxjs": "~6.3.2",
+    "@ngrx/entity": "~7.1.0",
+    "uuid": "3.3.2",
+    "jest-marbles": "^2.1.0",
+    "@bit/garlictech.angular-features.common.deepstream-ngx": "0.0.1",
+    "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "componentRootFolder": "src/features/common/geosearch",
+  "license": "SEE LICENSE IN LICENSE"
+}

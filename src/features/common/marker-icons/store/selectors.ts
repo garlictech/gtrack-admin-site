@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { EIconStyle } from '../enums';
-import { getFileId, prepareSvg } from '../pure';
+import { getSvgContent } from '../pure';
 import { svgIconContentAdapter, svgMarkerContentAdapter } from './reducer';
 import { featureName, State, SvgContent } from './state';
 
@@ -17,17 +17,7 @@ export const getAllSvgIconsCount = svgIconContentAdapter.getSelectors(svgIconSel
 export const getIcon = (type: string, encoded: boolean, iconStyle: EIconStyle) =>
   createSelector(
     getAllSvgIcons,
-    (svgContents: Array<SvgContent>) => {
-      const fileId = getFileId(type);
-      const svgContent: SvgContent =
-        svgContents.find(s => s.id === fileId) || svgContents.find(s => s.id === 'asterisco');
-
-      if (svgContent) {
-        return prepareSvg(svgContent.content, fileId, encoded, iconStyle);
-      } else {
-        return undefined;
-      }
-    }
+    (svgContents: Array<SvgContent>) => getSvgContent(type, svgContents, encoded, iconStyle)
   );
 
 const svgMarkerSelector = createSelector(
@@ -40,15 +30,5 @@ export const getAllSvgMarkersCount = svgMarkerContentAdapter.getSelectors(svgMar
 export const getMarker = (type: string, encoded: boolean, iconStyle: EIconStyle) =>
   createSelector(
     getAllSvgMarkers,
-    (svgContents: Array<SvgContent>) => {
-      const fileId = getFileId(type);
-      const svgContent: SvgContent =
-        svgContents.find(s => s.id === fileId) || svgContents.find(s => s.id === 'asterisco');
-
-      if (svgContent) {
-        return prepareSvg(svgContent.content, fileId, encoded, iconStyle);
-      } else {
-        return undefined;
-      }
-    }
+    (svgContents: Array<SvgContent>) => getSvgContent(type, svgContents, encoded, iconStyle)
   );

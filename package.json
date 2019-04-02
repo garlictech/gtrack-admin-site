@@ -186,7 +186,9 @@
     "suncalc": "^1.8.0",
     "tether": "^1.4.5",
     "togpx": "^0.5.4",
-    "zone.js": "~0.8.28"
+    "zone.js": "~0.8.28",
+    "@bit/garlictech.angular-features.common.geosearch": "file:./src/features/common/geosearch",
+    "@bit/garlictech.angular-features.common.search-filters": "file:./src/features/common/search-filters"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",

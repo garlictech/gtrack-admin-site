@@ -2,7 +2,7 @@ import _uniq from 'lodash-es/uniq';
 
 // Core
 import { Component, Input, OnInit } from '@angular/core';
-import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 
 import { ExternalPoi } from '../../../../shared/interfaces';
 
@@ -14,12 +14,15 @@ export class PoiIconsComponent implements OnInit {
   @Input() poi: ExternalPoi;
   urls: Array<string>;
 
-  constructor(private readonly _leafletIconService: LeafletIconService) {
+  constructor(private readonly _markerIconsService: MarkerIconsService) {
     this.urls = [];
   }
 
   ngOnInit(): void {
-    this.urls = typeof this.poi.types !== 'undefined' ? _uniq(this._leafletIconService.urls(this.poi.types)) : [];
+    this.urls =
+      typeof this.poi.types !== 'undefined'
+        ? _uniq(this.poi.types.map((type: string) => this._markerIconsService.getIcon(type, true)))
+        : [];
   }
 
   trackByFn(index: number): number {

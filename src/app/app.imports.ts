@@ -4,12 +4,10 @@ import { ToastModule } from 'primeng/toast';
 import {
   DeepstreamModule,
   defaultSharedConfig,
-  GeoSearchModule,
   HikeModule,
   HikeModuleConfig,
   ObjectMarkModule,
   ObjectMarkModuleConfig,
-  SearchFiltersModule,
   SharedModule
 } from 'subrepos/gtrack-common-ngx';
 import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
@@ -25,7 +23,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { GeoSearchModule } from '@bit/garlictech.angular-features.common.geosearch';
 import { MarkerIconsModule } from '@bit/garlictech.angular-features.common.marker-icons';
+import { SearchFiltersModule } from '@bit/garlictech.angular-features.common.search-filters';
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';
@@ -85,13 +85,9 @@ export const APP_IMPORTS = [
   GenericUiModule,
   DeepstreamModule.forRoot(),
   AuthenticationApiModule.forRoot(getAuthConfig),
-  SearchFiltersModule.forRoot({
-    storeDomain: 'searchFilters'
-  }),
+  SearchFiltersModule,
   SharedModule.forRoot(getSharedConfig),
-  GeoSearchModule.forRoot({
-    storeDomain: 'geosearch'
-  }),
+  GeoSearchModule,
   HikeModule.forRoot(hikeModuleConfig),
   CoreLayoutModule,
   AuthModule,

@@ -11,6 +11,7 @@ import { interpolateNumber as d3InterpolateNumber } from 'd3-interpolate';
 import { BaseType, event as d3Event, mouse as d3Mouse, select as d3Select, Selection } from 'd3-selection';
 import { sliderLeft } from 'd3-simple-slider';
 import _cloneDeep from 'lodash-es/cloneDeep';
+import _first from 'lodash-es/first';
 import _get from 'lodash-es/get';
 import * as moment from 'moment';
 import { ReplaySubject, Subject } from 'rxjs';
@@ -29,7 +30,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { HikeProgramStop, PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { OpenWeatherMapForecastItem } from '@bit/garlictech.angular-features.common.weather';
 import { WeatherEntity } from '@bit/garlictech.angular-features.common.weather/store';
@@ -109,7 +110,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
     private readonly _routeSelectors: RouteSelectors,
     private readonly _poiSelectors: PoiSelectors,
     private readonly _geospatial: GeospatialService,
-    private readonly _icon: LeafletIconService,
+    private readonly _markerIconsService: MarkerIconsService,
     private readonly _gameRule: GameRuleService,
     private readonly _descriptionLanguageList: DescriptionLanguageListService,
     private readonly _astronomy: AstronomyService,
@@ -806,7 +807,7 @@ export class ElevationProfileComponent implements OnInit, OnDestroy, OnChanges {
           .attr('y', this.margins.top - 24)
           .attr('width', 21)
           .attr('height', 24)
-          .attr('href', this._icon.url(type))
+          .attr('href', this._markerIconsService.getIcon(type, true))
           .style('cursor', 'pointer')
           .on('click', () => {
             this.activePoi = poi;

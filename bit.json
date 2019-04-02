@@ -19,7 +19,9 @@
     "garlictech.angular-features/common/marker-icons": "0.0.3",
     "garlictech.angular-features/web/spinner": "0.0.6",
     "garlictech.angular-features/common/spinner": "0.0.2",
-    "garlictech.angular-features/infrastructure/workflows-scripts": "0.0.3"
+    "garlictech.angular-features/infrastructure/workflows-scripts": "0.0.3",
+    "garlictech.angular-features/common/geosearch": "0.0.1",
+    "garlictech.angular-features/common/search-filters": "0.0.2"
   },
   "componentsDefaultDirectory": "src/features/{namespace}/{name}",
   "packageManager": "yarn",

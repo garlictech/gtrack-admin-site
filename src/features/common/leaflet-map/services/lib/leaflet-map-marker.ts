@@ -44,6 +44,18 @@ export class LeafletMapMarker {
     this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, iconStyle));
   }
 
+  addHighlight(): void {
+    this._highlighted = true;
+
+    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, EIconStyle.HIGHLIGHTED));
+  }
+
+  removeHighlight(): void {
+    this._highlighted = false;
+
+    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, EIconStyle.DEFAULT));
+  }
+
   addToMap(map: L.Map): void {
     this.marker.addTo(map);
 

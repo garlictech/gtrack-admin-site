@@ -1,3 +1,4 @@
+import _first from 'lodash-es/first';
 import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
 import { Observable, of as observableOf } from 'rxjs';
@@ -5,7 +6,7 @@ import { filter, take } from 'rxjs/operators';
 
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { HikeProgramData, HikeProgramStop, PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 import { WeatherEntity } from '@bit/garlictech.angular-features.common.weather/store';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { select, Store } from '@ngrx/store';
@@ -53,10 +54,10 @@ export class HikeProgramComponent implements OnInit, OnChanges {
     private readonly _store: Store<any>,
     private readonly _gameRule: GameRuleService,
     private readonly _astronomy: AstronomyService,
-    public icon: LeafletIconService
+    private readonly _markerIconsService: MarkerIconsService
   ) {
-    this.startIcon = icon.url('start');
-    this.finishIcon = icon.url('finish');
+    this.startIcon = this._markerIconsService.getIcon('start', true);
+    this.finishIcon = this._markerIconsService.getIcon('finish', true);
     this.speed = 4;
     this.startTime = {
       hours: 5,

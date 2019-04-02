@@ -277,5 +277,164 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/gtrack-interfaces"
     },
+    "garlictech.angular-features/common/geosearch@0.0.1": {
+        "files": [
+            {
+                "name": "geosearch.module.ts",
+                "relativePath": "geosearch.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "geosearch.service.ts",
+                "relativePath": "services/geosearch.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "geosearch.service.spec.ts",
+                "relativePath": "services/test/geosearch.service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": false
+            },
+            {
+                "name": "effects.spec.ts",
+                "relativePath": "store/test/effects.spec.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/test/fixtures/index.ts",
+                "test": true
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/geosearch",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.2"
+        ],
+        "originallySharedDir": "src/features/common/geosearch"
+    },
+    "garlictech.angular-features/common/search-filters@0.0.2": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "interfaces/index.ts",
+                "test": false
+            },
+            {
+                "name": "search-filters.ts",
+                "relativePath": "interfaces/search-filters.ts",
+                "test": false
+            },
+            {
+                "name": "search-filters.module.ts",
+                "relativePath": "search-filters.module.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": true
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": true
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": true
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/search-filters",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/search-filters"
+    },
     "version": "14.0.4"
 }

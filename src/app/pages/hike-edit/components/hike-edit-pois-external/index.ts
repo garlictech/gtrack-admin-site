@@ -3,9 +3,10 @@ import _filter from 'lodash-es/filter';
 import _pick from 'lodash-es/pick';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { debounceTime, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
-import { GeoSearchContextState, GeoSearchSelectors, PoiSelectors } from 'subrepos/gtrack-common-ngx';
+import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { GeoSearchContextState, GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
 import { EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store } from '@ngrx/store';
 
