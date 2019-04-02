@@ -8,7 +8,7 @@ import { ExternalPoi } from '../../../../shared/interfaces';
 
 @Component({
   selector: 'app-poi-icons',
-  template: '<img *ngFor="let url of urls; trackBy: trackByFn" [src]="url">'
+  template: '<img *ngFor="let url of urls; trackBy: trackByFn" [src]="url | trustedResource">'
 })
 export class PoiIconsComponent implements OnInit {
   @Input() poi: ExternalPoi;

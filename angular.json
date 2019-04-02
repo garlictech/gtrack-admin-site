@@ -25,11 +25,6 @@
                 "glob": "**/*",
                 "input": "src/assets/dist_root",
                 "output": "/"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/@bit/garlictech.angular-features.common.marker-icons/assets",
-                "output": "/assets"
               }
             ],
             "styles": ["src/styles/styles.scss"],

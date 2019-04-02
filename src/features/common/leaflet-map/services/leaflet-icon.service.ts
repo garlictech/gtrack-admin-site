@@ -18,7 +18,7 @@ export class LeafletIconService {
     type = typeArray[0] || 'unknown';
 
     return L.icon({
-      iconUrl: _first(this._markerIconsService.getMarker(type, true, iconStyle)),
+      iconUrl: this._markerIconsService.getMarker(type, true, iconStyle),
       iconSize: [32, 37],
       iconAnchor: [16, 37]
     });
