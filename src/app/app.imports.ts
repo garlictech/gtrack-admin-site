@@ -17,15 +17,16 @@ import {
   defaultAuthenticationApiConfig
 } from '@bit/garlictech.angular-features.common.authentication-api';
 import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
+import { GeoSearchModule } from '@bit/garlictech.angular-features.common.geosearch';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { MarkerIconsModule } from '@bit/garlictech.angular-features.common.marker-icons';
+import { SearchFiltersModule } from '@bit/garlictech.angular-features.common.search-filters';
+import { WeatherConfig, WeatherModule } from '@bit/garlictech.angular-features.common.weather';
 import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { GeoSearchModule } from '@bit/garlictech.angular-features.common.geosearch';
-import { MarkerIconsModule } from '@bit/garlictech.angular-features.common.marker-icons';
-import { SearchFiltersModule } from '@bit/garlictech.angular-features.common.search-filters';
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';
@@ -53,6 +54,12 @@ const hikeModuleConfig: HikeModuleConfig = {
     hike: 'hike',
     poi: 'poi',
     route: 'route'
+  }
+};
+
+const weatherConfig: WeatherConfig = {
+  openWeatherMap: {
+    key: 'e5a0aba93cfca3ee54c272133018df78'
   }
 };
 
@@ -105,5 +112,6 @@ export const APP_IMPORTS = [
   CurrentGeolocationModule.forRoot({ timeOut: 2000 }, { endpoint: environment.lambdaEndpoint }),
   LeafletMapModule,
   MarkerIconsModule,
-  ToastModule
+  ToastModule,
+  WeatherModule.forRoot(weatherConfig)
 ];

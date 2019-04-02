@@ -11,7 +11,7 @@
     "@ngrx/entity": "~7.1.0",
     "uuid": "3.3.2",
     "jest-marbles": "^2.1.0",
-    "@bit/garlictech.angular-features.common.deepstream-ngx": "0.0.1",
+    "@bit/garlictech.angular-features.common.deepstream-ngx": "file:../deepstream-ngx",
     "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces"
   },
   "devDependencies": {},

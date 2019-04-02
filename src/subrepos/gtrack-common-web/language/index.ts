@@ -1,10 +1,10 @@
+import { DropdownModule } from 'primeng/dropdown';
+
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { LocalizeModule } from '@bit/garlictech.angular-features.common.localization';
 import { TranslateModule } from '@ngx-translate/core';
-import { DropdownModule } from 'primeng/dropdown';
-
-import { LocalizeModule } from '@features/common/localization';
 
 import { LanguageSelectorComponent } from './language-selector';
 
@@ -15,4 +15,4 @@ import { LanguageSelectorComponent } from './language-selector';
 })
 export class LanguageModule {}
 
-export { Actions, Reducer, LocalizationState } from '@features/common/localization';
+export { Actions, LocalizationState, Reducer } from '@features/common/localization';

@@ -114,6 +114,8 @@
     "@bit/garlictech.angular-features.common.marker-icons": "file:./src/features/common/marker-icons",
     "@bit/garlictech.angular-features.web.spinner": "file:./src/features/web/spinner",
     "@bit/garlictech.angular-features.common.spinner": "file:./src/features/common/spinner",
+    "@bit/garlictech.angular-features.common.geosearch": "file:./src/features/common/geosearch",
+    "@bit/garlictech.angular-features.common.search-filters": "file:./src/features/common/search-filters",
     "@fortawesome/angular-fontawesome": "^0.3.0",
     "@fortawesome/fontawesome-free": "^5.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
@@ -186,9 +188,7 @@
     "suncalc": "^1.8.0",
     "tether": "^1.4.5",
     "togpx": "^0.5.4",
-    "zone.js": "~0.8.28",
-    "@bit/garlictech.angular-features.common.geosearch": "file:./src/features/common/geosearch",
-    "@bit/garlictech.angular-features.common.search-filters": "file:./src/features/common/search-filters"
+    "zone.js": "~0.8.28"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",

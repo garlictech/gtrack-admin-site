@@ -112,15 +112,7 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnChanges, O
           }
         }
       }),
-      rxjsMap(([routeIds, routes]) =>
-        routes.filter(route => {
-          if (route.id) {
-            return routeIds.indexOf(route.id) !== -1;
-          } else {
-            return false;
-          }
-        })
-      ),
+      rxjsMap(([routeIds, routes]) => routes.filter(route => (route.id ? routeIds.indexOf(route.id) !== -1 : false))),
       rxjsMap(data => {
         if (data) {
           return data
