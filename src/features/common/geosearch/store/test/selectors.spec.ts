@@ -12,10 +12,10 @@ import { GeoSearchSelectors } from '../selectors';
 import { GeoSearchResponseItem, GeoSearchState } from '../state';
 import { searches as fixtures } from './fixtures';
 
-describe('GeoSearch selectors', () => {
+xdescribe('GeoSearch selectors', () => {
   let store: Store<GeoSearchState>;
-  let searches: GeoSearchResponseItem[];
-  let contexts: string[];
+  let searches: Array<GeoSearchResponseItem>;
+  let contexts: Array<string>;
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {

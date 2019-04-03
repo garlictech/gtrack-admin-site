@@ -1,14 +1,14 @@
 import * as _ from 'lodash';
 
-import { ISegment } from '../../../../subrepos/gtrack-common-ngx';
+import { Segment } from '../../../../subrepos/gtrack-common-ngx';
 import { hikeEditRoutePlannerActions } from '../../actions';
 import { HikeEditRoutePlannerState } from '../../index';
 import { hikeEditRoutePlannerReducer, initialRouteInfoDataState } from '../hike-edit-route-planner';
 
-fdescribe('RoutePlanner reducers', () => {
+describe('RoutePlanner reducers', () => {
   let initialState: HikeEditRoutePlannerState;
-  let segmentData: ISegment;
-  let segmentData2: ISegment;
+  let segmentData: Segment;
+  let segmentData2: Segment;
 
   beforeEach(() => {
     initialState = initialRouteInfoDataState;

@@ -5,11 +5,11 @@ Object {
   "icons": Object {
     "entities": Object {
       "atm": Object {
-        "content": "<svg></svg>",
+        "content": "<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>",
         "id": "atm",
       },
       "bank": Object {
-        "content": "<svg></svg>",
+        "content": "<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>",
         "id": "bank",
       },
     },
@@ -34,11 +34,11 @@ Object {
   "markers": Object {
     "entities": Object {
       "atm": Object {
-        "content": "<svg></svg>",
+        "content": "<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>",
         "id": "atm",
       },
       "bank": Object {
-        "content": "<svg></svg>",
+        "content": "<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>",
         "id": "bank",
       },
     },
@@ -50,7 +50,7 @@ Object {
 }
 `;
 
-exports[`Reset with initial state {"markers":{"ids":["atm","bank"],"entities":{"atm":{"id":"atm","content":"<svg></svg>"},"bank":{"id":"bank","content":"<svg></svg>"}}},"icons":{"ids":["atm","bank"],"entities":{"atm":{"id":"atm","content":"<svg></svg>"},"bank":{"id":"bank","content":"<svg></svg>"}}}} 1`] = `
+exports[`Reset with initial state {"markers":{"ids":["atm","bank"],"entities":{"atm":{"id":"atm","content":"<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>"},"bank":{"id":"bank","content":"<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>"}}},"icons":{"ids":["atm","bank"],"entities":{"atm":{"id":"atm","content":"<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>"},"bank":{"id":"bank","content":"<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>"}}}} 1`] = `
 Object {
   "icons": Object {
     "entities": Object {},

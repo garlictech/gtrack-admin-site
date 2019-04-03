@@ -1,17 +1,17 @@
-/* tslint:disable:no-unused-variable */
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
-
-import { HikeDayComponent } from '../';
 import { reducer } from 'app/store';
 import { FormModule } from 'subrepos/gtrack-common-web/forms';
+
+/* tslint:disable:no-unused-variable */
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CONFIG as LANGUAGE_CONFIG } from '@features/common/localization';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 
-fdescribe('HikeDayComponent', () => {
+import { HikeDayComponent } from '../';
+
+xdescribe('HikeDayComponent', () => {
   let component: HikeDayComponent;
   let fixture: ComponentFixture<HikeDayComponent>;
 

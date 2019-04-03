@@ -1,8 +1,11 @@
 import * as L from 'leaflet';
 
 import { TestBed } from '@angular/core/testing';
-import { EIconSource, EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons/enums';
+import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons/enums';
 
+import { StoreModule } from '@ngrx/store';
+import { reducer } from '../../store';
+import { featureName } from '../../store/state';
 import { LeafletIconService } from '../leaflet-icon.service';
 
 describe('LeafletIconService', () => {
@@ -10,6 +13,11 @@ describe('LeafletIconService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({
+          [featureName]: reducer
+        })
+      ],
       providers: [LeafletIconService]
     });
 

@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
+import { StoreModule } from '@ngrx/store';
+import { reducer } from '../../store';
+import { featureName } from '../../store/state';
 import { LeafletIconService } from '../leaflet-icon.service';
 import { LeafletMapMarkerService } from '../leaflet-map-marker.service';
 import { LeafletMapMarker } from '../lib';
@@ -9,6 +12,11 @@ describe('LeafletMapMarkerService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot({
+          [featureName]: reducer
+        })
+      ],
       providers: [LeafletMapMarkerService, LeafletIconService]
     });
 

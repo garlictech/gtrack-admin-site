@@ -14,13 +14,12 @@ import {
 import { featureName as leafletFeatureName } from '@bit/garlictech.angular-features.common.leaflet-map/store/state';
 import { StoreModule } from '@ngrx/store';
 
+import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
 import { editedHikeProgramReducer, hikeEditPoiReducer } from '../../../../../app/store/reducer';
 import {
   ElevationService,
-  EXTERNAL_GEO_SEARCH_DEPENDENCIES,
   EXTERNAL_POI_DEPENDENCIES,
   GeometryService,
-  GeoSearchSelectors,
   GeospatialService,
   PoiSelectors
 } from '../../../../../subrepos/gtrack-common-ngx';
@@ -96,12 +95,6 @@ describe('PoiEditorService', () => {
           provide: ElevationService,
           useValue: {
             getData: () => 0
-          }
-        },
-        {
-          provide: EXTERNAL_GEO_SEARCH_DEPENDENCIES,
-          useValue: {
-            storeDomain: 'geoSearch'
           }
         },
         {

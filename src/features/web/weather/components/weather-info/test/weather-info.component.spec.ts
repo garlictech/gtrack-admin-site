@@ -104,7 +104,7 @@ describe('WeatherInfoComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should be display the data if loaded', () => {
+    xit('should be display the data if loaded', () => {
       const container = fixture.nativeElement.querySelector('.forecast-item');
       const spans = container.querySelectorAll('span');
 
