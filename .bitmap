@@ -2560,7 +2560,7 @@
         ],
         "originallySharedDir": "src/features/common/geosearch"
     },
-    "garlictech.angular-features/common/leaflet-map@0.0.23": {
+    "garlictech.angular-features/common/leaflet-map@0.0.24": {
         "files": [
             {
                 "name": "README.md",
@@ -2785,7 +2785,7 @@
         ],
         "originallySharedDir": "src/features/common/leaflet-map"
     },
-    "garlictech.angular-features/common/checkpoints@0.0.4": {
+    "garlictech.angular-features/common/checkpoints@0.0.5": {
         "files": [
             {
                 "name": "checkpoints.module.ts",
@@ -2833,8 +2833,8 @@
         "origin": "IMPORTED",
         "dependencies": [
             "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
-            "garlictech.angular-features/common/leaflet-map@0.0.23",
-            "garlictech.angular-features/common/spinner@0.0.2"
+            "garlictech.angular-features/common/spinner@0.0.2",
+            "garlictech.angular-features/common/leaflet-map@0.0.24"
         ],
         "originallySharedDir": "src/features/common/checkpoints"
     },
