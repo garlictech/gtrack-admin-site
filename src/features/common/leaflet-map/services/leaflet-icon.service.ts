@@ -1,5 +1,4 @@
 import * as L from 'leaflet';
-import _first from 'lodash-es/first';
 
 import { Injectable } from '@angular/core';
 import { EIconStyle, MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';

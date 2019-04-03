@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LangChangeEvent, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LangChangeEvent, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { LanguageSelectorComponent } from '../language-selector';
 import { LanguageService } from '../language-service';
@@ -15,21 +13,11 @@ export const _init = () => () => {
 };
 
 // tslint:disable-next-line:only-arrow-functions
-export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, TranslateModule.forRoot()],
+  imports: [CommonModule, TranslateModule],
   declarations: [LanguageSelectorComponent],
-  providers: [
-    LanguageService,
-    {
-      provide: TranslateLoader,
-      useFactory: createTranslateLoader,
-      deps: [HttpClient]
-    }
-  ],
+  providers: [LanguageService],
   exports: [TranslateModule, LanguageSelectorComponent]
 })
 export class LocalizeModule {

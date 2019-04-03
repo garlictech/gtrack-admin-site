@@ -1,8 +1,9 @@
+import * as L from 'leaflet';
+
+import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons';
+
 import { LeafletMarkerPopupData } from '../../interfaces';
 import { LeafletIconService } from '../leaflet-icon.service';
-
-import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons/enums';
-import * as L from 'leaflet';
 
 export class LeafletMapMarker {
   marker: L.Marker;
@@ -38,22 +39,21 @@ export class LeafletMapMarker {
 
   toggleHighlight(): void {
     this._highlighted = !this._highlighted;
-
-    const iconStyle = this._highlighted ? EIconStyle.HIGHLIGHTED : EIconStyle.DEFAULT;
-
-    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, iconStyle));
+    this._refreshHighlight();
   }
 
   addHighlight(): void {
     this._highlighted = true;
-
-    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, EIconStyle.HIGHLIGHTED));
+    this._refreshHighlight();
   }
 
   removeHighlight(): void {
     this._highlighted = false;
+    this._refreshHighlight();
+  }
 
-    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, EIconStyle.DEFAULT));
+  isHighlighted(): boolean {
+    return this._highlighted;
   }
 
   addToMap(map: L.Map): void {
@@ -75,5 +75,11 @@ export class LeafletMapMarker {
 
   get coordinates(): L.LatLng {
     return this.marker.getLatLng();
+  }
+
+  private _refreshHighlight(): void {
+    const iconType = this._highlighted ? 'highlight' : 'default';
+
+    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, EIconStyle.DEFAULT));
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@bit/garlictech.angular-features.common.spinner",
   "version": "0.0.2",
-  "homepage": "https://bitsrc.io/garlictech/angular-features/common/spinner",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/spinner",
   "main": "index.ts",
   "dependencies": {
     "@angular/core": "~7.2.1",

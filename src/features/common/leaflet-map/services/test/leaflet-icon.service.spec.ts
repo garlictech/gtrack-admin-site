@@ -1,10 +1,7 @@
 import * as L from 'leaflet';
 
 import { TestBed } from '@angular/core/testing';
-import {
-  EIconSource,
-  EIconStyle
-} from '@bit/garlictech.angular-features.common.leaflet-map/node_modules/@bit/garlictech.angular-features.common.marker-icons/enums';
+import { EIconSource, EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons/enums';
 
 import { LeafletIconService } from '../leaflet-icon.service';
 

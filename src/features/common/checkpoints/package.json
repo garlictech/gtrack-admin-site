@@ -1,7 +1,7 @@
 {
   "name": "@bit/garlictech.angular-features.common.checkpoints",
-  "version": "0.0.3",
-  "homepage": "https://bitsrc.io/garlictech/angular-features/common/checkpoints",
+  "version": "0.0.4",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/checkpoints",
   "main": "index.ts",
   "dependencies": {
     "@angular/common": "~7.2.1",

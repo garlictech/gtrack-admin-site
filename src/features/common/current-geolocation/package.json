@@ -1,7 +1,7 @@
 {
   "name": "@bit/garlictech.angular-features.common.current-geolocation",
   "version": "0.0.4",
-  "homepage": "https://bitsrc.io/garlictech/angular-features/common/current-geolocation",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/current-geolocation",
   "main": "index.ts",
   "dependencies": {
     "@angular/core": "~7.2.1",

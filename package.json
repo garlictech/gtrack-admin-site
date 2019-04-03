@@ -188,7 +188,9 @@
     "suncalc": "^1.8.0",
     "tether": "^1.4.5",
     "togpx": "^0.5.4",
-    "zone.js": "~0.8.28"
+    "zone.js": "~0.8.28",
+    "@bit/garlictech.angular-features.common.progressive-image-loader": "file:./src/features/common/progressive-image-loader",
+    "@bit/garlictech.angular-features.web.text-carousel": "file:./src/features/web/text-carousel"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",

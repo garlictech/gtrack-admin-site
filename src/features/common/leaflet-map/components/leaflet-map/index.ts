@@ -1,4 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { selectCurrentLocation } from '@bit/garlictech.angular-features.common.current-geolocation';
+import { select, Store } from '@ngrx/store';
+import { delay, take, tap } from 'rxjs/operators';
 import { DEFAULT_LAYERS, DEFAULT_LEAFLET_MAP_CONFIG, DEFAULT_OVERLAY_LAYERS } from '../../constants';
 import { Center, LayerDef, LeafletMapConfig } from '../../interfaces';
 import { LeafletMapService } from '../../services/leaflet-map.service';
@@ -12,6 +15,8 @@ import * as L from 'leaflet';
   templateUrl: './ui.html'
 })
 export class LeafletMapComponent implements OnInit {
+  showSpinner: boolean;
+
   get leafletMap(): L.Map {
     return this._leafletMapService.leafletMap;
   }
@@ -37,7 +42,7 @@ export class LeafletMapComponent implements OnInit {
 
   @ViewChild('map') private readonly _map: ElementRef;
 
-  constructor(private readonly _leafletMapService: LeafletMapService) {
+  constructor(private readonly _leafletMapService: LeafletMapService, private readonly _store: Store<any>) {
     this.id = 'leafletMap';
     this.layers = DEFAULT_LAYERS;
     this.overlays = DEFAULT_OVERLAY_LAYERS;
@@ -71,5 +76,16 @@ export class LeafletMapComponent implements OnInit {
       mousemove: this.mapMouseMove
       // ...
     });
+    this.showSpinner = true;
+    this._store
+      .pipe(
+        select(selectCurrentLocation),
+        take(1),
+        delay(500),
+        tap(() => {
+          this.showSpinner = false;
+        })
+      )
+      .subscribe();
   }
 }

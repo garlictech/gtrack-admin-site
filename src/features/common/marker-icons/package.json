@@ -1,12 +1,17 @@
 {
   "name": "@bit/garlictech.angular-features.common.marker-icons",
-  "version": "0.0.3",
-  "homepage": "https://bitsrc.io/garlictech/angular-features/common/marker-icons",
+  "version": "0.0.4",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/marker-icons",
   "main": "index.ts",
   "dependencies": {
     "@angular/common": "~7.2.1",
     "@angular/core": "~7.2.1",
-    "angular-svg-icon": "7.2.0"
+    "@ngrx/store": "7.1.0",
+    "angular-svg-icon": "7.2.0",
+    "@angular/router": "7.2.11",
+    "rxjs": "6.3.3",
+    "@ngrx/entity": "7.1.0",
+    "lodash": "4.17.11"
   },
   "devDependencies": {},
   "peerDependencies": {},

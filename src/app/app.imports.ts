@@ -12,6 +12,7 @@ import {
 } from 'subrepos/gtrack-common-ngx';
 import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
 
+import { HttpClient } from '@angular/common/http';
 import {
   AuthenticationApiModule,
   defaultAuthenticationApiConfig
@@ -26,6 +27,8 @@ import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
@@ -47,6 +50,11 @@ const sharedConfig = {
 // tslint:disable-next-line:only-arrow-functions
 export function getSharedConfig(): any {
   return sharedConfig;
+}
+
+// tslint:disable-next-line:only-arrow-functions
+export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 const hikeModuleConfig: HikeModuleConfig = {
@@ -113,5 +121,12 @@ export const APP_IMPORTS = [
   LeafletMapModule,
   MarkerIconsModule,
   ToastModule,
+  TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: createTranslateLoader,
+      deps: [HttpClient]
+    }
+  }),
   WeatherModule.forRoot(weatherConfig)
 ];

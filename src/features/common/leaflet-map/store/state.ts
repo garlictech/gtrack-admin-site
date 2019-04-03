@@ -1,6 +1,6 @@
 export interface State {
-  mapId?: string;
-  featureId?: number;
+  mapId: string;
+  featureId: number;
 }
 
-export const featureName = 'features.common.leaflet-map';
+export const featureName = 'features.leaflet-map';

@@ -1,10 +1,9 @@
 import * as L from 'leaflet';
 import _each from 'lodash-es/each';
 
-import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons';
 
+import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Checkpoint } from './checkpoint';
 
 export class CheckpointMarkerCollection {
@@ -66,17 +65,17 @@ export class CheckpointMarkerCollection {
     let reached = false;
 
     this.checkpoints.forEach((checkpoint, index) => {
-      let type: EIconStyle = EIconStyle.GREY;
+      let type = 'grey';
       let icon: L.Icon;
 
       // Completed checkpoints
       if (!reached) {
-        type = EIconStyle.GREEN;
+        type = 'green';
 
         // Current checkpoint
         if (checkpoint.index === active.index) {
           reached = true;
-          type = EIconStyle.RED;
+          type = 'red';
         }
       }
 
@@ -93,7 +92,7 @@ export class CheckpointMarkerCollection {
     this.markers[checkpoint.id] = this.markers[0];
   }
 
-  protected getIcon(segment: HikeProgramStop, iconStyle: EIconStyle = EIconStyle.DEFAULT): L.Icon {
+  protected getIcon(segment: HikeProgramStop, type = 'default'): L.Icon {
     let icon = 'checkpoint';
 
     if (segment.isStart && segment.isFinish) {
@@ -104,7 +103,7 @@ export class CheckpointMarkerCollection {
       icon = 'finish';
     }
 
-    return this.iconService.getLeafletIcon(icon, iconStyle);
+    return this.iconService.getLeafletIcon(icon, type);
   }
 
   protected get opacity(): number {

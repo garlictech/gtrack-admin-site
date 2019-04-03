@@ -244,7 +244,7 @@
     tslib "^1.9.0"
     xhr2 "^0.1.4"
 
-"@angular/router@~7.2.1":
+"@angular/router@7.2.11", "@angular/router@~7.2.1":
   version "7.2.11"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-7.2.11.tgz#a134dd4f06cdd2ccbf798688aedd4a2d5fb584ca"
   integrity sha512-6TcXQgTCPrOgkGWkxO879t+kcMovno6VfN4xfqr36IMBRxhmeWFEhLJmsVGPa/TT4XZjYQXyBk57ZXmneUqjQQ==
@@ -259,16 +259,16 @@
     "@babel/highlight" "^7.0.0"
 
 "@babel/core@^7.1.0", "@babel/core@^7.2.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.4.0.tgz#248fd6874b7d755010bfe61f557461d4f446d9e9"
-  integrity sha512-Dzl7U0/T69DFOTwqz/FJdnOSWS57NpjNfCwMKHABr589Lg8uX1RrlBIJ7L5Dubt/xkLsx0xH5EBFzlBVes1ayA==
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.4.3.tgz#198d6d3af4567be3989550d97e068de94503074f"
+  integrity sha512-oDpASqKFlbspQfzAE7yaeTmdljSH2ADIvBlb0RwbStltTuWa0+7CCI1fYVINNv9saHPa1W7oaKeuNuKj+RQCvA==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@babel/generator" "^7.4.0"
-    "@babel/helpers" "^7.4.0"
-    "@babel/parser" "^7.4.0"
+    "@babel/helpers" "^7.4.3"
+    "@babel/parser" "^7.4.3"
     "@babel/template" "^7.4.0"
-    "@babel/traverse" "^7.4.0"
+    "@babel/traverse" "^7.4.3"
     "@babel/types" "^7.4.0"
     convert-source-map "^1.1.0"
     debug "^4.1.0"
@@ -317,13 +317,13 @@
   dependencies:
     "@babel/types" "^7.4.0"
 
-"@babel/helpers@^7.4.0":
-  version "7.4.2"
-  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.4.2.tgz#3bdfa46a552ca77ef5a0f8551be5f0845ae989be"
-  integrity sha512-gQR1eQeroDzFBikhrCccm5Gs2xBjZ57DNjGbqTaHo911IpmSxflOQWMAHPw/TXk8L3isv7s9lYzUkexOeTQUYg==
+"@babel/helpers@^7.4.3":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.4.3.tgz#7b1d354363494b31cb9a2417ae86af32b7853a3b"
+  integrity sha512-BMh7X0oZqb36CfyhvtbSmcWc3GXocfxv3yNsAEuM0l+fAqSO22rQrUpijr3oE/10jCTrB6/0b9kzmG4VetCj8Q==
   dependencies:
     "@babel/template" "^7.4.0"
-    "@babel/traverse" "^7.4.0"
+    "@babel/traverse" "^7.4.3"
     "@babel/types" "^7.4.0"
 
 "@babel/highlight@^7.0.0":
@@ -335,10 +335,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.0.0", "@babel/parser@^7.1.0", "@babel/parser@^7.4.0":
-  version "7.4.2"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.4.2.tgz#b4521a400cb5a871eab3890787b4bc1326d38d91"
-  integrity sha512-9fJTDipQFvlfSVdD/JBtkiY0br9BtfvW2R8wo6CX/Ej2eMuV0gWPk1M67Mt3eggQvBqYW1FCEk8BN7WvGm/g5g==
+"@babel/parser@^7.0.0", "@babel/parser@^7.1.0", "@babel/parser@^7.4.0", "@babel/parser@^7.4.3":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.4.3.tgz#eb3ac80f64aa101c907d4ce5406360fe75b7895b"
+  integrity sha512-gxpEUhTS1sGA63EGQGuA+WESPR/6tz6ng7tSHFCmaTJK/cGK8y37cBTspX+U2xCAue2IQVvF6Z0oigmjwD8YGQ==
 
 "@babel/plugin-syntax-object-rest-spread@^7.0.0":
   version "7.2.0"
@@ -348,9 +348,9 @@
     "@babel/helper-plugin-utils" "^7.0.0"
 
 "@babel/polyfill@^7.2.3":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.4.0.tgz#90f9d68ae34ac42ab4b4aa03151848f536960218"
-  integrity sha512-bVsjsrtsDflIHp5I6caaAa2V25Kzn50HKPL6g3X0P0ni1ks+58cPB8Mz6AOKVuRPgaVdq/OwEUc/1vKqX+Mo4A==
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.4.3.tgz#332dc6f57b718017c3a8b37b4eea8aa6eeac1187"
+  integrity sha512-rkv8WIvJshA5Ev8iNMGgz5WZkRtgtiPexiT7w5qevGTuT7ZBfM3de9ox1y9JR5/OXb/sWGBbWlHNa7vQKqku3Q==
   dependencies:
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
@@ -364,16 +364,16 @@
     "@babel/parser" "^7.4.0"
     "@babel/types" "^7.4.0"
 
-"@babel/traverse@^7.0.0", "@babel/traverse@^7.1.0", "@babel/traverse@^7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.4.0.tgz#14006967dd1d2b3494cdd650c686db9daf0ddada"
-  integrity sha512-/DtIHKfyg2bBKnIN+BItaIlEg5pjAnzHOIQe5w+rHAw/rg9g0V7T4rqPX8BJPfW11kt3koyjAnTNwCzb28Y1PA==
+"@babel/traverse@^7.0.0", "@babel/traverse@^7.1.0", "@babel/traverse@^7.4.3":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.4.3.tgz#1a01f078fc575d589ff30c0f71bf3c3d9ccbad84"
+  integrity sha512-HmA01qrtaCwwJWpSKpA948cBvU5BrmviAief/b3AVw936DtcdsTexlbyzNuDnthwhOQ37xshn7hvQaEQk7ISYQ==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@babel/generator" "^7.4.0"
     "@babel/helper-function-name" "^7.1.0"
     "@babel/helper-split-export-declaration" "^7.4.0"
-    "@babel/parser" "^7.4.0"
+    "@babel/parser" "^7.4.3"
     "@babel/types" "^7.4.0"
     debug "^4.1.0"
     globals "^11.1.0"
@@ -400,16 +400,16 @@
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.checkpoints@file:./src/features/common/checkpoints":
-  version "0.0.3"
+  version "0.0.4"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.3-32117d9e-476b-44c0-ba5d-a5013b2e1a92-1554229977504/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.3-32117d9e-476b-44c0-ba5d-a5013b2e1a92-1554229977504/node_modules/@bit/leaflet-map"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.4-b028c082-9e58-4fdb-b61e-32d32f8c082b-1554251838695/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.4-b028c082-9e58-4fdb-b61e-32d32f8c082b-1554251838695/node_modules/@bit/leaflet-map"
     leaflet "^1.0.3"
     lodash-es "^4.17.11"
 
-"@bit/garlictech.angular-features.common.current-geolocation@file:./src/features/common/current-geolocation":
+"@bit/garlictech.angular-features.common.current-geolocation@file:./src/features/common/current-geolocation", "@bit/garlictech.angular-features.common.current-geolocation@file:src/features/common/current-geolocation":
   version "0.0.4"
   dependencies:
     "@angular/common" "~7.2.1"
@@ -427,7 +427,7 @@
   version "0.0.2"
   dependencies:
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-deepstream-ngx-0.0.2-cb00c9ef-5568-4fba-8fb5-b40691e4ba7b-1554229977536/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-deepstream-ngx-0.0.2-e0298d30-7661-4fd1-a6fb-119cbf180d42-1554251838757/node_modules/@bit/gtrack-interfaces"
     "@garlictech/deepstream-rxjs" "^1.9.2"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/store" "~7.1.0"
@@ -442,7 +442,7 @@
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
     "@angular/platform-browser" "~7.2.1"
-    "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-forms-0.0.6-ec552c75-3a8b-4530-9115-920697da0af4-1554229977605/node_modules/@bit/utils"
+    "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-forms-0.0.6-0a809344-a6b1-424e-92a4-4f62a1d3e66c-1554251838884/node_modules/@bit/utils"
     "@ngrx/store" "~7.1.0"
     "@ngx-translate/core" "^11.0.1"
     google-libphonenumber "3.2.2"
@@ -454,12 +454,12 @@
     password-validator "^4.1.1"
     rxjs "~6.3.2"
 
-"@bit/garlictech.angular-features.common.generic-ui@file:./src/features/common/generic-ui", "@bit/garlictech.angular-features.common.generic-ui@file:src/features/common/generic-ui":
+"@bit/garlictech.angular-features.common.generic-ui@file:./src/features/common/generic-ui":
   version "0.0.12"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-generic-ui-0.0.12-e377acf1-baaa-435a-800c-6942a8274566-1554229977614/node_modules/@bit/utils"
+    "@bit/garlictech.angular-features.common.utils" "0.0.5"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/store" "~7.1.0"
     "@ngx-translate/core" "^11.0.1"
@@ -468,11 +468,11 @@
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.geosearch@file:./src/features/common/geosearch":
-  version "0.0.1"
+  version "0.0.2"
   dependencies:
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-geosearch-0.0.1-d8b519fd-8ae6-4c8a-8745-67a8cfa0634d-1554229977647/node_modules/@bit/deepstream-ngx"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-geosearch-0.0.1-d8b519fd-8ae6-4c8a-8745-67a8cfa0634d-1554229977647/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-geosearch-0.0.2-fcaeeb16-630b-42a7-99ca-a974921c921d-1554251838930/node_modules/@bit/deepstream-ngx"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-geosearch-0.0.2-fcaeeb16-630b-42a7-99ca-a974921c921d-1554251838930/node_modules/@bit/gtrack-interfaces"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/entity" "~7.1.0"
     "@ngrx/store" "~7.1.0"
@@ -484,13 +484,14 @@
   version "0.0.2"
 
 "@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map", "@bit/garlictech.angular-features.common.leaflet-map@file:src/features/common/leaflet-map":
-  version "0.0.18"
+  version "0.0.23"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.18-cab033bc-27bf-4ab2-9432-da53eecefe41-1554229977517/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.18-cab033bc-27bf-4ab2-9432-da53eecefe41-1554229977517/node_modules/@bit/marker-icons"
-    "@bit/garlictech.angular-features.web.spinner" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.18-cab033bc-27bf-4ab2-9432-da53eecefe41-1554229977517/node_modules/web/spinner"
+    "@bit/garlictech.angular-features.common.current-geolocation" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.23-c51a00d6-6e85-4deb-93b9-358a30ad8c67-1554251838704/node_modules/@bit/current-geolocation"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.23-c51a00d6-6e85-4deb-93b9-358a30ad8c67-1554251838704/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.23-c51a00d6-6e85-4deb-93b9-358a30ad8c67-1554251838704/node_modules/@bit/marker-icons"
+    "@bit/garlictech.angular-features.web.spinner" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.23-c51a00d6-6e85-4deb-93b9-358a30ad8c67-1554251838704/node_modules/web/spinner"
     "@ngrx/store" "~7.1.0"
     geojson "^0.5.0"
     leaflet "^1.0.3"
@@ -502,33 +503,42 @@
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.localization@file:./src/features/common/localization", "@bit/garlictech.angular-features.common.localization@file:src/features/common/localization":
-  version "0.0.7"
+  version "0.0.8"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
     "@ngrx/store" "~7.1.0"
     "@ngx-translate/core" "^11.0.1"
-    "@ngx-translate/http-loader" "^4.0.0"
     lodash-es "^4.17.11"
     ng2-logger "2.0.46"
 
 "@bit/garlictech.angular-features.common.marker-icons@file:./src/features/common/marker-icons", "@bit/garlictech.angular-features.common.marker-icons@file:src/features/common/marker-icons":
-  version "0.0.3"
+  version "0.0.4"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
+    "@angular/router" "7.2.11"
+    "@ngrx/entity" "7.1.0"
+    "@ngrx/store" "7.1.0"
     angular-svg-icon "7.2.0"
+    lodash "4.17.11"
+    rxjs "6.3.3"
 
 "@bit/garlictech.angular-features.common.multi-language-text@file:./src/features/common/multi-language-text":
-  version "0.0.6"
+  version "0.0.7"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.6-71519c17-f9f0-4461-a53e-f32e24911ff6-1554229977623/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.6-71519c17-f9f0-4461-a53e-f32e24911ff6-1554229977623/node_modules/@bit/localization"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.7-b94046a6-4907-4ebe-bfa6-7210cdcc1478-1554251838911/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.7-b94046a6-4907-4ebe-bfa6-7210cdcc1478-1554251838911/node_modules/@bit/localization"
     "@ngrx/store" "~7.1.0"
     lodash-es "^4.17.11"
     rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.common.progressive-image-loader@file:./src/features/common/progressive-image-loader":
+  version "0.0.1"
+  dependencies:
+    "@angular/core" "~7.2.1"
 
 "@bit/garlictech.angular-features.common.router@file:./src/features/common/router":
   version "0.0.14"
@@ -581,7 +591,7 @@
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
-    "@bit/garlictech.angular-features.common.generic-ui" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-generic-ui-primeng-0.0.1-616e2cb7-9539-49f0-9835-385c3991c86a-1554229977634/node_modules/common/generic-ui"
+    "@bit/garlictech.angular-features.common.generic-ui" "0.0.12"
     "@fortawesome/angular-fontawesome" "^0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@ngrx/store" "~7.1.0"
@@ -590,18 +600,24 @@
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.web.spinner@file:./src/features/web/spinner", "@bit/garlictech.angular-features.web.spinner@file:src/features/web/spinner":
-  version "0.0.6"
+  version "0.0.7"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.spinner" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-spinner-0.0.6-60545b2f-4685-452a-b0e6-4ce99973444c-1554229977529/node_modules/common/spinner"
+    "@bit/garlictech.angular-features.common.spinner" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-spinner-0.0.7-fb78b4bc-ee33-4608-9f18-3fda1f59ed7e-1554251838740/node_modules/common/spinner"
+
+"@bit/garlictech.angular-features.web.text-carousel@file:./src/features/web/text-carousel":
+  version "0.0.5"
+  dependencies:
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-text-carousel-0.0.5-5545e970-1692-4533-9769-420f47d2f454-1554251839202/node_modules/common/localization"
 
 "@bit/garlictech.angular-features.web.weather@file:./src/features/web/weather":
   version "0.0.6"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.weather" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-weather-0.0.6-e5f2e37a-6670-4368-9542-00a12d1ce769-1554229977639/node_modules/common/weather"
+    "@bit/garlictech.angular-features.common.weather" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-weather-0.0.6-45307c1f-653e-4244-85d1-b04d30ad77a8-1554251838924/node_modules/common/weather"
     "@ngrx/store" "~7.1.0"
     angular-svg-icon "^7.0.0"
     primeng "~7.0.0"
@@ -852,7 +868,7 @@
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-7.1.0.tgz#c42966a92096d605b72a1959599ad6c90a1e15a2"
   integrity sha512-0oF9VaixL8TNzIyBfFieLXunoz66uuceGfh5EaepQu+qPcVhnFq5KvYHDQOdCq0uuQYB7rVwNFYjOD7pO5LE5A==
 
-"@ngrx/entity@~7.1.0":
+"@ngrx/entity@7.1.0", "@ngrx/entity@~7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-7.1.0.tgz#342b2c99a839eb788f51a8aa9398c5a4e493e35f"
   integrity sha512-blCV88FKOY3FMFoTaOslp5pQu5QTWSCxorU/s2Bl8ThhnolHUsX/Nx3IaEtBr5sWW2z7mY/95qY294iXvfeM9w==
@@ -872,7 +888,7 @@
   resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-7.4.0.tgz#5a73469c70322351c4224f4529c5123f587a5997"
   integrity sha512-ZmPpquprBYUozbLuLMLZzUhI+LnMNGMNg8x1ij9yDxXWQADcJm1Zu7kouYE1r5SoCYxKfwJ3Ia1VQfS3A5S8dw==
 
-"@ngrx/store@~7.1.0":
+"@ngrx/store@7.1.0", "@ngrx/store@~7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-7.1.0.tgz#072f22e062e264c62859f37d9807dfac860f161d"
   integrity sha512-tM8ZGxbLTyQ5JUHow3/PSFU3FWfYJs/wAVyRlxzTxfY7Krs/TJ64GgI4lOa6gVizi2UiYfLtI31pJrxzXyxEoA==
@@ -2651,13 +2667,13 @@ browserify-zlib@^0.2.0:
     pako "~1.0.5"
 
 browserslist@^4.3.6:
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.5.3.tgz#969495c410314bc89f14e748505e58be968080f1"
-  integrity sha512-Tx/Jtrmh6vFg24AelzLwCaCq1IUJiMDM1x/LPzqbmbktF8Zo7F9ONUpOWsFK6TtdON95mSMaQUWqi0ilc8xM6g==
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.5.4.tgz#166c4ecef3b51737a42436ea8002aeea466ea2c7"
+  integrity sha512-rAjx494LMjqKnMPhFkuLmLp8JWEX0o8ADTGeAbOqaF+XCvYLreZrG5uVjnPBlAQ8REZK4pzXGvp0bWgrFtKaag==
   dependencies:
     caniuse-lite "^1.0.30000955"
     electron-to-chromium "^1.3.122"
-    node-releases "^1.1.12"
+    node-releases "^1.1.13"
 
 browserstack@^1.5.1:
   version "1.5.2"
@@ -4545,11 +4561,6 @@ expand-tilde@^2.0.0, expand-tilde@^2.0.2:
   integrity sha1-l+gBqgUt8CRU3kawK/YhZCzchQI=
   dependencies:
     homedir-polyfill "^1.0.1"
-
-expect.js@~0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/expect.js/-/expect.js-0.2.0.tgz#1028533d2c1c363f74a6796ff57ec0520ded2be1"
-  integrity sha1-EChTPSwcNj90pnlv9X7AUg3tK+E=
 
 expect@^24.6.0:
   version "24.6.0"
@@ -7017,7 +7028,7 @@ lodash.tail@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.tail/-/lodash.tail-4.1.1.tgz#d2333a36d9e7717c8ad2f7cacafec7c32b444664"
   integrity sha1-0jM6NtnncXyK0vfKyv7HwytERmQ=
 
-lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@~4.17.10:
+lodash@4.17.11, lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@~4.17.10:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
@@ -7753,7 +7764,7 @@ node-pre-gyp@^0.10.0:
     semver "^5.3.0"
     tar "^4"
 
-node-releases@^1.1.12:
+node-releases@^1.1.13:
   version "1.1.13"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.13.tgz#8c03296b5ae60c08e2ff4f8f22ae45bd2f210083"
   integrity sha512-fKZGviSXR6YvVPyc011NHuJDSD8gFQvLPmc2d2V3BS4gr52ycyQ1Xzs7a8B+Ax3Ni/W+5h1h4SqmzeoA8WZRmA==
@@ -9143,16 +9154,6 @@ readable-stream@^3.0.6:
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
 
-readable-stream@~1.1.0:
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
-  integrity sha1-fPTFTvZI44EwhMY23SB54WbAgdk=
-  dependencies:
-    core-util-is "~1.0.0"
-    inherits "~2.0.1"
-    isarray "0.0.1"
-    string_decoder "~0.10.x"
-
 readable-stream@~2.0.0:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
@@ -9740,16 +9741,13 @@ shallow-clone@^1.0.0:
     mixin-object "^2.0.1"
 
 sharkdown@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/sharkdown/-/sharkdown-0.1.0.tgz#61d4fe529e75d02442127cc9234362265099214f"
-  integrity sha1-YdT+Up510CRCEnzJI0NiJlCZIU8=
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/sharkdown/-/sharkdown-0.1.1.tgz#64484bd0f08f347f8319e9ff947a670f6b48b1b2"
+  integrity sha512-exwooSpmo5s45lrexgz6Q0rFQM574wYIX3iDZ7RLLqOb7IAoQZu9nxlZODU972g19sR69OIpKP2cpHTzU+PHIg==
   dependencies:
     cardinal "~0.4.2"
-    expect.js "~0.2.0"
     minimist "0.0.5"
     split "~0.2.10"
-    stream-spigot "~2.1.2"
-    through "~2.3.4"
 
 shebang-command@^1.2.0:
   version "1.2.0"
@@ -10221,13 +10219,6 @@ stream-shift@^1.0.0:
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
   integrity sha1-1cdSgl5TZ+eG944Y5EXqIjoVWVI=
 
-stream-spigot@~2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/stream-spigot/-/stream-spigot-2.1.2.tgz#7de145e819f8dd0db45090d13dcf73a8ed3cc035"
-  integrity sha1-feFF6Bn43Q20UJDRPc9zqO08wDU=
-  dependencies:
-    readable-stream "~1.1.0"
-
 string-argv@0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/string-argv/-/string-argv-0.1.1.tgz#66bd5ae3823708eaa1916fa5412703150d4ddfaf"
@@ -10535,7 +10526,7 @@ through2@^2.0.0:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
 
-through@2, "through@>=2.2.7 <3", through@X.X.X, through@^2.3.6, through@~2.3.4:
+through@2, "through@>=2.2.7 <3", through@X.X.X, through@^2.3.6:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
@@ -10822,9 +10813,9 @@ tsutils@^2.29.0:
     tslib "^1.8.1"
 
 tsutils@^3.0.0, tsutils@^3.5.0, tsutils@^3.6.0:
-  version "3.9.1"
-  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-3.9.1.tgz#2a40dc742943c71eca6d5c1994fcf999956be387"
-  integrity sha512-hrxVtLtPqQr//p8/msPT1X1UYXUjizqSit5d9AQ5k38TcV38NyecL5xODNxa73cLe/5sdiJ+w1FqzDhRBA/anA==
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-3.10.0.tgz#6f1c95c94606e098592b0dff06590cf9659227d6"
+  integrity sha512-q20XSMq7jutbGB8luhKKsQldRKWvyBO2BGqni3p4yq8Ys9bEP/xQw3KepKmMRt9gJ4lvQSScrihJrcKdKoSU7Q==
   dependencies:
     tslib "^1.8.1"
 
