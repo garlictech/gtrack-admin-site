@@ -264,6 +264,12 @@
     "branch": "staging"
   },
   "browserslist": "last 2 versions",
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-s format:fix:l",
+      "pre-push": "run-s lint:l build:prod:l unittest:l"
+    }
+  },
   "workspaces": [
     "components/.dependencies/**/*",
     "src/features/{namespace}/{name}/**/*",
