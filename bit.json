@@ -2,7 +2,7 @@
   "env": {},
   "dependencies": {
     "garlictech.angular-features/common/authentication-api": "0.0.7",
-    "garlictech.angular-features/common/checkpoints": "0.0.5",
+    "garlictech.angular-features/common/checkpoints": "0.0.6",
     "garlictech.angular-features/common/deepstream-ngx": "0.0.2",
     "garlictech.angular-features/common/forms": "0.0.6",
     "garlictech.angular-features/common/generic-ui": "0.0.12",
