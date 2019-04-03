@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>icon/normal/post-box</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/normal/post-box" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M4,7 L8,10 L12,7 L12,11 L4,11 L4,7 Z M8,8 L4,5 L12,5 L8,8 Z M14,16 L14,15 L2,15 L2,16 L0,16 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 L14,0 C15.1045695,-2.02906125e-16 16,0.8954305 16,2 L16,16 L14,16 Z M14,13 L14,3 L2,3 L2,13 L14,13 Z M4.5,2 L11.5,2 C11.7761424,2 12,1.77614237 12,1.5 C12,1.22385763 11.7761424,1 11.5,1 L4.5,1 C4.22385763,1 4,1.22385763 4,1.5 C4,1.77614237 4.22385763,2 4.5,2 Z" id="icon" fill="#7C7CF0" fill-rule="nonzero"></path>
+    </g>
+</svg>

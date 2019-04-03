@@ -1,14 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SearchFilterActions, SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
 import { FormDescriptor, RangeSliderField, SliderField } from '@features/common/forms';
-
-import * as filterActions from '../../../search-filters/store/actions';
-
-import { SearchFiltersSelectors } from '../../../search-filters/store';
+import { select, Store } from '@ngrx/store';
 
 @Component({
   selector: 'gtrack-common-search-filters',
@@ -17,7 +14,9 @@ import { SearchFiltersSelectors } from '../../../search-filters/store';
 export class SearchFiltersComponent implements OnInit, OnDestroy {
   formDescriptor: FormDescriptor;
   filterForm: FormGroup;
-  showFilters: boolean;
+
+  @Output() readonly closeClick: EventEmitter<void>;
+
   private readonly _defaultFormConfig: any;
   private readonly _destroy$: Subject<boolean>;
 
@@ -26,12 +25,12 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     private readonly _store: Store<any>,
     private readonly _searchFiltersSelectors: SearchFiltersSelectors
   ) {
-    this.showFilters = false;
     this._destroy$ = new Subject<boolean>();
+    this.closeClick = new EventEmitter<void>();
 
     this._defaultFormConfig = {
       radius: 50,
-      difficulty: [[0, 10]],
+      difficulty: [[1, 5]],
       length: [[0, 50]],
       time: [[0, 60]]
     };
@@ -52,9 +51,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
         }),
         difficulty: new RangeSliderField({
           label: 'common.hike.location-search.difficulty',
-          min: 0,
-          max: 10,
-          defaultValue: [3, 9],
+          min: 1,
+          max: 5,
+          defaultValue: [1, 5],
           submitOnChange: true
         }),
         length: new RangeSliderField({
@@ -109,7 +108,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
 
   onChanges(value): void {
     this._store.dispatch(
-      new filterActions.ChangeFilters({
+      new SearchFilterActions.ChangeFilters({
         radius: value.radius * 1000,
         difficulty: [value.difficulty[0], value.difficulty[1]],
         length: [value.length[0] * 1000, value.length[1] * 1000],
@@ -118,7 +117,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     );
   }
 
-  toggleFilters(): void {
-    this.showFilters = !this.showFilters;
+  onClose(): void {
+    this.closeClick.emit();
   }
 }

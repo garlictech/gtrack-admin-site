@@ -1,10 +1,12 @@
+import _pickBy from 'lodash-es/pickBy';
+
 import { Inject, Injectable } from '@angular/core';
+import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
+import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
 import { EObjectState, HikeProgramStored } from '@features/common/gtrack-interfaces';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
-import _pickBy from 'lodash-es/pickBy';
-import { GeoSearchSelectors } from '../../../geosearch';
-import { SearchFiltersSelectors } from '../../../search-filters';
+
 import { EXTERNAL_HIKE_DEPENDENCIES, ExternalHikeDependencies } from '../../externals';
 import { hikeAdapter, HikeContextState, hikeContextStateAdapter, HikeState } from './state';
 
@@ -95,9 +97,13 @@ export class HikeSelectors {
     );
   }
 
+  getSearchResults(context: string): MemoizedSelector<object, Array<HikeProgramStored>> {
+    return this._geoSearchSelectors.getGeoSearchResults<HikeProgramStored>(context, this.getAllHikes);
+  }
+
   getFilteredSearchResults(context: string): MemoizedSelector<object, Dictionary<any>> {
     return createSelector(
-      this._geoSearchSelectors.getGeoSearchResults<HikeProgramStored>(context, this.getAllHikes),
+      this.getSearchResults(context),
       this._searchFiltersSelectors.getFilters,
       (hikes, filters) => {
         if (!(hikes instanceof Array)) {

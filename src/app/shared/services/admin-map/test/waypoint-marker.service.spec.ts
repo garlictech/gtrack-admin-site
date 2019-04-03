@@ -280,8 +280,8 @@ describe('WaypointMarkerService', () => {
     const title = 'mockTitle';
     const expected = L.divIcon({
       html: `<span>${title}</span>`,
-      iconSize: [25, 41],
-      iconAnchor: [13, 41],
+      iconSize: [21, 34],
+      iconAnchor: [11, 34],
       className: 'routing-control-marker'
     });
 

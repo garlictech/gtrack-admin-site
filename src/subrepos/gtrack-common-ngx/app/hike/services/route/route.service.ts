@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { DeepstreamService } from '@features/common/deepstream-ngx';
-import { EObjectState, RouteData, RouteSaveResponse, RouteStored } from '@features/common/gtrack-interfaces';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import {
+  EObjectState,
+  RouteData,
+  RouteSaveResponse,
+  RouteStored
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { geoBounds as d3GeoBounds } from 'd3-geo';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';

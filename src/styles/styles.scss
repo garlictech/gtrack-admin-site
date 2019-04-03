@@ -8,7 +8,7 @@
 @import '~leaflet/dist/leaflet.css';
 @import '~leaflet.fullscreen/Control.FullScreen.css';
 @import '~leaflet-usermarker/src/leaflet.usermarker.css';
-@import '../subrepos/gtrack-common-web/styles';
+
 @import 'mixins';
 @import 'defaults';
 @import 'utilities';
@@ -18,16 +18,20 @@ a {
 }
 
 .routing-control-marker {
-  background-image: url('/assets/img/marker-icon.png') !important;
+  background-image: url('/assets/img/pin.svg') !important;
   background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+
   border: 0;
   text-align: center;
   span {
     position: relative;
-    top: -30px;
-    color: white;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-size: 20px;
+    font-family: 'sans-serif';
+    top: 2px;
+    color: black;
+    font-size: 13px;
+    font-weight: bold;
   }
 }
 

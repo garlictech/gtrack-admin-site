@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getMapId with input {"features.leaflet-map":{"mapId":"foobar"}} 1`] = `"foobar"`;
+
+exports[`selectFeatureId with input {"features.leaflet-map":{"mapId":"foobar","featureId":2}} 1`] = `2`;

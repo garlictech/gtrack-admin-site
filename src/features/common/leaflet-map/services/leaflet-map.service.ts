@@ -32,6 +32,7 @@ export class LeafletMapService {
 
   baseLayers: LeafletTileLayerDef;
   overlayLayers: LeafletTileLayerDef;
+  geoJSONLayerGroup: L.GeoJSON;
 
   protected _currentPositionMarker: CurrentPositionMarker;
 
@@ -110,23 +111,23 @@ export class LeafletMapService {
     }
   }
 
-  fitBounds(box: L.LatLngBoundsExpression): L.Map {
+  fitBounds(box: L.LatLngBoundsExpression): void {
     if (this.leafletMap) {
       this.leafletMap.invalidateSize();
 
-      return this.leafletMap.fitBounds(box, {
+      this.leafletMap.fitBounds(box, {
         padding: [50, 50]
       });
     }
   }
 
-  fitRouteBounds(route: RouteData): L.Map {
+  fitRouteBounds(route: RouteData): void {
     const bounds: L.LatLngBoundsExpression = [
       [route.bounds.NorthEast.lat, route.bounds.NorthEast.lon],
       [route.bounds.SouthWest.lat, route.bounds.SouthWest.lon]
     ];
 
-    return this.fitBounds(bounds);
+    this.fitBounds(bounds);
   }
 
   getCurrentPositionMarker(): CurrentPositionMarker {
@@ -141,6 +142,12 @@ export class LeafletMapService {
     const geoJSON = L.geoJSON(geoJson, {
       style: geoJsonStyle
     });
+
+    if (this.geoJSONLayerGroup) {
+      this.geoJSONLayerGroup.addLayer(geoJSON);
+    } else {
+      this.geoJSONLayerGroup = geoJSON;
+    }
 
     return this.addLayer(geoJSON) as L.GeoJSON;
   }
@@ -171,6 +178,9 @@ export class LeafletMapService {
     if (layer && this.leafletMap && this.leafletMap.hasLayer(layer)) {
       this.leafletMap.removeLayer(layer);
     }
+    if (layer && this.geoJSONLayerGroup && this.geoJSONLayerGroup.hasLayer(layer)) {
+      this.geoJSONLayerGroup.removeLayer(layer);
+    }
   }
 
   createMarkersGroup(markers: Array<L.Marker> | Array<any>): L.LayerGroup {
@@ -188,5 +198,12 @@ export class LeafletMapService {
         this.overlappingMarkerSpiderfier.addMarker(marker);
       }
     }
+  }
+
+  updateFeature(oldId: number, newLayer: GeoJsonObject): number {
+    this.removeLayer(this.geoJSONLayerGroup.getLayer(oldId));
+    const layer = this.addGeoJSONObject(newLayer, undefined);
+
+    return this.geoJSONLayerGroup.getLayerId(layer);
   }
 }

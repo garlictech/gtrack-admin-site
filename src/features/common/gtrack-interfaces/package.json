@@ -1,7 +1,7 @@
 {
   "name": "@bit/garlictech.angular-features.common.gtrack-interfaces",
-  "version": "0.0.1",
-  "homepage": "https://bitsrc.io/garlictech/angular-features/common/gtrack-interfaces",
+  "version": "0.0.2",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/gtrack-interfaces",
   "main": "index.ts",
   "dependencies": {},
   "devDependencies": {},

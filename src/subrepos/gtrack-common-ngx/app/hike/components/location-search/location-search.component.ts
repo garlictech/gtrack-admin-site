@@ -1,9 +1,20 @@
-import * as fromGeoLocationActions from 'features/common/current-geolocation/store/actions';
 import _get from 'lodash-es/get';
 import { NEVER, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 
-import { Component, ElementRef, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import { GeoSearchActions } from '@bit/garlictech.angular-features.common.geosearch';
+import { SearchFilterActions } from '@bit/garlictech.angular-features.common.search-filters';
 import { GeoPosition } from '@features/common/current-geolocation';
 import * as fromCurrentLocationSelectors from '@features/common/current-geolocation/store/selectors';
 import { faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -11,9 +22,6 @@ import { select, Store } from '@ngrx/store';
 import distance from '@turf/distance';
 import { Coord as turfCoord } from '@turf/helpers';
 
-import * as geoSearchActions from '../../../geosearch/store/actions';
-import * as searchFilterActions from '../../../search-filters/store/actions';
-import { SearchFiltersSelectors } from '../../../search-filters/store/selectors';
 import { GoogleMapsService } from '../../../shared';
 
 @Component({
@@ -24,6 +32,10 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   @Input() context: string;
 
   @Input() placeholder: string;
+  @Input() displaySidebar;
+
+  @Output() readonly displaySidebarChange: EventEmitter<boolean>;
+  @Output() readonly search: EventEmitter<GeoJSON.Position>;
 
   icon: IconDefinition;
 
@@ -41,8 +53,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   constructor(
     private readonly _googleMapsService: GoogleMapsService,
     private readonly _ngZone: NgZone,
-    private readonly _store: Store<any>,
-    private readonly _searchFiltersSelectors: SearchFiltersSelectors
+    private readonly _store: Store<any>
   ) {
     this.icon = faSearch;
 
@@ -53,15 +64,17 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
 
     this._destroy$ = new Subject<boolean>();
     this._locate$ = new Subject<boolean>();
+    this.displaySidebarChange = new EventEmitter();
+    this.search = new EventEmitter<GeoJSON.Position>();
   }
 
   ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
-    this._store.dispatch(new fromGeoLocationActions.StartPositioning());
   }
 
   ngOnInit(): void {
+    this.displaySidebar = true;
     this._input = this._searchElementRef.nativeElement;
 
     if (!(this._input instanceof HTMLInputElement)) {
@@ -94,29 +107,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
         .catch(() => undefined);
     }
 
-    this._store
-      .pipe(
-        select(fromCurrentLocationSelectors.selectTracking),
-        take(1)
-      )
-      .subscribe(tracking => {
-        if (!tracking) {
-          this._store.dispatch(new fromGeoLocationActions.EndPositioning());
-        }
-      });
-
     this._initLocation();
-
-    this._store
-      .pipe(
-        select(this._searchFiltersSelectors.getFilter('radius')),
-        takeUntil(this._destroy$),
-        filter(radius => !!radius && this._radius !== radius)
-      )
-      .subscribe(radius => {
-        this._radius = radius;
-        this._search();
-      });
   }
 
   protected _search(): any {
@@ -126,7 +117,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
 
     if (this._address) {
       this._store.dispatch(
-        new searchFilterActions.ChangeFilters({
+        new SearchFilterActions.ChangeFilters({
           location: this._address,
           center: this._location
         })
@@ -134,7 +125,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     }
 
     this._store.dispatch(
-      new geoSearchActions.SearchInCircle(
+      new GeoSearchActions.SearchInCircle(
         {
           table: 'hike_programs',
           circle: {
@@ -154,7 +145,9 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     }
 
     this._locate$.next(false);
-    this._search();
+    this.search.emit(this._location);
+    this.displaySidebar = false;
+    this.displaySidebarChange.emit(this.displaySidebar);
   }
 
   requestLocation(): void {
@@ -164,6 +157,8 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     }
 
     this._locate$.next(true);
+    this.displaySidebar = false;
+    this.displaySidebarChange.emit(this.displaySidebar);
   }
 
   onRadiusChange(data: number): void {
@@ -200,9 +195,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
       .subscribe((coords: Array<number>) => {
         this._address = 'my-location';
         this._location = coords;
-        this._search();
+        this.search.next(this._location);
       });
-
-    this._locate$.next(true);
   }
 }

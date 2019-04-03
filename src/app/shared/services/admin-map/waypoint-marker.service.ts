@@ -1,20 +1,19 @@
 import { environment } from 'environments/environment';
 import * as L from 'leaflet';
 import _chunk from 'lodash-es/chunk';
-import _get from 'lodash-es/get';
 import _map from 'lodash-es/map';
 import { interval, of } from 'rxjs';
 import { combineAll, flatMap, take } from 'rxjs/operators';
 import { ElevationService } from 'subrepos/gtrack-common-ngx';
 
 import { Injectable } from '@angular/core';
-
+import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons';
 import { Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
 
-import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import { HttpClient } from '../../../../../node_modules/@angular/common/http';
 import { State } from '../../../store';
 import { hikeEditRoutePlannerActions } from '../../../store/actions';
@@ -179,10 +178,12 @@ export class WaypointMarkerService {
     }
 
     if (this._markers.length > 0) {
-      this._markers[0].setIcon(this._leafletIconService.getLeafletIcon(['start'], 'default'));
+      this._markers[0].setIcon(this._leafletIconService.getLeafletIcon(['start']));
       this._markers[0].setZIndexOffset(10000);
 
-      this._markers[this._markers.length - 1].setIcon(this._leafletIconService.getLeafletIcon(['finish'], 'default'));
+      this._markers[this._markers.length - 1].setIcon(
+        this._leafletIconService.getLeafletIcon(['finish'], EIconStyle.DEFAULT)
+      );
       this._markers[this._markers.length - 1].setZIndexOffset(10000);
     }
 
@@ -323,8 +324,8 @@ export class WaypointMarkerService {
   private _getSingleMarkerIcon(title: string): L.DivIcon {
     return L.divIcon({
       html: `<span>${title}</span>`,
-      iconSize: [25, 41],
-      iconAnchor: [13, 41],
+      iconSize: [21, 34],
+      iconAnchor: [11, 34],
       className: 'routing-control-marker'
     });
   }

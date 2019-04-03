@@ -2,6 +2,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { GalleriaModule } from 'primeng/galleria';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { SliderModule } from 'primeng/slider';
 import { AstronomyModule } from 'subrepos/gtrack-common-ngx';
 
@@ -22,7 +23,7 @@ import { BookmarkComponent } from './bookmark';
 import { CheckpointsComponent } from './checkpoints';
 import { DownloadGpxButtonComponent } from './download-gpx-button';
 import { ElevationProfileComponent } from './elevation-profile';
-import { HikeCardComponent } from './hike-card';
+import { CardShadowDirective, HikeCardComponent } from './hike-card';
 import { HikeDataItemComponent } from './hike-data-item';
 import { HikeDayComponent } from './hike-day';
 import { HikeInfoComponent } from './hike-info';
@@ -38,13 +39,8 @@ import { SearchFiltersComponent } from './search-filters';
 import { SearchResultsMapComponent } from './search-results-map';
 import { TrailBoxComponent } from './trail-box';
 
-const WEATHER_CONFIG = {
-  openWeatherMap: {
-    key: 'e5a0aba93cfca3ee54c272133018df78'
-  }
-};
-
 const COMPONENTS = [
+  CardShadowDirective,
   TrailBoxComponent,
   HikeCardComponent,
   HikeInfoComponent,
@@ -83,9 +79,10 @@ const COMPONENTS = [
     FormModule,
     AstronomyModule,
     AngularSvgIconModule,
-    BaseWeatherModule.forRoot(WEATHER_CONFIG),
+    BaseWeatherModule,
     WeatherModule,
-    SliderModule
+    SliderModule,
+    SelectButtonModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS]

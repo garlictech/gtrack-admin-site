@@ -7,7 +7,7 @@ import { TrailBoxComponent } from '../trail-box';
 import { DebugLog, log } from 'app/log';
 import { BehaviorSubject } from 'rxjs';
 
-import { WeatherEntity } from '@features/common/weather/store';
+import { WeatherEntity } from '@bit/garlictech.angular-features.common.weather/store';
 
 @Component({
   selector: 'gtrack-hike-map',

@@ -4,7 +4,8 @@ import { LeafletMapAction } from './index';
 import { State } from './state';
 
 export const initialState: State = {
-  mapId: ''
+  mapId: '',
+  featureId: undefined
 };
 
 export function reducer(state = initialState, action: LeafletMapAction): State {
@@ -16,6 +17,12 @@ export function reducer(state = initialState, action: LeafletMapAction): State {
       return {
         ...state,
         mapId: action.mapId
+      };
+
+    case ActionTypes.AddFeature:
+      return {
+        ...state,
+        featureId: action.payload.id
       };
 
     default:

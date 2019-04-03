@@ -21,12 +21,12 @@ import {
   CenterRadius,
   ElevationService,
   GeometryService,
-  GeoSearchSelectors,
   GeospatialService,
   PoiSelectors
 } from 'subrepos/gtrack-common-ngx';
 
 import { Injectable } from '@angular/core';
+import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
 import {
   BackgroundImageData,
   EPoiTypes,

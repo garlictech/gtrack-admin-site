@@ -1,12 +1,18 @@
 {
   "name": "@bit/garlictech.angular-features.common.router",
-  "version": "0.0.11",
-  "homepage": "https://bitsrc.io/garlictech/angular-features/common/router",
+  "version": "0.0.14",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/router",
   "main": "index.ts",
   "dependencies": {
+    "@angular/core": "~7.2.1",
+    "@ngrx/effects": "~7.1.0",
+    "@ngrx/router-store": "~7.1.0",
+    "@ngrx/store": "~7.1.0",
+    "@angular/router": "~7.2.1",
+    "@angular/common": "~7.2.1",
     "rxjs": "~6.3.3",
-    "lodash": "4.17.11",
-    "jest-marbles": "2.1.0"
+    "lodash": "^4.17.11",
+    "jest-marbles": "^2.1.0"
   },
   "devDependencies": {},
   "peerDependencies": {},

@@ -1,14 +1,16 @@
-import { TestBed } from '@angular/core/testing';
-import { LeafletMapMarker } from '../leaflet-map-marker';
-import { LeafletIconService } from '../../leaflet-icon.service';
-
 import * as L from 'leaflet';
+
+import { TestBed } from '@angular/core/testing';
+import { EIconStyle } from '@bit/garlictech.angular-features.common.leaflet-map/node_modules/@bit/garlictech.angular-features.common.marker-icons/enums';
+
+import { LeafletIconService } from '../../leaflet-icon.service';
+import { LeafletMapMarker } from '../leaflet-map-marker';
 
 describe('LeafletMapMarker', () => {
   let leafletMapMarker: LeafletMapMarker;
   let leafletIconService: LeafletIconService;
   let mapElement: HTMLDivElement;
-  let map: L.Map;
+  let lMap: L.Map;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -24,11 +26,11 @@ describe('LeafletMapMarker', () => {
 
     leafletIconService = TestBed.get(LeafletIconService);
     mapElement = document.createElement('div');
-    map = L.map(mapElement);
+    lMap = L.map(mapElement);
   });
 
   it('should be created', () => {
-    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, null);
+    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, undefined);
     expect(leafletMapMarker).toBeTruthy();
     expect(leafletMapMarker.marker).toBeInstanceOf(L.Marker);
   });
@@ -38,7 +40,7 @@ describe('LeafletMapMarker', () => {
       popupComponentName: 'FakePopup',
       markerClickCallback: jest.fn(),
       closeCallback: jest.fn(),
-      map: map,
+      map: lMap,
       data: {}
     };
 
@@ -52,32 +54,32 @@ describe('LeafletMapMarker', () => {
   });
 
   it('should toggle highlight', () => {
-    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, null);
+    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, undefined);
 
-    leafletMapMarker['_highlighted'] = false;
+    (leafletMapMarker as any)._highlighted = false;
 
     const iconSpy = jest.spyOn(leafletMapMarker.marker, 'setIcon');
 
-    const highlightIcon = leafletIconService.getLeafletIcon('cafe', 'highlight');
+    const highlightIcon = leafletIconService.getLeafletIcon('cafe', EIconStyle.HIGHLIGHTED);
     leafletMapMarker.toggleHighlight();
-    expect(leafletMapMarker['_highlighted']).toBeTruthy();
+    expect((leafletMapMarker as any)._highlighted).toBeTruthy();
     expect(iconSpy).toBeCalledWith(highlightIcon);
 
-    const defaultIcon = leafletIconService.getLeafletIcon('cafe', 'default');
+    const defaultIcon = leafletIconService.getLeafletIcon('cafe', EIconStyle.DEFAULT);
     leafletMapMarker.toggleHighlight();
-    expect(leafletMapMarker['_highlighted']).toBeFalsy();
+    expect((leafletMapMarker as any)._highlighted).toBeFalsy();
     expect(iconSpy).toBeCalledWith(defaultIcon);
   });
 
   it('should add to map', () => {
-    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, null);
+    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, undefined);
 
     const addSpy = jest.spyOn(leafletMapMarker.marker, 'addTo');
-    const fireSpy = jest.spyOn(map, 'fire');
+    const fireSpy = jest.spyOn(lMap, 'fire');
 
-    leafletMapMarker.addToMap(map);
+    leafletMapMarker.addToMap(lMap);
 
-    expect(addSpy).toHaveBeenCalledWith(map);
+    expect(addSpy).toHaveBeenCalledWith(lMap);
 
     leafletMapMarker.marker.fireEvent('click');
 
@@ -85,24 +87,24 @@ describe('LeafletMapMarker', () => {
   });
 
   it('should remove from map', () => {
-    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, null);
+    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, undefined);
 
     const removeSpy = jest.spyOn(leafletMapMarker.marker, 'removeFrom');
 
-    leafletMapMarker.removeFromMap(map);
-    expect(removeSpy).toHaveBeenCalledWith(map);
+    leafletMapMarker.removeFromMap(lMap);
+    expect(removeSpy).toHaveBeenCalledWith(lMap);
   });
 
   it('should get highlighted value with getter', () => {
-    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, null);
+    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, undefined);
 
     const highlighted = leafletMapMarker.highlighted;
 
-    expect(highlighted).toEqual(leafletMapMarker['_highlighted']);
+    expect(highlighted).toEqual((leafletMapMarker as any)._highlighted);
   });
 
   it('should get coordinates value with getter', () => {
-    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, null);
+    leafletMapMarker = new LeafletMapMarker(10, 10, ['cafe'], 'Cafe', leafletIconService, {}, undefined);
 
     const coordinates = leafletMapMarker.coordinates;
 

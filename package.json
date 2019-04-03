@@ -45,7 +45,7 @@
     "clean": "npm run npm clean",
     "commit": "docker/commit.sh",
     "release": "docker/semantic-release.sh",
-    "start": "npm run start:jit",
+    "start": "docker/start-dev.sh",
     "start:poll": "npm run start:poll",
     "start:dev": "npm run start:jit",
     "start:jit": "docker/cmd-with-deps.sh npm start",
@@ -110,6 +110,12 @@
     "@bit/garlictech.angular-features.common.weather": "file:./src/features/common/weather",
     "@bit/garlictech.angular-features.web.generic-ui-primeng": "file:./src/features/web/generic-ui-primeng",
     "@bit/garlictech.angular-features.web.weather": "file:./src/features/web/weather",
+    "@bit/garlictech.angular-features.common.current-geolocation": "file:./src/features/common/current-geolocation",
+    "@bit/garlictech.angular-features.common.marker-icons": "file:./src/features/common/marker-icons",
+    "@bit/garlictech.angular-features.web.spinner": "file:./src/features/web/spinner",
+    "@bit/garlictech.angular-features.common.spinner": "file:./src/features/common/spinner",
+    "@bit/garlictech.angular-features.common.geosearch": "file:./src/features/common/geosearch",
+    "@bit/garlictech.angular-features.common.search-filters": "file:./src/features/common/search-filters",
     "@fortawesome/angular-fontawesome": "^0.3.0",
     "@fortawesome/fontawesome-free": "^5.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
@@ -183,7 +189,8 @@
     "tether": "^1.4.5",
     "togpx": "^0.5.4",
     "zone.js": "~0.8.28",
-    "@bit/garlictech.angular-features.common.current-geolocation": "file:./src/features/common/current-geolocation"
+    "@bit/garlictech.angular-features.common.progressive-image-loader": "file:./src/features/common/progressive-image-loader",
+    "@bit/garlictech.angular-features.web.text-carousel": "file:./src/features/web/text-carousel"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",
@@ -257,12 +264,6 @@
     "branch": "staging"
   },
   "browserslist": "last 2 versions",
-  "husky": {
-    "hooks": {
-      "pre-commit": "run-s format:fix:l",
-      "pre-push": "run-s lint:l build:prod:l unittest:l"
-    }
-  },
   "workspaces": [
     "components/.dependencies/**/*",
     "src/features/{namespace}/{name}/**/*",

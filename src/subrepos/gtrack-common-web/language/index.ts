@@ -15,4 +15,4 @@ import { LanguageSelectorComponent } from './language-selector';
 })
 export class LanguageModule {}
 
-export { Actions, Reducer, LocalizationState } from '@features/common/localization';
+export { Actions, LocalizationState, Reducer } from '@features/common/localization';

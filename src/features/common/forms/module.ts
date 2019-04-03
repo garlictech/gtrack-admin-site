@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { ChipsComponent } from './chips/chips.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { DropdownSelectComponent } from './dropdown-select/dropdown-select.component';

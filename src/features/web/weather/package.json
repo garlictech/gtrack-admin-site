@@ -1,7 +1,7 @@
 {
   "name": "@bit/garlictech.angular-features.web.weather",
   "version": "0.0.6",
-  "homepage": "https://bitsrc.io/garlictech/angular-features/web/weather",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/weather",
   "main": "index.ts",
   "dependencies": {
     "@angular/common": "~7.2.1",

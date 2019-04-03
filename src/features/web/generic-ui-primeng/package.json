@@ -1,7 +1,7 @@
 {
   "name": "@bit/garlictech.angular-features.web.generic-ui-primeng",
   "version": "0.0.1",
-  "homepage": "https://bitsrc.io/garlictech/angular-features/web/generic-ui-primeng",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/generic-ui-primeng",
   "main": "index.ts",
   "dependencies": {
     "@angular/core": "~7.2.1",
@@ -13,15 +13,10 @@
     "@fortawesome/angular-fontawesome": "^0.3.0",
     "@ngx-translate/core": "^11.0.1",
     "primeng": "~7.0.0",
-    "@bit/garlictech.angular-features.common.generic-ui": "file:../../common/generic-ui"
+    "@bit/garlictech.angular-features.common.generic-ui": "0.0.12"
   },
   "devDependencies": {},
   "peerDependencies": {},
   "componentRootFolder": "src/features/web/generic-ui-primeng",
-  "license": "SEE LICENSE IN LICENSE",
-  "bit": {
-    "resolveAliases": {
-      "..": "@bit/garlictech.angular-features.web.generic-ui-primeng/services/generic-ui-platform-service/index.ts"
-    }
-  }
+  "license": "SEE LICENSE IN LICENSE"
 }

@@ -1,7 +1,7 @@
 {
   "name": "@bit/garlictech.angular-features.common.deepstream-ngx",
-  "version": "0.0.1",
-  "homepage": "https://bitsrc.io/garlictech/angular-features/common/deepstream-ngx",
+  "version": "0.0.2",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/deepstream-ngx",
   "main": "index.ts",
   "dependencies": {
     "@garlictech/deepstream-rxjs": "^1.9.2",

@@ -85,6 +85,7 @@ export interface HikeProgramData {
   elevationIcon?: string;
   routeId: string;
   description: LocalizedItem<TextualDescription>;
+  teaser: LocalizedItem<TextualDescription>;
   offlineMap?: string;
   stops: Array<HikeProgramStop>;
   reverseStops: Array<HikeProgramStop>;

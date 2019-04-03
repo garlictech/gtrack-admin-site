@@ -1,30 +1,15 @@
-import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
 
-import { iconmap } from '../assets/icon';
+import { Injectable } from '@angular/core';
+import { EIconStyle, MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeafletIconService {
-  protected iconMap: any;
+  constructor(private readonly _markerIconsService: MarkerIconsService) {}
 
-  constructor() {
-    this.iconMap = iconmap;
-  }
-
-  url(type: string, iconType = 'default'): any {
-    const baseUrl = `/assets/poi-icons/${iconType}`;
-    const fileName = this.iconMap[type] || this.iconMap.unknown;
-
-    return `${baseUrl}/${fileName}`;
-  }
-
-  urls(types: Array<string>, iconType = 'default'): Array<string> {
-    return types.map(type => this.url(type, iconType));
-  }
-
-  getLeafletIcon(types: Array<string> | string = '', iconType = 'default'): L.Icon {
+  getLeafletIcon(types: Array<string> | string = '', iconStyle: EIconStyle = EIconStyle.DEFAULT): L.Icon {
     let type: string;
     let typeArray: Array<string>;
 
@@ -32,7 +17,7 @@ export class LeafletIconService {
     type = typeArray[0] || 'unknown';
 
     return L.icon({
-      iconUrl: this.url(type, iconType),
+      iconUrl: this._markerIconsService.getMarker(type, true, iconStyle),
       iconSize: [32, 37],
       iconAnchor: [16, 37]
     });
