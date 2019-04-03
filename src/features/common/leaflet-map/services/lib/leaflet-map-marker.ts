@@ -78,8 +78,8 @@ export class LeafletMapMarker {
   }
 
   private _refreshHighlight(): void {
-    const iconType = this._highlighted ? 'highlight' : 'default';
+    const iconStyle = this._highlighted ? EIconStyle.HIGHLIGHTED : EIconStyle.DEFAULT;
 
-    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, EIconStyle.DEFAULT));
+    this.marker.setIcon(this.leafletIconService.getLeafletIcon(this.types, iconStyle));
   }
 }
