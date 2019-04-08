@@ -1,15 +1,21 @@
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, Injectable, Injector, Type } from '@angular/core';
-import { LeafletMarkerPopupData } from '../interfaces';
-
 import * as L from 'leaflet';
-
 import _cloneDeep from 'lodash-es/cloneDeep';
+import { Observable, timer } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { ApplicationRef, ComponentFactoryResolver, ComponentRef, Injectable, Injector, Type } from '@angular/core';
+
+import { LeafletMarkerPopupData } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeafletMarkerPopupService {
-  onUserMarkerClick: any;
+  onUserMarkerClick: (
+    marker: L.Marker,
+    popupData: LeafletMarkerPopupData,
+    e: L.LeafletMouseEvent
+  ) => Observable<L.Popup>;
   private _compRef: ComponentRef<any>;
 
   constructor(
@@ -18,7 +24,11 @@ export class LeafletMarkerPopupService {
     private readonly _injector: Injector
   ) {
     // tslint:disable:no-string-literal
-    this.onUserMarkerClick = (marker: L.Marker, popupData: LeafletMarkerPopupData, e: L.LeafletMouseEvent): void => {
+    this.onUserMarkerClick = (
+      marker: L.Marker,
+      popupData: LeafletMarkerPopupData,
+      e: L.LeafletMouseEvent
+    ): Observable<L.Popup> => {
       const factories = Array.from(this._resolver['_factories'].keys());
       const factoryClass = factories.find((x: any) => x.componentName === popupData.popupComponentName) as Type<any>;
 
@@ -27,6 +37,7 @@ export class LeafletMarkerPopupService {
         this._compRef = compFactory.create(this._injector);
 
         // Pass params to the loaded component
+        this._compRef.instance.opened = true;
         this._compRef.instance.data = _cloneDeep(popupData.data);
         this._compRef.instance.closePopup = () => {
           this._compRef.destroy();
@@ -44,16 +55,32 @@ export class LeafletMarkerPopupService {
         const div: HTMLDivElement = document.createElement('div');
         div.appendChild(this._compRef.location.nativeElement);
 
-        // Timeout for waiting appendChild formatting
-        setTimeout(() => {
-          L.popup({
-            offset: L.point(0, -30),
-            minWidth: popupData.data.backgroundImages ? 250 : 205
+        const observable = timer(150).pipe(
+          map(() => {
+            let width = popupData.width || 205;
+
+            if (!popupData.width && popupData.data.backgroundImages) {
+              width = 250;
+            }
+
+            const popup = L.popup({
+              offset: L.point(0, -30),
+              minWidth: width,
+              className: popupData.className || ''
+            });
+
+            popup
+              .setLatLng(e.target.getLatLng())
+              .setContent(div)
+              .openOn(popupData.map);
+
+            return popup;
           })
-            .setLatLng(e.target.getLatLng())
-            .setContent(div)
-            .openOn(popupData.map);
-        }, 150);
+        );
+
+        observable.subscribe();
+
+        return observable;
       }
     };
   }

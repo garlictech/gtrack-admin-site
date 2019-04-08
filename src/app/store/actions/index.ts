@@ -1,5 +1,3 @@
-// tslint:disable:no-property-initializers max-classes-per-file
-import * as commonGeoSearchActions from 'subrepos/gtrack-common-ngx/app/geosearch/store/actions';
 import * as commonHikeActions from 'subrepos/gtrack-common-ngx/app/hike/store/hike/actions';
 import * as commonPoiActions from 'subrepos/gtrack-common-ngx/app/hike/store/poi/actions';
 import * as commonRouteActions from 'subrepos/gtrack-common-ngx/app/hike/store/route/actions';
@@ -7,6 +5,8 @@ import * as routingActions from 'subrepos/gtrack-common-ngx/app/router/store/act
 
 // tslint:disable:max-line-length
 import * as commonBackgroundGeolocationActions from '@bit/garlictech.angular-features.common.current-geolocation/store/actions';
+// tslint:disable:no-property-initializers max-classes-per-file
+import * as commonGeoSearchActions from '@bit/garlictech.angular-features.common.geosearch/store/actions';
 
 import * as editedGTrackPoiActions from './edited-gtrack-poi';
 import * as editedHikeProgramActions from './edited-hike-program';

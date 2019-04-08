@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 
 import { Poi } from '../../../hike/services/poi';
 
@@ -16,11 +16,11 @@ export class IconComponent {
   @Input()
   set poi(poi: Poi) {
     if (poi && poi.types instanceof Array) {
-      this.urls = this.iconService.urls(poi.types);
+      this.urls = poi.types.map((type: string) => this._markerIconsService.getIcon(type, true));
     }
   }
 
-  constructor(private readonly iconService: LeafletIconService) {
+  constructor(private readonly _markerIconsService: MarkerIconsService) {
     this.urls = [];
     this.width = 32;
   }

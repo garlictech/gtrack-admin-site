@@ -1,12 +1,33 @@
 import * as L from 'leaflet';
+import _cloneDeep from 'lodash-es/cloneDeep';
 import _flatten from 'lodash-es/flatten';
-import { Observable, Subject } from 'rxjs';
-import { map as rxjsMap, take, takeUntil } from 'rxjs/operators';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { map as rxjsMap, take, takeUntil, tap } from 'rxjs/operators';
 
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { LeafletMapMarkerService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import {
+  LeafletMapMarkerService,
+  LeafletMapService,
+  LeafletMarkerPopupService
+} from '@bit/garlictech.angular-features.common.leaflet-map';
 import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
-import { Center, LayerDef } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+import {
+  Center,
+  LayerDef,
+  LeafletMarkerPopupData
+} from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leaflet-map/services/lib';
 import { GeoPosition, selectCurrentLocation } from '@features/common/current-geolocation';
 import { select, Store } from '@ngrx/store';
 
@@ -20,29 +41,35 @@ import * as routeActions from '../../store/route/actions';
   selector: 'gtrack-common-hike-list-map',
   template: ''
 })
-export class HikeListMapComponent implements AfterViewInit, OnInit, OnDestroy {
+export class HikeListMapComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   layers: Array<LayerDef>;
 
   center: Center;
 
   @Input() hikePrograms$: Observable<Array<HikeProgram>>;
+  @Input() highlighted: HikeProgram;
+  @Output() readonly hikeClick: EventEmitter<HikeProgram>;
 
   @ViewChild('map') map: LeafletMapComponent;
 
   routes: Array<Route>;
 
   routes$: Observable<Array<Route> | undefined>;
+  routeIds$: Observable<Array<string>>;
 
   protected _geoJsons: Array<Array<L.GeoJSON>>;
   protected _destroy$: Subject<boolean>;
+  protected _markers: Array<LeafletMapMarker>;
 
   constructor(
     protected _store: Store<any>,
     protected _routeSelectors: RouteSelectors,
     protected _leafletMapService: LeafletMapService,
     protected _mapMarker: LeafletMapMarkerService,
-    protected _geometry: GeometryService
+    protected _geometry: GeometryService,
+    protected _leafletMarkerPopupService: LeafletMarkerPopupService
   ) {
+    this.hikeClick = new EventEmitter<HikeProgram>();
     this.layers = [
       {
         name: 'street',
@@ -62,40 +89,69 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this._geoJsons = [];
     this._destroy$ = new Subject<boolean>();
+    this._markers = [];
   }
 
   ngOnInit(): void {
-    this.hikePrograms$.pipe(takeUntil(this._destroy$)).subscribe(hikePrograms => {
-      const routes = hikePrograms.map(hikeProgram => hikeProgram.routeId);
+    const routeIds$ = this.hikePrograms$.pipe(
+      takeUntil(this._destroy$),
+      rxjsMap(hikePrograms => hikePrograms.map(hikeProgram => hikeProgram.routeId))
+    );
 
-      this.routes$ = this._store.pipe(
-        select(this._routeSelectors.getRoutes(routes)),
-        rxjsMap(data => {
-          if (data) {
-            return data
-              .map(routeData => {
-                if (routeData) {
-                  return new Route(routeData);
-                }
-              })
-              .filter(route => typeof route !== 'undefined');
-          }
-        })
-      );
+    const routes$ = this._store.pipe(select(this._routeSelectors.getAllRoutes));
 
-      this._store.pipe(select(this._routeSelectors.getRouteContexts(routes))).subscribe(contexts => {
-        for (const route of routes) {
+    const routeContexts$ = this._store.pipe(select(this._routeSelectors.getAllContexts));
+
+    this.routes$ = combineLatest(routeIds$, routes$, routeContexts$).pipe(
+      tap(([routeIds, routes, contexts]) => {
+        for (const route of routeIds) {
           const routeContext = contexts.find(context => context.id === route);
 
           if (typeof routeContext === 'undefined' || (!routeContext.loaded && !routeContext.loading)) {
             this._store.dispatch(new routeActions.LoadRoute(route));
           }
         }
-      });
-    });
+      }),
+      rxjsMap(([routeIds, routes]) => routes.filter(route => (route.id ? routeIds.indexOf(route.id) !== -1 : false))),
+      rxjsMap(data => {
+        if (data) {
+          return data
+            .map(routeData => {
+              if (routeData) {
+                return new Route(routeData);
+              }
+            })
+            .filter(route => typeof route !== 'undefined');
+        }
+      })
+    );
   }
 
-  protected _centerMap(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.highlighted) {
+      this.highlightMarker(this.highlighted);
+    }
+  }
+
+  highlightMarker(hikeProgram?: HikeProgram): void {
+    let others = this._markers;
+    let activeMarker: LeafletMapMarker | undefined;
+
+    if (hikeProgram && hikeProgram.id) {
+      const id = hikeProgram.id;
+
+      activeMarker = this._markers.find(marker => marker.popupData.data.hikeProgram.id === id);
+      others = this._markers.filter(marker => marker.popupData.data.hikeProgram.id !== id);
+    }
+
+    others.forEach(marker => marker.removeHighlight());
+
+    if (activeMarker) {
+      activeMarker.addHighlight();
+    }
+  }
+
+  centerMap(): void {
     this.hikePrograms$.pipe(takeUntil(this._destroy$)).subscribe(hikePrograms => {
       const points: Array<GeoJSON.Position> = hikePrograms.map(hikeProgram => [
         hikeProgram.stops[0].lon,
@@ -115,13 +171,59 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnDestroy {
     const map = this.map;
 
     this.hikePrograms$.pipe(takeUntil(this._destroy$)).subscribe(hikePrograms => {
+      this._markers.forEach(marker => marker.removeFromMap(this.map.leafletMap));
+      this._markers = [];
+
       for (const hikeProgram of hikePrograms) {
-        const marker = this._mapMarker.create(
+        let marker: LeafletMapMarker | undefined;
+
+        const popupData = {
+          popupComponentName: 'HikeDataPopupComponent',
+          markerClickCallback: (
+            clickedMarker: L.Marker,
+            markerPopupData: LeafletMarkerPopupData,
+            e: L.LeafletMouseEvent
+          ) => {
+            this._leafletMarkerPopupService.onUserMarkerClick(clickedMarker, markerPopupData, e).subscribe(popup => {
+              const content = popup.getContent();
+
+              popup.on('remove', () => {
+                console.log('remove');
+                marker.removeHighlight();
+              });
+
+              if (marker) {
+                marker.addHighlight();
+              }
+
+              if (content instanceof HTMLElement) {
+                L.DomEvent.addListener(content, 'click', () => {
+                  this.hikeClick.emit(markerPopupData.data.hikeProgram);
+                });
+              }
+            });
+          },
+          closeCallback: () => {
+            this.map.leafletMap.closePopup();
+          },
+          map: this.map.leafletMap,
+          data: {
+            hikeProgram: _cloneDeep(hikeProgram)
+          },
+          width: 300,
+          className: 'search-hike-data'
+        };
+
+        marker = this._mapMarker.create(
           hikeProgram.stops[0].lat,
           hikeProgram.stops[0].lon,
           ['hiking'],
-          hikeProgram.title
+          hikeProgram.title,
+          undefined,
+          popupData
         );
+
+        this._markers.push(marker);
 
         marker.addToMap(this.map.leafletMap);
       }
@@ -147,7 +249,7 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this._addHikesToTheMap();
-    this._centerMap();
+    this.centerMap();
   }
 
   ngOnDestroy(): void {

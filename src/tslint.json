@@ -9,6 +9,7 @@
     "cognitive-complexity": false,
     "no-commented-code": false,
     "no-console": false,
-    "no-identical-functions": false
+    "no-identical-functions": false,
+    "unnecessary-else": false
   }
 }

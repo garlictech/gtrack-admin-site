@@ -34,19 +34,19 @@
     "setup": "docker/setup.sh",
     "build": "docker/build-dev.sh $@",
     "build:dev": "npm run build $@",
+    "build:universal": "npm run npm build:universal",
     "build:dev:all": "docker/build-dev-all.sh $@",
     "build:prod": "npm run npm build:prod",
     "build:prod:l": "export NODE_OPTIONS=--max_old_space_size=4096 && ng build --configuration=${PROJECT_CONFIG:-default}",
     "build:prod:debug": "npm run npm build:prod:debug",
-    "build:universal": "npm run npm build:universal",
     "build:prod:stat": "npm run npm build:prod:stat",
     "npm": "docker/cmd.sh npm run $@",
     "ng": "docker/cmd.sh ng $@",
     "clean": "npm run npm clean",
     "commit": "docker/commit.sh",
     "release": "docker/semantic-release.sh",
-    "start": "npm run start:jit",
-    "start:poll": "npm run start:poll",
+    "start": "docker/start-dev.sh & ngtw watch",
+    "start:poll": "docker/cmd-with-deps.sh npm run start:poll",
     "start:dev": "npm run start:jit",
     "start:jit": "docker/cmd-with-deps.sh npm start",
     "start:aot": "docker/cmd-with-deps.sh npm run start:aot",
@@ -61,28 +61,30 @@
     "lint:l": "export NODE_OPTIONS=--max_old_space_size=8192 && ng lint",
     "lint:fix": "npm run npm lint:fix",
     "lint:fix:l": "export NODE_OPTIONS=--max_old_space_size=8192 && ng lint --fix",
+    "test": "run-s unittest:l",
     "unittest": "npm run npm unittest",
     "unittest:l": "jest -c src/jest.config.unittest.js",
     "unittest:watch": "npm run npm unittest:watch",
     "alltest:l": "jest -c src/jest.config.all.js --coverage",
     "alltest": "npm run npm alltest",
     "alltest:ci": "npm run npm alltest:ci",
+    "prettier": "npm run npm prettier",
+    "prettier:l": "prettier --config ./.prettierrc --write \"src/**/*{.ts,.js,.json,.css,.scss}\"",
     "e2e": "docker/e2etest.sh",
+    "e2e:universal": "docker/e2etest-universal.sh",
     "e2e:full": "docker/e2etest.sh full",
     "e2e:prod": "docker/e2etest.sh prod",
     "bash": "docker/bash.sh",
     "travis": "docker/travis.sh $@",
     "semantic-release": "docker/semantic-release.sh",
     "deploy": "docker/deploy.sh $@",
+    "deploy:lambda": "docker/deploy-lambda.sh @",
     "doc:build": "npm run npm doc:build",
     "doc:serve": "npm run npm doc:serve",
     "doc:buildandserve": "npm run npm doc:buildandserve",
     "cypress:open": "unset NODE_OPTIONS && cypress open",
     "cypress:run:l": "unset NODE_OPTIONS && cypress run",
     "cypress:run:ci": "docker/cypresstest.sh",
-    "prettier": "npm run npm prettier",
-    "cypress": "cypress open",
-    "cypress:all": "cypress run",
     "bundle-report": "docker/cmd-ports.sh npm run bundle-report",
     "format:fix": "docker/quick-fix.sh",
     "format:fix:l": "pretty-quick --staged",
@@ -114,6 +116,12 @@
     "@bit/garlictech.angular-features.common.weather": "file:./src/features/common/weather",
     "@bit/garlictech.angular-features.web.generic-ui-primeng": "file:./src/features/web/generic-ui-primeng",
     "@bit/garlictech.angular-features.web.weather": "file:./src/features/web/weather",
+    "@bit/garlictech.angular-features.common.current-geolocation": "file:./src/features/common/current-geolocation",
+    "@bit/garlictech.angular-features.common.marker-icons": "file:./src/features/common/marker-icons",
+    "@bit/garlictech.angular-features.web.spinner": "file:./src/features/web/spinner",
+    "@bit/garlictech.angular-features.common.spinner": "file:./src/features/common/spinner",
+    "@bit/garlictech.angular-features.common.geosearch": "file:./src/features/common/geosearch",
+    "@bit/garlictech.angular-features.common.search-filters": "file:./src/features/common/search-filters",
     "@fortawesome/angular-fontawesome": "^0.3.0",
     "@fortawesome/fontawesome-free": "^5.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
@@ -178,7 +186,7 @@
     "password-validator": "^4.1.1",
     "popper.js": "^1.14.7",
     "primeicons": "^1.0.0",
-    "primeng": "~7.1.0",
+    "primeng": "~7.0.0",
     "randomcolor": "^0.5.3",
     "raven-js": "^3.26.4",
     "rxjs": "~6.3.2",
@@ -187,8 +195,8 @@
     "tether": "^1.4.5",
     "togpx": "^0.5.4",
     "zone.js": "~0.8.28",
-    "@bit/garlictech.angular-features.common.current-geolocation": "file:./src/features/common/current-geolocation",
-    "@bit/garlictech.angular-features.infrastructure.workflows-scripts": "file:./workflows-scripts"
+    "@bit/garlictech.angular-features.common.progressive-image-loader": "file:./src/features/common/progressive-image-loader",
+    "@bit/garlictech.angular-features.web.text-carousel": "file:./src/features/web/text-carousel"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",
@@ -229,7 +237,6 @@
     "jest-preset-angular": "^6.0.1",
     "ng-cli-pug-loader": "^0.1.7",
     "npm-run-all": "^4.1.5",
-    "npm-install-peers": "^1.2.1",
     "prettier": "^1.16.0",
     "pretty-quick": "^1.10.0",
     "protractor": "^5.3.1",
@@ -251,17 +258,14 @@
     "weak": "^1.0.1",
     "jest-create-mock-instance": "^1.1.0"
   },
-  "peerDependencies": {
-    "cypress": "^3.2.0",
-    "cypress-cucumber-preprocessor": "^1.11.0"
-  },
   "config": {
-    "dockerWorkflowVersion": "v16.2.2",
+    "dockerWorkflowVersion": "v15.0.0",
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"
     }
   },
   "optionalDependencies": {},
+  "peerDependencies": {},
   "release": {
     "branch": "staging"
   },
@@ -277,11 +281,7 @@
     "src/features/{namespace}/{name}/**/*",
     "src/features/common/**/*",
     "src/features/web/**/*",
-    "src/features/{name}/**/*",
-    "workflows-scripts"
+    "src/features/{name}/**/*"
   ],
-  "private": true,
-  "resolutions": {
-    "primeng": "7.1.0"
-  }
+  "private": true
 }

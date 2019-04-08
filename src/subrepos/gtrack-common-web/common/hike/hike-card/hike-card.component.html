@@ -1,4 +1,4 @@
-<div class="hike-container card relative rounded-lg" *ngIf="hikeProgram">
+<div class="flex hike-container relative rounded-lg" *ngIf="hikeProgram">
   <div
     [ngStyle]="{ 'background-image': 'url(' + image + ')' }"
     class="flex flex-col absolute w-full h-full justify-between h-64 rounded-lg bg-cover"
@@ -6,7 +6,7 @@
     <gtrack-bookmark [hikeProgramId]="hikeProgram.id"></gtrack-bookmark>
 
     <div class="flex flex-col items-center uppercase text-white hike-details">
-      <h2 class="card-title font-extrabold text-xl sm:text-4xl md:text-xl lg:text-2xl">
+      <h2 class="card-title">
         {{ (hikeProgram.description | localizeDescription).title }}
       </h2>
       <h6 class="card-subtitle font-medium"><i class="ion-ios-location"></i> {{ hikeProgram.location }}</h6>

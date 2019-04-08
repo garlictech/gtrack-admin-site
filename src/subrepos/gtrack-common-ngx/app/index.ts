@@ -6,8 +6,6 @@ export * from './map';
 export * from './hike';
 export * from './router';
 export * from './store';
-export * from './geosearch';
-export * from './search-filters';
 export * from './module';
 export * from './object-mark';
 export * from './astronomy';

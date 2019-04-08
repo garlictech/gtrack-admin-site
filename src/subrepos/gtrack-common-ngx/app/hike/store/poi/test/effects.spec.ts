@@ -1,29 +1,23 @@
+import { cold, hot, Scheduler } from 'jest-marbles';
+import _zipObject from 'lodash-es/zipObject';
+import { Observable, of } from 'rxjs';
+import * as uuid from 'uuid/v4';
+
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { GeoSearchService } from '@bit/garlictech.angular-features.common.geosearch';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { EObjectState, PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { PoiStored } from '@features/common/gtrack-interfaces';
-import { DeepstreamService } from '@features/common/deepstream-ngx';
-
-import _zipObject from 'lodash-es/zipObject';
-
-import * as uuid from 'uuid/v4';
-
-import { hot, cold, Scheduler } from 'jest-marbles';
-
+import { DeepstreamModule } from '../../../../deepstream';
+import { GeometryService } from '../../../services/geometry';
+import { PoiService } from '../../../services/poi';
 import * as poiActions from '../actions';
 import { PoiEffects } from '../effects';
-import { PoiService } from '../../../services/poi';
-import { DeepstreamModule } from '../../../../deepstream';
-
-import { Observable, of } from 'rxjs';
 import { pois as poiFixtures, poisStored } from './fixtures';
-
-import { GeometryService } from '../../../services/geometry';
-import { GeoSearchService } from '../../../../geosearch';
-import { EObjectState } from '@features/common/gtrack-interfaces';
 
 describe('Poi effects', () => {
   let poisMap: {

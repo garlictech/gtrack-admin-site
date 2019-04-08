@@ -1,0 +1,14 @@
+{
+  "name": "@bit/garlictech.angular-features.web.spinner",
+  "version": "0.0.8",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/spinner",
+  "main": "components/index.ts",
+  "dependencies": {
+    "@angular/core": "~7.2.1",
+    "@angular/common": "~7.2.1",
+    "@bit/garlictech.angular-features.common.spinner": "file:../../common/spinner"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "license": "SEE LICENSE IN LICENSE"
+}

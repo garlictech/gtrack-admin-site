@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
-import { DeepstreamService } from '@features/common/deepstream-ngx';
-import { HikeProgramStored } from '@features/common/gtrack-interfaces';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { HikeProgramService } from '../hike-program.service';
 import { hikeProgramsStored as hikeProgramFixtures } from '../../../testing/fixtures';

@@ -33,6 +33,7 @@ export const initialEditedHikeProgramState: EditedHikeProgramState = {
         type: ETextualDescriptionType.markdown
       }
     },
+    teaser: {},
     stops: [],
     reverseStops: [],
     // checkpoints: new CheckpointSequence([]),

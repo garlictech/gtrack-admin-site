@@ -1,20 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, select } from '@ngrx/store';
-import { HikeProgramStored } from '@features/common/gtrack-interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { TestBed } from '@angular/core/testing';
+import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
+import { HikeProgramStored } from '@features/common/gtrack-interfaces';
+import { select, Store, StoreModule } from '@ngrx/store';
+
+import { EXTERNAL_HIKE_DEPENDENCIES } from '../../../externals';
+import { HikeProgramComponent, hikeProgramsStored as hikeProgramFixtures } from '../../../testing/fixtures';
+import * as actions from '../actions';
 import { hikeReducer } from '../reducer';
+import { HikeSelectors } from '../selectors';
 import { HikeState } from '../state';
 
-import * as actions from '../actions';
-import { HikeSelectors } from '../selectors';
-import { EXTERNAL_HIKE_DEPENDENCIES } from '../../../externals';
-import { hikeProgramsStored as hikeProgramFixtures, HikeProgramComponent } from '../../../testing/fixtures';
-
-import { EXTERNAL_SEARCH_FILTERS_DEPENDENCIES, SearchFiltersSelectors } from '../../../../search-filters';
-
-import { EXTERNAL_GEO_SEARCH_DEPENDENCIES, GeoSearchSelectors } from '../../../../geosearch';
+import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
 
 describe('HikeProgram selectors', () => {
   let store: Store<HikeState>;
@@ -42,18 +41,6 @@ describe('HikeProgram selectors', () => {
           provide: EXTERNAL_HIKE_DEPENDENCIES,
           useValue: {
             storeDomain: 'hike'
-          }
-        },
-        {
-          provide: EXTERNAL_GEO_SEARCH_DEPENDENCIES,
-          useValue: {
-            storeDomain: 'geoSearch'
-          }
-        },
-        {
-          provide: EXTERNAL_SEARCH_FILTERS_DEPENDENCIES,
-          useValue: {
-            storeDomain: 'searchFilters'
           }
         }
       ]

@@ -1,38 +1,36 @@
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { GalleriaModule } from 'primeng/galleria';
-
 import { FormModule } from 'subrepos/gtrack-common-web/forms';
 
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { SearchFiltersModule } from '@bit/garlictech.angular-features.common.search-filters';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { StoreModule } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { MapComponentsModule } from '../../map/components/map-components.module';
+import { ObjectMarkModule } from '../../object-mark';
+import { SharedModule } from '../../shared/shared.module';
+import { HikeModule } from '../hike.module';
 import { BookmarkComponent } from './bookmark';
 import { CheckpointsComponent } from './checkpoints';
 import { DownloadGpxButtonComponent } from './download-gpx-button';
 import { ElevationProfileComponent } from './elevation-profile';
 import { HikeCardComponent } from './hike-card';
 import { HikeDataItemComponent } from './hike-data-item';
+import { HikeDayComponent } from './hike-day';
 import { HikeInfoComponent } from './hike-info';
+import { HikeListMapComponent } from './hike-list-map';
 import { HikeProgramComponent } from './hike-program';
 import { LocationSearchComponent } from './location-search';
-import { SearchFiltersComponent } from './search-filters';
-import { TrailBoxComponent } from './trail-box';
-
-import { MapComponentsModule } from '../../map/components/map-components.module';
-import { SearchFiltersModule } from '../../search-filters/search-filters.module';
-import { SharedModule } from '../../shared/shared.module';
-import { HikeModule } from '../hike.module';
-import { HikeDayComponent } from './hike-day';
-import { HikeListMapComponent } from './hike-list-map';
 import { PoiMapComponent } from './poi-map';
-import { SearchResultsMapComponent } from './search-results-map';
-
-import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
-import { ObjectMarkModule } from '../../object-mark';
 import { ReverseHikeButtonComponent } from './reverse-hike-button';
+import { SearchFiltersComponent } from './search-filters';
+import { SearchResultsMapComponent } from './search-results-map';
+import { TrailBoxComponent } from './trail-box';
 
 const COMPONENTS = [
   TrailBoxComponent,

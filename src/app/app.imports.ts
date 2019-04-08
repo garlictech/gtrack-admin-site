@@ -4,26 +4,31 @@ import { ToastModule } from 'primeng/toast';
 import {
   DeepstreamModule,
   defaultSharedConfig,
-  GeoSearchModule,
   HikeModule,
   HikeModuleConfig,
   ObjectMarkModule,
   ObjectMarkModuleConfig,
-  SearchFiltersModule,
   SharedModule
 } from 'subrepos/gtrack-common-ngx';
 import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
 
+import { HttpClient } from '@angular/common/http';
 import {
   AuthenticationApiModule,
   defaultAuthenticationApiConfig
 } from '@bit/garlictech.angular-features.common.authentication-api';
 import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
+import { GeoSearchModule } from '@bit/garlictech.angular-features.common.geosearch';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { MarkerIconsModule } from '@bit/garlictech.angular-features.common.marker-icons';
+import { SearchFiltersModule } from '@bit/garlictech.angular-features.common.search-filters';
+import { WeatherConfig, WeatherModule } from '@bit/garlictech.angular-features.common.weather';
 import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
@@ -47,11 +52,22 @@ export function getSharedConfig(): any {
   return sharedConfig;
 }
 
+// tslint:disable-next-line:only-arrow-functions
+export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 const hikeModuleConfig: HikeModuleConfig = {
   storeDomains: {
     hike: 'hike',
     poi: 'poi',
     route: 'route'
+  }
+};
+
+const weatherConfig: WeatherConfig = {
+  openWeatherMap: {
+    key: 'e5a0aba93cfca3ee54c272133018df78'
   }
 };
 
@@ -84,13 +100,9 @@ export const APP_IMPORTS = [
   GenericUiModule,
   DeepstreamModule.forRoot(),
   AuthenticationApiModule.forRoot(getAuthConfig),
-  SearchFiltersModule.forRoot({
-    storeDomain: 'searchFilters'
-  }),
+  SearchFiltersModule,
   SharedModule.forRoot(getSharedConfig),
-  GeoSearchModule.forRoot({
-    storeDomain: 'geosearch'
-  }),
+  GeoSearchModule,
   HikeModule.forRoot(hikeModuleConfig),
   CoreLayoutModule,
   AuthModule,
@@ -107,5 +119,14 @@ export const APP_IMPORTS = [
   GtrackCommonWebModule,
   CurrentGeolocationModule.forRoot({ timeOut: 2000 }, { endpoint: environment.lambdaEndpoint }),
   LeafletMapModule,
-  ToastModule
+  MarkerIconsModule,
+  ToastModule,
+  TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: createTranslateLoader,
+      deps: [HttpClient]
+    }
+  }),
+  WeatherModule.forRoot(weatherConfig)
 ];

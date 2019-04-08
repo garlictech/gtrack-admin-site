@@ -1,3 +1,4 @@
+// tslint:disable:no-string-literal no-import-side-effect
 import { TestBed } from '@angular/core/testing';
 import { CurrentPositionMarker } from '../current-position-marker';
 

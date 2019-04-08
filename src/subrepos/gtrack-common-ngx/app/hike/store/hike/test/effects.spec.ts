@@ -1,32 +1,28 @@
+import { cold, hot, Scheduler } from 'jest-marbles';
+import _zipObject from 'lodash-es/zipObject';
+import { Observable, of } from 'rxjs';
+import * as uuid from 'uuid/v1';
+
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
+import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { EObjectState, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { HikeProgramStored, EObjectState } from '@features/common/gtrack-interfaces';
-import { DeepstreamService } from '@features/common/deepstream-ngx';
-
-import _zipObject from 'lodash-es/zipObject';
-
-import * as uuid from 'uuid/v1';
-
-import { hot, cold, Scheduler } from 'jest-marbles';
-
+import { DeepstreamModule } from '../../../../deepstream';
+import { EXTERNAL_HIKE_DEPENDENCIES } from '../../../externals/hike';
+import { CheckpointService } from '../../../services/checkpoint';
+import { HikeProgramService } from '../../../services/hike-program';
+import { hikeProgramsStored } from '../../../testing/fixtures';
 import * as hikeProgramActions from '../actions';
 import { HikeEffects } from '../effects';
-import { HikeSelectors } from '../selectors';
-import { HikeProgramService } from '../../../services/hike-program';
-import { DeepstreamModule } from '../../../../deepstream';
-import { CheckpointService } from '../../../services/checkpoint';
-
-import { Observable, of } from 'rxjs';
-import { hikeProgramsStored } from '../../../testing/fixtures';
-import { HikeState } from '../state';
 import { hikeReducer } from '../reducer';
-import { GeoSearchSelectors } from '../../../../geosearch';
-import { SearchFiltersSelectors } from '../../../../search-filters';
-import { EXTERNAL_HIKE_DEPENDENCIES } from '../../../externals/hike';
+import { HikeSelectors } from '../selectors';
+import { HikeState } from '../state';
 
 describe('HikeProgram effects', () => {
   let hikeProgramsMap: {

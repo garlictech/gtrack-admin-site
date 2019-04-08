@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>icon/normal/lodging</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/normal/lodging" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M14,11 L2,11 L2,14 L0,14 L0,2 L2,2 L2,9 L16,9 L16,11 L16,14 L14,14 L14,11 Z M5,8 C3.8954305,8 3,7.1045695 3,6 C3,4.8954305 3.8954305,4 5,4 C6.1045695,4 7,4.8954305 7,6 C7,7.1045695 6.1045695,8 5,8 Z M10,5 L14,5 C15.1045695,5 16,5.8954305 16,7 L16,8 L8,8 L8,7 C8,5.8954305 8.8954305,5 10,5 Z" id="icon" fill="#7C7CF0" fill-rule="nonzero"></path>
+    </g>
+</svg>

@@ -25,6 +25,13 @@ export const hikePrograms: Array<HikeProgramData> = [
         summary: 'Test hike summary'
       }
     },
+    teaser: {
+      en_US: {
+        fullDescription: 'Test hike teaser',
+        title: 'Test hike teaser title',
+        summary: 'Test hike teaser summary'
+      }
+    },
     stops: [
       {
         distanceFromOrigo: 0,
@@ -139,6 +146,13 @@ export const hikePrograms: Array<HikeProgramData> = [
         fullDescription: 'Test hike desc 2',
         title: 'Test hike title 2',
         summary: 'Test hike summary 2'
+      }
+    },
+    teaser: {
+      en_US: {
+        fullDescription: 'Test hike teaser 2',
+        title: 'Test hike teaser title 2',
+        summary: 'Test hike teaser summary 2'
       }
     },
     stops: [],

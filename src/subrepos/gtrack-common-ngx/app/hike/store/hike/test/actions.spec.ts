@@ -32,6 +32,13 @@ describe('Hike actions', () => {
           summary: ''
         }
       },
+      teaser: {
+        en_US: {
+          fullDescription: '',
+          title: '',
+          summary: ''
+        }
+      },
       stops: [],
       reverseStops: []
     };

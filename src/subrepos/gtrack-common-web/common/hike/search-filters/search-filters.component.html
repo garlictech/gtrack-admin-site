@@ -1,38 +1,69 @@
-<div class="flex justify-center">
-  <a class="button is-success" (click)="toggleFilters()">
-    {{ (showFilters ? 'common.hike.location-search.close' : 'common.hike.location-search.filters') | translate }}
-  </a>
-</div>
-<div *ngIf="showFilters">
-  <form class="grid grid-columns-4 grid-gap-1 pt-4" [formGroup]="filterForm">
-    <p-slider
-      class="grid pl-8 md:col-start-1 md:col-end-2  col-start-1  col-end-5"
-      formControlName="radius"
-      [min]="formDescriptor.fields.radius.min"
-      [max]="formDescriptor.fields.radius.max"
-    ></p-slider>
-    <p-slider
-      class="grid pl-8 md:col-start-2 md:col-end-3  col-start-1  col-end-5"
-      formControlName="difficulty"
-      [range]="true"
-      [min]="formDescriptor.fields.difficulty.min"
-      [max]="formDescriptor.fields.difficulty.max"
-    ></p-slider>
+<div class="p-4 filters-box">
+  <div class="flex justify-start">
+    <a class="button" (click)="onClose()">
+      <fa-icon [icon]="closeIcon"></fa-icon>
+    </a>
+  </div>
+  <form class="pt-2" [formGroup]="filterForm">
+    <div class="my-4">
+      <div class="flex justify-between items-center mb-2 text-xs">
+        <strong>{{ 'common.hike.location-search.max-distance' | translate }}</strong>
+        <span>{{ filterForm.get('radius').value }} km</span>
+      </div>
+      <p-slider
+        class=""
+        formControlName="radius"
+        [min]="formDescriptor.fields.radius.min"
+        [max]="formDescriptor.fields.radius.max"
+      ></p-slider>
+    </div>
 
-    <p-slider
-      class="grid pl-8 md:col-start-3 md:col-end-4  col-start-1  col-end-5"
-      formControlName="length"
-      [range]="true"
-      [min]="formDescriptor.fields.length.min"
-      [max]="formDescriptor.fields.length.max"
-    ></p-slider>
+    <div class="my-4">
+      <div class="flex justify-between mb-2 text-xs">
+        <strong>{{ 'common.hike.location-search.difficulty' | translate }}</strong>
+        <span
+          >{{ filterForm.get('difficulty').value[0] | difficulty | translate }} -
+          {{ filterForm.get('difficulty').value[1] | difficulty | translate }}</span
+        >
+      </div>
+      <p-slider
+        class=""
+        formControlName="difficulty"
+        [range]="true"
+        [min]="formDescriptor.fields.difficulty.min"
+        [max]="formDescriptor.fields.difficulty.max"
+      ></p-slider>
+    </div>
 
-    <p-slider
-      class="grid pl-8 md:col-start-4 md:col-end-5  col-start-1  col-end-5"
-      formControlName="time"
-      [range]="true"
-      [min]="formDescriptor.fields.time.min"
-      [max]="formDescriptor.fields.time.max"
-    ></p-slider>
+    <div class="my-4">
+      <div class="flex justify-between mb-2 text-xs">
+        <strong>{{ 'common.hike.location-search.distance' | translate }}</strong>
+        <span>{{ filterForm.get('length').value[0] }} km - {{ filterForm.get('length').value[1] }} km</span>
+      </div>
+      <p-slider
+        class=""
+        formControlName="length"
+        [range]="true"
+        [min]="formDescriptor.fields.length.min"
+        [max]="formDescriptor.fields.length.max"
+      ></p-slider>
+    </div>
+
+    <div class="my-4">
+      <div class="flex justify-between mb-2 text-xs">
+        <strong>{{ 'common.hike.location-search.length' | translate }}</strong>
+        <span
+          >{{ filterForm.get('time').value[0] }} {{ 'hours' | translate }} - {{ filterForm.get('time').value[1] }}
+          {{ 'hours' | translate }}</span
+        >
+      </div>
+      <p-slider
+        class=""
+        formControlName="time"
+        [range]="true"
+        [min]="formDescriptor.fields.time.min"
+        [max]="formDescriptor.fields.time.max"
+      ></p-slider>
+    </div>
   </form>
 </div>

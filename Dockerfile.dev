@@ -7,3 +7,4 @@ ADD src /app/src
 ADD workflows-scripts /app/workflows-scripts
 
 RUN scripts/install_dependencies.js
+RUN bit link

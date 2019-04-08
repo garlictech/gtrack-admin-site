@@ -25,4 +25,15 @@ describe('AdminMap actions', () => {
       type: actions.ActionTypes.ResetMap
     });
   });
+
+  it('should create AddFeature action', () => {
+    const id = 1;
+    const action = new actions.AddFeature({ id });
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: actions.ActionTypes.AddFeature,
+      payload: { id }
+    });
+  });
 });

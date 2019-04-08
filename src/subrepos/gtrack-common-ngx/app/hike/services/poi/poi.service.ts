@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
-import { EObjectState, PoiData, PoiSaveResponse, PoiStored } from '@features/common/gtrack-interfaces';
+import {
+  EObjectState,
+  PoiData,
+  PoiSaveResponse,
+  PoiStored
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-import { DeepstreamService } from '@features/common/deepstream-ngx';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 
 import _cloneDeep from 'lodash-es/cloneDeep';
 

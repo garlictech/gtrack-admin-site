@@ -14,6 +14,11 @@ const testCases = [
     actionName: 'RegisterMap',
     action: new fromActions.RegisterMap('mapID'),
     initialState: createFeatureState({})
+  },
+  {
+    actionName: 'AddFeature',
+    action: new fromActions.AddFeature({ id: 2 }),
+    initialState: createFeatureState({})
   }
 ];
 

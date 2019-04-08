@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>icon/normal/bank</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon/normal/bank" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M8,0 L16,6 L0,6 L8,0 Z M1,14 L15,14 L15,16 L1,16 L1,14 Z M2,7 L4,7 L4,13 L2,13 L2,7 Z M7,7 L9,7 L9,13 L7,13 L7,7 Z M12,7 L14,7 L14,13 L12,13 L12,7 Z" id="icon" fill="#7C7CF0" fill-rule="nonzero"></path>
+    </g>
+</svg>

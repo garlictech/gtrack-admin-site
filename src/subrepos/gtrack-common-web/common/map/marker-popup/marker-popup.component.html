@@ -13,6 +13,5 @@
 
 <p-dialog [style]="{ 'max-width': '90%' }" appendTo="body" [(visible)]="showPopup">
   <p-header>{{ (data.poi.description | localizeDescription).title }}</p-header>
-  <gtrack-poi-page [poi]="data.poi">
-  </gtrack-poi-page>
+  <gtrack-poi-page [poi]="data.poi"> </gtrack-poi-page>
 </p-dialog>
