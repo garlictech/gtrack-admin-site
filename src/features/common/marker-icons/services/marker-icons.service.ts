@@ -14,7 +14,9 @@ import { SvgContent } from '../store/state';
   providedIn: 'root'
 })
 export class MarkerIconsService {
-  constructor(private readonly _store: Store<any>) {
+  constructor(private readonly _store: Store<any>) {}
+
+  init(): void {
     const iconContents: Array<SvgContent> = [];
     const markerContents: Array<SvgContent> = [];
 

@@ -119,7 +119,7 @@ export const APP_IMPORTS = [
   GtrackCommonWebModule,
   CurrentGeolocationModule.forRoot({ timeOut: 2000 }, { endpoint: environment.lambdaEndpoint }),
   LeafletMapModule,
-  MarkerIconsModule,
+  MarkerIconsModule.forRoot(),
   ToastModule,
   TranslateModule.forRoot({
     loader: {

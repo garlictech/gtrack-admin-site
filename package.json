@@ -88,7 +88,8 @@
     "bundle-report": "docker/cmd-ports.sh npm run bundle-report",
     "format:fix": "docker/quick-fix.sh",
     "format:fix:l": "pretty-quick --staged",
-    "install:peers": "npm-install-peers"
+    "install:peers": "npm-install-peers",
+    "fix-ws-permissions": "find ./workflows-scripts/webclient/docker/ -type f -exec chmod 755 {} \\;"
   },
   "dependencies": {
     "@angular/animations": "~7.2.1",

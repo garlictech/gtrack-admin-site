@@ -16,7 +16,7 @@
     "garlictech.angular-features/web/generic-ui-primeng": "0.0.1",
     "garlictech.angular-features/web/weather": "0.0.7",
     "garlictech.angular-features/common/current-geolocation": "0.0.4",
-    "garlictech.angular-features/common/marker-icons": "0.0.5",
+    "garlictech.angular-features/common/marker-icons": "0.0.6",
     "garlictech.angular-features/web/spinner": "0.0.8",
     "garlictech.angular-features/common/spinner": "0.0.2",
     "garlictech.angular-features/infrastructure/workflows-scripts": "0.0.3",
