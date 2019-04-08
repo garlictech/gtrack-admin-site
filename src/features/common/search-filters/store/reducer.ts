@@ -1,13 +1,14 @@
 // tslint:disable:only-arrow-functions
 import { ActionReducer } from '@ngrx/store';
+
 import { SearchFilters } from '../interfaces';
 import { AllSearchFiltersAction, SearchFilterActionTypes } from './actions';
 
 export const initialState: SearchFilters = {
   radius: 50000,
-  difficulty: [0, 10],
+  difficulty: [1, 5],
   length: [0, 50000],
-  time: [0, 3600],
+  time: [0, 600],
   location: 'my-location',
   center: [19.040235, 47.497912]
 };

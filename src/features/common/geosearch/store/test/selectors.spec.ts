@@ -9,13 +9,13 @@ import { select, Store, StoreModule } from '@ngrx/store';
 import * as actions from '../actions';
 import { geoSearchReducer } from '../reducer';
 import { GeoSearchSelectors } from '../selectors';
-import { GeoSearchResponseItem, GeoSearchState } from '../state';
+import { GeoSearchResponseItem, GeoSearchState, featureName } from '../state';
 import { searches as fixtures } from './fixtures';
 
-xdescribe('GeoSearch selectors', () => {
+describe('GeoSearch selectors', () => {
   let store: Store<GeoSearchState>;
-  let searches: Array<GeoSearchResponseItem>;
-  let contexts: Array<string>;
+  let searches: GeoSearchResponseItem[];
+  let contexts: string[];
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
@@ -26,7 +26,7 @@ xdescribe('GeoSearch selectors', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          geoSearch: geoSearchReducer
+          [featureName]: geoSearchReducer
         })
       ],
       providers: [GeoSearchSelectors]

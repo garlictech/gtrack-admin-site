@@ -88,8 +88,7 @@
     "bundle-report": "docker/cmd-ports.sh npm run bundle-report",
     "format:fix": "docker/quick-fix.sh",
     "format:fix:l": "pretty-quick --staged",
-    "install:peers": "npm-install-peers",
-    "postinstall": "node ./ng-add-pug-loader.js"
+    "install:peers": "npm-install-peers"
   },
   "dependencies": {
     "@angular/animations": "~7.2.1",
