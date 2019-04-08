@@ -1490,74 +1490,6 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/router"
     },
-    "garlictech.angular-features/common/search-filters@0.0.2": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "interfaces/index.ts",
-                "test": false
-            },
-            {
-                "name": "search-filters.ts",
-                "relativePath": "interfaces/search-filters.ts",
-                "test": false
-            },
-            {
-                "name": "search-filters.module.ts",
-                "relativePath": "search-filters.module.ts",
-                "test": false
-            },
-            {
-                "name": "actions.ts",
-                "relativePath": "store/actions.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/index.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.ts",
-                "relativePath": "store/reducer.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.ts",
-                "relativePath": "store/selectors.ts",
-                "test": false
-            },
-            {
-                "name": "state.ts",
-                "relativePath": "store/state.ts",
-                "test": false
-            },
-            {
-                "name": "actions.spec.ts",
-                "relativePath": "store/test/actions.spec.ts",
-                "test": true
-            },
-            {
-                "name": "reducer.spec.ts",
-                "relativePath": "store/test/reducer.spec.ts",
-                "test": true
-            },
-            {
-                "name": "selectors.spec.ts",
-                "relativePath": "store/test/selectors.spec.ts",
-                "test": true
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/search-filters",
-        "origin": "IMPORTED",
-        "originallySharedDir": "src/features/common/search-filters"
-    },
     "garlictech.angular-features/common/spinner@0.0.2": {
         "files": [
             {
@@ -1752,42 +1684,6 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/weather"
     },
-    "garlictech.angular-features/web/spinner@0.0.7": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/spinner/index.ts",
-                "test": false
-            },
-            {
-                "name": "style.scss",
-                "relativePath": "components/spinner/style.scss",
-                "test": false
-            },
-            {
-                "name": "ui.html",
-                "relativePath": "components/spinner/ui.html",
-                "test": false
-            },
-            {
-                "name": "spinner.module.ts",
-                "relativePath": "spinner.module.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "components/index.ts",
-        "rootDir": "src/features/web/spinner",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/spinner@0.0.2"
-        ],
-        "originallySharedDir": "src/features/web/spinner"
-    },
     "garlictech.angular-features/web/text-carousel@0.0.5": {
         "files": [
             {
@@ -1829,7 +1725,116 @@
         ],
         "originallySharedDir": "src/features/web/text-carousel"
     },
-    "garlictech.angular-features/web/weather@0.0.6": {
+    "garlictech.angular-features/common/search-filters@0.0.3": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "interfaces/index.ts",
+                "test": false
+            },
+            {
+                "name": "search-filters.ts",
+                "relativePath": "interfaces/search-filters.ts",
+                "test": false
+            },
+            {
+                "name": "search-filters.module.ts",
+                "relativePath": "search-filters.module.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": true
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": true
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": true
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/search-filters",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/search-filters"
+    },
+    "garlictech.angular-features/web/spinner@0.0.8": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/spinner/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "components/spinner/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "components/spinner/ui.html",
+                "test": false
+            },
+            {
+                "relativePath": "index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "name": "spinner.module.ts",
+                "relativePath": "spinner.module.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "components/index.ts",
+        "rootDir": "src/features/web/spinner",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/spinner@0.0.2"
+        ],
+        "originallySharedDir": "src/features/web/spinner"
+    },
+    "garlictech.angular-features/web/weather@0.0.7": {
         "files": [
             {
                 "name": "index.ts",
@@ -1880,7 +1885,7 @@
         ],
         "originallySharedDir": "src/features/web/weather"
     },
-    "garlictech.angular-features/common/marker-icons@0.0.4": {
+    "garlictech.angular-features/common/marker-icons@0.0.5": {
         "files": [
             {
                 "relativePath": "assets/icon/_info.txt",
@@ -2403,6 +2408,11 @@
                 "name": "marker-icons.service.ts"
             },
             {
+                "relativePath": "services/test/__snapshots__/marker-icons.service.spec.ts.snap",
+                "test": false,
+                "name": "marker-icons.service.spec.ts.snap"
+            },
+            {
                 "relativePath": "services/test/marker-icons.service.spec.ts",
                 "test": false,
                 "name": "marker-icons.service.spec.ts"
@@ -2468,7 +2478,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/marker-icons"
     },
-    "garlictech.angular-features/common/geosearch@0.0.2": {
+    "garlictech.angular-features/common/geosearch@0.0.3": {
         "files": [
             {
                 "name": "geosearch.module.ts",
@@ -2560,7 +2570,7 @@
         ],
         "originallySharedDir": "src/features/common/geosearch"
     },
-    "garlictech.angular-features/common/leaflet-map@0.0.24": {
+    "garlictech.angular-features/common/leaflet-map@0.0.25": {
         "files": [
             {
                 "name": "README.md",
@@ -2780,12 +2790,12 @@
             "garlictech.angular-features/common/current-geolocation@0.0.4",
             "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
             "garlictech.angular-features/common/spinner@0.0.2",
-            "garlictech.angular-features/web/spinner@0.0.7",
-            "garlictech.angular-features/common/marker-icons@0.0.4"
+            "garlictech.angular-features/web/spinner@0.0.8",
+            "garlictech.angular-features/common/marker-icons@0.0.5"
         ],
         "originallySharedDir": "src/features/common/leaflet-map"
     },
-    "garlictech.angular-features/common/checkpoints@0.0.6": {
+    "garlictech.angular-features/common/checkpoints@0.0.7": {
         "files": [
             {
                 "name": "checkpoints.module.ts",
@@ -2834,7 +2844,7 @@
         "dependencies": [
             "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
             "garlictech.angular-features/common/spinner@0.0.2",
-            "garlictech.angular-features/common/leaflet-map@0.0.24"
+            "garlictech.angular-features/common/leaflet-map@0.0.25"
         ],
         "originallySharedDir": "src/features/common/checkpoints"
     },
