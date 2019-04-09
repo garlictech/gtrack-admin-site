@@ -22,5 +22,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
+  "componentRootFolder": "src/features/common/leaflet-map",
   "license": "SEE LICENSE IN LICENSE"
 }

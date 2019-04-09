@@ -9,9 +9,11 @@
     "leaflet": "^1.0.3",
     "lodash-es": "^4.17.11",
     "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces",
-    "@bit/garlictech.angular-features.common.leaflet-map": "file:../leaflet-map"
+    "@bit/garlictech.angular-features.common.leaflet-map": "file:../leaflet-map",
+    "@bit/garlictech.angular-features.common.marker-icons": "file:../marker-icons"
   },
   "devDependencies": {},
   "peerDependencies": {},
+  "componentRootFolder": "src/features/common/checkpoints",
   "license": "SEE LICENSE IN LICENSE"
 }
