@@ -1,0 +1,1 @@
+@include configToUtility('min-width', $minWidth, 'min-w', 'min-width', map-get($modules, 'minWidth'));

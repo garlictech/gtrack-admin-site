@@ -1,0 +1,1 @@
+@include configToUtility('opacity', $opacity, 'opacity', 'opacity', map-get($modules, 'opacity'));

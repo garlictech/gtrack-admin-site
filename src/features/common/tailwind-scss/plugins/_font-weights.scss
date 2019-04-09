@@ -1,0 +1,1 @@
+@include configToUtility('font-weight', $fontWeights, 'font', 'font-weight', map-get($modules, 'fontWeights'));

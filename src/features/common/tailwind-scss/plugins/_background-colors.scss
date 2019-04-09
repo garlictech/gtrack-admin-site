@@ -1,0 +1,7 @@
+@include configToUtility(
+  'background-colors',
+  $backgroundColors,
+  'bg',
+  'background-color',
+  map-get($modules, 'backgroundColors')
+);

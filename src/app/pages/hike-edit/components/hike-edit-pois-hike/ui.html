@@ -1,15 +1,33 @@
-<p-dialog header="{{ (modalPoi?.description | localizeDescription).title }}" [(visible)]="displayGTrackPoiModal"
-  [modal]="true" [closable]="true" [width]="600" [blockScroll]="true">
+<p-dialog
+  header="{{ (modalPoi?.description | localizeDescription).title }}"
+  [(visible)]="displayGTrackPoiModal"
+  [modal]="true"
+  [closable]="true"
+  [width]="600"
+  [blockScroll]="true"
+>
   <app-hike-edit-gtrack-poi-info *ngIf="displayGTrackPoiModal" [poiId]="modalPoi.id" [closeModal]="closeModal">
   </app-hike-edit-gtrack-poi-info>
 </p-dialog>
 
 <div class="clearfix mb-20">
-  <p-checkbox class="f-right ml-20" label="Show offroute markers" binary="true" [(ngModel)]="showOffrouteMarkers"
-    (onChange)="toggleOffrouteMarkers()" [disabled]="(isPlanning$ | async) === false"></p-checkbox>
+  <p-checkbox
+    class="float-right ml-20"
+    label="Show offroute markers"
+    binary="true"
+    [(ngModel)]="showOffrouteMarkers"
+    (onChange)="toggleOffrouteMarkers()"
+    [disabled]="(isPlanning$ | async) === false"
+  ></p-checkbox>
 
-  <p-checkbox class="f-right" label="Show onroute markers" binary="true" [(ngModel)]="showOnrouteMarkers"
-    (onChange)="toggleOnrouteMarkers()" [disabled]="(isPlanning$ | async) === false"></p-checkbox>
+  <p-checkbox
+    class="float-right"
+    label="Show onroute markers"
+    binary="true"
+    [(ngModel)]="showOnrouteMarkers"
+    (onChange)="toggleOnrouteMarkers()"
+    [disabled]="(isPlanning$ | async) === false"
+  ></p-checkbox>
 </div>
 
 <p-accordion [multiple]="true">

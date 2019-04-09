@@ -1,0 +1,18 @@
+@mixin configToUtility($name, $config, $prefix, $style, $states) {
+  $utilities: ();
+
+  @each $m, $value in $config {
+    $modifier: if($m == 'default', '', '-#{$m}');
+
+    $utilities: map-merge(
+      $utilities,
+      (
+        '#{$prefix}#{$modifier}': (
+          #{$style}: $value
+        )
+      )
+    );
+  }
+
+  @include addUtilities($name, $utilities, $states);
+}

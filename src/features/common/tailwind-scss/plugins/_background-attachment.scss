@@ -1,0 +1,15 @@
+@include addUtilities(
+  'background-attachment',
+  (
+    'bg-fixed': (
+      'background-attachment': 'fixed'
+    ),
+    'bg-local': (
+      'background-attachment': 'local'
+    ),
+    'bg-scroll': (
+      'background-attachment': 'scroll'
+    )
+  ),
+  map-get($modules, 'backgroundAttachment')
+);

@@ -2848,5 +2848,343 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/marker-icons"
     },
+    "garlictech.angular-features/common/tailwind-scss@0.0.2": {
+        "files": [
+            {
+                "name": "README.md",
+                "relativePath": "README.md",
+                "test": false
+            },
+            {
+                "name": "_config.scss",
+                "relativePath": "_config.scss",
+                "test": false
+            },
+            {
+                "name": "_functions.scss",
+                "relativePath": "_functions.scss",
+                "test": false
+            },
+            {
+                "name": "_variables.scss",
+                "relativePath": "_variables.scss",
+                "test": false
+            },
+            {
+                "name": "_preflight.scss",
+                "relativePath": "base/_preflight.scss",
+                "test": false
+            },
+            {
+                "name": "_add-utility.scss",
+                "relativePath": "mixins/_add-utility.scss",
+                "test": false
+            },
+            {
+                "name": "_all.scss",
+                "relativePath": "mixins/_all.scss",
+                "test": false
+            },
+            {
+                "name": "_apply.scss",
+                "relativePath": "mixins/_apply.scss",
+                "test": false
+            },
+            {
+                "name": "_config-to-utility.scss",
+                "relativePath": "mixins/_config-to-utility.scss",
+                "test": false
+            },
+            {
+                "name": "_css-variables.scss",
+                "relativePath": "mixins/_css-variables.scss",
+                "test": false
+            },
+            {
+                "name": "_media-query.scss",
+                "relativePath": "mixins/_media-query.scss",
+                "test": false
+            },
+            {
+                "name": "_prefixes.scss",
+                "relativePath": "mixins/_prefixes.scss",
+                "test": false
+            },
+            {
+                "name": "_all.scss",
+                "relativePath": "plugins/_all.scss",
+                "test": false
+            },
+            {
+                "name": "_appearance.scss",
+                "relativePath": "plugins/_appearance.scss",
+                "test": false
+            },
+            {
+                "name": "_background-attachment.scss",
+                "relativePath": "plugins/_background-attachment.scss",
+                "test": false
+            },
+            {
+                "name": "_background-colors.scss",
+                "relativePath": "plugins/_background-colors.scss",
+                "test": false
+            },
+            {
+                "name": "_background-position.scss",
+                "relativePath": "plugins/_background-position.scss",
+                "test": false
+            },
+            {
+                "name": "_background-repeat.scss",
+                "relativePath": "plugins/_background-repeat.scss",
+                "test": false
+            },
+            {
+                "name": "_background-size.scss",
+                "relativePath": "plugins/_background-size.scss",
+                "test": false
+            },
+            {
+                "name": "_border-collapse.scss",
+                "relativePath": "plugins/_border-collapse.scss",
+                "test": false
+            },
+            {
+                "name": "_border-colors.scss",
+                "relativePath": "plugins/_border-colors.scss",
+                "test": false
+            },
+            {
+                "name": "_border-radius.scss",
+                "relativePath": "plugins/_border-radius.scss",
+                "test": false
+            },
+            {
+                "name": "_border-style.scss",
+                "relativePath": "plugins/_border-style.scss",
+                "test": false
+            },
+            {
+                "name": "_border-widths.scss",
+                "relativePath": "plugins/_border-widths.scss",
+                "test": false
+            },
+            {
+                "name": "_container.scss",
+                "relativePath": "plugins/_container.scss",
+                "test": false
+            },
+            {
+                "name": "_cursor.scss",
+                "relativePath": "plugins/_cursor.scss",
+                "test": false
+            },
+            {
+                "name": "_display.scss",
+                "relativePath": "plugins/_display.scss",
+                "test": false
+            },
+            {
+                "name": "_flexbox.scss",
+                "relativePath": "plugins/_flexbox.scss",
+                "test": false
+            },
+            {
+                "name": "_float.scss",
+                "relativePath": "plugins/_float.scss",
+                "test": false
+            },
+            {
+                "name": "_font-weights.scss",
+                "relativePath": "plugins/_font-weights.scss",
+                "test": false
+            },
+            {
+                "name": "_fonts.scss",
+                "relativePath": "plugins/_fonts.scss",
+                "test": false
+            },
+            {
+                "name": "_grid.scss",
+                "relativePath": "plugins/_grid.scss",
+                "test": false
+            },
+            {
+                "name": "_height.scss",
+                "relativePath": "plugins/_height.scss",
+                "test": false
+            },
+            {
+                "name": "_leading.scss",
+                "relativePath": "plugins/_leading.scss",
+                "test": false
+            },
+            {
+                "name": "_lists.scss",
+                "relativePath": "plugins/_lists.scss",
+                "test": false
+            },
+            {
+                "name": "_margin.scss",
+                "relativePath": "plugins/_margin.scss",
+                "test": false
+            },
+            {
+                "name": "_max-height.scss",
+                "relativePath": "plugins/_max-height.scss",
+                "test": false
+            },
+            {
+                "name": "_max-width.scss",
+                "relativePath": "plugins/_max-width.scss",
+                "test": false
+            },
+            {
+                "name": "_min-height.scss",
+                "relativePath": "plugins/_min-height.scss",
+                "test": false
+            },
+            {
+                "name": "_min-width.scss",
+                "relativePath": "plugins/_min-width.scss",
+                "test": false
+            },
+            {
+                "name": "_negative-margin.scss",
+                "relativePath": "plugins/_negative-margin.scss",
+                "test": false
+            },
+            {
+                "name": "_object-fit.scss",
+                "relativePath": "plugins/_object-fit.scss",
+                "test": false
+            },
+            {
+                "name": "_object-position.scss",
+                "relativePath": "plugins/_object-position.scss",
+                "test": false
+            },
+            {
+                "name": "_opacity.scss",
+                "relativePath": "plugins/_opacity.scss",
+                "test": false
+            },
+            {
+                "name": "_outline.scss",
+                "relativePath": "plugins/_outline.scss",
+                "test": false
+            },
+            {
+                "name": "_overflow.scss",
+                "relativePath": "plugins/_overflow.scss",
+                "test": false
+            },
+            {
+                "name": "_padding.scss",
+                "relativePath": "plugins/_padding.scss",
+                "test": false
+            },
+            {
+                "name": "_pointer-events.scss",
+                "relativePath": "plugins/_pointer-events.scss",
+                "test": false
+            },
+            {
+                "name": "_position.scss",
+                "relativePath": "plugins/_position.scss",
+                "test": false
+            },
+            {
+                "name": "_resize.scss",
+                "relativePath": "plugins/_resize.scss",
+                "test": false
+            },
+            {
+                "name": "_shadows.scss",
+                "relativePath": "plugins/_shadows.scss",
+                "test": false
+            },
+            {
+                "name": "_svg-fill.scss",
+                "relativePath": "plugins/_svg-fill.scss",
+                "test": false
+            },
+            {
+                "name": "_svg-stroke.scss",
+                "relativePath": "plugins/_svg-stroke.scss",
+                "test": false
+            },
+            {
+                "name": "_table-layout.scss",
+                "relativePath": "plugins/_table-layout.scss",
+                "test": false
+            },
+            {
+                "name": "_text-align.scss",
+                "relativePath": "plugins/_text-align.scss",
+                "test": false
+            },
+            {
+                "name": "_text-colors.scss",
+                "relativePath": "plugins/_text-colors.scss",
+                "test": false
+            },
+            {
+                "name": "_text-sizes.scss",
+                "relativePath": "plugins/_text-sizes.scss",
+                "test": false
+            },
+            {
+                "name": "_text-style.scss",
+                "relativePath": "plugins/_text-style.scss",
+                "test": false
+            },
+            {
+                "name": "_tracking.scss",
+                "relativePath": "plugins/_tracking.scss",
+                "test": false
+            },
+            {
+                "name": "_user-select.scss",
+                "relativePath": "plugins/_user-select.scss",
+                "test": false
+            },
+            {
+                "name": "_vertical-align.scss",
+                "relativePath": "plugins/_vertical-align.scss",
+                "test": false
+            },
+            {
+                "name": "_visibility.scss",
+                "relativePath": "plugins/_visibility.scss",
+                "test": false
+            },
+            {
+                "name": "_whitespace.scss",
+                "relativePath": "plugins/_whitespace.scss",
+                "test": false
+            },
+            {
+                "name": "_width.scss",
+                "relativePath": "plugins/_width.scss",
+                "test": false
+            },
+            {
+                "name": "_z-index.scss",
+                "relativePath": "plugins/_z-index.scss",
+                "test": false
+            },
+            {
+                "name": "styles.scss",
+                "relativePath": "styles.scss",
+                "test": false
+            }
+        ],
+        "mainFile": "styles.scss",
+        "rootDir": "src/features/common/tailwind-scss",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/tailwind-scss"
+    },
     "version": "14.0.5"
 }

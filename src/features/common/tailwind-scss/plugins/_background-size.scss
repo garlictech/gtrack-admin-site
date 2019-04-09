@@ -1,0 +1,7 @@
+@include configToUtility(
+  'background-size',
+  $backgroundSize,
+  'bg',
+  'background-size',
+  map-get($modules, 'backgroundSize')
+);

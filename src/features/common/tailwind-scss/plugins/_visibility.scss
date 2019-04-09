@@ -1,0 +1,12 @@
+@include addUtilities(
+  'visiblity',
+  (
+    'visible': (
+      visibility: 'visible'
+    ),
+    'invisible': (
+      visibility: 'hidden'
+    )
+  ),
+  map-get($modules, 'visibility')
+);

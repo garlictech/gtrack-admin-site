@@ -1,0 +1,55 @@
+$paddingUtilities: ();
+
+@each $m, $value in $padding {
+  $paddingUtilities: map-merge(
+    $paddingUtilities,
+    (
+      'p-#{$m}': (
+        padding-top: $value,
+        padding-left: $value,
+        padding-bottom: $value,
+        padding-right: $value
+      )
+    )
+  );
+
+  $paddingUtilities: map-merge(
+    $paddingUtilities,
+    (
+      'py-#{$m}': (
+        padding-top: $value,
+        padding-bottom: $value
+      )
+    )
+  );
+
+  $paddingUtilities: map-merge(
+    $paddingUtilities,
+    (
+      'px-#{$m}': (
+        padding-left: $value,
+        padding-right: $value
+      )
+    )
+  );
+
+  $paddingUtilities: map-merge(
+    $paddingUtilities,
+    (
+      'pt-#{$m}': (
+        padding-top: $value
+      ),
+      'pr-#{$m}': (
+        padding-right: $value
+      ),
+      'pb-#{$m}': (
+        padding-bottom: $value
+      ),
+      'pl-#{$m}': (
+        padding-left: $value
+      )
+    )
+  );
+}
+
+@include addUtilities('padding', $paddingUtilities, map-get($modules, 'padding'));

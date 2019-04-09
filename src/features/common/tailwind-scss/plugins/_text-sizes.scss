@@ -1,0 +1,1 @@
+@include configToUtility('text-sizes', $textSizes, 'text', 'font-size', map-get($modules, 'textSizes'));

@@ -1,0 +1,26 @@
+@mixin media-breakpoint($screen) {
+  @if (map-has-key($screens, $screen) != true) {
+    @error "Media query mixin requires a valid screen";
+  } @else if(map-get($screens, $screen)) == null {
+    @content;
+  } @else {
+    @media (min-width: #{map-get($screens, $screen)}) {
+      @content;
+    }
+  }
+}
+
+@mixin generate-breakpoint-prefixes($screen, $cls, $states) {
+  // generate prefixed classes
+  .#{$screen}\:#{$cls} {
+    @content;
+  }
+
+  @each $state in $states {
+    @if ($state == 'hover' or $state == 'focus') {
+      #{$screen}\:#{$state}\:#{$cls}:#{$state} {
+        @content;
+      }
+    }
+  }
+}

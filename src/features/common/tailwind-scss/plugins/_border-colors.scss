@@ -1,0 +1,3 @@
+$colors: map-remove($borderColors, default);
+
+@include configToUtility('border-color', $colors, 'border', 'border-color', map-get($modules, 'borderColors'));

@@ -1,0 +1,10 @@
+@include addUtilities(
+  'lists',
+  (
+    'list-reset': (
+      'list-style': 'none',
+      padding: '0'
+    )
+  ),
+  map-get($modules, 'lists')
+);

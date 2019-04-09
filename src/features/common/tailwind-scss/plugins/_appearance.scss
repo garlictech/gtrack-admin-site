@@ -1,0 +1,9 @@
+@include addUtilities(
+  'appearance',
+  (
+    'appearance-none': (
+      appearance: 'none'
+    )
+  ),
+  map-get($modules, 'appearance')
+);

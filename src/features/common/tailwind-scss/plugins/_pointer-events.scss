@@ -1,0 +1,12 @@
+@include addUtilities(
+  'pointer-events',
+  (
+    'pointer-events-none': (
+      'pointer-events': 'none'
+    ),
+    'pointer-events-auto': (
+      'pointer-events': 'auto'
+    )
+  ),
+  map-get($modules, 'pointerEvents')
+);

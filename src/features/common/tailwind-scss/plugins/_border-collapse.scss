@@ -1,0 +1,12 @@
+@include addUtilities(
+  'border-collapse',
+  (
+    'border-collapse': (
+      'border-collapse': 'collapse'
+    ),
+    'border-separate': (
+      'border-collapse': 'separate'
+    )
+  ),
+  map-get($modules, 'borderCollapse')
+);

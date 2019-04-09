@@ -1,0 +1,1 @@
+@include configToUtility('text-colors', $colors, 'text', 'color', map-get($modules, 'textColors'));

@@ -1,0 +1,11 @@
+@mixin createCssVariable($values, $prefix: null) {
+  @each $name, $value in $values {
+    $prefixStr: if($prefix, #{$prefix}-, #{$prefix});
+
+    @if $name == 'default' {
+      --#{$prefix}: #{$value};
+    } @else {
+      --#{$prefixStr}#{$name}: #{$value};
+    }
+  }
+}

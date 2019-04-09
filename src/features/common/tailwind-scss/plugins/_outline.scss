@@ -1,0 +1,9 @@
+@include addUtilities(
+  'outline',
+  (
+    'outline-none': (
+      outline: '0'
+    )
+  ),
+  map-get($modules, 'outline')
+);

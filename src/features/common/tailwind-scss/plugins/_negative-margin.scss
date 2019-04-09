@@ -1,0 +1,57 @@
+$margin-utilities: ();
+
+@each $m, $positiveValue in $negativeMargin {
+  $value: if($positiveValue == '0', $positiveValue, '-#{$positiveValue}');
+
+  $margin-utilities: map-merge(
+    $margin-utilities,
+    (
+      '-m-#{$m}': (
+        margin-top: $value,
+        margin-left: $value,
+        margin-bottom: $value,
+        margin-right: $value
+      )
+    )
+  );
+
+  $margin-utilities: map-merge(
+    $margin-utilities,
+    (
+      '-mx-#{$m}': (
+        margin-top: $value,
+        margin-bottom: $value
+      )
+    )
+  );
+
+  $margin-utilities: map-merge(
+    $margin-utilities,
+    (
+      '-my-#{$m}': (
+        margin-left: $value,
+        margin-right: $value
+      )
+    )
+  );
+
+  $margin-utilities: map-merge(
+    $margin-utilities,
+    (
+      '-mt-#{$m}': (
+        margin-top: $value
+      ),
+      '-mr-#{$m}': (
+        margin-right: $value
+      ),
+      '-mb-#{$m}': (
+        margin-bottom: $value
+      ),
+      '-ml-#{$m}': (
+        margin-left: $value
+      )
+    )
+  );
+}
+
+@include addUtilities('negaitve-margin', $margin-utilities, map-get($modules, 'negativeMargin'));

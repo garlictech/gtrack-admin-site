@@ -1,0 +1,12 @@
+@include addUtilities(
+  'user-select',
+  (
+    'select-none': (
+      'user-select': 'none'
+    ),
+    'select-text': (
+      'user-select': 'text'
+    )
+  ),
+  map-get($modules, 'userSelect')
+);

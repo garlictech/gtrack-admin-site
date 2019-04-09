@@ -1,0 +1,39 @@
+$containerStyles: (
+  'width': '100%'
+);
+
+@if (map-has-key($containerConfig, center)) {
+  @if (map-get($containerConfig, center) == true) {
+    $containerStyles: map-merge(
+      $containerStyles,
+      (
+        'margin-left': auto,
+        'margin-right': auto
+      )
+    );
+  }
+}
+
+@if (map-has-key($containerConfig, padding)) {
+  $containerStyles: map-merge(
+    $containerStyles,
+    (
+      'padding-left': #{map-get($containerConfig, padding)},
+      'padding-right': #{map-get($containerConfig, padding)}
+    )
+  );
+}
+
+$containerUtilities: (
+  container: $containerStyles
+);
+
+@include addUtilities('container', $containerUtilities, ());
+
+.container {
+  @each $minWidth in map-get($containerConfig, 'screens') {
+    @media (min-width: #{$minWidth}) {
+      max-width: #{$minWidth};
+    }
+  }
+}

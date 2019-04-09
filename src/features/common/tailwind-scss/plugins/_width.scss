@@ -1,0 +1,1 @@
+@include configToUtility('width', $width, 'w', 'width', map-get($modules, 'width'));

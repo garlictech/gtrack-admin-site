@@ -1,0 +1,9 @@
+@mixin apply($classes...) {
+  @each $class in $classes {
+    $styles: map-get($utilities, $class);
+
+    @each $style, $value in $styles {
+      #{$style}: #{$value};
+    }
+  }
+}

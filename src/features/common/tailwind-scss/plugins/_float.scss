@@ -1,0 +1,20 @@
+@include addUtilities(
+  'float',
+  (
+    'float-right': (
+      float: 'right'
+    ),
+    'float-left': (
+      float: 'left'
+    ),
+    'float-none': (
+      float: 'none'
+    ),
+    'clearfix:after': (
+      content: '""',
+      display: 'table',
+      clear: 'both'
+    )
+  ),
+  map-get($modules, 'float')
+);

@@ -1,0 +1,34 @@
+$borderWidthUtilities: ();
+
+@each $m, $value in $borderWidths {
+  $modifier: if(($m != 'default'), '-#{$m}', '');
+
+  $borderWidthUtilities: map-merge(
+    $borderWidthUtilities,
+    (
+      'border#{$modifier}': (
+        border-width: $value
+      )
+    )
+  );
+
+  $borderWidthUtilities: map-merge(
+    $borderWidthUtilities,
+    (
+      'border-t#{$modifier}': (
+        border-top-width: $value
+      ),
+      'border-r#{$modifier}': (
+        border-right-width: $value
+      ),
+      'border-b#{$modifier}': (
+        border-bottom-width: $value
+      ),
+      'border-l#{$modifier}': (
+        border-left-width: $value
+      )
+    )
+  );
+}
+
+@include addUtilities('border-width', $borderWidthUtilities, map-get($modules, 'borderWidths'));

@@ -197,7 +197,8 @@
     "togpx": "^0.5.4",
     "zone.js": "~0.8.28",
     "@bit/garlictech.angular-features.common.progressive-image-loader": "file:./src/features/common/progressive-image-loader",
-    "@bit/garlictech.angular-features.web.text-carousel": "file:./src/features/web/text-carousel"
+    "@bit/garlictech.angular-features.web.text-carousel": "file:./src/features/web/text-carousel",
+    "@bit/garlictech.angular-features.common.tailwind-scss": "file:./src/features/common/tailwind-scss"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",

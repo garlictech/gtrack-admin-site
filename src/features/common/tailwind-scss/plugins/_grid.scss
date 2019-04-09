@@ -1,0 +1,87 @@
+$gridUtilities: ();
+
+$gridUtilities: map-merge(
+  $gridUtilities,
+  (
+    'grid': (
+      'display': 'grid'
+    ),
+    'grid-dense': (
+      'grid-auto-flow': 'dense'
+    )
+  )
+);
+
+@each $name, $size in map-get($gridConfig, 'gaps') {
+  $gridUtilities: map-merge(
+    $gridUtilities,
+    (
+      'grid-gap-#{$name}': (
+        grid-gap: #{$size}
+      )
+    )
+  );
+}
+
+@each $columns in map-get($gridConfig, 'grids') {
+  $gridUtilities: map-merge(
+    $gridUtilities,
+    (
+      'grid-columns-#{$columns}': (
+        grid-template-columns: 'repeat(#{$columns}, 1fr)'
+      )
+    )
+  );
+}
+
+@for $span from 1 to max(map-get($gridConfig, 'grids') ...) + 1 {
+  $gridUtilities: map-merge(
+    $gridUtilities,
+    (
+      'col-span-#{$span}': (
+        grid-column-start: 'span #{$span}'
+      )
+    )
+  );
+}
+
+@for $span from 1 to max(map-get($gridConfig, 'grids') ...) + 2 {
+  $gridUtilities: map-merge(
+    $gridUtilities,
+    (
+      'col-start-#{$span}': (
+        grid-column-start: '#{$span}'
+      ),
+      'col-end-#{$span}': (
+        grid-column-end: '#{$span}'
+      )
+    )
+  );
+}
+
+@for $span from 1 to max(map-get($gridConfig, 'grids') ...) + 1 {
+  $gridUtilities: map-merge(
+    $gridUtilities,
+    (
+      'row-span-#{$span}': (
+        grid-row-start: 'span #{$span}'
+      )
+    )
+  );
+}
+
+@for $span from 1 to max(map-get($gridConfig, 'grids') ...) + 2 {
+  $gridUtilities: map-merge(
+    $gridUtilities,
+    (
+      'row-start-#{$span}': (
+        grid-row-start: '#{$span}'
+      ),
+      'row-end-#{$span}': (
+        grid-row-end: '#{$span}'
+      )
+    )
+  );
+}
+
+@include addUtilities('gird', $gridUtilities, map-get($modules, 'grid'));

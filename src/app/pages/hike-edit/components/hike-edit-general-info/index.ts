@@ -83,6 +83,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
 
   // tslint:disable-next-line:no-property-initializers
   submitDescription = (langKey: string, data: any) => {
+    console.log('submitDescription');
     this._store.dispatch(new editedHikeProgramActions.AddNewTranslatedHikeProgramDescription(langKey, data));
   };
 

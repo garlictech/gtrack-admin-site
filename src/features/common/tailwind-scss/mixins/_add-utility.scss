@@ -1,0 +1,46 @@
+@mixin addUtilities($name, $newUtilities, $states) {
+  @if (type-of($states) == 'string') {
+    $states: append((), $states);
+  }
+
+  @if (type-of($states) == 'list') {
+    $utilities: map-merge($utilities, $newUtilities) !global;
+
+    @each $cls, $styles in $newUtilities {
+      $clsStr: str-replace($cls, '/', '\\/');
+      .#{$clsStr} {
+        @each $style, $value in $styles {
+          #{$style}: #{$value};
+        }
+      }
+
+      @each $state in $states {
+        @each $style, $value in $styles {
+          @if ($state == 'hover' or $state == 'focus') {
+            @include generateStatePrefix($clsStr, $state) {
+              #{$style}: #{$value};
+            }
+          } @else if($state != 'responsive') {
+            @warn 'Invalid state #{$state}';
+          }
+        }
+      }
+    }
+    @each $screen, $max in $screens {
+      @include media-breakpoint($screen) {
+        @each $cls, $styles in $newUtilities {
+          $clsStr: str-replace($cls, '/', '\\/');
+          @if (index($states, 'responsive') != null) {
+            @each $style, $value in $styles {
+              @include generate-breakpoint-prefixes($screen, $clsStr, $states) {
+                #{$style}: #{$value};
+              }
+            }
+          }
+        }
+      }
+    }
+  } @else {
+    @debug #{$name} is disabled;
+  }
+}

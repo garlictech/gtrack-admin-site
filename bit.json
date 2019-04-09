@@ -23,7 +23,8 @@
     "garlictech.angular-features/common/geosearch": "0.0.3",
     "garlictech.angular-features/common/search-filters": "0.0.3",
     "garlictech.angular-features/common/progressive-image-loader": "0.0.1",
-    "garlictech.angular-features/web/text-carousel": "0.0.5"
+    "garlictech.angular-features/web/text-carousel": "0.0.5",
+    "garlictech.angular-features/common/tailwind-scss": "0.0.2"
   },
   "componentsDefaultDirectory": "src/features/{namespace}/{name}",
   "packageManager": "yarn",

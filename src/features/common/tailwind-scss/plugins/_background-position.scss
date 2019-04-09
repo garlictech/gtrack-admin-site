@@ -1,0 +1,7 @@
+@include configToUtility(
+  'background-position',
+  $backgroundPosition,
+  'bg',
+  'background-position',
+  map-get($modules, 'backgroundPosition')
+);
