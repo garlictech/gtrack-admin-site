@@ -9,15 +9,16 @@ import { AstronomyModule } from 'subrepos/gtrack-common-ngx';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TrustedPipesModule } from '@bit/garlictech.angular-features.common.generic-ui';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { WeatherModule as BaseWeatherModule } from '@bit/garlictech.angular-features.common.weather';
 import { WeatherModule } from '@bit/garlictech.angular-features.web.weather';
+import { FormModule } from '@features/web/forms-primeng';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MapComponentsModule, SharedModule } from '../../../gtrack-common-ngx';
 import { HikeComponentsModule as BaseModule } from '../../../gtrack-common-ngx/app/hike/components';
-import { FormModule } from '../../forms';
 import { LocalizeModule as WebLocalizeModule } from '../localize';
 import { BookmarkComponent } from './bookmark';
 import { CheckpointsComponent } from './checkpoints';
@@ -82,7 +83,8 @@ const COMPONENTS = [
     BaseWeatherModule,
     WeatherModule,
     SliderModule,
-    SelectButtonModule
+    SelectButtonModule,
+    TrustedPipesModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS]

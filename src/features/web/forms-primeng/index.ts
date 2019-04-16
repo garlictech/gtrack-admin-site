@@ -1,7 +1,3 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { NgxMdModule } from 'ngx-md';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
@@ -13,13 +9,14 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SliderModule } from 'primeng/slider';
 
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
+import { LanguageModule } from '@bit/garlictech.angular-features.web.language';
+import { FormModule as NativeFormModule } from '@features/common/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { FormModule as NativeFormModule } from '@features/common/forms';
-
-import { LanguageModule } from '../language';
-
-import { GenericUiModule } from '@features/web/generic-ui-primeng';
 import { DatePickerComponent } from './date-picker';
 import { DropdownSelectComponent } from './dropdown-select';
 import { DynamicFormComponent } from './dynamic-form-component';

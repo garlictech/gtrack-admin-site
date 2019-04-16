@@ -1,0 +1,1 @@
+export { TrustedPipesModule } from './module';

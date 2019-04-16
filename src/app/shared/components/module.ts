@@ -1,8 +1,8 @@
+import { FormModule } from '@features/web/forms-primeng';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { SharedModule } from 'subrepos/gtrack-common-ngx';
-import { FormModule } from 'subrepos/gtrack-common-web/forms';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';

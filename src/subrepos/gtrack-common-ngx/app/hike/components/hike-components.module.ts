@@ -1,12 +1,12 @@
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { GalleriaModule } from 'primeng/galleria';
-import { FormModule } from 'subrepos/gtrack-common-web/forms';
 
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { SearchFiltersModule } from '@bit/garlictech.angular-features.common.search-filters';
+import { FormModule } from '@features/web/forms-primeng';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';

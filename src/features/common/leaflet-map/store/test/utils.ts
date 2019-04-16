@@ -5,6 +5,6 @@ export const createFeatureState = ({ mapId = 'foobar', featureId = undefined } =
   featureId
 });
 
-export const createState = (stateParams?): { 'features.leaflet-map': State } => ({
-  'features.leaflet-map': createFeatureState(stateParams)
+export const createState = (stateParams?): { 'features.common.leaflet-map': State } => ({
+  'features.common.leaflet-map': createFeatureState(stateParams)
 });

@@ -13,7 +13,7 @@
     "@fortawesome/angular-fontawesome": "^0.3.0",
     "@ngx-translate/core": "^11.0.1",
     "primeng": "~7.0.0",
-    "@bit/garlictech.angular-features.common.generic-ui": "0.0.12"
+    "@bit/garlictech.angular-features.common.generic-ui": "../../common/generic-ui"
   },
   "devDependencies": {},
   "peerDependencies": {},

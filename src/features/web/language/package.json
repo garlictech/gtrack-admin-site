@@ -1,0 +1,19 @@
+{
+  "name": "@bit/garlictech.angular-features.web.language",
+  "version": "0.0.5",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/language",
+  "main": "index.ts",
+  "dependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1",
+    "@angular/forms": "~7.2.1",
+    "@ngx-translate/core": "^11.0.1",
+    "primeng": "~7.0.0",
+    "@ngrx/store": "~7.1.0",
+    "rxjs": "~6.3.2",
+    "@bit/garlictech.angular-features.common.localization": "file:../../common/localization"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "license": "SEE LICENSE IN LICENSE"
+}

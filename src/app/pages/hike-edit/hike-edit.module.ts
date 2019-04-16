@@ -8,7 +8,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
 import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
-import { FormModule, HikeComponentsModule, LanguageModule } from 'subrepos/gtrack-common-web';
+import { HikeComponentsModule } from 'subrepos/gtrack-common-web';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -16,6 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { LanguageModule } from '@bit/garlictech.angular-features.web.language';
+import { FormModule } from '@features/web/forms-primeng';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 

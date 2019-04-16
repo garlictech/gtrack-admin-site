@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GalleriaModule } from 'primeng/galleria';
 import { LightboxModule } from 'primeng/lightbox';
 import { SlideShowComponent } from './components';
-import { SanitizeHtmlDirective } from './directives/sanitize-html';
+
 import {
   CoordinatePipe,
   DifficultyPipe,
@@ -25,7 +25,6 @@ const DECLARATIONS = [
   DistancePipe,
   DurationPipe,
   CoordinatePipe,
-  SanitizeHtmlDirective,
   SlideShowComponent,
   PoiImagesToGalleryPipe,
   PoiImagesWithinCirclePipe

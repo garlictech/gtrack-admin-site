@@ -1,5 +1,5 @@
 import { reducer } from 'app/store';
-import { FormModule } from 'subrepos/gtrack-common-web/forms';
+import { FormModule } from '@features/web/forms-primeng';
 
 /* tslint:disable:no-unused-variable */
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';

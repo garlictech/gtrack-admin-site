@@ -89,7 +89,7 @@
     "format:fix": "docker/quick-fix.sh",
     "format:fix:l": "pretty-quick --staged",
     "install:peers": "npm-install-peers",
-    "fix-ws-permissions": "find ./workflows-scripts/webclient/docker/ -type f -exec chmod 755 {} \\;"
+    "fix-ws-permissions": "find ./workflows-scripts/webclient/ -type f -exec chmod 755 {} \\;"
   },
   "dependencies": {
     "@angular/animations": "~7.2.1",
@@ -107,7 +107,6 @@
     "@bit/garlictech.angular-features.common.checkpoints": "file:./src/features/common/checkpoints",
     "@bit/garlictech.angular-features.common.deepstream-ngx": "file:./src/features/common/deepstream-ngx",
     "@bit/garlictech.angular-features.common.forms": "file:./src/features/common/forms",
-    "@bit/garlictech.angular-features.common.generic-ui": "file:./src/features/common/generic-ui",
     "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:./src/features/common/gtrack-interfaces",
     "@bit/garlictech.angular-features.common.leaflet-map": "file:./src/features/common/leaflet-map",
     "@bit/garlictech.angular-features.common.localization": "file:./src/features/common/localization",
@@ -115,7 +114,6 @@
     "@bit/garlictech.angular-features.common.router": "file:./src/features/common/router",
     "@bit/garlictech.angular-features.common.utils": "file:./src/features/common/utils",
     "@bit/garlictech.angular-features.common.weather": "file:./src/features/common/weather",
-    "@bit/garlictech.angular-features.web.generic-ui-primeng": "file:./src/features/web/generic-ui-primeng",
     "@bit/garlictech.angular-features.web.weather": "file:./src/features/web/weather",
     "@bit/garlictech.angular-features.common.current-geolocation": "file:./src/features/common/current-geolocation",
     "@bit/garlictech.angular-features.common.marker-icons": "file:./src/features/common/marker-icons",
@@ -198,7 +196,10 @@
     "zone.js": "~0.8.28",
     "@bit/garlictech.angular-features.common.progressive-image-loader": "file:./src/features/common/progressive-image-loader",
     "@bit/garlictech.angular-features.web.text-carousel": "file:./src/features/web/text-carousel",
-    "@bit/garlictech.angular-features.common.tailwind-scss": "file:./src/features/common/tailwind-scss"
+    "@bit/garlictech.angular-features.common.tailwind-scss": "file:./src/features/common/tailwind-scss",
+    "@bit/garlictech.angular-features.web.language": "file:./src/features/web/language",
+    "@bit/garlictech.angular-features.common.generic-ui": "file:./src/features/common/generic-ui",
+    "@bit/garlictech.angular-features.web.generic-ui-primeng": "file:./src/features/web/generic-ui-primeng"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",
