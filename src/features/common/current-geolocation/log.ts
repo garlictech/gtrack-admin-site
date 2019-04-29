@@ -1,6 +1,6 @@
 import { Log } from 'ng2-logger';
 
-export const log = Log.create('f.current-geolocation');
+export const log = Log.create('common/current-geolocation');
 log.color = '#334576';
 
 // tslint:disable:only-arrow-functions no-invalid-this

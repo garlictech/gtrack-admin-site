@@ -1,10 +1,10 @@
 import _map from 'lodash-es/map';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { debounceTime, switchMap, take, takeUntil } from 'rxjs/operators';
-import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { BackgroundImageData, EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { PoiSelectors } from '@features/common/poi';
 import { MemoizedSelector, select, Store } from '@ngrx/store';
 
 import { PoiEditorService, RoutePlannerService } from '../../../../shared/services';

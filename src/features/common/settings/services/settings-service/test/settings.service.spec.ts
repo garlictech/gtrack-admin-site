@@ -1,15 +1,17 @@
-import * as fromGenericUiActions from '@features/common/generic-ui/store/actions';
-import { async, TestBed } from '@angular/core/testing';
-import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
-import { DeepstreamService } from 'subrepos/gtrack-common-ngx/app/deepstream';
-import { EProfileGroup } from '@features/common/settings/interfaces';
-import { EToastSeverity } from '@features/common/generic-ui';
-import { CommonProfile, CommonProfileSettings } from '@features/common/gtrack-interfaces/interfaces';
 import { log } from 'app/log';
 import { Observable, of } from 'rxjs';
-import { SettingsService } from '../index';
-import { Store, StoreModule } from '@ngrx/store';
 import { take } from 'rxjs/operators';
+
+import { async, TestBed } from '@angular/core/testing';
+import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { AuthenticationSelectors } from '@features/common/authentication';
+import { EToastSeverity } from '@features/common/generic-ui';
+import * as fromGenericUiActions from '@features/common/generic-ui/store/actions';
+import { CommonProfile, CommonProfileSettings } from '@features/common/gtrack-interfaces/interfaces';
+import { EProfileGroup } from '@features/common/settings/interfaces';
+import { Store, StoreModule } from '@ngrx/store';
+
+import { SettingsService } from '../settings.service';
 
 describe('SettingsService', () => {
   let service: SettingsService;

@@ -1,10 +1,9 @@
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _get from 'lodash-es/get';
-import { RouteService } from 'subrepos/gtrack-common-ngx';
 
-// Core
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { RouteService } from '@features/common/route';
 import * as toGeoJSON from '@mapbox/togeojson';
 
 import { HikeProgramService } from '../../../../shared/services';

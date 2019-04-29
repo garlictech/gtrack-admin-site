@@ -1835,6 +1835,26 @@
                 "test": false
             },
             {
+                "relativePath": "components/icon/icon.component.html",
+                "test": false,
+                "name": "icon.component.html"
+            },
+            {
+                "relativePath": "components/icon/icon.component.scss",
+                "test": false,
+                "name": "icon.component.scss"
+            },
+            {
+                "relativePath": "components/icon/icon.component.ts",
+                "test": false,
+                "name": "icon.component.ts"
+            },
+            {
+                "relativePath": "components/icon/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
                 "name": "color-codes.ts",
                 "relativePath": "enums/color-codes.ts",
                 "test": false
@@ -2366,98 +2386,6 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/search-filters"
     },
-    "garlictech.angular-features/common/geosearch@0.0.4": {
-        "files": [
-            {
-                "name": "geosearch.module.ts",
-                "relativePath": "geosearch.module.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "geosearch.service.ts",
-                "relativePath": "services/geosearch.service.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            },
-            {
-                "name": "geosearch.service.spec.ts",
-                "relativePath": "services/test/geosearch.service.spec.ts",
-                "test": false
-            },
-            {
-                "name": "actions.ts",
-                "relativePath": "store/actions.ts",
-                "test": false
-            },
-            {
-                "name": "effects.ts",
-                "relativePath": "store/effects.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/index.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.ts",
-                "relativePath": "store/reducer.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.ts",
-                "relativePath": "store/selectors.ts",
-                "test": false
-            },
-            {
-                "name": "state.ts",
-                "relativePath": "store/state.ts",
-                "test": false
-            },
-            {
-                "name": "actions.spec.ts",
-                "relativePath": "store/test/actions.spec.ts",
-                "test": false
-            },
-            {
-                "name": "effects.spec.ts",
-                "relativePath": "store/test/effects.spec.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/test/fixtures/index.ts",
-                "test": true
-            },
-            {
-                "name": "reducer.spec.ts",
-                "relativePath": "store/test/reducer.spec.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.spec.ts",
-                "relativePath": "store/test/selectors.spec.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/geosearch",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.2"
-        ],
-        "originallySharedDir": "src/features/common/geosearch"
-    },
     "garlictech.angular-features/common/gtrack-interfaces@0.0.3": {
         "files": [
             {
@@ -2605,680 +2533,6 @@
         "rootDir": "src/features/common/gtrack-interfaces",
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/gtrack-interfaces"
-    },
-    "garlictech.angular-features/web/forms-primeng@0.0.4": {
-        "files": [
-            {
-                "relativePath": "src/features/web/forms-primeng/date-picker/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/date-picker/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/date-picker/test/component.spec.ts",
-                "test": true,
-                "name": "component.spec.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/date-picker/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dropdown-select/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dropdown-select/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dropdown-select/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-component/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-component/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-component/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-field-component/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-field-component/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-field-component/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-group-component/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-group-component/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-group-component/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-section-component/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-section-component/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/dynamic-form-section-component/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/emoji-input/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/emoji-input/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/emoji-input/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/file/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/file/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/file/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/markdown/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/markdown/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/markdown/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/multi-select/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/multi-select/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/multi-select/test/component.spec.ts",
-                "test": false,
-                "name": "component.spec.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/multi-select/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/radio-select/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/radio-select/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/radio-select/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/range-slider/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/range-slider/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/range-slider/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/rich-text-editor/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/rich-text-editor/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/rich-text-editor/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/slider/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/slider/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/slider/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/switch/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/switch/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/switch/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/test/module.spec.ts",
-                "test": false,
-                "name": "module.spec.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/time-picker/index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/time-picker/style.scss",
-                "test": false,
-                "name": "style.scss"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/time-picker/test/component.spec.ts",
-                "test": false,
-                "name": "component.spec.ts"
-            },
-            {
-                "relativePath": "src/features/web/forms-primeng/time-picker/ui.html",
-                "test": false,
-                "name": "ui.html"
-            }
-        ],
-        "mainFile": "src/features/web/forms-primeng/index.ts",
-        "origin": "AUTHORED",
-        "exported": true
-    },
-    "garlictech.angular-features/web/text-carousel@0.0.10": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/text-carousel/index.ts",
-                "test": false
-            },
-            {
-                "name": "style.scss",
-                "relativePath": "components/text-carousel/style.scss",
-                "test": false
-            },
-            {
-                "name": "ui.html",
-                "relativePath": "components/text-carousel/ui.html",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "text-carousel.module.ts",
-                "relativePath": "text-carousel.module.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/web/text-carousel",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/localization@0.0.8"
-        ],
-        "originallySharedDir": "src/features/web/text-carousel"
-    },
-    "garlictech.angular-features/common/multi-language-text@0.0.8": {
-        "files": [
-            {
-                "name": "description.component.ts",
-                "relativePath": "components/description/description.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/description/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "localize.module.ts",
-                "relativePath": "localize.module.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "pipes/index.ts",
-                "test": false
-            },
-            {
-                "name": "localize-description.pipe.ts",
-                "relativePath": "pipes/localize-description.pipe.ts",
-                "test": false
-            },
-            {
-                "name": "localize-description.spec.ts",
-                "relativePath": "pipes/test/localize-description.spec.ts",
-                "test": true
-            },
-            {
-                "name": "description-language-list.service.ts",
-                "relativePath": "services/description-language-list/description-language-list.service.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/description-language-list/index.ts",
-                "test": false
-            },
-            {
-                "name": "description-language-list.service.spec.ts",
-                "relativePath": "services/description-language-list/test/description-language-list.service.spec.ts",
-                "test": true
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/index.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.ts",
-                "relativePath": "store/selectors.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/multi-language-text",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
-            "garlictech.angular-features/common/localization@0.0.8"
-        ],
-        "originallySharedDir": "src/features/common/multi-language-text"
-    },
-    "garlictech.angular-features/common/checkpoints@0.0.10": {
-        "files": [
-            {
-                "name": "checkpoints.module.ts",
-                "relativePath": "checkpoints.module.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "checkpoint-marker-collection.ts",
-                "relativePath": "lib/checkpoint-marker-collection.ts",
-                "test": false
-            },
-            {
-                "name": "checkpoint-sequence.ts",
-                "relativePath": "lib/checkpoint-sequence.ts",
-                "test": false
-            },
-            {
-                "name": "checkpoint.ts",
-                "relativePath": "lib/checkpoint.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "lib/index.ts",
-                "test": false
-            },
-            {
-                "name": "checkpoint.service.ts",
-                "relativePath": "services/checkpoint.service.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/checkpoints",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/current-geolocation@0.0.4",
-            "garlictech.angular-features/common/spinner@0.0.2",
-            "garlictech.angular-features/web/spinner@0.0.8",
-            "garlictech.angular-features/common/marker-icons@0.0.6"
-        ],
-        "originallySharedDir": "src/features/common/checkpoints"
-    },
-    "garlictech.angular-features/common/leaflet-map@0.0.28": {
-        "files": [
-            {
-                "name": "README.md",
-                "relativePath": "README.md",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/leaflet-map/index.ts",
-                "test": false
-            },
-            {
-                "name": "style.scss",
-                "relativePath": "components/leaflet-map/style.scss",
-                "test": false
-            },
-            {
-                "name": "ui.html",
-                "relativePath": "components/leaflet-map/ui.html",
-                "test": false
-            },
-            {
-                "name": "defaults.ts",
-                "relativePath": "constants/defaults.ts",
-                "test": false
-            },
-            {
-                "name": "geojson-styles.ts",
-                "relativePath": "constants/geojson-styles.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "constants/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "center.ts",
-                "relativePath": "interfaces/center.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "interfaces/index.ts",
-                "test": false
-            },
-            {
-                "name": "layer-def.ts",
-                "relativePath": "interfaces/layer-def.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-event-emitter-map.ts",
-                "relativePath": "interfaces/leaflet-event-emitter-map.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-map-config.ts",
-                "relativePath": "interfaces/leaflet-map-config.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-marker-popup-data.ts",
-                "relativePath": "interfaces/leaflet-marker-popup-data.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-tile-layer-def.ts",
-                "relativePath": "interfaces/leaflet-tile-layer-def.ts",
-                "test": false
-            },
-            {
-                "name": "marker-type.ts",
-                "relativePath": "interfaces/marker-type.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-map.module.ts",
-                "relativePath": "leaflet-map.module.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-icon.service.ts",
-                "relativePath": "services/leaflet-icon.service.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-map-marker.service.ts",
-                "relativePath": "services/leaflet-map-marker.service.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-map.service.ts",
-                "relativePath": "services/leaflet-map.service.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-marker-popup.service.ts",
-                "relativePath": "services/leaflet-marker-popup.service.ts",
-                "test": false
-            },
-            {
-                "name": "current-position-marker.ts",
-                "relativePath": "services/lib/current-position-marker.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/lib/index.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-map-marker.ts",
-                "relativePath": "services/lib/leaflet-map-marker.ts",
-                "test": false
-            },
-            {
-                "name": "current-position-marker.spec.ts",
-                "relativePath": "services/lib/test/current-position-marker.spec.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-map-marker.spec.ts",
-                "relativePath": "services/lib/test/leaflet-map-marker.spec.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-icon.service.spec.ts",
-                "relativePath": "services/test/leaflet-icon.service.spec.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-map-marker.service.spec.ts",
-                "relativePath": "services/test/leaflet-map-marker.service.spec.ts",
-                "test": false
-            },
-            {
-                "name": "leaflet-map.service.spec.ts",
-                "relativePath": "services/test/leaflet-map.service.spec.ts",
-                "test": false
-            },
-            {
-                "name": "actions.ts",
-                "relativePath": "store/actions.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/index.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.ts",
-                "relativePath": "store/reducer.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.ts",
-                "relativePath": "store/selectors.ts",
-                "test": false
-            },
-            {
-                "name": "state.ts",
-                "relativePath": "store/state.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.spec.ts.snap",
-                "relativePath": "store/test/__snapshots__/reducer.spec.ts.snap",
-                "test": false
-            },
-            {
-                "name": "selectors.spec.ts.snap",
-                "relativePath": "store/test/__snapshots__/selectors.spec.ts.snap",
-                "test": false
-            },
-            {
-                "name": "actions.spec.ts",
-                "relativePath": "store/test/actions.spec.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.spec.ts",
-                "relativePath": "store/test/reducer.spec.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.spec.ts",
-                "relativePath": "store/test/selectors.spec.ts",
-                "test": false
-            },
-            {
-                "name": "utils.ts",
-                "relativePath": "store/test/utils.ts",
-                "test": false
-            },
-            {
-                "name": "index.d.ts",
-                "relativePath": "types/leaflet-usermarker/index.d.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/leaflet-map",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/current-geolocation@0.0.4",
-            "garlictech.angular-features/common/spinner@0.0.2",
-            "garlictech.angular-features/web/spinner@0.0.8",
-            "garlictech.angular-features/common/marker-icons@0.0.6",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.3"
-        ],
-        "originallySharedDir": "src/features/common/leaflet-map"
     },
     "garlictech.angular-features/common/weather@0.0.5": {
         "files": [
@@ -3666,67 +2920,1252 @@
         ],
         "originallySharedDir": "src/features/web/language"
     },
-    "web/generic-ui-primeng": {
+    "garlictech.angular-features/common/leaflet-map@0.0.29": {
         "files": [
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/component-busy-indicator/index.ts",
+                "name": "README.md",
+                "relativePath": "README.md",
+                "test": false
+            },
+            {
+                "relativePath": "components/leaflet-map/leaflet-map.component.html",
+                "test": false,
+                "name": "leaflet-map.component.html"
+            },
+            {
+                "relativePath": "components/leaflet-map/leaflet-map.component.scss",
+                "test": false,
+                "name": "leaflet-map.component.scss"
+            },
+            {
+                "relativePath": "components/leaflet-map/leaflet-map.component.ts",
+                "test": false,
+                "name": "leaflet-map.component.ts"
+            },
+            {
+                "name": "defaults.ts",
+                "relativePath": "constants/defaults.ts",
+                "test": false
+            },
+            {
+                "name": "geojson-styles.ts",
+                "relativePath": "constants/geojson-styles.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "constants/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "center.ts",
+                "relativePath": "interfaces/center.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "interfaces/index.ts",
+                "test": false
+            },
+            {
+                "name": "layer-def.ts",
+                "relativePath": "interfaces/layer-def.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-event-emitter-map.ts",
+                "relativePath": "interfaces/leaflet-event-emitter-map.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-map-config.ts",
+                "relativePath": "interfaces/leaflet-map-config.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-marker-popup-data.ts",
+                "relativePath": "interfaces/leaflet-marker-popup-data.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-tile-layer-def.ts",
+                "relativePath": "interfaces/leaflet-tile-layer-def.ts",
+                "test": false
+            },
+            {
+                "name": "marker-type.ts",
+                "relativePath": "interfaces/marker-type.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-map.module.ts",
+                "relativePath": "leaflet-map.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-icon.service.ts",
+                "relativePath": "services/leaflet-icon.service.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-map-marker.service.ts",
+                "relativePath": "services/leaflet-map-marker.service.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-map.service.ts",
+                "relativePath": "services/leaflet-map.service.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-marker-popup.service.ts",
+                "relativePath": "services/leaflet-marker-popup.service.ts",
+                "test": false
+            },
+            {
+                "name": "current-position-marker.ts",
+                "relativePath": "services/lib/current-position-marker.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/lib/index.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-map-marker.ts",
+                "relativePath": "services/lib/leaflet-map-marker.ts",
+                "test": false
+            },
+            {
+                "name": "current-position-marker.spec.ts",
+                "relativePath": "services/lib/test/current-position-marker.spec.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-map-marker.spec.ts",
+                "relativePath": "services/lib/test/leaflet-map-marker.spec.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-icon.service.spec.ts",
+                "relativePath": "services/test/leaflet-icon.service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-map-marker.service.spec.ts",
+                "relativePath": "services/test/leaflet-map-marker.service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "leaflet-map.service.spec.ts",
+                "relativePath": "services/test/leaflet-map.service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.spec.ts.snap",
+                "relativePath": "store/test/__snapshots__/reducer.spec.ts.snap",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts.snap",
+                "relativePath": "store/test/__snapshots__/selectors.spec.ts.snap",
+                "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false
+            },
+            {
+                "name": "utils.ts",
+                "relativePath": "store/test/utils.ts",
+                "test": false
+            },
+            {
+                "name": "index.d.ts",
+                "relativePath": "types/leaflet-usermarker/index.d.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/leaflet-map",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/current-geolocation@0.0.4",
+            "garlictech.angular-features/common/spinner@0.0.2",
+            "garlictech.angular-features/web/spinner@0.0.8",
+            "garlictech.angular-features/common/marker-icons@0.0.6",
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.3"
+        ],
+        "originallySharedDir": "src/features/common/leaflet-map"
+    },
+    "garlictech.angular-features/web/text-carousel@0.0.11": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/text-carousel/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "components/text-carousel/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "components/text-carousel/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "text-carousel.module.ts",
+                "relativePath": "text-carousel.module.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/web/text-carousel",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/localization@0.0.8"
+        ],
+        "originallySharedDir": "src/features/web/text-carousel"
+    },
+    "garlictech.angular-features/common/checkpoints@0.0.12": {
+        "files": [
+            {
+                "name": "checkpoints.module.ts",
+                "relativePath": "checkpoints.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "checkpoint-marker-collection.ts",
+                "relativePath": "lib/checkpoint-marker-collection.ts",
+                "test": false
+            },
+            {
+                "name": "checkpoint-sequence.ts",
+                "relativePath": "lib/checkpoint-sequence.ts",
+                "test": false
+            },
+            {
+                "name": "checkpoint.ts",
+                "relativePath": "lib/checkpoint.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "lib/index.ts",
+                "test": false
+            },
+            {
+                "name": "checkpoint.service.ts",
+                "relativePath": "services/checkpoint.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/checkpoints",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/current-geolocation@0.0.4",
+            "garlictech.angular-features/common/spinner@0.0.2",
+            "garlictech.angular-features/web/spinner@0.0.8",
+            "garlictech.angular-features/common/marker-icons@0.0.6"
+        ],
+        "originallySharedDir": "src/features/common/checkpoints"
+    },
+    "garlictech.angular-features/common/geosearch@0.0.9": {
+        "files": [
+            {
+                "name": "geosearch.module.ts",
+                "relativePath": "geosearch.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "geosearch.service.ts",
+                "relativePath": "services/geosearch.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "geosearch.service.spec.ts",
+                "relativePath": "services/test/geosearch.service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": false
+            },
+            {
+                "name": "effects.spec.ts",
+                "relativePath": "store/test/effects.spec.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/test/fixtures/index.ts",
+                "test": true
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/geosearch",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.2"
+        ],
+        "originallySharedDir": "src/features/common/geosearch"
+    },
+    "common/object-mark": {
+        "files": [
+            {
+                "relativePath": "src/features/common/object-mark/config.ts",
+                "test": false,
+                "name": "config.ts"
+            },
+            {
+                "relativePath": "src/features/common/object-mark/externals.ts",
+                "test": false,
+                "name": "externals.ts"
+            },
+            {
+                "relativePath": "src/features/common/object-mark/index.ts",
                 "test": false,
                 "name": "index.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/component-busy-indicator/style.scss",
+                "relativePath": "src/features/common/object-mark/object-mark.module.ts",
                 "test": false,
-                "name": "style.scss"
+                "name": "object-mark.module.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/component-busy-indicator/ui.html",
-                "test": false,
-                "name": "ui.html"
-            },
-            {
-                "relativePath": "src/features/web/generic-ui-primeng/components/confirm-dialog/index.ts",
+                "relativePath": "src/features/common/object-mark/services/index.ts",
                 "test": false,
                 "name": "index.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/confirm-dialog/style.scss",
+                "relativePath": "src/features/common/object-mark/services/object-mark.service.ts",
                 "test": false,
-                "name": "style.scss"
+                "name": "object-mark.service.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/confirm-dialog/ui.html",
-                "test": false,
-                "name": "ui.html"
+                "relativePath": "src/features/common/object-mark/services/test/object-mark.service.spec.ts",
+                "test": true,
+                "name": "object-mark.service.spec.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/dynamic-list/index.ts",
+                "relativePath": "src/features/common/object-mark/store/actions.ts",
+                "test": false,
+                "name": "actions.ts"
+            },
+            {
+                "relativePath": "src/features/common/object-mark/store/effects.ts",
+                "test": false,
+                "name": "effects.ts"
+            },
+            {
+                "relativePath": "src/features/common/object-mark/store/index.ts",
                 "test": false,
                 "name": "index.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/dynamic-list/style.scss",
+                "relativePath": "src/features/common/object-mark/store/reducer.ts",
                 "test": false,
-                "name": "style.scss"
+                "name": "reducer.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/dynamic-list/ui.html",
+                "relativePath": "src/features/common/object-mark/store/selectors.ts",
                 "test": false,
-                "name": "ui.html"
+                "name": "selectors.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/for-primeng/index.ts",
+                "relativePath": "src/features/common/object-mark/store/state.ts",
+                "test": false,
+                "name": "state.ts"
+            },
+            {
+                "relativePath": "src/features/common/object-mark/store/test/actions.spec.ts",
+                "test": false,
+                "name": "actions.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/object-mark/store/test/effects.spec.ts",
+                "test": false,
+                "name": "effects.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/object-mark/store/test/reducer.spec.ts",
+                "test": false,
+                "name": "reducer.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/object-mark/store/test/selectors.spec.ts",
+                "test": false,
+                "name": "selectors.spec.ts"
+            }
+        ],
+        "mainFile": "src/features/common/object-mark/index.ts",
+        "origin": "AUTHORED",
+        "exported": false
+    },
+    "garlictech.angular-features/web/forms-primeng@0.0.6": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/date-picker/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/date-picker/style.scss",
+                "test": false
+            },
+            {
+                "name": "component.spec.ts",
+                "relativePath": "src/features/web/forms-primeng/date-picker/test/component.spec.ts",
+                "test": true
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/date-picker/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/dropdown-select/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/dropdown-select/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/dropdown-select/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-component/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-component/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-component/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-field-component/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-field-component/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-field-component/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-group-component/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-group-component/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-group-component/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-section-component/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-section-component/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/dynamic-form-section-component/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/emoji-input/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/emoji-input/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/emoji-input/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/file/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/file/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/file/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/markdown/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/markdown/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/markdown/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/multi-select/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/multi-select/style.scss",
+                "test": false
+            },
+            {
+                "name": "component.spec.ts",
+                "relativePath": "src/features/web/forms-primeng/multi-select/test/component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/multi-select/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/radio-select/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/radio-select/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/radio-select/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/range-slider/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/range-slider/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/range-slider/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/rich-text-editor/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/rich-text-editor/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/rich-text-editor/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/slider/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/slider/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/slider/ui.html",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/switch/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/switch/style.scss",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/switch/ui.html",
+                "test": false
+            },
+            {
+                "name": "module.spec.ts",
+                "relativePath": "src/features/web/forms-primeng/test/module.spec.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/web/forms-primeng/time-picker/index.ts",
+                "test": false
+            },
+            {
+                "name": "style.scss",
+                "relativePath": "src/features/web/forms-primeng/time-picker/style.scss",
+                "test": false
+            },
+            {
+                "name": "component.spec.ts",
+                "relativePath": "src/features/web/forms-primeng/time-picker/test/component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "ui.html",
+                "relativePath": "src/features/web/forms-primeng/time-picker/ui.html",
+                "test": false
+            }
+        ],
+        "mainFile": "src/features/web/forms-primeng/index.ts",
+        "origin": "AUTHORED",
+        "dependencies": [
+            "garlictech.angular-features/common/utils@0.0.5",
+            "garlictech.angular-features/common/forms@0.0.6",
+            "garlictech.angular-features/common/localization@0.0.8",
+            "garlictech.angular-features/web/language@0.0.5"
+        ],
+        "exported": true
+    },
+    "garlictech.angular-features/common/elevation@0.0.7": {
+        "files": [
+            {
+                "name": "elevation-filled-area.component.html",
+                "relativePath": "components/elevation-filled-area/elevation-filled-area.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-filled-area.component.ts",
+                "relativePath": "components/elevation-filled-area/elevation-filled-area.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-label.component.html",
+                "relativePath": "components/elevation-label/elevation-label.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-label.component.ts",
+                "relativePath": "components/elevation-label/elevation-label.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-line-graph.component.html",
+                "relativePath": "components/elevation-line-graph/elevation-line-graph.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-line-graph.component.ts",
+                "relativePath": "components/elevation-line-graph/elevation-line-graph.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-poi-icon-lines.component.html",
+                "relativePath": "components/elevation-poi-icon-lines/elevation-poi-icon-lines.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-poi-icon-lines.component.ts",
+                "relativePath": "components/elevation-poi-icon-lines/elevation-poi-icon-lines.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-poi-icons.component.html",
+                "relativePath": "components/elevation-poi-icons/elevation-poi-icons.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-poi-icons.component.ts",
+                "relativePath": "components/elevation-poi-icons/elevation-poi-icons.component.ts",
+                "test": false
+            },
+            {
+                "name": "poi-icon.ts",
+                "relativePath": "components/elevation-poi-icons/poi-icon.ts",
+                "test": false
+            },
+            {
+                "relativePath": "components/elevation-profile/elevation-profile.component.ts",
+                "test": false,
+                "name": "elevation-profile.component.ts"
+            },
+            {
+                "name": "elevation-x-axis-lines.component.ts",
+                "relativePath": "components/elevation-x-axis-lines/elevation-x-axis-lines.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-x-axis.component.ts",
+                "relativePath": "components/elevation-x-axis/elevation-x-axis.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-y-axis-lines.component.ts",
+                "relativePath": "components/elevation-y-axis-lines/elevation-y-axis-lines.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-y-axis.component.ts",
+                "relativePath": "components/elevation-y-axis/elevation-y-axis.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-zoom-slider.component.ts",
+                "relativePath": "components/elevation-zoom-slider/elevation-zoom-slider.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "elevation.module.ts",
+                "relativePath": "elevation.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/elevation",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/marker-icons@0.0.6",
+            "garlictech.angular-features/common/spinner@0.0.2",
+            "garlictech.angular-features/web/spinner@0.0.8",
+            "garlictech.angular-features/common/localization@0.0.8"
+        ],
+        "originallySharedDir": "src/features/common/elevation"
+    },
+    "garlictech.angular-features/web/elevation@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/features/web/elevation/components/elevation-profile/elevation-profile.component.html",
+                "test": false,
+                "name": "elevation-profile.component.html"
+            },
+            {
+                "relativePath": "src/features/web/elevation/components/elevation-profile/elevation-profile.component.scss",
+                "test": false,
+                "name": "elevation-profile.component.scss"
+            },
+            {
+                "relativePath": "src/features/web/elevation/components/elevation-profile/elevation-profile.component.ts",
+                "test": false,
+                "name": "elevation-profile.component.ts"
+            },
+            {
+                "relativePath": "src/features/web/elevation/components/index.ts",
                 "test": false,
                 "name": "index.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/for-primeng/style.scss",
+                "relativePath": "src/features/web/elevation/elevation.module.ts",
                 "test": false,
-                "name": "style.scss"
+                "name": "elevation.module.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/for-primeng/ui.html",
+                "relativePath": "src/features/web/elevation/index.ts",
                 "test": false,
-                "name": "ui.html"
+                "name": "index.ts"
+            }
+        ],
+        "mainFile": "src/features/web/elevation/index.ts",
+        "trackDir": "src/features/web/elevation",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "web/localize@0.0.2": {
+        "files": [
+            {
+                "relativePath": "src/features/web/localize/description/description.component.html",
+                "test": false,
+                "name": "description.component.html"
+            },
+            {
+                "relativePath": "src/features/web/localize/description/description.component.ts",
+                "test": false,
+                "name": "description.component.ts"
+            },
+            {
+                "relativePath": "src/features/web/localize/description/html-description/html-description.component.html",
+                "test": false,
+                "name": "html-description.component.html"
+            },
+            {
+                "relativePath": "src/features/web/localize/description/html-description/html-description.component.ts",
+                "test": false,
+                "name": "html-description.component.ts"
+            },
+            {
+                "relativePath": "src/features/web/localize/description/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/web/localize/description/markdown-description/markdown-description.component.html",
+                "test": false,
+                "name": "markdown-description.component.html"
+            },
+            {
+                "relativePath": "src/features/web/localize/description/markdown-description/markdown-description.component.ts",
+                "test": false,
+                "name": "markdown-description.component.ts"
+            },
+            {
+                "relativePath": "src/features/web/localize/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/web/localize/localize.module.ts",
+                "test": false,
+                "name": "localize.module.ts"
+            }
+        ],
+        "mainFile": "src/features/web/localize/index.ts",
+        "trackDir": "src/features/web/localize",
+        "origin": "AUTHORED",
+        "exported": false
+    },
+    "garlictech.angular-features/common/authentication@0.0.1": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/email-sent/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/facebook-login-button/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/google-login-button/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/login-box/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/passwordless-success/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/widget/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "guards/auth/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "guards/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "guards/not-auth/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "guards/role/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "interfaces.ts",
+                "relativePath": "interfaces.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "lib/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "lib/login-handle/index.ts",
+                "test": false
+            },
+            {
+                "name": "log.ts",
+                "relativePath": "log.ts",
+                "test": false
+            },
+            {
+                "name": "module.ts",
+                "relativePath": "module.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/authentication",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/utils@0.0.5",
+            "garlictech.angular-features/common/forms@0.0.6",
+            "garlictech.angular-features/common/localization@0.0.8",
+            "garlictech.angular-features/common/router@0.0.14",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.2",
+            "garlictech.angular-features/common/authentication-api@0.0.7"
+        ],
+        "originallySharedDir": "src/features/common/authentication"
+    },
+    "garlictech.angular-features/common/astronomy@0.0.1": {
+        "files": [
+            {
+                "name": "astronomy.module.ts",
+                "relativePath": "src/features/common/astronomy/astronomy.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/common/astronomy/components/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/common/astronomy/components/moonphase-icon/index.ts",
+                "test": false
+            },
+            {
+                "name": "moonphase-icon.component.html",
+                "relativePath": "src/features/common/astronomy/components/moonphase-icon/moonphase-icon.component.html",
+                "test": false
+            },
+            {
+                "name": "moonphase-icon.component.scss",
+                "relativePath": "src/features/common/astronomy/components/moonphase-icon/moonphase-icon.component.scss",
+                "test": false
+            },
+            {
+                "name": "moonphase-icon.component.ts",
+                "relativePath": "src/features/common/astronomy/components/moonphase-icon/moonphase-icon.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/common/astronomy/components/sunrise/index.ts",
+                "test": false
+            },
+            {
+                "name": "sunrise.component.html",
+                "relativePath": "src/features/common/astronomy/components/sunrise/sunrise.component.html",
+                "test": false
+            },
+            {
+                "name": "sunrise.component.ts",
+                "relativePath": "src/features/common/astronomy/components/sunrise/sunrise.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/common/astronomy/index.ts",
+                "test": false
+            },
+            {
+                "name": "astronomy.service.ts",
+                "relativePath": "src/features/common/astronomy/services/astronomy.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/features/common/astronomy/services/index.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "src/features/common/astronomy/index.ts",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "garlictech.angular-features/web/generic-ui-primeng@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/component-busy-indicator/component-busy-indicator.component.html",
+                "test": false,
+                "name": "component-busy-indicator.component.html"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/component-busy-indicator/component-busy-indicator.component.scss",
+                "test": false,
+                "name": "component-busy-indicator.component.scss"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/component-busy-indicator/component-busy-indicator.component.ts",
+                "test": false,
+                "name": "component-busy-indicator.component.ts"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/confirm-dialog/confirm-dialog.component.html",
+                "test": false,
+                "name": "confirm-dialog.component.html"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/confirm-dialog/confirm-dialog.component.scss",
+                "test": false,
+                "name": "confirm-dialog.component.scss"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/confirm-dialog/confirm-dialog.component.ts",
+                "test": false,
+                "name": "confirm-dialog.component.ts"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/dynamic-list/dynamic-list.component.html",
+                "test": false,
+                "name": "dynamic-list.component.html"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/dynamic-list/dynamic-list.component.scss",
+                "test": false,
+                "name": "dynamic-list.component.scss"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/dynamic-list/dynamic-list.component.ts",
+                "test": false,
+                "name": "dynamic-list.component.ts"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/for-primeng/for-primeng.component.html",
+                "test": false,
+                "name": "for-primeng.component.html"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/for-primeng/for-primeng.component.scss",
+                "test": false,
+                "name": "for-primeng.component.scss"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/components/for-primeng/for-primeng.component.ts",
+                "test": false,
+                "name": "for-primeng.component.ts"
             },
             {
                 "relativePath": "src/features/web/generic-ui-primeng/components/index.ts",
@@ -3734,19 +4173,24 @@
                 "name": "index.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/progress-spinner/index.ts",
+                "relativePath": "src/features/web/generic-ui-primeng/components/progress-spinner/progress-spinner.component.html",
                 "test": false,
-                "name": "index.ts"
+                "name": "progress-spinner.component.html"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/progress-spinner/style.scss",
+                "relativePath": "src/features/web/generic-ui-primeng/components/progress-spinner/progress-spinner.component.scss",
                 "test": false,
-                "name": "style.scss"
+                "name": "progress-spinner.component.scss"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/components/progress-spinner/ui.html",
+                "relativePath": "src/features/web/generic-ui-primeng/components/progress-spinner/progress-spinner.component.ts",
                 "test": false,
-                "name": "ui.html"
+                "name": "progress-spinner.component.ts"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/generic-ui.module.ts",
+                "test": false,
+                "name": "generic-ui.module.ts"
             },
             {
                 "relativePath": "src/features/web/generic-ui-primeng/index.ts",
@@ -3754,14 +4198,9 @@
                 "name": "index.ts"
             },
             {
-                "relativePath": "src/features/web/generic-ui-primeng/module.ts",
+                "relativePath": "src/features/web/generic-ui-primeng/services/alert/alert.service.ts",
                 "test": false,
-                "name": "module.ts"
-            },
-            {
-                "relativePath": "src/features/web/generic-ui-primeng/package.json",
-                "test": false,
-                "name": "package.json"
+                "name": "alert.service.ts"
             },
             {
                 "relativePath": "src/features/web/generic-ui-primeng/services/alert/index.ts",
@@ -3774,6 +4213,11 @@
                 "name": "service.spec.ts"
             },
             {
+                "relativePath": "src/features/web/generic-ui-primeng/services/confirm/confirm.service.ts",
+                "test": false,
+                "name": "confirm.service.ts"
+            },
+            {
                 "relativePath": "src/features/web/generic-ui-primeng/services/confirm/index.ts",
                 "test": false,
                 "name": "index.ts"
@@ -3782,6 +4226,11 @@
                 "relativePath": "src/features/web/generic-ui-primeng/services/confirm/test/service.spec.ts",
                 "test": false,
                 "name": "service.spec.ts"
+            },
+            {
+                "relativePath": "src/features/web/generic-ui-primeng/services/generic-ui-platform-service/generic-ui-platform.service.ts",
+                "test": false,
+                "name": "generic-ui-platform.service.ts"
             },
             {
                 "relativePath": "src/features/web/generic-ui-primeng/services/generic-ui-platform-service/index.ts",
@@ -3805,6 +4254,307 @@
             }
         ],
         "mainFile": "src/features/web/generic-ui-primeng/index.ts",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "common/hike": {
+        "files": [
+            {
+                "relativePath": "src/features/common/hike/components/bookmark/bookmark.component.ts",
+                "test": false,
+                "name": "bookmark.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/bookmark/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/checkpoints/checkpoints.component.ts",
+                "test": false,
+                "name": "checkpoints.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/checkpoints/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/download-gpx-button/download-gpx-button.component.ts",
+                "test": false,
+                "name": "download-gpx-button.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/download-gpx-button/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-card/hike-card.component.ts",
+                "test": false,
+                "name": "hike-card.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-card/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-card/test/hike-card.component.spec.ts",
+                "test": true,
+                "name": "hike-card.component.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-data-item/hike-data-item.component.ts",
+                "test": false,
+                "name": "hike-data-item.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-data-item/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-data-item/test/hike-data-item.component.spec.ts",
+                "test": false,
+                "name": "hike-data-item.component.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-data-popup/hike-data-popup.component.ts",
+                "test": false,
+                "name": "hike-data-popup.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-data-popup/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-day/hike-day.component.ts",
+                "test": false,
+                "name": "hike-day.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-day/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-day/test/hike-day.component.spec.ts",
+                "test": false,
+                "name": "hike-day.component.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-info/hike-info.component.ts",
+                "test": false,
+                "name": "hike-info.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-info/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-info/test/hike-info.component.spec.ts",
+                "test": false,
+                "name": "hike-info.component.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-list-map/hike-list-map.component.ts",
+                "test": false,
+                "name": "hike-list-map.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-list-map/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-program/hike-program.component.ts",
+                "test": false,
+                "name": "hike-program.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-program/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-program/interfaces.ts",
+                "test": false,
+                "name": "interfaces.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/hike-program/test/hike-program.component.spec.ts",
+                "test": false,
+                "name": "hike-program.component.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/reverse-hike-button/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/reverse-hike-button/reverse-hike-button.component.ts",
+                "test": false,
+                "name": "reverse-hike-button.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/reverse-hike-button/test/reverse-hike-button.component.spec.ts",
+                "test": false,
+                "name": "reverse-hike-button.component.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/trail-box/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/components/trail-box/trail-box.component.ts",
+                "test": false,
+                "name": "trail-box.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/hike-components.module.ts",
+                "test": false,
+                "name": "hike-components.module.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/lib/hike-program.ts",
+                "test": false,
+                "name": "hike-program.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/lib/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/services/hike-program/hike-program.service.ts",
+                "test": false,
+                "name": "hike-program.service.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/services/hike-program/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/services/hike-program/test/hike-program.service.spec.ts",
+                "test": false,
+                "name": "hike-program.service.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/services/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/store/actions.ts",
+                "test": false,
+                "name": "actions.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/store/effects.ts",
+                "test": false,
+                "name": "effects.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/store/index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/store/reducer.ts",
+                "test": false,
+                "name": "reducer.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/store/selectors.ts",
+                "test": false,
+                "name": "selectors.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/store/state.ts",
+                "test": false,
+                "name": "state.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/store/test/actions.spec.ts",
+                "test": false,
+                "name": "actions.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/store/test/effects.spec.ts",
+                "test": false,
+                "name": "effects.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/store/test/reducer.spec.ts",
+                "test": false,
+                "name": "reducer.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/store/test/selectors.spec.ts",
+                "test": false,
+                "name": "selectors.spec.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/testing/fixtures/hike-program-testing.module.ts",
+                "test": false,
+                "name": "hike-program-testing.module.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/testing/fixtures/hike-program.component.ts",
+                "test": false,
+                "name": "hike-program.component.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/testing/fixtures/hike-programs.ts",
+                "test": false,
+                "name": "hike-programs.ts"
+            },
+            {
+                "relativePath": "src/features/common/hike/testing/fixtures/index.ts",
+                "test": false,
+                "name": "index.ts"
+            }
+        ],
+        "mainFile": "src/features/common/hike/index.ts",
+        "origin": "AUTHORED",
+        "exported": false
+    },
+    "index": {
+        "files": [
+            {
+                "relativePath": "src/features/common/astronomy/services/astronomy/index.ts",
+                "test": false,
+                "name": "index.ts"
+            }
+        ],
+        "mainFile": "src/features/common/astronomy/services/astronomy/index.ts",
+        "origin": "AUTHORED",
+        "exported": false
+    },
+    "astronomyservice": {
+        "files": [
+            {
+                "relativePath": "src/features/common/astronomy/services/astronomy/astronomy.service.ts",
+                "test": false,
+                "name": "astronomy.service.ts"
+            }
+        ],
+        "mainFile": "src/features/common/astronomy/services/astronomy/astronomy.service.ts",
         "origin": "AUTHORED",
         "exported": false
     },

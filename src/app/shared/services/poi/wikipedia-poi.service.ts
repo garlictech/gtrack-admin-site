@@ -4,7 +4,6 @@ import _get from 'lodash-es/get';
 import { MessageService } from 'primeng/api';
 import { interval, Observable, of } from 'rxjs';
 import { combineAll, map, take } from 'rxjs/operators';
-import { CenterRadius, GeometryService } from 'subrepos/gtrack-common-ngx';
 import * as uuid from 'uuid/v1';
 
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +14,7 @@ import {
   EPoiTypes,
   ETextualDescriptionType
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { CenterRadius, GeometryService } from '@features/common/geometry';
 
 import { WikipediaPoi } from '../../interfaces';
 import { HikeProgramService } from '../hike/hike-program.service';

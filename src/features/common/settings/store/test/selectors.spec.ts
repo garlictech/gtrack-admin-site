@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { StoreModule, Store, select, combineReducers } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil, scan, tap } from 'rxjs/operators';
-import { Reducer as authenticationReducer } from 'subrepos/gtrack-common-ngx/app/authentication';
+import { reducer as authenticationReducer } from '@features/common/authentication/store';
 import { EAuthRoles } from '@features/common/gtrack-interfaces';
 
 import { reducer } from '../reducer';

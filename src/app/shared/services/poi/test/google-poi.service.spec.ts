@@ -3,10 +3,10 @@ import * as _ from 'lodash';
 import { HttpRequest } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-
-import { defaultSharedConfig, GeometryService } from '../../../../../subrepos/gtrack-common-ngx';
-
 import { EPoiImageTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { GeometryService } from '@features/common/geometry';
+import { defaultSharedConfig } from '@features/common/google-maps/config';
+
 import { GooglePoiService, PLACE_API_URL, PURE_PLACE_API_URL } from '../google-poi.service';
 import { DETAILED_GOOGLE_POI, GOOGLE_POI_RESPONSE, GOOGLE_POIS } from './fixtures/google-pois';
 

@@ -12,13 +12,13 @@ import {
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store, StoreModule } from '@ngrx/store';
 
-import { EXTERNAL_POI_DEPENDENCIES, poiReducer, PoiSelectors } from '../../../../subrepos/gtrack-common-ngx';
 import { ExternalPoi } from '../../../shared/interfaces';
 import { commonPoiActions, editedHikeProgramActions } from '../../actions';
 import { editedHikeProgramReducer, initialEditedHikeProgramState } from '../../reducer/edited-hike-program';
 import { bgImages as bgImageFixtures, pois as poiFixtures, stops as stopsFixtures } from '../../reducer/test/fixtures';
 import * as editedHikeProgramSelectors from '../../selectors/edited-hike-program';
 import { EditedHikeProgramState } from '../../state';
+import { PoiSelectors, poiReducer } from '@features/common/poi';
 
 const A_NEW_TRANSLATION = 'A new translation';
 
@@ -44,15 +44,7 @@ describe('Edited HikeProgram selectors', () => {
           pois: poiReducer
         })
       ],
-      providers: [
-        PoiSelectors,
-        {
-          provide: EXTERNAL_POI_DEPENDENCIES,
-          useValue: {
-            storeDomain: 'pois'
-          }
-        }
-      ]
+      providers: [PoiSelectors]
     });
 
     store = TestBed.get(Store);

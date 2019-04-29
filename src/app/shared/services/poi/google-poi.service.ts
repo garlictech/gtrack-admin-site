@@ -3,7 +3,7 @@ import _map from 'lodash-es/map';
 import _take from 'lodash-es/take';
 import { EMPTY, interval, Observable, of } from 'rxjs';
 import { combineAll, flatMap, take } from 'rxjs/operators';
-import { CenterRadius, defaultSharedConfig, GeometryService } from 'subrepos/gtrack-common-ngx';
+
 import * as uuid from 'uuid/v1';
 
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +15,8 @@ import {
   ETextualDescriptionType
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
+import { CenterRadius, GeometryService } from '@features/common/geometry';
+import { defaultSharedConfig } from '@features/common/google-maps/config';
 import { GooglePoi } from '../../interfaces';
 import { AdminLanguageService } from '../language.service';
 

@@ -1,6 +1,4 @@
 // tslint:disable-next-line:no-commented-code
-// import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
-
 import { LocalizedItem, TextualDescription } from './common';
 import { Locatable } from './location';
 import { ProviderInput } from './provider';

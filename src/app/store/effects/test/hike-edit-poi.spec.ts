@@ -6,12 +6,13 @@ import { Observable } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
+import { DeepstreamModule } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx/src/deepstream-service';
+import { RouteService } from '@features/common/route';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { DeepstreamModule, RouteService } from '../../../../subrepos/gtrack-common-ngx';
 import { ExternalPoi } from '../../../shared/interfaces';
 import { GooglePoiService, HikeProgramService, OsmPoiService, WikipediaPoiService } from '../../../shared/services';
 import { commonPoiActions, editedGTrackPoiActions, hikeEditPoiActions } from '../../actions';
@@ -42,7 +43,7 @@ describe('HikeEditPoiEffects effects', () => {
         StoreModule.forRoot({}),
         EffectsModule.forRoot([HikeEditPoiEffects]),
         HttpClientTestingModule,
-        DeepstreamModule.forRoot(),
+        DeepstreamModule,
         RouterModule.forRoot([])
       ],
       providers: [

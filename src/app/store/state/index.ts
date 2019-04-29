@@ -1,5 +1,3 @@
-import { State as CommonState } from 'subrepos/gtrack-common-web/store';
-
 import { EditedGTrackPoiState } from './edited-gtrack-poi';
 import { EditedHikeProgramState } from './edited-hike-program';
 import { HikeEditImageState } from './hike-edit-image';
@@ -12,7 +10,7 @@ export * from './hike-edit-route-planner';
 export * from './edited-hike-program';
 export * from './edited-gtrack-poi';
 
-export interface State extends CommonState {
+export interface State {
   hikeEditRoutePlanner: HikeEditRoutePlannerState;
   hikeEditPoi: HikeEditPoiState;
   hikeEditImage: HikeEditImageState;

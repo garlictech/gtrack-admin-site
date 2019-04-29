@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
-import { EAuthRoles, PublicCommonProfile } from '@features/common/gtrack-interfaces/interfaces';
-import { createFeatureSelector, createSelector, select, Store } from '@ngrx/store';
 import { DebugLog } from 'app/log';
 import { State } from 'app/store/state';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _get from 'lodash-es/get';
 import { combineLatest as observableCombineLatest, Observable, of as observableOf } from 'rxjs';
 import { filter, map, pluck, switchMap, tap } from 'rxjs/operators';
-import { AuthenticationSelectors, User } from 'subrepos/gtrack-common-ngx/app/authentication';
+
+import { Injectable } from '@angular/core';
+import { AuthenticationSelectors, User } from '@features/common/authentication';
+import { EAuthRoles, PublicCommonProfile } from '@features/common/gtrack-interfaces/interfaces';
+import { createFeatureSelector, createSelector, select, Store } from '@ngrx/store';
+
 import { DecoratedPublicCommonProfile, EProfileGroup } from '../interfaces';
 import * as Actions from './actions';
 import {

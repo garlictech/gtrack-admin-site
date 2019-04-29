@@ -1,0 +1,9 @@
+<svg:line
+  *ngFor="let line of lines; trackBy: trackByFn"
+  [attr.x1]="line"
+  [attr.x2]="line"
+  y1="0"
+  [attr.y2]="lineHeight"
+  style="stroke: black; stroke-width: 0.5px;"
+  class="poi-line"
+></svg:line>

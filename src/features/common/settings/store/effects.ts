@@ -1,20 +1,16 @@
-// tslint:disable:no-property-initializers
-import { Observable, of as observableOf } from 'rxjs';
-
-import { Injectable } from '@angular/core';
-
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
-import { catchError, delay, map, mergeMap, retryWhen, switchMap, take } from 'rxjs/operators';
-
-import _get from 'lodash-es/get';
-
-import { UserData } from '@features/common/gtrack-interfaces';
-
 import { log } from 'app/log';
 import { State } from 'app/store/state';
-import { SettingsService } from '../services';
+import _get from 'lodash-es/get';
+// tslint:disable:no-property-initializers
+import { Observable, of as observableOf } from 'rxjs';
+import { catchError, delay, map, mergeMap, retryWhen, switchMap, take } from 'rxjs/operators';
 
+import { Injectable } from '@angular/core';
+import { UserData } from '@features/common/gtrack-interfaces';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Action, Store } from '@ngrx/store';
+
+import { SettingsService } from '../services';
 import * as LocalActions from './actions';
 import { defaultSettings } from './state';
 

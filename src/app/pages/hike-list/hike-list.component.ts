@@ -2,11 +2,11 @@ import _orderBy from 'lodash-es/orderBy';
 import { ConfirmationService, SelectItem } from 'primeng/api';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import { HikeSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { EObjectState, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeSelectors } from '@features/common/hike';
 import { select, Store } from '@ngrx/store';
 
 import { State } from '../../store';

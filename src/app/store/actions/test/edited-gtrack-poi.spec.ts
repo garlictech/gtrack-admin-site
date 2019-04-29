@@ -1,6 +1,6 @@
 import { BackgroundImageData, EPoiImageTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
-import { poisStored as poiFixtures } from '../../../../subrepos/gtrack-common-ngx/app/hike/store/poi/test/fixtures';
+import { poisStored as poiFixtures } from '../../../../features/common/poi/store/test/fixtures';
 import * as EditedGTrackPoiActions from '../edited-gtrack-poi';
 
 describe('EditedGTrackPoi actions', () => {

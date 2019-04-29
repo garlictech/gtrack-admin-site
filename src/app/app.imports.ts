@@ -1,16 +1,6 @@
 import { environment } from 'environments/environment';
 import _get from 'lodash-es/get';
 import { ToastModule } from 'primeng/toast';
-import {
-  DeepstreamModule,
-  defaultSharedConfig,
-  HikeModule,
-  HikeModuleConfig,
-  ObjectMarkModule,
-  ObjectMarkModuleConfig,
-  SharedModule
-} from 'subrepos/gtrack-common-ngx';
-import { GtrackCommonWebModule } from 'subrepos/gtrack-common-web';
 
 import { HttpClient } from '@angular/common/http';
 import {
@@ -18,6 +8,7 @@ import {
   defaultAuthenticationApiConfig
 } from '@bit/garlictech.angular-features.common.authentication-api';
 import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
+import { DeepstreamModule } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { GeoSearchModule } from '@bit/garlictech.angular-features.common.geosearch';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { MarkerIconsModule } from '@bit/garlictech.angular-features.common.marker-icons';
@@ -30,11 +21,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+import { ObjectMarkModule, ObjectMarkModuleConfig } from '@features/common/object-mark';
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';
 import { HikeListModule } from './pages/hike-list';
-import { metaReducers, REDUCER_TOKEN } from './store';
+import { REDUCER_TOKEN } from './store';
 import {
   AuthEffects,
   EditedGTrackPoiEffects,
@@ -43,27 +35,10 @@ import {
   HikeEditPoiEffects
 } from './store/effects';
 
-const sharedConfig = {
-  ...defaultSharedConfig
-};
-
-// tslint:disable-next-line:only-arrow-functions
-export function getSharedConfig(): any {
-  return sharedConfig;
-}
-
 // tslint:disable-next-line:only-arrow-functions
 export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-
-const hikeModuleConfig: HikeModuleConfig = {
-  storeDomains: {
-    hike: 'hike',
-    poi: 'poi',
-    route: 'route'
-  }
-};
 
 const weatherConfig: WeatherConfig = {
   openWeatherMap: {
@@ -92,18 +67,16 @@ export function getAuthConfig(): any {
 
 export const APP_IMPORTS = [
   StoreModule.forRoot(REDUCER_TOKEN, {
-    metaReducers
+    // metaReducers
   }),
   StoreDevtoolsModule.instrument({
     maxAge: 25
   }),
   GenericUiModule,
-  DeepstreamModule.forRoot(),
+  DeepstreamModule,
   AuthenticationApiModule.forRoot(getAuthConfig),
   SearchFiltersModule,
-  SharedModule.forRoot(getSharedConfig),
   GeoSearchModule,
-  HikeModule.forRoot(hikeModuleConfig),
   CoreLayoutModule,
   AuthModule,
   HikeListModule,
@@ -116,7 +89,6 @@ export const APP_IMPORTS = [
     HikeEditImageEffects
   ]),
   ObjectMarkModule.forRoot(objectMarkConfig),
-  GtrackCommonWebModule,
   CurrentGeolocationModule.forRoot({ timeOut: 2000 }, { endpoint: environment.lambdaEndpoint }),
   LeafletMapModule,
   MarkerIconsModule.forRoot(),

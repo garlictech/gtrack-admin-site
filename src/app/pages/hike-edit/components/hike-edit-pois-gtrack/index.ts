@@ -2,17 +2,17 @@ import _difference from 'lodash-es/difference';
 import _intersection from 'lodash-es/intersection';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { debounceTime, filter, switchMap, take, takeUntil } from 'rxjs/operators';
-import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { select, Store } from '@ngrx/store';
-
 import {
   GeoSearchContextState,
   GeoSearchResponseItem,
   GeoSearchSelectors
 } from '@bit/garlictech.angular-features.common.geosearch';
+import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { PoiSelectors } from '@features/common/poi';
+import { select, Store } from '@ngrx/store';
+
 import { GTrackPoi } from '../../../../shared/interfaces';
 import { PoiEditorService } from '../../../../shared/services';
 import { State } from '../../../../store';

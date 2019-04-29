@@ -1,11 +1,11 @@
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { filter, switchMapTo } from 'rxjs/operators';
-import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
-import { DeepstreamActions } from 'subrepos/gtrack-common-ngx/app/deepstream';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { Actions as DeepstreamActions } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { AuthenticationSelectors } from '@features/common/authentication';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { select, Store } from '@ngrx/store';
 

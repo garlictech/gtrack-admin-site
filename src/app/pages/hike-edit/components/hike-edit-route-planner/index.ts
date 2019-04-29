@@ -2,12 +2,12 @@ import _pick from 'lodash-es/pick';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, filter, switchMap, take, takeUntil } from 'rxjs/operators';
-import { Route, RouteContextState, RouteSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import * as leafletMapSelectors from '@bit/garlictech.angular-features.common.leaflet-map/store/selectors';
+import { Route, RouteContextState, RouteSelectors } from '@features/common/route';
 import { select, Store } from '@ngrx/store';
 
 import { HikeProgramService, PoiEditorService, ReverseGeocodingService } from '../../../../shared/services';

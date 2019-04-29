@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+
+import { SearchResultsMapComponent as BaseComponent } from '@features/common/search';
+
+@Component({
+  selector: 'gtrack-search-results-map',
+  templateUrl: './search-results-map.component.html',
+  styleUrls: ['./search-results-map.component.scss']
+})
+export class SearchResultsMapComponent extends BaseComponent {}

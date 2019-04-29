@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { createSelector, Store, StoreModule } from '@ngrx/store';
 import * as _ from 'lodash';
-import { LoaderWatchService } from '..';
+import { LoaderWatchService } from '../loader-watch.service';
 import { reducer } from '../../../store/reducer';
 import * as fromSelectors from '../../../store/selectors';
 import { featureName } from '../../../store/state';

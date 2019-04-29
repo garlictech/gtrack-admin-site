@@ -1,15 +1,15 @@
-import { TestBed } from '@angular/core/testing';
-import { hot, cold, Scheduler } from 'jest-marbles';
-import { Actions } from '@ngrx/effects';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { StoreModule } from '@ngrx/store';
+import { cold, hot, Scheduler } from 'jest-marbles';
 import { Observable, of } from 'rxjs';
 
+import { TestBed } from '@angular/core/testing';
+import { EAuthRoles } from '@features/common/gtrack-interfaces';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { StoreModule } from '@ngrx/store';
+
+import { EProfileGroup } from '../../interfaces';
 import { SettingsService } from '../../services';
 import * as actions from '../actions';
 import { Effects as SettingsEffects } from '../effects';
-import { EProfileGroup } from '../../interfaces';
-import { EAuthRoles } from '@features/common/gtrack-interfaces';
 
 describe('Settings effects', () => {
   let service: SettingsService;

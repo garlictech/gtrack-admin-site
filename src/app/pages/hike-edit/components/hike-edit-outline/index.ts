@@ -5,12 +5,12 @@ import _first from 'lodash-es/first';
 import _last from 'lodash-es/last';
 import { Observable, Subject } from 'rxjs';
 import { delay, take, takeUntil } from 'rxjs/operators';
-import { PoiSelectors, Segment } from 'subrepos/gtrack-common-ngx';
 
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeProgramStop, Segment } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
+import { PoiSelectors } from '@features/common/poi';
 import { select, Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';

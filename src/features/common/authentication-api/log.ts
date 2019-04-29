@@ -1,6 +1,6 @@
 import { Log } from 'ng2-logger';
 
-export const log = Log.create('@garlictech/authentication-api');
+export const log = Log.create('common/authentication-api');
 log.color = 'blue';
 
 // tslint:disable:only-arrow-functions no-invalid-this

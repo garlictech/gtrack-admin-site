@@ -1,8 +1,7 @@
-import { FormModule } from '@features/web/forms-primeng';
+import { FormModule } from '@bit/garlictech.angular-features.web.forms-primeng';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { SharedModule } from 'subrepos/gtrack-common-ngx';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -28,7 +27,6 @@ const COMPONENTS = [
     FormsModule,
     FontAwesomeModule,
     MultiLanguageTextModule,
-    SharedModule,
     // PrimeNG
     DropdownModule,
     AccordionModule,

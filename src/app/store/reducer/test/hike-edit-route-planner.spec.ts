@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 
-import { Segment } from '../../../../subrepos/gtrack-common-ngx';
+import { Segment } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+
 import { hikeEditRoutePlannerActions } from '../../actions';
 import { HikeEditRoutePlannerState } from '../../index';
 import { hikeEditRoutePlannerReducer, initialRouteInfoDataState } from '../hike-edit-route-planner';

@@ -3,7 +3,6 @@ import _pick from 'lodash-es/pick';
 import { MessageService } from 'primeng/api';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { delay, filter, skipWhile, switchMap, take, takeUntil } from 'rxjs/operators';
-import { HikeContextState, HikeSelectors, RouteSelectors } from 'subrepos/gtrack-common-ngx';
 import * as uuid from 'uuid/v1';
 
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
@@ -17,6 +16,8 @@ import {
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { leafletMapActions, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import * as leafletMapSelectors from '@bit/garlictech.angular-features.common.leaflet-map/store/selectors';
+import { HikeContextState, HikeSelectors } from '@features/common/hike';
+import { RouteSelectors } from '@features/common/route';
 import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 
 import { HikeProgramService } from '../../shared/services';

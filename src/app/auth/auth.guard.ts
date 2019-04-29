@@ -1,12 +1,12 @@
 import { State } from 'app/store';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, switchMap, switchMapTo } from 'rxjs/operators';
-import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
-import { AuthGuard, RoleGuard } from 'subrepos/gtrack-common-ngx/app/authentication/guards';
 
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
+import { AuthenticationSelectors } from '@features/common/authentication';
+import { AuthGuard, RoleGuard } from '@features/common/authentication/guards';
 import { select, Store } from '@ngrx/store';
 
 @Injectable()

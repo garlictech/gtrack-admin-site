@@ -1,6 +1,5 @@
-import { GoogleMapsService } from 'subrepos/gtrack-common-ngx';
-
 import { Injectable } from '@angular/core';
+import { GoogleMapsService } from '@features/common/google-maps';
 
 const _parseResults = (results: Array<google.maps.GeocoderResult>) => {
   const _parts: any = {};

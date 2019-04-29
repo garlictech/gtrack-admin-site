@@ -1,0 +1,13 @@
+<ng-container *ngIf="description | localizeDescription as localizedDescription">
+  <gtrack-html-description
+    *ngIf="localizedDescription.type === eTextualDescriptionType.html; else markdown"
+    [field]="field"
+    [localizedDescription]="localizedDescription"
+  ></gtrack-html-description>
+  <ng-template #markdown>
+    <gtrack-markdown-description
+      [localizedDescription]="localizedDescription"
+      [field]="field"
+    ></gtrack-markdown-description>
+  </ng-template>
+</ng-container>

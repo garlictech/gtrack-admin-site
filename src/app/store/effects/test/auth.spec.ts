@@ -11,8 +11,8 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
-import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
-import { DeepstreamModule } from '../../../../subrepos/gtrack-common-ngx';
+import { DeepstreamService, DeepstreamModule } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+
 import { AuthEffects } from '../auth';
 import { mockRouter } from './helpers';
 
@@ -26,7 +26,7 @@ describe('Auth effects', () => {
         StoreModule.forRoot({}),
         EffectsModule.forRoot([AuthEffects]),
         HttpClientTestingModule,
-        DeepstreamModule.forRoot(),
+        DeepstreamModule,
         RouterModule.forRoot([])
       ],
       providers: [

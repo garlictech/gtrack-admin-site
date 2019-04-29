@@ -17,16 +17,10 @@ import _sortBy from 'lodash-es/sortBy';
 import _uniq from 'lodash-es/uniq';
 import { combineLatest, interval, Observable, of } from 'rxjs';
 import { combineAll, debounceTime, filter, map as rxMap, switchMap, take } from 'rxjs/operators';
-import {
-  CenterRadius,
-  ElevationService,
-  GeometryService,
-  GeospatialService,
-  PoiSelectors
-} from 'subrepos/gtrack-common-ngx';
 
 import { Injectable } from '@angular/core';
 import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
+import { GeospatialService } from '@bit/garlictech.angular-features.common.geospatial';
 import {
   BackgroundImageData,
   EPoiTypes,
@@ -41,6 +35,9 @@ import {
 } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leaflet-map/services/lib';
+import { ElevationService } from '@features/common/elevation/services';
+import { CenterRadius, GeometryService } from '@features/common/geometry';
+import { PoiSelectors } from '@features/common/poi';
 import { select, Store } from '@ngrx/store';
 import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import turfBuffer from '@turf/buffer';

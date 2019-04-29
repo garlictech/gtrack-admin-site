@@ -8,16 +8,19 @@ import _last from 'lodash-es/last';
 import _orderBy from 'lodash-es/orderBy';
 import { combineLatest } from 'rxjs';
 import { debounceTime, take } from 'rxjs/operators';
-import { CheckpointService, ElevationService, GameRuleService, Route } from 'subrepos/gtrack-common-ngx';
-import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
 
 import { Injectable } from '@angular/core';
+import { HikeProgramStop, RouteData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { CheckpointService } from '@features/common/checkpoints';
+import { ElevationService } from '@features/common/elevation/services';
+import { GameRuleService } from '@features/common/game-rule';
+import { GeospatialService } from '@features/common/geospatial/geospatial.service';
+import { Route } from '@features/common/route';
 import { select, Store } from '@ngrx/store';
 import turfDistance from '@turf/distance';
 import { point as turfPoint } from '@turf/helpers';
 import turfLength from '@turf/length';
 
-import { HikeProgramStop, RouteData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { State } from '../../../store';
 import { editedHikeProgramActions } from '../../../store/actions';
 import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';

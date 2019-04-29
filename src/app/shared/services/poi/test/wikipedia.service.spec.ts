@@ -5,8 +5,8 @@ import { HttpRequest } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { EPoiTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { GeometryService } from '@features/common/geometry';
 
-import { GeometryService } from '../../../../../subrepos/gtrack-common-ngx';
 import { HikeProgramService } from '../../hike';
 import { WikipediaPoiService } from '../wikipedia-poi.service';
 import {

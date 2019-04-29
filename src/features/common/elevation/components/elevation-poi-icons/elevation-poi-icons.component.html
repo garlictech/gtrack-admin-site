@@ -1,0 +1,12 @@
+<svg:image
+  (click)="onClick(icon.poi)"
+  *ngFor="let icon of icons; trackBy: trackByFn"
+  [attr.x]="icon.x - iconWidth / 2"
+  y="0"
+  [attr.href]="icon.url"
+  class="poi-icon cursor-pointer"
+  [attr.width]="iconWidth"
+  [attr.height]="iconHeight"
+>
+  <svg:title>{{ (icon.poi.description | localizeDescription).title }}</svg:title>
+</svg:image>

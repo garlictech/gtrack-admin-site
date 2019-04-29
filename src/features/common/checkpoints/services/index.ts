@@ -1,1 +1,1 @@
-export * from './checkpoint.service';
+export * from './checkpoint';

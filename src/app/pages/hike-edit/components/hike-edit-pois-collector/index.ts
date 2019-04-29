@@ -5,10 +5,10 @@ import _map from 'lodash-es/map';
 import _set from 'lodash-es/set';
 import { combineLatest, interval, Observable, Subject } from 'rxjs';
 import { debounceTime, filter, switchMap, take, takeUntil } from 'rxjs/operators';
-import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 import * as uuid from 'uuid/v1';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { PoiSelectors } from '@features/common/poi';
 import { select, Store } from '@ngrx/store';
 
 import { ExternalPoi, FilteredProperties, GTrackPoi } from '../../../../shared/interfaces';

@@ -3,10 +3,10 @@ import _intersection from 'lodash-es/intersection';
 import _map from 'lodash-es/map';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { debounceTime, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
-import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { PoiSelectors } from '@features/common/poi';
 import { select, Store } from '@ngrx/store';
 
 import { GTrackPoi } from '../../../../shared/interfaces';

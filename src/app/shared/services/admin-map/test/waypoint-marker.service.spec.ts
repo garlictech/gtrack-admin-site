@@ -7,12 +7,12 @@ import { TestBed } from '@angular/core/testing';
 import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { ElevationService } from '../../../../../subrepos/gtrack-common-ngx';
 import { State } from '../../../../store';
 import { hikeEditRoutePlannerActions } from '../../../../store/actions';
 import { AdminMapService } from '../admin-map.service';
 import { RoutePlannerService } from '../route-planner.service';
 import { Waypoint, WaypointMarkerService } from '../waypoint-marker.service';
+import { ElevationService } from '@features/common/elevation/services';
 
 describe('WaypointMarkerService', () => {
   let waypointMarkerService: WaypointMarkerService;

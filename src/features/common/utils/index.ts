@@ -1,4 +1,2 @@
-export { DestroyableComponent } from './destroyable-component';
-export { nationalities } from './nationalities';
-export { countries } from './countries';
-export { currencies, cryptoCurrencies } from './currencies';
+export { DestroyableComponent } from './components/destroyable-component/destroyable-component.component';
+export { nationalities, countries, currencies, cryptoCurrencies } from './assets';

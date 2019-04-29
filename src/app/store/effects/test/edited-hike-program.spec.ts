@@ -5,13 +5,14 @@ import { Observable, of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
-import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { DeepstreamModule, DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { GeospatialService } from '@bit/garlictech.angular-features.common.geospatial';
 import { EObjectState, HikeProgramData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeProgramService } from '@features/common/hike';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { DeepstreamModule, GeospatialService, HikeProgramService } from '../../../../subrepos/gtrack-common-ngx';
 import { ExternalPoi } from '../../../shared/interfaces';
 import * as editedHikeProgramSelectors from '../../../store/selectors/edited-hike-program';
 import * as hikeEditRoutePlannerSelectors from '../../../store/selectors/hike-edit-route-planner';
@@ -58,7 +59,7 @@ describe('EditedHikeProgramEffects effects', () => {
         StoreModule.forRoot({}),
         EffectsModule.forRoot([EditedHikeProgramEffects]),
         HttpClientTestingModule,
-        DeepstreamModule.forRoot(),
+        DeepstreamModule,
         RouterModule.forRoot([])
       ],
       providers: [

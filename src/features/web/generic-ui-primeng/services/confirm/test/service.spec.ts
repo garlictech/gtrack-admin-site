@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
-import { ConfirmService } from '..';
+import { ConfirmService } from '../../confirm/confirm.service';
 
 export class MockTranslateService {
   instant(value) {

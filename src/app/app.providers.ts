@@ -1,6 +1,5 @@
 import { ConfirmationService, MessageService } from 'primeng/api';
 
-// import { CONFIG as LANGUAGE_CONFIG } from 'subrepos/localize-ngx';
 import { TransferState } from '@angular/platform-browser';
 import { CONFIG as LANGUAGE_CONFIG } from '@bit/garlictech.angular-features.common.localization';
 

@@ -2,10 +2,12 @@
 import _omit from 'lodash-es/omit';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
-import { GeospatialService, HikeProgramService, RouteActionTypes } from 'subrepos/gtrack-common-ngx';
 
 import { Injectable } from '@angular/core';
+import { GeospatialService } from '@bit/garlictech.angular-features.common.geospatial';
 import { HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeProgramService } from '@features/common/hike';
+import { RouteActionTypes } from '@features/common/route';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, select, Store } from '@ngrx/store';
 

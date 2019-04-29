@@ -5,12 +5,12 @@ import { Observable, of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
-import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { DeepstreamModule, DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { PoiService } from '@features/common/poi';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { DeepstreamModule, PoiService } from '../../../../subrepos/gtrack-common-ngx';
 import { ExternalPoi } from '../../../shared/interfaces';
 import * as editedGTrackPoiSelectors from '../../../store/selectors/edited-gtrack-poi';
 import { editedGTrackPoiActions } from '../../actions';
@@ -53,7 +53,7 @@ describe('EditedGTrackPoiEffects effects', () => {
         StoreModule.forRoot({}),
         EffectsModule.forRoot([EditedGTrackPoiEffects]),
         HttpClientTestingModule,
-        DeepstreamModule.forRoot(),
+        DeepstreamModule,
         RouterModule.forRoot([])
       ],
       providers: [

@@ -3,9 +3,9 @@ import _concat from 'lodash-es/concat';
 import _uniqBy from 'lodash-es/uniqBy';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { RouteService } from 'subrepos/gtrack-common-ngx';
 
 import { Injectable } from '@angular/core';
+import { RouteService } from '@features/common/route';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 

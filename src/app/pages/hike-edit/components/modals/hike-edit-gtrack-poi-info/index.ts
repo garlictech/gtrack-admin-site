@@ -1,7 +1,6 @@
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
-import { PoiSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
@@ -11,6 +10,7 @@ import {
   PoiStored,
   TextualDescription
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { PoiSelectors } from '@features/common/poi';
 import { MemoizedSelector, select, Store } from '@ngrx/store';
 
 import { State } from '../../../../../store';

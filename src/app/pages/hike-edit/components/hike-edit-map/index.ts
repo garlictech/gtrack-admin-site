@@ -3,7 +3,6 @@ import * as L from 'leaflet';
 import { SelectItem } from 'primeng/api';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { GoogleMapsService } from 'subrepos/gtrack-common-ngx';
 
 import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GeoPosition, selectCurrentLocation } from '@bit/garlictech.angular-features.common.current-geolocation';
@@ -11,6 +10,7 @@ import { LeafletMapService } from '@bit/garlictech.angular-features.common.leafl
 import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
 import { GEOJSON_STYLES } from '@bit/garlictech.angular-features.common.leaflet-map/constants/geojson-styles';
 import { Center, LayerDef, LeafletMapConfig } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+import { GoogleMapsService } from '@features/common/google-maps';
 import { faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';
 

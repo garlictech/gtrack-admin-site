@@ -1,5 +1,4 @@
 // tslint:disable:only-arrow-functions
-import { metaReducers, reducer as commonReducers } from 'subrepos/gtrack-common-web/store';
 
 // State
 import { InjectionToken } from '@angular/core';
@@ -15,7 +14,6 @@ import { State } from './state';
 
 // Same keys as in the state!!!
 export const reducer: ActionReducerMap<State> = {
-  ...commonReducers,
   hikeEditRoutePlanner: hikeEditRoutePlannerReducer,
   hikeEditPoi: hikeEditPoiReducer,
   hikeEditImage: hikeEditImageReducer,
@@ -30,4 +28,3 @@ export function getReducers(): ActionReducerMap<State> {
 }
 
 export * from './state';
-export { metaReducers };

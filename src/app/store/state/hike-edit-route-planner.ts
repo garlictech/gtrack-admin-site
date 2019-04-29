@@ -1,5 +1,6 @@
 import { RouteTotal } from 'app/shared/interfaces';
-import { Segment } from 'subrepos/gtrack-common-ngx';
+
+import { Segment } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 export interface HikeEditRoutePlannerState {
   segments: Array<Segment>;

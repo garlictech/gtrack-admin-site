@@ -1,9 +1,9 @@
-import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
 import { Observable, of } from 'rxjs';
-import { AuthenticationSelectors } from 'subrepos/gtrack-common-ngx';
 
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
+import { AuthenticationSelectors } from '@features/common/authentication';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';

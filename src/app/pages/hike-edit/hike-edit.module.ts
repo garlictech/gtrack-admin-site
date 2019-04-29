@@ -1,3 +1,4 @@
+import { GeospatialService } from '@features/common/geospatial';
 import { TagInputModule } from 'ngx-chips';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
@@ -6,9 +7,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
-import { HikeModule, SharedModule } from 'subrepos/gtrack-common-ngx';
-import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/services/geospatial';
-import { HikeComponentsModule } from 'subrepos/gtrack-common-web';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -16,11 +14,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { FormModule } from '@bit/garlictech.angular-features.web.forms-primeng';
 import { LanguageModule } from '@bit/garlictech.angular-features.web.language';
-import { FormModule } from '@features/web/forms-primeng';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { HikeComponentsModule as HikeComponentsCommonModule } from '@features/common/hike';
+import { HikeComponentsModule as HikeComponentsWebModule } from '@features/web/hike';
 import { SharedComponentsModule } from '../../shared/components';
 import { PipesModule } from '../../shared/pipes/pipes.module';
 import { PoiMergeService } from '../../shared/services';
@@ -84,9 +84,8 @@ const COMPONENTS = [
     TranslateModule,
     ReactiveFormsModule,
     LeafletMapModule,
-    HikeModule,
-    HikeComponentsModule,
-    SharedModule,
+    HikeComponentsCommonModule,
+    HikeComponentsWebModule,
     TagInputModule,
     SharedComponentsModule,
     FontAwesomeModule,

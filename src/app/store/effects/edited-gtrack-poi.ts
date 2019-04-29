@@ -2,10 +2,10 @@
 import _omit from 'lodash-es/omit';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
-import { PoiService } from 'subrepos/gtrack-common-ngx';
 
 import { Injectable } from '@angular/core';
 import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { PoiService } from '@features/common/poi';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, select, Store } from '@ngrx/store';
 

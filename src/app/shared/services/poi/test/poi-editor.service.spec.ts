@@ -3,6 +3,8 @@ import { MessageService } from 'primeng/api';
 // tslint:disable:no-big-function
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
+import { GeospatialService } from '@bit/garlictech.angular-features.common.geospatial';
 import { EPoiTypes, ETextualDescriptionType } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import {
   LeafletIconService,
@@ -12,17 +14,12 @@ import {
   reducer as leafletMapReducer
 } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { featureName as leafletFeatureName } from '@bit/garlictech.angular-features.common.leaflet-map/store/state';
+import { ElevationService } from '@features/common/elevation/services';
+import { GeometryService } from '@features/common/geometry';
+import { PoiSelectors } from '@features/common/poi';
 import { StoreModule } from '@ngrx/store';
 
-import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
 import { editedHikeProgramReducer, hikeEditPoiReducer } from '../../../../../app/store/reducer';
-import {
-  ElevationService,
-  EXTERNAL_POI_DEPENDENCIES,
-  GeometryService,
-  GeospatialService,
-  PoiSelectors
-} from '../../../../../subrepos/gtrack-common-ngx';
 import { RoutePlannerService } from '../../admin-map';
 import { GooglePoiService } from '../google-poi.service';
 import { PoiEditorService } from '../poi-editor.service';
@@ -95,12 +92,6 @@ describe('PoiEditorService', () => {
           provide: ElevationService,
           useValue: {
             getData: () => 0
-          }
-        },
-        {
-          provide: EXTERNAL_POI_DEPENDENCIES,
-          useValue: {
-            storeDomain: 'poi'
           }
         },
         {

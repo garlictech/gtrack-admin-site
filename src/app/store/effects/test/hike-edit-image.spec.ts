@@ -6,13 +6,12 @@ import { Observable, of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
-import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { DeepstreamService, DeepstreamModule } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { BackgroundImageDataStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { DeepstreamModule } from '../../../../subrepos/gtrack-common-ngx';
 import { FlickrService, MapillaryService, PoiEditorService } from '../../../shared/services';
 import { hikeEditImageActions } from '../../actions';
 import { bgImagesStored as bgImageStoredFixtures } from '../../reducer/test/fixtures';
@@ -55,7 +54,7 @@ describe('HikeEditImageEffects effects', () => {
         StoreModule.forRoot({}),
         EffectsModule.forRoot([HikeEditImageEffects]),
         HttpClientTestingModule,
-        DeepstreamModule.forRoot(),
+        DeepstreamModule,
         RouterModule.forRoot([])
       ],
       providers: [
