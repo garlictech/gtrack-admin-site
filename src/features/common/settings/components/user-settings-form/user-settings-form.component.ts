@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SliderField, TimePickerField } from '@features/common/forms';
+import { SliderField, TimePickerField } from '@bit/garlictech.angular-features.common.forms';
 
 import { commonSettingsForm } from '../../const';
 

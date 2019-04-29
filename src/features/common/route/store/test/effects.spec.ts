@@ -1,18 +1,20 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { DeepstreamModule, DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
-import { EObjectState, RouteData, RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { GeometryService } from '@features/common/geometry';
-import { EffectsModule } from '@ngrx/effects';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { StoreModule } from '@ngrx/store';
 import { cold, hot, Scheduler } from 'jest-marbles';
 import { Observable, of } from 'rxjs';
 import * as uuid from 'uuid/v4';
 
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { DeepstreamModule, DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { GeometryService } from '@bit/garlictech.angular-features.common.geometry';
+import { EObjectState, RouteData, RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { EffectsModule } from '@ngrx/effects';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { StoreModule } from '@ngrx/store';
+
 import { RouteService } from '../../services/route';
 import * as routeActions from '../actions';
 import { RouteEffects } from '../effects';
+import { UnitsService } from '@bit/garlictech.angular-features.common.units';
 
 describe('Route effects', () => {
   let routeData: RouteData;

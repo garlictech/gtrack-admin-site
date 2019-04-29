@@ -1,4 +1,4 @@
-import { PublicCommonProfile } from '@features/common/gtrack-interfaces/interfaces';
+import { PublicCommonProfile } from '@bit/garlictech.angular-features.common.gtrack-interfaces/interfaces';
 
 export enum EProfileGroup {
   basic = 'basic',

@@ -4,7 +4,7 @@ import { filter } from 'rxjs/operators';
 
 import { Component, Input } from '@angular/core';
 import { Checkpoint } from '@features/common/checkpoints';
-import { PoiData } from '@features/common/gtrack-interfaces';
+import { PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import {
   faArrowRight,
   faClock,

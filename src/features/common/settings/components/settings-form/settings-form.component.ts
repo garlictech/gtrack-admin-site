@@ -1,4 +1,3 @@
-import { State } from 'app/store';
 import _each from 'lodash-es/each';
 import _get from 'lodash-es/get';
 import { some } from 'lodash/fp';
@@ -7,8 +6,8 @@ import { filter, map, takeUntil } from 'rxjs/operators';
 
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormDescriptor } from '@features/common/forms';
-import * as fromGenericUiActions from '@features/common/generic-ui/store/actions';
+import { FormDescriptor } from '@bit/garlictech.angular-features.common.forms';
+import * as fromGenericUiActions from '@bit/garlictech.angular-features.common.generic-ui/store/actions';
 import { createSelector, select, Store } from '@ngrx/store';
 
 import { EProfileGroup } from '../../interfaces';
@@ -33,7 +32,7 @@ export class SettingsFormComponent implements OnDestroy, AfterViewInit, OnInit {
 
   private readonly _componentDestroyed$: Subject<boolean>;
 
-  constructor(private readonly _store: Store<State>, private readonly _cdr: ChangeDetectorRef) {
+  constructor(private readonly _store: Store<any>, private readonly _cdr: ChangeDetectorRef) {
     this._componentDestroyed$ = new Subject();
   }
 

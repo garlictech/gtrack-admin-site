@@ -4,13 +4,13 @@ import { take } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { CenterRadius, GeometryService } from '@bit/garlictech.angular-features.common.geometry';
 import {
   EObjectState,
   RouteData,
   RouteSaveResponse,
   RouteStored
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { CenterRadius, GeometryService } from '@features/common/geometry';
 
 import { Route } from '../../lib/route';
 

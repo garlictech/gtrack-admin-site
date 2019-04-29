@@ -1,4 +1,4 @@
-import { SwitchField, SwitchFieldOptions } from '@features/common/forms';
+import { SwitchField, SwitchFieldOptions } from '@bit/garlictech.angular-features.common.forms';
 
 export const options: SwitchFieldOptions = {
   required: true,

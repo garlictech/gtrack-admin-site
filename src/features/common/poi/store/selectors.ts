@@ -2,7 +2,7 @@ import _get from 'lodash-es/get';
 import _pickBy from 'lodash-es/pickBy';
 
 import { Injectable } from '@angular/core';
-import { PoiData, PoiStored } from '@features/common/gtrack-interfaces';
+import { PoiData, PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 

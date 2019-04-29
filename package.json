@@ -200,9 +200,14 @@
     "tether": "^1.4.5",
     "togpx": "^0.5.4",
     "zone.js": "~0.8.28",
-    "@bit/garlictech.angular-features.web.generic-ui-primeng": "file:./src/features/web/generic-ui-primeng",
     "@bit/garlictech.angular-features.common.elevation": "file:./src/features/common/elevation",
-    "@bit/garlictech.angular-features.common.authentication": "file:./src/features/common/authentication"
+    "@bit/garlictech.angular-features.common.authentication": "file:./src/features/common/authentication",
+    "@bit/garlictech.angular-features.common.astronomy": "file:./src/features/common/astronomy",
+    "@bit/garlictech.angular-features.common.units": "file:./src/features/common/units",
+    "@bit/garlictech.angular-features.common.geometry": "file:./src/features/common/geometry",
+    "@bit/garlictech.angular-features.web.generic-ui-primeng": "file:./src/features/web/generic-ui-primeng",
+    "@bit/garlictech.angular-features.web.localize": "file:./src/features/web/localize",
+    "@bit/garlictech.angular-features.common.settings": "file:./src/features/common/settings"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",

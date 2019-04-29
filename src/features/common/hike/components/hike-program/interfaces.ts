@@ -1,4 +1,4 @@
-import { HikeProgramStop, PoiData } from '@features/common/gtrack-interfaces';
+import { HikeProgramStop, PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 export interface HikeProgramOutline {
   poi: PoiData;

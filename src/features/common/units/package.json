@@ -1,0 +1,13 @@
+{
+  "name": "@bit/garlictech.angular-features.common.units",
+  "version": "0.0.1",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/units",
+  "main": "index.ts",
+  "dependencies": {
+    "@angular/core": "~7.2.1"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "componentRootFolder": "src/features/common/units",
+  "license": "SEE LICENSE IN LICENSE"
+}

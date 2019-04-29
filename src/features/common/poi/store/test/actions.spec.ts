@@ -1,4 +1,4 @@
-import { PoiData, PoiStored, EPoiTypes, EObjectState } from '@features/common/gtrack-interfaces';
+import { PoiData, PoiStored, EPoiTypes, EObjectState } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { pois as poiFixtures } from './fixtures';
 
 import * as uuid from 'uuid/v4';

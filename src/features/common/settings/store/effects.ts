@@ -1,15 +1,14 @@
-import { log } from 'app/log';
-import { State } from 'app/store/state';
 import _get from 'lodash-es/get';
 // tslint:disable:no-property-initializers
 import { Observable, of as observableOf } from 'rxjs';
 import { catchError, delay, map, mergeMap, retryWhen, switchMap, take } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
-import { UserData } from '@features/common/gtrack-interfaces';
+import { UserData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 
+import { log } from '../log';
 import { SettingsService } from '../services';
 import * as LocalActions from './actions';
 import { defaultSettings } from './state';
@@ -87,7 +86,7 @@ export class Effects {
   constructor(
     private readonly _actions$: Actions,
     private readonly _profileService: SettingsService,
-    private readonly _store: Store<State>
+    private readonly _store: Store<any>
   ) {
     log.data('Initializing settings/settings effects...');
   }

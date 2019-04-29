@@ -1,22 +1,22 @@
-import { DebugLog, log } from 'app/log';
-import { State } from 'app/store/state';
 import { Observable, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
+import { AuthenticationSelectors, User } from '@bit/garlictech.angular-features.common.authentication';
 import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
-import { AuthenticationSelectors, User } from '@features/common/authentication';
-import { EToastSeverity } from '@features/common/generic-ui';
-import * as fromGenericUiActions from '@features/common/generic-ui/store/actions';
+import { EToastSeverity } from '@bit/garlictech.angular-features.common.generic-ui';
+import * as fromGenericUiActions from '@bit/garlictech.angular-features.common.generic-ui/store/actions';
 import {
   CommonProfile,
   CommonProfileSettings,
   PublicProfile,
   UserData
-} from '@features/common/gtrack-interfaces/interfaces';
-import { LANGUAGES } from '@features/common/gtrack-interfaces/user-profile/constants';
-import { EProfileGroup } from '@features/common/settings/interfaces';
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces/interfaces';
+import { LANGUAGES } from '@bit/garlictech.angular-features.common.gtrack-interfaces/user-profile/constants';
 import { select, Store } from '@ngrx/store';
+
+import { EProfileGroup } from '../../interfaces';
+import { DebugLog, log } from '../../log';
 
 export const languages = LANGUAGES.map(val => ({ label: `${val.nativeName}(${val.name})`, value: val.code }));
 
@@ -25,7 +25,7 @@ export class SettingsService {
   constructor(
     private readonly _deepstream: DeepstreamService,
     private readonly _authSelectors: AuthenticationSelectors.Selectors,
-    private readonly _store: Store<State>
+    private readonly _store: Store<any>
   ) {}
 
   @DebugLog get(): Observable<UserData> {

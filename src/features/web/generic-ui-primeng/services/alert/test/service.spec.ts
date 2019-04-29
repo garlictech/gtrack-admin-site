@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
-import { AlertService } from '../../alert/alert.service';
+import { AlertService } from '../alert.service';
 
 export class MockTranslateService {
   instant(value) {

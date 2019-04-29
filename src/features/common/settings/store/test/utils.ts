@@ -2,7 +2,7 @@ import { EntityState } from '@ngrx/entity';
 
 import { SettingsState, HikeProgramSettingsState, PrivateProfileState, PublicProfileState } from '../state';
 
-import { AuthenticationState } from '@features/common/authentication-api';
+import { AuthenticationState } from '@bit/garlictech.angular-features.common.authentication-api';
 
 const date = new Date('2018-01-01');
 

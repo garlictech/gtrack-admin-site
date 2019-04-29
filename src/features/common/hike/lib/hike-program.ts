@@ -9,7 +9,7 @@ import {
   HikeProgramStored,
   LocalizedItem,
   TextualDescription
-} from '@features/common/gtrack-interfaces';
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 export class HikeProgram implements HikeProgramStored {
   get title(): string {

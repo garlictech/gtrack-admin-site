@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.elevation",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "homepage": "https://bit.dev/garlictech/angular-features/common/elevation",
   "main": "index.ts",
   "dependencies": {
@@ -13,8 +13,8 @@
     "@bit/garlictech.angular-features.common.gtrack-interfaces": "0.0.2",
     "@bit/garlictech.angular-features.common.geospatial": "0.0.1",
     "@bit/garlictech.angular-features.common.marker-icons": "file:../marker-icons",
-    "@bit/garlictech.angular-features.common.leaflet-map": "0.0.30",
-    "@bit/garlictech.angular-features.common.multi-language-text": "0.0.7"
+    "@bit/garlictech.angular-features.common.leaflet-map": "file:../leaflet-map",
+    "@bit/garlictech.angular-features.common.multi-language-text": "file:../multi-language-text"
   },
   "devDependencies": {},
   "peerDependencies": {},

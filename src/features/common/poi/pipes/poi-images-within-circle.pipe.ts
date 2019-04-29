@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { BackgroundImageData } from '@features/common/gtrack-interfaces';
+import { BackgroundImageData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import distance from '@turf/distance';
 import { point as turfPoint } from '@turf/helpers';
 

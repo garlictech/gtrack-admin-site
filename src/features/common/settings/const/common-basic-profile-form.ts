@@ -1,5 +1,8 @@
 import { EmojiField, TextboxField } from '@bit/garlictech.angular-features.web.forms-primeng';
-import { MAX_ABOUT_LENGTH, MAX_USERNAME_LENGTH } from '@features/common/gtrack-interfaces/user-profile/constants';
+import {
+  MAX_ABOUT_LENGTH,
+  MAX_USERNAME_LENGTH
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces/user-profile/constants';
 
 export const commonBasicProfileFormDescriptor = {
   // profilePicture: new FileField({

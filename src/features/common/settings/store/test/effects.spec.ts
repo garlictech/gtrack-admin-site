@@ -2,7 +2,7 @@ import { cold, hot, Scheduler } from 'jest-marbles';
 import { Observable, of } from 'rxjs';
 
 import { TestBed } from '@angular/core/testing';
-import { EAuthRoles } from '@features/common/gtrack-interfaces';
+import { EAuthRoles } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 

@@ -1,7 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { EAuthRoles } from '@features/common/gtrack-interfaces';
+import { EAuthRoles } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

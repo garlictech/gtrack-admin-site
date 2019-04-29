@@ -5,7 +5,7 @@ import {
   EAuthRoles,
   PublicProfile,
   UserData
-} from '@features/common/gtrack-interfaces/interfaces';
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces/interfaces';
 import { Action } from '@ngrx/store';
 import { EProfileGroup } from '../interfaces';
 

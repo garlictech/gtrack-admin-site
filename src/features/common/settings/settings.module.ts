@@ -1,5 +1,3 @@
-import { DebugLog } from 'app/log';
-import { State } from 'app/store';
 import { filter, take } from 'rxjs/operators';
 
 import { CommonModule } from '@angular/common';
@@ -20,6 +18,7 @@ import { UserBasicProfileFormComponent } from './components/user-basic-profile-f
 import { UserProfileFormComponent } from './components/user-profile-form';
 import { UserSettingsFormComponent } from './components/user-settings-form/user-settings-form.component';
 import { EProfileGroup } from './interfaces';
+import { DebugLog } from './log';
 import { SettingsService } from './services';
 import { Actions, Effects, featureName, getReducers, SETTINGS_REDUCER_TOKEN } from './store';
 import * as actions from './store/actions';
@@ -61,7 +60,7 @@ import { getHikeStartDate, profileGroupSelector, Selectors } from './store/selec
   ]
 })
 export class SettingsModule {
-  constructor(private readonly _dsSelectors: DeepstreamSelectors, private readonly _store: Store<State>) {
+  constructor(private readonly _dsSelectors: DeepstreamSelectors, private readonly _store: Store<any>) {
     this._init();
   }
 

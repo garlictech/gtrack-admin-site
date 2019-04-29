@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { HikeProgramData } from '@features/common/gtrack-interfaces';
+import { HikeProgramData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Store } from '@ngrx/store';
 import * as actions from '../../store/actions';
 

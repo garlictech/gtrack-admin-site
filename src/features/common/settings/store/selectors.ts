@@ -1,16 +1,15 @@
-import { DebugLog } from 'app/log';
-import { State } from 'app/store/state';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _get from 'lodash-es/get';
 import { combineLatest as observableCombineLatest, Observable, of as observableOf } from 'rxjs';
 import { filter, map, pluck, switchMap, tap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
-import { AuthenticationSelectors, User } from '@features/common/authentication';
-import { EAuthRoles, PublicCommonProfile } from '@features/common/gtrack-interfaces/interfaces';
+import { AuthenticationSelectors, User } from '@bit/garlictech.angular-features.common.authentication';
+import { EAuthRoles, PublicCommonProfile } from '@bit/garlictech.angular-features.common.gtrack-interfaces/interfaces';
 import { createFeatureSelector, createSelector, select, Store } from '@ngrx/store';
 
 import { DecoratedPublicCommonProfile, EProfileGroup } from '../interfaces';
+import { DebugLog } from '../log';
 import * as Actions from './actions';
 import {
   featureName,
@@ -101,7 +100,7 @@ export class Selectors {
   getMyPublicProfile: Observable<DecoratedPublicCommonProfile>;
   getMyPublicData;
 
-  constructor(protected _store: Store<State>) {
+  constructor(protected _store: Store<any>) {
     this.getMyId = this._store.pipe(select(AuthenticationSelectors.selectUserId));
     this.getMyRole = this._store.pipe(select(AuthenticationSelectors.selectRole));
 

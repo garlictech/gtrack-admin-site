@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TextualDescription } from '@features/common/gtrack-interfaces';
+import { TextualDescription } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 @Component({
   selector: 'gtrack-html-description',

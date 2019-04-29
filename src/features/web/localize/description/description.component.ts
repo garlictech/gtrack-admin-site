@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ETextualDescriptionType, TextualDescription } from '@features/common/gtrack-interfaces';
+import { ETextualDescriptionType, TextualDescription } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { DescriptionComponent as BaseComponent } from '@features/common/multi-language-text';
 
 @Component({

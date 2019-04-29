@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule, select } from '@ngrx/store';
-import { PoiStored } from '@features/common/gtrack-interfaces';
+import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -14,7 +14,6 @@ import { PoiState } from '../state';
 
 import * as actions from '../actions';
 import { PoiSelectors } from '../selectors';
-import { EXTERNAL_POI_DEPENDENCIES } from '../../../externals';
 import { poisStored as poiFixtures } from './fixtures';
 
 describe('Poi selectors', () => {
@@ -36,15 +35,7 @@ describe('Poi selectors', () => {
           poi: poiReducer
         })
       ],
-      providers: [
-        PoiSelectors,
-        {
-          provide: EXTERNAL_POI_DEPENDENCIES,
-          useValue: {
-            storeDomain: 'poi'
-          }
-        }
-      ]
+      providers: [PoiSelectors]
     });
 
     store = TestBed.get(Store);

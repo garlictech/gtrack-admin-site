@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.generic-ui",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "homepage": "https://bit.dev/garlictech/angular-features/common/generic-ui",
   "main": "index.ts",
   "dependencies": {
@@ -17,6 +17,5 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/generic-ui",
   "license": "SEE LICENSE IN LICENSE"
 }

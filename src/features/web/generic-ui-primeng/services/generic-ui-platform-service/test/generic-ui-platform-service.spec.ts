@@ -1,6 +1,6 @@
 import { AlertService } from '../../alert/alert.service';
 import { ConfirmService } from '../../confirm/confirm.service';
-import { GenericUiPlatformService } from '../../generic-ui-platform-service/generic-ui-platform.service';
+import { GenericUiPlatformService } from '../generic-ui-platform.service';
 import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { TestBed } from '@angular/core/testing';

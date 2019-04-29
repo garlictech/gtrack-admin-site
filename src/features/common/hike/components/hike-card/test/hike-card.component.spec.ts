@@ -1,7 +1,11 @@
 /* tslint:disable:no-unused-variable */
 import { CUSTOM_ELEMENTS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HikeProgramStored, LocalizedItem, TextualDescription } from '@features/common/gtrack-interfaces';
+import {
+  HikeProgramStored,
+  LocalizedItem,
+  TextualDescription
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { HikeCardComponent } from '../hike-card.component';
 

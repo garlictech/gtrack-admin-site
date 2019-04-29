@@ -1,16 +1,19 @@
-import { log } from 'app/log';
+import { log } from '../../../log';
 import { Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { async, TestBed } from '@angular/core/testing';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication';
 import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
-import { AuthenticationSelectors } from '@features/common/authentication';
-import { EToastSeverity } from '@features/common/generic-ui';
-import * as fromGenericUiActions from '@features/common/generic-ui/store/actions';
-import { CommonProfile, CommonProfileSettings } from '@features/common/gtrack-interfaces/interfaces';
-import { EProfileGroup } from '@features/common/settings/interfaces';
+import { EToastSeverity } from '@bit/garlictech.angular-features.common.generic-ui';
+import * as fromGenericUiActions from '@bit/garlictech.angular-features.common.generic-ui/store/actions';
+import {
+  CommonProfile,
+  CommonProfileSettings
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces/interfaces';
 import { Store, StoreModule } from '@ngrx/store';
 
+import { EProfileGroup } from '../../../interfaces';
 import { SettingsService } from '../settings.service';
 
 describe('SettingsService', () => {

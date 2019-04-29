@@ -1,5 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { DatePickerField, MultiSelectField, PhoneNumberField, TextboxField } from '@features/common/forms';
+import {
+  DatePickerField,
+  MultiSelectField,
+  PhoneNumberField,
+  TextboxField
+} from '@bit/garlictech.angular-features.common.forms';
 
 import { commonBasicProfileFormDescriptor } from '../../const';
 import { languages } from '../../services/settings-service/settings.service';

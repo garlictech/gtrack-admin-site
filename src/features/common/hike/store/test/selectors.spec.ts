@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { TestBed } from '@angular/core/testing';
 import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
 import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
-import { HikeProgramStored } from '@features/common/gtrack-interfaces';
+import { HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store, StoreModule } from '@ngrx/store';
 
 import { HikeProgramComponent, hikeProgramsStored as hikeProgramFixtures } from '../../testing/fixtures';

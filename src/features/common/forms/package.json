@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.forms",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "homepage": "https://bit.dev/garlictech/angular-features/common/forms",
   "main": "index.ts",
   "dependencies": {
@@ -22,6 +22,5 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/forms",
   "license": "SEE LICENSE IN LICENSE"
 }

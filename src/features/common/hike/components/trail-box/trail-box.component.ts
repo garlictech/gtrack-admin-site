@@ -32,7 +32,7 @@ import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leafle
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { CheckpointMarkerCollection } from '@features/common/checkpoints/lib/checkpoint-marker-collection';
 import { GeoPosition, selectCurrentLocation } from '@features/common/current-geolocation';
-import { PoiData } from '@features/common/gtrack-interfaces';
+import { PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { PoiSelectors } from '@features/common/poi/store';
 import { RouteSelectors } from '@features/common/route/store';
 import { faCrosshairs, faSyncAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';

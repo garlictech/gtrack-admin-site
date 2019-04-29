@@ -6,7 +6,11 @@ import { StoreModule } from '@ngrx/store';
 import { GameRuleService } from '../../../../game-rule/services';
 import { AstronomyService } from '../../../../astronomy';
 
-import { HikeProgramStored, LocalizedItem, TextualDescription } from '@features/common/gtrack-interfaces';
+import {
+  HikeProgramStored,
+  LocalizedItem,
+  TextualDescription
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { PoiSelectors, poiReducer } from '../../../../poi/store';
 
 import { HikeProgramComponent } from '../hike-program.component';

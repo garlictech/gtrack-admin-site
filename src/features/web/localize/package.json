@@ -1,0 +1,22 @@
+{
+  "name": "@bit/garlictech.angular-features.web.localize",
+  "version": "0.0.1",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/localize",
+  "main": "index.ts",
+  "dependencies": {
+    "@angular/core": "~7.2.1",
+    "@angular/common": "~7.2.1",
+    "ngx-md": "^7.1.3",
+    "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../../common/gtrack-interfaces",
+    "@bit/garlictech.angular-features.common.multi-language-text": "file:../../common/multi-language-text"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "componentRootFolder": "src/features/web/localize",
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "resolveAliases": {
+      "@features/common/multi-language-text": "@bit/garlictech.angular-features.common.multi-language-text"
+    }
+  }
+}

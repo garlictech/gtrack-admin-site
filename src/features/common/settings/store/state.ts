@@ -1,7 +1,11 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { EnumValues } from 'enum-values';
 
-import { CommonProfileSettings, PublicProfile, UserData } from '@features/common/gtrack-interfaces/interfaces';
+import {
+  CommonProfileSettings,
+  PublicProfile,
+  UserData
+} from '@bit/garlictech.angular-features.common.gtrack-interfaces/interfaces';
 
 import { EProfileGroup } from '../interfaces';
 

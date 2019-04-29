@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, Pipe, PipeTransform } from '@angular/core';
 
-import { HikeProgramStored } from '@features/common/gtrack-interfaces';
+import { HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { HikeDataItemComponent } from '../hike-data-item.component';
 
 @Pipe({
