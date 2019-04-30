@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { HikeListMapComponent as BaseComponent } from '@features/common/hike';
+import { HikeListMapComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'gtrack-hike-list-map',

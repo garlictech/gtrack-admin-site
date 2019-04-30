@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
-import { SearchFiltersComponent as BaseComponent } from '@features/common/search-filters';
+import {
+  SearchFiltersComponent as BaseComponent,
+  SearchFiltersSelectors
+} from '@bit/garlictech.angular-features.common.search-filters';
 import { faSlidersH, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 

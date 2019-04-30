@@ -1,0 +1,15 @@
+{
+  "name": "@bit/garlictech.angular-features.web.poi",
+  "version": "0.0.2",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/poi",
+  "main": "index.ts",
+  "dependencies": {
+    "@angular/core": "~7.2.1",
+    "lodash-es": "^4.17.11",
+    "@angular/common": "~7.2.1",
+    "@bit/garlictech.angular-features.common.poi": "file:../../common/poi"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "license": "SEE LICENSE IN LICENSE"
+}

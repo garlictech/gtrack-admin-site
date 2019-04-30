@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { SearchResultsMapComponent as BaseComponent } from '@features/common/search';
+import { SearchResultsMapComponent as BaseComponent } from '@bit/garlictech.angular-features.common.search';
 
 @Component({
   selector: 'gtrack-search-results-map',

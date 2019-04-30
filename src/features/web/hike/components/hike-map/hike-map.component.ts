@@ -1,14 +1,12 @@
-import { Component, Input, ViewChild } from '@angular/core';
-
-import { HikeProgram } from '@features/common/hike';
-
-import { TrailBoxComponent } from '../trail-box';
-
-import { DebugLog, log } from 'app/log';
 import { BehaviorSubject } from 'rxjs';
 
+import { Component, Input, ViewChild } from '@angular/core';
+import { HikeProgram } from '@bit/garlictech.angular-features.common.hike';
 import { WeatherEntity } from '@bit/garlictech.angular-features.common.weather/store';
-import { ElevationProfileComponent } from '@features/web/elevation';
+import { ElevationProfileComponent } from '@bit/garlictech.angular-features.web.elevation';
+
+import { DebugLog, log } from '../../log';
+import { TrailBoxComponent } from '../trail-box';
 
 @Component({
   selector: 'gtrack-hike-map',

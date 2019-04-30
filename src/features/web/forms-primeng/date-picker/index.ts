@@ -1,6 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
 
-import { DatePickerComponent as NativeDatePickerComponent } from '@features/common/forms';
+import { DatePickerComponent as NativeDatePickerComponent } from '@bit/garlictech.angular-features.common.forms';
 
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 

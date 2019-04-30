@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { TrailBoxComponent as BaseComponent } from '@features/common/hike';
+import { TrailBoxComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'gtrack-trail-box',

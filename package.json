@@ -218,7 +218,14 @@
     "@bit/garlictech.angular-features.common.popup": "file:./src/features/common/popup",
     "@bit/garlictech.angular-features.common.authentication-cognito": "file:./src/features/common/authentication-cognito",
     "@bit/garlictech.angular-features.common.marker-popup": "file:./src/features/common/marker-popup",
-    "@bit/garlictech.angular-features.common.search": "file:./src/features/common/search"
+    "@bit/garlictech.angular-features.common.search": "file:./src/features/common/search",
+    "@bit/garlictech.angular-features.web.elevation": "file:./src/features/web/elevation",
+    "@bit/garlictech.angular-features.web.hike": "file:./src/features/web/hike",
+    "@bit/garlictech.angular-features.web.marker-popup": "file:./src/features/web/marker-popup",
+    "@bit/garlictech.angular-features.web.poi": "file:./src/features/web/poi",
+    "@bit/garlictech.angular-features.web.search": "file:./src/features/web/search",
+    "@bit/garlictech.angular-features.web.search-filters": "file:./src/features/web/search-filters",
+    "@bit/garlictech.angular-features.web.slideshow": "file:./src/features/web/slideshow"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.12.2",

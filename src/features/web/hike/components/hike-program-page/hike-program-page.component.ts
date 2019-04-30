@@ -1,14 +1,13 @@
-import { log } from 'app/log';
-import { State } from 'app/store';
 import _get from 'lodash-es/get';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { log } from '../../log';
 
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { HikeProgram } from '@bit/garlictech.angular-features.common.hike';
+import { getHikeSpeed, getHikeStartDate } from '@bit/garlictech.angular-features.common.settings/store/selectors';
 import { WeatherEntity, WeatherSelectors } from '@bit/garlictech.angular-features.common.weather/store';
 import * as actions from '@bit/garlictech.angular-features.common.weather/store/actions';
-import { HikeProgram } from '@features/common/hike';
-import { getHikeSpeed, getHikeStartDate } from '@features/common/settings/store/selectors';
 import { select, Store } from '@ngrx/store';
 
 @Component({
@@ -38,7 +37,7 @@ export class HikeProgramPageComponent implements OnInit {
 
   private _position: GeoJSON.Position;
 
-  constructor(private readonly _store: Store<State>, private readonly _weatherSelectors: WeatherSelectors) {}
+  constructor(private readonly _store: Store<any>, private readonly _weatherSelectors: WeatherSelectors) {}
 
   ngOnInit(): void {
     const start = this.hikeProgram.stops[0];

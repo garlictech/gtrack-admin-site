@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PoiMapComponent as BaseComponent } from '@features/common/poi';
+import { PoiMapComponent as BaseComponent } from '@bit/garlictech.angular-features.common.poi';
 
 @Component({
   selector: 'gtrack-poi-map',

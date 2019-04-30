@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { CheckpointsComponent as BaseComponent } from '@features/common/hike';
+import { CheckpointsComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'gtrack-checkpoints',

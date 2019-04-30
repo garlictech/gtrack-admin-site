@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MarkerPopupComponent as BaseComponent } from '@features/common/marker-popup/components/marker-popup/marker-popup.component';
+import { MarkerPopupComponent as BaseComponent } from '@bit/garlictech.angular-features.common.marker-popup/components/marker-popup/marker-popup.component';
 
 @Component({
   selector: 'gtrack-marker-popup',

@@ -12,7 +12,7 @@ import {
 
 import { faChevronLeft, faChevronRight, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-import { DebugLog } from 'app/log';
+import { DebugLog } from '../../log';
 
 @Component({
   selector: 'gtrack-slideshow',

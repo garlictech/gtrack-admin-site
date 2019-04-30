@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReverseHikeButtonComponent as BaseComponent } from '@features/common/hike/components/reverse-hike-button';
+import { ReverseHikeButtonComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'gtrack-reverse-hike-button',

@@ -1,4 +1,4 @@
-import { HikeDataPopupComponent as BaseComponent } from '@features/common/hike/components/hike-data-popup/hike-data-popup.component';
+import { HikeDataPopupComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 
 import { Component } from '@angular/core';
 

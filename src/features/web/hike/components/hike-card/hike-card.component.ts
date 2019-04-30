@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { HikeCardComponent as BaseComponent } from '@features/common/hike';
+import { HikeCardComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'gtrack-hike-card',

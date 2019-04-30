@@ -5,9 +5,9 @@ import { take } from 'rxjs/operators';
 import {
   LanguageSelectorComponent as LanguageSelectorComponentBase,
   LanguageService
-} from '@features/common/localization';
+} from '@bit/garlictech.angular-features.common.localization';
 
-import { currentLanguage } from '@features/common/localization/store/selectors';
+import { currentLanguage } from '@bit/garlictech.angular-features.common.localization/store/selectors';
 
 @Component({
   selector: 'gtrack-language-selector',

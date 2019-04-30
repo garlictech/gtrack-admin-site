@@ -12,9 +12,9 @@ import { SliderModule } from 'primeng/slider';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormModule as NativeFormModule } from '@bit/garlictech.angular-features.common.forms';
 // import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
 import { LanguageModule } from '@bit/garlictech.angular-features.web.language';
-import { FormModule as NativeFormModule } from '@features/common/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { DatePickerComponent } from './date-picker';
@@ -76,4 +76,4 @@ import { TimePickerComponent } from './time-picker';
 })
 export class FormModule {}
 
-export * from '@features/common/forms';
+export * from '@bit/garlictech.angular-features.common.forms';

@@ -12,8 +12,8 @@ import { TrustedPipesModule } from '@bit/garlictech.angular-features.common.gene
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { WeatherModule as BaseWeatherModule } from '@bit/garlictech.angular-features.common.weather';
 import { FormModule } from '@bit/garlictech.angular-features.web.forms-primeng';
+import { LocalizeModule as WebLocalizeModule } from '@bit/garlictech.angular-features.web.localize';
 import { WeatherModule } from '@bit/garlictech.angular-features.web.weather';
-import { LocalizeModule as WebLocalizeModule } from '@features/web/localize';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 

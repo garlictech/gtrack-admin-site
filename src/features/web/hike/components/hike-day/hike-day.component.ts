@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HikeDayComponent as BaseComponent } from '@features/common/hike';
+import { HikeDayComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'gtrack-hike-day',

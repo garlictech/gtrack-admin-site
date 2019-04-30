@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Poi } from '@features/common/poi';
+import { Poi } from '@bit/garlictech.angular-features.common.poi';
 import _get from 'lodash-es/get';
 
 @Component({

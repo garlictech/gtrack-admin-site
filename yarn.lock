@@ -516,19 +516,19 @@
     aws-amplify "^1.1.19"
 
 "@bit/garlictech.angular-features.common.authentication@file:./src/features/common/authentication", "@bit/garlictech.angular-features.common.authentication@file:src/features/common/authentication":
-  version "0.0.4"
+  version "0.0.5"
   dependencies:
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
     "@angular/router" "~7.2.1"
-    "@bit/garlictech.angular-features.common.authentication-api" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.4-15f2a5b9-ced6-4950-b6fb-75773a96668f-1556612780842/node_modules/@bit/authentication-api"
-    "@bit/garlictech.angular-features.common.authentication-cognito" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.4-15f2a5b9-ced6-4950-b6fb-75773a96668f-1556612780842/node_modules/@bit/authentication-cognito"
-    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.4-15f2a5b9-ced6-4950-b6fb-75773a96668f-1556612780842/node_modules/@bit/deepstream-ngx"
-    "@bit/garlictech.angular-features.common.forms" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.4-15f2a5b9-ced6-4950-b6fb-75773a96668f-1556612780842/node_modules/@bit/forms"
-    "@bit/garlictech.angular-features.common.generic-ui" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.4-15f2a5b9-ced6-4950-b6fb-75773a96668f-1556612780842/node_modules/@bit/generic-ui"
-    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.4-15f2a5b9-ced6-4950-b6fb-75773a96668f-1556612780842/node_modules/@bit/localization"
-    "@bit/garlictech.angular-features.common.popup" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.4-15f2a5b9-ced6-4950-b6fb-75773a96668f-1556612780842/node_modules/@bit/popup"
-    "@bit/garlictech.angular-features.common.router" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.4-15f2a5b9-ced6-4950-b6fb-75773a96668f-1556612780842/node_modules/@bit/router"
+    "@bit/garlictech.angular-features.common.authentication-api" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.5-b4b5326a-e378-455b-94df-572820bedd5f-1556617141265/node_modules/@bit/authentication-api"
+    "@bit/garlictech.angular-features.common.authentication-cognito" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.5-b4b5326a-e378-455b-94df-572820bedd5f-1556617141265/node_modules/@bit/authentication-cognito"
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.5-b4b5326a-e378-455b-94df-572820bedd5f-1556617141265/node_modules/@bit/deepstream-ngx"
+    "@bit/garlictech.angular-features.common.forms" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.5-b4b5326a-e378-455b-94df-572820bedd5f-1556617141265/node_modules/@bit/forms"
+    "@bit/garlictech.angular-features.common.generic-ui" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.5-b4b5326a-e378-455b-94df-572820bedd5f-1556617141265/node_modules/@bit/generic-ui"
+    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.5-b4b5326a-e378-455b-94df-572820bedd5f-1556617141265/node_modules/@bit/localization"
+    "@bit/garlictech.angular-features.common.popup" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.5-b4b5326a-e378-455b-94df-572820bedd5f-1556617141265/node_modules/@bit/popup"
+    "@bit/garlictech.angular-features.common.router" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-authentication-0.0.5-b4b5326a-e378-455b-94df-572820bedd5f-1556617141265/node_modules/@bit/router"
     "@fortawesome/free-brands-svg-icons" "^5.5.0"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/store" "~7.1.0"
@@ -537,18 +537,18 @@
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.checkpoints@file:./src/features/common/checkpoints", "@bit/garlictech.angular-features.common.checkpoints@file:src/features/common/checkpoints":
-  version "0.0.15"
+  version "0.0.16"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.15-85c60155-617d-4096-a685-a32387d057fc-1556612780491/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.15-85c60155-617d-4096-a685-a32387d057fc-1556612780491/node_modules/@bit/leaflet-map"
-    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.15-85c60155-617d-4096-a685-a32387d057fc-1556612780491/node_modules/@bit/marker-icons"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.16-32a8388a-463f-4fe8-beda-ecbaff2300ee-1556617140891/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.16-32a8388a-463f-4fe8-beda-ecbaff2300ee-1556617140891/node_modules/@bit/leaflet-map"
+    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.16-32a8388a-463f-4fe8-beda-ecbaff2300ee-1556617140891/node_modules/@bit/marker-icons"
     leaflet "^1.0.3"
     lodash-es "^4.17.11"
 
 "@bit/garlictech.angular-features.common.current-geolocation@file:./src/features/common/current-geolocation", "@bit/garlictech.angular-features.common.current-geolocation@file:src/features/common/current-geolocation":
-  version "0.0.4"
+  version "0.0.6"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
@@ -562,10 +562,10 @@
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.deepstream-ngx@file:./src/features/common/deepstream-ngx", "@bit/garlictech.angular-features.common.deepstream-ngx@file:src/features/common/deepstream-ngx":
-  version "0.0.2"
+  version "0.0.3"
   dependencies:
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-deepstream-ngx-0.0.2-bfcc59a6-3388-429b-9775-052232bb4284-1556612780542/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-deepstream-ngx-0.0.3-8cf694ab-d347-415a-9bea-eee7ec83bdb4-1556617140961/node_modules/@bit/gtrack-interfaces"
     "@garlictech/deepstream-rxjs" "^1.9.2"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/store" "~7.1.0"
@@ -573,25 +573,25 @@
     ng2-logger "^2.0.0"
     rxjs "~6.3.2"
 
-"@bit/garlictech.angular-features.common.elevation@file:./src/features/common/elevation":
-  version "0.0.12"
+"@bit/garlictech.angular-features.common.elevation@file:./src/features/common/elevation", "@bit/garlictech.angular-features.common.elevation@file:src/features/common/elevation":
+  version "0.0.14"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.astronomy" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/astronomy"
-    "@bit/garlictech.angular-features.common.game-rule" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/game-rule"
-    "@bit/garlictech.angular-features.common.geospatial" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/geospatial"
-    "@bit/garlictech.angular-features.common.google-maps" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/google-maps"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.hike" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/hike"
-    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/leaflet-map"
-    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/marker-icons"
-    "@bit/garlictech.angular-features.common.multi-language-text" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/multi-language-text"
-    "@bit/garlictech.angular-features.common.poi" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/poi"
-    "@bit/garlictech.angular-features.common.route" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/route"
-    "@bit/garlictech.angular-features.common.units" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/units"
-    "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/utils"
-    "@bit/garlictech.angular-features.common.weather" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.12-96935abe-fb7c-426d-aa2e-ed84e079a0d7-1556612780950/node_modules/@bit/weather"
+    "@bit/garlictech.angular-features.common.astronomy" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/astronomy"
+    "@bit/garlictech.angular-features.common.game-rule" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/game-rule"
+    "@bit/garlictech.angular-features.common.geospatial" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/geospatial"
+    "@bit/garlictech.angular-features.common.google-maps" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/google-maps"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.hike" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/hike"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/leaflet-map"
+    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/marker-icons"
+    "@bit/garlictech.angular-features.common.multi-language-text" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/multi-language-text"
+    "@bit/garlictech.angular-features.common.poi" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/poi"
+    "@bit/garlictech.angular-features.common.route" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/route"
+    "@bit/garlictech.angular-features.common.units" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/units"
+    "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/utils"
+    "@bit/garlictech.angular-features.common.weather" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-elevation-0.0.14-aa15a235-620d-44fc-ab42-59672902a303-1556617141355/node_modules/@bit/weather"
     "@ngrx/store" "7.1.0"
     "@turf/distance" "6.0.1"
     "@turf/helpers" "6.1.4"
@@ -609,13 +609,13 @@
     rxjs "6.3.3"
 
 "@bit/garlictech.angular-features.common.forms@file:./src/features/common/forms", "@bit/garlictech.angular-features.common.forms@file:src/features/common/forms":
-  version "0.0.8"
+  version "0.0.9"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
     "@angular/platform-browser" "~7.2.1"
-    "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-forms-0.0.8-34d4c678-87a0-4b1e-873f-0ef2fc43cf63-1556612780601/node_modules/@bit/utils"
+    "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-forms-0.0.9-fe553aa8-01eb-4318-bc9e-787c11f9cc78-1556617141023/node_modules/@bit/utils"
     "@ngrx/store" "~7.1.0"
     "@ngx-translate/core" "^11.0.1"
     google-libphonenumber "3.2.2"
@@ -633,12 +633,12 @@
     "@angular/core" "~7.2.1"
 
 "@bit/garlictech.angular-features.common.generic-ui@file:./src/features/common/generic-ui", "@bit/garlictech.angular-features.common.generic-ui@file:src/features/common/generic-ui":
-  version "0.0.15"
+  version "0.0.16"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
     "@angular/platform-browser" "7.2.13"
-    "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-generic-ui-0.0.15-12d7991f-9fdc-47aa-8110-ff7584ee8a41-1556612780608/node_modules/@bit/utils"
+    "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-generic-ui-0.0.16-5745d8c5-c67a-422b-b3d7-0ff6d5c53f94-1556617141037/node_modules/@bit/utils"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/store" "~7.1.0"
     "@ngx-translate/core" "^11.0.1"
@@ -659,11 +659,11 @@
     lodash-es "^4.17.11"
 
 "@bit/garlictech.angular-features.common.geosearch@file:./src/features/common/geosearch", "@bit/garlictech.angular-features.common.geosearch@file:src/features/common/geosearch":
-  version "0.0.9"
+  version "0.0.10"
   dependencies:
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-geosearch-0.0.9-eb6f3200-be99-4483-be4e-68108cdea1a2-1556612780612/node_modules/@bit/deepstream-ngx"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-geosearch-0.0.9-eb6f3200-be99-4483-be4e-68108cdea1a2-1556612780612/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-geosearch-0.0.10-cc557578-c7cb-4b2f-84eb-ea1089f15a5b-1556617141042/node_modules/@bit/deepstream-ngx"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-geosearch-0.0.10-cc557578-c7cb-4b2f-84eb-ea1089f15a5b-1556617141042/node_modules/@bit/gtrack-interfaces"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/entity" "~7.1.0"
     "@ngrx/store" "~7.1.0"
@@ -689,39 +689,39 @@
     ng2-logger "^2.0.0"
 
 "@bit/garlictech.angular-features.common.gtrack-interfaces@file:./src/features/common/gtrack-interfaces", "@bit/garlictech.angular-features.common.gtrack-interfaces@file:src/features/common/gtrack-interfaces":
-  version "0.0.3"
+  version "0.0.4"
   dependencies:
     d3-scale "2.2.2"
     d3-shape "1.3.5"
 
 "@bit/garlictech.angular-features.common.hike@file:./src/features/common/hike", "@bit/garlictech.angular-features.common.hike@file:src/features/common/hike":
-  version "0.0.4"
+  version "0.0.6"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
     "@angular/platform-browser" "~7.2.1"
-    "@bit/garlictech.angular-features.common.astronomy" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/astronomy"
-    "@bit/garlictech.angular-features.common.authentication" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/authentication"
-    "@bit/garlictech.angular-features.common.checkpoints" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/checkpoints"
-    "@bit/garlictech.angular-features.common.current-geolocation" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/current-geolocation"
-    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/deepstream-ngx"
-    "@bit/garlictech.angular-features.common.forms" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/forms"
-    "@bit/garlictech.angular-features.common.game-rule" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/game-rule"
-    "@bit/garlictech.angular-features.common.geometry" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/geometry"
-    "@bit/garlictech.angular-features.common.geosearch" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/geosearch"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/leaflet-map"
-    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/localization"
-    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/marker-icons"
-    "@bit/garlictech.angular-features.common.multi-language-text" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/multi-language-text"
-    "@bit/garlictech.angular-features.common.object-mark" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/object-mark"
-    "@bit/garlictech.angular-features.common.poi" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/poi"
-    "@bit/garlictech.angular-features.common.route" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/route"
-    "@bit/garlictech.angular-features.common.search-filters" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/search-filters"
-    "@bit/garlictech.angular-features.common.settings" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/settings"
-    "@bit/garlictech.angular-features.common.weather" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/@bit/weather"
-    "@bit/garlictech.angular-features.web.forms-primeng" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.4-8e8a735e-1276-46c3-8b3a-d7e76fc3498c-1556612780924/node_modules/web/forms-primeng"
+    "@bit/garlictech.angular-features.common.astronomy" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/astronomy"
+    "@bit/garlictech.angular-features.common.authentication" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/authentication"
+    "@bit/garlictech.angular-features.common.checkpoints" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/checkpoints"
+    "@bit/garlictech.angular-features.common.current-geolocation" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/current-geolocation"
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/deepstream-ngx"
+    "@bit/garlictech.angular-features.common.forms" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/forms"
+    "@bit/garlictech.angular-features.common.game-rule" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/game-rule"
+    "@bit/garlictech.angular-features.common.geometry" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/geometry"
+    "@bit/garlictech.angular-features.common.geosearch" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/geosearch"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/leaflet-map"
+    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/localization"
+    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/marker-icons"
+    "@bit/garlictech.angular-features.common.multi-language-text" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/multi-language-text"
+    "@bit/garlictech.angular-features.common.object-mark" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/object-mark"
+    "@bit/garlictech.angular-features.common.poi" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/poi"
+    "@bit/garlictech.angular-features.common.route" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/route"
+    "@bit/garlictech.angular-features.common.search-filters" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/search-filters"
+    "@bit/garlictech.angular-features.common.settings" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/settings"
+    "@bit/garlictech.angular-features.common.weather" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/@bit/weather"
+    "@bit/garlictech.angular-features.web.forms-primeng" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.6-89b66268-d8e1-435f-b5ae-b43661332f6a-1556617141327/node_modules/web/forms-primeng"
     "@fortawesome/angular-fontawesome" "^0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@ngrx/effects" "~7.1.0"
@@ -744,14 +744,14 @@
     uuid "3.3.2"
 
 "@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map", "@bit/garlictech.angular-features.common.leaflet-map@file:src/features/common/leaflet-map":
-  version "0.0.33"
+  version "0.0.34"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.current-geolocation" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.33-cfef1015-8cec-4cba-95be-f43b7470a198-1556612780518/node_modules/@bit/current-geolocation"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.33-cfef1015-8cec-4cba-95be-f43b7470a198-1556612780518/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.33-cfef1015-8cec-4cba-95be-f43b7470a198-1556612780518/node_modules/@bit/marker-icons"
-    "@bit/garlictech.angular-features.web.spinner" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.33-cfef1015-8cec-4cba-95be-f43b7470a198-1556612780518/node_modules/web/spinner"
+    "@bit/garlictech.angular-features.common.current-geolocation" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.34-f71d14c6-f57f-4932-a781-c90d4d4089db-1556617140928/node_modules/@bit/current-geolocation"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.34-f71d14c6-f57f-4932-a781-c90d4d4089db-1556617140928/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.34-f71d14c6-f57f-4932-a781-c90d4d4089db-1556617140928/node_modules/@bit/marker-icons"
+    "@bit/garlictech.angular-features.web.spinner" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-leaflet-map-0.0.34-f71d14c6-f57f-4932-a781-c90d4d4089db-1556617140928/node_modules/web/spinner"
     "@ngrx/store" "~7.1.0"
     geojson "^0.5.0"
     leaflet "^1.0.3"
@@ -773,7 +773,7 @@
     ng2-logger "2.0.46"
 
 "@bit/garlictech.angular-features.common.marker-icons@file:./src/features/common/marker-icons", "@bit/garlictech.angular-features.common.marker-icons@file:src/features/common/marker-icons":
-  version "0.0.8"
+  version "0.0.9"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
@@ -784,32 +784,32 @@
     lodash "4.17.11"
     rxjs "6.3.3"
 
-"@bit/garlictech.angular-features.common.marker-popup@file:./src/features/common/marker-popup":
-  version "0.0.1"
+"@bit/garlictech.angular-features.common.marker-popup@file:./src/features/common/marker-popup", "@bit/garlictech.angular-features.common.marker-popup@file:src/features/common/marker-popup":
+  version "0.0.2"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-marker-popup-0.0.1-e33644b6-9e67-47c0-9c36-67e48e4b5b81-1556612780965/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-marker-popup-0.0.2-98e77684-059b-414e-bc86-fc20ea69cd5b-1556617141370/node_modules/@bit/gtrack-interfaces"
     lodash-es "^4.17.11"
 
 "@bit/garlictech.angular-features.common.multi-language-text@file:./src/features/common/multi-language-text", "@bit/garlictech.angular-features.common.multi-language-text@file:src/features/common/multi-language-text":
-  version "0.0.7"
+  version "0.0.8"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.7-f6f021cf-328f-49fe-809f-98b54bd7aa95-1556612780622/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.7-f6f021cf-328f-49fe-809f-98b54bd7aa95-1556612780622/node_modules/@bit/localization"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.8-6d062cc2-7cfe-493b-8dad-3c6f018542a5-1556617141054/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-multi-language-text-0.0.8-6d062cc2-7cfe-493b-8dad-3c6f018542a5-1556617141054/node_modules/@bit/localization"
     "@ngrx/store" "~7.1.0"
     lodash-es "^4.17.11"
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.object-mark@file:./src/features/common/object-mark", "@bit/garlictech.angular-features.common.object-mark@file:src/features/common/object-mark":
-  version "0.0.1"
+  version "0.0.2"
   dependencies:
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.authentication" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-object-mark-0.0.1-f1f51243-dec3-40be-8c40-721a3d97fe8c-1556612780918/node_modules/@bit/authentication"
-    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-object-mark-0.0.1-f1f51243-dec3-40be-8c40-721a3d97fe8c-1556612780918/node_modules/@bit/deepstream-ngx"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-object-mark-0.0.1-f1f51243-dec3-40be-8c40-721a3d97fe8c-1556612780918/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.authentication" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-object-mark-0.0.2-e7233ce7-ae24-4f01-bda4-299baca59297-1556617141323/node_modules/@bit/authentication"
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-object-mark-0.0.2-e7233ce7-ae24-4f01-bda4-299baca59297-1556617141323/node_modules/@bit/deepstream-ngx"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-object-mark-0.0.2-e7233ce7-ae24-4f01-bda4-299baca59297-1556617141323/node_modules/@bit/gtrack-interfaces"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/entity" "~7.1.0"
     "@ngrx/store" "~7.1.0"
@@ -819,16 +819,16 @@
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.poi@file:./src/features/common/poi", "@bit/garlictech.angular-features.common.poi@file:src/features/common/poi":
-  version "0.0.4"
+  version "0.0.5"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.4-77809c12-5646-434e-bb4b-40b50bbac2d8-1556612780908/node_modules/@bit/deepstream-ngx"
-    "@bit/garlictech.angular-features.common.geometry" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.4-77809c12-5646-434e-bb4b-40b50bbac2d8-1556612780908/node_modules/@bit/geometry"
-    "@bit/garlictech.angular-features.common.geosearch" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.4-77809c12-5646-434e-bb4b-40b50bbac2d8-1556612780908/node_modules/@bit/geosearch"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.4-77809c12-5646-434e-bb4b-40b50bbac2d8-1556612780908/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.4-77809c12-5646-434e-bb4b-40b50bbac2d8-1556612780908/node_modules/@bit/leaflet-map"
-    "@bit/garlictech.angular-features.common.multi-language-text" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.4-77809c12-5646-434e-bb4b-40b50bbac2d8-1556612780908/node_modules/@bit/multi-language-text"
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.5-0233322a-cb33-4230-9f3a-f9fa2b73ae3f-1556617141312/node_modules/@bit/deepstream-ngx"
+    "@bit/garlictech.angular-features.common.geometry" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.5-0233322a-cb33-4230-9f3a-f9fa2b73ae3f-1556617141312/node_modules/@bit/geometry"
+    "@bit/garlictech.angular-features.common.geosearch" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.5-0233322a-cb33-4230-9f3a-f9fa2b73ae3f-1556617141312/node_modules/@bit/geosearch"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.5-0233322a-cb33-4230-9f3a-f9fa2b73ae3f-1556617141312/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.5-0233322a-cb33-4230-9f3a-f9fa2b73ae3f-1556617141312/node_modules/@bit/leaflet-map"
+    "@bit/garlictech.angular-features.common.multi-language-text" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-poi-0.0.5-0233322a-cb33-4230-9f3a-f9fa2b73ae3f-1556617141312/node_modules/@bit/multi-language-text"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/entity" "~7.1.0"
     "@ngrx/store" "~7.1.0"
@@ -854,14 +854,14 @@
     "@angular/core" "~7.2.1"
 
 "@bit/garlictech.angular-features.common.route@file:./src/features/common/route", "@bit/garlictech.angular-features.common.route@file:src/features/common/route":
-  version "0.0.3"
+  version "0.0.4"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-route-0.0.3-4a1defde-bf6e-4028-a30e-1e154aad083e-1556612780914/node_modules/@bit/deepstream-ngx"
-    "@bit/garlictech.angular-features.common.geometry" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-route-0.0.3-4a1defde-bf6e-4028-a30e-1e154aad083e-1556612780914/node_modules/@bit/geometry"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-route-0.0.3-4a1defde-bf6e-4028-a30e-1e154aad083e-1556612780914/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.units" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-route-0.0.3-4a1defde-bf6e-4028-a30e-1e154aad083e-1556612780914/node_modules/@bit/units"
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-route-0.0.4-7a049bd7-7bb1-4ac4-8019-c3a370ac1722-1556617141318/node_modules/@bit/deepstream-ngx"
+    "@bit/garlictech.angular-features.common.geometry" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-route-0.0.4-7a049bd7-7bb1-4ac4-8019-c3a370ac1722-1556617141318/node_modules/@bit/geometry"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-route-0.0.4-7a049bd7-7bb1-4ac4-8019-c3a370ac1722-1556617141318/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.units" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-route-0.0.4-7a049bd7-7bb1-4ac4-8019-c3a370ac1722-1556617141318/node_modules/@bit/units"
     "@ngrx/effects" "~7.1.0"
     "@ngrx/entity" "~7.1.0"
     "@ngrx/store" "~7.1.0"
@@ -885,22 +885,22 @@
     rxjs "~6.3.3"
 
 "@bit/garlictech.angular-features.common.search-filters@file:./src/features/common/search-filters", "@bit/garlictech.angular-features.common.search-filters@file:src/features/common/search-filters":
-  version "0.0.4"
+  version "0.0.6"
   dependencies:
     "@angular/core" "~7.2.1"
     "@ngrx/store" "~7.1.0"
     lodash-es "^4.17.11"
 
-"@bit/garlictech.angular-features.common.search@file:./src/features/common/search":
-  version "0.0.1"
+"@bit/garlictech.angular-features.common.search@file:./src/features/common/search", "@bit/garlictech.angular-features.common.search@file:src/features/common/search":
+  version "0.0.3"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.current-geolocation" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.1-11ca31e1-aaad-46a9-8684-6b9194675117-1556612780968/node_modules/@bit/current-geolocation"
-    "@bit/garlictech.angular-features.common.geosearch" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.1-11ca31e1-aaad-46a9-8684-6b9194675117-1556612780968/node_modules/@bit/geosearch"
-    "@bit/garlictech.angular-features.common.google-maps" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.1-11ca31e1-aaad-46a9-8684-6b9194675117-1556612780968/node_modules/@bit/google-maps"
-    "@bit/garlictech.angular-features.common.hike" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.1-11ca31e1-aaad-46a9-8684-6b9194675117-1556612780968/node_modules/@bit/hike"
-    "@bit/garlictech.angular-features.common.search-filters" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.1-11ca31e1-aaad-46a9-8684-6b9194675117-1556612780968/node_modules/@bit/search-filters"
+    "@bit/garlictech.angular-features.common.current-geolocation" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.3-b5fa9c67-2e5e-400e-af24-f3b55af41bf6-1556617141373/node_modules/@bit/current-geolocation"
+    "@bit/garlictech.angular-features.common.geosearch" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.3-b5fa9c67-2e5e-400e-af24-f3b55af41bf6-1556617141373/node_modules/@bit/geosearch"
+    "@bit/garlictech.angular-features.common.google-maps" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.3-b5fa9c67-2e5e-400e-af24-f3b55af41bf6-1556617141373/node_modules/@bit/google-maps"
+    "@bit/garlictech.angular-features.common.hike" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.3-b5fa9c67-2e5e-400e-af24-f3b55af41bf6-1556617141373/node_modules/@bit/hike"
+    "@bit/garlictech.angular-features.common.search-filters" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.3-b5fa9c67-2e5e-400e-af24-f3b55af41bf6-1556617141373/node_modules/@bit/search-filters"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@ngrx/store" "~7.1.0"
     "@turf/distance" "^6.0.1"
@@ -910,20 +910,20 @@
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.settings@file:./src/features/common/settings", "@bit/garlictech.angular-features.common.settings@file:src/features/common/settings":
-  version "0.0.2"
+  version "0.0.3"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
     "@angular/router" "~7.2.1"
-    "@bit/garlictech.angular-features.common.authentication" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.2-d3db1a98-7317-4eef-afed-3cdeb09282a5-1556612780891/node_modules/@bit/authentication"
-    "@bit/garlictech.angular-features.common.authentication-api" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.2-d3db1a98-7317-4eef-afed-3cdeb09282a5-1556612780891/node_modules/@bit/authentication-api"
-    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.2-d3db1a98-7317-4eef-afed-3cdeb09282a5-1556612780891/node_modules/@bit/deepstream-ngx"
-    "@bit/garlictech.angular-features.common.forms" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.2-d3db1a98-7317-4eef-afed-3cdeb09282a5-1556612780891/node_modules/@bit/forms"
-    "@bit/garlictech.angular-features.common.generic-ui" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.2-d3db1a98-7317-4eef-afed-3cdeb09282a5-1556612780891/node_modules/@bit/generic-ui"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.2-d3db1a98-7317-4eef-afed-3cdeb09282a5-1556612780891/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.web.forms-primeng" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.2-d3db1a98-7317-4eef-afed-3cdeb09282a5-1556612780891/node_modules/web/forms-primeng"
-    "@bit/garlictech.angular-features.web.language" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.2-d3db1a98-7317-4eef-afed-3cdeb09282a5-1556612780891/node_modules/web/language"
+    "@bit/garlictech.angular-features.common.authentication" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.3-88c4f643-fe6e-4bc0-b902-dc77c03d527e-1556617141299/node_modules/@bit/authentication"
+    "@bit/garlictech.angular-features.common.authentication-api" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.3-88c4f643-fe6e-4bc0-b902-dc77c03d527e-1556617141299/node_modules/@bit/authentication-api"
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.3-88c4f643-fe6e-4bc0-b902-dc77c03d527e-1556617141299/node_modules/@bit/deepstream-ngx"
+    "@bit/garlictech.angular-features.common.forms" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.3-88c4f643-fe6e-4bc0-b902-dc77c03d527e-1556617141299/node_modules/@bit/forms"
+    "@bit/garlictech.angular-features.common.generic-ui" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.3-88c4f643-fe6e-4bc0-b902-dc77c03d527e-1556617141299/node_modules/@bit/generic-ui"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.3-88c4f643-fe6e-4bc0-b902-dc77c03d527e-1556617141299/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.web.forms-primeng" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.3-88c4f643-fe6e-4bc0-b902-dc77c03d527e-1556617141299/node_modules/web/forms-primeng"
+    "@bit/garlictech.angular-features.web.language" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-common-settings-0.0.3-88c4f643-fe6e-4bc0-b902-dc77c03d527e-1556617141299/node_modules/web/language"
     "@fortawesome/angular-fontawesome" "^0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@ngrx/effects" "~7.1.0"
@@ -951,7 +951,7 @@
     "@angular/core" "~7.2.1"
 
 "@bit/garlictech.angular-features.common.utils@file:./src/features/common/utils", "@bit/garlictech.angular-features.common.utils@file:src/features/common/utils":
-  version "0.0.6"
+  version "0.0.7"
   dependencies:
     rxjs "~6.3.2"
 
@@ -969,27 +969,34 @@
     ng2-logger "^2.0.0"
     rxjs "~6.3.2"
 
-"@bit/garlictech.angular-features.web.forms-primeng@file:./src/features/web/forms-primeng", "@bit/garlictech.angular-features.web.forms-primeng@file:src/features/web/forms-primeng":
+"@bit/garlictech.angular-features.web.elevation@file:./src/features/web/elevation", "@bit/garlictech.angular-features.web.elevation@file:src/features/web/elevation":
   version "0.0.8"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.elevation" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-elevation-0.0.8-5654e2c4-ace0-4315-b878-2f43d3676a26-1556617141376/node_modules/common/elevation"
+
+"@bit/garlictech.angular-features.web.forms-primeng@file:./src/features/web/forms-primeng", "@bit/garlictech.angular-features.web.forms-primeng@file:src/features/web/forms-primeng":
+  version "0.0.9"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
     "@angular/platform-browser" "~7.2.1"
-    "@bit/garlictech.angular-features.common.forms" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-forms-primeng-0.0.8-c8b9bd50-2dc4-4945-9824-c07d8c3bddcc-1556612780897/node_modules/common/forms"
-    "@bit/garlictech.angular-features.web.language" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-forms-primeng-0.0.8-c8b9bd50-2dc4-4945-9824-c07d8c3bddcc-1556612780897/node_modules/@bit/language"
+    "@bit/garlictech.angular-features.common.forms" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-forms-primeng-0.0.9-887ba1a2-921a-46b3-89b8-2d9781a74e14-1556617141305/node_modules/common/forms"
+    "@bit/garlictech.angular-features.web.language" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-forms-primeng-0.0.9-887ba1a2-921a-46b3-89b8-2d9781a74e14-1556617141305/node_modules/@bit/language"
     "@fortawesome/angular-fontawesome" "^0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     ngx-md "^7.1.3"
     primeng "~7.0.0"
 
 "@bit/garlictech.angular-features.web.generic-ui-primeng@file:./src/features/web/generic-ui-primeng":
-  version "0.0.2"
+  version "0.0.3"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
-    "@bit/garlictech.angular-features.common.generic-ui" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-generic-ui-primeng-0.0.2-452f1019-7966-4e51-9e12-3e9b84322fdd-1556612780882/node_modules/common/generic-ui"
+    "@bit/garlictech.angular-features.common.generic-ui" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-generic-ui-primeng-0.0.3-a7cd23fd-7d00-46cb-8176-625dad6fa337-1556617141293/node_modules/common/generic-ui"
     "@fortawesome/angular-fontawesome" "^0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@ngrx/store" "~7.1.0"
@@ -997,48 +1004,121 @@
     primeng "~7.0.0"
     rxjs "~6.3.2"
 
-"@bit/garlictech.angular-features.web.language@file:./src/features/web/language", "@bit/garlictech.angular-features.web.language@file:src/features/web/language":
-  version "0.0.5"
+"@bit/garlictech.angular-features.web.hike@file:./src/features/web/hike":
+  version "0.0.1"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
     "@angular/forms" "~7.2.1"
-    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-language-0.0.5-ad3725fd-5a74-42af-84cb-9f4c14a4de21-1556612780640/node_modules/common/localization"
+    "@bit/garlictech.angular-features.common.authentication" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/common/authentication"
+    "@bit/garlictech.angular-features.common.generic-ui" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/common/generic-ui"
+    "@bit/garlictech.angular-features.common.hike" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/common/hike"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/common/leaflet-map"
+    "@bit/garlictech.angular-features.common.object-mark" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/common/object-mark"
+    "@bit/garlictech.angular-features.common.settings" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/common/settings"
+    "@bit/garlictech.angular-features.common.weather" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/common/weather"
+    "@bit/garlictech.angular-features.web.elevation" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/@bit/elevation"
+    "@bit/garlictech.angular-features.web.forms-primeng" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/@bit/forms-primeng"
+    "@bit/garlictech.angular-features.web.localize" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/@bit/localize"
+    "@bit/garlictech.angular-features.web.weather" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.1-2c8f9615-f952-435d-a5e1-380c8aa62112-1556617141378/node_modules/@bit/weather"
+    "@fortawesome/angular-fontawesome" "^0.3.0"
+    "@fortawesome/free-regular-svg-icons" "^5.5.0"
+    "@fortawesome/free-solid-svg-icons" "^5.5.0"
+    "@ngrx/store" "~7.1.0"
+    "@ngx-translate/core" "^11.0.1"
+    angular-svg-icon "^7.2.0"
+    lodash-es "^4.17.11"
+    ng2-logger "^2.0.0"
+    primeng "~7.0.0"
+    rxjs "~6.3.2"
+
+"@bit/garlictech.angular-features.web.language@file:./src/features/web/language", "@bit/garlictech.angular-features.web.language@file:src/features/web/language":
+  version "0.0.6"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@angular/forms" "~7.2.1"
+    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-language-0.0.6-9eb2a77d-3890-4d36-a42d-a61033a588dc-1556617141070/node_modules/common/localization"
     "@ngrx/store" "~7.1.0"
     "@ngx-translate/core" "^11.0.1"
     primeng "~7.0.0"
     rxjs "~6.3.2"
 
-"@bit/garlictech.angular-features.web.localize@file:./src/features/web/localize":
+"@bit/garlictech.angular-features.web.localize@file:./src/features/web/localize", "@bit/garlictech.angular-features.web.localize@file:src/features/web/localize":
+  version "0.0.2"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-localize-0.0.2-7b6b396a-cadf-4dac-88d4-e8dcf1cf251c-1556617141296/node_modules/common/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.multi-language-text" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-localize-0.0.2-7b6b396a-cadf-4dac-88d4-e8dcf1cf251c-1556617141296/node_modules/common/multi-language-text"
+    ngx-md "^7.1.3"
+
+"@bit/garlictech.angular-features.web.marker-popup@file:./src/features/web/marker-popup":
   version "0.0.1"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-localize-0.0.1-e76811e6-2419-4187-a915-70c6aeb01e5e-1556612780887/node_modules/common/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.multi-language-text" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-localize-0.0.1-e76811e6-2419-4187-a915-70c6aeb01e5e-1556612780887/node_modules/common/multi-language-text"
-    ngx-md "^7.1.3"
+    "@bit/garlictech.angular-features.common.marker-popup" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.1-32ffc67f-bf39-4bd7-95b9-831b5ecb34f1-1556617141389/node_modules/common/marker-popup"
+
+"@bit/garlictech.angular-features.web.poi@file:./src/features/web/poi":
+  version "0.0.1"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@bit/garlictech.angular-features.common.poi" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-poi-0.0.1-58747c57-917b-4366-a7eb-18c750f4695f-1556617141392/node_modules/common/poi"
+    lodash-es "^4.17.11"
+
+"@bit/garlictech.angular-features.web.search-filters@file:./src/features/web/search-filters":
+  version "0.0.1"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@angular/forms" "~7.2.1"
+    "@bit/garlictech.angular-features.common.search-filters" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-filters-0.0.1-c49234a2-d4b8-4979-9f75-acefad822587-1556617141399/node_modules/common/search-filters"
+    "@bit/garlictech.angular-features.web.forms-primeng" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-filters-0.0.1-c49234a2-d4b8-4979-9f75-acefad822587-1556617141399/node_modules/@bit/forms-primeng"
+    "@fortawesome/free-solid-svg-icons" "^5.5.0"
+    "@ngrx/store" "~7.1.0"
+
+"@bit/garlictech.angular-features.web.search@file:./src/features/web/search":
+  version "0.0.1"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@angular/forms" "~7.2.1"
+    "@bit/garlictech.angular-features.common.search" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-0.0.1-90bbec3a-c6da-4003-81c3-b87c10b21336-1556617141394/node_modules/common/search"
+    "@bit/garlictech.angular-features.web.forms-primeng" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-0.0.1-90bbec3a-c6da-4003-81c3-b87c10b21336-1556617141394/node_modules/@bit/forms-primeng"
+    angular-svg-icon "^7.2.0"
+    primeng "~7.0.0"
+
+"@bit/garlictech.angular-features.web.slideshow@file:./src/features/web/slideshow":
+  version "0.0.1"
+  dependencies:
+    "@angular/common" "~7.2.1"
+    "@angular/core" "~7.2.1"
+    "@fortawesome/free-solid-svg-icons" "^5.5.0"
+    ng2-logger "^2.0.0"
 
 "@bit/garlictech.angular-features.web.spinner@file:./src/features/web/spinner", "@bit/garlictech.angular-features.web.spinner@file:src/features/web/spinner":
   version "0.0.9"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.spinner" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-spinner-0.0.9-a45974dc-3caa-49a4-99ad-b8be54e580f9-1556612780536/node_modules/common/spinner"
+    "@bit/garlictech.angular-features.common.spinner" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-spinner-0.0.9-0190cba8-195e-46a8-b755-c185ecc1559e-1556617140957/node_modules/common/spinner"
 
 "@bit/garlictech.angular-features.web.text-carousel@file:./src/features/web/text-carousel":
-  version "0.0.11"
+  version "0.0.12"
   dependencies:
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-text-carousel-0.0.11-f1683004-c928-4b94-bc41-c03e2dc0ae7b-1556612780644/node_modules/common/localization"
+    "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-text-carousel-0.0.12-9df4e518-e1fa-4b2b-b65e-df4452ad6919-1556617141078/node_modules/common/localization"
     "@fortawesome/angular-fontawesome" "0.3.0"
     "@fortawesome/free-solid-svg-icons" "5.8.1"
 
-"@bit/garlictech.angular-features.web.weather@file:./src/features/web/weather":
+"@bit/garlictech.angular-features.web.weather@file:./src/features/web/weather", "@bit/garlictech.angular-features.web.weather@file:src/features/web/weather":
   version "0.0.10"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.weather" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-weather-0.0.10-84415238-7801-4d07-8a5e-e6187cfb5eeb-1556612780647/node_modules/common/weather"
+    "@bit/garlictech.angular-features.common.weather" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-weather-0.0.10-cc0114e7-2111-46ee-9199-1f5e6ec44833-1556617141083/node_modules/common/weather"
     "@ngrx/store" "~7.1.0"
     angular-svg-icon "^7.0.0"
     primeng "~7.0.0"
@@ -2042,9 +2122,9 @@
   integrity sha512-Fvm24+u85lGmV4hT5G++aht2C5I4Z4dYlWZIh62FAfFO/TfzXtPpoLI6I7AuBWkIFqZCnhFOoTT7RjjaIL5Fjg==
 
 "@types/node@^8.0.31":
-  version "8.10.47"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.47.tgz#e19b2f50f68697013db9e8abb5ad3ddc30faaa0b"
-  integrity sha512-HshJQ2myCc05qYuR99HvJRK5rWOPwKLumVDrpizY58OJUVEgRwd7RtxqDOOi350VGxFI8hrCtjR7IaDfo0S12Q==
+  version "8.10.48"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.48.tgz#e385073561643a9ba6199a1985ffc03530f90781"
+  integrity sha512-c35YEBTkL4rzXY2ucpSKy+UYHjUBIIkuJbWYbsGIrKLEWU5dgJMmLkkIb3qeC3O3Tpb1ZQCwecscvJTDjDjkRw==
 
 "@types/q@^0.0.32":
   version "0.0.32"
@@ -2292,12 +2372,12 @@ abbrev@1.0.x:
   integrity sha1-kbR5JYinc4wl813W9jdSovh3YTU=
 
 accepts@~1.3.4, accepts@~1.3.5:
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.6.tgz#27de8682f0833e966dde5c5d7a63ec8523106e4b"
-  integrity sha512-QsaoUD2dpVpjENy8JFpQnXP9vyzoZPmAoKrE3S6HtSB7qzSebkJNnmdY4p004FQUSSiHXPueENpoeuUW/7a8Ig==
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.7.tgz#531bc726517a3b2b41f850021c6cc15eaab507cd"
+  integrity sha512-Il80Qs2WjYlJIBNzNkK6KYqlVMTbZLXgHx2oT0pU/fjRHyEp+PEfEPY0R3WCwAGVOtauxh1hOxNgIf5bv7dQpA==
   dependencies:
     mime-types "~2.1.24"
-    negotiator "0.6.1"
+    negotiator "0.6.2"
 
 acorn-dynamic-import@^3.0.0:
   version "3.0.0"
@@ -4960,9 +5040,9 @@ etag@~1.8.1:
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
 eventemitter3@^3.0.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.1.tgz#1ab02a344af74f5cbf528969601bf0fd6aeebf98"
-  integrity sha512-MXmFv3KYbv7MPjPeGlFCTieXB9zNvmHfy4fXzZbrdMeUUk3pxQ8SS0cJ6CcwUDZnIL3ZDa01qQFzhlusB8s51Q==
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
+  integrity sha512-tvtQIeLVHjDkJYnzf2dgVMxfuSGJeM/7UCG17TT4EumTfNtF+0nebF/4zWOIkCreAbtNqhGEboB6BWrwqNaw4Q==
 
 events@1.1.1:
   version "1.1.1"
@@ -8095,10 +8175,10 @@ needle@^2.2.1:
     iconv-lite "^0.4.4"
     sax "^1.2.4"
 
-negotiator@0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
-  integrity sha1-KzJxhOiZIQEXeyhWP7XnECrNDKk=
+negotiator@0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.2.tgz#feacf7ccf525a77ae9634436a64883ffeca346fb"
+  integrity sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
 
 neo-async@^2.5.0, neo-async@^2.6.0:
   version "2.6.0"

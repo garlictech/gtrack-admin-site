@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { HikeProgramComponent as BaseComponent } from '@features/common/hike';
+import { HikeProgramComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'gtrack-hike-program',

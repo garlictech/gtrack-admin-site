@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DownloadGpxButtonComponent as BaseComponent } from '@features/common/hike';
+import { DownloadGpxButtonComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'gtrack-download-gpx',
