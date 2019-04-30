@@ -166,7 +166,6 @@
     "geojson-rewind": "^0.3.1",
     "geojson-validation": "^0.2.1",
     "geojson2svg": "^1.2.3",
-    "gtrack-common-ngx": "file:src/subrepos/gtrack-common-ngx",
     "intl": "^1.2.5",
     "leaflet": "^1.4.0",
     "leaflet-usermarker": "^1.0.0",

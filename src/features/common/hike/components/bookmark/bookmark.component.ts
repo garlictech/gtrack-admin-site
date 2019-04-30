@@ -5,10 +5,10 @@ import { delay, filter, map, take, takeUntil, tap } from 'rxjs/operators';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication';
 import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { ObjectMarkSelectors } from '@bit/garlictech.angular-features.common.object-mark';
+import * as actions from '@bit/garlictech.angular-features.common.object-mark/store/actions';
 import { select, Store } from '@ngrx/store';
 
-import * as actions from '@bit/garlictech.angular-features.common.object-mark/store/actions';
-import { ObjectMarkSelectors } from '@bit/garlictech.angular-features.common.object-mark/store/selectors';
 import { DebugLog, log } from '../../log';
 
 @Component({

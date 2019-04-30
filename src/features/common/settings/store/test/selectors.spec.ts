@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { StoreModule, Store, select, combineReducers } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil, scan, tap } from 'rxjs/operators';
-import { reducer as authenticationReducer } from '@bit/garlictech.angular-features.common.authentication/store';
+import { reducer as authenticationReducer } from '@bit/garlictech.angular-features.common.authentication/store/reducer';
 import { EAuthRoles } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
 import { reducer } from '../reducer';

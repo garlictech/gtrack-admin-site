@@ -1,3 +1,4 @@
+/*
 declare module 'togpx' {
   import { GeoJsonProperties } from 'geojson';
 
@@ -18,3 +19,4 @@ declare module 'togpx' {
 
   export = toGpx;
 }
+*/
