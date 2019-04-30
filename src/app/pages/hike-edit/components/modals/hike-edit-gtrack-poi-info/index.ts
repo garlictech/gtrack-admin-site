@@ -10,7 +10,7 @@ import {
   PoiStored,
   TextualDescription
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { PoiSelectors } from '@features/common/poi';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { MemoizedSelector, select, Store } from '@ngrx/store';
 
 import { State } from '../../../../../store';

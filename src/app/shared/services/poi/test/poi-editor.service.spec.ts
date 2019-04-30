@@ -14,9 +14,9 @@ import {
   reducer as leafletMapReducer
 } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { featureName as leafletFeatureName } from '@bit/garlictech.angular-features.common.leaflet-map/store/state';
-import { ElevationService } from '@features/common/elevation/services';
-import { GeometryService } from '@features/common/geometry';
-import { PoiSelectors } from '@features/common/poi';
+import { ElevationService } from '@bit/garlictech.angular-features.common.elevation';
+import { GeometryService } from '@bit/garlictech.angular-features.common.geometry';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { StoreModule } from '@ngrx/store';
 
 import { editedHikeProgramReducer, hikeEditPoiReducer } from '../../../../../app/store/reducer';

@@ -2,7 +2,9 @@ import * as _ from 'lodash';
 import { EMPTY } from 'rxjs';
 
 import { TestBed } from '@angular/core/testing';
+import { GameRuleService } from '@bit/garlictech.angular-features.common.game-rule';
 import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { RouteService } from '@bit/garlictech.angular-features.common.route';
 import { Store, StoreModule } from '@ngrx/store';
 
 import { State } from '../../../../store';
@@ -10,8 +12,6 @@ import { hikeEditRoutePlannerActions } from '../../../../store/actions';
 import { AdminMapService } from '../admin-map.service';
 import { RoutePlannerService } from '../route-planner.service';
 import { MOCK_SEGMENT_GEOJSON, MOCK_SEGMENT_TOTAL, MOCK_SEGMENTS } from './fixtures/segments';
-import { RouteService } from '@features/common/route';
-import { GameRuleService } from '@features/common/game-rule';
 
 describe('RoutePlannerService', () => {
   let routePlannerService: RoutePlannerService;

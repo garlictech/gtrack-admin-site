@@ -6,8 +6,8 @@ import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { GeospatialService } from '@bit/garlictech.angular-features.common.geospatial';
 import { HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { HikeProgramService } from '@features/common/hike';
-import { RouteActionTypes } from '@features/common/route';
+import { HikeProgramService } from '@bit/garlictech.angular-features.common.hike';
+import { RouteActionTypes } from '@bit/garlictech.angular-features.common.route';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, select, Store } from '@ngrx/store';
 

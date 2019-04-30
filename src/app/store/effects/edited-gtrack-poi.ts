@@ -5,7 +5,7 @@ import { catchError, map, switchMap, take } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { PoiService } from '@features/common/poi';
+import { PoiService } from '@bit/garlictech.angular-features.common.poi';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, select, Store } from '@ngrx/store';
 

@@ -21,7 +21,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ObjectMarkModule, ObjectMarkModuleConfig } from '@features/common/object-mark';
+import { ObjectMarkModule, ObjectMarkModuleConfig } from '@bit/garlictech.angular-features.common.object-mark';
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';

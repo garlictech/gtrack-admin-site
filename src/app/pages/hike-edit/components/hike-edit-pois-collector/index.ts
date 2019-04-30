@@ -8,7 +8,7 @@ import { debounceTime, filter, switchMap, take, takeUntil } from 'rxjs/operators
 import * as uuid from 'uuid/v1';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { PoiSelectors } from '@features/common/poi';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { select, Store } from '@ngrx/store';
 
 import { ExternalPoi, FilteredProperties, GTrackPoi } from '../../../../shared/interfaces';

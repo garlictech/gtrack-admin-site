@@ -10,7 +10,7 @@ import {
   GeoSearchSelectors
 } from '@bit/garlictech.angular-features.common.geosearch';
 import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { PoiSelectors } from '@features/common/poi';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { select, Store } from '@ngrx/store';
 
 import { GTrackPoi } from '../../../../shared/interfaces';

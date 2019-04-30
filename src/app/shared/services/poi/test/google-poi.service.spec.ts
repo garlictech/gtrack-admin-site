@@ -4,8 +4,8 @@ import { HttpRequest } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { EPoiImageTypes } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { GeometryService } from '@features/common/geometry';
-import { defaultSharedConfig } from '@features/common/google-maps/config';
+import { GeometryService } from '@bit/garlictech.angular-features.common.geometry';
+import { GOOGLE_MAPS_CONFIG } from '@bit/garlictech.angular-features.common.google-maps';
 
 import { GooglePoiService, PLACE_API_URL, PURE_PLACE_API_URL } from '../google-poi.service';
 import { DETAILED_GOOGLE_POI, GOOGLE_POI_RESPONSE, GOOGLE_POIS } from './fixtures/google-pois';
@@ -53,9 +53,7 @@ describe('GooglePoiService', () => {
       },
       radius: 10
     });
-    const request = `${PLACE_API_URL}/nearbysearch/json?location=0,0&radius=10&key=${
-      defaultSharedConfig.googleMaps.key
-    }`;
+    const request = `${PLACE_API_URL}/nearbysearch/json?location=0,0&radius=10&key=${GOOGLE_MAPS_CONFIG.key}`;
     const expectedPois = GOOGLE_POIS;
 
     googlePoiService.get(BOUNDS, ['en']).subscribe(pois => {
@@ -82,9 +80,7 @@ describe('GooglePoiService', () => {
     const thumbnailWidth = 320;
     const cardWidth = 640;
 
-    const request = `${PLACE_API_URL}/details/json?placeid=${GOOGLE_POIS[0].google.id}&key=${
-      defaultSharedConfig.googleMaps.key
-    }`;
+    const request = `${PLACE_API_URL}/details/json?placeid=${GOOGLE_POIS[0].google.id}&key=${GOOGLE_MAPS_CONFIG.key}`;
     const expectedPois = [
       _.merge(_.cloneDeep(GOOGLE_POIS[0]), {
         google: {
@@ -99,14 +95,14 @@ describe('GooglePoiService', () => {
               original: {
                 url: `${PURE_PLACE_API_URL}/photo?maxwidth=${2000}&photoreference=${
                   DETAILED_GOOGLE_POI.photos[0].photo_reference
-                }&key=${defaultSharedConfig.googleMaps.key}`,
+                }&key=${GOOGLE_MAPS_CONFIG.key}`,
                 width: 2000,
                 height: 1000
               },
               card: {
                 url: `${PURE_PLACE_API_URL}/photo?maxwidth=${cardWidth}&photoreference=${
                   DETAILED_GOOGLE_POI.photos[0].photo_reference
-                }&key=${defaultSharedConfig.googleMaps.key}`,
+                }&key=${GOOGLE_MAPS_CONFIG.key}`,
                 width: cardWidth,
                 height: Math.round(
                   (cardWidth * DETAILED_GOOGLE_POI.photos[0].height) / DETAILED_GOOGLE_POI.photos[0].width
@@ -115,7 +111,7 @@ describe('GooglePoiService', () => {
               thumbnail: {
                 url: `${PURE_PLACE_API_URL}/photo?maxwidth=${thumbnailWidth}&photoreference=${
                   DETAILED_GOOGLE_POI.photos[0].photo_reference
-                }&key=${defaultSharedConfig.googleMaps.key}`,
+                }&key=${GOOGLE_MAPS_CONFIG.key}`,
                 width: thumbnailWidth,
                 height: Math.round(
                   (thumbnailWidth * DETAILED_GOOGLE_POI.photos[0].height) / DETAILED_GOOGLE_POI.photos[0].width

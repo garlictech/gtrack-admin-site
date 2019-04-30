@@ -10,7 +10,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit }
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { HikeProgramStop, Segment } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
-import { PoiSelectors } from '@features/common/poi';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { select, Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';

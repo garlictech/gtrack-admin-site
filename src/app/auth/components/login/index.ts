@@ -2,8 +2,8 @@ import { Observable, of } from 'rxjs';
 
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication';
 import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
-import { AuthenticationSelectors } from '@features/common/authentication';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';

@@ -14,10 +14,10 @@ import {
   HikeProgramStored,
   RouteData
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeContextState, HikeSelectors } from '@bit/garlictech.angular-features.common.hike';
 import { leafletMapActions, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import * as leafletMapSelectors from '@bit/garlictech.angular-features.common.leaflet-map/store/selectors';
-import { HikeContextState, HikeSelectors } from '@features/common/hike';
-import { RouteSelectors } from '@features/common/route';
+import { RouteSelectors } from '@bit/garlictech.angular-features.common.route';
 import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 
 import { HikeProgramService } from '../../shared/services';

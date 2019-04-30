@@ -4,8 +4,8 @@ import { filter, switchMapTo } from 'rxjs/operators';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication';
 import { Actions as DeepstreamActions } from '@bit/garlictech.angular-features.common.deepstream-ngx';
-import { AuthenticationSelectors } from '@features/common/authentication';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { select, Store } from '@ngrx/store';
 

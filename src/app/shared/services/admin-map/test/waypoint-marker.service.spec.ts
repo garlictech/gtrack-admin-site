@@ -4,6 +4,7 @@ import { EMPTY } from 'rxjs';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { ElevationService } from '@bit/garlictech.angular-features.common.elevation';
 import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { Store, StoreModule } from '@ngrx/store';
 
@@ -12,7 +13,6 @@ import { hikeEditRoutePlannerActions } from '../../../../store/actions';
 import { AdminMapService } from '../admin-map.service';
 import { RoutePlannerService } from '../route-planner.service';
 import { Waypoint, WaypointMarkerService } from '../waypoint-marker.service';
-import { ElevationService } from '@features/common/elevation/services';
 
 describe('WaypointMarkerService', () => {
   let waypointMarkerService: WaypointMarkerService;

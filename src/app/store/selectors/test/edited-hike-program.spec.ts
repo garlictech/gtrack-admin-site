@@ -10,6 +10,7 @@ import {
   ETextualDescriptionType,
   HikeProgramStop
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { poiReducer, PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { select, Store, StoreModule } from '@ngrx/store';
 
 import { ExternalPoi } from '../../../shared/interfaces';
@@ -18,7 +19,6 @@ import { editedHikeProgramReducer, initialEditedHikeProgramState } from '../../r
 import { bgImages as bgImageFixtures, pois as poiFixtures, stops as stopsFixtures } from '../../reducer/test/fixtures';
 import * as editedHikeProgramSelectors from '../../selectors/edited-hike-program';
 import { EditedHikeProgramState } from '../../state';
-import { PoiSelectors, poiReducer } from '@features/common/poi';
 
 const A_NEW_TRANSLATION = 'A new translation';
 

@@ -15,8 +15,8 @@ import {
   ETextualDescriptionType
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
-import { CenterRadius, GeometryService } from '@features/common/geometry';
-import { defaultSharedConfig } from '@features/common/google-maps/config';
+import { CenterRadius, GeometryService } from '@bit/garlictech.angular-features.common.geometry';
+import { GOOGLE_MAPS_CONFIG } from '@bit/garlictech.angular-features.common.google-maps';
 import { GooglePoi } from '../../interfaces';
 import { AdminLanguageService } from '../language.service';
 
@@ -70,9 +70,7 @@ export class GooglePoiService {
           const _googleData = pois[idx].google;
 
           if (_googleData && _googleData.id) {
-            const request = `${PLACE_API_URL}/details/json?placeid=${_googleData.id}&key=${
-              defaultSharedConfig.googleMaps.key
-            }`;
+            const request = `${PLACE_API_URL}/details/json?placeid=${_googleData.id}&key=${GOOGLE_MAPS_CONFIG.key}`;
 
             const promise = this._http
               .get(request)
@@ -108,21 +106,21 @@ export class GooglePoiService {
                         original: {
                           url: `${PURE_PLACE_API_URL}/photo?maxwidth=${_photo.width}&photoreference=${
                             _photo.photo_reference
-                          }&key=${defaultSharedConfig.googleMaps.key}`,
+                          }&key=${GOOGLE_MAPS_CONFIG.key}`,
                           width: _photo.width,
                           height: _photo.height
                         },
                         card: {
                           url: `${PURE_PLACE_API_URL}/photo?maxwidth=${cardWidth}&photoreference=${
                             _photo.photo_reference
-                          }&key=${defaultSharedConfig.googleMaps.key}`,
+                          }&key=${GOOGLE_MAPS_CONFIG.key}`,
                           width: cardWidth,
                           height: Math.round((cardWidth * _photo.height) / _photo.width)
                         },
                         thumbnail: {
                           url: `${PURE_PLACE_API_URL}/photo?maxwidth=${thumbnailWidth}&photoreference=${
                             _photo.photo_reference
-                          }&key=${defaultSharedConfig.googleMaps.key}`,
+                          }&key=${GOOGLE_MAPS_CONFIG.key}`,
                           width: thumbnailWidth,
                           height: Math.round((thumbnailWidth * _photo.height) / _photo.width)
                         },
@@ -156,7 +154,7 @@ export class GooglePoiService {
     // tslint:disable:max-line-length
     let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${
       params.geo.center.geometry.coordinates[0]
-    }&radius=${params.geo.radius}&key=${defaultSharedConfig.googleMaps.key}`;
+    }&radius=${params.geo.radius}&key=${GOOGLE_MAPS_CONFIG.key}`;
     // tslint:enable:max-line-length
 
     if (params.pageToken) {

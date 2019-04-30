@@ -6,7 +6,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { EObjectState, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { HikeSelectors } from '@features/common/hike';
+import { HikeSelectors } from '@bit/garlictech.angular-features.common.hike';
 import { select, Store } from '@ngrx/store';
 
 import { State } from '../../store';

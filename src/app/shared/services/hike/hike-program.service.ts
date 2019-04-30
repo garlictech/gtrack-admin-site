@@ -10,12 +10,12 @@ import { combineLatest } from 'rxjs';
 import { debounceTime, take } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
+import { CheckpointService } from '@bit/garlictech.angular-features.common.checkpoints';
+import { ElevationService } from '@bit/garlictech.angular-features.common.elevation/services';
+import { GameRuleService } from '@bit/garlictech.angular-features.common.game-rule';
+import { GeospatialService } from '@bit/garlictech.angular-features.common.geospatial';
 import { HikeProgramStop, RouteData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { CheckpointService } from '@features/common/checkpoints';
-import { ElevationService } from '@features/common/elevation/services';
-import { GameRuleService } from '@features/common/game-rule';
-import { GeospatialService } from '@features/common/geospatial/geospatial.service';
-import { Route } from '@features/common/route';
+import { Route } from '@bit/garlictech.angular-features.common.route';
 import { select, Store } from '@ngrx/store';
 import turfDistance from '@turf/distance';
 import { point as turfPoint } from '@turf/helpers';

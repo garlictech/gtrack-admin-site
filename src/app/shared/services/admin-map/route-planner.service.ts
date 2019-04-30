@@ -7,10 +7,10 @@ import _omit from 'lodash-es/omit';
 import { take } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
+import { GameRuleService } from '@bit/garlictech.angular-features.common.game-rule';
 import { Segment } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { GEOJSON_STYLES, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { GameRuleService } from '@features/common/game-rule';
-import { RouteService } from '@features/common/route';
+import { RouteService } from '@bit/garlictech.angular-features.common.route';
 import { select, Store } from '@ngrx/store';
 import turfBuffer from '@turf/buffer';
 import { lineString as turfLineString } from '@turf/helpers';

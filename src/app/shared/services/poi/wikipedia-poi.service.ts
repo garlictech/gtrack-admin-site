@@ -8,13 +8,13 @@ import * as uuid from 'uuid/v1';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CenterRadius, GeometryService } from '@bit/garlictech.angular-features.common.geometry';
 import {
   BackgroundImageData,
   EPoiImageTypes,
   EPoiTypes,
   ETextualDescriptionType
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { CenterRadius, GeometryService } from '@features/common/geometry';
 
 import { WikipediaPoi } from '../../interfaces';
 import { HikeProgramService } from '../hike/hike-program.service';

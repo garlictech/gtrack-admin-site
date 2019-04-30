@@ -4,9 +4,9 @@ import { filter, switchMap, switchMapTo } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication';
 import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
-import { AuthenticationSelectors } from '@features/common/authentication';
-import { AuthGuard, RoleGuard } from '@features/common/authentication/guards';
+import { AuthGuard, RoleGuard } from '@bit/garlictech.angular-features.common.authentication/guards';
 import { select, Store } from '@ngrx/store';
 
 @Injectable()

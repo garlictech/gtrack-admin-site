@@ -8,7 +8,7 @@ import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { DeepstreamModule } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx/src/deepstream-service';
-import { RouteService } from '@features/common/route';
+import { RouteService } from '@bit/garlictech.angular-features.common.route';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';

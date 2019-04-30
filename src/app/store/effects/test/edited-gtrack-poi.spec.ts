@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { DeepstreamModule, DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
-import { PoiService } from '@features/common/poi';
+import { PoiService } from '@bit/garlictech.angular-features.common.poi';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';

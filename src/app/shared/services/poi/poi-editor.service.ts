@@ -19,6 +19,8 @@ import { combineLatest, interval, Observable, of } from 'rxjs';
 import { combineAll, debounceTime, filter, map as rxMap, switchMap, take } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
+import { ElevationService } from '@bit/garlictech.angular-features.common.elevation';
+import { CenterRadius, GeometryService } from '@bit/garlictech.angular-features.common.geometry';
 import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
 import { GeospatialService } from '@bit/garlictech.angular-features.common.geospatial';
 import {
@@ -35,9 +37,7 @@ import {
 } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leaflet-map/services/lib';
-import { ElevationService } from '@features/common/elevation/services';
-import { CenterRadius, GeometryService } from '@features/common/geometry';
-import { PoiSelectors } from '@features/common/poi';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { select, Store } from '@ngrx/store';
 import turfBooleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import turfBuffer from '@turf/buffer';

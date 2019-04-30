@@ -5,7 +5,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
-import { RouteService } from '@features/common/route';
+import { RouteService } from '@bit/garlictech.angular-features.common.route';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 

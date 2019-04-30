@@ -1,4 +1,3 @@
-import { GeospatialService } from '@features/common/geospatial';
 import { TagInputModule } from 'ngx-chips';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
@@ -12,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { GeospatialService } from '@bit/garlictech.angular-features.common.geospatial';
+import { HikeComponentsModule as HikeComponentsCommonModule } from '@bit/garlictech.angular-features.common.hike';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { FormModule } from '@bit/garlictech.angular-features.web.forms-primeng';
@@ -19,8 +20,6 @@ import { LanguageModule } from '@bit/garlictech.angular-features.web.language';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { HikeComponentsModule as HikeComponentsCommonModule } from '@features/common/hike';
-import { HikeComponentsModule as HikeComponentsWebModule } from '@features/web/hike';
 import { SharedComponentsModule } from '../../shared/components';
 import { PipesModule } from '../../shared/pipes/pipes.module';
 import { PoiMergeService } from '../../shared/services';

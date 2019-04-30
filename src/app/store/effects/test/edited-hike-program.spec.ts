@@ -8,7 +8,7 @@ import { Router, RouterModule } from '@angular/router';
 import { DeepstreamModule, DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { GeospatialService } from '@bit/garlictech.angular-features.common.geospatial';
 import { EObjectState, HikeProgramData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { HikeProgramService } from '@features/common/hike';
+import { HikeProgramService } from '@bit/garlictech.angular-features.common.hike';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';

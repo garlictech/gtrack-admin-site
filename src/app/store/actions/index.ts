@@ -2,10 +2,10 @@
 import * as commonBackgroundGeolocationActions from '@bit/garlictech.angular-features.common.current-geolocation/store/actions';
 // tslint:disable:no-property-initializers max-classes-per-file
 import * as commonGeoSearchActions from '@bit/garlictech.angular-features.common.geosearch/store/actions';
-import * as commonHikeActions from '@features/common/hike/store/actions';
-import * as commonPoiActions from '@features/common/poi/store/actions';
-import * as commonRouteActions from '@features/common/route/store/actions';
-import * as routingActions from '@features/common/router/store/actions';
+import * as commonHikeActions from '@bit/garlictech.angular-features.common.hike/store/actions';
+import * as commonPoiActions from '@bit/garlictech.angular-features.common.poi/store/actions';
+import * as commonRouteActions from '@bit/garlictech.angular-features.common.route/store/actions';
+import * as routingActions from '@bit/garlictech.angular-features.common.router/store/actions';
 
 import * as editedGTrackPoiActions from './edited-gtrack-poi';
 import * as editedHikeProgramActions from './edited-hike-program';

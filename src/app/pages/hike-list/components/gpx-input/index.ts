@@ -3,7 +3,7 @@ import _get from 'lodash-es/get';
 
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { RouteService } from '@features/common/route';
+import { RouteService } from '@bit/garlictech.angular-features.common.route';
 import * as toGeoJSON from '@mapbox/togeojson';
 
 import { HikeProgramService } from '../../../../shared/services';
