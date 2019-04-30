@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.leaflet-map",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "homepage": "https://bit.dev/garlictech/angular-features/common/leaflet-map",
   "main": "index.ts",
   "dependencies": {

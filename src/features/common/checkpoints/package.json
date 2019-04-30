@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.checkpoints",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "homepage": "https://bit.dev/garlictech/angular-features/common/checkpoints",
   "main": "index.ts",
   "dependencies": {
