@@ -35,8 +35,10 @@ import { HikeProgramStop, PoiStored } from '@bit/garlictech.angular-features.com
 import { HikeProgram } from '@bit/garlictech.angular-features.common.hike';
 import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
-import * as poiActions from '@bit/garlictech.angular-features.common.poi';
-import * as routeActions from '@bit/garlictech.angular-features.common.route';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
+import * as poiActions from '@bit/garlictech.angular-features.common.poi/store/actions';
+import { Route, RouteSelectors, RouteService } from '@bit/garlictech.angular-features.common.route';
+import * as routeActions from '@bit/garlictech.angular-features.common.route/store/actions';
 import { UnitsService } from '@bit/garlictech.angular-features.common.units';
 import { DistancePipe } from '@bit/garlictech.angular-features.common.utils/pipes';
 import { OpenWeatherMapForecastItem } from '@bit/garlictech.angular-features.common.weather';

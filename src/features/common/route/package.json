@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.route",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "homepage": "https://bit.dev/garlictech/angular-features/common/route",
   "main": "index.ts",
   "dependencies": {

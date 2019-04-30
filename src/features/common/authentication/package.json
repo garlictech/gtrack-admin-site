@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.authentication",
-  "version": "0.0.7",
+  "version": "0.0.10",
   "homepage": "https://bit.dev/garlictech/angular-features/common/authentication",
   "main": "index.ts",
   "dependencies": {

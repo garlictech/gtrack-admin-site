@@ -1,10 +1,12 @@
 import { ConfirmationService, MessageService } from 'primeng/api';
 
+import { ErrorHandler } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 import { CONFIG as LANGUAGE_CONFIG } from '@bit/garlictech.angular-features.common.localization';
 
 import { RouteRedirectGuard } from './auth';
 import { config } from './config';
+import { RavenErrorHandler } from './raven';
 // Services
 import {
   AdminLanguageService,
@@ -26,6 +28,7 @@ export const APP_PROVIDERS = [
   TransferState,
   { provide: REDUCER_TOKEN, useFactory: getReducers },
   { provide: LANGUAGE_CONFIG, useValue: config.language },
+  { provide: ErrorHandler, useClass: RavenErrorHandler },
   ReverseGeocodingService,
   RouteRedirectGuard,
   AdminMapService,

@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.marker-icons",
-  "version": "0.0.11",
+  "version": "0.0.14",
   "homepage": "https://bit.dev/garlictech/angular-features/common/marker-icons",
   "main": "index.ts",
   "dependencies": {

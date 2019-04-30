@@ -2,8 +2,8 @@ import _pickBy from 'lodash-es/pickBy';
 
 import { Injectable } from '@angular/core';
 import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
-import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
 import { EObjectState, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 

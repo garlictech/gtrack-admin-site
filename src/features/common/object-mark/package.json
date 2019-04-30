@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.object-mark",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "homepage": "https://bit.dev/garlictech/angular-features/common/object-mark",
   "main": "index.ts",
   "dependencies": {

@@ -1407,237 +1407,6 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/geospatial"
     },
-    "garlictech.angular-features/common/authentication-cognito@0.0.2": {
-        "files": [
-            {
-                "name": "config.ts",
-                "relativePath": "config.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "module.ts",
-                "relativePath": "module.ts",
-                "test": false
-            },
-            {
-                "name": "facebook-login.service.ts",
-                "relativePath": "services/facebook-login/facebook-login.service.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/facebook-login/index.ts",
-                "test": false
-            },
-            {
-                "name": "facebook-login.service.spec.ts",
-                "relativePath": "services/facebook-login/test/facebook-login.service.spec.ts",
-                "test": true
-            },
-            {
-                "name": "google-login.service.ts",
-                "relativePath": "services/google-login/google-login.service.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/google-login/index.ts",
-                "test": false
-            },
-            {
-                "name": "google-login.service.spec.ts",
-                "relativePath": "services/google-login/test/google-login.service.spec.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/passwordless-login/index.ts",
-                "test": false
-            },
-            {
-                "name": "passwordless-login.service.ts",
-                "relativePath": "services/passwordless-login/passwordless-login.service.ts",
-                "test": false
-            },
-            {
-                "name": "passwordless-login.service.spec.ts",
-                "relativePath": "services/passwordless-login/test/passwordless-login.service.spec.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/authentication-cognito",
-        "origin": "IMPORTED",
-        "originallySharedDir": "src/features/common/authentication-cognito"
-    },
-    "garlictech.angular-features/common/gtrack-interfaces@0.0.4": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "chat.ts",
-                "relativePath": "interfaces/chat.ts",
-                "test": false
-            },
-            {
-                "name": "checkpoint.ts",
-                "relativePath": "interfaces/checkpoint.ts",
-                "test": false
-            },
-            {
-                "name": "common.ts",
-                "relativePath": "interfaces/common.ts",
-                "test": false
-            },
-            {
-                "name": "elevation.ts",
-                "relativePath": "interfaces/elevation.ts",
-                "test": false
-            },
-            {
-                "name": "full-profile.ts",
-                "relativePath": "interfaces/full-profile.ts",
-                "test": false
-            },
-            {
-                "name": "geospatial-search.ts",
-                "relativePath": "interfaces/geospatial-search.ts",
-                "test": false
-            },
-            {
-                "name": "hike-program.ts",
-                "relativePath": "interfaces/hike-program.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "interfaces/index.ts",
-                "test": false
-            },
-            {
-                "name": "location.ts",
-                "relativePath": "interfaces/location.ts",
-                "test": false
-            },
-            {
-                "name": "marker-popup-data.ts",
-                "relativePath": "interfaces/marker-popup-data.ts",
-                "test": false
-            },
-            {
-                "name": "messaging.ts",
-                "relativePath": "interfaces/messaging.ts",
-                "test": false
-            },
-            {
-                "name": "object-delete.ts",
-                "relativePath": "interfaces/object-delete.ts",
-                "test": false
-            },
-            {
-                "name": "object-mark.ts",
-                "relativePath": "interfaces/object-mark.ts",
-                "test": false
-            },
-            {
-                "name": "permission-record.ts",
-                "relativePath": "interfaces/permission-record.ts",
-                "test": false
-            },
-            {
-                "name": "poi.ts",
-                "relativePath": "interfaces/poi.ts",
-                "test": false
-            },
-            {
-                "relativePath": "interfaces/primeng-gallery-image.ts",
-                "test": false,
-                "name": "primeng-gallery-image.ts"
-            },
-            {
-                "name": "profile.ts",
-                "relativePath": "interfaces/profile.ts",
-                "test": false
-            },
-            {
-                "name": "provider.ts",
-                "relativePath": "interfaces/provider.ts",
-                "test": false
-            },
-            {
-                "name": "roles.ts",
-                "relativePath": "interfaces/roles.ts",
-                "test": false
-            },
-            {
-                "name": "route.ts",
-                "relativePath": "interfaces/route.ts",
-                "test": false
-            },
-            {
-                "name": "search.ts",
-                "relativePath": "interfaces/search.ts",
-                "test": false
-            },
-            {
-                "relativePath": "interfaces/segment.ts",
-                "test": false,
-                "name": "segment.ts"
-            },
-            {
-                "name": "state.ts",
-                "relativePath": "interfaces/state.ts",
-                "test": false
-            },
-            {
-                "name": "track.ts",
-                "relativePath": "interfaces/track.ts",
-                "test": false
-            },
-            {
-                "name": "user.ts",
-                "relativePath": "interfaces/user.ts",
-                "test": false
-            },
-            {
-                "name": "constants.ts",
-                "relativePath": "user-profile/constants.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "user-profile/index.ts",
-                "test": false
-            },
-            {
-                "name": "languages.ts",
-                "relativePath": "user-profile/languages.ts",
-                "test": false
-            },
-            {
-                "name": "nationalities.ts",
-                "relativePath": "user-profile/nationalities.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/gtrack-interfaces",
-        "origin": "IMPORTED",
-        "originallySharedDir": "src/features/common/gtrack-interfaces"
-    },
     "garlictech.angular-features/web/text-carousel@0.0.12": {
         "files": [
             {
@@ -2197,87 +1966,6 @@
         ],
         "originallySharedDir": "src/features/web/spinner"
     },
-    "garlictech.angular-features/common/multi-language-text@0.0.8": {
-        "files": [
-            {
-                "name": "description.component.ts",
-                "relativePath": "components/description/description.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/description/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "localize.module.ts",
-                "relativePath": "localize.module.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "pipes/index.ts",
-                "test": false
-            },
-            {
-                "name": "localize-description.pipe.ts",
-                "relativePath": "pipes/localize-description.pipe.ts",
-                "test": false
-            },
-            {
-                "name": "localize-description.spec.ts",
-                "relativePath": "pipes/test/localize-description.spec.ts",
-                "test": true
-            },
-            {
-                "name": "description-language-list.service.ts",
-                "relativePath": "services/description-language-list/description-language-list.service.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/description-language-list/index.ts",
-                "test": false
-            },
-            {
-                "name": "description-language-list.service.spec.ts",
-                "relativePath": "services/description-language-list/test/description-language-list.service.spec.ts",
-                "test": true
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/index.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.ts",
-                "relativePath": "store/selectors.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/multi-language-text",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/localization@0.0.8"
-        ],
-        "originallySharedDir": "src/features/common/multi-language-text"
-    },
     "garlictech.angular-features/common/search-filters@0.0.6": {
         "files": [
             {
@@ -2709,79 +2397,6 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/forms"
     },
-    "garlictech.angular-features/common/marker-popup@0.0.2": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "marker-popup.component.ts",
-                "relativePath": "components/marker-popup/marker-popup.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "marker-popup.module.ts",
-                "relativePath": "marker-popup.module.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/marker-popup",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4"
-        ],
-        "originallySharedDir": "src/features/common/marker-popup"
-    },
-    "garlictech.angular-features/web/marker-popup@0.0.1": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "marker-popup.component.html",
-                "relativePath": "components/marker-popup/marker-popup.component.html",
-                "test": false
-            },
-            {
-                "name": "marker-popup.component.scss",
-                "relativePath": "components/marker-popup/marker-popup.component.scss",
-                "test": false
-            },
-            {
-                "name": "marker-popup.component.ts",
-                "relativePath": "components/marker-popup/marker-popup.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "marker-popup.module.ts",
-                "relativePath": "marker-popup.module.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/web/marker-popup",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
-            "garlictech.angular-features/common/marker-popup@0.0.2"
-        ],
-        "originallySharedDir": "src/features/web/marker-popup"
-    },
     "garlictech.angular-features/web/slideshow@0.0.1": {
         "files": [
             {
@@ -2834,97 +2449,6 @@
         "rootDir": "src/features/web/slideshow",
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/web/slideshow"
-    },
-    "garlictech.angular-features/common/deepstream-ngx@0.0.4": {
-        "files": [
-            {
-                "name": "README.md",
-                "relativePath": "README.md",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "fake-record.ts",
-                "relativePath": "src/deepstream-service-server/fake-record.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "src/deepstream-service-server/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "src/deepstream-service/index.ts",
-                "test": false
-            },
-            {
-                "name": "externals.ts",
-                "relativePath": "src/lib/externals.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "src/lib/index.ts",
-                "test": false
-            },
-            {
-                "name": "server.ts",
-                "relativePath": "src/lib/server.ts",
-                "test": false
-            },
-            {
-                "name": "log.ts",
-                "relativePath": "src/log.ts",
-                "test": false
-            },
-            {
-                "name": "actions.ts",
-                "relativePath": "src/store/actions.ts",
-                "test": false
-            },
-            {
-                "name": "effects.ts",
-                "relativePath": "src/store/effects.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "src/store/index.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.ts",
-                "relativePath": "src/store/reducer.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.ts",
-                "relativePath": "src/store/selectors.ts",
-                "test": false
-            },
-            {
-                "name": "state.ts",
-                "relativePath": "src/store/state.ts",
-                "test": false
-            },
-            {
-                "name": "index.spec.ts",
-                "relativePath": "src/test/index.spec.ts",
-                "test": true
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/deepstream-ngx",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.2"
-        ],
-        "originallySharedDir": "src/features/common/deepstream-ngx"
     },
     "garlictech.angular-features/web/language@0.0.7": {
         "files": [
@@ -3115,41 +2639,207 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/current-geolocation"
     },
-    "garlictech.angular-features/web/localize@0.0.3": {
+    "garlictech.angular-features/common/google-maps@0.0.3": {
         "files": [
             {
-                "name": "description.component.html",
-                "relativePath": "description/description.component.html",
+                "relativePath": "config.ts",
+                "test": false,
+                "name": "config.ts"
+            },
+            {
+                "relativePath": "google-maps.module.ts",
+                "test": false,
+                "name": "google-maps.module.ts"
+            },
+            {
+                "relativePath": "google-maps.service.ts",
+                "test": false,
+                "name": "google-maps.service.ts"
+            },
+            {
+                "relativePath": "index.ts",
+                "test": false,
+                "name": "index.ts"
+            },
+            {
+                "relativePath": "log.ts",
+                "test": false,
+                "name": "log.ts"
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/google-maps",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/google-maps"
+    },
+    "garlictech.angular-features/common/gtrack-interfaces@0.0.5": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
                 "test": false
             },
             {
-                "name": "description.component.ts",
-                "relativePath": "description/description.component.ts",
+                "name": "chat.ts",
+                "relativePath": "interfaces/chat.ts",
                 "test": false
             },
             {
-                "name": "html-description.component.html",
-                "relativePath": "description/html-description/html-description.component.html",
+                "name": "checkpoint.ts",
+                "relativePath": "interfaces/checkpoint.ts",
                 "test": false
             },
             {
-                "name": "html-description.component.ts",
-                "relativePath": "description/html-description/html-description.component.ts",
+                "name": "common.ts",
+                "relativePath": "interfaces/common.ts",
+                "test": false
+            },
+            {
+                "name": "elevation.ts",
+                "relativePath": "interfaces/elevation.ts",
+                "test": false
+            },
+            {
+                "name": "full-profile.ts",
+                "relativePath": "interfaces/full-profile.ts",
+                "test": false
+            },
+            {
+                "name": "geospatial-search.ts",
+                "relativePath": "interfaces/geospatial-search.ts",
+                "test": false
+            },
+            {
+                "name": "hike-program.ts",
+                "relativePath": "interfaces/hike-program.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "description/index.ts",
+                "relativePath": "interfaces/index.ts",
                 "test": false
             },
             {
-                "name": "markdown-description.component.html",
-                "relativePath": "description/markdown-description/markdown-description.component.html",
+                "name": "location.ts",
+                "relativePath": "interfaces/location.ts",
                 "test": false
             },
             {
-                "name": "markdown-description.component.ts",
-                "relativePath": "description/markdown-description/markdown-description.component.ts",
+                "name": "marker-popup-data.ts",
+                "relativePath": "interfaces/marker-popup-data.ts",
+                "test": false
+            },
+            {
+                "name": "messaging.ts",
+                "relativePath": "interfaces/messaging.ts",
+                "test": false
+            },
+            {
+                "name": "object-delete.ts",
+                "relativePath": "interfaces/object-delete.ts",
+                "test": false
+            },
+            {
+                "name": "object-mark.ts",
+                "relativePath": "interfaces/object-mark.ts",
+                "test": false
+            },
+            {
+                "name": "permission-record.ts",
+                "relativePath": "interfaces/permission-record.ts",
+                "test": false
+            },
+            {
+                "name": "poi.ts",
+                "relativePath": "interfaces/poi.ts",
+                "test": false
+            },
+            {
+                "relativePath": "interfaces/primeng-gallery-image.ts",
+                "test": false,
+                "name": "primeng-gallery-image.ts"
+            },
+            {
+                "name": "profile.ts",
+                "relativePath": "interfaces/profile.ts",
+                "test": false
+            },
+            {
+                "name": "provider.ts",
+                "relativePath": "interfaces/provider.ts",
+                "test": false
+            },
+            {
+                "name": "roles.ts",
+                "relativePath": "interfaces/roles.ts",
+                "test": false
+            },
+            {
+                "name": "route.ts",
+                "relativePath": "interfaces/route.ts",
+                "test": false
+            },
+            {
+                "name": "search.ts",
+                "relativePath": "interfaces/search.ts",
+                "test": false
+            },
+            {
+                "relativePath": "interfaces/segment.ts",
+                "test": false,
+                "name": "segment.ts"
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "interfaces/state.ts",
+                "test": false
+            },
+            {
+                "name": "track.ts",
+                "relativePath": "interfaces/track.ts",
+                "test": false
+            },
+            {
+                "name": "user.ts",
+                "relativePath": "interfaces/user.ts",
+                "test": false
+            },
+            {
+                "name": "constants.ts",
+                "relativePath": "user-profile/constants.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "user-profile/index.ts",
+                "test": false
+            },
+            {
+                "name": "languages.ts",
+                "relativePath": "user-profile/languages.ts",
+                "test": false
+            },
+            {
+                "name": "nationalities.ts",
+                "relativePath": "user-profile/nationalities.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/gtrack-interfaces",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/gtrack-interfaces"
+    },
+    "garlictech.angular-features/common/marker-popup@0.0.3": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "marker-popup.component.ts",
+                "relativePath": "components/marker-popup/marker-popup.component.ts",
                 "test": false
             },
             {
@@ -3158,22 +2848,135 @@
                 "test": false
             },
             {
-                "name": "localize.module.ts",
-                "relativePath": "localize.module.ts",
+                "name": "marker-popup.module.ts",
+                "relativePath": "marker-popup.module.ts",
                 "test": false
             }
         ],
         "mainFile": "index.ts",
-        "rootDir": "src/features/web/localize",
+        "rootDir": "src/features/common/marker-popup",
         "origin": "IMPORTED",
         "dependencies": [
-            "garlictech.angular-features/common/localization@0.0.8",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
-            "garlictech.angular-features/common/multi-language-text@0.0.8"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5"
         ],
-        "originallySharedDir": "src/features/web/localize"
+        "originallySharedDir": "src/features/common/marker-popup"
     },
-    "garlictech.angular-features/web/forms-primeng@0.0.10": {
+    "garlictech.angular-features/web/marker-popup@0.0.2": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "marker-popup.component.html",
+                "relativePath": "components/marker-popup/marker-popup.component.html",
+                "test": false
+            },
+            {
+                "name": "marker-popup.component.scss",
+                "relativePath": "components/marker-popup/marker-popup.component.scss",
+                "test": false
+            },
+            {
+                "name": "marker-popup.component.ts",
+                "relativePath": "components/marker-popup/marker-popup.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "marker-popup.module.ts",
+                "relativePath": "marker-popup.module.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/web/marker-popup",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/marker-popup@0.0.3"
+        ],
+        "originallySharedDir": "src/features/web/marker-popup"
+    },
+    "garlictech.angular-features/common/authentication-cognito@0.0.3": {
+        "files": [
+            {
+                "name": "config.ts",
+                "relativePath": "config.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "module.ts",
+                "relativePath": "module.ts",
+                "test": false
+            },
+            {
+                "name": "facebook-login.service.ts",
+                "relativePath": "services/facebook-login/facebook-login.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/facebook-login/index.ts",
+                "test": false
+            },
+            {
+                "name": "facebook-login.service.spec.ts",
+                "relativePath": "services/facebook-login/test/facebook-login.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "google-login.service.ts",
+                "relativePath": "services/google-login/google-login.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/google-login/index.ts",
+                "test": false
+            },
+            {
+                "name": "google-login.service.spec.ts",
+                "relativePath": "services/google-login/test/google-login.service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/passwordless-login/index.ts",
+                "test": false
+            },
+            {
+                "name": "passwordless-login.service.ts",
+                "relativePath": "services/passwordless-login/passwordless-login.service.ts",
+                "test": false
+            },
+            {
+                "name": "passwordless-login.service.spec.ts",
+                "relativePath": "services/passwordless-login/test/passwordless-login.service.spec.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/authentication-cognito",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/authentication-cognito"
+    },
+    "garlictech.angular-features/web/forms-primeng@0.0.11": {
         "files": [
             {
                 "name": "index.ts",
@@ -3452,7 +3255,242 @@
         ],
         "originallySharedDir": "src/features/web/forms-primeng"
     },
-    "garlictech.angular-features/common/route@0.0.5": {
+    "garlictech.angular-features/common/geosearch@0.0.14": {
+        "files": [
+            {
+                "name": "geosearch.module.ts",
+                "relativePath": "geosearch.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "geosearch.service.ts",
+                "relativePath": "services/geosearch.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "geosearch.service.spec.ts",
+                "relativePath": "services/test/geosearch.service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": false
+            },
+            {
+                "name": "effects.spec.ts",
+                "relativePath": "store/test/effects.spec.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/test/fixtures/index.ts",
+                "test": true
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/geosearch",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6"
+        ],
+        "originallySharedDir": "src/features/common/geosearch"
+    },
+    "garlictech.angular-features/common/deepstream-ngx@0.0.6": {
+        "files": [
+            {
+                "name": "README.md",
+                "relativePath": "README.md",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "fake-record.ts",
+                "relativePath": "src/deepstream-service-server/fake-record.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/deepstream-service-server/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/deepstream-service/index.ts",
+                "test": false
+            },
+            {
+                "name": "externals.ts",
+                "relativePath": "src/lib/externals.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/lib/index.ts",
+                "test": false
+            },
+            {
+                "name": "server.ts",
+                "relativePath": "src/lib/server.ts",
+                "test": false
+            },
+            {
+                "name": "log.ts",
+                "relativePath": "src/log.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "src/store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "src/store/effects.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "src/store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "src/store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "src/store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "src/store/state.ts",
+                "test": false
+            },
+            {
+                "name": "index.spec.ts",
+                "relativePath": "src/test/index.spec.ts",
+                "test": true
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/deepstream-ngx",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.2"
+        ],
+        "originallySharedDir": "src/features/common/deepstream-ngx"
+    },
+    "garlictech.angular-features/web/search-filters@0.0.3": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/search-filters/index.ts",
+                "test": false
+            },
+            {
+                "name": "search-filters.component.html",
+                "relativePath": "components/search-filters/search-filters.component.html",
+                "test": false
+            },
+            {
+                "name": "search-filters.component.scss",
+                "relativePath": "components/search-filters/search-filters.component.scss",
+                "test": false
+            },
+            {
+                "name": "search-filters.component.ts",
+                "relativePath": "components/search-filters/search-filters.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "search-filters.module.ts",
+                "relativePath": "search-filters.module.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/web/search-filters",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/units@0.0.1",
+            "garlictech.angular-features/common/forms@0.0.9",
+            "garlictech.angular-features/common/search-filters@0.0.6",
+            "garlictech.angular-features/common/utils@0.0.7",
+            "garlictech.angular-features/common/localization@0.0.8",
+            "garlictech.angular-features/web/language@0.0.7",
+            "garlictech.angular-features/web/forms-primeng@0.0.11"
+        ],
+        "originallySharedDir": "src/features/web/search-filters"
+    },
+    "garlictech.angular-features/common/route@0.0.7": {
         "files": [
             {
                 "name": "index.ts",
@@ -3561,13 +3599,23 @@
         "dependencies": [
             "garlictech.angular-features/common/geometry@0.0.1",
             "garlictech.angular-features/common/units@0.0.1",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6"
         ],
         "originallySharedDir": "src/features/common/route"
     },
-    "garlictech.angular-features/web/search-filters@0.0.2": {
+    "garlictech.angular-features/common/multi-language-text@0.0.10": {
         "files": [
+            {
+                "name": "description.component.ts",
+                "relativePath": "components/description/description.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/description/index.ts",
+                "test": false
+            },
             {
                 "name": "index.ts",
                 "relativePath": "components/index.ts",
@@ -3575,98 +3623,43 @@
             },
             {
                 "name": "index.ts",
-                "relativePath": "components/search-filters/index.ts",
+                "relativePath": "index.ts",
                 "test": false
             },
             {
-                "name": "search-filters.component.html",
-                "relativePath": "components/search-filters/search-filters.component.html",
-                "test": false
-            },
-            {
-                "name": "search-filters.component.scss",
-                "relativePath": "components/search-filters/search-filters.component.scss",
-                "test": false
-            },
-            {
-                "name": "search-filters.component.ts",
-                "relativePath": "components/search-filters/search-filters.component.ts",
+                "name": "localize.module.ts",
+                "relativePath": "localize.module.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "index.ts",
+                "relativePath": "pipes/index.ts",
                 "test": false
             },
             {
-                "name": "search-filters.module.ts",
-                "relativePath": "search-filters.module.ts",
+                "name": "localize-description.pipe.ts",
+                "relativePath": "pipes/localize-description.pipe.ts",
                 "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/web/search-filters",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/units@0.0.1",
-            "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/common/search-filters@0.0.6",
-            "garlictech.angular-features/common/utils@0.0.7",
-            "garlictech.angular-features/common/localization@0.0.8",
-            "garlictech.angular-features/web/language@0.0.7",
-            "garlictech.angular-features/web/forms-primeng@0.0.10"
-        ],
-        "originallySharedDir": "src/features/web/search-filters"
-    },
-    "garlictech.angular-features/common/google-maps@0.0.3": {
-        "files": [
-            {
-                "relativePath": "config.ts",
-                "test": false,
-                "name": "config.ts"
             },
             {
-                "relativePath": "google-maps.module.ts",
-                "test": false,
-                "name": "google-maps.module.ts"
+                "name": "localize-description.spec.ts",
+                "relativePath": "pipes/test/localize-description.spec.ts",
+                "test": true
             },
             {
-                "relativePath": "google-maps.service.ts",
-                "test": false,
-                "name": "google-maps.service.ts"
-            },
-            {
-                "relativePath": "index.ts",
-                "test": false,
-                "name": "index.ts"
-            },
-            {
-                "relativePath": "log.ts",
-                "test": false,
-                "name": "log.ts"
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/google-maps",
-        "origin": "IMPORTED",
-        "originallySharedDir": "src/features/common/google-maps"
-    },
-    "garlictech.angular-features/common/geosearch@0.0.12": {
-        "files": [
-            {
-                "name": "geosearch.module.ts",
-                "relativePath": "geosearch.module.ts",
+                "name": "description-language-list.service.ts",
+                "relativePath": "services/description-language-list/description-language-list.service.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "index.ts",
+                "relativePath": "services/description-language-list/index.ts",
                 "test": false
             },
             {
-                "name": "geosearch.service.ts",
-                "relativePath": "services/geosearch.service.ts",
-                "test": false
+                "name": "description-language-list.service.spec.ts",
+                "relativePath": "services/description-language-list/test/description-language-list.service.spec.ts",
+                "test": true
             },
             {
                 "name": "index.ts",
@@ -3674,8 +3667,109 @@
                 "test": false
             },
             {
-                "name": "geosearch.service.spec.ts",
-                "relativePath": "services/test/geosearch.service.spec.ts",
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/multi-language-text",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/localization@0.0.8"
+        ],
+        "originallySharedDir": "src/features/common/multi-language-text"
+    },
+    "garlictech.angular-features/common/authentication@0.0.10": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/email-sent/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/facebook-login-button/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/google-login-button/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/login-box/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/passwordless-success/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/widget/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "guards/auth/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "guards/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "guards/not-auth/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "guards/role/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "interfaces.ts",
+                "relativePath": "interfaces.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "lib/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "lib/login-handle/index.ts",
+                "test": false
+            },
+            {
+                "name": "log.ts",
+                "relativePath": "log.ts",
+                "test": false
+            },
+            {
+                "name": "module.ts",
+                "relativePath": "module.ts",
                 "test": false
             },
             {
@@ -3707,43 +3801,22 @@
                 "name": "state.ts",
                 "relativePath": "store/state.ts",
                 "test": false
-            },
-            {
-                "name": "actions.spec.ts",
-                "relativePath": "store/test/actions.spec.ts",
-                "test": false
-            },
-            {
-                "name": "effects.spec.ts",
-                "relativePath": "store/test/effects.spec.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/test/fixtures/index.ts",
-                "test": true
-            },
-            {
-                "name": "reducer.spec.ts",
-                "relativePath": "store/test/reducer.spec.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.spec.ts",
-                "relativePath": "store/test/selectors.spec.ts",
-                "test": false
             }
         ],
         "mainFile": "index.ts",
-        "rootDir": "src/features/common/geosearch",
+        "rootDir": "src/features/common/authentication",
         "origin": "IMPORTED",
         "dependencies": [
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4"
+            "garlictech.angular-features/common/localization@0.0.8",
+            "garlictech.angular-features/common/router@0.0.14",
+            "garlictech.angular-features/common/authentication-api@0.0.8",
+            "garlictech.angular-features/common/utils@0.0.7",
+            "garlictech.angular-features/common/forms@0.0.9",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6"
         ],
-        "originallySharedDir": "src/features/common/geosearch"
+        "originallySharedDir": "src/features/common/authentication"
     },
-    "garlictech.angular-features/common/hike@0.0.8": {
+    "garlictech.angular-features/common/hike@0.0.11": {
         "files": [
             {
                 "name": "bookmark.component.ts",
@@ -4019,6 +4092,11 @@
                 "name": "index.ts",
                 "relativePath": "testing/fixtures/index.ts",
                 "test": false
+            },
+            {
+                "relativePath": "types/togpx/index.d.ts",
+                "test": false,
+                "name": "index.d.ts"
             }
         ],
         "mainFile": "index.ts",
@@ -4034,53 +4112,63 @@
             "garlictech.angular-features/common/astronomy@0.0.1",
             "garlictech.angular-features/common/game-rule@0.0.1",
             "garlictech.angular-features/common/weather@0.0.6",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
             "garlictech.angular-features/common/utils@0.0.7",
             "garlictech.angular-features/common/generic-ui@0.0.16",
             "garlictech.angular-features/web/spinner@0.0.9",
-            "garlictech.angular-features/common/multi-language-text@0.0.8",
             "garlictech.angular-features/common/search-filters@0.0.6",
             "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4",
             "garlictech.angular-features/web/language@0.0.7",
-            "garlictech.angular-features/web/forms-primeng@0.0.10",
-            "garlictech.angular-features/common/route@0.0.5",
-            "garlictech.angular-features/common/geosearch@0.0.12",
-            "garlictech.angular-features/common/authentication@0.0.7",
-            "garlictech.angular-features/common/object-mark@0.0.4",
-            "garlictech.angular-features/common/marker-icons@0.0.11",
-            "garlictech.angular-features/common/settings@0.0.5",
-            "garlictech.angular-features/common/checkpoints@0.0.18",
-            "garlictech.angular-features/common/leaflet-map@0.0.36",
-            "garlictech.angular-features/common/poi@0.0.7"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/web/forms-primeng@0.0.11",
+            "garlictech.angular-features/common/geosearch@0.0.14",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/route@0.0.7",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/authentication@0.0.10",
+            "garlictech.angular-features/common/settings@0.0.8",
+            "garlictech.angular-features/common/object-mark@0.0.7",
+            "garlictech.angular-features/common/marker-icons@0.0.14",
+            "garlictech.angular-features/common/checkpoints@0.0.21",
+            "garlictech.angular-features/common/leaflet-map@0.0.39",
+            "garlictech.angular-features/common/poi@0.0.10"
         ],
         "originallySharedDir": "src/features/common/hike"
     },
-    "garlictech.angular-features/common/search@0.0.5": {
+    "garlictech.angular-features/web/localize@0.0.5": {
         "files": [
             {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
+                "name": "description.component.html",
+                "relativePath": "description/description.component.html",
+                "test": false
+            },
+            {
+                "name": "description.component.ts",
+                "relativePath": "description/description.component.ts",
+                "test": false
+            },
+            {
+                "name": "html-description.component.html",
+                "relativePath": "description/html-description/html-description.component.html",
+                "test": false
+            },
+            {
+                "name": "html-description.component.ts",
+                "relativePath": "description/html-description/html-description.component.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "components/location-search/index.ts",
+                "relativePath": "description/index.ts",
                 "test": false
             },
             {
-                "name": "location-search.component.ts",
-                "relativePath": "components/location-search/location-search.component.ts",
+                "name": "markdown-description.component.html",
+                "relativePath": "description/markdown-description/markdown-description.component.html",
                 "test": false
             },
             {
-                "name": "index.ts",
-                "relativePath": "components/search-results-map/index.ts",
-                "test": false
-            },
-            {
-                "name": "search-results-map.component.ts",
-                "relativePath": "components/search-results-map/search-results-map.component.ts",
+                "name": "markdown-description.component.ts",
+                "relativePath": "description/markdown-description/markdown-description.component.ts",
                 "test": false
             },
             {
@@ -4089,50 +4177,22 @@
                 "test": false
             },
             {
-                "name": "search-components.module.ts",
-                "relativePath": "search-components.module.ts",
+                "name": "localize.module.ts",
+                "relativePath": "localize.module.ts",
                 "test": false
             }
         ],
         "mainFile": "index.ts",
-        "rootDir": "src/features/common/search",
+        "rootDir": "src/features/web/localize",
         "origin": "IMPORTED",
         "dependencies": [
-            "garlictech.angular-features/common/current-geolocation@0.0.4",
             "garlictech.angular-features/common/localization@0.0.8",
-            "garlictech.angular-features/common/router@0.0.14",
-            "garlictech.angular-features/common/authentication-api@0.0.8",
-            "garlictech.angular-features/common/authentication-cognito@0.0.2",
-            "garlictech.angular-features/common/geometry@0.0.1",
-            "garlictech.angular-features/common/units@0.0.1",
-            "garlictech.angular-features/common/astronomy@0.0.1",
-            "garlictech.angular-features/common/game-rule@0.0.1",
-            "garlictech.angular-features/common/weather@0.0.6",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
-            "garlictech.angular-features/common/utils@0.0.7",
-            "garlictech.angular-features/common/generic-ui@0.0.16",
-            "garlictech.angular-features/web/spinner@0.0.9",
-            "garlictech.angular-features/common/multi-language-text@0.0.8",
-            "garlictech.angular-features/common/search-filters@0.0.6",
-            "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4",
-            "garlictech.angular-features/web/language@0.0.7",
-            "garlictech.angular-features/web/forms-primeng@0.0.10",
-            "garlictech.angular-features/common/route@0.0.5",
-            "garlictech.angular-features/common/google-maps@0.0.3",
-            "garlictech.angular-features/common/geosearch@0.0.12",
-            "garlictech.angular-features/common/hike@0.0.8",
-            "garlictech.angular-features/common/authentication@0.0.7",
-            "garlictech.angular-features/common/object-mark@0.0.4",
-            "garlictech.angular-features/common/marker-icons@0.0.11",
-            "garlictech.angular-features/common/settings@0.0.5",
-            "garlictech.angular-features/common/checkpoints@0.0.18",
-            "garlictech.angular-features/common/leaflet-map@0.0.36",
-            "garlictech.angular-features/common/poi@0.0.7"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/multi-language-text@0.0.10"
         ],
-        "originallySharedDir": "src/features/common/search"
+        "originallySharedDir": "src/features/web/localize"
     },
-    "garlictech.angular-features/common/elevation@0.0.16": {
+    "garlictech.angular-features/common/elevation@0.0.19": {
         "files": [
             {
                 "name": "elevation-filled-area.component.html",
@@ -4263,47 +4323,32 @@
             "garlictech.angular-features/common/geometry@0.0.1",
             "garlictech.angular-features/common/units@0.0.1",
             "garlictech.angular-features/common/weather@0.0.6",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
             "garlictech.angular-features/common/utils@0.0.7",
             "garlictech.angular-features/common/generic-ui@0.0.16",
             "garlictech.angular-features/web/spinner@0.0.9",
-            "garlictech.angular-features/common/multi-language-text@0.0.8",
             "garlictech.angular-features/common/search-filters@0.0.6",
             "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4",
             "garlictech.angular-features/web/language@0.0.7",
-            "garlictech.angular-features/web/forms-primeng@0.0.10",
-            "garlictech.angular-features/common/route@0.0.5",
             "garlictech.angular-features/common/google-maps@0.0.3",
-            "garlictech.angular-features/common/geosearch@0.0.12",
-            "garlictech.angular-features/common/hike@0.0.8",
-            "garlictech.angular-features/common/authentication@0.0.7",
-            "garlictech.angular-features/common/object-mark@0.0.4",
-            "garlictech.angular-features/common/marker-icons@0.0.11",
-            "garlictech.angular-features/common/settings@0.0.5",
-            "garlictech.angular-features/common/checkpoints@0.0.18",
-            "garlictech.angular-features/common/leaflet-map@0.0.36",
-            "garlictech.angular-features/common/poi@0.0.7"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/web/forms-primeng@0.0.11",
+            "garlictech.angular-features/common/geosearch@0.0.14",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/route@0.0.7",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/authentication@0.0.10",
+            "garlictech.angular-features/common/hike@0.0.11",
+            "garlictech.angular-features/common/settings@0.0.8",
+            "garlictech.angular-features/common/object-mark@0.0.7",
+            "garlictech.angular-features/common/marker-icons@0.0.14",
+            "garlictech.angular-features/common/checkpoints@0.0.21",
+            "garlictech.angular-features/common/leaflet-map@0.0.39",
+            "garlictech.angular-features/common/poi@0.0.10"
         ],
         "originallySharedDir": "src/features/common/elevation"
     },
-    "garlictech.angular-features/common/authentication@0.0.7": {
+    "garlictech.angular-features/common/settings@0.0.8": {
         "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "components/email-sent/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/facebook-login-button/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/google-login-button/index.ts",
-                "test": false
-            },
             {
                 "name": "index.ts",
                 "relativePath": "components/index.ts",
@@ -4311,37 +4356,137 @@
             },
             {
                 "name": "index.ts",
-                "relativePath": "components/login-box/index.ts",
+                "relativePath": "components/profile-deletion/index.ts",
+                "test": false
+            },
+            {
+                "name": "profile-deletion.component.html",
+                "relativePath": "components/profile-deletion/profile-deletion.component.html",
+                "test": false
+            },
+            {
+                "name": "profile-deletion.component.scss",
+                "relativePath": "components/profile-deletion/profile-deletion.component.scss",
+                "test": false
+            },
+            {
+                "name": "profile-deletion.component.ts",
+                "relativePath": "components/profile-deletion/profile-deletion.component.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "components/passwordless-success/index.ts",
+                "relativePath": "components/profile-photo/index.ts",
+                "test": false
+            },
+            {
+                "name": "profile-photo.component.html",
+                "relativePath": "components/profile-photo/profile-photo.component.html",
+                "test": false
+            },
+            {
+                "name": "profile-photo.component.scss",
+                "relativePath": "components/profile-photo/profile-photo.component.scss",
+                "test": false
+            },
+            {
+                "name": "profile-photo.component.ts",
+                "relativePath": "components/profile-photo/profile-photo.component.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "components/widget/index.ts",
+                "relativePath": "components/settings-form/index.ts",
+                "test": false
+            },
+            {
+                "name": "settings-form.component.html",
+                "relativePath": "components/settings-form/settings-form.component.html",
+                "test": false
+            },
+            {
+                "name": "settings-form.component.scss",
+                "relativePath": "components/settings-form/settings-form.component.scss",
+                "test": false
+            },
+            {
+                "name": "settings-form.component.ts",
+                "relativePath": "components/settings-form/settings-form.component.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "guards/auth/index.ts",
+                "relativePath": "components/user-basic-profile-form/index.ts",
+                "test": false
+            },
+            {
+                "name": "user-basic-profile-form.component.html",
+                "relativePath": "components/user-basic-profile-form/user-basic-profile-form.component.html",
+                "test": false
+            },
+            {
+                "name": "user-basic-profile-form.component.scss",
+                "relativePath": "components/user-basic-profile-form/user-basic-profile-form.component.scss",
+                "test": false
+            },
+            {
+                "name": "user-basic-profile-form.component.ts",
+                "relativePath": "components/user-basic-profile-form/user-basic-profile-form.component.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "guards/index.ts",
+                "relativePath": "components/user-profile-form/index.ts",
+                "test": false
+            },
+            {
+                "name": "user-profile-form.component.html",
+                "relativePath": "components/user-profile-form/user-profile-form.component.html",
+                "test": false
+            },
+            {
+                "name": "user-profile-form.component.scss",
+                "relativePath": "components/user-profile-form/user-profile-form.component.scss",
+                "test": false
+            },
+            {
+                "name": "user-profile-form.component.ts",
+                "relativePath": "components/user-profile-form/user-profile-form.component.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "guards/not-auth/index.ts",
+                "relativePath": "components/user-settings-form/index.ts",
+                "test": false
+            },
+            {
+                "name": "user-settings-form.component.html",
+                "relativePath": "components/user-settings-form/user-settings-form.component.html",
+                "test": false
+            },
+            {
+                "name": "user-settings-form.component.scss",
+                "relativePath": "components/user-settings-form/user-settings-form.component.scss",
+                "test": false
+            },
+            {
+                "name": "user-settings-form.component.ts",
+                "relativePath": "components/user-settings-form/user-settings-form.component.ts",
+                "test": false
+            },
+            {
+                "name": "common-basic-profile-form.ts",
+                "relativePath": "const/common-basic-profile-form.ts",
+                "test": false
+            },
+            {
+                "name": "common-settings-form.ts",
+                "relativePath": "const/common-settings-form.ts",
                 "test": false
             },
             {
                 "name": "index.ts",
-                "relativePath": "guards/role/index.ts",
+                "relativePath": "const/index.ts",
                 "test": false
             },
             {
@@ -4355,23 +4500,33 @@
                 "test": false
             },
             {
-                "name": "index.ts",
-                "relativePath": "lib/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "lib/login-handle/index.ts",
-                "test": false
-            },
-            {
                 "name": "log.ts",
                 "relativePath": "log.ts",
                 "test": false
             },
             {
-                "name": "module.ts",
-                "relativePath": "module.ts",
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/settings-service/index.ts",
+                "test": false
+            },
+            {
+                "name": "settings.service.ts",
+                "relativePath": "services/settings-service/settings.service.ts",
+                "test": false
+            },
+            {
+                "name": "settings.service.spec.ts",
+                "relativePath": "services/settings-service/test/settings.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "settings.module.ts",
+                "relativePath": "settings.module.ts",
                 "test": false
             },
             {
@@ -4403,22 +4558,129 @@
                 "name": "state.ts",
                 "relativePath": "store/state.ts",
                 "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": false
+            },
+            {
+                "name": "effects.spec.ts",
+                "relativePath": "store/test/effects.spec.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false
+            },
+            {
+                "name": "utils.ts",
+                "relativePath": "store/test/utils.ts",
+                "test": false
             }
         ],
         "mainFile": "index.ts",
-        "rootDir": "src/features/common/authentication",
+        "rootDir": "src/features/common/settings",
         "origin": "IMPORTED",
         "dependencies": [
+            "garlictech.angular-features/common/units@0.0.1",
             "garlictech.angular-features/common/localization@0.0.8",
             "garlictech.angular-features/common/router@0.0.14",
             "garlictech.angular-features/common/authentication-api@0.0.8",
             "garlictech.angular-features/common/utils@0.0.7",
+            "garlictech.angular-features/common/generic-ui@0.0.16",
             "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4"
+            "garlictech.angular-features/web/language@0.0.7",
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/web/forms-primeng@0.0.11",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/authentication@0.0.10"
         ],
-        "originallySharedDir": "src/features/common/authentication"
+        "originallySharedDir": "src/features/common/settings"
     },
-    "garlictech.angular-features/web/elevation@0.0.10": {
+    "garlictech.angular-features/common/search@0.0.8": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/location-search/index.ts",
+                "test": false
+            },
+            {
+                "name": "location-search.component.ts",
+                "relativePath": "components/location-search/location-search.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/search-results-map/index.ts",
+                "test": false
+            },
+            {
+                "name": "search-results-map.component.ts",
+                "relativePath": "components/search-results-map/search-results-map.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "search-components.module.ts",
+                "relativePath": "search-components.module.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/search",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/current-geolocation@0.0.4",
+            "garlictech.angular-features/common/localization@0.0.8",
+            "garlictech.angular-features/common/router@0.0.14",
+            "garlictech.angular-features/common/authentication-api@0.0.8",
+            "garlictech.angular-features/common/geometry@0.0.1",
+            "garlictech.angular-features/common/units@0.0.1",
+            "garlictech.angular-features/common/astronomy@0.0.1",
+            "garlictech.angular-features/common/game-rule@0.0.1",
+            "garlictech.angular-features/common/weather@0.0.6",
+            "garlictech.angular-features/common/utils@0.0.7",
+            "garlictech.angular-features/common/generic-ui@0.0.16",
+            "garlictech.angular-features/web/spinner@0.0.9",
+            "garlictech.angular-features/common/search-filters@0.0.6",
+            "garlictech.angular-features/common/forms@0.0.9",
+            "garlictech.angular-features/web/language@0.0.7",
+            "garlictech.angular-features/common/google-maps@0.0.3",
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/authentication-cognito@0.0.3",
+            "garlictech.angular-features/web/forms-primeng@0.0.11",
+            "garlictech.angular-features/common/geosearch@0.0.14",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/route@0.0.7",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/authentication@0.0.10",
+            "garlictech.angular-features/common/hike@0.0.11",
+            "garlictech.angular-features/common/settings@0.0.8",
+            "garlictech.angular-features/common/object-mark@0.0.7",
+            "garlictech.angular-features/common/marker-icons@0.0.14",
+            "garlictech.angular-features/common/checkpoints@0.0.21",
+            "garlictech.angular-features/common/leaflet-map@0.0.39",
+            "garlictech.angular-features/common/poi@0.0.10"
+        ],
+        "originallySharedDir": "src/features/common/search"
+    },
+    "garlictech.angular-features/web/elevation@0.0.13": {
         "files": [
             {
                 "name": "elevation-profile.component.html",
@@ -4460,7 +4722,6 @@
         "rootDir": "src/features/web/elevation",
         "origin": "IMPORTED",
         "dependencies": [
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
             "garlictech.angular-features/common/geospatial@0.0.1",
             "garlictech.angular-features/common/localization@0.0.8",
             "garlictech.angular-features/common/geometry@0.0.1",
@@ -4469,31 +4730,32 @@
             "garlictech.angular-features/common/forms@0.0.9",
             "garlictech.angular-features/common/router@0.0.14",
             "garlictech.angular-features/common/authentication-api@0.0.8",
-            "garlictech.angular-features/common/authentication-cognito@0.0.2",
             "garlictech.angular-features/common/units@0.0.1",
             "garlictech.angular-features/common/weather@0.0.6",
-            "garlictech.angular-features/common/multi-language-text@0.0.8",
             "garlictech.angular-features/common/search-filters@0.0.6",
             "garlictech.angular-features/common/utils@0.0.7",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4",
             "garlictech.angular-features/common/current-geolocation@0.0.7",
-            "garlictech.angular-features/web/forms-primeng@0.0.10",
-            "garlictech.angular-features/common/route@0.0.5",
             "garlictech.angular-features/common/google-maps@0.0.3",
-            "garlictech.angular-features/common/geosearch@0.0.12",
-            "garlictech.angular-features/common/hike@0.0.8",
-            "garlictech.angular-features/common/elevation@0.0.16",
-            "garlictech.angular-features/common/authentication@0.0.7",
-            "garlictech.angular-features/common/object-mark@0.0.4",
-            "garlictech.angular-features/common/marker-icons@0.0.11",
-            "garlictech.angular-features/common/settings@0.0.5",
-            "garlictech.angular-features/common/checkpoints@0.0.18",
-            "garlictech.angular-features/common/leaflet-map@0.0.36",
-            "garlictech.angular-features/common/poi@0.0.7"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/authentication-cognito@0.0.3",
+            "garlictech.angular-features/web/forms-primeng@0.0.11",
+            "garlictech.angular-features/common/geosearch@0.0.14",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/route@0.0.7",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/authentication@0.0.10",
+            "garlictech.angular-features/common/hike@0.0.11",
+            "garlictech.angular-features/common/elevation@0.0.19",
+            "garlictech.angular-features/common/settings@0.0.8",
+            "garlictech.angular-features/common/object-mark@0.0.7",
+            "garlictech.angular-features/common/marker-icons@0.0.14",
+            "garlictech.angular-features/common/checkpoints@0.0.21",
+            "garlictech.angular-features/common/leaflet-map@0.0.39",
+            "garlictech.angular-features/common/poi@0.0.10"
         ],
         "originallySharedDir": "src/features/web/elevation"
     },
-    "garlictech.angular-features/common/object-mark@0.0.4": {
+    "garlictech.angular-features/common/object-mark@0.0.7": {
         "files": [
             {
                 "name": "config.ts",
@@ -4593,15 +4855,15 @@
             "garlictech.angular-features/common/localization@0.0.8",
             "garlictech.angular-features/common/router@0.0.14",
             "garlictech.angular-features/common/authentication-api@0.0.8",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
             "garlictech.angular-features/common/utils@0.0.7",
             "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4",
-            "garlictech.angular-features/common/authentication@0.0.7"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/authentication@0.0.10"
         ],
         "originallySharedDir": "src/features/common/object-mark"
     },
-    "garlictech.angular-features/common/marker-icons@0.0.11": {
+    "garlictech.angular-features/common/marker-icons@0.0.14": {
         "files": [
             {
                 "relativePath": "assets/icon/_info.txt",
@@ -5209,264 +5471,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/marker-icons"
     },
-    "garlictech.angular-features/common/settings@0.0.5": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/profile-deletion/index.ts",
-                "test": false
-            },
-            {
-                "name": "profile-deletion.component.html",
-                "relativePath": "components/profile-deletion/profile-deletion.component.html",
-                "test": false
-            },
-            {
-                "name": "profile-deletion.component.scss",
-                "relativePath": "components/profile-deletion/profile-deletion.component.scss",
-                "test": false
-            },
-            {
-                "name": "profile-deletion.component.ts",
-                "relativePath": "components/profile-deletion/profile-deletion.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/profile-photo/index.ts",
-                "test": false
-            },
-            {
-                "name": "profile-photo.component.html",
-                "relativePath": "components/profile-photo/profile-photo.component.html",
-                "test": false
-            },
-            {
-                "name": "profile-photo.component.scss",
-                "relativePath": "components/profile-photo/profile-photo.component.scss",
-                "test": false
-            },
-            {
-                "name": "profile-photo.component.ts",
-                "relativePath": "components/profile-photo/profile-photo.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/settings-form/index.ts",
-                "test": false
-            },
-            {
-                "name": "settings-form.component.html",
-                "relativePath": "components/settings-form/settings-form.component.html",
-                "test": false
-            },
-            {
-                "name": "settings-form.component.scss",
-                "relativePath": "components/settings-form/settings-form.component.scss",
-                "test": false
-            },
-            {
-                "name": "settings-form.component.ts",
-                "relativePath": "components/settings-form/settings-form.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/user-basic-profile-form/index.ts",
-                "test": false
-            },
-            {
-                "name": "user-basic-profile-form.component.html",
-                "relativePath": "components/user-basic-profile-form/user-basic-profile-form.component.html",
-                "test": false
-            },
-            {
-                "name": "user-basic-profile-form.component.scss",
-                "relativePath": "components/user-basic-profile-form/user-basic-profile-form.component.scss",
-                "test": false
-            },
-            {
-                "name": "user-basic-profile-form.component.ts",
-                "relativePath": "components/user-basic-profile-form/user-basic-profile-form.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/user-profile-form/index.ts",
-                "test": false
-            },
-            {
-                "name": "user-profile-form.component.html",
-                "relativePath": "components/user-profile-form/user-profile-form.component.html",
-                "test": false
-            },
-            {
-                "name": "user-profile-form.component.scss",
-                "relativePath": "components/user-profile-form/user-profile-form.component.scss",
-                "test": false
-            },
-            {
-                "name": "user-profile-form.component.ts",
-                "relativePath": "components/user-profile-form/user-profile-form.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/user-settings-form/index.ts",
-                "test": false
-            },
-            {
-                "name": "user-settings-form.component.html",
-                "relativePath": "components/user-settings-form/user-settings-form.component.html",
-                "test": false
-            },
-            {
-                "name": "user-settings-form.component.scss",
-                "relativePath": "components/user-settings-form/user-settings-form.component.scss",
-                "test": false
-            },
-            {
-                "name": "user-settings-form.component.ts",
-                "relativePath": "components/user-settings-form/user-settings-form.component.ts",
-                "test": false
-            },
-            {
-                "name": "common-basic-profile-form.ts",
-                "relativePath": "const/common-basic-profile-form.ts",
-                "test": false
-            },
-            {
-                "name": "common-settings-form.ts",
-                "relativePath": "const/common-settings-form.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "const/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "interfaces.ts",
-                "relativePath": "interfaces.ts",
-                "test": false
-            },
-            {
-                "name": "log.ts",
-                "relativePath": "log.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/settings-service/index.ts",
-                "test": false
-            },
-            {
-                "name": "settings.service.ts",
-                "relativePath": "services/settings-service/settings.service.ts",
-                "test": false
-            },
-            {
-                "name": "settings.service.spec.ts",
-                "relativePath": "services/settings-service/test/settings.service.spec.ts",
-                "test": true
-            },
-            {
-                "name": "settings.module.ts",
-                "relativePath": "settings.module.ts",
-                "test": false
-            },
-            {
-                "name": "actions.ts",
-                "relativePath": "store/actions.ts",
-                "test": false
-            },
-            {
-                "name": "effects.ts",
-                "relativePath": "store/effects.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/index.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.ts",
-                "relativePath": "store/reducer.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.ts",
-                "relativePath": "store/selectors.ts",
-                "test": false
-            },
-            {
-                "name": "state.ts",
-                "relativePath": "store/state.ts",
-                "test": false
-            },
-            {
-                "name": "actions.spec.ts",
-                "relativePath": "store/test/actions.spec.ts",
-                "test": false
-            },
-            {
-                "name": "effects.spec.ts",
-                "relativePath": "store/test/effects.spec.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.spec.ts",
-                "relativePath": "store/test/reducer.spec.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.spec.ts",
-                "relativePath": "store/test/selectors.spec.ts",
-                "test": false
-            },
-            {
-                "name": "utils.ts",
-                "relativePath": "store/test/utils.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/settings",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/units@0.0.1",
-            "garlictech.angular-features/common/localization@0.0.8",
-            "garlictech.angular-features/common/router@0.0.14",
-            "garlictech.angular-features/common/authentication-api@0.0.8",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
-            "garlictech.angular-features/common/utils@0.0.7",
-            "garlictech.angular-features/common/generic-ui@0.0.16",
-            "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4",
-            "garlictech.angular-features/web/language@0.0.7",
-            "garlictech.angular-features/web/forms-primeng@0.0.10",
-            "garlictech.angular-features/common/authentication@0.0.7"
-        ],
-        "originallySharedDir": "src/features/common/settings"
-    },
-    "garlictech.angular-features/common/checkpoints@0.0.18": {
+    "garlictech.angular-features/common/checkpoints@0.0.21": {
         "files": [
             {
                 "name": "checkpoints.module.ts",
@@ -5521,11 +5526,11 @@
             "garlictech.angular-features/common/current-geolocation@0.0.4",
             "garlictech.angular-features/common/spinner@0.0.3",
             "garlictech.angular-features/web/spinner@0.0.9",
-            "garlictech.angular-features/common/marker-icons@0.0.11"
+            "garlictech.angular-features/common/marker-icons@0.0.14"
         ],
         "originallySharedDir": "src/features/common/checkpoints"
     },
-    "garlictech.angular-features/common/leaflet-map@0.0.36": {
+    "garlictech.angular-features/common/leaflet-map@0.0.39": {
         "files": [
             {
                 "name": "README.md",
@@ -5753,13 +5758,13 @@
         "origin": "IMPORTED",
         "dependencies": [
             "garlictech.angular-features/common/spinner@0.0.3",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
             "garlictech.angular-features/web/spinner@0.0.9",
-            "garlictech.angular-features/common/marker-icons@0.0.11"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/marker-icons@0.0.14"
         ],
         "originallySharedDir": "src/features/common/leaflet-map"
     },
-    "garlictech.angular-features/common/poi@0.0.7": {
+    "garlictech.angular-features/common/poi@0.0.10": {
         "files": [
             {
                 "name": "index.ts",
@@ -5899,16 +5904,16 @@
             "garlictech.angular-features/common/current-geolocation@0.0.4",
             "garlictech.angular-features/common/localization@0.0.8",
             "garlictech.angular-features/common/geometry@0.0.1",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
             "garlictech.angular-features/web/spinner@0.0.9",
-            "garlictech.angular-features/common/multi-language-text@0.0.8",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4",
-            "garlictech.angular-features/common/geosearch@0.0.12",
-            "garlictech.angular-features/common/marker-icons@0.0.11"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/geosearch@0.0.14",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/marker-icons@0.0.14"
         ],
         "originallySharedDir": "src/features/common/poi"
     },
-    "garlictech.angular-features/web/hike@0.0.3": {
+    "garlictech.angular-features/web/hike@0.0.6": {
         "files": [
             {
                 "name": "bookmark.component.html",
@@ -6220,41 +6225,41 @@
             "garlictech.angular-features/common/localization@0.0.8",
             "garlictech.angular-features/common/router@0.0.14",
             "garlictech.angular-features/common/authentication-api@0.0.8",
-            "garlictech.angular-features/common/authentication-cognito@0.0.2",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
             "garlictech.angular-features/common/geometry@0.0.1",
             "garlictech.angular-features/common/units@0.0.1",
             "garlictech.angular-features/common/astronomy@0.0.1",
             "garlictech.angular-features/common/game-rule@0.0.1",
             "garlictech.angular-features/common/weather@0.0.6",
-            "garlictech.angular-features/common/multi-language-text@0.0.8",
             "garlictech.angular-features/common/search-filters@0.0.6",
             "garlictech.angular-features/common/geospatial@0.0.1",
             "garlictech.angular-features/common/generic-ui@0.0.16",
             "garlictech.angular-features/web/spinner@0.0.9",
             "garlictech.angular-features/web/weather@0.0.10",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4",
             "garlictech.angular-features/web/language@0.0.7",
             "garlictech.angular-features/common/current-geolocation@0.0.7",
-            "garlictech.angular-features/web/localize@0.0.3",
-            "garlictech.angular-features/web/forms-primeng@0.0.10",
-            "garlictech.angular-features/common/route@0.0.5",
             "garlictech.angular-features/common/google-maps@0.0.3",
-            "garlictech.angular-features/common/geosearch@0.0.12",
-            "garlictech.angular-features/common/hike@0.0.8",
-            "garlictech.angular-features/common/elevation@0.0.16",
-            "garlictech.angular-features/common/authentication@0.0.7",
-            "garlictech.angular-features/web/elevation@0.0.10",
-            "garlictech.angular-features/common/object-mark@0.0.4",
-            "garlictech.angular-features/common/marker-icons@0.0.11",
-            "garlictech.angular-features/common/settings@0.0.5",
-            "garlictech.angular-features/common/checkpoints@0.0.18",
-            "garlictech.angular-features/common/leaflet-map@0.0.36",
-            "garlictech.angular-features/common/poi@0.0.7"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/authentication-cognito@0.0.3",
+            "garlictech.angular-features/web/forms-primeng@0.0.11",
+            "garlictech.angular-features/common/geosearch@0.0.14",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/route@0.0.7",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/authentication@0.0.10",
+            "garlictech.angular-features/common/hike@0.0.11",
+            "garlictech.angular-features/web/localize@0.0.5",
+            "garlictech.angular-features/common/elevation@0.0.19",
+            "garlictech.angular-features/common/settings@0.0.8",
+            "garlictech.angular-features/web/elevation@0.0.13",
+            "garlictech.angular-features/common/object-mark@0.0.7",
+            "garlictech.angular-features/common/marker-icons@0.0.14",
+            "garlictech.angular-features/common/checkpoints@0.0.21",
+            "garlictech.angular-features/common/leaflet-map@0.0.39",
+            "garlictech.angular-features/common/poi@0.0.10"
         ],
         "originallySharedDir": "src/features/web/hike"
     },
-    "garlictech.angular-features/web/poi@0.0.3": {
+    "garlictech.angular-features/web/poi@0.0.6": {
         "files": [
             {
                 "name": "index.ts",
@@ -6317,19 +6322,19 @@
         "origin": "IMPORTED",
         "dependencies": [
             "garlictech.angular-features/web/spinner@0.0.9",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
             "garlictech.angular-features/common/localization@0.0.8",
-            "garlictech.angular-features/common/multi-language-text@0.0.8",
             "garlictech.angular-features/common/geometry@0.0.1",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4",
-            "garlictech.angular-features/common/geosearch@0.0.12",
-            "garlictech.angular-features/common/marker-icons@0.0.11",
-            "garlictech.angular-features/common/leaflet-map@0.0.36",
-            "garlictech.angular-features/common/poi@0.0.7"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/geosearch@0.0.14",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/marker-icons@0.0.14",
+            "garlictech.angular-features/common/leaflet-map@0.0.39",
+            "garlictech.angular-features/common/poi@0.0.10"
         ],
         "originallySharedDir": "src/features/web/poi"
     },
-    "garlictech.angular-features/web/search@0.0.3": {
+    "garlictech.angular-features/web/search@0.0.6": {
         "files": [
             {
                 "name": "index.ts",
@@ -6391,36 +6396,36 @@
         "rootDir": "src/features/web/search",
         "origin": "IMPORTED",
         "dependencies": [
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.4",
             "garlictech.angular-features/common/search-filters@0.0.6",
             "garlictech.angular-features/common/units@0.0.1",
             "garlictech.angular-features/common/forms@0.0.9",
             "garlictech.angular-features/common/localization@0.0.8",
             "garlictech.angular-features/common/router@0.0.14",
             "garlictech.angular-features/common/authentication-api@0.0.8",
-            "garlictech.angular-features/common/authentication-cognito@0.0.2",
             "garlictech.angular-features/common/geometry@0.0.1",
             "garlictech.angular-features/common/astronomy@0.0.1",
             "garlictech.angular-features/common/game-rule@0.0.1",
             "garlictech.angular-features/common/weather@0.0.6",
-            "garlictech.angular-features/common/multi-language-text@0.0.8",
             "garlictech.angular-features/common/utils@0.0.7",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.4",
             "garlictech.angular-features/web/language@0.0.7",
             "garlictech.angular-features/common/current-geolocation@0.0.7",
-            "garlictech.angular-features/web/forms-primeng@0.0.10",
-            "garlictech.angular-features/common/route@0.0.5",
             "garlictech.angular-features/common/google-maps@0.0.3",
-            "garlictech.angular-features/common/geosearch@0.0.12",
-            "garlictech.angular-features/common/hike@0.0.8",
-            "garlictech.angular-features/common/search@0.0.5",
-            "garlictech.angular-features/common/authentication@0.0.7",
-            "garlictech.angular-features/common/object-mark@0.0.4",
-            "garlictech.angular-features/common/marker-icons@0.0.11",
-            "garlictech.angular-features/common/settings@0.0.5",
-            "garlictech.angular-features/common/checkpoints@0.0.18",
-            "garlictech.angular-features/common/leaflet-map@0.0.36",
-            "garlictech.angular-features/common/poi@0.0.7"
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/authentication-cognito@0.0.3",
+            "garlictech.angular-features/web/forms-primeng@0.0.11",
+            "garlictech.angular-features/common/geosearch@0.0.14",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/route@0.0.7",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/authentication@0.0.10",
+            "garlictech.angular-features/common/hike@0.0.11",
+            "garlictech.angular-features/common/settings@0.0.8",
+            "garlictech.angular-features/common/search@0.0.8",
+            "garlictech.angular-features/common/object-mark@0.0.7",
+            "garlictech.angular-features/common/marker-icons@0.0.14",
+            "garlictech.angular-features/common/checkpoints@0.0.21",
+            "garlictech.angular-features/common/leaflet-map@0.0.39",
+            "garlictech.angular-features/common/poi@0.0.10"
         ],
         "originallySharedDir": "src/features/web/search"
     },
