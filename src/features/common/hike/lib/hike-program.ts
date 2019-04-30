@@ -1,7 +1,6 @@
 import _cloneDeep from 'lodash-es/cloneDeep';
 
-import { CheckpointSequence } from '@features/common/checkpoints/lib/checkpoint-sequence';
-import { CheckpointService } from '@features/common/checkpoints/services/checkpoint/checkpoint.service';
+import { CheckpointSequence, CheckpointService } from '@bit/garlictech.angular-features.common.checkpoints';
 import {
   BackgroundImageData,
   EObjectState,

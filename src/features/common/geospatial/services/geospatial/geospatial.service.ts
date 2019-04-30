@@ -5,9 +5,7 @@ import length from '@turf/length';
 import lineSlice from '@turf/line-slice';
 import nearestPointOnLine from '@turf/nearest-point-on-line';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GeospatialService {
   /**
    * Snap points to the given line and return with the segment

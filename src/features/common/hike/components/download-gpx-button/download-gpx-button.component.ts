@@ -1,18 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import _cloneDeep from 'lodash-es/cloneDeep';
+import _get from 'lodash-es/get';
 import { combineLatest as observableCombineLatest } from 'rxjs';
 import { take } from 'rxjs/operators';
 import * as togpx from 'togpx';
 
-import _cloneDeep from 'lodash-es/cloneDeep';
-import _get from 'lodash-es/get';
+import { Component, Input, OnInit } from '@angular/core';
+import * as PoiActions from '@bit/garlictech.angular-features.common.poi/store/actions';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi/store/selectors';
+import * as RouteActions from '@bit/garlictech.angular-features.common.route/store/actions';
+import { RouteSelectors } from '@bit/garlictech.angular-features.common.route/store/selectors';
+import { select, Store } from '@ngrx/store';
 
-import { PoiSelectors } from '../../../poi/store/selectors';
-import { RouteSelectors } from '../../../route/store/selectors';
 import { HikeProgram } from '../../lib/hike-program';
-
-import * as PoiActions from '../../../poi/store/actions';
-import * as RouteActions from '../../../route/store/actions';
 
 @Component({
   selector: 'gtrack-common-download-gpx',

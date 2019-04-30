@@ -6,15 +6,14 @@ import { filter, take } from 'rxjs/operators';
 
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AstronomyService } from '@bit/garlictech.angular-features.common.astronomy';
+import { GameRuleService } from '@bit/garlictech.angular-features.common.game-rule/services';
 import { HikeProgramData, HikeProgramStop, PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi/store';
+import * as poiActions from '@bit/garlictech.angular-features.common.poi/store/actions';
 import { WeatherEntity } from '@bit/garlictech.angular-features.common.weather/store';
 import { Dictionary } from '@ngrx/entity/src/models';
 import { select, Store } from '@ngrx/store';
-
-import { GameRuleService } from '../../../game-rule/services';
-import { PoiSelectors } from '../../../poi/store';
-import * as poiActions from '../../../poi/store/actions';
 
 @Component({
   selector: 'gtrack-common-hike-program',

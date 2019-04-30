@@ -1,1 +1,2 @@
-export * from './geospatial.service';
+export * from './geospatial.module';
+export * from './services';

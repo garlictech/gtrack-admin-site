@@ -2,9 +2,9 @@ import { Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication';
 import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { EObjectMarkContext, ObjectMark } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { AuthenticationSelectors } from '@features/common/authentication';
 import { select, Store } from '@ngrx/store';
 
 import { DebugLog, log } from '../log';

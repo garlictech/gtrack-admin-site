@@ -1,0 +1,25 @@
+{
+  "name": "@bit/garlictech.angular-features.common.search",
+  "version": "0.0.3",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/search",
+  "main": "index.ts",
+  "dependencies": {
+    "@angular/core": "~7.2.1",
+    "@fortawesome/free-solid-svg-icons": "^5.5.0",
+    "@ngrx/store": "~7.1.0",
+    "@turf/distance": "^6.0.1",
+    "@turf/helpers": "^6.1.4",
+    "lodash-es": "^4.17.11",
+    "rxjs": "~6.3.2",
+    "leaflet": "^1.4.0",
+    "@angular/common": "~7.2.1",
+    "@bit/garlictech.angular-features.common.geosearch": "file:../geosearch",
+    "@bit/garlictech.angular-features.common.search-filters": "file:../search-filters",
+    "@bit/garlictech.angular-features.common.current-geolocation": "file:../current-geolocation",
+    "@bit/garlictech.angular-features.common.google-maps": "file:../google-maps",
+    "@bit/garlictech.angular-features.common.hike": "file:../hike"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "license": "SEE LICENSE IN LICENSE"
+}

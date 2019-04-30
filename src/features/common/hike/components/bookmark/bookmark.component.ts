@@ -1,16 +1,15 @@
-import { DebugLog, log } from '../../log';
-
 import _get from 'lodash-es/get';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { delay, filter, map, take, takeUntil, tap } from 'rxjs/operators';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AuthenticationSelectors } from '@features/common/authentication';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication';
 import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store } from '@ngrx/store';
 
-import * as actions from '../../../object-mark/store/actions';
-import { ObjectMarkSelectors } from '../../../object-mark/store/selectors';
+import * as actions from '@bit/garlictech.angular-features.common.object-mark/store/actions';
+import { ObjectMarkSelectors } from '@bit/garlictech.angular-features.common.object-mark/store/selectors';
+import { DebugLog, log } from '../../log';
 
 @Component({
   selector: 'gtrack-common-bookmark',

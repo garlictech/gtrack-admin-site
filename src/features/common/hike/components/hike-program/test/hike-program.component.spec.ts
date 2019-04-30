@@ -1,20 +1,18 @@
+import { CUSTOM_ELEMENTS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
-
-import { GameRuleService } from '../../../../game-rule/services';
-import { AstronomyService } from '../../../../astronomy';
-
+import { AstronomyService } from '@bit/garlictech.angular-features.common.astronomy';
+import { GameRuleService } from '@bit/garlictech.angular-features.common.game-rule/services';
 import {
   HikeProgramStored,
   LocalizedItem,
   TextualDescription
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { PoiSelectors, poiReducer } from '../../../../poi/store';
+import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { poiReducer, PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
+import { StoreModule } from '@ngrx/store';
 
 import { HikeProgramComponent } from '../hike-program.component';
-import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
 
 @Pipe({
   name: 'distance'

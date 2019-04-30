@@ -1,0 +1,16 @@
+{
+  "name": "@bit/garlictech.angular-features.common.authentication-cognito",
+  "version": "0.0.2",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/authentication-cognito",
+  "main": "index.ts",
+  "dependencies": {
+    "@angular/core": "~7.2.1",
+    "@angular/common": "~7.2.1",
+    "aws-amplify": "^1.1.19",
+    "amazon-cognito-identity-js": "3.0.9"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "componentRootFolder": "src/features/common/authentication-cognito",
+  "license": "SEE LICENSE IN LICENSE"
+}

@@ -29,21 +29,18 @@ import {
   ViewChild
 } from '@angular/core';
 import { AstronomyService } from '@bit/garlictech.angular-features.common.astronomy';
+import { GameRuleService } from '@bit/garlictech.angular-features.common.game-rule';
 import { GeospatialService } from '@bit/garlictech.angular-features.common.geospatial';
 import { HikeProgramStop, PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeProgram } from '@bit/garlictech.angular-features.common.hike';
 import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
+import * as poiActions from '@bit/garlictech.angular-features.common.poi';
+import * as routeActions from '@bit/garlictech.angular-features.common.route';
+import { UnitsService } from '@bit/garlictech.angular-features.common.units';
+import { DistancePipe } from '@bit/garlictech.angular-features.common.utils/pipes';
 import { OpenWeatherMapForecastItem } from '@bit/garlictech.angular-features.common.weather';
 import { WeatherEntity } from '@bit/garlictech.angular-features.common.weather/store';
-import { GameRuleService } from '@features/common/game-rule';
-import { HikeProgram } from '@features/common/hike';
-import * as poiActions from '@features/common/poi/store/actions';
-import { PoiSelectors } from '@features/common/poi/store/selectors';
-import { Route, RouteService } from '@features/common/route';
-import * as routeActions from '@features/common/route/store/actions';
-import { RouteSelectors } from '@features/common/route/store/selectors';
-import { UnitsService } from '@features/common/units';
-import { DistancePipe } from '@features/common/utils/pipes';
 import { select, Store } from '@ngrx/store';
 import { lineString as turfLineString } from '@turf/helpers';
 import lineSliceAlong from '@turf/line-slice-along';

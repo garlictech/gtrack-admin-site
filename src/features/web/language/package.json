@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.language",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://bit.dev/garlictech/angular-features/web/language",
   "main": "index.ts",
   "dependencies": {

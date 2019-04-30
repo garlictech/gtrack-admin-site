@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { UnitsService } from '@features/common/units';
+import { UnitsService } from '@bit/garlictech.angular-features.common.units';
 
 @Pipe({
   name: 'distance'

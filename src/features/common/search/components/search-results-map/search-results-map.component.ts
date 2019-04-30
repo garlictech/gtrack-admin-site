@@ -1,8 +1,7 @@
 import * as L from 'leaflet';
 
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-
-import { HikeListMapComponent } from '@features/common/hike/components/hike-list-map';
+import { HikeListMapComponent } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'gtrack-common-search-results-map',

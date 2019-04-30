@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.settings",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "homepage": "https://bit.dev/garlictech/angular-features/common/settings",
   "main": "index.ts",
   "dependencies": {
@@ -22,7 +22,7 @@
     "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces",
     "@bit/garlictech.angular-features.common.forms": "file:../forms",
     "@bit/garlictech.angular-features.common.generic-ui": "file:../generic-ui",
-    "@bit/garlictech.angular-features.web.forms-primeng": null,
+    "@bit/garlictech.angular-features.web.forms-primeng": "file:../../web/forms-primeng",
     "@bit/garlictech.angular-features.common.authentication": "file:../authentication",
     "@bit/garlictech.angular-features.common.deepstream-ngx": "file:../deepstream-ngx",
     "@bit/garlictech.angular-features.web.language": "file:../../web/language",
@@ -30,6 +30,5 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/settings",
   "license": "SEE LICENSE IN LICENSE"
 }

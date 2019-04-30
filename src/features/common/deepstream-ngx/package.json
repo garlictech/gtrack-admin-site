@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.deepstream-ngx",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://bit.dev/garlictech/angular-features/common/deepstream-ngx",
   "main": "index.ts",
   "dependencies": {
@@ -15,6 +15,5 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/deepstream-ngx",
   "license": "SEE LICENSE IN LICENSE"
 }

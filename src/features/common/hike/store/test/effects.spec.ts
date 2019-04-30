@@ -20,7 +20,7 @@ import { HikeEffects } from '../effects';
 import { hikeReducer } from '../reducer';
 import { HikeSelectors } from '../selectors';
 import { HikeState } from '../state';
-import { CheckpointService } from '@features/common/checkpoints';
+import { CheckpointService } from '@bit/garlictech.angular-features.common.checkpoints';
 
 describe('HikeProgram effects', () => {
   let hikeProgramsMap: {

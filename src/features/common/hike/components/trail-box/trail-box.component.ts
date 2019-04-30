@@ -19,7 +19,9 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { CheckpointMarkerCollection } from '@bit/garlictech.angular-features.common.checkpoints';
+import { GeoPosition, selectCurrentLocation } from '@bit/garlictech.angular-features.common.current-geolocation';
+import { HikeProgramStop, PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import {
   LeafletIconService,
   LeafletMapMarkerService,
@@ -30,11 +32,11 @@ import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.lea
 import { Center, LayerDef } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leaflet-map/services/lib';
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
-import { CheckpointMarkerCollection } from '@features/common/checkpoints/lib/checkpoint-marker-collection';
-import { GeoPosition, selectCurrentLocation } from '@features/common/current-geolocation';
-import { PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { PoiSelectors } from '@features/common/poi/store';
-import { RouteSelectors } from '@features/common/route/store';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
+import * as poiActions from '@bit/garlictech.angular-features.common.poi/store/actions';
+import { RouteSelectors } from '@bit/garlictech.angular-features.common.route';
+import { Route } from '@bit/garlictech.angular-features.common.route/services/route';
+import * as routeActions from '@bit/garlictech.angular-features.common.route/store/actions';
 import { faCrosshairs, faSyncAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';
 import bbox from '@turf/bbox';
@@ -44,9 +46,6 @@ import { lineString as turfLineString, point as turfPoint } from '@turf/helpers'
 import nearestPointOnLine from '@turf/nearest-point-on-line';
 import transformScale from '@turf/transform-scale';
 
-import * as poiActions from '../../../poi/store/actions';
-import { Route } from '../../../route/services/route';
-import * as routeActions from '../../../route/store/actions';
 import { HikeProgram } from '../../lib';
 
 @Component({

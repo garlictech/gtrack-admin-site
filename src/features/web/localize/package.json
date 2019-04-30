@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.localize",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://bit.dev/garlictech/angular-features/web/localize",
   "main": "index.ts",
   "dependencies": {
@@ -12,11 +12,5 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/web/localize",
-  "license": "SEE LICENSE IN LICENSE",
-  "bit": {
-    "resolveAliases": {
-      "@features/common/multi-language-text": "@bit/garlictech.angular-features.common.multi-language-text"
-    }
-  }
+  "license": "SEE LICENSE IN LICENSE"
 }

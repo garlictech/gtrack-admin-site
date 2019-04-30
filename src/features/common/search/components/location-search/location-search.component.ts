@@ -13,11 +13,11 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
+import { GeoPosition } from '@bit/garlictech.angular-features.common.current-geolocation';
+import * as fromCurrentLocationSelectors from '@bit/garlictech.angular-features.common.current-geolocation/store/selectors';
 import { GeoSearchActions } from '@bit/garlictech.angular-features.common.geosearch';
+import { GoogleMapsService } from '@bit/garlictech.angular-features.common.google-maps';
 import { SearchFilterActions } from '@bit/garlictech.angular-features.common.search-filters';
-import { GeoPosition } from '@features/common/current-geolocation';
-import * as fromCurrentLocationSelectors from '@features/common/current-geolocation/store/selectors';
-import { GoogleMapsService } from '@features/common/google-maps';
 import { faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';
 import distance from '@turf/distance';

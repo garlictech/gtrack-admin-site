@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { Component, Input } from '@angular/core';
-import { Checkpoint } from '@features/common/checkpoints';
+import { Checkpoint } from '@bit/garlictech.angular-features.common.checkpoints';
 import { PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import {
   faArrowRight,
@@ -16,8 +16,8 @@ import {
 import { Dictionary } from '@ngrx/entity/src/models';
 import { select, Store } from '@ngrx/store';
 
-import { PoiSelectors } from '../../../poi/store';
-import * as poiActions from '../../../poi/store/actions';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
+import * as poiActions from '@bit/garlictech.angular-features.common.poi/store/actions';
 
 @Component({
   selector: 'gtrack-common-checkpoints',

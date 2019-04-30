@@ -16,6 +16,8 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+import { GeoPosition, selectCurrentLocation } from '@bit/garlictech.angular-features.common.current-geolocation';
+import { GeometryService } from '@bit/garlictech.angular-features.common.geometry';
 import {
   LeafletMapMarkerService,
   LeafletMapService,
@@ -28,14 +30,12 @@ import {
   LeafletMarkerPopupData
 } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leaflet-map/services/lib';
-import { GeoPosition, selectCurrentLocation } from '@features/common/current-geolocation';
-import { GeometryService } from '@features/common/geometry';
-import { HikeProgram } from '@features/common/hike';
-import { RouteSelectors } from '@features/common/route/store';
+import { RouteSelectors } from '@bit/garlictech.angular-features.common.route';
+import { Route } from '@bit/garlictech.angular-features.common.route/services/route';
+import * as routeActions from '@bit/garlictech.angular-features.common.route/store/actions';
 import { select, Store } from '@ngrx/store';
 
-import { Route } from '../../../route/services/route';
-import * as routeActions from '../../../route/store/actions';
+import { HikeProgram } from '../../lib';
 
 @Component({
   selector: 'gtrack-common-hike-list-map',

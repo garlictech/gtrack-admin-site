@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.leaflet-map",
-  "version": "0.0.32",
+  "version": "0.0.34",
   "homepage": "https://bit.dev/garlictech/angular-features/common/leaflet-map",
   "main": "index.ts",
   "dependencies": {
@@ -15,7 +15,7 @@
     "lodash-es": "^4.17.11",
     "leaflet-usermarker": "^1.0.0",
     "lodash": "^4.17.4",
-    "@bit/garlictech.angular-features.common.current-geolocation": "0.0.5",
+    "@bit/garlictech.angular-features.common.current-geolocation": "file:../current-geolocation",
     "@bit/garlictech.angular-features.web.spinner": "file:../../web/spinner",
     "@bit/garlictech.angular-features.common.marker-icons": "file:../marker-icons",
     "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces"

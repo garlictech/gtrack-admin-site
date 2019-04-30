@@ -1,5 +1,5 @@
 import { Log } from 'ng2-logger';
-export const log = Log.create('common/deepstream-ngx');
+export const log = Log.create('@garlictech/deepstream-ngx');
 log.color = 'green';
 
 // tslint:disable:only-arrow-functions no-invalid-this

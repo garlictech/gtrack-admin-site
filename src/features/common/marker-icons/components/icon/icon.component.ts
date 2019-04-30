@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
-import { Poi } from '@features/common/poi';
+import { Poi } from '@bit/garlictech.angular-features.common.poi';
 
 @Component({
   selector: 'gtrack-icon',
