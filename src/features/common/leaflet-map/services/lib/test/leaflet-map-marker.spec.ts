@@ -3,8 +3,8 @@ import * as L from 'leaflet';
 import { TestBed } from '@angular/core/testing';
 import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons/enums';
 
-import { LeafletIconService } from '../../leaflet-icon.service';
 import { LeafletMapMarker } from '../leaflet-map-marker';
+import { LeafletIconService } from '../../leaflet-icon.service';
 
 describe('LeafletMapMarker', () => {
   let leafletMapMarker: LeafletMapMarker;

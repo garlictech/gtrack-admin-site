@@ -7,7 +7,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GeoPosition, selectCurrentLocation } from '@bit/garlictech.angular-features.common.current-geolocation';
 import { GoogleMapsService } from '@bit/garlictech.angular-features.common.google-maps';
-import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map/services';
 import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
 import { GEOJSON_STYLES } from '@bit/garlictech.angular-features.common.leaflet-map/constants/geojson-styles';
 import { Center, LayerDef, LeafletMapConfig } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';

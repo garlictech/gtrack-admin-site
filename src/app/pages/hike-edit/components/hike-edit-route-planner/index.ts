@@ -5,7 +5,7 @@ import { debounceTime, filter, switchMap, take, takeUntil } from 'rxjs/operators
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map/services';
 import * as leafletMapSelectors from '@bit/garlictech.angular-features.common.leaflet-map/store/selectors';
 import { Route, RouteContextState, RouteSelectors } from '@bit/garlictech.angular-features.common.route';
 import { select, Store } from '@ngrx/store';

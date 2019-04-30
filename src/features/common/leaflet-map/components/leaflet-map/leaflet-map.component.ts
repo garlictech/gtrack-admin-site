@@ -11,8 +11,8 @@ import * as L from 'leaflet';
 
 @Component({
   selector: 'gtrack-leaflet-map',
-  styleUrls: ['./style.scss'],
-  templateUrl: './ui.html'
+  styleUrls: ['./leaflet-map.component.scss'],
+  templateUrl: './leaflet-map.component.html'
 })
 export class LeafletMapComponent implements OnInit {
   showSpinner: boolean;

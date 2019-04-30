@@ -8,7 +8,7 @@ import {
   LocalizedItem,
   TextualDescription
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map/services';
 import { poiReducer, PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { StoreModule } from '@ngrx/store';
 

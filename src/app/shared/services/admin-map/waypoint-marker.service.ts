@@ -7,8 +7,8 @@ import { combineAll, flatMap, take } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { ElevationService } from '@bit/garlictech.angular-features.common.elevation';
-import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map/services';
 import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons';
 import { Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';

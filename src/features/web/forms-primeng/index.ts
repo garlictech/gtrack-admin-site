@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormModule as NativeFormModule } from '@bit/garlictech.angular-features.common.forms';
-
+import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
 import { LanguageModule } from '@bit/garlictech.angular-features.web.language';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -51,7 +51,8 @@ import { TimePickerComponent } from './time-picker';
     NativeFormModule,
     FontAwesomeModule,
     NgxMdModule,
-    EditorModule
+    EditorModule,
+    GenericUiModule
     // GenericUiModule
   ],
   declarations: [

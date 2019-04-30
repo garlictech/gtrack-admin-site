@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.astronomy",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://bit.dev/garlictech/angular-features/common/astronomy",
   "main": "index.ts",
   "dependencies": {
@@ -13,6 +13,5 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/astronomy",
   "license": "SEE LICENSE IN LICENSE"
 }

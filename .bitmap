@@ -733,79 +733,6 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/tailwind-scss"
     },
-    "garlictech.angular-features/common/astronomy@0.0.1": {
-        "files": [
-            {
-                "name": "astronomy.module.ts",
-                "relativePath": "astronomy.module.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/moonphase-icon/index.ts",
-                "test": false
-            },
-            {
-                "name": "moonphase-icon.component.html",
-                "relativePath": "components/moonphase-icon/moonphase-icon.component.html",
-                "test": false
-            },
-            {
-                "name": "moonphase-icon.component.scss",
-                "relativePath": "components/moonphase-icon/moonphase-icon.component.scss",
-                "test": false
-            },
-            {
-                "name": "moonphase-icon.component.ts",
-                "relativePath": "components/moonphase-icon/moonphase-icon.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/sunrise/index.ts",
-                "test": false
-            },
-            {
-                "name": "sunrise.component.html",
-                "relativePath": "components/sunrise/sunrise.component.html",
-                "test": false
-            },
-            {
-                "name": "sunrise.component.ts",
-                "relativePath": "components/sunrise/sunrise.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "astronomy.service.ts",
-                "relativePath": "services/astronomy/astronomy.service.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/astronomy/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/astronomy",
-        "origin": "IMPORTED",
-        "originallySharedDir": "src/features/common/astronomy"
-    },
     "garlictech.angular-features/common/authentication-api@0.0.8": {
         "files": [
             {
@@ -3255,98 +3182,6 @@
         ],
         "originallySharedDir": "src/features/web/forms-primeng"
     },
-    "garlictech.angular-features/common/geosearch@0.0.14": {
-        "files": [
-            {
-                "name": "geosearch.module.ts",
-                "relativePath": "geosearch.module.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "geosearch.service.ts",
-                "relativePath": "services/geosearch.service.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            },
-            {
-                "name": "geosearch.service.spec.ts",
-                "relativePath": "services/test/geosearch.service.spec.ts",
-                "test": false
-            },
-            {
-                "name": "actions.ts",
-                "relativePath": "store/actions.ts",
-                "test": false
-            },
-            {
-                "name": "effects.ts",
-                "relativePath": "store/effects.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/index.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.ts",
-                "relativePath": "store/reducer.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.ts",
-                "relativePath": "store/selectors.ts",
-                "test": false
-            },
-            {
-                "name": "state.ts",
-                "relativePath": "store/state.ts",
-                "test": false
-            },
-            {
-                "name": "actions.spec.ts",
-                "relativePath": "store/test/actions.spec.ts",
-                "test": false
-            },
-            {
-                "name": "effects.spec.ts",
-                "relativePath": "store/test/effects.spec.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/test/fixtures/index.ts",
-                "test": true
-            },
-            {
-                "name": "reducer.spec.ts",
-                "relativePath": "store/test/reducer.spec.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.spec.ts",
-                "relativePath": "store/test/selectors.spec.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/geosearch",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.6"
-        ],
-        "originallySharedDir": "src/features/common/geosearch"
-    },
     "garlictech.angular-features/common/deepstream-ngx@0.0.6": {
         "files": [
             {
@@ -3685,7 +3520,230 @@
         ],
         "originallySharedDir": "src/features/common/multi-language-text"
     },
-    "garlictech.angular-features/common/authentication@0.0.10": {
+    "garlictech.angular-features/web/localize@0.0.5": {
+        "files": [
+            {
+                "name": "description.component.html",
+                "relativePath": "description/description.component.html",
+                "test": false
+            },
+            {
+                "name": "description.component.ts",
+                "relativePath": "description/description.component.ts",
+                "test": false
+            },
+            {
+                "name": "html-description.component.html",
+                "relativePath": "description/html-description/html-description.component.html",
+                "test": false
+            },
+            {
+                "name": "html-description.component.ts",
+                "relativePath": "description/html-description/html-description.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "description/index.ts",
+                "test": false
+            },
+            {
+                "name": "markdown-description.component.html",
+                "relativePath": "description/markdown-description/markdown-description.component.html",
+                "test": false
+            },
+            {
+                "name": "markdown-description.component.ts",
+                "relativePath": "description/markdown-description/markdown-description.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "localize.module.ts",
+                "relativePath": "localize.module.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/web/localize",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/localization@0.0.8",
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/multi-language-text@0.0.10"
+        ],
+        "originallySharedDir": "src/features/web/localize"
+    },
+    "garlictech.angular-features/common/astronomy@0.0.2": {
+        "files": [
+            {
+                "name": "astronomy.module.ts",
+                "relativePath": "astronomy.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/moonphase-icon/index.ts",
+                "test": false
+            },
+            {
+                "name": "moonphase-icon.component.html",
+                "relativePath": "components/moonphase-icon/moonphase-icon.component.html",
+                "test": false
+            },
+            {
+                "name": "moonphase-icon.component.scss",
+                "relativePath": "components/moonphase-icon/moonphase-icon.component.scss",
+                "test": false
+            },
+            {
+                "name": "moonphase-icon.component.ts",
+                "relativePath": "components/moonphase-icon/moonphase-icon.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/sunrise/index.ts",
+                "test": false
+            },
+            {
+                "name": "sunrise.component.html",
+                "relativePath": "components/sunrise/sunrise.component.html",
+                "test": false
+            },
+            {
+                "name": "sunrise.component.ts",
+                "relativePath": "components/sunrise/sunrise.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "astronomy.service.ts",
+                "relativePath": "services/astronomy/astronomy.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/astronomy/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/astronomy",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/astronomy"
+    },
+    "garlictech.angular-features/common/geosearch@0.0.15": {
+        "files": [
+            {
+                "name": "geosearch.module.ts",
+                "relativePath": "geosearch.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "geosearch.service.ts",
+                "relativePath": "services/geosearch.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "geosearch.service.spec.ts",
+                "relativePath": "services/test/geosearch.service.spec.ts",
+                "test": false
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": false
+            },
+            {
+                "name": "effects.spec.ts",
+                "relativePath": "store/test/effects.spec.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/test/fixtures/index.ts",
+                "test": true
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/geosearch",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.2",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6"
+        ],
+        "originallySharedDir": "src/features/common/geosearch"
+    },
+    "garlictech.angular-features/common/authentication@0.0.11": {
         "files": [
             {
                 "name": "index.ts",
@@ -3816,7 +3874,7 @@
         ],
         "originallySharedDir": "src/features/common/authentication"
     },
-    "garlictech.angular-features/common/hike@0.0.11": {
+    "garlictech.angular-features/common/hike@0.0.12": {
         "files": [
             {
                 "name": "bookmark.component.ts",
@@ -4109,7 +4167,6 @@
             "garlictech.angular-features/common/current-geolocation@0.0.4",
             "garlictech.angular-features/common/geometry@0.0.1",
             "garlictech.angular-features/common/units@0.0.1",
-            "garlictech.angular-features/common/astronomy@0.0.1",
             "garlictech.angular-features/common/game-rule@0.0.1",
             "garlictech.angular-features/common/weather@0.0.6",
             "garlictech.angular-features/common/utils@0.0.7",
@@ -4120,234 +4177,22 @@
             "garlictech.angular-features/web/language@0.0.7",
             "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
             "garlictech.angular-features/web/forms-primeng@0.0.11",
-            "garlictech.angular-features/common/geosearch@0.0.14",
             "garlictech.angular-features/common/deepstream-ngx@0.0.6",
             "garlictech.angular-features/common/route@0.0.7",
             "garlictech.angular-features/common/multi-language-text@0.0.10",
-            "garlictech.angular-features/common/authentication@0.0.10",
-            "garlictech.angular-features/common/settings@0.0.8",
-            "garlictech.angular-features/common/object-mark@0.0.7",
-            "garlictech.angular-features/common/marker-icons@0.0.14",
-            "garlictech.angular-features/common/checkpoints@0.0.21",
-            "garlictech.angular-features/common/leaflet-map@0.0.39",
-            "garlictech.angular-features/common/poi@0.0.10"
+            "garlictech.angular-features/common/astronomy@0.0.2",
+            "garlictech.angular-features/common/geosearch@0.0.15",
+            "garlictech.angular-features/common/authentication@0.0.11",
+            "garlictech.angular-features/common/settings@0.0.9",
+            "garlictech.angular-features/common/marker-icons@0.0.15",
+            "garlictech.angular-features/common/checkpoints@0.0.22",
+            "garlictech.angular-features/common/leaflet-map@0.0.40",
+            "garlictech.angular-features/common/poi@0.0.11",
+            "garlictech.angular-features/common/object-mark@0.0.8"
         ],
         "originallySharedDir": "src/features/common/hike"
     },
-    "garlictech.angular-features/web/localize@0.0.5": {
-        "files": [
-            {
-                "name": "description.component.html",
-                "relativePath": "description/description.component.html",
-                "test": false
-            },
-            {
-                "name": "description.component.ts",
-                "relativePath": "description/description.component.ts",
-                "test": false
-            },
-            {
-                "name": "html-description.component.html",
-                "relativePath": "description/html-description/html-description.component.html",
-                "test": false
-            },
-            {
-                "name": "html-description.component.ts",
-                "relativePath": "description/html-description/html-description.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "description/index.ts",
-                "test": false
-            },
-            {
-                "name": "markdown-description.component.html",
-                "relativePath": "description/markdown-description/markdown-description.component.html",
-                "test": false
-            },
-            {
-                "name": "markdown-description.component.ts",
-                "relativePath": "description/markdown-description/markdown-description.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "localize.module.ts",
-                "relativePath": "localize.module.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/web/localize",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/localization@0.0.8",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
-            "garlictech.angular-features/common/multi-language-text@0.0.10"
-        ],
-        "originallySharedDir": "src/features/web/localize"
-    },
-    "garlictech.angular-features/common/elevation@0.0.19": {
-        "files": [
-            {
-                "name": "elevation-filled-area.component.html",
-                "relativePath": "components/elevation-filled-area/elevation-filled-area.component.html",
-                "test": false
-            },
-            {
-                "name": "elevation-filled-area.component.ts",
-                "relativePath": "components/elevation-filled-area/elevation-filled-area.component.ts",
-                "test": false
-            },
-            {
-                "name": "elevation-label.component.html",
-                "relativePath": "components/elevation-label/elevation-label.component.html",
-                "test": false
-            },
-            {
-                "name": "elevation-label.component.ts",
-                "relativePath": "components/elevation-label/elevation-label.component.ts",
-                "test": false
-            },
-            {
-                "name": "elevation-line-graph.component.html",
-                "relativePath": "components/elevation-line-graph/elevation-line-graph.component.html",
-                "test": false
-            },
-            {
-                "name": "elevation-line-graph.component.ts",
-                "relativePath": "components/elevation-line-graph/elevation-line-graph.component.ts",
-                "test": false
-            },
-            {
-                "name": "elevation-poi-icon-lines.component.html",
-                "relativePath": "components/elevation-poi-icon-lines/elevation-poi-icon-lines.component.html",
-                "test": false
-            },
-            {
-                "name": "elevation-poi-icon-lines.component.ts",
-                "relativePath": "components/elevation-poi-icon-lines/elevation-poi-icon-lines.component.ts",
-                "test": false
-            },
-            {
-                "name": "elevation-poi-icons.component.html",
-                "relativePath": "components/elevation-poi-icons/elevation-poi-icons.component.html",
-                "test": false
-            },
-            {
-                "name": "elevation-poi-icons.component.ts",
-                "relativePath": "components/elevation-poi-icons/elevation-poi-icons.component.ts",
-                "test": false
-            },
-            {
-                "name": "poi-icon.ts",
-                "relativePath": "components/elevation-poi-icons/poi-icon.ts",
-                "test": false
-            },
-            {
-                "name": "elevation-profile.component.ts",
-                "relativePath": "components/elevation-profile/elevation-profile.component.ts",
-                "test": false
-            },
-            {
-                "name": "elevation-x-axis-lines.component.ts",
-                "relativePath": "components/elevation-x-axis-lines/elevation-x-axis-lines.component.ts",
-                "test": false
-            },
-            {
-                "name": "elevation-x-axis.component.ts",
-                "relativePath": "components/elevation-x-axis/elevation-x-axis.component.ts",
-                "test": false
-            },
-            {
-                "name": "elevation-y-axis-lines.component.ts",
-                "relativePath": "components/elevation-y-axis-lines/elevation-y-axis-lines.component.ts",
-                "test": false
-            },
-            {
-                "name": "elevation-y-axis.component.ts",
-                "relativePath": "components/elevation-y-axis/elevation-y-axis.component.ts",
-                "test": false
-            },
-            {
-                "name": "elevation-zoom-slider.component.ts",
-                "relativePath": "components/elevation-zoom-slider/elevation-zoom-slider.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "elevation.module.ts",
-                "relativePath": "elevation.module.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "elevation.service.ts",
-                "relativePath": "services/elevation/elevation.service.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/elevation/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/elevation",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/astronomy@0.0.1",
-            "garlictech.angular-features/common/game-rule@0.0.1",
-            "garlictech.angular-features/common/localization@0.0.8",
-            "garlictech.angular-features/common/router@0.0.14",
-            "garlictech.angular-features/common/authentication-api@0.0.8",
-            "garlictech.angular-features/common/current-geolocation@0.0.4",
-            "garlictech.angular-features/common/geometry@0.0.1",
-            "garlictech.angular-features/common/units@0.0.1",
-            "garlictech.angular-features/common/weather@0.0.6",
-            "garlictech.angular-features/common/utils@0.0.7",
-            "garlictech.angular-features/common/generic-ui@0.0.16",
-            "garlictech.angular-features/web/spinner@0.0.9",
-            "garlictech.angular-features/common/search-filters@0.0.6",
-            "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/web/language@0.0.7",
-            "garlictech.angular-features/common/google-maps@0.0.3",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
-            "garlictech.angular-features/web/forms-primeng@0.0.11",
-            "garlictech.angular-features/common/geosearch@0.0.14",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
-            "garlictech.angular-features/common/route@0.0.7",
-            "garlictech.angular-features/common/multi-language-text@0.0.10",
-            "garlictech.angular-features/common/authentication@0.0.10",
-            "garlictech.angular-features/common/hike@0.0.11",
-            "garlictech.angular-features/common/settings@0.0.8",
-            "garlictech.angular-features/common/object-mark@0.0.7",
-            "garlictech.angular-features/common/marker-icons@0.0.14",
-            "garlictech.angular-features/common/checkpoints@0.0.21",
-            "garlictech.angular-features/common/leaflet-map@0.0.39",
-            "garlictech.angular-features/common/poi@0.0.10"
-        ],
-        "originallySharedDir": "src/features/common/elevation"
-    },
-    "garlictech.angular-features/common/settings@0.0.8": {
+    "garlictech.angular-features/common/settings@0.0.9": {
         "files": [
             {
                 "name": "index.ts",
@@ -4600,270 +4445,11 @@
             "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
             "garlictech.angular-features/web/forms-primeng@0.0.11",
             "garlictech.angular-features/common/deepstream-ngx@0.0.6",
-            "garlictech.angular-features/common/authentication@0.0.10"
+            "garlictech.angular-features/common/authentication@0.0.11"
         ],
         "originallySharedDir": "src/features/common/settings"
     },
-    "garlictech.angular-features/common/search@0.0.8": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/location-search/index.ts",
-                "test": false
-            },
-            {
-                "name": "location-search.component.ts",
-                "relativePath": "components/location-search/location-search.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/search-results-map/index.ts",
-                "test": false
-            },
-            {
-                "name": "search-results-map.component.ts",
-                "relativePath": "components/search-results-map/search-results-map.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "search-components.module.ts",
-                "relativePath": "search-components.module.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/search",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/current-geolocation@0.0.4",
-            "garlictech.angular-features/common/localization@0.0.8",
-            "garlictech.angular-features/common/router@0.0.14",
-            "garlictech.angular-features/common/authentication-api@0.0.8",
-            "garlictech.angular-features/common/geometry@0.0.1",
-            "garlictech.angular-features/common/units@0.0.1",
-            "garlictech.angular-features/common/astronomy@0.0.1",
-            "garlictech.angular-features/common/game-rule@0.0.1",
-            "garlictech.angular-features/common/weather@0.0.6",
-            "garlictech.angular-features/common/utils@0.0.7",
-            "garlictech.angular-features/common/generic-ui@0.0.16",
-            "garlictech.angular-features/web/spinner@0.0.9",
-            "garlictech.angular-features/common/search-filters@0.0.6",
-            "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/web/language@0.0.7",
-            "garlictech.angular-features/common/google-maps@0.0.3",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
-            "garlictech.angular-features/common/authentication-cognito@0.0.3",
-            "garlictech.angular-features/web/forms-primeng@0.0.11",
-            "garlictech.angular-features/common/geosearch@0.0.14",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
-            "garlictech.angular-features/common/route@0.0.7",
-            "garlictech.angular-features/common/multi-language-text@0.0.10",
-            "garlictech.angular-features/common/authentication@0.0.10",
-            "garlictech.angular-features/common/hike@0.0.11",
-            "garlictech.angular-features/common/settings@0.0.8",
-            "garlictech.angular-features/common/object-mark@0.0.7",
-            "garlictech.angular-features/common/marker-icons@0.0.14",
-            "garlictech.angular-features/common/checkpoints@0.0.21",
-            "garlictech.angular-features/common/leaflet-map@0.0.39",
-            "garlictech.angular-features/common/poi@0.0.10"
-        ],
-        "originallySharedDir": "src/features/common/search"
-    },
-    "garlictech.angular-features/web/elevation@0.0.13": {
-        "files": [
-            {
-                "name": "elevation-profile.component.html",
-                "relativePath": "components/elevation-profile/elevation-profile.component.html",
-                "test": false
-            },
-            {
-                "name": "elevation-profile.component.scss",
-                "relativePath": "components/elevation-profile/elevation-profile.component.scss",
-                "test": false
-            },
-            {
-                "name": "elevation-profile.component.ts",
-                "relativePath": "components/elevation-profile/elevation-profile.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/elevation-profile/index.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "components/index.ts",
-                "test": false
-            },
-            {
-                "name": "elevation.module.ts",
-                "relativePath": "elevation.module.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/web/elevation",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/geospatial@0.0.1",
-            "garlictech.angular-features/common/localization@0.0.8",
-            "garlictech.angular-features/common/geometry@0.0.1",
-            "garlictech.angular-features/common/astronomy@0.0.1",
-            "garlictech.angular-features/common/game-rule@0.0.1",
-            "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/common/router@0.0.14",
-            "garlictech.angular-features/common/authentication-api@0.0.8",
-            "garlictech.angular-features/common/units@0.0.1",
-            "garlictech.angular-features/common/weather@0.0.6",
-            "garlictech.angular-features/common/search-filters@0.0.6",
-            "garlictech.angular-features/common/utils@0.0.7",
-            "garlictech.angular-features/common/current-geolocation@0.0.7",
-            "garlictech.angular-features/common/google-maps@0.0.3",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
-            "garlictech.angular-features/common/authentication-cognito@0.0.3",
-            "garlictech.angular-features/web/forms-primeng@0.0.11",
-            "garlictech.angular-features/common/geosearch@0.0.14",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
-            "garlictech.angular-features/common/route@0.0.7",
-            "garlictech.angular-features/common/multi-language-text@0.0.10",
-            "garlictech.angular-features/common/authentication@0.0.10",
-            "garlictech.angular-features/common/hike@0.0.11",
-            "garlictech.angular-features/common/elevation@0.0.19",
-            "garlictech.angular-features/common/settings@0.0.8",
-            "garlictech.angular-features/common/object-mark@0.0.7",
-            "garlictech.angular-features/common/marker-icons@0.0.14",
-            "garlictech.angular-features/common/checkpoints@0.0.21",
-            "garlictech.angular-features/common/leaflet-map@0.0.39",
-            "garlictech.angular-features/common/poi@0.0.10"
-        ],
-        "originallySharedDir": "src/features/web/elevation"
-    },
-    "garlictech.angular-features/common/object-mark@0.0.7": {
-        "files": [
-            {
-                "name": "config.ts",
-                "relativePath": "config.ts",
-                "test": false
-            },
-            {
-                "name": "externals.ts",
-                "relativePath": "externals.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "log.ts",
-                "relativePath": "log.ts",
-                "test": false
-            },
-            {
-                "name": "object-mark.module.ts",
-                "relativePath": "object-mark.module.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "services/index.ts",
-                "test": false
-            },
-            {
-                "name": "object-mark.service.ts",
-                "relativePath": "services/object-mark.service.ts",
-                "test": false
-            },
-            {
-                "name": "object-mark.service.spec.ts",
-                "relativePath": "services/test/object-mark.service.spec.ts",
-                "test": true
-            },
-            {
-                "name": "actions.ts",
-                "relativePath": "store/actions.ts",
-                "test": false
-            },
-            {
-                "name": "effects.ts",
-                "relativePath": "store/effects.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "store/index.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.ts",
-                "relativePath": "store/reducer.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.ts",
-                "relativePath": "store/selectors.ts",
-                "test": false
-            },
-            {
-                "name": "state.ts",
-                "relativePath": "store/state.ts",
-                "test": false
-            },
-            {
-                "name": "actions.spec.ts",
-                "relativePath": "store/test/actions.spec.ts",
-                "test": false
-            },
-            {
-                "name": "effects.spec.ts",
-                "relativePath": "store/test/effects.spec.ts",
-                "test": false
-            },
-            {
-                "name": "reducer.spec.ts",
-                "relativePath": "store/test/reducer.spec.ts",
-                "test": false
-            },
-            {
-                "name": "selectors.spec.ts",
-                "relativePath": "store/test/selectors.spec.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/object-mark",
-        "origin": "IMPORTED",
-        "dependencies": [
-            "garlictech.angular-features/common/localization@0.0.8",
-            "garlictech.angular-features/common/router@0.0.14",
-            "garlictech.angular-features/common/authentication-api@0.0.8",
-            "garlictech.angular-features/common/utils@0.0.7",
-            "garlictech.angular-features/common/forms@0.0.9",
-            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
-            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
-            "garlictech.angular-features/common/authentication@0.0.10"
-        ],
-        "originallySharedDir": "src/features/common/object-mark"
-    },
-    "garlictech.angular-features/common/marker-icons@0.0.14": {
+    "garlictech.angular-features/common/marker-icons@0.0.15": {
         "files": [
             {
                 "relativePath": "assets/icon/_info.txt",
@@ -5471,7 +5057,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/marker-icons"
     },
-    "garlictech.angular-features/common/checkpoints@0.0.21": {
+    "garlictech.angular-features/common/checkpoints@0.0.22": {
         "files": [
             {
                 "name": "checkpoints.module.ts",
@@ -5526,11 +5112,11 @@
             "garlictech.angular-features/common/current-geolocation@0.0.4",
             "garlictech.angular-features/common/spinner@0.0.3",
             "garlictech.angular-features/web/spinner@0.0.9",
-            "garlictech.angular-features/common/marker-icons@0.0.14"
+            "garlictech.angular-features/common/marker-icons@0.0.15"
         ],
         "originallySharedDir": "src/features/common/checkpoints"
     },
-    "garlictech.angular-features/common/leaflet-map@0.0.39": {
+    "garlictech.angular-features/common/leaflet-map@0.0.40": {
         "files": [
             {
                 "name": "README.md",
@@ -5760,11 +5346,11 @@
             "garlictech.angular-features/common/spinner@0.0.3",
             "garlictech.angular-features/web/spinner@0.0.9",
             "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
-            "garlictech.angular-features/common/marker-icons@0.0.14"
+            "garlictech.angular-features/common/marker-icons@0.0.15"
         ],
         "originallySharedDir": "src/features/common/leaflet-map"
     },
-    "garlictech.angular-features/common/poi@0.0.10": {
+    "garlictech.angular-features/common/poi@0.0.11": {
         "files": [
             {
                 "name": "index.ts",
@@ -5906,14 +5492,428 @@
             "garlictech.angular-features/common/geometry@0.0.1",
             "garlictech.angular-features/web/spinner@0.0.9",
             "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
-            "garlictech.angular-features/common/geosearch@0.0.14",
             "garlictech.angular-features/common/deepstream-ngx@0.0.6",
             "garlictech.angular-features/common/multi-language-text@0.0.10",
-            "garlictech.angular-features/common/marker-icons@0.0.14"
+            "garlictech.angular-features/common/geosearch@0.0.15",
+            "garlictech.angular-features/common/marker-icons@0.0.15"
         ],
         "originallySharedDir": "src/features/common/poi"
     },
-    "garlictech.angular-features/web/hike@0.0.6": {
+    "garlictech.angular-features/common/elevation@0.0.20": {
+        "files": [
+            {
+                "name": "elevation-filled-area.component.html",
+                "relativePath": "components/elevation-filled-area/elevation-filled-area.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-filled-area.component.ts",
+                "relativePath": "components/elevation-filled-area/elevation-filled-area.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-label.component.html",
+                "relativePath": "components/elevation-label/elevation-label.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-label.component.ts",
+                "relativePath": "components/elevation-label/elevation-label.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-line-graph.component.html",
+                "relativePath": "components/elevation-line-graph/elevation-line-graph.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-line-graph.component.ts",
+                "relativePath": "components/elevation-line-graph/elevation-line-graph.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-poi-icon-lines.component.html",
+                "relativePath": "components/elevation-poi-icon-lines/elevation-poi-icon-lines.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-poi-icon-lines.component.ts",
+                "relativePath": "components/elevation-poi-icon-lines/elevation-poi-icon-lines.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-poi-icons.component.html",
+                "relativePath": "components/elevation-poi-icons/elevation-poi-icons.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-poi-icons.component.ts",
+                "relativePath": "components/elevation-poi-icons/elevation-poi-icons.component.ts",
+                "test": false
+            },
+            {
+                "name": "poi-icon.ts",
+                "relativePath": "components/elevation-poi-icons/poi-icon.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-profile.component.ts",
+                "relativePath": "components/elevation-profile/elevation-profile.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-x-axis-lines.component.ts",
+                "relativePath": "components/elevation-x-axis-lines/elevation-x-axis-lines.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-x-axis.component.ts",
+                "relativePath": "components/elevation-x-axis/elevation-x-axis.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-y-axis-lines.component.ts",
+                "relativePath": "components/elevation-y-axis-lines/elevation-y-axis-lines.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-y-axis.component.ts",
+                "relativePath": "components/elevation-y-axis/elevation-y-axis.component.ts",
+                "test": false
+            },
+            {
+                "name": "elevation-zoom-slider.component.ts",
+                "relativePath": "components/elevation-zoom-slider/elevation-zoom-slider.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "elevation.module.ts",
+                "relativePath": "elevation.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "elevation.service.ts",
+                "relativePath": "services/elevation/elevation.service.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/elevation/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/elevation",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/game-rule@0.0.1",
+            "garlictech.angular-features/common/localization@0.0.8",
+            "garlictech.angular-features/common/router@0.0.14",
+            "garlictech.angular-features/common/authentication-api@0.0.8",
+            "garlictech.angular-features/common/current-geolocation@0.0.4",
+            "garlictech.angular-features/common/geometry@0.0.1",
+            "garlictech.angular-features/common/units@0.0.1",
+            "garlictech.angular-features/common/weather@0.0.6",
+            "garlictech.angular-features/common/utils@0.0.7",
+            "garlictech.angular-features/common/generic-ui@0.0.16",
+            "garlictech.angular-features/web/spinner@0.0.9",
+            "garlictech.angular-features/common/search-filters@0.0.6",
+            "garlictech.angular-features/common/forms@0.0.9",
+            "garlictech.angular-features/web/language@0.0.7",
+            "garlictech.angular-features/common/google-maps@0.0.3",
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/web/forms-primeng@0.0.11",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/route@0.0.7",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/astronomy@0.0.2",
+            "garlictech.angular-features/common/geosearch@0.0.15",
+            "garlictech.angular-features/common/authentication@0.0.11",
+            "garlictech.angular-features/common/hike@0.0.12",
+            "garlictech.angular-features/common/settings@0.0.9",
+            "garlictech.angular-features/common/marker-icons@0.0.15",
+            "garlictech.angular-features/common/checkpoints@0.0.22",
+            "garlictech.angular-features/common/leaflet-map@0.0.40",
+            "garlictech.angular-features/common/poi@0.0.11",
+            "garlictech.angular-features/common/object-mark@0.0.8"
+        ],
+        "originallySharedDir": "src/features/common/elevation"
+    },
+    "garlictech.angular-features/common/search@0.0.9": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/location-search/index.ts",
+                "test": false
+            },
+            {
+                "name": "location-search.component.ts",
+                "relativePath": "components/location-search/location-search.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/search-results-map/index.ts",
+                "test": false
+            },
+            {
+                "name": "search-results-map.component.ts",
+                "relativePath": "components/search-results-map/search-results-map.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "search-components.module.ts",
+                "relativePath": "search-components.module.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/search",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/current-geolocation@0.0.4",
+            "garlictech.angular-features/common/localization@0.0.8",
+            "garlictech.angular-features/common/router@0.0.14",
+            "garlictech.angular-features/common/authentication-api@0.0.8",
+            "garlictech.angular-features/common/geometry@0.0.1",
+            "garlictech.angular-features/common/units@0.0.1",
+            "garlictech.angular-features/common/game-rule@0.0.1",
+            "garlictech.angular-features/common/weather@0.0.6",
+            "garlictech.angular-features/common/utils@0.0.7",
+            "garlictech.angular-features/common/generic-ui@0.0.16",
+            "garlictech.angular-features/web/spinner@0.0.9",
+            "garlictech.angular-features/common/search-filters@0.0.6",
+            "garlictech.angular-features/common/forms@0.0.9",
+            "garlictech.angular-features/web/language@0.0.7",
+            "garlictech.angular-features/common/google-maps@0.0.3",
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/authentication-cognito@0.0.3",
+            "garlictech.angular-features/web/forms-primeng@0.0.11",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/route@0.0.7",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/astronomy@0.0.2",
+            "garlictech.angular-features/common/geosearch@0.0.15",
+            "garlictech.angular-features/common/authentication@0.0.11",
+            "garlictech.angular-features/common/hike@0.0.12",
+            "garlictech.angular-features/common/settings@0.0.9",
+            "garlictech.angular-features/common/marker-icons@0.0.15",
+            "garlictech.angular-features/common/checkpoints@0.0.22",
+            "garlictech.angular-features/common/leaflet-map@0.0.40",
+            "garlictech.angular-features/common/poi@0.0.11",
+            "garlictech.angular-features/common/object-mark@0.0.8"
+        ],
+        "originallySharedDir": "src/features/common/search"
+    },
+    "garlictech.angular-features/web/elevation@0.0.14": {
+        "files": [
+            {
+                "name": "elevation-profile.component.html",
+                "relativePath": "components/elevation-profile/elevation-profile.component.html",
+                "test": false
+            },
+            {
+                "name": "elevation-profile.component.scss",
+                "relativePath": "components/elevation-profile/elevation-profile.component.scss",
+                "test": false
+            },
+            {
+                "name": "elevation-profile.component.ts",
+                "relativePath": "components/elevation-profile/elevation-profile.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/elevation-profile/index.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "components/index.ts",
+                "test": false
+            },
+            {
+                "name": "elevation.module.ts",
+                "relativePath": "elevation.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/web/elevation",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/geospatial@0.0.1",
+            "garlictech.angular-features/common/localization@0.0.8",
+            "garlictech.angular-features/common/geometry@0.0.1",
+            "garlictech.angular-features/common/game-rule@0.0.1",
+            "garlictech.angular-features/common/forms@0.0.9",
+            "garlictech.angular-features/common/router@0.0.14",
+            "garlictech.angular-features/common/authentication-api@0.0.8",
+            "garlictech.angular-features/common/units@0.0.1",
+            "garlictech.angular-features/common/weather@0.0.6",
+            "garlictech.angular-features/common/search-filters@0.0.6",
+            "garlictech.angular-features/common/utils@0.0.7",
+            "garlictech.angular-features/common/current-geolocation@0.0.7",
+            "garlictech.angular-features/common/google-maps@0.0.3",
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/authentication-cognito@0.0.3",
+            "garlictech.angular-features/web/forms-primeng@0.0.11",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/route@0.0.7",
+            "garlictech.angular-features/common/multi-language-text@0.0.10",
+            "garlictech.angular-features/common/astronomy@0.0.2",
+            "garlictech.angular-features/common/geosearch@0.0.15",
+            "garlictech.angular-features/common/authentication@0.0.11",
+            "garlictech.angular-features/common/hike@0.0.12",
+            "garlictech.angular-features/common/settings@0.0.9",
+            "garlictech.angular-features/common/marker-icons@0.0.15",
+            "garlictech.angular-features/common/checkpoints@0.0.22",
+            "garlictech.angular-features/common/leaflet-map@0.0.40",
+            "garlictech.angular-features/common/poi@0.0.11",
+            "garlictech.angular-features/common/elevation@0.0.20",
+            "garlictech.angular-features/common/object-mark@0.0.8"
+        ],
+        "originallySharedDir": "src/features/web/elevation"
+    },
+    "garlictech.angular-features/common/object-mark@0.0.8": {
+        "files": [
+            {
+                "name": "config.ts",
+                "relativePath": "config.ts",
+                "test": false
+            },
+            {
+                "name": "externals.ts",
+                "relativePath": "externals.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "log.ts",
+                "relativePath": "log.ts",
+                "test": false
+            },
+            {
+                "name": "object-mark.module.ts",
+                "relativePath": "object-mark.module.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "services/index.ts",
+                "test": false
+            },
+            {
+                "name": "object-mark.service.ts",
+                "relativePath": "services/object-mark.service.ts",
+                "test": false
+            },
+            {
+                "name": "object-mark.service.spec.ts",
+                "relativePath": "services/test/object-mark.service.spec.ts",
+                "test": true
+            },
+            {
+                "name": "actions.ts",
+                "relativePath": "store/actions.ts",
+                "test": false
+            },
+            {
+                "name": "effects.ts",
+                "relativePath": "store/effects.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "store/index.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.ts",
+                "relativePath": "store/reducer.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.ts",
+                "relativePath": "store/selectors.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "store/state.ts",
+                "test": false
+            },
+            {
+                "name": "actions.spec.ts",
+                "relativePath": "store/test/actions.spec.ts",
+                "test": false
+            },
+            {
+                "name": "effects.spec.ts",
+                "relativePath": "store/test/effects.spec.ts",
+                "test": false
+            },
+            {
+                "name": "reducer.spec.ts",
+                "relativePath": "store/test/reducer.spec.ts",
+                "test": false
+            },
+            {
+                "name": "selectors.spec.ts",
+                "relativePath": "store/test/selectors.spec.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/object-mark",
+        "origin": "IMPORTED",
+        "dependencies": [
+            "garlictech.angular-features/common/localization@0.0.8",
+            "garlictech.angular-features/common/router@0.0.14",
+            "garlictech.angular-features/common/authentication-api@0.0.8",
+            "garlictech.angular-features/common/utils@0.0.7",
+            "garlictech.angular-features/common/forms@0.0.9",
+            "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
+            "garlictech.angular-features/common/deepstream-ngx@0.0.6",
+            "garlictech.angular-features/common/authentication@0.0.11"
+        ],
+        "originallySharedDir": "src/features/common/object-mark"
+    },
+    "garlictech.angular-features/web/hike@0.0.7": {
         "files": [
             {
                 "name": "bookmark.component.html",
@@ -6227,7 +6227,6 @@
             "garlictech.angular-features/common/authentication-api@0.0.8",
             "garlictech.angular-features/common/geometry@0.0.1",
             "garlictech.angular-features/common/units@0.0.1",
-            "garlictech.angular-features/common/astronomy@0.0.1",
             "garlictech.angular-features/common/game-rule@0.0.1",
             "garlictech.angular-features/common/weather@0.0.6",
             "garlictech.angular-features/common/search-filters@0.0.6",
@@ -6241,25 +6240,26 @@
             "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
             "garlictech.angular-features/common/authentication-cognito@0.0.3",
             "garlictech.angular-features/web/forms-primeng@0.0.11",
-            "garlictech.angular-features/common/geosearch@0.0.14",
             "garlictech.angular-features/common/deepstream-ngx@0.0.6",
             "garlictech.angular-features/common/route@0.0.7",
             "garlictech.angular-features/common/multi-language-text@0.0.10",
-            "garlictech.angular-features/common/authentication@0.0.10",
-            "garlictech.angular-features/common/hike@0.0.11",
             "garlictech.angular-features/web/localize@0.0.5",
-            "garlictech.angular-features/common/elevation@0.0.19",
-            "garlictech.angular-features/common/settings@0.0.8",
-            "garlictech.angular-features/web/elevation@0.0.13",
-            "garlictech.angular-features/common/object-mark@0.0.7",
-            "garlictech.angular-features/common/marker-icons@0.0.14",
-            "garlictech.angular-features/common/checkpoints@0.0.21",
-            "garlictech.angular-features/common/leaflet-map@0.0.39",
-            "garlictech.angular-features/common/poi@0.0.10"
+            "garlictech.angular-features/common/astronomy@0.0.2",
+            "garlictech.angular-features/common/geosearch@0.0.15",
+            "garlictech.angular-features/common/authentication@0.0.11",
+            "garlictech.angular-features/common/hike@0.0.12",
+            "garlictech.angular-features/common/settings@0.0.9",
+            "garlictech.angular-features/common/marker-icons@0.0.15",
+            "garlictech.angular-features/common/checkpoints@0.0.22",
+            "garlictech.angular-features/common/leaflet-map@0.0.40",
+            "garlictech.angular-features/common/poi@0.0.11",
+            "garlictech.angular-features/common/elevation@0.0.20",
+            "garlictech.angular-features/web/elevation@0.0.14",
+            "garlictech.angular-features/common/object-mark@0.0.8"
         ],
         "originallySharedDir": "src/features/web/hike"
     },
-    "garlictech.angular-features/web/poi@0.0.6": {
+    "garlictech.angular-features/web/poi@0.0.7": {
         "files": [
             {
                 "name": "index.ts",
@@ -6325,16 +6325,16 @@
             "garlictech.angular-features/common/localization@0.0.8",
             "garlictech.angular-features/common/geometry@0.0.1",
             "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
-            "garlictech.angular-features/common/geosearch@0.0.14",
             "garlictech.angular-features/common/deepstream-ngx@0.0.6",
             "garlictech.angular-features/common/multi-language-text@0.0.10",
-            "garlictech.angular-features/common/marker-icons@0.0.14",
-            "garlictech.angular-features/common/leaflet-map@0.0.39",
-            "garlictech.angular-features/common/poi@0.0.10"
+            "garlictech.angular-features/common/geosearch@0.0.15",
+            "garlictech.angular-features/common/marker-icons@0.0.15",
+            "garlictech.angular-features/common/leaflet-map@0.0.40",
+            "garlictech.angular-features/common/poi@0.0.11"
         ],
         "originallySharedDir": "src/features/web/poi"
     },
-    "garlictech.angular-features/web/search@0.0.6": {
+    "garlictech.angular-features/web/search@0.0.7": {
         "files": [
             {
                 "name": "index.ts",
@@ -6403,7 +6403,6 @@
             "garlictech.angular-features/common/router@0.0.14",
             "garlictech.angular-features/common/authentication-api@0.0.8",
             "garlictech.angular-features/common/geometry@0.0.1",
-            "garlictech.angular-features/common/astronomy@0.0.1",
             "garlictech.angular-features/common/game-rule@0.0.1",
             "garlictech.angular-features/common/weather@0.0.6",
             "garlictech.angular-features/common/utils@0.0.7",
@@ -6413,19 +6412,20 @@
             "garlictech.angular-features/common/gtrack-interfaces@0.0.5",
             "garlictech.angular-features/common/authentication-cognito@0.0.3",
             "garlictech.angular-features/web/forms-primeng@0.0.11",
-            "garlictech.angular-features/common/geosearch@0.0.14",
             "garlictech.angular-features/common/deepstream-ngx@0.0.6",
             "garlictech.angular-features/common/route@0.0.7",
             "garlictech.angular-features/common/multi-language-text@0.0.10",
-            "garlictech.angular-features/common/authentication@0.0.10",
-            "garlictech.angular-features/common/hike@0.0.11",
-            "garlictech.angular-features/common/settings@0.0.8",
-            "garlictech.angular-features/common/search@0.0.8",
-            "garlictech.angular-features/common/object-mark@0.0.7",
-            "garlictech.angular-features/common/marker-icons@0.0.14",
-            "garlictech.angular-features/common/checkpoints@0.0.21",
-            "garlictech.angular-features/common/leaflet-map@0.0.39",
-            "garlictech.angular-features/common/poi@0.0.10"
+            "garlictech.angular-features/common/astronomy@0.0.2",
+            "garlictech.angular-features/common/geosearch@0.0.15",
+            "garlictech.angular-features/common/authentication@0.0.11",
+            "garlictech.angular-features/common/hike@0.0.12",
+            "garlictech.angular-features/common/settings@0.0.9",
+            "garlictech.angular-features/common/marker-icons@0.0.15",
+            "garlictech.angular-features/common/checkpoints@0.0.22",
+            "garlictech.angular-features/common/leaflet-map@0.0.40",
+            "garlictech.angular-features/common/poi@0.0.11",
+            "garlictech.angular-features/common/search@0.0.9",
+            "garlictech.angular-features/common/object-mark@0.0.8"
         ],
         "originallySharedDir": "src/features/web/search"
     },

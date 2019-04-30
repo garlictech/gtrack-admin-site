@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.hike",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "homepage": "https://bit.dev/garlictech/angular-features/web/hike",
   "main": "index.ts",
   "dependencies": {

@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TrustedPipesModule } from '@bit/garlictech.angular-features.common.generic-ui';
+import { HikeComponentsModule as BaseHikeComponentsModule } from '@bit/garlictech.angular-features.common.hike';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { WeatherModule as BaseWeatherModule } from '@bit/garlictech.angular-features.common.weather';
 import { FormModule } from '@bit/garlictech.angular-features.web.forms-primeng';
@@ -22,6 +23,7 @@ import { CheckpointsComponent } from './components/checkpoints';
 import { DownloadGpxButtonComponent } from './components/download-gpx-button';
 import { CardShadowDirective, HikeCardComponent } from './components/hike-card';
 import { HikeDataItemComponent } from './components/hike-data-item';
+import { HikeDataPopupComponent } from './components/hike-data-popup';
 import { HikeDayComponent } from './components/hike-day';
 import { HikeInfoComponent } from './components/hike-info';
 import { HikeListMapComponent } from './components/hike-list-map';
@@ -32,20 +34,21 @@ import { ReverseHikeButtonComponent } from './components/reverse-hike-button';
 import { TrailBoxComponent } from './components/trail-box';
 
 const COMPONENTS = [
-  CardShadowDirective,
-  TrailBoxComponent,
-  HikeCardComponent,
-  HikeInfoComponent,
-  HikeDataItemComponent,
-  HikeProgramComponent,
-  CheckpointsComponent,
-  HikeListMapComponent,
-  DownloadGpxButtonComponent,
-  HikeProgramPageComponent,
-  HikeMapComponent,
   BookmarkComponent,
+  CheckpointsComponent,
+  DownloadGpxButtonComponent,
+  HikeCardComponent,
+  CardShadowDirective,
+  HikeDataItemComponent,
+  HikeDataPopupComponent,
   HikeDayComponent,
-  ReverseHikeButtonComponent
+  HikeInfoComponent,
+  HikeListMapComponent,
+  HikeMapComponent,
+  HikeProgramComponent,
+  HikeProgramPageComponent,
+  ReverseHikeButtonComponent,
+  TrailBoxComponent
 ];
 
 @NgModule({
@@ -60,7 +63,7 @@ const COMPONENTS = [
     ReactiveFormsModule,
     WebLocalizeModule,
     FormModule,
-    // HikeComponentsModule TODO from common
+    BaseHikeComponentsModule,
     AngularSvgIconModule,
     BaseWeatherModule,
     WeatherModule,
@@ -69,6 +72,7 @@ const COMPONENTS = [
     TrustedPipesModule
   ],
   exports: [...COMPONENTS],
-  declarations: [...COMPONENTS]
+  declarations: [...COMPONENTS],
+  entryComponents: [HikeDataPopupComponent]
 })
 export class HikeComponentsModule {}

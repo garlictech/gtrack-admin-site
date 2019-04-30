@@ -1,8 +1,8 @@
 import { take } from 'rxjs/operators';
 
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
-import { LeafletMapComponent, LeafletMapMarkerService } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { Center, LayerDef } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+import { Center, LayerDef, LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { LeafletMapMarkerService } from '@bit/garlictech.angular-features.common.leaflet-map/services';
 
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { Poi } from '../../lib';

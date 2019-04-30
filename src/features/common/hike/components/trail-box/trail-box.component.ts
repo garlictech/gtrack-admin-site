@@ -22,14 +22,14 @@ import {
 import { CheckpointMarkerCollection } from '@bit/garlictech.angular-features.common.checkpoints';
 import { GeoPosition, selectCurrentLocation } from '@bit/garlictech.angular-features.common.current-geolocation';
 import { HikeProgramStop, PoiData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
+import { Center, LayerDef } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import {
   LeafletIconService,
   LeafletMapMarkerService,
   LeafletMapService,
   LeafletMarkerPopupService
-} from '@bit/garlictech.angular-features.common.leaflet-map';
-import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
-import { Center, LayerDef } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+} from '@bit/garlictech.angular-features.common.leaflet-map/services';
 import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leaflet-map/services/lib';
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';

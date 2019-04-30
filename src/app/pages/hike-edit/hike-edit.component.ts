@@ -15,7 +15,8 @@ import {
   RouteData
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { HikeContextState, HikeSelectors } from '@bit/garlictech.angular-features.common.hike';
-import { leafletMapActions, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { leafletMapActions } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map/services';
 import * as leafletMapSelectors from '@bit/garlictech.angular-features.common.leaflet-map/store/selectors';
 import { RouteSelectors } from '@bit/garlictech.angular-features.common.route';
 import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';

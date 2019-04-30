@@ -18,17 +18,17 @@ import {
 } from '@angular/core';
 import { GeoPosition, selectCurrentLocation } from '@bit/garlictech.angular-features.common.current-geolocation';
 import { GeometryService } from '@bit/garlictech.angular-features.common.geometry';
-import {
-  LeafletMapMarkerService,
-  LeafletMapService,
-  LeafletMarkerPopupService
-} from '@bit/garlictech.angular-features.common.leaflet-map';
 import { LeafletMapComponent } from '@bit/garlictech.angular-features.common.leaflet-map/components/leaflet-map';
 import {
   Center,
   LayerDef,
   LeafletMarkerPopupData
 } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
+import {
+  LeafletMapMarkerService,
+  LeafletMapService,
+  LeafletMarkerPopupService
+} from '@bit/garlictech.angular-features.common.leaflet-map/services';
 import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leaflet-map/services/lib';
 import { RouteSelectors } from '@bit/garlictech.angular-features.common.route';
 import { Route } from '@bit/garlictech.angular-features.common.route/services/route';

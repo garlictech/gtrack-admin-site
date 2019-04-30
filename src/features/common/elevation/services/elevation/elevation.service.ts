@@ -2,8 +2,8 @@ import { max as d3max, min as d3min } from 'd3-array';
 import { ScaleLinear as D3ScaleLinear, scaleLinear as d3ScaleLinear } from 'd3-scale';
 import { Area as D3Area, area as d3Area, curveBasis as d3CurveBasis, Line as D3Line, line as d3Line } from 'd3-shape';
 import { GoogleMapsService } from 'features/common/google-maps';
-import { Route } from 'features/common/route';
-import { UnitsService } from 'features/common/units';
+import { Route } from 'features/common/route/lib';
+import { UnitsService } from 'features/common/units/services';
 
 import { Injectable } from '@angular/core';
 import distance from '@turf/distance';

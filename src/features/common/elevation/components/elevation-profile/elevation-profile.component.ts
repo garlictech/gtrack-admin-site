@@ -37,7 +37,9 @@ import { MarkerIconsService } from '@bit/garlictech.angular-features.common.mark
 import { DescriptionLanguageListService } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import * as poiActions from '@bit/garlictech.angular-features.common.poi/store/actions';
-import { Route, RouteSelectors, RouteService } from '@bit/garlictech.angular-features.common.route';
+import { Route } from '@bit/garlictech.angular-features.common.route/lib';
+import { RouteService } from '@bit/garlictech.angular-features.common.route/services';
+import { RouteSelectors } from '@bit/garlictech.angular-features.common.route/store';
 import * as routeActions from '@bit/garlictech.angular-features.common.route/store/actions';
 import { UnitsService } from '@bit/garlictech.angular-features.common.units';
 import { DistancePipe } from '@bit/garlictech.angular-features.common.utils/pipes';

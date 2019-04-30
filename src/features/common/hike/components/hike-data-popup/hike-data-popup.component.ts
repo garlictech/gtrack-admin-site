@@ -1,7 +1,13 @@
 import _get from 'lodash-es/get';
 
+import { Component } from '@angular/core';
+
 import { HikeProgram } from '../../lib';
 
+@Component({
+  selector: 'gtrack-common-hike-data-popup',
+  template: ''
+})
 export class HikeDataPopupComponent {
   // tslint:disable-next-line:no-property-initializers
   static componentName = 'HikeDataPopupComponent';

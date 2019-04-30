@@ -1,10 +1,10 @@
 import * as L from 'leaflet';
 import _each from 'lodash-es/each';
 
-import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map';
-
 import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { LeafletIconService } from '@bit/garlictech.angular-features.common.leaflet-map/services';
 import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons';
+
 import { Checkpoint } from './checkpoint';
 
 export class CheckpointMarkerCollection {
