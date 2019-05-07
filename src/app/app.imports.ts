@@ -3,15 +3,20 @@ import _get from 'lodash-es/get';
 import { ToastModule } from 'primeng/toast';
 
 import { HttpClient } from '@angular/common/http';
+import { AuthenticationModule } from '@bit/garlictech.angular-features.common.authentication';
 import {
   AuthenticationApiModule,
   defaultAuthenticationApiConfig
 } from '@bit/garlictech.angular-features.common.authentication-api';
 import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
-import { DeepstreamModule } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { DeepstreamModule } from '@bit/garlictech.angular-features.common.deepstream-ngx/src/lib';
 import { GeoSearchModule } from '@bit/garlictech.angular-features.common.geosearch';
+import { HikeComponentsModule } from '@bit/garlictech.angular-features.common.hike';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { MarkerIconsModule } from '@bit/garlictech.angular-features.common.marker-icons';
+import { ObjectMarkModule, ObjectMarkModuleConfig } from '@bit/garlictech.angular-features.common.object-mark';
+import { PoiComponentsModule } from '@bit/garlictech.angular-features.common.poi';
+import { RouteComponentsModule } from '@bit/garlictech.angular-features.common.route';
 import { SearchFiltersModule } from '@bit/garlictech.angular-features.common.search-filters';
 import { WeatherConfig, WeatherModule } from '@bit/garlictech.angular-features.common.weather';
 import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
@@ -21,7 +26,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ObjectMarkModule, ObjectMarkModuleConfig } from '@bit/garlictech.angular-features.common.object-mark';
 import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';
@@ -39,12 +43,6 @@ import {
 export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-
-const weatherConfig: WeatherConfig = {
-  openWeatherMap: {
-    key: 'e5a0aba93cfca3ee54c272133018df78'
-  }
-};
 
 const objectMarkConfig: ObjectMarkModuleConfig = {
   storeDomain: 'objectMarks'
@@ -72,15 +70,14 @@ export const APP_IMPORTS = [
   StoreDevtoolsModule.instrument({
     maxAge: 25
   }),
-  GenericUiModule,
   DeepstreamModule,
+  GenericUiModule,
+  AuthModule,
+  AuthenticationModule,
   AuthenticationApiModule.forRoot(getAuthConfig),
   SearchFiltersModule,
   GeoSearchModule,
   CoreLayoutModule,
-  AuthModule,
-  HikeListModule,
-  HikeEditModule,
   EffectsModule.forRoot([
     AuthEffects,
     HikeEditPoiEffects,
@@ -92,6 +89,8 @@ export const APP_IMPORTS = [
   CurrentGeolocationModule.forRoot({ timeOut: 2000 }, { endpoint: environment.lambdaEndpoint }),
   LeafletMapModule,
   MarkerIconsModule.forRoot(),
+  HikeListModule,
+  HikeEditModule,
   ToastModule,
   TranslateModule.forRoot({
     loader: {
@@ -100,5 +99,8 @@ export const APP_IMPORTS = [
       deps: [HttpClient]
     }
   }),
-  WeatherModule.forRoot(weatherConfig)
+  WeatherModule,
+  HikeComponentsModule,
+  PoiComponentsModule,
+  RouteComponentsModule
 ];

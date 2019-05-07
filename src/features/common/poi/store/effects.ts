@@ -33,12 +33,14 @@ export class PoiEffects {
 
   @Effect() savePoi$: Observable<Action> = this._actions$.pipe(
     ofType<LocalActions.SavePoi>(LocalActions.PoiActionTypes.SAVE_POI),
-    mergeMap(action =>
-      this._poiService.create(action.poi).pipe(
+    mergeMap(action => {
+      console.log('SAVE POI EFFECT', action);
+
+      return this._poiService.create(action.poi).pipe(
         take(1),
         map(response => new LocalActions.PoiSaved(response.id))
-      )
-    )
+      );
+    })
   );
 
   @Effect() updateState$: Observable<Action> = this._actions$.pipe(

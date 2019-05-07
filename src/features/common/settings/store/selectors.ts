@@ -4,7 +4,8 @@ import { combineLatest as observableCombineLatest, Observable, of as observableO
 import { filter, map, pluck, switchMap, tap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
-import { AuthenticationSelectors, User } from '@bit/garlictech.angular-features.common.authentication';
+import { User } from '@bit/garlictech.angular-features.common.authentication';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store';
 import { EAuthRoles, PublicCommonProfile } from '@bit/garlictech.angular-features.common.gtrack-interfaces/interfaces';
 import { createFeatureSelector, createSelector, select, Store } from '@ngrx/store';
 
@@ -91,7 +92,7 @@ const selectPublicDataOf = userId =>
   );
 
 @Injectable()
-export class Selectors {
+export class SettingsSelectors {
   getMyId;
   getMyRole;
   getMyProfilePicture;

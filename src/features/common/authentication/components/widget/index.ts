@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, first, map, pluck, switchMapTo } from 'rxjs/operators';
 import { DebugLog } from '../../log';
-import { AuthenticationSelectors } from '../../store';
+import { AuthenticationSelectors } from '../../store/selectors';
 
 @Component({
   selector: 'app-authentication-widget',
@@ -17,7 +17,7 @@ export class WidgetComponent implements OnInit {
   message$: Observable<string>;
 
   constructor(
-    private readonly _authSelectors: AuthenticationSelectors.Selectors,
+    private readonly _authSelectors: AuthenticationSelectors,
     private readonly _route: ActivatedRoute,
     private readonly _store: Store<any>
   ) {

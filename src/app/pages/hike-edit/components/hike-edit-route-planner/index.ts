@@ -83,7 +83,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
                 [route.bounds.NorthEast.lat, route.bounds.NorthEast.lon],
                 [route.bounds.SouthWest.lat, route.bounds.SouthWest.lon]
               ];
-              // TODO fotRouteBounds
+              // TODO forRouteBounds
               this._leafletMapService.fitBounds(bounds);
 
               // Load path to routePlanner state - necessary for drawing pois

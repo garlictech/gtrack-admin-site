@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { createFeatureSelector, createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 import { filter, map } from 'rxjs/operators';
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, ExternalDeepstreamDependencies } from '../lib/externals';
-import { DeepstreamState, EDeepstreamState } from './state';
+import { DeepstreamState, EDeepstreamState, featureName } from './state';
 
 import _get from 'lodash-es/get';
 
@@ -14,7 +14,7 @@ export interface SelectorUserData {
 }
 
 @Injectable()
-export class Selectors {
+export class DeepstreamSelectors {
   loggingIn: MemoizedSelector<object, boolean>;
   loggedIn: MemoizedSelector<object, boolean>;
   loggedOut;
@@ -29,7 +29,7 @@ export class Selectors {
   constructor(@Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) externals, private readonly _store: Store<any>) {
     this._externals = externals;
 
-    const selectFeature = createFeatureSelector<DeepstreamState>(this._externals.storeDomain);
+    const selectFeature = createFeatureSelector<DeepstreamState>(featureName);
 
     this.permissions = createSelector(
       selectFeature,

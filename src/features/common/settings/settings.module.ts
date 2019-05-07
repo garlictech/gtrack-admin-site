@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Selectors as DeepstreamSelectors } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { DeepstreamSelectors } from '@bit/garlictech.angular-features.common.deepstream-ngx/src/store/selectors';
 import { FormModule } from '@bit/garlictech.angular-features.web.forms-primeng';
 import { LanguageModule } from '@bit/garlictech.angular-features.web.language';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -22,7 +22,7 @@ import { DebugLog } from './log';
 import { SettingsService } from './services';
 import { Actions, Effects, featureName, getReducers, SETTINGS_REDUCER_TOKEN } from './store';
 import * as actions from './store/actions';
-import { getHikeStartDate, profileGroupSelector, Selectors } from './store/selectors';
+import { getHikeStartDate, profileGroupSelector, SettingsSelectors } from './store/selectors';
 
 @NgModule({
   imports: [
@@ -51,7 +51,7 @@ import { getHikeStartDate, profileGroupSelector, Selectors } from './store/selec
     DeletionButtonComponent
   ],
   providers: [
-    Selectors,
+    SettingsSelectors,
     SettingsService,
     {
       provide: SETTINGS_REDUCER_TOKEN,

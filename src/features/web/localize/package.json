@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.localize",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://bit.dev/garlictech/angular-features/web/localize",
   "main": "index.ts",
   "dependencies": {

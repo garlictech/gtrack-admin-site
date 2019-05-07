@@ -20,3 +20,5 @@ export const initialState: DeepstreamState = {
   auth: undefined,
   permissionRecord: undefined
 };
+
+export const featureName = 'deepstream';

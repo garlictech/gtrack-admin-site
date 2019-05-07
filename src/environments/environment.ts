@@ -14,7 +14,16 @@ export const environment: Environment = {
   authentication: {
     server: 'https://9i0oeair61.execute-api.us-east-1.amazonaws.com/latest',
 
-    google: { appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com' }
+    google: { appId: '941049973777-8pdbs3vi9veua8i21fbnhkmku74s00dm.apps.googleusercontent.com' },
+
+    cognito: {
+      domain: 'gtrack.auth.us-east-1.amazoncognito.com',
+      region: 'us-east-1',
+      responseType: 'token',
+      userPoolId: 'us-east-1_2O173W10c',
+      userPoolClientId: '2rp9tv9kkprvjs7i29kckg48ds',
+      scope: ['email', 'profile', 'openid', 'aws.cognito.signin.user.admin']
+    }
   },
 
   raven: 'no-raven-in-dev',

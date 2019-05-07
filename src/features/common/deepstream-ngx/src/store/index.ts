@@ -6,4 +6,4 @@ export { Effects } from './effects';
 
 export * from './state';
 export { reducer as Reducer } from './reducer';
-export { Selectors } from './selectors';
+export { DeepstreamSelectors } from './selectors';

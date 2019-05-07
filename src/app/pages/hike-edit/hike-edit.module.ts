@@ -15,6 +15,8 @@ import { GeospatialService } from '@bit/garlictech.angular-features.common.geosp
 import { HikeComponentsModule as BaseHikeComponentsModule } from '@bit/garlictech.angular-features.common.hike';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
+import { PoiComponentsModule } from '@bit/garlictech.angular-features.common.poi';
+import { UtilsModule } from '@bit/garlictech.angular-features.common.utils';
 import { FormModule } from '@bit/garlictech.angular-features.web.forms-primeng';
 import { HikeComponentsModule } from '@bit/garlictech.angular-features.web.hike';
 import { LanguageModule } from '@bit/garlictech.angular-features.web.language';
@@ -92,6 +94,8 @@ const COMPONENTS = [
     LanguageModule,
     MultiLanguageTextModule,
     LeafletMapModule,
+    UtilsModule,
+    PoiComponentsModule,
     // PrimeNG
     ButtonModule,
     CardModule,

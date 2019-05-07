@@ -1,17 +1,16 @@
-import { TestBed } from '@angular/core/testing';
-import { StoreModule, Store, select, combineReducers } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import { takeUntil, scan, tap } from 'rxjs/operators';
+import { scan, takeUntil, tap } from 'rxjs/operators';
+
+import { TestBed } from '@angular/core/testing';
 import { reducer as authenticationReducer } from '@bit/garlictech.angular-features.common.authentication/store/reducer';
 import { EAuthRoles } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { select, Store, StoreModule } from '@ngrx/store';
 
-import { reducer } from '../reducer';
-import { SettingsState, featureName } from '../state';
 import { EProfileGroup } from '../../interfaces';
-
-import * as fromSelectors from '../selectors';
 import * as actions from '../actions';
-
+import { reducer } from '../reducer';
+import * as fromSelectors from '../selectors';
+import { featureName, SettingsState } from '../state';
 import {
   createState,
   initialHikeProgramSettingsState,
@@ -21,7 +20,7 @@ import {
 
 describe('Settings selectors', () => {
   let store: Store<SettingsState>;
-  let selectors: fromSelectors.Selectors;
+  let selectors: fromSelectors.SettingsSelectors;
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
@@ -36,14 +35,14 @@ describe('Settings selectors', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot(reducers, {
-          initialState: initialState
+          initialState
         })
       ],
-      providers: [fromSelectors.Selectors]
+      providers: [fromSelectors.SettingsSelectors]
     });
 
     store = TestBed.get(Store);
-    selectors = TestBed.get(fromSelectors.Selectors);
+    selectors = TestBed.get(fromSelectors.SettingsSelectors);
   });
 
   afterEach(() => {

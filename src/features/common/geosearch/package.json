@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.geosearch",
-  "version": "0.0.15",
+  "version": "0.0.17",
   "homepage": "https://bit.dev/garlictech/angular-features/common/geosearch",
   "main": "index.ts",
   "dependencies": {

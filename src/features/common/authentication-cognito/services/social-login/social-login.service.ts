@@ -1,12 +1,14 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import Amplify from 'aws-amplify';
+import Amplify, { Hub } from 'aws-amplify';
 import { COGNITO_CONFIG, CognitoConfig } from '../../config';
+
+export type Providers = 'Facebook' | 'Google';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FacebookLoginService {
+export class SocialLoginService {
   // Get access to window object in the Angular way
   private readonly _window: Window;
   private readonly _url: string;
@@ -30,15 +32,23 @@ export class FacebookLoginService {
         }
       }
     });
+    Hub.listen('auth', data => {
+      const { payload } = data;
+      this.onAuthEvent(payload);
+    });
   }
 
-  async connect(roles?: Array<string>): Promise<void> {
+  async connect(provider: Providers, roles?: Array<string>): Promise<void> {
     const domain = this._config.domain;
     const redirectSignIn = this._url;
     const responseType = this._config.responseType;
     const clientId = this._config.userPoolClientId;
-    const urlToFacebook = `https://${domain}/oauth2/authorize?redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}&identity_provider=Facebook`;
+    const url = `https://${domain}/oauth2/authorize?redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}&identity_provider=${provider}`;
 
-    this._window.location.assign(urlToFacebook);
+    this._window.location.assign(url);
+  }
+
+  onAuthEvent(payload): void {
+    console.log('PAYLOAD:', payload);
   }
 }

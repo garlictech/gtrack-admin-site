@@ -4,6 +4,7 @@ import { Action } from '@ngrx/store';
 import { Auth } from './state';
 
 export enum AuthenticationActionTypes {
+  INIT = '[Authentication] Init',
   TWITTER_LOGIN = '[Authentication] Login with Twitter',
   REQUEST_VERIFY_TOKEN = '[Authentication] Request Twitter verify token',
   VERIFY = '[Authentication] Verify user with token',
@@ -23,6 +24,10 @@ export enum AuthenticationActionTypes {
   TERMS_ACCEPTED = '[Authentication] Terms accepted',
   LOGIN_REFUSED = '[Authentication] Login refused as term is not accepted',
   SELECT_ROLE = '[Authentication] Auth role selected'
+}
+
+export class Init implements Action {
+  readonly type = AuthenticationActionTypes.INIT;
 }
 
 export class RequestVerifyToken implements Action {
@@ -119,6 +124,7 @@ export class SelectRole implements Action {
 }
 
 export type AllActions =
+  | Init
   | RequestVerifyToken
   | Verify
   | FacebookLogin

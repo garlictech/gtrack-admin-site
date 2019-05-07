@@ -22,7 +22,7 @@ import { select, Store } from '@ngrx/store';
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, ExternalDeepstreamDependencies } from '../lib/externals';
 import { DebugLog, log } from '../log';
 import { DeepstreamPermissionRecordChanged } from '../store/actions';
-import { Selectors } from '../store/selectors';
+import { DeepstreamSelectors } from '../store/selectors';
 
 export interface QueryDesc {
   table: string;
@@ -38,7 +38,9 @@ export interface RpcQuery {
 
 const OPEN_SEARCH_PROVIDER_SERIALIZE = 'open.search-provider.serialize';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DeepstreamService {
   private dsClient: DeepstreamClient;
   private readonly _liveQueries: { [key: string]: Observable<Array<any>> };
@@ -49,11 +51,10 @@ export class DeepstreamService {
 
   constructor(
     @Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) private readonly _externals: ExternalDeepstreamDependencies,
-    private readonly _selectors: Selectors,
+    private readonly _selectors: DeepstreamSelectors,
     private readonly _store: Store<any>
   ) {
     this._liveQueries = {};
-
     this._init();
   }
 

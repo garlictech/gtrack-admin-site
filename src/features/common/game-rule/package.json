@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.game-rule",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://bit.dev/garlictech/angular-features/common/game-rule",
   "main": "index.ts",
   "dependencies": {
@@ -9,5 +9,8 @@
   "devDependencies": {},
   "peerDependencies": {},
   "componentRootFolder": "src/features/common/game-rule",
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

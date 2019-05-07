@@ -13,7 +13,9 @@ import {
   HikeProgramStored
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HikeProgramService {
   constructor(private readonly _deepstream: DeepstreamService) {}
 

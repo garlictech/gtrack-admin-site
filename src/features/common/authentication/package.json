@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.authentication",
-  "version": "0.0.11",
+  "version": "0.0.16",
   "homepage": "https://bit.dev/garlictech/angular-features/common/authentication",
   "main": "index.ts",
   "dependencies": {
@@ -16,13 +16,17 @@
     "@bit/garlictech.angular-features.common.forms": "file:../forms",
     "@bit/garlictech.angular-features.common.localization": "file:../localization",
     "@bit/garlictech.angular-features.common.router": "file:../router",
-    "@bit/garlictech.angular-features.common.deepstream-ngx": "file:../deepstream-ngx",
-    "@bit/garlictech.angular-features.common.generic-ui": "file:../generic-ui",
     "@bit/garlictech.angular-features.common.popup": "file:../popup",
     "@bit/garlictech.angular-features.common.authentication-api": "file:../authentication-api",
+    "@bit/garlictech.angular-features.common.deepstream-ngx": "file:../deepstream-ngx",
+    "@bit/garlictech.angular-features.common.generic-ui": "file:../generic-ui",
     "@bit/garlictech.angular-features.common.authentication-cognito": "file:../authentication-cognito"
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "componentRootFolder": "src/features/common/authentication",
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

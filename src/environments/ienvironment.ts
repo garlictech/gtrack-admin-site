@@ -9,6 +9,14 @@ export interface Environment {
     google: {
       appId: string;
     };
+    cognito: {
+      domain: string;
+      region: string;
+      responseType: 'token' | 'code';
+      userPoolId: string;
+      userPoolClientId: string;
+      scope: Array<string>;
+    };
   };
 
   graphhopper: {

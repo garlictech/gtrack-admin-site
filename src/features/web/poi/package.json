@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.poi",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "homepage": "https://bit.dev/garlictech/angular-features/web/poi",
   "main": "index.ts",
   "dependencies": {

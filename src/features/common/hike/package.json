@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.hike",
-  "version": "0.0.13",
+  "version": "0.0.17",
   "homepage": "https://bit.dev/garlictech/angular-features/common/hike",
   "main": "index.ts",
   "dependencies": {
@@ -52,5 +52,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
+  "componentRootFolder": "src/features/common/hike",
   "license": "SEE LICENSE IN LICENSE"
 }

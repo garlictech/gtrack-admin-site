@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
-import { DeepstreamService } from '../deepstream-service';
-import { Effects, Selectors } from '../store';
+import { DeepstreamSelectors, Effects, featureName } from '../store';
+import { reducer } from '../store/reducer';
 
 @NgModule({
-  imports: [EffectsModule.forFeature([Effects])],
-  providers: [Effects, DeepstreamService, Selectors]
+  imports: [StoreModule.forFeature(featureName, reducer), EffectsModule.forFeature([Effects])],
+  providers: [Effects, DeepstreamSelectors]
 })
 export class DeepstreamModule {}
 

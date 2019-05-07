@@ -6,7 +6,9 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { GOOGLE_MAPS_CONFIG, GoogleMapsConfig } from './config';
 import { log } from './log';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class GoogleMapsService {
   map: Promise<google.maps.Map>;
   private readonly _config: GoogleMapsConfig;

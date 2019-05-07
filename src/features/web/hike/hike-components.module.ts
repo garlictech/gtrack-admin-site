@@ -8,12 +8,17 @@ import { SliderModule } from 'primeng/slider';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AstronomyModule } from '@bit/garlictech.angular-features.common.astronomy';
 import { TrustedPipesModule } from '@bit/garlictech.angular-features.common.generic-ui';
 import { HikeComponentsModule as BaseHikeComponentsModule } from '@bit/garlictech.angular-features.common.hike';
 import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { MarkerIconsModule } from '@bit/garlictech.angular-features.common.marker-icons';
+import { UtilsModule } from '@bit/garlictech.angular-features.common.utils';
 import { WeatherModule as BaseWeatherModule } from '@bit/garlictech.angular-features.common.weather';
+import { ElevationModule } from '@bit/garlictech.angular-features.web.elevation';
 import { FormModule } from '@bit/garlictech.angular-features.web.forms-primeng';
 import { LocalizeModule as WebLocalizeModule } from '@bit/garlictech.angular-features.web.localize';
+import { SlideshowModule } from '@bit/garlictech.angular-features.web.slideshow';
 import { WeatherModule } from '@bit/garlictech.angular-features.web.weather';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
@@ -69,7 +74,12 @@ const COMPONENTS = [
     WeatherModule,
     SliderModule,
     SelectButtonModule,
-    TrustedPipesModule
+    TrustedPipesModule,
+    UtilsModule,
+    ElevationModule,
+    MarkerIconsModule,
+    SlideshowModule,
+    AstronomyModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS],

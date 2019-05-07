@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.elevation",
-  "version": "0.0.21",
+  "version": "0.0.25",
   "homepage": "https://bit.dev/garlictech/angular-features/common/elevation",
   "main": "index.ts",
   "dependencies": {

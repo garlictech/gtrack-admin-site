@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-import { GeospatialService } from './services';
 
-@NgModule({
-  providers: [GeospatialService]
-})
+@NgModule({})
 export class GeospatialModule {}

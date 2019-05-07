@@ -15,6 +15,8 @@ import { ObjectMarkEffects, ObjectMarkSelectors } from './store';
 })
 export class ObjectMarkModule {
   static forRoot(config: ObjectMarkModuleConfig): ModuleWithProviders {
+    console.error('ObjectMarkModule forRoot');
+
     return {
       ngModule: ObjectMarkModule,
       providers: [

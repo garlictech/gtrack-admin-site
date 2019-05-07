@@ -8,9 +8,8 @@ export interface ExternalDeepstreamDependencies {
     getUserId: MemoizedSelector<any, string | undefined>;
     getUserRole: MemoizedSelector<any, string>;
   };
-
-  storeDomain: string;
 }
+
 export const EXTERNAL_DEEPSTREAM_DEPENDENCIES = new InjectionToken<ExternalDeepstreamDependencies>(
   'ExternalDeepstreamDependencies'
 );

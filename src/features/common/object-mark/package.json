@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.object-mark",
-  "version": "0.0.8",
+  "version": "0.0.12",
   "homepage": "https://bit.dev/garlictech/angular-features/common/object-mark",
   "main": "index.ts",
   "dependencies": {
@@ -18,5 +18,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
+  "componentRootFolder": "src/features/common/object-mark",
   "license": "SEE LICENSE IN LICENSE"
 }

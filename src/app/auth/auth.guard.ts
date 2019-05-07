@@ -4,9 +4,9 @@ import { filter, switchMap, switchMapTo } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
-import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication';
 import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
 import { AuthGuard, RoleGuard } from '@bit/garlictech.angular-features.common.authentication/guards';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store/selectors';
 import { select, Store } from '@ngrx/store';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class RouteRedirectGuard implements CanActivate {
     private readonly _auth: AuthGuard,
     private readonly _role: RoleGuard,
     private readonly _store: Store<State>,
-    private readonly _selectors: AuthenticationSelectors.Selectors
+    private readonly _selectors: AuthenticationSelectors
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

@@ -45,7 +45,7 @@
     "clean": "npm run npm clean",
     "commit": "docker/commit.sh",
     "release": "docker/semantic-release.sh",
-    "start": "docker/start-dev.sh & ngtw watch",
+    "start": "docker/start-dev.sh",
     "start:poll": "docker/cmd-with-deps.sh npm run start:poll",
     "start:dev": "npm run start:jit",
     "start:jit": "docker/cmd-with-deps.sh npm start",

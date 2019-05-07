@@ -4,8 +4,9 @@ import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormDescriptor, RangeSliderField, SliderField } from '@bit/garlictech.angular-features.common.forms';
-import { SearchFilterActions, SearchFiltersSelectors } from '../../store';
 import { select, Store } from '@ngrx/store';
+
+import { SearchFilterActions, SearchFiltersSelectors } from '../../store';
 
 @Component({
   selector: 'gtrack-common-search-filters',

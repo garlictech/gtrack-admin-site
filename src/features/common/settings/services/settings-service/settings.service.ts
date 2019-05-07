@@ -2,7 +2,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
-import { AuthenticationSelectors, User } from '@bit/garlictech.angular-features.common.authentication';
+import { User } from '@bit/garlictech.angular-features.common.authentication';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store/selectors';
 import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { EToastSeverity } from '@bit/garlictech.angular-features.common.generic-ui';
 import * as fromGenericUiActions from '@bit/garlictech.angular-features.common.generic-ui/store/actions';
@@ -24,7 +25,7 @@ export const languages = LANGUAGES.map(val => ({ label: `${val.nativeName}(${val
 export class SettingsService {
   constructor(
     private readonly _deepstream: DeepstreamService,
-    private readonly _authSelectors: AuthenticationSelectors.Selectors,
+    private readonly _authSelectors: AuthenticationSelectors,
     private readonly _store: Store<any>
   ) {}
 

@@ -41,7 +41,9 @@ const calculateHill = (data: Array<Array<number>>, bigEnough: (diff: number) => 
   return sum;
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ElevationService {
   constructor(private readonly googleMapsService: GoogleMapsService, private readonly unitsService: UnitsService) {}
 

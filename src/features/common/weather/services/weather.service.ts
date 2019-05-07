@@ -5,7 +5,9 @@ import { Inject, Injectable } from '@angular/core';
 
 import { OpenWeatherMapForecast, WEATHER_CONFIG, WeatherConfig } from '../interfaces';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class WeatherService {
   private readonly _apiUrl: string;
 

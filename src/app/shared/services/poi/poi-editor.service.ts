@@ -30,12 +30,12 @@ import {
   PoiData,
   PoiStored
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import {
   LeafletMapMarkerService,
   LeafletMapService,
   LeafletMarkerPopupService
 } from '@bit/garlictech.angular-features.common.leaflet-map/services';
-import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import { LeafletMapMarker } from '@bit/garlictech.angular-features.common.leaflet-map/services/lib';
 import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { select, Store } from '@ngrx/store';

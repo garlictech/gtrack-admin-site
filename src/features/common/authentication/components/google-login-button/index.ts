@@ -1,10 +1,13 @@
+import { switchMap, take } from 'rxjs/operators';
+
 import { Component } from '@angular/core';
 import { faGoogle, IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { Store } from '@ngrx/store';
-import { switchMap, take } from 'rxjs/operators';
+
 import { LoginHandle } from '../../lib';
 import { DebugLog } from '../../log';
-import { AuthenticationActions, AuthenticationSelectors } from '../../store';
+import { AuthenticationActions } from '../../store';
+import { AuthenticationSelectors } from '../../store/selectors';
 
 @Component({
   selector: 'app-authentication-google-login-button',
@@ -13,7 +16,7 @@ import { AuthenticationActions, AuthenticationSelectors } from '../../store';
 export class GoogleLoginButtonComponent extends LoginHandle {
   icon: IconDefinition;
 
-  constructor(store: Store<any>, selectors: AuthenticationSelectors.Selectors) {
+  constructor(store: Store<any>, selectors: AuthenticationSelectors) {
     super(store, selectors);
 
     this.icon = faGoogle;

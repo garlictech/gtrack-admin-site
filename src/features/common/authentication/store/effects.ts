@@ -1,17 +1,16 @@
-// tslint:disable:no-property-initializers no-identical-functions
-import { from, from as observableFrom, Observable, of as observableOf } from 'rxjs';
-
-import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
+import { asyncScheduler, empty, from, Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
+// tslint:disable:no-property-initializers no-identical-functions
+import { Injectable } from '@angular/core';
 import { AuthService } from '@bit/garlictech.angular-features.common.authentication-api/auth';
 import {
-  FacebookLoginService,
-  GoogleLoginService,
-  PasswordlessLoginService
+  PasswordlessLoginService,
+  SocialLoginService
 } from '@bit/garlictech.angular-features.common.authentication-cognito';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
+
 import { log } from '../log';
 import * as LocalActions from './actions';
 
@@ -23,7 +22,7 @@ export class Effects {
   //   switchMap(action => {
   //     log.data('Effect: Twitter login initiated');
 
-  //     return observableFrom(this._twitter.connect(action.roles)).pipe(
+  //     return from(this._twitter.connect(action.roles)).pipe(
   //       map(auth => {
   //         log.info('Effect: Twitter login success');
 
@@ -32,7 +31,7 @@ export class Effects {
   //       catchError(err => {
   //         log.error('Effect: Twitter Login error', err);
 
-  //         return observableOf(new LocalActions.FailureHappened(err));
+  //         return of(new LocalActions.FailureHappened(err));
   //       })
   //     );
   //   })
@@ -44,7 +43,7 @@ export class Effects {
   //   switchMap(action => {
   //     log.data('Effect: Requesting Twitter email verification token');
 
-  //     return observableFrom(this._auth.requestVerifyToken(action.email)).pipe(
+  //     return from(this._auth.requestVerifyToken(action.email)).pipe(
   //       map(() => {
   //         log.info('Effect: Twitter verification email sent');
 
@@ -53,11 +52,27 @@ export class Effects {
   //       catchError(err => {
   //         log.error('Effect: Twitter Login error', err);
 
-  //         return observableOf(new LocalActions.FailureHappened(err));
+  //         return of(new LocalActions.FailureHappened(err));
   //       })
   //     );
   //   })
   // );
+
+  @Effect() init$: Observable<Action> = this._actions$.pipe(
+    ofType<LocalActions.Init>(LocalActions.AuthenticationActionTypes.INIT),
+    switchMap(() =>
+      this._auth.authenticated.pipe(
+        map(authData => new LocalActions.LoginSuccess(authData)),
+        catchError(() => {
+          log.info('Authentication lib init: not authenticated');
+
+          return empty();
+        })
+      )
+    )
+  );
+
+  @Effect() effectInit$ = of(new LocalActions.Init(), asyncScheduler);
 
   // Verify
   @Effect() verify$: Observable<Action> = this._actions$.pipe(
@@ -65,7 +80,7 @@ export class Effects {
     switchMap(action => {
       log.data('Effect: Verify initiated');
 
-      return observableFrom(this._auth.verify(action.token, action.uid)).pipe(
+      return from(this._auth.verify(action.token, action.uid)).pipe(
         map(auth => {
           log.info('Effect: Verify success');
 
@@ -74,7 +89,7 @@ export class Effects {
         catchError(err => {
           log.error('Effect: Verify error', err);
 
-          return observableOf(new LocalActions.FailureHappened(err));
+          return of(new LocalActions.FailureHappened(err));
         })
       );
     })
@@ -86,7 +101,7 @@ export class Effects {
     switchMap(action => {
       log.data('Effect: Google login initiated');
 
-      return from(this._googleService.connect(action.roles)).pipe(
+      return from(this._socialLoginService.connect('Google', action.roles)).pipe(
         map(auth => {
           log.info('Effect: Google login success');
 
@@ -95,7 +110,7 @@ export class Effects {
         catchError(err => {
           log.error('Effect: Google Login error', err);
 
-          return observableOf(new LocalActions.FailureHappened(err));
+          return of(new LocalActions.FailureHappened(err));
         })
       );
     })
@@ -107,7 +122,7 @@ export class Effects {
     switchMap(action => {
       log.data('Effect: Facebook login initiated');
 
-      // return observableFrom(this._facebook.connect(action.roles)).pipe(
+      // return from(this._facebook.connect(action.roles)).pipe(
       //   map(auth => {
       //     log.info('Effect: Facebook login success');
 
@@ -116,11 +131,11 @@ export class Effects {
       //   catchError(err => {
       //     log.error('Effect: Facebook Login error', err);
 
-      //     return observableOf(new LocalActions.FailureHappened(err));
+      //     return of(new LocalActions.FailureHappened(err));
       //   })
       // );
 
-      return from(this._facebookService.connect(action.roles)).pipe(
+      return from(this._socialLoginService.connect('Facebook', action.roles)).pipe(
         map(auth => {
           log.info('Effect: Facebook login success');
 
@@ -129,7 +144,7 @@ export class Effects {
         catchError(err => {
           log.error('Effect: Facebook Login error', err);
 
-          return observableOf(new LocalActions.FailureHappened(err));
+          return of(new LocalActions.FailureHappened(err));
         })
       );
     })
@@ -150,7 +165,7 @@ export class Effects {
       //   catchError(err => {
       //     log.error('Effect: Magic Link email sending', err);
 
-      //     return observableOf(new LocalActions.FailureHappened(err));
+      //     return of(new LocalActions.FailureHappened(err));
       //   })
 
       // return from(this._loginService.signUp(action.email)).pipe(
@@ -163,7 +178,7 @@ export class Effects {
       //   catchError(err => {
       //     log.error('Effect: Magic Link email sending', err);
 
-      //     return observableOf(new LocalActions.FailureHappened(err));
+      //     return of(new LocalActions.FailureHappened(err));
       //   })
       // );
 
@@ -176,7 +191,7 @@ export class Effects {
         catchError(err => {
           log.error('Effect: Magic Link email sending', err);
 
-          return observableOf(new LocalActions.FailureHappened(err));
+          return of(new LocalActions.FailureHappened(err));
         })
       );
     })
@@ -188,7 +203,7 @@ export class Effects {
     switchMap(action => {
       log.data('Effect: Magic Link login initiated');
 
-      // return observableFrom(this._magicLink.callback(action.token, action.uid, action.roles)).pipe(
+      // return from(this._magicLink.callback(action.token, action.uid, action.roles)).pipe(
       //   map(auth => {
       //     log.info('Effect: Magic Link login success');
 
@@ -197,7 +212,7 @@ export class Effects {
       //   catchError(err => {
       //     log.error('Effect: Magic Link Login error', err);
 
-      //     return observableOf(new LocalActions.FailureHappened(err));
+      //     return of(new LocalActions.FailureHappened(err));
       //   })
       // );
       return from(this._loginService.answerCustomChallenge(action.token)).pipe(
@@ -210,7 +225,7 @@ export class Effects {
         catchError(err => {
           log.error('Effect: Magic Link Login error', err);
 
-          return observableOf(new LocalActions.FailureHappened(err));
+          return of(new LocalActions.FailureHappened(err));
         })
       );
     })
@@ -222,7 +237,7 @@ export class Effects {
     switchMap(() => {
       log.data('Effect: Logout initiated');
 
-      return observableFrom(this._auth.logout()).pipe(
+      return from(this._auth.logout()).pipe(
         map(() => {
           log.info('Effect: Logout success');
 
@@ -231,7 +246,7 @@ export class Effects {
         catchError(err => {
           log.error('Effect: Logout error', err);
 
-          return observableOf(new LocalActions.FailureHappened(err));
+          return of(new LocalActions.FailureHappened(err));
         })
       );
     })
@@ -240,12 +255,12 @@ export class Effects {
   @Effect() unauthorized$: Observable<Action> = this._actions$.pipe(
     ofType<LocalActions.Unauthorized>(LocalActions.AuthenticationActionTypes.UNAUTHORIZED),
     switchMap(() =>
-      observableFrom(this._auth.refreshToken()).pipe(
+      from(this._auth.refreshToken()).pipe(
         map(auth => new LocalActions.LoginSuccess(auth)),
         catchError(err => {
           log.error('Effect: Refresh token error', err);
 
-          return observableOf(new LocalActions.LogoutStart());
+          return of(new LocalActions.LogoutStart());
         })
       )
     )
@@ -255,7 +270,6 @@ export class Effects {
     private readonly _actions$: Actions,
     private readonly _auth: AuthService,
     private readonly _loginService: PasswordlessLoginService,
-    private readonly _googleService: GoogleLoginService,
-    private readonly _facebookService: FacebookLoginService
+    private readonly _socialLoginService: SocialLoginService
   ) {}
 }

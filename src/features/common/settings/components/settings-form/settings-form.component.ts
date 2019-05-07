@@ -11,7 +11,8 @@ import * as fromGenericUiActions from '@bit/garlictech.angular-features.common.g
 import { createSelector, select, Store } from '@ngrx/store';
 
 import { EProfileGroup } from '../../interfaces';
-import { Actions, Selectors } from '../../store';
+import { Actions } from '../../store';
+import * as SettingsSelectors from '../../store/selectors';
 
 @Component({
   selector: 'gtrack-settings-form',
@@ -39,10 +40,10 @@ export class SettingsFormComponent implements OnDestroy, AfterViewInit, OnInit {
   ngOnInit(): void {
     this.handledFormDescriptor = {
       formDataSelector: createSelector(
-        Selectors.selectPrivateProfileInCurrentRole,
+        SettingsSelectors.selectPrivateProfileInCurrentRole,
         state => _get(state, this.formGroupLabel)
       ),
-      remoteErrorStateSelector: Selectors.profileGroupSaveFailure(this.formGroupLabel),
+      remoteErrorStateSelector: SettingsSelectors.profileGroupSaveFailure(this.formGroupLabel),
       submit: {
         translatableLabel: this.formGroupLabel !== EProfileGroup.settings ? 'form.submit' : undefined,
         submitFv: (formGroup: FormGroup) =>
@@ -56,11 +57,11 @@ export class SettingsFormComponent implements OnDestroy, AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.loading$ = this._store.pipe(select(Selectors.isFetchingProfile));
-    this.saving$ = this._store.pipe(select(Selectors.profileGroupSaving(this.formGroupLabel)));
-    this.fetchFailure$ = this._store.pipe(select(Selectors.profileFetchFailure));
+    this.loading$ = this._store.pipe(select(SettingsSelectors.isFetchingProfile));
+    this.saving$ = this._store.pipe(select(SettingsSelectors.profileGroupSaving(this.formGroupLabel)));
+    this.fetchFailure$ = this._store.pipe(select(SettingsSelectors.profileFetchFailure));
 
-    const saveFailureBase$ = this._store.pipe(select(Selectors.profileGroupSaveFailure(this.formGroupLabel)));
+    const saveFailureBase$ = this._store.pipe(select(SettingsSelectors.profileGroupSaveFailure(this.formGroupLabel)));
 
     this.fieldFailure$ = saveFailureBase$.pipe(filter(error => _get(error, 'errorMsg') === 'Invalid data'));
 

@@ -22,6 +22,7 @@ const initialUiState: UiState = {
 };
 
 export const jwtReducer: ActionReducer<JwtAuthState> = (state = initialJwtState, action: Action) => {
+  console.log(action.type);
   switch (action.type) {
     case AuthenticationActionTypes.TWITTER_LOGIN:
     case AuthenticationActionTypes.REQUEST_VERIFY_TOKEN:
@@ -69,9 +70,17 @@ export const uiErrorReducer: ActionReducer<UiState> = (state = initialUiState, a
   }
 };
 
+export const logout = (_reducer: any): any =>
+  function(state: any, action: any): any {
+    return _reducer(action.type === AuthenticationActionTypes.LOGOUT_SUCCESS ? undefined : state, action);
+  };
+
+const metaReducers = [logout];
+
 const _reducers = {
   jwtAuth: jwtReducer,
   uiState: uiErrorReducer
 };
 
 export const reducer = combineReducers(_reducers);
+export { metaReducers };

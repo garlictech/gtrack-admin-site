@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.search-filters",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "homepage": "https://bit.dev/garlictech/angular-features/common/search-filters",
   "main": "index.ts",
   "dependencies": {

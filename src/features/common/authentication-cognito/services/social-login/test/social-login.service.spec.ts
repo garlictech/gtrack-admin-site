@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { DOCUMENT } from '@angular/common';
 import { COGNITO_CONFIG } from '../../../config';
-import { FacebookLoginService } from '../facebook-login.service';
+import { SocialLoginService } from '../social-login.service';
 
 const cognitoConfigMock = {
   domain: 'gtrack.auth.us-east-1.amazoncognito.com',
@@ -13,7 +13,7 @@ const cognitoConfigMock = {
   scope: ['email', 'profile', 'openid', 'aws.cognito.signin.user.admin']
 };
 
-describe('FacebookLoginService', () => {
+describe('SocialLoginService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       providers: [
@@ -24,7 +24,7 @@ describe('FacebookLoginService', () => {
   );
 
   it('should be created', () => {
-    const service: FacebookLoginService = TestBed.get(FacebookLoginService);
+    const service: SocialLoginService = TestBed.get(SocialLoginService);
     expect(service).toBeTruthy();
   });
 });

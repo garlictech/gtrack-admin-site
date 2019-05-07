@@ -4,10 +4,12 @@ import { GalleriaModule } from 'primeng/galleria';
 
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GeoSearchModule } from '@bit/garlictech.angular-features.common.geosearch';
 import { MultiLanguageTextModule } from '@bit/garlictech.angular-features.common.multi-language-text';
 import { SearchFiltersModule } from '@bit/garlictech.angular-features.common.search-filters';
 import { FormModule } from '@bit/garlictech.angular-features.web.forms-primeng';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -23,7 +25,7 @@ import { HikeListMapComponent } from './components/hike-list-map';
 import { HikeProgramComponent } from './components/hike-program';
 import { ReverseHikeButtonComponent } from './components/reverse-hike-button';
 import { TrailBoxComponent } from './components/trail-box';
-
+import { HikeEffects, HikeSelectors } from './store';
 import { hikeReducer } from './store/reducer';
 import { featureName } from './store/state';
 
@@ -54,8 +56,11 @@ const COMPONENTS = [
     FormModule,
     DialogModule,
     GalleriaModule,
-    StoreModule.forFeature(featureName, hikeReducer)
+    GeoSearchModule,
+    StoreModule.forFeature(featureName, hikeReducer),
+    EffectsModule.forFeature([HikeEffects])
   ],
+  providers: [HikeSelectors],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS]
 })

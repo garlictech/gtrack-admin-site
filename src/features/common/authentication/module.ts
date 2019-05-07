@@ -1,11 +1,14 @@
+import { filter, switchMapTo } from 'rxjs/operators';
+
 import { NgModule } from '@angular/core';
+import { Auth, AuthService } from '@bit/garlictech.angular-features.common.authentication-api';
 import { Actions as DeepstreamActions } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { LoaderWatchService } from '@bit/garlictech.angular-features.common.generic-ui';
 import { Actions as PopupActions } from '@bit/garlictech.angular-features.common.popup';
 import { RouterActions } from '@bit/garlictech.angular-features.common.router';
 import { EffectsModule } from '@ngrx/effects';
 import { select, Store, StoreModule } from '@ngrx/store';
-import { filter, switchMapTo } from 'rxjs/operators';
+
 import {
   EmailSentComponent,
   FacebookLoginButtonComponent,
@@ -15,7 +18,24 @@ import {
   WidgetComponent
 } from './components';
 import { DebugLog, log } from './log';
-import { AUTHENTICATION_REDUCER_TOKEN, AuthenticationSelectors, Effects, featureName, getReducers } from './store';
+import { AUTHENTICATION_REDUCER_TOKEN, AuthenticationActions, Effects, featureName, getReducers } from './store';
+import { AuthenticationSelectors } from './store/selectors';
+
+// tslint:disable-next-line: only-arrow-functions
+export function initializerFactory(auth: AuthService, store: Store<any>): () => void {
+  // tslint:disable-next-line: only-arrow-functions
+  return function(): void {
+    log.data('[AuthenticationApiModule:app init] Retrieving authentication info with stored token...');
+    auth.authenticated.subscribe(
+      (authData: Auth) => {
+        store.dispatch(new AuthenticationActions.LoginSuccess(authData));
+      },
+      err => {
+        log.info('Authentication lib init: not authenticated');
+      }
+    );
+  };
+}
 
 @NgModule({
   declarations: [
@@ -32,7 +52,7 @@ import { AUTHENTICATION_REDUCER_TOKEN, AuthenticationSelectors, Effects, feature
 })
 export class AuthenticationModule {
   constructor(
-    private readonly _authSelectors: AuthenticationSelectors.Selectors,
+    private readonly _authSelectors: AuthenticationSelectors,
     private readonly _store: Store<any>,
     private readonly _loaderWatch: LoaderWatchService
   ) {

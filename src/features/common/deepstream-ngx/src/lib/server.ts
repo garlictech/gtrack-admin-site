@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { DeepstreamService } from '../deepstream-service';
 import { DeepstreamService as ServerService } from '../deepstream-service-server';
-import { Selectors } from '../store';
+import { DeepstreamSelectors } from '../store';
 
 @NgModule({
   imports: [],
@@ -11,7 +11,7 @@ import { Selectors } from '../store';
       provide: DeepstreamService,
       useClass: ServerService
     },
-    Selectors
+    DeepstreamSelectors
   ]
 })
 export class DeepstreamModule {}

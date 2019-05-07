@@ -9,7 +9,7 @@ import { select, Store } from '@ngrx/store';
 
 import { EXTERNAL_DEEPSTREAM_DEPENDENCIES, ExternalDeepstreamDependencies } from '../lib/externals';
 import { DebugLog, log } from '../log';
-import { Selectors } from '../store/selectors';
+import { DeepstreamSelectors } from '../store/selectors';
 import { FakeRecord } from './fake-record';
 
 export interface QueryDesc {
@@ -37,7 +37,7 @@ export class DeepstreamService {
 
   constructor(
     @Inject(EXTERNAL_DEEPSTREAM_DEPENDENCIES) private readonly _externals: ExternalDeepstreamDependencies,
-    private readonly _selectors: Selectors,
+    private readonly _selectors: DeepstreamSelectors,
     private readonly _store: Store<any>
   ) {
     this._liveQueries = {};

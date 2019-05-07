@@ -6,8 +6,9 @@ import { reducer } from './reducer';
 import { SettingsState } from './state';
 
 import * as Actions from './actions';
-import * as Selectors from './selectors';
-export { Actions, Selectors };
+import * as SettingsSelectors from './selectors';
+export { Actions, SettingsSelectors };
+
 export { Effects } from './effects';
 export { reducer as Reducer } from './reducer';
 export * from './state';

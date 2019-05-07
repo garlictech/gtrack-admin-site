@@ -4,7 +4,7 @@ import _get from 'lodash-es/get';
 
 import { createFeatureSelector, createSelector, MemoizedSelector } from '@ngrx/store';
 
-import { Selectors as DeepstreamSelectors } from '@bit/garlictech.angular-features.common.deepstream-ngx';
+import { DeepstreamSelectors } from '@bit/garlictech.angular-features.common.deepstream-ngx/src/store/selectors';
 
 import { User } from '../interfaces';
 import { Auth, AuthenticationState, featureName, JwtAuthState } from './state';
@@ -42,7 +42,7 @@ export const loggedOut = createSelector(
 @Injectable({
   providedIn: 'root'
 })
-export class Selectors {
+export class AuthenticationSelectors {
   auth: MemoizedSelector<object, Auth>;
   user: MemoizedSelector<object, User>;
   loggingIn: MemoizedSelector<object, boolean>;

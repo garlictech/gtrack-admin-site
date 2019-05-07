@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.forms-primeng",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "homepage": "https://bit.dev/garlictech/angular-features/web/forms-primeng",
   "main": "index.ts",
   "dependencies": {
