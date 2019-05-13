@@ -17,8 +17,9 @@ import { MarkerIconsModule } from '@bit/garlictech.angular-features.common.marke
 import { ObjectMarkModule, ObjectMarkModuleConfig } from '@bit/garlictech.angular-features.common.object-mark';
 import { PoiComponentsModule } from '@bit/garlictech.angular-features.common.poi';
 import { RouteComponentsModule } from '@bit/garlictech.angular-features.common.route';
+import { RouterModule } from '@bit/garlictech.angular-features.common.router';
 import { SearchFiltersModule } from '@bit/garlictech.angular-features.common.search-filters';
-import { WeatherConfig, WeatherModule } from '@bit/garlictech.angular-features.common.weather';
+import { WeatherModule } from '@bit/garlictech.angular-features.common.weather';
 import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -30,7 +31,7 @@ import { AuthModule } from './auth';
 import { CoreLayoutModule } from './core';
 import { HikeEditModule } from './pages/hike-edit';
 import { HikeListModule } from './pages/hike-list';
-import { REDUCER_TOKEN } from './store';
+import { metaReducers, REDUCER_TOKEN } from './store';
 import {
   AuthEffects,
   EditedGTrackPoiEffects,
@@ -65,12 +66,13 @@ export function getAuthConfig(): any {
 
 export const APP_IMPORTS = [
   StoreModule.forRoot(REDUCER_TOKEN, {
-    // metaReducers
+    metaReducers
   }),
   StoreDevtoolsModule.instrument({
     maxAge: 25
   }),
   DeepstreamModule,
+  RouterModule,
   GenericUiModule,
   AuthModule,
   AuthenticationModule,
