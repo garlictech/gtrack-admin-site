@@ -3,32 +3,45 @@
     <p-card title="General info">
       <div class="ui-g mt-20">
         <div class="ui-g-12">
-          <app-localized-description [descriptionSelector]="descriptionSelector"
-            [descriptionLangSelector]="descriptionLangSelector" [submitFv]="submitDescription"
-            [deleteFv]="deleteDescription" [type]="'poi'"></app-localized-description>
+          <app-localized-description
+            [descriptionSelector]="descriptionSelector"
+            [descriptionLangSelector]="descriptionLangSelector"
+            [submitFv]="submitDescription"
+            [deleteFv]="deleteDescription"
+            [type]="'poi'"
+          ></app-localized-description>
         </div>
       </div>
       <div class="ui-g">
         <div class="ui-g-12">
-          <p-button label="Save" styleClass="ui-button-success" (onClick)="savePoi()"
-            [disabled]="(isDirty$ | async) === false">
+          <p-button
+            label="Save"
+            styleClass="ui-button-success"
+            (onClick)="savePoi()"
+            [disabled]="(isDirty$ | async) === false"
+          >
           </p-button>
 
-          <p-button label="Delete" styleClass="ui-button-danger ml-5" (onClick)="deletePoi(gTrackPoi?.id)"
-            *ngIf="gTrackPoi?.state === EObjectState.draft"></p-button>
+          <p-button
+            label="Delete"
+            styleClass="ui-button-danger ml-5"
+            (onClick)="deletePoi(gTrackPoi?.id)"
+            *ngIf="gTrackPoi?.state === EObjectState.draft"
+          ></p-button>
         </div>
       </div>
       <div class="ui-g mt-20">
         <div class="ui-g-12">
-          <div><strong>Position</strong>: {{ gTrackPoi?.lat || 'n/a' }},{{ gTrackPoi?.lon || 'n/a' }}
-            ({{ gTrackPoi?.elevation.toFixed(1) || 'n/a' }} m)
+          <div>
+            <strong>Position</strong>: {{ gTrackPoi?.lat || 'n/a' }},{{ gTrackPoi?.lon || 'n/a' }} ({{
+            gTrackPoi?.elevation.toFixed(1) || 'n/a' }} m)
           </div>
         </div>
         <div class="ui-g-12">
-          <div><strong>Object type</strong>: {{ gTrackPoi?.objectTypes.join(', ') }}</div>
+          <div><strong>Object type</strong>: {{ gTrackPoi?.objectTypes?.join(', ') || 'n/a' }}</div>
         </div>
         <div class="ui-g-12">
-          <div><strong>Types</strong>: {{ gTrackPoi?.types.join(', ') }}</div>
+          <div><strong>Types</strong>: {{ gTrackPoi?.types?.join(', ') || 'n/a' }}</div>
         </div>
         <div class="ui-g-12">
           <strong>Details</strong>:
@@ -44,9 +57,13 @@
 <div class="ui-g mb-20">
   <div class="ui-g-12">
     <p-card title="Photos">
-      <app-hike-edit-photos [backgroundImageSelector]="backgroundImageSelector"
-        [backgroundImageUrlSelector]="backgroundImageUrlSelector" [clickActions]="clickActions"
-        [distanceFrom]="[gTrackPoi?.lat, gTrackPoi?.lon, 300]" [showMarkerColumn]="false"></app-hike-edit-photos>
+      <app-hike-edit-photos
+        [backgroundImageSelector]="backgroundImageSelector"
+        [backgroundImageUrlSelector]="backgroundImageUrlSelector"
+        [clickActions]="clickActions"
+        [distanceFrom]="[gTrackPoi?.lat, gTrackPoi?.lon, 300]"
+        [showMarkerColumn]="false"
+      ></app-hike-edit-photos>
     </p-card>
   </div>
 </div>
