@@ -666,354 +666,6 @@
         ],
         "originallySharedDir": "src/features/common/deepstream-ngx"
     },
-    "garlictech.angular-features/common/forms@0.0.6": {
-        "files": [
-            {
-                "name": "abstract-value-accessor.ts",
-                "relativePath": "abstract-value-accessor/abstract-value-accessor.ts",
-                "test": false
-            },
-            {
-                "name": "abstract-value-accessor.spec.ts",
-                "relativePath": "abstract-value-accessor/test/abstract-value-accessor.spec.ts",
-                "test": false
-            },
-            {
-                "name": "aws-formdata.service.ts",
-                "relativePath": "aws-formdata/aws-formdata.service.ts",
-                "test": false
-            },
-            {
-                "name": "policy.ts",
-                "relativePath": "aws-formdata/policy.ts",
-                "test": false
-            },
-            {
-                "name": "chips.component.ts",
-                "relativePath": "chips/chips.component.ts",
-                "test": false
-            },
-            {
-                "name": "chips.spec.ts",
-                "relativePath": "chips/test/chips.spec.ts",
-                "test": false
-            },
-            {
-                "name": "date-picker.component.ts",
-                "relativePath": "date-picker/date-picker.component.ts",
-                "test": false
-            },
-            {
-                "name": "date-picker.spec.ts",
-                "relativePath": "date-picker/test/date-picker.spec.ts",
-                "test": false
-            },
-            {
-                "name": "dropdown-select.component.ts",
-                "relativePath": "dropdown-select/dropdown-select.component.ts",
-                "test": false
-            },
-            {
-                "name": "dropdown-select.spec.ts",
-                "relativePath": "dropdown-select/test/dropdown-select.spec.ts",
-                "test": false
-            },
-            {
-                "name": "dynamic-form-field.component.ts",
-                "relativePath": "dynamic-form-field/dynamic-form-field.component.ts",
-                "test": false
-            },
-            {
-                "name": "dynamic-form-field-component.spec.ts.snap",
-                "relativePath": "dynamic-form-field/test/__snapshots__/dynamic-form-field-component.spec.ts.snap",
-                "test": true
-            },
-            {
-                "name": "dynamic-form-field-component.spec.ts",
-                "relativePath": "dynamic-form-field/test/dynamic-form-field-component.spec.ts",
-                "test": false
-            },
-            {
-                "name": "dynamic-form-group.component.ts",
-                "relativePath": "dynamic-form-group/dynamic-form-group.component.ts",
-                "test": false
-            },
-            {
-                "name": "dynamic-form-section.component.ts",
-                "relativePath": "dynamic-form-section/dynamic-form-section.component.ts",
-                "test": false
-            },
-            {
-                "name": "dynamic-form.component.ts",
-                "relativePath": "dynamic-form/dynamic-form.component.ts",
-                "test": false
-            },
-            {
-                "name": "dynamic-form.component.spec.ts.snap",
-                "relativePath": "dynamic-form/test/__snapshots__/dynamic-form.component.spec.ts.snap",
-                "test": false
-            },
-            {
-                "name": "dynamic-form.component.spec.ts",
-                "relativePath": "dynamic-form/test/dynamic-form.component.spec.ts",
-                "test": false
-            },
-            {
-                "name": "emoji-input.component.ts",
-                "relativePath": "emoji-input/emoji-input.component.ts",
-                "test": false
-            },
-            {
-                "name": "field-control.service.ts",
-                "relativePath": "field-control/field-control.service.ts",
-                "test": false
-            },
-            {
-                "name": "checkbox.ts",
-                "relativePath": "field/checkbox.ts",
-                "test": false
-            },
-            {
-                "name": "chips.ts",
-                "relativePath": "field/chips.ts",
-                "test": false
-            },
-            {
-                "name": "date-picker.ts",
-                "relativePath": "field/date-picker.ts",
-                "test": false
-            },
-            {
-                "name": "email.ts",
-                "relativePath": "field/email.ts",
-                "test": false
-            },
-            {
-                "name": "emoji.ts",
-                "relativePath": "field/emoji.ts",
-                "test": false
-            },
-            {
-                "name": "field.ts",
-                "relativePath": "field/field.ts",
-                "test": false
-            },
-            {
-                "name": "file-s3.ts",
-                "relativePath": "field/file-s3.ts",
-                "test": false
-            },
-            {
-                "name": "file-upload.ts",
-                "relativePath": "field/file-upload.ts",
-                "test": false
-            },
-            {
-                "name": "file.ts",
-                "relativePath": "field/file.ts",
-                "test": false
-            },
-            {
-                "name": "group.ts",
-                "relativePath": "field/group.ts",
-                "test": false
-            },
-            {
-                "name": "html.ts",
-                "relativePath": "field/html.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "field/index.ts",
-                "test": false
-            },
-            {
-                "name": "interfaces.ts",
-                "relativePath": "field/interfaces.ts",
-                "test": false
-            },
-            {
-                "name": "markdown.ts",
-                "relativePath": "field/markdown.ts",
-                "test": false
-            },
-            {
-                "name": "multi-select.ts",
-                "relativePath": "field/multi-select.ts",
-                "test": false
-            },
-            {
-                "name": "password.ts",
-                "relativePath": "field/password.ts",
-                "test": false
-            },
-            {
-                "name": "phone-number.ts",
-                "relativePath": "field/phone-number.ts",
-                "test": false
-            },
-            {
-                "name": "range-slider.ts",
-                "relativePath": "field/range-slider.ts",
-                "test": false
-            },
-            {
-                "name": "rich-text-editor.ts",
-                "relativePath": "field/rich-text-editor.ts",
-                "test": false
-            },
-            {
-                "name": "section.ts",
-                "relativePath": "field/section.ts",
-                "test": false
-            },
-            {
-                "name": "select.ts",
-                "relativePath": "field/select.ts",
-                "test": false
-            },
-            {
-                "name": "slider.ts",
-                "relativePath": "field/slider.ts",
-                "test": false
-            },
-            {
-                "name": "switch.ts",
-                "relativePath": "field/switch.ts",
-                "test": false
-            },
-            {
-                "name": "template.ts",
-                "relativePath": "field/template.ts",
-                "test": false
-            },
-            {
-                "name": "text.ts",
-                "relativePath": "field/text.ts",
-                "test": false
-            },
-            {
-                "name": "textarea.ts",
-                "relativePath": "field/textarea.ts",
-                "test": false
-            },
-            {
-                "name": "textbox.ts",
-                "relativePath": "field/textbox.ts",
-                "test": false
-            },
-            {
-                "name": "time-picker.ts",
-                "relativePath": "field/time-picker.ts",
-                "test": false
-            },
-            {
-                "name": "title.ts",
-                "relativePath": "field/title.ts",
-                "test": false
-            },
-            {
-                "name": "file-s3.component.ts",
-                "relativePath": "file-s3/file-s3.component.ts",
-                "test": false
-            },
-            {
-                "name": "file.component.ts",
-                "relativePath": "file/file.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "log.ts",
-                "relativePath": "log.ts",
-                "test": false
-            },
-            {
-                "name": "markdown.component.ts",
-                "relativePath": "markdown/markdown.component.ts",
-                "test": false
-            },
-            {
-                "name": "module.ts",
-                "relativePath": "module.ts",
-                "test": false
-            },
-            {
-                "name": "multi-select.component.ts",
-                "relativePath": "multi-select/multi-select.component.ts",
-                "test": false
-            },
-            {
-                "name": "multi-select.spec.ts",
-                "relativePath": "multi-select/test/multi-select.spec.ts",
-                "test": false
-            },
-            {
-                "name": "radio-select.component.ts",
-                "relativePath": "radio-select/radio-select.component.ts",
-                "test": false
-            },
-            {
-                "name": "range-slider.component.ts",
-                "relativePath": "range-slider/range-slider.component.ts",
-                "test": false
-            },
-            {
-                "name": "rich-text-editor.component.ts",
-                "relativePath": "rich-text-editor/rich-text-editor.component.ts",
-                "test": false
-            },
-            {
-                "name": "slider.component.ts",
-                "relativePath": "slider/slider.component.ts",
-                "test": false
-            },
-            {
-                "name": "switch.component.ts",
-                "relativePath": "switch/switch.component.ts",
-                "test": false
-            },
-            {
-                "name": "time-picker.spec.ts",
-                "relativePath": "time-picker/test/time-picker.spec.ts",
-                "test": false
-            },
-            {
-                "name": "time-picker.component.ts",
-                "relativePath": "time-picker/time-picker.component.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "validators/index.ts",
-                "test": false
-            },
-            {
-                "name": "password-validator.ts",
-                "relativePath": "validators/password/password-validator.ts",
-                "test": false
-            },
-            {
-                "name": "phone-number-validator.ts",
-                "relativePath": "validators/phone-number/phone-number-validator.ts",
-                "test": false
-            },
-            {
-                "name": "xhr-file-upload.service.ts",
-                "relativePath": "xhr-file-upload/xhr-file-upload.service.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/forms",
-        "origin": "IMPORTED",
-        "originallySharedDir": "src/features/common/forms"
-    },
     "garlictech.angular-features/common/localization@0.0.8": {
         "files": [
             {
@@ -2848,5 +2500,353 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/marker-icons"
     },
-    "version": "14.0.5"
+    "garlictech.angular-features/common/forms@0.0.10": {
+        "files": [
+            {
+                "name": "abstract-value-accessor.ts",
+                "relativePath": "abstract-value-accessor/abstract-value-accessor.ts",
+                "test": false
+            },
+            {
+                "name": "abstract-value-accessor.spec.ts",
+                "relativePath": "abstract-value-accessor/test/abstract-value-accessor.spec.ts",
+                "test": false
+            },
+            {
+                "name": "aws-formdata.service.ts",
+                "relativePath": "aws-formdata/aws-formdata.service.ts",
+                "test": false
+            },
+            {
+                "name": "policy.ts",
+                "relativePath": "aws-formdata/policy.ts",
+                "test": false
+            },
+            {
+                "name": "chips.component.ts",
+                "relativePath": "chips/chips.component.ts",
+                "test": false
+            },
+            {
+                "name": "chips.spec.ts",
+                "relativePath": "chips/test/chips.spec.ts",
+                "test": false
+            },
+            {
+                "name": "date-picker.component.ts",
+                "relativePath": "date-picker/date-picker.component.ts",
+                "test": false
+            },
+            {
+                "name": "date-picker.spec.ts",
+                "relativePath": "date-picker/test/date-picker.spec.ts",
+                "test": false
+            },
+            {
+                "name": "dropdown-select.component.ts",
+                "relativePath": "dropdown-select/dropdown-select.component.ts",
+                "test": false
+            },
+            {
+                "name": "dropdown-select.spec.ts",
+                "relativePath": "dropdown-select/test/dropdown-select.spec.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form-field.component.ts",
+                "relativePath": "dynamic-form-field/dynamic-form-field.component.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form-field-component.spec.ts.snap",
+                "relativePath": "dynamic-form-field/test/__snapshots__/dynamic-form-field-component.spec.ts.snap",
+                "test": true
+            },
+            {
+                "name": "dynamic-form-field-component.spec.ts",
+                "relativePath": "dynamic-form-field/test/dynamic-form-field-component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form-group.component.ts",
+                "relativePath": "dynamic-form-group/dynamic-form-group.component.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form-section.component.ts",
+                "relativePath": "dynamic-form-section/dynamic-form-section.component.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form.component.ts",
+                "relativePath": "dynamic-form/dynamic-form.component.ts",
+                "test": false
+            },
+            {
+                "name": "dynamic-form.component.spec.ts.snap",
+                "relativePath": "dynamic-form/test/__snapshots__/dynamic-form.component.spec.ts.snap",
+                "test": false
+            },
+            {
+                "name": "dynamic-form.component.spec.ts",
+                "relativePath": "dynamic-form/test/dynamic-form.component.spec.ts",
+                "test": false
+            },
+            {
+                "name": "emoji-input.component.ts",
+                "relativePath": "emoji-input/emoji-input.component.ts",
+                "test": false
+            },
+            {
+                "name": "field-control.service.ts",
+                "relativePath": "field-control/field-control.service.ts",
+                "test": false
+            },
+            {
+                "name": "checkbox.ts",
+                "relativePath": "field/checkbox.ts",
+                "test": false
+            },
+            {
+                "name": "chips.ts",
+                "relativePath": "field/chips.ts",
+                "test": false
+            },
+            {
+                "name": "date-picker.ts",
+                "relativePath": "field/date-picker.ts",
+                "test": false
+            },
+            {
+                "name": "email.ts",
+                "relativePath": "field/email.ts",
+                "test": false
+            },
+            {
+                "name": "emoji.ts",
+                "relativePath": "field/emoji.ts",
+                "test": false
+            },
+            {
+                "name": "field.ts",
+                "relativePath": "field/field.ts",
+                "test": false
+            },
+            {
+                "name": "file-s3.ts",
+                "relativePath": "field/file-s3.ts",
+                "test": false
+            },
+            {
+                "name": "file-upload.ts",
+                "relativePath": "field/file-upload.ts",
+                "test": false
+            },
+            {
+                "name": "file.ts",
+                "relativePath": "field/file.ts",
+                "test": false
+            },
+            {
+                "name": "group.ts",
+                "relativePath": "field/group.ts",
+                "test": false
+            },
+            {
+                "name": "html.ts",
+                "relativePath": "field/html.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "field/index.ts",
+                "test": false
+            },
+            {
+                "name": "interfaces.ts",
+                "relativePath": "field/interfaces.ts",
+                "test": false
+            },
+            {
+                "name": "markdown.ts",
+                "relativePath": "field/markdown.ts",
+                "test": false
+            },
+            {
+                "name": "multi-select.ts",
+                "relativePath": "field/multi-select.ts",
+                "test": false
+            },
+            {
+                "name": "password.ts",
+                "relativePath": "field/password.ts",
+                "test": false
+            },
+            {
+                "name": "phone-number.ts",
+                "relativePath": "field/phone-number.ts",
+                "test": false
+            },
+            {
+                "name": "range-slider.ts",
+                "relativePath": "field/range-slider.ts",
+                "test": false
+            },
+            {
+                "name": "rich-text-editor.ts",
+                "relativePath": "field/rich-text-editor.ts",
+                "test": false
+            },
+            {
+                "name": "section.ts",
+                "relativePath": "field/section.ts",
+                "test": false
+            },
+            {
+                "name": "select.ts",
+                "relativePath": "field/select.ts",
+                "test": false
+            },
+            {
+                "name": "slider.ts",
+                "relativePath": "field/slider.ts",
+                "test": false
+            },
+            {
+                "name": "switch.ts",
+                "relativePath": "field/switch.ts",
+                "test": false
+            },
+            {
+                "name": "template.ts",
+                "relativePath": "field/template.ts",
+                "test": false
+            },
+            {
+                "name": "text.ts",
+                "relativePath": "field/text.ts",
+                "test": false
+            },
+            {
+                "name": "textarea.ts",
+                "relativePath": "field/textarea.ts",
+                "test": false
+            },
+            {
+                "name": "textbox.ts",
+                "relativePath": "field/textbox.ts",
+                "test": false
+            },
+            {
+                "name": "time-picker.ts",
+                "relativePath": "field/time-picker.ts",
+                "test": false
+            },
+            {
+                "name": "title.ts",
+                "relativePath": "field/title.ts",
+                "test": false
+            },
+            {
+                "name": "file-s3.component.ts",
+                "relativePath": "file-s3/file-s3.component.ts",
+                "test": false
+            },
+            {
+                "name": "file.component.ts",
+                "relativePath": "file/file.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "log.ts",
+                "relativePath": "log.ts",
+                "test": false
+            },
+            {
+                "name": "markdown.component.ts",
+                "relativePath": "markdown/markdown.component.ts",
+                "test": false
+            },
+            {
+                "name": "module.ts",
+                "relativePath": "module.ts",
+                "test": false
+            },
+            {
+                "name": "multi-select.component.ts",
+                "relativePath": "multi-select/multi-select.component.ts",
+                "test": false
+            },
+            {
+                "name": "multi-select.spec.ts",
+                "relativePath": "multi-select/test/multi-select.spec.ts",
+                "test": false
+            },
+            {
+                "name": "radio-select.component.ts",
+                "relativePath": "radio-select/radio-select.component.ts",
+                "test": false
+            },
+            {
+                "name": "range-slider.component.ts",
+                "relativePath": "range-slider/range-slider.component.ts",
+                "test": false
+            },
+            {
+                "name": "rich-text-editor.component.ts",
+                "relativePath": "rich-text-editor/rich-text-editor.component.ts",
+                "test": false
+            },
+            {
+                "name": "slider.component.ts",
+                "relativePath": "slider/slider.component.ts",
+                "test": false
+            },
+            {
+                "name": "switch.component.ts",
+                "relativePath": "switch/switch.component.ts",
+                "test": false
+            },
+            {
+                "name": "time-picker.spec.ts",
+                "relativePath": "time-picker/test/time-picker.spec.ts",
+                "test": false
+            },
+            {
+                "name": "time-picker.component.ts",
+                "relativePath": "time-picker/time-picker.component.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "validators/index.ts",
+                "test": false
+            },
+            {
+                "name": "password-validator.ts",
+                "relativePath": "validators/password/password-validator.ts",
+                "test": false
+            },
+            {
+                "name": "phone-number-validator.ts",
+                "relativePath": "validators/phone-number/phone-number-validator.ts",
+                "test": false
+            },
+            {
+                "name": "xhr-file-upload.service.ts",
+                "relativePath": "xhr-file-upload/xhr-file-upload.service.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/forms",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/forms"
+    },
+    "version": "14.1.0"
 }
