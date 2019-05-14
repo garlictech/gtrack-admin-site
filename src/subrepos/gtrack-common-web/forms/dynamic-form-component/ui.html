@@ -13,9 +13,9 @@
       [formDescriptor]="formDescriptor"
     ></gtrack-form-field>
   </div>
-  <a class="general-button mt-4" *ngIf="formDescriptor.submit?.translatableLabel">
+  <button type="submit" class="general-button mt-4" *ngIf="formDescriptor.submit?.translatableLabel">
     <span>
       {{ formDescriptor.submit?.translatableLabel | translate }}
     </span>
-  </a>
+  </button>
 </form>
