@@ -7,7 +7,8 @@ export const environment: Environment = {
   production: false,
   staging: false,
   webappServer: window.location.origin,
-  deepstream: 'ws://localhost:6020/deepstream',
+  // deepstream: 'ws://localhost:6020/deepstream',
+  deepstream: 'wss://deepstream.staging.gtracksport.com/deepstream',
 
   lambdaEndpoint,
 
