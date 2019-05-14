@@ -33,8 +33,9 @@
       <div class="ui-g mt-20">
         <div class="ui-g-12">
           <div>
-            <strong>Position</strong>: {{ gTrackPoi?.lat || 'n/a' }}, {{ gTrackPoi?.lon || 'n/a' }} ({{
-            gTrackPoi?.elevation.toFixed(1) || 'n/a' }} m)
+            <strong>Position</strong>: {{ gTrackPoi?.lat || 'n/a' }},
+            <span>{{ gTrackPoi?.lon || 'n/a' }}</span>
+            <span>({{ gTrackPoi?.elevation.toFixed(1) || 'n/a' }} m)</span>
           </div>
         </div>
         <div class="ui-g-12">
