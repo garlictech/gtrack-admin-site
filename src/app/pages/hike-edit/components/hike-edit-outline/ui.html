@@ -13,8 +13,8 @@
       <tr>
         <td>{{ rowIndex + 1 }}.</td>
         <td *ngIf="!stop.poiId.includes('endpoint')" class="icon">
-          <img title="Start" [src]="startIcon" *ngIf="rowIndex === 0" />
-          <img title="Finish" [src]="finishIcon" *ngIf="rowIndex === (stops.length - 1)" />
+          <img title="Start" [src]="startIcon | trustedResource" *ngIf="rowIndex === 0" />
+          <img title="Finish" [src]="finishIcon | trustedResource" *ngIf="rowIndex === (stops.length - 1)" />
           {{ (stop.description | localizeDescription).title }}
 
           <!-- The 1st stop is a fake (start) endpoint  -->
