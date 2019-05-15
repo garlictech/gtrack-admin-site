@@ -45,7 +45,7 @@
     "clean": "npm run npm clean",
     "commit": "docker/commit.sh",
     "release": "docker/semantic-release.sh",
-    "start": "docker/start-dev.sh & ngtw watch",
+    "start": "docker/start-dev.sh",
     "start:poll": "docker/cmd-with-deps.sh npm run start:poll",
     "start:dev": "npm run start:jit",
     "start:jit": "docker/cmd-with-deps.sh npm start",
@@ -187,7 +187,7 @@
     "password-validator": "^4.1.1",
     "popper.js": "^1.14.7",
     "primeicons": "^1.0.0",
-    "primeng": "~7.0.0",
+    "primeng": "~7.1.0",
     "randomcolor": "^0.5.3",
     "raven-js": "^3.26.4",
     "rxjs": "~6.3.2",
@@ -257,10 +257,11 @@
     "tsutils": "^3.6.0",
     "typescript": "~3.2.4",
     "weak": "^1.0.1",
-    "jest-create-mock-instance": "^1.1.0"
+    "jest-create-mock-instance": "^1.1.0",
+    "npm-install-peers": "^1.2.1"
   },
   "config": {
-    "dockerWorkflowVersion": "v15.0.0",
+    "dockerWorkflowVersion": "v16.2.2",
     "commitizen": {
       "path": "/app/node_modules/cz-conventional-changelog"
     }
@@ -284,5 +285,8 @@
     "src/features/web/**/*",
     "src/features/{name}/**/*"
   ],
-  "private": true
+  "private": true,
+  "resolutions": {
+    "primeng": "7.1.0"
+  }
 }
