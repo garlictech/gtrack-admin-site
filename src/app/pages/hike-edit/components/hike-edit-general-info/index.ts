@@ -1,13 +1,12 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormDescriptor, SliderField } from '@bit/garlictech.angular-features.common.forms';
 import {
+  EHikeProgramDifficulty,
   HikeProgramStored,
   LocalizedItem,
   TextualDescription
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { MemoizedSelector, select, Store } from '@ngrx/store';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, SelectItem } from 'primeng/api';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { State } from '../../../../store';
@@ -25,9 +24,9 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
   isRoundTrip$: Observable<boolean>;
   remoteError$: Observable<any>;
   formDataPath$: Observable<string>;
-  generalInfoFormDescriptor: FormDescriptor;
   descriptionSelector: MemoizedSelector<object, LocalizedItem<TextualDescription>>;
   descriptionLangSelector: any;
+  difficultyStates: Array<SelectItem>;
 
   private readonly _destroy$: Subject<boolean>;
 
@@ -37,6 +36,13 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
     private readonly _changeDetectorRef: ChangeDetectorRef
   ) {
     this.formDataPath$ = of('editedHikeProgram.data');
+
+    this.difficultyStates = [
+      { label: 'Green', value: EHikeProgramDifficulty.green },
+      { label: 'Blue', value: EHikeProgramDifficulty.blue },
+      { label: 'Red', value: EHikeProgramDifficulty.red },
+      { label: 'Black', value: EHikeProgramDifficulty.black }
+    ];
 
     this._destroy$ = new Subject<boolean>();
   }
@@ -89,26 +95,12 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
     });
   };
 
+  difficultyChange($event: any): void {
+    this._store.dispatch(new editedHikeProgramActions.SetHikeProgramDifficulty($event.value));
+  }
+
   private _initDescriptionFormConfig(): void {
     this.descriptionSelector = editedHikeProgramSelectors.getDescriptions;
     this.descriptionLangSelector = editedHikeProgramSelectors.getDescriptionByLang;
-
-    this.generalInfoFormDescriptor = {
-      formDataSelector: editedHikeProgramSelectors.getData,
-      submit: {
-        translatableLabel: 'form.submit',
-        classList: ['btn', 'btn-sm', 'btn-fill', 'btn-success'],
-        submitFv: (formGroup: FormGroup) =>
-          this._store.dispatch(new editedHikeProgramActions.SetHikeProgramDescription(formGroup.value))
-      },
-      fields: {
-        difficulty: new SliderField({
-          label: 'form.difficulty',
-          required: true,
-          min: 0,
-          max: 10
-        })
-      }
-    };
   }
 }

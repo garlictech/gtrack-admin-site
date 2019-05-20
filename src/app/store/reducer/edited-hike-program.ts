@@ -152,6 +152,12 @@ export function editedHikeProgramReducer(
 
       return newState;
     }
+    case editedHikeProgramActions.SET_HIKE_PROGRAM_DIFFICULTY: {
+      newState.data.difficulty = action.difficulty;
+      newState.dirty = true;
+
+      return newState;
+    }
 
     case editedHikeProgramActions.ADD_STOP: {
       newState.dirty = true;

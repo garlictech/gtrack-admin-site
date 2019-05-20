@@ -289,149 +289,6 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/authentication-api"
     },
-    "garlictech.angular-features/common/gtrack-interfaces@0.0.2": {
-        "files": [
-            {
-                "name": "index.ts",
-                "relativePath": "index.ts",
-                "test": false
-            },
-            {
-                "name": "chat.ts",
-                "relativePath": "interfaces/chat.ts",
-                "test": false
-            },
-            {
-                "name": "checkpoint.ts",
-                "relativePath": "interfaces/checkpoint.ts",
-                "test": false
-            },
-            {
-                "name": "common.ts",
-                "relativePath": "interfaces/common.ts",
-                "test": false
-            },
-            {
-                "name": "full-profile.ts",
-                "relativePath": "interfaces/full-profile.ts",
-                "test": false
-            },
-            {
-                "name": "geospatial-search.ts",
-                "relativePath": "interfaces/geospatial-search.ts",
-                "test": false
-            },
-            {
-                "name": "hike-program.ts",
-                "relativePath": "interfaces/hike-program.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "interfaces/index.ts",
-                "test": false
-            },
-            {
-                "name": "location.ts",
-                "relativePath": "interfaces/location.ts",
-                "test": false
-            },
-            {
-                "name": "marker-popup-data.ts",
-                "relativePath": "interfaces/marker-popup-data.ts",
-                "test": false
-            },
-            {
-                "name": "messaging.ts",
-                "relativePath": "interfaces/messaging.ts",
-                "test": false
-            },
-            {
-                "name": "object-delete.ts",
-                "relativePath": "interfaces/object-delete.ts",
-                "test": false
-            },
-            {
-                "name": "object-mark.ts",
-                "relativePath": "interfaces/object-mark.ts",
-                "test": false
-            },
-            {
-                "name": "permission-record.ts",
-                "relativePath": "interfaces/permission-record.ts",
-                "test": false
-            },
-            {
-                "name": "poi.ts",
-                "relativePath": "interfaces/poi.ts",
-                "test": false
-            },
-            {
-                "name": "profile.ts",
-                "relativePath": "interfaces/profile.ts",
-                "test": false
-            },
-            {
-                "name": "provider.ts",
-                "relativePath": "interfaces/provider.ts",
-                "test": false
-            },
-            {
-                "name": "roles.ts",
-                "relativePath": "interfaces/roles.ts",
-                "test": false
-            },
-            {
-                "name": "route.ts",
-                "relativePath": "interfaces/route.ts",
-                "test": false
-            },
-            {
-                "name": "search.ts",
-                "relativePath": "interfaces/search.ts",
-                "test": false
-            },
-            {
-                "name": "state.ts",
-                "relativePath": "interfaces/state.ts",
-                "test": false
-            },
-            {
-                "name": "track.ts",
-                "relativePath": "interfaces/track.ts",
-                "test": false
-            },
-            {
-                "name": "user.ts",
-                "relativePath": "interfaces/user.ts",
-                "test": false
-            },
-            {
-                "name": "constants.ts",
-                "relativePath": "user-profile/constants.ts",
-                "test": false
-            },
-            {
-                "name": "index.ts",
-                "relativePath": "user-profile/index.ts",
-                "test": false
-            },
-            {
-                "name": "languages.ts",
-                "relativePath": "user-profile/languages.ts",
-                "test": false
-            },
-            {
-                "name": "nationalities.ts",
-                "relativePath": "user-profile/nationalities.ts",
-                "test": false
-            }
-        ],
-        "mainFile": "index.ts",
-        "rootDir": "src/features/common/gtrack-interfaces",
-        "origin": "IMPORTED",
-        "originallySharedDir": "src/features/common/gtrack-interfaces"
-    },
     "garlictech.angular-features/common/current-geolocation@0.0.4": {
         "files": [
             {
@@ -2847,6 +2704,164 @@
         "rootDir": "src/features/common/forms",
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/forms"
+    },
+    "garlictech.angular-features/common/gtrack-interfaces@0.0.5": {
+        "files": [
+            {
+                "name": "index.ts",
+                "relativePath": "index.ts",
+                "test": false
+            },
+            {
+                "name": "chat.ts",
+                "relativePath": "interfaces/chat.ts",
+                "test": false
+            },
+            {
+                "name": "checkpoint.ts",
+                "relativePath": "interfaces/checkpoint.ts",
+                "test": false
+            },
+            {
+                "name": "common.ts",
+                "relativePath": "interfaces/common.ts",
+                "test": false
+            },
+            {
+                "name": "elevation.ts",
+                "relativePath": "interfaces/elevation.ts",
+                "test": false
+            },
+            {
+                "name": "full-profile.ts",
+                "relativePath": "interfaces/full-profile.ts",
+                "test": false
+            },
+            {
+                "name": "geospatial-search.ts",
+                "relativePath": "interfaces/geospatial-search.ts",
+                "test": false
+            },
+            {
+                "name": "hike-program.ts",
+                "relativePath": "interfaces/hike-program.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "interfaces/index.ts",
+                "test": false
+            },
+            {
+                "name": "location.ts",
+                "relativePath": "interfaces/location.ts",
+                "test": false
+            },
+            {
+                "name": "marker-popup-data.ts",
+                "relativePath": "interfaces/marker-popup-data.ts",
+                "test": false
+            },
+            {
+                "name": "messaging.ts",
+                "relativePath": "interfaces/messaging.ts",
+                "test": false
+            },
+            {
+                "name": "object-delete.ts",
+                "relativePath": "interfaces/object-delete.ts",
+                "test": false
+            },
+            {
+                "name": "object-mark.ts",
+                "relativePath": "interfaces/object-mark.ts",
+                "test": false
+            },
+            {
+                "name": "permission-record.ts",
+                "relativePath": "interfaces/permission-record.ts",
+                "test": false
+            },
+            {
+                "name": "poi.ts",
+                "relativePath": "interfaces/poi.ts",
+                "test": false
+            },
+            {
+                "name": "primeng-gallery-image.ts",
+                "relativePath": "interfaces/primeng-gallery-image.ts",
+                "test": false
+            },
+            {
+                "name": "profile.ts",
+                "relativePath": "interfaces/profile.ts",
+                "test": false
+            },
+            {
+                "name": "provider.ts",
+                "relativePath": "interfaces/provider.ts",
+                "test": false
+            },
+            {
+                "name": "roles.ts",
+                "relativePath": "interfaces/roles.ts",
+                "test": false
+            },
+            {
+                "name": "route.ts",
+                "relativePath": "interfaces/route.ts",
+                "test": false
+            },
+            {
+                "name": "search.ts",
+                "relativePath": "interfaces/search.ts",
+                "test": false
+            },
+            {
+                "name": "segment.ts",
+                "relativePath": "interfaces/segment.ts",
+                "test": false
+            },
+            {
+                "name": "state.ts",
+                "relativePath": "interfaces/state.ts",
+                "test": false
+            },
+            {
+                "name": "track.ts",
+                "relativePath": "interfaces/track.ts",
+                "test": false
+            },
+            {
+                "name": "user.ts",
+                "relativePath": "interfaces/user.ts",
+                "test": false
+            },
+            {
+                "name": "constants.ts",
+                "relativePath": "user-profile/constants.ts",
+                "test": false
+            },
+            {
+                "name": "index.ts",
+                "relativePath": "user-profile/index.ts",
+                "test": false
+            },
+            {
+                "name": "languages.ts",
+                "relativePath": "user-profile/languages.ts",
+                "test": false
+            },
+            {
+                "name": "nationalities.ts",
+                "relativePath": "user-profile/nationalities.ts",
+                "test": false
+            }
+        ],
+        "mainFile": "index.ts",
+        "rootDir": "src/features/common/gtrack-interfaces",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/features/common/gtrack-interfaces"
     },
     "version": "14.1.0"
 }
