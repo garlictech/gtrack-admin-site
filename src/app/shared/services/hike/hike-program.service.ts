@@ -141,7 +141,6 @@ export class HikeProgramService {
           reverseTime: reverseTotal.time,
           reverseScore: reverseTotal.score
         };
-        console.error('TOTALS?', totals);
 
         this._store.dispatch(new editedHikeProgramActions.SetHikeProgramTotals(totals));
       });

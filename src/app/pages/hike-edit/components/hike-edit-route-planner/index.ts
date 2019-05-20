@@ -103,17 +103,13 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$)
       )
       .subscribe((route: any) => {
-        console.error('ROUTE?', route);
-
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
             // Clear location
             if (route.features.length === 1) {
-              console.error('CLEAR LOCATION');
               this._store.dispatch(new editedHikeProgramActions.SetHikeProgramLocation(''));
               // 1st segment added (line + 2 points)
             } else if (route.features.length === 3) {
-              console.error('CALL UPDATE LOCATION');
               this._updateLocation(route.features[1].geometry.coordinates);
             }
 
@@ -155,7 +151,6 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       })
       .then(
         (location: string) => {
-          console.error('UPDATE LOCATION WITH', location);
           this._store.dispatch(new editedHikeProgramActions.SetHikeProgramLocation(location));
         },
         err => {
