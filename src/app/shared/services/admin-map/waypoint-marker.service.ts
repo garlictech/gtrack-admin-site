@@ -125,6 +125,7 @@ export class WaypointMarkerService {
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
 
     // async not works properly with forEach!
+    // tslint:disable:no-for-in-array
     for (const _idx in latlngs) {
       if (latlngs[_idx]) {
         const _latlng = latlngs[_idx];
@@ -235,13 +236,13 @@ export class WaypointMarkerService {
     // 50 requests per second
     const _chunks: Array<Array<any>> = _chunk(_coordsArr, 500);
 
-    const elevationData = await interval(100)
+    return interval(100)
       .pipe(
         take(_chunks.length),
         flatMap(async counter => {
           const _chunkCoords: Array<any> = _chunks[counter];
 
-          const eData = await this._elevationService.getData(_chunkCoords).then(data => {
+          return this._elevationService.getData(_chunkCoords).then(data => {
             // Update elevation only if we got all data
             if (data.length === _chunkCoords.length) {
               _chunkCoords.forEach((_chunkCoord, i) => {
@@ -251,8 +252,6 @@ export class WaypointMarkerService {
 
             return of(counter);
           });
-
-          return eData;
         }),
         combineAll()
       )
@@ -272,8 +271,6 @@ export class WaypointMarkerService {
         this._store.dispatch(new hikeEditRoutePlannerActions.RoutingError());
         // this._leafletMapService.spin(false);
       });
-
-    return elevationData;
   }
 
   /**
