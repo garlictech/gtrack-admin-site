@@ -122,53 +122,56 @@ export class WaypointMarkerService {
       return;
     }
 
-    // this._leafletMapService.spin(true);
-
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingStart());
 
-    latlngs.forEach(async (_latlng, _idx) => {
-      const _waypoint: Waypoint = {
-        latLng: _latlng,
-        idx: _idx + this._markers.length
-      };
-      this._markers.push(this._createMarker(_waypoint));
+    // async not works properly with forEach!
+    // tslint:disable:no-for-in-array
+    for (const _idx in latlngs) {
+      if (latlngs[_idx]) {
+        const _latlng = latlngs[_idx];
+        const _waypoint: Waypoint = {
+          latLng: _latlng,
+          idx: parseInt(_idx, 10) + this._markers.length
+        };
+        this._markers.push(this._createMarker(_waypoint));
 
-      if (this._markers.length > 1) {
-        await this.getRouteFromApi(
-          this._markers[this._markers.length - 2].getLatLng(),
-          this._markers[this._markers.length - 1].getLatLng()
-        ).then((data: RoutePlanResult) => {
+        if (this._markers.length > 1) {
+          const data: RoutePlanResult = await this.getRouteFromApi(
+            this._markers[this._markers.length - 2].getLatLng(),
+            this._markers[this._markers.length - 1].getLatLng()
+          );
+
           this._routePlannerService.addRouteSegment(data.coordsArr, data.upDown);
           this._moveLastWaypointToRoute(data.coordsArr);
-        });
+        }
       }
-    });
+    }
 
     this._refreshEndpointMarkerIcons();
 
     this._store.dispatch(new hikeEditRoutePlannerActions.RoutingFinished());
-
-    // this._leafletMapService.spin(false);
   }
 
   async getRouteFromApi(p1, p2): Promise<any> {
-    const _urlParams = {
-      vehicle: 'hike',
-      instructions: false,
-      locale: 'en',
-      key: environment.graphhopper.apiKey,
-      points_encoded: false
-    };
-    const _urlParamsStr = _map(_urlParams, (v, k) => `${k}=${v}`);
-    const request = `https://graphhopper.com/api/1/route?point=${p1.lat},${p1.lng}&point=${p2.lat},${
-      p2.lng
-    }&${_urlParamsStr.join('&')}`;
+    return new Promise(async resolve => {
+      const _urlParams = {
+        vehicle: 'hike',
+        instructions: false,
+        locale: 'en',
+        key: environment.graphhopper.apiKey,
+        points_encoded: false
+      };
+      const _urlParamsStr = _map(_urlParams, (v, k) => `${k}=${v}`);
+      const request = `https://graphhopper.com/api/1/route?point=${p1.lat},${p1.lng}&point=${p2.lat},${
+        p2.lng
+      }&${_urlParamsStr.join('&')}`;
 
-    // Get basic poi list
-    return this._http
-      .get(request)
-      .toPromise()
-      .then(async (data: any) => this._calculateCoordsElevation(data));
+      // Get basic poi list
+      const routeData = await this._http.get(request).toPromise();
+      const elevationData = await this._calculateCoordsElevation(routeData);
+
+      resolve(elevationData);
+    });
   }
 
   private _refreshEndpointMarkerIcons(): void {
