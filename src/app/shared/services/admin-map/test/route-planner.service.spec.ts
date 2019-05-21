@@ -54,14 +54,20 @@ describe('RoutePlannerService', () => {
         {
           provide: GameRuleService,
           useValue: {
-            segmentTime: jest.fn(() => {}),
-            score: jest.fn(() => {})
+            segmentTime: jest.fn(() => {
+              // EMPTY
+            }),
+            score: jest.fn(() => {
+              // EMPTY
+            })
           }
         },
         {
           provide: RouteService,
           useValue: {
-            getBounds: jest.fn(() => {})
+            getBounds: jest.fn(() => {
+              // EMPTY
+            })
           }
         },
         {
@@ -175,8 +181,8 @@ describe('RoutePlannerService', () => {
       geometry: {
         type: 'Point',
         coordinates: [
-          MOCK_SEGMENTS[0].coordinates[0][1],
           MOCK_SEGMENTS[0].coordinates[0][0],
+          MOCK_SEGMENTS[0].coordinates[0][1],
           MOCK_SEGMENTS[0].coordinates[0][2]
         ]
       },
