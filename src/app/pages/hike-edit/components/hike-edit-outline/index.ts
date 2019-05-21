@@ -77,8 +77,8 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
           .getRouteFromApi(
             L.latLng(stop.lat, stop.lon),
             L.latLng(
-              _last(sData.segments[sData.nearestIdx].coordinates)[0],
-              _last(sData.segments[sData.nearestIdx].coordinates)[1]
+              _last(sData.segments[sData.nearestIdx].coordinates)[1],
+              _last(sData.segments[sData.nearestIdx].coordinates)[0]
             )
           )
           .then(
@@ -107,8 +107,8 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
         this._waypointMarkerService
           .getRouteFromApi(
             L.latLng(
-              _first(sData.segments[sData.nearestIdx].coordinates)[0],
-              _first(sData.segments[sData.nearestIdx].coordinates)[1]
+              _first(sData.segments[sData.nearestIdx].coordinates)[1],
+              _first(sData.segments[sData.nearestIdx].coordinates)[0]
             ),
             L.latLng(stop.lat, stop.lon)
           )

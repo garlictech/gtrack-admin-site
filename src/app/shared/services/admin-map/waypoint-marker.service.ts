@@ -141,8 +141,10 @@ export class WaypointMarkerService {
             this._markers[this._markers.length - 1].getLatLng()
           );
 
-          this._routePlannerService.addRouteSegment(data.coordsArr, data.upDown);
-          this._moveLastWaypointToRoute(data.coordsArr);
+          if (data.coordsArr) {
+            this._routePlannerService.addRouteSegment(data.coordsArr, data.upDown);
+            this._moveLastWaypointToRoute(data.coordsArr);
+          }
         }
       }
     }
@@ -228,7 +230,9 @@ export class WaypointMarkerService {
 
   private async _calculateCoordsElevation(routeData: any): Promise<any> {
     // GraphHopper format fix
-    const _coordsArr = routeData.paths[0].points.coordinates.map(coord => [coord[1], coord[0]]);
+    // USE GEOJSON, DO NOT CHANGE ORDERS!!
+    // const _coordsArr = routeData.paths[0].points.coordinates.map(coord => [coord[1], coord[0]]);
+    const _coordsArr = routeData.paths[0].points.coordinates;
 
     // Google Elevation Service
     // 2,500 free requests per day
@@ -279,11 +283,11 @@ export class WaypointMarkerService {
   private _moveLastWaypointToRoute(coords): void {
     for (let i = this._markers.length - 2; i < this._markers.length; i++) {
       const line = turfLineString(coords);
-      const pt = turfPoint([this._markers[i].getLatLng().lat, this._markers[i].getLatLng().lng]);
+      const pt = turfPoint([this._markers[i].getLatLng().lng, this._markers[i].getLatLng().lat]);
       const snapped = turfNearestPointOnLine(line, pt);
 
       this._markers[i].setLatLng(
-        new L.LatLng((snapped.geometry as any).coordinates[0], (snapped.geometry as any).coordinates[1])
+        new L.LatLng((snapped.geometry as any).coordinates[1], (snapped.geometry as any).coordinates[0])
       );
     }
   }

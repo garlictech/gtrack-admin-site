@@ -14,7 +14,7 @@ import { GeospatialService } from 'subrepos/gtrack-common-ngx/app/shared/service
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import turfDistance from '@turf/distance';
-import { point as turfPoint } from '@turf/helpers';
+import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfLength from '@turf/length';
 
 import { HikeProgramStop, RouteData } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
@@ -38,6 +38,36 @@ const _calculateTotal = (stops: Array<HikeProgramStop>): any => {
   }
 
   return total;
+};
+
+/**
+ * Create begin/end stop from path endpoints
+ */
+const _createStopFromPathEndPoint = (path: any, coordIdx: number, reverse: boolean): HikeProgramStop => {
+  const coord = path.geometry.coordinates[coordIdx];
+  const line = turfLineString(path.geometry.coordinates);
+
+  return {
+    distanceFromOrigo:
+      coordIdx === 0
+        ? reverse
+          ? turfLength(line, { units: 'kilometers' }) * 1000
+          : 0
+        : reverse
+        ? 0
+        : turfLength(line, { units: 'kilometers' }) * 1000,
+    onRoute: true,
+    poiId: `endpoint-${coordIdx === 0 ? (reverse ? 'finish' : 'start') : reverse ? 'start' : 'finish'}`,
+    lat: coord[1],
+    lon: coord[0],
+    segment: {
+      uphill: 0,
+      downhill: 0,
+      distance: 0,
+      score: 0,
+      time: 0
+    }
+  };
 };
 
 @Injectable()
@@ -85,12 +115,10 @@ export class HikeProgramService {
           if (path.geometry.coordinates.length > 0) {
             // Add endpoint-start
             if (poiStops[0].distanceFromOrigo > 25) {
-              poiStops.unshift(this._createStopFromPathEndPoint(path, 0, false));
+              poiStops.unshift(_createStopFromPathEndPoint(path, 0, false));
             }
             if (reversePoiStops[0].distanceFromOrigo > 25) {
-              reversePoiStops.unshift(
-                this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, true)
-              );
+              reversePoiStops.unshift(_createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, true));
             }
 
             // Add endpoint-finish
@@ -102,7 +130,7 @@ export class HikeProgramService {
               ) * 1000
             );
             if (path.geometry.coordinates.length > 1 && distanceFromFinish > 25) {
-              poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, false));
+              poiStops.push(_createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, false));
             }
 
             const reverseDistanceFromFinish = Math.round(
@@ -113,19 +141,19 @@ export class HikeProgramService {
               ) * 1000
             );
             if (path.geometry.coordinates.length > 1 && reverseDistanceFromFinish > 25) {
-              reversePoiStops.push(this._createStopFromPathEndPoint(path, 0, true));
+              reversePoiStops.push(_createStopFromPathEndPoint(path, 0, true));
             }
           }
         } else {
           // Add endpoint-start
           if (path.geometry.coordinates.length > 0) {
-            poiStops.unshift(this._createStopFromPathEndPoint(path, 0, false));
-            reversePoiStops.unshift(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, true));
+            poiStops.unshift(_createStopFromPathEndPoint(path, 0, false));
+            reversePoiStops.unshift(_createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, true));
           }
           // Add endpoint-finish
           if (path.geometry.coordinates.length > 1) {
-            poiStops.push(this._createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, false));
-            reversePoiStops.push(this._createStopFromPathEndPoint(path, 0, true));
+            poiStops.push(_createStopFromPathEndPoint(path, path.geometry.coordinates.length - 1, false));
+            reversePoiStops.push(_createStopFromPathEndPoint(path, 0, true));
           }
         }
 
@@ -238,36 +266,6 @@ export class HikeProgramService {
         path
       );
     }
-  }
-
-  /**
-   * Create begin/end stop from path endpoints
-   */
-  private _createStopFromPathEndPoint(path: any, coordIdx: number, reverse: boolean): HikeProgramStop {
-    const coord = path.geometry.coordinates[coordIdx];
-    const distCoordIdx = reverse ? path.geometry.coordinates.length - 1 : 0;
-
-    return {
-      distanceFromOrigo:
-        coordIdx === 0
-          ? reverse
-            ? this._geospatialService.distanceOnLine(path.geometry.coordinates[distCoordIdx], coord, path)
-            : 0
-          : reverse
-          ? 0
-          : this._geospatialService.distanceOnLine(path.geometry.coordinates[distCoordIdx], coord, path),
-      onRoute: true,
-      poiId: `endpoint-${coordIdx === 0 ? (reverse ? 'finish' : 'start') : reverse ? 'start' : 'finish'}`,
-      lat: coord[1],
-      lon: coord[0],
-      segment: {
-        uphill: 0,
-        downhill: 0,
-        distance: 0,
-        score: 0,
-        time: 0
-      }
-    };
   }
 
   /**
