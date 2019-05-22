@@ -1,4 +1,4 @@
-// tslint:disable:only-arrow-functions no-small-switch
+// tslint:disable:only-arrow-functions no-small-switch cyclomatic-complexity
 import _assign from 'lodash-es/assign';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _omit from 'lodash-es/omit';
@@ -97,6 +97,64 @@ export function editedHikeProgramReducer(
       if (action.setDirty) {
         newState.dirty = true;
       }
+
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_HIKE_PROGRAM_LOCATION: {
+      newState.data.location = action.location;
+
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_HIKE_PROGRAM_IS_ROUNDTRIP: {
+      newState.data.isRoundTrip = action.isRoundTrip;
+
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_HIKE_PROGRAM_ID: {
+      newState.data.id = action.id;
+
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_HIKE_PROGRAM_ROUTE_ID: {
+      newState.data.routeId = action.routeId;
+
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_HIKE_PROGRAM_IS_FEATURE: {
+      newState.data.feature = action.isFeature;
+      newState.dirty = true;
+
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_HIKE_PROGRAM_TOTALS: {
+      newState.data = _assign(newState.data, action.totals);
+      newState.dirty = true;
+
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_HIKE_PROGRAM_DESCRIPTION: {
+      newState.data = _assign(newState.data, action.description);
+      newState.dirty = true;
+
+      return newState;
+    }
+
+    case editedHikeProgramActions.SET_HIKE_PROGRAM_ICONS: {
+      newState.data.elevationIcon = action.elevationIcon;
+      newState.data.routeIcon = action.routeIcon;
+
+      return newState;
+    }
+    case editedHikeProgramActions.SET_HIKE_PROGRAM_DIFFICULTY: {
+      newState.data.difficulty = action.difficulty;
+      newState.dirty = true;
 
       return newState;
     }

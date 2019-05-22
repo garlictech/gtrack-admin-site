@@ -175,7 +175,7 @@ export class RoutePlannerService {
     segments.forEach((segment, i) => {
       // Add segment coords to LineString
       for (const p of segment.coordinates) {
-        _geoJSON.features[0].geometry.coordinates.push([p[1], p[0], p[2]]);
+        _geoJSON.features[0].geometry.coordinates.push([p[0], p[1], p[2]]);
       }
 
       // Add the segment start point
@@ -221,7 +221,7 @@ export class RoutePlannerService {
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: [dataPoint[1], dataPoint[0], dataPoint[2]]
+        coordinates: [dataPoint[0], dataPoint[1], dataPoint[2]]
       },
       properties: {
         name: `Route point ${index}`

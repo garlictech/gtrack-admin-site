@@ -32,18 +32,16 @@ export class HikeListComponent implements OnInit, OnDestroy {
     private readonly _confirmationService: ConfirmationService
   ) {
     this.selectedListState = EObjectState.published;
-    this.listStates = [];
-    this._destroy$ = new Subject<boolean>();
-  }
-
-  ngOnInit(): void {
-    this._title.setTitle('Hikes');
-
     this.listStates = [
       { label: 'Published', value: 'published' },
       { label: 'Draft', value: 'draft' },
       { label: 'Archived', value: 'archived' }
     ];
+    this._destroy$ = new Subject<boolean>();
+  }
+
+  ngOnInit(): void {
+    this._title.setTitle('Hikes');
 
     this.hikeList$ = this._store.pipe(
       select(this._hikeSelectors.getActiveHikes()),

@@ -1,6 +1,4 @@
 // tslint:disable-next-line:no-commented-code
-// import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
-
 import { LocalizedItem, TextualDescription } from './common';
 import { Locatable } from './location';
 import { ProviderInput } from './provider';
@@ -22,6 +20,13 @@ export enum EPoiImageTypes {
   wikipedia = 'wikipedia',
   mapillary = 'mapillary',
   flickr = 'flickr'
+}
+
+export enum EHikeProgramDifficulty {
+  green,
+  blue,
+  red,
+  black
 }
 
 export interface PoiImageSource {
@@ -78,7 +83,7 @@ export interface HikeProgramData {
   score: number;
   reverseScore: number;
   location: string;
-  difficulty: number;
+  difficulty: EHikeProgramDifficulty;
   backgroundImages?: Array<BackgroundImageData>;
   rate?: string;
   routeIcon?: string;
