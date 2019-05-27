@@ -23,10 +23,9 @@ export enum EPoiImageTypes {
 }
 
 export enum EHikeProgramDifficulty {
-  green,
-  blue,
-  red,
-  black
+  easy,
+  normal,
+  hard
 }
 
 export interface PoiImageSource {
