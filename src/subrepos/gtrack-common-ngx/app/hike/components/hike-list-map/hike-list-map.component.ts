@@ -188,7 +188,6 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnChanges, O
               const content = popup.getContent();
 
               popup.on('remove', () => {
-                console.log('remove');
                 marker.removeHighlight();
               });
 
