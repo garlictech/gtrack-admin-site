@@ -38,10 +38,9 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
     this.formDataPath$ = of('editedHikeProgram.data');
 
     this.difficultyStates = [
-      { label: 'Green', value: EHikeProgramDifficulty.green },
-      { label: 'Blue', value: EHikeProgramDifficulty.blue },
-      { label: 'Red', value: EHikeProgramDifficulty.red },
-      { label: 'Black', value: EHikeProgramDifficulty.black }
+      { label: 'Easy', value: EHikeProgramDifficulty.easy },
+      { label: 'Normal', value: EHikeProgramDifficulty.normal },
+      { label: 'Hard', value: EHikeProgramDifficulty.hard }
     ];
 
     this._destroy$ = new Subject<boolean>();

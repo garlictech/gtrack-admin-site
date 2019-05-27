@@ -41,7 +41,7 @@ import * as hikeEditRoutePlannerSelectors from '../../store/selectors/hike-edit-
 export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   hikeProgramState$: Observable<EObjectState>;
   hikeProgramData$: Observable<HikeProgramStored>;
-  allowSave$: Observable<boolean>;
+  isDirty$: Observable<boolean>;
   isPlanning$: Observable<boolean>;
   working$: Observable<string | null>;
   // tslint:disable-next-line:no-property-initializers
@@ -136,7 +136,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
 
-    this.allowSave$ = this._store.pipe(
+    this.isDirty$ = this._store.pipe(
       select(editedHikeProgramSelectors.getDirty),
       takeUntil(this._destroy$)
     );
