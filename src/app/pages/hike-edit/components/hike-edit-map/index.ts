@@ -250,12 +250,17 @@ export class HikeEditMapComponent implements OnInit, OnDestroy, AfterViewInit {
   private _initLocationSearchInput(): void {
     this._searchInput = this._searchElementRef.nativeElement;
 
-    this._googleMapsService.autocomplete(this._searchInput).then(autocomplete => {
-      autocomplete.addListener('place_changed', () => {
-        this._ngZone.run(() => {
-          this.locationSearchResult = autocomplete.getPlace();
+    this._googleMapsService.autocomplete(this._searchInput).then(
+      autocomplete => {
+        autocomplete.addListener('place_changed', () => {
+          this._ngZone.run(() => {
+            this.locationSearchResult = autocomplete.getPlace();
+          });
         });
-      });
-    });
+      },
+      () => {
+        /**/
+      }
+    );
   }
 }

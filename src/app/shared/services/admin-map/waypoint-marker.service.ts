@@ -182,7 +182,6 @@ export class WaypointMarkerService {
   }
 
   private _refreshEndpointMarkerIcons(): void {
-    console.log('_refreshEndpointMarkerIcons');
     for (let i = 0; i < this._markers.length; i++) {
       this._markers[i].setIcon(this._getSingleMarkerIcon((i + 1).toString()));
       (this._markers[i] as any).options.idx = i;

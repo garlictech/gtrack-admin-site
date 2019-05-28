@@ -42,7 +42,7 @@ export const routes: Routes = [
         resolve: { hike: MarkerIconsResolver }
       }
     ],
-    // canActivate: [RouteRedirectGuard],
+    canActivate: [RouteRedirectGuard],
     data: { enabledRole: roles.enabledRoles }
   },
   {
