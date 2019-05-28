@@ -266,6 +266,9 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
     // Save hikeProgram
     this._store.dispatch(new editedHikeProgramActions.SaveHikeProgram());
 
+    // Reset map to avoid early route drawing
+    this._store.dispatch(new leafletMapActions.ResetMap());
+
     // Save route
     combineLatest(
       this._store.pipe(
