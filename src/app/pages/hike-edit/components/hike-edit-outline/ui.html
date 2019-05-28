@@ -27,7 +27,9 @@
             *ngIf="rowIndex > 1 && rowIndex === (stops.length - 2) && stops[stops.length - 1].poiId.includes('endpoint')"
             class="ml-10"
           >
-            <span *ngIf="(isPlanning$ | async)"> [<a (click)="endHere($event, stop)">end here</a>] </span>
+            <span *ngIf="(isPlanning$ | async) && !isRoundTrip">
+              [<a (click)="endHere($event, stop)">end here</a>]
+            </span>
           </span>
         </td>
 

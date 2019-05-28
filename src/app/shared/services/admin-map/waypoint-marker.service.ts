@@ -94,6 +94,11 @@ export class WaypointMarkerService {
     this._refreshEndpointMarkerIcons();
   }
 
+  updateEndPointCoord(latlng: L.LatLng): void {
+    this._markers[this._markers.length - 1].setLatLng(latlng);
+    this._refreshEndpointMarkerIcons();
+  }
+
   removeLast(): void {
     // Remove last marker
     if (this._markers.length > 0) {
@@ -177,6 +182,7 @@ export class WaypointMarkerService {
   }
 
   private _refreshEndpointMarkerIcons(): void {
+    console.log('_refreshEndpointMarkerIcons');
     for (let i = 0; i < this._markers.length; i++) {
       this._markers[i].setIcon(this._getSingleMarkerIcon((i + 1).toString()));
       (this._markers[i] as any).options.idx = i;
