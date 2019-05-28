@@ -116,7 +116,7 @@ export class LocalizedDescriptionComponent implements AfterViewInit, OnInit, OnD
     return {
       formDataSelector: this.descriptionLangSelector(languageKey),
       submit: {
-        // translatableLabel: 'form.submit', // Hide submit button
+        translatableLabel: 'form.submit',
         classList: ['btn', 'btn-sm', 'btn-fill', 'btn-success'],
         submitFv: (formGroup: FormGroup) => this.submitFv(languageKey, formGroup.value)
       },

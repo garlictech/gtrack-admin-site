@@ -32,7 +32,6 @@
         [type]="field.type"
         [ngClass]="['input-' + field.type]"
         [placeholder]="sanitizedPlaceholder | translate"
-        (change)="onChange($event)"
       />
       <textarea
         class="field textarea"
@@ -42,7 +41,6 @@
         [id]="field.key"
         [rows]="field.rows"
         [placeholder]="sanitizedPlaceholder | translate"
-        (change)="onChange($event)"
       ></textarea>
       <textarea
         class="field textarea"
@@ -52,7 +50,6 @@
         [id]="field.key"
         [rows]="field.rows"
         [placeholder]="sanitizedPlaceholder | translate"
-        (change)="onChange($event)"
       ></textarea>
       <div class="field-text" *ngSwitchCase="'text'">{{ field.textKey | translate }}</div>
       <div class="field-html" *ngSwitchCase="'html'" [innerHtml]="field.content"></div>
@@ -156,8 +153,7 @@
         ></gtrack-form-file>
       </ng-container>
       <ng-container *ngSwitchCase="'markdown'">
-        <gtrack-form-markdown [rows]="field.rows" [formControlName]="field.key" (change)="onChange($event)">
-        </gtrack-form-markdown>
+        <gtrack-form-markdown [rows]="field.rows" [formControlName]="field.key"> </gtrack-form-markdown>
       </ng-container>
       <ng-container *ngSwitchCase="'richtext'">
         <gtrack-form-rich-text-editor [rows]="field.rows" [formControlName]="field.key"></gtrack-form-rich-text-editor>
