@@ -1,4 +1,4 @@
-<app-table-spinner *ngIf="(working$ | async) as working; else pageContent"></app-table-spinner>
+<app-table-spinner *ngIf="working$ | async as working; else pageContent"></app-table-spinner>
 
 <p-dialog
   [header]="((hikeProgramData$ | async)?.description | localizeDescription).title"
@@ -13,8 +13,8 @@
 
 <ng-template #pageContent>
   <div class="ui-g">
-    <div class="ui-g-12" *ngIf="(hikeProgramState$ | async) as hikeProgramState">
-      <div class="float-left">
+    <div class="ui-g-12" *ngIf="hikeProgramState$ | async as hikeProgramState">
+      <div class="f-left">
         <p-checkbox
           label="Feature"
           binary="true"
@@ -22,19 +22,19 @@
           (onChange)="handleHikeProgramFeature()"
         ></p-checkbox>
       </div>
-      <div class="float-right">
+      <div class="f-right">
         <p-button
           label="Retrieve plan"
-          styleClass="ui-button-primary mr-5"
+          styleClass="ui-button-primary mr-10"
           *ngIf="(isPlanning$ | async) === false"
           (onClick)="retrievePlan()"
         ></p-button>
 
-        <p-button label="Preview" styleClass="ui-button-warning mr-5" (onClick)="openPreview()"></p-button>
+        <p-button label="Preview" styleClass="ui-button-warning mr-10" (onClick)="openPreview()"></p-button>
 
         <p-button
           label="Publish"
-          styleClass="ui-button-success mr-5"
+          styleClass="ui-button-success mr-10"
           (onClick)="updateHikeState(EObjectState.published)"
           title="Publish hike"
           *ngIf="paramsId && hikeProgramState === EObjectState.draft"
@@ -42,7 +42,7 @@
 
         <p-button
           label="Draft"
-          styleClass="ui-button-secondary mr-5"
+          styleClass="ui-button-secondary mr-10"
           (onClick)="updateHikeState(EObjectState.draft)"
           title="Move to draft"
           *ngIf="paramsId && hikeProgramState === EObjectState.archived"
@@ -50,7 +50,7 @@
 
         <p-button
           label="Archive"
-          styleClass="ui-button-danger mr-5"
+          styleClass="ui-button-danger mr-10"
           (onClick)="updateHikeState(EObjectState.archived)"
           title="Archive hike"
           *ngIf="paramsId && hikeProgramState === EObjectState.published"
@@ -60,7 +60,7 @@
           label="Save hike"
           styleClass="ui-button-success"
           (onClick)="saveHike()"
-          [disabled]="(allowSave$ | async) === false"
+          [disabled]="(isDirty$ | async) === false"
         ></p-button>
       </div>
     </div>

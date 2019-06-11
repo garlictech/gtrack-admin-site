@@ -3,6 +3,7 @@ import _pick from 'lodash-es/pick';
 import { MessageService } from 'primeng/api';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { delay, filter, skipWhile, switchMap, take, takeUntil } from 'rxjs/operators';
+import { HikeContextState, HikeSelectors, RouteSelectors } from 'subrepos/gtrack-common-ngx';
 import * as uuid from 'uuid/v1';
 
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
@@ -14,10 +15,8 @@ import {
   HikeProgramStored,
   RouteData
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { HikeContextState, HikeSelectors } from '@bit/garlictech.angular-features.common.hike';
 import { leafletMapActions, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import * as leafletMapSelectors from '@bit/garlictech.angular-features.common.leaflet-map/store/selectors';
-import { RouteSelectors } from '@bit/garlictech.angular-features.common.route';
 import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 
 import { HikeProgramService } from '../../shared/services';
@@ -42,7 +41,7 @@ import * as hikeEditRoutePlannerSelectors from '../../store/selectors/hike-edit-
 export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   hikeProgramState$: Observable<EObjectState>;
   hikeProgramData$: Observable<HikeProgramStored>;
-  allowSave$: Observable<boolean>;
+  isDirty$: Observable<boolean>;
   isPlanning$: Observable<boolean>;
   working$: Observable<string | null>;
   // tslint:disable-next-line:no-property-initializers
@@ -137,7 +136,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
 
-    this.allowSave$ = this._store.pipe(
+    this.isDirty$ = this._store.pipe(
       select(editedHikeProgramSelectors.getDirty),
       takeUntil(this._destroy$)
     );
