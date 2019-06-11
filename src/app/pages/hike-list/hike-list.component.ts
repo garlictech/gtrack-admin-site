@@ -6,11 +6,11 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { EObjectState, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { HikeSelectors } from '@bit/garlictech.angular-features.common.hike';
 import { select, Store } from '@ngrx/store';
 
 import { State } from '../../store';
 import { commonHikeActions } from '../../store/actions';
+import { HikeSelectors } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'app-hike-list',
@@ -32,18 +32,16 @@ export class HikeListComponent implements OnInit, OnDestroy {
     private readonly _confirmationService: ConfirmationService
   ) {
     this.selectedListState = EObjectState.published;
-    this.listStates = [];
-    this._destroy$ = new Subject<boolean>();
-  }
-
-  ngOnInit(): void {
-    this._title.setTitle('Hikes');
-
     this.listStates = [
       { label: 'Published', value: 'published' },
       { label: 'Draft', value: 'draft' },
       { label: 'Archived', value: 'archived' }
     ];
+    this._destroy$ = new Subject<boolean>();
+  }
+
+  ngOnInit(): void {
+    this._title.setTitle('Hikes');
 
     this.hikeList$ = this._store.pipe(
       select(this._hikeSelectors.getActiveHikes()),

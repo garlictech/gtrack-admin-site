@@ -1,8 +1,9 @@
 // tslint:disable:no-property-initializers max-classes-per-file
+import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 
-import { CheckpointSequence } from '@bit/garlictech.angular-features.common.checkpoints';
 import {
   BackgroundImageData,
+  EHikeProgramDifficulty,
   HikeProgramStop,
   TextualDescription
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
@@ -22,6 +23,7 @@ export const SET_HIKE_PROGRAM_ROUTE_ID = '[HikeProgram] Set routeId';
 export const SET_HIKE_PROGRAM_TOTALS = '[HikeProgram] Set totals';
 export const SET_HIKE_PROGRAM_DESCRIPTION = '[HikeProgram] Set description';
 export const SET_HIKE_PROGRAM_ICONS = '[HikeProgram] Set icons';
+export const SET_HIKE_PROGRAM_DIFFICULTY = '[HikeProgram] Set difficulty';
 export const PREPARE_THEN_ADD_STOP = '[HikeProgram] Prepare then add stop';
 export const ADD_STOP = '[HikeProgram] Add stop';
 export const SET_STOPS = '[HikeProgram] Set stops';
@@ -122,6 +124,12 @@ export class SetHikeProgramIcons implements Action {
   constructor(public elevationIcon: string, public routeIcon: string) {}
 }
 
+export class SetHikeProgramDifficulty implements Action {
+  readonly type = SET_HIKE_PROGRAM_DIFFICULTY;
+
+  constructor(public difficulty: EHikeProgramDifficulty) {}
+}
+
 export class AddStop implements Action {
   readonly type = ADD_STOP;
   constructor(public stop: HikeProgramStop) {}
@@ -191,6 +199,7 @@ export type AllEditedHikeProgramActions =
   | SetHikeProgramId
   | SetHikeProgramRouteId
   | SetHikeProgramIcons
+  | SetHikeProgramDifficulty
   | PrepareThenAddStop
   | AddStop
   | SetStops
