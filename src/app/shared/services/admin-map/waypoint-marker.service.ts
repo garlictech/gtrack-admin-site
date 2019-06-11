@@ -6,7 +6,6 @@ import { interval, of } from 'rxjs';
 import { combineAll, flatMap, take } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
-import { ElevationService } from '@bit/garlictech.angular-features.common.elevation';
 import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons';
@@ -91,6 +90,11 @@ export class WaypointMarkerService {
     this._markers.push(this._createMarker(_waypoint));
 
     this._updateMarkerNumbers();
+    this._refreshEndpointMarkerIcons();
+  }
+
+  updateEndPointCoord(latlng: L.LatLng): void {
+    this._markers[this._markers.length - 1].setLatLng(latlng);
     this._refreshEndpointMarkerIcons();
   }
 

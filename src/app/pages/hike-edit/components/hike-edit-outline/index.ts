@@ -4,13 +4,13 @@ import * as L from 'leaflet';
 import _first from 'lodash-es/first';
 import _last from 'lodash-es/last';
 import { Observable, Subject } from 'rxjs';
-import { delay, take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
+import { PoiSelectors, Segment } from 'subrepos/gtrack-common-ngx';
 
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { HikeProgramStop, Segment } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
-import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { select, Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
@@ -31,7 +31,10 @@ interface NearestSegmentData {
 })
 export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() isPlanning$: Observable<boolean>;
+
   stops$: Observable<Array<HikeProgramStop>>;
+  isRoundTrip: boolean;
+
   startIcon: SafeResourceUrl;
   finishIcon: SafeResourceUrl;
   private readonly _destroy$: Subject<boolean>;
@@ -53,9 +56,17 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
 
     this.stops$ = this._store.pipe(
       select(editedHikeProgramSelectors.getStopsWithPoiNames(this._poiSelectors.getAllPois)),
-      delay(0),
       takeUntil(this._destroy$)
     );
+
+    this._store
+      .pipe(
+        select(hikeEditRoutePlannerSelectors.getIsRoundTrip),
+        takeUntil(this._destroy$)
+      )
+      .subscribe((isRoundTrip: boolean) => {
+        this.isRoundTrip = isRoundTrip;
+      });
   }
 
   ngAfterViewInit(): void {
@@ -72,25 +83,43 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
 
     this._getNearestSegmentToPoint(stop).then(
       (sData: NearestSegmentData) => {
+        console.log('sData', sData);
+        const promises = [];
+        const isRoundTrip = this.isRoundTrip; // save here
+
         // Plan new route between the snapped point and the segment endpoint
-        this._waypointMarkerService
-          .getRouteFromApi(
+        promises.push(
+          this._waypointMarkerService.getRouteFromApi(
             L.latLng(stop.lat, stop.lon),
             L.latLng(
               _last(sData.segments[sData.nearestIdx].coordinates)[1],
               _last(sData.segments[sData.nearestIdx].coordinates)[0]
             )
           )
-          .then(
-            (data: RoutePlanResult) => {
-              this._waypointMarkerService.removeSegments(0, sData.nearestIdx);
-              this._waypointMarkerService.insertNewStartPoint(L.latLng(stop.lat, stop.lon));
-              this._routePlannerService.updateRouteSegment(0, data.coordsArr, data.upDown);
-            },
-            () => {
-              /**/
-            }
+        );
+
+        // Plan new route between the last segment's startpoint and the  snapped point
+        if (isRoundTrip) {
+          promises.push(
+            this._waypointMarkerService.getRouteFromApi(
+              L.latLng(_first(_last(sData.segments).coordinates)[1], _first(_last(sData.segments).coordinates)[0]),
+              L.latLng(stop.lat, stop.lon)
+            )
           );
+        }
+
+        Promise.all(promises).then((data: Array<RoutePlanResult>) => {
+          // Replace the new starter segment
+          this._waypointMarkerService.removeSegments(0, sData.nearestIdx);
+          this._waypointMarkerService.insertNewStartPoint(L.latLng(stop.lat, stop.lon));
+          this._routePlannerService.updateRouteSegment(0, data[0].coordsArr, data[0].upDown);
+
+          // Replace the last segment
+          if (isRoundTrip) {
+            this._routePlannerService.updateRouteSegment(sData.segments.length - 1, data[1].coordsArr, data[1].upDown);
+            this._waypointMarkerService.updateEndPointCoord(L.latLng(stop.lat, stop.lon));
+          }
+        });
       },
       () => {
         /**/
@@ -140,7 +169,7 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
           take(1)
         )
         .subscribe((segments: Array<Segment>) => {
-          const stopPoint = turfPoint([stop.lat, stop.lon]);
+          const stopPoint = turfPoint([stop.lon, stop.lat]);
           const snappedPoints = [];
 
           // Snap the point to all segments
