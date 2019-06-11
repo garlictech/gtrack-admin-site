@@ -34,7 +34,7 @@
         <div class="ui-g-12">
           <div>
             <strong>Position</strong>: {{ gTrackPoi?.lat || 'n/a' }},{{ gTrackPoi?.lon || 'n/a' }} ({{
-            gTrackPoi?.elevation.toFixed(1) || 'n/a' }} m)
+            gTrackPoi?.elevation?.toFixed(1) || 'n/a' }} m)
           </div>
         </div>
         <div class="ui-g-12">
