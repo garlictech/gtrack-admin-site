@@ -2,10 +2,11 @@ import * as _ from 'lodash';
 import { EMPTY } from 'rxjs';
 
 import { TestBed } from '@angular/core/testing';
+import { GameRuleService } from '@bit/garlictech.angular-features.common.game-rule';
 import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
+import { RouteService } from '@bit/garlictech.angular-features.common.route';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { GameRuleService, RouteService } from '../../../../../subrepos/gtrack-common-ngx';
 import { State } from '../../../../store';
 import { hikeEditRoutePlannerActions } from '../../../../store/actions';
 import { AdminMapService } from '../admin-map.service';

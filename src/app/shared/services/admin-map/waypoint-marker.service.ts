@@ -4,9 +4,9 @@ import _chunk from 'lodash-es/chunk';
 import _map from 'lodash-es/map';
 import { interval, of } from 'rxjs';
 import { combineAll, flatMap, take } from 'rxjs/operators';
-import { ElevationService } from 'subrepos/gtrack-common-ngx';
 
 import { Injectable } from '@angular/core';
+import { ElevationService } from '@bit/garlictech.angular-features.common.elevation';
 import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
 import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons';
