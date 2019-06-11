@@ -261,6 +261,9 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   saveHike(): void {
+    // Turn off planning
+    this._store.dispatch(new hikeEditRoutePlannerActions.SetPlanning(false));
+
     // Save hikeProgram
     this._store.dispatch(new editedHikeProgramActions.SaveHikeProgram());
 
