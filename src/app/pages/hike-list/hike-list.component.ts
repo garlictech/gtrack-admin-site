@@ -8,9 +8,9 @@ import { Title } from '@angular/platform-browser';
 import { EObjectState, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store } from '@ngrx/store';
 
+import { HikeSelectors } from '@bit/garlictech.angular-features.common.hike';
 import { State } from '../../store';
 import { commonHikeActions } from '../../store/actions';
-import { HikeSelectors } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'app-hike-list',
@@ -44,7 +44,7 @@ export class HikeListComponent implements OnInit, OnDestroy {
     this._title.setTitle('Hikes');
 
     this.hikeList$ = this._store.pipe(
-      select(this._hikeSelectors.getActiveHikes()),
+      select(this._hikeSelectors.getAllHikes()),
       takeUntil(this._destroy$),
       map(hikes => _orderBy(hikes, ['timestamp'], ['desc']))
     );
