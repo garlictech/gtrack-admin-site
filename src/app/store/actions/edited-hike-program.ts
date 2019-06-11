@@ -1,6 +1,6 @@
 // tslint:disable:no-property-initializers max-classes-per-file
-import { CheckpointSequence } from 'subrepos/gtrack-common-ngx';
 
+import { CheckpointSequence } from '@bit/garlictech.angular-features.common.checkpoints';
 import {
   BackgroundImageData,
   EHikeProgramDifficulty,

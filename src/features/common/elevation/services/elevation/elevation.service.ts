@@ -57,8 +57,9 @@ export class ElevationService {
 
   async getData(coordinates: Array<Array<number>>): Promise<Array<Array<number>>> {
     return this.googleMapsService.map.then(async () => {
+      // coordinates array uses lon/lat format!
       const locations: Array<google.maps.LatLng> = coordinates.map(
-        (coordinate: Array<number>) => new google.maps.LatLng(coordinate[0], coordinate[1])
+        (coordinate: Array<number>) => new google.maps.LatLng(coordinate[1], coordinate[0])
       );
 
       const elevationService: google.maps.ElevationService = new google.maps.ElevationService();
@@ -72,8 +73,8 @@ export class ElevationService {
           (results: Array<google.maps.ElevationResult>, status: google.maps.ElevationStatus) => {
             if (status === google.maps.ElevationStatus.OK) {
               const elevations: Array<Array<number>> = results.map((point: google.maps.ElevationResult) => [
-                point.location.lat(),
                 point.location.lng(),
+                point.location.lat(),
                 point.elevation
               ]);
 
