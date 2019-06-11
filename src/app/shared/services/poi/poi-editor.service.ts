@@ -308,8 +308,8 @@ export class PoiEditorService {
     const _pois = _sortBy(_cloneDeep(pois), (p: ExternalPoi) => p.distFromRoute);
     const _onRoutePois = _getOnroutePois(_pois);
     const _offRoutePois = _getOffroutePois(_pois);
-    _forEach(_onRoutePois, p => ((p as any).selected = true));
-    _forEach(_offRoutePois, p => ((p as any).selected = false));
+    _forEach(_onRoutePois, p => (p.selected = true));
+    _forEach(_offRoutePois, p => (p.selected = false));
 
     return of(_pois);
   }

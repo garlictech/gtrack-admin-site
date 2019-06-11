@@ -5,12 +5,12 @@ import _first from 'lodash-es/first';
 import _last from 'lodash-es/last';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { PoiSelectors, Segment } from 'subrepos/gtrack-common-ngx';
 
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { HikeProgramStop } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { HikeProgramStop, Segment } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
+import { PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
 import { select, Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
 import turfNearestPointOnLine from '@turf/nearest-point-on-line';
@@ -108,18 +108,27 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
           );
         }
 
-        Promise.all(promises).then((data: Array<RoutePlanResult>) => {
-          // Replace the new starter segment
-          this._waypointMarkerService.removeSegments(0, sData.nearestIdx);
-          this._waypointMarkerService.insertNewStartPoint(L.latLng(stop.lat, stop.lon));
-          this._routePlannerService.updateRouteSegment(0, data[0].coordsArr, data[0].upDown);
+        Promise.all(promises).then(
+          (data: Array<RoutePlanResult>) => {
+            // Replace the new starter segment
+            this._waypointMarkerService.removeSegments(0, sData.nearestIdx);
+            this._waypointMarkerService.insertNewStartPoint(L.latLng(stop.lat, stop.lon));
+            this._routePlannerService.updateRouteSegment(0, data[0].coordsArr, data[0].upDown);
 
-          // Replace the last segment
-          if (isRoundTrip) {
-            this._routePlannerService.updateRouteSegment(sData.segments.length - 1, data[1].coordsArr, data[1].upDown);
-            this._waypointMarkerService.updateEndPointCoord(L.latLng(stop.lat, stop.lon));
+            // Replace the last segment
+            if (isRoundTrip) {
+              this._routePlannerService.updateRouteSegment(
+                sData.segments.length - 1,
+                data[1].coordsArr,
+                data[1].upDown
+              );
+              this._waypointMarkerService.updateEndPointCoord(L.latLng(stop.lat, stop.lon));
+            }
+          },
+          () => {
+            // EMPTY
           }
-        });
+        );
       },
       () => {
         /**/

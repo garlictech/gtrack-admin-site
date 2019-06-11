@@ -3,7 +3,6 @@ import { Route, RouterModule, Routes } from '@angular/router';
 import { EAuthRoles } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { MarkerIconsResolver } from '@bit/garlictech.angular-features.common.marker-icons';
 
-import { RouteRedirectGuard } from './auth';
 import { LoginComponent } from './auth/components/login';
 import { LayoutComponent } from './core/components/layout';
 import { NotFound404Component } from './not-found404.component';
