@@ -44,7 +44,7 @@ export class HikeListComponent implements OnInit, OnDestroy {
     this._title.setTitle('Hikes');
 
     this.hikeList$ = this._store.pipe(
-      select(this._hikeSelectors.getAllHikes()),
+      select(this._hikeSelectors.getAllHikes),
       takeUntil(this._destroy$),
       map(hikes => _orderBy(hikes, ['timestamp'], ['desc']))
     );
