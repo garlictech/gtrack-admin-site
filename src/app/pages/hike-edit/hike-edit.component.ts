@@ -15,8 +15,7 @@ import {
   RouteData
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { HikeContextState, HikeSelectors } from '@bit/garlictech.angular-features.common.hike';
-import { leafletMapActions } from '@bit/garlictech.angular-features.common.leaflet-map';
-import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map/services';
+import { leafletMapActions, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import * as leafletMapSelectors from '@bit/garlictech.angular-features.common.leaflet-map/store/selectors';
 import { RouteSelectors } from '@bit/garlictech.angular-features.common.route';
 import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
@@ -101,7 +100,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
         this._title.setTitle('Edit hike');
 
         // Set hike id and load hikeProgram data
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this.paramsId }, false));
+        this._store.dispatch(new editedHikeProgramActions.SetHikeProgramId(this.paramsId));
         this._store.dispatch(new commonHikeActions.LoadHikeProgram(params.id));
 
         // Disable planning
@@ -113,12 +112,12 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
         // Generate initial hike id and load the empty hikeProgram (for save toaster handling)
         this._hikeId = uuid();
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ id: this._hikeId }, false));
+        this._store.dispatch(new editedHikeProgramActions.SetHikeProgramId(this._hikeId));
         // this._store.dispatch(new commonHikeActions.HikeProgramUnsaved(_hikeId));
 
         // Generate initial route id and load the empty route (for save toaster handling)
         const _routeId = uuid();
-        this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ routeId: _routeId }, false));
+        this._store.dispatch(new editedHikeProgramActions.SetHikeProgramRouteId(_routeId));
         // Update the routes's dirty flag
         this._store.dispatch(new commonRouteActions.RouteModified(_routeId));
 
@@ -335,9 +334,7 @@ export class HikeEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   handleHikeProgramFeature(): void {
     this.hikeProgramData$.pipe(take(1)).subscribe((hikeProgramData: HikeProgramStored) => {
-      this._store.dispatch(
-        new editedHikeProgramActions.AddHikeProgramDetails({ feature: !hikeProgramData.feature }, true)
-      );
+      this._store.dispatch(new editedHikeProgramActions.SetHikeProgramIsFeature(!hikeProgramData.feature));
     });
   }
 

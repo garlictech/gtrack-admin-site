@@ -7,8 +7,8 @@ import { combineAll, flatMap, take } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { ElevationService } from '@bit/garlictech.angular-features.common.elevation';
+import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { EMarkerType } from '@bit/garlictech.angular-features.common.leaflet-map/interfaces';
-import { LeafletIconService, LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map/services';
 import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons';
 import { Store } from '@ngrx/store';
 import { lineString as turfLineString, point as turfPoint } from '@turf/helpers';
@@ -133,6 +133,7 @@ export class WaypointMarkerService {
       };
       this._markers.push(this._createMarker(_waypoint));
 
+      console.error('MARKERS LENGTH', this._markers.length);
       if (this._markers.length > 1) {
         await this.getRouteFromApi(
           this._markers[this._markers.length - 2].getLatLng(),
@@ -165,10 +166,23 @@ export class WaypointMarkerService {
     }&${_urlParamsStr.join('&')}`;
 
     // Get basic poi list
-    return this._http
+    console.error('CALL HTTP', `${p1.lat},${p1.lng}`, `${p2.lat},${p2.lng}`);
+    const routeData = await this._http
       .get(request)
       .toPromise()
-      .then(async (data: any) => this._calculateCoordsElevation(data));
+      .then(async (data: any) => {
+        console.error('data?', p1, p2, data);
+
+        const eData = await this._calculateCoordsElevation(data);
+
+        return eData;
+      });
+
+    console.error('HTTP RESUT', routeData);
+
+    debugger;
+
+    return routeData;
   }
 
   private _refreshEndpointMarkerIcons(): void {
@@ -233,13 +247,13 @@ export class WaypointMarkerService {
     // 50 requests per second
     const _chunks: Array<Array<any>> = _chunk(_coordsArr, 500);
 
-    return interval(100)
+    const elevationData = await interval(100)
       .pipe(
         take(_chunks.length),
         flatMap(async counter => {
           const _chunkCoords: Array<any> = _chunks[counter];
 
-          return this._elevationService.getData(_chunkCoords).then(data => {
+          const eData = await this._elevationService.getData(_chunkCoords).then(data => {
             // Update elevation only if we got all data
             if (data.length === _chunkCoords.length) {
               _chunkCoords.forEach((_chunkCoord, i) => {
@@ -249,6 +263,8 @@ export class WaypointMarkerService {
 
             return of(counter);
           });
+
+          return eData;
         }),
         combineAll()
       )
@@ -268,6 +284,10 @@ export class WaypointMarkerService {
         this._store.dispatch(new hikeEditRoutePlannerActions.RoutingError());
         // this._leafletMapService.spin(false);
       });
+
+    console.error('elevationData', elevationData);
+
+    return elevationData;
   }
 
   /**
@@ -310,6 +330,7 @@ export class WaypointMarkerService {
   }
 
   private _getRouteAndUpdateSegment(start: L.LatLng, end: L.LatLng, segmentIdx: number): void {
+    console.error('_getRouteAndUpdateSegment', start, end);
     this.getRouteFromApi(start, end).then(
       (data: RoutePlanResult) => {
         this._routePlannerService.updateRouteSegment(segmentIdx, data.coordsArr, data.upDown);

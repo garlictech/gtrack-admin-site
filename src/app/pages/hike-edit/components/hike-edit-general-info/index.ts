@@ -61,14 +61,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
     );
 
     this.isRoundTrip$.pipe(takeUntil(this._destroy$)).subscribe((isRoundTrip: boolean) => {
-      this._store.dispatch(
-        new editedHikeProgramActions.AddHikeProgramDetails(
-          {
-            isRoundTrip
-          },
-          false
-        )
-      );
+      this._store.dispatch(new editedHikeProgramActions.SetHikeProgramIsRoundTrip(isRoundTrip));
     });
   }
 
@@ -107,7 +100,7 @@ export class HikeEditGeneralInfoComponent implements OnInit, OnDestroy, AfterVie
         translatableLabel: 'form.submit',
         classList: ['btn', 'btn-sm', 'btn-fill', 'btn-success'],
         submitFv: (formGroup: FormGroup) =>
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails(formGroup.value, true))
+          this._store.dispatch(new editedHikeProgramActions.SetHikeProgramDescription(formGroup.value))
       },
       fields: {
         difficulty: new SliderField({

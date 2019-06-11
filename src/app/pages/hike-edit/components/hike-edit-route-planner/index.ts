@@ -5,7 +5,7 @@ import { debounceTime, filter, switchMap, take, takeUntil } from 'rxjs/operators
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map/services';
+import { LeafletMapService } from '@bit/garlictech.angular-features.common.leaflet-map';
 import * as leafletMapSelectors from '@bit/garlictech.angular-features.common.leaflet-map/store/selectors';
 import { Route, RouteContextState, RouteSelectors } from '@bit/garlictech.angular-features.common.route';
 import { select, Store } from '@ngrx/store';
@@ -83,7 +83,7 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
                 [route.bounds.NorthEast.lat, route.bounds.NorthEast.lon],
                 [route.bounds.SouthWest.lat, route.bounds.SouthWest.lon]
               ];
-              // TODO forRouteBounds
+              // TODO fotRouteBounds
               this._leafletMapService.fitBounds(bounds);
 
               // Load path to routePlanner state - necessary for drawing pois
@@ -103,16 +103,20 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$)
       )
       .subscribe((route: any) => {
-        // Clear location
-        if (route.features.length === 1) {
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
-          // 1st segment added (line + 2 points)
-        } else if (route.features.length === 3) {
-          this._updateLocation(route.features[1].geometry.coordinates);
-        }
+        console.error('ROUTE?', route);
 
         this.isPlanning$.pipe(take(1)).subscribe((isPlanning: boolean) => {
           if (isPlanning) {
+            // Clear location
+            if (route.features.length === 1) {
+              console.error('CLEAR LOCATION');
+              this._store.dispatch(new editedHikeProgramActions.SetHikeProgramLocation(''));
+              // 1st segment added (line + 2 points)
+            } else if (route.features.length === 3) {
+              console.error('CALL UPDATE LOCATION');
+              this._updateLocation(route.features[1].geometry.coordinates);
+            }
+
             this._refreshIcons(route);
           }
         });
@@ -151,10 +155,11 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
       })
       .then(
         (location: string) => {
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location }, false));
+          console.error('UPDATE LOCATION WITH', location);
+          this._store.dispatch(new editedHikeProgramActions.SetHikeProgramLocation(location));
         },
         err => {
-          this._store.dispatch(new editedHikeProgramActions.AddHikeProgramDetails({ location: '' }, false));
+          this._store.dispatch(new editedHikeProgramActions.SetHikeProgramLocation(''));
         }
       );
   }
@@ -168,12 +173,9 @@ export class HikeEditRoutePlannerComponent implements OnInit, OnDestroy {
     });
 
     this._store.dispatch(
-      new editedHikeProgramActions.AddHikeProgramDetails(
-        {
-          elevationIcon: this._hikeProgramService.createElevationIcon(_route),
-          routeIcon: this._hikeProgramService.createRouteIcon(_route)
-        },
-        false
+      new editedHikeProgramActions.SetHikeProgramIcons(
+        this._hikeProgramService.createElevationIcon(_route),
+        this._hikeProgramService.createRouteIcon(_route)
       )
     );
   }
