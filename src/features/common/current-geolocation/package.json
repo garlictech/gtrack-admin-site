@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.current-geolocation",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "homepage": "https://bit.dev/garlictech/angular-features/common/current-geolocation",
   "main": "index.ts",
   "dependencies": {
@@ -17,5 +17,8 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

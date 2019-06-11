@@ -7,9 +7,11 @@ import {
   ElevationFilledAreaComponent,
   ElevationLabelComponent,
   ElevationLineGraphComponent,
+  ElevationMaxPointComponent,
   ElevationPoiIconLinesComponent,
   ElevationPoiIconsComponent,
   ElevationProfileComponent,
+  ElevationProfileLineComponent,
   ElevationXAxisComponent,
   ElevationXAxisLinesComponent,
   ElevationYAxisComponent,
@@ -28,7 +30,9 @@ const COMPONENTS = [
   ElevationZoomSliderComponent,
   ElevationLabelComponent,
   ElevationLineGraphComponent,
-  ElevationProfileComponent
+  ElevationMaxPointComponent,
+  ElevationProfileComponent,
+  ElevationProfileLineComponent
 ];
 
 @NgModule({

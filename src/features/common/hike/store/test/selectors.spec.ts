@@ -3,20 +3,20 @@ import { takeUntil } from 'rxjs/operators';
 
 import { TestBed } from '@angular/core/testing';
 import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
-import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
 import { HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
 import { select, Store, StoreModule } from '@ngrx/store';
 
 import { HikeProgramComponent, hikeProgramsStored as hikeProgramFixtures } from '../../testing/fixtures';
 import * as actions from '../actions';
 import { hikeReducer } from '../reducer';
 import { HikeSelectors } from '../selectors';
-import { HikeState } from '../state';
+import { featureName, HikeState } from '../state';
 
 describe('HikeProgram selectors', () => {
   let store: Store<HikeState>;
-  let hikePrograms: HikeProgramStored[];
-  let ids: string[];
+  let hikePrograms: Array<HikeProgramStored>;
+  let ids: Array<string>;
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
@@ -27,7 +27,7 @@ describe('HikeProgram selectors', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          hike: hikeReducer
+          [featureName]: hikeReducer
         })
       ],
       declarations: [HikeProgramComponent],

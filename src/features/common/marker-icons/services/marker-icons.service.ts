@@ -3,6 +3,7 @@ import { take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
+import { SVG_CIRCLES } from '../assets/circle';
 import { SVG_ICONS } from '../assets/icons';
 import { SVG_MARKERS } from '../assets/markers';
 import { EIconStyle } from '../enums';
@@ -19,6 +20,7 @@ export class MarkerIconsService {
   init(): void {
     const iconContents: Array<SvgContent> = [];
     const markerContents: Array<SvgContent> = [];
+    const circleContents: Array<SvgContent> = [];
 
     Object.keys(SVG_ICONS).forEach((type: string) => {
       iconContents.push({
@@ -34,9 +36,17 @@ export class MarkerIconsService {
       });
     });
 
+    Object.keys(SVG_CIRCLES).forEach((type: string) => {
+      circleContents.push({
+        id: type,
+        content: SVG_CIRCLES[type]
+      });
+    });
+
     setTimeout(() => {
       this._store.dispatch(new markerIconsActions.AddSvgIconContents(iconContents));
       this._store.dispatch(new markerIconsActions.AddSvgMarkerContents(markerContents));
+      this._store.dispatch(new markerIconsActions.AddSvgCircleContents(circleContents));
     });
   }
 
@@ -59,6 +69,20 @@ export class MarkerIconsService {
     this._store
       .pipe(
         select(markerIconSelectors.getMarker(type, encoded, iconStyle)),
+        take(1)
+      )
+      .subscribe((markerContent: string) => {
+        content = markerContent;
+      });
+
+    return content;
+  }
+
+  getCircleMarker(type: string, encoded: boolean, iconStyle: EIconStyle = EIconStyle.DEFAULT): string {
+    let content = '';
+    this._store
+      .pipe(
+        select(markerIconSelectors.getCircle(type, encoded, iconStyle)),
         take(1)
       )
       .subscribe((markerContent: string) => {

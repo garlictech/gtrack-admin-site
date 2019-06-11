@@ -3,7 +3,7 @@ import { combineLatest, Observable, Subject } from 'rxjs';
 import { delay, filter, map, take, takeUntil, tap } from 'rxjs/operators';
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store/selectors';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store';
 import { EObjectMarkContext } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { ObjectMarkSelectors } from '@bit/garlictech.angular-features.common.object-mark';
 import * as actions from '@bit/garlictech.angular-features.common.object-mark/store/actions';
@@ -25,7 +25,7 @@ export class BookmarkComponent implements OnDestroy, OnInit {
 
   constructor(
     protected _objectMarkSelectors: ObjectMarkSelectors,
-    protected _authSelectors: AuthenticationSelectors,
+    protected _authSelectors: AuthenticationSelectors.Selectors,
     protected _store: Store<any>
   ) {
     this._destroy$ = new Subject<boolean>();

@@ -3,7 +3,11 @@
     $styles: map-get($utilities, $class);
 
     @each $style, $value in $styles {
-      #{$style}: #{$value};
+      @if ($style) {
+        #{$style}: #{$value};
+      } @else {
+        @warn "Invalid class #{$class}";
+      }
     }
   }
 }

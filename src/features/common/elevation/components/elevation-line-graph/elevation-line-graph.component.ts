@@ -10,8 +10,13 @@ import { ElevationData } from '@bit/garlictech.angular-features.common.gtrack-in
 })
 export class ElevationLineGraphComponent implements AfterViewInit, OnChanges {
   @Input() elevationData: ElevationData;
+  @Input() stroke: string;
 
   line: string;
+
+  constructor() {
+    this.stroke = 'black';
+  }
 
   ngAfterViewInit(): void {
     this._createLine();

@@ -9,6 +9,7 @@ import { LocalStorage } from '../../storage/local-storage.service';
 import { MockStorageService } from '../../storage/test/mock-storage.service';
 import { AuthService } from '../auth.service';
 
+import { AUTH_CONFIG } from '@features/common/authentication/config';
 import { take } from 'rxjs/operators';
 
 describe('AuthService', () => {
@@ -35,6 +36,10 @@ describe('AuthService', () => {
         {
           provide: LocalStorage,
           useClass: MockStorageService
+        },
+        {
+          provide: AUTH_CONFIG,
+          useValue: { apiUrl }
         }
       ]
     });

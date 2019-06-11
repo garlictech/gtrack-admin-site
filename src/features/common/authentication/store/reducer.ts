@@ -70,10 +70,11 @@ export const uiErrorReducer: ActionReducer<UiState> = (state = initialUiState, a
   }
 };
 
-export const logout = (_reducer: any): any =>
-  function(state: any, action: any): any {
+export function logout(_reducer: any): any {
+  return function(state: any, action: any): any {
     return _reducer(action.type === AuthenticationActionTypes.LOGOUT_SUCCESS ? undefined : state, action);
   };
+}
 
 const metaReducers = [logout];
 

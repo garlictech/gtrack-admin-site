@@ -33,6 +33,14 @@ export class GeometryService {
     };
   }
 
+  protected _getLineString(line: GeoJSON.LineString): GeoJSON.Feature<GeoJSON.LineString> {
+    return {
+      type: 'Feature',
+      geometry: line,
+      properties: undefined
+    };
+  }
+
   toRadian(n: number): number {
     return (n * Math.PI) / 180;
   }
@@ -56,6 +64,16 @@ export class GeometryService {
 
   doEnvelope(points: Array<GeoJSON.Position>): [GeoJSON.Position, GeoJSON.Position] {
     const features: Array<GeoJSON.Feature<GeoJSON.Point>> = points.map(point => this.getPoint(point[0], point[1]));
+
+    const featureCollection = turfFeatureCollection(features);
+    const env = envelope(featureCollection);
+    const coordinates = env.geometry.coordinates[0];
+
+    return [[coordinates[0][1], coordinates[0][0]], [coordinates[2][1], coordinates[2][0]]];
+  }
+
+  doPathEnvelope(paths: Array<GeoJSON.LineString>): [GeoJSON.Position, GeoJSON.Position] {
+    const features: Array<GeoJSON.Feature<GeoJSON.LineString>> = paths.map(path => this._getLineString(path));
 
     const featureCollection = turfFeatureCollection(features);
     const env = envelope(featureCollection);

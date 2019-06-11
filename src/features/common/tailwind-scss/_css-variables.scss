@@ -1,0 +1,21 @@
+@if ($silent != true) {
+  :root {
+    @each $prefix, $values in $cssVariables {
+      @include createCssVariable($values, $prefix);
+    }
+
+    @include createCssVariable($screens);
+
+    @each $font, $value in $fonts {
+      $fontStr: null;
+      @for $i from 1 through length($value) {
+        $e: nth($value, $i);
+        $glue: ',';
+
+        $fontStr: if($i != length($value), $fontStr#{$e}#{$glue}, $fontStr#{$e});
+      }
+
+      --font-#{$font}: #{$fontStr};
+    }
+  }
+}

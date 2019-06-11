@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, select } from '@ngrx/store';
 import { PoiStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { select, Store, StoreModule } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import _get from 'lodash-es/get';
-import _values from 'lodash-es/values';
 import _keys from 'lodash-es/keys';
+import _values from 'lodash-es/values';
 import _zipObject from 'lodash-es/zipObject';
 
 import { poiReducer } from '../reducer';
@@ -14,13 +14,14 @@ import { PoiState } from '../state';
 
 import * as actions from '../actions';
 import { PoiSelectors } from '../selectors';
+import { featureName } from '../state';
 import { poisStored as poiFixtures } from './fixtures';
 
 describe('Poi selectors', () => {
   let store: Store<PoiState>;
-  let poisData: PoiStored[];
-  let pois: PoiStored[];
-  let ids: string[];
+  let poisData: Array<PoiStored>;
+  let pois: Array<PoiStored>;
+  let ids: Array<string>;
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
@@ -32,7 +33,7 @@ describe('Poi selectors', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          poi: poiReducer
+          [featureName]: poiReducer
         })
       ],
       providers: [PoiSelectors]

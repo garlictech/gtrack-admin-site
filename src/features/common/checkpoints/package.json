@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.checkpoints",
-  "version": "0.0.25",
+  "version": "0.0.36",
   "homepage": "https://bit.dev/garlictech/angular-features/common/checkpoints",
   "main": "index.ts",
   "dependencies": {
@@ -14,5 +14,8 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

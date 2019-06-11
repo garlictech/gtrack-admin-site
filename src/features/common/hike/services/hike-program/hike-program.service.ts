@@ -29,13 +29,11 @@ export class HikeProgramService {
       );
   }
 
-  query(): Observable<Array<HikeProgramStored>> {
-    return this._deepstream
-      .doQuery<HikeProgramStored>({
-        table: 'hike_programs',
-        query: []
-      })
-      .pipe(take(1));
+  query(query: Array<any> = []): Observable<Array<HikeProgramStored>> {
+    return this._deepstream.doQuery<HikeProgramStored>({
+      table: 'hike_programs',
+      query
+    });
   }
 
   save(hikeProgram: HikeProgramData): Observable<HikeProgramSaveResponse> {

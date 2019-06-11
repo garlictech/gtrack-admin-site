@@ -24,3 +24,7 @@ export * from './segment';
 export * from './state';
 export * from './track';
 export * from './user';
+export * from './object-delete';
+export * from './location';
+export * from './marker-popup-data';
+export * from './elevation';

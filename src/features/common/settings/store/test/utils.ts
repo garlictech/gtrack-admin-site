@@ -1,8 +1,18 @@
 import { EntityState } from '@ngrx/entity';
 
-import { SettingsState, HikeProgramSettingsState, PrivateProfileState, PublicProfileState } from '../state';
+import {
+  featureName,
+  HikeProgramSettingsState,
+  PrivateProfileState,
+  PublicProfileState,
+  SettingsState
+} from '../state';
 
-import { AuthenticationState } from '@bit/garlictech.angular-features.common.authentication-api';
+import {
+  AuthenticationState,
+  featureName as authenticationFeatureName,
+  JwtAuthState
+} from '@bit/garlictech.angular-features.common.authentication/store/state';
 
 const date = new Date('2018-01-01');
 
@@ -23,7 +33,7 @@ export const initialPrivateProfileState: PrivateProfileState = {
         startTime: date,
         speed: 2
       },
-      basic: <any>null
+      basic: null as any
     }
   },
   profileGroups: {}
@@ -46,22 +56,24 @@ export const initialPublicProfileState: EntityState<PublicProfileState> = {
 };
 
 export const initialAuthState: AuthenticationState = {
-  auth: {
-    user: {
-      id: 'test',
-      email: 'test@test.com',
-      createdAt: date,
-      facebookId: '',
-      lastLogin: date,
-      modifiedAt: date,
-      roles: ['user'],
-      verified: true
+  jwtAuth: {
+    auth: {
+      token: 'testtoken',
+      user: {
+        id: 'test',
+        email: 'test@test.com',
+        roles: ['user']
+      }
     },
-    token: 'testtoken'
+    loggingIn: false,
+    failed: undefined,
+    emailSent: false
   },
-  loggingIn: false,
-  failed: null,
-  emailSent: false
+  uiState: {
+    termsAccepted: false,
+    selectedRole: 'user',
+    loginRefused: false
+  }
 };
 
 export const initialState: SettingsState = {
@@ -74,21 +86,25 @@ export const createAuthState = (): AuthenticationState => ({
   ...initialAuthState
 });
 
+export const createJwtAuthState = (): JwtAuthState => ({
+  ...initialAuthState.jwtAuth
+});
+
 export const createFeatureState = (changes: Partial<SettingsState> = {}): SettingsState => ({
   ...initialState,
   ...changes
 });
 
 export interface TestState {
-  authentication: {
-    jwtAuth: AuthenticationState;
+  [authenticationFeatureName]: {
+    jwtAuth: JwtAuthState;
   };
-  'features.settings': SettingsState;
+  [featureName]: SettingsState;
 }
 
 export const createState = (stateParams?: Partial<SettingsState>): TestState => ({
-  authentication: {
-    jwtAuth: createAuthState()
+  [authenticationFeatureName]: {
+    jwtAuth: createJwtAuthState()
   },
-  'features.settings': createFeatureState(stateParams)
+  [featureName]: createFeatureState(stateParams)
 });

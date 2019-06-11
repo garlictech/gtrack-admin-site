@@ -8,4 +8,6 @@ export * from './elevation-poi-icons/elevation-poi-icons.component';
 export * from './elevation-zoom-slider/elevation-zoom-slider.component';
 export * from './elevation-label/elevation-label.component';
 export * from './elevation-line-graph/elevation-line-graph.component';
+export * from './elevation-max-point/elevation-max-point.component';
 export * from './elevation-profile/elevation-profile.component';
+export * from './elevation-profile-line/elevation-profile-line.component';

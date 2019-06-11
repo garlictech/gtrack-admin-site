@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.text-carousel",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "homepage": "https://bit.dev/garlictech/angular-features/web/text-carousel",
   "main": "index.ts",
   "dependencies": {
@@ -11,5 +11,9 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "componentRootFolder": "src/features/web/text-carousel",
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

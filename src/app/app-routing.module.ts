@@ -46,11 +46,11 @@ export const routes: Routes = [
     data: { enabledRole: roles.enabledRoles }
   },
   {
-    path: 'login',
+    path: 'auth/login',
     component: LoginComponent
   },
   {
-    path: 'logout',
+    path: 'auth/logout',
     component: LoginComponent
   },
   fallbackRoute

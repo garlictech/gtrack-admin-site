@@ -15,8 +15,11 @@ import { select as d3Select } from 'd3-selection';
 export class ElevationYAxisLinesComponent implements AfterViewInit, OnChanges {
   @Input() elevationData: ElevationData;
   @Input() lineWidth: number;
+  @Input() stroke: string;
 
-  constructor(private readonly _elementRef: ElementRef) {}
+  constructor(private readonly _elementRef: ElementRef) {
+    this.stroke = '#777';
+  }
 
   ngAfterViewInit(): void {
     if (this.elevationData) {
@@ -39,7 +42,7 @@ export class ElevationYAxisLinesComponent implements AfterViewInit, OnChanges {
       g.call(yAxisLines);
       g.select('.domain').remove();
       g.selectAll('.tick line')
-        .attr('stroke', '#777')
+        .attr('stroke', this.stroke)
         .attr('stroke-dasharray', '2,2');
 
       g.selectAll('text').remove();

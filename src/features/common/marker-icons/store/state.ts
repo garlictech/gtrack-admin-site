@@ -9,6 +9,7 @@ export interface SvgContent {
 export interface State {
   icons: SvgContentEntityState;
   markers: SvgContentEntityState;
+  circles: SvgContentEntityState;
 }
 
 export const featureName = 'features.common.marker-icons';

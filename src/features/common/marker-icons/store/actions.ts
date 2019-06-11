@@ -5,7 +5,8 @@ import { SvgContent } from './state';
 export enum ActionTypes {
   Reset = '[Marker icons] Reset',
   AddSvgIconContents = '[Marker icons] Add SVG icon contents',
-  AddSvgMarkerContents = '[Marker icons] Add SVG marker contents'
+  AddSvgMarkerContents = '[Marker icons] Add SVG marker contents',
+  AddSvgCircleContents = '[Marker icons] Add SVG circle contents'
 }
 
 export class Reset implements Action {
@@ -22,4 +23,9 @@ export class AddSvgMarkerContents implements Action {
   constructor(public svgContents: Array<SvgContent>) {}
 }
 
-export type AllActions = Reset | AddSvgIconContents | AddSvgMarkerContents;
+export class AddSvgCircleContents implements Action {
+  readonly type = ActionTypes.AddSvgCircleContents;
+  constructor(public svgContents: Array<SvgContent>) {}
+}
+
+export type AllActions = Reset | AddSvgIconContents | AddSvgMarkerContents | AddSvgCircleContents;

@@ -1,19 +1,19 @@
 {
   "name": "@bit/garlictech.angular-features.common.tailwind-scss",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "homepage": "https://bit.dev/garlictech/angular-features/common/tailwind-scss",
   "main": "styles.scss",
   "dependencies": {},
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/tailwind-scss",
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
+    "env": {},
     "resolveAliases": {
       "add-utility": "@bit/garlictech.angular-features.common.tailwind-scss/mixins/_add-utility.scss",
       "apply": "@bit/garlictech.angular-features.common.tailwind-scss/mixins/_apply.scss",
       "config-to-utility": "@bit/garlictech.angular-features.common.tailwind-scss/mixins/_config-to-utility.scss",
-      "css-variables": "@bit/garlictech.angular-features.common.tailwind-scss/mixins/_css-variables.scss",
+      "css-variables": "@bit/garlictech.angular-features.common.tailwind-scss/_css-variables.scss",
       "media-query": "@bit/garlictech.angular-features.common.tailwind-scss/mixins/_media-query.scss",
       "prefixes": "@bit/garlictech.angular-features.common.tailwind-scss/mixins/_prefixes.scss",
       "appearance": "@bit/garlictech.angular-features.common.tailwind-scss/plugins/_appearance.scss",

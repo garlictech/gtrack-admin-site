@@ -16,6 +16,8 @@
     "@angular/platform-browser": "~7.2.1"
   },
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/localization",
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

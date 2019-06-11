@@ -1,16 +1,13 @@
-import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
-
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { EmailField, FormDescriptor } from '@bit/garlictech.angular-features.common.forms';
 import { currentLanguage } from '@bit/garlictech.angular-features.common.localization/store';
 import { select, Store } from '@ngrx/store';
-
+import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { LoginHandle } from '../../lib';
 import { DebugLog } from '../../log';
-import { AuthenticationActions } from '../../store';
-import { AuthenticationSelectors } from '../../store/selectors';
+import { AuthenticationActions, AuthenticationSelectors } from '../../store';
 
 @Component({
   selector: 'app-authentication-login-box',
@@ -23,7 +20,7 @@ export class LoginBoxComponent extends LoginHandle implements OnInit {
   formDescriptor: FormDescriptor;
   termsChecked: boolean;
 
-  constructor(store: Store<any>, authSelectors: AuthenticationSelectors) {
+  constructor(store: Store<any>, authSelectors: AuthenticationSelectors.Selectors) {
     super(store, authSelectors);
 
     this.termsChecked = false;

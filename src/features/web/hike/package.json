@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.hike",
-  "version": "0.0.12",
+  "version": "0.0.23",
   "homepage": "https://bit.dev/garlictech/angular-features/web/hike",
   "main": "index.ts",
   "dependencies": {
@@ -27,7 +27,9 @@
     "@bit/garlictech.angular-features.common.leaflet-map": "file:../../common/leaflet-map",
     "@bit/garlictech.angular-features.web.forms-primeng": "file:../forms-primeng",
     "@bit/garlictech.angular-features.web.localize": "file:../localize",
-    "@bit/garlictech.angular-features.web.weather": "file:../weather"
+    "@bit/garlictech.angular-features.web.weather": "file:../weather",
+    "@bit/garlictech.angular-features.common.utils": "file:../../common/utils",
+    "@bit/garlictech.angular-features.common.marker-icons": "file:../../common/marker-icons"
   },
   "devDependencies": {},
   "peerDependencies": {},

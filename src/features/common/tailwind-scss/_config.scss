@@ -1,3 +1,5 @@
+$silent: false !default;
+
 $modules: (
   appearance: (
     'responsive'
@@ -176,6 +178,6 @@ $containerConfig: (
   center: true,
   padding: '15px',
   screens: (
-    '1200px'
+    '1260px'
   )
 ) !default;

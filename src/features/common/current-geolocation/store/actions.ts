@@ -5,7 +5,8 @@ import { GeoPosition } from '../interfaces';
 export enum CurrentGeolocationActionTypes {
   CURRENT_LOCATION_OBTAINED = '[Location API] Current Location Obtained',
   START_POSITIONING = '[Location] Start Positioning',
-  END_POSITIONING = '[Location] End Positioning'
+  END_POSITIONING = '[Location] End Positioning',
+  START_BROWSER_POSITIONING = '[Location] Start browser positioning'
 }
 
 export class CurrentLocationObtained implements Action {
@@ -16,6 +17,10 @@ export class CurrentLocationObtained implements Action {
 
 export class StartPositioning {
   readonly type = CurrentGeolocationActionTypes.START_POSITIONING;
+}
+
+export class StartBrowserPositioning {
+  readonly type = CurrentGeolocationActionTypes.START_BROWSER_POSITIONING;
 }
 
 export class EndPositioning {

@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.weather",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "homepage": "https://bit.dev/garlictech/angular-features/web/weather",
   "main": "index.ts",
   "dependencies": {
@@ -13,5 +13,9 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "componentRootFolder": "src/features/web/weather",
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

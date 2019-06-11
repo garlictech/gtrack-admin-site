@@ -14,7 +14,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/authentication-api",
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {}

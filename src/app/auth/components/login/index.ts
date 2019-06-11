@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
-import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store/selectors';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private readonly _store: Store<State>,
     private readonly _title: Title,
-    private readonly _authSelectors: AuthenticationSelectors
+    private readonly _authSelectors: AuthenticationSelectors.Selectors
   ) {
     this.loggingIn$ = of(false);
 

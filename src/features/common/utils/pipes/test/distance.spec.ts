@@ -1,4 +1,4 @@
-import { UnitsService } from 'features/common/units';
+import { UnitsService } from '@bit/garlictech.angular-features.common.units';
 import { DistancePipe } from '../distance.pipe';
 
 describe('DistancePipe', () => {

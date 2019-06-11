@@ -1,25 +1,33 @@
-import { filter, switchMapTo } from 'rxjs/operators';
-
-import { NgModule } from '@angular/core';
-import { Auth, AuthService } from '@bit/garlictech.angular-features.common.authentication-api';
+import { HttpClientModule } from '@angular/common/http';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { Actions as DeepstreamActions } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { LoaderWatchService } from '@bit/garlictech.angular-features.common.generic-ui';
 import { Actions as PopupActions } from '@bit/garlictech.angular-features.common.popup';
 import { RouterActions } from '@bit/garlictech.angular-features.common.router';
 import { EffectsModule } from '@ngrx/effects';
 import { select, Store, StoreModule } from '@ngrx/store';
-
+import { filter, switchMapTo } from 'rxjs/operators';
 import {
   EmailSentComponent,
   FacebookLoginButtonComponent,
   GoogleLoginButtonComponent,
   LoginBoxComponent,
   PasswordlessSuccessComponent,
+  VerifySuccessComponent,
   WidgetComponent
 } from './components';
+import { AUTH_CONFIG } from './config';
 import { DebugLog, log } from './log';
-import { AUTHENTICATION_REDUCER_TOKEN, AuthenticationActions, Effects, featureName, getReducers } from './store';
-import { AuthenticationSelectors } from './store/selectors';
+import { AuthService } from './services';
+import {
+  Auth,
+  AUTHENTICATION_REDUCER_TOKEN,
+  AuthenticationActions,
+  AuthenticationSelectors,
+  featureName,
+  getReducers
+} from './store';
+import { Effects } from './store/effects';
 
 // tslint:disable-next-line: only-arrow-functions
 export function initializerFactory(auth: AuthService, store: Store<any>): () => void {
@@ -44,15 +52,29 @@ export function initializerFactory(auth: AuthService, store: Store<any>): () => 
     GoogleLoginButtonComponent,
     LoginBoxComponent,
     PasswordlessSuccessComponent,
+    VerifySuccessComponent,
     WidgetComponent
   ],
-  imports: [StoreModule.forFeature(featureName, AUTHENTICATION_REDUCER_TOKEN), EffectsModule.forFeature([Effects])],
-  exports: [LoginBoxComponent, WidgetComponent],
-  providers: [{ provide: AUTHENTICATION_REDUCER_TOKEN, useFactory: getReducers }]
+  imports: [
+    StoreModule.forFeature(featureName, AUTHENTICATION_REDUCER_TOKEN),
+    EffectsModule.forFeature([Effects]),
+    HttpClientModule
+  ],
+  exports: [LoginBoxComponent, WidgetComponent]
 })
 export class AuthenticationModule {
+  static forRoot(config): ModuleWithProviders {
+    return {
+      ngModule: AuthenticationModule,
+      providers: [
+        { provide: AUTHENTICATION_REDUCER_TOKEN, useFactory: getReducers },
+        { provide: AUTH_CONFIG, useValue: config }
+      ]
+    };
+  }
+
   constructor(
-    private readonly _authSelectors: AuthenticationSelectors,
+    private readonly _authSelectors: AuthenticationSelectors.Selectors,
     private readonly _store: Store<any>,
     private readonly _loaderWatch: LoaderWatchService
   ) {

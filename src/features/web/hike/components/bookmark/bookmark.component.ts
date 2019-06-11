@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store/selectors';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store';
 import { BookmarkComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 import { ObjectMarkSelectors } from '@bit/garlictech.angular-features.common.object-mark';
 import { faBookmark as faBookmarkRegular } from '@fortawesome/free-regular-svg-icons';
@@ -17,7 +17,7 @@ export class BookmarkComponent extends BaseComponent {
 
   constructor(
     protected _objectMarkSelectors: ObjectMarkSelectors,
-    protected _authSelectors: AuthenticationSelectors,
+    protected _authSelectors: AuthenticationSelectors.Selectors,
     protected _store: Store<any>
   ) {
     super(_objectMarkSelectors, _authSelectors, _store);

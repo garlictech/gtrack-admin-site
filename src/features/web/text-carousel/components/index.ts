@@ -1,1 +1,1 @@
-export * from './text-carousel/text-carousel.component';
+export * from './text-carousel';

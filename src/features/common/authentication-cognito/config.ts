@@ -6,6 +6,7 @@ export interface CognitoConfig {
   responseType: 'token' | 'code';
   userPoolId: string;
   userPoolClientId: string;
+  userPoolAdminClientId: string;
   scope: Array<string>;
 }
 

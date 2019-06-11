@@ -1,0 +1,13 @@
+:host {
+  ::ng-deep {
+    .leaflet-container {
+      height: 100%;
+    }
+    .leaflet-bottom,
+    .leaflet-left,
+    .leaflet-top,
+    .leaflet-right {
+      z-index: 500 !important;
+    }
+  }
+}

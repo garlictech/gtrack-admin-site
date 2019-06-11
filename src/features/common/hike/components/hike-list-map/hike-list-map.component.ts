@@ -1,8 +1,8 @@
 import * as L from 'leaflet';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _flatten from 'lodash-es/flatten';
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { map as rxjsMap, take, takeUntil, tap } from 'rxjs/operators';
+import { combineLatest, Observable, ReplaySubject, Subject } from 'rxjs';
+import { filter, map as rxjsMap, take, takeUntil, tap } from 'rxjs/operators';
 
 import {
   AfterViewInit,
@@ -46,17 +46,17 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnChanges, O
 
   center: Center;
 
-  @Input() hikePrograms$: Observable<Array<HikeProgram>>;
+  @Input() hikePrograms: Array<HikeProgram>;
   @Input() highlighted: HikeProgram;
   @Output() readonly hikeClick: EventEmitter<HikeProgram>;
 
   @ViewChild('map') map: LeafletMapComponent;
 
   routes: Array<Route>;
-
   routes$: Observable<Array<Route> | undefined>;
   routeIds$: Observable<Array<string>>;
 
+  protected _hikePrograms$: ReplaySubject<Array<HikeProgram>>;
   protected _geoJsons: Array<Array<L.GeoJSON>>;
   protected _destroy$: Subject<boolean>;
   protected _markers: Array<LeafletMapMarker>;
@@ -69,6 +69,7 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnChanges, O
     protected _geometry: GeometryService,
     protected _leafletMarkerPopupService: LeafletMarkerPopupService
   ) {
+    this._hikePrograms$ = new ReplaySubject<Array<HikeProgram>>(1);
     this.hikeClick = new EventEmitter<HikeProgram>();
     this.layers = [
       {
@@ -93,7 +94,7 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnChanges, O
   }
 
   ngOnInit(): void {
-    const routeIds$ = this.hikePrograms$.pipe(
+    const routeIds$ = this._hikePrograms$.pipe(
       takeUntil(this._destroy$),
       rxjsMap(hikePrograms => hikePrograms.map(hikeProgram => hikeProgram.routeId))
     );
@@ -112,7 +113,15 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnChanges, O
           }
         }
       }),
-      rxjsMap(([routeIds, routes]) => routes.filter(route => (route.id ? routeIds.indexOf(route.id) !== -1 : false))),
+      rxjsMap(([routeIds, routes]) =>
+        routes.filter(route => {
+          if (route.id) {
+            return routeIds.indexOf(route.id) !== -1;
+          } else {
+            return false;
+          }
+        })
+      ),
       rxjsMap(data => {
         if (data) {
           return data
@@ -127,9 +136,21 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnChanges, O
     );
   }
 
+  ngAfterViewInit(): void {
+    if (this.hikePrograms instanceof Array) {
+      this._hikePrograms$.next(this.hikePrograms);
+    }
+    this._addHikesToTheMap();
+    this.centerMap();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.highlighted) {
       this.highlightMarker(this.highlighted);
+    }
+
+    if (changes.hikePrograms) {
+      this._hikePrograms$.next(changes.hikePrograms.currentValue);
     }
   }
 
@@ -152,25 +173,32 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnChanges, O
   }
 
   centerMap(): void {
-    this.hikePrograms$.pipe(takeUntil(this._destroy$)).subscribe(hikePrograms => {
-      const points: Array<GeoJSON.Position> = hikePrograms.map(hikeProgram => [
-        hikeProgram.stops[0].lon,
-        hikeProgram.stops[0].lat
-      ]);
+    this.routes$
+      .pipe(
+        filter(routes => routes instanceof Array),
+        filter(routes => routes.length > 0),
+        takeUntil(this._destroy$)
+      )
+      .subscribe(routes => {
+        const lineStrings = routes.map(route => ({
+          ...route.path
+        }));
 
-      const envelope = this._geometry.doEnvelope(points);
-      const southWest = new L.LatLng(envelope[0][0], envelope[0][1]);
-      const northEast = new L.LatLng(envelope[1][0], envelope[1][1]);
-      const box = new L.LatLngBounds(southWest, northEast);
+        console.log(lineStrings);
 
-      this._leafletMapService.fitBounds(box);
-    });
+        const envelope = this._geometry.doPathEnvelope(lineStrings);
+        const southWest = new L.LatLng(envelope[0][0], envelope[0][1]);
+        const northEast = new L.LatLng(envelope[1][0], envelope[1][1]);
+        const box = new L.LatLngBounds(southWest, northEast);
+
+        this._leafletMapService.fitBounds(box, 11);
+      });
   }
 
   protected _addHikesToTheMap(): void {
     const map = this.map;
 
-    this.hikePrograms$.pipe(takeUntil(this._destroy$)).subscribe(hikePrograms => {
+    this._hikePrograms$.pipe(takeUntil(this._destroy$)).subscribe(hikePrograms => {
       this._markers.forEach(marker => marker.removeFromMap(this.map.leafletMap));
       this._markers = [];
 
@@ -247,14 +275,10 @@ export class HikeListMapComponent implements AfterViewInit, OnInit, OnChanges, O
     });
   }
 
-  ngAfterViewInit(): void {
-    this._addHikesToTheMap();
-    this.centerMap();
-  }
-
   ngOnDestroy(): void {
     this._destroy$.next(true);
-    this._destroy$.unsubscribe();
+    this._destroy$.complete();
+    this._hikePrograms$.complete();
   }
 
   addGeoJson(geojson: any, map: L.Map): void {

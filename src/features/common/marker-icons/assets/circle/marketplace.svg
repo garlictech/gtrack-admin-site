@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>normal/marketplace</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-37.5%" y="-27.3%" width="175.0%" height="154.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.4 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="new-icons-normal" transform="translate(-411.000000, -88.000000)" fill-rule="nonzero">
+            <g id="normal/marketplace" filter="url(#filter-1)" transform="translate(417.000000, 94.000000)">
+                <g id="pin/normal">
+                    <circle id="Oval" fill="#FFFFFF" stroke="#7C7CF0" stroke-width="4" cx="16" cy="16" r="17"></circle>
+                </g>
+                <g id="icon/normal/marketplace" transform="translate(8.000000, 8.000000)" fill="#7C7CF0">
+                    <path d="M13,11 L13,4.81532327 C12.4022004,4.57664231 12,4.13053176 12,3.6195889 C12,4.38196407 11.1045625,5 10,5 C8.8954375,5 8,4.38196407 8,3.6195889 C8,4.38196407 7.1045625,5 6,5 C4.8954375,5 4,4.38196407 4,3.6195889 C4,4.13053176 3.59779962,4.57664231 3,4.81532327 L3,11 L4,11 L4,8 L7,8 L7,11 L9,11 L9,6 L12,6 L12,11 L13,11 Z M13,13 L3,13 L3,16 L1,16 L1,4.81532327 C0.402200378,4.57664231 0,4.13053176 0,3.6195889 L1.53146875,0 L14.4685313,0 L16,3.6195889 C16,4.13053176 15.5977996,4.57664231 15,4.81532327 L15,16 L13,16 L13,13 Z" id="icon"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

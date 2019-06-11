@@ -2,8 +2,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
+import { TrustedPipesModule } from '@bit/garlictech.angular-features.common.generic-ui/pipes/trusted-pipes';
 import { StoreModule } from '@ngrx/store';
 
+import { CircleIconComponent } from './components/circle-icon';
 import { IconComponent } from './components/icon';
 import { MarkerIconsService } from './services';
 import { markerIconsReducer } from './store';
@@ -17,9 +19,14 @@ export function _init(_markerIconsService: MarkerIconsService): () => void {
 }
 
 @NgModule({
-  imports: [CommonModule, AngularSvgIconModule, StoreModule.forFeature(featureName, markerIconsReducer)],
-  declarations: [IconComponent],
-  exports: [IconComponent]
+  imports: [
+    CommonModule,
+    AngularSvgIconModule,
+    StoreModule.forFeature(featureName, markerIconsReducer),
+    TrustedPipesModule
+  ],
+  declarations: [IconComponent, CircleIconComponent],
+  exports: [IconComponent, CircleIconComponent]
 })
 export class MarkerIconsModule {
   static forRoot(): ModuleWithProviders {

@@ -1,26 +1,25 @@
 {
   "name": "@bit/garlictech.angular-features.common.leaflet-map",
-  "version": "0.0.43",
+  "version": "0.0.52",
   "homepage": "https://bit.dev/garlictech/angular-features/common/leaflet-map",
   "main": "index.ts",
   "dependencies": {
+    "@angular/common": "~7.2.1",
     "@angular/core": "~7.2.1",
     "@ngrx/store": "~7.1.0",
-    "leaflet": "^1.0.3",
-    "rxjs": "~6.3.2",
-    "@angular/common": "~7.2.1",
     "geojson": "^0.5.0",
-    "leaflet.fullscreen": "^1.4.5",
-    "overlapping-marker-spiderfier-leaflet": "^0.2.6-2",
-    "lodash-es": "^4.17.11",
+    "leaflet": "^1.0.3",
     "leaflet-usermarker": "^1.0.0",
+    "leaflet.fullscreen": "^1.4.5",
     "lodash": "^4.17.4",
-    "@bit/garlictech.angular-features.common.current-geolocation": "file:../current-geolocation",
-    "@bit/garlictech.angular-features.web.spinner": "file:../../web/spinner",
-    "@bit/garlictech.angular-features.common.marker-icons": "file:../marker-icons",
-    "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces"
+    "lodash-es": "^4.17.11",
+    "overlapping-marker-spiderfier-leaflet": "^0.2.6-2",
+    "rxjs": "~6.3.2"
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

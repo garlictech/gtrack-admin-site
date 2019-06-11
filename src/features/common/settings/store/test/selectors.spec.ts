@@ -3,6 +3,7 @@ import { scan, takeUntil, tap } from 'rxjs/operators';
 
 import { TestBed } from '@angular/core/testing';
 import { reducer as authenticationReducer } from '@bit/garlictech.angular-features.common.authentication/store/reducer';
+import { featureName as authenticationFeatureName } from '@bit/garlictech.angular-features.common.authentication/store/state';
 import { EAuthRoles } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store, StoreModule } from '@ngrx/store';
 
@@ -28,7 +29,7 @@ describe('Settings selectors', () => {
 
     const reducers: any = {};
     reducers[featureName] = reducer;
-    reducers.authentication = authenticationReducer;
+    reducers[authenticationFeatureName] = authenticationReducer;
 
     destroy$ = new Subject<boolean>();
 

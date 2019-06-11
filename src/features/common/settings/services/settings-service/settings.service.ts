@@ -3,7 +3,7 @@ import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { User } from '@bit/garlictech.angular-features.common.authentication';
-import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store/selectors';
+import { Selectors as AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store/selectors';
 import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { EToastSeverity } from '@bit/garlictech.angular-features.common.generic-ui';
 import * as fromGenericUiActions from '@bit/garlictech.angular-features.common.generic-ui/store/actions';

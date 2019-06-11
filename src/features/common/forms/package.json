@@ -1,26 +1,28 @@
 {
   "name": "@bit/garlictech.angular-features.common.forms",
-  "version": "0.0.10",
+  "version": "0.0.13",
   "homepage": "https://bit.dev/garlictech/angular-features/common/forms",
   "main": "index.ts",
   "dependencies": {
+    "@angular/common": "~7.2.1",
     "@angular/core": "~7.2.1",
     "@angular/forms": "~7.2.1",
+    "@angular/platform-browser": "~7.2.1",
     "@ngrx/store": "~7.1.0",
     "@ngx-translate/core": "^11.0.1",
-    "lodash-es": "^4.17.11",
-    "rxjs": "~6.3.2",
-    "lodash": "^4.17.4",
+    "google-libphonenumber": "3.2.2",
     "jest-create-mock-instance": "^1.1.0",
     "jest-marbles": "^2.1.0",
+    "lodash": "^4.17.4",
+    "lodash-es": "^4.17.11",
     "ng2-logger": "^2.0.0",
-    "@angular/common": "~7.2.1",
-    "@angular/platform-browser": "~7.2.1",
     "password-validator": "^4.1.1",
-    "google-libphonenumber": "3.2.2",
-    "@bit/garlictech.angular-features.common.utils": "file:../utils"
+    "rxjs": "~6.3.2"
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

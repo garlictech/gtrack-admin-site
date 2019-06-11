@@ -12,9 +12,13 @@ export const svgIconContentInitialState = svgIconContentAdapter.getInitialState(
 export const svgMarkerContentAdapter: EntityAdapter<SvgContent> = createEntityAdapter<SvgContent>();
 export const svgMarkerContentInitialState = svgMarkerContentAdapter.getInitialState();
 
+export const svgCircleContentAdapter: EntityAdapter<SvgContent> = createEntityAdapter<SvgContent>();
+export const svgCircleContentInitialState = svgCircleContentAdapter.getInitialState();
+
 export const initialState: State = {
   icons: undefined,
-  markers: undefined
+  markers: undefined,
+  circles: undefined
 };
 
 export function svgIconsReducer(
@@ -51,9 +55,27 @@ export function svgMarkerReducer(
   }
 }
 
+export function svgCircleReducer(
+  state: SvgContentEntityState = svgCircleContentInitialState,
+  action: MarkerIconsAction
+): SvgContentEntityState {
+  switch (action.type) {
+    case ActionTypes.Reset:
+      return { ...svgCircleContentInitialState };
+
+    case ActionTypes.AddSvgCircleContents: {
+      return svgIconContentAdapter.addAll(action.svgContents, state);
+    }
+
+    default:
+      return state;
+  }
+}
+
 const reducerMap: ActionReducerMap<State> = {
   icons: svgIconsReducer,
-  markers: svgMarkerReducer
+  markers: svgMarkerReducer,
+  circles: svgCircleReducer
 };
 
 const reducer: ActionReducer<State> = combineReducers(reducerMap);

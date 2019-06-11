@@ -14,6 +14,7 @@ import { select as d3Select } from 'd3-selection';
 })
 export class ElevationYAxisComponent implements AfterViewInit, OnChanges {
   @Input() elevationData: ElevationData;
+  @Input() ticks: number;
 
   constructor(private readonly _elementRef: ElementRef) {}
 
@@ -34,6 +35,10 @@ export class ElevationYAxisComponent implements AfterViewInit, OnChanges {
   addAxis(): void {
     // The vertical axis
     const yAxisVertical = d3AxisLeft(this.elevationData.yRange).tickSize(5);
+
+    if (this.ticks) {
+      yAxisVertical.ticks(this.ticks);
+    }
 
     d3Select(this._elementRef.nativeElement).call(yAxisVertical);
   }

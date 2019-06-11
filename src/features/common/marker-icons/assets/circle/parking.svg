@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>normal/parking</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-37.5%" y="-27.3%" width="175.0%" height="154.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.4 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="new-icons-normal" transform="translate(-539.000000, -88.000000)" fill-rule="nonzero">
+            <g id="normal/parking" filter="url(#filter-1)" transform="translate(545.000000, 94.000000)">
+                <g id="pin/normal">
+                    <circle id="Oval" fill="#FFFFFF" stroke="#7C7CF0" stroke-width="4" cx="16" cy="16" r="17"></circle>
+                </g>
+                <g id="icon/normal/parking" transform="translate(8.000000, 8.000000)" fill="#7C7CF0">
+                    <path d="M12.919286,8.71178612 C11.6961287,9.86479822 9.87736329,10.3827455 7.7579755,10.3827455 C7.28762673,10.3827455 6.88491799,10.3589463 6.52792892,10.311974 L6.52792892,16 L3,16 L3,0.330058324 C4.10979763,0.141543038 5.65299252,-3.55271368e-15 7.84252554,-3.55271368e-15 C10.0558578,-3.55271368e-15 11.629115,0.424002818 12.6894352,1.27200846 C13.7009042,2.07178925 14.3823149,3.39076995 14.3823149,4.9439856 C14.3823149,6.49908013 13.8624887,7.81806083 12.919286,8.71178612 Z M8.0172623,2.70810663 C7.28700043,2.70810663 6.80537832,2.77825185 6.52792892,2.84902337 L6.52792892,7.53372216 C6.84483501,7.60449368 7.21685521,7.62766665 7.73480252,7.62766665 C9.64187576,7.62766665 10.8186871,6.66191725 10.8186871,5.03855639 C10.8193134,3.57865894 9.80596548,2.70810663 8.0172623,2.70810663 Z" id="icon"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Actions as AuthActions } from '@bit/garlictech.angular-features.common.authentication-api';
 import { AuthGuard, RoleGuard } from '@bit/garlictech.angular-features.common.authentication/guards';
-import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store/selectors';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store';
 import { select, Store } from '@ngrx/store';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class RouteRedirectGuard implements CanActivate {
     private readonly _auth: AuthGuard,
     private readonly _role: RoleGuard,
     private readonly _store: Store<State>,
-    private readonly _selectors: AuthenticationSelectors
+    private readonly _selectors: AuthenticationSelectors.Selectors
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

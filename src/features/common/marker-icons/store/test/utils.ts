@@ -12,9 +12,10 @@ export const createSvgContentEntityState = (svgContents: Array<SvgContent>) => (
 });
 
 // tslint:disable-next-line:no-unnecessary-initializer
-export const createFeatureState = ({ markers = undefined, icons = undefined } = {}): State => ({
+export const createFeatureState = ({ markers = undefined, icons = undefined, circles = undefined } = {}): State => ({
   markers,
-  icons
+  icons,
+  circles
 });
 
 export const createState = (stateParams?: any): { [featureName]: State } => ({

@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.object-mark",
-  "version": "0.0.12",
+  "version": "0.0.30",
   "homepage": "https://bit.dev/garlictech/angular-features/common/object-mark",
   "main": "index.ts",
   "dependencies": {
@@ -12,12 +12,12 @@
     "@ngrx/entity": "~7.1.0",
     "lodash-es": "^4.17.11",
     "jest-marbles": "^2.1.0",
-    "@bit/garlictech.angular-features.common.deepstream-ngx": "file:../deepstream-ngx",
-    "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces",
     "@bit/garlictech.angular-features.common.authentication": "file:../authentication"
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/object-mark",
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

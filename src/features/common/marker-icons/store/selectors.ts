@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { EIconStyle } from '../enums';
 import { getSvgContent } from '../pure';
-import { svgIconContentAdapter, svgMarkerContentAdapter } from './reducer';
+import { svgCircleContentAdapter, svgIconContentAdapter, svgMarkerContentAdapter } from './reducer';
 import { featureName, State, SvgContent } from './state';
 
 export const featureSelector = createFeatureSelector<State>(featureName);
@@ -30,5 +30,18 @@ export const getAllSvgMarkersCount = svgMarkerContentAdapter.getSelectors(svgMar
 export const getMarker = (type: string, encoded: boolean, iconStyle: EIconStyle) =>
   createSelector(
     getAllSvgMarkers,
+    (svgContents: Array<SvgContent>) => getSvgContent(type, svgContents, encoded, iconStyle)
+  );
+
+const svgCircleSelector = createSelector(
+  featureSelector,
+  (state: State) => state.circles
+);
+export const getAllSvgCircles = svgCircleContentAdapter.getSelectors(svgCircleSelector).selectAll;
+export const getAllSvgCirclesCount = svgCircleContentAdapter.getSelectors(svgCircleSelector).selectTotal;
+
+export const getCircle = (type: string, encoded: boolean, iconStyle: EIconStyle) =>
+  createSelector(
+    getAllSvgCircles,
     (svgContents: Array<SvgContent>) => getSvgContent(type, svgContents, encoded, iconStyle)
   );

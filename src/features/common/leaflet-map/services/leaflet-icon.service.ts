@@ -1,8 +1,7 @@
 import * as L from 'leaflet';
 
 import { Injectable } from '@angular/core';
-import { EIconStyle } from '@bit/garlictech.angular-features.common.marker-icons';
-import { MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons/services';
+import { EIconStyle, MarkerIconsService } from '@bit/garlictech.angular-features.common.marker-icons';
 
 @Injectable({
   providedIn: 'root'

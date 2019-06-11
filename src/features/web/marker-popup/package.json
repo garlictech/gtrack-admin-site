@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.marker-popup",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://bit.dev/garlictech/angular-features/web/marker-popup",
   "main": "index.ts",
   "dependencies": {

@@ -1,6 +1,6 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 // tslint:disable no-var-requires no-require-imports
-const passwordValidator = require('password-validator');
+import passwordValidator from 'password-validator';
 
 const schema = new passwordValidator();
 

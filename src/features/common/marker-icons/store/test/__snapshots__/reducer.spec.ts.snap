@@ -2,6 +2,10 @@
 
 exports[`AddSvgIconContents with initial state {} 1`] = `
 Object {
+  "circles": Object {
+    "entities": Object {},
+    "ids": Array [],
+  },
   "icons": Object {
     "entities": Object {
       "atm": Object {
@@ -27,6 +31,10 @@ Object {
 
 exports[`AddSvgMarkerContents with initial state {} 1`] = `
 Object {
+  "circles": Object {
+    "entities": Object {},
+    "ids": Array [],
+  },
   "icons": Object {
     "entities": Object {},
     "ids": Array [],
@@ -52,6 +60,10 @@ Object {
 
 exports[`Reset with initial state {"markers":{"ids":["atm","bank"],"entities":{"atm":{"id":"atm","content":"<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>"},"bank":{"id":"bank","content":"<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>"}}},"icons":{"ids":["atm","bank"],"entities":{"atm":{"id":"atm","content":"<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>"},"bank":{"id":"bank","content":"<svg><path id=\\"icon\\" fill=\\"#7C7CF0\\"></path></svg>"}}}} 1`] = `
 Object {
+  "circles": Object {
+    "entities": Object {},
+    "ids": Array [],
+  },
   "icons": Object {
     "entities": Object {},
     "ids": Array [],

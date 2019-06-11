@@ -28,7 +28,7 @@ export const updateColors = (svgContent = '', type: string, iconStyle: EIconStyl
       break;
   }
 
-  return svgContent.replace(new RegExp(`fill="${originalSvgColor}"`, 'g'), `fill="${fillColor}"`);
+  return svgContent.replace(new RegExp(`(fill|stroke)="${originalSvgColor}"`, 'g'), `$1="${fillColor}"`);
 };
 
 export const getFileId = (type: string): string => {

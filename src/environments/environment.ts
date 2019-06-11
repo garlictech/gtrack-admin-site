@@ -19,9 +19,10 @@ export const environment: Environment = {
     cognito: {
       domain: 'gtrack.auth.us-east-1.amazoncognito.com',
       region: 'us-east-1',
-      responseType: 'token',
+      responseType: 'code',
       userPoolId: 'us-east-1_2O173W10c',
       userPoolClientId: '2rp9tv9kkprvjs7i29kckg48ds',
+      userPoolAdminClientId: '3ppjavs9rc4hs600oqp9lvvie1',
       scope: ['email', 'profile', 'openid', 'aws.cognito.signin.user.admin']
     }
   },

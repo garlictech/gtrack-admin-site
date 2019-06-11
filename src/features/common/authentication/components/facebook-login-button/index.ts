@@ -1,13 +1,10 @@
-import { switchMap, take } from 'rxjs/operators';
-
 import { Component } from '@angular/core';
 import { faFacebookF, IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { Store } from '@ngrx/store';
-
+import { switchMap, take } from 'rxjs/operators';
 import { LoginHandle } from '../../lib';
 import { DebugLog } from '../../log';
-import { AuthenticationActions } from '../../store';
-import { AuthenticationSelectors } from '../../store/selectors';
+import { AuthenticationActions, AuthenticationSelectors } from '../../store';
 
 @Component({
   selector: 'app-authentication-facebook-login-button',
@@ -16,7 +13,7 @@ import { AuthenticationSelectors } from '../../store/selectors';
 export class FacebookLoginButtonComponent extends LoginHandle {
   icon: IconDefinition;
 
-  constructor(store: Store<any>, selectors: AuthenticationSelectors) {
+  constructor(store: Store<any>, selectors: AuthenticationSelectors.Selectors) {
     super(store, selectors);
 
     this.icon = faFacebookF;

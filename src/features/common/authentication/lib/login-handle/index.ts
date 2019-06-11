@@ -1,16 +1,13 @@
-import { Observable } from 'rxjs';
-import { filter, switchMapTo, take, tap } from 'rxjs/operators';
-
 import { RouterActions } from '@bit/garlictech.angular-features.common.router';
 import { select, Store } from '@ngrx/store';
-
-import { AuthenticationActions } from '../../store';
-import { AuthenticationSelectors } from '../../store/selectors';
+import { Observable } from 'rxjs';
+import { filter, switchMapTo, take, tap } from 'rxjs/operators';
+import { AuthenticationActions, AuthenticationSelectors } from '../../store';
 
 export class LoginHandle {
   protected _selectedRole$: Observable<string>;
 
-  constructor(protected _store: Store<any>, protected _selectors: AuthenticationSelectors) {
+  constructor(protected _store: Store<any>, protected _selectors: AuthenticationSelectors.Selectors) {
     this._selectedRole$ = this._store.pipe(select(this._selectors.selectedRole));
   }
 

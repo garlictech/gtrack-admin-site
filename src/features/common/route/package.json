@@ -1,25 +1,24 @@
 {
   "name": "@bit/garlictech.angular-features.common.route",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "homepage": "https://bit.dev/garlictech/angular-features/common/route",
   "main": "index.ts",
   "dependencies": {
     "lodash-es": "^4.17.11",
     "@angular/core": "~7.2.1",
+    "@ngrx/effects": "~7.1.0",
     "@ngrx/store": "~7.1.0",
     "d3-geo": "^1.11.3",
     "rxjs": "~6.3.2",
-    "@ngrx/effects": "~7.1.0",
     "@ngrx/entity": "~7.1.0",
     "uuid": "3.3.2",
     "@angular/common": "~7.2.1",
-    "jest-marbles": "^2.1.0",
-    "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces",
-    "@bit/garlictech.angular-features.common.deepstream-ngx": "file:../deepstream-ngx",
-    "@bit/garlictech.angular-features.common.geometry": "file:../geometry",
-    "@bit/garlictech.angular-features.common.units": "file:../units"
+    "jest-marbles": "^2.1.0"
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

@@ -10,3 +10,7 @@ export * from './hike-list-map';
 export * from './hike-program';
 export * from './reverse-hike-button';
 export * from './trail-box';
+export * from './location-search';
+export * from './hike-settings';
+export * from './hike-list';
+export * from './search-results-map';

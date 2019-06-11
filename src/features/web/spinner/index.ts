@@ -1,2 +1,1 @@
-export * from './components';
-export * from './spinner.module';
+export * from './components/index';

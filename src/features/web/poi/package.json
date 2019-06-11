@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.poi",
-  "version": "0.0.10",
+  "version": "0.0.18",
   "homepage": "https://bit.dev/garlictech/angular-features/web/poi",
   "main": "index.ts",
   "dependencies": {
@@ -11,5 +11,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
+  "componentRootFolder": "src/features/web/poi",
   "license": "SEE LICENSE IN LICENSE"
 }

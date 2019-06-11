@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.deepstream-ngx",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "homepage": "https://bit.dev/garlictech/angular-features/common/deepstream-ngx",
   "main": "index.ts",
   "dependencies": {
@@ -10,10 +10,12 @@
     "@ngrx/store": "~7.1.0",
     "lodash-es": "^4.17.11",
     "@ngrx/effects": "~7.1.0",
-    "ng2-logger": "^2.0.0",
-    "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces"
+    "ng2-logger": "^2.0.0"
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

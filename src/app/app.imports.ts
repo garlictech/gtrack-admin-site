@@ -8,6 +8,7 @@ import {
   AuthenticationApiModule,
   defaultAuthenticationApiConfig
 } from '@bit/garlictech.angular-features.common.authentication-api';
+import { CheckpointsModule } from '@bit/garlictech.angular-features.common.checkpoints';
 import { CurrentGeolocationModule } from '@bit/garlictech.angular-features.common.current-geolocation';
 import { DeepstreamModule } from '@bit/garlictech.angular-features.common.deepstream-ngx/src/lib';
 import { GeoSearchModule } from '@bit/garlictech.angular-features.common.geosearch';
@@ -75,7 +76,9 @@ export const APP_IMPORTS = [
   RouterModule,
   GenericUiModule,
   AuthModule,
-  AuthenticationModule,
+  AuthenticationModule.forRoot({
+    apiUrl: environment.lambdaEndpoint
+  }),
   AuthenticationApiModule.forRoot(getAuthConfig),
   SearchFiltersModule,
   GeoSearchModule,
@@ -93,6 +96,7 @@ export const APP_IMPORTS = [
   MarkerIconsModule.forRoot(),
   HikeListModule,
   HikeEditModule,
+  CheckpointsModule,
   ToastModule,
   TranslateModule.forRoot({
     loader: {

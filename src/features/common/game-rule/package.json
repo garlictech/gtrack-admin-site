@@ -8,7 +8,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/game-rule",
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {}

@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.search",
-  "version": "0.0.14",
+  "version": "0.0.25",
   "homepage": "https://bit.dev/garlictech/angular-features/common/search",
   "main": "index.ts",
   "dependencies": {
@@ -21,5 +21,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
+  "componentRootFolder": "src/features/common/search",
   "license": "SEE LICENSE IN LICENSE"
 }

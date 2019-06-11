@@ -38,4 +38,15 @@ describe('MarkerIcon actions', () => {
       svgContents: contents
     });
   });
+
+  it('should create AddSvgCircleContents action', () => {
+    const contents = [createSvgContent('atm'), createSvgContent('bank')];
+    const action = new actions.AddSvgCircleContents(contents);
+
+    expect(action).toBeDefined();
+    expect({ ...action }).toEqual({
+      type: actions.ActionTypes.AddSvgCircleContents,
+      svgContents: contents
+    });
+  });
 });

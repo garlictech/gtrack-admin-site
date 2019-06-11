@@ -5,36 +5,36 @@ import * as uuid from 'uuid/v1';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { DeepstreamModule, DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { GeoSearchSelectors } from '@bit/garlictech.angular-features.common.geosearch';
-import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
-import { DeepstreamService, DeepstreamModule } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { EObjectState, HikeProgramStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { SearchFiltersSelectors } from '@bit/garlictech.angular-features.common.search-filters';
 import { EffectsModule } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { StoreModule } from '@ngrx/store';
 
+import { CheckpointService } from '@bit/garlictech.angular-features.common.checkpoints';
 import { HikeProgramService } from '../../services/hike-program';
 import { hikeProgramsStored } from '../../testing/fixtures';
 import * as hikeProgramActions from '../actions';
 import { HikeEffects } from '../effects';
 import { hikeReducer } from '../reducer';
 import { HikeSelectors } from '../selectors';
-import { HikeState } from '../state';
-import { CheckpointService } from '@bit/garlictech.angular-features.common.checkpoints';
+import { featureName, HikeState } from '../state';
 
 describe('HikeProgram effects', () => {
   let hikeProgramsMap: {
     [key: string]: HikeProgramStored;
   };
 
-  let hikePrograms: HikeProgramStored[];
+  let hikePrograms: Array<HikeProgramStored>;
 
   let actions$: Observable<any>;
   let hikeProgramService: HikeProgramService;
   let checkpointService: CheckpointService;
   let effects: HikeEffects;
 
-  let ids: string[];
+  let ids: Array<string>;
   let newId: string;
 
   beforeEach(() => {
@@ -69,11 +69,11 @@ describe('HikeProgram effects', () => {
       imports: [
         StoreModule.forRoot(
           {
-            hike: hikeReducer
+            [featureName]: hikeReducer
           },
           {
             initialState: {
-              hike: state
+              [featureName]: state
             }
           }
         ),

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
-import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store/selectors';
+import { AuthenticationSelectors } from '@bit/garlictech.angular-features.common.authentication/store';
 import { DeepstreamService } from '@bit/garlictech.angular-features.common.deepstream-ngx';
 import { EObjectMarkContext, ObjectMark } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
 import { select, Store } from '@ngrx/store';
@@ -13,7 +13,7 @@ import { DebugLog, log } from '../log';
 export class ObjectMarkService {
   constructor(
     private readonly _deepstream: DeepstreamService,
-    private readonly _authSelectors: AuthenticationSelectors,
+    private readonly _authSelectors: AuthenticationSelectors.Selectors,
     private readonly _store: Store<any>
   ) {}
 

@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.hike",
-  "version": "0.0.17",
+  "version": "0.0.39",
   "homepage": "https://bit.dev/garlictech/angular-features/common/hike",
   "main": "index.ts",
   "dependencies": {
@@ -16,10 +16,11 @@
     "@ngrx/effects": "~7.1.0",
     "@ngx-translate/core": "^11.0.1",
     "leaflet": "^1.4.0",
+    "@turf/distance": "6.0.1",
+    "@turf/helpers": "^6.1.4",
     "@turf/bbox-polygon": "5.1.5",
     "@turf/bbox": "5.1.5",
     "@turf/boolean-point-in-polygon": "^6.0.1",
-    "@turf/helpers": "^6.1.4",
     "@turf/nearest-point-on-line": "^6.0.2",
     "@turf/transform-scale": "^5.1.5",
     "@fortawesome/angular-fontawesome": "^0.3.0",
@@ -28,30 +29,13 @@
     "uuid": "3.3.2",
     "@angular/common": "~7.2.1",
     "jest-marbles": "^2.1.0",
-    "@bit/garlictech.angular-features.common.authentication": "file:../authentication",
-    "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces",
-    "@bit/garlictech.angular-features.common.object-mark": "file:../object-mark",
     "@bit/garlictech.angular-features.common.checkpoints": "file:../checkpoints",
-    "@bit/garlictech.angular-features.common.poi": "file:../poi",
-    "@bit/garlictech.angular-features.common.route": "file:../route",
-    "@bit/garlictech.angular-features.common.forms": "file:../forms",
-    "@bit/garlictech.angular-features.common.settings": "file:../settings",
-    "@bit/garlictech.angular-features.common.localization": "file:../localization",
-    "@bit/garlictech.angular-features.web.forms-primeng": "file:../../web/forms-primeng",
-    "@bit/garlictech.angular-features.common.current-geolocation": "file:../current-geolocation",
-    "@bit/garlictech.angular-features.common.geometry": "file:../geometry",
-    "@bit/garlictech.angular-features.common.leaflet-map": "file:../leaflet-map",
-    "@bit/garlictech.angular-features.common.astronomy": "file:../astronomy",
-    "@bit/garlictech.angular-features.common.game-rule": "file:../game-rule",
-    "@bit/garlictech.angular-features.common.marker-icons": "file:../marker-icons",
-    "@bit/garlictech.angular-features.common.weather": "file:../weather",
-    "@bit/garlictech.angular-features.common.multi-language-text": "file:../multi-language-text",
-    "@bit/garlictech.angular-features.common.search-filters": "file:../search-filters",
-    "@bit/garlictech.angular-features.common.deepstream-ngx": "file:../deepstream-ngx",
-    "@bit/garlictech.angular-features.common.geosearch": "file:../geosearch"
+    "@bit/garlictech.angular-features.common.authentication": "file:../authentication"
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/hike",
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

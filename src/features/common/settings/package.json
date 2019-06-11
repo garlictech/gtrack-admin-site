@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.settings",
-  "version": "0.0.14",
+  "version": "0.0.35",
   "homepage": "https://bit.dev/garlictech/angular-features/common/settings",
   "main": "index.ts",
   "dependencies": {
@@ -19,17 +19,12 @@
     "@ngrx/entity": "~7.1.0",
     "enum-values": "^1.2.0",
     "jest-marbles": "^2.1.0",
-    "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces",
-    "@bit/garlictech.angular-features.common.forms": "file:../forms",
-    "@bit/garlictech.angular-features.common.generic-ui": "file:../generic-ui",
-    "@bit/garlictech.angular-features.web.forms-primeng": "file:../../web/forms-primeng",
-    "@bit/garlictech.angular-features.common.authentication": "file:../authentication",
-    "@bit/garlictech.angular-features.common.deepstream-ngx": "file:../deepstream-ngx",
-    "@bit/garlictech.angular-features.web.language": "file:../../web/language",
-    "@bit/garlictech.angular-features.common.authentication-api": "file:../authentication-api"
+    "@bit/garlictech.angular-features.common.authentication": "file:../authentication"
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/settings",
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

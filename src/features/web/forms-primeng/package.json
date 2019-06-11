@@ -1,21 +1,22 @@
 {
   "name": "@bit/garlictech.angular-features.web.forms-primeng",
-  "version": "0.0.13",
+  "version": "0.0.21",
   "homepage": "https://bit.dev/garlictech/angular-features/web/forms-primeng",
   "main": "index.ts",
   "dependencies": {
+    "@angular/common": "~7.2.1",
     "@angular/core": "~7.2.1",
     "@angular/forms": "~7.2.1",
-    "@fortawesome/free-solid-svg-icons": "^5.5.0",
-    "@angular/common": "~7.2.1",
-    "@fortawesome/angular-fontawesome": "^0.3.0",
-    "ngx-md": "^7.1.3",
-    "primeng": "~7.0.0",
     "@angular/platform-browser": "~7.2.1",
-    "@bit/garlictech.angular-features.common.forms": "file:../../common/forms",
-    "@bit/garlictech.angular-features.web.language": "file:../language"
+    "@fortawesome/angular-fontawesome": "^0.3.0",
+    "@fortawesome/free-solid-svg-icons": "^5.5.0",
+    "ngx-md": "^7.1.3",
+    "primeng": "~7.0.0"
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

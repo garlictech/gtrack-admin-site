@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule, select } from '@ngrx/store';
 import { RouteStored } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
+import { select, Store, StoreModule } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { routeReducer } from '../reducer';
-import { RouteState } from '../state';
+import { featureName, RouteState } from '../state';
 
 import * as actions from '../actions';
 import { RouteSelectors } from '../selectors';
@@ -14,8 +14,8 @@ import { routesStored as routeFixtures } from './fixtures';
 
 describe('Route selectors', () => {
   let store: Store<RouteState>;
-  let routes: RouteStored[];
-  let ids: string[];
+  let routes: Array<RouteStored>;
+  let ids: Array<string>;
   let destroy$: Subject<boolean>;
 
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('Route selectors', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          route: routeReducer
+          [featureName]: routeReducer
         })
       ],
       providers: [RouteSelectors]

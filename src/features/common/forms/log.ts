@@ -1,5 +1,5 @@
 import { Log } from 'ng2-logger';
-export const log = Log.create('common/forms');
+export const log = Log.create('forms');
 log.color = 'magenta';
 
 // tslint:disable:only-arrow-functions no-invalid-this

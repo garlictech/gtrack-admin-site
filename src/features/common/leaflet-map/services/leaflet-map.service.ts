@@ -111,13 +111,19 @@ export class LeafletMapService {
     }
   }
 
-  fitBounds(box: L.LatLngBoundsExpression): void {
+  fitBounds(box: L.LatLngBoundsExpression, maxZoom?: number): void {
     if (this.leafletMap) {
       this.leafletMap.invalidateSize();
 
-      this.leafletMap.fitBounds(box, {
+      const options: L.FitBoundsOptions = {
         padding: [50, 50]
-      });
+      };
+
+      if (maxZoom) {
+        options.maxZoom = maxZoom;
+      }
+
+      this.leafletMap.fitBounds(box, options);
     }
   }
 

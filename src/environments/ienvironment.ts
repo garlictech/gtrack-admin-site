@@ -15,6 +15,7 @@ export interface Environment {
       responseType: 'token' | 'code';
       userPoolId: string;
       userPoolClientId: string;
+      userPoolAdminClientId: string;
       scope: Array<string>;
     };
   };
