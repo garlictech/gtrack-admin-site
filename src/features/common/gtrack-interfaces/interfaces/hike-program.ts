@@ -24,12 +24,6 @@ export enum EPoiImageTypes {
   flickr = 'flickr'
 }
 
-export enum EHikeProgramDifficulty {
-  easy,
-  normal,
-  hard
-}
-
 export interface PoiImageSource {
   type: EPoiImageTypes;
   poiObjectId: string;
@@ -84,7 +78,7 @@ export interface HikeProgramData {
   score: number;
   reverseScore: number;
   location: string;
-  difficulty: EHikeProgramDifficulty;
+  difficulty: number;
   backgroundImages?: Array<BackgroundImageData>;
   rate?: string;
   routeIcon?: string;

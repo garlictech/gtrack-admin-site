@@ -51,7 +51,6 @@ export class SocialLoginService {
     const responseType = this._config.responseType;
     let clientId = this._config.userPoolClientId;
 
-    console.error('connect', roles);
     if (roles && roles.includes('admin')) {
       this.config(true);
       Cache.setItem('isAdmin', true);

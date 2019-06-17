@@ -11,17 +11,7 @@
     [ngClass]="['input-checkbox']"
   />
 
-  <span>
-    <label
-      [ngClass]="field.labelCls"
-      for="float-input"
-      *ngIf="!field.disableLabel && field.label"
-      [attr.for]="field.key"
-      ><span [innerHtml]="field.label | translate: labelParams"></span
-      ><span class="required" *ngIf="field?.required">*</span
-      ><small *ngIf="field.helpText">{{ field.helpText | translate }}</small>
-    </label>
-
+  <span class="ui-float-label">
     <ng-container id="float-input" [ngSwitch]="field.controlType">
       <input
         class="input w-full"
@@ -65,8 +55,7 @@
             [formControlName]="field.key"
             ngDefaultControl="ngDefaultControl"
             [id]="field.key"
-          >
-          </gtrack-form-radio-select>
+          ></gtrack-form-radio-select>
           <gtrack-form-dropdown-select
             class="field"
             *ngSwitchCase="'dropdown'"
@@ -74,8 +63,7 @@
             [formControlName]="field.key"
             [id]="field.key"
             (valueChange)="onChange($event)"
-          >
-          </gtrack-form-dropdown-select>
+          ></gtrack-form-dropdown-select>
         </ng-container>
       </ng-container>
       <gtrack-form-multi-select
@@ -159,6 +147,16 @@
         <gtrack-form-rich-text-editor [rows]="field.rows" [formControlName]="field.key"></gtrack-form-rich-text-editor>
       </ng-container>
     </ng-container>
+
+    <label
+      [ngClass]="field.labelCls"
+      for="float-input"
+      *ngIf="!field.disableLabel && field.label"
+      [attr.for]="field.key"
+      ><span [innerHtml]="field.label | translate: labelParams"></span
+      ><span class="required" *ngIf="field?.required">*</span
+      ><small *ngIf="field.helpText">{{ field.helpText | translate }}</small>
+    </label>
   </span>
 
   <div class="feedback info" *ngIf="field.infoText">{{ field.infoText | translate }}</div>

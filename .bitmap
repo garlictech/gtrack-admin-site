@@ -420,7 +420,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/authentication-cognito"
     },
-    "garlictech.angular-features/common/authentication@0.1.8": {
+    "garlictech.angular-features/common/authentication@0.1.9": {
         "files": [
             {
                 "name": "index.ts",
@@ -907,7 +907,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/deepstream-ngx"
     },
-    "garlictech.angular-features/common/elevation@0.0.47": {
+    "garlictech.angular-features/common/elevation@0.0.48": {
         "files": [
             {
                 "name": "elevation-filled-area.component.html",
@@ -1974,7 +1974,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/gtrack-interfaces"
     },
-    "garlictech.angular-features/common/hike@0.0.39": {
+    "garlictech.angular-features/common/hike@0.0.40": {
         "files": [
             {
                 "name": "bookmark.component.ts",
@@ -3787,7 +3787,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/multi-language-text"
     },
-    "garlictech.angular-features/common/object-mark@0.0.30": {
+    "garlictech.angular-features/common/object-mark@0.0.31": {
         "files": [
             {
                 "name": "config.ts",
@@ -4345,7 +4345,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/search-filters"
     },
-    "garlictech.angular-features/common/search@0.0.25": {
+    "garlictech.angular-features/common/search@0.0.27": {
         "files": [
             {
                 "name": "index.ts",
@@ -4388,7 +4388,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/search"
     },
-    "garlictech.angular-features/common/settings@0.0.35": {
+    "garlictech.angular-features/common/settings@0.0.36": {
         "files": [
             {
                 "name": "index.ts",
@@ -5286,7 +5286,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/weather"
     },
-    "garlictech.angular-features/web/elevation@0.0.30": {
+    "garlictech.angular-features/web/elevation@0.0.31": {
         "files": [
             {
                 "name": "elevation-profile.component.html",
@@ -5755,7 +5755,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/web/generic-ui-primeng"
     },
-    "garlictech.angular-features/web/hike@0.0.23": {
+    "garlictech.angular-features/web/hike@0.0.24": {
         "files": [
             {
                 "name": "bookmark.component.html",
@@ -6298,7 +6298,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/web/search-filters"
     },
-    "garlictech.angular-features/web/search@0.0.23": {
+    "garlictech.angular-features/web/search@0.0.26": {
         "files": [
             {
                 "name": "index.ts",

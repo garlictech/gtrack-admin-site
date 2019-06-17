@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { LocationSearchComponent as BaseComponent } from '@bit/garlictech.angular-features.common.search';
+import { LocationSearchComponent as BaseComponent } from '@bit/garlictech.angular-features.common.hike';
 
 @Component({
   selector: 'gtrack-location-search',

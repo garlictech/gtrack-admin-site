@@ -5,9 +5,13 @@ import { SliderModule } from 'primeng/slider';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+
 import { FormModule } from '@bit/garlictech.angular-features.web.forms-primeng';
 
+import { LeafletMapModule } from '@bit/garlictech.angular-features.common.leaflet-map';
 import { SearchComponentsModule as SearchComponentsCommonModule } from '@bit/garlictech.angular-features.common.search';
+import { TranslateModule } from '@ngx-translate/core';
 import { LocationSearchComponent, SearchResultsMapComponent } from './components';
 
 const COMPONENTS = [LocationSearchComponent, SearchResultsMapComponent];
@@ -17,10 +21,13 @@ const COMPONENTS = [LocationSearchComponent, SearchResultsMapComponent];
     CommonModule,
     ReactiveFormsModule,
     FormModule,
+    FormsModule,
     AngularSvgIconModule,
     SliderModule,
     SelectButtonModule,
-    SearchComponentsCommonModule
+    SearchComponentsCommonModule,
+    TranslateModule,
+    LeafletMapModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS]

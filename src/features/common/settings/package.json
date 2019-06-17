@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.settings",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "homepage": "https://bit.dev/garlictech/angular-features/common/settings",
   "main": "index.ts",
   "dependencies": {
@@ -18,8 +18,7 @@
     "@ngrx/effects": "~7.1.0",
     "@ngrx/entity": "~7.1.0",
     "enum-values": "^1.2.0",
-    "jest-marbles": "^2.1.0",
-    "@bit/garlictech.angular-features.common.authentication": "file:../authentication"
+    "jest-marbles": "^2.1.0"
   },
   "devDependencies": {},
   "peerDependencies": {},

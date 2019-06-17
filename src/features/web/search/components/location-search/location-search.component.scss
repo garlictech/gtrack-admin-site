@@ -1,63 +1,90 @@
 :host {
-  input {
-    background: transparent;
-    border-bottom: 1px solid white;
-    color: white;
-    width: 100%;
-  }
-
-  :host {
-    nav {
-      background: #ffffff;
+  .fixed-search {
+    input {
+      color: white;
+      background: transparent;
+      border-bottom: 1px solid white;
+      border-radius: none;
+      width: 80%;
     }
 
-    &.header-absolute {
-      > nav {
-        position: absolute;
-      }
+    .location-icon {
+      font-size: larger;
+      color: white;
+      padding-left: 1rem;
     }
-
-    &.header-gradient {
-      > nav {
-        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0) 100%);
-      }
+    form {
+      width: 100%;
+      margin-bottom: 0;
     }
   }
 
-  .general-button {
-    background-position: 25px 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-    transition: all 0.2s cubic-bezier(0.72, 0.01, 0.56, 1) 0s;
-    transition: all 0.3s ease;
-    background: transparent;
-    border: 1px solid white;
-    border-radius: 0.5rem;
-    color: white;
-    text-align: center;
-  }
+  .floating-search {
+    #wrap {
+      display: inline-block;
+      position: relative;
+      padding: 0;
+      z-index: 9999;
+    }
+    input {
+      display: flex;
+      color: white;
+      padding-left: 2rem;
+      padding-bottom: 1rem;
+      width: 0px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 3;
+      transition: width 0.4s cubic-bezier(0, 0.795, 0, 1);
+      cursor: pointer;
+      background: transparent;
+      width: 0px;
+    }
+    input:focus:hover {
+      border: 1px solid white;
+      border-radius: 15px;
+      padding: 0.3rem;
+    }
+    .location-icon {
+      right: -23;
+      font-size: larger;
+      color: white;
+      position: relative;
+      z-index: 50;
+      top: 5;
+      cursor: pointer;
+    }
+    input:focus {
+      width: 20rem;
+      z-index: 1;
+      cursor: text;
+      z-index: 1;
+      cursor: text;
+      border: 1px solid white;
+      border-radius: 15px;
+      padding: 0.3rem;
+    }
 
-  .general-button:hover {
-    border-color: white;
-    background: white;
-    transition: all 0.3s ease-out;
-  }
-
-  .general-button span {
-    box-sizing: border-box;
-    color: white;
-    cursor: pointer;
-    text-align: center;
-    text-transform: uppercase;
-    border: 0px none black;
-    outline: white none 0px;
-    transition: all 0.3s ease;
-  }
-
-  .general-button:hover span {
-    color: #22282f;
-    transition: all 0.3s ease;
+    .search_submit {
+      height: 1rem;
+      width: 1rem;
+      display: flex;
+      background-color: white;
+      -webkit-mask-image: url(../../../../../assets/icons/search-solid.svg);
+      mask-image: url(../../../../../assets/icons/search-solid.svg);
+      border: none;
+      position: absolute;
+      top: 7;
+      right: 5;
+      z-index: 2;
+      cursor: pointer;
+    }
+    .search_submit:focus {
+      display: none;
+    }
+    .search_submit:focus:hover {
+      display: none;
+    }
   }
 }

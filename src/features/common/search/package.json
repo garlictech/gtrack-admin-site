@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.search",
-  "version": "0.0.25",
+  "version": "0.0.27",
   "homepage": "https://bit.dev/garlictech/angular-features/common/search",
   "main": "index.ts",
   "dependencies": {
@@ -13,14 +13,16 @@
     "rxjs": "~6.3.2",
     "leaflet": "^1.4.0",
     "@angular/common": "~7.2.1",
-    "@bit/garlictech.angular-features.common.geosearch": "file:../geosearch",
-    "@bit/garlictech.angular-features.common.search-filters": "file:../search-filters",
     "@bit/garlictech.angular-features.common.current-geolocation": "file:../current-geolocation",
+    "@bit/garlictech.angular-features.common.geosearch": "file:../geosearch",
     "@bit/garlictech.angular-features.common.google-maps": "file:../google-maps",
+    "@bit/garlictech.angular-features.common.search-filters": "file:../search-filters",
     "@bit/garlictech.angular-features.common.hike": "file:../hike"
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "componentRootFolder": "src/features/common/search",
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }
