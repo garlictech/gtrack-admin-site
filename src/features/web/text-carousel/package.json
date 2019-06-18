@@ -5,12 +5,12 @@
   "main": "index.ts",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
-    "@fortawesome/angular-fontawesome": "^0.3.0",
-    "@bit/garlictech.angular-features.common.localization": "file:../../common/localization"
+    "@fortawesome/angular-fontawesome": "^0.3.0"
   },
   "devDependencies": {},
   "peerDependencies": {
-    "@angular/core": "~7.2.1"
+    "@angular/core": "~7.2.1",
+    "@bit/garlictech.angular-features.common.localization": "*"
   },
   "license": "SEE LICENSE IN LICENSE",
   "bit": {

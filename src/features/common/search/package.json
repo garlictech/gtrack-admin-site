@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.search",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "homepage": "https://bit.dev/garlictech/angular-features/common/search",
   "main": "index.ts",
   "dependencies": {

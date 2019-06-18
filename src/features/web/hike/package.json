@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.hike",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "homepage": "https://bit.dev/garlictech/angular-features/web/hike",
   "main": "index.ts",
   "dependencies": {
@@ -10,10 +10,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@glidejs/glide": "3.3.0",
     "angular-svg-icon": "^7.2.0",
-    "primeng": "~7.1.0",
-    "@bit/garlictech.angular-features.web.search-filters": "file:../search-filters",
-    "@bit/garlictech.angular-features.web.search": "file:../search",
-    "@bit/garlictech.angular-features.web.slideshow": "file:../slideshow"
+    "primeng": "~7.1.0"
   },
   "devDependencies": {},
   "peerDependencies": {
@@ -24,7 +21,10 @@
     "@ngx-translate/core": "^11.0.1",
     "lodash-es": "^4.17.11",
     "ng2-logger": "^2.0.0",
-    "rxjs": "~6.3.2"
+    "rxjs": "~6.3.2",
+    "@bit/garlictech.angular-features.web.search-filters": "*",
+    "@bit/garlictech.angular-features.web.search": "*",
+    "@bit/garlictech.angular-features.web.slideshow": "*"
   },
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
