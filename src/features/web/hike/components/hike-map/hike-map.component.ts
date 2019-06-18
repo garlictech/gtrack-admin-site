@@ -1,12 +1,14 @@
+import { Component, Input, ViewChild } from '@angular/core';
+
+import { HikeProgram } from '@bit/garlictech.angular-features.common.hike';
+import { Poi } from '@bit/garlictech.angular-features.common.poi';
+import { Route } from '@bit/garlictech.angular-features.common.route';
+import { ElevationProfileComponent } from '@bit/garlictech.angular-features.web.elevation';
+import { TrailBoxComponent } from '../trail-box';
+
 import { BehaviorSubject } from 'rxjs';
 
-import { Component, Input, ViewChild } from '@angular/core';
-import { HikeProgram } from '@bit/garlictech.angular-features.common.hike';
 import { WeatherEntity } from '@bit/garlictech.angular-features.common.weather/store';
-import { ElevationProfileComponent } from '@bit/garlictech.angular-features.web.elevation';
-
-import { DebugLog, log } from '../../log';
-import { TrailBoxComponent } from '../trail-box';
 
 @Component({
   selector: 'gtrack-hike-map',
@@ -15,6 +17,8 @@ import { TrailBoxComponent } from '../trail-box';
 })
 export class HikeMapComponent {
   @Input() hikeProgram: HikeProgram;
+  @Input() route: Route;
+  @Input() pois: Array<Poi>;
 
   @Input() startDate: Date;
 
@@ -36,10 +40,8 @@ export class HikeMapComponent {
     this.elevationMarkerLocked$ = new BehaviorSubject<boolean>(false);
   }
 
-  @DebugLog onElevationLineOver(): void {
+  onElevationLineOver(): void {
     const locked = this.elevationMarkerLocked$.getValue();
-
-    log.data('Locked', locked);
 
     if (!locked) {
       this.elevationMarkerVisible$.next(true);
@@ -54,10 +56,8 @@ export class HikeMapComponent {
     }
   }
 
-  @DebugLog onElevationLineClick(position: GeoJSON.Position): void {
+  onElevationLineClick(position: GeoJSON.Position): void {
     const locked = this.elevationMarkerLocked$.getValue();
-
-    log.data('Locked', locked);
 
     if (!locked) {
       this.elevationMarkerPosition$.next(position);
@@ -68,10 +68,8 @@ export class HikeMapComponent {
     }
   }
 
-  @DebugLog onElevationLineClickMap(data: { position: GeoJSON.Position; forced?: boolean }): void {
+  onElevationLineClickMap(data: { position: GeoJSON.Position; forced?: boolean }): void {
     const locked = this.elevationMarkerLocked$.getValue();
-
-    log.data('Locked', locked);
 
     if (!locked || data.forced) {
       this.elevationMarkerPosition$.next(data.position);
@@ -82,10 +80,8 @@ export class HikeMapComponent {
     }
   }
 
-  @DebugLog onElevationLineOut(): void {
+  onElevationLineOut(): void {
     const locked = this.elevationMarkerLocked$.getValue();
-
-    log.data('Locked', locked);
 
     if (!locked) {
       this.elevationMarkerVisible$.next(false);

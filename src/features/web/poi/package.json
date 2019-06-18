@@ -1,16 +1,23 @@
 {
   "name": "@bit/garlictech.angular-features.web.poi",
-  "version": "0.0.18",
+  "version": "0.0.21",
   "homepage": "https://bit.dev/garlictech/angular-features/web/poi",
   "main": "index.ts",
   "dependencies": {
-    "@angular/core": "~7.2.1",
-    "lodash-es": "^4.17.11",
-    "@angular/common": "~7.2.1",
-    "@bit/garlictech.angular-features.common.poi": "file:../../common/poi"
+    "@bit/garlictech.angular-features.common.leaflet-map": "file:../../common/leaflet-map",
+    "@bit/garlictech.angular-features.common.poi": "file:../../common/poi",
+    "@bit/garlictech.angular-features.common.utils": "file:../../common/utils",
+    "@bit/garlictech.angular-features.web.hike": "file:../hike",
+    "@bit/garlictech.angular-features.web.localize": "0.0.9"
   },
   "devDependencies": {},
-  "peerDependencies": {},
-  "componentRootFolder": "src/features/web/poi",
-  "license": "SEE LICENSE IN LICENSE"
+  "peerDependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1",
+    "lodash-es": "^4.17.11"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

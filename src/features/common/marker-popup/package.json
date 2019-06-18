@@ -1,16 +1,17 @@
 {
   "name": "@bit/garlictech.angular-features.common.marker-popup",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "homepage": "https://bit.dev/garlictech/angular-features/common/marker-popup",
   "main": "index.ts",
-  "dependencies": {
-    "lodash-es": "^4.17.11",
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
     "@angular/common": "~7.2.1",
     "@angular/core": "~7.2.1",
-    "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces"
+    "lodash-es": "^4.17.11"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
-  "componentRootFolder": "src/features/common/marker-popup",
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

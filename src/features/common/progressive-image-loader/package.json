@@ -1,13 +1,15 @@
 {
   "name": "@bit/garlictech.angular-features.common.progressive-image-loader",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://bit.dev/garlictech/angular-features/common/progressive-image-loader",
   "main": "index.ts",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
     "@angular/core": "~7.2.1"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
-  "componentRootFolder": "src/features/common/progressive-image-loader",
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

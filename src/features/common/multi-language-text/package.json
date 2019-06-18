@@ -1,17 +1,17 @@
 {
   "name": "@bit/garlictech.angular-features.common.multi-language-text",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "homepage": "https://bit.dev/garlictech/angular-features/common/multi-language-text",
   "main": "index.ts",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
     "@angular/common": "~7.2.1",
     "@angular/core": "~7.2.1",
     "@ngrx/store": "~7.1.0",
     "lodash-es": "^4.17.11",
     "rxjs": "~6.3.2"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {}

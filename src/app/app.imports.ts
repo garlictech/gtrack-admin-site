@@ -20,7 +20,6 @@ import { PoiComponentsModule } from '@bit/garlictech.angular-features.common.poi
 import { RouteComponentsModule } from '@bit/garlictech.angular-features.common.route';
 import { RouterModule } from '@bit/garlictech.angular-features.common.router';
 import { SearchFiltersModule } from '@bit/garlictech.angular-features.common.search-filters';
-import { WeatherModule } from '@bit/garlictech.angular-features.common.weather';
 import { GenericUiModule } from '@bit/garlictech.angular-features.web.generic-ui-primeng';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -105,7 +104,6 @@ export const APP_IMPORTS = [
       deps: [HttpClient]
     }
   }),
-  WeatherModule,
   HikeComponentsModule,
   PoiComponentsModule,
   RouteComponentsModule

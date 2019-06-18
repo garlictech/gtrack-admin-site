@@ -65,6 +65,12 @@ export interface HikeProgramStop {
   isFinish?: boolean;
 }
 
+export enum EHikeProgramDifficulty {
+  easy,
+  normal,
+  hard
+}
+
 export interface HikeProgramData {
   id?: string;
   distance: number;
@@ -78,7 +84,7 @@ export interface HikeProgramData {
   score: number;
   reverseScore: number;
   location: string;
-  difficulty: number;
+  difficulty: EHikeProgramDifficulty;
   backgroundImages?: Array<BackgroundImageData>;
   rate?: string;
   routeIcon?: string;

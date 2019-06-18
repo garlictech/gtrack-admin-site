@@ -14,23 +14,26 @@
     }
   }
 
-  h2 {
+  .card-title {
+    white-space: normal;
+    text-align: center;
     font-weight: 800;
+    font-size: 2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 
-    @media screen and (max-width: 1024px) {
-      font-size: 1.3rem;
+    //sm
+    @media screen and (max-width: 576px) {
+      font-size: 1.5rem;
     }
-    @media screen and (max-width: 770px) {
-      font-size: 1.8rem;
-    }
-    @media screen and (max-width: 420px) {
-      font-size: 1.3rem;
-    }
-    @media screen and (max-width: 380px) {
-      font-size: 1.1rem;
-    }
-    @media screen and (max-width: 320px) {
-      font-size: 1rem;
-    }
+  }
+  .card-subtitle {
+    white-space: normal;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .teaser {
+    padding: 0.25rem;
   }
 }

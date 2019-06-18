@@ -1,19 +1,20 @@
 {
   "name": "@bit/garlictech.angular-features.common.geosearch",
-  "version": "0.0.18",
+  "version": "0.0.20",
   "homepage": "https://bit.dev/garlictech/angular-features/common/geosearch",
   "main": "index.ts",
   "dependencies": {
+    "uuid": "^3.3.2",
+    "jest-marbles": "^2.1.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
     "@angular/core": "~7.2.1",
     "@ngrx/effects": "~7.1.0",
     "@ngrx/store": "~7.1.0",
     "rxjs": "~6.3.2",
-    "@ngrx/entity": "~7.1.0",
-    "uuid": "3.3.2",
-    "jest-marbles": "^2.1.0"
+    "@ngrx/entity": "~7.1.0"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {}

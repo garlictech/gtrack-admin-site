@@ -1,14 +1,23 @@
 {
   "name": "@bit/garlictech.angular-features.web.marker-popup",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "homepage": "https://bit.dev/garlictech/angular-features/web/marker-popup",
   "main": "index.ts",
   "dependencies": {
-    "@angular/core": "~7.2.1",
-    "@angular/common": "~7.2.1",
-    "@bit/garlictech.angular-features.common.marker-popup": "file:../../common/marker-popup"
+    "primeng": "7.1.0",
+    "@bit/garlictech.angular-features.common.marker-icons": "file:../../common/marker-icons",
+    "@bit/garlictech.angular-features.common.marker-popup": "file:../../common/marker-popup",
+    "@bit/garlictech.angular-features.common.utils": "file:../../common/utils",
+    "@bit/garlictech.angular-features.web.localize": "0.0.9",
+    "@bit/garlictech.angular-features.web.poi": "file:../poi"
   },
   "devDependencies": {},
-  "peerDependencies": {},
-  "license": "SEE LICENSE IN LICENSE"
+  "peerDependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

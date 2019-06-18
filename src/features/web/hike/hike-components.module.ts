@@ -23,18 +23,24 @@ import { WeatherModule } from '@bit/garlictech.angular-features.web.weather';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { RouterModule } from '@angular/router';
+import { SearchComponentsModule } from '@bit/garlictech.angular-features.web.search';
+import { SearchFiltersComponentsModule } from '@bit/garlictech.angular-features.web.search-filters';
 import { BookmarkComponent } from './components/bookmark';
 import { CheckpointsComponent } from './components/checkpoints';
 import { DownloadGpxButtonComponent } from './components/download-gpx-button';
+import { GalleryComponent } from './components/gallery';
 import { CardShadowDirective, HikeCardComponent } from './components/hike-card';
 import { HikeDataItemComponent } from './components/hike-data-item';
 import { HikeDataPopupComponent } from './components/hike-data-popup';
 import { HikeDayComponent } from './components/hike-day';
 import { HikeInfoComponent } from './components/hike-info';
 import { HikeListMapComponent } from './components/hike-list-map';
+import { HikeListComponent } from './components/hike-list/hike-list.component';
 import { HikeMapComponent } from './components/hike-map';
 import { HikeProgramComponent } from './components/hike-program';
 import { HikeProgramPageComponent } from './components/hike-program-page';
+import { HikeSettingsComponent } from './components/hike-settings';
 import { ReverseHikeButtonComponent } from './components/reverse-hike-button';
 import { TrailBoxComponent } from './components/trail-box';
 
@@ -53,7 +59,10 @@ const COMPONENTS = [
   HikeProgramComponent,
   HikeProgramPageComponent,
   ReverseHikeButtonComponent,
-  TrailBoxComponent
+  TrailBoxComponent,
+  GalleryComponent,
+  HikeSettingsComponent,
+  HikeListComponent
 ];
 
 @NgModule({
@@ -79,7 +88,10 @@ const COMPONENTS = [
     ElevationModule,
     MarkerIconsModule,
     SlideshowModule,
-    AstronomyModule
+    AstronomyModule,
+    RouterModule,
+    SearchComponentsModule,
+    SearchFiltersComponentsModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS],

@@ -1,23 +1,24 @@
 {
   "name": "@bit/garlictech.angular-features.common.generic-ui",
-  "version": "0.0.24",
+  "version": "0.0.26",
   "homepage": "https://bit.dev/garlictech/angular-features/common/generic-ui",
   "main": "index.ts",
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@fortawesome/angular-fontawesome": "^0.3.0",
+    "jest-marbles": "^2.1.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
     "@angular/core": "~7.2.1",
     "@ngrx/store": "~7.1.0",
     "lodash": "^4.17.4",
     "rxjs": "~6.3.2",
     "@angular/common": "~7.2.1",
-    "@fortawesome/free-solid-svg-icons": "5.8.2",
-    "@fortawesome/angular-fontawesome": "0.3.0",
     "@ngrx/effects": "~7.1.0",
     "@angular/platform-browser": "~7.2.1",
-    "@ngx-translate/core": "^11.0.1",
-    "jest-marbles": "^2.1.0"
+    "@ngx-translate/core": "^11.0.1"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {}

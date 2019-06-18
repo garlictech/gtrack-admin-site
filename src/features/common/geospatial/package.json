@@ -1,17 +1,18 @@
 {
   "name": "@bit/garlictech.angular-features.common.geospatial",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://bit.dev/garlictech/angular-features/common/geospatial",
   "main": "index.ts",
   "dependencies": {
-    "@angular/core": "~7.2.1",
     "@turf/helpers": "^6.1.4",
     "@turf/length": "^6.0.2",
     "@turf/line-slice": "^5.1.5",
     "@turf/nearest-point-on-line": "^6.0.2"
   },
   "devDependencies": {},
-  "peerDependencies": {},
+  "peerDependencies": {
+    "@angular/core": "~7.2.1"
+  },
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {}

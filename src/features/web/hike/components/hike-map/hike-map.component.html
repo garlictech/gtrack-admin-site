@@ -1,5 +1,5 @@
-<div>
-  <div>
+<div class="flex flex-col w-full">
+  <div class="flex-1">
     <gtrack-trail-box
       (elevationLineMove)="onElevationLineMove($event)"
       (elevationLineOut)="onElevationLineOut()"
@@ -20,6 +20,8 @@
       [elevationMarkerPosition]="elevationMarkerPosition$ | async"
       [elevationMarkerVisible]="elevationMarkerVisible$ | async"
       [hikeProgram]="hikeProgram"
+      [route]="route"
+      [pois]="pois"
       [startDate]="startDate"
       [speed]="speed"
       [weather]="weather"

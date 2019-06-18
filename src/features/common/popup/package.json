@@ -1,17 +1,19 @@
 {
   "name": "@bit/garlictech.angular-features.common.popup",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "homepage": "https://bit.dev/garlictech/angular-features/common/popup",
   "main": "index.ts",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
     "@angular/core": "~7.2.1",
     "@ngrx/store": "~7.1.0",
     "rxjs": "~6.3.2",
     "@angular/common": "~7.2.1",
     "lodash-es": "^4.17.11"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
-  "componentRootFolder": "src/features/common/popup",
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

@@ -5,17 +5,14 @@
   >
     <gtrack-bookmark [hikeProgramId]="hikeProgram.id"></gtrack-bookmark>
 
-    <div class="flex flex-col items-center uppercase text-white hike-details">
-      <h2 class="card-title">
+    <div class="flex flex-col items-center text-white hike-details">
+      <div class="card-title">
         {{ (hikeProgram.description | localizeDescription).title }}
-      </h2>
-      <h6 class="card-subtitle font-medium"><i class="ion-ios-location"></i> {{ hikeProgram.location }}</h6>
+      </div>
+      <div class="card-subtitle"><i class="ion-ios-location"></i> {{ hikeProgram.location }}</div>
     </div>
 
     <div class="flex flex-col">
-      <div class="text-center italic text-xs bg-white text-black">
-        A megye legszebb naplementéje
-      </div>
       <gtrack-hike-info class="w-full" [hikeProgram]="hikeProgram"></gtrack-hike-info>
     </div>
   </div>

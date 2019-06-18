@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Poi } from '@bit/garlictech.angular-features.common.poi';
 
-import { Poi } from '@bit/garlictech.angular-features.common.poi/lib';
 import _get from 'lodash-es/get';
 
 @Component({
@@ -10,8 +10,6 @@ import _get from 'lodash-es/get';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PoiPageComponent {
-  @Input() poi: Poi;
-
   get images(): Array<string> {
     let urls: Array<string> = [];
 
@@ -23,4 +21,6 @@ export class PoiPageComponent {
 
     return urls;
   }
+
+  @Input() poi: Poi;
 }

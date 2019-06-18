@@ -1,23 +1,24 @@
 {
   "name": "@bit/garlictech.angular-features.common.poi",
-  "version": "0.0.23",
+  "version": "0.0.25",
   "homepage": "https://bit.dev/garlictech/angular-features/common/poi",
   "main": "index.ts",
   "dependencies": {
+    "@turf/distance": "^6.0.1",
+    "@turf/helpers": "^6.1.4",
+    "jest-marbles": "^2.1.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
     "@angular/common": "~7.2.1",
     "@angular/core": "~7.2.1",
     "@ngrx/effects": "~7.1.0",
     "@ngrx/entity": "~7.1.0",
     "@ngrx/store": "~7.1.0",
-    "@turf/distance": "^6.0.1",
-    "@turf/helpers": "^6.1.4",
-    "jest-marbles": "^2.1.0",
     "lodash-es": "^4.17.11",
-    "rxjs": "~6.3.2",
-    "uuid": "3.3.2"
+    "rxjs": "~6.3.2"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {}

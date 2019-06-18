@@ -1,16 +1,17 @@
 {
   "name": "@bit/garlictech.angular-features.common.utils",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "homepage": "https://bit.dev/garlictech/angular-features/common/utils",
   "main": "index.ts",
   "dependencies": {
-    "rxjs": "~6.3.2",
-    "@angular/core": "~7.2.1",
-    "moment": "2.24.0",
-    "@angular/common": "~7.2.1"
+    "moment": "^2.24.0"
   },
   "devDependencies": {},
-  "peerDependencies": {},
+  "peerDependencies": {
+    "rxjs": "~6.3.2",
+    "@angular/core": "~7.2.1",
+    "@angular/common": "~7.2.1"
+  },
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {}

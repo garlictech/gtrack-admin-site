@@ -1,0 +1,16 @@
+:host {
+  ::ng-deep {
+    gtrack-location-search > input {
+      color: white;
+      background: transparent;
+      border-bottom: 1px solid white;
+      width: 80%;
+    }
+
+    gtrack-location-search > .location-icon {
+      font-size: larger;
+      color: white;
+      padding-left: 1rem;
+    }
+  }
+}

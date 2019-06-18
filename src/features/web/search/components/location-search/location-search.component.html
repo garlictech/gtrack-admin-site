@@ -1,19 +1,12 @@
-<div class="search-container" [ngClass]="[floating ? 'floating-search' : 'fixed-search']">
-  <div id="wrap">
-    <form action="" autocomplete="on">
-      <input
-        #search
-        [placeholder]="placeholder"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="off"
-        placeholder="{{ 'common.hike.location-search.search' | translate }}"
-        onfocus="this.value=''"
-      />
-      <a class="location-icon" (click)="requestLocation()">
-        <i class="ion ion-md-locate"></i>
-      </a>
-      <div class="search_submit"></div>
-    </form>
-  </div>
-</div>
+<input
+  #search
+  [placeholder]="placeholder"
+  autocorrect="off"
+  autocapitalize="off"
+  spellcheck="off"
+  placeholder="{{ 'common.hike.location-search.search' | translate }}"
+  onfocus="this.value=''"
+/>
+<a class="location-icon" (click)="requestLocation()">
+  <i class="ion ion-md-locate"></i>
+</a>

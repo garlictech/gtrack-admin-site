@@ -1,20 +1,21 @@
 {
   "name": "@bit/garlictech.angular-features.common.object-mark",
-  "version": "0.0.31",
+  "version": "0.0.34",
   "homepage": "https://bit.dev/garlictech/angular-features/common/object-mark",
   "main": "index.ts",
   "dependencies": {
+    "jest-marbles": "^2.1.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
     "@angular/core": "~7.2.1",
     "@ngrx/effects": "~7.1.0",
     "@ngrx/entity": "~7.1.0",
     "@ngrx/store": "~7.1.0",
-    "jest-marbles": "^2.1.0",
     "lodash-es": "^4.17.11",
     "ng2-logger": "^2.0.0",
     "rxjs": "~6.3.2"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {}

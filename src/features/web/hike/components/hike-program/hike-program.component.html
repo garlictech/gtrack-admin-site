@@ -1,52 +1,101 @@
-<div class="py-4 flex flex-col relative timeline" *ngIf="stops">
-  <ng-container *ngIf="pois$ | async as pois">
+<ng-container *ngIf="pois$ | async as pois">
+  <div class="container">
     <div
-      *ngFor="let stop of stops; let i = index; trackBy: trackByFn"
-      class="flex items-center justify-center content-center my-4 relative"
+      *ngFor="let stop of stops; let i = index; let odd = odd; let first = first; let last = last; trackBy: trackByFn"
+      [ngClass]="{ odd: odd, first: first, last: last }"
     >
-      <div class="w-1/6 hidden sm:flex items-center justify-center self-stretch">
-        <div class="bg-primary text-white text-xs flex items-center justify-center rounded-full shadow-md h-16 w-16">
-          {{ stop.arrive | date: 'HH:mm' }}
-        </div>
-      </div>
-      <div class="flex-1">
-        <small class="mb-1 block">{{ stop.distanceFromOrigo | distance }}</small>
-        <div class="rounded shadow-md p-2">
-          <ng-container *ngIf="stop.eventOnly !== true; else event_template">
-            <h4 class="m-0 font-bold text-xl flex items-center">
-              <ng-container *ngIf="i === 0"
-                ><img class="mr-2 timeline-icon" title="Start" [src]="startIcon | trustedResource" /><span
-                  >START</span
-                ></ng-container
-              >
-              <ng-container *ngIf="i === stops.length - 1"
-                ><img class="mr-2 timeline-icon" title="Finish" [src]="finishIcon | trustedResource" /><span
-                  >FINISH</span
-                ></ng-container
-              >
-              <ng-container *ngIf="i > 0 && i < stops.length - 1">
-                <ng-container *ngIf="pois[stop.poiId] && pois[stop.poiId].description">
-                  <gtrack-icon class="mr-2 timeline-icon" *ngIf="pois[stop.poiId]" [poi]="pois[stop.poiId]">
-                  </gtrack-icon>
-                  <span>{{ (pois[stop.poiId].description | localizeDescription).title }}</span>
-                </ng-container>
-              </ng-container>
-            </h4>
-            <div>
-              <gtrack-description
-                *ngIf="pois[stop.poiId] && pois[stop.poiId].description"
-                field="summary"
-                [description]="pois[stop.poiId].description"
-              ></gtrack-description>
+      <ul class="timeline">
+        <ng-container *ngIf="stop.eventOnly !== true; else event_template">
+          <li>
+            <div class="timeline-badge" routerLink="/poi/{{ stop.poiId }}">
+              <gtrack-circle-icon width="64" class="timeline-icon" *ngIf="pois[stop.poiId]" [poi]="pois[stop.poiId]">
+              </gtrack-circle-icon>
+              <img class="timeline-icon start-icon" title="Start" [src]="startIcon | trustedResource" />
+              <img class="timeline-icon finish-icon" title="Finish" [src]="finishIcon | trustedResource" />
             </div>
-          </ng-container>
-        </div>
-      </div>
+
+            <div class="timeline-panel">
+              <div class="timeline-heading ">
+                <h4 class="timeline-title">
+                  <ng-container *ngIf="i === 0"> <span>START </span></ng-container>
+                  <ng-container *ngIf="i > 0 && i < stops.length - 1">
+                    <ng-container *ngIf="pois[stop.poiId] && pois[stop.poiId].description">
+                      <span>{{ (pois[stop.poiId].description | localizeDescription).title }}</span>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="i === stops.length - 1"> <span>FINISH</span></ng-container>
+                </h4>
+              </div>
+              <div class="timeline-body"></div>
+            </div>
+            <div class="info">
+              <div class="font-semibold">
+                {{ stop.distanceFromOrigo | distance }}
+              </div>
+              <div class="text-sm">{{ stop.arrive | date: 'HH:mm' }}</div>
+            </div>
+          </li>
+          <div>
+            <gtrack-description
+              *ngIf="pois[stop.poiId] && pois[stop.poiId].description"
+              field="summary"
+              [description]="pois[stop.poiId].description"
+            ></gtrack-description>
+          </div>
+        </ng-container>
+      </ul>
+
+      <ng-template #event_template>
+        <header>
+          <p>{{ stop.title | translate }}</p>
+        </header>
+      </ng-template>
     </div>
+  </div>
+
+  <!-- POI POPUP -->
+  <!-- <ng-container *ngIf="activeStop && activeStop.poiId !== 'endpoint-first' && activeStop.poiId !== 'endpoint-last'">
+    <p-dialog
+      [modal]="true"
+      [blockScroll]="true"
+      [(visible)]="activeStop"
+      [responsive]="true"
+      [style]="{ width: '400px', height: '200px' }"
+    >
+      <p-header>
+        <div class="flex">
+          <div><gtrack-icon [poi]="pois[activeStop.poiId]"></gtrack-icon></div>
+          <div>
+            {{ (pois[activeStop.poiId].description | localizeDescription).title || 'Unknown' }}
+          </div>
+        </div>
+      </p-header>
+      <gtrack-description [description]="pois[activeStop.poiId].description"></gtrack-description>
+
+      <div class="poi-data">
+        Latitude:
+        <p>{{ activeStop.lat }}</p>
+      </div>
+      <div class="poi-data">
+        Longitude:
+        <p>{{ activeStop.lon }}</p>
+      </div>
+      <div class="poi-data">
+        Distance from start:
+        <p>{{ activeStop.distanceFromOrigo | distance }}</p>
+      </div>
+      <div class="poi-data">
+        Elevation:
+        <p>{{ pois[activeStop.poiId].elevation | distance }}</p>
+      </div>
+      <p-galleria
+        *ngIf="pois[activeStop.poiId].backgroundImages"
+        [images]="pois[activeStop.poiId].backgroundImages | poiImagesToGallery"
+        panelWidth="340"
+        panelHeight="313"
+        [showCaption]="false"
+      ></p-galleria>
+    </p-dialog>
   </ng-container>
-  <ng-template #event_template>
-    <header class="card-header">
-      <p class="card-header-title">{{ stop.title | translate }}</p>
-    </header>
-  </ng-template>
-</div>
+</ng-container> -->
+</ng-container>

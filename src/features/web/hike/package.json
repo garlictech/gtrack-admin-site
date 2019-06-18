@@ -1,38 +1,33 @@
 {
   "name": "@bit/garlictech.angular-features.web.hike",
-  "version": "0.0.24",
+  "version": "0.0.27",
   "homepage": "https://bit.dev/garlictech/angular-features/web/hike",
   "main": "index.ts",
   "dependencies": {
-    "@angular/core": "~7.2.1",
+    "@angular/router": "7.2.15",
+    "@fortawesome/angular-fontawesome": "^0.3.0",
     "@fortawesome/free-regular-svg-icons": "^5.5.0",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
-    "@ngrx/store": "~7.1.0",
-    "rxjs": "~6.3.2",
-    "lodash-es": "^4.17.11",
-    "@angular/common": "~7.2.1",
-    "@angular/forms": "~7.2.1",
-    "@fortawesome/angular-fontawesome": "^0.3.0",
-    "@ngx-translate/core": "^11.0.1",
+    "@glidejs/glide": "3.3.0",
     "angular-svg-icon": "^7.2.0",
-    "primeng": "~7.0.0",
-    "ng2-logger": "^2.0.0",
-    "@bit/garlictech.angular-features.common.authentication": "file:../../common/authentication",
-    "@bit/garlictech.angular-features.common.hike": "file:../../common/hike",
-    "@bit/garlictech.angular-features.common.object-mark": "file:../../common/object-mark",
-    "@bit/garlictech.angular-features.common.weather": "file:../../common/weather",
-    "@bit/garlictech.angular-features.web.elevation": "file:../elevation",
-    "@bit/garlictech.angular-features.common.settings": "file:../../common/settings",
-    "@bit/garlictech.angular-features.common.generic-ui": "file:../../common/generic-ui",
-    "@bit/garlictech.angular-features.common.leaflet-map": "file:../../common/leaflet-map",
-    "@bit/garlictech.angular-features.web.forms-primeng": "file:../forms-primeng",
-    "@bit/garlictech.angular-features.web.localize": "file:../localize",
-    "@bit/garlictech.angular-features.web.weather": "file:../weather",
-    "@bit/garlictech.angular-features.common.utils": "file:../../common/utils",
-    "@bit/garlictech.angular-features.common.marker-icons": "file:../../common/marker-icons"
+    "primeng": "~7.1.0",
+    "@bit/garlictech.angular-features.web.search-filters": "file:../search-filters",
+    "@bit/garlictech.angular-features.web.search": "file:../search",
+    "@bit/garlictech.angular-features.web.slideshow": "file:../slideshow"
   },
   "devDependencies": {},
-  "peerDependencies": {},
-  "componentRootFolder": "src/features/web/hike",
-  "license": "SEE LICENSE IN LICENSE"
+  "peerDependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1",
+    "@angular/forms": "~7.2.1",
+    "@ngrx/store": "~7.1.0",
+    "@ngx-translate/core": "^11.0.1",
+    "lodash-es": "^4.17.11",
+    "ng2-logger": "^2.0.0",
+    "rxjs": "~6.3.2"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
 }

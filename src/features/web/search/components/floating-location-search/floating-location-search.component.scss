@@ -1,0 +1,66 @@
+:host {
+  #wrap {
+    display: inline-block;
+    position: relative;
+    padding: 0;
+    z-index: 9999;
+  }
+  ::ng-deep {
+    gtrack-location-search > input {
+      display: flex;
+      color: white;
+      padding-right: 6rem;
+      width: 0px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 3;
+      transition: width 0.4s cubic-bezier(0, 0.795, 0, 1);
+      cursor: pointer;
+    }
+    gtrack-location-search > input:focus:hover {
+      border: 1px solid white;
+      border-radius: 15px;
+      padding: 0.3rem;
+    }
+    .location-icon {
+      right: -23;
+      font-size: larger;
+      color: white;
+      position: relative;
+      z-index: 50;
+      top: 5;
+      cursor: pointer;
+    }
+    gtrack-location-search > input:focus {
+      width: 20rem;
+      z-index: 1;
+      cursor: text;
+      z-index: 1;
+      cursor: text;
+      border: 1px solid white;
+      border-radius: 15px;
+      padding: 0.3rem;
+    }
+  }
+  .search_submit {
+    height: 1rem;
+    width: 1rem;
+    display: flex;
+    background-color: white;
+    mask-image: url(/assets/icons/search-solid.svg);
+    // text-indent: -10000px;
+    border: none;
+    position: absolute;
+    top: 7;
+    right: 5;
+    z-index: 2;
+    cursor: pointer;
+  }
+  .search_submit:focus {
+    display: none;
+  }
+  .search_submit:focus:hover {
+    display: none;
+  }
+}
