@@ -1,7 +1,0 @@
-<div class="settings-container">
-  <fa-icon [icon]="calendarIcon"></fa-icon>
-  <span class="px-2" *ngIf="startDate$ | async as startDate">{{ startDate | date: 'MM.dd. HH:mm' }}</span>
-  <fa-icon [icon]="speedIcon"></fa-icon>
-  <span class="px-2" *ngIf="speed$ | async as speed">{{ speed }} km/h</span>
-  <fa-icon class="ml-auto" [icon]="settingsIcon"></fa-icon>
-</div>

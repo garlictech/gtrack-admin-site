@@ -14,7 +14,6 @@
   "peerDependencies": {
     "@angular/common": "~7.2.1",
     "@angular/core": "~7.2.1",
-    "@bit/garlictech.angular-features.web.spinner": "*",
     "@ngrx/store": "~7.1.0",
     "lodash": "^4.17.4",
     "lodash-es": "^4.17.11",

@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/tomi/.nvm/versions/node/v10.14.1/bin/node /usr/local/Cellar/yarn/1.15.2/libexec/bin/yarn.js install
+  /Users/tomi/.nvm/versions/node/v10.14.1/bin/node /usr/local/Cellar/yarn/1.15.2/libexec/bin/yarn.js
 
 PATH: 
-  /Users/tomi/Dev/web/localhost/garlictech/git/gtrack-admin-site/node_modules/.bin:/Users/tomi/Dev/web/localhost/garlictech/git/node_modules/.bin:/Users/tomi/Dev/web/localhost/garlictech/node_modules/.bin:/Users/tomi/Dev/web/localhost/node_modules/.bin:/Users/tomi/Dev/web/node_modules/.bin:/Users/tomi/Dev/node_modules/.bin:/Users/tomi/node_modules/.bin:/Users/node_modules/.bin:/node_modules/.bin:/Users/tomi/.nvm/versions/node/v10.14.1/bin:/Users/tomi/Dev/git-subrepo/lib:/Users/tomi/.nvm/versions/node/v10.14.1/bin:./bin:/usr/local/bin:/usr/local/sbin:/Users/tomi/.dotfiles/bin:/Users/tomi/.rbenv/shims:/Users/tomi/Code/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tomi/Dev/git-subrepo/lib:./bin:/usr/local/sbin:/Users/tomi/.dotfiles/bin:/Users/tomi/.rbenv/shims:/Users/tomi/Code/go/bin:/Users/tomi/Library/Android/sdk/tools:/Users/tomi/Library/Android/sdk/platform-tools:/usr/local/bin:/Users/tomi/Library/Android/sdk/tools:/Users/tomi/Library/Android/sdk/platform-tools
+  /Users/tomi/Dev/git-subrepo/lib:/Users/tomi/.nvm/versions/node/v10.14.1/bin:./bin:/usr/local/bin:/usr/local/sbin:/Users/tomi/.dotfiles/bin:/Users/tomi/.rbenv/shims:/Users/tomi/Code/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tomi/Dev/git-subrepo/lib:./bin:/usr/local/sbin:/Users/tomi/.dotfiles/bin:/Users/tomi/.rbenv/shims:/Users/tomi/Code/go/bin:/Users/tomi/Library/Android/sdk/tools:/Users/tomi/Library/Android/sdk/platform-tools:/usr/local/bin:/Users/tomi/Library/Android/sdk/tools:/Users/tomi/Library/Android/sdk/platform-tools
 
 Yarn version: 
   1.15.2
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: ENOENT: no such file or directory, copyfile '/Users/tomi/Library/Caches/Yarn/v4/npm-load-google-maps-api-1.3.3-9d3670a05527609ce9b31331bdd5957ddc0343fb/node_modules/load-google-maps-api/README.md' -> '/Users/tomi/Dev/web/localhost/garlictech/git/gtrack-admin-site/node_modules/@bit/garlictech.angular-features.common.google-maps/node_modules/load-google-maps-api/README.md'
+  Error: ENOENT: no such file or directory, copyfile '/Users/tomi/Library/Caches/Yarn/v4/npm-load-google-maps-api-1.3.3-9d3670a05527609ce9b31331bdd5957ddc0343fb/node_modules/load-google-maps-api/LICENSE.md' -> '/Users/tomi/Dev/web/localhost/garlictech/git/gtrack-admin-site/node_modules/@bit/garlictech.angular-features.common.google-maps/node_modules/load-google-maps-api/LICENSE.md'
 
 npm manifest: 
   {
@@ -141,9 +141,6 @@ npm manifest:
       "@bit/garlictech.angular-features.common.tailwind-scss": "file:./src/features/common/tailwind-scss",
       "@bit/garlictech.angular-features.common.utils": "file:./src/features/common/utils",
       "@bit/garlictech.angular-features.common.weather": "file:./src/features/common/weather",
-      "@bit/garlictech.angular-features.web.language": "file:./src/features/web/language",
-      "@bit/garlictech.angular-features.web.spinner": "file:./src/features/web/spinner",
-      "@bit/garlictech.angular-features.web.text-carousel": "file:./src/features/web/text-carousel",
       "@fortawesome/angular-fontawesome": "^0.3.0",
       "@fortawesome/fontawesome-free": "^5.5.0",
       "@fortawesome/fontawesome-svg-core": "^1.2.8",
@@ -220,7 +217,6 @@ npm manifest:
       "@bit/garlictech.angular-features.common.units": "file:./src/features/common/units",
       "@bit/garlictech.angular-features.common.geometry": "file:./src/features/common/geometry",
       "@bit/garlictech.angular-features.web.generic-ui-primeng": "file:./src/features/web/generic-ui-primeng",
-      "@bit/garlictech.angular-features.web.localize": "file:./src/features/web/localize",
       "@bit/garlictech.angular-features.common.settings": "file:./src/features/common/settings",
       "@bit/garlictech.angular-features.common.game-rule": "file:./src/features/common/game-rule",
       "@bit/garlictech.angular-features.common.google-maps": "file:./src/features/common/google-maps",
@@ -235,15 +231,19 @@ npm manifest:
       "@bit/garlictech.angular-features.common.authentication-cognito": "file:./src/features/common/authentication-cognito",
       "@bit/garlictech.angular-features.common.marker-popup": "file:./src/features/common/marker-popup",
       "@bit/garlictech.angular-features.common.search": "file:./src/features/common/search",
-      "@bit/garlictech.angular-features.web.elevation": "file:./src/features/web/elevation",
-      "@bit/garlictech.angular-features.web.hike": "file:./src/features/web/hike",
       "@bit/garlictech.angular-features.web.marker-popup": "file:./src/features/web/marker-popup",
-      "@bit/garlictech.angular-features.web.poi": "file:./src/features/web/poi",
-      "@bit/garlictech.angular-features.web.search": "file:./src/features/web/search",
-      "@bit/garlictech.angular-features.web.search-filters": "file:./src/features/web/search-filters",
-      "@bit/garlictech.angular-features.web.slideshow": "file:./src/features/web/slideshow",
       "@bit/garlictech.angular-features.common.astronomy": "0.0.2",
-      "@bit/garlictech.angular-features.web.weather": "file:./src/features/web/weather"
+      "@bit/garlictech.angular-features.web.text-carousel": "0.0.15",
+      "@bit/garlictech.angular-features.web.spinner": "0.0.11",
+      "@bit/garlictech.angular-features.web.weather": "0.0.13",
+      "@bit/garlictech.angular-features.web.slideshow": "0.0.3",
+      "@bit/garlictech.angular-features.web.search-filters": "0.0.16",
+      "@bit/garlictech.angular-features.web.search": "0.0.30",
+      "@bit/garlictech.angular-features.web.language": "file:./src/features/web/language",
+      "@bit/garlictech.angular-features.web.elevation": "0.0.35",
+      "@bit/garlictech.angular-features.web.poi": "0.0.22",
+      "@bit/garlictech.angular-features.web.hike": "0.0.28",
+      "@bit/garlictech.angular-features.web.localize": "0.0.11"
     },
     "devDependencies": {
       "@angular-devkit/build-angular": "~0.12.2",
@@ -827,15 +827,7 @@ Lockfile:
       suncalc "^1.8.0"
   
   "@bit/garlictech.angular-features.common.authentication-api@file:./src/features/common/authentication-api":
-    version "0.0.10"
-    dependencies:
-      "@angular/common" "~7.2.1"
-      "@angular/core" "~7.2.1"
-      "@angular/router" "~7.2.1"
-      "@ngrx/effects" "~7.1.0"
-      "@ngrx/store" "~7.1.0"
-      ng2-logger "^2.0.0"
-      rxjs "~6.3.2"
+    version "0.0.11"
   
   "@bit/garlictech.angular-features.common.authentication-cognito@file:./src/features/common/authentication-cognito":
     version "0.0.9"
@@ -867,7 +859,7 @@ Lockfile:
       "@garlictech/deepstream-rxjs" "^1.9.2"
   
   "@bit/garlictech.angular-features.common.elevation@file:./src/features/common/elevation":
-    version "0.0.51"
+    version "0.0.52"
     dependencies:
       "@turf/distance" "^6.0.1"
       "@turf/helpers" "^6.1.4"
@@ -928,14 +920,22 @@ Lockfile:
     dependencies:
       load-google-maps-api "^1.3.2"
   
-  "@bit/garlictech.angular-features.common.gtrack-interfaces@file:./src/features/common/gtrack-interfaces", "@bit/garlictech.angular-features.common.gtrack-interfaces@file:src/features/common/gtrack-interfaces":
+  "@bit/garlictech.angular-features.common.gtrack-interfaces@0.0.6":
+    version "0.0.6"
+    resolved "https://node.bit.dev/garlictech.angular-features.common.gtrack-interfaces/-/garlictech.angular-features.common.gtrack-interfaces-0.0.6.tgz#c36e339cdf69b7a37f9a90889d21945f766a851b"
+    integrity sha1-w24znN9pt6N/mpCInSGUX3ZqhRs=
+    dependencies:
+      d3-scale "2.2.2"
+      d3-shape "1.3.5"
+  
+  "@bit/garlictech.angular-features.common.gtrack-interfaces@file:./src/features/common/gtrack-interfaces":
     version "0.0.7"
     dependencies:
       d3-scale "^2.2.2"
       d3-shape "^1.3.5"
   
-  "@bit/garlictech.angular-features.common.hike@file:./src/features/common/hike", "@bit/garlictech.angular-features.common.hike@file:src/features/common/hike":
-    version "0.0.43"
+  "@bit/garlictech.angular-features.common.hike@file:./src/features/common/hike":
+    version "0.0.44"
     dependencies:
       "@fortawesome/angular-fontawesome" "^0.3.0"
       "@fortawesome/free-solid-svg-icons" "^5.5.0"
@@ -952,7 +952,7 @@ Lockfile:
       togpx "^0.5.4"
       uuid "^3.3.2"
   
-  "@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map", "@bit/garlictech.angular-features.common.leaflet-map@file:src/features/common/leaflet-map":
+  "@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map":
     version "0.0.54"
     dependencies:
       geojson "^0.5.0"
@@ -961,18 +961,43 @@ Lockfile:
       leaflet.fullscreen "^1.4.5"
       overlapping-marker-spiderfier-leaflet "^0.2.6-2"
   
-  "@bit/garlictech.angular-features.common.localization@file:./src/features/common/localization", "@bit/garlictech.angular-features.common.localization@file:src/features/common/localization":
+  "@bit/garlictech.angular-features.common.localization@0.0.8":
+    version "0.0.8"
+    resolved "https://node.bit.dev/garlictech.angular-features.common.localization/-/garlictech.angular-features.common.localization-0.0.8.tgz#d9840461d8fe951df226e4a330701eb420a2d96a"
+    integrity sha1-2YQEYdj+lR3yJuSjMHAetCCi2Wo=
+    dependencies:
+      "@angular/common" "~7.2.1"
+      "@angular/core" "~7.2.1"
+      "@ngrx/store" "~7.1.0"
+      "@ngx-translate/core" "^11.0.1"
+      lodash-es "^4.17.11"
+      ng2-logger "2.0.46"
+  
+  "@bit/garlictech.angular-features.common.localization@file:./src/features/common/localization":
     version "0.0.10"
   
-  "@bit/garlictech.angular-features.common.marker-icons@file:./src/features/common/marker-icons", "@bit/garlictech.angular-features.common.marker-icons@file:src/features/common/marker-icons":
+  "@bit/garlictech.angular-features.common.marker-icons@file:./src/features/common/marker-icons":
     version "0.0.29"
     dependencies:
       angular-svg-icon "^7.2.0"
   
-  "@bit/garlictech.angular-features.common.marker-popup@file:./src/features/common/marker-popup", "@bit/garlictech.angular-features.common.marker-popup@file:src/features/common/marker-popup":
+  "@bit/garlictech.angular-features.common.marker-popup@file:./src/features/common/marker-popup":
     version "0.0.6"
   
-  "@bit/garlictech.angular-features.common.multi-language-text@file:./src/features/common/multi-language-text", "@bit/garlictech.angular-features.common.multi-language-text@file:src/features/common/multi-language-text":
+  "@bit/garlictech.angular-features.common.multi-language-text@0.0.12":
+    version "0.0.12"
+    resolved "https://node.bit.dev/garlictech.angular-features.common.multi-language-text/-/garlictech.angular-features.common.multi-language-text-0.0.12.tgz#7976f2a2175b79b83b03fe57765515c954b34358"
+    integrity sha1-eXbyohdbebg7A/5XdlUVyVSzQ1g=
+    dependencies:
+      "@angular/common" "~7.2.1"
+      "@angular/core" "~7.2.1"
+      "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.6"
+      "@bit/garlictech.angular-features.common.localization" "0.0.8"
+      "@ngrx/store" "~7.1.0"
+      lodash-es "^4.17.11"
+      rxjs "~6.3.2"
+  
+  "@bit/garlictech.angular-features.common.multi-language-text@file:./src/features/common/multi-language-text":
     version "0.0.14"
   
   "@bit/garlictech.angular-features.common.object-mark@file:./src/features/common/object-mark":
@@ -980,7 +1005,7 @@ Lockfile:
     dependencies:
       jest-marbles "^2.1.0"
   
-  "@bit/garlictech.angular-features.common.poi@file:./src/features/common/poi", "@bit/garlictech.angular-features.common.poi@file:src/features/common/poi":
+  "@bit/garlictech.angular-features.common.poi@file:./src/features/common/poi":
     version "0.0.25"
     dependencies:
       "@turf/distance" "^6.0.1"
@@ -1006,11 +1031,11 @@ Lockfile:
     dependencies:
       jest-marbles "^2.1.0"
   
-  "@bit/garlictech.angular-features.common.search-filters@file:./src/features/common/search-filters", "@bit/garlictech.angular-features.common.search-filters@file:src/features/common/search-filters":
+  "@bit/garlictech.angular-features.common.search-filters@file:./src/features/common/search-filters":
     version "0.0.14"
   
-  "@bit/garlictech.angular-features.common.search@file:./src/features/common/search", "@bit/garlictech.angular-features.common.search@file:src/features/common/search":
-    version "0.0.30"
+  "@bit/garlictech.angular-features.common.search@file:./src/features/common/search":
+    version "0.0.31"
     dependencies:
       "@fortawesome/free-solid-svg-icons" "^5.5.0"
       "@turf/distance" "^6.0.1"
@@ -1025,7 +1050,7 @@ Lockfile:
       enum-values "^1.2.0"
       jest-marbles "^2.1.0"
   
-  "@bit/garlictech.angular-features.common.spinner@file:./src/features/common/spinner", "@bit/garlictech.angular-features.common.spinner@file:src/features/common/spinner":
+  "@bit/garlictech.angular-features.common.spinner@file:./src/features/common/spinner":
     version "0.0.4"
   
   "@bit/garlictech.angular-features.common.tailwind-scss@file:./src/features/common/tailwind-scss":
@@ -1034,7 +1059,7 @@ Lockfile:
   "@bit/garlictech.angular-features.common.units@file:./src/features/common/units":
     version "0.0.2"
   
-  "@bit/garlictech.angular-features.common.utils@file:./src/features/common/utils", "@bit/garlictech.angular-features.common.utils@file:src/features/common/utils":
+  "@bit/garlictech.angular-features.common.utils@file:./src/features/common/utils":
     version "0.0.12"
     dependencies:
       moment "^2.24.0"
@@ -1045,12 +1070,20 @@ Lockfile:
       angular-svg-icon "^7.0.0"
       jest-marbles "^2.1.0"
   
-  "@bit/garlictech.angular-features.web.elevation@file:./src/features/web/elevation":
-    version "0.0.34"
+  "@bit/garlictech.angular-features.web.elevation@0.0.35":
+    version "0.0.35"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.elevation/-/garlictech.angular-features.web.elevation-0.0.35.tgz#a14aa07c0ff64bedb18b6f9a660bcf22ca22b4f1"
+    integrity sha1-oUqgfA/2S+2xi2+aZgvPIsoitPE=
     dependencies:
+      "@bit/garlictech.angular-features.common.elevation" "0.0.52"
+      "@bit/garlictech.angular-features.common.marker-icons" "0.0.29"
+      "@bit/garlictech.angular-features.common.multi-language-text" "0.0.14"
+      "@bit/garlictech.angular-features.common.poi" "0.0.25"
+      "@bit/garlictech.angular-features.common.utils" "0.0.12"
+      "@bit/garlictech.angular-features.web.localize" "0.0.7"
       primeng "~7.1.0"
   
-  "@bit/garlictech.angular-features.web.forms-primeng@file:./src/features/web/forms-primeng", "@bit/garlictech.angular-features.web.forms-primeng@file:src/features/web/forms-primeng":
+  "@bit/garlictech.angular-features.web.forms-primeng@file:./src/features/web/forms-primeng":
     version "0.0.23"
     dependencies:
       "@fortawesome/angular-fontawesome" "^0.3.0"
@@ -1065,11 +1098,32 @@ Lockfile:
       "@fortawesome/free-solid-svg-icons" "^5.5.0"
       primeng "~7.1.0"
   
-  "@bit/garlictech.angular-features.web.hike@file:./src/features/web/hike", "@bit/garlictech.angular-features.web.hike@file:src/features/web/hike":
-    version "0.0.27"
+  "@bit/garlictech.angular-features.web.hike@0.0.28":
+    version "0.0.28"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.hike/-/garlictech.angular-features.web.hike-0.0.28.tgz#e17ee7fb7c89eab5968f4a247b5fdaefff810abf"
+    integrity sha1-4X7n+3yJ6rWWj0oke1/a7/+BCr8=
     dependencies:
       "@angular/router" "7.2.15"
-      "@bit/garlictech.angular-features.web.search-filters" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-hike-0.0.27-31d7d9ab-2dfe-4391-95dd-b4b8efcdfb64-1560860423578/node_modules/@bit/search-filters"
+      "@bit/garlictech.angular-features.common.astronomy" "0.0.2"
+      "@bit/garlictech.angular-features.common.authentication" "0.1.12"
+      "@bit/garlictech.angular-features.common.generic-ui" "0.0.26"
+      "@bit/garlictech.angular-features.common.hike" "0.0.44"
+      "@bit/garlictech.angular-features.common.leaflet-map" "0.0.54"
+      "@bit/garlictech.angular-features.common.marker-icons" "0.0.29"
+      "@bit/garlictech.angular-features.common.object-mark" "0.0.34"
+      "@bit/garlictech.angular-features.common.poi" "0.0.25"
+      "@bit/garlictech.angular-features.common.route" "0.0.12"
+      "@bit/garlictech.angular-features.common.settings" "0.0.39"
+      "@bit/garlictech.angular-features.common.tailwind-scss" "0.0.4"
+      "@bit/garlictech.angular-features.common.utils" "0.0.12"
+      "@bit/garlictech.angular-features.common.weather" "0.0.8"
+      "@bit/garlictech.angular-features.web.elevation" "0.0.35"
+      "@bit/garlictech.angular-features.web.forms-primeng" "0.0.23"
+      "@bit/garlictech.angular-features.web.localize" "0.0.7"
+      "@bit/garlictech.angular-features.web.search" "0.0.30"
+      "@bit/garlictech.angular-features.web.search-filters" ""
+      "@bit/garlictech.angular-features.web.slideshow" ""
+      "@bit/garlictech.angular-features.web.weather" "0.0.13"
       "@fortawesome/angular-fontawesome" "^0.3.0"
       "@fortawesome/free-regular-svg-icons" "^5.5.0"
       "@fortawesome/free-solid-svg-icons" "^5.5.0"
@@ -1082,6 +1136,17 @@ Lockfile:
     dependencies:
       primeng "~7.1.0"
   
+  "@bit/garlictech.angular-features.web.localize@0.0.7":
+    version "0.0.7"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.localize/-/garlictech.angular-features.web.localize-0.0.7.tgz#fce550c56392936c9034494993f2e95c25a6a509"
+    integrity sha1-/OVQxWOSk2yQNElJk/LpXCWmpQk=
+    dependencies:
+      "@angular/common" "~7.2.1"
+      "@angular/core" "~7.2.1"
+      "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.6"
+      "@bit/garlictech.angular-features.common.multi-language-text" "0.0.12"
+      ngx-md "^7.1.3"
+  
   "@bit/garlictech.angular-features.web.localize@0.0.9":
     version "0.0.9"
     resolved "https://node.bit.dev/garlictech.angular-features.web.localize/-/garlictech.angular-features.web.localize-0.0.9.tgz#f1937d4f954c5cc852c9e21e2d824e29a603eec3"
@@ -1091,81 +1156,77 @@ Lockfile:
       "@bit/garlictech.angular-features.common.multi-language-text" "0.0.14"
       ngx-md "^7.1.3"
   
-  "@bit/garlictech.angular-features.web.localize@file:./src/features/web/localize":
-    version "0.0.7"
-    dependencies:
-      "@angular/common" "~7.2.1"
-      "@angular/core" "~7.2.1"
-      "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-localize-0.0.7-ba8e349a-22a5-4797-bb86-360e362b90d2-1560860423535/node_modules/common/gtrack-interfaces"
-      "@bit/garlictech.angular-features.common.multi-language-text" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-localize-0.0.7-ba8e349a-22a5-4797-bb86-360e362b90d2-1560860423535/node_modules/common/multi-language-text"
-      ngx-md "^7.1.3"
-  
   "@bit/garlictech.angular-features.web.marker-popup@file:./src/features/web/marker-popup":
-    version "0.0.6"
+    version "0.0.11"
     dependencies:
-      "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.6-c612a079-08c8-42ef-aaf9-3386748be8c7-1560860423584/node_modules/common/marker-icons"
-      "@bit/garlictech.angular-features.common.marker-popup" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.6-c612a079-08c8-42ef-aaf9-3386748be8c7-1560860423584/node_modules/common/marker-popup"
-      "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.6-c612a079-08c8-42ef-aaf9-3386748be8c7-1560860423584/node_modules/common/utils"
-      "@bit/garlictech.angular-features.web.localize" "0.0.9"
-      "@bit/garlictech.angular-features.web.poi" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.6-c612a079-08c8-42ef-aaf9-3386748be8c7-1560860423584/node_modules/@bit/poi"
       primeng "7.1.0"
   
-  "@bit/garlictech.angular-features.web.poi@file:./src/features/web/poi", "@bit/garlictech.angular-features.web.poi@file:src/features/web/poi":
-    version "0.0.21"
+  "@bit/garlictech.angular-features.web.poi@0.0.22":
+    version "0.0.22"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.poi/-/garlictech.angular-features.web.poi-0.0.22.tgz#0d0a5641a958f6747218f58231cc8e8d87029903"
+    integrity sha1-DQpWQalY9nRyGPWCMcyOjYcCmQM=
     dependencies:
-      "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-poi-0.0.21-6522b7de-8342-4ac0-862b-28387387c1bd-1560860423588/node_modules/common/leaflet-map"
-      "@bit/garlictech.angular-features.common.poi" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-poi-0.0.21-6522b7de-8342-4ac0-862b-28387387c1bd-1560860423588/node_modules/common/poi"
-      "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-poi-0.0.21-6522b7de-8342-4ac0-862b-28387387c1bd-1560860423588/node_modules/common/utils"
-      "@bit/garlictech.angular-features.web.hike" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-poi-0.0.21-6522b7de-8342-4ac0-862b-28387387c1bd-1560860423588/node_modules/@bit/hike"
+      "@bit/garlictech.angular-features.common.leaflet-map" "0.0.54"
+      "@bit/garlictech.angular-features.common.poi" "0.0.25"
+      "@bit/garlictech.angular-features.common.utils" "0.0.12"
+      "@bit/garlictech.angular-features.web.hike" "0.0.28"
       "@bit/garlictech.angular-features.web.localize" "0.0.9"
   
-  "@bit/garlictech.angular-features.web.search-filters@file:./src/features/web/search-filters", "@bit/garlictech.angular-features.web.search-filters@file:src/features/web/search-filters":
+  "@bit/garlictech.angular-features.web.search-filters@", "@bit/garlictech.angular-features.web.search-filters@0.0.16":
     version "0.0.16"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.search-filters/-/garlictech.angular-features.web.search-filters-0.0.16.tgz#ca894675e11e6e55ef791f4a2b363197428268b2"
+    integrity sha1-yolGdeEeblXveR9KKzYxl0KCaLI=
     dependencies:
-      "@bit/garlictech.angular-features.common.search-filters" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-filters-0.0.16-8ecba9f1-1017-4969-b367-b5372c7da254-1560860423581/node_modules/common/search-filters"
-      "@bit/garlictech.angular-features.common.utils" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-filters-0.0.16-8ecba9f1-1017-4969-b367-b5372c7da254-1560860423581/node_modules/common/utils"
-      "@bit/garlictech.angular-features.web.forms-primeng" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-filters-0.0.16-8ecba9f1-1017-4969-b367-b5372c7da254-1560860423581/node_modules/@bit/forms-primeng"
+      "@bit/garlictech.angular-features.common.search-filters" "0.0.14"
+      "@bit/garlictech.angular-features.common.utils" "0.0.12"
+      "@bit/garlictech.angular-features.web.forms-primeng" "0.0.23"
       "@fortawesome/angular-fontawesome" "0.3.0"
       "@fortawesome/free-solid-svg-icons" "^5.5.0"
       "@ngx-translate/core" "11.0.1"
       primeng "7.1.0"
   
-  "@bit/garlictech.angular-features.web.search@file:./src/features/web/search":
-    version "0.0.29"
+  "@bit/garlictech.angular-features.web.search@0.0.30":
+    version "0.0.30"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.search/-/garlictech.angular-features.web.search-0.0.30.tgz#b193a0cd7c755c0c7978ebcab08a0a68e85d4457"
+    integrity sha1-sZOgzXx1XAx5eOvKsIoKaOhdRFc=
     dependencies:
-      "@bit/garlictech.angular-features.common.hike" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-0.0.29-3614264e-bc1f-4ec7-971e-45c8ddec96a6-1560860423592/node_modules/common/hike"
-      "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-0.0.29-3614264e-bc1f-4ec7-971e-45c8ddec96a6-1560860423592/node_modules/common/leaflet-map"
-      "@bit/garlictech.angular-features.common.search" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-0.0.29-3614264e-bc1f-4ec7-971e-45c8ddec96a6-1560860423592/node_modules/common/search"
-      "@bit/garlictech.angular-features.web.forms-primeng" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-search-0.0.29-3614264e-bc1f-4ec7-971e-45c8ddec96a6-1560860423592/node_modules/@bit/forms-primeng"
+      "@bit/garlictech.angular-features.common.hike" "0.0.44"
+      "@bit/garlictech.angular-features.common.leaflet-map" "0.0.54"
+      "@bit/garlictech.angular-features.common.search" "0.0.31"
+      "@bit/garlictech.angular-features.web.forms-primeng" "0.0.23"
       angular-svg-icon "^7.2.0"
       primeng "~7.1.0"
   
-  "@bit/garlictech.angular-features.web.slideshow@file:./src/features/web/slideshow":
-    version "0.0.2"
+  "@bit/garlictech.angular-features.web.slideshow@", "@bit/garlictech.angular-features.web.slideshow@0.0.3":
+    version "0.0.3"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.slideshow/-/garlictech.angular-features.web.slideshow-0.0.3.tgz#87bc4d96e3b0cb4a549d686b74464bfa7ae41d31"
+    integrity sha1-h7xNluOwy0pUnWhrdEZL+nrkHTE=
     dependencies:
-      "@angular/common" "~7.2.1"
-      "@angular/core" "~7.2.1"
+      "@fortawesome/angular-fontawesome" "^0.3.0"
       "@fortawesome/free-solid-svg-icons" "^5.5.0"
-      ng2-logger "^2.0.0"
   
-  "@bit/garlictech.angular-features.web.spinner@file:./src/features/web/spinner":
-    version "0.0.10"
+  "@bit/garlictech.angular-features.web.spinner@0.0.11":
+    version "0.0.11"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.spinner/-/garlictech.angular-features.web.spinner-0.0.11.tgz#fddd53a2cb8866092ce8cf12b5a2bb1c2f08ccd5"
+    integrity sha1-/d1TosuIZgks6M8StaK7HC8IzNU=
     dependencies:
-      "@angular/common" "~7.2.1"
-      "@angular/core" "~7.2.1"
-      "@bit/garlictech.angular-features.common.spinner" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-spinner-0.0.10-1cb039d5-0808-4680-b479-48df89426f8d-1560860423115/node_modules/common/spinner"
+      "@bit/garlictech.angular-features.common.spinner" "0.0.4"
   
-  "@bit/garlictech.angular-features.web.text-carousel@file:./src/features/web/text-carousel":
+  "@bit/garlictech.angular-features.web.text-carousel@0.0.15":
+    version "0.0.15"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.text-carousel/-/garlictech.angular-features.web.text-carousel-0.0.15.tgz#3d607627d6ca48849f8b36d825d603b5faf11cd9"
+    integrity sha1-PWB2J9bKSISfizbYJdYDtfrxHNk=
+    dependencies:
+      "@bit/garlictech.angular-features.common.localization" "0.0.10"
+      "@fortawesome/angular-fontawesome" "^0.3.0"
+      "@fortawesome/free-solid-svg-icons" "^5.8.1"
+  
+  "@bit/garlictech.angular-features.web.weather@0.0.13":
     version "0.0.13"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.weather/-/garlictech.angular-features.web.weather-0.0.13.tgz#7b6b4e5cbc038c88e747b558383a1f436d21ac8e"
+    integrity sha1-e2tOXLwDjIjnR7VYODofQ20hrI4=
     dependencies:
-      "@angular/core" "~7.2.1"
-      "@bit/garlictech.angular-features.common.localization" "file:../../../../../../Library/Caches/Yarn/v4/npm-@bit-garlictech-angular-features-web-text-carousel-0.0.13-d759027f-e806-44d2-be8a-6d4ba5a554c6-1560860423120/node_modules/common/localization"
-      "@fortawesome/angular-fontawesome" "0.3.0"
-      "@fortawesome/free-solid-svg-icons" "5.8.1"
-  
-  "@bit/garlictech.angular-features.web.weather@file:./src/features/web/weather":
-    version "0.0.13"
-    dependencies:
+      "@bit/garlictech.angular-features.common.weather" "0.0.8"
       angular-svg-icon "^7.0.0"
       primeng "~7.1.0"
   
@@ -1203,7 +1264,7 @@ Lockfile:
     dependencies:
       tslib "^1.9.0"
   
-  "@fortawesome/fontawesome-common-types@^0.2.17", "@fortawesome/fontawesome-common-types@^0.2.19":
+  "@fortawesome/fontawesome-common-types@^0.2.19":
     version "0.2.19"
     resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.19.tgz#754a0f85e1290858152e1c05700ab502b11197f1"
     integrity sha512-nd2Ul/CUs8U9sjofQYAALzOGpgkVJQgEhIJnOHaoyVR/LeC3x2mVg4eB910a4kS6WgLPebAY0M2fApEI497raQ==
@@ -1234,14 +1295,7 @@ Lockfile:
     dependencies:
       "@fortawesome/fontawesome-common-types" "^0.2.19"
   
-  "@fortawesome/free-solid-svg-icons@5.8.1":
-    version "5.8.1"
-    resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.8.1.tgz#086c70f95b34a4bcf6f50ff1078d46e53486eb52"
-    integrity sha512-FUcxR75PtMOo3ihRHJOZz64IsWIVdWgB2vCMLJjquTv487wVVCMH5H5gWa72et2oI9lKKD2jvjQ+y+7mxhscVQ==
-    dependencies:
-      "@fortawesome/fontawesome-common-types" "^0.2.17"
-  
-  "@fortawesome/free-solid-svg-icons@^5.5.0", "@fortawesome/free-solid-svg-icons@^5.8.2":
+  "@fortawesome/free-solid-svg-icons@^5.5.0", "@fortawesome/free-solid-svg-icons@^5.8.1", "@fortawesome/free-solid-svg-icons@^5.8.2":
     version "5.9.0"
     resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.9.0.tgz#1c73e7bac17417d23f934d83f7fff5b100a7fda9"
     integrity sha512-U8YXPfWcSozsCW0psCtlRGKjjRs5+Am5JJwLOUmVHFZbIEWzaz4YbP84EoPwUsVmSAKrisu3QeNcVOtmGml0Xw==
@@ -4514,7 +4568,7 @@ Lockfile:
       d3-color "1"
       d3-interpolate "1"
   
-  d3-scale@2, d3-scale@^2.0.0, d3-scale@^2.2.2:
+  d3-scale@2, d3-scale@2.2.2, d3-scale@^2.0.0, d3-scale@^2.2.2:
     version "2.2.2"
     resolved "https://registry.yarnpkg.com/d3-scale/-/d3-scale-2.2.2.tgz#4e880e0b2745acaaddd3ede26a9e908a9e17b81f"
     integrity sha512-LbeEvGgIb8UMcAa0EATLNX0lelKWGYDQiPdHj+gLblGVhGLyNbaCn3EvrJf0A3Y/uOOU5aD6MTh5ZFCdEwGiCw==
@@ -4531,7 +4585,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/d3-selection/-/d3-selection-1.4.0.tgz#ab9ac1e664cf967ebf1b479cc07e28ce9908c474"
     integrity sha512-EYVwBxQGEjLCKF2pJ4+yrErskDnz5v403qvAid96cNdCMr8rmCYfY5RGzWz24mdIbxmDf6/4EAH+K9xperD5jg==
   
-  d3-shape@1, d3-shape@^1.3.5:
+  d3-shape@1, d3-shape@1.3.5, d3-shape@^1.3.5:
     version "1.3.5"
     resolved "https://registry.yarnpkg.com/d3-shape/-/d3-shape-1.3.5.tgz#e81aea5940f59f0a79cfccac012232a8987c6033"
     integrity sha512-VKazVR3phgD+MUCldapHD7P9kcrvPcexeX/PkMJmkUov4JM8IxsSg1DvbYoYich9AtdTsa5nNk2++ImPiDiSxg==
@@ -8811,6 +8865,17 @@ Lockfile:
       "@types/node" "^8.0.31"
       jasmine "^2.8.0"
       typescript "^2.5.2"
+  
+  ng2-logger@2.0.46:
+    version "2.0.46"
+    resolved "https://registry.yarnpkg.com/ng2-logger/-/ng2-logger-2.0.46.tgz#ca3052eea106a57200e15e04871c06754ddcf92a"
+    integrity sha512-zlTN3HsPCmARCLvHxEx3Sf1m6q81NQgMzUrf3+9R/A13Axh0GvI6Co6PlH7UCsqjHvaU4xxy6AJ6U5PQvDI54Q==
+    dependencies:
+      chalk "^2.3.2"
+      enum-values "^1.2.1"
+      json-stringify-safe "^5.0.1"
+      json5 "^0.5.1"
+      randomcolor "^0.5.3"
   
   ng2-logger@^2.0.0:
     version "2.0.48"
