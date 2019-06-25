@@ -46,13 +46,7 @@ export class FlickrService {
   // tslint:disable:no-property-initializers
   private readonly _getOnePage = async params => {
     // tslint:disable:max-line-length
-    const request = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
-      environment.flickr.apiKey
-    }&bbox=${params.bounds.SouthWest.lon},${params.bounds.SouthWest.lat},${params.bounds.NorthEast.lon},${
-      params.bounds.NorthEast.lat
-    }&page=${
-      params.page
-    }&privacy_filter=1&content_type=1&extras=geo,description,license,url_n,url_z,url_o,url_k,url_h&format=json&nojsoncallback=1`;
+    const request = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${environment.flickr.apiKey}&bbox=${params.bounds.SouthWest.lon},${params.bounds.SouthWest.lat},${params.bounds.NorthEast.lon},${params.bounds.NorthEast.lat}&page=${params.page}&privacy_filter=1&content_type=1&extras=geo,description,license,url_n,url_z,url_o,url_k,url_h&format=json&nojsoncallback=1`;
     // tslint:enable:max-line-length
 
     return this._http
