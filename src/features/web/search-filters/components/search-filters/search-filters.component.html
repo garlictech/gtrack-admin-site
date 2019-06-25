@@ -1,0 +1,69 @@
+<div class="p-4 filters-box">
+  <div class="flex justify-start">
+    <a class="button" (click)="onClose()">
+      <fa-icon [icon]="closeIcon"></fa-icon>
+    </a>
+  </div>
+  <form class="pt-2" [formGroup]="filterForm">
+    <div class="my-4">
+      <div class="flex justify-between items-center mb-2 text-xs">
+        <strong>{{ 'common.hike.location-search.max-distance' | translate }}</strong>
+        <span>{{ filterForm.get('radius').value }} km</span>
+      </div>
+      <p-slider
+        class=""
+        formControlName="radius"
+        [min]="formDescriptor.fields.radius.min"
+        [max]="formDescriptor.fields.radius.max"
+      ></p-slider>
+    </div>
+
+    <div class="my-4">
+      <div class="flex justify-between mb-2 text-xs">
+        <strong>{{ 'common.hike.location-search.difficulty' | translate }}</strong>
+        <span
+          >{{ filterForm.get('difficulty').value[0] | difficulty | translate }} -
+          {{ filterForm.get('difficulty').value[1] | difficulty | translate }}</span
+        >
+      </div>
+      <p-slider
+        class=""
+        formControlName="difficulty"
+        [range]="true"
+        [min]="formDescriptor.fields.difficulty.min"
+        [max]="formDescriptor.fields.difficulty.max"
+      ></p-slider>
+    </div>
+
+    <div class="my-4">
+      <div class="flex justify-between mb-2 text-xs">
+        <strong>{{ 'common.hike.location-search.distance' | translate }}</strong>
+        <span>{{ filterForm.get('length').value[0] }} km - {{ filterForm.get('length').value[1] }} km</span>
+      </div>
+      <p-slider
+        class=""
+        formControlName="length"
+        [range]="true"
+        [min]="formDescriptor.fields.length.min"
+        [max]="formDescriptor.fields.length.max"
+      ></p-slider>
+    </div>
+
+    <div class="my-4">
+      <div class="flex justify-between mb-2 text-xs">
+        <strong>{{ 'common.hike.location-search.length' | translate }}</strong>
+        <span
+          >{{ filterForm.get('time').value[0] }} {{ 'hours' | translate }} - {{ filterForm.get('time').value[1] }}
+          {{ 'hours' | translate }}</span
+        >
+      </div>
+      <p-slider
+        class=""
+        formControlName="time"
+        [range]="true"
+        [min]="formDescriptor.fields.time.min"
+        [max]="formDescriptor.fields.time.max"
+      ></p-slider>
+    </div>
+  </form>
+</div>

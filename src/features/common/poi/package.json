@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.poi",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "homepage": "https://bit.dev/garlictech/angular-features/common/poi",
   "main": "index.ts",
   "dependencies": {
@@ -21,6 +21,24 @@
   },
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.deepstream-ngx": "-",
+        "@bit/garlictech.angular-features.common.geometry": "-",
+        "@bit/garlictech.angular-features.common.geosearch": "-",
+        "@bit/garlictech.angular-features.common.gtrack-interfaces": "-",
+        "@bit/garlictech.angular-features.common.leaflet-map": "-",
+        "@bit/garlictech.angular-features.common.multi-language-text": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.deepstream-ngx": "*",
+        "@bit/garlictech.angular-features.common.geometry": "*",
+        "@bit/garlictech.angular-features.common.geosearch": "*",
+        "@bit/garlictech.angular-features.common.gtrack-interfaces": "*",
+        "@bit/garlictech.angular-features.common.leaflet-map": "*",
+        "@bit/garlictech.angular-features.common.multi-language-text": "*"
+      }
+    },
     "env": {}
   }
 }

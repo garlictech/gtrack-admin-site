@@ -1,0 +1,10 @@
+<gtrack-leaflet-map #map [layers]="layers" [center]="center">
+  <div class="map-button-container">
+    <button pButton (click)="goToCurrentPosition($event)" class="map-button">
+      <fa-icon [icon]="faCrosshairs"></fa-icon>
+    </button>
+    <button pButton (click)="resetMap($event)" class="map-button">
+      <fa-icon [icon]="faSyncAlt"></fa-icon>
+    </button>
+  </div>
+</gtrack-leaflet-map>

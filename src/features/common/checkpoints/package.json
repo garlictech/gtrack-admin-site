@@ -1,10 +1,13 @@
 {
   "name": "@bit/garlictech.angular-features.common.checkpoints",
-  "version": "0.0.38",
+  "version": "0.0.44",
   "homepage": "https://bit.dev/garlictech/angular-features/common/checkpoints",
   "main": "index.ts",
   "dependencies": {
-    "leaflet": "^1.0.3"
+    "leaflet": "^1.0.3",
+    "@bit/garlictech.angular-features.common.gtrack-interfaces": "file:../gtrack-interfaces",
+    "@bit/garlictech.angular-features.common.marker-icons": "file:../marker-icons",
+    "@bit/garlictech.angular-features.common.leaflet-map": "file:../leaflet-map"
   },
   "devDependencies": {},
   "peerDependencies": {
@@ -14,6 +17,18 @@
   },
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.gtrack-interfaces": "-",
+        "@bit/garlictech.angular-features.common.leaflet-map": "-",
+        "@bit/garlictech.angular-features.common.marker-icons": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.gtrack-interfaces": "*",
+        "@bit/garlictech.angular-features.common.leaflet-map": "*",
+        "@bit/garlictech.angular-features.common.marker-icons": "*"
+      }
+    },
     "env": {}
   }
 }

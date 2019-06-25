@@ -1,0 +1,34 @@
+{
+  "name": "@bit/garlictech.angular-features.web.elevation",
+  "version": "0.0.38",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/elevation",
+  "main": "index.ts",
+  "dependencies": {
+    "primeng": "~7.1.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.elevation": "-",
+        "@bit/garlictech.angular-features.common.marker-icons": "-",
+        "@bit/garlictech.angular-features.common.poi": "-",
+        "@bit/garlictech.angular-features.common.utils": "-",
+        "@bit/garlictech.angular-features.web.localize": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.elevation": "*",
+        "@bit/garlictech.angular-features.common.marker-icons": "*",
+        "@bit/garlictech.angular-features.common.poi": "*",
+        "@bit/garlictech.angular-features.common.utils": "*",
+        "@bit/garlictech.angular-features.web.localize": "*"
+      }
+    },
+    "env": {}
+  }
+}

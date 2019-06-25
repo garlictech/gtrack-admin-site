@@ -1,0 +1,39 @@
+{
+  "name": "@bit/garlictech.angular-features.web.search",
+  "version": "0.0.36",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/search",
+  "main": "index.ts",
+  "dependencies": {
+    "angular-svg-icon": "^7.2.0",
+    "primeng": "~7.1.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1",
+    "@angular/forms": "~7.2.1",
+    "@ngx-translate/core": "^11.0.1",
+    "@bit/garlictech.angular-features.common.hike": "*",
+    "@bit/garlictech.angular-features.common.leaflet-map": "*",
+    "@bit/garlictech.angular-features.common.search": "*",
+    "@bit/garlictech.angular-features.web.forms-primeng": "*"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {},
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.hike": "-",
+        "@bit/garlictech.angular-features.common.leaflet-map": "-",
+        "@bit/garlictech.angular-features.common.search": "-",
+        "@bit/garlictech.angular-features.web.forms-primeng": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.hike": "*",
+        "@bit/garlictech.angular-features.common.leaflet-map": "*",
+        "@bit/garlictech.angular-features.common.search": "*",
+        "@bit/garlictech.angular-features.web.forms-primeng": "*"
+      }
+    }
+  }
+}

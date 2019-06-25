@@ -1,0 +1,29 @@
+{
+  "name": "@bit/garlictech.angular-features.web.weather",
+  "version": "0.0.14",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/weather",
+  "main": "index.ts",
+  "dependencies": {
+    "angular-svg-icon": "^7.0.0",
+    "primeng": "~7.1.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1",
+    "@ngrx/store": "~7.1.0",
+    "@bit/garlictech.angular-features.common.weather": "*"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {},
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.weather": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.weather": "*"
+      }
+    }
+  }
+}

@@ -27,6 +27,7 @@ export class HikeListComponent implements AfterViewInit, OnDestroy {
   activeView: string;
   activeHike?: HikeProgram;
   isMobile: boolean;
+  mapButtonTitle: string;
 
   private readonly _destroy$: Subject<boolean>;
 
@@ -38,6 +39,7 @@ export class HikeListComponent implements AfterViewInit, OnDestroy {
 
   constructor(private readonly _store: Store<any>) {
     this.showMap = false;
+    this.mapButtonTitle = 'Show map';
     this.isMobile = window.innerWidth < 768;
     this._destroy$ = new Subject<boolean>();
     this.activeView = 'map';
@@ -50,11 +52,11 @@ export class HikeListComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.isMobile = window.innerWidth < 768;
-    console.log(this.isMobile);
   }
 
   toggleMap(): void {
     this.showMap = !this.showMap;
+    this.showMap ? (this.mapButtonTitle = 'Hide map') : (this.mapButtonTitle = 'Show map');
   }
 
   changeView(view: string): void {

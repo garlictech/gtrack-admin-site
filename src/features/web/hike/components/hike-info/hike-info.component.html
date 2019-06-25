@@ -1,0 +1,14 @@
+<div class="flex h-12 bg-black text-white rounded-br-lg rounded-bl-lg" *ngIf="hikeProgram">
+  <span class="distance hike-info-item px-1 rounded-bl-lg flex flex-row justify-center w-full items-center text-s">
+    <i class="fas fa-arrow-right"></i>
+    <div>{{ hikeProgram.distance | distance }}</div>
+  </span>
+  <span class="uphill hike-info-item px-1 flex flex-row justify-center w-full items-center text-s">
+    <i class="fas fa-mountain"></i>
+    <div>{{ hikeProgram.uphill | distance }}</div>
+  </span>
+  <span class="time hike-info-item px-1 flex flex-row justify-center w-full items-center text-s">
+    <i class="fas fa-clock"></i>
+    <div>{{ hikeProgram.time | duration }}</div>
+  </span>
+</div>

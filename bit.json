@@ -8,7 +8,7 @@
     "garlictech.angular-features/common/gtrack-interfaces": "0.0.5",
     "garlictech.angular-features/common/leaflet-map": "0.0.41",
     "garlictech.angular-features/common/localization": "0.0.8",
-    "garlictech.angular-features/common/multi-language-text": "0.0.10",
+    "garlictech.angular-features/common/multi-language-text": "0.0.1",
     "garlictech.angular-features/common/router": "0.0.14",
     "garlictech.angular-features/common/utils": "0.0.7",
     "garlictech.angular-features/common/weather": "0.0.6",

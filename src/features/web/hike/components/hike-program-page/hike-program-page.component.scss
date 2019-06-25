@@ -1,0 +1,65 @@
+:host {
+  display: block;
+  .first-section {
+    width: 100%;
+    background: #f8f9f3;
+  }
+  .first-section-grid {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  .third-section {
+    width: 100%;
+    background: #33424e;
+    color: white;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .gallery-section {
+    width: 100%;
+    background: #f8f9f3;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .weather {
+    background: #3b4a55;
+    padding: 1rem;
+  }
+  .fourth-section {
+    width: 100%;
+    background: #f0f8ec;
+    padding-top: 2rem;
+  }
+  .fourth-section > h2 {
+    padding-bottom: 2rem;
+  }
+  .table-container {
+    background: #eeefe9;
+    padding: 1rem;
+  }
+  ::ng-deep {
+    gtrack-leaflet-map {
+      width: 100%;
+      height: 300px;
+      display: block;
+    }
+
+    gtrack-trail-box {
+      gtrack-leaflet-map > div {
+        margin-bottom: 1rem;
+      }
+    }
+    gtrack-elevation-profile-line > div {
+      margin-bottom: 1rem;
+    }
+    .hike-body {
+      .slides {
+        width: 100%;
+        height: 435px;
+        position: relative;
+      }
+    }
+  }
+}

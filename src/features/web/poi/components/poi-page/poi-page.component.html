@@ -1,0 +1,37 @@
+<div class="first-section">
+  <div class="container flex justify-center items-center flex-col">
+    <h2>{{ poi.description.en_US.title }}</h2>
+    <div class="description-container">
+      <gtrack-description [description]="poi.description.en_US.fullDescription"></gtrack-description>
+      <div *ngIf="poi.description.en_US.fullDescription.length === 0">
+        There is no further description about {{ poi.description.en_US.title }}.
+      </div>
+    </div>
+    <div class="poi-data-container">
+      <div class="poi-data">
+        Latitude:
+        <p>{{ poi.lat | number: '1.0' }}</p>
+      </div>
+      <div class="poi-data">
+        Longitude:
+        <p>{{ poi.lon | number: '1.0' }}</p>
+      </div>
+      <div class="poi-data">
+        Elevation:
+        <p>{{ poi.elevation | distance }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="second-section">
+  <div class="container flex justify-center">
+    <div class="map-size" *ngIf="poi">
+      <gtrack-poi-map [poi]="poi"></gtrack-poi-map>
+    </div>
+  </div>
+</div>
+
+<div class="third-section" *ngIf="images && images.length > 0">
+  <gtrack-gallery [imageUrls]="images"></gtrack-gallery>
+</div>

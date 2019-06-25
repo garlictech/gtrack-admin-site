@@ -1,0 +1,26 @@
+{
+  "name": "@bit/garlictech.angular-features.web.search-filters",
+  "version": "0.0.18",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/search-filters",
+  "main": "index.ts",
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.5.0",
+    "@fortawesome/angular-fontawesome": "0.3.0",
+    "@ngx-translate/core": "11.0.1",
+    "primeng": "7.1.0",
+    "@bit/garlictech.angular-features.common.search-filters": "file:../../common/search-filters",
+    "@bit/garlictech.angular-features.common.utils": "file:../../common/utils",
+    "@bit/garlictech.angular-features.web.forms-primeng": "file:../forms-primeng"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1",
+    "@angular/forms": "~7.2.1",
+    "@ngrx/store": "~7.1.0"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
+}

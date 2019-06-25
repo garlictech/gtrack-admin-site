@@ -1,0 +1,59 @@
+<a (click)="toggleMap()" class="fab cursor-pointer">{{ mapButtonTitle }}</a>
+
+<div
+  [ngClass]="{ 'show-map': showMap, 'list-view': activeView === 'list', 'map-view': activeView === 'map' }"
+  class="search-container w-full h-full md:flex"
+>
+  <div class="search-list w-full h-full md:w-1/3 lg:w-1/4 px-2">
+    <ul class="list-reset hidden md:flex justify-between pt-4 pb-2">
+      <li class="rounded border-grey-dark border-solid border -mr-px">
+        <button
+          [ngClass]="{ 'bg-grey-dark text-white': activeView === 'list' }"
+          class="py-2 focus:outline-none px-4 hover:bg-grey-dark hover:text-white"
+          (click)="changeView('list')"
+        >
+          <fa-icon [icon]="listIcon"></fa-icon>
+        </button>
+      </li>
+      <li class="rounded border-grey-dark border-solid border">
+        <button
+          [ngClass]="{ 'bg-grey-dark text-white': activeView === 'map' }"
+          class="py-2 focus:outline-none px-4 hover:bg-grey-dark hover:text-white"
+          (click)="changeView('map')"
+        >
+          <fa-icon [icon]="mapIcon"></fa-icon>
+        </button>
+      </li>
+    </ul>
+    <ng-container [ngTemplateOutlet]="preListTemplate"></ng-container>
+
+    <div *ngIf="hikes.length === 0" class="information">
+      We couldn't find any hikes with the parameters you specified, please try to expand your results using the filters.
+    </div>
+
+    <div class="hike-list-container" *ngIf="hikes">
+      <div *ngFor="let hike of hikes; trackBy: trackByFn" class="cursor-pointer my-2 hike-list-item">
+        <gtrack-hike-card
+          (mouseenter)="onHikeHover(hike)"
+          (mouseleave)="onHikeLeave()"
+          [routerLink]="['/hike', hike.id]"
+          gtrackCardShadow="search"
+          [hikeProgram]="hike"
+        ></gtrack-hike-card>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="hikes && ((showMap && isMobile) || (!isMobile && activeView === 'map'))"
+    class="flex-1 h-full search-map relative"
+  >
+    <gtrack-search-filters class="block md:hidden" (closeClick)="toggleFilters()" *ngIf="showFilters">
+    </gtrack-search-filters>
+    <gtrack-search-results-map
+      [highlighted]="activeHike"
+      [hikePrograms]="hikes"
+      (hikeClick)="onHikeClick($event)"
+      [circle]="searchCircle"
+    ></gtrack-search-results-map>
+  </div>
+</div>

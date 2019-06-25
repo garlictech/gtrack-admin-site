@@ -1,0 +1,24 @@
+{
+  "name": "@bit/garlictech.angular-features.web.spinner",
+  "version": "0.0.12",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/spinner",
+  "main": "index.ts",
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
+    "@angular/core": "~7.2.1",
+    "@angular/common": "~7.2.1"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.spinner": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.spinner": "*"
+      }
+    },
+    "env": {}
+  }
+}

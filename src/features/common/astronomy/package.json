@@ -1,0 +1,21 @@
+{
+  "name": "@bit/garlictech.angular-features.common.astronomy",
+  "version": "0.0.3",
+  "homepage": "https://bit.dev/garlictech/angular-features/common/astronomy",
+  "main": "index.ts",
+  "dependencies": {
+    "angular-svg-icon": "^7.2.0",
+    "suncalc": "^1.8.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1",
+    "@ngx-translate/core": "^11.0.1",
+    "lodash-es": "^4.17.11"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
+}

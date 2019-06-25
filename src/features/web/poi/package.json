@@ -1,0 +1,38 @@
+{
+  "name": "@bit/garlictech.angular-features.web.poi",
+  "version": "0.0.28",
+  "homepage": "https://bit.dev/garlictech/angular-features/web/poi",
+  "main": "index.ts",
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
+    "@angular/common": "~7.2.1",
+    "@angular/core": "~7.2.1",
+    "lodash-es": "^4.17.11",
+    "@bit/garlictech.angular-features.common.leaflet-map": "*",
+    "@bit/garlictech.angular-features.common.poi": "*",
+    "@bit/garlictech.angular-features.common.utils": "*",
+    "@bit/garlictech.angular-features.web.hike": "*",
+    "@bit/garlictech.angular-features.web.localize": "*"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {},
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.leaflet-map": "-",
+        "@bit/garlictech.angular-features.common.poi": "-",
+        "@bit/garlictech.angular-features.common.utils": "-",
+        "@bit/garlictech.angular-features.web.hike": "-",
+        "@bit/garlictech.angular-features.web.localize": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.leaflet-map": "*",
+        "@bit/garlictech.angular-features.common.poi": "*",
+        "@bit/garlictech.angular-features.common.utils": "*",
+        "@bit/garlictech.angular-features.web.hike": "*",
+        "@bit/garlictech.angular-features.web.localize": "*"
+      }
+    }
+  }
+}

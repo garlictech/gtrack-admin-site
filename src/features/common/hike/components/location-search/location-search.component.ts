@@ -35,6 +35,7 @@ export class LocationSearchComponent implements OnDestroy, OnInit {
 
   @Input() placeholder: string;
   @Input() displaySidebar;
+  @Input() floating: boolean;
 
   @Output() readonly displaySidebarChange: EventEmitter<boolean>;
   @Output() readonly search: EventEmitter<GeoJSON.Position>;
@@ -68,6 +69,7 @@ export class LocationSearchComponent implements OnDestroy, OnInit {
     this._locate$ = new Subject<boolean>();
     this.displaySidebarChange = new EventEmitter();
     this.search = new EventEmitter<GeoJSON.Position>();
+    this.floating = false;
   }
 
   ngOnDestroy(): void {

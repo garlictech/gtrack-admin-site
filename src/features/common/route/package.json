@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.route",
-  "version": "0.0.12",
+  "version": "0.0.15",
   "homepage": "https://bit.dev/garlictech/angular-features/common/route",
   "main": "index.ts",
   "dependencies": {
@@ -16,10 +16,32 @@
     "@ngrx/store": "~7.1.0",
     "rxjs": "~6.3.2",
     "@ngrx/entity": "~7.1.0",
-    "@angular/common": "~7.2.1"
+    "@angular/common": "~7.2.1",
+    "@bit/garlictech.angular-features.common.gtrack-interfaces": "*",
+    "@bit/garlictech.angular-features.common.deepstream-ngx": "*",
+    "@bit/garlictech.angular-features.common.geometry": "*",
+    "@bit/garlictech.angular-features.common.units": "*"
   },
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
-    "env": {}
+    "env": {},
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.gtrack-interfaces": "-",
+        "@bit/garlictech.angular-features.common.units": "-",
+        "@bit/garlictech.angular-features.common.deepstream-ngx": "-",
+        "@bit/garlictech.angular-features.common.geometry": "-"
+      },
+      "devDependencies": {
+        "@bit/garlictech.angular-features.common.deepstream-ngx": "-",
+        "@bit/garlictech.angular-features.common.geometry": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.gtrack-interfaces": "*",
+        "@bit/garlictech.angular-features.common.deepstream-ngx": "*",
+        "@bit/garlictech.angular-features.common.geometry": "*",
+        "@bit/garlictech.angular-features.common.units": "*"
+      }
+    }
   }
 }
