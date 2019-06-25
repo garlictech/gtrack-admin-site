@@ -25,7 +25,7 @@
       <div class="f-right">
         <p-button
           label="Retrieve plan"
-          styleClass="ui-button-primary mr-10"
+          styleClass="ui-button-primary"
           *ngIf="(isPlanning$ | async) === false"
           (onClick)="retrievePlan()"
         ></p-button>

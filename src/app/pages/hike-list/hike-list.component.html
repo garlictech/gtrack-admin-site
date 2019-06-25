@@ -2,12 +2,12 @@
   <div class="ui-g-12">
     <p-card title="Hikes">
       <div class="mb-20">
-        <p-button label="New hike" class="float-right" styleClass="ui-button-success" routerLink="/admin/hike/new">
+        <p-button label="New hike" class="f-right" styleClass="ui-button-success" routerLink="/admin/hike/new">
         </p-button>
 
-        <app-gpx-input title="Import GPX" class="float-right mr-10"></app-gpx-input>
+        <app-gpx-input title="Import GPX" class="f-right mr-10"></app-gpx-input>
 
-        <div class="ui-md-6 ui-g-nopad float-left">
+        <div class="ui-md-6 ui-g-nopad f-left">
           <p-selectButton [options]="listStates" [(ngModel)]="selectedListState"></p-selectButton>
         </div>
 
@@ -18,7 +18,7 @@
         <app-table-spinner></app-table-spinner>
       </ng-template>
 
-      <ng-container *ngIf="(hikeList$ | async) as hikeList; else hikeListSpinner">
+      <ng-container *ngIf="hikeList$ | async as hikeList; else hikeListSpinner">
         <p-table [value]="hikeList">
           <ng-template pTemplate="header">
             <tr>
