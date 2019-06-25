@@ -83,7 +83,6 @@ export class HikeEditOutlineComponent implements OnInit, OnDestroy, AfterViewIni
 
     this._getNearestSegmentToPoint(stop).then(
       (sData: NearestSegmentData) => {
-        console.log('sData', sData);
         const promises = [];
         const isRoundTrip = this.isRoundTrip; // save here
 
