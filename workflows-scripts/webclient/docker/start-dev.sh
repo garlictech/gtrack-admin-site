@@ -11,4 +11,6 @@ fi
 export DOCKER_CMD="$@"
 
 ${DOCKER_COMPOSE} up --remove-orphans -d
+
+export NODE_OPTIONS=--max_old_space_size=4096
 ng serve --port 8081
