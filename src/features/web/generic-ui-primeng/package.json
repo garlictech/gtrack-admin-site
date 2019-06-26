@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.web.generic-ui-primeng",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "homepage": "https://bit.dev/garlictech/angular-features/web/generic-ui-primeng",
   "main": "index.ts",
   "dependencies": {

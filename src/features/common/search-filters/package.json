@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.search-filters",
-  "version": "0.0.14",
+  "version": "0.0.16",
   "homepage": "https://bit.dev/garlictech/angular-features/common/search-filters",
   "main": "index.ts",
   "dependencies": {},
@@ -10,10 +10,19 @@
     "@angular/forms": "~7.2.1",
     "@ngrx/store": "~7.1.0",
     "lodash-es": "^4.17.11",
-    "rxjs": "~6.3.2"
+    "rxjs": "~6.3.2",
+    "@bit/garlictech.angular-features.common.forms": "*"
   },
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
-    "env": {}
+    "env": {},
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.forms": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.forms": "*"
+      }
+    }
   }
 }

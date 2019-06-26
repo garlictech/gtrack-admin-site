@@ -1,13 +1,18 @@
 {
   "name": "@bit/garlictech.angular-features.common.search",
-  "version": "0.0.31",
+  "version": "0.0.39",
   "homepage": "https://bit.dev/garlictech/angular-features/common/search",
   "main": "index.ts",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@turf/distance": "^6.0.1",
     "@turf/helpers": "^6.1.4",
-    "leaflet": "^1.4.0"
+    "leaflet": "^1.4.0",
+    "@bit/garlictech.angular-features.common.current-geolocation": "file:../current-geolocation",
+    "@bit/garlictech.angular-features.common.geosearch": "file:../geosearch",
+    "@bit/garlictech.angular-features.common.google-maps": "file:../google-maps",
+    "@bit/garlictech.angular-features.common.hike": "file:../hike",
+    "@bit/garlictech.angular-features.common.search-filters": "file:../search-filters"
   },
   "devDependencies": {},
   "peerDependencies": {

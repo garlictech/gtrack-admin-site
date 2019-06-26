@@ -1,20 +1,20 @@
 Arguments: 
-  /Users/tomi/.nvm/versions/node/v10.14.1/bin/node /usr/local/Cellar/yarn/1.15.2/libexec/bin/yarn.js
+  /usr/bin/node /usr/bin/yarn install
 
 PATH: 
-  /Users/tomi/Dev/git-subrepo/lib:/Users/tomi/.nvm/versions/node/v10.14.1/bin:./bin:/usr/local/bin:/usr/local/sbin:/Users/tomi/.dotfiles/bin:/Users/tomi/.rbenv/shims:/Users/tomi/Code/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tomi/Dev/git-subrepo/lib:./bin:/usr/local/sbin:/Users/tomi/.dotfiles/bin:/Users/tomi/.rbenv/shims:/Users/tomi/Code/go/bin:/Users/tomi/Library/Android/sdk/tools:/Users/tomi/Library/Android/sdk/platform-tools:/usr/local/bin:/Users/tomi/Library/Android/sdk/tools:/Users/tomi/Library/Android/sdk/platform-tools
+  /mnt/data/development/gtrack/gtrack-admin-site/node_modules/.bin:/mnt/data/development/gtrack/node_modules/.bin:/mnt/data/development/node_modules/.bin:/mnt/data/node_modules/.bin:/mnt/node_modules/.bin:/node_modules/.bin:/usr/bin:/mnt/data/development/git-subrepo/lib:/home/hangyagy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/data/android/sdk/tools:/mnt/data/android/sdk/platform-tools:/home/hangyagy/go/bin:/usr/local/go/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:~/bin/:/mnt/data/development/webstorm/bin:~/.composer/vendor/bin/
 
 Yarn version: 
-  1.15.2
+  1.16.0
 
 Node version: 
-  10.14.1
+  10.16.0
 
 Platform: 
-  darwin x64
+  linux x64
 
 Trace: 
-  Error: ENOENT: no such file or directory, copyfile '/Users/tomi/Library/Caches/Yarn/v4/npm-load-google-maps-api-1.3.3-9d3670a05527609ce9b31331bdd5957ddc0343fb/node_modules/load-google-maps-api/LICENSE.md' -> '/Users/tomi/Dev/web/localhost/garlictech/git/gtrack-admin-site/node_modules/@bit/garlictech.angular-features.common.google-maps/node_modules/load-google-maps-api/LICENSE.md'
+  Error: EEXIST: file already exists, mkdir '/mnt/data/development/gtrack/gtrack-admin-site/node_modules/@bit/garlictech.angular-features.common.checkpoints/node_modules/@bit/garlictech.angular-features.common.leaflet-map'
 
 npm manifest: 
   {
@@ -841,9 +841,12 @@ Lockfile:
       "@fortawesome/free-brands-svg-icons" "^5.5.0"
       aws-amplify "^1.1.29"
   
-  "@bit/garlictech.angular-features.common.checkpoints@file:./src/features/common/checkpoints":
-    version "0.0.38"
+  "@bit/garlictech.angular-features.common.checkpoints@file:./src/features/common/checkpoints", "@bit/garlictech.angular-features.common.checkpoints@file:src/features/common/checkpoints":
+    version "0.0.40"
     dependencies:
+      "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.40-2a43f83c-071b-4fb3-9a50-204e9c9ac7a4-1561580336005/node_modules/@bit/gtrack-interfaces"
+      "@bit/garlictech.angular-features.common.leaflet-map" "0.0.56"
+      "@bit/garlictech.angular-features.common.marker-icons" "0.0.31"
       leaflet "^1.0.3"
   
   "@bit/garlictech.angular-features.common.current-geolocation@file:./src/features/common/current-geolocation":
@@ -858,8 +861,39 @@ Lockfile:
     dependencies:
       "@garlictech/deepstream-rxjs" "^1.9.2"
   
-  "@bit/garlictech.angular-features.common.elevation@file:./src/features/common/elevation":
+  "@bit/garlictech.angular-features.common.elevation@0.0.52":
     version "0.0.52"
+    resolved "https://node.bit.dev/garlictech.angular-features.common.elevation/-/garlictech.angular-features.common.elevation-0.0.52.tgz#f59336de56362e282a0bb6bccca0ac444d5f5aea"
+    integrity sha1-9ZM23lY2LigqC7a8zKCsRE1fWuo=
+    dependencies:
+      "@bit/garlictech.angular-features.common.astronomy" "0.0.2"
+      "@bit/garlictech.angular-features.common.game-rule" "0.0.3"
+      "@bit/garlictech.angular-features.common.geospatial" "0.0.3"
+      "@bit/garlictech.angular-features.common.google-maps" "0.0.6"
+      "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+      "@bit/garlictech.angular-features.common.hike" "0.0.44"
+      "@bit/garlictech.angular-features.common.leaflet-map" "0.0.54"
+      "@bit/garlictech.angular-features.common.marker-icons" "0.0.29"
+      "@bit/garlictech.angular-features.common.multi-language-text" "0.0.14"
+      "@bit/garlictech.angular-features.common.poi" "0.0.25"
+      "@bit/garlictech.angular-features.common.route" "0.0.12"
+      "@bit/garlictech.angular-features.common.units" "0.0.2"
+      "@bit/garlictech.angular-features.common.utils" "0.0.12"
+      "@bit/garlictech.angular-features.common.weather" "0.0.8"
+      "@turf/distance" "^6.0.1"
+      "@turf/helpers" "^6.1.4"
+      "@turf/line-slice-along" "^5.1.5"
+      d3-array "^1.2.4"
+      d3-axis "^1.0.12"
+      d3-drag "^1.2.3"
+      d3-interpolate "^1.3.2"
+      d3-scale "^2.2.2"
+      d3-selection "^1.4.0"
+      d3-shape "^1.3.5"
+      d3-simple-slider "^1.5.0"
+  
+  "@bit/garlictech.angular-features.common.elevation@file:./src/features/common/elevation":
+    version "0.0.57"
     dependencies:
       "@turf/distance" "^6.0.1"
       "@turf/helpers" "^6.1.4"
@@ -928,7 +962,7 @@ Lockfile:
       d3-scale "2.2.2"
       d3-shape "1.3.5"
   
-  "@bit/garlictech.angular-features.common.gtrack-interfaces@file:./src/features/common/gtrack-interfaces":
+  "@bit/garlictech.angular-features.common.gtrack-interfaces@file:./src/features/common/gtrack-interfaces", "@bit/garlictech.angular-features.common.gtrack-interfaces@file:src/features/common/gtrack-interfaces":
     version "0.0.7"
     dependencies:
       d3-scale "^2.2.2"
@@ -937,6 +971,7 @@ Lockfile:
   "@bit/garlictech.angular-features.common.hike@file:./src/features/common/hike":
     version "0.0.44"
     dependencies:
+      "@bit/garlictech.angular-features.common.checkpoints" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-hike-0.0.44-f57f81e5-98aa-4f26-952f-772d1624c0b1-1561580336222/node_modules/@bit/checkpoints"
       "@fortawesome/angular-fontawesome" "^0.3.0"
       "@fortawesome/free-solid-svg-icons" "^5.5.0"
       "@turf/bbox" "^5.1.5"
@@ -951,6 +986,21 @@ Lockfile:
       primeng "~7.1.0"
       togpx "^0.5.4"
       uuid "^3.3.2"
+  
+  "@bit/garlictech.angular-features.common.leaflet-map@0.0.56":
+    version "0.0.56"
+    resolved "https://node.bit.dev/garlictech.angular-features.common.leaflet-map/-/garlictech.angular-features.common.leaflet-map-0.0.56.tgz#d2867c039663e775c2375affeb84095e7c7d7bab"
+    integrity sha1-0oZ8A5Zj53XCN1r/64QJXnx9e6s=
+    dependencies:
+      "@bit/garlictech.angular-features.common.current-geolocation" "0.0.9"
+      "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+      "@bit/garlictech.angular-features.common.marker-icons" "0.0.31"
+      "@bit/garlictech.angular-features.web.spinner" "0.0.13"
+      geojson "^0.5.0"
+      leaflet "^1.0.3"
+      leaflet-usermarker "^1.0.0"
+      leaflet.fullscreen "^1.4.5"
+      overlapping-marker-spiderfier-leaflet "^0.2.6-2"
   
   "@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map":
     version "0.0.54"
@@ -976,6 +1026,15 @@ Lockfile:
   "@bit/garlictech.angular-features.common.localization@file:./src/features/common/localization":
     version "0.0.10"
   
+  "@bit/garlictech.angular-features.common.marker-icons@0.0.31":
+    version "0.0.31"
+    resolved "https://node.bit.dev/garlictech.angular-features.common.marker-icons/-/garlictech.angular-features.common.marker-icons-0.0.31.tgz#3b399c3fdcaa96d4dfcfa31706a63bd49001d9f0"
+    integrity sha1-OzmcP9yqltTfz6MXBqY71JAB2fA=
+    dependencies:
+      "@bit/garlictech.angular-features.common.generic-ui" "0.0.26"
+      "@bit/garlictech.angular-features.common.poi" "0.0.27"
+      angular-svg-icon "^7.2.0"
+  
   "@bit/garlictech.angular-features.common.marker-icons@file:./src/features/common/marker-icons":
     version "0.0.29"
     dependencies:
@@ -999,11 +1058,33 @@ Lockfile:
   
   "@bit/garlictech.angular-features.common.multi-language-text@file:./src/features/common/multi-language-text":
     version "0.0.14"
+    dependencies:
+      "@angular/common" "~7.2.1"
+      "@angular/core" "~7.2.1"
+      "@ngrx/store" "~7.1.0"
+      lodash-es "^4.17.11"
+      rxjs "~6.3.2"
   
   "@bit/garlictech.angular-features.common.object-mark@file:./src/features/common/object-mark":
     version "0.0.34"
     dependencies:
       jest-marbles "^2.1.0"
+  
+  "@bit/garlictech.angular-features.common.poi@0.0.27":
+    version "0.0.27"
+    resolved "https://node.bit.dev/garlictech.angular-features.common.poi/-/garlictech.angular-features.common.poi-0.0.27.tgz#71543d78c5ca22769d19612da2969b64795d4276"
+    integrity sha1-cVQ9eMXKInadGWEtopabZHldQnY=
+    dependencies:
+      "@bit/garlictech.angular-features.common.deepstream-ngx" "0.0.11"
+      "@bit/garlictech.angular-features.common.geometry" "0.0.3"
+      "@bit/garlictech.angular-features.common.geosearch" "0.0.20"
+      "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+      "@bit/garlictech.angular-features.common.leaflet-map" "0.0.56"
+      "@bit/garlictech.angular-features.common.multi-language-text" "0.0.14"
+      "@turf/distance" "^6.0.1"
+      "@turf/helpers" "^6.1.4"
+      jest-marbles "^2.1.0"
+      uuid "^3.3.2"
   
   "@bit/garlictech.angular-features.common.poi@file:./src/features/common/poi":
     version "0.0.25"
@@ -1136,6 +1217,15 @@ Lockfile:
     dependencies:
       primeng "~7.1.0"
   
+  "@bit/garlictech.angular-features.web.localize@0.0.11":
+    version "0.0.11"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.localize/-/garlictech.angular-features.web.localize-0.0.11.tgz#a454d06ca7cdf2d21b8c31b17234cc0667df70f1"
+    integrity sha1-pFTQbKfN8tIbjDGxcjTMBmffcPE=
+    dependencies:
+      "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+      "@bit/garlictech.angular-features.common.multi-language-text" "0.0.14"
+      ngx-md "^7.1.3"
+  
   "@bit/garlictech.angular-features.web.localize@0.0.7":
     version "0.0.7"
     resolved "https://node.bit.dev/garlictech.angular-features.web.localize/-/garlictech.angular-features.web.localize-0.0.7.tgz#fce550c56392936c9034494993f2e95c25a6a509"
@@ -1211,6 +1301,11 @@ Lockfile:
     integrity sha1-/d1TosuIZgks6M8StaK7HC8IzNU=
     dependencies:
       "@bit/garlictech.angular-features.common.spinner" "0.0.4"
+  
+  "@bit/garlictech.angular-features.web.spinner@0.0.13":
+    version "0.0.13"
+    resolved "https://node.bit.dev/garlictech.angular-features.web.spinner/-/garlictech.angular-features.web.spinner-0.0.13.tgz#4b0695b8b2aa2b6d5e5a3b07a84259ca5d5e8261"
+    integrity sha1-SwaVuLKqK21eWjsHqEJZyl1egmE=
   
   "@bit/garlictech.angular-features.web.text-carousel@0.0.15":
     version "0.0.15"

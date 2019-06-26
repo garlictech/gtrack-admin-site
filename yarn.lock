@@ -498,12 +498,25 @@
     "@fortawesome/free-brands-svg-icons" "^5.5.0"
     aws-amplify "^1.1.29"
 
-"@bit/garlictech.angular-features.common.checkpoints@file:./src/features/common/checkpoints":
+"@bit/garlictech.angular-features.common.checkpoints@0.0.38":
   version "0.0.38"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.checkpoints/-/garlictech.angular-features.common.checkpoints-0.0.38.tgz#98d0c855883d912682d152f17e64925b661ac100"
+  integrity sha1-mNDIVYg9kSaC0VLxfmSSW2YawQA=
   dependencies:
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+    "@bit/garlictech.angular-features.common.leaflet-map" "0.0.54"
+    "@bit/garlictech.angular-features.common.marker-icons" "0.0.29"
     leaflet "^1.0.3"
 
-"@bit/garlictech.angular-features.common.current-geolocation@file:./src/features/common/current-geolocation":
+"@bit/garlictech.angular-features.common.checkpoints@file:./src/features/common/checkpoints":
+  version "0.0.40"
+  dependencies:
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.40-2f25a666-6c39-45d2-a1fc-73fccfa3b213-1561580536538/node_modules/@bit/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.40-2f25a666-6c39-45d2-a1fc-73fccfa3b213-1561580536538/node_modules/@bit/leaflet-map"
+    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.40-2f25a666-6c39-45d2-a1fc-73fccfa3b213-1561580536538/node_modules/@bit/marker-icons"
+    leaflet "^1.0.3"
+
+"@bit/garlictech.angular-features.common.current-geolocation@file:./src/features/common/current-geolocation", "@bit/garlictech.angular-features.common.current-geolocation@file:src/features/common/current-geolocation":
   version "0.0.9"
   dependencies:
     "@turf/distance" "^6.0.1"
@@ -515,8 +528,39 @@
   dependencies:
     "@garlictech/deepstream-rxjs" "^1.9.2"
 
-"@bit/garlictech.angular-features.common.elevation@file:./src/features/common/elevation":
+"@bit/garlictech.angular-features.common.elevation@0.0.52":
   version "0.0.52"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.elevation/-/garlictech.angular-features.common.elevation-0.0.52.tgz#f59336de56362e282a0bb6bccca0ac444d5f5aea"
+  integrity sha1-9ZM23lY2LigqC7a8zKCsRE1fWuo=
+  dependencies:
+    "@bit/garlictech.angular-features.common.astronomy" "0.0.2"
+    "@bit/garlictech.angular-features.common.game-rule" "0.0.3"
+    "@bit/garlictech.angular-features.common.geospatial" "0.0.3"
+    "@bit/garlictech.angular-features.common.google-maps" "0.0.6"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+    "@bit/garlictech.angular-features.common.hike" "0.0.44"
+    "@bit/garlictech.angular-features.common.leaflet-map" "0.0.54"
+    "@bit/garlictech.angular-features.common.marker-icons" "0.0.29"
+    "@bit/garlictech.angular-features.common.multi-language-text" "0.0.14"
+    "@bit/garlictech.angular-features.common.poi" "0.0.25"
+    "@bit/garlictech.angular-features.common.route" "0.0.12"
+    "@bit/garlictech.angular-features.common.units" "0.0.2"
+    "@bit/garlictech.angular-features.common.utils" "0.0.12"
+    "@bit/garlictech.angular-features.common.weather" "0.0.8"
+    "@turf/distance" "^6.0.1"
+    "@turf/helpers" "^6.1.4"
+    "@turf/line-slice-along" "^5.1.5"
+    d3-array "^1.2.4"
+    d3-axis "^1.0.12"
+    d3-drag "^1.2.3"
+    d3-interpolate "^1.3.2"
+    d3-scale "^2.2.2"
+    d3-selection "^1.4.0"
+    d3-shape "^1.3.5"
+    d3-simple-slider "^1.5.0"
+
+"@bit/garlictech.angular-features.common.elevation@file:./src/features/common/elevation":
+  version "0.0.57"
   dependencies:
     "@turf/distance" "^6.0.1"
     "@turf/helpers" "^6.1.4"
@@ -530,8 +574,19 @@
     d3-shape "^1.3.5"
     d3-simple-slider "^1.5.0"
 
-"@bit/garlictech.angular-features.common.forms@file:./src/features/common/forms":
+"@bit/garlictech.angular-features.common.forms@0.0.15":
   version "0.0.15"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.forms/-/garlictech.angular-features.common.forms-0.0.15.tgz#3400b9d0bcc2682f581aba90c0691be68fc4cc58"
+  integrity sha1-NAC50LzCaC9YGrqQwGkb5o/EzFg=
+  dependencies:
+    "@bit/garlictech.angular-features.common.utils" "0.0.12"
+    google-libphonenumber "^3.2.2"
+    jest-create-mock-instance "^1.1.0"
+    jest-marbles "^2.1.0"
+    password-validator "^4.1.1"
+
+"@bit/garlictech.angular-features.common.forms@file:./src/features/common/forms":
+  version "0.0.17"
   dependencies:
     google-libphonenumber "^3.2.2"
     jest-create-mock-instance "^1.1.0"
@@ -541,8 +596,18 @@
 "@bit/garlictech.angular-features.common.game-rule@file:./src/features/common/game-rule":
   version "0.0.3"
 
-"@bit/garlictech.angular-features.common.generic-ui@file:./src/features/common/generic-ui":
+"@bit/garlictech.angular-features.common.generic-ui@0.0.26":
   version "0.0.26"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.generic-ui/-/garlictech.angular-features.common.generic-ui-0.0.26.tgz#a7a5278d528005dcd48a61029c48e1d85e65f679"
+  integrity sha1-p6UnjVKABdzUimECnEjh2F5l9nk=
+  dependencies:
+    "@bit/garlictech.angular-features.common.utils" "0.0.12"
+    "@fortawesome/angular-fontawesome" "^0.3.0"
+    "@fortawesome/free-solid-svg-icons" "^5.8.2"
+    jest-marbles "^2.1.0"
+
+"@bit/garlictech.angular-features.common.generic-ui@file:./src/features/common/generic-ui":
+  version "0.0.28"
   dependencies:
     "@fortawesome/angular-fontawesome" "^0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.8.2"
@@ -558,8 +623,18 @@
     "@turf/midpoint" "^5.1.5"
     "@turf/nearest-point-on-line" "^6.0.2"
 
-"@bit/garlictech.angular-features.common.geosearch@file:./src/features/common/geosearch":
+"@bit/garlictech.angular-features.common.geosearch@0.0.20":
   version "0.0.20"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.geosearch/-/garlictech.angular-features.common.geosearch-0.0.20.tgz#51d2aee3402a8560c852aaa8925a06f4ceb8faf3"
+  integrity sha1-UdKu40AqhWDIUqqokloG9M64+vM=
+  dependencies:
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "0.0.11"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+    jest-marbles "^2.1.0"
+    uuid "^3.3.2"
+
+"@bit/garlictech.angular-features.common.geosearch@file:./src/features/common/geosearch", "@bit/garlictech.angular-features.common.geosearch@file:src/features/common/geosearch":
+  version "0.0.21"
   dependencies:
     jest-marbles "^2.1.0"
     uuid "^3.3.2"
@@ -572,7 +647,7 @@
     "@turf/line-slice" "^5.1.5"
     "@turf/nearest-point-on-line" "^6.0.2"
 
-"@bit/garlictech.angular-features.common.google-maps@file:./src/features/common/google-maps":
+"@bit/garlictech.angular-features.common.google-maps@file:./src/features/common/google-maps", "@bit/garlictech.angular-features.common.google-maps@file:src/features/common/google-maps":
   version "0.0.6"
   dependencies:
     load-google-maps-api "^1.3.2"
@@ -585,14 +660,58 @@
     d3-scale "2.2.2"
     d3-shape "1.3.5"
 
-"@bit/garlictech.angular-features.common.gtrack-interfaces@file:./src/features/common/gtrack-interfaces":
+"@bit/garlictech.angular-features.common.gtrack-interfaces@file:./src/features/common/gtrack-interfaces", "@bit/garlictech.angular-features.common.gtrack-interfaces@file:src/features/common/gtrack-interfaces":
   version "0.0.7"
   dependencies:
     d3-scale "^2.2.2"
     d3-shape "^1.3.5"
 
-"@bit/garlictech.angular-features.common.hike@file:./src/features/common/hike":
+"@bit/garlictech.angular-features.common.hike@0.0.44":
   version "0.0.44"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.hike/-/garlictech.angular-features.common.hike-0.0.44.tgz#1b906147a9bb6854201ed843d1826c969db50504"
+  integrity sha1-G5BhR6m7aFQgHthD0YJslp21BQQ=
+  dependencies:
+    "@bit/garlictech.angular-features.common.astronomy" "0.0.2"
+    "@bit/garlictech.angular-features.common.authentication" "0.1.12"
+    "@bit/garlictech.angular-features.common.checkpoints" "0.0.38"
+    "@bit/garlictech.angular-features.common.current-geolocation" "0.0.9"
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "0.0.11"
+    "@bit/garlictech.angular-features.common.forms" "0.0.15"
+    "@bit/garlictech.angular-features.common.game-rule" "0.0.3"
+    "@bit/garlictech.angular-features.common.geometry" "0.0.3"
+    "@bit/garlictech.angular-features.common.geosearch" "0.0.20"
+    "@bit/garlictech.angular-features.common.google-maps" "0.0.6"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+    "@bit/garlictech.angular-features.common.leaflet-map" "0.0.54"
+    "@bit/garlictech.angular-features.common.localization" "0.0.10"
+    "@bit/garlictech.angular-features.common.marker-icons" "0.0.29"
+    "@bit/garlictech.angular-features.common.multi-language-text" "0.0.14"
+    "@bit/garlictech.angular-features.common.object-mark" "0.0.34"
+    "@bit/garlictech.angular-features.common.poi" "0.0.25"
+    "@bit/garlictech.angular-features.common.route" "0.0.12"
+    "@bit/garlictech.angular-features.common.router" "0.0.15"
+    "@bit/garlictech.angular-features.common.search-filters" "0.0.14"
+    "@bit/garlictech.angular-features.common.settings" "0.0.39"
+    "@bit/garlictech.angular-features.common.utils" "0.0.12"
+    "@bit/garlictech.angular-features.common.weather" "0.0.8"
+    "@bit/garlictech.angular-features.web.forms-primeng" "0.0.23"
+    "@fortawesome/angular-fontawesome" "^0.3.0"
+    "@fortawesome/free-solid-svg-icons" "^5.5.0"
+    "@turf/bbox" "^5.1.5"
+    "@turf/bbox-polygon" "^5.1.5"
+    "@turf/boolean-point-in-polygon" "^6.0.1"
+    "@turf/distance" "^6.0.1"
+    "@turf/helpers" "^6.1.4"
+    "@turf/nearest-point-on-line" "^6.0.2"
+    "@turf/transform-scale" "^5.1.5"
+    jest-marbles "^2.1.0"
+    leaflet "^1.4.0"
+    primeng "~7.1.0"
+    togpx "^0.5.4"
+    uuid "^3.3.2"
+
+"@bit/garlictech.angular-features.common.hike@file:./src/features/common/hike", "@bit/garlictech.angular-features.common.hike@file:src/features/common/hike":
+  version "0.0.50"
   dependencies:
     "@fortawesome/angular-fontawesome" "^0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
@@ -609,8 +728,23 @@
     togpx "^0.5.4"
     uuid "^3.3.2"
 
-"@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map":
+"@bit/garlictech.angular-features.common.leaflet-map@0.0.54":
   version "0.0.54"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.leaflet-map/-/garlictech.angular-features.common.leaflet-map-0.0.54.tgz#1801f08c0c5455ad64d27fa3df436b24b630f266"
+  integrity sha1-GAHwjAxUVa1k0n+j30NrJLYw8mY=
+  dependencies:
+    "@bit/garlictech.angular-features.common.current-geolocation" "0.0.9"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+    "@bit/garlictech.angular-features.common.marker-icons" "0.0.29"
+    "@bit/garlictech.angular-features.web.spinner" "0.0.11"
+    geojson "^0.5.0"
+    leaflet "^1.0.3"
+    leaflet-usermarker "^1.0.0"
+    leaflet.fullscreen "^1.4.5"
+    overlapping-marker-spiderfier-leaflet "^0.2.6-2"
+
+"@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map", "@bit/garlictech.angular-features.common.leaflet-map@file:src/features/common/leaflet-map":
+  version "0.0.56"
   dependencies:
     geojson "^0.5.0"
     leaflet "^1.0.3"
@@ -618,52 +752,58 @@
     leaflet.fullscreen "^1.4.5"
     overlapping-marker-spiderfier-leaflet "^0.2.6-2"
 
-"@bit/garlictech.angular-features.common.localization@0.0.8":
-  version "0.0.8"
-  resolved "https://node.bit.dev/garlictech.angular-features.common.localization/-/garlictech.angular-features.common.localization-0.0.8.tgz#d9840461d8fe951df226e4a330701eb420a2d96a"
-  integrity sha1-2YQEYdj+lR3yJuSjMHAetCCi2Wo=
-  dependencies:
-    "@angular/common" "~7.2.1"
-    "@angular/core" "~7.2.1"
-    "@ngrx/store" "~7.1.0"
-    "@ngx-translate/core" "^11.0.1"
-    lodash-es "^4.17.11"
-    ng2-logger "2.0.46"
-
 "@bit/garlictech.angular-features.common.localization@file:./src/features/common/localization":
   version "0.0.10"
 
-"@bit/garlictech.angular-features.common.marker-icons@file:./src/features/common/marker-icons":
+"@bit/garlictech.angular-features.common.marker-icons@0.0.29":
   version "0.0.29"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.marker-icons/-/garlictech.angular-features.common.marker-icons-0.0.29.tgz#c2222721f6ffdac66d7dc1564ee592dd00384487"
+  integrity sha1-wiInIfb/2sZtfcFWTuWS3QA4RIc=
+  dependencies:
+    "@bit/garlictech.angular-features.common.generic-ui" "0.0.26"
+    "@bit/garlictech.angular-features.common.poi" "0.0.25"
+    angular-svg-icon "^7.2.0"
+
+"@bit/garlictech.angular-features.common.marker-icons@file:./src/features/common/marker-icons", "@bit/garlictech.angular-features.common.marker-icons@file:src/features/common/marker-icons":
+  version "0.0.31"
   dependencies:
     angular-svg-icon "^7.2.0"
 
-"@bit/garlictech.angular-features.common.marker-popup@file:./src/features/common/marker-popup":
+"@bit/garlictech.angular-features.common.marker-popup@file:./src/features/common/marker-popup", "@bit/garlictech.angular-features.common.marker-popup@file:src/features/common/marker-popup":
   version "0.0.6"
 
-"@bit/garlictech.angular-features.common.multi-language-text@0.0.12":
-  version "0.0.12"
-  resolved "https://node.bit.dev/garlictech.angular-features.common.multi-language-text/-/garlictech.angular-features.common.multi-language-text-0.0.12.tgz#7976f2a2175b79b83b03fe57765515c954b34358"
-  integrity sha1-eXbyohdbebg7A/5XdlUVyVSzQ1g=
+"@bit/garlictech.angular-features.common.multi-language-text@0.0.12", "@bit/garlictech.angular-features.common.multi-language-text@file:./src/features/common/multi-language-text":
+  version "0.0.14"
   dependencies:
     "@angular/common" "~7.2.1"
     "@angular/core" "~7.2.1"
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.6"
-    "@bit/garlictech.angular-features.common.localization" "0.0.8"
     "@ngrx/store" "~7.1.0"
     lodash-es "^4.17.11"
     rxjs "~6.3.2"
-
-"@bit/garlictech.angular-features.common.multi-language-text@file:./src/features/common/multi-language-text":
-  version "0.0.14"
 
 "@bit/garlictech.angular-features.common.object-mark@file:./src/features/common/object-mark":
   version "0.0.34"
   dependencies:
     jest-marbles "^2.1.0"
 
-"@bit/garlictech.angular-features.common.poi@file:./src/features/common/poi":
+"@bit/garlictech.angular-features.common.poi@0.0.25":
   version "0.0.25"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.poi/-/garlictech.angular-features.common.poi-0.0.25.tgz#791268f9b882664e168d0bd4641320020d23a6b6"
+  integrity sha1-eRJo+biCZk4WjQvUZBMgAg0jprY=
+  dependencies:
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "0.0.11"
+    "@bit/garlictech.angular-features.common.geometry" "0.0.3"
+    "@bit/garlictech.angular-features.common.geosearch" "0.0.20"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+    "@bit/garlictech.angular-features.common.leaflet-map" "0.0.54"
+    "@bit/garlictech.angular-features.common.multi-language-text" "0.0.14"
+    "@turf/distance" "^6.0.1"
+    "@turf/helpers" "^6.1.4"
+    jest-marbles "^2.1.0"
+    uuid "^3.3.2"
+
+"@bit/garlictech.angular-features.common.poi@file:./src/features/common/poi":
+  version "0.0.27"
   dependencies:
     "@turf/distance" "^6.0.1"
     "@turf/helpers" "^6.1.4"
@@ -676,8 +816,21 @@
 "@bit/garlictech.angular-features.common.progressive-image-loader@file:./src/features/common/progressive-image-loader":
   version "0.0.2"
 
-"@bit/garlictech.angular-features.common.route@file:./src/features/common/route":
+"@bit/garlictech.angular-features.common.route@0.0.12":
   version "0.0.12"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.route/-/garlictech.angular-features.common.route-0.0.12.tgz#9aab3add8545cbc1e681311f6b2dfc32223ddf60"
+  integrity sha1-mqs63YVFy8HmgTEfay38MiI932A=
+  dependencies:
+    "@bit/garlictech.angular-features.common.deepstream-ngx" "0.0.11"
+    "@bit/garlictech.angular-features.common.geometry" "0.0.3"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+    "@bit/garlictech.angular-features.common.units" "0.0.2"
+    d3-geo "^1.11.3"
+    jest-marbles "^2.1.0"
+    uuid "^3.3.2"
+
+"@bit/garlictech.angular-features.common.route@file:./src/features/common/route":
+  version "0.0.15"
   dependencies:
     d3-geo "^1.11.3"
     jest-marbles "^2.1.0"
@@ -688,12 +841,39 @@
   dependencies:
     jest-marbles "^2.1.0"
 
-"@bit/garlictech.angular-features.common.search-filters@file:./src/features/common/search-filters":
+"@bit/garlictech.angular-features.common.search-filters@0.0.14":
   version "0.0.14"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.search-filters/-/garlictech.angular-features.common.search-filters-0.0.14.tgz#75ba665c898f7aaff536cc95957142665def5a66"
+  integrity sha1-dbpmXImPeq/1NsyVlXFCZl3vWmY=
+  dependencies:
+    "@bit/garlictech.angular-features.common.forms" "0.0.15"
+
+"@bit/garlictech.angular-features.common.search-filters@file:./src/features/common/search-filters", "@bit/garlictech.angular-features.common.search-filters@file:src/features/common/search-filters":
+  version "0.0.16"
+
+"@bit/garlictech.angular-features.common.search@0.0.31":
+  version "0.0.31"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.search/-/garlictech.angular-features.common.search-0.0.31.tgz#0a09e45a407a9598443ceffc83ac821745a83155"
+  integrity sha1-CgnkWkB6lZhEPO/8g6yCF0WoMVU=
+  dependencies:
+    "@bit/garlictech.angular-features.common.current-geolocation" "0.0.9"
+    "@bit/garlictech.angular-features.common.geosearch" "0.0.20"
+    "@bit/garlictech.angular-features.common.google-maps" "0.0.6"
+    "@bit/garlictech.angular-features.common.hike" "0.0.44"
+    "@bit/garlictech.angular-features.common.search-filters" "0.0.14"
+    "@fortawesome/free-solid-svg-icons" "^5.5.0"
+    "@turf/distance" "^6.0.1"
+    "@turf/helpers" "^6.1.4"
+    leaflet "^1.4.0"
 
 "@bit/garlictech.angular-features.common.search@file:./src/features/common/search":
-  version "0.0.31"
+  version "0.0.39"
   dependencies:
+    "@bit/garlictech.angular-features.common.current-geolocation" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-925282a7-d073-4788-9fa4-f8d57f1ce2ee-1561580628632/node_modules/@bit/current-geolocation"
+    "@bit/garlictech.angular-features.common.geosearch" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-925282a7-d073-4788-9fa4-f8d57f1ce2ee-1561580628632/node_modules/@bit/geosearch"
+    "@bit/garlictech.angular-features.common.google-maps" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-925282a7-d073-4788-9fa4-f8d57f1ce2ee-1561580628632/node_modules/@bit/google-maps"
+    "@bit/garlictech.angular-features.common.hike" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-925282a7-d073-4788-9fa4-f8d57f1ce2ee-1561580628632/node_modules/@bit/hike"
+    "@bit/garlictech.angular-features.common.search-filters" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-925282a7-d073-4788-9fa4-f8d57f1ce2ee-1561580628632/node_modules/@bit/search-filters"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@turf/distance" "^6.0.1"
     "@turf/helpers" "^6.1.4"
@@ -716,8 +896,16 @@
 "@bit/garlictech.angular-features.common.units@file:./src/features/common/units":
   version "0.0.2"
 
-"@bit/garlictech.angular-features.common.utils@file:./src/features/common/utils":
+"@bit/garlictech.angular-features.common.utils@0.0.12":
   version "0.0.12"
+  resolved "https://node.bit.dev/garlictech.angular-features.common.utils/-/garlictech.angular-features.common.utils-0.0.12.tgz#2f7d5fc89c7be222e8ac659516984689d6015ab0"
+  integrity sha1-L31fyJx74iLorGWVFphGidYBWrA=
+  dependencies:
+    "@bit/garlictech.angular-features.common.units" "0.0.2"
+    moment "^2.24.0"
+
+"@bit/garlictech.angular-features.common.utils@file:./src/features/common/utils":
+  version "0.0.13"
   dependencies:
     moment "^2.24.0"
 
@@ -793,6 +981,22 @@
   dependencies:
     primeng "~7.1.0"
 
+"@bit/garlictech.angular-features.web.localize@0.0.11":
+  version "0.0.11"
+  resolved "https://node.bit.dev/garlictech.angular-features.web.localize/-/garlictech.angular-features.web.localize-0.0.11.tgz#a454d06ca7cdf2d21b8c31b17234cc0667df70f1"
+  integrity sha1-pFTQbKfN8tIbjDGxcjTMBmffcPE=
+  dependencies:
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "0.0.7"
+    "@bit/garlictech.angular-features.common.multi-language-text" "0.0.14"
+    ngx-md "^7.1.3"
+
+"@bit/garlictech.angular-features.web.localize@0.0.12":
+  version "0.0.12"
+  resolved "https://node.bit.dev/garlictech.angular-features.web.localize/-/garlictech.angular-features.web.localize-0.0.12.tgz#a58ea13505d33e48ab29b36cbd28f976b7e31397"
+  integrity sha1-pY6hNQXTPkirKbNsvSj5drfjE5c=
+  dependencies:
+    ngx-md "^7.1.3"
+
 "@bit/garlictech.angular-features.web.localize@0.0.7":
   version "0.0.7"
   resolved "https://node.bit.dev/garlictech.angular-features.web.localize/-/garlictech.angular-features.web.localize-0.0.7.tgz#fce550c56392936c9034494993f2e95c25a6a509"
@@ -814,8 +1018,13 @@
     ngx-md "^7.1.3"
 
 "@bit/garlictech.angular-features.web.marker-popup@file:./src/features/web/marker-popup":
-  version "0.0.11"
+  version "0.0.17"
   dependencies:
+    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.17-5ad7efb2-3c8e-4230-bb72-5538ad0f5237-1561580628635/node_modules/common/marker-icons"
+    "@bit/garlictech.angular-features.common.marker-popup" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.17-5ad7efb2-3c8e-4230-bb72-5538ad0f5237-1561580628635/node_modules/common/marker-popup"
+    "@bit/garlictech.angular-features.common.utils" "0.0.12"
+    "@bit/garlictech.angular-features.web.localize" "0.0.12"
+    "@bit/garlictech.angular-features.web.poi" "0.0.28"
     primeng "7.1.0"
 
 "@bit/garlictech.angular-features.web.poi@0.0.22":
@@ -829,7 +1038,12 @@
     "@bit/garlictech.angular-features.web.hike" "0.0.28"
     "@bit/garlictech.angular-features.web.localize" "0.0.9"
 
-"@bit/garlictech.angular-features.web.search-filters@", "@bit/garlictech.angular-features.web.search-filters@0.0.16":
+"@bit/garlictech.angular-features.web.poi@0.0.28":
+  version "0.0.28"
+  resolved "https://node.bit.dev/garlictech.angular-features.web.poi/-/garlictech.angular-features.web.poi-0.0.28.tgz#5077f658165d1ff2505e6b3f7bdc4722fef088b4"
+  integrity sha1-UHf2WBZdH/JQXms/e9xHIv7wiLQ=
+
+"@bit/garlictech.angular-features.web.search-filters@0.0.16":
   version "0.0.16"
   resolved "https://node.bit.dev/garlictech.angular-features.web.search-filters/-/garlictech.angular-features.web.search-filters-0.0.16.tgz#ca894675e11e6e55ef791f4a2b363197428268b2"
   integrity sha1-yolGdeEeblXveR9KKzYxl0KCaLI=
@@ -837,6 +1051,16 @@
     "@bit/garlictech.angular-features.common.search-filters" "0.0.14"
     "@bit/garlictech.angular-features.common.utils" "0.0.12"
     "@bit/garlictech.angular-features.web.forms-primeng" "0.0.23"
+    "@fortawesome/angular-fontawesome" "0.3.0"
+    "@fortawesome/free-solid-svg-icons" "^5.5.0"
+    "@ngx-translate/core" "11.0.1"
+    primeng "7.1.0"
+
+"@bit/garlictech.angular-features.web.search-filters@null":
+  version "0.0.19"
+  resolved "https://node.bit.dev/garlictech.angular-features.web.search-filters/-/garlictech.angular-features.web.search-filters-0.0.19.tgz#ac3e0ddd6d64720d76be8c47d1563417898ffbc5"
+  integrity sha1-rD4N3W1kcg12voxH0VY0F4mP+8U=
+  dependencies:
     "@fortawesome/angular-fontawesome" "0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@ngx-translate/core" "11.0.1"
@@ -854,7 +1078,7 @@
     angular-svg-icon "^7.2.0"
     primeng "~7.1.0"
 
-"@bit/garlictech.angular-features.web.slideshow@", "@bit/garlictech.angular-features.web.slideshow@0.0.3":
+"@bit/garlictech.angular-features.web.slideshow@0.0.3", "@bit/garlictech.angular-features.web.slideshow@null":
   version "0.0.3"
   resolved "https://node.bit.dev/garlictech.angular-features.web.slideshow/-/garlictech.angular-features.web.slideshow-0.0.3.tgz#87bc4d96e3b0cb4a549d686b74464bfa7ae41d31"
   integrity sha1-h7xNluOwy0pUnWhrdEZL+nrkHTE=
@@ -1895,19 +2119,19 @@
     "@types/lodash" "*"
 
 "@types/lodash@*", "@types/lodash@^4.14.120":
-  version "4.14.134"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.134.tgz#9032b440122db3a2a56200e91191996161dde5b9"
-  integrity sha512-2/O0khFUCFeDlbi7sZ7ZFRCcT812fAeOLm7Ev4KbwASkZ575TDrDcY7YyaoHdTOzKcNbfiwLYZqPmoC4wadrsw==
+  version "4.14.135"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.135.tgz#d2607c35dd68f70c2b35ba020c667493dedd8447"
+  integrity sha512-Ed+tSZ9qM1oYpi5kzdsBuOzcAIn1wDW+e8TFJ50IMJMlSopGdJgKAbhHzN6h1E1OfjlGOr2JepzEWtg9NIfoNg==
 
 "@types/node@*":
-  version "12.0.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.8.tgz#551466be11b2adc3f3d47156758f610bd9f6b1d8"
-  integrity sha512-b8bbUOTwzIY3V5vDTY1fIJ+ePKDUBqt2hC2woVGotdQQhG/2Sh62HOKHrT7ab+VerXAcPyAiTEipPu/FsreUtg==
+  version "12.0.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.10.tgz#51babf9c7deadd5343620055fc8aff7995c8b031"
+  integrity sha512-LcsGbPomWsad6wmMNv7nBLw7YYYyfdYcz6xryKYQhx89c3XXan+8Q6AJ43G5XDIaklaVkK3mE4fCb0SBvMiPSQ==
 
 "@types/node@^10.12.10":
-  version "10.14.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.9.tgz#2e8d678039d27943ce53a1913386133227fd9066"
-  integrity sha512-NelG/dSahlXYtSoVPErrp06tYFrvzj8XLWmKA+X8x0W//4MqbUyZu++giUG/v0bjAT6/Qxa8IjodrfdACyb0Fg==
+  version "10.14.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.10.tgz#e491484c6060af8d461e12ec81c0da8a3282b8de"
+  integrity sha512-V8wj+w2YMNvGuhgl/MA5fmTxgjmVHVoasfIaxMMZJV6Y8Kk+Ydpi1z2whoShDCJ2BuNVoqH/h1hrygnBxkrw/Q==
 
 "@types/node@^8.0.31":
   version "8.10.49"
@@ -3093,9 +3317,9 @@ bs-logger@0.x:
     fast-json-stable-stringify "2.x"
 
 bser@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/bser/-/bser-2.0.0.tgz#9ac78d3ed5d915804fd87acb158bc797147a1719"
-  integrity sha1-mseNPtXZFYBP2HrLFYvHlxR6Fxk=
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/bser/-/bser-2.1.0.tgz#65fc784bf7f87c009b973c12db6546902fa9c7b5"
+  integrity sha512-8zsjWrQkkBoLK6uxASk1nJ2SKv97ltiGDo6A3wA0/yRPz+CwmEyDo0hUrhIuukG2JHpAl3bvFIixw2/3Hi0DOg==
   dependencies:
     node-int64 "^0.4.0"
 
@@ -3311,9 +3535,9 @@ camelcase@^5.0.0:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30000921, caniuse-lite@^1.0.30000975:
-  version "1.0.30000975"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000975.tgz#d4e7131391dddcf2838999d3ce75065f65f1cdfc"
-  integrity sha512-ZsXA9YWQX6ATu5MNg+Vx/cMQ+hM6vBBSqDeJs8ruk9z0ky4yIHML15MoxcFt088ST2uyjgqyUGRJButkptWf0w==
+  version "1.0.30000978"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000978.tgz#1e3346c27fc46bce9ac1ccd77863153a263dde56"
+  integrity sha512-H6gK6kxUzG6oAwg/Jal279z8pHw0BzrpZfwo/CA9FFm/vA0l8IhDfkZtepyJNE2Y4V6Dp3P3ubz6czby1/Mgsw==
 
 canonical-path@1.0.0:
   version "1.0.0"
@@ -4111,9 +4335,9 @@ d3-collection@1:
   integrity sha512-ii0/r5f4sjKNTfh84Di+DpztYwqKhEyUlKoPrzUFfeSkWxjW49xU2QzO9qrPrNkpdI0XJkfzvmTu8V2Zylln6A==
 
 d3-color@1:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-1.2.3.tgz#6c67bb2af6df3cc8d79efcc4d3a3e83e28c8048f"
-  integrity sha512-x37qq3ChOTLd26hnps36lexMRhNXEtVxZ4B25rL0DVdDsGQIJGB18S7y9XDwlDD6MD/ZBzITCf4JjGMM10TZkw==
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-1.2.5.tgz#5810ea1808f2f993d04508cb2fad764f48134788"
+  integrity sha512-u4CaFaqQKRofuhr9uo/xLdaGvvzdsMX7MgP42XgQJHLBRWnn0C0T+48rvj80cN9KXAauHEMEfe7ehacIoxmP/g==
 
 d3-contour@1:
   version "1.3.2"
@@ -4172,9 +4396,9 @@ d3-format@1:
   integrity sha512-Z18Dprj96ExragQ0DeGi+SYPQ7pPfRMtUXtsg/ChVIKNBCzjO8XYJvRTC1usblx52lqge56V5ect+frYTQc8WQ==
 
 d3-geo@1, d3-geo@^1.11.3:
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.11.3.tgz#5bb08388f45e4b281491faa72d3abd43215dbd1c"
-  integrity sha512-n30yN9qSKREvV2fxcrhmHUdXP9TNH7ZZj3C/qnaoU0cVf/Ea85+yT7HY7i8ySPwkwjCNYtmKqQFTvLFngfkItQ==
+  version "1.11.6"
+  resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.11.6.tgz#134f2ef035ff75a448075fafdea92702a2e0e0cf"
+  integrity sha512-z0J8InXR9e9wcgNtmVnPTj0TU8nhYT6lD/ak9may2PdKqXIeHUr8UbFLoCtrPYNsjv6YaLvSDQVl578k6nm7GA==
   dependencies:
     d3-array "1"
 
@@ -4309,9 +4533,9 @@ d3-zoom@1:
     d3-transition "1"
 
 d3@^5.9.1:
-  version "5.9.2"
-  resolved "https://registry.yarnpkg.com/d3/-/d3-5.9.2.tgz#64e8a7e9c3d96d9e6e4999d2c8a2c829767e67f5"
-  integrity sha512-ydrPot6Lm3nTWH+gJ/Cxf3FcwuvesYQ5uk+j/kXEH/xbuYWYWTMAHTJQkyeuG8Y5WM5RSEYB41EctUrXQQytRQ==
+  version "5.9.4"
+  resolved "https://registry.yarnpkg.com/d3/-/d3-5.9.4.tgz#d85ce1f4c7ddc7825d56c51ace089f78bb877e6c"
+  integrity sha512-iMLfEVd2Cg3YEfOdUvQ9gJtZs4YJG0T5Nvz+A3j4sIyBwscncVheaRtwg/g6g69qwS/gl0gqlIt7CUeO/BVNbQ==
   dependencies:
     d3-array "1"
     d3-axis "1"
@@ -4402,7 +4626,7 @@ debug@^3.1.0, debug@^3.2.5, debug@^3.2.6:
   dependencies:
     ms "^2.1.1"
 
-debuglog@^1.0.1:
+debuglog@*, debuglog@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/debuglog/-/debuglog-1.0.1.tgz#aa24ffb9ac3df9a2351837cfb2d279360cd78492"
   integrity sha1-qiT/uaw9+aI1GDfPstJ5NgzXhJI=
@@ -4764,14 +4988,14 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.164:
-  version "1.3.164"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.164.tgz#8680b875577882c1572c42218d53fa9ba5f71d5d"
-  integrity sha512-VLlalqUeduN4+fayVtRZvGP2Hl1WrRxlwzh2XVVMJym3IFrQUS29BFQ1GP/BxOJXJI1OFCrJ5BnFEsAe8NHtOg==
+  version "1.3.174"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.174.tgz#011c68d4130e995cbb69c533e147d7f4856e9f39"
+  integrity sha512-OEh3EARo2B07ZRtxB0u9GqWyWmTeNS+diMp5bjw4kqMjgpzqM0w1zUOyErDsyWxTdArbvZ79T/w5n3WsBVHLfA==
 
 elliptic@^6.0.0:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.4.1.tgz#c2d0b7776911b86722c632c3c06c60f2f819939a"
-  integrity sha512-BsXLz5sqX8OHcsh7CqBMztyXARmGQ3LWPtGjJi6DiJHq5C/qvi9P3OqgswKSDftbu8+IoI/QDTAm2fFnQ9SZSQ==
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.0.tgz#2b8ed4c891b7de3200e14412a5b8248c7af505ca"
+  integrity sha512-eFOJTMyCYb7xtE/caJ6JJu+bhi67WCYNbkGSknu20pmM8Ke/bqOfdnZWxyoGN26JgfxTbXrsCkEw4KheCT/KGg==
   dependencies:
     bn.js "^4.4.0"
     brorand "^1.0.1"
@@ -5880,9 +6104,9 @@ got@^6.7.1:
     url-parse-lax "^1.0.0"
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
-  version "4.1.15"
-  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
-  integrity sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.0.tgz#8d8fdc73977cb04104721cb53666c1ca64cd328b"
+  integrity sha512-jpSvDPV4Cq/bgtpndIWbI5hmYxhQGHPC4d4cqBPb4DLniCfhJokdXhwhaDuLBGLQdvvRum/UiX6ECVIPvDXqdg==
 
 graphql@0.13.0:
   version "0.13.0"
@@ -6075,7 +6299,7 @@ http-deceiver@^1.2.7:
   resolved "https://registry.yarnpkg.com/http-deceiver/-/http-deceiver-1.2.7.tgz#fa7168944ab9a519d337cb0bec7284dc3e723d87"
   integrity sha1-+nFolEq5pRnTN8sL7HKE3D5yPYc=
 
-http-errors@1.7.2, http-errors@~1.7.2:
+http-errors@1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.7.2.tgz#4f5029cf13239f31036e5b2e55292bcfbcc85c8f"
   integrity sha512-uUQBt3H/cSIVfch6i1EuPNy/YsRSOUBXTVfZ+yR7Zjez3qjBz6i9+i4zjNaoqcoFVI4lQJ5plg63TvGfRSDCRg==
@@ -6095,6 +6319,17 @@ http-errors@~1.6.2:
     inherits "2.0.3"
     setprototypeof "1.1.0"
     statuses ">= 1.4.0 < 2"
+
+http-errors@~1.7.2:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.7.3.tgz#6c619e4f9c60308c38519498c14fbb10aacebb06"
+  integrity sha512-ZTTX0MWrsQ2ZAhA1cejAwDLycFsd7I7nVtnkT3Ol0aqodaKW+0CTZDQ1uBv5whptCnc8e8HeRRJxRs0kmm/Qfw==
+  dependencies:
+    depd "~1.1.2"
+    inherits "2.0.4"
+    setprototypeof "1.1.1"
+    statuses ">= 1.5.0 < 2"
+    toidentifier "1.0.0"
 
 "http-parser-js@>=0.4.0 <0.4.11":
   version "0.4.10"
@@ -6262,7 +6497,7 @@ import-local@^2.0.0:
     pkg-dir "^3.0.0"
     resolve-cwd "^2.0.0"
 
-imurmurhash@^0.1.4:
+imurmurhash@*, imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
@@ -6292,15 +6527,20 @@ inflight@^1.0.4, inflight@~1.0.6:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.3, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.0, inherits@~2.0.1, inherits@~2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
-  integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
+inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.0, inherits@~2.0.1, inherits@~2.0.3:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
+  integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
 inherits@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
   integrity sha1-sX0I0ya0Qj5Wjv9xn5GwscvfafE=
+
+inherits@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
+  integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
 ini@1.3.5, ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
   version "1.3.5"
@@ -6629,7 +6869,7 @@ is-plain-obj@^1.1.0:
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-1.1.0.tgz#71a50c8429dfca773c92a390a4a03b39fcd51d3e"
   integrity sha1-caUMhCnfync8kqOQpKA7OfzVHT4=
 
-is-plain-object@^2.0.1, is-plain-object@^2.0.3, is-plain-object@^2.0.4:
+is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/is-plain-object/-/is-plain-object-2.0.4.tgz#2c163b3fafb1b606d9d17928f05c2a1c38e07677"
   integrity sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==
@@ -7524,9 +7764,9 @@ leaflet-usermarker@^1.0.0:
   integrity sha1-3l9OpQnFoLQFvUpGoOSes+gEgms=
 
 leaflet.fullscreen@^1.4.5:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/leaflet.fullscreen/-/leaflet.fullscreen-1.5.0.tgz#ea94858dcdbaf1f9766b0bbe84896b59c008d5c6"
-  integrity sha512-buOWgke+29iBnyFYQYndHkndVTABIBHoBLrWSjDd7wdd/5DeaP/leBDxY3q41546B0ky3z8AXi+1WVjOjhUlHQ==
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/leaflet.fullscreen/-/leaflet.fullscreen-1.5.1.tgz#be5d4f559af174cdc0c6d21b8d616bce10426d36"
+  integrity sha512-lI2Y077BixQyat/IVuRfAVis+RKoh4Y8hhewW/AvrNzpKkync7V4OxwpFnCOmWa/l/SqtE2s0FAfGM4Wn2Z+dQ==
 
 leaflet@^1.0.3, leaflet@^1.4.0:
   version "1.5.1"
@@ -7638,7 +7878,7 @@ libnpm@^2.0.1:
     read-package-json "^2.0.13"
     stringify-package "^1.0.0"
 
-libnpmaccess@^3.0.1:
+libnpmaccess@*, libnpmaccess@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/libnpmaccess/-/libnpmaccess-3.0.1.tgz#5b3a9de621f293d425191aa2e779102f84167fa8"
   integrity sha512-RlZ7PNarCBt+XbnP7R6PoVgOq9t+kou5rvhaInoNibhPO7eMlRfS0B8yjatgn2yaHIwWNyoJDolC/6Lc5L/IQA==
@@ -7667,7 +7907,7 @@ libnpmhook@^5.0.2:
     get-stream "^4.0.0"
     npm-registry-fetch "^3.8.0"
 
-libnpmorg@^1.0.0:
+libnpmorg@*, libnpmorg@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/libnpmorg/-/libnpmorg-1.0.0.tgz#979b868c48ba28c5820e3bb9d9e73c883c16a232"
   integrity sha512-o+4eVJBoDGMgRwh2lJY0a8pRV2c/tQM/SxlqXezjcAg26Qe9jigYVs+Xk0vvlYDWCDhP0g74J8UwWeAgsB7gGw==
@@ -7692,7 +7932,7 @@ libnpmpublish@^1.1.0:
     semver "^5.5.1"
     ssri "^6.0.1"
 
-libnpmsearch@^2.0.0:
+libnpmsearch@*, libnpmsearch@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/libnpmsearch/-/libnpmsearch-2.0.1.tgz#eccc73a8fbf267d765d18082b85daa2512501f96"
   integrity sha512-K0yXyut9MHHCAH+DOiglQCpmBKPZXSUu76+BE2maSEfQN15OwNaA/Aiioe9lRFlVFOr7WcuJCY+VSl+gLi9NTA==
@@ -7701,7 +7941,7 @@ libnpmsearch@^2.0.0:
     get-stream "^4.0.0"
     npm-registry-fetch "^3.8.0"
 
-libnpmteam@^1.0.1:
+libnpmteam@*, libnpmteam@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/libnpmteam/-/libnpmteam-1.0.1.tgz#ff704b1b6c06ea674b3b1101ac3e305f5114f213"
   integrity sha512-gDdrflKFCX7TNwOMX1snWojCoDE5LoRWcfOC0C/fqF7mBq8Uz9zWAX4B2RllYETNO7pBupBaSyBDkTAC15cAMg==
@@ -7864,6 +8104,11 @@ lodash-es@^4.17.11:
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
   integrity sha512-DHb1ub+rMjjrxqlB3H56/6MXtm1lSksDp2rA2cNWjG8mlDUYFhUj3Di2Zn5IwSU87xLv8tNIQ7sSwE/YOX/D/Q==
 
+lodash._baseindexof@*:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/lodash._baseindexof/-/lodash._baseindexof-3.1.0.tgz#fe52b53a1c6761e42618d654e4a25789ed61822c"
+  integrity sha1-/lK1OhxnYeQmGNZU5KJXie1hgiw=
+
 lodash._baseuniq@~4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash._baseuniq/-/lodash._baseuniq-4.6.0.tgz#0ebb44e456814af7905c6212fa2c9b2d51b841e8"
@@ -7872,10 +8117,32 @@ lodash._baseuniq@~4.6.0:
     lodash._createset "~4.0.0"
     lodash._root "~3.0.0"
 
+lodash._bindcallback@*:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/lodash._bindcallback/-/lodash._bindcallback-3.0.1.tgz#e531c27644cf8b57a99e17ed95b35c748789392e"
+  integrity sha1-5THCdkTPi1epnhftlbNcdIeJOS4=
+
+lodash._cacheindexof@*:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/lodash._cacheindexof/-/lodash._cacheindexof-3.0.2.tgz#3dc69ac82498d2ee5e3ce56091bafd2adc7bde92"
+  integrity sha1-PcaayCSY0u5ePOVgkbr9Ktx73pI=
+
+lodash._createcache@*:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/lodash._createcache/-/lodash._createcache-3.1.2.tgz#56d6a064017625e79ebca6b8018e17440bdcf093"
+  integrity sha1-VtagZAF2JeeevKa4AY4XRAvc8JM=
+  dependencies:
+    lodash._getnative "^3.0.0"
+
 lodash._createset@~4.0.0:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/lodash._createset/-/lodash._createset-4.0.3.tgz#0f4659fbb09d75194fa9e2b88a6644d363c9fe26"
   integrity sha1-D0ZZ+7CddRlPqeK4imZE02PJ/iY=
+
+lodash._getnative@*, lodash._getnative@^3.0.0:
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/lodash._getnative/-/lodash._getnative-3.9.1.tgz#570bc7dede46d61cdcde687d65d3eecbaa3aaff5"
+  integrity sha1-VwvH3t5G1hzc3mh9ZdPuy6o6r/U=
 
 lodash._root@~3.0.0:
   version "3.0.1"
@@ -7901,6 +8168,11 @@ lodash.mergewith@^4.6.0:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.1.tgz#639057e726c3afbdb3e7d42741caa8d6e4335927"
   integrity sha512-eWw5r+PYICtEBgrBE5hhlT6aAa75f411bgDz/ZL2KZqYV03USvucsxcHUIlGTDTECs1eunpI7HOV7U+WLDvNdQ==
+
+lodash.restparam@*:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/lodash.restparam/-/lodash.restparam-3.6.1.tgz#936a4e309ef330a7645ed4145986c85ae5b20805"
+  integrity sha1-k2pOMJ7zMKdkXtQUWYbIWuWyCAU=
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
@@ -8344,9 +8616,9 @@ mississippi@^3.0.0:
     through2 "^2.0.0"
 
 mixin-deep@^1.2.0:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.1.tgz#a49e7268dce1a0d9698e45326c5626df3543d0fe"
-  integrity sha512-8ZItLHeEgaqEvd5lYBXfm4EZSFCX29Jb9K+lAHhDKzReKBQKj3R+7NOF6tjqYi9t4oI8VUfaWITJQm86wnXGNQ==
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.2.tgz#1120b43dc359a785dce65b55b82e257ccf479566"
+  integrity sha512-WRoDn//mXBiJ1H40rqa3vH0toePwSsGb45iInWlTySa+Uu4k3tYUSxa2v1KqAiLtvlrSzaExqS1gtk96A9zvEA==
   dependencies:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
@@ -8523,17 +8795,6 @@ ng-cli-pug-loader@^0.1.7:
     jasmine "^2.8.0"
     typescript "^2.5.2"
 
-ng2-logger@2.0.46:
-  version "2.0.46"
-  resolved "https://registry.yarnpkg.com/ng2-logger/-/ng2-logger-2.0.46.tgz#ca3052eea106a57200e15e04871c06754ddcf92a"
-  integrity sha512-zlTN3HsPCmARCLvHxEx3Sf1m6q81NQgMzUrf3+9R/A13Axh0GvI6Co6PlH7UCsqjHvaU4xxy6AJ6U5PQvDI54Q==
-  dependencies:
-    chalk "^2.3.2"
-    enum-values "^1.2.1"
-    json-stringify-safe "^5.0.1"
-    json5 "^0.5.1"
-    randomcolor "^0.5.3"
-
 ng2-logger@^2.0.0:
   version "2.0.48"
   resolved "https://registry.yarnpkg.com/ng2-logger/-/ng2-logger-2.0.48.tgz#9d555d28f6358a3423ddbb5da8f5d3dbd02058cc"
@@ -8602,9 +8863,9 @@ no-case@^2.2.0:
     lower-case "^1.1.1"
 
 node-abi@^2.1.1, node-abi@^2.2.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.8.0.tgz#bd2e88dbe6a6871e6dd08553e0605779325737ec"
-  integrity sha512-1/aa2clS0pue0HjckL62CsbhWWU35HARvBDXcJtYKbYR7LnIutmpxmXbuDMV9kEviD2lP/wACOgWmmwljghHyQ==
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.9.0.tgz#ae4075b298dab2d92dd1e22c48ccc7ffd7f06200"
+  integrity sha512-jmEOvv0eanWjhX8dX1pmjb7oJl1U1oR4FOh0b2GnvALwSYoOdU7sj+kLDSAyjo4pfC9aj/IxkloxdLJQhSSQBA==
   dependencies:
     semver "^5.4.1"
 
@@ -8881,7 +9142,7 @@ npm-pick-manifest@^2.1.0, npm-pick-manifest@^2.2.3:
     npm-package-arg "^6.0.0"
     semver "^5.4.1"
 
-npm-profile@^4.0.1:
+npm-profile@*, npm-profile@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/npm-profile/-/npm-profile-4.0.1.tgz#d350f7a5e6b60691c7168fbb8392c3603583f5aa"
   integrity sha512-NQ1I/1Q7YRtHZXkcuU1/IyHeLy6pd+ScKg4+DQHdfsm769TGq6HPrkbuNJVJS4zwE+0mvvmeULzQdWn2L2EsVA==
@@ -9867,9 +10128,9 @@ process-nextick-args@~1.0.6:
   integrity sha1-FQ4gt1ZZCtP5EJPyWk8q2L/zC6M=
 
 process-nextick-args@~2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.0.tgz#a37d732f4271b4ab1ad070d35508e8290788ffaa"
-  integrity sha512-MtEC1TqN0EU5nephaJ4rAtThHtC86dNN9qCuEhtshvpVBkAW5ZO7BASN9REnF9eoXGcRub+pFuKEpOHE+HbEMw==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
+  integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
 process@^0.11.10:
   version "0.11.10"
@@ -9968,9 +10229,9 @@ pseudomap@^1.0.2:
   integrity sha1-8FKijacOYYkX7wqKw0wa5aaChrM=
 
 psl@^1.1.24, psl@^1.1.28:
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/psl/-/psl-1.1.32.tgz#3f132717cf2f9c169724b2b6caf373cf694198db"
-  integrity sha512-MHACAkHpihU/REGGPLj4sEfc/XKW2bheigvHO1dUqjaKigMp1C8+WLQYRGgeKFMsw5PMfegZcaN8IDXK/cD0+g==
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/psl/-/psl-1.1.33.tgz#5533d9384ca7aab86425198e10e8053ebfeab661"
+  integrity sha512-LTDP2uSrsc7XCb5lO7A8BI1qYxRe/8EqlRvMeEl6rsnYAqDOl8xHR+8lSAIVfrNaSAlTPTNOCgNjWcoUL3AZsw==
 
 public-encrypt@^4.0.0:
   version "4.0.3"
@@ -10179,9 +10440,9 @@ qs@~6.5.2:
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
 query-string@^6.2.0:
-  version "6.7.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.7.0.tgz#7e92bf8525140cf8c5ebf500f26716b0de5b7023"
-  integrity sha512-oQ01H1jrgDRbPq5SjtJF470S418GOrKkds+fpvAt6DQatHXl7bmkaJulHbTIM+QNGtoPpa8f5k9W3Zk50zXRPQ==
+  version "6.8.1"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.8.1.tgz#62c54a7ef37d01b538c8fd56f95740c81d438a26"
+  integrity sha512-g6y0Lbq10a5pPQpjlFuojfMfV1Pd2Jw9h75ypiYPPia3Gcq2rgkKiIwbkS6JxH7c5f5u/B/sB+d13PU+g1eu4Q==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"
@@ -10346,15 +10607,13 @@ read-installed@~4.0.3:
     graceful-fs "^4.1.2"
 
 read-package-tree@^5.2.2:
-  version "5.2.2"
-  resolved "https://registry.yarnpkg.com/read-package-tree/-/read-package-tree-5.2.2.tgz#4b6a0ef2d943c1ea36a578214c9a7f6b7424f7a8"
-  integrity sha512-rW3XWUUkhdKmN2JKB4FL563YAgtINifso5KShykufR03nJ5loGFlkUMe1g/yxmqX073SoYYTsgXu7XdDinKZuA==
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/read-package-tree/-/read-package-tree-5.3.0.tgz#4f95472e45e7145fb77f4069d12844b139f5ea12"
+  integrity sha512-Gi64+EWmi4515E1rPR77ae/Ip8cjFQTlsWytSYJj974U0tSnxm67pyXltbDjB1lvLw4dc85HbtidGL1K2c/oxw==
   dependencies:
-    debuglog "^1.0.1"
-    dezalgo "^1.0.0"
-    once "^1.3.0"
     read-package-json "^2.0.0"
     readdir-scoped-modules "^1.0.0"
+    util-promisify "^2.1.0"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -10475,7 +10734,7 @@ readable-stream@~2.0.0:
     string_decoder "~0.10.x"
     util-deprecate "~1.0.1"
 
-readdir-scoped-modules@^1.0.0:
+readdir-scoped-modules@*, readdir-scoped-modules@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/readdir-scoped-modules/-/readdir-scoped-modules-1.0.2.tgz#9fafa37d286be5d92cbaebdee030dc9b5f406747"
   integrity sha1-n6+jfShr5dksuuve4DDcm19AZ0c=
@@ -10715,9 +10974,9 @@ resolve@1.1.7, resolve@1.1.x:
   integrity sha1-IDEU2CrSxe2ejgQRs5ModeiJ6Xs=
 
 resolve@1.x, resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.3.2, resolve@^1.3.3:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.11.0.tgz#4014870ba296176b86343d50b60f3b50609ce232"
-  integrity sha512-WL2pBDjqT6pGUNSUzMw00o4T7If+z4H2x3Gz893WoUQ5KW8Vr9txp00ykiP16VBaZF5+j/OcXJHZ9+PCvdiDKw==
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.11.1.tgz#ea10d8110376982fef578df8fc30b9ac30a07a3e"
+  integrity sha512-vIpgF6wfuJOZI7KKKSP+HmiKggadPQAdsp5HiC1mvqnfp0gF1vdwgBWZIdrVft9pgqoMFQN+R7BSWZiBxx+BBw==
   dependencies:
     path-parse "^1.0.6"
 
@@ -10991,9 +11250,9 @@ semver@5.5.1:
   integrity sha512-PqpAxfrEhlSUWge8dwIp4tZnQ25DIOthpiaHNIthsjEFQD6EvqUKUDM7L8O2rShkFccYo1VjJR0coWfNkCubRw==
 
 semver@^6.0.0:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-6.1.1.tgz#53f53da9b30b2103cd4f15eab3a18ecbcb210c9b"
-  integrity sha512-rWYq2e5iYW+fFe/oPPtYJxYgjBm8sC4rmoGdUOgBB7VnwKt6HrL793l2voH1UlsyYZpJ4g0wfjnTEO1s1NP2eQ==
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-6.1.2.tgz#079960381376a3db62eb2edc8a3bfb10c7cfe318"
+  integrity sha512-z4PqiCpomGtWj8633oeAdXm1Kn1W++3T8epkZYnwiVgIYIJ0QHszhInYSJTYxebByQH7KVCEAn8R9duzZW2PhQ==
 
 semver@~5.3.0:
   version "5.3.0"
@@ -11062,20 +11321,10 @@ set-immediate-shim@~1.0.1:
   resolved "https://registry.yarnpkg.com/set-immediate-shim/-/set-immediate-shim-1.0.1.tgz#4b2b1b27eb808a9f8dcc481a58e5e56f599f3f61"
   integrity sha1-SysbJ+uAip+NzEgaWOXlb1mfP2E=
 
-set-value@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/set-value/-/set-value-0.4.3.tgz#7db08f9d3d22dc7f78e53af3c3bf4666ecdfccf1"
-  integrity sha1-fbCPnT0i3H945Trzw79GZuzfzPE=
-  dependencies:
-    extend-shallow "^2.0.1"
-    is-extendable "^0.1.1"
-    is-plain-object "^2.0.1"
-    to-object-path "^0.3.0"
-
-set-value@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/set-value/-/set-value-2.0.0.tgz#71ae4a88f0feefbbf52d1ea604f3fb315ebb6274"
-  integrity sha512-hw0yxk9GT/Hr5yJEYnHNKYXkIA8mVJgd9ditYZCe16ZczcaELYYcfvaXesNACk2O8O0nTiPQcQhGUQj8JLzeeg==
+set-value@^2.0.0, set-value@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/set-value/-/set-value-2.0.1.tgz#a18d40530e6f07de4228c7defe4227af8cad005b"
+  integrity sha512-JxHc1weCN68wRY0fhCoXpyK55m/XPHafOmK4UWD7m2CI14GMcFypt4w/0+NV5f/ZMby2F6S2wwA7fgynh9gWSw==
   dependencies:
     extend-shallow "^2.0.1"
     is-extendable "^0.1.1"
@@ -12253,9 +12502,9 @@ tslint@^3.2.2:
     underscore.string "^3.3.4"
 
 tslint@^5.11.0:
-  version "5.17.0"
-  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.17.0.tgz#f9f0ce2011d8e90debaa6e9b4975f24cd16852b8"
-  integrity sha512-pflx87WfVoYepTet3xLfDOLDm9Jqi61UXIKePOuca0qoAZyrGWonDG9VTbji58Fy+8gciUn8Bt7y69+KEVjc/w==
+  version "5.18.0"
+  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.18.0.tgz#f61a6ddcf372344ac5e41708095bbf043a147ac6"
+  integrity sha512-Q3kXkuDEijQ37nXZZLKErssQVnwCV/+23gFEMROi8IlbaBG6tXqLPQJ5Wjcyt/yHPKBC+hD5SzuGaMora+ZS6w==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     builtin-modules "^1.1.1"
@@ -12404,14 +12653,14 @@ underscore.string@^3.3.4:
     util-deprecate "^1.0.2"
 
 union-value@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/union-value/-/union-value-1.0.0.tgz#5c71c34cb5bad5dcebe3ea0cd08207ba5aa1aea4"
-  integrity sha1-XHHDTLW61dzr4+oM0IIHulqhrqQ=
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/union-value/-/union-value-1.0.1.tgz#0b6fe7b835aecda61c6ea4d4f02c14221e109847"
+  integrity sha512-tJfXmxMeWYnczCVs7XAEvIV7ieppALdyepWMkHkwciRpZraG/xwT+s2JN8+pr1+8jCRf80FFzvr+MpQeeoF4Xg==
   dependencies:
     arr-union "^3.1.0"
     get-value "^2.0.6"
     is-extendable "^0.1.1"
-    set-value "^0.4.3"
+    set-value "^2.0.1"
 
 unique-filename@^1.1.0, unique-filename@^1.1.1:
   version "1.1.1"
@@ -12566,6 +12815,13 @@ util-extend@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/util-extend/-/util-extend-1.0.3.tgz#a7c216d267545169637b3b6edc6ca9119e2ff93f"
   integrity sha1-p8IW0mdUUWljeztu3GypEZ4v+T8=
+
+util-promisify@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/util-promisify/-/util-promisify-2.1.0.tgz#3c2236476c4d32c5ff3c47002add7c13b9a82a53"
+  integrity sha1-PCI2R2xNMsX/PEcAKt18E7moKlM=
+  dependencies:
+    object.getownpropertydescriptors "^2.0.3"
 
 util.promisify@^1.0.0:
   version "1.0.0"

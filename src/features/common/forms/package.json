@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.forms",
-  "version": "0.0.15",
+  "version": "0.0.17",
   "homepage": "https://bit.dev/garlictech/angular-features/common/forms",
   "main": "index.ts",
   "dependencies": {
@@ -20,10 +20,19 @@
     "lodash": "^4.17.4",
     "lodash-es": "^4.17.11",
     "ng2-logger": "^2.0.0",
-    "rxjs": "~6.3.2"
+    "rxjs": "~6.3.2",
+    "@bit/garlictech.angular-features.common.utils": "*"
   },
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
-    "env": {}
+    "env": {},
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.utils": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.utils": "*"
+      }
+    }
   }
 }

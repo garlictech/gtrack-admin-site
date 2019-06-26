@@ -1,6 +1,6 @@
 {
   "name": "@bit/garlictech.angular-features.common.elevation",
-  "version": "0.0.52",
+  "version": "0.0.58",
   "homepage": "https://bit.dev/garlictech/angular-features/common/elevation",
   "main": "index.ts",
   "dependencies": {
@@ -18,15 +18,63 @@
   },
   "devDependencies": {},
   "peerDependencies": {
+    "@angular/common": "~7.2.1",
     "@angular/core": "~7.2.1",
-    "lodash-es": "^4.17.11",
     "@angular/router": "~7.2.1",
+    "lodash-es": "^4.17.11",
     "moment": "^2.24.0",
     "rxjs": "~6.3.3",
-    "@angular/common": "~7.2.1"
+    "@bit/garlictech.angular-features.common.astronomy": "*",
+    "@bit/garlictech.angular-features.common.game-rule": "*",
+    "@bit/garlictech.angular-features.common.geospatial": "*",
+    "@bit/garlictech.angular-features.common.google-maps": "*",
+    "@bit/garlictech.angular-features.common.gtrack-interfaces": "*",
+    "@bit/garlictech.angular-features.common.hike": "*",
+    "@bit/garlictech.angular-features.common.leaflet-map": "*",
+    "@bit/garlictech.angular-features.common.marker-icons": "*",
+    "@bit/garlictech.angular-features.common.multi-language-text": "*",
+    "@bit/garlictech.angular-features.common.poi": "*",
+    "@bit/garlictech.angular-features.common.route": "*",
+    "@bit/garlictech.angular-features.common.units": "*",
+    "@bit/garlictech.angular-features.common.utils": "*",
+    "@bit/garlictech.angular-features.common.weather": "*"
   },
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
-    "env": {}
+    "env": {},
+    "overrides": {
+      "dependencies": {
+        "@bit/garlictech.angular-features.common.astronomy": "-",
+        "@bit/garlictech.angular-features.common.game-rule": "-",
+        "@bit/garlictech.angular-features.common.geospatial": "-",
+        "@bit/garlictech.angular-features.common.google-maps": "-",
+        "@bit/garlictech.angular-features.common.gtrack-interfaces": "-",
+        "@bit/garlictech.angular-features.common.hike": "-",
+        "@bit/garlictech.angular-features.common.leaflet-map": "-",
+        "@bit/garlictech.angular-features.common.marker-icons": "-",
+        "@bit/garlictech.angular-features.common.multi-language-text": "-",
+        "@bit/garlictech.angular-features.common.poi": "-",
+        "@bit/garlictech.angular-features.common.route": "-",
+        "@bit/garlictech.angular-features.common.units": "-",
+        "@bit/garlictech.angular-features.common.utils": "-",
+        "@bit/garlictech.angular-features.common.weather": "-"
+      },
+      "peerDependencies": {
+        "@bit/garlictech.angular-features.common.astronomy": "*",
+        "@bit/garlictech.angular-features.common.game-rule": "*",
+        "@bit/garlictech.angular-features.common.geospatial": "*",
+        "@bit/garlictech.angular-features.common.google-maps": "*",
+        "@bit/garlictech.angular-features.common.gtrack-interfaces": "*",
+        "@bit/garlictech.angular-features.common.hike": "*",
+        "@bit/garlictech.angular-features.common.leaflet-map": "*",
+        "@bit/garlictech.angular-features.common.marker-icons": "*",
+        "@bit/garlictech.angular-features.common.multi-language-text": "*",
+        "@bit/garlictech.angular-features.common.poi": "*",
+        "@bit/garlictech.angular-features.common.route": "*",
+        "@bit/garlictech.angular-features.common.units": "*",
+        "@bit/garlictech.angular-features.common.utils": "*",
+        "@bit/garlictech.angular-features.common.weather": "*"
+      }
+    }
   }
 }
