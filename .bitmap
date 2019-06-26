@@ -545,7 +545,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/authentication"
     },
-    "garlictech.angular-features/common/checkpoints@0.0.41": {
+    "garlictech.angular-features/common/checkpoints@0.0.42": {
         "files": [
             {
                 "name": "checkpoints.module.ts",
@@ -2229,7 +2229,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/hike"
     },
-    "garlictech.angular-features/common/leaflet-map@0.0.57": {
+    "garlictech.angular-features/common/leaflet-map@0.0.58": {
         "files": [
             {
                 "name": "README.md",
@@ -2745,7 +2745,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/localization"
     },
-    "garlictech.angular-features/common/marker-icons@0.0.32": {
+    "garlictech.angular-features/common/marker-icons@0.0.33": {
         "files": [
             {
                 "name": "circle.ts",
@@ -3812,7 +3812,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/common/object-mark"
     },
-    "garlictech.angular-features/common/poi@0.0.28": {
+    "garlictech.angular-features/common/poi@0.0.29": {
         "files": [
             {
                 "name": "index.ts",
@@ -5740,7 +5740,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "src/features/web/language"
     },
-    "garlictech.angular-features/web/marker-popup@0.0.18": {
+    "garlictech.angular-features/web/marker-popup@0.0.19": {
         "files": [
             {
                 "name": "index.ts",
