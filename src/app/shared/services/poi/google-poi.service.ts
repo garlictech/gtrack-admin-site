@@ -104,17 +104,23 @@ export class GooglePoiService {
                         lat: pois[idx].lat,
                         lon: pois[idx].lon,
                         original: {
-                          url: `${PURE_PLACE_API_URL}/photo?maxwidth=${_photo.width}&photoreference=${_photo.photo_reference}&key=${GOOGLE_MAPS_CONFIG.key}`,
+                          url: `${PURE_PLACE_API_URL}/photo?maxwidth=${_photo.width}&photoreference=${
+                            _photo.photo_reference
+                          }&key=${GOOGLE_MAPS_CONFIG.key}`,
                           width: _photo.width,
                           height: _photo.height
                         },
                         card: {
-                          url: `${PURE_PLACE_API_URL}/photo?maxwidth=${cardWidth}&photoreference=${_photo.photo_reference}&key=${GOOGLE_MAPS_CONFIG.key}`,
+                          url: `${PURE_PLACE_API_URL}/photo?maxwidth=${cardWidth}&photoreference=${
+                            _photo.photo_reference
+                          }&key=${GOOGLE_MAPS_CONFIG.key}`,
                           width: cardWidth,
                           height: Math.round((cardWidth * _photo.height) / _photo.width)
                         },
                         thumbnail: {
-                          url: `${PURE_PLACE_API_URL}/photo?maxwidth=${thumbnailWidth}&photoreference=${_photo.photo_reference}&key=${GOOGLE_MAPS_CONFIG.key}`,
+                          url: `${PURE_PLACE_API_URL}/photo?maxwidth=${thumbnailWidth}&photoreference=${
+                            _photo.photo_reference
+                          }&key=${GOOGLE_MAPS_CONFIG.key}`,
                           width: thumbnailWidth,
                           height: Math.round((thumbnailWidth * _photo.height) / _photo.width)
                         },
@@ -146,7 +152,9 @@ export class GooglePoiService {
   // tslint:disable-next-line:no-property-initializers
   private readonly _getOnePage = async params => {
     // tslint:disable:max-line-length
-    let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${params.geo.center.geometry.coordinates[0]}&radius=${params.geo.radius}&key=${GOOGLE_MAPS_CONFIG.key}`;
+    let request = `${PLACE_API_URL}/nearbysearch/json?location=${params.geo.center.geometry.coordinates[1]},${
+      params.geo.center.geometry.coordinates[0]
+    }&radius=${params.geo.radius}&key=${GOOGLE_MAPS_CONFIG.key}`;
     // tslint:enable:max-line-length
 
     if (params.pageToken) {

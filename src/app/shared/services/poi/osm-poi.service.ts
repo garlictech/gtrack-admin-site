@@ -32,15 +32,21 @@ export class OsmPoiService {
         <union into="_">
           <query into="_" type="node">
             <has-kv k="${typeParam}" modv="" v=""/>
-            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${bounds.SouthWest.lat}" w="${bounds.SouthWest.lon}"/>
+            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${
+      bounds.SouthWest.lat
+    }" w="${bounds.SouthWest.lon}"/>
           </query>
           <query into="_" type="way">
             <has-kv k="${typeParam}" modv="" v=""/>
-            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${bounds.SouthWest.lat}" w="${bounds.SouthWest.lon}"/>
+            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${
+      bounds.SouthWest.lat
+    }" w="${bounds.SouthWest.lon}"/>
           </query>
           <query into="_" type="relation">
             <has-kv k="${typeParam}" modv="" v=""/>
-            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${bounds.SouthWest.lat}" w="${bounds.SouthWest.lon}"/>
+            <bbox-query e="${bounds.NorthEast.lon}" into="_" n="${bounds.NorthEast.lat}" s="${
+      bounds.SouthWest.lat
+    }" w="${bounds.SouthWest.lon}"/>
           </query>
         </union>
         <print e="" from="_" geometry="skeleton" limit="" mode="body" n="" order="id" s="" w=""/>

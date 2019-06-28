@@ -36,7 +36,11 @@ export class WikipediaPoiService {
     const gsLimit = 500;
 
     // tslint:disable:max-line-length
-    const request = `https://${lng}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${geo.radius}&gscoord=${geo.center.geometry.coordinates[1]}%7C${geo.center.geometry.coordinates[0]}&format=json&gslimit=${gsLimit}&origin=*`;
+    const request = `https://${lng}.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=${
+      geo.radius
+    }&gscoord=${geo.center.geometry.coordinates[1]}%7C${
+      geo.center.geometry.coordinates[0]
+    }&format=json&gslimit=${gsLimit}&origin=*`;
     // tslint:enable:max-line-length
 
     // Get basic poi list
