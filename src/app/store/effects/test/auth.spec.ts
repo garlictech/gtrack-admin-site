@@ -50,7 +50,7 @@ describe('Auth effects', () => {
   describe('routeForbidden$', () => {
     it('should return empty observable from RouteForbidden', () => {
       const action = new AuthActions.RouteForbidden();
-      const completion = new routingActions.Go(['/login']);
+      const completion = new routingActions.Go(['auth', 'login']);
       const expected = cold('-b', { b: completion });
 
       actions$ = hot('-a', { a: action });
@@ -74,7 +74,7 @@ describe('Auth effects', () => {
   describe('logoutSuccess$', () => {
     it('should return empty observable from LogoutSuccess', () => {
       const action = new AuthActions.LogoutSuccess();
-      const completion = new routingActions.Go(['/login']);
+      const completion = new routingActions.Go(['auth', 'login']);
       const expected = cold('-b', { b: completion });
 
       actions$ = hot('-a', { a: action });

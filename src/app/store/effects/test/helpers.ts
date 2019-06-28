@@ -1,3 +1,3 @@
 export const mockRouter = {
-  url: '/login'
+  url: '/auth/login'
 };
