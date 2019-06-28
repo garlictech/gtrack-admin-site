@@ -10,7 +10,7 @@ import {
   ETextualDescriptionType,
   HikeProgramStop
 } from '@bit/garlictech.angular-features.common.gtrack-interfaces';
-import { poiReducer, PoiSelectors } from '@bit/garlictech.angular-features.common.poi';
+import { poiReducer, PoiSelectors, featureName as poiFeatureName } from '@bit/garlictech.angular-features.common.poi';
 import { select, Store, StoreModule } from '@ngrx/store';
 
 import { ExternalPoi } from '../../../shared/interfaces';
@@ -41,7 +41,7 @@ describe('Edited HikeProgram selectors', () => {
       imports: [
         StoreModule.forRoot({
           editedHikeProgram: editedHikeProgramReducer,
-          pois: poiReducer
+          [poiFeatureName]: poiReducer
         })
       ],
       providers: [PoiSelectors]
