@@ -1,6 +1,6 @@
 // tslint:disable:no-property-initializers
 import { Observable, of } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -14,20 +14,21 @@ export class AuthEffects {
   // Auth guard route forbidden
   @Effect() routeForbidden$: Observable<any> = this._actions$.pipe(
     ofType(AuthActions.ROUTE_FORBIDDEN),
-    switchMap(data => of(new routingActions.Go(['/login'])))
+    switchMap(data => of(new routingActions.Go(['auth', 'login'])))
   );
 
   // Login
   @Effect() loginSuccess$: Observable<any> = this._actions$.pipe(
     ofType(AuthActions.LOGIN_SUCCESS),
-    filter(() => this._router.url === '/login'),
+    tap(() => console.log(this._router.url)),
+    filter(() => this._router.url === '/auth/login'),
     switchMap(() => of(new routingActions.Go(['/'])))
   );
 
   // Logout
   @Effect() logoutSuccess$: Observable<any> = this._actions$.pipe(
     ofType(AuthActions.LOGOUT_SUCCESS),
-    switchMap(() => of(new routingActions.Go(['/login'])))
+    switchMap(() => of(new routingActions.Go(['auth', 'login'])))
   );
   constructor(private readonly _actions$: Actions, private readonly _router: Router) {}
 }

@@ -49,6 +49,9 @@ export const jwtReducer: ActionReducer<JwtAuthState> = (state = initialJwtState,
     case AuthenticationActionTypes.LOGOUT_SUCCESS:
       return { ...initialJwtState, loggingIn: false };
 
+    case AuthenticationActionTypes.LOGIN_CONTINUED:
+      return { ...state, loggingIn: true };
+
     default:
       return state;
   }

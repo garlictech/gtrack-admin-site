@@ -106,9 +106,9 @@ export class AuthenticationModule {
       .pipe(
         select(this._authSelectors.jwtLoggingIn),
         filter(loggingIn => !loggingIn),
-        switchMapTo(this._store.pipe(select(this._authSelectors.token)))
+        switchMapTo(this._store.pipe(select(this._authSelectors.selectAuthHeader)))
       )
-      .subscribe(token => this._store.dispatch(new DeepstreamActions.DeepstreamLogin(token)));
+      .subscribe(header => this._store.dispatch(new DeepstreamActions.DeepstreamLogin(header)));
 
     this._loaderWatch.spinnerOnWorking$(this._authSelectors.loggingIn, 'authentication.loggingIn').subscribe();
   }

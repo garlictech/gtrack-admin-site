@@ -41,7 +41,8 @@ export class DeepstreamSelectors {
       selectFeature,
       this.permissions,
       (state, permissions) =>
-        state.state === EDeepstreamState.LOGGING_IN || (_get(state, 'auth.id') !== 'open' && permissions === null)
+        state.state === EDeepstreamState.LOGGING_IN ||
+        (_get(state, 'auth.id') !== 'open' && typeof permissions === 'undefined')
     );
 
     this.permissionRecordName = createSelector(
@@ -52,7 +53,12 @@ export class DeepstreamSelectors {
     this.loggedIn = createSelector(
       selectFeature,
       this.permissions,
-      (state, permissions) => state.state === EDeepstreamState.LOGGED_IN && !!permissions
+      (state, permissions) => {
+        console.log(state);
+        console.log(permissions);
+
+        return state.state === EDeepstreamState.LOGGED_IN && !!permissions;
+      }
     );
 
     this.loggedOut = createSelector(

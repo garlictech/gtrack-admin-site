@@ -57,6 +57,7 @@ export class Selectors {
   termsAccepted: MemoizedSelector<object, boolean>;
   loginRefused: MemoizedSelector<object, boolean>;
   selectUserId: MemoizedSelector<object, string>;
+  selectAuthHeader: MemoizedSelector<object, string>;
 
   constructor(private readonly _deepstreamSelectors: DeepstreamSelectors) {
     const selectUiFeature = createSelector(
@@ -83,6 +84,11 @@ export class Selectors {
     this.token = createSelector(
       selectAuth,
       state => _get(state, 'token')
+    );
+
+    this.selectAuthHeader = createSelector(
+      this.token,
+      token => (!!token && `Bearer ${token}`) || undefined
     );
 
     this.loggedIn = createSelector(

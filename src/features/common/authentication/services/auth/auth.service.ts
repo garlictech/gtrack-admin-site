@@ -4,7 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Auth as amplifyAuth, Hub } from 'aws-amplify';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 
 import { AUTH_CONFIG, AuthConfig } from '../../config';
 import { User } from '../../interfaces';
@@ -178,13 +178,17 @@ export class AuthService {
     });
   }
 
-  private onAuthEvent(payload): Promise<Observable<Auth>> | Observable<void> {
+  private onAuthEvent(payload): Observable<void> | Promise<void> {
     if (payload.event === 'signIn') {
+      this.store.dispatch(new Actions.ContinueLogin());
+
       return amplifyAuth.currentSession().then(session => {
         const token = session.getIdToken().getJwtToken();
         const refreshToken = session.getRefreshToken().getToken();
 
-        return this.init(token, refreshToken);
+        this.init(token, refreshToken)
+          .pipe(take(1))
+          .subscribe(auth => this.store.dispatch(new Actions.LoginSuccess(auth)));
       });
     } else if (payload.event === 'signOut') {
       return this.logout();

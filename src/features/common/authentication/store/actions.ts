@@ -23,7 +23,8 @@ export enum AuthenticationActionTypes {
   WINDOW_REOPENED = '[Authentication] Window reopened',
   TERMS_ACCEPTED = '[Authentication] Terms accepted',
   LOGIN_REFUSED = '[Authentication] Login refused as term is not accepted',
-  SELECT_ROLE = '[Authentication] Auth role selected'
+  SELECT_ROLE = '[Authentication] Auth role selected',
+  LOGIN_CONTINUED = '[Authentication] Continue login after cognito success'
 }
 
 export class Init implements Action {
@@ -123,6 +124,10 @@ export class SelectRole implements Action {
   constructor(public payload: string) {}
 }
 
+export class ContinueLogin implements Action {
+  readonly type = AuthenticationActionTypes.LOGIN_CONTINUED;
+}
+
 export type AllActions =
   | Init
   | RequestVerifyToken
@@ -143,4 +148,5 @@ export type AllActions =
   | WindowReopened
   | TermsAccepted
   | LoginRefused
-  | SelectRole;
+  | SelectRole
+  | ContinueLogin;
