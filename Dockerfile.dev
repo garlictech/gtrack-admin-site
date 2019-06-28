@@ -2,6 +2,7 @@ FROM garlictech2/workflows-angular:v16.2.2
 ENV NO_UPDATE_NOTIFIER 1
 
 # install_dependencies will merge deps in the container
+COPY .npmrc /app/.npmrc
 COPY ./package.json /app/package.project.json
 ADD src /app/src
 ADD workflows-scripts /app/workflows-scripts
