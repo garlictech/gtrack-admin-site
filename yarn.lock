@@ -489,17 +489,17 @@
     aws-amplify "^1.1.29"
 
 "@bit/garlictech.angular-features.common.authentication@file:./src/features/common/authentication":
-  version "0.1.13"
+  version "0.1.14"
   dependencies:
     "@fortawesome/free-brands-svg-icons" "^5.5.0"
     aws-amplify "^1.1.29"
 
 "@bit/garlictech.angular-features.common.checkpoints@file:./src/features/common/checkpoints":
-  version "0.0.42"
+  version "0.0.43"
   dependencies:
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.42-0afecbf1-d9ea-4032-8613-c8402fb00047-1561757641683/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.42-0afecbf1-d9ea-4032-8613-c8402fb00047-1561757641683/node_modules/@bit/leaflet-map"
-    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.42-0afecbf1-d9ea-4032-8613-c8402fb00047-1561757641683/node_modules/@bit/marker-icons"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:src/features/common/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:src/features/common/leaflet-map"
+    "@bit/garlictech.angular-features.common.marker-icons" "file:src/features/common/marker-icons"
     leaflet "^1.0.3"
 
 "@bit/garlictech.angular-features.common.current-geolocation@file:./src/features/common/current-geolocation", "@bit/garlictech.angular-features.common.current-geolocation@file:src/features/common/current-geolocation":
@@ -510,7 +510,7 @@
     jest-marbles "^2.1.0"
 
 "@bit/garlictech.angular-features.common.deepstream-ngx@file:./src/features/common/deepstream-ngx":
-  version "0.0.11"
+  version "0.0.12"
   dependencies:
     "@garlictech/deepstream-rxjs" "^1.9.2"
 
@@ -601,7 +601,7 @@
     uuid "^3.3.2"
 
 "@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map", "@bit/garlictech.angular-features.common.leaflet-map@file:src/features/common/leaflet-map":
-  version "0.0.58"
+  version "0.0.59"
   dependencies:
     geojson "^0.5.0"
     leaflet "^1.0.3"
@@ -613,7 +613,7 @@
   version "0.0.10"
 
 "@bit/garlictech.angular-features.common.marker-icons@file:./src/features/common/marker-icons", "@bit/garlictech.angular-features.common.marker-icons@file:src/features/common/marker-icons":
-  version "0.0.33"
+  version "0.0.34"
   dependencies:
     angular-svg-icon "^7.2.0"
 
@@ -630,12 +630,12 @@
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.object-mark@file:./src/features/common/object-mark":
-  version "0.0.35"
+  version "0.0.36"
   dependencies:
     jest-marbles "^2.1.0"
 
 "@bit/garlictech.angular-features.common.poi@file:./src/features/common/poi":
-  version "0.0.29"
+  version "0.0.30"
   dependencies:
     "@turf/distance" "^6.0.1"
     "@turf/helpers" "^6.1.4"
@@ -666,18 +666,18 @@
 "@bit/garlictech.angular-features.common.search@file:./src/features/common/search":
   version "0.0.39"
   dependencies:
-    "@bit/garlictech.angular-features.common.current-geolocation" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-8f9e5b36-78a4-4aaa-9bc9-e242fe39f2d9-1561757641915/node_modules/@bit/current-geolocation"
-    "@bit/garlictech.angular-features.common.geosearch" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-8f9e5b36-78a4-4aaa-9bc9-e242fe39f2d9-1561757641915/node_modules/@bit/geosearch"
-    "@bit/garlictech.angular-features.common.google-maps" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-8f9e5b36-78a4-4aaa-9bc9-e242fe39f2d9-1561757641915/node_modules/@bit/google-maps"
-    "@bit/garlictech.angular-features.common.hike" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-8f9e5b36-78a4-4aaa-9bc9-e242fe39f2d9-1561757641915/node_modules/@bit/hike"
-    "@bit/garlictech.angular-features.common.search-filters" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-8f9e5b36-78a4-4aaa-9bc9-e242fe39f2d9-1561757641915/node_modules/@bit/search-filters"
+    "@bit/garlictech.angular-features.common.current-geolocation" "file:src/features/common/current-geolocation"
+    "@bit/garlictech.angular-features.common.geosearch" "file:src/features/common/geosearch"
+    "@bit/garlictech.angular-features.common.google-maps" "file:src/features/common/google-maps"
+    "@bit/garlictech.angular-features.common.hike" "file:src/features/common/hike"
+    "@bit/garlictech.angular-features.common.search-filters" "file:src/features/common/search-filters"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@turf/distance" "^6.0.1"
     "@turf/helpers" "^6.1.4"
     leaflet "^1.4.0"
 
 "@bit/garlictech.angular-features.common.settings@file:./src/features/common/settings":
-  version "0.0.40"
+  version "0.0.41"
   dependencies:
     "@fortawesome/angular-fontawesome" "^0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
@@ -759,10 +759,10 @@
     ngx-md "^7.1.3"
 
 "@bit/garlictech.angular-features.web.marker-popup@file:./src/features/web/marker-popup":
-  version "0.0.19"
+  version "0.0.20"
   dependencies:
-    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.19-d34f5e03-2105-44a2-84a3-de0d80800812-1561757641917/node_modules/common/marker-icons"
-    "@bit/garlictech.angular-features.common.marker-popup" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.19-d34f5e03-2105-44a2-84a3-de0d80800812-1561757641917/node_modules/common/marker-popup"
+    "@bit/garlictech.angular-features.common.marker-icons" "file:src/features/common/marker-icons"
+    "@bit/garlictech.angular-features.common.marker-popup" "file:src/features/common/marker-popup"
     "@bit/garlictech.angular-features.common.utils" "0.0.12"
     "@bit/garlictech.angular-features.web.localize" "0.0.12"
     "@bit/garlictech.angular-features.web.poi" "0.0.28"
@@ -3606,7 +3606,7 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2, commander@^2.12.1, commander@^2.19.0, commander@^2.9.0, commander@~2.20.0:
+commander@2, commander@^2.12.1, commander@^2.19.0, commander@^2.9.0:
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
   integrity sha512-7j2y+40w61zy6YC2iRNpUe/NwhNyoXrYpHMrSunaMG64nRnaf96zO/KMQR4OyN/UnE5KLyEBnKHd4aG3rskjpQ==
@@ -5851,13 +5851,14 @@ handle-thing@^2.0.0:
   integrity sha512-d4sze1JNC454Wdo2fkuyzCr6aHcbL6PGGuFAz0Li/NcOm1tCHGnWDRmJP85dh9IhQErTc2svWFEX5xHIOo//kQ==
 
 handlebars@^4.0.1, handlebars@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.2.tgz#b6b37c1ced0306b221e094fc7aca3ec23b131b67"
-  integrity sha512-nvfrjqvt9xQ8Z/w0ijewdD/vvWDTOweBUm96NTr66Wfvo1mJenBLwcYmPs3TIBP5ruzYGD7Hx/DaM9RmhroGPw==
+  version "4.7.7"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.7.7.tgz#9ce33416aad02dbd6c8fafa8240d5d98004945a1"
+  integrity sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==
   dependencies:
+    minimist "^1.2.5"
     neo-async "^2.6.0"
-    optimist "^0.6.1"
     source-map "^0.6.1"
+    wordwrap "^1.0.0"
   optionalDependencies:
     uglify-js "^3.1.4"
 
@@ -8235,10 +8236,15 @@ minimist@0.0.8:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
   integrity sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=
 
-minimist@1.2.0, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
+minimist@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
   integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
+
+minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
+  integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
 
 minimist@~0.0.1:
   version "0.0.10"
@@ -8451,9 +8457,9 @@ negotiator@0.6.2:
   integrity sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
 
 neo-async@^2.5.0, neo-async@^2.6.0:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
-  integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
+  integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
 next-tick@^1.0.0:
   version "1.0.0"
@@ -9127,19 +9133,19 @@ opn@^5.1.0:
   dependencies:
     is-wsl "^1.1.0"
 
-optimist@^0.6.1, optimist@~0.6.0:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
-  integrity sha1-2j6nRob6IaGaERwybpDrFaAZZoY=
-  dependencies:
-    minimist "~0.0.1"
-    wordwrap "~0.0.2"
-
 optimist@~0.3.5:
   version "0.3.7"
   resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.3.7.tgz#c90941ad59e4273328923074d2cf2e7cbc6ec0d9"
   integrity sha1-yQlBrVnkJzMokjB00s8ufLxuwNk=
   dependencies:
+    wordwrap "~0.0.2"
+
+optimist@~0.6.0:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
+  integrity sha1-2j6nRob6IaGaERwybpDrFaAZZoY=
+  dependencies:
+    minimist "~0.0.1"
     wordwrap "~0.0.2"
 
 optionator@^0.8.1:
@@ -12289,12 +12295,9 @@ uglify-js@^2.6.1:
     uglify-to-browserify "~1.0.0"
 
 uglify-js@^3.1.4:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.6.0.tgz#704681345c53a8b2079fb6cec294b05ead242ff5"
-  integrity sha512-W+jrUHJr3DXKhrsS7NUVxn3zqMOFn0hL/Ei6v0anCIMoKC93TjcflTagwIHLW7SfMFfiQuktQyFVCFHGUE0+yg==
-  dependencies:
-    commander "~2.20.0"
-    source-map "~0.6.1"
+  version "3.15.1"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.15.1.tgz#9403dc6fa5695a6172a91bc983ea39f0f7c9086d"
+  integrity sha512-FAGKF12fWdkpvNJZENacOH0e/83eG6JyVQyanIJaBXCN1J11TUQv1T1/z8S+Z0CG0ZPk1nPcreF/c7lrTd0TEQ==
 
 uglify-to-browserify@~1.0.0:
   version "1.0.2"
