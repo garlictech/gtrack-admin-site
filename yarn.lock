@@ -489,17 +489,17 @@
     aws-amplify "^1.1.29"
 
 "@bit/garlictech.angular-features.common.authentication@file:./src/features/common/authentication":
-  version "0.1.13"
+  version "0.1.14"
   dependencies:
     "@fortawesome/free-brands-svg-icons" "^5.5.0"
     aws-amplify "^1.1.29"
 
 "@bit/garlictech.angular-features.common.checkpoints@file:./src/features/common/checkpoints":
-  version "0.0.42"
+  version "0.0.43"
   dependencies:
-    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.42-0afecbf1-d9ea-4032-8613-c8402fb00047-1561757641683/node_modules/@bit/gtrack-interfaces"
-    "@bit/garlictech.angular-features.common.leaflet-map" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.42-0afecbf1-d9ea-4032-8613-c8402fb00047-1561757641683/node_modules/@bit/leaflet-map"
-    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-checkpoints-0.0.42-0afecbf1-d9ea-4032-8613-c8402fb00047-1561757641683/node_modules/@bit/marker-icons"
+    "@bit/garlictech.angular-features.common.gtrack-interfaces" "file:src/features/common/gtrack-interfaces"
+    "@bit/garlictech.angular-features.common.leaflet-map" "file:src/features/common/leaflet-map"
+    "@bit/garlictech.angular-features.common.marker-icons" "file:src/features/common/marker-icons"
     leaflet "^1.0.3"
 
 "@bit/garlictech.angular-features.common.current-geolocation@file:./src/features/common/current-geolocation", "@bit/garlictech.angular-features.common.current-geolocation@file:src/features/common/current-geolocation":
@@ -510,7 +510,7 @@
     jest-marbles "^2.1.0"
 
 "@bit/garlictech.angular-features.common.deepstream-ngx@file:./src/features/common/deepstream-ngx":
-  version "0.0.11"
+  version "0.0.12"
   dependencies:
     "@garlictech/deepstream-rxjs" "^1.9.2"
 
@@ -601,7 +601,7 @@
     uuid "^3.3.2"
 
 "@bit/garlictech.angular-features.common.leaflet-map@file:./src/features/common/leaflet-map", "@bit/garlictech.angular-features.common.leaflet-map@file:src/features/common/leaflet-map":
-  version "0.0.58"
+  version "0.0.59"
   dependencies:
     geojson "^0.5.0"
     leaflet "^1.0.3"
@@ -613,7 +613,7 @@
   version "0.0.10"
 
 "@bit/garlictech.angular-features.common.marker-icons@file:./src/features/common/marker-icons", "@bit/garlictech.angular-features.common.marker-icons@file:src/features/common/marker-icons":
-  version "0.0.33"
+  version "0.0.34"
   dependencies:
     angular-svg-icon "^7.2.0"
 
@@ -630,12 +630,12 @@
     rxjs "~6.3.2"
 
 "@bit/garlictech.angular-features.common.object-mark@file:./src/features/common/object-mark":
-  version "0.0.35"
+  version "0.0.36"
   dependencies:
     jest-marbles "^2.1.0"
 
 "@bit/garlictech.angular-features.common.poi@file:./src/features/common/poi":
-  version "0.0.29"
+  version "0.0.30"
   dependencies:
     "@turf/distance" "^6.0.1"
     "@turf/helpers" "^6.1.4"
@@ -666,18 +666,18 @@
 "@bit/garlictech.angular-features.common.search@file:./src/features/common/search":
   version "0.0.39"
   dependencies:
-    "@bit/garlictech.angular-features.common.current-geolocation" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-8f9e5b36-78a4-4aaa-9bc9-e242fe39f2d9-1561757641915/node_modules/@bit/current-geolocation"
-    "@bit/garlictech.angular-features.common.geosearch" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-8f9e5b36-78a4-4aaa-9bc9-e242fe39f2d9-1561757641915/node_modules/@bit/geosearch"
-    "@bit/garlictech.angular-features.common.google-maps" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-8f9e5b36-78a4-4aaa-9bc9-e242fe39f2d9-1561757641915/node_modules/@bit/google-maps"
-    "@bit/garlictech.angular-features.common.hike" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-8f9e5b36-78a4-4aaa-9bc9-e242fe39f2d9-1561757641915/node_modules/@bit/hike"
-    "@bit/garlictech.angular-features.common.search-filters" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-common-search-0.0.39-8f9e5b36-78a4-4aaa-9bc9-e242fe39f2d9-1561757641915/node_modules/@bit/search-filters"
+    "@bit/garlictech.angular-features.common.current-geolocation" "file:src/features/common/current-geolocation"
+    "@bit/garlictech.angular-features.common.geosearch" "file:src/features/common/geosearch"
+    "@bit/garlictech.angular-features.common.google-maps" "file:src/features/common/google-maps"
+    "@bit/garlictech.angular-features.common.hike" "file:src/features/common/hike"
+    "@bit/garlictech.angular-features.common.search-filters" "file:src/features/common/search-filters"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
     "@turf/distance" "^6.0.1"
     "@turf/helpers" "^6.1.4"
     leaflet "^1.4.0"
 
 "@bit/garlictech.angular-features.common.settings@file:./src/features/common/settings":
-  version "0.0.40"
+  version "0.0.41"
   dependencies:
     "@fortawesome/angular-fontawesome" "^0.3.0"
     "@fortawesome/free-solid-svg-icons" "^5.5.0"
@@ -759,10 +759,10 @@
     ngx-md "^7.1.3"
 
 "@bit/garlictech.angular-features.web.marker-popup@file:./src/features/web/marker-popup":
-  version "0.0.19"
+  version "0.0.20"
   dependencies:
-    "@bit/garlictech.angular-features.common.marker-icons" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.19-d34f5e03-2105-44a2-84a3-de0d80800812-1561757641917/node_modules/common/marker-icons"
-    "@bit/garlictech.angular-features.common.marker-popup" "file:../../../../../home/hangyagy/.cache/yarn/v4/npm-@bit-garlictech-angular-features-web-marker-popup-0.0.19-d34f5e03-2105-44a2-84a3-de0d80800812-1561757641917/node_modules/common/marker-popup"
+    "@bit/garlictech.angular-features.common.marker-icons" "file:src/features/common/marker-icons"
+    "@bit/garlictech.angular-features.common.marker-popup" "file:src/features/common/marker-popup"
     "@bit/garlictech.angular-features.common.utils" "0.0.12"
     "@bit/garlictech.angular-features.web.localize" "0.0.12"
     "@bit/garlictech.angular-features.web.poi" "0.0.28"
@@ -10136,9 +10136,9 @@ querystring@0.2.0:
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
 
 querystringify@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
-  integrity sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
+  integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
 quick-lru@^1.0.0:
   version "1.1.0"
@@ -12441,9 +12441,9 @@ url-parse-lax@^1.0.0:
     prepend-http "^1.0.1"
 
 url-parse@^1.4.3:
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.7.tgz#a8a83535e8c00a316e403a5db4ac1b9b853ae278"
-  integrity sha512-d3uaVyzDB9tQoSXFvuSUNFibTd9zxd2bkVrDRvF5TmvWWQwqE4lgYJ5m+x1DbecWkw+LK4RNl2CU1hHuOKPVlg==
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.7.tgz#00780f60dbdae90181f51ed85fb24109422c932a"
+  integrity sha512-HxWkieX+STA38EDk7CE9MEryFeHCKzgagxlGvsdS7WBImq9Mk+PGwiT56w82WI3aicwJA8REp42Cxo98c8FZMA==
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
